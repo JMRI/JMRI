@@ -1,5 +1,3 @@
-// PackageTest.java
-
 package jmri.jmrix.tmcc;
 
 import junit.framework.Test;
@@ -8,13 +6,12 @@ import junit.framework.TestSuite;
 
 /**
  * Tests for the jmri.jmrix.tmcc package.
- * @author      Bob Jacobsen  Copyright 2003
- * @version   $Revision$
+ *
+ * @author Bob Jacobsen Copyright 2003
  */
 public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure
-
     public PackageTest(String s) {
         super(s);
     }
@@ -36,14 +33,19 @@ public class PackageTest extends TestCase {
         suite.addTest(SerialTrafficControllerTest.suite());
         suite.addTest(SerialAddressTest.suite());
 
-        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
+        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             suite.addTest(jmri.jmrix.tmcc.serialmon.SerialMonFrameTest.suite());
         }
-        
+
         return suite;
     }
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 }

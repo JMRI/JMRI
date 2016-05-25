@@ -1,15 +1,18 @@
 //JsonSensorServer.java
 package jmri.jmris.json;
 
+import static jmri.jmris.json.JSON.METHOD;
+import static jmri.jmris.json.JSON.NAME;
+import static jmri.jmris.json.JSON.PUT;
+import static jmri.jmris.json.JSON.SENSOR;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.util.Locale;
 import jmri.JmriException;
 import jmri.jmris.AbstractSensorServer;
 import jmri.jmris.JmriConnection;
-import static jmri.jmris.json.JSON.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * JSON Web Socket interface between the JMRI Sensor manager and a network
@@ -26,10 +29,8 @@ import org.slf4j.LoggerFactory;
  */
 public class JsonSensorServer extends AbstractSensorServer {
 
-    private JmriConnection connection;
-    private ObjectMapper mapper;
-    static Logger log = LoggerFactory.getLogger(JsonSensorServer.class);
-
+    private final JmriConnection connection;
+    private final ObjectMapper mapper;
     public JsonSensorServer(JmriConnection connection) {
         super();
         this.connection = connection;
@@ -42,7 +43,7 @@ public class JsonSensorServer extends AbstractSensorServer {
     @Override
     public void sendStatus(String sensorName, int status) throws IOException {
         try {
-            this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getSensor(sensorName)));
+            this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getSensor(this.connection.getLocale(), sensorName)));
         } catch (JsonException ex) {
             this.connection.sendMessage(this.mapper.writeValueAsString(ex.getJsonMessage()));
         }
@@ -50,7 +51,7 @@ public class JsonSensorServer extends AbstractSensorServer {
 
     @Override
     public void sendErrorStatus(String sensorName) throws IOException {
-        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.handleError(500, Bundle.getMessage("ErrorObject", SENSOR, sensorName))));
+        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.handleError(500, Bundle.getMessage(this.connection.getLocale(), "ErrorObject", SENSOR, sensorName))));
     }
 
     @Override
@@ -58,14 +59,14 @@ public class JsonSensorServer extends AbstractSensorServer {
         throw new JmriException("Overridden but unsupported method"); // NOI18N
     }
 
-    public void parseRequest(JsonNode data) throws JmriException, IOException, JsonException {
+    public void parseRequest(Locale locale, JsonNode data) throws JmriException, IOException, JsonException {
         String name = data.path(NAME).asText();
         if (data.path(METHOD).asText().equals(PUT)) {
-            JsonUtil.putSensor(name, data);
+            JsonUtil.putSensor(locale, name, data);
         } else {
-            JsonUtil.setSensor(name, data);
+            JsonUtil.setSensor(locale, name, data);
         }
-        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getSensor(name)));
+        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getSensor(locale, name)));
         this.addSensorToList(name);
     }
 }

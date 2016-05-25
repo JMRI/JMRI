@@ -19,4 +19,6 @@
  * @see jmri.implementation 
 */
 
+//@annotations for the entire package go here
+
 package jmri;

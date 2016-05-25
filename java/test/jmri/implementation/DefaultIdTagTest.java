@@ -1,11 +1,9 @@
-// DefaultIdTagTest.java
-
 package jmri.implementation;
 
 import java.util.Calendar;
 import java.util.Date;
-import jmri.Reporter;
 import jmri.IdTag;
+import jmri.Reporter;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -13,8 +11,8 @@ import junit.framework.TestSuite;
 
 /**
  * Tests for the DefaultIdTag class
- * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision$
+ *
+ * @author Matthew Harris Copyright (C) 2011
  */
 public class DefaultIdTagTest extends TestCase {
 
@@ -45,19 +43,24 @@ public class DefaultIdTagTest extends TestCase {
         IdTag r = new DefaultIdTag("ID0413276BC1");
         Assert.assertNull("At creation, Reporter where seen is null", r.getWhereLastSeen());
         Assert.assertNull("At creation, Date when seen is null", r.getWhenLastSeen());
-        Assert.assertEquals("At creation, IdTag status is UNSEEN", IdTag.UNSEEN , r.getState());
+        Assert.assertEquals("At creation, IdTag status is UNSEEN", IdTag.UNSEEN, r.getState());
 
         r.setWhereLastSeen(null);
         Assert.assertNull("After setWhereLastSeen(null), Reporter where seen is null", r.getWhereLastSeen());
         Assert.assertNull("After setWhereLastSeen(null), Date when seen is null", r.getWhenLastSeen());
-        Assert.assertEquals("After setWhereLastSeen(null), IdTag status is UNSEEN", IdTag.UNSEEN , r.getState());
+        Assert.assertEquals("After setWhereLastSeen(null), IdTag status is UNSEEN", IdTag.UNSEEN, r.getState());
     }
 
     public void testHasBeenSeen() throws InterruptedException {
         IdTag r = new DefaultIdTag("ID0413276BC1");
         Reporter rep = new AbstractReporter("IR1") {
-            public int getState() { return state; }
-            public void setState(int s) { state = s; }
+            public int getState() {
+                return state;
+            }
+
+            public void setState(int s) {
+                state = s;
+            }
             int state = 0;
         };
 
@@ -76,12 +79,11 @@ public class DefaultIdTagTest extends TestCase {
         r.setWhereLastSeen(null);
         Assert.assertNull("After setWhereLastSeen(null), Reporter where seen is null", r.getWhereLastSeen());
         Assert.assertNull("After setWhereLastSeen(null), Date when seen is null", r.getWhenLastSeen());
-        Assert.assertEquals("After setWhereLastSeen(null), IdTag status is UNSEEN", IdTag.UNSEEN , r.getState());
+        Assert.assertEquals("After setWhereLastSeen(null), IdTag status is UNSEEN", IdTag.UNSEEN, r.getState());
 
     }
 
     // from here down is testing infrastructure
-
     public DefaultIdTagTest(String s) {
         super(s);
     }

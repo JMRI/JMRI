@@ -1,38 +1,40 @@
 // LcdClockAction.java
+package jmri.jmrit.lcdclock;
 
- package jmri.jmrit.lcdclock;
-
-import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
 
 /**
- * Swing action to create and register a
- *  LcdClockFrame object
+ * Swing action to create and register a LcdClockFrame object
  *
- * @author			Ken Cameron    Copyright (C) 2007
- * @version			$Revision$
- * 
- * This was a direct steal form the Nixie clock code, ver 1.5.
- * Thank you Bob Jacobsen.
+ * @author	Ken Cameron Copyright (C) 2007
+ * @version	$Revision$
+ *
+ * This was a direct steal form the Nixie clock code, ver 1.5. Thank you Bob
+ * Jacobsen.
  */
+public class LcdClockAction extends AbstractAction {
 
- public class LcdClockAction extends AbstractAction {
-	 
-	 public LcdClockAction() {
-         this("LCD Clock");
-     }
+    /**
+     *
+     */
+    private static final long serialVersionUID = -2354784468892156228L;
 
- 	public LcdClockAction(String s) {
-    	super(s);
-     }
+    public LcdClockAction() {
+        this("LCD Clock");
+    }
 
-     public void actionPerformed(ActionEvent e) {
+    public LcdClockAction(String s) {
+        super(s);
+    }
 
-         LcdClockFrame f = new LcdClockFrame();
-         f.setVisible(true);
+    public void actionPerformed(ActionEvent e) {
 
-     }
+        LcdClockFrame f = new LcdClockFrame();
+        f.setVisible(true);
 
- }
+    }
+
+}
 
 /* @(#)LcdClockAction.java */

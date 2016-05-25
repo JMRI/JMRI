@@ -1,49 +1,42 @@
-// Manager.java
-
 package jmri;
 
 import java.util.List;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Basic interface for access to named, managed objects.
  * <P>
- * {@link NamedBean} objects represent various real elements, and
- * have a "system name" and perhaps "user name".  A specific Manager
- * object provides access to them by name, and serves as a factory for
- * new objects.
+ * {@link NamedBean} objects represent various real elements, and have a "system
+ * name" and perhaps "user name". A specific Manager object provides access to
+ * them by name, and serves as a factory for new objects.
  * <P>
- * Right now, this interface just contains the members needed
- * by {@link InstanceManager} to handle
- * managers for more than one system.
+ * Right now, this interface just contains the members needed by
+ * {@link InstanceManager} to handle managers for more than one system.
  * <P>
  * Although they are not defined here because their return type differs, any
- * specific Manager subclass
- * provides "get" methods to locate specific objects, and a "new" method
- * to create a new one via the Factory pattern.
- * The "get" methods will
- * return an existing object or null, and will never create a new object.
- * The "new" method will log a warning if an object already exists with
+ * specific Manager subclass provides "get" methods to locate specific objects,
+ * and a "new" method to create a new one via the Factory pattern. The "get"
+ * methods will return an existing object or null, and will never create a new
+ * object. The "new" method will log a warning if an object already exists with
  * that system name.
  * <P>
  * add/remove PropertyChangeListener methods are provided. At a minimum,
- * subclasses must notify of changes to the list of available NamedBeans;
- * they may have other properties that will also notify.
+ * subclasses must notify of changes to the list of available NamedBeans; they
+ * may have other properties that will also notify.
  *
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision$
+ * @author Bob Jacobsen Copyright (C) 2003
  */
 public interface Manager {
 
@@ -55,10 +48,10 @@ public interface Manager {
     public char systemLetter();
 
     /**
-     * Provides access to the system prefix string.
-     * This was previously called the "System letter"
+     * Provides access to the system prefix string. This was previously called
+     * the "System letter"
      */
-    public String getSystemPrefix();
+    public @Nonnull String getSystemPrefix();
 
     /**
      * @return The type letter for a specific implementation
@@ -68,7 +61,7 @@ public interface Manager {
     /**
      * @return A system name from a user input, typically a number.
      */
-    public String makeSystemName(String s);
+    public @Nonnull String makeSystemName(@Nonnull String s);
 
     /**
      * Free resources when no longer used. Specifically, remove all references
@@ -76,66 +69,99 @@ public interface Manager {
      */
     public void dispose();
 
-    public String[] getSystemNameArray();
-    public List<String> getSystemNameList();
-    public List<NamedBean> getNamedBeanList();
-    
+    public @Nonnull String[] getSystemNameArray();
+
+    public @Nonnull List<String> getSystemNameList();
+
+    public @Nonnull List<NamedBean> getNamedBeanList();
+
     /**
-     * Locate an instance based on a system name.  Returns null if no
-     * instance already exists.
+     * Locate an instance based on a system name. Returns null if no instance
+     * already exists.
+     *
      * @param systemName System Name of the required NamedBean
      * @return requested NamedBean object or null if none exists
      */
-    public NamedBean getBeanBySystemName(String systemName);
-    
+    public @Nullable NamedBean getBeanBySystemName(@Nonnull String systemName);
+
     /**
-     * Locate an instance based on a user name.  Returns null if no
-     * instance already exists.
+     * Locate an instance based on a user name. Returns null if no instance
+     * already exists.
+     *
      * @param userName System Name of the required NamedBean
      * @return requested NamedBean object or null if none exists
      */
-    public NamedBean getBeanByUserName(String userName);
-    
+    public @Nullable NamedBean getBeanByUserName(@Nonnull String userName);
+
     /**
-     * Locate an instance based on a name.  Returns null if no
-     * instance already exists.
+     * Locate an instance based on a name. Returns null if no instance already
+     * exists.
+     *
      * @param name System Name of the required NamedBean
      * @return requested NamedBean object or null if none exists
      */
-    public NamedBean getNamedBean(String name);
-    
-	/**
-	 * At a minimum,
- 	 * subclasses must notify of changes to the list of available NamedBeans;
-     * they may have other properties that will also notify.
+    public @Nullable NamedBean getNamedBean(@Nonnull String name);
+
+    /**
+     * At a minimum, subclasses must notify of changes to the list of available
+     * NamedBeans; they may have other properties that will also notify.
      */
-    public void addPropertyChangeListener(java.beans.PropertyChangeListener l);
-	/**
-	 * At a minimum,
- 	 * subclasses must notify of changes to the list of available NamedBeans;
-     * they may have other properties that will also notify.
+    public void addPropertyChangeListener(@Nullable  java.beans.PropertyChangeListener l);
+
+    /**
+     * At a minimum, subclasses must notify of changes to the list of available
+     * NamedBeans; they may have other properties that will also notify.
      */
-    public void removePropertyChangeListener(java.beans.PropertyChangeListener l);
-    
+    public void removePropertyChangeListener(@Nullable  java.beans.PropertyChangeListener l);
+
+    /**
+     * Add a VetoableChangeListener to the listener list.
+     */
+    public void addVetoableChangeListener(@Nullable  java.beans.VetoableChangeListener l);
+
+    /**
+     * Remove a VetoableChangeListener to the listener list.
+     */
+    public void removeVetoableChangeListener(@Nullable  java.beans.VetoableChangeListener l);
+
+    /**
+     * Method for a UI to delete a bean, the UI should first request a
+     * "CanDelete", this will return a list of locations (and descriptions)
+     * where the bean is in use via throwing a VetoException, then if that comes
+     * back clear, or the user agrees with the actions, then a "DoDelete" can be
+     * called which inform the listeners to delete the bean, then it will be
+     * deregistered and disposed of.
+     * <p>
+     * If a property name of "DoNotDelete" is thrown back in the VetoException
+     * then the delete process should be aborted.
+     *
+     * @param n        The NamedBean to be deleted
+     * @param property The programmatic name of the request. "CanDelete" will
+     *                 enquire with all listeners if the item can be deleted.
+     *                 "DoDelete" tells the listener to delete the item.
+     * @throws java.beans.PropertyVetoException - If the recipients wishes the
+     *                                          delete to be aborted (see
+     *                                          above).
+     */
+    public void deleteBean(@Nonnull NamedBean n, @Nonnull String property) throws java.beans.PropertyVetoException;
+
     /**
      * Remember a NamedBean Object created outside the manager.
      * <P>
-     * The non-system-specific SignalHeadManagers
-     * use this method extensively.
+     * The non-system-specific SignalHeadManagers use this method extensively.
      */
-    public void register(NamedBean n);
+    public void register(@Nonnull NamedBean n);
 
     /**
      * Forget a NamedBean Object created outside the manager.
      * <P>
-     * The non-system-specific RouteManager
-     * uses this method.
+     * The non-system-specific RouteManager uses this method.
      */
-    public void deregister(NamedBean n);
-    
+    public void deregister(@Nonnull NamedBean n);
+
     /**
-    * The order in which things get saved to the xml file.
-    */
+     * The order in which things get saved to the xml file.
+     */
     public static final int SENSORS = 10;
     public static final int TURNOUTS = SENSORS + 10;
     public static final int LIGHTS = TURNOUTS + 10;
@@ -145,12 +171,12 @@ public interface Manager {
     public static final int SIGNALHEADS = SENSORGROUPS + 10;
     public static final int SIGNALMASTS = SIGNALHEADS + 10;
     public static final int SIGNALGROUPS = SIGNALMASTS + 10;
-    public static final int BLOCKS = SIGNALGROUPS +10;
-    public static final int OBLOCKS = BLOCKS +10;
-    public static final int LAYOUTBLOCKS = OBLOCKS +10;
-    public static final int SECTIONS = LAYOUTBLOCKS +10;
-    public static final int TRANSITS = SECTIONS +10;
-    public static final int BLOCKBOSS = TRANSITS +10;
+    public static final int BLOCKS = SIGNALGROUPS + 10;
+    public static final int OBLOCKS = BLOCKS + 10;
+    public static final int LAYOUTBLOCKS = OBLOCKS + 10;
+    public static final int SECTIONS = LAYOUTBLOCKS + 10;
+    public static final int TRANSITS = SECTIONS + 10;
+    public static final int BLOCKBOSS = TRANSITS + 10;
     public static final int ROUTES = BLOCKBOSS + 10;
     public static final int WARRANTS = ROUTES + 10;
     public static final int SIGNALMASTLOGICS = WARRANTS + 10;
@@ -161,11 +187,15 @@ public interface Manager {
     public static final int TIMEBASE = AUDIO + 10;
     public static final int PANELFILES = TIMEBASE + 10;
     public static final int ENTRYEXIT = PANELFILES + 10;
-    
+
     public int getXMLOrder();
-    
-    
+
+    /**
+     * For instances in the code where we are dealing with just a bean and a
+     * message needs to be passed to the user or in a log.
+     *
+     * @return a string of the bean type that the manager handles, eg Turnout,
+     *         Sensor etc
+     */
+    public @Nonnull String getBeanTypeHandled();
 }
-
-
-/* @(#)Manager.java */

@@ -1,49 +1,45 @@
 // SpeedoTrafficController.java
-
 package jmri.jmrix.bachrus;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.io.DataInputStream;
-import java.io.OutputStream;
-import java.util.Vector;
 
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
+import java.io.DataInputStream;
+import java.io.OutputStream;
+import java.util.Vector;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Converts Stream-based I/O to/from speedo messages.  The "SpeedoInterface"
- * side sends/receives message objects.  The connection to
- * a SpeedoPortController is via a pair of *Streams, which then carry sequences
- * of characters for transmission.     Note that this processing is
- * handled in an independent thread.
- * 
- * Updated January 2010 for gnu io (RXTX) - Andrew Berridge. Comments tagged with
- * "AJB" indicate changes or observations by me
- * 
+ * Converts Stream-based I/O to/from speedo messages. The "SpeedoInterface" side
+ * sends/receives message objects. The connection to a SpeedoPortController is
+ * via a pair of *Streams, which then carry sequences of characters for
+ * transmission. Note that this processing is handled in an independent thread.
+ *
+ * Updated January 2010 for gnu io (RXTX) - Andrew Berridge. Comments tagged
+ * with "AJB" indicate changes or observations by me
+ *
  * Removed Runnable implementation and methods for it
  *
- * @author			Bob Jacobsen  Copyright (C) 2001
- * @author			Andrew Crosland  Copyright (C) 2010
- * @version			$Revision$
+ * @author	Bob Jacobsen Copyright (C) 2001
+ * @author	Andrew Crosland Copyright (C) 2010
+ * @version	$Revision$
  */
-public class SpeedoTrafficController implements SpeedoInterface, SerialPortEventListener  {
+public class SpeedoTrafficController implements SpeedoInterface, SerialPortEventListener {
 
-	private SpeedoReply reply = new SpeedoReply();
-	
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    private SpeedoReply reply = new SpeedoReply();
+
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     // Ignore FindBugs warning as we can only have on SPROG instance at this time
     public SpeedoTrafficController() {
-		self=this;
-	}
-
+        self = this;
+    }
 
     // The methods to implement the SpeedoInterface
+    protected Vector<SpeedoListener> cmdListeners = new Vector<SpeedoListener>();
 
-	protected Vector<SpeedoListener> cmdListeners = new Vector<SpeedoListener>();
-
-	public boolean status() { return (ostream != null & istream != null);
-		}
+    public boolean status() {
+        return (ostream != null && istream != null);
+    }
 
     public synchronized void addSpeedoListener(SpeedoListener l) {
         // add only if not already registered
@@ -61,9 +57,9 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
         }
     }
 
-	SpeedoListener lastSender = null;
+    SpeedoListener lastSender = null;
 
-	@SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     protected void notifyReply(SpeedoReply r) {
         // make a copy of the listener vector to synchronized (not needed for transmit?)
         Vector<SpeedoListener> v;
@@ -93,11 +89,11 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
     }
 
     // methods to connect/disconnect to a source of data in a LnPortController
-	private SpeedoPortController controller = null;
+    private SpeedoPortController controller = null;
 
-	/**
-	 * Make connection to existing PortController object.
-	 */
+    /**
+     * Make connection to existing PortController object.
+     */
     public void connectPort(SpeedoPortController p) {
         istream = p.getInputStream();
         ostream = p.getOutputStream();
@@ -107,35 +103,37 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
         controller = p;
     }
 
-	/**
-	 * Break connection to existing SpeedoPortController object. Once broken,
-	 * attempts to send via "message" member will fail.
-	 */
-	public void disconnectPort(SpeedoPortController p) {
-			istream = null;
-			ostream = null;
-			if (controller != p)
-				log.warn("disconnectPort: disconnect called from non-connected LnPortController");
-			controller = null;
-		}
+    /**
+     * Break connection to existing SpeedoPortController object. Once broken,
+     * attempts to send via "message" member will fail.
+     */
+    public void disconnectPort(SpeedoPortController p) {
+        istream = null;
+        ostream = null;
+        if (controller != p) {
+            log.warn("disconnectPort: disconnect called from non-connected LnPortController");
+        }
+        controller = null;
+    }
 
-	/**
-	 * static function returning the SpeedoTrafficController instance to use.
-	 * @return The registered SpeedoTrafficController instance for general use,
-	 *         if need be creating one.
-	 */
-	static public SpeedoTrafficController instance() {
-		if (self == null) {
-			self = new SpeedoTrafficController();
-		}
-		return self;
-	}
+    /**
+     * static function returning the SpeedoTrafficController instance to use.
+     *
+     * @return The registered SpeedoTrafficController instance for general use,
+     *         if need be creating one.
+     */
+    static public SpeedoTrafficController instance() {
+        if (self == null) {
+            self = new SpeedoTrafficController();
+        }
+        return self;
+    }
 
-	static volatile protected SpeedoTrafficController self = null;
+    static volatile protected SpeedoTrafficController self = null;
 
     // data members to hold the streams
-	DataInputStream istream = null;
-	OutputStream ostream = null;
+    DataInputStream istream = null;
+    OutputStream ostream = null;
 
 
     /*
@@ -154,12 +152,12 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
     }
 
     private boolean unsolicited;
-    static Logger log = LoggerFactory.getLogger(SpeedoTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SpeedoTrafficController.class.getName());
 
     /**
-     * serialEvent - respond to an event triggered by RXTX. In this case
-     * we are only dealing with DATA_AVAILABLE but the other events
-     * are left here for reference. AJB Jan 2010
+     * serialEvent - respond to an event triggered by RXTX. In this case we are
+     * only dealing with DATA_AVAILABLE but the other events are left here for
+     * reference. AJB Jan 2010
      */
     public void serialEvent(SerialPortEvent event) {
         switch (event.getEventType()) {
@@ -193,7 +191,6 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
                         break;
                     }
                 }
-
 
                 break;
         }
@@ -229,4 +226,3 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
 
 
 /* @(#)SpeedoTrafficController.java */
-

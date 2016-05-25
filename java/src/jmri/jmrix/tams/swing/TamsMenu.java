@@ -1,58 +1,65 @@
 package jmri.jmrix.tams.swing;
 
+import java.util.ResourceBundle;
+import javax.swing.JMenu;
+import jmri.jmrix.tams.TamsSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.ResourceBundle;
-import javax.swing.*;
 
-import jmri.jmrix.tams.TamsSystemConnectionMemo;
 /**
  *
  * Based on work by Bob Jacobsen
- * @author	Kevin Dickerson  Copyright (C) 2012
+ *
+ * @author	Kevin Dickerson Copyright (C) 2012
  */
-public class TamsMenu extends JMenu{
+public class TamsMenu extends JMenu {
 
-        public TamsMenu(TamsSystemConnectionMemo memo) {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 3647445955400088727L;
+
+    public TamsMenu(TamsSystemConnectionMemo memo) {
         super();
 
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.tams.TamsBundle");
         String title;
-        if (memo != null)
+        if (memo != null) {
             title = memo.getUserName();
-        else
+        } else {
             title = rb.getString("MenuTams");
-        
+        }
+
         setText(title);
-        
+
         jmri.util.swing.WindowInterface wi = new jmri.util.swing.sdi.JmriJFrameInterface();
-        
+
         for (Item item : panelItems) {
             if (item == null) {
                 add(new javax.swing.JSeparator());
             } else {
-                add(new TamsNamedPaneAction( rb.getString(item.name), wi, item.load, memo));
+                add(new TamsNamedPaneAction(rb.getString(item.name), wi, item.load, memo));
             }
         }
-        
-        if (jmri.InstanceManager.getDefault(jmri.jmrit.beantable.ListedTableFrame.class)==null){
-            try{
+
+        if (jmri.InstanceManager.getDefault(jmri.jmrit.beantable.ListedTableFrame.class) == null) {
+            try {
                 new jmri.jmrit.beantable.ListedTableFrame();
-            } catch (java.lang.NullPointerException ex){
+            } catch (java.lang.NullPointerException ex) {
                 log.error("Unable to register Tams table");
             }
         }
-        
+
     }
-    
-        Item[] panelItems = new Item[] {
-            new Item("MenuItemTamsMonitor", "jmri.jmrix.tams.swing.monitor.TamsMonPane"),
-            new Item("MenuItemSendPacket",  "jmri.jmrix.tams.swing.packetgen.PacketGenPanel"),
-            new Item("MenuItemInfo",  "jmri.jmrix.tams.swing.statusframe.StatusPanel"),
-            new Item("MenuItemLocoData",  "jmri.jmrix.tams.swing.locodatabase.LocoDataPane"),
-        };
+
+    Item[] panelItems = new Item[]{
+        new Item("MenuItemTamsMonitor", "jmri.jmrix.tams.swing.monitor.TamsMonPane"),
+        new Item("MenuItemSendPacket", "jmri.jmrix.tams.swing.packetgen.PacketGenPanel"),
+        new Item("MenuItemInfo", "jmri.jmrix.tams.swing.statusframe.StatusPanel"),
+        new Item("MenuItemLocoData", "jmri.jmrix.tams.swing.locodatabase.LocoDataPane"),};
 
     static class Item {
+
         Item(String name, String load) {
             this.name = name;
             this.load = load;
@@ -61,6 +68,6 @@ public class TamsMenu extends JMenu{
         String name;
         String load;
     }
-    
-    static Logger log = LoggerFactory.getLogger(TamsMenu.class.getName());
+
+    private final static Logger log = LoggerFactory.getLogger(TamsMenu.class.getName());
 }

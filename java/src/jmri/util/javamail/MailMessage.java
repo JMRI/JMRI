@@ -1,24 +1,21 @@
-// MailMessage.java
-
 package jmri.util.javamail;
 
-/** 
+/**
  * Send an email message.
  * <p>
- * Based on JavaMail 1.4.1's msgsend example,
- * converted from command line form to 
- * callable form.
+ * Based on JavaMail 1.4.1's msgsend example, converted from command line form
+ * to callable form.
  *
- * Probably needs to set the "Return-Path" header to SF 
- * itself, so that SF will accept directly-sent email
+ * Probably needs to set the "Return-Path" header to SF itself, so that SF will
+ * accept directly-sent email
  *
  * Has a temp value for server name
- * 
+ *
  * Check for //! comments
  *
- * @author Bob Jacobsen    Copyright 2008, 2009
- * @version $Revision$
- * 
+ * @author Bob Jacobsen Copyright 2008, 2009
+ * @author kcameron Copyright 2015
+ *
  */
 
 /*
@@ -53,52 +50,61 @@ package jmri.util.javamail;
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
+import java.util.Date;
+import java.util.Properties;
+import javax.mail.Authenticator;
+import javax.mail.Folder;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Store;
+import javax.mail.Transport;
+import javax.mail.URLName;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.Properties;
-import java.util.Date;
-
-import javax.mail.*;
-import javax.mail.internet.*;
 
 /*
  * Demo app that shows how to construct and send an RFC822
  * (singlepart) message.
- *
- * XXX - allow more than one recipient on the command line
- *
+ * *
  * @author Max Spivak
  * @author Bill Shannon
  */
-
 public class MailMessage {
 
     // first two required 
     String to;
     String mailhost;
     String subject;
-    
-    String from = "jmri.problem.report@gmail.com";  //! null
+
+    String from = "";  //! null
     String cc = null;
     String bcc = null;
     String url = null;  // "store-url"
     String mailer = "JMRI";
-    String file = "default.lcf"; //! null;  // "attach-file"
+    String file = ""; //! null;  // "attach-file"
     String protocol = null;
     String host = null;
-    
-    String user = "jmri.problem.report@gmail.com";
-    String password = "Hgytht756%gfA@f9";
-    
+    String pProtocol = "smtp";
+    String pTls = "true";
+    String pAuth = "true";
+
+    String user = "";
+    String password = "";
+
     String record = null;   // name of folder in which to record mail
-    
+
     public MailMessage(String to, String mailhost, String subject) {
         this.to = to;
         this.mailhost = mailhost;
         this.subject = subject;
     }
-    
+
     public void setFrom(String from) {
         this.from = from;
     }
@@ -110,91 +116,169 @@ public class MailMessage {
     public void setPassword(String passWord) {
         this.password = passWord;
     }
-    
+
+    /**
+     * sets the protocol to be used connecting to the mailhost default smtp
+     *
+     * @param p
+     */
+    public void setProtocol(String p) {
+        this.pProtocol = p;
+    }
+
+    /**
+     * shows the protocol to be used connecting to the mailhost
+     *
+     * @return
+     */
+    public String getProtocol() {
+        return (this.pProtocol);
+    }
+
+    /**
+     * sets if encryption will used when connecting to the mailhost default is
+     * true
+     *
+     * @param t
+     */
+    public void setTls(boolean t) {
+        if (t) {
+            this.pTls = "true";
+        } else {
+            this.pTls = "false";
+        }
+    }
+
+    /**
+     * shows if encryption will be used when connecting to the mailhost
+     *
+     * @return
+     */
+    public boolean isTls() {
+        return ((this.pTls.equals("true") ? true : false));
+    }
+
+    /**
+     * sets if authorization will be used to the mailhost default is true
+     *
+     * @param t
+     */
+    public void setAuth(boolean t) {
+        if (t) {
+            this.pAuth = "true";
+        } else {
+            this.pAuth = "false";
+        }
+    }
+
+    /**
+     * shows if authorization will be used to the mailhost
+     *
+     * @return
+     */
+    public boolean isAuth() {
+        return ((this.pAuth.equals("true") ? true : false));
+    }
+
     Session session;
     Message msg;
     MimeMultipart mp;
-    
-    public void prepare() {        
+
+    /**
+     * sets up needed parts for sending email message presumes any needed sets
+     * have been done first
+     */
+    public void prepare() {
         try {
             Properties props = System.getProperties();
-            // XXX - could use Session.getTransport() and Transport.connect()
-            // XXX - assume we're using SMTP
-            props.put("mail.transport.protocol", "smtp");
-            props.put("mail.smtp.starttls.enable","true");
+            props.put("mail.transport.protocol", pProtocol);
+            props.put("mail.smtp.starttls.enable", pTls);
             if (mailhost != null) {
                 props.put("mail.smtp.host", mailhost);
             }
-            props.put("mail.smtp.auth", "true");
-            
+            props.put("mail.smtp.auth", pAuth);
+
             Authenticator auth = new SMTPAuthenticator();
-            
+
             // Get a Session object
             session = Session.getInstance(props, auth);
-            if (log.isDebugEnabled())
+            if (log.isDebugEnabled()) {
                 session.setDebug(true);
-            
+            }
+
             // construct the message
             msg = new MimeMessage(session);
             msg.setFrom(new InternetAddress(from));
-            
+
             msg.setRecipients(Message.RecipientType.TO,
-                              InternetAddress.parse(to, false));
-            if (cc != null)
+                    InternetAddress.parse(to, false));
+            if (cc != null) {
                 msg.setRecipients(Message.RecipientType.CC,
-                                  InternetAddress.parse(cc, false));
-            if (bcc != null)
+                        InternetAddress.parse(cc, false));
+            }
+            if (bcc != null) {
                 msg.setRecipients(Message.RecipientType.BCC,
-                                  InternetAddress.parse(bcc, false));
-            
+                        InternetAddress.parse(bcc, false));
+            }
+
             msg.setSubject(subject);
-            
+
             // We need a multipart message to hold attachment.
             mp = new MimeMultipart();
 
-        } catch (Exception e) {
+        } catch (MessagingException e) {
             log.warn("Exception in prepare", e);
         }
     }
-    
-    public void setText(String text) {        
+
+    /**
+     * Adds the text to the message as a separate Mime part
+     *
+     * @param text
+     */
+    public void setText(String text) {
         try {
             MimeBodyPart mbp1 = new MimeBodyPart();
             mbp1.setText(text);
             mp.addBodyPart(mbp1);
-        } catch (Exception e) {
+        } catch (MessagingException e) {
             log.warn("Exception in setText", e);
         }
     }
-             
-    public void setFileAttachment(String file) {        
+
+    /**
+     * Adds the provided file to the message as a separate Mime part.
+     *
+     * @param file
+     */
+    public void setFileAttachment(String file) {
         try {
             // Attach the specified file.
             MimeBodyPart mbp2 = new MimeBodyPart();
             mbp2.attachFile(file);
             mp.addBodyPart(mbp2);
-                
-        } catch (Exception e) {
+
+        } catch (java.io.IOException | MessagingException e) {
             log.error("Exception in setAttachment", e);
         }
     }
-            
-    public void send() throws Exception {        
+
+    public void send() throws Exception {
         msg.setContent(mp);
 
         msg.setHeader("X-Mailer", mailer);
         msg.setSentDate(new Date());
-        
+
         // send the thing off
         Transport.send(msg);
-        
-        log.debug("Mail was sent successfully.");        
+
+        log.debug("Mail was sent successfully.");
     }
 
-    public void saveCopy() {        
+    public void saveCopy() {
         try {
             // Keep a copy, if requested.
-            
+
             if (record != null) {
                 // Get a Store object
                 Store store = null;
@@ -203,49 +287,52 @@ public class MailMessage {
                     store = session.getStore(urln);
                     store.connect();
                 } else {
-                    if (protocol != null)       
+                    if (protocol != null) {
                         store = session.getStore(protocol);
-                    else
+                    } else {
                         store = session.getStore();
-                    
+                    }
+
                     // Connect
-                    if (host != null || user != null || password != null)
+                    if (host != null || user != null || password != null) {
                         store.connect(host, user, password);
-                    else
+                    } else {
                         store.connect();
+                    }
                 }
-                
+
                 // Get record Folder.  Create if it does not exist.
                 Folder folder = store.getFolder(record);
                 if (folder == null) {
                     log.error("Can't get record folder!");
                 } else {
-                	if (!folder.exists())
-                		folder.create(Folder.HOLDS_MESSAGES);
+                    if (!folder.exists()) {
+                        folder.create(Folder.HOLDS_MESSAGES);
+                    }
 
-                	Message[] msgs = new Message[1];
-                	msgs[0] = msg;
-                	folder.appendMessages(msgs);
+                    Message[] msgs = new Message[1];
+                    msgs[0] = msg;
+                    folder.appendMessages(msgs);
 
-                	log.info("Mail was recorded successfully.");
+                    log.info("Mail was recorded successfully.");
                 }
             }
-            
-        } catch (Exception e) {
+
+        } catch (MessagingException e) {
             e.printStackTrace();
         }
     }
 
-	/**
-	 * SimpleAuthenticator is used to do simple authentication when the SMTP
-	 * server requires it.
-	 */
-	private class SMTPAuthenticator extends javax.mail.Authenticator {
-	
-		public PasswordAuthentication getPasswordAuthentication() {
-			return new PasswordAuthentication(user, password);
-		}
-	}
-    
-    static Logger log = LoggerFactory.getLogger(MailMessage.class.getName());
+    /**
+     * SimpleAuthenticator is used to do simple authentication when the SMTP
+     * server requires it.
+     */
+    private class SMTPAuthenticator extends javax.mail.Authenticator {
+
+        public PasswordAuthentication getPasswordAuthentication() {
+            return new PasswordAuthentication(user, password);
+        }
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(MailMessage.class.getName());
 }

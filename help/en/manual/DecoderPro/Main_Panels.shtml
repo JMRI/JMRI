@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<title>Panels Menu</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<a name="Top"></a>
+<h1>DecoderPro&reg; Main Window</h1>
+<h2>Panels Menu</h2>
+
+<div align="right">
+<p><a href="Main_Roster.shtml">Previous | </a><a href="Main_Debug.shtml">Next</a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+
+<hr>
+<p><strong>DecoderPro </strong>is only one facet of the JMRI suite of programs.  Another facet
+  is <strong>PanelPro</strong>,
+which is software that allows you draw a track diagram and then
+interface the items in that diagram to the electronic hardware on the
+real layout so that the hardware can be operated via the JMRI
+Interface. For a tutorial on how to work with PanelPro go to <a href="http://jmri.org/community/clinics/NMRA2008/LayoutEditorClinic2008/LayoutEditorClinic.pdf" target="_blank">PanelPro Layout Editor Tutorial</a>.
+The subject of panels is included here only show what is available in
+the DecoderPro menus with a brief illustration/description of what
+these menu selections access. They are covered here because there is a
+Panels menu on the DecoderPro main window that allows access to some of
+the PanelPro functions.</p>
+
+<p><strong>New Panels...<img src="images/arrow.gif" alt="arrow" height="9" width="20"></strong></p>
+<ul style="font-weight: bold;">
+  <li>Panel Editor</li></ul><div style="margin-left: 40px;"><h4>Panel and Panel Editor</h4>
+<table align="center" border="0" cellpadding="1" cellspacing="1" width="90%">
+  <tbody><tr>
+    <td align="left" valign="top"><img style="width: 426px; height: 375px;" src="images/Main_PanelMenu_01.png" alt="panel"></td>
+    <td align="left" valign="top"><img src="images/Main_PanelMenu_02.png" alt="panel" height="389" width="342"></td></tr></tbody></table></div><ul style="font-weight: bold;">
+  <li>Control Panel Editor</li></ul><div style="margin-left: 40px;"><p align="center"><img style="width: 641px; height: 375px;" src="images/Main_PanelMenu_05.png" alt="control panel editor"></p></div><ul style="font-weight: bold;">
+  <li>Layout Editor</li>
+</ul><div style="margin-left: 40px;"><p>For more information on how to use the <a href="http://www.jmri.org/help/en/package/jmri/jmrit/display/LayoutEditor.shtml">Layout  Editor.</a></p>
+<p align="center">
+  <input alt="Layout editor" name="Layout Editor" id="Layout Editor" src="images/Main_PanelMenu_03.png" height="234" type="image" width="900">
+</p></div><p><strong>Open Panels...</strong></p>
+<blockquote>
+  <p>The <strong>Open</strong> dialog opens, select the panel file that you would like to load.</p>
+</blockquote>
+<p><strong>Save Panels...</strong></p>
+<blockquote>
+  <p>The Save dialog opens, select the location on your computer that you would like to store your panel file.</p>
+</blockquote>
+<p><strong>Show History</strong></p>
+<blockquote>
+  <p>Opens untitled window with History of	panel operations</p>
+</blockquote>
+<p><img src="images/separator.png" alt="sep" height="4" width="340"></p>
+<p><strong>Show Panel <img src="images/arrow.gif" alt="arrow" height="9" width="20"></strong></p>
+<blockquote>
+  <p>A list of available panels is displayed, select the
+panel that you would like to display on your desktop window. The
+selected file will display on your computer.</p>
+</blockquote>
+<p><img src="images/separator.png" alt="sep" height="4" width="340"></p>
+<p><strong>Run Script...</strong></p>
+<blockquote>
+  <p>Opens the <strong>Find desired script file</strong> dialog, you can select the script that you would like to open.</p>
+</blockquote>
+<p><strong>Thread Monitor</strong></p>
+<blockquote>
+  <p>Opens the Thread Monitor window</p><p align="center"><img src="images/Main_PanelMenu_04.png" alt="Thread Monitor" border="4" height="477" width="461"></p>
+</blockquote>
+<p><strong>Script Output</strong></p>
+<blockquote>
+  <p>Displays the <strong>Script Output</strong> window.</p><p><img style="width: 376px; height: 275px;" alt="script out" src="images/Main_panelMenu_ScriptOut.png"></p>
+</blockquote>
+<p><strong>Script Entry</strong></p>
+<blockquote>
+  <p>Displays the <strong>Script Entry</strong> window, in which you may enter scripted function and click on the <strong>Execute</strong> button to execute the script.</p><p><img style="width: 448px; height: 277px;" alt="script entry" src="images/Main_PanelMenu_SE.png"></p>
+</blockquote>
+
+<hr>
+<div align="right"><p><a href="Main_Roster.shtml">Previous | </a><a href="Main_Debug.shtml">Next</a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+</body>
+</html>

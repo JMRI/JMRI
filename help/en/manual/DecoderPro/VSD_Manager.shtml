@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<title>
+DecoderPro&reg; Main Window
+</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<h1>DecoderPro&reg; Debug Menu</h1>
+<h2>VSDecoder Manager</h2>
+
+<div align="right">
+<p><a href="Main_Debug.shtml#vsdecoder">Back </a></p>
+</div>
+
+<hr>
+<p><span id="product-desc">
+The VSDecoder Manager window provides a consolidated window to manage
+all the VSDecoders running on a system.  Each active VSDecoder apepars
+as a "control panel" within the Manager window, and all of the key
+controls required are at the user's fingertips.
+</span></p>
+
+<h4>Using the VSDecoder Manager</h4>
+<p>Launch the VSDecoder Manager by selecting "Virtual Sound Decoder ->
+VSDecoder Manager" from the Debug menu.  A simple window will appear,
+with a blank panel, a volume/mute control, and an "Add Decoder"
+button.</p>
+<p><img src="images/VSD_Manager01.png" width="489" height="173"></p>
+<p>To create a new VSDecoder, click "Add Decoder".  This will open a
+  Configuration Dialog ("Config Dialog") where you can choose a
+  locomotive and a sound profile.  Once you close the Config Dialog, a
+new Control Panel will be added to the VSDecoder Manager window.</p>
+<p>Each time you add a VSDecoder, a new Control Panel will be added to
+the main window.  You can remove Control Panels by clicking the
+"Delete" button.<p>
+<img src="images/VSD_Manager04.png" alt="VSDecoder Manager"
+width="530" height="150" border="4">
+
+<p>Once you have added a Control Panel, the VSDecoder will respond to
+throttle and function button presses from a throttle assigned to the
+locomotive's addres, or to button presses on the Control Panel.</p>
+
+<h4>Configuration Dialog</h4>
+<img src="images/VSD_Manager02.png" alt="Config Dialog" width="430" height="256" border="4">
+<p> The Configuration Dialog allows you to create a new VSDecoder.
+Choose a locomotive from the Roster or set an Address manually.  Then
+select a Profile from the Profile Select combo box.  To load Profiles,
+click the "Load VSD File" button or choose File->Load VSD File from
+the menu bar.</p>
+<p><em>Note:</em> You must have a Locomotive assigned <em>and</em> a
+Profile selected before the "OK" button is enabled.
+<p>You can save a Profile to a Roster Entry so that it is
+automatically configured when the Roster Entry is selected.  To do
+this:
+<ol>
+  <li>Select the Roster Entry</li>
+  <li>Load a VSD File and choose a Profile</li>
+  <li>Click the "Save to Roster" button</li>
+</ol>
+
+<p>To manually set a locomotive address:
+<ol>
+  <li>Choose the "Manual" tab in the "Select a Loco" section</li>
+  <li>Enter an address and choose a protocol</li>
+  <li>Click the "Set" button</li>
+</ol>
+<img src="images/VSD_Manager03.png" alt="Config Dialog" width="430" height="256" border="4">
+</p>
+<h4>Control Panel</h4>
+<p>Each VSDecoder gets a Control Panel within the VSDecoder Manager
+window.  The Control Panel is divided into three sections:
+<ul>
+  <li>The Loco Address and Profile Name</li>
+  <li>Sound activation buttons</li>
+  <li>Configuration, Options, and Delete buttons</li>
+</ul>
+</p>
+<img src="images/VSD_Manager05.png" alt="Two Control Panels" width="530" height="249" border="4">
+<p>The left section shows the assigned Loco Address and Profile Name.
+The center section provides buttons for activating sounds.  The right
+section has buttons for controlling or deleting the Control Panel.</p>
+<p>Sounds can also be activated by a throttle assigned to the same address
+as the VSDecoder.</p>
+
+<h5>Volume / Mute control</h5>
+<p>At the bottom of the window is a master volume slider and mute
+button.  These control the overall sound level for all VSDecoders
+within the VSDecoder Manager.</p>
+
+<h5>Menu Items</h5>
+<h6>File->Load VSD File</h6>
+<p>Load the Sound Profiles from a VSD File.  Profiles loaded will be
+available to any currently running or newly launched VSDecoder. This
+is the same action as the "load VSD File" button on the Config Dialog.</p>
+<h6>Edit->VSDecoder Preferences</h6>
+<p>Set preferences for VSDecoder operation. See <a
+href="Main_VSD.shtml#preferences">VSDecoder Preferences</a> for details.</p>
+
+<div align="right">
+<p><a href="Main_Debug.shtml#vsdecoder">Back </a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+</body>
+</html>

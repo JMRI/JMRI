@@ -1,39 +1,44 @@
 // EditorTableDataModel.java
-
 package jmri.jmrix.loconet.soundloader;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.awt.Font;
+import java.io.IOException;
+import java.util.ResourceBundle;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.table.TableCellEditor;
+import jmri.jmrix.loconet.spjfile.SpjFile;
+import jmri.util.FileUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-
-import jmri.jmrix.loconet.spjfile.SpjFile;
-
-import java.io.IOException;
-
-import java.util.ResourceBundle;
-
-import java.awt.Font;
-
-import javax.swing.*;
-import javax.swing.table.TableCellEditor;
-import jmri.util.FileUtil;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Table data model for display of Digitrax SPJ files
- * @author		Bob Jacobsen   Copyright (C) 2003, 2006
- * @author      Dennis Miller   Copyright (C) 2006
- * @version		$Revision$
+ *
+ * @author	Bob Jacobsen Copyright (C) 2003, 2006
+ * @author Dennis Miller Copyright (C) 2006
+ * @version	$Revision$
  */
 public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = -6127498935819325767L;
     static public final int HEADERCOL = 0;
     static public final int TYPECOL = 1;
     static public final int MAPCOL = 2;
     static public final int HANDLECOL = 3;
-    static public final int FILENAMECOL  = 4;
+    static public final int FILENAMECOL = 4;
     static public final int LENGTHCOL = 5;
     static public final int PLAYBUTTONCOL = 6;
     static public final int REPLACEBUTTONCOL = 7;
@@ -43,157 +48,176 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
     static volatile ResourceBundle res = null;   // defer to first use
 
     SpjFile file;
-    
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification="cache resource at 1st start, threading OK")
+
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+            justification = "cache resource at 1st start, threading OK")
     public EditorTableDataModel(SpjFile file) {
         super();
-        if (res == null)
+        if (res == null) {
             res = ResourceBundle.getBundle("jmri.jmrix.loconet.soundloader.Editor");
+        }
         this.file = file;
     }
 
     public int getRowCount() {
         // The 0th header is not displayed
-        return file.numHeaders()-1;
+        return file.numHeaders() - 1;
     }
 
-    public int getColumnCount( ){ return NUMCOLUMN;}
+    public int getColumnCount() {
+        return NUMCOLUMN;
+    }
 
     public String getColumnName(int col) {
         switch (col) {
-        case HEADERCOL: return res.getString("HeaderHEADERCOL");
-        case TYPECOL: return res.getString("HeaderTYPECOL");
-        case HANDLECOL: return res.getString("HeaderHANDLECOL");
-        case MAPCOL: return res.getString("HeaderMAPCOL");
-        case FILENAMECOL: return res.getString("HeaderFILENAMECOL");
-        case LENGTHCOL: return res.getString("HeaderLENGTHCOL");
-        case PLAYBUTTONCOL: return res.getString("HeaderPLAYBUTTONCOL");
-        case REPLACEBUTTONCOL: return res.getString("HeaderREPLACEBUTTONCOL");
+            case HEADERCOL:
+                return res.getString("HeaderHEADERCOL");
+            case TYPECOL:
+                return res.getString("HeaderTYPECOL");
+            case HANDLECOL:
+                return res.getString("HeaderHANDLECOL");
+            case MAPCOL:
+                return res.getString("HeaderMAPCOL");
+            case FILENAMECOL:
+                return res.getString("HeaderFILENAMECOL");
+            case LENGTHCOL:
+                return res.getString("HeaderLENGTHCOL");
+            case PLAYBUTTONCOL:
+                return res.getString("HeaderPLAYBUTTONCOL");
+            case REPLACEBUTTONCOL:
+                return res.getString("HeaderREPLACEBUTTONCOL");
 
-        default: return "unknown";
+            default:
+                return "unknown";
         }
     }
 
     public Class<?> getColumnClass(int col) {
         switch (col) {
-        case HEADERCOL:
-        case HANDLECOL:
-            return Integer.class;
-        case LENGTHCOL:
-            return Float.class;
-        case MAPCOL:
-        case TYPECOL:
-        case FILENAMECOL:
-            return String.class;
-        case REPLACEBUTTONCOL:
-        case PLAYBUTTONCOL:
-            return JButton.class;
-        default:
-            return null;
+            case HEADERCOL:
+            case HANDLECOL:
+                return Integer.class;
+            case LENGTHCOL:
+                return Float.class;
+            case MAPCOL:
+            case TYPECOL:
+            case FILENAMECOL:
+                return String.class;
+            case REPLACEBUTTONCOL:
+            case PLAYBUTTONCOL:
+                return JButton.class;
+            default:
+                return null;
         }
     }
 
     public boolean isCellEditable(int row, int col) {
         switch (col) {
-        case REPLACEBUTTONCOL:
-        case PLAYBUTTONCOL:
-            return true;
-        default:
-            return false;
+            case REPLACEBUTTONCOL:
+            case PLAYBUTTONCOL:
+                return true;
+            default:
+                return false;
         }
     }
 
     public Object getValueAt(int row, int col) {
         switch (col) {
-        case HEADERCOL:
-            return Integer.valueOf(row);
-        case HANDLECOL:
-            return Integer.valueOf(file.getHeader(row+1).getHandle());
-        case MAPCOL: 
-            return file.getMapEntry(file.getHeader(row+1).getHandle());
-        case FILENAMECOL: 
-            return ""+file.getHeader(row+1).getName();
-        case TYPECOL: 
-            return file.getHeader(row+1).typeAsString();
-        case LENGTHCOL: 
-            if (!file.getHeader(row+1).isWAV()) return null;
-            float rate = (new jmri.jmrit.sound.WavBuffer(file.getHeader(row+1).getByteArray())).getSampleRate();
-            if (rate == 0.f) {
-                log.error("Rate should not be zero");
+            case HEADERCOL:
+                return Integer.valueOf(row);
+            case HANDLECOL:
+                return Integer.valueOf(file.getHeader(row + 1).getHandle());
+            case MAPCOL:
+                return file.getMapEntry(file.getHeader(row + 1).getHandle());
+            case FILENAMECOL:
+                return "" + file.getHeader(row + 1).getName();
+            case TYPECOL:
+                return file.getHeader(row + 1).typeAsString();
+            case LENGTHCOL:
+                if (!file.getHeader(row + 1).isWAV()) {
+                    return null;
+                }
+                float rate = (new jmri.jmrit.sound.WavBuffer(file.getHeader(row + 1).getByteArray())).getSampleRate();
+                if (rate == 0.f) {
+                    log.error("Rate should not be zero");
+                    return null;
+                }
+                float time = file.getHeader(row + 1).getDataLength() / rate;
+                return Float.valueOf(time);
+            case PLAYBUTTONCOL:
+                if (file.getHeader(row + 1).isWAV()) {
+                    return res.getString("ButtonPlay");
+                } else if (file.getHeader(row + 1).isTxt()) {
+                    return res.getString("ButtonView");
+                } else if (file.getHeader(row + 1).isMap()) {
+                    return res.getString("ButtonView");
+                } else if (file.getHeader(row + 1).isSDF()) {
+                    return res.getString("ButtonView");
+                } else {
+                    return null;
+                }
+            case REPLACEBUTTONCOL:
+                if (file.getHeader(row + 1).isWAV()) {
+                    return res.getString("ButtonReplace");
+                }
+                if (file.getHeader(row + 1).isSDF()) {
+                    return res.getString("ButtonEdit");
+                } else {
+                    return null;
+                }
+            default:
+                log.error("internal state inconsistent with table requst for " + row + " " + col);
                 return null;
-            }
-            float time = file.getHeader(row+1).getDataLength()/rate;
-            return new Float(time);
-        case PLAYBUTTONCOL:
-            if (file.getHeader(row+1).isWAV())
-                return res.getString("ButtonPlay");
-            else if (file.getHeader(row+1).isTxt())
-                return res.getString("ButtonView");
-            else if (file.getHeader(row+1).isMap())
-                return res.getString("ButtonView");
-            else if (file.getHeader(row+1).isSDF())
-                return res.getString("ButtonView");
-            else return null;
-        case REPLACEBUTTONCOL:
-            if (file.getHeader(row+1).isWAV())
-                return res.getString("ButtonReplace");
-            if (file.getHeader(row+1).isSDF())
-                return res.getString("ButtonEdit");
-            else return null;
-        default:
-            log.error("internal state inconsistent with table requst for "+row+" "+col);
-            return null;
         }
     }
 
     public int getPreferredWidth(int col) {
         JTextField b;
         switch (col) {
-        case TYPECOL: 
-            return new JTextField(8).getPreferredSize().width;
-        case MAPCOL: 
-            return new JTextField(12).getPreferredSize().width;
-        case HEADERCOL:
-        case HANDLECOL:
-            return new JTextField(3).getPreferredSize().width;
-        case FILENAMECOL: 
-            return new JTextField(12).getPreferredSize().width;
-        case LENGTHCOL :
-            return new JTextField(5).getPreferredSize().width;
-        case PLAYBUTTONCOL: 
-            b = new JTextField((String)getValueAt(1, PLAYBUTTONCOL));
-            return b.getPreferredSize().width+30;
-        case REPLACEBUTTONCOL: 
-            b = new JTextField((String)getValueAt(1, REPLACEBUTTONCOL));
-            return b.getPreferredSize().width+30;
-        default:
-        	log.warn("Unexpected column in getPreferredWidth: "+col);
-            return new JTextField(8).getPreferredSize().width;
+            case TYPECOL:
+                return new JTextField(8).getPreferredSize().width;
+            case MAPCOL:
+                return new JTextField(12).getPreferredSize().width;
+            case HEADERCOL:
+            case HANDLECOL:
+                return new JTextField(3).getPreferredSize().width;
+            case FILENAMECOL:
+                return new JTextField(12).getPreferredSize().width;
+            case LENGTHCOL:
+                return new JTextField(5).getPreferredSize().width;
+            case PLAYBUTTONCOL:
+                b = new JTextField((String) getValueAt(1, PLAYBUTTONCOL));
+                return b.getPreferredSize().width + 30;
+            case REPLACEBUTTONCOL:
+                b = new JTextField((String) getValueAt(1, REPLACEBUTTONCOL));
+                return b.getPreferredSize().width + 30;
+            default:
+                log.warn("Unexpected column in getPreferredWidth: " + col);
+                return new JTextField(8).getPreferredSize().width;
         }
     }
 
     public void setValueAt(Object value, int row, int col) {
-        if (col==PLAYBUTTONCOL) { 
+        if (col == PLAYBUTTONCOL) {
             // button fired, handle
-            if (file.getHeader(row+1).isWAV()) {
+            if (file.getHeader(row + 1).isWAV()) {
                 playButtonPressed(value, row, col);
                 return;
-            } else if (file.getHeader(row+1).isTxt()) {
+            } else if (file.getHeader(row + 1).isTxt()) {
                 viewTxtButtonPressed(value, row, col);
                 return;
-            } else if (file.getHeader(row+1).isMap()) {
+            } else if (file.getHeader(row + 1).isMap()) {
                 viewTxtButtonPressed(value, row, col);
                 return;
-            } else if (file.getHeader(row+1).isSDF()) {
+            } else if (file.getHeader(row + 1).isSDF()) {
                 viewSdfButtonPressed(value, row, col);
                 return;
-            } 
-        } else if (col==REPLACEBUTTONCOL) { 
+            }
+        } else if (col == REPLACEBUTTONCOL) {
             // button fired, handle
-            if (file.getHeader(row+1).isWAV()) {
+            if (file.getHeader(row + 1).isWAV()) {
                 replWavButtonPressed(value, row, col);
-            } else if (file.getHeader(row+1).isSDF()) {
+            } else if (file.getHeader(row + 1).isSDF()) {
                 editSdfButtonPressed(value, row, col);
                 return;
             }
@@ -202,40 +226,43 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
 
     // should probably be abstract and put in invoking GUI
     static JFileChooser chooser;  // shared across all uses
-    
+
     void replWavButtonPressed(Object value, int row, int col) {
-        if (chooser == null) chooser = new JFileChooser(FileUtil.getUserFilesPath());
+        if (chooser == null) {
+            chooser = new JFileChooser(FileUtil.getUserFilesPath());
+        }
         chooser.rescanCurrentDirectory();
         int retVal = chooser.showOpenDialog(null);
-        if (retVal != JFileChooser.APPROVE_OPTION) return;  // give up if no file selected
-        
+        if (retVal != JFileChooser.APPROVE_OPTION) {
+            return;  // give up if no file selected
+        }
         // load file
         jmri.jmrit.sound.WavBuffer buff;
-        try { 
+        try {
             buff = new jmri.jmrit.sound.WavBuffer(chooser.getSelectedFile());
         } catch (Exception e) {
-            log.error("Exception loading file: "+e);
+            log.error("Exception loading file: " + e);
             return;
         }
         // store to memory
-        file.getHeader(row+1).setContent(buff.getByteArray(), buff.getDataStart(), buff.getDataSize());
+        file.getHeader(row + 1).setContent(buff.getByteArray(), buff.getDataStart(), buff.getDataSize());
         // update rest of header
-        file.getHeader(row+1).setName(chooser.getSelectedFile().getName());
+        file.getHeader(row + 1).setName(chooser.getSelectedFile().getName());
 
         // mark table changes in other rows
         fireTableRowsUpdated(row, row);
     }
-    
+
     // should probably be abstract and put in invoking GUI
     void playButtonPressed(Object value, int row, int col) {
         // new jmri.jmrit.sound.WavBuffer(file.getHeader(row+1).getByteArray());
-        jmri.jmrit.sound.SoundUtil.playSoundBuffer(file.getHeader(row+1).getByteArray());
+        jmri.jmrit.sound.SoundUtil.playSoundBuffer(file.getHeader(row + 1).getByteArray());
     }
 
     // should probably be abstract and put in invoking GUI
     // Also used to display the .map block
     void viewTxtButtonPressed(Object value, int row, int col) {
-        String content = new String(file.getHeader(row+1).getByteArray());
+        String content = new String(file.getHeader(row + 1).getByteArray());
         JFrame frame = new JFrame();
         JTextArea text = new JTextArea(content);
         text.setEditable(false);
@@ -244,10 +271,10 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
         frame.pack();
         frame.setVisible(true);
     }
-    
+
     // should probably be abstract and put in invoking GUI
     void viewSdfButtonPressed(Object value, int row, int col) {
-        jmri.jmrix.loconet.sdf.SdfBuffer buff = new jmri.jmrix.loconet.sdf.SdfBuffer(file.getHeader(row+1).getByteArray());
+        jmri.jmrix.loconet.sdf.SdfBuffer buff = new jmri.jmrix.loconet.sdf.SdfBuffer(file.getHeader(row + 1).getByteArray());
         String content = buff.toString();
         JFrame frame = new jmri.util.JmriJFrame(res.getString("TitleSdfView"));
         JTextArea text = new JTextArea(content);
@@ -257,18 +284,19 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
         frame.pack();
         frame.setVisible(true);
     }
-    
+
     // should probably be abstract and put in invoking GUI
     void editSdfButtonPressed(Object value, int row, int col) {
-        jmri.jmrix.loconet.sdfeditor.EditorFrame sdfEditor 
-            = new jmri.jmrix.loconet.sdfeditor.EditorFrame(file.getHeader(row+1).getSdfBuffer());
+        jmri.jmrix.loconet.sdfeditor.EditorFrame sdfEditor
+                = new jmri.jmrix.loconet.sdfeditor.EditorFrame(file.getHeader(row + 1).getSdfBuffer());
         sdfEditor.setVisible(true);
     }
-    
+
     /**
-     * Configure a table to have our standard rows and columns.
-     * This is optional, in that other table formats can use this table model.
-     * But we put it here to help keep it consistent.
+     * Configure a table to have our standard rows and columns. This is
+     * optional, in that other table formats can use this table model. But we
+     * put it here to help keep it consistent.
+     *
      * @param table
      */
     public void configureTable(JTable table) {
@@ -279,7 +307,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
         // resize columns as requested
-        for (int i=0; i<table.getColumnCount(); i++) {
+        for (int i = 0; i < table.getColumnCount(); i++) {
             int width = getPreferredWidth(i);
             table.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
@@ -299,19 +327,23 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
             retval = checkLabelWidth(retval, "ButtonEdit");
             retval = checkLabelWidth(retval, "ButtonReplace");
         }
-        return retval; 
+        return retval;
     }
+
     private JButton checkLabelWidth(JButton now, String name) {
         JButton b = new JButton(res.getString(name));
-        b.validate();
-        if (b.getPreferredSize().width > now.getPreferredSize().width)
+        b.revalidate();
+        if (b.getPreferredSize().width > now.getPreferredSize().width) {
             return b;
-        else 
+        } else {
             return now;
+        }
     }
+
     /**
-     * Service method to setup a column so that it will hold a
-     * button for it's values
+     * Service method to setup a column so that it will hold a button for it's
+     * values
+     *
      * @param table
      * @param column
      * @param sample Typical button, used for size
@@ -320,47 +352,47 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
         //TableColumnModel tcm = table.getColumnModel();
         // install a button renderer & editor
         ButtonRenderer buttonRenderer = new ButtonRenderer();
-		table.setDefaultRenderer(JButton.class,buttonRenderer);
+        table.setDefaultRenderer(JButton.class, buttonRenderer);
         TableCellEditor buttonEditor = new ButtonEditor(new JButton());
-		table.setDefaultEditor(JButton.class,buttonEditor);
+        table.setDefaultEditor(JButton.class, buttonEditor);
         // ensure the table rows, columns have enough room for buttons
         table.setRowHeight(sample.getPreferredSize().height);
         table.getColumnModel().getColumn(column)
-		    .setPreferredWidth(sample.getPreferredSize().width+30);
+                .setPreferredWidth(sample.getPreferredSize().width + 30);
     }
 
     synchronized public void dispose() {
     }
-    
+
     /**
-     * Method to self print or print preview the table.
-     * Printed in equally sized columns across the page with headings and
-     * vertical lines between each column. Data is word wrapped within a column.
-     * Can handle data as strings, comboboxes or booleans
+     * Method to self print or print preview the table. Printed in equally sized
+     * columns across the page with headings and vertical lines between each
+     * column. Data is word wrapped within a column. Can handle data as strings,
+     * comboboxes or booleans
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     public void printTable(HardcopyWriter w) {
         // determine the column size - evenly sized, with space between for lines
-        int columnSize = (w.getCharactersPerLine()- this.getColumnCount() - 1)/this.getColumnCount();
-        
+        int columnSize = (w.getCharactersPerLine() - this.getColumnCount() - 1) / this.getColumnCount();
+
         // Draw horizontal dividing line
         w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber(),
-              (columnSize+1)*this.getColumnCount());
-        
+                (columnSize + 1) * this.getColumnCount());
+
         // print the column header labels
         String[] columnStrings = new String[this.getColumnCount()];
         // Put each column header in the array
-        for (int i = 0; i < this.getColumnCount(); i++){
+        for (int i = 0; i < this.getColumnCount(); i++) {
             columnStrings[i] = this.getColumnName(i);
         }
         w.setFontStyle(Font.BOLD);
         printColumns(w, columnStrings, columnSize);
         w.setFontStyle(0);
         w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber(),
-                (columnSize+1)*this.getColumnCount());
-  
+                (columnSize + 1) * this.getColumnCount());
+
         // now print each row of data
         // create a base string the width of the column
         String spaces = "";
@@ -372,20 +404,22 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
                 //check for special, non string contents
                 if (this.getValueAt(i, j) == null) {
                     columnStrings[j] = spaces;
-                } else if (this.getValueAt(i, j)instanceof JComboBox){
-                        columnStrings[j] = (String)((JComboBox) this.getValueAt(i, j)).getSelectedItem();
-                    } else if (this.getValueAt(i, j)instanceof Boolean){
-                            columnStrings[j] = ( this.getValueAt(i, j)).toString();
-                        }else columnStrings[j] = (String) this.getValueAt(i, j);
+                } else if (this.getValueAt(i, j) instanceof JComboBox) {
+                    columnStrings[j] = (String) ((JComboBox<?>) this.getValueAt(i, j)).getSelectedItem();
+                } else if (this.getValueAt(i, j) instanceof Boolean) {
+                    columnStrings[j] = (this.getValueAt(i, j)).toString();
+                } else {
+                    columnStrings[j] = (String) this.getValueAt(i, j);
+                }
             }
-        printColumns(w, columnStrings, columnSize);
-        w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber(),
-                (columnSize+1)*this.getColumnCount());
-        }            
+            printColumns(w, columnStrings, columnSize);
+            w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber(),
+                    (columnSize + 1) * this.getColumnCount());
+        }
         w.close();
     }
-    
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize) {
@@ -398,7 +432,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
         }
         // loop through each column
         boolean complete = false;
-        while (!complete){
+        while (!complete) {
             complete = true;
             for (int i = 0; i < columnStrings.length; i++) {
                 // if the column string is too wide cut it at word boundary (valid delimiters are space, - and _)
@@ -407,12 +441,12 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
                 // if column string isn't too wide, pad it to column width with spaces if needed
                 if (columnStrings[i].length() > columnSize) {
                     boolean noWord = true;
-                    for (int k = columnSize; k >= 1 ; k--) {
-                        if (columnStrings[i].substring(k-1,k).equals(" ") 
-                            || columnStrings[i].substring(k-1,k).equals("-")
-                            || columnStrings[i].substring(k-1,k).equals("_")) {
-                            columnString = columnStrings[i].substring(0,k) 
-                                + spaces.substring(columnStrings[i].substring(0,k).length());
+                    for (int k = columnSize; k >= 1; k--) {
+                        if (columnStrings[i].substring(k - 1, k).equals(" ")
+                                || columnStrings[i].substring(k - 1, k).equals("-")
+                                || columnStrings[i].substring(k - 1, k).equals("_")) {
+                            columnString = columnStrings[i].substring(0, k)
+                                    + spaces.substring(columnStrings[i].substring(0, k).length());
                             columnStrings[i] = columnStrings[i].substring(k);
                             noWord = false;
                             complete = false;
@@ -420,11 +454,11 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
                         }
                     }
                     if (noWord) {
-                        columnString = columnStrings[i].substring(0,columnSize);
+                        columnString = columnStrings[i].substring(0, columnSize);
                         columnStrings[i] = columnStrings[i].substring(columnSize);
                         complete = false;
                     }
-                    
+
                 } else {
                     columnString = columnStrings[i] + spaces.substring(columnStrings[i].length());
                     columnStrings[i] = "";
@@ -434,16 +468,18 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
             try {
                 w.write(lineString);
                 //write vertical dividing lines
-                for (int i = 0; i < w.getCharactersPerLine(); i = i+columnSize+1) {
+                for (int i = 0; i < w.getCharactersPerLine(); i = i + columnSize + 1) {
                     w.write(w.getCurrentLineNumber(), i, w.getCurrentLineNumber() + 1, i);
                 }
                 lineString = "\n";
                 w.write(lineString);
                 lineString = "";
-            } catch (IOException e) { log.warn("error during printing: "+e);}
+            } catch (IOException e) {
+                log.warn("error during printing: " + e);
+            }
         }
     }
 
-    static final Logger log = LoggerFactory.getLogger(EditorTableDataModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EditorTableDataModel.class.getName());
 
 }

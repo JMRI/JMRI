@@ -38,8 +38,11 @@ The "Update" button requests information from the interface for display.
 
 <dl>
 <dt>Version<dd>The version number of the unit.
-<dt>Breaks<dd>The number of LocoNet breaks seen since the last time the interface was powered on.
-<dt>Errors<dd>The number of LocoNet errors seen since the last time the interface was powered on.
+<dt>Breaks<dd>The number of LocoNet breaks seen since the last time the interface was powered on. This is the number of times that the locobuffer sees a problem with 
+its output message to the loconet and issues a break, that tells the devices that are receiving the data to throw that packet away and the locobuffer then resends the packet.
+<dt>Errors<dd>The number of LocoNet errors seen since the last time the interface was powered on. This happens when the Locobuffer detects a problem on a packet it is receiving off the loconet. 
+This should be a result of the sending device seeing a problem with the packet it is sending and issuing a break. The data is not lost when this happens, the sending device then sends the packet again. The worst 
+case is if the Locobuffer seeing a problem with a packet it is receving and the transfitting device does not. The packet is then lost.
 </dl>
 
 <h2>Digitrax PRn</h2>

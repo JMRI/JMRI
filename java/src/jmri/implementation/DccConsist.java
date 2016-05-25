@@ -1,14 +1,13 @@
-// DccConsist.java
 package jmri.implementation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import jmri.AddressedProgrammer;
 import jmri.Consist;
 import jmri.ConsistListener;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.ProgListener;
-import jmri.Programmer;
 import jmri.ProgrammerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +19,6 @@ import org.slf4j.LoggerFactory;
  * this address to a Command Station that supports it.
  *
  * @author Paul Bender Copyright (C) 2003-2008
- * @version $Revision$
  */
 public class DccConsist implements Consist, ProgListener {
 
@@ -232,20 +230,27 @@ public class DccConsist implements Consist, ProgListener {
      *        the same direction as the consist, or false otherwise.
      */
     protected void addToAdvancedConsist(DccLocoAddress LocoAddress, boolean directionNormal) {
-        Programmer opsProg = InstanceManager.programmerManagerInstance()
+        AddressedProgrammer opsProg = InstanceManager.programmerManagerInstance()
                 .getAddressedProgrammer(LocoAddress.isLongAddress(),
-                LocoAddress.getNumber());
+                        LocoAddress.getNumber());
+        if (opsProg == null) {
+            log.error("Can't make consisting change because no programmer exists; this is probably a configuration error in the preferences");
+            return;
+        }
+        
         if (directionNormal) {
             try {
                 opsProg.writeCV(19, ConsistAddress.getNumber(), this);
             } catch (ProgrammerException e) {
                 // Don't do anything with this yet
+                log.warn("Exception writing CV19 while adding from consist", e);
             }
         } else {
             try {
                 opsProg.writeCV(19, ConsistAddress.getNumber() + 128, this);
             } catch (ProgrammerException e) {
                 // Don't do anything with this yet
+                log.warn("Exception writing CV19 while adding to consist", e);
             }
         }
 
@@ -258,14 +263,21 @@ public class DccConsist implements Consist, ProgListener {
      *  @param address is the Locomotive address to remove from the consist
      */
     protected void removeFromAdvancedConsist(DccLocoAddress LocoAddress) {
-        Programmer opsProg = InstanceManager.programmerManagerInstance()
+        AddressedProgrammer opsProg = InstanceManager.programmerManagerInstance()
                 .getAddressedProgrammer(LocoAddress.isLongAddress(),
-                LocoAddress.getNumber());
+                        LocoAddress.getNumber());
+        if (opsProg == null) {
+            log.error("Can't make consisting change because no programmer exists; this is probably a configuration error in the preferences");
+            return;
+        }
+
         try {
             opsProg.writeCV(19, 0, this);
         } catch (ProgrammerException e) {
             // Don't do anything with this yet
+            log.warn("Exception writing CV19 while removing from consist", e);
         }
+
         InstanceManager.programmerManagerInstance()
                 .releaseAddressedProgrammer(opsProg);
     }
@@ -384,6 +396,21 @@ public class DccConsist implements Consist, ProgListener {
         this.notifyConsistListeners(ConsistAddress, ConsistListener.OK);
     }
 
+    /*
+     * Restore the consist to the command station.
+     */
+    @Override
+    public void restore() {
+        // itterate through the list to re-add the addresses to the 
+        // command station.
+        java.util.Iterator<DccLocoAddress> i = ConsistList.iterator();
+        while (i.hasNext()) {
+            DccLocoAddress locoaddress = i.next();
+            add(locoaddress, getLocoDirection(locoaddress));
+        }
+        // notify any listeners that the consist changed
+        this.notifyConsistListeners(ConsistAddress, ConsistListener.OK);
+    }
 
     /*
      * Notify all listener objects of a status change.

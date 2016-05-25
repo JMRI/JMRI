@@ -1,17 +1,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: EditLevelXing.shtml,v 1.3 2008/11/01 17:33:00 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-12-10--> 
+<!-- $Id$ -->
+<!--  UpDated by Herv&#233; Blorec <bzh56420@yahoo.fr>  2013-10-23--> 
 <html lang="fr">
 <head>
  <TITLE>
       JMRI: Edit Level Crossing Help
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help Layout Editor Level Crossing">
+    <META name="
+
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -24,27 +25,26 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1> Éditer Croisement </H1>
+<H1> &#233;diter Croisement </H1>
 
-Un croisement est une pièce particulière de la voie qui représente deux voies traversantes
-au niveau du sol. Un croisement est communément appelé un diamant. Un croisement
-a quatre points de connexion, et deux voies, désigné 1 et 2. Quand un niveau de
-traversée est créée, la voie 1 est la voie horizontale, et la voie 2 est la 
-voie inclinée. L'angle entre les deux voies, l'inclinaison de chaque voie, et le
-longueur de chaque voie peut être modifiée en faisant glisser les points de connexion avec la touche méta
-enfoncée. Le centre du croisement peut être positionné en faisant glisser le centre du
-cercle avec la touche Meta enfoncé (voir la barre d'aide pour ce qui touche la méta
-pour votre système d'exploitation).</p>
-<p>En Option chaque voie sera soit <i>voie principale </i> ou la <i>voie de coté </i>
-en fonction de la désignation des segments de voie voie principale ou  voie de côté
-connectés à chaque voie. Aussi vous pouvez indépendamment en option assigner chaque voie
-a un bloc différent. Si un nom de bloc est entré dans le <b>Canton: Nom</b>
-de la barre d'outils avant de créer un croisement, ce bloc est attribué aux
- deux voies. Chaque voie peut être attribuée un bloc différent dans le menu Édition
-Croisement. La boîte de Dialogue Modifier Croisement permet également un dialogue Créer/Modifier
-Canton qui doit être demandée pour chacun des deux cantons, afin que l'information pour ces
-cantons puissent être conclus ou modifiés. Les blocs sont discutés plus en détail sur la page d'aide
- de la boîte de dialogue Créer/Modifier Cantons.</p>
+Un croisement est une pi&#232;ce particuli&#232;re de la voie qui repr&#233;sente deux voies se croisant 
+&#224; niveau. Un croisement est commun&#233;ment appel&#233; un diamant. Un croisement
+a quatre points de connexion, et deux voies, d&#233;sign&#233; 1 et 2. Quand uncroisement est cr&#233;&#233;e, la voie 1 est la voie horizontale, et la voie 2 est la 
+voie inclin&#233;e. L'angle entre les deux voies, l'inclinaison de chaque voie, et le
+longueur de chaque voie peut &#234;tre modifi&#233;e en faisant glisser les points de connexion avec la touche m&#233;ta
+enfonc&#233;e. Le centre du croisement peut &#234;tre positionn&#233; en faisant glisser le centre du
+cercle avec la touche Meta enfonc&#233; (voir la barre d'aide pour ce qui touche la m&#233;ta
+pour votre syst&#232;me d'exploitation)(Clic droit pour Linux).</p>
+<p>En Option chaque voie sera soit <i>voie principale </i> soit <i>voie d'&#233;vitement</i>
+en fonction de la d&#233;signation des segments de voie voie principale ou  voie d'&#233;vitement
+connect&#233;es &#224; chaque voie. Aussi vous pouvez ind&#233;pendamment en option assigner chaque voie
+a un canton diff&#233;rent. Si un nom de canton est entr&#233; dans le <b>Canton: Nom</b>
+de la barre d'outils avant de cr&#233;er un croisement, ce canton est attribu&#233; aux
+deux voies. Chaque voie peut &#234;tre attribu&#233;e un canton diff&#233;rent dans le menu &#233;dition
+Croisement. La bo&#238;te de Dialogue Modifier Croisement permet &#233;galement un dialogue Cr&#233;er/Modifier
+Canton qui doit &#234;tre demand&#233;e pour chacun des deux cantons, afin que l'information pour ces
+cantons puissent &#234;tre entr&#233;s ou modifi&#233;s. Les cantons sont discut&#233;s plus en d&#233;tail sur la page d'aide
+ de la bo&#238;te de dialogue Cr&#233;er/Modifier Cantons.</p>
 
 <!--#include virtual="/Footer" -->
 </body>

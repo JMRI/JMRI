@@ -1,13 +1,13 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Translated by Blorec Hervé le 2012-01-23-->
+<!-- Translated by Blorec Herv&#233; le 2013-10-06-->
 <html lang="fr">
 <head>
 <!-- Copyright 2008 -->
-<!-- $Id: FrameServlet.shtml,v 1.3 2011/04/28 02:00:00 mstevetodd Exp $ -->
+<!-- $Id$ -->
 <title>JMRI: Frame Servlet</title>
 
 <!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" TYPE="image/png">
@@ -17,39 +17,46 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+Cadre
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
 <h1> 
-JMRI: Cadre Servlet
+JMRI: Trame Servlet
 </h1>
 
-Le Cadre servlet JMRI fournit un accès Web aux fenêtres JMRI.
-
+Le Cadre servlet JMRI fournit un acc&#232;s Web aux fen&#234;tres JMRI. Sa base Url est" frame",
+ce qui en soi va retourner une page listant les trames disponibles.
 <p>
 Il utilise les installations de la classe jmri.util.JmriJFrame
-pour localiser les fenêtres et créer une image de leur apparence actuelle.
-La fenêtre n'a pas à être maximisée, mais elle doit être ouverte;
-c'est OK pour la fenêtre d'avoir été minimisée dans la barre de démarrage (Windows)
-ou convertie en une icône (Mac OS X et Linux).
+pour localiser les fen&#234;tres et cr&#233;er une image de leur apparence actuelle.
+La fen&#234;tre n'a pas &#224; &#234;tre maximis&#233;e, mais elle doit &#234;tre ouverte;
+c'est OK pour la fen&#234;tre d'avoir &#233;t&#233; minimis&#233;e dans la barre de d&#233;marrage (Windows)
+ou convertie en une ic&#244;ne (Mac OS X et Linux).
 
 <p>
-Les préférences MiniServer peuvent être utilisées pour régler le délai par défaut après
-un clic et ajuster le rafraîchissement périodique entre les clics.
+Les<a href="index.shtml#Configure"> pr&#233;f&#233;rences MiniServer</a> peuvent &#234;tre utilis&#233;es pour r&#233;gler le d&#233;lai par d&#233;faut apr&#232;s
+un clic et ajuster le rafra&#238;chissement p&#233;riodique entre les clics.
 
+<p>
+Vous pouvez remplacer les valeurs par d&#233;faut pour des pages individuelles en ajoutant oui/non parms &#224; votre URL:
+<ul><li><b>simple</b> (cacher les liens en bas de page)</li>
+<li><b>prot&#233;ger</b>(prot&#233;ger le cadre des clics de l'utilisateur, ex: en lecture image seule  mais avec rafra&#238;chissement)</li>
+<li><b>ajax</b>(utiliser AJAX pour les mises &#224; jour)
 <p>
 Le fichier jmri/web/servlet/frameimage/JmriJFrameServlet.properties
- peut être utilisé pour configurer le code HTML qui est renvoyé lorsque
-une trame est demandée.
+ <a href="https://jmri.svn.sourceforge.net/svnroot/jmri/trunk/jmri/java/src/jmri/web/servlet/frameimage/JmriJFrameServlet.properties" target=_new>
+[view]</a>
+ peut &#234;tre utilis&#233; pour configurer le code HTML qui est renvoy&#233; lorsque
+une trame est demand&#233;e.
 
 <p>
-S'il vous plaît noter que ce servlet a seulement été utilisé avec
+S'il vous pla&#238;t noter que ce servlet a seulement &#233;t&#233; utilis&#233; avec
 le
 <a href="MiniServer.shtml"> mini-serveur JMRI  </a>, et peut
-ne pas fonctionner avec d'autres conteneurs de servlets. Nous nous sommes engagés à
+ne pas fonctionner avec d'autres conteneurs de servlets. Nous nous sommes engag&#233;s &#224;
 le faire fonctionner, cependant,simplement entrer en contact avec
-les développeurs JMRI si vous rencontrez des problèmes.
+les d&#233;veloppeurs JMRI si vous rencontrez des probl&#232;mes.
 
 <!--#include virtual="/Footer" -->
 </body>

@@ -1,0 +1,3371 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2014 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- 																																				-->
+<!-- version 1 - Initial creation- Specific for Qdecoder accessory decoder	-->
+<!-- 					Alain Le Marchand (2014-09-06)																-->
+<!-- 																																				-->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Sequence Generator</name>
+  <name xml:lang="de">Zustandsautomaten</name>
+  <column>
+		<row>
+			<display item="Sequence programming" format="checkbox">
+			<label>Sequence Generator active</label>
+			<label xml:lang="de">Zustandsautomaten aktiv</label>
+			</display>
+		</row>
+		<label><text>    </text></label>
+		<separator/>
+		<row>
+		<grid ipadx="1" ipady="5" weightx="1">
+			<griditem gridx="0" gridy="0" anchor="LINE_START">
+				<column>
+					<label><text>    </text></label>
+					<label><text>    </text></label>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 1</text>
+					<text xml:lang="de">Zustand 1</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 2</text>
+					<text xml:lang="de">Zustand 2</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 3</text>
+					<text xml:lang="de">Zustand 3</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 4</text>
+					<text xml:lang="de">Zustand 4</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 5</text>
+					<text xml:lang="de">Zustand 5</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 6</text>
+					<text xml:lang="de">Zustand 6</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 7</text>
+					<text xml:lang="de">Zustand 7</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 8</text>
+					<text xml:lang="de">Zustand 8</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 9</text>
+					<text xml:lang="de">Zustand 9</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 10</text>
+					<text xml:lang="de">Zustand 10</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 11</text>
+					<text xml:lang="de">Zustand 11</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 12</text>
+					<text xml:lang="de">Zustand 12</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 13</text>
+					<text xml:lang="de">Zustand 13</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 14</text>
+					<text xml:lang="de">Zustand 14</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 15</text>
+					<text xml:lang="de">Zustand 15</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 16</text>
+					<text xml:lang="de">Zustand 16</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 17</text>
+					<text xml:lang="de">Zustand 17</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 18</text>
+					<text xml:lang="de">Zustand 18</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 19</text>
+					<text xml:lang="de">Zustand 19</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 20</text>
+					<text xml:lang="de">Zustand 20</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 21</text>
+					<text xml:lang="de">Zustand 21</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 22</text>
+					<text xml:lang="de">Zustand 22</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 23</text>
+					<text xml:lang="de">Zustand 23</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 24</text>
+					<text xml:lang="de">Zustand 24</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 25</text>
+					<text xml:lang="de">Zustand 25</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 26</text>
+					<text xml:lang="de">Zustand 26</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 27</text>
+					<text xml:lang="de">Zustand 27</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 28</text>
+					<text xml:lang="de">Zustand 28</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 29</text>
+					<text xml:lang="de">Zustand 29</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 30</text>
+					<text xml:lang="de">Zustand 30</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 31</text>
+					<text xml:lang="de">Zustand 31</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 32</text>
+					<text xml:lang="de">Zustand 32</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 33</text>
+					<text xml:lang="de">Zustand 33</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 34</text>
+					<text xml:lang="de">Zustand 34</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 35</text>
+					<text xml:lang="de">Zustand 35</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 36</text>
+					<text xml:lang="de">Zustand 36</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 37</text>
+					<text xml:lang="de">Zustand 37</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 38</text>
+					<text xml:lang="de">Zustand 38</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 39</text>
+					<text xml:lang="de">Zustand 39</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 40</text>
+					<text xml:lang="de">Zustand 40</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 41</text>
+					<text xml:lang="de">Zustand 41</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 42</text>
+					<text xml:lang="de">Zustand 42</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 43</text>
+					<text xml:lang="de">Zustand 43</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 44</text>
+					<text xml:lang="de">Zustand 44</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 45</text>
+					<text xml:lang="de">Zustand 45</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 46</text>
+					<text xml:lang="de">Zustand 46</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 47</text>
+					<text xml:lang="de">Zustand 47</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 48</text>
+					<text xml:lang="de">Zustand 48</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 49</text>
+					<text xml:lang="de">Zustand 49</text>
+					</label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+					<label>
+					<text>State 50</text>
+					<text xml:lang="de">Zustand 50</text>
+					</label>
+			</griditem>
+			<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+				<column>
+					<label><text>   </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+				<column>
+					<label>
+						<text>  Duration</text>
+						<text xml:lang="de">    Dauer</text>
+					</label>
+					<label>
+						<text>in 1/100 sec</text>
+						<text xml:lang="de">in 1/100 Sek</text>
+					</label>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 1" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 2" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 3" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 4" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 5" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 6" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 7" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 8" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 9" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 10" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 11" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 12" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 13" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 14" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 15" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 16" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 17" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 18" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 19" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 20" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 21" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 22" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 23" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 24" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 25" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 26" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 27" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 28" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 29" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 30" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 31" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 32" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 33" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 34" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 35" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 36" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 37" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 38" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 39" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 40" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 41" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 42" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 43" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 44" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 45" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 46" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 47" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 48" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 49" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Duration State 50" label=""/>
+			</griditem>
+			<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+				<column>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+				<column>
+					<label>
+						<text>Successor</text>
+						<text xml:lang="de">Nachfolge-</text>
+					</label>
+					<label>
+						<text>     State</text>
+						<text xml:lang="de">  zustand</text>
+					</label>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 1 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 2 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 3 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 4 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 5 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 6 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 7 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 8 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 9 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 10 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 11 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 12 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 13 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 14 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 15 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 16 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 17 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 18 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 19 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 20 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 21 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 22 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 23 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 24 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 25 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 26 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 27 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 28 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 29 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 30 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 31 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 32 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 33 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 34 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 35 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 36 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 37 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 38 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 39 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 40 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 41 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 42 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 43 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 44 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 45 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 46 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 47 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 48 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 49 successor" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 50 successor" label=""/>
+			</griditem>
+			<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+				<column>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+				<column>
+					<label>
+						<text>Initially</text>
+						<text xml:lang="de">Anfangs</text>
+					</label>
+					<label>
+						<text>    On</text>
+						<text xml:lang="de">    Ein</text>
+					</label>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 1 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 2 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 3 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 4 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 5 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 6 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 7 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 8 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 9 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 10 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 11 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 12 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 13 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 14 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 15 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 16 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 17 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 18 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 19 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 20 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 21 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 22 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 23 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 24 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 25 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 26 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 27 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 28 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 29 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 30 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 31 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 32 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 33 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 34 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 35 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 36 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 37 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 38 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 39 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 40 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 41 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 42 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 43 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 44 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 45 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 46 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 47 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 48 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 49 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 50 initially On" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+				<column>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+				<column>
+					<label><text> A</text></label>
+					<label><text> 0</text></label>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 1 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 2 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 3 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 4 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 5 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 6 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 7 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 8 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 9 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 10 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 11 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 12 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 13 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 14 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 15 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 16 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 17 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 18 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 19 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 20 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 21 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 22 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 23 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 24 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 25 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 26 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 27 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 28 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 29 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 30 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 31 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 32 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 33 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 34 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 35 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 36 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 37 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 38 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 39 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 40 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 41 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 42 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 43 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 44 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 45 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 46 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 47 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 48 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 49 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 50 switches A0" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+				<column>
+					<label><text> A</text></label>
+					<label><text> 1</text></label>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 1 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 2 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 3 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 4 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 5 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 6 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 7 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 8 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 9 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 10 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 11 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 12 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 13 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 14 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 15 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 16 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 17 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 18 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 19 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 20 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 21 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 22 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 23 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 24 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 25 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 26 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 27 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 28 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 29 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 30 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 31 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 32 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 33 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 34 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 35 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 36 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 37 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 38 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 39 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 40 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 41 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 42 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 43 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 44 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 45 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 46 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 47 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 48 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 49 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 50 switches A1" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+				<column>
+					<label><text> A</text></label>
+					<label><text> 2</text></label>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 1 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 2 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 3 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 4 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 5 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 6 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 7 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 8 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 9 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 10 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 11 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 12 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 13 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 14 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 15 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 16 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 17 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 18 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 19 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 20 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 21 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 22 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 23 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 24 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 25 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 26 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 27 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 28 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 29 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 30 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 31 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 32 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 33 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 34 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 35 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 36 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 37 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 38 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 39 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 40 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 41 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 42 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 43 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 44 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 45 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 46 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 47 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 48 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 49 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 50 switches A2" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+				<column>
+					<label><text> A</text></label>
+					<label><text> 3</text></label>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 1 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 2 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 3 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 4 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 5 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 6 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 7 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 8 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 9 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 10 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 11 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 12 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 13 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 14 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 15 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 16 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 17 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 18 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 19 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 20 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 21 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 22 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 23 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 24 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 25 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 26 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 27 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 28 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 29 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 30 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 31 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 32 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 33 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 34 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 35 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 36 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 37 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 38 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 39 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 40 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 41 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 42 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 43 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 44 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 45 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 46 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 47 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 48 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 49 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="State 50 switches A3" label="" format="checkbox"/>
+			</griditem>
+			<!-- Following items only for 8 or more output decoders -->
+			<group include="Z1-16plus,Z2-8plus,function-8plus">
+				<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+					<column>
+						<label><text> A</text></label>
+						<label><text> 4</text></label>
+						<label><text>    </text></label>
+					</column>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 1 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 2 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 3 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 4 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 5 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 6 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 7 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 8 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 9 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 10 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 11 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 12 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 13 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 14 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 15 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 16 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 17 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 18 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 19 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 20 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 21 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 22 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 23 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 24 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 25 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 26 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 27 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 28 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 29 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 30 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 31 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 32 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 33 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 34 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 35 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 36 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 37 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 38 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 39 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 40 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 41 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 42 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 43 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 44 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 45 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 46 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 47 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 48 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 49 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 50 switches A4" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+					<column>
+						<label><text> A</text></label>
+						<label><text> 5</text></label>
+						<label><text>    </text></label>
+					</column>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 1 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 2 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 3 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 4 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 5 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 6 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 7 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 8 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 9 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 10 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 11 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 12 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 13 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 14 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 15 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 16 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 17 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 18 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 19 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 20 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 21 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 22 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 23 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 24 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 25 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 26 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 27 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 28 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 29 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 30 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 31 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 32 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 33 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 34 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 35 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 36 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 37 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 38 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 39 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 40 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 41 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 42 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 43 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 44 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 45 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 46 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 47 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 48 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 49 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 50 switches A5" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+					<column>
+						<label><text> A</text></label>
+						<label><text> 6</text></label>
+						<label><text>    </text></label>
+					</column>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 1 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 2 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 3 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 4 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 5 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 6 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 7 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 8 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 9 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 10 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 11 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 12 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 13 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 14 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 15 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 16 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 17 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 18 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 19 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 20 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 21 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 22 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 23 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 24 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 25 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 26 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 27 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 28 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 29 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 30 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 31 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 32 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 33 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 34 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 35 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 36 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 37 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 38 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 39 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 40 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 41 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 42 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 43 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 44 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 45 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 46 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 47 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 48 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 49 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 50 switches A6" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+					<column>
+						<label><text> A</text></label>
+						<label><text> 7</text></label>
+						<label><text>    </text></label>
+					</column>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 1 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 2 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 3 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 4 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 5 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 6 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 7 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 8 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 9 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 10 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 11 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 12 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 13 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 14 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 15 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 16 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 17 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 18 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 19 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 20 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 21 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 22 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 23 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 24 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 25 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 26 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 27 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 28 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 29 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 30 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 31 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 32 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 33 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 34 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 35 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 36 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 37 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 38 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 39 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 40 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 41 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 42 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 43 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 44 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 45 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 46 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 47 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 48 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 49 switches A7" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 50 switches A7" label="" format="checkbox"/>
+				</griditem>
+			</group>
+			<!-- end of items only for 8 or more output decoders -->
+			<!-- Following items only for 16 output decoders -->
+			<group include="Z1-16plus">
+				<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+					<column>
+						<label><text> A</text></label>
+						<label><text> 8</text></label>
+						<label><text>    </text></label>
+					</column>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 1 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 2 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 3 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 4 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 5 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 6 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 7 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 8 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 9 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 10 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 11 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 12 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 13 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 14 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 15 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 16 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 17 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 18 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 19 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 20 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 21 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 22 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 23 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 24 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 25 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 26 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 27 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 28 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 29 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 30 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 31 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 32 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 33 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 34 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 35 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 36 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 37 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 38 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 39 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 40 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 41 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 42 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 43 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 44 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 45 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 46 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 47 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 48 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 49 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 50 switches A8" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+					<column>
+						<label><text> A</text></label>
+						<label><text> 9</text></label>
+						<label><text>    </text></label>
+					</column>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 1 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 2 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 3 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 4 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 5 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 6 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 7 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 8 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 9 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 10 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 11 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 12 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 13 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 14 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 15 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 16 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 17 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 18 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 19 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 20 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 21 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 22 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 23 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 24 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 25 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 26 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 27 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 28 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 29 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 30 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 31 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 32 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 33 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 34 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 35 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 36 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 37 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 38 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 39 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 40 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 41 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 42 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 43 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 44 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 45 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 46 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 47 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 48 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 49 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 50 switches A9" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+					<column>
+						<label><text> A</text></label>
+						<label><text>10</text></label>
+						<label><text>    </text></label>
+					</column>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 1 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 2 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 3 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 4 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 5 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 6 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 7 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 8 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 9 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 10 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 11 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 12 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 13 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 14 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 15 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 16 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 17 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 18 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 19 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 20 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 21 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 22 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 23 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 24 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 25 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 26 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 27 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 28 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 29 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 30 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 31 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 32 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 33 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 34 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 35 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 36 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 37 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 38 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 39 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 40 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 41 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 42 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 43 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 44 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 45 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 46 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 47 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 48 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 49 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 50 switches A10" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+					<column>
+						<label><text> A</text></label>
+						<label><text>11</text></label>
+						<label><text>    </text></label>
+					</column>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 1 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 2 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 3 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 4 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 5 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 6 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 7 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 8 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 9 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 10 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 11 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 12 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 13 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 14 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 15 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 16 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 17 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 18 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 19 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 20 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 21 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 22 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 23 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 24 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 25 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 26 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 27 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 28 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 29 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 30 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 31 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 32 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 33 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 34 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 35 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 36 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 37 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 38 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 39 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 40 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 41 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 42 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 43 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 44 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 45 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 46 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 47 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 48 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 49 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 50 switches A11" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+					<column>
+						<label><text> A</text></label>
+						<label><text>12</text></label>
+						<label><text>    </text></label>
+					</column>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 1 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 2 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 3 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 4 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 5 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 6 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 7 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 8 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 9 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 10 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 11 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 12 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 13 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 14 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 15 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 16 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 17 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 18 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 19 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 20 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 21 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 22 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 23 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 24 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 25 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 26 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 27 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 28 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 29 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 30 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 31 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 32 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 33 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 34 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 35 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 36 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 37 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 38 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 39 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 40 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 41 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 42 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 43 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 44 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 45 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 46 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 47 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 48 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 49 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 50 switches A12" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+					<column>
+						<label><text> A</text></label>
+						<label><text>13</text></label>
+						<label><text>    </text></label>
+					</column>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 1 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 2 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 3 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 4 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 5 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 6 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 7 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 8 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 9 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 10 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 11 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 12 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 13 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 14 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 15 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 16 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 17 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 18 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 19 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 20 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 21 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 22 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 23 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 24 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 25 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 26 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 27 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 28 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 29 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 30 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 31 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 32 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 33 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 34 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 35 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 36 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 37 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 38 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 39 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 40 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 41 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 42 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 43 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 44 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 45 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 46 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 47 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 48 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 49 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 50 switches A13" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+					<column>
+						<label><text> A</text></label>
+						<label><text>14</text></label>
+						<label><text>    </text></label>
+					</column>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 1 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 2 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 3 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 4 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 5 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 6 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 7 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 8 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 9 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 10 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 11 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 12 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 13 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 14 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 15 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 16 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 17 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 18 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 19 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 20 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 21 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 22 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 23 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 24 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 25 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 26 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 27 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 28 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 29 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 30 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 31 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 32 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 33 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 34 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 35 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 36 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 37 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 38 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 39 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 40 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 41 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 42 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 43 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 44 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 45 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 46 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 47 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 48 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 49 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 50 switches A14" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+					<column>
+						<label><text> A</text></label>
+						<label><text>15</text></label>
+						<label><text>    </text></label>
+					</column>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 1 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 2 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 3 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 4 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 5 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 6 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 7 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 8 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 9 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 10 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 11 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 12 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 13 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 14 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 15 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 16 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 17 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 18 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 19 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 20 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 21 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 22 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 23 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 24 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 25 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 26 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 27 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 28 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 29 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 30 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 31 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 32 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 33 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 34 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 35 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 36 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 37 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 38 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 39 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 40 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 41 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 42 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 43 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 44 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 45 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 46 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 47 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 48 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 49 switches A15" label="" format="checkbox"/>
+				</griditem>
+				<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+						<display item="State 50 switches A15" label="" format="checkbox"/>
+				</griditem>
+			</group>
+			<!-- end of items only for 16 output decoders -->
+		</grid>
+		</row>
+  </column>
+</pane>

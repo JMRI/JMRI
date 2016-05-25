@@ -1,17 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TranslateSelection.shtml,v 1.3 2008/11/01 17:33:00 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-12-26--> 
+<!--  $Id$
+<!-- UpDated by Herv&#233; Blorec  bzh56420@yahoo.fr 2013-11-01--> 
 <html lang="fr">
 <head>
  <TITLE>
       JMRI: Translate Selection Help
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="JMRI help Layout Editor Translate">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -24,35 +24,34 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Traduire sélection
+<H1>Translater s&#233;lection
 </H1>
 <p>
-La boîte de dialogue de Traduire Sélection fournit pour traduire une partie sélectionnée par l'utilisateur d'
-un panneau  créé en utilisant l'Éditeur de TCO. Avant de sélectionner <b>Traduire Sélection ...</b>
-dans le menu Options, une zone du panneau doit être «sélectionnée». Pour sélectionner une zone,
-Appuyez et maintenez enfoncé la souris en haut à gauche de la zone, et faites glisser la souris
-en bas à droite de la zone. La zone sélectionnée est décrite par un rectangle. Pour les
-articles icône, le coin supérieur gauche de l'icône doit être dans le rectangle de sélection
-Si l'icône est à traduire. </p>
+La bo&#238;te de dialogue  Translater S&#233;lection fournit pour Translater une partie d'un panneau s&#233;lectionn&#233;e par l'utilisateur cr&#233;&#233; en utilisant l'&#201;diteur de R&#233;seau. Avant de s&#233;lectionner <b>Translater S&#233;lection ...</b>
+dans le menu Options, une zone du panneau doit &#234;tre "s&#233;lectionn&#233;e". Pour s&#233;lectionner une zone,
+Appuyez et maintenez enfonc&#233; la souris en haut &#224; gauche de la zone, et faites glisser la souris
+en bas &#224; droite de la zone. La zone s&#233;lectionn&#233;e est d&#233;crite par un rectangle. Pour les
+articles ic&#244;ne, le coin sup&#233;rieur gauche de l'ic&#244;ne doit &#234;tre dans le rectangle de s&#233;lection
+Si l'ic&#244;ne est &#224; Translater. </p>
 <p>
-Pour traduire votre région sélectionnée dans la fenêtre du panneau, saisissez le montant à traduire
-dans les directions <i> x </i> (horizontal) et y <i> </i> (vertical). Les unités sont en pixels
- - les mêmes unités indiquées dans le <i> x, y </i> affichage de la position dans la barre d'outils de l'Éditeur de TCO
-. Pour aucune traduction dans les deux sens entrez zéro.Pour une traduction horizontale
-, entrez un nombre négatif pour déplacer la zone sélectionnée à gauche du nombre de
-pixels, entrez un nombre positif pour aller à droite. Pour la translation verticale, entrez un
-nombre négatif pour déplacer la zone sélectionnée en place par ce nombre de pixels; entrer un
-nombre positif pour déplacer la zone sélectionnée vers le bas. </p>
+Pour Translater votre r&#233;gion s&#233;lectionn&#233;e dans la fen&#234;tre du panneau, saisissez le montant &#224; Translater
+dans les directions <i> x </i> (horizontal) et <i>y </i> (vertical). Les unit&#233;s sont en pixels
+ - les m&#234;mes unit&#233;s indiqu&#233;es dans l'affichage <i> x, y </i> de la position dans la barre d'outils de l'&#201;diteur de TCO
+. Pour aucune Translation dans les deux sens entrez z&#233;ro.Pour une traduction horizontale
+, entrez un nombre n&#233;gatif pour d&#233;placer la zone s&#233;lectionn&#233;e &#224; gauche du nombre de
+pixels, entrez un nombre positif pour aller &#224; droite. Pour la translation verticale, entrez un
+nombre n&#233;gatif pour d&#233;placer la zone s&#233;lectionn&#233;e en place par ce nombre de pixels; entrer un
+nombre positif pour d&#233;placer la zone s&#233;lectionn&#233;e vers le bas. </p>
 <p>
-Après avoir entré les montants à traduire, cliquez sur  <b>Déplacer la Sélection </b> pour déplacer 
-la zone sélectionnée. <b> Attention: </b> traduire trop loin peut déplacer une icône en dehors du coin supérieur gauche
- sur le bord du panneau, où elle ne peut pas être sélectionnée, et peut disparaître
-pour toujours. Heureusement, si vous faites cette erreur, vous pouvez annuler une traduction en sélectionnant immédiatement <b> Annuler Traduction </b> dans le menu Options. <b> Annuler
-Traduction </b> ne fonctionne que pour la dernière <b> Sélection Traduire ...</b> effectuée.
-N'oubliez pas de vérifier les résultats immédiatement après la traduction d'une sélection en annulant
-l'opération est si nécessaire. </p>
+Apr&#232;s avoir entr&#233; les montants &#224; Translater, cliquez sur  <b>D&#233;placer la S&#233;lection </b> pour d&#233;placer 
+la zone s&#233;lectionn&#233;e. <b> Attention: </b> Translater trop loin peut d&#233;placer une ic&#244;ne en dehors du coin sup&#233;rieur gauche
+ du bord du panneau, o&#249; elle ne peut pas &#234;tre s&#233;lectionn&#233;e, et peut dispara&#238;tre
+pour toujours. Heureusement, si vous faites cette erreur, vous pouvez annuler une Translation en s&#233;lectionnant imm&#233;diatement <b> Annuler Translation </b> dans le menu Options. <b> Annuler
+Translation </b> ne fonctionne que pour la derni&#232;re <b> S&#233;lection Translater ...</b> effectu&#233;e.
+N'oubliez pas de v&#233;rifier les r&#233;sultats imm&#233;diatement apr&#232;s la Translation d'une s&#233;lection en annulant
+l'op&#233;ration est si n&#233;cessaire. </p>
 <p>
-<b> Pour conserver vos modifications, s'il vous plaît n'oubliez pas d'enregistrer votre panneau! </b> </p>
+<b> Pour conserver vos modifications, s'il vous pla&#238;t n'oubliez pas d'enregistrer votre panneau! </b> </p>
  
 <!--#include virtual="/Footer" -->
 </body>

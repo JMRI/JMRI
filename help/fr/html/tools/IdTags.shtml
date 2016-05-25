@@ -1,21 +1,21 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: IdTags.shtml,v 1.1 2011/04/10 18:29:38 matthewharris Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-09-29-->
+<!-- $Id$ -->
+<!-- UpDated  by Blorec Herv&#233; 2013-09-21-->
 <html lang="fr">
 <head>
   <title>
  	JMRI: Id Tag Documentation
   </title>
-  <meta http-equiv=Content-Type content="text/html; charset=utf-8">
+  <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
 
   <meta content="Matthew Harris" name=Author>
 
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <meta name="keywords"
         content="rfid tag id tag model railroad JMRI decoderpro panelpro">
 
 <!-- Style -->
-  <meta http-equiv=Content-Type content="text/html; charset=utf-8">
+  <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -32,49 +32,57 @@
       <div id="mainContent">
       <!-- Page Body -->
         <h2>
-		JMRI: Documentation Balise d'Identification 
+		JMRI: Documentation &#201;tiquette d'Identification 
         </h2>
 
 <h1>Id Tag</h1>
 
 <p>
-Une balise d'identification est le moyen pour JMRI de représenter des informations sur les étiquettes d'identification qui peuvent
-être attachés à, par exemple, divers éléments de matériel roulant.
+Une &#233;tiquette d'identification est le moyen pour JMRI de repr&#233;senter des informations sur les &#233;tiquettes d'identification qui peuvent
+&#234;tre attach&#233;es &#224;, par exemple, divers &#233;l&#233;ments de mat&#233;riel roulant.
 <p>
-Quand un balise d'identification est lue par un lecteur approprié, cela est notifié par le biais à la fois d'un
+Quand une &#233;tiquette d'identification est lue par un lecteur appropri&#233;, cela est notifi&#233; par le biais &#224; la fois d'un
 <a href="Sensors.shtml"> Capteur </a> qui devient actif et un
-<a href="Reporters.shtml"> Journal</a> où est fixé la valeur de la balise d'identification.
-La balise ID sera également enregistrer à la fois par le Journal qui l'a vue la dernière fois, ainsi que 
- l'heure à laquelle elle a été vue la dernière fois
+<a href="Reporters.shtml"> Rapport</a> o&#249; est fix&#233; la valeur de l'&#233;tiquette d'identification.
+L'&#233;tiquette ID sera &#233;galement enregistrer &#224; la fois par le Rapport qui l'a vue la derni&#232;re fois, ainsi que 
+ l'heure &#224; laquelle elle a &#233;t&#233; vue la derni&#232;re fois
 <p>
-Si une étiquette d'identification inconnue est détectée par un lecteur, les détails de cette étiquette seront automatiquement inscrits dans la <a href="../../package/jmri/jmrit/beantable/IdTagTable.shtml"> table étiquette d'identification </a>.
+Si une &#233;tiquette d'identification inconnue est d&#233;tect&#233;e par un lecteur, les d&#233;tails de cette &#233;tiquette seront automatiquement inscrits dans le<a href="../../package/jmri/jmrit/beantable/IdTagTable.shtml"> tableau &#201;tiquette d'identification </a>.
 <p>
-À l'arrêt du système, les détails de tous les ID Tags connus du système sont écrits dans un fichier stocké dans le sous-répertoire "idtags" des préférences des utilisateurs. Le stockage des détails quand et où une étiquette d'identification donnée a été vu la dernière fois est configurable en mettant l'option au bas de la table étiquette d'identification.
+&#224; l'arr&#234;t du syst&#232;me, les d&#233;tails de tous les ID Tags connus du syst&#232;me sont &#233;crits dans un fichier stock&#233; dans le sous-r&#233;pertoire "idtags" des pr&#233;f&#233;rences des utilisateurs. Le stockage des d&#233;tails quand et o&#249; une Id Tag donn&#233;e a &#233;t&#233; vue la derni&#232;re fois est configurable en mettant l'option au bas du tableau &#201;tiquette d'Identification.
 <p>
-La mise en œuvre initiale est pour <a href="http://www.merg.org.uk/"> MERG </a>
-Les lecteurs RFID, à la fois autonome et via un concentrateur.
+Les prises en charge actuelles sont pour les lecteurs bas&#233;s sur CORE-ID. Ceux-ci sont pris en charge en mode autonome via le protocole "Generic Stand-alone" et comme une mise en concentration de 8 voies en utilisant <a href="http://www.merg.org.uk/"> MERG</a>  un &#233;quipement via le protocole 'Concentrateur MERG'.
+<br>
+Note: Le <a href="http://www.merg.org.uk/"> MERG </a> kit de d&#233;marrage tel qu"il est fourni
+doit &#234;tre configur&#233; en utilisant le protocole "Generic Stand-alone" - que lors
+d'une extension du kit avec les composants concentrateurs aditionnel, le protocole 'Concentrateur MERG' devrait &#234;tre utilis&#233;.
 
-<h2>Table Étiquette d'Identification</h2>
+
+<h2>Table &#201;tiquette d'Identification</h2>
+
 la
-<a href="../../package/jmri/jmrit/beantable/IdTagTable.shtml"> table étiquette d'identification</a>
-fournit un accès facile au contenu de tous les étiquettes ID que JMRI connaît.
+<a href="../../package/jmri/jmrit/beantable/IdTagTable.shtml"> Tableau &#201;tiquette d'Identification</a>
+fournit un acc&#232;s facile au contenu de tous les &#233;tiquettes ID que JMRI conna&#238;t.
 Il y a aussi un bouton
-<a href="../../package/jmri/jmrit/beantable/IdTagAddEdit.shtml"> «Ajouter ...»  </a>
-pour créer votre propre étiquette ID, JMRI crée automatiquement les
-Objets d'étiquette d'identification pour les balises détectées sur le réseau.
-<h2>Afficher les étiquettes d'identification sur les panneaux </h2>
-Une étiquette d'identification peut être affichée sur un panneau via l'utilisation de l'icône Journal
-associé à un lecteur donné.
+<a href="../../package/jmri/jmrit/beantable/IdTagAddEdit.shtml"> "Ajouter ..."  </a>
+pour cr&#233;er votre propre &#233;tiquette ID; JMRI cr&#233;e automatiquement les
+Objets d'&#233;tiquette d'identification pour les &#233;tiquettes d&#233;tect&#233;es sur le r&#233;seau.
+
+
+<h2>Afficher les &#233;tiquettes d'identification sur les panneaux </h2>
+
+Une &#233;tiquette d'identification peut &#234;tre affich&#233;e sur un panneau via l'utilisation de l'ic&#244;ne Rapport
+associ&#233; &#224; un lecteur donn&#233;.
 Pour ce faire:
 <ul>
-<li> Sur la fenêtre Éditeur de panneau pour votre panneau, trouver le bouton " Ajouter Rapport".
-<li> Dans la boîte de texte à côté de ce bouton, tapez le nom utilisateur ou  système du Rapport désiré. <li> Cliquez sur le bouton. L'icône Rapport sera placé sur le panneau. Si elle n'est pas visible, ce pourrait être parce que la valeur est actuellement vide;
-utiliser le tableau Reporter pour changer la valeur à quelque chose qui sera visible.
-<li> Vous pouvez faire glisser l'icône à l'endroit où vous voulez avec la manière habituelle.
-<li> Le menu pop-up sur l'icône vous permet de changer le formatage.
+<li> Sur la fen&#234;tre &#201;diteur de Panneau pour votre panneau, trouver le bouton " Ajouter Rapport".
+<li> Dans la bo&#238;te de texte &#224; c&#244;t&#233; de ce bouton, tapez le nom utilisateur ou  syst&#232;me du Rapport d&#233;sir&#233;. <li> Cliquez sur le bouton. L'ic&#244;ne Rapport sera plac&#233; sur le panneau. Si elle n'est pas visible, ce pourrait &#234;tre parce que la valeur est actuellement vide;
+utiliser le tableau Rapport pour changer la valeur pour quelque chose qui sera visible.
+<li> Vous pouvez faire glisser l'ic&#244;ne &#224; l'endroit o&#249; vous voulez avec la mani&#232;re habituelle.
+<li> Le menu pop-up sur l'ic&#244;ne vous permet de changer le formatage.
 </ul>
 <p>
-Plus d'informations sur les Journaux peuvent être trouvés dans la <a href="Reporters.shtml"> page d'aide Journaux</a>.
+Plus d'informations sur les Rapportsss peuvent &#234;tre trouv&#233;es dans la <a href="Reporters.shtml"> page d'aide Rapportsss</a>.
 
 <!--#include virtual="/Footer" -->
 

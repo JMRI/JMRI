@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">	
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Pierre</firstname>
+        <surname>Billon</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-10-13</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Creation. </revremark>
+    </revision>
+  </revhistory>
+	<variable label="Motorola" CV="12" mask="XXXXXXVV" tooltip="CV12 Bits 0-1" default="1" exclude="SD18A_1.00">
+		<enumVal>
+		  <enumChoice choice="Deactivated" value="0">
+			<choice>Deactivated</choice>
+			<choice xml:lang="it">Disattivato</choice>
+			<choice xml:lang="fr">Désactivé</choice>
+			<choice xml:lang="de">Deaktiviert</choice>
+		  </enumChoice>
+		  <enumChoice choice="Active (main address only)" value="1">
+			<choice>Active (main address only)</choice>
+			<choice xml:lang="it">Attivo (solo Ind.principale)</choice>
+			<choice xml:lang="fr">Actif (adresse principale)</choice>
+			<choice xml:lang="de">Aktiv (ohne Zusatzadresse)</choice>
+		  </enumChoice>
+		  <enumChoice choice="Active (with 1 extra address)" value="2">
+			<choice>Active (with 1 extra address)</choice>
+			<choice xml:lang="it">Attivo (con 1 Ind.extra)</choice>
+			<choice xml:lang="fr">Actif (1 adresse supplémentaire)</choice>
+			<choice xml:lang="de">Aktiv (mit 1 Zusatzadresse)</choice>
+		  </enumChoice>
+		  <enumChoice choice="Active (with 2 extra addresses)" value="3">
+			<choice>Active (with 2 extra addresses)</choice>
+			<choice xml:lang="it">Attivo (con 2 Ind.extra)</choice>
+			<choice xml:lang="fr">Actif (2 adresses supplémentaires)</choice>
+			<choice xml:lang="de">Aktiv (mit 2 Zusatzadressen)</choice>
+		  </enumChoice>
+		</enumVal>
+    </variable>
+	<variable label="Reverse Motorola direction" CV="12" mask="XXXXXVXX" tooltip="CV12 Bit 2" default="0" exclude="SD18A_1.00">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label xml:lang="fr">Direction inversée en MM1</label>
+		<label xml:lang="it">Direzione invertita in MM1</label>
+		<label xml:lang="de">Fahrtrichtung in MM1</label>
+  	</variable>
+</variables>

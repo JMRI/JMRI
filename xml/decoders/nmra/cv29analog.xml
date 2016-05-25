@@ -1,7 +1,7 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id: cv29analog.xml 22377 2013-01-12 06:28:11Z jacobsen $ -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -32,7 +32,7 @@
       <authorinitials>PB</authorinitials>
       <revremark>Added French and German translations</revremark>
     </revision>
-	<revision>
+    <revision>
       <revnumber>6</revnumber>
       <date>2012-12-26</date>
       <authorinitials>BJ</authorinitials>
@@ -45,26 +45,29 @@
       <revremark>Revision in original 0NMRA.xml file</revremark>
     </revision>
   </revhistory>
-  <variable label="Power Source Conversion" CV="29" mask="XXXXXVXX" item="Analog (DC) Operation">
+  <variable CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="1" tooltip="'NMRA Digital only: Digital Operation Only - DC conversion enabled: both Digital + Analog, default is Off">
     <enumVal>
       <enumChoice choice="NMRA Digital only">
         <choice>NMRA Digital only</choice>
         <choice xml:lang="it">Solo NMRA Digitale</choice>
-        <choice xml:lang="fr">Digital selon NMRA seulement</choice>
+        <choice xml:lang="fr">Digital NMRA seulement</choice>
         <choice xml:lang="ca">NMRA Digital only (ca)</choice>
-		<choice xml:lang="de">Nur Digital nach NMRA</choice>
+        <choice xml:lang="de">Nur Digital nach NMRA</choice>
       </enumChoice>
       <enumChoice choice="DC conversion enabled">
         <choice>DC conversion enabled</choice>
-        <choice xml:lang="it">Converiosne Analogica Abilitata</choice>
+        <choice xml:lang="it">Alim.Analogica Abilitata (DCC+Analogico)</choice>
         <choice xml:lang="fr">Mode analogique activé</choice>
         <choice xml:lang="ca">DC conversion enabled (ca)</choice>
-		<choice xml:lang="de">Analogbetrieb Aktiviert</choice>
+        <choice xml:lang="de">Analogbetrieb Aktiviert</choice>
       </enumChoice>
     </enumVal>
-    <label xml:lang="it">Conversione Alimentazione</label>
+    <label xml:lang="it">Conversione Sorgente Alimentazione</label>
     <label xml:lang="fr">Conversion source d'alimentation</label>
     <label xml:lang="ca">Power Source Conversion(ca)</label>
-	<label xml:lang="de">Stromquelle Konversion</label>
+    <label xml:lang="de">Stromquelle Konversion</label>
+    <label>Power Source Conversion</label>
+    <tooltip>NMRA Digital only: Digital Operation Only - DC conversion enabled: both Digital + Analog, default is Off</tooltip>
+    <tooltip xml:lang="it">'4' bit. Permette alla loco di andare in DC, per default è Off</tooltip>
   </variable>
 </variables>

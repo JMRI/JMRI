@@ -7,9 +7,6 @@
 #
 # Components based on Bob Jacobsen's and Nigel Cliffe, scripts in JMRI distribution, 
 # and comments on JMRI-Users group 
-#
-# The next line is maintained by CVS, please don't change it
-# $Revision: 20133 $
 
 import javax.swing
 import jmri

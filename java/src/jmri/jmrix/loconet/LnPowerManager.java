@@ -1,23 +1,22 @@
 // LnPowerManager.java
-
 package jmri.jmrix.loconet;
 
+import jmri.JmriException;
+import jmri.PowerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.PowerManager;
-import jmri.JmriException;
 
 /**
  * PowerManager implementation for controlling layout power
  * <P>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
- * and used with permission as part of the JMRI project.  That permission
- * does not extend to uses in other software products.  If you wish to
- * use this code, algorithm or these message formats outside of JMRI, please
- * contact Digitrax Inc for separate permission.
+ * and used with permission as part of the JMRI project. That permission does
+ * not extend to uses in other software products. If you wish to use this code,
+ * algorithm or these message formats outside of JMRI, please contact Digitrax
+ * Inc for separate permission.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version         $Revision$
+ * @version $Revision$
  */
 public class LnPowerManager
         extends jmri.managers.AbstractPowerManager
@@ -26,28 +25,28 @@ public class LnPowerManager
     public LnPowerManager(LocoNetSystemConnectionMemo memo) {
         super(memo);
         // standard LocoNet - connect
-        if(memo.getLnTrafficController()==null){
+        if (memo.getLnTrafficController() == null) {
             log.error("Power Manager Created, yet there is no Traffic Controller");
             return;
         }
         this.tc = memo.getLnTrafficController();
         tc.addLocoNetListener(~0, this);
-        
+
         updateTrackPowerStatus();  // this delays a while then reads slot 0 to get current track status
     }
-    
+
     protected int power = UNKNOWN;
 
     public void setPower(int v) throws JmriException {
         power = UNKNOWN;
 
         checkTC();
-        if (v==ON) {
+        if (v == ON) {
             // send GPON
             LocoNetMessage l = new LocoNetMessage(2);
             l.setOpCode(LnConstants.OPC_GPON);
             tc.sendLocoNetMessage(l);
-        } else if (v==OFF) {
+        } else if (v == OFF) {
             // send GPOFF
             LocoNetMessage l = new LocoNetMessage(2);
             l.setOpCode(LnConstants.OPC_GPOFF);
@@ -57,41 +56,54 @@ public class LnPowerManager
         firePropertyChange("Power", null, null);
     }
 
-	public int getPower() { return power;}
-    
+    public int getPower() {
+        return power;
+    }
+
     // these next three public methods have been added so that other classes
     // do not need to reference the static final values "ON", "OFF", and "UKNOWN".
-    public boolean isPowerOn() {return (power == ON);}
-    public boolean isPowerOff() {return (power == OFF);}
-    public boolean isPowerUnknown() {return (power == UNKNOWN);}
+    public boolean isPowerOn() {
+        return (power == ON);
+    }
+
+    public boolean isPowerOff() {
+        return (power == OFF);
+    }
+
+    public boolean isPowerUnknown() {
+        return (power == UNKNOWN);
+    }
 
     // to free resources when no longer used
     public void dispose() {
-		if (tc!=null) tc.removeLocoNetListener(~0, this);
+        if (tc != null) {
+            tc.removeLocoNetListener(~0, this);
+        }
         tc = null;
     }
 
     LnTrafficController tc = null;
 
     private void checkTC() throws JmriException {
-		if (tc == null) throw new JmriException("Use power manager after dispose");
+        if (tc == null) {
+            throw new JmriException("Use power manager after dispose");
         }
+    }
 
     // to listen for status changes from LocoNet
     public void message(LocoNetMessage m) {
         if (m.getOpCode() == LnConstants.OPC_GPON) {
             power = ON;
             firePropertyChange("Power", null, null);
-		}
-		else if (m.getOpCode() == LnConstants.OPC_GPOFF) {
+        } else if (m.getOpCode() == LnConstants.OPC_GPOFF) {
             power = OFF;
             firePropertyChange("Power", null, null);
         } else if (m.getOpCode() == LnConstants.OPC_SL_RD_DATA) {
             // grab the track status any time that a slot read of a "normal" slot passes thru.
             // Ignore "reserved" and "master control" slots in slot numbers 120-127
             if ((m.getElement(1) == 0x0E) && (m.getElement(2) < 120)) {
-                int slotTrackStatus = 
-                        ((m.getElement(7) & LnConstants.GTRK_POWER) == LnConstants.GTRK_POWER) ? ON : OFF;
+                int slotTrackStatus
+                        = ((m.getElement(7) & LnConstants.GTRK_POWER) == LnConstants.GTRK_POWER) ? ON : OFF;
                 if (power != slotTrackStatus) {
                     // fire a property change only if slot status is DIFFERENT 
                     // from current local status
@@ -104,18 +116,17 @@ public class LnPowerManager
 
     /**
      * Creates a thread which delays and then queries slot 0 to get the current
-     * track status.  The LnListener will see the slot read data and use the
-     * current track status to update the LnPowerManager's internal track
-     * power state info.
+     * track status. The LnListener will see the slot read data and use the
+     * current track status to update the LnPowerManager's internal track power
+     * state info.
      */
-    
-    private void updateTrackPowerStatus() { 
+    private void updateTrackPowerStatus() {
         LnTrackStatusUpdateThread thread = new LnTrackStatusUpdateThread(tc);
         thread.start();
     }
 
     /**
-     * Class providing a thread to delay then query slot 0.  The LnPowerManager
+     * Class providing a thread to delay then query slot 0. The LnPowerManager
      * can use the resulting OPC_SL_RD_DATA message to update its view of the
      * current track status.
      */
@@ -125,16 +136,17 @@ public class LnPowerManager
 
         /**
          * Constructs the thread
-         * <param> tc - LocoNetTrafficController which can be used to send the LocoNet message.
+         * <param> tc - LocoNetTrafficController which can be used to send the
+         * LocoNet message.
          */
         public LnTrackStatusUpdateThread(LnTrafficController tc) {
             this.tc = tc;
         }
 
-        /** 
+        /**
          * Runs the thread - Waits a while (to allow the managers to initialize)
-         * then sends a query of slot 0 so that the power manager can 
-         * inspect the "<trk>" byte.  
+         * then sends a query of slot 0 so that the power manager can inspect
+         * the "<trk>" byte.
          */
         public void run() {
             // wait a little bit to allow power manager to be initialized
@@ -151,7 +163,7 @@ public class LnPowerManager
             tc.sendLocoNetMessage(msg);
         }
     }
-    static Logger log = LoggerFactory.getLogger(LnPowerManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnPowerManager.class.getName());
 }
 
 /* @(#)LnPowerManager.java */

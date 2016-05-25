@@ -1,74 +1,81 @@
 // ConsumerTableModel.java
-
 package jmri.jmrix.openlcb.swing.tie;
 
+import java.awt.Font;
+import java.io.IOException;
+import java.util.ResourceBundle;
+import javax.swing.table.AbstractTableModel;
+import jmri.util.davidflanagan.HardcopyWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.util.davidflanagan.HardcopyWriter;
-
-
-import java.awt.*;
-
-import java.io.IOException;
-
-import java.util.ResourceBundle;
-import javax.swing.table.*;
 
 /**
  * Table Model for access to producer info
- * @author	 Bob Jacobsen 2008
- * @version	 $Revision$
+ *
+ * @author	Bob Jacobsen 2008
+ * @version	$Revision$
  * @since 2.3.7
  */
-
 public class ConsumerTableModel extends AbstractTableModel {
-    static    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.openlcb.swing.tie.TieBundle");
 
-    
+    /**
+     *
+     */
+    private static final long serialVersionUID = 5173698837318536847L;
+
+    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.openlcb.swing.tie.TieBundle");
+
     public static final int USERNAME_COLUMN = 0;
     public static final int NODE_COLUMN = 1;
     public static final int NUMBER_COLUMN = 2;
-    String[] columnName  = new String[]{"User Name", "Node", "Event"};
+    String[] columnName = new String[]{"User Name", "Node", "Event"};
 
     public String getColumnName(int c) {
         return columnName[c];
     }
+
     public Class<?> getColumnClass(int c) {
         return String.class;
     }
-    public boolean isCellEditable(int r,int c) { return false; }
-    public int getColumnCount () {
+
+    public boolean isCellEditable(int r, int c) {
+        return false;
+    }
+
+    public int getColumnCount() {
         return columnName.length;
     }
-    public int getRowCount () {
+
+    public int getRowCount() {
         return dummy.length;
     }
-    public Object getValueAt (int r,int c) {
+
+    public Object getValueAt(int r, int c) {
         return dummy[r][c];  // for testing
     }
-    public void setValueAt(Object type,int r,int c) {
+
+    public void setValueAt(Object type, int r, int c) {
         // nothing is stored here
     }
-    
-    String[][] dummy = {{"Turnout 21 Left",  "11", "1"}, // row then column
-                        {"Turnout 21 Right", "11", "2"}, 
-                        {"Turnout 22 Right", "13", "1"}, 
-                        {"Turnout 22 Left",  "13", "2"}, 
-                        {"Turnout 23 Right", "13", "3"}, 
-                        {"Turnout 23 Left",  "13", "4"}, 
-                        {"Turnout 24 Right", "15", "1"}, 
-                        {"Turnout 24 Left",  "15", "2"}
-                    }; 
-    
+
+    String[][] dummy = {{"Turnout 21 Left", "11", "1"}, // row then column
+    {"Turnout 21 Right", "11", "2"},
+    {"Turnout 22 Right", "13", "1"},
+    {"Turnout 22 Left", "13", "2"},
+    {"Turnout 23 Right", "13", "3"},
+    {"Turnout 23 Left", "13", "4"},
+    {"Turnout 24 Right", "15", "1"},
+    {"Turnout 24 Left", "15", "2"}
+    };
 
     /**
-    * Method to print or print preview the assignment table.
-    * Printed in proportionately sized columns across the page with headings and
-    * vertical lines between each column. Data is word wrapped within a column.
-    * Can only handle 4 columns of data as strings.
-    * Adapted from routines in BeanTableDataModel.java by Bob Jacobsen and Dennis Miller
-    */
-    public void printTable(HardcopyWriter w,int colWidth[]) {
+     * Method to print or print preview the assignment table. Printed in
+     * proportionately sized columns across the page with headings and vertical
+     * lines between each column. Data is word wrapped within a column. Can only
+     * handle 4 columns of data as strings. Adapted from routines in
+     * BeanTableDataModel.java by Bob Jacobsen and Dennis Miller
+     */
+    public void printTable(HardcopyWriter w, int colWidth[]) {
         // determine the column sizes - proportionately sized, with space between for lines
         int[] columnSize = new int[4];
         int charPerLine = w.getCharactersPerLine();
@@ -77,20 +84,20 @@ public class ConsumerTableModel extends AbstractTableModel {
         for (int j = 0; j < 4; j++) {
             totalColWidth += colWidth[j];
         }
-        float ratio = ((float)charPerLine)/((float)totalColWidth);
+        float ratio = ((float) charPerLine) / ((float) totalColWidth);
         for (int j = 0; j < 4; j++) {
-            columnSize[j] = (int)Math.round(colWidth[j]*ratio - 1.);
+            columnSize[j] = (int) Math.round(colWidth[j] * ratio - 1.);
             tableLineWidth += (columnSize[j] + 1);
         }
-    
+
         // Draw horizontal dividing line
         w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber(),
-            tableLineWidth);
-    
+                tableLineWidth);
+
         // print the column header labels
         String[] columnStrings = new String[4];
         // Put each column header in the array
-        for (int i = 0; i < 4; i++){
+        for (int i = 0; i < 4; i++) {
             columnStrings[i] = this.getColumnName(i);
         }
         w.setFontStyle(Font.BOLD);
@@ -98,7 +105,7 @@ public class ConsumerTableModel extends AbstractTableModel {
         w.setFontStyle(0);
         // draw horizontal line
         w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber(),
-                    tableLineWidth);
+                tableLineWidth);
 
         // now print each row of data
         String[] spaces = new String[4];
@@ -114,8 +121,7 @@ public class ConsumerTableModel extends AbstractTableModel {
                 //check for special, null contents
                 if (this.getValueAt(i, j) == null) {
                     columnStrings[j] = spaces[j];
-                } 
-                else {
+                } else {
                     columnStrings[j] = (String) this.getValueAt(i, j);
                 }
             }
@@ -123,12 +129,11 @@ public class ConsumerTableModel extends AbstractTableModel {
             // draw horizontal line
             w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber(),
                     tableLineWidth);
-        }            
+        }
         w.close();
     }
 
-    protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize[]) 
-    {
+    protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize[]) {
         StringBuilder columnString = new StringBuilder();
         StringBuilder lineString = new StringBuilder();
         String[] spaces = new String[4];
@@ -141,7 +146,7 @@ public class ConsumerTableModel extends AbstractTableModel {
         }
         // loop through each column
         boolean complete = false;
-        while (!complete){
+        while (!complete) {
             complete = true;
             for (int i = 0; i < 4; i++) {
                 // if the column string is too wide cut it at word boundary (valid delimiters are space, - and _)
@@ -151,12 +156,12 @@ public class ConsumerTableModel extends AbstractTableModel {
                 if (columnStrings[i].length() > columnSize[i]) {
                     // this column string will not fit on one line
                     boolean noWord = true;
-                    for (int k = columnSize[i]; k >= 1 ; k--) {
-                        if (columnStrings[i].substring(k-1,k).equals(" ") 
-                                || columnStrings[i].substring(k-1,k).equals("-")
-                                || columnStrings[i].substring(k-1,k).equals("_")) {
-                            columnString = new StringBuilder(columnStrings[i].substring(0,k));
-                            columnString.append(spaces[i].substring(columnStrings[i].substring(0,k).length()));
+                    for (int k = columnSize[i]; k >= 1; k--) {
+                        if (columnStrings[i].substring(k - 1, k).equals(" ")
+                                || columnStrings[i].substring(k - 1, k).equals("-")
+                                || columnStrings[i].substring(k - 1, k).equals("_")) {
+                            columnString = new StringBuilder(columnStrings[i].substring(0, k));
+                            columnString.append(spaces[i].substring(columnStrings[i].substring(0, k).length()));
                             columnStrings[i] = columnStrings[i].substring(k);
                             noWord = false;
                             complete = false;
@@ -164,12 +169,11 @@ public class ConsumerTableModel extends AbstractTableModel {
                         }
                     }
                     if (noWord) {
-                        columnString = new StringBuilder(columnStrings[i].substring(0,columnSize[i]));
+                        columnString = new StringBuilder(columnStrings[i].substring(0, columnSize[i]));
                         columnStrings[i] = columnStrings[i].substring(columnSize[i]);
                         complete = false;
-                    }                    
-                }	
-                else {
+                    }
+                } else {
                     // this column string will fit on one line
                     columnString = new StringBuilder(columnStrings[i]);
                     columnString.append(spaces[i].substring(columnStrings[i].length()));
@@ -183,25 +187,23 @@ public class ConsumerTableModel extends AbstractTableModel {
                 //write vertical dividing lines
                 int iLine = w.getCurrentLineNumber();
                 for (int i = 0, k = 0; i < w.getCharactersPerLine(); k++) {
-                    w.write( iLine, i, iLine + 1, i);
-                    if (k<4) {
-                        i = i+columnSize[k]+1;
-                    }
-                    else {
+                    w.write(iLine, i, iLine + 1, i);
+                    if (k < 4) {
+                        i = i + columnSize[k] + 1;
+                    } else {
                         i = w.getCharactersPerLine();
                     }
                 }
                 w.write("\n");
                 lineString = new StringBuilder();
-            } 
-            catch (IOException e) { 
-                log.warn("error during printing: "+e);
+            } catch (IOException e) {
+                log.warn("error during printing: " + e);
             }
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(ConsumerTableModel.class.getName());
-	
+    private final static Logger log = LoggerFactory.getLogger(ConsumerTableModel.class.getName());
+
 }
 
 /* @(#)ProducerTableModel.java */

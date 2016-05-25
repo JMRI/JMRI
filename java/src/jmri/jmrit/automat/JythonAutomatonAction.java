@@ -1,18 +1,15 @@
-// JythonAutomatonAction.java
-
 package jmri.jmrit.automat;
 
-import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
-import java.io.*;
-import javax.swing.*;
+import java.io.File;
+import javax.swing.AbstractAction;
+import javax.swing.JFileChooser;
+import javax.swing.JPanel;
 
 /**
- * Swing action to create and register a
- * JythonAutomaton object
+ * Swing action to create and register a JythonAutomaton object
  *
- * @author	    Bob Jacobsen    Copyright (C) 2003, 2007
- * @version         $Revision$
+ * @author	Bob Jacobsen Copyright (C) 2003, 2007
  */
 public class JythonAutomatonAction extends AbstractAction {
 
@@ -36,5 +33,3 @@ public class JythonAutomatonAction extends AbstractAction {
         }
     }
 }
-
-/* @(#)JythonAutomatonAction.java */

@@ -1,18 +1,17 @@
-// PackageTest.java
-
 package jmri.jmrix.loconet.locoio;
 
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * Tests for the jmri.jmrix.loconet.locoio package
+ *
  * @author	Bob Jacobsen Copyright (C) 2002, 2010
- * @version     $Revision$
  */
 public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure
-
     public PackageTest(String s) {
         super(s);
     }
@@ -32,6 +31,11 @@ public class PackageTest extends TestCase {
     }
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 }

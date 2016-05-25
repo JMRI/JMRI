@@ -1,0 +1,193 @@
+<!DOCTYPE HTML PUBLIC"-//W3C//DTD HTML 4.01//EN""http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr"><head>
+<!-- $Id$ --><title>JMRI: Virtual Sound Decoder</title>
+
+
+
+ 
+    
+  
+  <meta http-equiv="Content-Type"content="text/html; charset=iso-8859-1">
+
+    
+  <meta content="Mark Underwood"name="Author">
+
+    
+  <meta name="keywords"content="JMRI help Virtual Sound Decoder"><!-- Style -->
+
+
+
+  
+  <meta http-equiv="Content-Type"content="text/html; charset=iso-8859-1">
+
+  
+  <link rel="stylesheet"type="text/css"href="/css/default.css"media="screen">
+
+  
+  <link rel="stylesheet"type="text/css"href="/css/print.css"media="print">
+
+  
+  <link rel="icon"href="/images/jmri.ico"type="image/png">
+
+  
+  <link rel="home"title="Home"href="/"><!-- /Style --></head><body>
+
+<!--#include virtual="/Header"-->
+  
+<div class="nomenu"id="mBody">
+    
+<div id="mainContent">
+
+<h1>D&#233;codeur Son Virtuel JMRI</h1>
+
+
+Ceci est la page de r&#233;f&#233;rence rapide pour l'outil D&#233;codeur Son Virtuel JMRI.<br>
+
+<br>
+  Quelle est cette chose? Le D&#233;codeur Son Virtuel JMRI ("D&#233;codeurSV"pour faire plus court) qui
+ se trouve sur votre ordinateur, &#233;coutant son adresse d&#233;codeur attribu&#233;. Quand vous faites quelque chose au r&#233;gulateur( changer de vitesse ou appuyez sur une touche de fonction ), il &#233;met des sons, comme un ferait un d&#233;codeur son physique dans votre locomotive - sauf que le son vient de votre ordinateur.
+  <br>
+  Le D&#233;codeur de son Virtuel est compl&#232;tement ind&#233;pendant du r&#233;seau mat&#233;riell, et peut &#234;tre utilis&#233; en mode autonome. Vous n'avez m&#234;me pas besoin d'avoir une locomotive dans la Liste pour l'utiliser.
+  <br>
+  Vous <i>avez</i>besoin d'avoir un syst&#232;me de son et haut-parleurs sur votre ordinateur, bien s&#251;r!
+  <br>
+  Devez avoir &#233;galement le syst&#232;me audio OpenAL ou JavaSound install&#233; sur votre
+  votre ordinateur. Voir <a
+  href ="http://jmri.org/help/en/html/tools/Audio.shtml">les pages d'aides Audio JMRI</a>pour plus de d&#233;tails .
+  <br>
+  <hr>
+  <h2>Fen&#234;tre Gestionnaire D&#233;codeurSV </h2>
+
+  <p>la fen&#234;tre du gestionnaire du D&#233;codeurSV contient un panneau de commande pour chaque d&#233;codeur de son virtuel ("D&#233;codeurSV ») qui s'ex&#233;cute. </p>
+<p>Lors du premier lancement  la fen&#234;tre est vide, &#224 l'exception d'un curseur de volume, touche secret, et le bouton"Ajouter D&#233;codeur". Pour cr&#233;er un D&#233;codeurSV, cliquez sur"Ajouter D&#233;codeur". Cela ouvrira la bo&#238;te de dialogue de configuration D&#233;codeurSV. </P>
+  <p>le curseur du volume et le bouton Muet sont des commandes"ma&#238;tresses"qui commandent la sortie audio de tous les D&#233;codeurSV qui fonctionnement. < p>
+
+  <h3>Dialogue de Configuration du D&#233;codeurSV</h3>
+
+La bo&#238;te de dialogue de configuration vous permet de choisir le profil sonore &#224 utiliser (vapeur vs Diesel, EMD vs GE, Leslie vs Nathan, etc), et attribuer une adresse de d&#233;codeur &#224 &#233;couter.
+  
+<h4>S&#233;lectionnez Liste et Enregistrer </h4>
+
+  Vous pouvez s&#233;lectionner une entr&#233;e de liste actuelle, si vous en avez. Appuyez sur le bouton"Enregistrer"pour enregistrer le fichier DSV actuellement charg&#233; et le profil del'entr&#233;e de la Liste s&#233;lectionn&#233;e. La prochaine fois que vous choisirez cette Entr&#233;e Liste, il va charger automatiquement le fichier DSV stock&#233; et le Profil .
+  <br>
+  Vous n'avez pas &#224 utiliser la Liste du tout si vous ne voulez pas .
+  <br>
+  <h4>S&#233;lection de Profil </h4>
+
+  Pour s&#233;lectionner un profil, vous devez d'abord charger un"fichier VSD". Un fichier VSD exemple est inclus dans le paquet, et vous pouvez faire (et partager!) votre propre fichier. Cliquez sur le bouton"Charger Fichier VSD"ou choisissez"Fichier VSD ->Load"dans la barre de menu pour charger un fichier VSD. Vous ne pouvez rien faire d'autre (&#224 l'exception de choisir une entr&#233;e de la liste) jusqu'&#224 ce qu'un fichier VSD soit charg&#233;.
+  <br>
+  Maintenant, vous pouvez choisir l'un des profils r&#233;pertori&#233;s dans le profil d&#233;roulant. Notez que vous ne pouvez rien faire d'autre (&#224 l'exception choisir une entr&#233;e de la liste) jusqu'&#224 ce que vous avez s&#233;lectionn&#233; un profil.
+ 
+ <h4>Adresse d'Affectation et Liste </h4>
+
+  Une fois que vous avez charg&#233; un fichier VSD et d&#233;fini un profil, vous pouvez entrer une adresse de d&#233;codeur directement-et cliquez sur"D&#233;finir"- ou vous pouvez choisir une locomotive &#224 partir de votre liste. Le VSD r&#233;pondra ensuite aux r&#233;gulateurs. Il va &#233;couter <i>tous</i>les r&#233;gulateurs qui envoient des informations d'&#233;tat pour JMRI. Cela comprend les r&#233;gulateurs JMRI logiciels, Smartphones, Tablettes, WiThrottle et EngineDriver, et la plupart ( mais pas tous) des r&#233;gulateurs mat&#233;riels.
+  <br>
+Une fois que vous avez configur&#233; votre d&#233;codeur, cliquez sur"OK"pour d&#233;marrer.
+<h4>Volet de Commande D&#233;codeur </h4>
+<p>Lorsque vous ajoutez un D&#233;codeurSV, vous verrez un panneau de commandes complet pour ce d&#233;codeur. De gauche &#224 droite vous voyez l'adresse de locomotive, un ensemble de boutons pour jouer directement le son moteur et les sons auxiliaires,et un jeu de boutons pour commander le d&#233;codeur directement.</p>
+<ul>
+  <li>Config : Lancez la bo&#238;te de dialogue de configuration pour ce D&#233;codeurSV </li>
+  <li>Options : Lancement de la bo&#238;te de dialogue Options pour ce D&#233;codeurSV</li>
+  <li>Supprimer: pour supprimer ce D&#233;codeurSV </li>
+</ul>
+
+<p>Le choix exact de boutons de commandee du son va varier en fonction du profil sonore que vous avez charg&#233;. </p>
+<p>Note: Certaines touches peuvent &#234;tre non-fonctionnel, &#224 des fins d'affichage/de d&#233;monstration seulement</p>
+
+<h5>Commande Machine Diesel</h5>
+
+La commande du moteur Diesel est livr&#233; avec deux caract&#233;ristiques .
+<ul>
+  <li>Indicateur de Cran: Ce"Compteur"indique le"cran"actuel auquel le moteur tourne. Il s'agit d'un indicateur et non pas un contr&#244;le.</li>
+  <li>Bouton de D&#233;marrage Moteur: Appuyez sur ce bouton pour d&#233;marrer le bruit du moteur. Appuyez &#224 nouveau pour arr&#234;ter le bruit du moteur .</Li>
+</ul>
+<br>
+Par d&#233;faut, les sons des moteurs ne r&#233;pondent pas aux r&#233;gulateurs jusqu'&#224 ce que vous ayez appuy&#233; sur le bouton"D&#233;marrer Moteur""sur l'onglet Sons. Il s'agit de pr&#233;server un semblant de r&#233;alisme: vous devez d&#233;marrer le moteur avant qu'il ne puisse fonctionner. Cette fonctionnalit&#233; est compl&#232;tement ind&#233;pendante du fonctionnement r&#233;el de la locomotive. Si vous pr&#233;f&#233;rez avoir vos bruits de moteur commen&#231ant imm&#233;diatement lorsque vous avancez le r&#233;gulateur, sans appuyer"D&#233;marrer Moteur", il y a un param&#232;tre dans les pr&#233;f&#233;rences de D&#233;codeurSV pour changer cela. ( Cette fonctionnalit&#233; est actuellement cass&#233; pour les sons de vapeur ... )
+<br>
+ 
+
+<hr>
+<h3>Dialogue Options</h3>
+<p>A l'avenir, la bo&#238;te de Dialogue Options fournira divers param&#232;tres de l'option. Pour l'instant, il est non fonctionnel. Les gadgets de ce volet sont juste pour le show .</P>
+
+<h4>Note sp&#233;ciale sur les sons du moteur</h4 >
+
+La g&#233;n&#233;ration actuelle de son moteur est encore tr&#232;s "dure". Attendez-vous &#224 "des transitions entre les crans de vitesse, et quelques autres effets bizarres". Soyez patient. Ceci est encore Code "Alpha"!
+<hr>
+<h2>&#201;l&#233;ments de menu</h2>
+<hr>
+<h3>Menu Fichier</h3>
+<dl>
+  <dt>Charger Fichier D&#233;codeurSV</dt>
+  <dd>Affiche un s&#233;lecteur de fichiers pour charger un fichier DSV. La plupart des fonctions D&#233;codeurSV
+    ne fonctionnera pas jusqu'&#224 ce que vous avez charg&#233; un fichier VSD .</dd>
+</dl>
+ </dl>
+ <h3>Edit Menu </h3>
+ <dl>
+  <dt>Pr&#233;f&#233;rences D&#233;codeurSV<dt>
+   <dd>Lance la fen&#234;tre Pr&#233;f&#233;rences D&#233;codeurSV.<dd>
+</dl></p>
+<ul>
+
+<h3>Fen&#234;tres et des Menus d'Aide</h3>
+Ce sont les fen&#234;tre standard et menus d'aide JMRI.
+ <br> <hr>
+<h2>Pr&#233;f&#233;rences D&#233;codeurSV</h2>
+  <hr>
+La fen&#234;tre Pr&#233;f&#233;rences D&#233;codeurSV vous permet de personnaliser la fa&#231on dont le
+  D&#233;codeur Sonore Virtuel fonctionne .
+  <dl>
+    <dt>D&#233;marrage Automatique du Moteur</dt></p>
+<ul>
+    <dd>Si cette case est coch&#233;e, les bruits de moteur r&#233;pondront aux entr&#233;es du r&#233;gulateurs imm&#233;diatement, sans avoir &#224 appuyer d'abord sur le bouton "D&#233;marrage Moteur"
+      .</dd>
+<dt>chargement automatique de fichier VSD</dt>
+<dd>Si cette case est coch&#233;e, le fichier VSD sp&#233;cifi&#233; dans le champs Chemin/Nom par D&#233;faut seront charg&#233;s automatiquement sur ​le​d&#233;codeur au d&#233;marrage.</Dd>
+  <dt>Chemin par D&#233;faut du fichier VSD</td>
+  <dd>Ce chemin est &#224 la fois le chemin par d&#233;faut pour la boite de s&#233;lection "Charger fichier VSD"
+    et le chemin pr&#233;visible du Fichier VSD par D&#233;faut si le "chargement automatique du fichier VSD"est coch&#233;.</Dd>
+<dt>Nom du fichier VSD par D&#233;faut</dt>
+<dd>Ce fichier VSD, suppos&#233; &#234;tre dans le" Chemin du Fichier VSD par D&#233;faut", sera
+  auto- charg&#233; sur le d&#233;codeur au d&#233;marrage, si la case "Chargement Automatique du fichier VSD" est coch&#233;e .</dd>
+</dl>
+<br> <hr>
+<h2>Liste Interaction</h2>
+<hr></p>
+<ul>
+Les Connexions du D&#233;codeur Son Virtuel vers la Liste sont encore un peu "sous
+construction".
+Vous pouvez faire ce qui suit :
+<ul>
+  <li>D&#233;finissez l'adresse D&#233;codeurSV &#224 partir d'une entr&#233;e de la Liste </li>
+  <li>stocker un fichier D&#233;codeurSV pr&#233;f&#233;r&#233; et un Nom de Profil dans une entr&#233;e Liste
+  </li>
+  <li>Auto- d&#233;finir le profil D&#233;codeurSV et adresse dans une entr&#233;e Liste
+  </li>
+</ul>
+
+Pour m&#233;moriser le r&#233;glage actuel de profil du D&#233;codeurSV dans une entr&#233;e Liste,
+S&#233;lectionnez l'entr&#233;e de la liste et cliquez sur le bouton "Enregistrer".
+
+<h2>Bugs et d'autres notes</h2>
+Quelques notes sur les limitations (bugs, principalement ) :
+<ul>
+ <li>Tous les sons sont encore "dure". Attendez-vous &#224 des transitions surprenantes
+  entre les r&#233;glages de vitesse, d'&#233;tranges effets lorsque vous appuyez sur les touches
+  rapidement (et parfois pas ), et ainsi de suite .
+  <li>Tous les boutons sonores ne sont pas fonctionnels .
+  <li>Beaucoup d'autres choses sont corrompu ou cass&#233;. S'il vous pla&#238;t transmettez un rapport de bug
+  si quelque chose semble vraiment rompu.
+</ul>
+  
+ <br>
+  <hr>
+  <br>
+<a id="prefs">( Ceci est la page d'aide de jmri.jmrit.vsdecoder.VSDecoderFrame )
+<!--#include virtual="/Footer"-->
+</a></p>
+</div>
+</div>
+</body></html>
+
+

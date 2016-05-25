@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<!-- UpDated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-23--> 
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI: Edit Turnout Help
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help Layout Editor Turnout">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>Modifier Le dessin de la Travers&#233;e </H1>
+
+Une Travers&#233;e Jonction est une pi&#232;ce sp&#233;ciale de la voie qui repr&#233;sente deux voies de passage
+a niveau, avec la possibilit&#233; de basculer entre les voies. Il se se trouver sous deux
+formes comme une Jonction Simple (TJS) ou Jontion Double (TJD)
+La Travers&#233;e Jonction a quatre points de raccordement, et deux voies, d&#233;sign&#233;es 1 et 2. Quand une
+travers&#233;e est cr&#233;&#233;e, la voie 1 est la voie horizontale, et la voie 2 est la voie inclin&#233;e
+. L'angle entre les deux voies, l'inclinaison de chaque voie, et 
+la longueur de chaque voie peut &#234;tre modifi&#233;e en d&#233;pla&#231;ant les points de connexion avec la touche  m&#233;ta
+enfonc&#233;. Le centre de la travers&#233;e peut &#234;tre positionn&#233; en d&#233;pla&#231;ant le 
+cercle avec la touche de m&#233;ta enfonc&#233;es (voir la barre d'aide  quelle cl&#233; est la cl&#233; de m&#233;ta
+pour votre syst&#232;me d'exploitation)(Clic droit pour Linux). </p>
+<p>
+Bien que la Travers&#233;e Jonction soit constitu&#233;e de deux pistes, elle est trait&#233; comme un seul bloc
+et peut &#234;tre soit une  <i>voie principale</i> ou <i>voie d'&#233;vitement</i>
+en fonction de la d&#233;signation de la voie principale ou de la voie lat&#233;rale 
+connect&#233; &#224; chaque piste. Si un nom de canton est entr&#233; dans <b>Canton: Nom</b>
+de la barre d'outils pr&#233;alablement &#224; la cr&#233;ation d'une travers&#233;e jonction, ce canton est affect&#233; &#224; la travers&#233;e jonction.
+<p>
+La fen&#234;tre &#233;dition Travers&#233;e Jonction, vous permet de configurer les &#233;tats de sortie pour les deux aiguillages
+qui forment la travers&#233;e et de tester ceux-ci avant de confirmer la configuration.
+</p>
+
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

@@ -1,28 +1,25 @@
 //JmriSRCPPowerServer.java
-
 package jmri.jmris.srcp;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
+import jmri.PowerManager;
+import jmri.jmris.AbstractPowerServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.io.*;
-
-import jmri.PowerManager;
-
-import jmri.jmris.AbstractPowerServer;
 
 /**
- * SRCP interface between the JMRI power manager and a
- * network connection
- * @author          Paul Bender Copyright (C) 2010
- * @version         $Revision$
+ * SRCP interface between the JMRI power manager and a network connection
+ *
+ * @author Paul Bender Copyright (C) 2010
+ * @version $Revision$
  */
-
 public class JmriSRCPPowerServer extends AbstractPowerServer {
 
-   private DataOutputStream output;
+    private DataOutputStream output;
 
-   public JmriSRCPPowerServer(DataOutputStream outStream){
-        output=outStream;
+    public JmriSRCPPowerServer(DataOutputStream outStream) {
+        output = outStream;
         mgrOK();
     }
 
@@ -30,35 +27,50 @@ public class JmriSRCPPowerServer extends AbstractPowerServer {
     /*
      * Protocol Specific Abstract Functions
      */
-
-     public void sendStatus(int Status) throws IOException
-     {
-	if(Status==PowerManager.ON){
-		output.writeBytes("100 INFO 0 POWER ON\n\r");
-        } else if (Status==PowerManager.OFF){
-		output.writeBytes("100 INFO 0 POWER OFF\n\r");
+    public void sendStatus(int Status) throws IOException {
+        if (Status == PowerManager.ON) {
+            TimeStampedOutput.writeTimestamp(output, "100 INFO 0 POWER ON\n\r");
+        } else if (Status == PowerManager.OFF) {
+            TimeStampedOutput.writeTimestamp(output, "100 INFO 0 POWER OFF\n\r");
         } else {
-               // power unknown
+            // power unknown
+            TimeStampedOutput.writeTimestamp(output, "411 ERROR unknown value\n\r");
         }
-     }
+    }
 
-     public void sendErrorStatus() throws IOException {
- 	output.writeBytes("499 ERROR unspecified error\n\r");
-     }
+    public void sendErrorStatus() throws IOException {
+        TimeStampedOutput.writeTimestamp(output, "499 ERROR unspecified error\n\r");
+    }
 
-     public void parseStatus(String statusString) throws jmri.JmriException {
-	    if(statusString.contains("ON")){
-                   if(log.isDebugEnabled())
-                      log.debug("Setting Power ON");
-                   setOnStatus();
-            } else if(statusString.contains("OFF")){
-                   if(log.isDebugEnabled())
-                      log.debug("Setting Power OFF");
-                   setOffStatus();
+    public void parseStatus(String statusString) throws jmri.JmriException {
+        if (statusString.contains("ON")) {
+            if (log.isDebugEnabled()) {
+                log.debug("Setting Power ON");
             }
-     }
+            setOnStatus();
+        } else if (statusString.contains("OFF")) {
+            if (log.isDebugEnabled()) {
+                log.debug("Setting Power OFF");
+            }
+            setOffStatus();
+        }
+    }
 
-
-    static Logger log = LoggerFactory.getLogger(JmriSRCPPowerServer.class.getName());
+    @Override
+    public void propertyChange(java.beans.PropertyChangeEvent ev) {
+        try {
+            // send updates, but only if the status is ON or OFF.
+            if (p.getPower() == PowerManager.ON || p.getPower() == PowerManager.OFF) {
+                sendStatus(p.getPower());
+            }
+        } catch (jmri.JmriException ex) {
+            try {
+                sendErrorStatus();
+            } catch (IOException ie) {
+            }
+        } catch (IOException ie2) {
+        }
+    }
+    private final static Logger log = LoggerFactory.getLogger(JmriSRCPPowerServer.class.getName());
 
 }

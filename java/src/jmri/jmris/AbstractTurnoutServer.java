@@ -4,7 +4,8 @@ package jmri.jmris;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Turnout;
@@ -20,8 +21,11 @@ import org.slf4j.LoggerFactory;
  */
 abstract public class AbstractTurnoutServer {
 
+    protected final HashMap<String, TurnoutListener> turnouts;
+    private final static Logger log = LoggerFactory.getLogger(AbstractTurnoutServer.class.getName());
+
     public AbstractTurnoutServer() {
-        turnouts = new ArrayList<String>();
+        turnouts = new HashMap<String, TurnoutListener>();
     }
 
     /*
@@ -34,15 +38,15 @@ abstract public class AbstractTurnoutServer {
     abstract public void parseStatus(String statusString) throws JmriException, IOException;
 
     synchronized protected void addTurnoutToList(String turnoutName) {
-        if (!turnouts.contains(turnoutName)) {
-            turnouts.add(turnoutName);
-            InstanceManager.turnoutManagerInstance().getTurnout(turnoutName)
-                    .addPropertyChangeListener(getListener(turnoutName));
+        if (!turnouts.containsKey(turnoutName)) {
+            turnouts.put(turnoutName, new TurnoutListener(turnoutName));
+            InstanceManager.turnoutManagerInstance().getTurnout(turnoutName).addPropertyChangeListener(turnouts.get(turnoutName));
         }
     }
 
     synchronized protected void removeTurnoutFromList(String turnoutName) {
-        if (turnouts.contains(turnoutName)) {
+        if (turnouts.containsKey(turnoutName)) {
+            InstanceManager.turnoutManagerInstance().getTurnout(turnoutName).removePropertyChangeListener(turnouts.get(turnoutName));
             turnouts.remove(turnoutName);
         }
     }
@@ -56,11 +60,11 @@ abstract public class AbstractTurnoutServer {
     public void closeTurnout(String turnoutName) {
         // load address from switchAddrTextField
         try {
-            if(!turnouts.contains(turnoutName)) {
-               // enforce that initTurnout must be called before moving a
-               // turnout
-               sendErrorStatus(turnoutName);
-               return;
+            if (!turnouts.containsKey(turnoutName)) {
+                // enforce that initTurnout must be called before moving a
+                // turnout
+                sendErrorStatus(turnoutName);
+                return;
             }
             Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
             if (turnout == null) {
@@ -70,7 +74,7 @@ abstract public class AbstractTurnoutServer {
                 // and set commanded state to CLOSED
                 turnout.setCommandedState(Turnout.CLOSED);
             }
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             log.error("Error closing turnout", ex);
         }
     }
@@ -79,11 +83,11 @@ abstract public class AbstractTurnoutServer {
         // load address from switchAddrTextField
         try {
             Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
-            if(!turnouts.contains(turnoutName)) {
-               // enforce that initTurnout must be called before moving a
-               // turnout
-               sendErrorStatus(turnoutName);
-               return;
+            if (!turnouts.containsKey(turnoutName)) {
+                // enforce that initTurnout must be called before moving a
+                // turnout
+                sendErrorStatus(turnoutName);
+                return;
             }
 
             if (turnout == null) {
@@ -95,13 +99,20 @@ abstract public class AbstractTurnoutServer {
                 // and set commanded state to THROWN
                 turnout.setCommandedState(Turnout.THROWN);
             }
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             log.error("Error throwing turnout", ex);
         }
     }
 
+    public void dispose() {
+        for (Map.Entry<String, TurnoutListener> turnout : this.turnouts.entrySet()) {
+            InstanceManager.turnoutManagerInstance().getTurnout(turnout.getKey()).removePropertyChangeListener(turnout.getValue());
+        }
+        this.turnouts.clear();
+    }
+
     protected TurnoutListener getListener(String turnoutName) {
-              return new TurnoutListener(turnoutName);
+        return new TurnoutListener(turnoutName);
     }
 
     protected class TurnoutListener implements PropertyChangeListener {
@@ -130,7 +141,4 @@ abstract public class AbstractTurnoutServer {
         String name = null;
         Turnout turnout = null;
     }
-    protected ArrayList<String> turnouts = null;
-    String newState = "";
-    static Logger log = LoggerFactory.getLogger(AbstractTurnoutServer.class.getName());
 }

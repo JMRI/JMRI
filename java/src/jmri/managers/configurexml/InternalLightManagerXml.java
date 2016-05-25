@@ -1,19 +1,19 @@
 package jmri.managers.configurexml;
 
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.jdom.Element;
 
 /**
- * Provides load and store functionality for
- * configuring InternalLightManagers.
+ * Provides load and store functionality for configuring InternalLightManagers.
  * <P>
- * Uses the store method from the abstract base class, but
- * provides a load method here.
+ * Uses the store method from the abstract base class, but provides a load
+ * method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision$
+ * @deprecated As of 4.3.5, see jmri.jmrix.internal.configurexml classes
  */
+@Deprecated
 public class InternalLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {
 
     public InternalLightManagerXml() {
@@ -21,18 +21,19 @@ public class InternalLightManagerXml extends jmri.managers.configurexml.Abstract
     }
 
     public void setStoreElementClass(Element lights) {
-        lights.setAttribute("class",this.getClass().getName());
+        lights.setAttribute("class", this.getClass().getName());
     }
 
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
 
-    public boolean load(Element lights) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         // load individual lights
-        loadLights(lights);
+        loadLights(shared);
         return true;
     }
 
-    static Logger log = LoggerFactory.getLogger(InternalLightManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(InternalLightManagerXml.class.getName());
 }

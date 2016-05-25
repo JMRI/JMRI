@@ -13,10 +13,12 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<!ELEMENT operations-config (trains | options | schedules)*>
+<!ELEMENT operations-config (trains | options | schedules | automations)*>
 
-<!ELEMENT options (trainOptions | trainEditOptions | trainScheduleOptions | scripts | manifestCreator)*>
+<!ELEMENT options (trainOptions | rowColorOptions | trainEditOptions | trainScheduleOptions | scripts | manifestCreator 
+| switchlistCreator)*>
 <!ELEMENT trainOptions EMPTY>
+<!ELEMENT rowColorOptions EMPTY>
 <!ELEMENT trainEditOptions EMPTY>
 <!ELEMENT trainScheduleOptions EMPTY>
 
@@ -26,6 +28,12 @@
 <!ATTLIST trainOptions openFile		 	(true | false) "false">
 <!ATTLIST trainOptions runFile		 	(true | false) "false">
 <!ATTLIST trainOptions trainAction		CDATA #IMPLIED>
+
+<!ATTLIST rowColorOptions rowColorManual		(true | false) "false">
+<!ATTLIST rowColorOptions rowColorBuidFailed 	CDATA #IMPLIED>
+<!ATTLIST rowColorOptions rowColorBuilt 		CDATA #IMPLIED>
+<!ATTLIST rowColorOptions rowColorTrainEnRoute 	CDATA #IMPLIED>
+<!ATTLIST rowColorOptions rowColorTerminated 	CDATA #IMPLIED>
 
 <!ATTLIST trainScheduleOptions activeId		CDATA #IMPLIED>
 
@@ -37,8 +45,9 @@
 <!ELEMENT terminate EMPTY>
 
 <!ELEMENT trains (train)*>
-<!ELEMENT train (route | types | carLoads | carRoads | carOwners |scripts | railRoad | manifestLogo)*>
+<!ELEMENT train (rowColor | route | types | carLoads | carRoads | carOwners |scripts | railRoad | manifestLogo)*>
 
+<!ELEMENT rowColor EMPTY>
 <!ELEMENT route (skips)*>
 <!ELEMENT skips (location)*>
 <!ELEMENT location EMPTY>
@@ -57,6 +66,8 @@
 <!ELEMENT manifestLogo EMPTY>
 
 <!ELEMENT manifestCreator (directory | runFile | commonFile)*>
+<!ELEMENT switchlistCreator (directory | runFile | commonFile)*>
+
 <!ELEMENT directory EMPTY>
 <!ATTLIST directory name				CDATA #IMPLIED>
 <!ELEMENT runFile EMPTY>
@@ -104,6 +115,7 @@
 <!ATTLIST train showTimes			(true | false) "true">
 <!ATTLIST train buildFailedMessage	CDATA #IMPLIED>
 <!ATTLIST train switchListStatus	CDATA #IMPLIED>
+<!ATTLIST train mrStatus                CDATA #IMPLIED>
 <!ATTLIST train status				CDATA #IMPLIED>
 <!ATTLIST train current				CDATA #IMPLIED>
 <!ATTLIST train departureTrack		CDATA #IMPLIED>
@@ -124,7 +136,15 @@
 <!ATTLIST train leg2End				CDATA #IMPLIED>
 <!ATTLIST train leg3End				CDATA #IMPLIED>
 <!ATTLIST train comment				CDATA #IMPLIED>
+<!ATTLIST train serviceAll			CDATA #IMPLIED>
+<!ATTLIST train sendCustomStaging	CDATA #IMPLIED>
+<!ATTLIST train buildConsist		CDATA #IMPLIED>
+<!ATTLIST train TerminationDate		CDATA #IMPLIED>
+<!ATTLIST train RequestedCars		CDATA #IMPLIED>
+<!ATTLIST train statusCode			CDATA #IMPLIED>
+<!ATTLIST train oldStatusCode			CDATA #IMPLIED>
 
+<!ATTLIST rowColor name				CDATA #IMPLIED>
 <!ATTLIST carType name				CDATA #IMPLIED>
 <!ATTLIST locoType name				CDATA #IMPLIED>
 <!ATTLIST carLoad name				CDATA #IMPLIED>
@@ -152,4 +172,32 @@
 <!ATTLIST location id				CDATA #REQUIRED>          
 <!ATTLIST location name				CDATA #IMPLIED>
 
+<!ELEMENT automations (automation)*>
+<!ELEMENT automation (item)*>
+<!ELEMENT item (messages)*>
+<!ELEMENT messages (messageOk | messageFail)*>
+<!ELEMENT messageOk EMPTY>
+<!ELEMENT messageFail EMPTY>
+
+
+<!ATTLIST automation id				CDATA #REQUIRED>
+<!ATTLIST automation name			CDATA #REQUIRED>
+<!ATTLIST automation comment		CDATA #REQUIRED>
+<!ATTLIST automation currentItem	CDATA #REQUIRED>
+
+<!ATTLIST item id					CDATA #REQUIRED>          
+<!ATTLIST item sequenceId			CDATA #IMPLIED>
+<!ATTLIST item name					CDATA #IMPLIED>
+<!ATTLIST item actionCode			CDATA #IMPLIED>
+<!ATTLIST item trainId				CDATA #IMPLIED>
+<!ATTLIST item routeLocationId		CDATA #IMPLIED>
+<!ATTLIST item automationId			CDATA #IMPLIED>
+<!ATTLIST item gotoAutomationId		CDATA #IMPLIED>
+<!ATTLIST item trainScheduleId		CDATA #IMPLIED>
+<!ATTLIST item haltFail				(true | false) "true">
+<!ATTLIST item actionRan			(true | false) "false">
+<!ATTLIST item actionSuccessful		(true | false) "false">
+
+<!ATTLIST messageOk message			CDATA #IMPLIED>
+<!ATTLIST messageFail message		CDATA #IMPLIED>
 

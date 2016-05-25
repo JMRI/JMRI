@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2014 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="1" lastUpdated="20140905"/>
+	<!-- version 1 : Initial file. Based on following documentation :
+										PLC008 Diesel Decoder Instructions 11.doc 26/05/14
+										PLC008 Steam Decoder Instructions 11 26/05/14
+	-->
+  <decoder>
+    <family name="MyLocoSound DCC" mfg="MyLocoSound" type="mobile" lowVersionID="1" highVersionID="9" comment="with stay-alive capacitor">
+      <model model="Diesel" numOuts="2" numFns="11" productID="Diesel" maxMotorCurrent="1.5A" formFactor="HO" connector="NMRAmedium" comment="with 40mm x 20mm high bass speaker">
+        <size length="50" width="28" height="12" units="mm"/>
+          <functionlabels>
+              <functionlabel num="2" lockable="false">Horn</functionlabel>
+              <functionlabel num="3" lockable="false">Short Horn</functionlabel>
+              <functionlabel num="5" lockable="false">Airbrake</functionlabel>
+              <functionlabel num="8" lockable="true">Turbocharger</functionlabel>
+          </functionlabels>			
+      </model>
+      <model model="Steam" numOuts="2" numFns="11" productID="Steam" maxMotorCurrent="1.5A" formFactor="HO" connector="NMRAmedium" comment="with 27mm diameter, 8 ohm speaker">
+        <size length="50" width="28" height="12" units="mm"/>
+          <functionlabels>
+              <functionlabel num="2" lockable="false">Whistle</functionlabel>
+              <functionlabel num="3" lockable="false">Short Whistle</functionlabel>
+              <functionlabel num="5" lockable="true">Safety valve</functionlabel>
+              <functionlabel num="8" lockable="true">Westinghouse brake pump</functionlabel>
+          </functionlabels>
+      </model>			
+      <functionlabels>
+          <functionlabel num="0" lockable="true">Lights</functionlabel>
+          <functionlabel num="1" lockable="true">Mute</functionlabel>
+          <functionlabel num="4" lockable="true">Bell</functionlabel>
+          <functionlabel num="6" lockable="false">Guard’s whistle</functionlabel>
+          <functionlabel num="7" lockable="true">Shunting</functionlabel>
+          <functionlabel num="10" lockable="true">Lights</functionlabel>
+      </functionlabels>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable CV="2" item="Vstart" default="5" comment="A value of 127 corresponds to 100%">
+          <decVal max="127"/>
+          <label>Vstart</label>
+          <label xml:lang="it">Volt Partenza</label>
+          <label xml:lang="fr">V démarr.</label>
+          <label xml:lang="de">Anfahrspannung</label>
+          <comment xml:lang="it">Un Valore di 127 corrisponde al 100%</comment>
+          <comment xml:lang="de">Der Wert 127 entspricht 100%</comment>
+      </variable>
+      <variable CV="3" item="Accel" default="5">
+          <decVal max="63"/>
+          <label xml:lang="it">Accellerazione (0-63)</label>
+          <label xml:lang="fr">Accelération (0-63)</label>
+          <label xml:lang="de">Anfahrverzögerung (0-63)</label>
+          <label>Acceleration Rate</label>
+      </variable>
+      <variable CV="4" item="Decel" default="5">
+          <decVal max="63"/>
+          <label>Deceleration Rate</label>
+          <label xml:lang="it">Decellerazione (0-63)</label>
+          <label xml:lang="fr">Décélération (0-63)</label>
+          <label xml:lang="de">Bremszeit (0-63)</label>
+      </variable>
+      <variable CV="5" item="Vhigh" default="180">
+          <decVal/>
+          <label>Vhigh</label>
+          <label xml:lang="it">Volt Massimi</label>
+          <label xml:lang="fr">Vmax</label>
+          <label xml:lang="de">Höchstgeschwindigkeit</label>
+      </variable>
+      <variable CV="6" item="Vmid" default="90">
+          <decVal/>
+          <label>Vmid</label>
+          <label xml:lang="it">Volt Intermedi</label>
+          <label xml:lang="fr">Vmoy</label>
+          <label xml:lang="de">Mittengeschwindigkeit</label>
+      </variable>
+      <variable CV="7" readOnly="yes" item="Decoder Version" default="9">
+          <decVal/>
+          <label xml:lang="it">Versione Decoder: </label>
+          <label xml:lang="fr">Version décodeur: </label>
+          <label xml:lang="de">Decoder Version: </label>
+          <label>Manufacturer Version No: </label>
+      </variable>
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="116">
+          <decVal/>
+          <label xml:lang="it">ID Costruttore: </label>
+          <label xml:lang="fr">ID constructeur: </label>
+          <label xml:lang="de">Hersteller ID: </label>
+          <label>Manufacturer ID: </label>
+      </variable>
+      <variable item="EMF Feedback Cutout" CV="10" default="255">
+        <decVal/>
+        <label>EMF Feedback Cutout</label>
+        <label xml:lang="fr">EMF Feedback Cutout(fr)</label>
+        <label xml:lang="it">Limitazione Retroazione EMF</label>
+        <tooltip>The speed step above which feedback control is disabled</tooltip>
+      </variable>
+      <variable item="Packet Time-out Value" CV="11" default="20">
+        <decVal/>
+        <label>Packet Time-out Value</label>
+        <label xml:lang="fr">Packet Time-out Value(fr)</label>
+        <label xml:lang="it">Valore Time-out Packet</label>
+        <tooltip>Time (secs) for which speed is maintained when the controller is switched off</tooltip>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <!-- Consist Address F1-F8 with default values for this decoder -->
+      <variable item="Consist Address Active For F1" CV="21" mask="XXXXXXXV" default="1">
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-ConsistAddress.xml"/>
+          <label xml:lang="it">Indirizzo Consist Attivo per F1</label>
+          <label xml:lang="fr">Adresse d'Unité Multiple active pour F1</label>
+          <label xml:lang="de">Verbundadresse aktiv für F1</label>
+          <label>Consist Address Active For F1</label>
+      </variable>
+      <variable item="Consist Address Active For F2" CV="21" mask="XXXXXXVX" default="1">
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-ConsistAddress.xml"/>
+          <label xml:lang="it">Indirizzo Consist Attivo per F2</label>
+          <label xml:lang="fr">Adresse d'Unité Multiple active pour F2</label>
+          <label xml:lang="de">Verbundadresse aktiv für F2</label>
+          <label>Consist Address Active For F2</label>
+      </variable>
+      <variable item="Consist Address Active For F3" CV="21" mask="XXXXXVXX" default="1">
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-ConsistAddress.xml"/>
+          <label xml:lang="it">Indirizzo Consist Attivo per F3</label>
+          <label xml:lang="fr">Adresse d'Unité Multiple active pour F3</label>
+          <label xml:lang="de">Verbundadresse aktiv für F3</label>
+          <label>Consist Address Active For F3</label>
+      </variable>
+      <variable item="Consist Address Active For F4" CV="21" mask="XXXXVXXX" default="1">
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-ConsistAddress.xml"/>
+          <label xml:lang="it">Indirizzo Consist Attivo per F4</label>
+          <label xml:lang="fr">Adresse d'Unité Multiple active pour F4</label>
+          <label xml:lang="de">Verbundadresse aktiv für F4</label>
+          <label>Consist Address Active For F4</label>
+      </variable>
+      <variable item="Consist Address Active For F5" CV="21" mask="XXXVXXXX" default="1">
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-ConsistAddress.xml"/>
+          <label xml:lang="it">Indirizzo Consist Attivo per F5</label>
+          <label xml:lang="fr">Adresse d'Unité Multiple active pour F5</label>
+          <label xml:lang="de">Verbundadresse aktiv für F5</label>
+          <label>Consist Address Active For F5</label>
+      </variable>
+      <variable item="Consist Address Active For F6" CV="21" mask="XXVXXXXX" default="1">
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-ConsistAddress.xml"/>
+          <label xml:lang="it">Indirizzo Consist Attivo per F6</label>
+          <label xml:lang="fr">Adresse d'Unité Multiple active pour F6</label>
+          <label xml:lang="de">Verbundadresse aktiv für F6</label>
+          <label>Consist Address Active For F6</label>
+      </variable>
+      <variable item="Consist Address Active For F7" CV="21" mask="XVXXXXXX" default="1">
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-ConsistAddress.xml"/>
+          <label xml:lang="it">Indirizzo Consist Attivo per F7</label>
+          <label xml:lang="fr">Adresse d'Unité Multiple active pour F7</label>
+          <label xml:lang="de">Verbundadresse aktiv für F7</label>
+          <label>Consist Address Active For F7</label>
+      </variable>
+      <variable item="Consist Address Active For F8" CV="21" mask="VXXXXXXX" default="1">
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-ConsistAddress.xml"/>
+          <label xml:lang="it">Indirizzo Consist Attivo per F8</label>
+          <label xml:lang="fr">Adresse d'Unité Multiple active pour F8</label>
+          <label xml:lang="de">Verbundadresse aktiv für F8</label>
+          <label>Consist Address Active For F8</label>
+      </variable>
+      <!-- Consist Address F9-F12 with default values for this decoder -->
+      <variable item="Consist Address Active For FL in Forward" CV="22" mask="XXXXXXXV" default="1">
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-ConsistAddress.xml"/>
+          <label xml:lang="it">Indirizzo Consist Attivo per F-Luci Avanti</label>
+          <label xml:lang="fr">Adresse UM active pour FL en avant</label>
+          <label xml:lang="de">Verbundadresse aktiv für FL vorwärts</label>
+          <label>Consist Address Active For FL in Forward</label>
+      </variable>
+      <variable item="Consist Address Active For FL in Reverse" CV="22" mask="XXXXXXVX" default="1">
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-ConsistAddress.xml"/>
+          <label xml:lang="it">Indirizzo Consist Attivo per F-Luci Indietro</label>
+          <label xml:lang="fr">Adresse UM active pour FL en arr</label>
+          <label xml:lang="de">Verbundadresse aktiv für FL rückwärts</label>
+          <label>Consist Address Active For FL in Reverse</label>
+      </variable>      
+      <variable item="Consist Address Active For F9" CV="22" mask="XXXXXVXX" default="1">
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-ConsistAddress.xml"/>
+          <label xml:lang="it">Indirizzo Consist Attivo per F9</label>
+          <label xml:lang="fr">Adresse d'Unité Multiple active pour F9</label>
+          <label xml:lang="de">Verbundadresse aktiv für F9</label>
+          <label>Consist Address Active For F9</label>
+      </variable>
+      <variable item="Consist Address Active For F10" CV="22" mask="XXXXVXXX" default="1">
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-ConsistAddress.xml"/>
+          <label xml:lang="it">Indirizzo Consist Attivo per F10</label>
+          <label xml:lang="fr">Adresse d'Unité Multiple active pour F10</label>
+          <label xml:lang="de">Verbundadresse aktiv für F10</label>
+          <label>Consist Address Active For F10</label>
+      </variable>
+      <variable item="Consist Address Active For F11" CV="22" mask="XXXVXXXX" default="0">
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-ConsistAddress.xml"/>
+          <label xml:lang="it">Indirizzo Consist Attivo per F11</label>
+          <label xml:lang="fr">Adresse d'Unité Multiple active pour F11</label>
+          <label xml:lang="de">Verbundadresse aktiv für F11</label>
+          <label>Consist Address Active For F11</label>
+      </variable>
+      <variable item="Consist Address Active For F12" CV="22" mask="XXVXXXXX" default="0">
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-ConsistAddress.xml"/>
+          <label xml:lang="it">Indirizzo Consist Attivo per F12</label>
+          <label xml:lang="fr">Adresse d'Unité Multiple active pour F12</label>
+          <label xml:lang="de">Verbundadresse aktiv für F12</label>
+          <label>Consist Address Active For F12</label>
+      </variable>
+      <!-- End of Consist Address with default values for this decoder -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <!-- Sound variables for Diesel -->
+      <variable CV="47" item="Sound Setting 2" default="50" include="Diesel">
+          <decVal/>
+          <label>Engine tickover rate</label>
+          <tooltip>Used to adjust the engine tickover rate when static</tooltip>
+      </variable>
+      <variable CV="48" item="Sound Setting 1" default="32" include="Diesel">
+          <decVal max="200"/>
+          <label>Engine volume</label>
+          <tooltip>Engine volume control: 0 = silent, 255 = high</tooltip>
+      </variable>
+      <variable CV="49" item="Sound Setting 3" default="80" include="Diesel">
+          <decVal max="255"/>
+          <label>Engine maximum rate</label>
+          <tooltip>Used to adjust the engine maximum rate at speed</tooltip>
+      </variable>
+     <variable CV="50" item="Sound Setting 12" default="120" include="Diesel">
+          <decVal max="255"/>
+          <label>Horn tone</label>
+          <tooltip>Horn tone control: 0 = low pitch, 255 = high pitch</tooltip>
+      </variable>
+      <variable CV="51" item="Sound Setting 11" default="64" include="Diesel">
+          <decVal max="255"/>
+          <label>Horn volume</label>
+          <tooltip>Horn volume control</tooltip>
+      </variable>
+      <variable CV="52" item="Sound Setting 13" default="0" include="Diesel">
+          <decVal max="255"/>
+          <label>Automatic horn</label>
+          <tooltip>Repeating horn interval in seconds, zero is no repeating horn</tooltip>
+      </variable>
+      <variable CV="53" item="Sound Setting 15" default="128"> <!-- common to both models -->
+          <decVal max="255"/>
+          <label>Bell volume</label>
+          <tooltip>Bell volume control</tooltip>
+      </variable>
+      <variable CV="54" item="Sound Setting 7" default="20" include="Diesel">
+          <decVal max="255"/>
+          <label>Airbrake volume</label>
+          <tooltip>Airbrake volume control</tooltip>
+      </variable>
+      <variable CV="55" item="Sound Setting 16" default="32"> <!-- common to both models -->
+          <decVal max="255"/>
+          <label>Guard’s whistle volume</label>
+          <tooltip>Guard’s whistle volume control</tooltip>
+      </variable>
+      <variable CV="56" mask="XXXXXXXV" item="Sound Option 1" default="1" include="Diesel">
+          <enumVal>
+              <enumChoice choice="Single tone horn">
+                  <choice>Single tone horn</choice>
+              </enumChoice>
+              <enumChoice choice="Dual tone horn">
+                  <choice>Dual tone horn</choice>
+              </enumChoice>
+          </enumVal>
+          <label>Airhorn Select</label>
+          <tooltip>Select the type of horn</tooltip>
+      </variable>
+      <variable CV="56" mask="XXXXXXVX" item="Sound Option 2" default="1" include="Diesel">
+          <enumVal>
+              <enumChoice choice="Electric">
+                  <choice>Electric</choice>
+              </enumChoice>
+              <enumChoice choice="Mechanical/hydraulic">
+                  <choice>Mechanical/hydraulic</choice>
+              </enumChoice>
+          </enumVal>
+          <label>Transmission type</label>
+          <tooltip>&lt;html&gt;Electric: loco will rev up before moving and will then remain at constant high revs while accelerating. &lt;br&gt;Mechanical/hydraulic: “gear changes” will be simulated.&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="57" item="Global lighting option 1" default="32"> <!-- common to both models -->
+          <decVal max="127"/>
+          <label>Lighting voltage</label>
+          <tooltip>Proportional up to about 12.7 volts for lighting eg. 32 = 3.2 volts</tooltip>
+      </variable>					
+      <variable CV="58" item="Sound Setting 6" default="120" include="Diesel">
+          <decVal max="255"/>
+          <label>Turbocharger tone</label>
+          <tooltip>Turbocharger pitch</tooltip>
+      </variable>				
+      <variable CV="59" item="Sound Setting 5" default="32" include="Diesel">
+          <decVal max="48"/>
+          <label>Turbocharger volume</label>
+          <tooltip>Turbocharger volume</tooltip>
+      </variable>	
+      <!-- end of Sound variables for Diesel-->
+      <!-- Sound variables for Steam -->
+      <variable CV="48" item="Sound Setting 1" default="32" include="Steam">
+          <decVal max="255"/>
+          <label>Steam volume</label>
+          <tooltip>Chuff and steam hiss volume control: 0 = silent, 255 = high</tooltip>
+      </variable>
+      <variable CV="49" item="Sound Setting 3" default="0" include="Steam">
+          <decVal max="63"/>
+          <label>Chuff sensitivity</label>
+          <tooltip>0 = chuff varies most with acceleration, higher values reduce sensitivity</tooltip>
+      </variable>
+      <variable CV="50" item="Sound Setting 12" default="128" include="Steam">
+          <decVal max="255"/>
+          <label>Whistle tone</label>
+          <tooltip>Whistle tone control: 0 = low pitch, 255 = high pitch</tooltip>
+      </variable>
+      <variable CV="51" item="Sound Setting 11" default="64" include="Steam">
+          <decVal max="255"/>
+          <label>Whistle volume</label>
+          <tooltip>Whistle volume control</tooltip>
+      </variable>
+      <variable CV="52" item="Sound Setting 13" default="0" include="Steam">
+          <decVal max="255"/>
+          <label>Automatic whistle</label>
+          <tooltip>Repeating whistle interval in seconds, zero is no repeating whistle</tooltip>
+      </variable>
+      <!-- CV53: common to both models, see above -->
+      <variable CV="54" item="Sound Setting 7" default="32" include="Steam">
+          <decVal max="255"/>
+          <label>Safety valve volume</label>
+          <tooltip>Safety valve volume control</tooltip>
+      </variable>
+      <!-- CV55: common to both models, see above -->
+      <variable CV="56" mask="XXXXXXXV" item="Sound Option 1" default="0" include="Steam">
+          <enumVal>
+              <enumChoice choice="Plain whistle">
+                  <choice>Plain whistle</choice>
+              </enumChoice>
+              <enumChoice choice="Chime whistle">
+                  <choice>Chime whistle</choice>
+              </enumChoice>
+          </enumVal>
+          <label>Whistle Select</label>
+          <tooltip>Select the type of whistle</tooltip>
+      </variable>
+      <variable CV="56" mask="XXXXXXVX" item="Sound Option 2" default="0" include="Steam">
+          <enumVal>
+              <enumChoice choice="2 or 4 cylinders">
+                  <choice>2 or 4 cylinders</choice>
+              </enumChoice>
+              <enumChoice choice="3 cylinders">
+                  <choice>3 cylinders</choice>
+              </enumChoice>
+          </enumVal>
+          <label>Loco type</label>
+          <tooltip>&lt;html&gt;2 &amp; 4 cylinder locos chuff 4 times in each revolution of the driving wheels &lt;br&gt;3 cylinder locos chuff 6 times per revolution&lt;/html&gt;</tooltip>
+      </variable>
+      <!-- CV57: common to both models, see above -->					
+      <variable CV="63" item="Sound Setting 4" default="8" include="Steam">
+          <decVal max="127"/>
+          <label>Chuff delay</label>
+          <tooltip>The speed step at which the chuff will start when the loco starts from rest</tooltip>
+      </variable>			
+      <variable CV="64" item="EMF Static Config" default="32" include="Steam">
+          <decVal max="127"/>
+          <label>Back EMF strength</label>
+          <tooltip>Higher values may produce smoother running</tooltip>
+      </variable>	
+      <!-- end of Sound variables for Steam -->			
+      <!-- highest used so far: -->
+      <!-- "Sound Setting 1-7, 11-16" -->
+      <!-- "Sound Option 3"  -->
+    </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="8"/>
+    </resets>
+  </decoder>
+</decoder-config>

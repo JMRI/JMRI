@@ -3,6 +3,7 @@ package jmri.jmris.json;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.util.Locale;
 import jmri.JmriException;
 import jmri.jmris.AbstractPowerServer;
 import jmri.jmris.JmriConnection;
@@ -19,11 +20,13 @@ import jmri.jmris.JmriConnection;
  * <code>{type:'power', data:{state:&lt;integer&gt;}}</code>
  *
  * @author rhwood
+ * @deprecated 4.3.4
  */
+@Deprecated
 public class JsonPowerServer extends AbstractPowerServer {
 
-    private JmriConnection connection;
-    private ObjectMapper mapper;
+    private final JmriConnection connection;
+    private final ObjectMapper mapper;
 
     public JsonPowerServer(JmriConnection connection) {
         this.connection = connection;
@@ -38,7 +41,7 @@ public class JsonPowerServer extends AbstractPowerServer {
 
     private void sendStatus() throws IOException {
         try {
-            this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getPower()));
+            this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getPower(this.connection.getLocale())));
         } catch (JsonException ex) {
             this.connection.sendMessage(this.mapper.writeValueAsString(ex.getJsonMessage()));
         }
@@ -50,7 +53,7 @@ public class JsonPowerServer extends AbstractPowerServer {
     }
 
     public void sendErrorStatus(int status) throws IOException {
-        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.handleError(status, Bundle.getMessage("ErrorPower"))));
+        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.handleError(status, Bundle.getMessage(this.connection.getLocale(), "ErrorPower"))));
     }
 
     @Override
@@ -58,9 +61,9 @@ public class JsonPowerServer extends AbstractPowerServer {
         throw new JmriException("Overridden but unsupported method"); // NOI18N
     }
 
-    public void parseRequest(JsonNode data) throws JmriException, IOException, JsonException {
+    public void parseRequest(Locale locale, JsonNode data) throws JmriException, IOException, JsonException {
         if (this.mgrOK()) {
-            JsonUtil.setPower(data);
+            JsonUtil.setPower(locale, data);
         }
         this.sendStatus();
     }

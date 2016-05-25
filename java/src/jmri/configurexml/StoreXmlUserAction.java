@@ -1,35 +1,30 @@
-// StoreXmlUserAction.java
-
 package jmri.configurexml;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.InstanceManager;
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
-
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import jmri.InstanceManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Store the JMRI user-level information as XML.
  * <P>
  * Note that this does not store preferences, configuration, or tool information
- * in the file.  This is not a complete store!
- * See {@link jmri.ConfigureManager} for information on the various
- * types of information stored in configuration files.
+ * in the file. This is not a complete store! See {@link jmri.ConfigureManager}
+ * for information on the various types of information stored in configuration
+ * files.
  *
- * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision$
- * @see         jmri.jmrit.XmlFile
+ * @author	Bob Jacobsen Copyright (C) 2002
+ * @see jmri.jmrit.XmlFile
  */
 public class StoreXmlUserAction extends StoreXmlConfigAction {
 
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
 
     public StoreXmlUserAction() {
-        this(
-            java.util.ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle")
-                .getString("MenuItemStore"));
+        this(rb.getString("MenuItemStore"));
     }
 
     public StoreXmlUserAction(String s) {
@@ -37,35 +32,30 @@ public class StoreXmlUserAction extends StoreXmlConfigAction {
     }
 
     public void actionPerformed(ActionEvent e) {
-        String oldButtonText=userFileChooser.getApproveButtonText();
-        String oldDialogTitle=userFileChooser.getDialogTitle();
-        int oldDialogType=userFileChooser.getDialogType();
-	userFileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
-        userFileChooser.setApproveButtonText(java.util.ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle").getString("MenuItemStore"));
-        userFileChooser.setDialogTitle(java.util.ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle").getString("MenuItemStore"));
+        JFileChooser userFileChooser = getUserFileChooser();
+        userFileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
+        userFileChooser.setApproveButtonText(rb.getString("StorePanelTitle"));
+        userFileChooser.setDialogTitle(rb.getString("StorePanelTitle"));
         java.io.File file = getFileCustom(userFileChooser);
- 
-        if (file==null) return;
-        
+
+        if (file == null) {
+            return;
+        }
+
         // make a backup file
         InstanceManager.configureManagerInstance().makeBackup(file);
         // and finally store
         boolean results = InstanceManager.configureManagerInstance().storeUser(file);
-        log.debug(results?"store was successful":"store failed");
-        if (!results){
-        	JOptionPane.showMessageDialog(null,
-        			rb.getString("StoreHasErrors")+"\n"
-        			+rb.getString("StoreIncomplete")+"\n"
-        			+rb.getString("ConsoleWindowHasInfo"),
-        			rb.getString("StoreError"),	JOptionPane.ERROR_MESSAGE);
+        log.debug(results ? "store was successful" : "store failed");
+        if (!results) {
+            JOptionPane.showMessageDialog(null,
+                    rb.getString("StoreHasErrors") + "\n"
+                    + rb.getString("StoreIncomplete") + "\n"
+                    + rb.getString("ConsoleWindowHasInfo"),
+                    rb.getString("StoreError"), JOptionPane.ERROR_MESSAGE);
         }
-
-        // The last thing we do is restore the Approve button text.
-	userFileChooser.setDialogType(oldDialogType);
-        userFileChooser.setApproveButtonText(oldButtonText);
-	userFileChooser.setDialogTitle(oldDialogTitle);
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(StoreXmlUserAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(StoreXmlUserAction.class.getName());
 }

@@ -22,6 +22,13 @@
       </personname>
       <email>suzie_tall@yahoo.co.uk</email>
     </author>
+    <author>
+      <personname>
+        <firstname>Dave</firstname>
+        <surname>Sand</surname>
+      </personname>
+      <email>dave@sandsys.org</email>
+    </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
@@ -35,6 +42,12 @@
       <date>2013-07-01</date>
       <authorinitials>ST</authorinitials>
       <revremark>Added aspect mapping and specific appearances.</revremark>
+    </revision>
+    <revision>
+      <revnumber>1.2</revnumber>
+      <date>2015-02-06</date>
+      <authorinitials>DS</authorinitials>
+      <revremark>Added Diverging Clear, Branch Clear</revremark>
     </revision>
   </revhistory>
   <aspecttable>SPTCO-1930</aspecttable>
@@ -149,10 +162,14 @@
     <aspectMapping>
       <advancedAspect>Diverging Clear</advancedAspect>
       <ourAspect>Clear</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+      <ourAspect>Branch Clear</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Diverging Approach</advancedAspect>
       <ourAspect>Clear</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+      <ourAspect>Branch Clear</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Branch Clear</advancedAspect>

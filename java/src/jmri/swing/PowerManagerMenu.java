@@ -1,22 +1,27 @@
 // PowerManagerMenu.java
-
 package jmri.swing;
 
 import java.util.List;
-
-import javax.swing.*;
-
+import javax.swing.ButtonGroup;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JRadioButtonMenuItem;
 import jmri.InstanceManager;
 import jmri.PowerManager;
 
 /**
  * Create a menu for selecting the Power Manager to use
  *
- * @author	Bob Jacobsen   Copyright 2010
- * @version     $Revision$
+ * @author	Bob Jacobsen Copyright 2010
+ * @version $Revision$
  * @since 2.9.5
  */
 abstract public class PowerManagerMenu extends JMenu {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1282259771699660069L;
 
     /**
      * Get the currently selected manager
@@ -24,9 +29,9 @@ abstract public class PowerManagerMenu extends JMenu {
     public PowerManager get() {
         return null;
     }
-    
+
     abstract protected void choiceChanged();
-    
+
     /**
      * Create a PowerManager menu.
      */
@@ -34,21 +39,20 @@ abstract public class PowerManagerMenu extends JMenu {
         super();
 
         ButtonGroup group = new ButtonGroup();
-        
+
         // label this menu
         setText("Connection");
-        
+
         // now add an item for each available manager
-        List<Object> managers = InstanceManager.getList(PowerManager.class);
+        List<PowerManager> managers = InstanceManager.getList(PowerManager.class);
         if (managers != null) {
-            for (Object obj : managers) {
-                PowerManager mgr = (PowerManager) obj;
+            for (PowerManager mgr : managers) {
                 if (mgr != null) {
                     JMenuItem item = new JRadioButtonMenuItem(mgr.getUserName());
                     add(item);
                     group.add(item);
                     items.add(item);
-                    item.addActionListener(new java.awt.event.ActionListener(){
+                    item.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent e) {
                             choiceChanged();
                         }
@@ -56,32 +60,38 @@ abstract public class PowerManagerMenu extends JMenu {
                 }
             }
         }
-        
+
         setDefault();
     }
-    
-    List<JMenuItem> items = new java.util.ArrayList<JMenuItem>(); 
-    
+
+    List<JMenuItem> items = new java.util.ArrayList<JMenuItem>();
+
     void setDefault() {
         // name of default
         PowerManager manager = InstanceManager.powerManagerInstance();
-        if (manager == null) return;
+        if (manager == null) {
+            return;
+        }
         String defaultMgr = manager.getUserName();
-        if (defaultMgr == null) return;
-        
+        if (defaultMgr == null) {
+            return;
+        }
+
         for (JMenuItem item : items) {
             if (defaultMgr.equals(item.getActionCommand())) {
                 item.setSelected(true);
             }
         }
     }
-    
+
     public PowerManager getManager() {
         // start with default
         PowerManager manager = InstanceManager.powerManagerInstance();
-        if (manager == null) return null;
+        if (manager == null) {
+            return null;
+        }
         String name = manager.getUserName();
-        
+
         // find active name
         for (JMenuItem item : items) {
             if (item.isSelected()) {
@@ -90,14 +100,13 @@ abstract public class PowerManagerMenu extends JMenu {
             }
         }
         // find PowerManager and return
-        List<Object> managers = InstanceManager.getList(PowerManager.class);
-        for (Object obj : managers) {
-            PowerManager mgr = (PowerManager) obj;
-            if (name.equals(mgr.getUserName())) return mgr;
+        List<PowerManager> managers = InstanceManager.getList(PowerManager.class);
+        for (PowerManager mgr : managers) {
+            if (name.equals(mgr.getUserName())) {
+                return mgr;
+            }
         }
         // should not happen
         return null;
     }
 }
-
-

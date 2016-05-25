@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2004 All rights reserved -->
-<!-- $Id: Hornby8249.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -14,90 +14,54 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Bob Jacobsen rgj1927@pacbell.net" version="1" lastUpdated="20080821"/>
+  <version author="Peter Ulvestad" version="2" lastUpdated="20131222"/>
+  <!-- Version 2 - Corrected CV 29 default, Renamed family to match branding. -->
   <!-- Decoder used in Hornby engines -->
   <decoder>
-    <family name="R8249" mfg="Hornby">
+    <family name="Digital" mfg="Hornby" highVersionID="13" lowVersionID="13">
       <model model="R8249" numOuts="4" numFns="4" nmraWarrant="yes" nmraWarrantStart="200808" maxTotalCurrent="0.5A" maxMotorCurrent="0.5A">
         <size length="17" width="10" height="3.5" units="mm"/>
       </model>
-      <!-- don't know version id, maybe lowVersionID="13"?  -->
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
-        <shortAddressVal/>
-        <label>Primary Address</label>
-        <comment>Short address</comment>
-      </variable>
-      <variable label="Acceleration Rate  " CV="3" default="5" item="Accel">
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable CV="3" default="5" item="Accel">
         <decVal max="255"/>
         <label>Acceleration Rate  </label>
+        <label xml:lang="it">Accellerazione (0-255)</label>
+        <label xml:lang="fr">Accelération (0-255)</label>
+        <label xml:lang="de">Anfahrverzögerung (0-255)</label>
       </variable>
-      <variable label="Deceleration Rate  " CV="4" default="5" item="Decel">
+      <variable CV="4" default="5" item="Decel">
         <decVal max="255"/>
         <label>Deceleration Rate  </label>
+        <label xml:lang="it">Decellerazione (1-255)</label>
+        <label xml:lang="fr">Décélération (1-255)</label>
+        <label xml:lang="de">Bremszeit (1-255)</label>
       </variable>
-      <variable label="Long Address" CV="17" item="Extended Address" comment="4 digit address (Range 0001-9999)">
-        <longAddressVal/>
-        <label>Long Address</label>
-        <comment>4 digit address (Range 0001-9999)</comment>
-      </variable>
-      <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
+      <variable CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
         <label>Version ID</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer" default="48">
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="48">
         <decVal/>
         <label>Manufacturer ID</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
       </variable>
-      <variable label="EMF Feedback Cutout" CV="10" item="EMF Feedback Cutout" default="128">
+      <variable CV="10" item="EMF Feedback Cutout" default="128">
         <decVal max="128"/>
         <label>EMF Feedback Cutout</label>
       </variable>
-      <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
-        <enumVal>
-          <enumChoice choice="Forward">
-            <choice>Forward</choice>
-          </enumChoice>
-          <enumChoice choice="Reverse">
-            <choice>Reverse</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Normal direction of motion</label>
-      </variable>
-      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
-        <enumVal>
-          <enumChoice choice="14">
-            <choice>14</choice>
-          </enumChoice>
-          <enumChoice choice="28/128 (recommended)">
-            <choice>28/128 (recommended)</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed Steps</label>
-      </variable>
-      <variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" default="0" item="Analog (DC) Operation">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Analog conversion mode</label>
-      </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format">
-        <enumVal>
-          <enumChoice choice="2 digit addressing">
-            <choice>2 digit addressing</choice>
-          </enumChoice>
-          <enumChoice choice="4 digit addressing">
-            <choice>4 digit addressing</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Addressing Mode</label>
-      </variable>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <!-- Define the fixed Function-Output mapping -->
       <constant item="FL(f) controls output 1" minOut="1" default="1"/>
       <constant item="FL(r) controls output 2" minOut="2" default="1"/>

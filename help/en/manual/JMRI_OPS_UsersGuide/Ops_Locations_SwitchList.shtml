@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<title>JMRI OperationsPro- Locations</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<a name="Top"></a>
+
+<h1>Using JMRI&reg; to Operate Trains</h1>
+<h2>OperationsPro: Yardmaster (Switch List) window</h2>
+
+<div align="right">
+<p><a href="Ops_Locations_List.shtml">Back</a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+
+<hr>
+<p>The Location <span style="font-weight: bold;">Yardmaster</span> window as shown below is opened by clicking the <span style="font-weight: bold;">Yardmaster</span>
+button in the individual Location in the <a href="Ops_Locations_List.shtml">Locations</a> window.</p>
+<p>The Yardmaster tool allows you to show a list of all scheduled pick ups and set outs by Train.
+Only Trains that have work for the selected Location are available.</p>
+<p style="text-align: center;"><img style="width: 637px; height: 500px;" alt="switch List" src="images/Ops_Location_SwitchList.png"></p>
+
+<div align="right"><p><a href="Ops_Locations_List.shtml">Back<br></a><a href="Ops_Cars.shtml"></a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</div>
+</div>
+</body>
+</html>

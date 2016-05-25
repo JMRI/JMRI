@@ -1,9 +1,5 @@
-//AbstractMonFrame.java
-
 package jmri.jmrix;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,20 +26,22 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.text.*;
+import javax.swing.text.BadLocationException;
 import jmri.util.FileUtil;
 import jmri.jmrix.cmri.serial.serialmon.SerialFilterFrame;
 import jmri.jmrix.cmri.serial.serialmon.SerialMonFrame;
 
 import jmri.util.JmriJFrame;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base class for Frames displaying communications monitor information
- * @author	Bob Jacobsen   Copyright (C) 2001, 2003
+ *
+ * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2014
  * @author	Chuck Catania  Copyright (C) 2014, 2016
- * @version	$Revision: 20196 $
  */
-public abstract class AbstractMonFrame extends JmriJFrame  {
+public abstract class AbstractMonFrame extends JmriJFrame {
 
     // template functions to fill in
     protected abstract String title();    // provide the title for the frame
@@ -51,14 +49,14 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
     /**
      * Initialize the data source.
      * <P>
-     * This is invoked at the end of the GUI initialization phase.
-     * Subclass implementations should connect to their data source here.
+     * This is invoked at the end of the GUI initialization phase. Subclass
+     * implementations should connect to their data source here.
      */
     protected abstract void init();
 
     // the subclass also needs a dispose() method to close any specific communications; call super.dispose()
     @Override
-    public void dispose() { 
+    public void dispose() {
         p.setSimplePreferenceState(timeStampCheck, timeCheckBox.isSelected());
         p.setSimplePreferenceState(rawDataCheck, rawCheckBox.isSelected());
         p.setSimplePreferenceState(alwaysOnTopCheck, alwaysOnTopCheckBox.isSelected());
@@ -119,20 +117,20 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         // the following code sets the frame's initial state
 
-        clearButton.setText("Clear screen");
+        clearButton.setText(Bundle.getMessage("ButtonClearScreen")); // NOI18N
         clearButton.setVisible(true);
-        clearButton.setToolTipText("Clear monitoring history");
+        clearButton.setToolTipText(Bundle.getMessage("TooltipClearMonHistory")); // NOI18N
 
-        freezeButton.setText("Freeze Display");
+        freezeButton.setText(Bundle.getMessage("ButtonFreezeScreen")); // NOI18N
         freezeButton.setVisible(true);
-        freezeButton.setToolTipText("Start/Stop display scrolling");
+        freezeButton.setToolTipText(Bundle.getMessage("TooltipStopScroll")); // NOI18N
 
-        enterButton.setText("Add Message");
+        enterButton.setText(Bundle.getMessage("ButtonAddMessage")); // NOI18N
         enterButton.setVisible(true);
-        enterButton.setToolTipText("Add a text message to the log");
+        enterButton.setToolTipText(Bundle.getMessage("TooltipAddMessage")); // NOI18N
 
         monTextPane.setVisible(true);
-        monTextPane.setToolTipText("Command and reply monitoring information appears here");
+        monTextPane.setToolTipText(Bundle.getMessage("TooltipMonTextPane")); // NOI18N
         monTextPane.setEditable(false);
 
         // Add document listener to scroll to end when modified if required
@@ -159,37 +157,38 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
             }
         });
 
-        entryField.setToolTipText("Enter text here, then click button to include it in log");
+        entryField.setToolTipText(Bundle.getMessage("TooltipEntryPane")); // NOI18N
 
         // fix a width for current character set
         JTextField t = new JTextField(80);
-        int x = jScrollPane1.getPreferredSize().width+t.getPreferredSize().width;
-        int y = jScrollPane1.getPreferredSize().height+10*t.getPreferredSize().height;
+        int x = jScrollPane1.getPreferredSize().width + t.getPreferredSize().width;
+        int y = jScrollPane1.getPreferredSize().height + 10 * t.getPreferredSize().height;
 
         jScrollPane1.getViewport().add(monTextPane);
         jScrollPane1.setPreferredSize(new Dimension(x, y));
         jScrollPane1.setVisible(true);
         jScrollPane1.setBorder(packetDisplayBorderTitled); 
                 
-        logMsgButton.setText("Start Logging");
+        logMsgButton.setText(Bundle.getMessage("ButtonStartLogging"));
         logMsgButton.setVisible(true);
-        logMsgButton.setToolTipText("Start/Stop message logging to file");
+        logMsgButton.setToolTipText(Bundle.getMessage("TooltipStartLogging")); //NOI18N
 /*
-        startLogButton.setText("Start logging");
+        startLogButton.setText(Bundle.getMessage("ButtonStartLogging"));
         startLogButton.setVisible(true);
-        startLogButton.setToolTipText("Start logging to file");
-        stopLogButton.setText("Stop logging");
-        stopLogButton.setVisible(true);
-        stopLogButton.setToolTipText("Stop logging to file");
+        startLogButton.setToolTipText(Bundle.getMessage("TooltipStartLogging")); // NOI18N
 */
-        rawCheckBox.setText("Show raw data");
+        stopLogButton.setText(Bundle.getMessage("ButtonStopLogging")); // NOI18N
+        stopLogButton.setVisible(true);
+        stopLogButton.setToolTipText(Bundle.getMessage("TooltipStopLogging")); // NOI18N
+
+        rawCheckBox.setText(Bundle.getMessage("ButtonShowRaw")); // NOI18N
         rawCheckBox.setVisible(true);
-        rawCheckBox.setToolTipText("If checked, show the raw traffic in hex");
+        rawCheckBox.setToolTipText(Bundle.getMessage("TooltipShowRaw")); // NOI18N
         rawCheckBox.setSelected(p.getSimplePreferenceState(rawDataCheck));
 
-        timeCheckBox.setText("Show timestamps");
+        timeCheckBox.setText(Bundle.getMessage("ButtonShowTimestamps")); // NOI18N
         timeCheckBox.setVisible(true);
-        timeCheckBox.setToolTipText("If checked, show timestamps before each message");
+        timeCheckBox.setToolTipText(Bundle.getMessage("TooltipShowTimestamps")); // NOI18N
         timeCheckBox.setSelected(p.getSimplePreferenceState(timeStampCheck));
         
         deltaTBox.setText("w/Time Diff");
@@ -197,20 +196,20 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
         deltaTBox.setToolTipText("If checked, show time difference in mS");
         deltaTBox.setSelected(p.getSimplePreferenceState(deltaTCheck));
         
-        alwaysOnTopCheckBox.setText("Window always on Top");
+        alwaysOnTopCheckBox.setText(Bundle.getMessage("ButtonWindowOnTop")); // NOI18N
         alwaysOnTopCheckBox.setVisible(true);
-        alwaysOnTopCheckBox.setToolTipText("If checked, this window be always be displayed in front of any other window");
+        alwaysOnTopCheckBox.setToolTipText(Bundle.getMessage("TooltipWindowOnTop")); // NOI18N
         alwaysOnTopCheckBox.setSelected(p.getSimplePreferenceState(alwaysOnTopCheck));
         setAlwaysOnTop(alwaysOnTopCheckBox.isSelected());
 
-        autoScrollCheckBox.setText("Auto scroll");
+        autoScrollCheckBox.setText(Bundle.getMessage("ButtonAutoScroll")); // NOI18N
         autoScrollCheckBox.setVisible(true);
-        autoScrollCheckBox.setToolTipText("If checked, always scroll to the latest log entry");
+        autoScrollCheckBox.setToolTipText(Bundle.getMessage("TooltipAutoScroll")); // NOI18N
         autoScrollCheckBox.setSelected(!p.getSimplePreferenceState(autoScrollCheck));
 
-        openFileChooserButton.setText("Choose log file");
+        openFileChooserButton.setText(Bundle.getMessage("ButtonChooseLogFile")); // NOI18N
         openFileChooserButton.setVisible(true);
-        openFileChooserButton.setToolTipText("Click here to select a new output log file");
+        openFileChooserButton.setToolTipText(Bundle.getMessage("TooltipChooseLogFile")); // NOI18N
 
         packetfilterButton.setText("Filter Packets");
         packetfilterButton.setVisible(true);
@@ -377,13 +376,12 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
     /**
      * Define help menu for this window.
      * <p>
-     * By default, provides a generic help page
-     * that covers general features.  Specific
-     * implementations can override this to 
-     * show their own help page if desired.
+     * By default, provides a generic help page that covers general features.
+     * Specific implementations can override this to show their own help page if
+     * desired.
      */
     protected void addHelpMenu() {
-        addHelpMenu("package.jmri.jmrix.AbstractMonFrame", true);
+        addHelpMenu("package.jmri.jmrix.AbstractMonFrame", true); // NOI18N
     }
 
     public void nextLine(String line, String raw) {
@@ -414,15 +412,14 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
         }
  */
         // display the raw data if requested
-        if ( rawCheckBox.isSelected() ) {
-            sb.append( '[' ).append(raw).append( "]  " );
+        if (rawCheckBox.isSelected()) {
+            sb.append('[').append(raw).append("]  "); // NOI18N
         }
 
         // display decoded data
         sb.append(line);
-        synchronized( self )
-        {
-            linesBuffer.append( sb.toString() );
+        synchronized (self) {
+            linesBuffer.append(sb.toString());
         }
 
         // if not frozen, display it in the Swing thread
@@ -430,21 +427,18 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
         if (!freezeDisplay) {
             Runnable r = new Runnable() {
                 public void run() {
-                    synchronized( self )
-                    {
-                        monTextPane.append( linesBuffer.toString() );
-                        int LineCount = monTextPane.getLineCount() ;
-                        if( LineCount > MAX_LINES )
-                        {
-                            LineCount -= MAX_LINES ;
+                    synchronized (self) {
+                        monTextPane.append(linesBuffer.toString());
+                        int LineCount = monTextPane.getLineCount();
+                        if (LineCount > MAX_LINES) {
+                            LineCount -= MAX_LINES;
                             try {
                                 int offset = monTextPane.getLineStartOffset(LineCount);
-                                monTextPane.getDocument().remove(0, offset ) ;
-                            }
-                            catch (BadLocationException ex) {
+                                monTextPane.getDocument().remove(0, offset);
+                            } catch (BadLocationException ex) {
                             }
                         }
-                        linesBuffer.setLength(0) ;
+                        linesBuffer.setLength(0);
                     }
                 }
             };
@@ -452,7 +446,6 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
         }
 
         // if requested, log to a file.
-
         if (logStream != null) {
             synchronized (logStream) {
                 String logLine = sb.toString();
@@ -460,12 +453,13 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
                     // have to massage the line-ends
                     int i = 0;
                     int lim = sb.length();
-                    StringBuffer out = new StringBuffer(sb.length()+10);  // arbitrary guess at space
-                    for ( i = 0; i<lim; i++) {
-                        if (sb.charAt(i) == '\n')
+                    StringBuffer out = new StringBuffer(sb.length() + 10);  // arbitrary guess at space
+                    for (i = 0; i < lim; i++) {
+                        if (sb.charAt(i) == '\n') {
                             out.append(newline);
-                        else
+                        } else {
                             out.append(sb.charAt(i));
+                        }
                     }
                     logLine = out.toString();
                 }
@@ -474,12 +468,11 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
         }
     }
 
-    String newline = System.getProperty("line.separator");
+    String newline = System.getProperty("line.separator"); // NOI18N
 
     public synchronized void clearButtonActionPerformed(java.awt.event.ActionEvent e) {
         // clear the monitoring history
-        synchronized( linesBuffer )
-        {
+        synchronized (linesBuffer) {
             linesBuffer.setLength(0);
             monTextPane.setText("");
         }
@@ -545,22 +538,22 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
     }
     
 
-/*
+
     public synchronized void startLogButtonActionPerformed(java.awt.event.ActionEvent e) {
         // start logging by creating the stream
-        if ( logStream==null) {  // successive clicks don't restart the file
+        if (logStream == null) {  // successive clicks don't restart the file
             // start logging
             try {
-                logStream = new PrintStream (new FileOutputStream(logFileChooser.getSelectedFile()));
+                logStream = new PrintStream(new FileOutputStream(logFileChooser.getSelectedFile()));
             } catch (Exception ex) {
-                log.error("exception "+ex);
+                log.error("exception " + ex);
             }
         }
     }
 
     public synchronized void stopLogButtonActionPerformed(java.awt.event.ActionEvent e) {
         // stop logging by removing the stream
-        if (logStream!=null) {
+        if (logStream != null) {
             synchronized (logStream) {
                 logStream.flush();
                 logStream.close();
@@ -568,7 +561,7 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
             logStream = null;
         }
     }
-*/
+
     public void openFileChooserButtonActionPerformed(java.awt.event.ActionEvent e) {
         // start at current file, show dialog
         int retVal = logFileChooser.showSaveDialog(this);
@@ -580,8 +573,9 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
             logButtonActionPerformed(e);  // stop before changing file
             //File file = logFileChooser.getSelectedFile();
             // if we were currently logging, start the new file
-//            if (loggingNow) startLogButtonActionPerformed(e);
-            if (loggingNow) logButtonActionPerformed(e);
+            if (loggingNow) {
+                startLogButtonActionPerformed(e);
+            }
         }
     }
 
@@ -598,17 +592,17 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
 	}
     
     public void enterButtonActionPerformed(java.awt.event.ActionEvent e) {
-        nextLine(entryField.getText()+"\n", "");
+        nextLine(entryField.getText() + "\n", ""); // NOI18N
     }
-    
+
     public synchronized String getFrameText() {
         return linesBuffer.toString();
     }
 
     /**
-     * Method to position caret at end of JTextArea ta when
-     * scroll true.
-     * @param ta Reference to JTextArea
+     * Method to position caret at end of JTextArea ta when scroll true.
+     *
+     * @param ta     Reference to JTextArea
      * @param scroll True to move to end
      */
     private void doAutoScroll(final JTextArea ta, final boolean scroll) {
@@ -618,9 +612,9 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
                 int len = ta.getText().length();
                 if (scroll) {
                     ta.setCaretPosition(len);
-                } else if (ta.getCaretPosition()==len && len>0) {
-                    ta.setCaretPosition(len-1);
-                }        
+                } else if (ta.getCaretPosition() == len && len > 0) {
+                    ta.setCaretPosition(len - 1);
+                }
             }
         });
     }
@@ -631,6 +625,6 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
     DateFormat df = new SimpleDateFormat("HH:mm:ss.SSS");
 
     StringBuffer linesBuffer = new StringBuffer();
-    static private int MAX_LINES = 500 ;
+    static private int MAX_LINES = 500;
     private static final Logger log = LoggerFactory.getLogger(AbstractMonFrame.class.getName());
 }

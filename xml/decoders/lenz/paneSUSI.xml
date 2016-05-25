@@ -1,7 +1,7 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2012 All rights reserved -->
-<!-- $Id: accelDecel.xml 22090 2012-12-29 02:30:04Z jacobsen $ -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -12,7 +12,9 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<pane name="SUSI" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>SUSI</name>
+  <name xml:lang="de">SUSI</name>
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2012</year>
     <holder>JMRI</holder>
@@ -39,21 +41,20 @@
       <revremark>Revision in original Lenz_Gold.xml file</revremark>
     </revision>
   </revhistory>
-  
-    <column>
-      <row>
-        <column>
-          <label label="              S.U.S.I. Variables">
-            <label>              S.U.S.I. Variables</label>
-            <label xml:lang="it">              S.U.S.I. Variabili</label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <display item="SUSI Indicator"/>
-          <display item="SUSI transport"/>
-        </column>
-      </row>
-    </column>
-    <name>SUSI</name>
+  <column>
+    <row>
+      <column>
+        <label>
+          <text>              S.U.S.I. Variables</text>
+          <text xml:lang="de">              S.U.S.I. Variablen</text>
+		      <text xml:lang="it">              Variabili S.U.S.I.</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <display item="SUSI Indicator"/>
+        <display item="SUSI transport"/>
+      </column>
+    </row>
+  </column>
 </pane>

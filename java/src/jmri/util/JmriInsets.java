@@ -1,9 +1,5 @@
-// JmriInsets.java
-
 package jmri.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
@@ -16,100 +12,108 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * This class attempts to retrieve the screen insets for all
- * operating systems.
+ * This class attempts to retrieve the screen insets for all operating systems.
  *
- * The standard insets command fails on Linux - this class attempts
- * to rectify that.
+ * The standard insets command fails on Linux - this class attempts to rectify
+ * that.
  *
- * Borrows heavily from the Linsets class created by:
- *   A. Tres Finocchiaro
- *   http://forums.sun.com/thread.jspa?threadID=5169228&start=29
+ * <a href="http://forums.sun.com/thread.jspa?threadID=5169228&start=29">
+ * Borrows heavily from the Linsets class created by: A. Tres Finocchiaro
+ * </a>
  *
- * 
- * @author      Matt Harris
- * @version     $Revision$
+ *
+ * @author Matt Harris
  */
 public class JmriInsets {
 
     private static final String DESKTOP_ENVIRONMENTS = "kdesktop|gnome-panel|xfce|darwin|icewm"; //NOI18N
-    
+
     private static final String GNOME_CONFIG = "%gconf.xml"; //NOI18N
     private static final String GNOME_PANEL = "_panel_screen"; //NOI18N
     private static final String GNOME_ROOT = System.getProperty("user.home") + "/.gconf/apps/panel/toplevels/"; //NOI18N
-    
+
     private static final String KDE_CONFIG = System.getProperty("user.home") + "/.kde/share/config/kickerrc"; //NOI18N
-    
+
     //private static final String XFCE_CONFIG = System.getProperty("user.home") + "/.config/xfce4/mcs_settings/panel.xml";
-    
     private static final String OS_NAME = SystemType.getOSName();
-    
+
     // Set this to -2 initially (out of the normal range)
     // which can then be used to determine if we need to
     // determine the window manager in use.
     private static int linuxWM = -2;
 
-    
     /**
      * Creates a new instance of JmriInsets
      */
     public static Insets getInsets() {
-    
-        if(linuxWM==-2) linuxWM=getLinuxWindowManager();
-        
+
+        if (linuxWM == -2) {
+            linuxWM = getLinuxWindowManager();
+        }
+
         switch (linuxWM) {
-            case 0: return getKDEInsets();
-            case 1: return getGnomeInsets();
-            case 2: return getXfceInsets();
-            case 3: return getDarwinInsets();
-            case 4: return getIcewmInsets();
-            default: return getDefaultInsets();
+            case 0:
+                return getKDEInsets();
+            case 1:
+                return getGnomeInsets();
+            case 2:
+                return getXfceInsets();
+            case 3:
+                return getDarwinInsets();
+            case 4:
+                return getIcewmInsets();
+            default:
+                return getDefaultInsets();
         }
 
     }
-    
+
     /*
      * Determine the current Linux Window Manager
      */
-    private static int getLinuxWindowManager(){
-        if(!SystemType.isWindows() &&
-           !OS_NAME.toLowerCase().startsWith("mac")) { //NOI18N
+    private static int getLinuxWindowManager() {
+        if (!SystemType.isWindows()
+                && !OS_NAME.toLowerCase().startsWith("mac")) { //NOI18N
             try {
                 Process p = Runtime.getRuntime().exec("ps ax"); //NOI18N
                 BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
-                
+
                 try {
                     java.util.List<String> desktopList = Arrays.asList(DESKTOP_ENVIRONMENTS.split("\\|")); //NOI18N
-                    
+
                     String line = r.readLine();
                     while (line != null) {
-                        for (int i=0; i < desktopList.size(); i++) {
+                        for (int i = 0; i < desktopList.size(); i++) {
                             String s = desktopList.get(i).toString();
-                            if(line.contains(s) && !line.contains("grep")) //NOI18N
+                            if (line.contains(s) && !line.contains("grep")) //NOI18N
+                            {
                                 return desktopList.indexOf(s);
+                            }
                         }
                         line = r.readLine();
                     }
                 } catch (java.io.IOException e1) {
                     log.error("error reading file", e1);
                     throw e1;
-                }
-                finally { 
+                } finally {
                     try {
                         r.close();
-                    } catch (java.io.IOException e2) { log.error("Exception closing file", e2); }
+                    } catch (java.io.IOException e2) {
+                        log.error("Exception closing file", e2);
+                    }
                 }
 
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 log.error("IO Exception");
             }
         }
         return -1;
     }
-    
+
     /*
      * Get insets for KDE 3.5+
      */
@@ -121,106 +125,114 @@ public class JmriInsets {
          */
         int[] sizes = {24, 30, 46, 58, 0}; // xSmall, Small, Medium, Large, xLarge, Null
         int[] i = {0, 0, 0, 0, 0};         // Left, Right, Top, Bottom, Null
-        
+
         /* Needs to be fixed. Doesn't know the difference between CustomSize and Size */
         int iniCustomSize = getKdeINI("General", "CustomSize"); //NOI18N
         int iniSize = getKdeINI("General", "Size"); //NOI18N
         int iniPosition = getKdeINI("General", "Position"); //NOI18N
-        int position = iniPosition==-1?3:iniPosition;
-        int size = (iniCustomSize==-1 || iniSize!=4)?iniSize:iniCustomSize;
-        size = size<24?sizes[size]:size;
-        i[position]=size;
+        int position = iniPosition == -1 ? 3 : iniPosition;
+        int size = (iniCustomSize == -1 || iniSize != 4) ? iniSize : iniCustomSize;
+        size = size < 24 ? sizes[size] : size;
+        i[position] = size;
         return new Insets(i[2], i[0], i[3], i[1]);
     }
-    
+
     /*
      * Get insets for Gnome
      */
     private static Insets getGnomeInsets() {
         File gnomeRoot = new File(GNOME_ROOT);
-        
-        int n=0; int s=0; int e=0; int w=0;
-        for(int i=0; i<gnomeRoot.listFiles().length; i++) {
+
+        int n = 0;
+        int s = 0;
+        int e = 0;
+        int w = 0;
+        for (int i = 0; i < gnomeRoot.listFiles().length; i++) {
             File f = gnomeRoot.listFiles()[i];
             String folder = f.getName();
-            if(f.isDirectory() && folder.contains(GNOME_PANEL)) {
+            if (f.isDirectory() && folder.contains(GNOME_PANEL)) {
                 int val = getGnomeXML(new File(GNOME_ROOT + "/" + folder + "/" + GNOME_CONFIG));
-                if(val == -1)
-                    {//Skip
-                    } 
-                else if (folder.startsWith("top" + GNOME_PANEL)) //NOI18N
+                if (val == -1) {//Skip
+                } else if (folder.startsWith("top" + GNOME_PANEL)) //NOI18N
+                {
                     n = Math.max(val, n);
-                else if (folder.startsWith("bottom" + GNOME_PANEL)) //NOI18N
+                } else if (folder.startsWith("bottom" + GNOME_PANEL)) //NOI18N
+                {
                     s = Math.max(val, s);
-                else if (folder.startsWith("right" + GNOME_PANEL)) //NOI18N
+                } else if (folder.startsWith("right" + GNOME_PANEL)) //NOI18N
+                {
                     e = Math.max(val, e);
-                else if (folder.startsWith("left" + GNOME_PANEL)) //NOI18N
+                } else if (folder.startsWith("left" + GNOME_PANEL)) //NOI18N
+                {
                     w = Math.max(val, w);
+                }
             }
         }
         return new Insets(n, w, s, e);
     }
-    
+
     /*
      * Get insets for Xfce
      */
     private static Insets getXfceInsets() {
         return getDefaultInsets(false);
     }
-    
+
     /*
      * Get insets for Darwin (Mac OS X)
      */
     private static Insets getDarwinInsets() {
         return getDefaultInsets(false);
     }
-    
+
     /*
      * Get insets for IceWM
      */
     private static Insets getIcewmInsets() {
-        // OK, this is being a bit lazy but the vast majority of 
+        // OK, this is being a bit lazy but the vast majority of
         // IceWM themes do not seem to modify the taskbar height
         // from the default 25 pixels nor do they change the
         // position of being along the bottom
         return new Insets(0, 0, 25, 0);
     }
-    
+
     /*
      * Default insets (Java standard)
      * Write log entry for any OS that we don't yet now how to handle.
      */
     private static Insets getDefaultInsets() {
-        if(!OS_NAME.toLowerCase().startsWith("windows")&& //NOI18N
-           !OS_NAME.toLowerCase().startsWith("mac")) //NOI18N
-            // MS Windows & Mac OS will always end-up here, so no need to log.
+        if (!OS_NAME.toLowerCase().startsWith("windows") && //NOI18N
+                !OS_NAME.toLowerCase().startsWith("mac")) //NOI18N
+        // MS Windows & Mac OS will always end-up here, so no need to log.
+        {
             return getDefaultInsets(false);
-        else
-            // any other OS ends up here
+        } else // any other OS ends up here
+        {
             return getDefaultInsets(true);
+        }
     }
-    
+
     private static Insets getDefaultInsets(boolean logOS) {
-        if (logOS) log.debug("Trying default insets for " + OS_NAME);
+        if (logOS) {
+            log.trace("Trying default insets for {}", OS_NAME);
+        }
         try {
             GraphicsDevice gs[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices();
-            for(int i = 0; i < gs.length; i++) {
+            for (int i = 0; i < gs.length; i++) {
                 GraphicsConfiguration gc[] = gs[i].getConfigurations();
-                for(int j = 0; j < gc.length; j++) {
-                    return(Toolkit.getDefaultToolkit().getScreenInsets(gc[j]));                    
+                for (GraphicsConfiguration element : gc) {
+                    return (Toolkit.getDefaultToolkit().getScreenInsets(element));
                 }
             }
-        }
-        catch (HeadlessException h) {
+        } catch (HeadlessException h) {
             log.debug("Warning: Headless error - no GUI available");
         }
         return new Insets(0, 0, 0, 0);
     }
-    
+
     /*
      * Some additional routines required for specific window managers
      */
-    
     /*
      * Parse XML files for some sizes in Gnome
      */
@@ -230,8 +242,8 @@ public class JmriInsets {
             FileReader reader = new FileReader(xmlFile);
             BufferedReader buffer = new BufferedReader(reader);
             String temp = buffer.readLine();
-            while(temp != null) {
-                if(temp.contains("<entry name=\"size\"")) { //NOI18N
+            while (temp != null) {
+                if (temp.contains("<entry name=\"size\"")) { //NOI18N
                     found = true;
                     break;
                 }
@@ -239,38 +251,39 @@ public class JmriInsets {
             }
             buffer.close();
             reader.close();
-            if (temp == null)
-            	return -1;
-            if(found) {
+            if (temp == null) {
+                return -1;
+            }
+            if (found) {
                 temp = temp.substring(temp.indexOf("value=\"") + 7);
                 return Integer.parseInt(temp.substring(0, temp.indexOf('"')));
             }
-        }
-        catch (Exception e) {
+        } catch (IOException e) {
             log.error("Error parsing Gnome XML: " + e.getMessage());
         }
         return -1;
     }
-    
+
     private static int getKdeINI(String category, String component) {
         try {
             File f = new File(KDE_CONFIG);
-            if(!f.exists() || category == null || component == null)
+            if (!f.exists() || category == null || component == null) {
                 return -1;
-            
+            }
+
             boolean found = false;
             String value = null;
             FileReader reader = new FileReader(f);
             BufferedReader buffer = new BufferedReader(reader);
             try {
                 String temp = buffer.readLine();
-                while(temp !=null) {
-                    if(temp.trim().equals("[" + category + "]")) {
+                while (temp != null) {
+                    if (temp.trim().equals("[" + category + "]")) {
                         temp = buffer.readLine();
-                        while(temp != null) {
-                            if(temp.trim().startsWith("["))
+                        while (temp != null) {
+                            if (temp.trim().startsWith("[")) {
                                 return -1;
-                            else if (temp.startsWith(component + "=")) {
+                            } else if (temp.startsWith(component + "=")) {
                                 value = temp.substring(component.length() + 1);
                                 found = true;
                                 break;
@@ -278,31 +291,35 @@ public class JmriInsets {
                             temp = buffer.readLine();
                         }
                     }
-                    if(found == true)
+                    if (found == true) {
                         break;
+                    }
                     temp = buffer.readLine();
                 }
             } catch (java.io.IOException e1) {
                 log.error("error reading file", e1);
                 throw e1;
-            }
-            finally { 
+            } finally {
                 try {
                     buffer.close();
-                } catch (java.io.IOException e2) { log.error("Exception closing file", e2); }
+                } catch (java.io.IOException e2) {
+                    log.error("Exception closing file", e2);
+                }
                 try {
                     reader.close();
-                } catch (java.io.IOException e2) { log.error("Exception closing file", e2); }
+                } catch (java.io.IOException e2) {
+                    log.error("Exception closing file", e2);
+                }
             }
 
-            if(found)
+            if (found) {
                 return Integer.parseInt(value);
-        }
-        catch (Exception e) {
+            }
+        } catch (IOException e) {
             log.error("Error parsing KDI_CONFIG: " + e.getMessage());
         }
         return -1;
     }
-    
-    static Logger log = LoggerFactory.getLogger(JmriInsets.class.getName());
+
+    private final static Logger log = LoggerFactory.getLogger(JmriInsets.class.getName());
 }

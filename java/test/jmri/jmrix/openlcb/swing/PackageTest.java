@@ -1,5 +1,3 @@
-// PackageTest.java
-
 package jmri.jmrix.openlcb.swing;
 
 import junit.framework.Test;
@@ -8,16 +6,15 @@ import junit.framework.TestSuite;
 
 /**
  * Tests for the jmri.jmrix.openlcb package.
- * @author      Bob Jacobsen  Copyright 2009, 2012
- * @version   $Revision$
+ *
+ * @author Bob Jacobsen Copyright 2009, 2012
  */
 public class PackageTest extends TestCase {
 
     public void testDefinitions() {
     }
-    
-    // from here down is testing infrastructure
 
+    // from here down is testing infrastructure
     public PackageTest(String s) {
         super(s);
     }
@@ -36,11 +33,19 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.openlcb.swing.hub.PackageTest.suite());
         suite.addTest(jmri.jmrix.openlcb.swing.tie.PackageTest.suite());
         suite.addTest(jmri.jmrix.openlcb.swing.monitor.PackageTest.suite());
-        
+        suite.addTest(jmri.jmrix.openlcb.swing.clockmon.PackageTest.suite());
+        suite.addTest(jmri.jmrix.openlcb.swing.downloader.PackageTest.suite());
+        suite.addTest(BundleTest.suite());
+
         return suite;
     }
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 }

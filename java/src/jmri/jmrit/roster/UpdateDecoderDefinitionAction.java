@@ -1,16 +1,16 @@
 // UpdateDecoderDefinitionAction.java
 package jmri.jmrit.roster;
 
+import java.awt.event.ActionEvent;
+import java.io.IOException;
+import java.util.List;
+import javax.swing.Icon;
+import jmri.jmrit.decoderdefn.DecoderFile;
+import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
-import jmri.jmrit.decoderdefn.*;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.awt.event.ActionEvent;
-import javax.swing.Icon;
-import java.util.List;
 
 /**
  * Update the decoder definitions in the roster
@@ -20,6 +20,11 @@ import java.util.List;
  * @see jmri.jmrit.XmlFile
  */
 public class UpdateDecoderDefinitionAction extends JmriAbstractAction {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = -2751913119792322837L;
 
     public UpdateDecoderDefinitionAction(String s, WindowInterface wi) {
         super(s, wi);
@@ -33,50 +38,51 @@ public class UpdateDecoderDefinitionAction extends JmriAbstractAction {
         super(s);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
-        Roster roster = Roster.instance();
-        List<RosterEntry> list = roster.matchingList(null, null, null, null, null, null, null);
-        
+        List<RosterEntry> list = Roster.getDefault().matchingList(null, null, null, null, null, null, null);
+
         for (RosterEntry entry : list) {
             String family = entry.getDecoderFamily();
             String model = entry.getDecoderModel();
-            
+
             // check if replaced
             List<DecoderFile> decoders = DecoderIndexFile.instance().matchingDecoderList(null, family, null, null, null, model);
-            System.out.println("Found "+decoders.size()+" of "+family+" "+model+" for "+entry.getId());
-            
+            log.info("Found " + decoders.size() + " decoders matching family \"" + family + "\" model \"" + model + "\" from roster entry \"" + entry.getId() + "\"");
+
             String replacementFamily = null;
             String replacementModel = null;
-            
+
             for (DecoderFile decoder : decoders) {
-                System.out.println("   Replacements: "+decoder.getReplacementFamily()+" "+decoder.getReplacementModel());
+
+                if (decoder.getReplacementFamily() != null || decoder.getReplacementModel() != null) {
+                    log.info("   Recommended replacement is family \"" + decoder.getReplacementFamily() + "\" model \"" + decoder.getReplacementModel() + "\"");
+                }
                 replacementFamily = (decoder.getReplacementFamily() != null) ? decoder.getReplacementFamily() : replacementFamily;
                 replacementModel = (decoder.getReplacementModel() != null) ? decoder.getReplacementModel() : replacementModel;
             }
-            
+
             if (replacementModel != null && replacementFamily != null) {
-                System.out.println("   *** Will update");
-        
+                log.info("   *** Will update");
+
                 // change the roster entry
                 entry.setDecoderFamily(replacementFamily);
                 entry.setDecoderModel(replacementModel);
-                
+
                 // write it out (not bothering to do backup?)
-                entry.updateFile();    
+                entry.updateFile();
             }
         }
 
         // write updated roster
-        Roster.instance().makeBackupFile(Roster.defaultRosterFilename());
+        Roster.getDefault().makeBackupFile(Roster.defaultRosterFilename());
         try {
-            roster.writeFile(Roster.defaultRosterFilename());
-        } catch (Exception ex) {
-            log.error("Exception while writing the new roster file, may not be complete: "+ex);
+            Roster.getDefault().writeFile(Roster.defaultRosterFilename());
+        } catch (IOException ex) {
+            log.error("Exception while writing the new roster file, may not be complete: " + ex);
         }
         // use the new one
-        Roster.resetInstance();
-        Roster.instance();
-        
+        Roster.getDefault().reloadRosterFile();
     }
 
     // never invoked, because we overrode actionPerformed above
@@ -85,5 +91,5 @@ public class UpdateDecoderDefinitionAction extends JmriAbstractAction {
         throw new IllegalArgumentException("Should not be invoked");
     }
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(UpdateDecoderDefinitionAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(UpdateDecoderDefinitionAction.class.getName());
 }

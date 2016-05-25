@@ -3,9 +3,9 @@
 #
 # Author: Bob Jacobsen, copyright 2007
 # Part of the JMRI distribution
-#
-# The next line is maintained by CVS, please don't change it
-# $Revision$
+
+import java
+import jmri
 
 # Change the next line to the name of the turnout you want to
 # be pulsed

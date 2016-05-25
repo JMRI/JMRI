@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005, 2011, 2013 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new file includes for Decoder files -->
+<!-- Panes to show Output lines -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Out 3 B</name>
+  <column>
+    <row>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>&lt;html&gt;&lt;strong&gt;JMRI 4.1.3 or later is required to use this definition.&lt;/strong&gt;&lt;/html&gt;</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>&lt;html&gt;&lt;h1&gt;Output Port 3 LInes T7A-T7B T8A-T8B&lt;/h1&gt;&lt;/html&gt;</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>SwitchMan Output Port Configuration settings. All numbers are entered as their actual</text>
+        </label>
+        <label>
+          <text>event numbers. For example LT9 is entered as Output event number 9.</text>
+        </label>
+      </column>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <column>
+        <display item="PC5 Output-Input" label=" " tooltip="Line direction">
+          </display>
+      </column>
+      <column>
+        <display item="PC5 Paired" label=" T7 " tooltip="Paired Action when selected">
+          </display>
+      </column>
+      <column>
+        <display item="PC5 Type" label="    Type">
+          </display>
+      </column>
+      <column>
+        <display item="PC5 Inv" format="checkbox" tooltip="Invert output drive" label="Inv"/>
+      </column>
+      <column>
+        <display item="PC5 Timing" label="                                       Debounce">
+          </display>
+      </column>
+      <column>
+        <display item="PC5 TimingA" label="   Timing">
+          </display>
+      </column>
+      <column>
+        <display item="PC5 TimingB" label="      Timing">
+          </display>
+      </column>
+      <column>
+        <display item="IP21 Type" label="Type" tooltip="Line #1 is paired with Line #2">
+          <label>T7A Type</label>
+        </display>
+      </column>
+      <column>
+        <display item="PC5 Effect" label="Effect" tooltip="Special effects">
+          <label>Effect</label>
+        </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PC FU5 Interval" tooltip="Select time delay intervals" label="Fade on"/>
+      </column>
+      <column>
+        <display item="PC FU5 Multiplier" tooltip="Select time delay multiplier" label="x"/>
+      </column>
+      <column>
+        <display item="PC FU5 Re-trig" format="checkbox" tooltip="Retriggerable/One-Shot" label="Re-trigger"/>
+      </column>
+      <column>
+        <display item="PC FD5 Interval" tooltip="Select time delay intervals" label="Fade off"/>
+      </column>
+      <column>
+        <display item="PC FD5 Multiplier" tooltip="Select time delay multiplier" label="x"/>
+      </column>
+      <column>
+        <display item="PC FD5 Re-trig" format="checkbox" tooltip="Retriggerable/One-Shot" label="Re-trigger"/>
+      </column>
+      <column>
+        <display item="PC Out5 Brightness" layout="left" label=" Brightness"/>
+      </column>
+      <column>
+        <display item="PC Out5 Brightness" format="hslider" label=""/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PC5 Base Address" label="Primary event #" tooltip="">
+          </display>
+      </column>
+      <column>
+        <display item="PC5 Input Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="PC5 Output Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="PC5 Mode" label="">
+          </display>
+      </column>
+      <column>
+        <display item="PC5 Transition" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PC5 Secondary 1 Address" label="Second Event #">
+          </display>
+      </column>
+      <column>
+        <display item="PC5 Secondary 1 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="PC5 Secondary 1 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="PC5 Secondary 1" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PC5 Secondary 2 Address" label="   Third Event #">
+          </display>
+      </column>
+      <column>
+        <display item="PC5 Secondary 2 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="PC5 Secondary 2 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="PC5 Secondary 2" label="message">
+          </display>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="PC6 Output-Input" label=" " tooltip="Line direction">
+          </display>
+      </column>
+      <column>
+        <display item="PC6 Paired" label=" T7 " tooltip="Paired Action when selected">
+          </display>
+      </column>
+      <column>
+        <display item="PC6 Type" label="    Type">
+          </display>
+      </column>
+      <column>
+        <display item="PC6 Inv" format="checkbox" tooltip="Invert output drive" label="Inv"/>
+      </column>
+      <column>
+        <display item="PC6 Timing" label="                                       Debounce">
+          </display>
+      </column>
+      <column>
+        <display item="PC6 TimingA" label="   Timing">
+          </display>
+      </column>
+      <column>
+        <display item="PC6 TimingB" label="      Timing">
+          </display>
+      </column>
+      <column>
+        <display item="IP22 Type" label="Type" tooltip="Line #2 is paired with Line #1">
+          <label>T7B Type</label>
+        </display>
+      </column>
+      <column>
+        <display item="PC6 Effect" label="Effect" tooltip="Special effects">
+          <label>Effect</label>
+        </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PC FU6 Interval" tooltip="Select time delay intervals" label="Fade on"/>
+      </column>
+      <column>
+        <display item="PC FU6 Multiplier" tooltip="Select time delay multiplier" label="x"/>
+      </column>
+      <column>
+        <display item="PC FU6 Re-trig" format="checkbox" tooltip="Retriggerable/One-Shot" label="Re-trigger"/>
+      </column>
+      <column>
+        <display item="PC FD6 Interval" tooltip="Select time delay intervals" label="Fade off"/>
+      </column>
+      <column>
+        <display item="PC FD6 Multiplier" tooltip="Select time delay multiplier" label="x"/>
+      </column>
+      <column>
+        <display item="PC FD6 Re-trig" format="checkbox" tooltip="Retriggerable/One-Shot" label="Re-trigger"/>
+      </column>
+      <column>
+        <display item="PC Out6 Brightness" layout="left" label=" Brightness"/>
+      </column>
+      <column>
+        <display item="PC Out6 Brightness" format="hslider" label=""/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PC6 Base Address" label="Primary event #" tooltip="">
+          </display>
+      </column>
+      <column>
+        <display item="PC6 Input Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="PC6 Output Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="PC6 Mode" label="">
+          </display>
+      </column>
+      <column>
+        <display item="PC6 Transition" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PC6 Secondary 1 Address" label="Second Event #">
+          </display>
+      </column>
+      <column>
+        <display item="PC6 Secondary 1 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="PC6 Secondary 1 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="PC6 Secondary 1" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PC6 Secondary 2 Address" label="   Third Event #">
+          </display>
+      </column>
+      <column>
+        <display item="PC6 Secondary 2 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="PC6 Secondary 2 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="PC6 Secondary 2" label="message">
+          </display>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="PC7 Output-Input" label=" " tooltip="Line direction">
+          </display>
+      </column>
+      <column>
+        <display item="PC7 Paired" label=" T8 " tooltip="Paired Action when selected">
+          </display>
+      </column>
+      <column>
+        <display item="PC7 Type" label="    Type">
+          </display>
+      </column>
+      <column>
+        <display item="PC7 Inv" format="checkbox" tooltip="Invert output drive" label="Inv"/>
+      </column>
+      <column>
+        <display item="PC7 Timing" label="                                       Debounce">
+          </display>
+      </column>
+      <column>
+        <display item="PC7 TimingA" label="   Timing">
+          </display>
+      </column>
+      <column>
+        <display item="PC7 TimingB" label="      Timing">
+          </display>
+      </column>
+      <column>
+        <display item="IP23 Type" label="Type" tooltip="Line #3 is paired with Line #4">
+          <label>T8A Type</label>
+        </display>
+      </column>
+      <column>
+        <display item="PC7 Effect" label="Effect" tooltip="Special effects">
+          <label>Effect</label>
+        </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PC FU7 Interval" tooltip="Select time delay intervals" label="Fade on"/>
+      </column>
+      <column>
+        <display item="PC FU7 Multiplier" tooltip="Select time delay multiplier" label="x"/>
+      </column>
+      <column>
+        <display item="PC FU7 Re-trig" format="checkbox" tooltip="Retriggerable/One-Shot" label="Re-trigger"/>
+      </column>
+      <column>
+        <display item="PC FD7 Interval" tooltip="Select time delay intervals" label="Fade off"/>
+      </column>
+      <column>
+        <display item="PC FD7 Multiplier" tooltip="Select time delay multiplier" label="x"/>
+      </column>
+      <column>
+        <display item="PC FD7 Re-trig" format="checkbox" tooltip="Retriggerable/One-Shot" label="Re-trigger"/>
+      </column>
+      <column>
+        <display item="PC Out7 Brightness" layout="left" label=" Brightness"/>
+      </column>
+      <column>
+        <display item="PC Out7 Brightness" format="hslider" label=""/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PC7 Base Address" label="Primary event #" tooltip="">
+          </display>
+      </column>
+      <column>
+        <display item="PC7 Input Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="PC7 Output Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="PC7 Mode" label="">
+          </display>
+      </column>
+      <column>
+        <display item="PC7 Transition" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PC7 Secondary 1 Address" label="Second Event #">
+          </display>
+      </column>
+      <column>
+        <display item="PC7 Secondary 1 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="PC7 Secondary 1 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="PC7 Secondary 1" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PC7 Secondary 2 Address" label="   Third Event #">
+          </display>
+      </column>
+      <column>
+        <display item="PC7 Secondary 2 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="PC7 Secondary 2 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="PC7 Secondary 2" label="message">
+          </display>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="PC8 Output-Input" label=" " tooltip="Line direction">
+          </display>
+      </column>
+      <column>
+        <display item="PC8 Paired" label=" T8 " tooltip="Paired Action when selected">
+          </display>
+      </column>
+      <column>
+        <display item="PC8 Type" label="    Type">
+          </display>
+      </column>
+      <column>
+        <display item="PC8 Inv" format="checkbox" tooltip="Invert output drive" label="Inv"/>
+      </column>
+      <column>
+        <display item="PC8 Timing" label="                                       Debounce">
+          </display>
+      </column>
+      <column>
+        <display item="PC8 TimingA" label="   Timing">
+          </display>
+      </column>
+      <column>
+        <display item="PC8 TimingB" label="      Timing">
+          </display>
+      </column>
+      <column>
+        <display item="IP24 Type" label="Type" tooltip="Line #4 is paired with Line #3">
+          <label>T8B Type</label>
+        </display>
+      </column>
+      <column>
+        <display item="PC8 Effect" label="Effect" tooltip="Special effects">
+          <label>Effect</label>
+        </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PC FU8 Interval" tooltip="Select time delay intervals" label="Fade on"/>
+      </column>
+      <column>
+        <display item="PC FU8 Multiplier" tooltip="Select time delay multiplier" label="x"/>
+      </column>
+      <column>
+        <display item="PC FU8 Re-trig" format="checkbox" tooltip="Retriggerable/One-Shot" label="Re-trigger"/>
+      </column>
+      <column>
+        <display item="PC FD8 Interval" tooltip="Select time delay intervals" label="Fade off"/>
+      </column>
+      <column>
+        <display item="PC FD8 Multiplier" tooltip="Select time delay multiplier" label="x"/>
+      </column>
+      <column>
+        <display item="PC FD8 Re-trig" format="checkbox" tooltip="Retriggerable/One-Shot" label="Re-trigger"/>
+      </column>
+      <column>
+        <display item="PC Out8 Brightness" layout="left" label=" Brightness"/>
+      </column>
+      <column>
+        <display item="PC Out8 Brightness" format="hslider" label=""/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PC8 Base Address" label="Primary event #" tooltip="">
+          </display>
+      </column>
+      <column>
+        <display item="PC8 Input Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="PC8 Output Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="PC8 Mode" label="">
+          </display>
+      </column>
+      <column>
+        <display item="PC8 Transition" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PC8 Secondary 1 Address" label="Second Event #">
+          </display>
+      </column>
+      <column>
+        <display item="PC8 Secondary 1 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="PC8 Secondary 1 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="PC8 Secondary 1" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PC8 Secondary 2 Address" label="   Third Event #">
+          </display>
+      </column>
+      <column>
+        <display item="PC8 Secondary 2 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="PC8 Secondary 2 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="PC8 Secondary 2" label="message">
+          </display>
+      </column>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <column>
+        <display item="IOP3 Port Type" label="Set Port 3 Type" tooltip="Complete Port type setting">
+        </display>
+      </column>
+    </row>
+  </column>
+</pane>

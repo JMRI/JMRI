@@ -1,56 +1,36 @@
 <!DOCTYPE html public "-//w3c//dtd html 4.0 transitional//en">
 <!-- $Id$ -->
-<html>
+<html lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <meta name="Author" content="Joseph A. Ellis - TesserAct Studios">
   <meta name="Revised_By" content="Bob Blakcwell - afticarr@sympatico.ca">
-  <meta name="Revision_Date" content="January 21, 2007">
+  <meta name="Revised_By" content="Egbert Broerse">
+  <meta name="Revision_Date" content="October 10, 2015">
   <meta name="Revision"
-  content="Stylesheet format update to permit printing without background colours">
-  <title>How to Update JMRI Documents</title>
-  <!-- Style -->
-  <link rel="stylesheet" type="text/css" href="DecoderPro.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="../css/print.css" media="print">
-  <link rel="icon" href="../images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="../">
-  <!-- /Style -->
+  content="Updated instructions for GitHub instead of single file edit and ZIP">
+  <title>How to Update the JMRI Documentation</title>
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
 </head>
 
-
-
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en">
-<head>
-<!-- Copyright Joseph A. Ellis - TesserAct Studios -->
-<!-- Copyright Bob Blakcwell - afticarr@sympatico.ca 2007 -->
-<!-- $Id$ -->
-<title>Updating JMRI Manuals/Documents</title>
-
-<!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
-</HEAD>
-
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>Updating JMRI Manuals/Documents</h1>
+<h1>How to update the JMRI Documentation</h1>
 
 <div class="toc">
 <ul>
   <li><a href="#screenshots">Creating Images from Screen Shots</a></li>
   <li><a href="#sizing">Sizing and Saving the Images</a></li>
-  <li><a href="#submitpage">Submitting to Sourceforge</a></li>
+  <li><a href="#submitpage">Submitting to GitHub</a></li>
 </ul>
 </div>
 
@@ -58,15 +38,15 @@ JMRI's web pages and help screens are written in a simple subset
 of HTML, the language that powers the web.  
 The most important part of the content is the plain text 
 that people will read, and the additional formatting information
-is kept very minimal.  To update a JMRI web page, you edit
-these directly with a simple text editor.
+is kept very minimal. To update a JMRI web page, you edit
+these directly on GitHub web or on your computer with a plain text editor.
 
-<p>Using MSWord or Front Page to edit these .shtml documents is not a good idea
+<p>Using MS Word or Front Page to edit these .shtml documents is not a good idea
 because they will probably add in their own proprietary formatting codes that
 will mess things up, possibly even to the point of being unusable by JMRI. Also,
-don't rename files, or make changes to the formatting information at the
-top or bottom.  Still with making editorial changes to the text in the 
-main body of file, which is really what the readers are paying attention
+don't rename existing files, or make changes to the formatting information at the
+top or bottom. So you may concentrate on making editorial changes to the text in the 
+main body of a file, which is really what the readers are paying attention
 to anyway.
 
 <p>To get started, you can drill down inside your computer's 
@@ -80,13 +60,13 @@ and look around.  If you change something, you can then
 open the page in the JMRI help system and see how it looks 
 (either keep a backup in case you
 want the original page back,
-or you can reinstall JMRI to restore it)
+or you can reinstall JMRI to restore it).
 
 <p>The most simple changes are just ones to the text itself: 
 To add a sentence or fix a wording, you just do that with the editor.
 To add a break between paragraphs, e.g. to add
 a new paragraph, you insert a "tag" 
-that tells JMRI or a browser to insert a paragraph break:  &lt;p&gt;.
+that tells JMRI or a browser to insert a paragraph break: &lt;p&gt;.
 
 <h2> <a name="screenshots">Creating Images from Screen Shots</h2>
 <h3>For Windows</h3> 
@@ -120,7 +100,7 @@ it around the area you want. When you let go, you will have an image file on
 your desktop.
 
 <h3>Using a Third-Party Application</h3>
-I love 
+We love 
 <a href="http://www.irfanview.com/main_download_engl.htm">IrFanView</a> for
 screenshots, and it is free. With it, you can also include your mouse cursor in
 your snapshot. You can also take a series of shots easily, and even make a
@@ -133,65 +113,36 @@ it easier to work with them in a program like Paint or Photoshop.
 Any changes you make to your image should be done before you use Amaya to
 insert it into your document. Remember that if you change it, it needs to be
 re-inserted. Make sure you save the image as one of the following filetypes:
-PNG, GIF, JPG, or JPEG (not BMP or TIF), and do not use any spaces or capital
-letters in the name. Generally, a good size for the width of an image is 500
+PNG, JPG, or JPEG (not BMP or TIF), and do not use any spaces or capital
+letters in the image file name. Generally, a good size for the width of an image is 500
 pixels or less, at a web resolution of 72 pixels per inch. If you know how to
 resize your images, it would be very helpful. 
 
-<h2 id="submitpage">Submitting to Sourceforge</h2>
+<h2 id="submitpage">Submitting to GitHub</h2>
 
 <p>If you understand this, you are ready to help us update the many JMRI
-documents that we use for both the JMRI website and for the Help files in the
+documents that we use for both the JMRI website and for the Help files in a
 next software build. 
 
 <p>
 When you submit your changes to be included in future JMRI releases, they
 are given a quick check and then merged into the previous content.
-The check is done by using CVS tools to find the parts of the
+The check is done by using GitHub tools to find the parts of the
 file that have been changed.
-To make that easier, please don't reformat pages or use an 
-editor that moves lines around on its own.
 
 <h3>Prepare the Files</h3>
 
 The proper filetype to use for JMRI has the .shtml extension. If you have
-made an .html or .htm file, you can change the extension yourself to .shtml
-(just ignore the warning). Don't use spaces or capital letters in your
+made a (new) .html or .htm file, you should change the extension to .shtml. Don't use spaces or capital letters in your
 filenames. If you are not changing or adding images, just save the file with
-its original name, i.e. &ldquo;index.shtml&rdquo;, 
-save it where you can find it easily, and click the <a
-href="#submitpage">Submit to Sourceforge</a> link below.</p>
+its original name, i.e. <span
+style="font-family: monospace">&ldquo;index.shtml&rdquo;</span>, 
+in a location where you can find it easily when you're ready to copy them to GitHub.</p>
 
-<p>If you are submitting more than one file at a time (i.e. the .shtml and some
-new or edited image files), then you should first copy these files into a new
-folder somewhere on your hard drive, and then compress (or Zip) the folder. For
-Windows XP, right click the folder, then Send To -- Compressed.
+<h3>Send to GitHub</h3>
 
-<h3>Send to Sourceforge</h3>
+<p>You can view the current <a href="https://github.com/JMRI/JMRI">JMRI repository on GitHub</a>. To learn how to make changes to connect to GitHub and contribute your changes, please read <a href="../getgitcode.shtml">Using Git</a>.
 
-Sourceforge is a community of open-source developers and the hard-working
-volunteers for the JMRI software project would welcome your help whether you
-want to register with SourceForge or not. 
-When you click the &quot;Submit to Sourceforge&quot;
-link below, you will be taken to a page that has a link called &quot;Add new
-Artifact.&quot; If you do this without being a logged-in user, you can submit
-your file(s) anonymously. If you plan to do a lot of submissions, we suggest
-you first use the &quo;Log In&quot; link on the top-right side, and then
-&quot;Create an Account.&quot; This will allow you to keep track of what you
-have submitted, and allow others to see who is contributing their time. Once
-you have logged in with your new username, you can return to the proper page by
-going back two times in your browser. Either way, when you click the &quot;Add
-New Artifact&quot; link, you only need to provide a brief description of what
-you are sending, and then upload your file or compressed folder. 
-
-<p>Link to <a
-href="http://sourceforge.net/tracker/?group_id=26788&amp;atid=388315">Submit to
-SourceForge</a>. 
-
-
-<p>This document is located in help/en/html/doc/Technical/webupdate/UpdatingDocs.shtml
-
-    
 <!--#include virtual="/Footer" -->
 </body>
 </html>

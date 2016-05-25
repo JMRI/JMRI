@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2006 All rights reserved  -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Michael Mosher" version="1" lastUpdated="20061010"/>
+  <version author="John Crellin" version="1.2" lastUpdated="20140601"/>
+  <!-- Version 1 - made from TCS_X.xml -->
+  <!-- Version 1.1- 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
+  <!-- Version 1.2- 20140602 Added CV 15 and missing lighting effects(jcrellin0661@gmail.com) -->
+  <!-- 20140627 Added Translation and XI:include (fortuna.enzo@gmail.com) -->
+  <decoder>
+    <family name="TCS FL2 and FL4 Decoders" mfg="Train Control Systems">
+      <model model="FL2" numOuts="2" numFns="14">
+        <output name="1" label="Green" connection="solder" maxcurrent="100 mA"/>
+        <output name="2" label="Purple" connection="solder" maxcurrent="100 mA"/>
+        <size length="1.000" width="0.650" height="0.160" units="inches"/>
+      </model>
+      <model model="FL4" numOuts="4" numFns="14">
+        <output name="1" label="Green" connection="solder" maxcurrent="200 mA"/>
+        <output name="2" label="Purple" connection="solder" maxcurrent="200 mA"/>
+        <output name="3" label="Brown" connection="solder" maxcurrent="200 mA"/>
+        <output name="4" label="Pink" connection="solder" maxcurrent="200 mA"/>
+        <size length="0.565" width="0.355" height="0.132" units="inches"/>
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/tcs/2_CV7-8.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/tcs/2_CV13_Fn.xml"/>
+	    <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/tcs/2_CV21_Fn.xml"/>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/tcs/2_CV35-54_Fn.xml"/>
+    <!--  Lighting effects starts here  -->
+		
+		<variable CV="62" default="60" item="Function 6 effect generated" tooltip="1 second = 60 to 4 seconds = 255">
+			<decVal/>
+			<label>Momentary Pulse</label>
+			<label xml:lang="it">Impulso Momentaneo</label>
+		</variable>
+		<variable CV="63" default="10" item="Function 2 effect generated" tooltip="1 second = about 12">
+			<decVal/>
+			<label>Ditch Light Blink Holdover Time</label>
+			<label xml:lang="it">Tempo Lampeggio Luci Ditch</label>
+		</variable>
+		<variable CV="117" default="3" mask="XXXXVVVV" item="Function 2 behavior">
+			<enumVal>
+				<enumChoice choice="1 slowest" value="1">
+            <choice>1 slowest</choice>
+            <choice xml:lang="it">1 pi� lento</choice>
+        </enumChoice>
+				<enumChoice choice="2"/>
+				<enumChoice choice="3"/>
+				<enumChoice choice="4"/>
+				<enumChoice choice="5"/>
+				<enumChoice choice="6"/>
+				<enumChoice choice="7"/>
+				<enumChoice choice="8"/>
+				<enumChoice choice="9"/>
+				<enumChoice choice="10"/>
+				<enumChoice choice="11"/>
+				<enumChoice choice="12 fastest">
+            <choice>12 fastest</choice>
+            <choice xml:lang="it">12 pi� veloce</choice>
+          </enumChoice>
+			</enumVal>
+			<label>Ditch Light Blink Rate</label>
+			<label xml:lang="it">Tempo Lampeggio Luci Ditch</label>
+		</variable>
+		<variable CV="64" default="16" item="Global lighting option 2" tooltip="16 = 50% for incandescent bulbs, 2-6 for LEDs">
+			<decVal max="32"/>
+			<label>Dimming Brightness 1</label>
+      <label xml:lang="it">Luminosit� 1 di smorzamento</label>
+      <tooltip xml:lang="it">16 = 50% per bulbi incandescenti, 2-6 per LEDs</tooltip>
+		</variable>
+		<variable CV="153" default="5" item="Global lighting option 3" tooltip="16 = 50% for incandescent bulbs, 2-6 for LEDs">
+			<decVal max="32"/>
+			<label>Dimming Brightness 2</label>
+			<label xml:lang="it">Luminosit� 2 di smorzamento</label>
+			<tooltip xml:lang="it">16 = 50% per bulbi incandescenti, 2-6 per LEDs</tooltip>
+		</variable>
+		<variable CV="154" default="5" item="Global lighting option 4" tooltip="16 = 50% for incandescent bulbs, 2-6 for LEDs">
+			<decVal max="32"/>
+			<label>Dimming Brightness 3</label>
+			<label xml:lang="it">Luminosit� 3 di smorzamento</label>
+			<tooltip xml:lang="it">16 = 50% per bulbi incandescenti, 2-6 per LEDs</tooltip>
+		</variable>
+		<variable CV="155" default="5" item="Global lighting option 5" tooltip="16 = 50% for incandescent bulbs, 2-6 for LEDs">
+			<decVal max="32"/>
+			<label>Dimming Brightness 4</label>
+			<label xml:lang="it">Luminosit� 4 di smorzamento</label>
+			<tooltip xml:lang="it">16 = 50% per bulbi incandescenti, 2-6 per LEDs</tooltip>
+		</variable>
+		<variable CV="112" default="1" item="Function F0F effect generated">
+			<decVal min="1" max="5"/>
+			<label>Mars/Gyra Min Brightness</label>
+			<label xml:lang="it">Mars/Gyra Min Brightness</label>
+		</variable>
+		<variable CV="113" default="9" item="Function F0F option 2">
+			<decVal/>
+			<label>Mars/Gyra Max Bright Time</label>
+			<label xml:lang="it">Durata Max luce Mars/Gyra</label>
+		</variable>
+		<variable CV="114" default="1" item="Function F0F option 3">
+			<decVal/>
+			<label>Mars/Gyra Total Cycle Time</label>
+			<label xml:lang="it">Tempo ciclo Totale Mars/Gyra</label>
+		</variable>
+		<variable CV="115" default="6" item="Function F0F behavior">
+			<decVal min="2" max="26"/>
+			<label>Mars/Gyra Mid Brightness</label>
+			<label xml:lang="it">Luminosit� Media Mars/Gyra</label>
+		</variable>
+		<variable CV="116" default="22" item="Function F0F options">
+			<decVal min="4" max="28"/>
+			<label>Mars/Gyra Max Brightness</label>
+			<label xml:lang="it">Luminosit� Max Mars/Gyra</label>
+		</variable>
+		<variable CV="118" default="1" item="Function F0R effect generated">
+			<decVal min="1" max="5"/>
+			<label>Beacon Min Brightness</label>
+			<label xml:lang="it">Luminosit� Min Faro</label>
+		</variable>
+		<variable CV="119" default="5" item="Function F0R option 2">
+			<decVal/>
+			<label>Beacon Max Bright Time</label>
+			<label xml:lang="it">Durata Max Luce Faro</label>
+		</variable>
+		<variable CV="120" default="1" item="Function F0R option 3">
+			<decVal/>
+			<label>Beacon Total Cycle Time</label>
+      <label xml:lang="it">Tempo Ciclo Totale Faro</label>
+		</variable>
+		<variable CV="121" default="15" item="Function F0R behavior">
+			<decVal min="2" max="26"/>
+			<label>Beacon Mid Brightness</label>
+			<label xml:lang="it">Luminosit� Media Faro</label>
+		</variable>
+		<variable CV="122" default="25" item="Function F0R options">
+			<decVal min="4" max="28"/>
+			<label>Beacon Max Brightness</label>
+			<label xml:lang="it">Luminosit� Max.Faro</label>
+		</variable>
+		<variable CV="140" default="140" item="Function 3 effect generated">
+			<decVal/>
+			<label>Single Strobe 1 Off Duration</label>
+			<label xml:lang="it">Durata Off Singolo Lampeggio 1</label>
+		</variable>
+		<variable CV="141" default="5" item="Function 3 behavior">
+			<decVal/>
+			<label>Single Strobe 1 On Duration</label>
+			<label xml:lang="it">Durata On Singolo Lampeggio 1</label>
+		</variable>
+		<variable CV="142" default="124" item="Function 3 options">
+			<decVal/>
+			<label>Single Strobe 2 Off Duration</label>
+			<label xml:lang="it">Durata Off Singolo Lampeggio 2</label>
+		</variable>
+		<variable CV="143" default="5" item="Function 3 option 1">
+			<decVal/>
+			<label>Single Strobe 2 On Duration</label>
+			<label xml:lang="it">Durata Off Singolo Lampeggio 2</label>
+		</variable>
+		<variable CV="144" default="144" item="Function 8 effect generated">
+			<decVal/>
+			<label>Flashing Light On Duration</label>
+			<label xml:lang="it">Durata On Luci lampeggianti</label>
+		</variable>
+		<variable CV="145" default="48" item="Function 8 behavior">
+			<decVal/>
+			<label>Flashing Light Off Duration</label>
+			<label xml:lang="it">Durata Off Luci lampeggianti</label>
+		</variable>
+		<variable CV="146" default="112" item="Function 4 effect generated">
+			<decVal/>
+			<label>Double Strobe 1 Long Off Duration</label>
+			<label xml:lang="it">Durata lunga Off Lampeggio doppio 1</label>
+		</variable>
+		<variable CV="147" default="5" item="Function 4 behavior">
+			<decVal/>
+			<label>Double Strobe 1 On Duration</label>
+			<label xml:lang="it">Durata On Lampeggio doppio 1</label>
+		</variable>
+		<variable CV="148" default="16" item="Function 4 options">
+			<decVal/>
+			<label>Double Strobe 1 Short Off Duration</label>
+			<label xml:lang="it">Durata corta Off Lampeggio doppio 1</label>
+		</variable>
+		<variable CV="149" default="117" item="Function 4 option 1">
+			<decVal/>
+			<label>Double Strobe 2 Long Off Duration</label>
+			<label xml:lang="it">Durata lunga Off Lampeggio doppio 2</label>
+		</variable>
+		<variable CV="150" default="16" item="Function 4 option 2">
+			<decVal/>
+			<label>Double Strobe 2 On Duration</label>
+			<label xml:lang="it">Durata On Lampeggio doppio 2</label>
+		</variable>
+		<variable CV="151" default="5" item="Function 4 option 3">
+			<decVal/>
+			<label>Double Strobe 2 Short Off Duration</label>
+			<label xml:lang="it">Durata corta Off Lampeggio doppio 2</label>
+		</variable>
+		<variable CV="135" default="16" item="Function 7 effect generated" tooltip="Random Flicker for fireboxes">
+			<decVal/>
+			<label>Random Flicker 1 Speed</label>
+			<label xml:lang="it">Velocit� Sfarfallio casuale 1</label>
+			<tooltip xml:lang="it">Sfarfallio casuale caldaia</tooltip>
+		</variable>
+		<variable CV="152" default="16" item="Function 7 behavior" tooltip="Random Flicker 2 for fireboxes">
+			<decVal/>
+			<label>Random Flicker 2 Speed</label>
+			<label xml:lang="it">Velocit� Sfarfallio casuale 2</label>
+			<tooltip xml:lang="it">Sfarfallio casuale caldaia</tooltip>
+		</variable>
+     
+		<!--  Lighting effects ends here  -->
+		
+		<xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+		<variable CV="250" readOnly="yes" item="mfgMonth" tooltip="Date TCS made this decoder">
+        <decVal/>
+        <label>Month of Decoder Manufacture</label>
+        <label xml:lang="it">Mese di produzione Decoder</label>
+        <tooltip xml:lang="it">Data in cui TCS ha prodotto il decoder</tooltip>
+      </variable>
+		<variable CV="251" readOnly="yes" item="mfgDay" tooltip="Date TCS made this decoder">
+        <decVal/>
+        <label>Day of Decoder Manufacture</label>
+        <label xml:lang="it">Giorno di produzione Decoder</label>
+        <tooltip xml:lang="it">Data in cui TCS ha prodotto il decoder</tooltip>
+      </variable>
+		<variable CV="252" readOnly="yes" item="mfgYear" tooltip="Date TCS made this decoder">
+        <decVal/>
+        <label>Year of Decoder Manufacture</label>
+        <label xml:lang="it">Anno di produzione Decoder</label>
+        <tooltip xml:lang="it">Data in cui TCS ha prodotto il decoder</tooltip>
+      </variable>
+    </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="2">
+        <label>Reset All CVs</label>
+         <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
+    </resets>
+  </decoder>
+	<pane>
+	    <name>TCS</name>
+		<column>
+			<label>
+        <text>TCS decoders support a decoder locking feature</text>
+        <text xml:lang="it">I decoders TCS prevedono la funzione di blocco</text>
+      </label>
+      <label>
+        <text>useful when several decoders are used in one loco</text>
+        <text xml:lang="it">utile qundo si usano pi� decoder in una loco</text>
+      </label>
+      <label>
+        <text>on the same address, e.g. for adding sound</text>
+        <text xml:lang="it">con lo stesso indirizzo ( es. decoder solo suono + decoder motore)</text>
+      </label>
+      <label>
+        <text>TCS suggests values of 1=mobile, 2=sound, 3=light/function only</text>
+        <text xml:lang="it">TCS suggerisce: 1=motore, 2=suono, 3=luci/solo funzioni</text>
+      </label>
+			<label label=" "/>
+			<display item="Decoder Lock ID number"/>
+			<label>
+        <text>Set CV15 equal to this number to unlock the decoder for programming</text>
+        <text xml:lang="it">Programmare CV15 con questo valore per sbloccare il decore e programmarlo</text>
+      </label>
+			<label label=" "/>
+			<!-- <display item="Decoder Lock control number" label="Decoder Lock control, CV15"/>  -->
+			<label label=" "/>
+			<display item="mfgMonth"/>
+			<display item="mfgDay"/>
+			<display item="mfgYear"/>
+			<label label=" "/>
+			<label label="TCS_Fn.xml Function Decoders"/>
+		</column>
+	</pane>
+</decoder-config>

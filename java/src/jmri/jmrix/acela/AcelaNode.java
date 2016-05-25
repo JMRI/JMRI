@@ -1,35 +1,34 @@
 // AcelaNode.java
 package jmri.jmrix.acela;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import jmri.JmriException;
 import jmri.Sensor;
-import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRListener;
+import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Models a Acela node.
  * <P>
- * Nodes are numbered from 0.
- * The first watchman node carries the first 8 sensors 0 to 7, etc.
+ * Nodes are numbered from 0. The first watchman node carries the first 8
+ * sensors 0 to 7, etc.
  * <P>
- * The array of sensor states is used to update sensor known state
- * only when there's a change on the serial bus.  This allows for the
- * sensor state to be updated within the program, keeping this updated
- * state until the next change on the serial bus.  E.g. you can manually
- * change a state via an icon, and not have it change back the next time
- * that node is polled.
+ * The array of sensor states is used to update sensor known state only when
+ * there's a change on the serial bus. This allows for the sensor state to be
+ * updated within the program, keeping this updated state until the next change
+ * on the serial bus. E.g. you can manually change a state via an icon, and not
+ * have it change back the next time that node is polled.
  * <P>
  * Same applies to the outputs (Dash-8s and Signalmen)
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003
- * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
+ * @author Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
  * @version	$Revision$
  *
- * @author	Bob Coleman Copyright (C) 2007, 2008, 2009
- *              Based on CMRI serial example, modified to establish Acela support. 
+ * @author	Bob Coleman Copyright (C) 2007, 2008, 2009 Based on CMRI serial
+ * example, modified to establish Acela support.
  */
 public class AcelaNode extends AbstractNode {
 
@@ -60,7 +59,10 @@ public class AcelaNode extends AbstractNode {
         "10", "11", "12", "13", "14",
         "15", "16", "17", "18", "19"
     };
-    public static String[] getNodeNames() { return nodeNames.clone(); }
+
+    public static String[] getNodeNames() {
+        return nodeNames.clone();
+    }
 
     static final String[] moduleNames = new String[]{"Acela",
         "TrainBrain",
@@ -72,8 +74,11 @@ public class AcelaNode extends AbstractNode {
         "YardMaster",
         "Sentry"
     };
-    public static String[] getModuleNames() { return moduleNames.clone(); }
-    
+
+    public static String[] getModuleNames() {
+        return moduleNames.clone();
+    }
+
     static final String[] moduleTips = new String[]{"Acela",
         "TrainBrain has 4 output circuits and 4 input circuits",
         "Dash-8 has 8 output circuits and no input circuits",
@@ -136,18 +141,17 @@ public class AcelaNode extends AbstractNode {
     protected int endingSensorAddress = -1;           // used to aid linear address search
 
     /**
-     * Assumes a node address of 0, and a node type of NO_CARD
-     * If this constructor is used, actual node address must be set using
-     *    setNodeAddress, and actual node type using 'setNodeType'
+     * Assumes a node address of 0, and a node type of NO_CARD If this
+     * constructor is used, actual node address must be set using
+     * setNodeAddress, and actual node type using 'setNodeType'
      */
     public AcelaNode() {
         this(0, UN);
     }
 
     /**
-     * Creates a new AcelaNode and initialize default instance variables
-     *   address - Address of first bit on Acela bus (0-1023)
-     *   type - D8, SM, WM
+     * Creates a new AcelaNode and initialize default instance variables address
+     * - Address of first bit on Acela bus (0-1023) type - D8, SM, WM
      */
     public AcelaNode(int address, int type) {
         // set address and type and check validity
@@ -209,7 +213,7 @@ public class AcelaNode extends AbstractNode {
                 if (!bulk_message) {
                     outputNeedToSend[i] = true;
                 }
-            //  outputWired is applied as the command is being constructed so all GUI views on as on and off as off.
+                //  outputWired is applied as the command is being constructed so all GUI views on as on and off as off.
             }
             setMustSend();
         }
@@ -224,72 +228,72 @@ public class AcelaNode extends AbstractNode {
     }
 
     /**
-     * Public method setting starting output addresses
-     *    Used to help linear address search
+     * Public method setting starting output addresses Used to help linear
+     * address search
      */
     public void setStartingOutputAddress(int startingAddress) {
         startingOutputAddress = startingAddress;
     }
 
     /**
-     * Public method getting starting output addresses
-     *    Used to help linear address search
+     * Public method getting starting output addresses Used to help linear
+     * address search
      */
     public int getStartingOutputAddress() {
         return startingOutputAddress;
     }
 
     /**
-     * Public method setting ending output addresses
-     *    Used to help linear address search
+     * Public method setting ending output addresses Used to help linear address
+     * search
      */
     public void setEndingOutputAddress(int endingAddress) {
         endingOutputAddress = endingAddress;
     }
 
     /**
-     * Public method getting ending output addresses
-     *    Used to help linear address search
+     * Public method getting ending output addresses Used to help linear address
+     * search
      */
     public int getEndingOutputAddress() {
         return endingOutputAddress;
     }
 
     /**
-     * Public method setting starting sensor addresses
-     *    Used to help linear address search
+     * Public method setting starting sensor addresses Used to help linear
+     * address search
      */
     public void setStartingSensorAddress(int startingAddress) {
         startingSensorAddress = startingAddress;
     }
 
     /**
-     * Public method getting starting sensor addresses
-     *    Used to help linear address search
+     * Public method getting starting sensor addresses Used to help linear
+     * address search
      */
     public int getStartingSensorAddress() {
         return startingSensorAddress;
     }
 
     /**
-     * Public method setting ending sensor addresses
-     *    Used to help linear address search
+     * Public method setting ending sensor addresses Used to help linear address
+     * search
      */
     public void setEndingSensorAddress(int endingAddress) {
         endingSensorAddress = endingAddress;
     }
 
     /**
-     * Public method getting ending sensor addresses
-     *    Used to help linear address search
+     * Public method getting ending sensor addresses Used to help linear address
+     * search
      */
     public int getEndingSensorAddress() {
         return endingSensorAddress;
     }
 
     /**
-     * Public method setting an output bit.
-     *    Note:  state = 'true' for 0, 'false' for 1
+     * Public method setting an output bit. Note: state = 'true' for 0, 'false'
+     * for 1
      */
     public void setOutputBit(int bitNumber, boolean state) {
         // Save old state
@@ -308,8 +312,8 @@ public class AcelaNode extends AbstractNode {
         boolean bulk_message = true;
         int c = 0;
         while (c < outputbitsPerCard) {
-                if ((outputType[c] != AcelaNode.ONOFF)
-                        || (outputSpecial[c] != 0)) {
+            if ((outputType[c] != AcelaNode.ONOFF)
+                    || (outputSpecial[c] != 0)) {
                 bulk_message = false;
             }
             c++;
@@ -326,9 +330,8 @@ public class AcelaNode extends AbstractNode {
     }
 
     /**
-     * Public method get the current state of an output bit.
-     *    Note:  returns 'true' for 0, 'false' for 1
-     *           bits are numbered from 0 for Acela
+     * Public method get the current state of an output bit. Note: returns
+     * 'true' for 0, 'false' for 1 bits are numbered from 0 for Acela
      */
     public boolean getOutputBit(int bitNumber) {
         int newbitNumber = 0;
@@ -342,8 +345,8 @@ public class AcelaNode extends AbstractNode {
     }
 
     /**
-     * Public method to return state of Sensors.
-     *  Note:  returns 'true' if at least one sensor is active for this node
+     * Public method to return state of Sensors. Note: returns 'true' if at
+     * least one sensor is active for this node
      */
     public boolean getSensorsActive() {
         return hasActiveSensors;
@@ -614,15 +617,15 @@ public class AcelaNode extends AbstractNode {
     }
 
     /**
-     * Public method to set transmission delay.
-     *   delay - delay between bytes on receive (units of 10 microsec.)
-     *   Note: two bytes are used, so range is 0-65,535.  If delay
-     *          is out of range, it is restricted to the allowable range
+     * Public method to set transmission delay. delay - delay between bytes on
+     * receive (units of 10 microsec.) Note: two bytes are used, so range is
+     * 0-65,535. If delay is out of range, it is restricted to the allowable
+     * range
      */
     public void setTransmissionDelay(int delay) {
         if ((delay < 0) || (delay > MAXDELAY)) {
-            log.warn("transmission delay out of 0-65535 range: " +
-                    Integer.toString(delay));
+            log.warn("transmission delay out of 0-65535 range: "
+                    + Integer.toString(delay));
             if (delay < 0) {
                 delay = 0;
             }
@@ -666,7 +669,6 @@ public class AcelaNode extends AbstractNode {
 
         //  For now, we are not going to support more than 255 nodes
         //  so we leave addrhi at 0x00.
-
         // We need to see if there is a second output circuit for this
         // node that we need to send.  If there is then we need to set
         // the mustsend flag for the node because the Traffic Controller
@@ -692,7 +694,6 @@ public class AcelaNode extends AbstractNode {
         //  If we are going to do a bulk command then the address will be
         //  the starting address.  If we are not going to do a bulk command
         //  then the address will start from the starting address.
-
         Integer tempint = Integer.valueOf(startingOutputAddress);
         addrlo = tempint.byteValue();
 
@@ -714,12 +715,12 @@ public class AcelaNode extends AbstractNode {
             if ((nodeType == WM) || (nodeType == SY)) {
                 cmdlen = 3;
                 cmdcode = 0x01;  //  This really is an error case since these
-            //  nodes do not have outputs
+                //  nodes do not have outputs
             }
             if (nodeType == SC) {
                 cmdlen = 3;
                 cmdcode = 0x01;  //  This really is an error case since these
-            //  nodes do not have outputs
+                //  nodes do not have outputs
             }
             if ((nodeType == SM) || (nodeType == SW) || (nodeType == YM)) {
                 cmdlen = 5;
@@ -758,146 +759,266 @@ public class AcelaNode extends AbstractNode {
                     //  -- but some of the output circuits may still be
                     // of type ONOFF.
                     if (outputSpecial[c] == 0) {
-                    if (outputType[c] == AcelaNode.ONOFF) {
-                        // outputArray[c] tells us to to turn the output on
-                        // or off.
-                        // outputWired[c] tells us whether the relay is 
-                        // wired backwards.
-                        // command 0x01 is activate
-                        // command 0x02 is deactivate
-                        int tempcommand = (outputArray[c] ^ outputWired[c]);
-                        if (tempcommand == 0) {
-                            tempcommand = 2;
-                        }
-                        cmdcode = (byte) (tempcommand);
-                        cmdlen = 3;
-                    }
-
-                    if (outputType[c] == AcelaNode.BLINK) {
-                        // outputArray[c] tells us to to turn the output on
-                        // or off.
-                        // outputWired[c] tells us whether the output
-                        // should start on or start off.
-                        // outputLength[c] tells us how long in tenths of
-                        // a second to blink.
-                        // output will continue to blink until turned off.
-                        // command 0x02 is deactivate
-                        // command 0x05 is blink
-                        // command 0x06 is reverse blink
-                        int tempcommand = outputArray[c];
-                        if ((tempcommand == 1) && (outputWired[c] == 1)) {
-                            tempcommand = 5;
-                        }
-                        if ((tempcommand == 1) && (outputWired[c] == 0)) {
-                            tempcommand = 6;
-                        }
-                        if (tempcommand == 0) {
-                            tempcommand = 2;
-                        }
-                        cmdcode = (byte) (tempcommand);
-                        if (cmdcode == 0x02) {
+                        if (outputType[c] == AcelaNode.ONOFF) {
+                            // outputArray[c] tells us to to turn the output on
+                            // or off.
+                            // outputWired[c] tells us whether the relay is 
+                            // wired backwards.
+                            // command 0x01 is activate
+                            // command 0x02 is deactivate
+                            int tempcommand = (outputArray[c] ^ outputWired[c]);
+                            if (tempcommand == 0) {
+                                tempcommand = 2;
+                            }
+                            cmdcode = (byte) (tempcommand);
                             cmdlen = 3;
-                        } else {
-                            cmdlen = 4;
-                            settinglo = (byte) outputLength[c];
                         }
-                    }
 
-                    if (outputType[c] == AcelaNode.PULSE) {
-                        // outputArray[c] tells us to to turn the output on
-                        // or off.
-                        // outputWired[c] tells us whether the output
-                        // should start on or start off.
-                        // outputLength[c] tells us how long in tenths of
-                        // a second to pulse the output.
-                        // output will actually return to off state after
-                        // the pulse duratiom -- but we will never know.
-                        // Program will need to fake this out.
-                        // command 0x02 is deactivate
-                        // command 0x03 is to pulse on
-                        // command 0x04 is to pulse off
-                        int tempcommand = outputArray[c];
-                        if ((tempcommand == 1) && (outputWired[c] == 1)) {
-                            tempcommand = 4;
+                        if (outputType[c] == AcelaNode.BLINK) {
+                            // outputArray[c] tells us to to turn the output on
+                            // or off.
+                            // outputWired[c] tells us whether the output
+                            // should start on or start off.
+                            // outputLength[c] tells us how long in tenths of
+                            // a second to blink.
+                            // output will continue to blink until turned off.
+                            // command 0x02 is deactivate
+                            // command 0x05 is blink
+                            // command 0x06 is reverse blink
+                            int tempcommand = outputArray[c];
+                            if ((tempcommand == 1) && (outputWired[c] == 1)) {
+                                tempcommand = 5;
+                            }
+                            if ((tempcommand == 1) && (outputWired[c] == 0)) {
+                                tempcommand = 6;
+                            }
+                            if (tempcommand == 0) {
+                                tempcommand = 2;
+                            }
+                            cmdcode = (byte) (tempcommand);
+                            if (cmdcode == 0x02) {
+                                cmdlen = 3;
+                            } else {
+                                cmdlen = 4;
+                                settinglo = (byte) outputLength[c];
+                            }
                         }
-                        if ((tempcommand == 1) && (outputWired[c] == 0)) {
-                            tempcommand = 3;
+
+                        if (outputType[c] == AcelaNode.PULSE) {
+                            // outputArray[c] tells us to to turn the output on
+                            // or off.
+                            // outputWired[c] tells us whether the output
+                            // should start on or start off.
+                            // outputLength[c] tells us how long in tenths of
+                            // a second to pulse the output.
+                            // output will actually return to off state after
+                            // the pulse duratiom -- but we will never know.
+                            // Program will need to fake this out.
+                            // command 0x02 is deactivate
+                            // command 0x03 is to pulse on
+                            // command 0x04 is to pulse off
+                            int tempcommand = outputArray[c];
+                            if ((tempcommand == 1) && (outputWired[c] == 1)) {
+                                tempcommand = 4;
+                            }
+                            if ((tempcommand == 1) && (outputWired[c] == 0)) {
+                                tempcommand = 3;
+                            }
+                            if (tempcommand == 0) {
+                                tempcommand = 2;
+                            }
+                            cmdcode = (byte) (tempcommand);
+                            if (cmdcode == 0x02) {
+                                cmdlen = 3;
+                            } else {
+                                cmdlen = 4;
+                                settinglo = (byte) outputLength[c];
+                            }
                         }
-                        if (tempcommand == 0) {
-                            tempcommand = 2;
-                        }
-                        cmdcode = (byte) (tempcommand);
-                        if (cmdcode == 0x02) {
-                            cmdlen = 3;
-                        } else {
-                            cmdlen = 4;
-                            settinglo = (byte) outputLength[c];
-                        }
-                    }
                     } else {
                         switch (outputSignalHeadType[c]) {
                             case DOUBLE: {
                                 switch (outputSpecial[c]) {
-                                    case 1: cmdcode = 0x0c; settinglo = 0x01; break; // Red
-                                    case 2: cmdcode = 0x0c; settinglo = 0x02; break; // Flashing red
-                                    case 3: cmdcode = 0x0c; settinglo = 0x08; break; // Yellow
-                                    case 4: cmdcode = 0x0c; settinglo = 0x08; break; // Flashing Yellow
-                                    case 5: cmdcode = 0x0c; settinglo = 0x04; break; // Green
-                                    case 6: cmdcode = 0x0c; settinglo = 0x08; break; // Flashing Green
-                                    case 7: cmdcode = 0x0c; settinglo = 0x00; break; // Dark
-                                    default: cmdcode = 0x0c; settinglo = 0x03; break; // Flashing red
+                                    case 1:
+                                        cmdcode = 0x0c;
+                                        settinglo = 0x01;
+                                        break; // Red
+                                    case 2:
+                                        cmdcode = 0x0c;
+                                        settinglo = 0x02;
+                                        break; // Flashing red
+                                    case 3:
+                                        cmdcode = 0x0c;
+                                        settinglo = 0x08;
+                                        break; // Yellow
+                                    case 4:
+                                        cmdcode = 0x0c;
+                                        settinglo = 0x08;
+                                        break; // Flashing Yellow
+                                    case 5:
+                                        cmdcode = 0x0c;
+                                        settinglo = 0x04;
+                                        break; // Green
+                                    case 6:
+                                        cmdcode = 0x0c;
+                                        settinglo = 0x08;
+                                        break; // Flashing Green
+                                    case 7:
+                                        cmdcode = 0x0c;
+                                        settinglo = 0x00;
+                                        break; // Dark
+                                    default:
+                                        cmdcode = 0x0c;
+                                        settinglo = 0x03;
+                                        break; // Flashing red
                                 }
                                 break;
                             }
                             case TRIPLE: {
                                 switch (outputSpecial[c]) {
-                                    case 1: cmdcode = 0x0d; settinglo = 0x01; break; // Red
-                                    case 2: cmdcode = 0x0d; settinglo = 0x02; break; // Flashing red
-                                    case 3: cmdcode = 0x0d; settinglo = 0x04; break; // Yellow
-                                    case 4: cmdcode = 0x0d; settinglo = 0x08; break; // Flashing Yellow
-                                    case 5: cmdcode = 0x0d; settinglo = 0x10; break; // Green
-                                    case 6: cmdcode = 0x0d; settinglo = 0x20; break; // Flashing Green
-                                    case 7: cmdcode = 0x0d; settinglo = 0x00; break; // Dark
-                                    default: cmdcode = 0x0d; settinglo = 0x03; break; // Flashing red
+                                    case 1:
+                                        cmdcode = 0x0d;
+                                        settinglo = 0x01;
+                                        break; // Red
+                                    case 2:
+                                        cmdcode = 0x0d;
+                                        settinglo = 0x02;
+                                        break; // Flashing red
+                                    case 3:
+                                        cmdcode = 0x0d;
+                                        settinglo = 0x04;
+                                        break; // Yellow
+                                    case 4:
+                                        cmdcode = 0x0d;
+                                        settinglo = 0x08;
+                                        break; // Flashing Yellow
+                                    case 5:
+                                        cmdcode = 0x0d;
+                                        settinglo = 0x10;
+                                        break; // Green
+                                    case 6:
+                                        cmdcode = 0x0d;
+                                        settinglo = 0x20;
+                                        break; // Flashing Green
+                                    case 7:
+                                        cmdcode = 0x0d;
+                                        settinglo = 0x00;
+                                        break; // Dark
+                                    default:
+                                        cmdcode = 0x0d;
+                                        settinglo = 0x03;
+                                        break; // Flashing red
                                 }
                                 break;
                             }
                             case BPOLAR: {
                                 switch (outputSpecial[c]) {
-                                    case 1: cmdcode = 0x0c; settinglo = 0x01; break; // Red
-                                    case 2: cmdcode = 0x0c; settinglo = 0x02; break; // Flashing red
-                                    case 3: cmdcode = 0x0c; settinglo = 0x10; break; // Yellow
-                                    case 4: cmdcode = 0x0c; settinglo = 0x20; break; // Flashing Yellow
-                                    case 5: cmdcode = 0x0c; settinglo = 0x04; break; // Green
-                                    case 6: cmdcode = 0x0c; settinglo = 0x08; break; // Flashing Green
-                                    case 7: cmdcode = 0x0c; settinglo = 0x00; break; // Dark
-                                    default: cmdcode = 0x0c; settinglo = 0x03; break; // Flashing red
+                                    case 1:
+                                        cmdcode = 0x0c;
+                                        settinglo = 0x01;
+                                        break; // Red
+                                    case 2:
+                                        cmdcode = 0x0c;
+                                        settinglo = 0x02;
+                                        break; // Flashing red
+                                    case 3:
+                                        cmdcode = 0x0c;
+                                        settinglo = 0x10;
+                                        break; // Yellow
+                                    case 4:
+                                        cmdcode = 0x0c;
+                                        settinglo = 0x20;
+                                        break; // Flashing Yellow
+                                    case 5:
+                                        cmdcode = 0x0c;
+                                        settinglo = 0x04;
+                                        break; // Green
+                                    case 6:
+                                        cmdcode = 0x0c;
+                                        settinglo = 0x08;
+                                        break; // Flashing Green
+                                    case 7:
+                                        cmdcode = 0x0c;
+                                        settinglo = 0x00;
+                                        break; // Dark
+                                    default:
+                                        cmdcode = 0x0c;
+                                        settinglo = 0x03;
+                                        break; // Flashing red
                                 }
                                 break;
                             }
                             case WIGWAG: {
                                 switch (outputSpecial[c]) {
-                                    case 1: cmdcode = 0x0c; settinglo = 0x0B; break; // Red
-                                    case 2: cmdcode = 0x0c; settinglo = 0x0B; break; // Flashing red
-                                    case 3: cmdcode = 0x0c; settinglo = 0x0B; break; // Yellow
-                                    case 4: cmdcode = 0x0c; settinglo = 0x0B; break; // Flashing Yellow
-                                    case 5: cmdcode = 0x0c; settinglo = 0x0B; break; // Green
-                                    case 6: cmdcode = 0x0c; settinglo = 0x0B; break; // Flashing Green
-                                    case 7: cmdcode = 0x0c; settinglo = 0x00; break; // Dark
-                                    default: cmdcode = 0x0c; settinglo = 0x0F; break; // Flashing red
+                                    case 1:
+                                        cmdcode = 0x0c;
+                                        settinglo = 0x0B;
+                                        break; // Red
+                                    case 2:
+                                        cmdcode = 0x0c;
+                                        settinglo = 0x0B;
+                                        break; // Flashing red
+                                    case 3:
+                                        cmdcode = 0x0c;
+                                        settinglo = 0x0B;
+                                        break; // Yellow
+                                    case 4:
+                                        cmdcode = 0x0c;
+                                        settinglo = 0x0B;
+                                        break; // Flashing Yellow
+                                    case 5:
+                                        cmdcode = 0x0c;
+                                        settinglo = 0x0B;
+                                        break; // Green
+                                    case 6:
+                                        cmdcode = 0x0c;
+                                        settinglo = 0x0B;
+                                        break; // Flashing Green
+                                    case 7:
+                                        cmdcode = 0x0c;
+                                        settinglo = 0x00;
+                                        break; // Dark
+                                    default:
+                                        cmdcode = 0x0c;
+                                        settinglo = 0x0F;
+                                        break; // Flashing red
                                 }
                                 break;
                             }
                             default: {
                                 switch (outputSpecial[c]) {
-                                    case 1: cmdcode = 0x0d; settinglo = 0x01; break; // Red
-                                    case 2: cmdcode = 0x0d; settinglo = 0x03; break; // Flashing red
-                                    case 3: cmdcode = 0x0d; settinglo = 0x04; break; // Yellow
-                                    case 4: cmdcode = 0x0d; settinglo = 0x08; break; // Flashing Yellow
-                                    case 5: cmdcode = 0x0d; settinglo = 0x10; break; // Green
-                                    case 6: cmdcode = 0x0d; settinglo = 0x30; break; // Flashing Green
-                                    case 7: cmdcode = 0x0d; settinglo = 0x00; break; // Dark
-                                    default: cmdcode = 0x0d; settinglo = 0x03; break; // Flashing red
+                                    case 1:
+                                        cmdcode = 0x0d;
+                                        settinglo = 0x01;
+                                        break; // Red
+                                    case 2:
+                                        cmdcode = 0x0d;
+                                        settinglo = 0x03;
+                                        break; // Flashing red
+                                    case 3:
+                                        cmdcode = 0x0d;
+                                        settinglo = 0x04;
+                                        break; // Yellow
+                                    case 4:
+                                        cmdcode = 0x0d;
+                                        settinglo = 0x08;
+                                        break; // Flashing Yellow
+                                    case 5:
+                                        cmdcode = 0x0d;
+                                        settinglo = 0x10;
+                                        break; // Green
+                                    case 6:
+                                        cmdcode = 0x0d;
+                                        settinglo = 0x30;
+                                        break; // Flashing Green
+                                    case 7:
+                                        cmdcode = 0x0d;
+                                        settinglo = 0x00;
+                                        break; // Dark
+                                    default:
+                                        cmdcode = 0x0d;
+                                        settinglo = 0x03;
+                                        break; // Flashing red
                                 }
                             }
                         }
@@ -929,6 +1050,7 @@ public class AcelaNode extends AbstractNode {
 
     /**
      * Use the contents of the poll reply to mark changes
+     *
      * @param l Reply to a poll operation
      */
     public void markChanges(AcelaReply l) {
@@ -946,25 +1068,25 @@ public class AcelaNode extends AbstractNode {
         int firstBitAt = startingSensorAddress % 8; // mod operator
         //int numBytes = 1;   // For TB there are only 4 sensors so always 1 byte
 
-        log.debug("Sensor Parsing for module type: "+moduleNames[nodeType]);
-        log.debug("Sensor Parsing has startingSensorAddress: "+startingSensorAddress);
-        log.debug("Sensor Parsing has firstByteNum: "+firstByteNum);
-        log.debug("Sensor Parsing has firstBitAt: "+firstBitAt);
+        log.debug("Sensor Parsing for module type: " + moduleNames[nodeType]);
+        log.debug("Sensor Parsing has startingSensorAddress: " + startingSensorAddress);
+        log.debug("Sensor Parsing has firstByteNum: " + firstByteNum);
+        log.debug("Sensor Parsing has firstBitAt: " + firstBitAt);
 
         //  Using rawvalue may be unnecessary, but trying to minimize reads to getElement 
         int rawvalue = l.getElement(firstByteNum);
-        log.debug("Sensor Parsing has first rawvalue: "+Integer.toHexString(rawvalue));
+        log.debug("Sensor Parsing has first rawvalue: " + Integer.toHexString(rawvalue));
 
         int usingByteNum = 0;
 
         try {
             for (int i = 0; i < sensorbitsPerCard; i++) {
                 if (sensorArray[i] == null) {
-                    log.debug("Sensor Parsing for Sensor: "+startingSensorAddress+" + "+i+" was skipped");
+                    log.debug("Sensor Parsing for Sensor: " + startingSensorAddress + " + " + i + " was skipped");
                     continue;
                 } // skip ones that don't exist
 
-                log.debug("Sensor Parsing for Sensor: "+startingSensorAddress+" + "+i);
+                log.debug("Sensor Parsing for Sensor: " + startingSensorAddress + " + " + i);
 
                 int relvalue = rawvalue;
 
@@ -977,7 +1099,7 @@ public class AcelaNode extends AbstractNode {
                         for (int j = 0; j < firstBitAt; j++) {
                             relvalue = relvalue >> 1;
                         }
-                        log.debug("Sensor Parsing for Sensor: "+startingSensorAddress+" + "+i+" shifted by 4: "+Integer.toHexString(relvalue));
+                        log.debug("Sensor Parsing for Sensor: " + startingSensorAddress + " + " + i + " shifted by 4: " + Integer.toHexString(relvalue));
                     }
                 }
 
@@ -987,7 +1109,7 @@ public class AcelaNode extends AbstractNode {
                         usingByteNum = 2;
                         //  Using rawvalue may be unnecessary, but trying to minimize reads to getElement 
                         rawvalue = l.getElement(usingByteNum + firstByteNum);
-                        log.debug("Sensor Parsing (1stat4) has third rawvalue: "+Integer.toHexString(rawvalue));
+                        log.debug("Sensor Parsing (1stat4) has third rawvalue: " + Integer.toHexString(rawvalue));
                         relvalue = rawvalue;
                         tempi = i - 12;  // tempi needs to shift down by 12
                     } else {
@@ -995,7 +1117,7 @@ public class AcelaNode extends AbstractNode {
                             usingByteNum = 1;
                             //  Using rawvalue may be unnecessary, but trying to minimize reads to getElement 
                             rawvalue = l.getElement(usingByteNum + firstByteNum);
-                            log.debug("Sensor Parsing (1stat4) has second rawvalue: "+Integer.toHexString(rawvalue));
+                            log.debug("Sensor Parsing (1stat4) has second rawvalue: " + Integer.toHexString(rawvalue));
                             relvalue = rawvalue;
                             tempi = i - 4;  // tempi needs to shift down by 4
                         }
@@ -1005,20 +1127,20 @@ public class AcelaNode extends AbstractNode {
                         usingByteNum = 1;
                         //  Using rawvalue may be unnecessary, but trying to minimize reads to getElement 
                         rawvalue = l.getElement(usingByteNum + firstByteNum);
-                        log.debug("Sensor Parsing has second rawvalue: "+Integer.toHexString(rawvalue));
+                        log.debug("Sensor Parsing has second rawvalue: " + Integer.toHexString(rawvalue));
                         relvalue = rawvalue;
                         tempi = i - 8;  // tempi needs to shift down by 8
                     }
                 }
 
-                log.debug("Sensor Parsing for Sensor: "+startingSensorAddress+" + "+i+" has tempi: "+tempi);
+                log.debug("Sensor Parsing for Sensor: " + startingSensorAddress + " + " + i + " has tempi: " + tempi);
 
                 //  Finally we can isolate the bit from the poll result
                 for (int j = 0; j < tempi; j++) {
                     relvalue = relvalue >> 1;
                 }
 
-                log.debug("Sensor Parsing for Sensor: "+startingSensorAddress+" + "+i+" has relvalue: "+Integer.toHexString(relvalue));
+                log.debug("Sensor Parsing for Sensor: " + startingSensorAddress + " + " + i + " has relvalue: " + Integer.toHexString(relvalue));
 
                 // Now that we have the relvalue need to compare to last time
                 boolean nooldstate = false;
@@ -1037,7 +1159,7 @@ public class AcelaNode extends AbstractNode {
 
                 if ((nooldstate) || (oldstate != newstate)) {
                     if (nooldstate) {
-                        log.debug("Sensor Parsing for Sensor: "+startingSensorAddress+" + "+i+"  had no old state.");
+                        log.debug("Sensor Parsing for Sensor: " + startingSensorAddress + " + " + i + "  had no old state.");
                     }
                     if (newstate == 0x00) {
                         sensorLastSetting[i] = Sensor.INACTIVE;
@@ -1046,9 +1168,9 @@ public class AcelaNode extends AbstractNode {
                         sensorLastSetting[i] = Sensor.ACTIVE;
                         sensorArray[i].setKnownState(sensorLastSetting[i]);
                     }
-                    log.debug("Sensor Parsing for Sensor: "+startingSensorAddress+" + "+i+ " changed state: " + sensorLastSetting[i] + " rawvalue: "+Integer.toHexString(rawvalue));
+                    log.debug("Sensor Parsing for Sensor: " + startingSensorAddress + " + " + i + " changed state: " + sensorLastSetting[i] + " rawvalue: " + Integer.toHexString(rawvalue));
                 } else {
-                    log.debug("Sensor Parsing for Sensor: "+startingSensorAddress+" + "+i+ " did NOT change state: " + sensorLastSetting[i] + " rawvalue: "+Integer.toHexString(rawvalue));
+                    log.debug("Sensor Parsing for Sensor: " + startingSensorAddress + " + " + i + " did NOT change state: " + sensorLastSetting[i] + " rawvalue: " + Integer.toHexString(rawvalue));
                 }
             }
         } catch (JmriException e) {
@@ -1058,8 +1180,10 @@ public class AcelaNode extends AbstractNode {
 
     /**
      * The numbers here are 0 to MAXSENSORBITS, not 1 to MAXSENSORBITS.
-     * @param s - Sensor object
-     * @param rawaddr - 0 to MAXSENSORBITS number of sensor's input bit on this node
+     *
+     * @param s       - Sensor object
+     * @param rawaddr - 0 to MAXSENSORBITS number of sensor's input bit on this
+     *                node
      */
     public void registerSensor(Sensor s, int rawaddr) {
         // validate the sensor ordinal
@@ -1094,7 +1218,7 @@ public class AcelaNode extends AbstractNode {
      *
      * @return true if initialization required
      */
-    public boolean handleTimeout(AbstractMRMessage m,AbstractMRListener l) {
+    public boolean handleTimeout(AbstractMRMessage m, AbstractMRListener l) {
         timeout++;
         if (log.isDebugEnabled()) {
             log.warn("Timeout to poll for UA=" + nodeAddress + ": consecutive timeouts: " + timeout);
@@ -1108,7 +1232,7 @@ public class AcelaNode extends AbstractNode {
         }
         timeout = 0;
     }
-    static Logger log = LoggerFactory.getLogger(AcelaNode.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaNode.class.getName());
 }
 
 /* @(#)AcelaNode.java */

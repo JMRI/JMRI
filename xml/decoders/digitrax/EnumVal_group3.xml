@@ -1,7 +1,7 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id: motorDriveFreq.xml 22090 2012-12-29 02:30:04Z jacobsen $ -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -12,49 +12,49 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-       <enumVal>
-          <enumChoice choice="Sensor input message">
-            <choice>Sensor input message</choice>
-            <choice xml:lang="it">Messaggio ingresso sensore</choice>
-          </enumChoice>
-          <enumChoice choice="No message">
-            <choice>No message</choice>
-            <choice xml:lang="it">Nessun Messaggio </choice>
-          </enumChoice>
-          <enumChoice choice="Turnout feedback message">
-            <choice>Turnout feedback message</choice>
-            <choice xml:lang="it">Messaggio posizione Scambio</choice>
-          </enumChoice>
-          <enumChoice choice="Cascaded turnout request">
-            <choice>Cascaded turnout request</choice>
-            <choice xml:lang="it">Richiesta scambi in cascata</choice>
-          </enumChoice>
-          <enumChoice choice="System power on/off">
-            <choice>System power on/off</choice>
-            <choice xml:lang="it">Accendi/Spegni sistema</choice>
-          </enumChoice>
-          <enumChoice choice="System stop/run">
-            <choice>System stop/run</choice>
-            <choice xml:lang="it">Stop/esegui sistema</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x06)">
-            <choice>Reserved (0x06)</choice>
-            <choice xml:lang="it">Riservato (0x06)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x07)">
-            <choice>Reserved (0x07)</choice>
-            <choice xml:lang="it">Riservato (0x07)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x08)">
-            <choice>Reserved (0x08)</choice>
-            <choice xml:lang="it">Riservato (0x08)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x09)">
-            <choice>Reserved (0x09)</choice>
-            <choice xml:lang="it">Riservato (0x09)</choice>
-          </enumChoice>
-          <enumChoice choice="Exact turnout feedback message">
-            <choice>Exact turnout feedback message</choice>
-            <choice xml:lang="it">Messaggio posizione esatta Scambio</choice>
-          </enumChoice>
-        </enumVal>
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <enumChoice choice="Sensor input message">
+    <choice>Sensor input message</choice>
+    <choice xml:lang="it">Messaggio ingresso sensore</choice>
+  </enumChoice>
+  <enumChoice choice="No message">
+    <choice>No message</choice>
+    <choice xml:lang="it">Nessun Messaggio </choice>
+  </enumChoice>
+  <enumChoice choice="Turnout feedback message">
+    <choice>Turnout feedback message</choice>
+    <choice xml:lang="it">Messaggio posizione Scambio</choice>
+  </enumChoice>
+  <enumChoice choice="Cascaded turnout request">
+    <choice>Cascaded turnout request</choice>
+    <choice xml:lang="it">Richiesta scambi in cascata</choice>
+  </enumChoice>
+  <enumChoice choice="System power on/off">
+    <choice>System power on/off</choice>
+    <choice xml:lang="it">Accendi/Spegni sistema</choice>
+  </enumChoice>
+  <enumChoice choice="System stop/run">
+    <choice>System stop/run</choice>
+    <choice xml:lang="it">Stop/esegui sistema</choice>
+  </enumChoice>
+  <enumChoice choice="Reserved (0x06)">
+    <choice>Reserved (0x06)</choice>
+    <choice xml:lang="it">Riservato (0x06)</choice>
+  </enumChoice>
+  <enumChoice choice="Reserved (0x07)">
+    <choice>Reserved (0x07)</choice>
+    <choice xml:lang="it">Riservato (0x07)</choice>
+  </enumChoice>
+  <enumChoice choice="Reserved (0x08)">
+    <choice>Reserved (0x08)</choice>
+    <choice xml:lang="it">Riservato (0x08)</choice>
+  </enumChoice>
+  <enumChoice choice="Reserved (0x09)">
+    <choice>Reserved (0x09)</choice>
+    <choice xml:lang="it">Riservato (0x09)</choice>
+  </enumChoice>
+  <enumChoice choice="Exact turnout feedback message">
+    <choice>Exact turnout feedback message</choice>
+    <choice xml:lang="it">Messaggio posizione esatta Scambio</choice>
+  </enumChoice>
+</enumVal>

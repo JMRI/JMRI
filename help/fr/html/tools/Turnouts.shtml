@@ -1,21 +1,21 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Translated by Blorec Hervé le 2012-01-23-->
-<!-- $Id: Turnouts.shtml,v 1.4 2011/04/12 16:18:00 kevin-dickerson Exp $ -->
+<!-- Translated by Blorec Herv&#233; le 2012-01-23-->
+<!-- <!-- $Id$ -->
 <html lang="fr">
 <head>
   <TITLE>
  	JMRI: Turnout Documentation
   </TITLE>
-  <META http-equiv=Content-Type content="text/html;charset=utf-8">
+  <META http-equiv=Content-Type content="text/html;charset=iso-8859-1">
 
   <META content="Bob Jacobsen" name=Author>
 
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <meta name="keywords"
         content="turnout model railroad JMRI decoderpro panelpro">
 
 <!-- Style --> de documentation
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -37,63 +37,63 @@
 
 <h3>Que sont les aiguillages? </h3>
 
-<p> JMRI appelle peu près n'importe quelle sortie d'un réseau un " Aiguillage".
-A l'origine, JMRI contrôlait simplement les aiguillages via les décodeurs d'accessoires DCC.
-Comme le temps passait, davantage de capacité ont été ajoutées à JMRI, mais elle a gardé ce nom.
-Maintenant, par exemple, les broches de sortie individuelle sur un système C/MRI
-sont également référencées via le nom «aiguillage».
+<p> JMRI appelle peu pr&#232;s n'importe quelle sortie d'un r&#233;seau un " Aiguillage".
+A l'origine, JMRI contr&#244;lait simplement les aiguillages via les d&#233;codeurs d'accessoires DCC.
+Comme le temps passait, davantage de capacit&#233; ont &#233;t&#233; ajout&#233;es &#224; JMRI, mais il a gard&#233; ce nom.
+Maintenant, par exemple, les broches de sortie individuelle sur un syst&#232;me C/MRI
+sont &#233;galement r&#233;f&#233;renc&#233;es via le nom "aiguillage".
 </P>
 
-<h3> Contrôler un Aiguillage </h3>
+<h3> Contr&#244;ler un Aiguillage </h3>
 
 <p>
 Dans la plupart des cas, vous pouvez simplement utiliser un aiguillage et JMRI
 comprendra ce que vous voulez dire.
-Par exemple, vous pouvez ouvrir le "Contrôle Aiguillage"
-du menu «Outils», entrez un numéro d'aiguillage (numéro de l'adresse DCC ou C/MRI),
-et cliquez sur Dévié ou Direct. JMRI agira à partir de là.
+Par exemple, vous pouvez ouvrir la "Commande Aiguillage"
+du menu "Outils", entrez un num&#233;ro d'aiguillage (num&#233;ro de l'adresse DCC ou C/MRI),
+et cliquez sur D&#233;vi&#233; ou Droit. JMRI agira &#224; partir de l&#224;.
 </P>
 <P>
-Les deux états de la sortie sont appelés "Direct" et "Dévié".
-«Direct» est l'arrêt, inactif, état non commandé.
-«Dévié» est la suite, actif, l'état ordonné.
+Les deux &#233;tats de la sortie sont appel&#233;s "Droit" et "D&#233;vi&#233;".
+"Droit" est l'arr&#234;t, inactif, &#233;tat non command&#233;.
+"D&#233;vi&#233;" est la suite, actif, l'&#233;tat ordonn&#233;.
    
 <h3> Sauvegarde de configuration d'Aiguillage sur le disque </h3>
 
-<p> Les définitions d'aiguillage sont enregistrées dans votre fichier de configuration de réseau, avec les
-capteurs, les têtes signal, etc Pour stocker ces informations sur le disque, utilisez <b>Stocker 
-Configuration ...</b> dans le menu <b>Fichier </b> en haut du Tableau Lumière
- (ou d'autres tableaux à partir du menu Outils), ou sélectionnez <b> Stocker Panneau...</b>
+<p> Les d&#233;finitions d'aiguillage sont enregistr&#233;es dans votre fichier de configuration de r&#233;seau, avec les
+capteurs, les t&#234;tes signal, etc. Pour stocker ces informations sur le disque, utilisez <b>Sauvegarder 
+Configuration ...</b> dans le menu <b>Fichier </b> en haut du Tableau Lumi&#232;re
+ (ou d'autres tableaux &#224; partir du menu Outils), ou s&#233;lectionnez <b>Sauvegarder Panneau...</b>
 dans le menu <b>Panneau </b>.
 
 <a name="add"> <H3> Ajout d'un nouvel Aiguillage </H3> </a>
-<p> Pour configurer entièrement un nouvel Aiguillage, suivez cette procédure: </p>
+<p> Pour configurer enti&#232;rement un nouvel Aiguillage, suivez cette proc&#233;dure: </p>
 <ol>
-<li> <p> Cliquez  <b> Tableau Aiguillage</b> dans le menu<b> Outils </b> pour faire apparaître
+<li> <p> Cliquez  <b>Tableau Aiguillage</b> dans le menu<b>Outils</b> pour faire appara&#238;tre
 Le Tableau Aiguillage, puis cliquez sur le bouton <b> Ajouter...</b>  au bas du tableau 
-pour ouvrir la fenêtre Ajouter/modifier Aiguillage. </p>
-<p> <li> Depuis la liste déroulante <b>Système </b> , sélectionnez le système auquel l'Adresse de l'aiguillage est connectée. Dans la zone  <b>Adresse matérielle </b> entrez dedans l'Adresse accessoires DCC de l'aiguillage </p>
+pour ouvrir la fen&#234;tre Ajouter/modifier Aiguillage. </p>
+<p> <li> Depuis la liste d&#233;roulante <b>Syst&#232;me </b> , s&#233;lectionnez le syst&#232;me auquel l'Adresse de l'aiguillage est connect&#233;e. Dans la zone  <b>Adresse mat&#233;rielle</b> entrez dedans l'Adresse accessoires DCC de l'aiguillage </p>
 </Li>
-<p> <li> Entrez un nom utilisateur. Toute chaîne de caractères qui est différent
-du nom utilisateur d'appareils de voie sera acceptée, mais il est
-sage d'utiliser une chaîne qui décrit l'utilisation prévue de l'Aiguillage.
+<p> <li> Entrez un nom utilisateur. Toute cha&#238;ne de caract&#232;res qui est diff&#233;rente
+du nom utilisateur d'appareils de voie sera accept&#233;e, mais il est
+sage d'utiliser une cha&#238;ne qui d&#233;crit l'utilisation pr&#233;vue de l'Aiguillage.
 Vous pouvez laisser ce champ vide si vous le souhaitez. </P>
 </Li>
-    <p> <li> Si vous souhaitez ajouter un certain nombre d'appareils de voie à la fois, cliquez sur la case à cocher
-    <b>Ajouter une Plage </b> et puis dans le champs <b> Nombre à ajouter </b> entrez
-le nombre d'appareils de voie que vous souhaitez ajouter. Si vous avez entré un nom utilisateur
-    , puis il sera ajouté avec un certain numéro pour s'assurer que chaque nom utilisateur
-    est unique. Si une adresse matérielle qui existe est déjà dans le plage qui est en cours d'ajout
-    , alors le système va sauter cette adresse et poursuivra.
+    <p> <li> Si vous souhaitez ajouter un certain nombre d'appareils de voie &#224; la fois, cliquez sur la case &#224; cocher
+    <b>Ajouter une Plage </b> et puis dans le champs <b> Nombre &#224; ajouter </b> entrez
+le nombre d'appareils de voie que vous souhaitez ajouter. Si vous avez entr&#233; un nom utilisateur
+    , puis il sera ajout&#233; avec un certain num&#233;ro pour s'assurer que chaque nom utilisateur
+    est unique. Si une adresse mat&#233;rielle qui existe est d&#233;j&#224; dans le plage qui est en cours d'ajout
+    , alors le syst&#232;me va sauter cette adresse et poursuivra.
     </Li>
-<p> <li> Cliquez sur le bouton <b>OK </b> situé au bas de la fenêtre.
-Si tout va bien, un message indiquant " Nouvel Aiguillage ajouté ..." sera
-affiché dans la zone des notes. S'il y a des problèmes avec quoi que ce soit, une erreur ou
-un message d'avertissement sera affiché dans la zone des notes; vous devrez alors
-corriger l'erreur et cliquez sur <b>OK  </b> à nouveau. </p>
+<p> <li> Cliquez sur le bouton <b>OK </b> situ&#233; au bas de la fen&#234;tre.
+Si tout va bien, un message indiquant " Nouvel Aiguillage ajout&#233; ..." sera
+affich&#233; dans la zone des notes. S'il y a des probl&#232;mes avec quoi que ce soit, une erreur ou
+un message d'avertissement sera affich&#233; dans la zone des notes; vous devrez alors
+corriger l'erreur et cliquez sur <b>OK  </b> &#224; nouveau. </p>
     </Li> 
-    <P> <LI> Retour au Tableau Aiguillage principal, vous pouvez ensuite sélectionner
-des options pour l'aiguillage et le contrôler en cliquant sur le bouton d'état.
+    <P> <LI> Retour au Tableau Aiguillage principal, vous pouvez ensuite s&#233;lectionner
+des options pour l'aiguillage et le contr&#244;ler en cliquant sur le bouton d'&#233;tat.
 </Ol>
 <!--#include virtual="/Footer" -->
 

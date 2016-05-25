@@ -1,37 +1,32 @@
 // SerialMessage.java
-
 package jmri.jmrix.powerline;
 
-
 /**
- * Contains the data payload of a serial
- * packet.
+ * Contains the data payload of a serial packet.
  * <P>
  * The transmission protocol can come in one of several forms:
  * <ul>
- * <li>If the interlocked parameter is false (default),
- * the packet is just sent.  If the response length is not zero,
- * a reply of that length is expected.
- * <li>If the interlocked parameter is true, the transmission
- * will require a CRC interlock, which will be automatically added.
- * (Design note: this is done to make sure that the messages
- * remain atomic)
+ * <li>If the interlocked parameter is false (default), the packet is just sent.
+ * If the response length is not zero, a reply of that length is expected.
+ * <li>If the interlocked parameter is true, the transmission will require a CRC
+ * interlock, which will be automatically added. (Design note: this is done to
+ * make sure that the messages remain atomic)
  * </ul>
  *
- * @author    Bob Jacobsen  Copyright (C) 2001,2003, 2006, 2007, 2008
- * Converted to multiple connection
+ * @author Bob Jacobsen Copyright (C) 2001,2003, 2006, 2007, 2008 Converted to
+ * multiple connection
  * @author kcameron Copyright (C) 2011
- * @version   $Revision$
+ * @version $Revision$
  */
-
 abstract public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     // is this logically an abstract class?
 
-    /** Suppress the default ctor, as the
-     * length must always be specified
+    /**
+     * Suppress the default ctor, as the length must always be specified
      */
-    protected SerialMessage() {}
-    
+    protected SerialMessage() {
+    }
+
     public SerialMessage(int l) {
         super(l);
         setResponseLength(0);  // only polls require a response
@@ -40,8 +35,9 @@ abstract public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     /**
-     * This ctor interprets the String as the exact
-     * sequence to send, byte-for-byte.
+     * This ctor interprets the String as the exact sequence to send,
+     * byte-for-byte.
+     *
      * @param m
      */
     public SerialMessage(String m, int l) {
@@ -52,15 +48,21 @@ abstract public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     boolean interlocked = false;
-    public void setInterlocked(boolean v) { interlocked = v; }
-    public boolean getInterlocked() { return interlocked; }
-    
+
+    public void setInterlocked(boolean v) {
+        interlocked = v;
+    }
+
+    public boolean getInterlocked() {
+        return interlocked;
+    }
+
     /**
-     * This ctor interprets the byte array as
-     * a sequence of characters to send.
+     * This ctor interprets the byte array as a sequence of characters to send.
+     *
      * @param a Array of bytes to send
      */
-    public  SerialMessage(byte[] a, int l) {
+    public SerialMessage(byte[] a, int l) {
         super(String.valueOf(a));
         setResponseLength(l);
         setBinary(true);
@@ -68,15 +70,29 @@ abstract public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     int responseLength = -1;  // -1 is an invalid value, indicating it hasn't been set
-    public void setResponseLength(int l) { responseLength = l; }
-    public int getResponseLength() { return responseLength; }
-        
+
+    public void setResponseLength(int l) {
+        responseLength = l;
+    }
+
+    public int getResponseLength() {
+        return responseLength;
+    }
+
     abstract public String toMonitorString();
-    
+
     // static methods to recognize a message
-    public boolean isPoll() { return getElement(1)==48;}
-    public boolean isXmt()  { return getElement(1)==17;}
-    public int getAddr() { return getElement(0); }
+    public boolean isPoll() {
+        return getElement(1) == 48;
+    }
+
+    public boolean isXmt() {
+        return getElement(1) == 17;
+    }
+
+    public int getAddr() {
+        return getElement(0);
+    }
 
     // static methods to return a formatted message
     static public SerialMessage getPoll(int addr) {

@@ -1,14 +1,12 @@
-// JythonSiglet.java
-
 package jmri.jmrit.automat;
 
+import jmri.InstanceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.*;
 
 /**
- * This sample Automaton invokes a Jython interpreter to handle a script
- * that defines a Siglet implementation.
+ * This sample Automaton invokes a Jython interpreter to handle a script that
+ * defines a Siglet implementation.
  * <P>
  * The python file should define two functions:
  * <UL>
@@ -17,13 +15,13 @@ import jmri.*;
  * </UL>
  * <P>
  * Access is via Java reflection so that both users and developers can work
- * without the jython.jar file in the classpath. To make it easier to
- * read the code, the "non-reflection" statements are in the comments.
+ * without the jython.jar file in the classpath. To make it easier to read the
+ * code, the "non-reflection" statements are in the comments.
  *
- * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision$
+ * @author	Bob Jacobsen Copyright (C) 2003
  */
 public class JythonSiglet extends Siglet {
+
     Object interp;
 
     public JythonSiglet(String file) {
@@ -40,17 +38,17 @@ public class JythonSiglet extends Siglet {
      * <LI>Read the file
      * <LI>Run the python defineIO routine
      * </UL>
-     * Initialization of the Python in the actual
-     * script file is deferred until the {@link #handle} method.
+     * Initialization of the Python in the actual script file is deferred until
+     * the {@link #handle} method.
      */
     public void defineIO() {
 
         try {
             // PySystemState.initialize();
             Class<?> cs = Class.forName("org.python.core.PySystemState");
-            java.lang.reflect.Method initialize =
-                        cs.getMethod("initialize",(Class[])null);
-            initialize.invoke(null, (Object[])null);
+            java.lang.reflect.Method initialize
+                    = cs.getMethod("initialize", (Class[]) null);
+            initialize.invoke(null, (Object[]) null);
 
             // interp = new PythonInterpreter();
             interp = Class.forName("org.python.util.PythonInterpreter").newInstance();
@@ -58,8 +56,8 @@ public class JythonSiglet extends Siglet {
             // load some general objects
             // interp.set("dcc", InstanceManager.commandStationInstance());
             // interp.set("self", this);
-            java.lang.reflect.Method set =
-                        interp.getClass().getMethod("set", new Class[]{String.class, Object.class});
+            java.lang.reflect.Method set
+                    = interp.getClass().getMethod("set", new Class[]{String.class, Object.class});
             set.invoke(interp, new Object[]{"self", this});
 
             set.invoke(interp, new Object[]{"inputs", inputs});
@@ -82,23 +80,23 @@ public class JythonSiglet extends Siglet {
             exec = interp.getClass().getMethod("exec", new Class[]{String.class});
 
             // have jython read the file
-            exec.invoke(interp, new Object[]{"execfile(\""+filename+"\")"});
+            exec.invoke(interp, new Object[]{"execfile(\"" + filename + "\")"});
 
             // execute the init routine in the jython class
             exec.invoke(interp, new Object[]{"defineIO()"});
 
-            System.out.println("inputs[0]: "+inputs[0]);
+            System.out.println("inputs[0]: " + inputs[0]);
 
         } catch (IllegalAccessException e) {
-            log.error("IllegalAccessException creating jython system objects",e);
+            log.error("IllegalAccessException creating jython system objects", e);
         } catch (NoSuchMethodException e) {
-            log.error("NoSuchMethodException creating jython system objects",e);
+            log.error("NoSuchMethodException creating jython system objects", e);
         } catch (ClassNotFoundException e) {
-            log.error("ClassNotFoundException creating jython system objects",e);
+            log.error("ClassNotFoundException creating jython system objects", e);
         } catch (InstantiationException e) {
-            log.error("InstantiationException creating jython system objects",e);
+            log.error("InstantiationException creating jython system objects", e);
         } catch (java.lang.reflect.InvocationTargetException e) {
-            log.error("InvocationTargetException creating jython system objects",e);
+            log.error("InvocationTargetException creating jython system objects", e);
         }
     }
 
@@ -114,7 +112,7 @@ public class JythonSiglet extends Siglet {
             // execute the handle routine in the jython
             exec.invoke(interp, new Object[]{"setOutput()"});
         } catch (Exception e) {
-            log.error("Exception invoking jython command: "+e);
+            log.error("Exception invoking jython command: " + e);
             e.printStackTrace();
         }
     }
@@ -122,8 +120,6 @@ public class JythonSiglet extends Siglet {
     java.lang.reflect.Method exec;
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(JythonSiglet.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JythonSiglet.class.getName());
 
 }
-
-/* @(#)JythonAutomaton.java */

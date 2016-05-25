@@ -1,18 +1,17 @@
 // SerialInterface.java
-
 package jmri.jmrix.tmcc;
-
 
 /**
  * Interface to send/receive serial TMCC information
  *
- * @author			Bob Jacobsen Copyright (C) 2001, 2006
- * @version			$Revision$
+ * @author	Bob Jacobsen Copyright (C) 2001, 2006
+ * @version	$Revision$
  */
 public interface SerialInterface {
 
-    public void addSerialListener( SerialListener l);
-    public void removeSerialListener( SerialListener l);
+    public void addSerialListener(SerialListener l);
+
+    public void removeSerialListener(SerialListener l);
 
     boolean status();   // true if the implementation is operational
 

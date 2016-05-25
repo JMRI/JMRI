@@ -1,17 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: AppConfigPanelErrorPage.shtml,v 1.2 2009/02/23 02:02:24 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-10-03--> 
+<!-- $Id$ -->
+<!-- UpDated  by Blorec Herv&#233;  2013-10-08--> 
 <html lang="fr">
 <head>
  <TITLE>
       JMRI: Setting Preferences
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="JMRI help preferences">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -24,64 +24,17 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>JMRI:Réglage des options JMRI </H1>
+<H1>JMRI:R&#233;glage des options JMRI </H1>
 
-Cet écran d'aide s'ouvre automatiquement lorsque les préférences JMRI n'ont pas été réglées, ou il y avait une erreur de préférences liées tandis que le programme a été mis en service. Il vous guide à travers les préférences de mise en fonctionnement de base.
-
-<p>
-Une fois que les préférences sont définies correctement, cet écran ne s'affichera pas plus. Vous pouvez revenir aux préférences <a href=""> page d'aide principale </a> en choisissant "Aide Fenêtre" dans le menu Aide de la fenêtre de préférences.
+Cet &#233;cran d'aide s'ouvre automatiquement lorsque les pr&#233;f&#233;rences JMRI n'ont pas &#233;t&#233; r&#233;gl&#233;es, ou qu'il y avait une erreur de pr&#233;f&#233;rences quand le programme a &#233;t&#233; mis en service. Il vous guide &#224; travers les pr&#233;f&#233;rences de mise en fonctionnement de base.
 
 <p>
-Il y a aussi plus d'informations sur les réglage des préférences
-sur les
- <a href="../../manual/Getting_Started.shtml#Preferences"> pages tutoriels</a> .
-
-<h2> Préférences Basiques</h2>
+Une fois que les pr&#233;f&#233;rences sont d&#233;finies correctement, cet &#233;cran ne s'affichera plus. Le Volet d'Aide pour d&#233;finir les pr&#233;f&#233;rences est &#224; <a href="./AppConfigPanel.shtml">la page d'aide principale des pr&#233;f&#233;rences.</a>. Vous pouvez &#233;galement ouvrir le volet en s&#233;lectionnant "Fen&#234;tre Aide" dans le menu Aide de la fen&#234;tre des pr&#233;f&#233;rences.
 <p>
-La première chose à faire est de régler les préférences de base.
 <p>
-<a href="../../manual/images/Preferences.png">
-<img src="../../manual/images/Preferences.png" height="156" width="256" align="right"></a>
-<dl>
-<dt>Connexion  Mise en page
-<dd> Vous pouvez sélectionner l'une des connexions diverses JMRI mise ici.
-Pour plus d'informations sur comment configurer cela pour votre matériel particulier,
-voir les  <a href="../../html/hardware/index.shtml">pages matériels </a>.
-<dt> Style Interface Graphique Utilisateur GUI
-<dd>Ces boîtes radio vous permettent de sélectionner la façon dont le programme s'affiche.
-Les choix disponibles dépendent du type d'ordinateur que vous avez, et
-tous les éléments suivants peuvent être disponibles:
-    <ul>
-    <li>Métal - le style par défaut de Java, utilisable sur tous les ordinateurs
-     <li> CDE/Motif - Une forme Linux/Unix qui fonctionne bien avec les gestionnaires écran X Windows. Il est également disponible sur (presque) tous les types d'ordinateurs.
-     <li> Windows - uniquement disponible sur les systèmes Microsoft Windows, ce qui rend le
-         programme aussi ressemblant que possible qu'une application normale de Windows.
-     <li> Mac OS X - uniquement disponible sur MacOS, ce qui rend l'apparence du programme ressemblant à
-         une application Macintosh
-    </ul>
-<dt>Programmateur par défaut
-<dd>Le programmateur  DecoderPro vous permet de choisir  l'affichage de beaucoup ou peu de contenu du décodeur en utilisant un «programmateur» configurable . Vous pouvez en sélectionner un dans le même temps, vous sélectionnez votre <a href="../../manual/Basic_Programming.shtml"> décodeur de locomotive </a>, mais cela fournit un endroit commode pour définir un décodeur par défaut ainsi vous n'avez pas à le sélectionner à chaque fois que vous ouvrez un décodeur.
-</dl>
-
-Sans aucun doute la commande la plus importante se trouve au bas de cette section:
-Le bouton "Enregistrer"!
-          
 <p>
-Soyez sûr de cliquer sur "Enregistrer" lorsque vous quittez cette fenêtre. Vos modifications des préférences
-ne prendront effet qu'après redémarrage du programme, de sorte que le
-programme vous invite à le faire après avoir sauvé les préférences.
-
-<h2> Préférences avancées  </h2>
-
-La case "Montrer Préférences avancées "  vous permet de
-personnaliser votre connexion à la mise en page. Vous n'avez pas besoin d'utiliser les
-préférences avancées pour obtenir votre première connexion au réseau et et d'exécuter l'application, et nous
-vous recommandons de les laisser seuls jusqu'à ce que la connexion à votre
-centrale de commande fonctionne correctement. 
 <p>
-Pour plus d'informations sur le réglage des préférences avancées,
-voir la
-<a href="AppConfigPanel.shtml#advanced"> section d'aide sur les Préférences avancées</a>.
+This is the help\en\package\apps\AppConfixPanelErrorPage.shtml pane
 
 <!--#include virtual="/Footer" -->
 </body>

@@ -1,17 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: MS100.shtml,v 1.3 2010/01/14 23:02:22 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-09-22-->
+<!-- $Id$ -->
+<!-- Translated  by Blorec Herv&#233; le 2013-09-14-->
 <html lang="fr">
 <head>
  <TITLE>
-      JMRI Hardware Guide: Connecting an MS100 to LocoNet
+      JMRI Hardware Guide: Connecting an MS100 to LocoNet&reg;
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="Digitrax Chief DCS Command Station MS-100 LocoBuffer java model railroad JMRI install windows">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -20,83 +20,94 @@
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
 </HEAD>
-
+&reg;
 <BODY>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
       <h1> 
-      Guide Matériel JMRI: Connecter un MS100 à LocoNet
+      Guide Mat&#233;riel JMRI: Connecter un MS100 &#224; LocoNet&reg;
       </h1>
 
 
 <p>
 La MS100 de Digitrax vous permet de connecter de nombreux types d'ordinateurs
-à un LocoNet.
+&#224; un LocoNet&reg;.
 </ p>
 <p>
-Malheureusement, la MS100 est une conception un peu ancienne, et ne peut pas
-fournir une connexion entièrement fiable à LocoNet.
-La
-<A HREF="LocoBufferUSB.shtml"> LocoBuffer USB </a>
+Malheureusement, la MS100 est d'une conception un peu ancienne, et ne peut pas
+fournir une connexion enti&#232;rement fiable &#224; LocoNet.
+
+<ul>
+<li> Votre ordinateur peut ne pas &#234;tre en mesure de se connecter via le MS100.
+<li> M&#234;me si le MS100 permet une connexion, vous &#234;tes susceptibles de rencontrer des erreurs intermittentes difficiles &#224; diagnostiquer .
+<li> M&#234;me si vous obtenez que le MS100 travaille une fois, il peut &#233;chouer de fa&#231;on permanente en raison d'une mise &#224; jour du syst&#232;me d'exploitation de l'ordinateur.
+<li> Si vous avez des probl&#232;mes avec un MS100, il  peut pas n'y avoir personne pour vous aider.
+</ ul>
+Nous recommandons vivement que les nouvelles configurations n'utilisent pas le MS100, et les plans existants des utilisateurs 
+pour la conversion &#224; une meilleure solution avant qu'il ne devienne n&#233;cessaire.
+
+<p>La
+<A HREF="LocoBufferUSB.shtml"> LocoBuffer USB</a>
 est actuellement le moyen le plus fiable pour
-connecter un ordinateur à un LocoNet. Elle est produite par la société de Dick Bronson
-<A HREF="http://www.rr-cirkits.com"> RR-CirKits </a>
-, basée en partie sur la conception LocoBuffer originale.
+connecter un ordinateur &#224; un LocoNet. Elle est produite par la soci&#233;t&#233; de Dick Bronson
+<A HREF="http://www.rr-cirkits.com"> RR-CirKits </a>, bas&#233;e en partie sur la conception LocoBuffer originale.
 </p>
 
 
-<p>Dans le mode MS100, le programme tente d'ouvrir le port à 16600
-bauds, le taux LocoNet. Si cela échoue, il tente d'ouvrir le
-port à 16457 bauds, ce qui est un taux standard qui est assez proche
-pour travailler. Si cela échoue aussi, Ils ne seront pas en mesure de parler à la
-LocoNet à travers la MS100.
+<p>Dans le mode MS100, le programme tente d'ouvrir le port &#224; 16600
+bauds, le taux LocoNet. Si cela &#233;choue, il tente d'ouvrir le
+port &#224; 16457 bauds, ce qui est un taux standard qui est assez proche
+pour travailler. Si cela &#233;choue aussi, Ils ne seront pas en mesure de parler au
+LocoNet &#224; travers la MS100.
 
 <p>
-Parce qu'aucun de ces taux n'est disponibles, la <b>MS100 ne peut pas être
-utilisée avec Mac OS X, Windows 7 ou la plupart des machines Windows Vista </b>.
+Parce qu'aucun de ces taux n'est disponibles, la <b>MS100 ne peut pas &#234;tre
+utilis&#233;e avec Mac OS X, Windows 7 ou la plupart des machines Windows Vista</b>.
 <p>
-Parce que nous ne pouvons pas être sûr que votre ordinateur
-sera en mesure de parler à un MS100 sans l'essayer, vous devriez
-tester ceci avant de dépenser de l'argent sur la MS100. Pour ce faire: </p>
+Parce que nous ne pouvons pas &#234;tre s&#251;r que votre ordinateur
+sera en mesure de parler &#224; un MS100 sans l'essayer, vous devriez
+tester ceci avant de d&#233;penser de l'argent sur la MS100. Pour ce faire: </p>
 <UL>
-<LI> Démarrez le programme. </Li>
-<LI> Définir les préférences pour MS100 et votre port série. Vous
-n'avez pas besoin d'avoir quelque chose de connecté, mais ne sélectionnez pas le port que
+<LI> D&#233;marrez le programme. </Li>
+<LI> D&#233;finir les pr&#233;f&#233;rences pour MS100 et votre port s&#233;rie. Vous
+n'avez pas besoin d'avoir quelque chose de connect&#233;, mais ne s&#233;lectionnez pas le port que
 vous finiriez par utiliser. </li>
-<LI> Enregistrer les préférences. </Li>
-<LI> Quitter le programme et le redémarrer pour que les préférences
+<LI> Enregistrer les pr&#233;f&#233;rences. </Li>
+<LI> Quitter le programme et le red&#233;marrer pour que les pr&#233;f&#233;rences
 prennent effet. </li>
 </UL>
 
-<p> Si vous obtenez une boîte de dialogue disant "Impossible de définir la vitesse de transmission ...",
+<p> Si vous obtenez une bo&#238;te de dialogue disant "Impossible de d&#233;finir la vitesse de transmission ...",
 alors vous ne serez pas en mesure d'utiliser votre ordinateur avec un MS100. Vous
 devrez utiliser une LocoBuffer.</p>
 
-<h3> Linux Triche pour Régler la Vitesse de Transmission </h3>
+<h3> Linux triche pour R&#233;gler la vitesse de transmission </h3>
 
-Certains utilisateurs ont rapporté un succès en utilisant des commandes Linux pour
-régler directement la vitesse de transmission alors que le programme est en marche. Pour ce faire:
+Certains utilisateurs ont rapport&#233; un succ&#232;s en utilisant des commandes Linux pour
+r&#233;gler directement la vitesse de transmission alors que le programme est en marche. Pour ce faire:
 <UL>
-<LI> Démarrer DecoderPro,
-et attendre jusqu'à ce que vous voyez le message d'erreur que le taux de transmission pourrait ne
-pas être réglé.
-<LI> Exécutez les commandes suivantes à partir de la ligne de commande Linux:
+<LI> D&#233;marrer DecoderPro,
+et attendre jusqu'&#224; ce que vous voyez le message d'erreur que le taux de transmission pourrait ne
+pas &#234;tre r&#233;gl&#233;.
+<LI> Ex&#233;cutez les commandes suivantes &#224; partir de la ligne de commande Linux:
 <PRE>
-setserial / dev/ttyS0 diviseur 7
-setserial / dev/ttyS0 spd_cust
-Vitesse stty 38400 </dev/ttyS0
+setserial /dev/ttyS0 divisor 7
+setserial /dev/ttyS0 spd_cust
+ stty speed 38400 &lt; dev/ttyS0
 </PRE>
 <LI> Puis cliquez sur "OK" et continuer.
 </UL>
 
-Ceci a été rapporté pour travailler
-à la fois avec RH9 et FC3.
+Ceci a &#233;t&#233; rapport&#233; pour travailler
+&#224; la fois avec RH9 et FC3.
 
+<p>LocoNet&reg; est une marque d&#233;pos&#233;e de <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
+      <hr class="hide">
+    </div>
+  </div>
 
-
-     <hr class="hide">
 
 <!--#include virtual="/Footer" -->
 </body>

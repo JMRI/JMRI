@@ -1,34 +1,42 @@
 // StatusPanel.java
-
 package jmri.jmrix.tams.swing.statusframe;
 
-import jmri.JmriException;
-import jmri.jmrix.tams.*;
 import java.util.ResourceBundle;
-
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import jmri.JmriException;
+import jmri.jmrix.tams.TamsListener;
+import jmri.jmrix.tams.TamsMessage;
+import jmri.jmrix.tams.TamsReply;
+import jmri.jmrix.tams.TamsSystemConnectionMemo;
+import jmri.jmrix.tams.TamsTrafficController;
 
 /**
  * Panel to show TAMS status
  *
  * Based on work by Bob Jacobsen
- * @author	Kevin Dickerson  Copyright (C) 2012
+ *
+ * @author	Kevin Dickerson Copyright (C) 2012
  * @version	$Revision: 19655 $
  */
 public class StatusPanel extends jmri.jmrix.tams.swing.TamsPanel implements TamsListener {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = 5401219799607877348L;
     String appString = "Application Version : ";
     String serString = "Serial Number : ";
-    JLabel appVersion = new JLabel(appString+"<unknown>");
-    JLabel serVersion = new JLabel(serString+"<unknown>");
+    JLabel appVersion = new JLabel(appString + "<unknown>");
+    JLabel serVersion = new JLabel(serString + "<unknown>");
 
-    
     JButton sendButton;
-    
+
     public StatusPanel() {
         super();
     }
-    
+
     public void initComponents(TamsSystemConnectionMemo memo) {
         super.initComponents(memo);
         //memo.getTrafficController().addTamsListener(this);
@@ -37,15 +45,15 @@ public class StatusPanel extends jmri.jmrix.tams.swing.TamsPanel implements Tams
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         add(appVersion);
         add(serVersion);
-        
+
         // ask to be notified
         TamsMessage m = new TamsMessage("xV");
         tc.sendTamsMessage(m, this);
-        
+
         sendButton = new JButton("Update");
         sendButton.setVisible(true);
         sendButton.setToolTipText("Request status update from TAMS System");
-        
+
         add(sendButton);
         sendButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -53,26 +61,29 @@ public class StatusPanel extends jmri.jmrix.tams.swing.TamsPanel implements Tams
             }
         });
     }
-    
+
     void reset() {
-        appVersion.setText(appString+"<unknown>");
+        appVersion.setText(appString + "<unknown>");
     }
+
     // to free resources when no longer used
-    public void dispose(){
+    public void dispose() {
         tc.removeTamsListener(this);
         tc = null;
     }
-    
+
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
         reset();
         TamsMessage m = new TamsMessage("xV");
         tc.sendTamsMessage(m, this);
 
-	}
+    }
 
     @SuppressWarnings("unused")
-	private void checkTC() throws JmriException {
-        if (tc == null) throw new JmriException("attempt to use TamsPowerManager after dispose");
+    private void checkTC() throws JmriException {
+        if (tc == null) {
+            throw new JmriException("attempt to use TamsPowerManager after dispose");
+        }
     }
 
     TamsTrafficController tc;
@@ -89,16 +100,22 @@ public class StatusPanel extends jmri.jmrix.tams.swing.TamsPanel implements Tams
     public void message(TamsMessage m) {
         // messages are ignored
     }
-   
+
     /**
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.tams.swing.TamsNamedPaneAction {
+
+        /**
+         *
+         */
+        private static final long serialVersionUID = 2919382089865855790L;
+
         public Default() {
-            super(ResourceBundle.getBundle("jmri.jmrix.tams.TamsBundle").getString("MenuItemInfo"), 
-                new jmri.util.swing.sdi.JmriJFrameInterface(), 
-                StatusPanel.class.getName(), 
-                jmri.InstanceManager.getDefault(TamsSystemConnectionMemo.class));
+            super(ResourceBundle.getBundle("jmri.jmrix.tams.TamsBundle").getString("MenuItemInfo"),
+                    new jmri.util.swing.sdi.JmriJFrameInterface(),
+                    StatusPanel.class.getName(),
+                    jmri.InstanceManager.getDefault(TamsSystemConnectionMemo.class));
         }
     }
 

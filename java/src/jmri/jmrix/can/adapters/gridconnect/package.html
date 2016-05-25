@@ -1,40 +1,40 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
-<head>
-<!--
+    <head>
+        <!--
+        
+          $Id$
+        
+          Made with permission from the Sun version at
+          http://java.sun.com/j2se/javadoc/writingdoccomments/package-template
+        
+          Copyright 2003
+        
+        -->
+    </head>
+    <body bgcolor="white">
 
-  $Id$
+        Defines classes for communicating with the CAN network
+        via hardware which uses the 
+        <a href="http://www.gridconnect.com/canboandto.html">GridConnect format</a>.
+        <p>
+            The primary implementation handles the regular format.
+            The canusb package is a vestigal specific implementation which has
+            been pulled back into the main package for the
+            "CAN via GridConnect adapter" connection.
 
-  Made with permission from the Sun version at
-  http://java.sun.com/j2se/javadoc/writingdoccomments/package-template
+        <p>
+            The 
+            MERG CAN-RS and CAN-USB adapters speak a slightly different
+            varient of the GridConnect protocol, where the 
+            computer-to-adapter headers are fixed length and left-justified.
+            This is handled via inheritance in the gridconnect.canrs 
+            subpackage.
 
-  Copyright 2003
+            <!-- Put @see and @since tags down here. -->
+            <!-- @see jmri.InstanceManager -->
 
--->
-</head>
-<body bgcolor="white">
+            @since 2.1.7
 
-Defines classes for communicating with the CAN network
-via hardware which uses the 
-<a href="http://www.gridconnect.com/canboandto.html">GridConnect format</a>.
-<p>
-The primary implementation handles the regular format.
-The canusb package is a vestigal specific implementation which has
-been pulled back into the main package for the
-"CAN via GridConnect adapter" connection.
-
-<p>
-The 
-MERG CAN-RS and CAN-USB adapters speak a slightly different
-varient of the GridConnect protocol, where the 
-computer-to-adapter headers are fixed length and left-justified.
-This is handled via inheritance in the gridconnect.canrs 
-subpackage.
-
-<!-- Put @see and @since tags down here. -->
-<!-- @see jmri.InstanceManager -->
-
-@since 2.1.7
-
-</body>
+    </body>
 </html>

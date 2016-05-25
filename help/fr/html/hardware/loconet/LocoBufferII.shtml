@@ -1,19 +1,19 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LocoBufferII.shtml,v 1.1 2008/01/13 04:24:44 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-06-16-->
+<!--  $Id$ -->
+<!-- Updated  by Blorec Herv&#233;  2013-09-13-->
 <html lang="fr">
 <head>
  <TITLE>
       JMRI Hardware Guide: Connecting a LocoBuffer II to LocoNet
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="Digitrax Chief DCS Command Station MS-100 LocoBuffer java model railroad JMRI install windows">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">Guide Matériel
+	MEDIA="screen">Guide Mat&#233;riel
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
 	MEDIA="print">
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
@@ -27,89 +27,99 @@
     <div id="mainContent">
 
       <h1> 
-     Guide Matériel JMRI: Connecter un LocoBuffer II à LocoNet
+     Guide Mat&#233;riel JMRI: Connecter un LocoBuffer II &#224; LocoNet&reg;
       </h1>
 
 
 <p>
-Le  LocoBuffer II offre un moyen très fiable pour
-connecter un port série de l'ordinateur à un LocoNet.
-Il a été produit par la société,de Dick Bronson
+Le  LocoBuffer II offre un moyen tr&#232;s fiable pour
+connecter un port s&#233;rie de l'ordinateur &#224; un LocoNet&reg;.
+Il a &#233;t&#233; produit par la soci&#233;t&#233;,de Dick Bronson
 <A HREF="http://www.rr-cirkits.com"> RR-CirKits </a>
-, basé en partie sur la conception LocoBuffer originale, mais est
-actuellement en rupture de production. Vous pourriez être en mesure d'en trouver un
-dans un magasin de modélisme local. Il a été remplacé
+, bas&#233; en partie sur la conception LocoBuffer originale, mais est
+actuellement en rupture de production. Vous pourriez &#234;tre en mesure d'en trouver un
+dans un magasin de mod&#233;lisme local. Il a &#233;t&#233; remplac&#233;
 par le
 <A HREF="LocoBufferUSB.shtml"> LocoBuffer-USB </a>,
 qui utilise une connexion USB.
 </p>
 
-<h2>Démarrage conseillé</h2>
+<h2>Configuration conseill&#233;e</h2>
 <p>
-la configuration recommandée pour le LocoBuffer II est:
-</ p>
+la configuration recommand&#233;e pour le LocoBuffer II est:</p>
+<UL>
+<LI> 19200 bauds
+    <LI>RS-232 echo off</LI>
+    <LI>LocoBuffer mode</LI>
+    <LI>ICSP Program Mode off</LI>
+    <LI>Boot Program Mode off</LI>
+    <LI>Alimentation isol&#233;e (<a href="#locoBufferIIPower">voir ci-dessous</a>)</LI>
+</ul>
+<p>La configuration recommandée de JMRI pour le LocoBuffer-II est:
+</p>
 
 <UL>
-<LI> Réglez les commutateurs sur Off(vers le côté de l'étiquette avant).
-<LI> Branchez le LocoBuffer II  à une alimentation autonome, par exemple
-un bloc alimentation à la tension correcte.
+<LI>Mettre tous les commutateurs sur off (vers le c&#244;t&#233; avant de l'&#233;tiquette ).
+<LI>Connecter le LocoBuffer-II &#224; une source d'alimentation appropri&#233;e, par exemple
+une alimentation chargeur de batterie  de la tension correcte
 <LI>
-Démarrer DecoderPro ou tout autre programme et le configurer pour:
+D&#233;marrer DecoderPro ou les autres programmes et les configurer pour :
 <UL>
-<LI> LocoNet LocoBuffer-II
-<LI> Sélectionnez votre port
-<LI> 19200 bauds
-<LI> Le contrôle de flux matériel
+<LI>LocoNet LocoBuffer-II
+<LI>S&#233;lectionnez votre port
+<LI>19,200 baud ou 57,600 baud, pour correspondre au r&#233;glage des options par le switch interne de LocoBuffer-II 
+<LI>Contr&#244;le de flux mat&#233;riel
 </UL>
 </UL>
-<h2>Boucle de test</h2>
+
+<h2>Test de Boucle</h2>
 <p>
-Le circuit d'entrée LocoBuffer-II et le code lut effectivement depuis le jack de sortie LocoNet
+Le circuit d'entr&#233;e LocoBuffer-II et le code lus effectivement depuis le jack de sortie LocoNet
 , donc si vous installez le terminateur LocoNet
-(le petit circuit qui a été livré avec le II LocoBuffer II )
-et mettre SW7-8 à ON (en bas) afin que le circuit d'entrée tire son alimentation du bloc alimentation,
- alors vous avez créé un test de bouclage. La seule chose qui n'est pas
-testée est la prise LocoNet elle-même.
+(le petit circuit qui a &#233;t&#233; livr&#233; avec le II LocoBuffer II )
+et mettre SW7-8 &#224; ON (en bas) afin que le circuit d'entr&#233;e tire son alimentation du bloc alimentation,
+ alors vous avez cr&#233;&#233; un test de bouclage. La seule chose qui n'est pas
+test&#233;e est la prise LocoNet elle-m&#234;me.
 </p>
 
 <p>
-Étapes:
+&#233;tapes:
 <OL>
-<LI> Débranchez le câble LocoNet
-<LI> Boîtier ouvert (utiliser un petit tournevis pour travailler les loquets dans les petites fentes sur les côtés)
+<LI> D&#233;branchez le c&#226;ble LocoNet
+<LI> Bo&#238;tier ouvert (utiliser un petit tournevis pour travailler les loquets dans les petites fentes sur les c&#244;t&#233;s)
 <LI> Installez le terminateur
 <LI> Mettre sw 7-8 sur On, tous les autres commutateurs sur OFF
-<LI> Définissez les options JMRI LocoBuffer à 19200 bauds et le matériel
-handshake autorisé
-<LI> Ouvrez la fenêtre Moniteur JMRI LocoNet .
+<LI> D&#233;finissez les options JMRI LocoBuffer &#224; 19200 bauds et le mat&#233;riel
+handshake autoris&#233;
+<LI> Ouvrez la fen&#234;tre Moniteur JMRI LocoNet .
 <LI> En utilisant JMRI envoyer certaines commandes (commandes de commutation, par exemple)
-<LI> Les commandes doivent apparaître dans la fenêtre du moniteur et le LocoNet
-La LED d'activité LocoBuffer-II doit clignoter
-<li> Retirer le terminateur (à moins que votre application l'exige)
-<LI> Restaurer les commutateurs LocoBuffer-II à leurs réglages normaux pour votre application
+<LI> Les commandes doivent appara&#238;tre dans la fen&#234;tre du moniteur LocoNet et La LED d'activit&#233; LocoBuffer-II doit clignoter
+<li> Retirer le terminateur (&#224; moins que votre application l'exige)
+<LI> Restaurer les commutateurs LocoBuffer-II &#224; leurs r&#233;glages normaux pour votre application
 </OL>
 <p/ >
 
-<h2>Alimentation LocoBuffer II</h2>
+<h2><a name="locoBufferIIPower">LocoBuffer-II Power</a></h2>
 
-Lorsqu'il est alimenté par une alimentation externe, le LocoBuffer II isole complètement
-votre ordinateur du LocoNet, supprimant la possibilité
-des courants de terre qui circulent à travers le câble LocoNet.
+Lorsqu'il est aliment&#233; par une alimentation externe, le LocoBuffer II isole compl&#232;tement
+votre ordinateur du LocoNet, supprimant la possibilit&#233;
+des courants de terre qui circulent &#224; travers le c&#226;ble LocoNet.
 <P>
-Si vous utilisez un ordinateur isolé, par exemple un ordinateur portable qui n'est
-pas connecté à tous les périphériques, vous pouvez configurer les LocoBuffer II
+Si vous utilisez un ordinateur isol&#233;, par exemple un ordinateur portable qui n'est
+pas connect&#233; &#224; tous les p&#233;riph&#233;riques, vous pouvez configurer les LocoBuffer II
 de sorte qu'il n'a pas besoin d'une alimentation externe. Il recevra alors son
-alimentation du câble RailSynch dans le LocoNet.
+alimentation du c&#226;ble RailSynch dans le LocoNet.
 <P>
-Il est fortement conseillé que vous obteniez votre connexion à un ordinateur de travail
-correctement avec une source d'alimentation externe avant de faire cela. De cette façon,
-si des problèmes surviennent lorsque vous essayez d'utiliser l'énergie interne, vous saurez
-ce qui les provoquent et ils seront beaucoup plus facile à diagnostiquer
+Il est fortement conseill&#233; que vous obteniez votre connexion &#224; un ordinateur de travail
+correctement avec une source d'alimentation externe avant de faire cela. De cette fa&#231;on,
+si des probl&#232;mes surviennent lorsque vous essayez d'utiliser l'&#233;nergie interne, vous saurez
+ce qui les provoquent et ils seront beaucoup plus facile &#224; diagnostiquer
 <P>
-Pour ce faire, retirez le raccordement d'alimentation et
-régler les commutateurs 7 et 8 sur ON (vers le bas, vers l'illustration interrupteur
-)..
+Pour configurer LocoBufferII pour "Local Power", emlevezla connexion d'alimentation et r&#233;glez les switches 7 et 8 &#224; ON (vers le bas, vers l'illustration du commutateur).
 
+<p>LocoNet&reg; est une marque d&#233;pos&#233;e de <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
+    </div>
+  </div>
 <!--#include virtual="/Footer" -->
 </body>
 </html>

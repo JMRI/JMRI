@@ -1,28 +1,34 @@
 // SerialTurnout.java
-
 package jmri.jmrix.powerline;
 
+import jmri.Turnout;
+import jmri.implementation.AbstractTurnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.implementation.AbstractTurnout;
-import jmri.Turnout;
 
 /**
- *  Turnout implementation for X10.
- *  <p>
- *  This object doesn't listen to the serial communications.  It should
- *  eventually, so it can track changes outside the program.
+ * Turnout implementation for X10.
  * <p>
- *  Within JMRI, only one Turnout object should besending messages to a turnout address;
- *  more than one Turnout object pointing to a single device is not allowed.
+ * This object doesn't listen to the serial communications. It should
+ * eventually, so it can track changes outside the program.
+ * <p>
+ * Within JMRI, only one Turnout object should besending messages to a turnout
+ * address; more than one Turnout object pointing to a single device is not
+ * allowed.
  *
- * Description:		extend jmri.AbstractTurnout for powerline serial layouts
- * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
- * Converted to multiple connection
+ * Description:	extend jmri.AbstractTurnout for powerline serial layouts
+ *
+ * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008 Converted to
+ * multiple connection
  * @author kcameron Copyright (C) 2011
- * @version			$Revision$
+ * @version	$Revision$
  */
 public class SerialTurnout extends AbstractTurnout {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = -5837680887910599967L;
 
     /**
      * Create a Turnout object, with both system and user names.
@@ -38,7 +44,7 @@ public class SerialTurnout extends AbstractTurnout {
     }
 
     SerialTrafficController tc = null;
-    
+
     /**
      * Handle a request to change state by sending a turnout command
      */
@@ -51,33 +57,35 @@ public class SerialTurnout extends AbstractTurnout {
         // _once_ if anything has changed state (or set the commanded state directly)
 
         // sort out states
-        if ( (s & Turnout.CLOSED) > 0) {
+        if ((s & Turnout.CLOSED) != 0) {
             // first look for the double case, which we can't handle
-            if ( (s & Turnout.THROWN) > 0) {
+            if ((s & Turnout.THROWN) != 0) {
                 // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN "+s);
+                log.error("Cannot command both CLOSED and THROWN " + s);
                 return;
             } else {
                 // send a CLOSED command
-                sendMessage(true^getInverted());
+                sendMessage(true ^ getInverted());
             }
         } else {
             // send a THROWN command
-            sendMessage(false^getInverted());
+            sendMessage(false ^ getInverted());
         }
     }
-    
-    protected void turnoutPushbuttonLockout(boolean _pushButtonLockout){
-		if (log.isDebugEnabled()) log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock")+ " Pushbutton");
+
+    protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
+        if (log.isDebugEnabled()) {
+            log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton");
+        }
     }
 
     // data members holding the X10 address
     int housecode = -1;
     int devicecode = -1;
-    
+
     protected void sendMessage(boolean closed) {
         if (log.isDebugEnabled()) {
-        	log.debug("set closed "+closed+" house "+ X10Sequence.houseCodeToText(housecode) +" device "+devicecode);
+            log.debug("set closed " + closed + " house " + X10Sequence.houseCodeToText(housecode) + " device " + devicecode);
         }
         // create output sequence of address, then function
         X10Sequence out = new X10Sequence();
@@ -87,7 +95,7 @@ public class SerialTurnout extends AbstractTurnout {
         tc.sendX10Sequence(out, null);
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTurnout.class.getName());
 }
 
 /* @(#)SerialTurnout.java */

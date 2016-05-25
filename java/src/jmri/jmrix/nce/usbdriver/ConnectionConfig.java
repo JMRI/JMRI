@@ -1,5 +1,4 @@
 // ConnectionConfig.java
-
 package jmri.jmrix.nce.usbdriver;
 
 import jmri.util.SystemType;
@@ -8,21 +7,22 @@ import jmri.util.SystemType;
  * Definition of objects to handle configuring an LocoBuffer layout connection
  * via an NCE SerialDriverAdapter object.
  *
- * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @author 		Daniel Boudreau Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2001, 2003
+ * @author Daniel Boudreau Copyright (C) 2007
  * @version	$Revision$
  */
-public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
+public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
-	public final static String NAME = "NCE USB";
-	
+    public final static String NAME = "NCE USB";
+
     /**
-     * Ctor for an object being created during load process;
-     * Swing init is deferred.
+     * Ctor for an object being created during load process; Swing init is
+     * deferred.
      */
-    public ConnectionConfig(jmri.jmrix.SerialPortAdapter p){
+    public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         super(p);
     }
+
     /**
      * Ctor for a functional Swing object with no existing adapter
      */
@@ -30,22 +30,25 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
         super();
     }
 
-    public String name() { return NAME; }
-    
-    public boolean isOptList1Advanced() { return false; }
-
-    protected void setInstance() { 
-        if (adapter == null)
-            adapter = new UsbDriverAdapter();      
+    public String name() {
+        return NAME;
     }
-    
-        
+
+    public boolean isOptList1Advanced() {
+        return false;
+    }
+
+    protected void setInstance() {
+        if (adapter == null) {
+            adapter = new UsbDriverAdapter();
+        }
+    }
+
     @Override
     protected String[] getPortFriendlyNames() {
-        if(SystemType.isWindows()){
+        if (SystemType.isWindows()) {
             return new String[]{"Silicon Labs CP210x USB to UART Bridge", "Silicon Labs CP210x"};
         }
         return new String[]{};
     }
 }
-

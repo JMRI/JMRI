@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../../XSLT/aspecttable.xsl" type="text/xsl"?>
+<aspecttable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/aspecttable.xsd">
+  <name>CFL-2014</name>
+  <date>2014</date>
+  <reference>Signaling definitions corresponding to observations of the signals of the Luxembourgish National Railway Company (CFL)</reference>
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Suzie</firstname>
+        <surname>Tall</surname>
+      </personname>
+      <email>suzie_tall@yahoo.co.uk</email>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-10-11</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Initial version</revremark>
+    </revision>
+  </revhistory>
+  <aspects>
+    <aspect>
+      <name>Clear</name>
+      <indication>Proceed</indication>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+      <dccAspect>7</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Diverging Clear</name>
+      <indication>Proceed through divergance at indicated speed</indication>
+      <speed>Diverging</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
+      <dccAspect>6</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Approach</name>
+      <indication>Proceed preparing to stop at next signal</indication>
+      <speed>Normal</speed>
+      <speed2>Stop</speed2>
+      <route>Normal</route>
+      <dccAspect>3</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Diverging Approach</name>
+      <indication>Proceed through divergance at indicated speed preparing to stop at next signal</indication>
+      <speed>Diverging</speed>
+      <speed2>Stop</speed2>
+      <route>Diverging</route>
+      <dccAspect>2</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Approach Diverging</name>
+      <indication>Proceed preparing to diverge at next signal</indication>
+      <speed>Normal</speed>
+      <speed2>Diverging</speed2>
+      <route>Normal</route>
+      <dccAspect>5</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Diverging Approach Diverging</name>
+      <indication>Proceed through divergance at indicated speed preparing to diverge at next signal</indication>
+      <speed>Diverging</speed>
+      <speed2>Diverging</speed2>
+      <route>Diverging</route>
+      <dccAspect>4</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Restricting</name>
+      <indication>Proceed with caution for shunting within shunt limits</indication>
+      <speed>Restricting</speed>
+      <speed2>Restricting</speed2>
+      <route>Either</route>
+      <dccAspect>1</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Stop</name>
+      <indication>Stop</indication>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>0</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Not Lit</name>
+      <rule>Dark</rule>
+      <indication>(used to indicate dark for e.g. approach lighting)</indication>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>8</dccAspect>
+    </aspect>
+  </aspects>
+  <imagetypes>
+    <imagetype type="large" />
+    <imagetype type="aspects" />
+  </imagetypes>
+  <appearancefiles>
+    <appearancefile href="appearance-BlockR.xml" />
+    <appearancefile href="appearance-Block.xml" />
+    <appearancefile href="appearance-BlockS.xml" />
+    <appearancefile href="appearance-Stop.xml" />
+    <appearancefile href="appearance-Distant.xml" />
+    <appearancefile href="appearance-Repeater.xml" />
+    <appearancefile href="appearance-Perm.xml" />
+    <appearancefile href="appearance-Shunt.xml" />
+  </appearancefiles>
+</aspecttable>

@@ -1,21 +1,18 @@
-// SwingTest.java
-
 package jmri.jmrix.lenz.swing;
 
-import org.apache.log4j.Logger;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
  * Tests for the jmri.jmrix.lenz.swing package
- * @author			Bob Jacobsen
- * @version			$Revision$
+ *
+ * @author	Bob Jacobsen
+ * @version	$Revision$
  */
 public class SwingTest extends TestCase {
 
     // from here down is testing infrastructure
-
     public SwingTest(String s) {
         super(s);
     }
@@ -29,7 +26,7 @@ public class SwingTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.lenz.swing.SwingTest");  // no tests in this class itself
-        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
+        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             suite.addTest(jmri.jmrix.lenz.swing.liusb.LIUSBTest.suite());
             suite.addTest(jmri.jmrix.lenz.swing.li101.LI101Test.suite());
             suite.addTest(jmri.jmrix.lenz.swing.mon.MonTest.suite());
@@ -39,10 +36,10 @@ public class SwingTest extends TestCase {
             suite.addTest(jmri.jmrix.lenz.swing.lz100.LZ100Test.suite());
             suite.addTest(jmri.jmrix.lenz.swing.lzv100.LZV100Test.suite());
         }
-        
+
+        suite.addTest(BundleTest.suite());
+
         return suite;
     }
-
-    static Logger log = Logger.getLogger(SwingTest.class.getName());
 
 }

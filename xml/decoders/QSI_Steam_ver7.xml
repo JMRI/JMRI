@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
-<!-- $Id: QSI_Steam_ver7.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -13,6 +13,8 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="jacobsen@mac.com" version="14" lastUpdated="20150628"/>
+  <!-- Version 14 Using regular variable elements intead of ivariables -->
   <version author="Michael Mosher" version="13" lastUpdated="20130815"/>
   <version author="Michael Mosher" version="12" lastUpdated="2011003"/>
   <version author="Michael Mosher" version="11" lastUpdated="20110922"/>
@@ -302,131 +304,129 @@
         <functionlabel num="12" lockable="true">Cab Light</functionlabel>
       </functionlabels>
     </family>
-    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <programming direct="yes" paged="yes" register="yes" ops="yes">
+      <capability>
+        <name>Indexed CV access</name>
+        <parameter name="PI">49</parameter>
+        <parameter name="SI">50</parameter>
+        <parameter name="cvFirst">true</parameter> <!-- 51.13 is write 13 to PICV, then access CV 51 -->
+      </capability>
+    </programming>
     <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <!-- Moved to front because controls presence of others -->
-      <ivariable label="Minor Version" CVname="56.254.6" CV="56" PI="254" SI="6" item="CV56.254.6" default="0" readOnly="yes">
-        <indexedVal/>
-      </ivariable>
-      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
-        <shortAddressVal/>
-        <label>Primary Address</label>
-        <comment>Short address</comment>
+      <variable label="Minor Version" CV="56.254.6" readOnly="yes" default="0" item="CV56.254.6">
+        <decVal/>
       </variable>
-      <variable label="Vstart" CV="2" default="32" tooltip="QSI uses this only if speed tables are used" comment="A value of 255 corresponds to 100%">
+      <variable item="Vstart" CV="2" default="32" tooltip="QSI uses this only if speed tables are used" comment="A value of 255 corresponds to 100%">
         <decVal/>
         <label>Vstart</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Startspannung</label>
         <comment>A value of 255 corresponds to 100%</comment>
       </variable>
-      <variable label="Acceleration Rate" CV="3" item="Accel">
-        <decVal max="31"/>
-        <label>Acceleration Rate</label>
-      </variable>
-      <variable label="Deceleration Rate" CV="4" item="Decel">
-        <decVal max="31"/>
-        <label>Deceleration Rate</label>
-      </variable>
-      <variable label="Max Volts" CV="5" item="Vhigh" default="1" tooltip="range 2-255, 1 = not used">
+      <!-- CV 3-4 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_255.xml"/>
+      <variable CV="5" item="Vhigh" default="1" tooltip="range 2-255, 1 = not used">
         <decVal min="1" max="255"/>
         <label>Max Volts</label>
+        <label xml:lang="it">Volt Massimi (0-255):</label>
+        <label xml:lang="de">Höchstgeschwindigkeit</label>
       </variable>
-      <variable label="Manufacturer Version No" CV="7" readOnly="yes" item="Decoder Version">
+      <variable CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
         <label>Manufacturer Version No</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer" default="113">
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="113">
         <decVal/>
         <label>Manufacturer ID</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
       </variable>
-      <variable label="Packet Time-out Value" CV="11">
+      <variable item="Packet Time-out Value" CV="11">
         <decVal/>
         <label>Packet Time-out Value</label>
       </variable>
-      <variable label="Extended Address" CV="17" item="Long Address">
-        <longAddressVal/>
-        <label>Extended Address</label>
-      </variable>
-      <variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
-        <decVal/>
-        <label>Consist Address</label>
-      </variable>
-      <variable label="Consist Direction" CV="19" mask="VXXXXXXX">
-         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
-        <label>Consist Direction</label>
-      </variable>
-      <variable label="Consist Address Active For F1" CV="21" mask="XXXXXXXV" tooltip="F1 = Bell; Recommendation: Lead = ON, Mid = OFF, End = OFF">
-         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+      <!-- CV=19 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <variable item="Consist Address Active For F1" CV="21" mask="XXXXXXXV" tooltip="F1 = Bell; Recommendation: Lead = ON, Mid = OFF, End = OFF">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F1</label>
       </variable>
-      <variable label="Consist Address Active For F2" CV="21" mask="XXXXXXVX" tooltip="F2 = Horn / Whistle; Recommendation: Lead = ON, Mid = OFF, End = OFF">
-         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+      <variable item="Consist Address Active For F2" CV="21" mask="XXXXXXVX" tooltip="F2 = Horn / Whistle; Recommendation: Lead = ON, Mid = OFF, End = OFF">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F2</label>
       </variable>
-      <variable label="Consist Address Active For F3" CV="21" mask="XXXXXVXX" tooltip="F3 = Coupler Clash (default); Recommendation: Lead = OFF, Mid = OFF, End = ON">
-         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+      <variable item="Consist Address Active For F3" CV="21" mask="XXXXXVXX" tooltip="F3 = Coupler Clash (default); Recommendation: Lead = OFF, Mid = OFF, End = ON">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F3</label>
       </variable>
-      <variable label="Consist Address Active For F4" CV="21" mask="XXXXVXXX" tooltip="F4 = Blower Hiss / Fan (default); Recommendation: Lead = ON, Mid = ON, End = ON">
-         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+      <variable item="Consist Address Active For F4" CV="21" mask="XXXXVXXX" tooltip="F4 = Blower Hiss / Fan (default); Recommendation: Lead = ON, Mid = ON, End = ON">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F4</label>
       </variable>
-      <variable label="Consist Address Active For F5" CV="21" mask="XXXVXXXX" tooltip="F5 = Dynamic Brakes (default); Recommendation: Lead = ON, Mid = ON, End = ON">
-         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+      <variable item="Consist Address Active For F5" CV="21" mask="XXXVXXXX" tooltip="F5 = Dynamic Brakes (default); Recommendation: Lead = ON, Mid = ON, End = ON">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F5</label>
       </variable>
-      <variable label="Consist Address Active For F6" CV="21" mask="XXVXXXXX" tooltip="F6 = Doppler (Startup) (default); Recommendation: Lead = ON, Mid = ON, End = ON">
-         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+      <variable item="Consist Address Active For F6" CV="21" mask="XXVXXXXX" tooltip="F6 = Doppler (Startup) (default); Recommendation: Lead = ON, Mid = ON, End = ON">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F6</label>
       </variable>
-      <variable label="Consist Address Active For F7" CV="21" mask="XVXXXXXX" tooltip="F7 = Brake Squeal and Air Brakes (default); Recommendation: Lead = ON, Mid = ON, End = ON">
-         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+      <variable item="Consist Address Active For F7" CV="21" mask="XVXXXXXX" tooltip="F7 = Brake Squeal and Air Brakes (default); Recommendation: Lead = ON, Mid = ON, End = ON">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F7</label>
       </variable>
-      <variable label="Consist Address Active For F8" CV="21" mask="VXXXXXXX" tooltip="F8 = Audio Mute (default); Recommendation: Lead = ON, Mid = ON, End = ON">
-         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+      <variable item="Consist Address Active For F8" CV="21" mask="VXXXXXXX" tooltip="F8 = Audio Mute (default); Recommendation: Lead = ON, Mid = ON, End = ON">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F8</label>
       </variable>
-      <variable label="Consist Address Active For FL in Forward" CV="22" mask="XXXXXXXV" tooltip="FL(f) = Directional Lighting; Recommendation: Lead = ON, Mid = OFF, End = OFF">
-         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+      <variable item="Consist Address Active For FL in Forward" CV="22" mask="XXXXXXXV" tooltip="FL(f) = Directional Lighting; Recommendation: Lead = ON, Mid = OFF, End = OFF">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For FL in Forward</label>
       </variable>
-      <variable label="Consist Address Active For FL in Reverse" CV="22" mask="XXXXXXVX" tooltip="FL(r) = Directional Lighting; Recommendation: Lead = ON, Mid = OFF, End = OFF">
-         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+      <variable item="Consist Address Active For FL in Reverse" CV="22" mask="XXXXXXVX" tooltip="FL(r) = Directional Lighting; Recommendation: Lead = ON, Mid = OFF, End = OFF">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For FL in Reverse</label>
       </variable>
-      <variable label="Consist Address Active For F9" CV="22" mask="XXXXXVXX" tooltip="F9 = Cruise Ctrl (Shut Down) (default); Recommendation: Lead = ON, Mid = ON, End = ON">
-         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+      <variable item="Consist Address Active For F9" CV="22" mask="XXXXXVXX" tooltip="F9 = Cruise Ctrl (Shut Down) (default); Recommendation: Lead = ON, Mid = ON, End = ON">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F9</label>
       </variable>
-      <variable label="Consist Address Active For F10" CV="22" mask="XXXXVXXX" tooltip="F10 = SMPH Report (Status Report) (default); Recommendation: Lead = ON, Mid = OFF, End = OFF">
-         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+      <variable item="Consist Address Active For F10" CV="22" mask="XXXXVXXX" tooltip="F10 = SMPH Report (Status Report) (default); Recommendation: Lead = ON, Mid = OFF, End = OFF">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F10</label>
       </variable>
-      <variable label="Consist Address Active For F11" CV="22" mask="XXXVXXXX" tooltip="F11 = Number Board Lights (default); Recommendation: Lead = ON, Mid = ON, End = ON">
-         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+      <variable item="Consist Address Active For F11" CV="22" mask="XXXVXXXX" tooltip="F11 = Number Board Lights (default); Recommendation: Lead = ON, Mid = ON, End = ON">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F11</label>
       </variable>
-      <variable label="Consist Address Active For F12" CV="22" mask="XXVXXXXX" tooltip="F12 = Cab Lights (default); Recommendation: Lead = OFF, Mid = OFF, End = OFF">
-         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+      <variable item="Consist Address Active For F12" CV="22" mask="XXVXXXXX" tooltip="F12 = Cab Lights (default); Recommendation: Lead = OFF, Mid = OFF, End = OFF">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F12</label>
       </variable>
-      <variable label="Acceleration Adjustment" CV="23" mask="XVVVVVVV" tooltip="This is used whenever acceleration is non zero" item="Consist Acceleration Adjustment">
+      <variable CV="23" mask="XVVVVVVV" tooltip="This is used whenever acceleration is non zero" item="Consist Acceleration Adjustment">
         <decVal max="127"/>
         <label>Acceleration Adjustment</label>
       </variable>
-      <variable label="Acceleration Adjustment Sign" CV="23" mask="VXXXXXXX" item="Consist Acceleration Adjustment Sign">
-         <xi:include href="http://jmri.org/xml/decoders/parts/enum-AddSubtract.xml"/>
+      <variable CV="23" mask="VXXXXXXX" item="Consist Acceleration Adjustment Sign">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-AddSubtract.xml"/>
         <label>Acceleration Adjustment Sign</label>
       </variable>
-      <variable label="Deceleration Adjustment" CV="24" mask="XVVVVVVV" tooltip="This is used whenever deceleration is non zero" item="Consist Deceleration Adjustment">
+      <variable CV="24" mask="XVVVVVVV" tooltip="This is used whenever deceleration is non zero" item="Consist Deceleration Adjustment">
         <decVal max="127"/>
         <label>Deceleration Adjustment</label>
       </variable>
-      <variable label="Deceleration Adjustment Sign" CV="24" mask="VXXXXXXX" item="Consist Deceleration Adjustment Sign">
-         <xi:include href="http://jmri.org/xml/decoders/parts/enum-AddSubtract2.xml"/>
+      <variable CV="24" mask="VXXXXXXX" item="Consist Deceleration Adjustment Sign">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-AddSubtract2.xml"/>
         <label>Deceleration Adjustment Sign</label>
       </variable>
-      <variable label="Quantum Speed Table" CV="25" item="Speed Table Selection" default="2" comment="value is applied">
+      <variable CV="25" item="Speed Table Selection" default="2" comment="value is applied">
         <enumVal>
           <enumChoice choice="User Defined Speed Table" value="1">
             <choice>User Defined Speed Table</choice>
@@ -468,33 +468,11 @@
         <label>Quantum Speed Table</label>
         <comment>value is applied</comment>
       </variable>
-      <variable label="Locomotive Direction" CV="29" mask="XXXXXXXV">
-         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
-        <label>Locomotive Direction</label>
-      </variable>
-      <variable label="FL Location" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
-        <enumVal>
-          <enumChoice choice="14 speed step format">
-            <choice>14 speed step format</choice>
-          </enumChoice>
-          <enumChoice choice="28/128 speed step format">
-            <choice>28/128 speed step format</choice>
-          </enumChoice>
-        </enumVal>
-        <label>FL Location</label>
-      </variable>
-      <variable label="Power Source Conversion" CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="1">
-        <enumVal>
-          <enumChoice choice="NMRA Digital only">
-            <choice>NMRA Digital only</choice>
-          </enumChoice>
-          <enumChoice choice="DC conversion enabled">
-            <choice>DC conversion enabled</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Power Source Conversion</label>
-      </variable>
-      <variable label="Speed Table Definition" CV="29" mask="XXXVXXXX">
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <variable item="Speed Table Definition" CV="29" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="Use Straight-Line Response">
             <choice>Use Straight-Line Response</choice>
@@ -505,479 +483,468 @@
         </enumVal>
         <label>Speed Table Definition</label>
       </variable>
-      <variable label="Address Format" CV="29" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="One byte (short) address">
-            <choice>One byte (short) address</choice>
-          </enumChoice>
-          <enumChoice choice="Two byte (extended) address">
-            <choice>Two byte (extended) address</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Address Format</label>
-      </variable>
-      <variable label="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1">
+      <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FL(f) controls output 1</label>
       </variable>
-      <variable label="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2" default="1">
+      <variable item="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FL(f) controls output 2</label>
       </variable>
-      <variable label="FL(f) controls output 3" CV="33" mask="XXXXXVXX" minOut="3">
+      <variable item="FL(f) controls output 3" CV="33" mask="XXXXXVXX" minOut="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FL(f) controls output 3</label>
       </variable>
-      <variable label="FL(f) controls output 4" CV="33" mask="XXXXVXXX" minOut="4">
+      <variable item="FL(f) controls output 4" CV="33" mask="XXXXVXXX" minOut="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FL(f) controls output 4</label>
       </variable>
-      <variable label="FL(f) controls output 5" CV="33" mask="XXXVXXXX" minOut="5">
+      <variable item="FL(f) controls output 5" CV="33" mask="XXXVXXXX" minOut="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FL(f) controls output 5</label>
       </variable>
-      <variable label="FL(f) controls output 6" CV="33" mask="XXVXXXXX" minOut="6">
+      <variable item="FL(f) controls output 6" CV="33" mask="XXVXXXXX" minOut="6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FL(f) controls output 6</label>
       </variable>
-      <variable label="FL(f) controls output 7" CV="33" mask="XVXXXXXX" minOut="7">
+      <variable item="FL(f) controls output 7" CV="33" mask="XVXXXXXX" minOut="7">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FL(f) controls output 7</label>
       </variable>
-      <variable label="FL(f) controls output 8" CV="33" mask="VXXXXXXX" minOut="8">
+      <variable item="FL(f) controls output 8" CV="33" mask="VXXXXXXX" minOut="8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FL(f) controls output 8</label>
       </variable>
-      <variable label="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1" default="1">
+      <variable item="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FL(r) controls output 1</label>
       </variable>
-      <variable label="FL(r) controls output 2" CV="34" mask="XXXXXXVX" minOut="2" default="1">
+      <variable item="FL(r) controls output 2" CV="34" mask="XXXXXXVX" minOut="2" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FL(r) controls output 2</label>
       </variable>
-      <variable label="FL(r) controls output 3" CV="34" mask="XXXXXVXX" minOut="3">
+      <variable item="FL(r) controls output 3" CV="34" mask="XXXXXVXX" minOut="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FL(r) controls output 3</label>
       </variable>
-      <variable label="FL(r) controls output 4" CV="34" mask="XXXXVXXX" minOut="4">
+      <variable item="FL(r) controls output 4" CV="34" mask="XXXXVXXX" minOut="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FL(r) controls output 4</label>
       </variable>
-      <variable label="FL(r) controls output 5" CV="34" mask="XXXVXXXX" minOut="5">
+      <variable item="FL(r) controls output 5" CV="34" mask="XXXVXXXX" minOut="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FL(r) controls output 5</label>
       </variable>
-      <variable label="FL(r) controls output 6" CV="34" mask="XXVXXXXX" minOut="6">
+      <variable item="FL(r) controls output 6" CV="34" mask="XXVXXXXX" minOut="6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FL(r) controls output 6</label>
       </variable>
-      <variable label="FL(r) controls output 7" CV="34" mask="XVXXXXXX" minOut="7">
+      <variable item="FL(r) controls output 7" CV="34" mask="XVXXXXXX" minOut="7">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FL(r) controls output 7</label>
       </variable>
-      <variable label="FL(r) controls output 8" CV="34" mask="VXXXXXXX" minOut="8">
+      <variable item="FL(r) controls output 8" CV="34" mask="VXXXXXXX" minOut="8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FL(r) controls output 8</label>
       </variable>
-      <variable label="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1" minFn="1">
+      <variable item="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1" minFn="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F1 controls output 1</label>
       </variable>
-      <variable label="F1 controls output 2" CV="35" mask="XXXXXXVX" minOut="2" minFn="1">
+      <variable item="F1 controls output 2" CV="35" mask="XXXXXXVX" minOut="2" minFn="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F1 controls output 2</label>
       </variable>
-      <variable label="F1 controls output 3" CV="35" mask="XXXXXVXX" minOut="3" minFn="1" default="1">
+      <variable item="F1 controls output 3" CV="35" mask="XXXXXVXX" minOut="3" minFn="1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F1 controls output 3</label>
       </variable>
-      <variable label="F1 controls output 4" CV="35" mask="XXXXVXXX" minOut="4" minFn="1">
+      <variable item="F1 controls output 4" CV="35" mask="XXXXVXXX" minOut="4" minFn="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F1 controls output 4</label>
       </variable>
-      <variable label="F1 controls output 5" CV="35" mask="XXXVXXXX" minOut="5" minFn="1">
+      <variable item="F1 controls output 5" CV="35" mask="XXXVXXXX" minOut="5" minFn="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F1 controls output 5</label>
       </variable>
-      <variable label="F1 controls output 6" CV="35" mask="XXVXXXXX" minOut="6" minFn="1">
+      <variable item="F1 controls output 6" CV="35" mask="XXVXXXXX" minOut="6" minFn="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F1 controls output 6</label>
       </variable>
-      <variable label="F1 controls output 7" CV="35" mask="XVXXXXXX" minOut="7" minFn="1">
+      <variable item="F1 controls output 7" CV="35" mask="XVXXXXXX" minOut="7" minFn="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F1 controls output 7</label>
       </variable>
-      <variable label="F1 controls output 8" CV="35" mask="VXXXXXXX" minOut="8" minFn="1">
+      <variable item="F1 controls output 8" CV="35" mask="VXXXXXXX" minOut="8" minFn="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F1 controls output 8</label>
       </variable>
-      <variable label="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" minFn="2">
+      <variable item="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" minFn="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F2 controls output 1</label>
       </variable>
-      <variable label="F2 controls output 2" CV="36" mask="XXXXXXVX" minOut="2" minFn="2">
+      <variable item="F2 controls output 2" CV="36" mask="XXXXXXVX" minOut="2" minFn="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F2 controls output 2</label>
       </variable>
-      <variable label="F2 controls output 3" CV="36" mask="XXXXXVXX" minOut="3" minFn="2">
+      <variable item="F2 controls output 3" CV="36" mask="XXXXXVXX" minOut="3" minFn="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F2 controls output 3</label>
       </variable>
-      <variable label="F2 controls output 4" CV="36" mask="XXXXVXXX" minOut="4" minFn="2" default="1">
+      <variable item="F2 controls output 4" CV="36" mask="XXXXVXXX" minOut="4" minFn="2" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F2 controls output 4</label>
       </variable>
-      <variable label="F2 controls output 5" CV="36" mask="XXXVXXXX" minOut="5" minFn="2">
+      <variable item="F2 controls output 5" CV="36" mask="XXXVXXXX" minOut="5" minFn="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F2 controls output 5</label>
       </variable>
-      <variable label="F2 controls output 6" CV="36" mask="XXVXXXXX" minOut="6" minFn="2">
+      <variable item="F2 controls output 6" CV="36" mask="XXVXXXXX" minOut="6" minFn="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F2 controls output 6</label>
       </variable>
-      <variable label="F2 controls output 7" CV="36" mask="XVXXXXXX" minOut="7" minFn="2">
+      <variable item="F2 controls output 7" CV="36" mask="XVXXXXXX" minOut="7" minFn="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F2 controls output 7</label>
       </variable>
-      <variable label="F2 controls output 8" CV="36" mask="VXXXXXXX" minOut="8" minFn="2">
+      <variable item="F2 controls output 8" CV="36" mask="VXXXXXXX" minOut="8" minFn="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F2 controls output 8</label>
       </variable>
-      <variable label="F3 controls output 1" CV="37" mask="XXXXXXXV" minOut="1" minFn="3">
+      <variable item="F3 controls output 1" CV="37" mask="XXXXXXXV" minOut="1" minFn="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F3 controls output 1</label>
       </variable>
-      <variable label="F3 controls output 2" CV="37" mask="XXXXXXVX" minOut="2" minFn="3">
+      <variable item="F3 controls output 2" CV="37" mask="XXXXXXVX" minOut="2" minFn="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F3 controls output 2</label>
       </variable>
-      <variable label="F3 controls output 3" CV="37" mask="XXXXXVXX" minOut="3" minFn="3">
+      <variable item="F3 controls output 3" CV="37" mask="XXXXXVXX" minOut="3" minFn="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F3 controls output 3</label>
       </variable>
-      <variable label="F3 controls output 4" CV="37" mask="XXXXVXXX" minOut="4" minFn="3">
+      <variable item="F3 controls output 4" CV="37" mask="XXXXVXXX" minOut="4" minFn="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F3 controls output 4</label>
       </variable>
-      <variable label="F3 controls output 5" CV="37" mask="XXXVXXXX" minOut="5" minFn="3" default="1">
+      <variable item="F3 controls output 5" CV="37" mask="XXXVXXXX" minOut="5" minFn="3" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F3 controls output 5</label>
       </variable>
-      <variable label="F3 controls output 6" CV="37" mask="XXVXXXXX" minOut="6" minFn="3">
+      <variable item="F3 controls output 6" CV="37" mask="XXVXXXXX" minOut="6" minFn="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F3 controls output 6</label>
       </variable>
-      <variable label="F3 controls output 7" CV="37" mask="XVXXXXXX" minOut="7" minFn="3">
+      <variable item="F3 controls output 7" CV="37" mask="XVXXXXXX" minOut="7" minFn="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F3 controls output 7</label>
       </variable>
-      <variable label="F3 controls output 8" CV="37" mask="VXXXXXXX" minOut="8" minFn="3">
+      <variable item="F3 controls output 8" CV="37" mask="VXXXXXXX" minOut="8" minFn="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F3 controls output 8</label>
       </variable>
-      <variable label="F4 controls output 4" CV="38" mask="XXXXXXXV" minOut="4" minFn="4">
+      <variable item="F4 controls output 4" CV="38" mask="XXXXXXXV" minOut="4" minFn="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F4 controls output 4</label>
       </variable>
-      <variable label="F4 controls output 5" CV="38" mask="XXXXXXVX" minOut="5" minFn="4">
+      <variable item="F4 controls output 5" CV="38" mask="XXXXXXVX" minOut="5" minFn="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F4 controls output 5</label>
       </variable>
-      <variable label="F4 controls output 6" CV="38" mask="XXXXXVXX" minOut="6" minFn="4" default="1">
+      <variable item="F4 controls output 6" CV="38" mask="XXXXXVXX" minOut="6" minFn="4" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F4 controls output 6</label>
       </variable>
-      <variable label="F4 controls output 7" CV="38" mask="XXXXVXXX" minOut="7" minFn="4">
+      <variable item="F4 controls output 7" CV="38" mask="XXXXVXXX" minOut="7" minFn="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F4 controls output 7</label>
       </variable>
-      <variable label="F4 controls output 8" CV="38" mask="XXXVXXXX" minOut="8" minFn="4">
+      <variable item="F4 controls output 8" CV="38" mask="XXXVXXXX" minOut="8" minFn="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F4 controls output 8</label>
       </variable>
-      <variable label="F4 controls output 9" CV="38" mask="XXVXXXXX" minOut="9" minFn="4">
+      <variable item="F4 controls output 9" CV="38" mask="XXVXXXXX" minOut="9" minFn="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F4 controls output 9</label>
       </variable>
-      <variable label="F4 controls output 10" CV="38" mask="XVXXXXXX" minOut="10" minFn="4">
+      <variable item="F4 controls output 10" CV="38" mask="XVXXXXXX" minOut="10" minFn="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F4 controls output 10</label>
       </variable>
-      <variable label="F4 controls output 11" CV="38" mask="VXXXXXXX" minOut="11" minFn="4">
+      <variable item="F4 controls output 11" CV="38" mask="VXXXXXXX" minOut="11" minFn="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F4 controls output 11</label>
       </variable>
-      <variable label="F5 controls output 4" CV="39" mask="XXXXXXXV" minOut="4" minFn="5">
+      <variable item="F5 controls output 4" CV="39" mask="XXXXXXXV" minOut="4" minFn="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F5 controls output 4</label>
       </variable>
-      <variable label="F5 controls output 5" CV="39" mask="XXXXXXVX" minOut="5" minFn="5">
+      <variable item="F5 controls output 5" CV="39" mask="XXXXXXVX" minOut="5" minFn="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F5 controls output 5</label>
       </variable>
-      <variable label="F5 controls output 6" CV="39" mask="XXXXXVXX" minOut="6" minFn="5">
+      <variable item="F5 controls output 6" CV="39" mask="XXXXXVXX" minOut="6" minFn="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F5 controls output 6</label>
       </variable>
-      <variable label="F5 controls output 7" CV="39" mask="XXXXVXXX" minOut="7" minFn="5" default="1">
+      <variable item="F5 controls output 7" CV="39" mask="XXXXVXXX" minOut="7" minFn="5" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F5 controls output 7</label>
       </variable>
-      <variable label="F5 controls output 8" CV="39" mask="XXXVXXXX" minOut="8" minFn="5">
+      <variable item="F5 controls output 8" CV="39" mask="XXXVXXXX" minOut="8" minFn="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F5 controls output 8</label>
       </variable>
-      <variable label="F5 controls output 9" CV="39" mask="XXVXXXXX" minOut="9" minFn="5">
+      <variable item="F5 controls output 9" CV="39" mask="XXVXXXXX" minOut="9" minFn="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F5 controls output 9</label>
       </variable>
-      <variable label="F5 controls output 10" CV="39" mask="XVXXXXXX" minOut="10" minFn="5">
+      <variable item="F5 controls output 10" CV="39" mask="XVXXXXXX" minOut="10" minFn="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F5 controls output 10</label>
       </variable>
-      <variable label="F5 controls output 11" CV="39" mask="VXXXXXXX" minOut="11" minFn="5">
+      <variable item="F5 controls output 11" CV="39" mask="VXXXXXXX" minOut="11" minFn="5">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F5 controls output 11</label>
       </variable>
-      <variable label="F6 controls output 4" CV="40" mask="XXXXXXXV" minOut="4" minFn="6">
+      <variable item="F6 controls output 4" CV="40" mask="XXXXXXXV" minOut="4" minFn="6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F6 controls output 4</label>
       </variable>
-      <variable label="F6 controls output 5" CV="40" mask="XXXXXXVX" minOut="5" minFn="6">
+      <variable item="F6 controls output 5" CV="40" mask="XXXXXXVX" minOut="5" minFn="6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F6 controls output 5</label>
       </variable>
-      <variable label="F6 controls output 6" CV="40" mask="XXXXXVXX" minOut="6" minFn="6">
+      <variable item="F6 controls output 6" CV="40" mask="XXXXXVXX" minOut="6" minFn="6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F6 controls output 6</label>
       </variable>
-      <variable label="F6 controls output 7" CV="40" mask="XXXXVXXX" minOut="7" minFn="6">
+      <variable item="F6 controls output 7" CV="40" mask="XXXXVXXX" minOut="7" minFn="6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F6 controls output 7</label>
       </variable>
-      <variable label="F6 controls output 8" CV="40" mask="XXXVXXXX" minOut="8" minFn="6" default="1">
+      <variable item="F6 controls output 8" CV="40" mask="XXXVXXXX" minOut="8" minFn="6" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F6 controls output 8</label>
       </variable>
-      <variable label="F6 controls output 9" CV="40" mask="XXVXXXXX" minOut="9" minFn="6">
+      <variable item="F6 controls output 9" CV="40" mask="XXVXXXXX" minOut="9" minFn="6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F6 controls output 9</label>
       </variable>
-      <variable label="F6 controls output 10" CV="40" mask="XVXXXXXX" minOut="10" minFn="6">
+      <variable item="F6 controls output 10" CV="40" mask="XVXXXXXX" minOut="10" minFn="6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F6 controls output 10</label>
       </variable>
-      <variable label="F6 controls output 11" CV="40" mask="VXXXXXXX" minOut="11" minFn="6">
+      <variable item="F6 controls output 11" CV="40" mask="VXXXXXXX" minOut="11" minFn="6">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F6 controls output 11</label>
       </variable>
-      <variable label="F7 controls output 4" CV="41" mask="XXXXXXXV" minOut="4" minFn="7">
+      <variable item="F7 controls output 4" CV="41" mask="XXXXXXXV" minOut="4" minFn="7">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F7 controls output 4</label>
       </variable>
-      <variable label="F7 controls output 5" CV="41" mask="XXXXXXVX" minOut="5" minFn="7">
+      <variable item="F7 controls output 5" CV="41" mask="XXXXXXVX" minOut="5" minFn="7">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F7 controls output 5</label>
       </variable>
-      <variable label="F7 controls output 6" CV="41" mask="XXXXXVXX" minOut="6" minFn="7">
+      <variable item="F7 controls output 6" CV="41" mask="XXXXXVXX" minOut="6" minFn="7">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F7 controls output 6</label>
       </variable>
-      <variable label="F7 controls output 7" CV="41" mask="XXXXVXXX" minOut="7" minFn="7">
+      <variable item="F7 controls output 7" CV="41" mask="XXXXVXXX" minOut="7" minFn="7">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F7 controls output 7</label>
       </variable>
-      <variable label="F7 controls output 8" CV="41" mask="XXXVXXXX" minOut="8" minFn="7">
+      <variable item="F7 controls output 8" CV="41" mask="XXXVXXXX" minOut="8" minFn="7">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F7 controls output 8</label>
       </variable>
-      <variable label="F7 controls output 9" CV="41" mask="XXVXXXXX" minOut="9" minFn="7" default="1">
+      <variable item="F7 controls output 9" CV="41" mask="XXVXXXXX" minOut="9" minFn="7" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F7 controls output 9</label>
       </variable>
-      <variable label="F7 controls output 10" CV="41" mask="XVXXXXXX" minOut="10" minFn="7">
+      <variable item="F7 controls output 10" CV="41" mask="XVXXXXXX" minOut="10" minFn="7">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F7 controls output 10</label>
       </variable>
-      <variable label="F7 controls output 11" CV="41" mask="VXXXXXXX" minOut="11" minFn="7">
+      <variable item="F7 controls output 11" CV="41" mask="VXXXXXXX" minOut="11" minFn="7">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F7 controls output 11</label>
       </variable>
-      <variable label="F8 controls output 4" CV="42" mask="XXXXXXXV" minOut="4" minFn="8">
+      <variable item="F8 controls output 4" CV="42" mask="XXXXXXXV" minOut="4" minFn="8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F8 controls output 4</label>
       </variable>
-      <variable label="F8 controls output 5" CV="42" mask="XXXXXXVX" minOut="5" minFn="8">
+      <variable item="F8 controls output 5" CV="42" mask="XXXXXXVX" minOut="5" minFn="8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F8 controls output 5</label>
       </variable>
-      <variable label="F8 controls output 6" CV="42" mask="XXXXXVXX" minOut="6" minFn="8">
+      <variable item="F8 controls output 6" CV="42" mask="XXXXXVXX" minOut="6" minFn="8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F8 controls output 6</label>
       </variable>
-      <variable label="F8 controls output 7" CV="42" mask="XXXXVXXX" minOut="7" minFn="8">
+      <variable item="F8 controls output 7" CV="42" mask="XXXXVXXX" minOut="7" minFn="8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F8 controls output 7</label>
       </variable>
-      <variable label="F8 controls output 8" CV="42" mask="XXXVXXXX" minOut="8" minFn="8">
+      <variable item="F8 controls output 8" CV="42" mask="XXXVXXXX" minOut="8" minFn="8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F8 controls output 8</label>
       </variable>
-      <variable label="F8 controls output 9" CV="42" mask="XXVXXXXX" minOut="9" minFn="8">
+      <variable item="F8 controls output 9" CV="42" mask="XXVXXXXX" minOut="9" minFn="8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F8 controls output 9</label>
       </variable>
-      <variable label="F8 controls output 10" CV="42" mask="XVXXXXXX" minOut="10" minFn="8" default="1">
+      <variable item="F8 controls output 10" CV="42" mask="XVXXXXXX" minOut="10" minFn="8" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F8 controls output 10</label>
       </variable>
-      <variable label="F8 controls output 11" CV="42" mask="VXXXXXXX" minOut="11" minFn="8">
+      <variable item="F8 controls output 11" CV="42" mask="VXXXXXXX" minOut="11" minFn="8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F8 controls output 11</label>
       </variable>
-      <variable label="F9 controls output 7" CV="43" mask="XXXXXXXV" minOut="7" minFn="9">
+      <variable item="F9 controls output 7" CV="43" mask="XXXXXXXV" minOut="7" minFn="9">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F9 controls output 7</label>
       </variable>
-      <variable label="F9 controls output 8" CV="43" mask="XXXXXXVX" minOut="8" minFn="9">
+      <variable item="F9 controls output 8" CV="43" mask="XXXXXXVX" minOut="8" minFn="9">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F9 controls output 8</label>
       </variable>
-      <variable label="F9 controls output 9" CV="43" mask="XXXXXVXX" minOut="9" minFn="9">
+      <variable item="F9 controls output 9" CV="43" mask="XXXXXVXX" minOut="9" minFn="9">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F9 controls output 9</label>
       </variable>
-      <variable label="F9 controls output 10" CV="43" mask="XXXXVXXX" minOut="10" minFn="9">
+      <variable item="F9 controls output 10" CV="43" mask="XXXXVXXX" minOut="10" minFn="9">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F9 controls output 10</label>
       </variable>
-      <variable label="F9 controls output 11" CV="43" mask="XXXVXXXX" minOut="11" minFn="9" default="1">
+      <variable item="F9 controls output 11" CV="43" mask="XXXVXXXX" minOut="11" minFn="9" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F9 controls output 11</label>
       </variable>
-      <variable label="F9 controls output 12" CV="43" mask="XXVXXXXX" minOut="12" minFn="9">
+      <variable item="F9 controls output 12" CV="43" mask="XXVXXXXX" minOut="12" minFn="9">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F9 controls output 12</label>
       </variable>
-      <variable label="F9 controls output 13" CV="43" mask="XVXXXXXX" minOut="13" minFn="9">
+      <variable item="F9 controls output 13" CV="43" mask="XVXXXXXX" minOut="13" minFn="9">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F9 controls output 13</label>
       </variable>
-      <variable label="F9 controls output 14" CV="43" mask="VXXXXXXX" minOut="14" minFn="9">
+      <variable item="F9 controls output 14" CV="43" mask="VXXXXXXX" minOut="14" minFn="9">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F9 controls output 14</label>
       </variable>
-      <variable label="F10 controls output 7" CV="44" mask="XXXXXXXV" minOut="7" minFn="10">
+      <variable item="F10 controls output 7" CV="44" mask="XXXXXXXV" minOut="7" minFn="10">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F10 controls output 7</label>
       </variable>
-      <variable label="F10 controls output 8" CV="44" mask="XXXXXXVX" minOut="8" minFn="10">
+      <variable item="F10 controls output 8" CV="44" mask="XXXXXXVX" minOut="8" minFn="10">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F10 controls output 8</label>
       </variable>
-      <variable label="F10 controls output 9" CV="44" mask="XXXXXVXX" minOut="9" minFn="10">
+      <variable item="F10 controls output 9" CV="44" mask="XXXXXVXX" minOut="9" minFn="10">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F10 controls output 9</label>
       </variable>
-      <variable label="F10 controls output 10" CV="44" mask="XXXXVXXX" minOut="10" minFn="10">
+      <variable item="F10 controls output 10" CV="44" mask="XXXXVXXX" minOut="10" minFn="10">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F10 controls output 10</label>
       </variable>
-      <variable label="F10 controls output 11" CV="44" mask="XXXVXXXX" minOut="11" minFn="10">
+      <variable item="F10 controls output 11" CV="44" mask="XXXVXXXX" minOut="11" minFn="10">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F10 controls output 11</label>
       </variable>
-      <variable label="F10 controls output 12" CV="44" mask="XXVXXXXX" minOut="12" minFn="10" default="1">
+      <variable item="F10 controls output 12" CV="44" mask="XXVXXXXX" minOut="12" minFn="10" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F10 controls output 12</label>
       </variable>
-      <variable label="F10 controls output 13" CV="44" mask="XVXXXXXX" minOut="13" minFn="10">
+      <variable item="F10 controls output 13" CV="44" mask="XVXXXXXX" minOut="13" minFn="10">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F10 controls output 13</label>
       </variable>
-      <variable label="F10 controls output 14" CV="44" mask="VXXXXXXX" minOut="14" minFn="10">
+      <variable item="F10 controls output 14" CV="44" mask="VXXXXXXX" minOut="14" minFn="10">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F10 controls output 14</label>
       </variable>
-      <variable label="F11 controls output 7" CV="45" mask="XXXXXXXV" minOut="7" minFn="11">
+      <variable item="F11 controls output 7" CV="45" mask="XXXXXXXV" minOut="7" minFn="11">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F11 controls output 7</label>
       </variable>
-      <variable label="F11 controls output 8" CV="45" mask="XXXXXXVX" minOut="8" minFn="11">
+      <variable item="F11 controls output 8" CV="45" mask="XXXXXXVX" minOut="8" minFn="11">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F11 controls output 8</label>
       </variable>
-      <variable label="F11 controls output 9" CV="45" mask="XXXXXVXX" minOut="9" minFn="11">
+      <variable item="F11 controls output 9" CV="45" mask="XXXXXVXX" minOut="9" minFn="11">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F11 controls output 9</label>
       </variable>
-      <variable label="F11 controls output 10" CV="45" mask="XXXXVXXX" minOut="10" minFn="11">
+      <variable item="F11 controls output 10" CV="45" mask="XXXXVXXX" minOut="10" minFn="11">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F11 controls output 10</label>
       </variable>
-      <variable label="F11 controls output 11" CV="45" mask="XXXVXXXX" minOut="11" minFn="11">
+      <variable item="F11 controls output 11" CV="45" mask="XXXVXXXX" minOut="11" minFn="11">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F11 controls output 11</label>
       </variable>
-      <variable label="F11 controls output 12" CV="45" mask="XXVXXXXX" minOut="12" minFn="11">
+      <variable item="F11 controls output 12" CV="45" mask="XXVXXXXX" minOut="12" minFn="11">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F11 controls output 12</label>
       </variable>
-      <variable label="F11 controls output 13" CV="45" mask="XVXXXXXX" minOut="13" minFn="11" default="1">
+      <variable item="F11 controls output 13" CV="45" mask="XVXXXXXX" minOut="13" minFn="11" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F11 controls output 13</label>
       </variable>
-      <variable label="F11 controls output 14" CV="45" mask="VXXXXXXX" minOut="14" minFn="11">
+      <variable item="F11 controls output 14" CV="45" mask="VXXXXXXX" minOut="14" minFn="11">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F11 controls output 14</label>
       </variable>
-      <variable label="F12 controls output 7" CV="46" mask="XXXXXXXV" minOut="7" minFn="12">
+      <variable item="F12 controls output 7" CV="46" mask="XXXXXXXV" minOut="7" minFn="12">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F12 controls output 7</label>
       </variable>
-      <variable label="F12 controls output 8" CV="46" mask="XXXXXXVX" minOut="8" minFn="12">
+      <variable item="F12 controls output 8" CV="46" mask="XXXXXXVX" minOut="8" minFn="12">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F12 controls output 8</label>
       </variable>
-      <variable label="F12 controls output 9" CV="46" mask="XXXXXVXX" minOut="9" minFn="12">
+      <variable item="F12 controls output 9" CV="46" mask="XXXXXVXX" minOut="9" minFn="12">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F12 controls output 9</label>
       </variable>
-      <variable label="F12 controls output 10" CV="46" mask="XXXXVXXX" minOut="10" minFn="12">
+      <variable item="F12 controls output 10" CV="46" mask="XXXXVXXX" minOut="10" minFn="12">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F12 controls output 10</label>
       </variable>
-      <variable label="F12 controls output 11" CV="46" mask="XXXVXXXX" minOut="11" minFn="12">
+      <variable item="F12 controls output 11" CV="46" mask="XXXVXXXX" minOut="11" minFn="12">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F12 controls output 11</label>
       </variable>
-      <variable label="F12 controls output 12" CV="46" mask="XXVXXXXX" minOut="12" minFn="12">
+      <variable item="F12 controls output 12" CV="46" mask="XXVXXXXX" minOut="12" minFn="12">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F12 controls output 12</label>
       </variable>
-      <variable label="F12 controls output 13" CV="46" mask="XVXXXXXX" minOut="13" minFn="12">
+      <variable item="F12 controls output 13" CV="46" mask="XVXXXXXX" minOut="13" minFn="12">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F12 controls output 13</label>
       </variable>
-      <variable label="F12 controls output 14" CV="46" mask="VXXXXXXX" minOut="14" minFn="12" default="1">
+      <variable item="F12 controls output 14" CV="46" mask="VXXXXXXX" minOut="14" minFn="12" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F12 controls output 14</label>
       </variable>
-      <variable label="Primary Index" CV="49" opsOnly="yes" writeOnly="yes" item="Primary Index for Verbal CV Inquiry">
+      <variable CV="49" opsOnly="yes" writeOnly="yes" item="Primary Index for Verbal CV Inquiry">
         <decVal/>
         <label>Primary Index</label>
       </variable>
-      <variable label="Secondary Index" CV="50" opsOnly="yes" writeOnly="yes" item="Secondary Index for Verbal CV Inquiry">
+      <variable CV="50" opsOnly="yes" writeOnly="yes" item="Secondary Index for Verbal CV Inquiry">
         <decVal/>
         <label>Secondary Index</label>
       </variable>
-      <variable label="Programming Verbal Acknowledgement" CV="62" mask="XXXXXXXV" comment="CV62" item="CV62 Verbal Ack" default="1">
+      <variable CV="62" mask="XXXXXXXV" comment="CV62" item="CV62 Verbal Ack" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Programming Verbal Acknowledgement</label>
         <comment>CV62</comment>
       </variable>
-      <variable label="CV Numeric Readout" CV="62" mask="XXXXXVXX" comment="CV62" item="CV62 CV Readout" default="0">
+      <variable CV="62" mask="XXXXXVXX" comment="CV62" item="CV62 CV Readout" default="0">
         <enumVal>
           <enumChoice choice="CV Number and Value">
             <choice>CV Number and Value</choice>
@@ -989,17 +956,17 @@
         <label>CV Numeric Readout</label>
         <comment>CV62</comment>
       </variable>
-      <variable label="Verbal CV Inquiry" CV="64" opsOnly="yes" writeOnly="yes" comment="CV64" item="Verbal CV Inquiry">
+      <variable CV="64" opsOnly="yes" writeOnly="yes" comment="CV64" item="Verbal CV Inquiry">
         <decVal/>
         <label>Verbal CV Inquiry</label>
         <comment>CV64</comment>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
-      <variable label="Speed Table" CV="67">
+      <variable item="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
-      <variable label="Reverse Trim" CV="95" default="128">
+      <variable item="Reverse Trim" CV="95" default="128">
         <decVal/>
         <label>Reverse Trim</label>
       </variable>
@@ -1007,1160 +974,1107 @@
       <constant item="SICV" default="50" comment="CV used for Secondary Index"/>
       <!-- QSI CV.PI.SI formatted items -->
       <!-- Sound control -->
-      <ivariable label="System Volume" CVname="51.0" CV="51" PI="0" default="127" comment="QSI" item="CV51.0">
-        <indexedVal max="127"/>
-      </ivariable>
-      <ivariable label="Mute Volume" CVname="51.1" CV="51" PI="1" default="0" comment="QSI" item="CV51.1">
-        <indexedVal max="63"/>
-      </ivariable>
-      <ivariable label="Horn Triggered Doppler" CVname="51.2" CV="51" PI="2" default="1" comment="QSI" item="CV51.2 Doppler" mask="XXXXXXXV">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Alt Whistle Selection Feedback" CVname="51.2" CV="51" PI="2" default="1" comment="QSI" item="CV51.2 Whistle" mask="XXXXXVXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Heavy Load Feedback" CVname="51.2" CV="51" PI="2" default="1" comment="QSI" item="CV51.2 Heavy" mask="XXXXVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Cylinder Cocks at Startup" CVname="51.2" CV="51" PI="2" default="1" comment="QSI" item="CV51.2 Cocks1" mask="XXXVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Cylinder Cocks after NFF/NFR" CVname="51.2" CV="51" PI="2" default="1" comment="QSI" item="CV51.2 Cocks2" mask="XXVXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Auto Mute Timeout" CVname="51.5" CV="51" PI="5" default="0" comment="QSI" item="CV51.5" include="300,301,302,303,304,305,306,307,308,309,310,312,313,314,315,316,317,318,319,320,321,323,324,325,326,328,329,331,332,333,334,335,336,337,338">
-        <indexedVal/>
+      <variable label="System Volume" CV="51.0" default="127" comment="QSI" item="CV51.0">
+        <decVal max="127"/>
+      </variable>
+      <variable label="Mute Volume" CV="51.1" default="0" comment="QSI" item="CV51.1">
+        <decVal max="63"/>
+      </variable>
+      <variable label="Horn Triggered Doppler" CV="51.2" mask="XXXXXXXV" default="1" comment="QSI" item="CV51.2 Doppler">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Alt Whistle Selection Feedback" CV="51.2" mask="XXXXXVXX" default="1" comment="QSI" item="CV51.2 Whistle">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Heavy Load Feedback" CV="51.2" mask="XXXXVXXX" default="1" comment="QSI" item="CV51.2 Heavy">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Cylinder Cocks at Startup" CV="51.2" mask="XXXVXXXX" default="1" comment="QSI" item="CV51.2 Cocks1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Cylinder Cocks after NFF/NFR" CV="51.2" mask="XXVXXXXX" default="1" comment="QSI" item="CV51.2 Cocks2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Auto Mute Timeout" CV="51.5" default="0" comment="QSI" item="CV51.5" include="300,301,302,303,304,305,306,307,308,309,310,312,313,314,315,316,317,318,319,320,321,323,324,325,326,328,329,331,332,333,334,335,336,337,338">
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>19</value>
         </qualifier>
-      </ivariable>
-      <ivariable label="Auto Mute Timeout" CVname="51.5" CV="51" PI="5" default="0" comment="QSI" item="CV51.5" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Chuff Cutoff" CVname="51.10" CV="51" PI="10" default="50" comment="QSI" item="CV51.10" include="3010,3017,3048,3049,3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Min Sound of Power" CVname="51.12" CV="51" PI="12" default="40" comment="QSI" item="CV51.12" include="3010,3017,3048,3049,3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Max Sound of Power" CVname="51.13" CV="51" PI="13" default="65" comment="QSI" item="CV51.13" include="3010,3017,3048,3049,3050">
-        <indexedVal/>
-      </ivariable>
+        <decVal/></variable>
+      <variable label="Auto Mute Timeout" CV="51.5" default="0" comment="QSI" item="CV51.5" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
+        <decVal/>
+      </variable>
+      <variable label="Chuff Cutoff" CV="51.10" default="50" comment="QSI" item="CV51.10" include="3010,3017,3048,3049,3050">
+        <decVal/>
+      </variable>
+      <variable label="Min Sound of Power" CV="51.12" default="40" comment="QSI" item="CV51.12" include="3010,3017,3048,3049,3050">
+        <decVal/>
+      </variable>
+      <variable label="Max Sound of Power" CV="51.13" default="65" comment="QSI" item="CV51.13" include="3010,3017,3048,3049,3050">
+        <decVal/>
+      </variable>
       <!-- Sound volumes -->
-      <ivariable label="Whistle" CVname="52.0" CV="52" PI="0" default="11" comment="QSI" item="CV52.0">
-        <indexedVal max="15"/>
-      </ivariable>
-      <ivariable label="Bell" CVname="52.8" CV="52" PI="8" default="11" comment="QSI" item="CV52.8">
-        <indexedVal max="15"/>
-      </ivariable>
-      <ivariable label="Chuff 1" CVname="52.10" CV="52" PI="10" default="11" comment="QSI" item="CV52.10">
-        <indexedVal max="15"/>
-      </ivariable>
-      <ivariable label="Valve Rod Clank" CVname="52.13" CV="52" PI="15" default="11" comment="QSI" item="CV52.13" include="3010,3017,3050">
-        <indexedVal max="15"/>
-      </ivariable>
-      <ivariable label="Cylinder Cocks" CVname="52.15" CV="52" PI="15" default="11" comment="QSI" item="CV52.15" include="300,301,302,303,304,305,306,307,308,309,310,312,313,314,315,316,317,318,319,320,321,323,324,325,326,328,329,331,332,333,334,335,336,337,338,3010,3015,3017,3048,3049,3050">
-        <indexedVal max="15"/>
-      </ivariable>
-      <ivariable label="Air Pump 1" CVname="52.16" CV="52" PI="16" default="11" comment="QSI" item="CV52.16">
-        <indexedVal max="15"/>
-      </ivariable>
-      <ivariable label="Air Pump 2" CVname="52.17" CV="52" PI="17" default="11" comment="QSI" item="CV52.17">
-        <indexedVal max="15"/>
-      </ivariable>
-      <ivariable label="Steam Blower (hiss)" CVname="52.19" CV="52" PI="19" default="8" comment="QSI" item="CV52.19">
-        <indexedVal max="15"/>
-      </ivariable>
-      <ivariable label="Long Air Let-off" CVname="52.21" CV="52" PI="21" default="11" comment="QSI" item="CV52.21">
-        <indexedVal max="15"/>
-      </ivariable>
-      <ivariable label="Short Air Let-off" CVname="52.22" CV="52" PI="22" default="11" comment="QSI" item="CV52.22">
-        <indexedVal max="15"/>
-      </ivariable>
-      <ivariable label="Squealing Brakes" CVname="52.24" CV="52" PI="24" default="11" comment="QSI" item="CV52.24">
-        <indexedVal max="15"/>
-      </ivariable>
-      <ivariable label="Steam Dynamo" CVname="52.26" CV="52" PI="26" default="11" comment="QSI" item="CV52.26">
-        <indexedVal max="15"/>
-      </ivariable>
-      <ivariable label="Boiler Pop-off" CVname="52.29" CV="52" PI="29" default="11" comment="QSI" item="CV52.29">
-        <indexedVal max="15"/>
-      </ivariable>
-      <ivariable label="Blow Down" CVname="52.30" CV="52" PI="30" default="11" comment="QSI" item="CV52.30">
-        <indexedVal max="15"/>
-      </ivariable>
-      <ivariable label="Injector" CVname="52.31" CV="52" PI="31" default="11" comment="QSI" item="CV52.31">
-        <indexedVal max="15"/>
-      </ivariable>
-      <ivariable label="Fuel" CVname="52.32" CV="52" PI="32" default="11" item="CV52.32" >
-        <indexedVal max="15"/>
-      </ivariable>
-      <ivariable label="Coupler Sounds" CVname="52.34" CV="52" PI="34" default="11" comment="QSI" item="CV52.34">
-        <indexedVal max="15"/>
-      </ivariable>
-      <ivariable label="Air Brakes" CVname="52.37" CV="52" PI="37" default="11" comment="QSI" item="CV52.37">
-        <indexedVal max="15"/>
-      </ivariable>
-      <ivariable label="Alt Horn" CVname="52.40" CV="52" PI="40" default="11" comment="QSI" item="CV52.40" include="313,3010,3017,3048,3049,3050">
-        <indexedVal max="15"/>
-      </ivariable>
-      <ivariable label="Other" CVname="52.46" CV="52" PI="46" default="11" comment="QSI" item="CV52.46" include="3010,3017,3048,3049,3050">
-        <indexedVal max="15"/>
-      </ivariable>
-      <ivariable label="Output 1 - Forward/Reverse Only" CVname="53.1.0" CV="53" PI="1" SI="0" default="136" item="CV53.1.0">
+      <variable label="Whistle" CV="52.0" default="11" comment="QSI" item="CV52.0">
+        <decVal max="15"/>
+      </variable>
+      <variable label="Bell" CV="52.8" default="11" comment="QSI" item="CV52.8">
+        <decVal max="15"/>
+      </variable>
+      <variable label="Chuff 1" CV="52.10" default="11" comment="QSI" item="CV52.10">
+        <decVal max="15"/>
+      </variable>
+      <variable label="Valve Rod Clank" CV="52.13" default="11" comment="QSI" item="CV52.13" include="3010,3017,3050">
+        <decVal max="15"/>
+      </variable>
+      <variable label="Cylinder Cocks" CV="52.15" default="11" comment="QSI" item="CV52.15" include="300,301,302,303,304,305,306,307,308,309,310,312,313,314,315,316,317,318,319,320,321,323,324,325,326,328,329,331,332,333,334,335,336,337,338,3010,3015,3017,3048,3049,3050">
+        <decVal max="15"/>
+      </variable>
+      <variable label="Air Pump 1" CV="52.16" default="11" comment="QSI" item="CV52.16">
+        <decVal max="15"/>
+      </variable>
+      <variable label="Air Pump 2" CV="52.17" default="11" comment="QSI" item="CV52.17">
+        <decVal max="15"/>
+      </variable>
+      <variable label="Steam Blower (hiss)" CV="52.19" default="8" comment="QSI" item="CV52.19">
+        <decVal max="15"/>
+      </variable>
+      <variable label="Long Air Let-off" CV="52.21" default="11" comment="QSI" item="CV52.21">
+        <decVal max="15"/>
+      </variable>
+      <variable label="Short Air Let-off" CV="52.22" default="11" comment="QSI" item="CV52.22">
+        <decVal max="15"/>
+      </variable>
+      <variable label="Squealing Brakes" CV="52.24" default="11" comment="QSI" item="CV52.24">
+        <decVal max="15"/>
+      </variable>
+      <variable label="Steam Dynamo" CV="52.26" default="11" comment="QSI" item="CV52.26">
+        <decVal max="15"/>
+      </variable>
+      <variable label="Boiler Pop-off" CV="52.29" default="11" comment="QSI" item="CV52.29">
+        <decVal max="15"/>
+      </variable>
+      <variable label="Blow Down" CV="52.30" default="11" comment="QSI" item="CV52.30">
+        <decVal max="15"/>
+      </variable>
+      <variable label="Injector" CV="52.31" default="11" comment="QSI" item="CV52.31">
+        <decVal max="15"/>
+      </variable>
+      <variable label="Fuel" CV="52.32" default="11" item="CV52.32">
+        <decVal max="15"/>
+      </variable>
+      <variable label="Coupler Sounds" CV="52.34" default="11" comment="QSI" item="CV52.34">
+        <decVal max="15"/>
+      </variable>
+      <variable label="Air Brakes" CV="52.37" default="11" comment="QSI" item="CV52.37">
+        <decVal max="15"/>
+      </variable>
+      <variable label="Alt Horn" CV="52.40" default="11" comment="QSI" item="CV52.40" include="313,3010,3017,3048,3049,3050">
+        <decVal max="15"/>
+      </variable>
+      <variable label="Other" CV="52.46" default="11" comment="QSI" item="CV52.46" include="3010,3017,3048,3049,3050">
+        <decVal max="15"/>
+      </variable>
+      <variable label="Output 1 - Forward/Reverse Only" CV="53.1.0" default="136" item="CV53.1.0">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceLowMovV7.xml"/>
-      </ivariable>
-      <ivariable label=" - Neutral Only" CVname="53.1.1" CV="53" PI="1" SI="1" default="136" item="CV53.1.1">
+      </variable>
+      <variable label=" - Neutral Only" CV="53.1.1" default="136" item="CV53.1.1">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceLowNeuV7.xml"/>
-      </ivariable>
-      <ivariable label="Output 2 - Forward/Reverse Only" CVname="53.2.0" CV="53" PI="2" SI="0" default="136" item="CV53.2.0">
+      </variable>
+      <variable label="Output 2 - Forward/Reverse Only" CV="53.2.0" default="136" item="CV53.2.0">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceLowMovV7.xml"/>
-      </ivariable>
-      <ivariable label=" - Neutral Only" CVname="53.2.1" CV="53" PI="2" SI="1" default="136" item="CV53.2.1">
+      </variable>
+      <variable label=" - Neutral Only" CV="53.2.1" default="136" item="CV53.2.1">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceLowNeuV7.xml"/>
-      </ivariable>
-      <ivariable label="Output 3 - Forward/Reverse Only" CVname="53.3.0" CV="53" PI="3" SI="0" default="3" item="CV53.3.0">
+      </variable>
+      <variable label="Output 3 - Forward/Reverse Only" CV="53.3.0" default="3" item="CV53.3.0">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceLowMovV7.xml"/>
-      </ivariable>
-      <ivariable label=" - Neutral Only" CVname="53.3.1" CV="53" PI="3" SI="1" default="3" item="CV53.3.1">
+      </variable>
+      <variable label=" - Neutral Only" CV="53.3.1" default="3" item="CV53.3.1">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceLowNeuV7.xml"/>
-      </ivariable>
-      <ivariable label="Output 4 - Forward/Reverse Only" CVname="53.4.0" CV="53" PI="4" SI="0" default="1" comment="QSI" item="CV53.4.0">
+      </variable>
+      <variable label="Output 4 - Forward/Reverse Only" CV="53.4.0" default="1" comment="QSI" item="CV53.4.0">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceLowMovV7.xml"/>
-      </ivariable>
-      <ivariable label=" - Neutral Only" CVname="53.4.1" CV="53" PI="4" SI="1" default="1" item="CV53.4.1">
+      </variable>
+      <variable label=" - Neutral Only" CV="53.4.1" default="1" item="CV53.4.1">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceLowNeuV7.xml"/>
-      </ivariable>
-      <ivariable label="Output 5 - Forward/Reverse Only" CVname="53.5.0" CV="53" PI="5" SI="0" default="211" item="CV53.5.0">
+      </variable>
+      <variable label="Output 5 - Forward/Reverse Only" CV="53.5.0" default="211" item="CV53.5.0">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceLowMovV7.xml"/>
-      </ivariable>
-      <ivariable label=" - Neutral Only" CVname="53.5.1" CV="53" PI="5" SI="1" default="211" item="CV53.5.1">
+      </variable>
+      <variable label=" - Neutral Only" CV="53.5.1" default="211" item="CV53.5.1">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceLowNeuV7.xml"/>
-      </ivariable>
-      <ivariable label="Output 6 - Forward/Reverse Only" CVname="53.6.0" CV="53" PI="6" SI="0" default="8" item="CV53.6.0">
+      </variable>
+      <variable label="Output 6 - Forward/Reverse Only" CV="53.6.0" default="8" item="CV53.6.0">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceLowMovV7.xml"/>
-      </ivariable>
-      <ivariable label=" - Neutral Only" CVname="53.6.1" CV="53" PI="6" SI="1" default="8" item="CV53.6.1">
+      </variable>
+      <variable label=" - Neutral Only" CV="53.6.1" default="8" item="CV53.6.1">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceLowNeuV7.xml"/>
-      </ivariable>
-      <ivariable label="Output 7 - Forward/Reverse Only" CVname="53.7.0" CV="53" PI="7" SI="0" default="5" item="CV53.7.0">
+      </variable>
+      <variable label="Output 7 - Forward/Reverse Only" CV="53.7.0" default="5" item="CV53.7.0">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceLowMovV7.xml"/>
-      </ivariable>
-      <ivariable label=" - Neutral Only" CVname="53.7.1" CV="53" PI="7" SI="1" default="5" item="CV53.7.1">
+      </variable>
+      <variable label=" - Neutral Only" CV="53.7.1" default="5" item="CV53.7.1">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceLowNeuV7.xml"/>
-      </ivariable>
-      <ivariable label="Output 8 - Forward/Reverse Only" CVname="53.8.0" CV="53" PI="8" SI="0" default="65" item="CV53.8.0">
+      </variable>
+      <variable label="Output 8 - Forward/Reverse Only" CV="53.8.0" default="65" item="CV53.8.0">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceLowMovV7.xml"/>
-      </ivariable>
-      <ivariable label=" - Neutral Only" CVname="53.8.1" CV="53" PI="8" SI="1" default="144" item="CV53.8.1">
+      </variable>
+      <variable label=" - Neutral Only" CV="53.8.1" default="144" item="CV53.8.1">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceLowNeuV7.xml"/>
-      </ivariable>
-      <ivariable label="Output 9 - Forward/Reverse Only" CVname="53.9.0" CV="53" PI="9" SI="0" default="216" item="CV53.9.0">
+      </variable>
+      <variable label="Output 9 - Forward/Reverse Only" CV="53.9.0" default="216" item="CV53.9.0">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceLowMovV7.xml"/>
-      </ivariable>
-      <ivariable label=" - Neutral Only" CVname="53.9.1" CV="53" PI="9" SI="1" default="6" item="CV53.9.1">
+      </variable>
+      <variable label=" - Neutral Only" CV="53.9.1" default="6" item="CV53.9.1">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceLowNeuV7.xml"/>
-      </ivariable>
-      <ivariable label="Output 10 - Forward/Reverse Only" CVname="53.10.0" CV="53" PI="10" SI="0" default="64" item="CV53.10.0">
+      </variable>
+      <variable label="Output 10 - Forward/Reverse Only" CV="53.10.0" default="64" item="CV53.10.0">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceLowMovV7.xml"/>
-      </ivariable>
-      <ivariable label=" - Neutral Only" CVname="53.10.1" CV="53" PI="10" SI="1" default="64" item="CV53.10.1">
+      </variable>
+      <variable label=" - Neutral Only" CV="53.10.1" default="64" item="CV53.10.1">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceLowNeuV7.xml"/>
-      </ivariable>
-      <ivariable label="Output 11 - Forward/Reverse Only" CVname="53.11.0" CV="53" PI="11" SI="0" default="179" item="CV53.11.0">
+      </variable>
+      <variable label="Output 11 - Forward/Reverse Only" CV="53.11.0" default="179" item="CV53.11.0">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceLowMovV7.xml"/>
-      </ivariable>
-      <ivariable label=" - Neutral Only" CVname="53.11.1" CV="53" PI="11" SI="1" default="145" item="CV53.11.1">
+      </variable>
+      <variable label=" - Neutral Only" CV="53.11.1" default="145" item="CV53.11.1">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceLowNeuV7.xml"/>
-      </ivariable>
-      <ivariable label="Output 12 - Forward/Reverse Only" CVname="53.12.0" CV="53" PI="12" SI="0" default="178" item="CV53.12.0">
+      </variable>
+      <variable label="Output 12 - Forward/Reverse Only" CV="53.12.0" default="178" item="CV53.12.0">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceLowMovV7.xml"/>
-      </ivariable>
-      <ivariable label=" - Neutral Only" CVname="53.12.1" CV="53" PI="12" SI="1" default="178" item="CV53.12.1">
+      </variable>
+      <variable label=" - Neutral Only" CV="53.12.1" default="178" item="CV53.12.1">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceLowNeuV7.xml"/>
-      </ivariable>
-      <ivariable label="Output 13 - Forward/Reverse Only" CVname="53.13.0" CV="53" PI="13" SI="0" default="137" item="CV53.13.0">
+      </variable>
+      <variable label="Output 13 - Forward/Reverse Only" CV="53.13.0" default="137" item="CV53.13.0">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceLowMovV7.xml"/>
-      </ivariable>
-      <ivariable label=" - Neutral Only" CVname="53.13.1" CV="53" PI="13" SI="1" default="137" item="CV53.13.1">
+      </variable>
+      <variable label=" - Neutral Only" CV="53.13.1" default="137" item="CV53.13.1">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceLowNeuV7.xml"/>
-      </ivariable>
-      <ivariable label="Output 14 - Forward/Reverse Only" CVname="53.14.0" CV="53" PI="14" SI="0" default="138" item="CV53.14.0">
+      </variable>
+      <variable label="Output 14 - Forward/Reverse Only" CV="53.14.0" default="138" item="CV53.14.0">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceLowMovV7.xml"/>
-      </ivariable>
-      <ivariable label=" - Neutral Only" CVname="53.14.1" CV="53" PI="14" SI="1" default="138" item="CV53.14.1">
+      </variable>
+      <variable label=" - Neutral Only" CV="53.14.1" default="138" item="CV53.14.1">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceLowNeuV7.xml"/>
-      </ivariable>
-      <ivariable label="Output 15" CVname="53.15.0" CV="53" PI="15" SI="0" default="10" item="CV53.15.0" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+      </variable>
+      <variable label="Output 15" CV="53.15.0" default="10" item="CV53.15.0" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </ivariable>
-      <ivariable label="Output 15" CVname="53.15.0" CV="53" PI="15" SI="0" default="10" item="CV53.15.0" include="3010,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/></variable>
+      <variable label="Output 15" CV="53.15.0" default="10" item="CV53.15.0" include="3010,3017,3048,3049,3050">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
-      </ivariable>
-      <ivariable label="Output 16" CVname="53.16.0" CV="53" PI="16" SI="0" default="10" item="CV53.16.0" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+      </variable>
+      <variable label="Output 16" CV="53.16.0" default="10" item="CV53.16.0" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </ivariable>
-      <ivariable label="Output 16" CVname="53.16.0" CV="53" PI="16" SI="0" default="10" item="CV53.16.0" include="3010,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/></variable>
+      <variable label="Output 16" CV="53.16.0" default="10" item="CV53.16.0" include="3010,3017,3048,3049,3050">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
-      </ivariable>
-      <ivariable label="Output 17" CVname="53.17.0" CV="53" PI="17" SI="0" default="154" item="CV53.17.0" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,318,319,320,321,323,324,325,328,331,332,333,334,335,336,337,338,">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+      </variable>
+      <variable label="Output 17" CV="53.17.0" default="154" item="CV53.17.0" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,318,319,320,321,323,324,325,328,331,332,333,334,335,336,337,338,">
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </ivariable>
-      <ivariable label="Output 17" CVname="53.17.0" CV="53" PI="17" SI="0" default="154" item="CV53.17.0" include="3010,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/></variable>
+      <variable label="Output 17" CV="53.17.0" default="154" item="CV53.17.0" include="3010,3017,3048,3049,3050">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
-      </ivariable>
-      <ivariable label="Output 18" CVname="53.18.0" CV="53" PI="18" SI="0" default="10" item="CV53.18.0" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+      </variable>
+      <variable label="Output 18" CV="53.18.0" default="10" item="CV53.18.0" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </ivariable>
-      <ivariable label="Output 18" CVname="53.18.0" CV="53" PI="18" SI="0" default="10" item="CV53.18.0" include="3010,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/></variable>
+      <variable label="Output 18" CV="53.18.0" default="10" item="CV53.18.0" include="3010,3017,3048,3049,3050">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
-      </ivariable>
-      <ivariable label="Output 19" CVname="53.19.0" CV="53" PI="19" SI="0" default="10" item="CV53.19.0" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+      </variable>
+      <variable label="Output 19" CV="53.19.0" default="10" item="CV53.19.0" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </ivariable>
-      <ivariable label="Output 19" CVname="53.19.0" CV="53" PI="19" SI="0" default="10" item="CV53.19.0" include="3010,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/></variable>
+      <variable label="Output 19" CV="53.19.0" default="10" item="CV53.19.0" include="3010,3017,3048,3049,3050">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
-      </ivariable>
-      <ivariable label="Output 20" CVname="53.20.0" CV="53" PI="20" SI="0" default="10" item="CV53.20.0" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+      </variable>
+      <variable label="Output 20" CV="53.20.0" default="10" item="CV53.20.0" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </ivariable>
-      <ivariable label="Output 20" CVname="53.20.0" CV="53" PI="20" SI="0" default="10" item="CV53.20.0" include="3010,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/></variable>
+      <variable label="Output 20" CV="53.20.0" default="10" item="CV53.20.0" include="3010,3017,3048,3049,3050">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
-      </ivariable>
-      <ivariable label="Output 21" CVname="53.21.0" CV="53" PI="21" SI="0" default="10" item="CV53.21.0" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+      </variable>
+      <variable label="Output 21" CV="53.21.0" default="10" item="CV53.21.0" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </ivariable>
-      <ivariable label="Output 21" CVname="53.21.0" CV="53" PI="21" SI="0" default="10" item="CV53.21.0" include="3010,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/></variable>
+      <variable label="Output 21" CV="53.21.0" default="10" item="CV53.21.0" include="3010,3017,3048,3049,3050">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
-      </ivariable>
-      <ivariable label="Output 22" CVname="53.22.0" CV="53" PI="22" SI="0" default="10" item="CV53.22.0" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+      </variable>
+      <variable label="Output 22" CV="53.22.0" default="10" item="CV53.22.0" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </ivariable>
-      <ivariable label="Output 22" CVname="53.22.0" CV="53" PI="22" SI="0" default="10" item="CV53.22.0" include="3010,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/></variable>
+      <variable label="Output 22" CV="53.22.0" default="10" item="CV53.22.0" include="3010,3017,3048,3049,3050">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
-      </ivariable>
-      <ivariable label="Output 23" CVname="53.23.0" CV="53" PI="23" SI="0" default="10" item="CV53.23.0" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+      </variable>
+      <variable label="Output 23" CV="53.23.0" default="10" item="CV53.23.0" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </ivariable>
-      <ivariable label="Output 23" CVname="53.23.0" CV="53" PI="23" SI="0" default="10" item="CV53.23.0" include="3010,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/></variable>
+      <variable label="Output 23" CV="53.23.0" default="10" item="CV53.23.0" include="3010,3017,3048,3049,3050">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
-      </ivariable>
-      <ivariable label="Output 24" CVname="53.24.0" CV="53" PI="24" SI="0" default="10" item="CV53.24.0" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+      </variable>
+      <variable label="Output 24" CV="53.24.0" default="10" item="CV53.24.0" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </ivariable>
-      <ivariable label="Output 24" CVname="53.24.0" CV="53" PI="24" SI="0" default="10" item="CV53.24.0" include="3010,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/></variable>
+      <variable label="Output 24" CV="53.24.0" default="10" item="CV53.24.0" include="3010,3017,3048,3049,3050">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
-      </ivariable>
-      <ivariable label="Output 25" CVname="53.25.0" CV="53" PI="25" SI="0" default="10" item="CV53.25.0" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+      </variable>
+      <variable label="Output 25" CV="53.25.0" default="10" item="CV53.25.0" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </ivariable>
-      <ivariable label="Output 25" CVname="53.25.0" CV="53" PI="25" SI="0" default="10" item="CV53.25.0" include="3010,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/></variable>
+      <variable label="Output 25" CV="53.25.0" default="10" item="CV53.25.0" include="3010,3017,3048,3049,3050">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
-      </ivariable>
-      <ivariable label="Output 26" CVname="53.26.0" CV="53" PI="26" SI="0" default="10" item="CV53.26.0" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+      </variable>
+      <variable label="Output 26" CV="53.26.0" default="10" item="CV53.26.0" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </ivariable>
-      <ivariable label="Output 26" CVname="53.26.0" CV="53" PI="26" SI="0" default="10" item="CV53.26.0" include="3010,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/></variable>
+      <variable label="Output 26" CV="53.26.0" default="10" item="CV53.26.0" include="3010,3017,3048,3049,3050">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
-      </ivariable>
-      <ivariable label="Output 27" CVname="53.27.0" CV="53" PI="27" SI="0" default="10" item="CV53.27.0" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+      </variable>
+      <variable label="Output 27" CV="53.27.0" default="10" item="CV53.27.0" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </ivariable>
-      <ivariable label="Output 27" CVname="53.27.0" CV="53" PI="27" SI="0" default="10" item="CV53.27.0" include="3010,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/></variable>
+      <variable label="Output 27" CV="53.27.0" default="10" item="CV53.27.0" include="3010,3017,3048,3049,3050">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
-      </ivariable>
-      <ivariable label="Output 28" CVname="53.28.0" CV="53" PI="28" SI="0" default="10" item="CV53.28.0" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+      </variable>
+      <variable label="Output 28" CV="53.28.0" default="10" item="CV53.28.0" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </ivariable>
-      <ivariable label="Output 28" CVname="53.28.0" CV="53" PI="28" SI="0" default="10" item="CV53.28.0" include="3010,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/></variable>
+      <variable label="Output 28" CV="53.28.0" default="10" item="CV53.28.0" include="3010,3017,3048,3049,3050">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
-      </ivariable>
-      <ivariable label="Output 29" CVname="53.29.0" CV="53" PI="29" SI="0" default="10" item="CV53.29.0" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+      </variable>
+      <variable label="Output 29" CV="53.29.0" default="10" item="CV53.29.0" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </ivariable>
-      <ivariable label="Output 29" CVname="53.29.0" CV="53" PI="29" SI="0" default="10" item="CV53.29.0" include="3010,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/></variable>
+      <variable label="Output 29" CV="53.29.0" default="10" item="CV53.29.0" include="3010,3017,3048,3049,3050">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
-      </ivariable>
-      <ivariable label="Output 30" CVname="53.30.0" CV="53" PI="30" SI="0" default="10" item="CV53.30.0" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+      </variable>
+      <variable label="Output 30" CV="53.30.0" default="10" item="CV53.30.0" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </ivariable>
-      <ivariable label="Output 30" CVname="53.30.0" CV="53" PI="30" SI="0" default="10" item="CV53.30.0" include="3010,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/></variable>
+      <variable label="Output 30" CV="53.30.0" default="10" item="CV53.30.0" include="3010,3017,3048,3049,3050">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
-      </ivariable>
-      <ivariable label="Max Bell" CVname="55.3.0" CV="55" PI="3" SI="0" default="2" item="CV55.3.0" readOnly="yes" include="300,301,302,303,304,305,306,307,308,309,310,312,313,314,315,316,317,318,319,320,321,323,324,325,326,328,329,331,332,333,334,335,336,337,338">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Bell Select" CVname="55.3.1" CV="55" PI="3" SI="1" default="1" item="CV55.3.0" include="300,301,302,303,304,305,306,307,308,309,310,312,313,314,315,316,317,318,319,320,321,323,324,325,326,328,329,331,332,333,334,335,336,337,338">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Headlight Initial State" CVname="55.70.0" CV="55" PI="70" SI="0" default="1" item="CV55.70.0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffAutoOnDim.xml"/>
-      </ivariable>
-      <ivariable label="Auto Headlight FWD" CVname="55.70.1" CV="55" PI="70" SI="1" default="2" item="CV55.70.1 FWD" mask="XXXXXXVV">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-offDimBright.xml"/>
-      </ivariable>
-      <ivariable label="Auto Headlight NFF" CVname="55.70.1" CV="55" PI="70" SI="1" default="1" item="CV55.70.1 NFF" mask="XXXXVVXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-offDimBright.xml"/>
-      </ivariable>
-      <ivariable label="Auto Headlight REV" CVname="55.70.1" CV="55" PI="70" SI="1" default="1" item="CV55.70.1 REV" mask="XXVVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-offDimBright.xml"/>
-      </ivariable>
-      <ivariable label="Auto Headlight NFR" CVname="55.70.1" CV="55" PI="70" SI="1" default="1" item="CV55.70.1 NFR" mask="VVXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-offDimBright.xml"/>
-      </ivariable>
-      <ivariable label="Headlight Dim Intensity" CVname="55.70.10" CV="55" PI="70" SI="10" default="64" item="CV55.70.10" include="300,301,302,303,304,305,306,307,308,309,310,312,313,314,315,316,318,319,320,321,323,324,325,326,328,329,331,332,333,334,335,336,337,338">
-        <indexedVal/>
+      </variable>
+      <variable label="Max Bell" CV="55.3.0" readOnly="yes" default="2" item="CV55.3.0" include="300,301,302,303,304,305,306,307,308,309,310,312,313,314,315,316,317,318,319,320,321,323,324,325,326,328,329,331,332,333,334,335,336,337,338">
+        <decVal/>
+      </variable>
+      <variable label="Bell Select" CV="55.3.1" default="1" item="CV55.3.1" include="300,301,302,303,304,305,306,307,308,309,310,312,313,314,315,316,317,318,319,320,321,323,324,325,326,328,329,331,332,333,334,335,336,337,338">
+        <decVal/>
+      </variable>
+      <variable label="Headlight Initial State" CV="55.70.0" default="1" item="CV55.70.0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffAutoOnDim.xml"/>
+      </variable>
+      <variable label="Auto Headlight FWD" CV="55.70.1" mask="XXXXXXVV" default="2" item="CV55.70.1 FWD">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-offDimBright.xml"/>
+      </variable>
+      <variable label="Auto Headlight NFF" CV="55.70.1" mask="XXXXVVXX" default="1" item="CV55.70.1 NFF">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-offDimBright.xml"/>
+      </variable>
+      <variable label="Auto Headlight REV" CV="55.70.1" mask="XXVVXXXX" default="1" item="CV55.70.1 REV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-offDimBright.xml"/>
+      </variable>
+      <variable label="Auto Headlight NFR" CV="55.70.1" mask="VVXXXXXX" default="1" item="CV55.70.1 NFR">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-offDimBright.xml"/>
+      </variable>
+      <variable label="Headlight Dim Intensity" CV="55.70.10" default="64" item="CV55.70.10" include="300,301,302,303,304,305,306,307,308,309,310,312,313,314,315,316,318,319,320,321,323,324,325,326,328,329,331,332,333,334,335,336,337,338">
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>4</value>
         </qualifier>
-      </ivariable>
-      <ivariable label="Headlight Dim Intensity" CVname="55.70.10" CV="55" PI="70" SI="10" default="64" item="CV55.70.10" include="3006,3007,3010,3015,3017,3048,3049,3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Headlight Max Intensity" CVname="55.70.12" CV="55" PI="70" SI="12" default="255" item="CV55.70.12" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
-        <indexedVal/>
+        <decVal/></variable>
+      <variable label="Headlight Dim Intensity" CV="55.70.10" default="64" item="CV55.70.10" include="3006,3007,3010,3015,3017,3048,3049,3050">
+        <decVal/>
+      </variable>
+      <variable label="Headlight Max Intensity" CV="55.70.12" default="255" item="CV55.70.12" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </ivariable>
-      <ivariable label="Headlight Max Intensity" CVname="55.70.12" CV="55" PI="70" SI="12" default="255" item="CV55.70.12" include="3010,3017,3048,3049,3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Headlight Ramp Up Rate" CVname="55.70.15" CV="55" PI="70" SI="15" default="25" item="CV55.70.15" include="3048,3049,3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Headlight Ramp Down Rate" CVname="55.70.16" CV="55" PI="70" SI="16" default="25" item="CV55.70.16" include="3048,3049,3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Reverse Light Initial State" CVname="55.73.0" CV="55" PI="73" SI="0" default="1" item="CV55.73.0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffAutoOnDim.xml"/>
-      </ivariable>
-      <ivariable label="Auto Reverse Light FWD" CVname="55.73.1" CV="55" PI="73" SI="1" default="1" item="CV55.73.1 FWD" mask="XXXXXXVV">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-offDimBright.xml"/>
-      </ivariable>
-      <ivariable label="Auto Reverse Light NFF" CVname="55.73.1" CV="55" PI="73" SI="1" default="1" item="CV55.73.1 NFF" mask="XXXXVVXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-offDimBright.xml"/>
-      </ivariable>
-      <ivariable label="Auto Reverse Light REV" CVname="55.73.1" CV="55" PI="73" SI="1" default="2" item="CV55.73.1 REV" mask="XXVVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-offDimBright.xml"/>
-      </ivariable>
-      <ivariable label="Auto Reverse Light NFR" CVname="55.73.1" CV="55" PI="73" SI="1" default="1" item="CV55.73.1 NFR" mask="VVXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-offDimBright.xml"/>
-      </ivariable>
-      <ivariable label="Reverse Light Dim Intensity" CVname="55.73.10" CV="55" PI="73" SI="10" default="32" item="CV55.73.10" include="3006,3007,3010,3015,3017,3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Reverse Light Max Intensity" CVname="55.73.12" CV="55" PI="73" SI="12" default="255" item="CV55.73.12" include="3010,3017,3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Reverse Light Ramp Up Rate" CVname="55.73.15" CV="55" PI="73" SI="15" default="25" item="CV55.73.15" include="3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Reverse Light Ramp Down Rate" CVname="55.73.16" CV="55" PI="73" SI="16" default="25" item="CV55.73.16" include="3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Mars Light Initial State" CVname="55.76.0" CV="55" PI="76" SI="0" default="1" item="CV55.76.0" include="317,3010,3015,3017,3048,3049,3050">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffAutoOnDimStrobe.xml"/>
-      </ivariable>
-      <ivariable label="Auto Mars Light FWD" CVname="55.76.1" CV="55" PI="76" SI="1" default="3" item="CV55.76.1" include="317,3010,3015,3017,3048,3049,3050">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-offDimBrightStrobe.xml"/>
-      </ivariable>
-      <ivariable label="Auto Mars Light NFF" CVname="55.76.2" CV="55" PI="76" SI="2" default="1" item="CV55.76.2" include="317,3010,3015,3017,3048,3049,3050">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-offDimBrightStrobe.xml"/>
-      </ivariable>
-      <ivariable label="Auto Mars Light REV" CVname="55.76.3" CV="55" PI="76" SI="3" default="1" item="CV55.76.3" include="317,3010,3015,3017,3048,3049,3050">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-offDimBrightStrobe.xml"/>
-      </ivariable>
-      <ivariable label="Auto Mars Light NFR" CVname="55.76.4" CV="55" PI="76" SI="4" default="1" item="CV55.76.4" include="317,3010,3015,3017,3048,3049,3050">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-offDimBrightStrobe.xml"/>
-      </ivariable>
-      <ivariable label="Mars Light Period" CVname="55.76.6" CV="55" PI="76" SI="6" default="100" item="CV55.76.6" include="317">
-        <indexedVal/>
+        <decVal/></variable>
+      <variable label="Headlight Max Intensity" CV="55.70.12" default="255" item="CV55.70.12" include="3010,3017,3048,3049,3050">
+        <decVal/>
+      </variable>
+      <variable label="Headlight Ramp Up Rate" CV="55.70.15" default="25" item="CV55.70.15" include="3048,3049,3050">
+        <decVal/>
+      </variable>
+      <variable label="Headlight Ramp Down Rate" CV="55.70.16" default="25" item="CV55.70.16" include="3048,3049,3050">
+        <decVal/>
+      </variable>
+      <variable label="Reverse Light Initial State" CV="55.73.0" default="1" item="CV55.73.0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffAutoOnDim.xml"/>
+      </variable>
+      <variable label="Auto Reverse Light FWD" CV="55.73.1" mask="XXXXXXVV" default="1" item="CV55.73.1 FWD">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-offDimBright.xml"/>
+      </variable>
+      <variable label="Auto Reverse Light NFF" CV="55.73.1" mask="XXXXVVXX" default="1" item="CV55.73.1 NFF">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-offDimBright.xml"/>
+      </variable>
+      <variable label="Auto Reverse Light REV" CV="55.73.1" mask="XXVVXXXX" default="2" item="CV55.73.1 REV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-offDimBright.xml"/>
+      </variable>
+      <variable label="Auto Reverse Light NFR" CV="55.73.1" mask="VVXXXXXX" default="1" item="CV55.73.1 NFR">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-offDimBright.xml"/>
+      </variable>
+      <variable label="Reverse Light Dim Intensity" CV="55.73.10" default="32" item="CV55.73.10" include="3006,3007,3010,3015,3017,3050">
+        <decVal/>
+      </variable>
+      <variable label="Reverse Light Max Intensity" CV="55.73.12" default="255" item="CV55.73.12" include="3010,3017,3050">
+        <decVal/>
+      </variable>
+      <variable label="Reverse Light Ramp Up Rate" CV="55.73.15" default="25" item="CV55.73.15" include="3050">
+        <decVal/>
+      </variable>
+      <variable label="Reverse Light Ramp Down Rate" CV="55.73.16" default="25" item="CV55.73.16" include="3050">
+        <decVal/>
+      </variable>
+      <variable label="Mars Light Initial State" CV="55.76.0" default="1" item="CV55.76.0" include="317,3010,3015,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffAutoOnDimStrobe.xml"/>
+      </variable>
+      <variable label="Auto Mars Light FWD" CV="55.76.1" default="3" item="CV55.76.1" include="317,3010,3015,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-offDimBrightStrobe.xml"/>
+      </variable>
+      <variable label="Auto Mars Light NFF" CV="55.76.2" default="1" item="CV55.76.2" include="317,3010,3015,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-offDimBrightStrobe.xml"/>
+      </variable>
+      <variable label="Auto Mars Light REV" CV="55.76.3" default="1" item="CV55.76.3" include="317,3010,3015,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-offDimBrightStrobe.xml"/>
+      </variable>
+      <variable label="Auto Mars Light NFR" CV="55.76.4" default="1" item="CV55.76.4" include="317,3010,3015,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-offDimBrightStrobe.xml"/>
+      </variable>
+      <variable label="Mars Light Period" CV="55.76.6" default="100" item="CV55.76.6" include="317">
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </ivariable>
-      <ivariable label="Mars Light Period" CVname="55.76.6" CV="55" PI="76" SI="6" default="100" item="CV55.76.6" include="3048,3049,3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Mars Light Dim Intensity" CVname="55.76.10" CV="55" PI="76" SI="10" default="0" item="CV55.76.10" include="317">
-        <indexedVal/>
+        <decVal/></variable>
+      <variable label="Mars Light Period" CV="55.76.6" default="100" item="CV55.76.6" include="3048,3049,3050">
+        <decVal/>
+      </variable>
+      <variable label="Mars Light Dim Intensity" CV="55.76.10" default="0" item="CV55.76.10" include="317">
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>7</value>
         </qualifier>
-      </ivariable>
-      <ivariable label="Mars Light Dim Intensity" CVname="55.76.10" CV="55" PI="76" SI="10" default="0" item="CV55.76.10" include="3010,3015,3017,3048,3049,3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Mars Light Min Intensity" CVname="55.76.11" CV="55" PI="76" SI="11" default="4" item="CV55.76.11" include="317">
-        <indexedVal/>
+        <decVal/></variable>
+      <variable label="Mars Light Dim Intensity" CV="55.76.10" default="0" item="CV55.76.10" include="3010,3015,3017,3048,3049,3050">
+        <decVal/>
+      </variable>
+      <variable label="Mars Light Min Intensity" CV="55.76.11" default="4" item="CV55.76.11" include="317">
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </ivariable>
-      <ivariable label="Mars Light Min Intensity" CVname="55.76.11" CV="55" PI="76" SI="11" default="4" item="CV55.76.11" include="3048,3049,3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Mars Light Max Intensity" CVname="55.76.12" CV="55" PI="76" SI="12" default="255" item="CV55.76.12" include="317">
-        <indexedVal/>
+        <decVal/></variable>
+      <variable label="Mars Light Min Intensity" CV="55.76.11" default="4" item="CV55.76.11" include="3048,3049,3050">
+        <decVal/>
+      </variable>
+      <variable label="Mars Light Max Intensity" CV="55.76.12" default="255" item="CV55.76.12" include="317">
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </ivariable>
-      <ivariable label="Mars Light Max Intensity" CVname="55.76.12" CV="55" PI="76" SI="12" default="255" item="CV55.76.12" include="3010,3017,3048,3049,3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Mars Light Mid Intensity" CVname="55.76.13" CV="55" PI="76" SI="13" default="32" item="CV55.76.13" include="317">
-        <indexedVal/>
+        <decVal/></variable>
+      <variable label="Mars Light Max Intensity" CV="55.76.12" default="255" item="CV55.76.12" include="3010,3017,3048,3049,3050">
+        <decVal/>
+      </variable>
+      <variable label="Mars Light Mid Intensity" CV="55.76.13" default="32" item="CV55.76.13" include="317">
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </ivariable>
-      <ivariable label="Mars Light Mid Intensity" CVname="55.76.13" CV="55" PI="76" SI="13" default="32" item="CV55.76.13" include="3048,3049,3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Mars Light Ramp Up Rate" CVname="55.76.15" CV="55" PI="76" SI="15" default="25" item="CV55.76.15" include="3048,3049,3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Mars Light Ramp Down Rate" CVname="55.76.16" CV="55" PI="76" SI="16" default="25" item="CV55.76.16" include="3048,3049,3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Front Number Board Lights Initial State" CVname="55.100.0" CV="55" PI="100" SI="0" default="1" item="CV55.100.0" mask="XXXXXXVV" include="331,3001,3010,3015,3017,3048,3049,3050">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-offAutoOn.xml"/>
-      </ivariable>
-      <ivariable label="Auto Front Number Board Lights FWD" CVname="55.100.1" CV="55" PI="100" SI="1" default="1" item="CV55.100.1 FWD" mask="XXXXXXXV" include="331,3001,3010,3015,3017,3048,3049,3050">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Auto Front Number Board Lights NFF" CVname="55.100.1" CV="55" PI="100" SI="1" default="1" item="CV55.100.1 NFF" mask="XXXXXVXX" include="331,3001,3010,3015,3017,3048,3049,3050">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Auto Front Number Board Lights REV" CVname="55.100.1" CV="55" PI="100" SI="1" default="1" item="CV55.100.1 REV" mask="XXXVXXXX" include="331,3001,3010,3015,3017,3048,3049,3050">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Auto Front Number Board Lights NFR" CVname="55.100.1" CV="55" PI="100" SI="1" default="1" item="CV55.100.1 NFR" mask="XVXXXXXX" include="331,3001,3010,3015,3017,3048,3049,3050">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Front Number Board Max Intensity" CVname="55.100.12" CV="55" PI="100" SI="12" default="255" item="CV55.100.12" include="3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Front Number Board Ramp Up Rate" CVname="55.100.15" CV="55" PI="100" SI="15" default="25" item="CV55.100.15" include="3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Front Number Board Ramp Down Rate" CVname="55.100.16" CV="55" PI="100" SI="16" default="25" item="CV55.100.16" include="3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Front Marker Lights Initial State" CVname="55.104.0" CV="55" PI="104" SI="0" default="1" item="CV55.104.0" mask="XXXXXXVV" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-offAutoOn.xml"/>
-      </ivariable>
-      <ivariable label="Auto Front Marker Lights FWD" CVname="55.104.1" CV="55" PI="104" SI="1" default="1" item="CV55.104.1 FWD" mask="XXXXXXXV" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Auto Front Marker Lights NFF" CVname="55.104.1" CV="55" PI="104" SI="1" default="1" item="CV55.104.1 NFF" mask="XXXXXVXX" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Auto Front Marker Lights REV" CVname="55.104.1" CV="55" PI="104" SI="1" default="1" item="CV55.104.1 REV" mask="XXXVXXXX" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Auto Front Marker Lights NFR" CVname="55.104.1" CV="55" PI="104" SI="1" default="1" item="CV55.104.1 NFR" mask="XVXXXXXX" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Front Marker Lights Max Intensity" CVname="55.104.12" CV="55" PI="104" SI="12" default="255" item="CV55.104.12" include="3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Front Marker Lights Ramp Up Rate" CVname="55.104.15" CV="55" PI="104" SI="15" default="25" item="CV55.104.15" include="3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Front Marker Lights Ramp Down Rate" CVname="55.104.16" CV="55" PI="104" SI="16" default="25" item="CV55.104.16" include="3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Rear Marker Lights Initial State" CVname="55.106.0" CV="55" PI="106" SI="0" default="1" item="CV55.106.0" mask="XXXXXXVV" include="321,329,331,337,338,3010,3015,3017,3048,3049,3050">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-offAutoOn.xml"/>
-      </ivariable>
-      <ivariable label="Auto Rear Marker Lights FWD" CVname="55.106.1" CV="55" PI="106" SI="1" default="1" item="CV55.106.1 FWD" mask="XXXXXXXV" include="321,329,331,337,338,3010,3015,3017,3048,3049,3050">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Auto Rear Marker Lights NFF" CVname="55.106.1" CV="55" PI="106" SI="1" default="1" item="CV55.106.1 NFF" mask="XXXXXVXX" include="321,329,331,337,338,3010,3015,3017,3048,3049,3050">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Auto Rear Marker Lights REV" CVname="55.106.1" CV="55" PI="106" SI="1" default="1" item="CV55.106.1 REV" mask="XXXVXXXX" include="321,329,331,337,338,3010,3015,3017,3048,3049,3050">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Auto Rear Marker Lights NFR" CVname="55.106.1" CV="55" PI="106" SI="1" default="1" item="CV55.106.1 NFR" mask="XVXXXXXX" include="321,329,331,337,338,3010,3015,3017,3048,3049,3050">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Rear Marker Lights Max Intensity" CVname="55.106.12" CV="55" PI="106" SI="12" default="255" item="CV55.106.12" include="3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Rear Marker Lights Ramp Up Rate" CVname="55.106.15" CV="55" PI="106" SI="15" default="25" item="CV55.106.15" include="3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Rear Marker Lights Ramp Down Rate" CVname="55.106.16" CV="55" PI="106" SI="16" default="25" item="CV55.106.16" include="3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Front Cab Lights Initial State" CVname="55.116.0" CV="55" PI="116" SI="0" default="1" item="CV55.116.0" mask="XXXXXXVV" include="3050">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-offAutoOn.xml"/>
-      </ivariable>
-      <ivariable label="Auto Front Cab Lights FWD" CVname="55.116.1" CV="55" PI="116" SI="1" default="0" item="CV55.116.1 FWD" mask="XXXXXXXV" include="3050">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Auto Front Cab Lights NFF" CVname="55.116.1" CV="55" PI="116" SI="1" default="1" item="CV55.116.1 NFF" mask="XXXXXVXX" include="3050">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Auto Front Cab Lights REV" CVname="55.116.1" CV="55" PI="116" SI="1" default="0" item="CV55.116.1 REV" mask="XXXVXXXX" include="3050">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Auto Front Cab Lights NFR" CVname="55.116.1" CV="55" PI="116" SI="1" default="1" item="CV55.116.1 NFR" mask="XVXXXXXX" include="3050">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Front Cab Lights Max Intensity" CVname="55.116.12" CV="55" PI="116" SI="12" default="255" item="CV55.116.12" include="3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Front Cab Lights Ramp Up Rate" CVname="55.116.15" CV="55" PI="116" SI="15" default="25" item="CV55.116.15" include="3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Front Cab Lights Ramp Down Rate" CVname="55.116.16" CV="55" PI="116" SI="16" default="25" item="CV55.116.16" include="3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Rear Cab Lights Initial State" CVname="55.118.0" CV="55" PI="118" SI="0" default="1" item="CV55.118.0" mask="XXXXXXVV" include="308,321,329,331,332,336,337,338,3010,3015,3017,3048,3049,3050">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-offAutoOn.xml"/>
-      </ivariable>
-      <ivariable label="Auto Rear Cab Lights FWD" CVname="55.118.1" CV="55" PI="118" SI="1" default="0" item="CV55.118.1 FWD" mask="XXXXXXXV" include="308,321,329,331,332,336,337,338,3010,3015,3017,3048,3049,3050">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Auto Rear Cab Lights NFF" CVname="55.118.1" CV="55" PI="118" SI="1" default="1" item="CV55.118.1 NFF" mask="XXXXXVXX" include="308,321,329,331,332,336,337,338,3010,3015,3017,3048,3049,3050">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Auto Rear Cab Lights REV" CVname="55.118.1" CV="55" PI="118" SI="1" default="0" item="CV55.118.1 REV" mask="XXXVXXXX" include="308,321,329,331,332,336,337,338,3010,3015,3017,3048,3049,3050">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Auto Rear Cab Lights NFR" CVname="55.118.1" CV="55" PI="118" SI="1" default="1" item="CV55.118.1 NFR" mask="XVXXXXXX" include="308,321,329,331,332,336,337,338,3010,3015,3017,3048,3049,3050">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Rear Cab Lights Max Intensity" CVname="55.118.12" CV="55" PI="118" SI="12" default="255" item="CV55.118.12" include="3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Rear Cab Lights Ramp Up Rate" CVname="55.118.15" CV="55" PI="118" SI="15" default="25" item="CV55.118.15" include="3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Rear Cab Lights Ramp Down Rate" CVname="55.118.16" CV="55" PI="118" SI="16" default="25" item="CV55.118.16" include="3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Firebox Min Intensity" CVname="55.122.11" CV="55" PI="122" SI="11" default="4" item="CV55.122.11" include="3010,3015,3017,3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Firebox Max Intensity" CVname="55.122.12" CV="55" PI="122" SI="12" default="255" item="CV55.122.12" include="3010,3015,3017,3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Firebox Mid Intensity" CVname="55.122.13" CV="55" PI="122" SI="13" default="64" item="CV55.122.13" include="3010,3015,3017,3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Firebox Ramp Up Rate" CVname="55.122.15" CV="55" PI="122" SI="15" default="4" item="CV55.122.15" include="3010,3015,3017,3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Firebox Ramp Down Rate" CVname="55.122.16" CV="55" PI="122" SI="16" default="4" item="CV55.122.16" include="3010,3015,3017,3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Step Lights" CVname="55.134.0" CV="55" PI="134" SI="0" default="1" item="CV55.134.0 Step" mask="XXXXXVXX" include="3015">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Firebox Light" CVname="55.135.0" CV="55" PI="135" SI="0" default="1" item="CV55.135.0 Firebox" mask="XXXVXXXX" include="3010,3015,3017,3050">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Headlight" CVname="55.136.0" CV="55" PI="136" SI="0" default="1" item="CV55.136.0 70" mask="XXXXXXXV">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Rear Light" CVname="55.136.0" CV="55" PI="136" SI="0" default="1" item="CV55.136.0 73" mask="XXXXXXVX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Mars Light" CVname="55.136.0" CV="55" PI="136" SI="0" default="1" item="CV55.136.0 76" mask="XXXXXVXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Rear Mars Light" CVname="55.136.0" CV="55" PI="136" SI="0" default="1" item="CV55.136.0 80" mask="XXXXVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Ditch Lights" CVname="55.136.0" CV="55" PI="136" SI="0" default="1" item="CV55.136.0 84" mask="XXXVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Rear Ditch Lights" CVname="55.136.0" CV="55" PI="136" SI="0" default="1" item="CV55.136.0 88" mask="XXVXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Front Overhead Beacon" CVname="55.136.0" CV="55" PI="136" SI="0" default="1" item="CV55.136.0 92" mask="XVXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Rear Overhead Beacon" CVname="55.136.0" CV="55" PI="136" SI="0" default="1" item="CV55.136.0 96" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Front Number Board Lights" CVname="55.136.1" CV="55" PI="136" SI="1" default="0" item="CV55.136.1 100" mask="XXXXXXXV">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Rear Number Board Lights" CVname="55.136.1" CV="55" PI="136" SI="1" default="0" item="CV55.136.1 102" mask="XXXXXXVX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Front Marker Lights" CVname="55.136.1" CV="55" PI="136" SI="1" default="0" item="CV55.136.1 104" mask="XXXXXVXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Rear Marker Lights" CVname="55.136.1" CV="55" PI="136" SI="1" default="0" item="CV55.136.1 106" mask="XXXXVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Front Step Lights" CVname="55.136.1" CV="55" PI="136" SI="1" default="0" item="CV55.136.1 112" mask="XVXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Rear Step Lights" CVname="55.136.1" CV="55" PI="136" SI="1" default="0" item="CV55.136.1 114" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Front Cab Lights" CVname="55.136.2" CV="55" PI="136" SI="2" default="0" item="CV55.136.2 116" mask="XXXXXXXV">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Rear Cab Lights" CVname="55.136.2" CV="55" PI="136" SI="2" default="0" item="CV55.136.2 118" mask="XXXXXXVX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Multi Auto Lights 2, Headlight" CVname="55.137.0" CV="55" PI="137" SI="0" default="0" item="CV55.137.0 70" mask="XXXXXXXV">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Multi Auto Lights 2, Rear Light" CVname="55.137.0" CV="55" PI="137" SI="0" default="0" item="CV55.137.0 73" mask="XXXXXXVX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Multi Auto Lights 2, Mars Light" CVname="55.137.0" CV="55" PI="137" SI="0" default="0" item="CV55.137.0 76" mask="XXXXXVXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Multi Auto Lights 2, Rear Mars Light" CVname="55.137.0" CV="55" PI="137" SI="0" default="0" item="CV55.137.0 80" mask="XXXXVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Multi Auto Lights 2, Ditch Lights" CVname="55.137.0" CV="55" PI="137" SI="0" default="0" item="CV55.137.0 84" mask="XXXVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Multi Auto Lights 2, Rear Ditch Lights" CVname="55.137.0" CV="55" PI="137" SI="0" default="0" item="CV55.137.0 88" mask="XXVXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Multi Auto Lights 2, Front Overhead Beacon" CVname="55.137.0" CV="55" PI="137" SI="0" default="0" item="CV55.137.0 92" mask="XVXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Multi Auto Lights 2, Rear Overhead Beacon" CVname="55.137.0" CV="55" PI="137" SI="0" default="0" item="CV55.137.0 96" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Multi Auto Lights 2, Front Number Board Lights" CVname="55.137.1" CV="55" PI="137" SI="1" default="1" item="CV55.137.1 100" mask="XXXXXXXV">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Multi Auto Lights 2, Rear Number Board Lights" CVname="55.137.1" CV="55" PI="137" SI="1" default="1" item="CV55.137.1 102" mask="XXXXXXVX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Multi Auto Lights 2, Front Marker Lights" CVname="55.137.1" CV="55" PI="137" SI="1" default="1" item="CV55.137.1 104" mask="XXXXXVXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Multi Auto Lights 2, Rear Marker Lights" CVname="55.137.1" CV="55" PI="137" SI="1" default="1" item="CV55.137.1 106" mask="XXXXVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Multi Auto Lights 2, Front Step Lights" CVname="55.137.1" CV="55" PI="137" SI="1" default="1" item="CV55.137.1 112" mask="XVXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Multi Auto Lights 2, Rear Step Lights" CVname="55.137.1" CV="55" PI="137" SI="1" default="1" item="CV55.137.1 114" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Multi Auto Lights 2, Front Cab Lights" CVname="55.137.2" CV="55" PI="137" SI="2" default="0" item="CV55.137.2 116" mask="XXXXXXXV">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Multi Auto Lights 2, Rear Cab Lights" CVname="55.137.2" CV="55" PI="137" SI="2" default="0" item="CV55.137.2 118" mask="XXXXXXVX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Multi Auto Lights 3, Headlight" CVname="55.138.0" CV="55" PI="138" SI="0" default="0" item="CV55.138.0 70" mask="XXXXXXXV">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Multi Auto Lights 3, Rear Light" CVname="55.138.0" CV="55" PI="138" SI="0" default="0" item="CV55.138.0 73" mask="XXXXXXVX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Multi Auto Lights 3, Mars Light" CVname="55.138.0" CV="55" PI="138" SI="0" default="0" item="CV55.138.0 76" mask="XXXXXVXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Multi Auto Lights 3, Rear Mars Light" CVname="55.138.0" CV="55" PI="138" SI="0" default="0" item="CV55.138.0 80" mask="XXXXVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Multi Auto Lights 3, Ditch Lights" CVname="55.138.0" CV="55" PI="138" SI="0" default="0" item="CV55.138.0 84" mask="XXXVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Multi Auto Lights 3, Rear Ditch Lights" CVname="55.138.0" CV="55" PI="138" SI="0" default="0" item="CV55.138.0 88" mask="XXVXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Multi Auto Lights 3, Front Overhead Beacon" CVname="55.138.0" CV="55" PI="138" SI="0" default="0" item="CV55.138.0 92" mask="XVXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Multi Auto Lights 3, Rear Overhead Beacon" CVname="55.138.0" CV="55" PI="138" SI="0" default="0" item="CV55.138.0 96" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Multi Auto Lights 3, Front Number Board Lights" CVname="55.138.1" CV="55" PI="138" SI="1" default="0" item="CV55.138.1 100" mask="XXXXXXXV">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Multi Auto Lights 3, Rear Number Board Lights" CVname="55.138.1" CV="55" PI="138" SI="1" default="0" item="CV55.138.1 102" mask="XXXXXXVX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Multi Auto Lights 3, Front Marker Lights" CVname="55.138.1" CV="55" PI="138" SI="1" default="0" item="CV55.138.1 104" mask="XXXXXVXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Multi Auto Lights 3, Rear Marker Lights" CVname="55.138.1" CV="55" PI="138" SI="1" default="0" item="CV55.138.1 106" mask="XXXXVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Multi Auto Lights 3, Front Step Lights" CVname="55.138.1" CV="55" PI="138" SI="1" default="0" item="CV55.138.1 112" mask="XVXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Multi Auto Lights 3, Rear Step Lights" CVname="55.138.1" CV="55" PI="138" SI="1" default="0" item="CV55.138.1 114" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Multi Auto Lights 3, Front Cab Lights" CVname="55.138.2" CV="55" PI="138" SI="2" default="1" item="CV55.138.2 116" mask="XXXXXXXV">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Multi Auto Lights 3, Rear Cab Lights" CVname="55.138.2" CV="55" PI="138" SI="2" default="1" item="CV55.138.2 118" mask="XXXXXXVX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Crossing Blast 1" CVname="55.154.0" CV="55" PI="154" SI="0" default="30" item="CV55.154.0" mask="XVVVVVVV" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
-        <indexedVal max="127"/>
+        <decVal/></variable>
+      <variable label="Mars Light Mid Intensity" CV="55.76.13" default="32" item="CV55.76.13" include="3048,3049,3050">
+        <decVal/>
+      </variable>
+      <variable label="Mars Light Ramp Up Rate" CV="55.76.15" default="25" item="CV55.76.15" include="3048,3049,3050">
+        <decVal/>
+      </variable>
+      <variable label="Mars Light Ramp Down Rate" CV="55.76.16" default="25" item="CV55.76.16" include="3048,3049,3050">
+        <decVal/>
+      </variable>
+      <variable label="Front Number Board Lights Initial State" CV="55.100.0" mask="XXXXXXVV" default="1" item="CV55.100.0" include="331,3001,3010,3015,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-offAutoOn.xml"/>
+      </variable>
+      <variable label="Auto Front Number Board Lights FWD" CV="55.100.1" mask="XXXXXXXV" default="1" item="CV55.100.1 FWD" include="331,3001,3010,3015,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Auto Front Number Board Lights NFF" CV="55.100.1" mask="XXXXXVXX" default="1" item="CV55.100.1 NFF" include="331,3001,3010,3015,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Auto Front Number Board Lights REV" CV="55.100.1" mask="XXXVXXXX" default="1" item="CV55.100.1 REV" include="331,3001,3010,3015,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Auto Front Number Board Lights NFR" CV="55.100.1" mask="XVXXXXXX" default="1" item="CV55.100.1 NFR" include="331,3001,3010,3015,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Front Number Board Max Intensity" CV="55.100.12" default="255" item="CV55.100.12" include="3050">
+        <decVal/>
+      </variable>
+      <variable label="Front Number Board Ramp Up Rate" CV="55.100.15" default="25" item="CV55.100.15" include="3050">
+        <decVal/>
+      </variable>
+      <variable label="Front Number Board Ramp Down Rate" CV="55.100.16" default="25" item="CV55.100.16" include="3050">
+        <decVal/>
+      </variable>
+      <variable label="Front Marker Lights Initial State" CV="55.104.0" mask="XXXXXXVV" default="1" item="CV55.104.0" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-offAutoOn.xml"/>
+      </variable>
+      <variable label="Auto Front Marker Lights FWD" CV="55.104.1" mask="XXXXXXXV" default="1" item="CV55.104.1 FWD" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Auto Front Marker Lights NFF" CV="55.104.1" mask="XXXXXVXX" default="1" item="CV55.104.1 NFF" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Auto Front Marker Lights REV" CV="55.104.1" mask="XXXVXXXX" default="1" item="CV55.104.1 REV" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Auto Front Marker Lights NFR" CV="55.104.1" mask="XVXXXXXX" default="1" item="CV55.104.1 NFR" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Front Marker Lights Max Intensity" CV="55.104.12" default="255" item="CV55.104.12" include="3050">
+        <decVal/>
+      </variable>
+      <variable label="Front Marker Lights Ramp Up Rate" CV="55.104.15" default="25" item="CV55.104.15" include="3050">
+        <decVal/>
+      </variable>
+      <variable label="Front Marker Lights Ramp Down Rate" CV="55.104.16" default="25" item="CV55.104.16" include="3050">
+        <decVal/>
+      </variable>
+      <variable label="Rear Marker Lights Initial State" CV="55.106.0" mask="XXXXXXVV" default="1" item="CV55.106.0" include="321,329,331,337,338,3010,3015,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-offAutoOn.xml"/>
+      </variable>
+      <variable label="Auto Rear Marker Lights FWD" CV="55.106.1" mask="XXXXXXXV" default="1" item="CV55.106.1 FWD" include="321,329,331,337,338,3010,3015,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Auto Rear Marker Lights NFF" CV="55.106.1" mask="XXXXXVXX" default="1" item="CV55.106.1 NFF" include="321,329,331,337,338,3010,3015,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Auto Rear Marker Lights REV" CV="55.106.1" mask="XXXVXXXX" default="1" item="CV55.106.1 REV" include="321,329,331,337,338,3010,3015,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Auto Rear Marker Lights NFR" CV="55.106.1" mask="XVXXXXXX" default="1" item="CV55.106.1 NFR" include="321,329,331,337,338,3010,3015,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Rear Marker Lights Max Intensity" CV="55.106.12" default="255" item="CV55.106.12" include="3050">
+        <decVal/>
+      </variable>
+      <variable label="Rear Marker Lights Ramp Up Rate" CV="55.106.15" default="25" item="CV55.106.15" include="3050">
+        <decVal/>
+      </variable>
+      <variable label="Rear Marker Lights Ramp Down Rate" CV="55.106.16" default="25" item="CV55.106.16" include="3050">
+        <decVal/>
+      </variable>
+      <variable label="Front Cab Lights Initial State" CV="55.116.0" mask="XXXXXXVV" default="1" item="CV55.116.0" include="3050">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-offAutoOn.xml"/>
+      </variable>
+      <variable label="Auto Front Cab Lights FWD" CV="55.116.1" mask="XXXXXXXV" default="0" item="CV55.116.1 FWD" include="3050">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Auto Front Cab Lights NFF" CV="55.116.1" mask="XXXXXVXX" default="1" item="CV55.116.1 NFF" include="3050">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Auto Front Cab Lights REV" CV="55.116.1" mask="XXXVXXXX" default="0" item="CV55.116.1 REV" include="3050">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Auto Front Cab Lights NFR" CV="55.116.1" mask="XVXXXXXX" default="1" item="CV55.116.1 NFR" include="3050">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Front Cab Lights Max Intensity" CV="55.116.12" default="255" item="CV55.116.12" include="3050">
+        <decVal/>
+      </variable>
+      <variable label="Front Cab Lights Ramp Up Rate" CV="55.116.15" default="25" item="CV55.116.15" include="3050">
+        <decVal/>
+      </variable>
+      <variable label="Front Cab Lights Ramp Down Rate" CV="55.116.16" default="25" item="CV55.116.16" include="3050">
+        <decVal/>
+      </variable>
+      <variable label="Rear Cab Lights Initial State" CV="55.118.0" mask="XXXXXXVV" default="1" item="CV55.118.0" include="308,321,329,331,332,336,337,338,3010,3015,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-offAutoOn.xml"/>
+      </variable>
+      <variable label="Auto Rear Cab Lights FWD" CV="55.118.1" mask="XXXXXXXV" default="0" item="CV55.118.1 FWD" include="308,321,329,331,332,336,337,338,3010,3015,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Auto Rear Cab Lights NFF" CV="55.118.1" mask="XXXXXVXX" default="1" item="CV55.118.1 NFF" include="308,321,329,331,332,336,337,338,3010,3015,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Auto Rear Cab Lights REV" CV="55.118.1" mask="XXXVXXXX" default="0" item="CV55.118.1 REV" include="308,321,329,331,332,336,337,338,3010,3015,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Auto Rear Cab Lights NFR" CV="55.118.1" mask="XVXXXXXX" default="1" item="CV55.118.1 NFR" include="308,321,329,331,332,336,337,338,3010,3015,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Rear Cab Lights Max Intensity" CV="55.118.12" default="255" item="CV55.118.12" include="3050">
+        <decVal/>
+      </variable>
+      <variable label="Rear Cab Lights Ramp Up Rate" CV="55.118.15" default="25" item="CV55.118.15" include="3050">
+        <decVal/>
+      </variable>
+      <variable label="Rear Cab Lights Ramp Down Rate" CV="55.118.16" default="25" item="CV55.118.16" include="3050">
+        <decVal/>
+      </variable>
+      <variable label="Firebox Min Intensity" CV="55.122.11" default="4" item="CV55.122.11" include="3010,3015,3017,3050">
+        <decVal/>
+      </variable>
+      <variable label="Firebox Max Intensity" CV="55.122.12" default="255" item="CV55.122.12" include="3010,3015,3017,3050">
+        <decVal/>
+      </variable>
+      <variable label="Firebox Mid Intensity" CV="55.122.13" default="64" item="CV55.122.13" include="3010,3015,3017,3050">
+        <decVal/>
+      </variable>
+      <variable label="Firebox Ramp Up Rate" CV="55.122.15" default="4" item="CV55.122.15" include="3010,3015,3017,3050">
+        <decVal/>
+      </variable>
+      <variable label="Firebox Ramp Down Rate" CV="55.122.16" default="4" item="CV55.122.16" include="3010,3015,3017,3050">
+        <decVal/>
+      </variable>
+      <variable label="Step Lights" CV="55.134.0" mask="XXXXXVXX" default="1" item="CV55.134.0 Step" include="3015">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Firebox Light" CV="55.135.0" mask="XXXVXXXX" default="1" item="CV55.135.0 Firebox" include="3010,3015,3017,3050">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Headlight" CV="55.136.0" mask="XXXXXXXV" default="1" item="CV55.136.0 70">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Rear Light" CV="55.136.0" mask="XXXXXXVX" default="1" item="CV55.136.0 73">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Mars Light" CV="55.136.0" mask="XXXXXVXX" default="1" item="CV55.136.0 76">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Rear Mars Light" CV="55.136.0" mask="XXXXVXXX" default="1" item="CV55.136.0 80">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Ditch Lights" CV="55.136.0" mask="XXXVXXXX" default="1" item="CV55.136.0 84">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Rear Ditch Lights" CV="55.136.0" mask="XXVXXXXX" default="1" item="CV55.136.0 88">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Front Overhead Beacon" CV="55.136.0" mask="XVXXXXXX" default="1" item="CV55.136.0 92">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Rear Overhead Beacon" CV="55.136.0" mask="VXXXXXXX" default="1" item="CV55.136.0 96">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Front Number Board Lights" CV="55.136.1" mask="XXXXXXXV" default="0" item="CV55.136.1 100">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Rear Number Board Lights" CV="55.136.1" mask="XXXXXXVX" default="0" item="CV55.136.1 102">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Front Marker Lights" CV="55.136.1" mask="XXXXXVXX" default="0" item="CV55.136.1 104">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Rear Marker Lights" CV="55.136.1" mask="XXXXVXXX" default="0" item="CV55.136.1 106">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Front Step Lights" CV="55.136.1" mask="XVXXXXXX" default="0" item="CV55.136.1 112">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Rear Step Lights" CV="55.136.1" mask="VXXXXXXX" default="0" item="CV55.136.1 114">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Front Cab Lights" CV="55.136.2" mask="XXXXXXXV" default="0" item="CV55.136.2 116">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Rear Cab Lights" CV="55.136.2" mask="XXXXXXVX" default="0" item="CV55.136.2 118">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Multi Auto Lights 2, Headlight" CV="55.137.0" mask="XXXXXXXV" default="0" item="CV55.137.0 70">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Multi Auto Lights 2, Rear Light" CV="55.137.0" mask="XXXXXXVX" default="0" item="CV55.137.0 73">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Multi Auto Lights 2, Mars Light" CV="55.137.0" mask="XXXXXVXX" default="0" item="CV55.137.0 76">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Multi Auto Lights 2, Rear Mars Light" CV="55.137.0" mask="XXXXVXXX" default="0" item="CV55.137.0 80">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Multi Auto Lights 2, Ditch Lights" CV="55.137.0" mask="XXXVXXXX" default="0" item="CV55.137.0 84">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Multi Auto Lights 2, Rear Ditch Lights" CV="55.137.0" mask="XXVXXXXX" default="0" item="CV55.137.0 88">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Multi Auto Lights 2, Front Overhead Beacon" CV="55.137.0" mask="XVXXXXXX" default="0" item="CV55.137.0 92">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Multi Auto Lights 2, Rear Overhead Beacon" CV="55.137.0" mask="VXXXXXXX" default="0" item="CV55.137.0 96">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Multi Auto Lights 2, Front Number Board Lights" CV="55.137.1" mask="XXXXXXXV" default="1" item="CV55.137.1 100">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Multi Auto Lights 2, Rear Number Board Lights" CV="55.137.1" mask="XXXXXXVX" default="1" item="CV55.137.1 102">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Multi Auto Lights 2, Front Marker Lights" CV="55.137.1" mask="XXXXXVXX" default="1" item="CV55.137.1 104">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Multi Auto Lights 2, Rear Marker Lights" CV="55.137.1" mask="XXXXVXXX" default="1" item="CV55.137.1 106">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Multi Auto Lights 2, Front Step Lights" CV="55.137.1" mask="XVXXXXXX" default="1" item="CV55.137.1 112">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Multi Auto Lights 2, Rear Step Lights" CV="55.137.1" mask="VXXXXXXX" default="1" item="CV55.137.1 114">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Multi Auto Lights 2, Front Cab Lights" CV="55.137.2" mask="XXXXXXXV" default="0" item="CV55.137.2 116">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Multi Auto Lights 2, Rear Cab Lights" CV="55.137.2" mask="XXXXXXVX" default="0" item="CV55.137.2 118">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Multi Auto Lights 3, Headlight" CV="55.138.0" mask="XXXXXXXV" default="0" item="CV55.138.0 70">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Multi Auto Lights 3, Rear Light" CV="55.138.0" mask="XXXXXXVX" default="0" item="CV55.138.0 73">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Multi Auto Lights 3, Mars Light" CV="55.138.0" mask="XXXXXVXX" default="0" item="CV55.138.0 76">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Multi Auto Lights 3, Rear Mars Light" CV="55.138.0" mask="XXXXVXXX" default="0" item="CV55.138.0 80">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Multi Auto Lights 3, Ditch Lights" CV="55.138.0" mask="XXXVXXXX" default="0" item="CV55.138.0 84">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Multi Auto Lights 3, Rear Ditch Lights" CV="55.138.0" mask="XXVXXXXX" default="0" item="CV55.138.0 88">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Multi Auto Lights 3, Front Overhead Beacon" CV="55.138.0" mask="XVXXXXXX" default="0" item="CV55.138.0 92">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Multi Auto Lights 3, Rear Overhead Beacon" CV="55.138.0" mask="VXXXXXXX" default="0" item="CV55.138.0 96">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Multi Auto Lights 3, Front Number Board Lights" CV="55.138.1" mask="XXXXXXXV" default="0" item="CV55.138.1 100">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Multi Auto Lights 3, Rear Number Board Lights" CV="55.138.1" mask="XXXXXXVX" default="0" item="CV55.138.1 102">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Multi Auto Lights 3, Front Marker Lights" CV="55.138.1" mask="XXXXXVXX" default="0" item="CV55.138.1 104">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Multi Auto Lights 3, Rear Marker Lights" CV="55.138.1" mask="XXXXVXXX" default="0" item="CV55.138.1 106">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Multi Auto Lights 3, Front Step Lights" CV="55.138.1" mask="XVXXXXXX" default="0" item="CV55.138.1 112">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Multi Auto Lights 3, Rear Step Lights" CV="55.138.1" mask="VXXXXXXX" default="0" item="CV55.138.1 114">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Multi Auto Lights 3, Front Cab Lights" CV="55.138.2" mask="XXXXXXXV" default="1" item="CV55.138.2 116">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Multi Auto Lights 3, Rear Cab Lights" CV="55.138.2" mask="XXXXXXVX" default="1" item="CV55.138.2 118">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Crossing Blast 1" CV="55.154.0" mask="XVVVVVVV" default="30" item="CV55.154.0" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </ivariable>
-      <ivariable label="Crossing Blast 1 Hoot/Fancy Ending" CVname="55.154.0" CV="55" PI="154" SI="0" default="0" item="CV55.154.0 hoot" mask="VXXXXXXX" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
+        <decVal max="127"/></variable>
+      <variable label="Crossing Blast 1 Hoot/Fancy Ending" CV="55.154.0" mask="VXXXXXXX" default="0" item="CV55.154.0 hoot" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </ivariable>
-      <ivariable label="Crossing Blast 1" CVname="55.154.0" CV="55" PI="154" SI="0" default="30" item="CV55.154.0" mask="XVVVVVVV" include="3010,3017,3048,3049,3050">
-        <indexedVal max="127"/>
-      </ivariable>
-      <ivariable label="Crossing Blast 1 Hoot/Fancy Ending" CVname="55.154.0" CV="55" PI="154" SI="0" default="0" item="CV55.154.0 hoot" mask="VXXXXXXX" include="3010,3017,3048,3049,3050">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Crossing Silence 1" CVname="55.154.1" CV="55" PI="154" SI="1" default="15" item="CV55.154.1" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
-        <indexedVal/>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/></variable>
+      <variable label="Crossing Blast 1" CV="55.154.0" mask="XVVVVVVV" default="30" item="CV55.154.0" include="3010,3017,3048,3049,3050">
+        <decVal max="127"/>
+      </variable>
+      <variable label="Crossing Blast 1 Hoot/Fancy Ending" CV="55.154.0" mask="VXXXXXXX" default="0" item="CV55.154.0 hoot" include="3010,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Crossing Silence 1" CV="55.154.1" default="15" item="CV55.154.1" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </ivariable>
-      <ivariable label="Crossing Silence 1" CVname="55.154.1" CV="55" PI="154" SI="1" default="15" item="CV55.154.1" include="3010,3017,3048,3049,3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Crossing Blast 2" CVname="55.154.2" CV="55" PI="154" SI="2" default="30" item="CV55.154.2" mask="XVVVVVVV" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
-        <indexedVal max="127"/>
+        <decVal/></variable>
+      <variable label="Crossing Silence 1" CV="55.154.1" default="15" item="CV55.154.1" include="3010,3017,3048,3049,3050">
+        <decVal/>
+      </variable>
+      <variable label="Crossing Blast 2" CV="55.154.2" mask="XVVVVVVV" default="30" item="CV55.154.2" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </ivariable>
-      <ivariable label="Crossing Blast 2 Hoot/Fancy Ending" CVname="55.154.2" CV="55" PI="154" SI="2" default="0" item="CV55.154.2 hoot" mask="VXXXXXXX" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
+        <decVal max="127"/></variable>
+      <variable label="Crossing Blast 2 Hoot/Fancy Ending" CV="55.154.2" mask="VXXXXXXX" default="0" item="CV55.154.2 hoot" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </ivariable>
-      <ivariable label="Crossing Blast 2" CVname="55.154.2" CV="55" PI="154" SI="2" default="30" item="CV55.154.2" mask="XVVVVVVV" include="3010,3017,3048,3049,3050">
-        <indexedVal max="127"/>
-      </ivariable>
-      <ivariable label="Crossing Blast 2 Hoot/Fancy Ending" CVname="55.154.2" CV="55" PI="154" SI="2" default="0" item="CV55.154.2 hoot" mask="VXXXXXXX" include="3010,3017,3048,3049,3050">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Crossing Silence 2" CVname="55.154.3" CV="55" PI="154" SI="3" default="15" item="CV55.154.3" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
-        <indexedVal/>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/></variable>
+      <variable label="Crossing Blast 2" CV="55.154.2" mask="XVVVVVVV" default="30" item="CV55.154.2" include="3010,3017,3048,3049,3050">
+        <decVal max="127"/>
+      </variable>
+      <variable label="Crossing Blast 2 Hoot/Fancy Ending" CV="55.154.2" mask="VXXXXXXX" default="0" item="CV55.154.2 hoot" include="3010,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Crossing Silence 2" CV="55.154.3" default="15" item="CV55.154.3" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </ivariable>
-      <ivariable label="Crossing Silence 2" CVname="55.154.3" CV="55" PI="154" SI="3" default="15" item="CV55.154.3" include="3010,3017,3048,3049,3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Crossing Blast 3" CVname="55.154.4" CV="55" PI="154" SI="4" default="10" item="CV55.154.4" mask="XVVVVVVV" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
-        <indexedVal max="127"/>
+        <decVal/></variable>
+      <variable label="Crossing Silence 2" CV="55.154.3" default="15" item="CV55.154.3" include="3010,3017,3048,3049,3050">
+        <decVal/>
+      </variable>
+      <variable label="Crossing Blast 3" CV="55.154.4" mask="XVVVVVVV" default="10" item="CV55.154.4" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </ivariable>
-      <ivariable label="Crossing Blast 3 Hoot/Fancy Ending" CVname="55.154.4" CV="55" PI="154" SI="4" default="0" item="CV55.154.4 hoot" mask="VXXXXXXX" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
+        <decVal max="127"/></variable>
+      <variable label="Crossing Blast 3 Hoot/Fancy Ending" CV="55.154.4" mask="VXXXXXXX" default="0" item="CV55.154.4 hoot" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </ivariable>
-      <ivariable label="Crossing Blast 3" CVname="55.154.4" CV="55" PI="154" SI="4" default="10" item="CV55.154.4" mask="XVVVVVVV" include="3010,3017,3048,3049,3050">
-        <indexedVal max="127"/>
-      </ivariable>
-      <ivariable label="Crossing Blast 3 Hoot/Fancy Ending" CVname="55.154.4" CV="55" PI="154" SI="4" default="0" item="CV55.154.4 hoot" mask="VXXXXXXX" include="3010,3017,3048,3049,3050">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Crossing Silence 3" CVname="55.154.5" CV="55" PI="154" SI="5" default="15" item="CV55.154.5" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
-        <indexedVal/>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/></variable>
+      <variable label="Crossing Blast 3" CV="55.154.4" mask="XVVVVVVV" default="10" item="CV55.154.4" include="3010,3017,3048,3049,3050">
+        <decVal max="127"/>
+      </variable>
+      <variable label="Crossing Blast 3 Hoot/Fancy Ending" CV="55.154.4" mask="VXXXXXXX" default="0" item="CV55.154.4 hoot" include="3010,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Crossing Silence 3" CV="55.154.5" default="15" item="CV55.154.5" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </ivariable>
-      <ivariable label="Crossing Silence 3" CVname="55.154.5" CV="55" PI="154" SI="5" default="15" item="CV55.154.5" include="3010,3017,3048,3049,3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Crossing Blast 4" CVname="55.154.6" CV="55" PI="154" SI="6" default="30" item="CV55.154.6" mask="XVVVVVVV" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
-        <indexedVal max="127"/>
+        <decVal/></variable>
+      <variable label="Crossing Silence 3" CV="55.154.5" default="15" item="CV55.154.5" include="3010,3017,3048,3049,3050">
+        <decVal/>
+      </variable>
+      <variable label="Crossing Blast 4" CV="55.154.6" mask="XVVVVVVV" default="30" item="CV55.154.6" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </ivariable>
-      <ivariable label="Crossing Blast 4 Hoot/fFancy Ending" CVname="55.154.6" CV="55" PI="154" SI="6" default="0" item="CV55.154.6 hoot" mask="VXXXXXXX" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
+        <decVal max="127"/></variable>
+      <variable label="Crossing Blast 4 Hoot/fFancy Ending" CV="55.154.6" mask="VXXXXXXX" default="0" item="CV55.154.6 hoot" include="300,301,302,303,305,306,307,308,309,310,312,313,315,316,317,318,319,320,321,323,324,325,326,328,331,332,333,334,335,336,337,338">
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </ivariable>
-      <ivariable label="Crossing Blast 4" CVname="55.154.6" CV="55" PI="154" SI="6" default="30" item="CV55.154.6" mask="XVVVVVVV" include="3010,3017,3048,3049,3050">
-        <indexedVal max="127"/>
-      </ivariable>
-      <ivariable label="Crossing Blast 4 Hoot/Fancy Ending" CVname="55.154.6" CV="55" PI="154" SI="6" default="0" item="CV55.154.6 hoot" mask="VXXXXXXX" include="3010,3017,3048,3049,3050">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Status Report MPH" CVname="55.178.0" CV="55" PI="178" SI="0" default="1" item="CV55.178.0 MPH" mask="XXXXXXXV">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Status Report BEMF" CVname="55.178.0" CV="55" PI="178" SI="0" default="0" item="CV55.178.0 BEMF" mask="XXXXXXVX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Status Report PWM" CVname="55.178.0" CV="55" PI="178" SI="0" default="0" item="CV55.178.0 PWM" mask="XXXXXVXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Status Report Temp" CVname="55.178.0" CV="55" PI="178" SI="0" default="0" item="CV55.178.0 Temp" mask="XXXXVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Status Report Miles" CVname="55.178.0" CV="55" PI="178" SI="0" default="0" item="CV55.178.0 Miles" mask="XXXVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Status Report Volts" CVname="55.178.0" CV="55" PI="178" SI="0" default="0" item="CV55.178.0 Volts" mask="XXVXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Sounds on Power Up" CVname="56.0" CV="56" PI="0" default="1" item="CV56.0 Power" mask="XXXXXXXV">
-        <ienumVal>
-          <ienumChoice choice="When a valid DCC ops packet to locomotive address received">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/></variable>
+      <variable label="Crossing Blast 4" CV="55.154.6" mask="XVVVVVVV" default="30" item="CV55.154.6" include="3010,3017,3048,3049,3050">
+        <decVal max="127"/>
+      </variable>
+      <variable label="Crossing Blast 4 Hoot/Fancy Ending" CV="55.154.6" mask="VXXXXXXX" default="0" item="CV55.154.6 hoot" include="3010,3017,3048,3049,3050">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Status Report MPH" CV="55.178.0" mask="XXXXXXXV" default="1" item="CV55.178.0 MPH">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Status Report BEMF" CV="55.178.0" mask="XXXXXXVX" default="0" item="CV55.178.0 BEMF">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Status Report PWM" CV="55.178.0" mask="XXXXXVXX" default="0" item="CV55.178.0 PWM">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Status Report Temp" CV="55.178.0" mask="XXXXVXXX" default="0" item="CV55.178.0 Temp">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Status Report Miles" CV="55.178.0" mask="XXXVXXXX" default="0" item="CV55.178.0 Miles">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Status Report Volts" CV="55.178.0" mask="XXVXXXXX" default="0" item="CV55.178.0 Volts">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Sounds on Power Up" CV="56.0" mask="XXXXXXXV" default="1" item="CV56.0 Power">
+        <enumVal>
+          <enumChoice choice="When a valid DCC ops packet to locomotive address received">
             <choice>When a valid DCC ops packet to locomotive address received</choice>
-          </ienumChoice>
-          <ienumChoice choice="When any valid DCC ops packet received">
+          </enumChoice>
+          <enumChoice choice="When any valid DCC ops packet received">
             <choice>When any valid DCC ops packet received</choice>
-          </ienumChoice>
-        </ienumVal>
-      </ivariable>
-      <ivariable label="Units" CVname="56.0" CV="56" PI="0" default="0" item="CV56.0 Units" mask="XXXXXXVX">
-        <ienumVal>
-          <ienumChoice choice="Imperial">
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label="Units" CV="56.0" mask="XXXXXXVX" default="0" item="CV56.0 Units">
+        <enumVal>
+          <enumChoice choice="Imperial">
             <choice>Imperial</choice>
-          </ienumChoice>
-          <ienumChoice choice="Metric">
+          </enumChoice>
+          <enumChoice choice="Metric">
             <choice>Metric</choice>
-          </ienumChoice>
-        </ienumVal>
-      </ivariable>
-      <ivariable label="Chuff Cal" CVname="56.0" CV="56" PI="0" default="0" item="CV56.0 Cal" mask="XXXXVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
-      </ivariable>
-      <ivariable label="Chuff Sync" CVname="56.0" CV="56" PI="0" default="0" item="CV56.0 Sync" mask="XXXVXXXX" include="3001,3006,3007,3010,3015,3017,3050">
-        <ienumVal>
-          <ienumChoice choice="BEMF">
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label="Chuff Cal" CV="56.0" mask="XXXXVXXX" default="0" item="CV56.0 Cal">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Chuff Sync" CV="56.0" mask="XXXVXXXX" default="0" item="CV56.0 Sync" include="3001,3006,3007,3010,3015,3017,3050">
+        <enumVal>
+          <enumChoice choice="BEMF">
             <choice>BEMF</choice>
-          </ienumChoice>
-          <ienumChoice choice="Cam">
+          </enumChoice>
+          <enumChoice choice="Cam">
             <choice>Cam</choice>
-          </ienumChoice>
-        </ienumVal>
-      </ivariable>
-      <ivariable label="Odometer" CVname="56.0" CV="56" PI="0" default="0" item="CV56.0 Odo" mask="XXVXXXXX" include="3001,3006,3007,3010,3015,3017,3050">
-        <ienumVal>
-          <ienumChoice choice="BEMF">
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label="Odometer" CV="56.0" mask="XXVXXXXX" default="0" item="CV56.0 Odo" include="3001,3006,3007,3010,3015,3017,3050">
+        <enumVal>
+          <enumChoice choice="BEMF">
             <choice>BEMF</choice>
-          </ienumChoice>
-          <ienumChoice choice="Cam">
+          </enumChoice>
+          <enumChoice choice="Cam">
             <choice>Cam</choice>
-          </ienumChoice>
-        </ienumVal>
-      </ivariable>
-      <ivariable label="Reed Switch" CVname="56.0" CV="56" PI="0" default="0" item="CV56.0 Reed" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-EnabledDisabled.xml"/>
-      </ivariable>
-      <ivariable label="Throttle Mode" CVname="56.4" CV="56" PI="4" default="1" item="CV56.4" mask="XXXXXXVV">
-        <ienumVal>
-          <ienumChoice choice="Standard Throttle Control">
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label="Reed Switch" CV="56.0" mask="VXXXXXXX" default="0" item="CV56.0 Reed">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
+      </variable>
+      <variable label="Throttle Mode" CV="56.4" mask="XXXXXXVV" default="1" item="CV56.4">
+        <enumVal>
+          <enumChoice choice="Standard Throttle Control">
             <choice>Standard Throttle Control</choice>
-          </ienumChoice>
-          <ienumChoice choice="Regulated Throttle Control">
+          </enumChoice>
+          <enumChoice choice="Regulated Throttle Control">
             <choice>Regulated Throttle Control</choice>
-          </ienumChoice>
-          <ienumChoice choice="Load Compensated BEMF Speed Control">
+          </enumChoice>
+          <enumChoice choice="Load Compensated BEMF Speed Control">
             <choice>Load Compensated BEMF Speed Control</choice>
-          </ienumChoice>
-          <ienumChoice choice="Calibrated Speed Control">
+          </enumChoice>
+          <enumChoice choice="Calibrated Speed Control">
             <choice>Calibrated Speed Control</choice>
-          </ienumChoice>
-        </ienumVal>
-      </ivariable>
-      <ivariable label="RTC Minimum BEMF" CVname="56.5" CV="56" PI="5" default="1" item="CV56.5">
-        <indexedVal max="7"/>
-      </ivariable>
-      <ivariable label="BEMF to SMPH trim" CVname="56.9" CV="56" PI="9" default="128" item="CV56.9" include="300,301,302,303,304,305,306,307,308,309,310,312,313,314,315,316,317,318,319,320,321,323,324,325,326,328,329,331,332,333,334,335,336,337,338">
-        <indexedVal/>
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label="RTC Minimum BEMF" CV="56.5" default="1" item="CV56.5">
+        <decVal max="7"/>
+      </variable>
+      <variable label="BEMF to SMPH trim" CV="56.9" default="128" item="CV56.9" include="300,301,302,303,304,305,306,307,308,309,310,312,313,314,315,316,317,318,319,320,321,323,324,325,326,328,329,331,332,333,334,335,336,337,338">
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </ivariable>
-      <ivariable label="BEMF to SMPH trim" CVname="56.9" CV="56" PI="9" default="128" item="CV56.9" include="3001,3006,3007,3010,3015,3017,3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Chuff Interval Scale Factor" CVname="56.12" CV="56" PI="12" default="32" item="CV56.12">
-        <indexedVal max="128"/>
-      </ivariable>
-      <ivariable label="Chuff Interval Trim" CVname="56.13" CV="56" PI="13" default="128" item="CV56.13" include="300,301,302,303,304,305,306,307,308,309,310,312,313,314,315,316,317,318,319,320,321,323,324,325,326,328,329,331,332,333,334,335,336,337,338">
-        <indexedVal/>
+        <decVal/></variable>
+      <variable label="BEMF to SMPH trim" CV="56.9" default="128" item="CV56.9" include="3001,3006,3007,3010,3015,3017,3050">
+        <decVal/>
+      </variable>
+      <variable label="Chuff Interval Scale Factor" CV="56.12" default="32" item="CV56.12">
+        <decVal max="128"/>
+      </variable>
+      <variable label="Chuff Interval Trim" CV="56.13" default="128" item="CV56.13" include="300,301,302,303,304,305,306,307,308,309,310,312,313,314,315,316,317,318,319,320,321,323,324,325,326,328,329,331,332,333,334,335,336,337,338">
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </ivariable>
-      <ivariable label="Chuff Interval Trim" CVname="56.13" CV="56" PI="13" default="128" item="CV56.13" include="3010,3017,3048,3049,3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Very Low Speed Proportional Gain" CVname="56.18.0" CV="56" PI="18" SI="0" default="10" item="CV56.18.0">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Very Low Speed Intergral Gain" CVname="56.18.1" CV="56" PI="18" SI="1" default="2" item="CV56.18.1" include="3010,3017,3048,3049,3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Very Low Speed Differential Gain" CVname="56.18.2" CV="56" PI="18" SI="2" default="80" item="CV56.18.2">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Low Speed Proportional Gain" CVname="56.19.0" CV="56" PI="19" SI="0" default="10" item="CV56.19.0">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Low Speed Intergral Gain" CVname="56.19.1" CV="56" PI="19" SI="1" default="2" item="CV56.19.1" include="3010,3017,3048,3049,3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Low Speed Differential Gain" CVname="56.19.2" CV="56" PI="19" SI="2" default="40" item="CV56.19.2">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Medium Speed Proportional Gain" CVname="56.20.0" CV="56" PI="20" SI="0" default="10" item="CV56.20.0">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Medium Speed Intergral Gain" CVname="56.20.1" CV="56" PI="20" SI="1" default="2" item="CV56.20.1" include="3010,3017,3048,3049,3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Medium Speed Differential Gain" CVname="56.20.2" CV="56" PI="20" SI="2" default="40" item="CV56.20.2">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="High Speed Proportional Gain" CVname="56.21.0" CV="56" PI="21" SI="0" default="4" item="CV56.21.0">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="High Speed Intergral Gain" CVname="56.21.1" CV="56" PI="21" SI="1" default="2" item="CV56.21.1" include="3010,3017,3048,3049,3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="High Speed Differential Gain" CVname="56.21.2" CV="56" PI="21" SI="2" default="1" item="CV56.21.2">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Wheel Diameter Low Byte" CVname="56.24.0" CV="56" PI="24" SI="0" default="0" item="CV56.24.0" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Wheel Diameter High Byte" CVname="56.24.1" CV="56" PI="24" SI="1" default="0" item="CV56.24.1" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Wheel Diameter" CVname="56.24.0" CV="56" PI="24" SI="0" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
-        <indexedPairVal highCVname="56.24.1"/>
-      </ivariable>
-      <ivariable label="Locomotive Scale Low Byte" CVname="56.25.0" CV="56" PI="25" SI="0" default="0" item="CV56.25.0" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Locomotive Scale High Byte" CVname="56.25.1" CV="56" PI="25" SI="1" default="0" item="CV56.25.1" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Locomotive Scale" CVname="56.25.0" CV="56" PI="25" SI="0" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
-        <indexedPairVal highCVname="56.25.1"/>
-      </ivariable>
-      <ivariable label="Room Temperature" CVname="56.32.0" CV="56" PI="32" SI="0" default="25" item="CV56.32.0" include="3006,3010,3015,3017,3050">
-        <indexedVal/>
-      </ivariable>
+        <decVal/></variable>
+      <variable label="Chuff Interval Trim" CV="56.13" default="128" item="CV56.13" include="3010,3017,3048,3049,3050">
+        <decVal/>
+      </variable>
+      <variable label="Very Low Speed Proportional Gain" CV="56.18.0" default="10" item="CV56.18.0">
+        <decVal/>
+      </variable>
+      <variable label="Very Low Speed Intergral Gain" CV="56.18.1" default="2" item="CV56.18.1" include="3010,3017,3048,3049,3050">
+        <decVal/>
+      </variable>
+      <variable label="Very Low Speed Differential Gain" CV="56.18.2" default="80" item="CV56.18.2">
+        <decVal/>
+      </variable>
+      <variable label="Low Speed Proportional Gain" CV="56.19.0" default="10" item="CV56.19.0">
+        <decVal/>
+      </variable>
+      <variable label="Low Speed Intergral Gain" CV="56.19.1" default="2" item="CV56.19.1" include="3010,3017,3048,3049,3050">
+        <decVal/>
+      </variable>
+      <variable label="Low Speed Differential Gain" CV="56.19.2" default="40" item="CV56.19.2">
+        <decVal/>
+      </variable>
+      <variable label="Medium Speed Proportional Gain" CV="56.20.0" default="10" item="CV56.20.0">
+        <decVal/>
+      </variable>
+      <variable label="Medium Speed Intergral Gain" CV="56.20.1" default="2" item="CV56.20.1" include="3010,3017,3048,3049,3050">
+        <decVal/>
+      </variable>
+      <variable label="Medium Speed Differential Gain" CV="56.20.2" default="40" item="CV56.20.2">
+        <decVal/>
+      </variable>
+      <variable label="High Speed Proportional Gain" CV="56.21.0" default="4" item="CV56.21.0">
+        <decVal/>
+      </variable>
+      <variable label="High Speed Intergral Gain" CV="56.21.1" default="2" item="CV56.21.1" include="3010,3017,3048,3049,3050">
+        <decVal/>
+      </variable>
+      <variable label="High Speed Differential Gain" CV="56.21.2" default="1" item="CV56.21.2">
+        <decVal/>
+      </variable>
+      <variable label="Wheel Diameter Low Byte" CV="56.24.0" default="0" item="CV56.24.0" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
+        <decVal/>
+      </variable>
+      <variable label="Wheel Diameter High Byte" CV="56.24.1" default="0" item="CV56.24.1" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
+        <decVal/>
+      </variable>
+      <variable label="Wheel Diameter" CV="56.24.0" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
+        <splitVal highCV="56.24.1"/>
+      </variable>
+      <variable label="Locomotive Scale Low Byte" CV="56.25.0" default="0" item="CV56.25.0" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
+        <decVal/>
+      </variable>
+      <variable label="Locomotive Scale High Byte" CV="56.25.1" default="0" item="CV56.25.1" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
+        <decVal/>
+      </variable>
+      <variable label="Locomotive Scale" CV="56.25.0" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
+        <splitVal highCV="56.25.1"/>
+      </variable>
+      <variable label="Room Temperature" CV="56.32.0" default="25" item="CV56.32.0" include="3006,3010,3015,3017,3050">
+        <decVal/>
+      </variable>
       <!-- CV 56.129 Engine ID Access (for ops mode) - TBD -->
       <!-- CV 56.254 About Quantum Decoder -->
-      <ivariable label="Hardware Profile High Byte" CVname="56.254.2" CV="56" PI="254" SI="2" readOnly="yes" item="CV56.254.2">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Hardware Low Byte" CVname="56.254.3" CV="56" PI="254" SI="3" readOnly="yes" item="CV56.254.3">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Product Model High Byte" CVname="56.254.4" CV="56" PI="254" SI="4" readOnly="yes" item="CV56.254.4">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Product Model Low Byte" CVname="56.254.5" CV="56" PI="254" SI="5" readOnly="yes" item="CV56.254.5">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Firmware Build" CVname="56.254.8" CV="56" PI="254" SI="8" readOnly="yes" item="CV56.254.8">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Firmware Build Date.Month" CVname="56.254.10" CV="56" PI="254" SI="10" readOnly="yes" item="CV56.254.10">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Firmware Build Date.Day" CVname="56.254.11" CV="56" PI="254" SI="11" readOnly="yes" item="CV56.254.11">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Firmware Build Date.Year" CVname="56.254.12" CV="56" PI="254" SI="12" readOnly="yes" item="CV56.254.12">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Sound Set" CVname="56.254.14" CV="56" PI="254" SI="14" readOnly="yes" item="CV56.254.14" include="300,301,302,303,304,305,306,307,308,309,310,312,313,314,315,316,317,318,319,320,321,323,324,325,326,328,329,331,332,333,334,335,336,337,338">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Sound Set Number Low Byte" CVname="56.254.14" CV="56" PI="254" SI="14" readOnly="yes" item="CV56.254.14" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Sound Set Number High Byte" CVname="56.254.15" CV="56" PI="254" SI="15" readOnly="yes" item="CV56.254.15" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Firmware Modified Date.Month" CVname="56.254.16" CV="56" PI="254" SI="16" readOnly="yes" item="CV56.254.16" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Firmware Modified Date.Day" CVname="56.254.17" CV="56" PI="254" SI="17" readOnly="yes" item="CV56.254.17" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Firmware Modified Date.Year" CVname="56.254.18" CV="56" PI="254" SI="18" readOnly="yes" item="CV56.254.18" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Product Model" CVname="56.254.5" CV="56" PI="254" SI="5" readOnly="yes" item="Product Number">
-        <indexedPairVal highCVname="56.254.4"/>
-      </ivariable>
-      <ivariable label="Hardware Profile" CVname="56.254.3" CV="56" PI="254" SI="3" readOnly="yes" item="Hardware Profile">
-        <indexedPairVal highCVname="56.254.2"/>
-      </ivariable>
-      <ivariable label="Sound Set Number" CVname="56.254.14" CV="56" PI="254" SI="14" readOnly="yes" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
-        <indexedPairVal highCVname="56.254.15"/>
-      </ivariable>
-      <!-- CV 56.255 Play Build Information (for ops mode) -->
-      <ivariable label="Play Product Identifier" CVname="56.255_0" CV="56" PI="255" opsOnly="yes" writeOnly="yes" infoOnly="yes" item="CV56.255_0" default="0">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Play Firmware Version" CVname="56.255_1" CV="56" PI="255" opsOnly="yes" writeOnly="yes" infoOnly="yes" item="CV56.255_1" default="1">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Play Firmware Build Date" CVname="56.255_2" CV="56" PI="255" opsOnly="yes" writeOnly="yes" infoOnly="yes" item="CV56.255_2" default="2">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Play Hardware Profile" CVname="56.255_3" CV="56" PI="255" opsOnly="yes" writeOnly="yes" infoOnly="yes" item="CV56.255_3" default="3">
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Play Sound Set" CVname="56.255_4" CV="56" PI="255" opsOnly="yes" writeOnly="yes" infoOnly="yes" item="CV56.255_4" default="4">
-        <indexedVal/>
-      </ivariable>
+      <variable label="Hardware Profile High Byte" CV="56.254.2" readOnly="yes" item="CV56.254.2">
+        <decVal/>
+      </variable>
+      <variable label="Hardware Low Byte" CV="56.254.3" readOnly="yes" item="CV56.254.3">
+        <decVal/>
+      </variable>
+      <variable label="Product Model High Byte" CV="56.254.4" readOnly="yes" item="CV56.254.4">
+        <decVal/>
+      </variable>
+      <variable label="Product Model Low Byte" CV="56.254.5" readOnly="yes" item="CV56.254.5">
+        <decVal/>
+      </variable>
+      <variable label="Firmware Build" CV="56.254.8" readOnly="yes" item="CV56.254.8">
+        <decVal/>
+      </variable>
+      <variable label="Firmware Build Date.Month" CV="56.254.10" readOnly="yes" item="CV56.254.10">
+        <decVal/>
+      </variable>
+      <variable label="Firmware Build Date.Day" CV="56.254.11" readOnly="yes" item="CV56.254.11">
+        <decVal/>
+      </variable>
+      <variable label="Firmware Build Date.Year" CV="56.254.12" readOnly="yes" item="CV56.254.12">
+        <decVal/>
+      </variable>
+      <variable label="Sound Set" CV="56.254.14" readOnly="yes" item="CV56.254.14" include="300,301,302,303,304,305,306,307,308,309,310,312,313,314,315,316,317,318,319,320,321,323,324,325,326,328,329,331,332,333,334,335,336,337,338">
+        <decVal/>
+      </variable>
+      <variable label="Sound Set Number Low Byte" CV="56.254.14" readOnly="yes" item="CV56.254.14" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
+        <decVal/>
+      </variable>
+      <variable label="Sound Set Number High Byte" CV="56.254.15" readOnly="yes" item="CV56.254.15" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
+        <decVal/>
+      </variable>
+      <variable label="Firmware Modified Date.Month" CV="56.254.16" readOnly="yes" item="CV56.254.16" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
+        <decVal/>
+      </variable>
+      <variable label="Firmware Modified Date.Day" CV="56.254.17" readOnly="yes" item="CV56.254.17" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
+        <decVal/>
+      </variable>
+      <variable label="Firmware Modified Date.Year" CV="56.254.18" readOnly="yes" item="CV56.254.18" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
+        <decVal/>
+      </variable>
+      <variable label="Product Model" CV="56.254.5" readOnly="yes" item="Product Number">
+        <splitVal highCV="56.254.4"/>
+      </variable>
+      <variable label="Hardware Profile" CV="56.254.3" readOnly="yes" item="Hardware Profile">
+        <splitVal highCV="56.254.2"/>
+      </variable>
+      <variable label="Sound Set Number" CV="56.254.14" readOnly="yes" include="3001,3006,3007,3010,3015,3017,3048,3049,3050">
+        <splitVal highCV="56.254.15"/>
+      </variable>
     </variables>
     <resets>
       <ifactReset label="Reset System Sound Control" CVname="56.128.51" CV="56" PI="128" SI="51" default="113" item="CV56.128.51"/>
@@ -2179,6 +2093,5 @@
   <xi:include href="http://jmri.org/xml/decoders/qsi/PaneLightControlV7.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/qsi/PaneMultiAutoLightsV7.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/qsi/PaneBemfV7.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/qsi/PaneIndexedCVsV7.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/qsi/PaneQSIMiscV7.xml"/>
 </decoder-config>

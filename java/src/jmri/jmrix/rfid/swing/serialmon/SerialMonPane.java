@@ -1,5 +1,3 @@
-// SerialMonPane.java
-
 package jmri.jmrix.rfid.swing.serialmon;
 
 import jmri.InstanceManager;
@@ -14,22 +12,23 @@ import jmri.util.swing.sdi.JmriJFrameInterface;
 /**
  * Swing action to create and register a MonFrame object
  *
- * @author      Bob Jacobsen    Copyright (C) 2001, 2008
- * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision$
- * @since       2.11.4
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Matthew Harris Copyright (C) 2011
+ * @since 2.11.4
  */
-
-public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements RfidListener, RfidPanelInterface{
+public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements RfidListener, RfidPanelInterface {
 
     public SerialMonPane() {
         super();
     }
-    
-    @Override
-    public String getHelpTarget() { return null; }
 
-    public String getTitle() { 
+    @Override
+    public String getHelpTarget() {
+        return null;
+    }
+
+    @Override
+    public String getTitle() {
         return "RFID Device Command Monitor";
     }
 
@@ -40,58 +39,64 @@ public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements RfidLis
         // and unwind swing
         super.dispose();
     }
-    
-    public void init() {}
-    
+
+    @Override
+    public void init() {
+    }
+
     RfidSystemConnectionMemo memo;
-    
+
     @Override
     public void initContext(Object context) {
-        if (context instanceof RfidSystemConnectionMemo ) {
+        if (context instanceof RfidSystemConnectionMemo) {
             initComponents((RfidSystemConnectionMemo) context);
         }
     }
-    
+
+    @Override
     public void initComponents(RfidSystemConnectionMemo memo) {
         this.memo = memo;
         // connect to the RfidTrafficController
         memo.getTrafficController().addRfidListener(this);
     }
 
+    @Override
     public synchronized void message(RfidMessage l) {  // receive a message and log it
-        if (l.isBinary())
-          	nextLine("binary cmd: "+l.toMonitorString()+"\n", null);
-        else
-            nextLine("cmd: \""+l.toMonitorString()+"\"\n", null);
-	}
-    
-	public synchronized void reply(RfidReply l) {  // receive a reply message and log it
-	    String raw = "";
-	    for (int i=0;i<l.getNumDataElements(); i++) {
-	        if (i>0) raw+=" ";
-            raw = jmri.util.StringUtil.appendTwoHexFromInt(l.getElement(i)&0xFF, raw);
-        }
-	        
-	    if (l.isUnsolicited()) {    
-            nextLine("msg: \""+l.toMonitorString()+"\"\n", raw);
+        if (l.isBinary()) {
+            nextLine("binary cmd: " + l.toMonitorString() + "\n", null);
         } else {
-            nextLine("rep: \""+l.toMonitorString()+"\"\n", raw);
+            nextLine("cmd: \"" + l.toMonitorString() + "\"\n", null);
         }
-	}
-    
+    }
+
+    @Override
+    public synchronized void reply(RfidReply l) {  // receive a reply message and log it
+        String raw = "";
+        for (int i = 0; i < l.getNumDataElements(); i++) {
+            if (i > 0) {
+                raw += " ";
+            }
+            raw = jmri.util.StringUtil.appendTwoHexFromInt(l.getElement(i) & 0xFF, raw);
+        }
+
+        if (l.isUnsolicited()) {
+            nextLine("msg: \"" + l.toMonitorString() + "\"\n", raw);
+        } else {
+            nextLine("rep: \"" + l.toMonitorString() + "\"\n", raw);
+        }
+    }
+
     /**
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends RfidNamedPaneAction {
+
         public Default() {
             super("RFID Device Command Monitor",
-                new JmriJFrameInterface(), 
-                SerialMonPane.class.getName(), 
-                InstanceManager.getDefault(RfidSystemConnectionMemo.class));
+                    new JmriJFrameInterface(),
+                    SerialMonPane.class.getName(),
+                    InstanceManager.getDefault(RfidSystemConnectionMemo.class));
         }
     }
-    
+
 }
-
-
-/* @(#)SerialMonPane.java */

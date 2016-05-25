@@ -1,36 +1,36 @@
-// PackageTest.java
-
 package jmri.util.swing.sdi;
 
-import junit.framework.*;
-import javax.swing.*;
-import jmri.util.*;
-import jmri.util.swing.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import jmri.util.JmriJFrame;
+import jmri.util.swing.ButtonTestAction;
+import junit.framework.Assert;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * Invokes complete set of tests in the jmri.util.swing.sdi tree
  *
- * @author	    Bob Jacobsen  Copyright 2010
- * @version         $Revision$
+ * @author	Bob Jacobsen Copyright 2010
  */
 public class PackageTest extends TestCase {
-    
+
     public void testAction() {
         JmriJFrame f = new JmriJFrame("SDI test");
         JButton b = new JButton(new ButtonTestAction(
-                        "new frame", new jmri.util.swing.sdi.JmriJFrameInterface()));
+                "new frame", new jmri.util.swing.sdi.JmriJFrameInterface()));
         f.add(b);
         f.pack();
         f.setVisible(true);
+//    }
+//  test order isn't guaranteed!
+//    public void testFrameCreation() {
+        JFrame f2 = jmri.util.JmriJFrame.getFrame("SDI test");
+        Assert.assertTrue("found frame", f2 != null);
+        f2.dispose();
     }
-    
-    public void testFrameCreation() {
-    	JFrame f = jmri.util.JmriJFrame.getFrame("SDI test");
-    	Assert.assertTrue("found frame", f !=null );
-    	if (f != null)
-    		f.dispose();    	
-    }
-    
+
     // from here down is testing infrastructure
     public PackageTest(String s) {
         super(s);
@@ -44,15 +44,20 @@ public class PackageTest extends TestCase {
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite(PackageTest.class); 
+        TestSuite suite = new TestSuite(PackageTest.class);
 
-       suite.addTest(SdiJfcUnitTests.suite());
+        suite.addTest(SdiJfcUnitTests.suite());
 
         return suite;
     }
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 
 }

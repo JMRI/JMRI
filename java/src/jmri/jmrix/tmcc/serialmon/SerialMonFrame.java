@@ -1,9 +1,6 @@
 // SerialMonFrame.java
-
 package jmri.jmrix.tmcc.serialmon;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import jmri.jmrix.tmcc.SerialListener;
 import jmri.jmrix.tmcc.SerialMessage;
 import jmri.jmrix.tmcc.SerialReply;
@@ -11,17 +8,24 @@ import jmri.jmrix.tmcc.SerialTrafficController;
 
 /**
  * Frame displaying (and logging) TMCC serial command messages
- * @author	    Bob Jacobsen   Copyright (C) 2001, 2006
- * @version         $Revision$
+ *
+ * @author	Bob Jacobsen Copyright (C) 2001, 2006
+ * @version $Revision$
  */
-
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = 6510323420215494043L;
 
     public SerialMonFrame() {
         super();
     }
 
-    protected String title() { return "TMCC Serial Command Monitor"; }
+    protected String title() {
+        return "TMCC Serial Command Monitor";
+    }
 
     public void dispose() {
         SerialTrafficController.instance().removeSerialListener(this);
@@ -36,132 +40,133 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
     public synchronized void message(SerialMessage l) {  // receive a message and log it
         // check for valid length
         if (l.getNumDataElements() < 3) {
-            nextLine("Truncated message of length "+l.getNumDataElements()+"\n",
-                            l.toString());
+            nextLine("Truncated message of length " + l.getNumDataElements() + "\n",
+                    l.toString());
             return;
-        } else
-            nextLine("Cmd: "+parse(l.getAsWord())+"\n", l.toString());
+        } else {
+            nextLine("Cmd: " + parse(l.getAsWord()) + "\n", l.toString());
+        }
     }
 
     public synchronized void reply(SerialReply l) {  // receive a reply message and log it
         // check for valid length
         if (l.getNumDataElements() < 2) {
-            nextLine("Truncated reply of length "+l.getNumDataElements()+": \""+l.toString()+"\"\n",
-                            l.toString());
+            nextLine("Truncated reply of length " + l.getNumDataElements() + ": \"" + l.toString() + "\"\n",
+                    l.toString());
             return;
-        } else
-            nextLine("Rep: "+parse(l.getAsWord())+"\n", l.toString());
+        } else {
+            nextLine("Rep: " + parse(l.getAsWord()) + "\n", l.toString());
+        }
     }
 
     String parse(int val) {
-        if ( (val&0xC000) == 0x4000) {
+        if ((val & 0xC000) == 0x4000) {
             // switch command
-            int A = (val/128)&0x7F;
-            int C = (val/32)&0x03;
-            int D = val&0x1F;
-            if ( (C==0) && (D==0) ) 
-                return "Throw switch "+A+" THROUGH";
-            else if ( (C==0) && (D==0x1F) ) 
-                return "Throw switch "+A+" OUT";
-            else if ( (C==1) && (D==0x09) ) 
-                return "Switch "+A+" set address";
-            else if (C==2) 
-                return "Assign switch "+A+" to route "+D+" THROUGH";
-            else if (C==3) 
-                return "Assign switch "+A+" to route "+D+" OUT";
-            else 
-                return "unrecognized switch command with A="+A+" C="+C+" D="+D;
-        } else if ( (val&0xF000) == 0xD000) {
+            int A = (val / 128) & 0x7F;
+            int C = (val / 32) & 0x03;
+            int D = val & 0x1F;
+            if ((C == 0) && (D == 0)) {
+                return "Throw switch " + A + " THROUGH";
+            } else if ((C == 0) && (D == 0x1F)) {
+                return "Throw switch " + A + " OUT";
+            } else if ((C == 1) && (D == 0x09)) {
+                return "Switch " + A + " set address";
+            } else if (C == 2) {
+                return "Assign switch " + A + " to route " + D + " THROUGH";
+            } else if (C == 3) {
+                return "Assign switch " + A + " to route " + D + " OUT";
+            } else {
+                return "unrecognized switch command with A=" + A + " C=" + C + " D=" + D;
+            }
+        } else if ((val & 0xF000) == 0xD000) {
             // route command
-            int A = (val/128)&0x1F;
-            int C = (val/32)&0x03;
-            int D = val&0x1F;
-            return "route command with A="+A+" C="+C+" D="+D;
-        } else if ( (val&0xC000) == 0x0000) {
+            int A = (val / 128) & 0x1F;
+            int C = (val / 32) & 0x03;
+            int D = val & 0x1F;
+            return "route command with A=" + A + " C=" + C + " D=" + D;
+        } else if ((val & 0xC000) == 0x0000) {
             // engine command
-            int A = (val/128)&0x7F;
-            int C = (val/32)&0x03;
-            int D = val&0x1F;
+            int A = (val / 128) & 0x7F;
+            int C = (val / 32) & 0x03;
+            int D = val & 0x1F;
             switch (C) {
                 case 0:
-                    if ( ((D&0x70) == 0x10) && ((D&0x0F) < 10) ) {
-                        return "engine "+A+" numeric action command "+(D&0x0F);
+                    if (((D & 0x70) == 0x10) && ((D & 0x0F) < 10)) {
+                        return "engine " + A + " numeric action command " + (D & 0x0F);
                     }
-                    
+
                     switch (D) {
                         case 0:
-                            return "engine "+A+" forward direction";
+                            return "engine " + A + " forward direction";
                         case 1:
-                            return "engine "+A+" toggle direction";
+                            return "engine " + A + " toggle direction";
                         case 3:
-                            return "engine "+A+" reverse direction";
+                            return "engine " + A + " reverse direction";
                         case 7:
-                            return "engine "+A+" brake";
+                            return "engine " + A + " brake";
                         case 4:
-                            return "engine "+A+" boost";
+                            return "engine " + A + " boost";
                         case 5:
-                            return "engine "+A+" open front coupler";
+                            return "engine " + A + " open front coupler";
                         case 6:
-                            return "engine "+A+" open rear coupler";
+                            return "engine " + A + " open rear coupler";
                         case 28:
-                            return "engine "+A+" blow horn 1";
+                            return "engine " + A + " blow horn 1";
                         case 29:
-                            return "engine "+A+" ring bell";
+                            return "engine " + A + " ring bell";
                         case 30:
-                            return "engine "+A+" letoff sound";
+                            return "engine " + A + " letoff sound";
                         case 31:
-                            return "engine "+A+" blow horn 2";
+                            return "engine " + A + " blow horn 2";
                         case 8:
-                            return "engine "+A+" AUX1 off";
+                            return "engine " + A + " AUX1 off";
                         case 9:
-                            return "engine "+A+" AUX1 option 1 (CAB AUX1 button)";
+                            return "engine " + A + " AUX1 option 1 (CAB AUX1 button)";
                         case 10:
-                            return "engine "+A+" AUX1 option 2";
+                            return "engine " + A + " AUX1 option 2";
                         case 11:
-                            return "engine "+A+" AUX1 on";
+                            return "engine " + A + " AUX1 on";
                         case 12:
-                            return "engine "+A+" AUX2 off";
+                            return "engine " + A + " AUX2 off";
                         case 13:
-                            return "engine "+A+" AUX2 option 1 (CAB AUX2 button)";
+                            return "engine " + A + " AUX2 option 1 (CAB AUX2 button)";
                         case 14:
-                            return "engine "+A+" AUX2 option 2";
+                            return "engine " + A + " AUX2 option 2";
                         case 15:
-                            return "engine "+A+" AUX2 on";
+                            return "engine " + A + " AUX2 on";
                         default:
-                            return "engine "+A+" action command D="+D;
+                            return "engine " + A + " action command D=" + D;
                     }
-                    
+
                 case 1:
-                    return "engine "+A+" extended command (C=1) with D="+D;
+                    return "engine " + A + " extended command (C=1) with D=" + D;
                 case 2:
-                    return "change engine "+A+" speed (relative) by "+(D-5);
+                    return "change engine " + A + " speed (relative) by " + (D - 5);
                 case 3:
                 default:    // to let the compiler know there are only 3 cases
-                    return "set engine "+A+" speed (absolute) to "+D;
+                    return "set engine " + A + " speed (absolute) to " + D;
             }
-        } else if ( (val&0xF800) == 0xC800) {
+        } else if ((val & 0xF800) == 0xC800) {
             // train command
-            int A = (val/128)&0x0F;
-            int C = (val/32)&0x03;
-            int D = val&0x1F;
-            return "train command with A="+A+" C="+C+" D="+D;
-        } else if ( (val&0xC000) == 0x8000) {
+            int A = (val / 128) & 0x0F;
+            int C = (val / 32) & 0x03;
+            int D = val & 0x1F;
+            return "train command with A=" + A + " C=" + C + " D=" + D;
+        } else if ((val & 0xC000) == 0x8000) {
             // accessory command
-            int A = (val/128)&0x7F;
-            int C = (val/32)&0x03;
-            int D = val&0x1F;
-            return "accessory command with A="+A+" C="+C+" D="+D;
-        } else if ( (val&0xF800) == 0xC000) {
+            int A = (val / 128) & 0x7F;
+            int C = (val / 32) & 0x03;
+            int D = val & 0x1F;
+            return "accessory command with A=" + A + " C=" + C + " D=" + D;
+        } else if ((val & 0xF800) == 0xC000) {
             // group command
-            int A = (val/128)&0x0F;
-            int C = (val/32)&0x03;
-            int D = val&0x1F;
-            return "group command with A="+A+" C="+C+" D="+D;
+            int A = (val / 128) & 0x0F;
+            int C = (val / 32) & 0x03;
+            int D = val & 0x1F;
+            return "group command with A=" + A + " C=" + C + " D=" + D;
         } else {
-            return "unexpected command "+Integer.toHexString(val&0xFF);
+            return "unexpected command " + Integer.toHexString(val & 0xFF);
         }
     }
-    
-    static Logger log = LoggerFactory.getLogger(SerialMonFrame.class.getName());
 
 }

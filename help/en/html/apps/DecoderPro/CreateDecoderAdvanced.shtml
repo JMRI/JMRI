@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <title>JMRI: DecoderPro User Guide - Advanced Decoder Definitions</title>
 
 <!-- Style -->
@@ -21,37 +20,256 @@
 <div id="mainContent">
 
 
-<H2>DecoderPro User Guide - Advanced Decoder Definitions</h2>
+<h1>JMRI: DecoderPro User Guide</h1>
+<h2>Advanced Decoder Definitions</h2>
 
 <p>This page provides information on advanced features in
-the decoder definiton
+the decoder definition
 files for the DecoderPro Symbolic Programmer.</p>
 
+<a name="html_formatting" id="html_formatting"></a>
+<h3>Formatting on the page</h3>
+You can do limited formatting on the display using HTML formatting tags.
 
+<p>
+You can embed HTML in pane text, but it must be enclosed in &lt;html&gt;...&lt;/html&gt; tags.
+</p>
+<P>This is made a bit tricky because of overlap between "tags as
+part of XML structure of decoder file" and "HTML tags included in the decoder file".
+All of the HTML tags need to be quoted, with their &lt; and &gt; characters
+replaced by the &amp;lt; and &amp;gt; strings and any embedded double quotes
+being replaced by &amp;quot;.</p>
+<p>
+For example:
+</p>
+<pre style="white-space: pre-wrap;">
+   &lt;label label="&amp;lt;html&amp;gt;&amp;lt;strong&amp;gt;JMRI 3.7.2 or later is required to use this definition.&amp;lt;/strong&amp;gt;&amp;lt;/html&amp;gt;"/&gt;
+</pre>
+After the XML is read, the contents of that label will be displayed from the text in the "label" attribute, which is:
+<pre>
+   &lt;html&gt;&lt;strong&gt;JMRI 3.7.2 or later is required to use this definition.&lt;/strong&gt;&lt;/html&gt;
+</pre>
+and will appear on the screen as
+<p>
+&nbsp;&nbsp;&nbsp;<strong>JMRI 3.7.2 or later is required to use this definition.</strong>
+<p>
+For more examples see
+<a href="https://github.com/JMRI/JMRI/blob/master/xml/decoders/esu/v4readMePane.xml" target="_blank">
+    xml/decoders/esu/v4readMePane.xml</a>.
+</p>
+<p>
+This provides only HTML5 support, so if something isn't displaying as you expect,
+see if an approach using simpler HTML will work.
+</p>
+
+<a name="id" id="id"></a>
 <h3>Identification</h3>
 Three pieces:
+<dl>
+<dt>Manufacturer:</dt><dd>Numerical value from CV8, which is then matched to a name using the
+                    entries in the xml/decoderIndex.xml file.</dd>
+<dt>Version code:</dt><dd>Numerical value from CV7, which is then matched to model name(s) using
+                    the lowVersionID and highVersionID values on model elements
+                    within all decoder definitions for the specific manufacturer.
+                    This is a complex process that doesn't always go well
+                    due to duplicate values, etc.</dd>
+<dt>Product ID code:</dt><dd>originally a numerical value read from a manufacturer-specific CV or CVs;
+                    this only works for certain manufacturers.  The read process
+                    is handled in the code (the
+                    <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/decoderdefn/IdentifyDecoder.html">jmri.jmrit.decoderdefn.IdentifyDecoder</a> class)
+                    and has to be updated each time a manufacturer
+                    starts providing values in one or more new CVs.
+                    When the product code is present, it should
+                    break any degeneracy between overlapping CV7 values within a
+                    decoder family.
+                    <p>
+                    Support is also being added to find this value using the
+                    <a href="../../hardware/loconet/Addressing.shtml#SVs">LocoNet SV2 protocol</a>
+                    some time during the JMRI 4.1 release series.  See the release notes
+                    for more info on the progress.
+                    <p>
+                    Since the product code works with the include/exclude operations described below,
+                    you can also use it in cases where there's no CV or CVs that contain it.
+                    In that case, no automated ID is done, but the value from the
+                    productID attribute of the user-selected model is used during later
+                    processing and expansion of the decoder definition.
+                    Alphanumeric productID values are sometimes used for this to avoid
+                    conflicts with the numeric ones found in CVs.
+                    </dd>
+</dl>
+For example:
+<code><pre>
+  &lt;decoder&gt;
+    &lt;family name="My Decoder Family" mfg="NMRA"&gt;
+      &lt;model model="Model A" lowVersionID="16" highVersionID="19" productID="400" /&gt;
+      &lt;/model&gt;
+      &lt;model model="Model B" lowVersionID="21" highVersionID="22" productID="401" /&gt;
+      &lt;/model&gt;
+  &lt;/decoder&gt;
+</pre></code>
+
+If the user selects a decoder model manually, that selection sets
+all three values for use by when the decoder definition is expanded
+for programming (see section <a href="#conditional">Conditional Decoder Definitions</a> below).
+
+<a name="pane_considerations" id="pane_considerations"></a>
+<h3>Pane Considerations</h3>
+Programmer panes are used to split and organise decoder variables into convenient named categories.
 <ul>
-<li>Manufacturer - from CV8
-<li>Version code - from CV7
-<li>Product code - read from a manufacturer specific CV or CVs, 
-this only works for specific manufacturers.  The read process
-is handled in the code (the jmri.jmrit.decoderdefn.IdentifyDecoder class)
-and has to be updated each time a manufacturer starts providing this number
-in a CV.
+  <li>
+    JMRI provides a standard set of panes, defined by &lt;pane&gt; elements included in the &lt;programmer&gt; element
+    of each of the standard Programmer files (Basic, Comprehensive, Advanced, etc.) in the xml/programmers/ folder.
+  </li>
+  <li>
+    Decoder definition files can contain custom panes for particular decoders or families of decoders,
+    defined by &lt;pane&gt; elements included in the &lt;decoder-config&gt; (top-level) element of the decoder file.
+  </li>
+  <li>
+    Pane names are specified by a &lt;name&gt; element at the top of each &lt;pane&gt; element.
+  </li>
 </ul>
-
-<h3>Visibility</h3>
- 
-The model element has a "show" attribute. It's possible values are:
-
+<a name="pane_replacement" id="pane_replacement"></a>
+<h4>Pane Replacement</h4>
+Custom panes are usually added to definition files for one of the following reasons:
+<ol type="A">
+  <li>
+    The items to be shown do not fall into any of the categories defined by the standard pane names.
+    <ul>
+      <li>In this case the pane &lt;name&gt; element should be different from any existing standard names.</li>
+      <li>The new custom pane will be added at the end of the pane list.</li>
+    </ul>
+  </li>
+  <li>
+    The applicable standard pane category does not have the correct layout or number of variables.
+    <ul>
+      <li>In this case the pane &lt;name&gt; element should exactly match the existing standard pane &lt;name&gt; element.</li>
+      <li>The new custom pane will <strong><em>replace</em></strong> the existing same-named standard pane.</li>
+    </ul>
+  </li>
+</ol>
+<h4>Empty Panes</h4>
+Empty panes are defined as those with no active variable elements to display for the selected decoder.
+They may still contain text content.
+<a name="pane_visibility" id="pane_visibility"></a>
+<a name="visibility" id="visibility"></a>
+<h4>Pane Visibility</h4>
+Pane visibility is governed by a complex set of rules:
 <ul>
-<li>"yes" (default) - the traditional behavior, always show this model and the family it contains
-<li>"no" - never show this model, even if it matches a possible selection.
-            Used for legacy (old) definitions that have been replaced with newer ones.
-<li>"maybe" - only show if it matches a (possible) automatic identification.
+  <li>
+    Irrespective of all other rules, a pane will not show if it fails any
+    <a href="#pane_include">"include" or "exclude" attributes</a> in its &lt;pane&gt; element.
+  </li>
+  <li>
+    Empty pane visibilty is controlled by the following, in increasing order of priority:
+    <ul>
+      <li>The Preferences-&gt;Roster-&gt;Programmer-&gt;Show Empty Tabs setting.</li>
+      <li>If present, a showEmptyPanes attribute in the current programmer XML file.</li>
+      <li>If present, a showEmptyPanes attribute in the specific decoder defintiion XML file.</li>
+    </ul>
+  </li>
+  <li>
+    Whether a specific empty pane (as defined in Empty Panes above) shows also depends on the pane type:
+    <ul>
+      <li>
+        If the empty pane is a standard pane (as defined in <a href="#pane_considerations">Pane Considerations</a> above),
+        it will only show if showEmptyPanes is in force.
+        <em>However, its usual contents will be replaced by a generic message explaining that the pane is unused
+        since the contents are inapplicable or appear on another pane.</em>
+      </li>
+      <li>
+        If the empty pane is a replacement pane (as defined in item B of <a href="#pane_replacement">Pane Replacement</a> above),
+        it will only show if showEmptyPanes is in force.
+      </li>
+      <li>
+        If the empty pane is a custom pane (as defined in item A of <a href="#pane_replacement">Pane Replacement</a> above),
+        it will always show, irrespective of whether showEmptyPanes is in force.
+      </li>
+    </ul>
+
+  </li>
 </ul>
+<a name="pane_best_practice" id="pane_best_practice"></a>
+<h4>Best Pactice</h4>
+Advanced users may choose to hide empty panes, but Show Empty Tabs is enabled by default so beginner users need to see why panes are empty or where to find items not on the expected panes.
+<p>
+The recommended best practice is:
+<ul>
+  <li>
+    Where possible, items should use the existing standard panes.
+  </li>
+  <li>
+    Where a particular existing standard pane does not suit in terms of number of items or layout:
+    <ul>
+      <li>
+        Create a <a href="#pane_replacement">replacement pane</a> with the same name as the existing standard pane.
+      </li>
+      <li>
+        For examples, see the Advanced and Sound panes of the
+        <a href="https://github.com/JMRI/JMRI/blob/master/xml/decoders/ESU_LokSoundV4_0.xml" target="_blank">
+      ESU_LokSoundV4_0</a> decoder definition.
+      </li>
+    </ul>
+  </li>
+  <li>
+    Where an existing standard pane does not suit in terms of concept:
+    <ul>
+      <li>
+        Create one or more new <a href="#pane_replacement">custom panes</a> with unique descriptive names.
+      </li>
+      <li>
+        Create information-only (no variable display elements, just text)
+        <a href="#pane_replacement">replacement panes</a> with the same names as
+        any existing unused standard panes. Use these panes to explain why each
+        pane is unused and/or where to find the information a user may
+        reasonably expect to find on this pane.
+        Use <a href="#html_formatting">HTML formatting</a> to enhance the display of
+        these explanatory panes.
+      </li>
+      <li>
+        For examples, see the Lights and Sound Levels panes of the
+        <a href="https://github.com/JMRI/JMRI/blob/master/xml/decoders/ESU_LokSoundV4_0.xml" target="_blank">
+        ESU_LokSoundV4_0</a> decoder definition.
+      </li>
+    </ul>
+  </li>
+  <li>
+    Information-only
+    <a href="#pane_replacement">custom panes</a>
+    will <em>always</em> be displayed.
+  </li>
+</ul>
+<p>
+In some cases, e.g. a non-locomotive decoder for servos where none of the
+locomotive-decoder panes make sense so the decoder definition contains lots of
+custom panes, it's a simplification to put a showEmptyPanes="no" attribute in
+the &lt;decoder-config&gt; element of the definition XML and just hide all those empty panes by default.
 
+<a name="frag_include" id="frag_include"></a>
+<h3>Including Fragment Files</h3>
 
+Common parts of decoder definitions can be placed into "fragment files",
+which can then be included into multiple decoder definition files.
+This makes it easier to maintain and update those common definitions, e.g.
+to translate them into other languages.
+<p>
+By convention, we these fragment files in subdirectories:
+<dl>
+<dt>xml/decoders/nmra<dd>The NMRA definitions for CVs, used by many decoder types
+<dt>xml/decoders/(mfg)<dd>Manufacturer-specific variables, for example xml/decoders/esu
+</dl>
+The format for an include is:
+<code><pre>
+     &lt;xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/&gt;
+</pre></code>
+
+The program searches for those fragment files first in the preferences directory,
+then in the program directory.  The full path must be present, e.g.
+you need an xml directory that contains a decoders directory in your preferences directory for the
+fragment file to be found.
+<p>
+Use an existing file as an example for the top elements &amp; format needed.
+
+<a name="update" id="update"></a>
 <h3>Updates and Migration</h3>
 
 Sometimes, we replace a decoder definition with a better one.  The old one is in use,
@@ -62,11 +280,492 @@ attributes that can be added to the old (not the new) definition to facilitate t
 &lt;model show="no" model="A4X" replacementModel="A4X" replacementFamily="Jan 2012"&gt;
 </pre></code>
 
-The user selects "Update decoder definitions" from the Debug Menu, and 
-all existing roster entries what point a decoder definitions with replacementModel and/or
-replacementFamily defined will be updated to those replacements.
+When the user selects "Update Decoder Definitions" from the Debug menu on PanelPro window
+or the Action menu in DecoderPro,
+all their existing roster entries that use a decoder definition with replacementModel and/or
+replacementFamily defined will be updated to the specified replacement decoder definition
+instead.  This lets people keep using their old, comfortable decoder definition (the old
+file remains in JMRI) until they decide to move forward to a new one.
+<p>
+The model element "show" attribute helps ensure that new users
+starts with the new definition.
+Its possible values are:
+	<ul>
+	<li>"yes" (default) - the traditional behavior, always show this model and the family it contains
+	<li>"no" - never show this model, even if it matches a possible selection.
+	            Used for legacy (old) definitions that have been replaced with newer ones.
+	<li>"maybe" - only show if it matches a (possible) automatic identification.
+	</ul>
+
+To create a completely new definition for an existing model:
+	<ol>
+	<li>Decide where you want the new model defined.  It has to have either a new model
+	name, a new family name (new file) or both.
+	<li>Create your definition.
+	<li>Add "replacementModel" and "replacementFamily" attributes to the old definition.
+	<li>Generally, set the "show" attribute in the old definition to "no".  The only exception to this
+	is when some users will want to select the old definition still for a new decoder, perhaps
+	because automatic identification can tell the uses of the old definition from the new one.
+	(E.g. you're splitting the old definition into two parts because a new locomotive version
+	exists)
+	</ol>
+
+<h3>Programming Capabilities</h3>
+
+Some decoders can do extra programming operations, for example bypassing limitations on CV
+programming in the command station.  "Capability" elements are used to
+tell DecoderPro about these.
+
+<h4>Access to High CV addresses</h4>
+
+Certain command stations can only access up to CV 256 or CV512.  Some
+decoder manufacturers have built in mechanisms to bypass this.  For example,
+some ESU decoders can use writes to various CVs to access high-address CVs.
+To tell DecoderPro that a decoder can do this, use an element like:
+<code><pre>
+    &lt;capability&gt;
+        &lt;name&gt;High Access via Double Index&lt;/name&gt;
+        &lt;parameter name="Max Regular CV address"&gt;256&lt;/parameter&gt;
+        &lt;parameter name="High Address CV"&gt;96&lt;/parameter&gt;
+        &lt;parameter name="Low Address CV"&gt;97&lt;/parameter&gt;
+        &lt;parameter name="Access Register CV"&gt;99&lt;/parameter&gt;
+        &lt;parameter name="Modulo"&gt;100&lt;/parameter&gt;
+    &lt;/capability&gt;
+</pre></code>
+<p>
+The parameters must appear in the order shown. They mean:
+	<ul>
+	<li>"Max Regular CV address" - CV addresses equal or below this don't
+	    use this mechanism. (The mechanism won't be used if the command
+	    station can directly read/write the CV being requested, but
+	    even if it can't, this mechanism won't be used below this value)
+	<li>"High Address CV" - The high part (see Modulo) of the CV address
+	    is written here at the start of the operation
+	<li>"Low Address CV" - The low part (see Modulo) of the CV address is
+	    written here as the 2nd part of the operation.
+	<li>"Access Register CV" - after the address values are set, this is the
+	    CV that's read or written to read or set the desired real CV.
+	<li>"Modulo" - value used to split the real CV address between the high and low address
+	    CVs.
+	</ul>
+<p>
+For example, to write 21 to CV 614 with the values shown, DecoderPro will:
+	<ul>
+	<li>Write 6 =(614/100) to CV 96 for the high address part
+	<li>Write 14 = (614 mod 100) to CV 97 for the low address part
+	<li>Write 21 to CV 99 to do the actual CV write
+	</ul>
+<p>
+For an example of where to position this capability element in the file, etc., see the
+<a href="https://github.com/JMRI/JMRI/blob/master/xml/decoders/ESU_LokSoundV4_0.xml" target="_blank">
+    xml/decoders/ESU_LokSoundV4_0.xml</a> file.
+
+<p>
+<a name="zimocapability" id="zimocapability"></a>
+Another approach, used by e.g. Zimo, is to provide a way to page the access.
+For example, to write 21 to CV614 with one of these, you need to:
+	<ul>
+	<li>Write 60 =(614/100)*10 to CV 7 for the high address part
+	<li>Write 21 to CV 14 (614 mod 100) to do the actual CV write
+	</ul>
+This capability element will do that:
+<code><pre>
+        &lt;capability&gt;
+            &lt;name&gt;High Access via Partial Index&lt;/name&gt;
+            &lt;parameter name="Max Regular CV address"&gt;100&lt;/parameter&gt;
+            &lt;parameter name="High Address CV"&gt;7&lt;/parameter&gt;
+            &lt;parameter name="High Address Multiplier"&gt;10&lt;/parameter&gt;
+            &lt;parameter name="Modulo"&gt;100&lt;/parameter&gt;
+        &lt;/capability&gt;
+</pre></code>
+Note that it has a different "name" value. That's what selects the
+different algorithm needed here.
+<p>
+The parameters must appear in the order shown. They mean:
+	<ul>
+	<li>"Max Regular CV address" - CV addresses equal or below this don't
+	    use this mechanism. (The mechanism won't be used if the command
+	    station can directly read/write the CV being requested, but
+	    even if it can't, this mechanism won't be used below this value)
+	<li>"High Address CV" - The high part (see Modulo) of the CV address
+	    is written here at the start of the operation
+	<li>"High Address Multiplier" - This multiplies the high part of the CV
+	    address before it's stored to the High Address CV.  For example,
+	    putting a 10 here will store the high address part in the "10's digit" of
+	    the High Address CV.
+	<li>"Modulo" - value used to split the real CV address between the high and low address
+	    CVs.
+	</ul>
+
+<p>
+<a id="zimobis"></a>
+Another approach used by e.g. Zimo uses a page register that
+has to be reset afterwards.
+For example, to write 21 to CV614 with one of these, you need to:
+	<ul>
+	<li>Write 260 =(614/100)*10+200 to CV 7 for the high address part.
+	    The "200" is an indicator to use this mode.
+	<li>Write 21 to CV 14 (614 mod 100) to do the actual CV write
+	<li>Write 0 back to CV7 to reset the indexing.
+	</ul>
+This capability element will do that:
+<code><pre>
+        &lt;capability&gt;
+            &lt;name&gt;High Access via Partial Index with Reset&lt;/name&gt;
+            &lt;parameter name="Max Regular CV address"&gt;100&lt;/parameter&gt;
+            &lt;parameter name="High Address CV"&gt;7&lt;/parameter&gt;
+            &lt;parameter name="High Address Multiplier"&gt;10&lt;/parameter&gt;
+            &lt;parameter name="Modulo"&gt;100&lt;/parameter&gt;
+            &lt;parameter name="Indicator"&gt;200&lt;/parameter&gt;
+        &lt;/capability&gt;
+</pre></code>
+<p>
+The parameters must appear in the order shown. They mean:
+	<ul>
+	<li>"Max Regular CV address" - CV addresses equal or below this don't
+	    use this mechanism. (The mechanism won't be used if the command
+	    station can directly read/write the CV being requested, but
+	    even if it can't, this mechanism won't be used below this value)
+	<li>"High Address CV" - The high part (see Modulo) of the CV address
+	    is written here at the start of the operation
+	<li>"High Address Multiplier" - This multiplies the high part of the CV
+	    address before it's stored to the High Address CV.  For example,
+	    putting a 10 here will store the high address part in the "10's digit" of
+	    the High Address CV.
+	<li>"Modulo" - value used to split the real CV address between the high and low address
+	    CVs.
+	<li>"Indicator" - value added to the value being stored to High Address CV
+	    to tell the decoder to use this mode.
+	</ul>
+
+<a id="accessoryops"></a>
+<h4>Accessory Decoder Ops Mode</h4>
+Special programming packets are used by certain accessory decoders
+to configure their CVs from the DCC track signal.
+The capability to do that is written:
+<code><pre>
+        &lt;capability&gt;
+            &lt;name&gt;Ops Mode Accessory Programming&lt;/name&gt;
+        &lt;/capability&gt;
+</pre></code>
+There are no parameters.  Note that this only works for ops-mode writes; these
+particular NMRA DCC packets do not perform read operations, nor do they work
+in the service mode (programming track).
+
+<h4>Indexed CV Access</h4>
+
+To access indexed CVs, include this capability element:
+<code><pre>
+        &lt;capability&gt;
+            &lt;name&gt;Indexed CV access&lt;/name&gt;
+            &lt;parameter name="PI"&gt;31&lt;/parameter&gt;
+            &lt;parameter name="SI"&gt;32&lt;/parameter&gt;
+            &lt;parameter name="cvFirst"&gt;false&lt;/parameter&gt;
+        &lt;/capability&gt;
+</pre></code>
+If cvFirst is true, the format is CV.PI or CV.PI.SI as used by QSI.
+If it's false, the format is PI.CV or PI.SI.CV as used by ESU.
+<p>
+If both this and the "access to high CV" capabilities are present, this one
+should be listed second.
+<p>
+For an example of where to position it etc., see the
+<a href="https://github.com/JMRI/JMRI/blob/master/xml/decoders/ESU_LokSoundV4_0.xml" target="_blank">
+    xml/decoders/ESU_LokSoundV4_0.xml</a> file.
+
+<a id="tcsaccess"></a>
+<h4>TCS WOW decoder access</h4>
+The TCS WOW decoders use several unique (to say the least) CV access methods.
+JMRI accommodates them via a special capability element:
+
+<code><pre>
+        &lt;capability&gt;
+            &lt;name&gt;TCS 4 CV access&lt;/name&gt;
+        &lt;/capability&gt;
+</pre></code>
+
+This provides two custom CV formats:
+	<ul>
+	<li> T2CV.11.12 Writes 11 to the first index CV (201), 12 to the 2nd index CV (202),
+	      then does write/read/confirm operations on CV 203 and 204
+	<li> T3CV.11.12.13 Writes 11 to the first index CV (201), the data to the 2nd index CV (202),
+	      then writes 12 to CV203 and 13 to CV204.
+	</ul>
+For examples of how to use these, see the TCS WOW decoder definition.
+
+<h4>Split Variables - "long" addresses over 2 CVs</h4>
+
+<p>Some decoders, mostly accessory decoders, are using "long" addresses that are split over 2 CVs, contiguous or not.</p>
+<p>CV1 and CV9 are standardized by NMRA for accessory decoders primary address, see <a href="http://www.nmra.org/sites/default/files/standards/sandrp/pdf/s-9.2.2_decoder_cvs_2012.07.pdf">NMRA standard 9.2.2</a>.</p>
+
+<p>Long addresses can be accessed via "splitVal" type, as in the following example:</p>
+
+<code><pre>
+    &lt;variable CV="1" item="Accessory Address" default="1" minOut="1"&gt;
+        &lt;splitVal highCV="9" upperMask="XXXXXVVV"/&gt;
+        &lt;label&gt;Accessory Address&lt;/label&gt;
+    &lt;/variable&gt;
+</pre></code>
+
+<p>The first declared CV is the LSB (Least Significant Byte) whereas the "high CV" is the MSB (Most Significant Byte).</p>
+
+<p>splitVal actually has two parameters, a "Factor" and an "Offset":</p>
+	<ul>
+	<li>Value to put in CVs = ((value in text field) - Offset)/Factor</li>
+	<li>Value to put in text field = ((value in CVs) * Factor) + Offset</li>
+	</ul>
+<code><pre>
+    &lt;splitVal highCV="9" factor="4" offset="-3"/&gt;
+</pre></code>
+
+<p>For an example, see the <a href="https://github.com/JMRI/JMRI/blob/master/xml/decoders/SPROG_DCC_Servo6." target="_blank">xml/decoders/SPROG_DCC_Servo6.xml</a> file.</p>
+
+<p>For details and more advanced features, see this <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitVariableValue.html" target="_blank">JavaDoc page</a></p>
+
+
+<a name="conditional" id="conditional"></a>
+<h3>Conditional Decoder Definitions</h3>
+
+To reduce the number of decoder definition files needed, each file can
+contain definitions for multiple decoder models.
+JMRI provides ways of adapting the definition to specific models
+both when the file is being initially expanded for use, and
+later while the program is working on the definition.
+These are particularly useful when using a common fragment file
+that might be included by multiple decoder definition files (defining
+different-but-similar families)
+
+<a name="var_include" id="var_include"></a>
+<h4>Include/Exclude During Variable Expansion</h4>
+
+Whether a variable element is expanded and used can be made conditional on the
+decoder type using "include" and "exclude" attributes on &lt;variables&gt; and &lt;variable&gt; elements.
+<p>
+A variable definition will not be expanded and used:
+</p>
+	<ul>
+	<li>If an exclude attribute is present, neither the
+	decoders product ID, model name, nor family name is found in the exclude list.
+	<li>If an include attribute is present, at least one of the
+	decoders product ID, model name, nor family name is found in the include list.
+	</ul>
+Both of these conditions must be true, and it's possible to use
+both include and exclude on the same element, but it's more usual to just
+use one.
+<p>
+Example:
+</p>
+<pre>
+      &lt;variable label="My Variable" CV="72" include="ModelA,400"&gt;
+        &lt;decVal/&gt;
+      &lt;/variable&gt;
+</pre>
+
+<p>
+The variable above will only appear when expanding the decoder definition
+for ModelA or product ID 400.
+</p>
+<p>
+You can also put include and exclude attributes on individual choices in an enumeration-type
+variable.  This can be used to e.g. only include specific lighting options in certain
+decoder families.
+</p>
+<p>
+Attributes on a &lt;variables&gt; element act on all the &lt;variable&gt; elements within it,
+along with any include or exclude attributes on those individual variables.
+</p>
+
+<a name="pane_include" id="pane_include"></a>
+<h4>Include/Exclude During Pane Creation</h4>
+
+Whether a pane (or part of a pane) is created can be made conditional on the
+decoder type using "include" and "exclude" attributes on &lt;pane&gt; and &lt;group&gt; elements.
+<p>
+A pane will not be created:
+</p>
+	<ul>
+	<li>If an exclude attribute is present, neither the
+	decoders product ID, model name, nor family name is found in the exclude list.
+	<li>If an include attribute is present, at least one of the
+	decoders product ID, model name, nor family name is found in the include list.
+	</ul>
+Both of these conditions must be true, and it's possible to use
+both include and exclude on the same element, but it's more usual to just
+use one.
+<p>
+Example:
+</p>
+<pre>
+      &lt;pane label="My Pane" include="ModelA,400"&gt;
+        ...
+      &lt;/pane&gt;
+</pre>
+
+<p>
+&quot;My Pane&quot; will be created only when expanding the decoder definition
+for ModelA or product ID 400.
+</p>
+<p>
+You can also create a &lt;group&gt; element with include and exclude attributes.
+Elements within the &lt;group&gt; will be created only if the &lt;group&gt; conditions are met.
+This can be used to e.g. display specific text labels only for certain
+decoder models.
+</p>
+<p>
+Example:
+
+<pre>
+      &lt;group include="ModelA,400"&gt;
+        &lt;label&gt;
+          &lt;text&gt;These decoders are very old.&lt;/text&gt;
+        &lt;/label&gt;
+        &lt;label&gt;
+          &lt;text&gt;Some features are unavailable.&lt;/text&gt;
+        &lt;/label&gt;
+      &lt;/group&gt;
+</pre>
+
+<p>
+The text will be created only when expanding the decoder definition
+for ModelA or product ID 400.
+</p>
+
+<a name="qualify" id="qualify"></a>
+<h4>Run-time Qualification of Variables</h4>
+<h5>Qualifying Variables</h5>
+
+A "qualifier" element on a variable element allows you to enable or disable the variable
+depending on the current value of another variable. This can be
+useful if, for example, the decoder has a "mode" CV that determines the meaning
+of other CVs.
+<p>
+If a variable is qualified as inactive, it doesn't appear in any
+panes and is neither read nor written to the decoder when you do "All" or "Changes only"
+read or write operations.  The value is saved to the roster and will be
+reloaded when the roster entry is reopened later.
+</p>
+<p>In the following example,
+a CV is interpreted as two different variables depending on whether the
+decoder is set for short or long addressing.
+
+<pre>
+  &lt;variable label="Variable for Short Address" CV="11"&gt;
+    &lt;qualifier&gt;
+      &lt;variableref&gt;Address Format&lt;/variableref&gt;
+      &lt;relation&gt;eq&lt;/relation&gt;
+      &lt;value&gt;0&lt;/value&gt;
+    &lt;/qualifier&gt;
+    &lt;decVal/&gt;
+  &lt;/variable&gt;
+  &lt;variable label="Variable for Long Address" CV="11"&gt;
+    &lt;qualifier&gt;
+      &lt;variableref&gt;Address Format&lt;/variableref&gt;
+      &lt;relation&gt;eq&lt;/relation&gt;
+      &lt;value&gt;1&lt;/value&gt;
+    &lt;/qualifier&gt;
+    &lt;decVal/&gt;
+  &lt;/variable&gt;
+</pre>
+
+Other available operators include "gt", "ge", "ne", "lt", "le" and "exists".
+The "exists" operator checks for whether a variable is defined or not; a "1" value
+means that it is, and a "0" means that it doesn't.
+
+<p>
+If multiple qualifier elements are present, all must be true for the
+variable to be active and displayed.
+</p>
+
+<a name="panes" id="panes"></a>
+<h5>Qualifying Panes</h5>
+
+A "qualifier" element on a pane element allows you to enable or disable the pane
+depending on the current value of a variable.
+
+<p>If a pane is qualified as inactive, its contents are no longer shown.
+This includes any labels or other decorations on the pane, in addition to the
+variables it contains.
+Depending on other options, the pane may either show as empty, or not show
+at all.  The variables within it are still active, though, and a
+"Read all sheets" or "Write all sheets" will still write them.
+If you have overlapping variable definitions, consider carefully whether
+this is what you want. You might need to qualify the individual overlapping variables.
+
+<p>The following example enables
+one of two panes depending on whether the decoder is currently set for short or
+long addressing.
+</p>
+<pre>
+  &lt;pane name="Short Only"&gt;
+    &lt;qualifier&gt;
+      &lt;variableref&gt;Address Format&lt;/variableref&gt;
+      &lt;relation&gt;eq&lt;/relation&gt;
+      &lt;value&gt;0&lt;/value&gt;
+    &lt;/qualifier&gt;
+    &lt;column&gt;&lt;row&gt;
+      &lt;label label="Short Only Pane"/&gt;
+    &lt;/row&gt;&lt;/column&gt;
+  &lt;/pane&gt;
+  &lt;pane name="Long Only"&gt;
+    &lt;qualifier&gt;
+      &lt;variableref&gt;Address Format&lt;/variableref&gt;
+      &lt;relation&gt;eq&lt;/relation&gt;
+      &lt;value&gt;1&lt;/value&gt;
+    &lt;/qualifier&gt;
+    &lt;column&gt;&lt;row&gt;
+      &lt;label label="Long Only Pane"/&gt;
+    &lt;/row&gt;&lt;/column&gt;
+  &lt;/pane&gt;
+</pre>
+
+Other available operators include "gt", "ge", "ne", "lt" and "le".
+<p>
+If multiple qualifier elements are present, all must be true for the
+pane to be active and displayed.
+
+<a name="labels" id="labels"></a>
+<h5>Qualifying Elements on Panes</h5>
+
+A "qualifier" element on a "label", "soundlabel", "row", "column", "grid" or "griditem" element
+allows you to enable or disable the  display of that element on a specific pane.
+
+<p>The following example displays a warning label if a version-number
+variable has a too-low value:</p>
+<pre>
+    &lt;label label="Version number too low!"&gt;
+      &lt;qualifier&gt;
+        &lt;variableref&gt;Version Number&lt;/variableref&gt;
+        &lt;relation&gt;lt&lt;/relation&gt;
+        &lt;value&gt;3&lt;/value&gt;
+      &lt;/qualifier&gt;
+    &lt;/label&gt;
+</pre>
+<p>
+  You can use the same qualifier for multiple elements by enclosing the elements in a
+  "group" element and adding the qualifier to the "group" element:
+</p>
+<pre>
+    &lt;group&gt;
+      &lt;qualifier&gt;
+        &lt;variableref&gt;Version Number&lt;/variableref&gt;
+        &lt;relation&gt;lt&lt;/relation&gt;
+        &lt;value&gt;3&lt;/value&gt;
+      &lt;/qualifier&gt;
+      &lt;label label="Version number too low!"/&gt;
+      &lt;label label=" "/&gt;
+      &lt;label label="Please update."/&gt;
+    &lt;/group&gt;
+</pre>
+<p>
+  Once you've read the Version Number (variable or CV) from the decoder,
+  the label(s) will display iff that version number is too low.  Note
+  that initially, before the values are read from the decoder, this
+  display will depend on the default value from the file, which might
+  be misleading to the user.
+</p>
 
 <!--#include virtual="/Footer" -->
-</div>
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

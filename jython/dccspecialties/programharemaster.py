@@ -2,8 +2,8 @@
 # http://www.dccspecialties.com
 #
 # Script by Brett Scott
-# Version 1.10 08/11/2007
-# info@mgbrr.org www.mgbrr.org
+# Version 1.50 07/27/2014
+# mgbrrclub@gmail.com or info@mgbrr.org and www.mgbrr.org
 #
 # Many Thanks to Bob Jacobsen and Everyone who Contributes to JMRI.
 # 

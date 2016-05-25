@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003, 2005 All rights reserved -->
-<!-- $Id: ZTC_213B.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -29,56 +29,58 @@
     </family>
     <programming direct="byteOnly" paged="yes" register="yes" ops="no"/>
     <variables>
-      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
-        <shortAddressVal/>
-        <label>Primary Address</label>
-        <comment>Short address</comment>
-      </variable>
-      <variable label="Start Volts" CV="2" item="Vstart" comment="Range 0-255">
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable CV="2" item="Vstart" comment="Range 0-255">
         <decVal/>
         <label>Start Volts</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Anfahrspannung</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable label="Accel" CV="3" comment="Range 0-15">
+      <variable item="Accel" CV="3" comment="Range 0-15">
         <decVal max="15"/>
         <label>Accel</label>
+        <label xml:lang="it">Accellerazione (0-15)</label>
+        <label xml:lang="fr">Accelération (0-15)</label>
+        <label xml:lang="de">Anfahrverzögerung (0-15)</label>
         <comment>Range 0-15</comment>
       </variable>
-      <variable label="Decel" CV="4" comment="Range 0-15">
+      <variable item="Decel" CV="4" comment="Range 0-15">
         <decVal max="15"/>
         <label>Decel</label>
+        <label xml:lang="it">Decellerazione (0-15)</label>
+        <label xml:lang="fr">Décélération (0-15)</label>
+        <label xml:lang="de">Bremszeit (0-15)</label>
         <comment>Range 0-15</comment>
       </variable>
-      <variable label="Vhigh" CV="5" comment="Range 0-255">
+      <variable item="Vhigh" CV="5" comment="Range 0-255">
         <decVal max="255"/>
         <label>Vhigh</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable label="Vmid" CV="6" comment="Range 1-13">
+      <variable item="Vmid" CV="6" comment="Range 1-13">
         <decVal min="0" max="13"/>
         <label>Vmid</label>
         <comment>Range 1-13</comment>
       </variable>
-      <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
+      <variable CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
         <label>Version ID</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer" default="99">
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="99">
         <decVal/>
         <label>Manufacturer ID</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
       </variable>
-      <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
-        <enumVal>
-          <enumChoice choice="Forward">
-            <choice>Forward</choice>
-          </enumChoice>
-          <enumChoice choice="Reverse">
-            <choice>Reverse</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Normal direction of motion</label>
-      </variable>
-      <variable label=" Analog (DC) Operation " CV="12" comment="DC Conversion Active?" mask="XXXXXXXV">
+  <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <variable item=" Analog (DC) Operation " CV="12" comment="DC Conversion Active?" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="Operate on DCC only">
             <choice>Operate on DCC only</choice>
@@ -90,45 +92,12 @@
         <label> Analog (DC) Operation </label>
         <comment>DC Conversion Active?</comment>
       </variable>
-      <variable label="Extended Address (0-9999)" CV="17" item="Long Address" comment="4 digit address (Range 0-9999)">
-        <longAddressVal/>
-        <label>Extended Address (0-9999)</label>
-        <comment>4 digit address (Range 0-9999)</comment>
-      </variable>
-      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
-        <enumVal>
-          <enumChoice choice="14">
-            <choice>14</choice>
-          </enumChoice>
-          <enumChoice choice="28/128 (recommended)">
-            <choice>28/128 (recommended)</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed Steps</label>
-      </variable>
-      <variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <variable CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog conversion mode</label>
       </variable>
-      <variable label="Address Format" CV="29" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="One byte (short) address">
-            <choice>One byte (short) address</choice>
-          </enumChoice>
-          <enumChoice choice="Two byte (extended) address">
-            <choice>Two byte (extended) address</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Address Format</label>
-      </variable>
-      <variable label="Motor Drive Selection" CV="54" mask="XXXXXXXV" default="0">
+      <variable item="Motor Drive Selection" CV="54" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="WhisperDrive ON">
             <choice>WhisperDrive ON</choice>
@@ -139,31 +108,32 @@
         </enumVal>
         <label>Motor Drive Selection</label>
       </variable>
-      <variable label="Directional Headlights" CV="61" mask="XXXXXXXV">
+      <variable item="Directional Headlights" CV="61" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="Headlights are directional and operate automatically">
             <choice>Headlights are directional and operate automatically</choice>
+            <choice xml:lang="it">Luci di testa direzionali e automatiche</choice>
           </enumChoice>
           <enumChoice choice="Headlights are independently controlled (F0-Front, F4-Rear)">
             <choice>Headlights are independently controlled (F0-Front, F4-Rear)</choice>
+            <choice xml:lang="it">Luci di testa controllate indipendentemente (F0-Avanti, F4-Retro)</choice>
           </enumChoice>
         </enumVal>
         <label>Directional Headlights</label>
+        <label xml:lang="it">Luci di testa direzionali</label>
       </variable>
-      <variable label=" Kick Start " CV="65" comment="Range 0-63">
-        <decVal max="63"/>
-        <label> Kick Start </label>
-        <comment>Range 0-63</comment>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart_63.xml"/>
       <!-- Define the fixed Function-Output mapping -->
       <constant item="F2 controls output 3" minOut="3" default="1"/>
       <constant item="F3 controls output 4" minOut="4" default="1"/>
     </variables>
     <resets>
-      <factReset label="Reset All CVs" CV="8" default="8"/>
+      <factReset label="Reset All CVs" CV="8" default="8">
+         <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
     </resets>
   </decoder>
-  <pane name="ZTC">
+  <pane>
     <column>
       <display item="Motor Drive Selection"/>
     </column>

@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
 <!-- Nigel Cliffe, 16th Nov 2012 -->
@@ -6,30 +6,143 @@
 <!-- CV's 739-768 control volume and sound choices of individual sounds -->
 <!-- manual hints that control of sound in slot, looping etc. is possible, but gives no details -->
 <!-- see Zimo German manual for small decoders, -->
-<variables>
+  <!-- v1.1,  Added CVs for Sound Sample selection.   Mark Waters, 11 Mar 2016 -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <!-- include this CV to put it onto the Sound Levels pane -->
-  <variable label="Random sound Z1" CV="745" item="Zimo Sound Setting 61">
+  <variable CV="744" item="Z1 Sound Sample" >
     <decVal/>
+    <label>Z1 </label>
   </variable>
-  <variable label="Random sound Z2" CV="748" item="Zimo Sound Setting 62">
+  <variable CV="745" item="Zimo Sound Setting 61">
     <decVal/>
+    <label>Random sound Z1</label>
+    <label xml:lang="it">Suono Z1 casuale</label>
   </variable>
-  <variable label="Random sound Z3" CV="751" item="Zimo Sound Setting 63">
-    <decVal/>
+  <variable item="Z1 Stand" CV="746" mask="XXXXVXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label> </label>
   </variable>
-  <variable label="Random sound Z4" CV="754" item="Zimo Sound Setting 64">
-    <decVal/>
+  <variable item="Z1 Drive" CV="746" mask="XVXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label> </label>
   </variable>
-  <variable label="Random sound Z5" CV="757" item="Zimo Sound Setting 65">
+  <variable CV="747" item="Z2 Sound Sample" >
     <decVal/>
+    <label>Z2 </label>
   </variable>
-  <variable label="Random sound Z6" CV="760" item="Zimo Sound Setting 66">
+  <variable CV="748" item="Zimo Sound Setting 62">
     <decVal/>
+    <label>Random sound Z2</label>
+    <label xml:lang="it">Suono Z2 casuale</label>
   </variable>
-  <variable label="Random sound Z7" CV="763" item="Zimo Sound Setting 67">
-    <decVal/>
+  <variable item="Z2 Stand" CV="749" mask="XXXXVXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label> </label>
   </variable>
-  <variable label="Random sound Z8" CV="766" item="Zimo Sound Setting 68">
+  <variable item="Z2 Drive" CV="749" mask="XVXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label> </label>
+  </variable>
+  <variable CV="750" item="Z3 Sound Sample" >
     <decVal/>
+    <label>Z3 </label>
+  </variable>
+  <variable CV="751" item="Zimo Sound Setting 63">
+    <decVal/>
+    <label>Random sound Z3</label>
+    <label xml:lang="it">Suono Z3 casuale</label>
+  </variable>
+  <variable item="Z3 Stand" CV="752" mask="XXXXVXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label> </label>
+  </variable>
+  <variable item="Z3 Drive" CV="752" mask="XVXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label> </label>
+  </variable>
+  <variable CV="753" item="Z4 Sound Sample" >
+    <decVal/>
+    <label>Z4 </label>
+  </variable>
+  <variable CV="754" item="Zimo Sound Setting 64">
+    <decVal/>
+    <label>Random sound Z4</label>
+    <label xml:lang="it">Suono Z4 casuale</label>
+  </variable>
+  <variable item="Z4 Stand" CV="755" mask="XXXXVXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label> </label>
+  </variable>
+  <variable item="Z4 Drive" CV="755" mask="XVXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label> </label>
+  </variable>
+  <variable CV="756" item="Z5 Sound Sample" >
+    <decVal/>
+    <label>Z5 </label>
+  </variable>
+  <variable CV="757" item="Zimo Sound Setting 65">
+    <decVal/>
+    <label>Random sound Z5</label>
+    <label xml:lang="it">Suono Z5 casuale</label>
+  </variable>
+  <variable item="Z5 Stand" CV="758" mask="XXXXVXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label> </label>
+  </variable>
+  <variable item="Z5 Drive" CV="758" mask="XVXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label> </label>
+  </variable>
+  <variable CV="759" item="Z6 Sound Sample" >
+    <decVal/>
+    <label>Z6 </label>
+  </variable>
+  <variable CV="760" item="Zimo Sound Setting 66">
+    <decVal/>
+    <label>Random sound Z6</label>
+    <label xml:lang="it">Suono Z6 casuale</label>
+  </variable>
+  <variable item="Z6 Stand" CV="761" mask="XXXXVXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label> </label>
+  </variable>
+  <variable item="Z6 Drive" CV="761" mask="XVXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label> </label>
+  </variable>
+  <variable CV="762" item="Z7 Sound Sample" >
+    <decVal/>
+    <label>Z7 </label>
+  </variable>
+  <variable CV="763" item="Zimo Sound Setting 67">
+    <decVal/>
+    <label>Random sound Z7</label>
+    <label xml:lang="it">Suono Z7 casuale</label>
+  </variable>
+  <variable item="Z7 Stand" CV="764" mask="XXXXVXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label> </label>
+  </variable>
+  <variable item="Z7 Drive" CV="764" mask="XVXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label> </label>
+  </variable>
+  <variable CV="765" item="Z8 Sound Sample" >
+    <decVal/>
+    <label>Z8 </label>
+  </variable>
+  <variable CV="766" item="Zimo Sound Setting 68">
+    <decVal/>
+    <label>Random sound Z8</label>
+    <label xml:lang="it">Suono Z8 casuale</label>
+  </variable>
+  <variable item="Z8 Stand" CV="767" mask="XXXXVXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label> </label>
+  </variable>
+  <variable item="Z8 Drive" CV="767" mask="XVXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label> </label>
   </variable>
 </variables>

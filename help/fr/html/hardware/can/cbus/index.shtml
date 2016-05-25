@@ -1,13 +1,13 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr"
 <head>
-<!-- Copyright ($Author: jacobsen $) 2008 -->
-<!-- $Id: index.shtml,v 1.8 2010/07/03 01:31:05 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-11-06-->
+<!-- Copyright ($Author$) 2008 -->
+<!-- $Id$ -->
+<!-- UpDated  by Blorec Herv&#233;  2013-09-10-->
 <title>JMRI: CBUS Support</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -26,126 +26,126 @@
 JMRI: Support CBUS
 </h1>
 
-<em>Le support sur cette page est en évolution rapide,
- le code réel pourrait être en avance ou en retard sur
- la documentation un jour donné.
+<em>Le support sur cette page est en &#233;volution rapide,
+ le code r&#233;el pourrait &#234;tre en avance ou en retard sur
+ la documentation un jour donn&#233;.
 </em><p>
 
 JMRI fournit un soutien pour les 
-<a href="../../../tools/Sensors.shtml"> Capteurs </a> généraux JMRI,
+<a href="../../../tools/Sensors.shtml"> Capteurs</a> g&#233;n&#233;raux JMRI,
 et les
 <a href="../../../tools/Turnouts.shtml"> Aiguillages</a>
-en termes d'«événements» CBUS.
+en termes d'"&#233;v&#233;nements" CBUS.
 
 <p>
 Voir aussi la
-<a href="../index.shtml"> page principale d'aide </a> que JMRI CAN peut soutenir,supporter,
-y compris des liens vers divers outils généraux, et les
+<a href="../index.shtml"> page principale d'aide</a> que JMRI CAN peut soutenir,supporter,
+y compris des liens vers divers outils g&#233;n&#233;raux, et les
 page sur les
-<a href="Details.shtml"> détails techniques </a>
+<a href="Details.shtml"> d&#233;tails techniques</a>
 de support de CBUS JMRI.
 
-<H2> Désignation</H2>
-Le <a  href="../../../doc/Technical/Names.shtml"> système de lettre </a>
-pour les connexions CBUS est "M". Détails du CBUS
-les noms d'événement et les objet sont
-décrits ci-dessous, avec des détails techniques sur une
-<a href="Names.shtml"> page séparée </a>.
+<H2> D&#233;signation</H2>
+Le <a  href="../../../doc/Technical/Names.shtml"> syst&#232;me de lettre</a>
+pour les connexions CBUS est "M". D&#233;tails du CBUS
+les noms d'&#233;v&#233;nement et les objet sont
+d&#233;crits ci-dessous, avec des d&#233;tails techniques sur une
+<a href="Names.shtml"> page s&#233;par&#233;e</a>.
 
 <p>
 Notez qu'il y a un
-<a href="../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">Outil de Capture des Évènement CBUS </a>
+<a href="../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml"> Outil de Capture des &#233;v&#232;nement CBUS</a>
 
 <p>
- JMRI Associe les événements individuels CBUS et les
+ JMRI Associe les &#233;v&#233;nements individuels CBUS et les
 Objets JMRI (capteurs, aiguillages, etc) via le
-Noms de système JMRI. Un tel nom système
-"<code> MS+123; -345 </code>"
-définit un capteur qui suit les événements CBUS
-"123 ON" et "345 OFF" pour changer d'état.
-Selon les événement CBUS - les ID sont utilisées.
+Noms syst&#232;me JMRI. Un tel nom syst&#232;me
+"<code> MS+123; -345</code>"
+d&#233;finit un capteur qui suit les &#233;v&#233;nements CBUS
+"123 ON" et "345 OFF" pour changer d'&#233;tat.
+Selon les &#233;v&#233;nement CBUS - les ID sont utilis&#233;es.
 sur un circuit particulier
-, ces noms de système peuvent être très long, auquel
-cas, le "nom utilisateur" deviennent beaucoup plus utile. 
+, ces noms syst&#232;mes peuvent &#234;tre tr&#232;s long, auquel
+cas, le "nom utilisateur" devient beaucoup plus utile. 
 
 <h2>Capteurs</h2>
 
-Les messages CBUS entrant dans une applications JMRI peuvent être consultés
-via des objets capteur JMRI. Le<a href="Names.shtml"> nom système </a>des capteurs
-détermine à quel message CBUS (s) il correspond.
+Les messages CBUS entrant dans une applications JMRI peuvent &#234;tre consult&#233;s
+via des objets capteur JMRI. Le<a href="Names.shtml"> nom syst&#232;me</a> des capteurs
+d&#233;termine &#224; quel(s) message(s) CBUS (s) il correspond.
 
-<h3> Désignation </h3>
-Un capteur est défini par deux événements: L'un, qui est ACTIF, et
+<h3> D&#233;signation</h3>
+Un capteur est d&#233;fini par deux &#233;v&#233;nements: L'un, qui est ACTIF, et
 celui qui est INACTIF.
 
-Si ces images sont mappées à ON et OFF avec le même numéro ID d'événement, respectivement, seul
-le nombre d'ID d'événement doit être précisé:
-<br> <code>MS18 </code> <br>
-Le nombre est décimal.
+Si ces images sont mapp&#233;es &#224; ON et OFF avec le m&#234;me num&#233;ro ID d'&#233;v&#233;nement, respectivement, seul
+le nombre d'ID d'&#233;v&#233;nement doit &#234;tre pr&#233;cis&#233;:
+<br><code>MS18</code><br>
+Le nombre est d&#233;cimal.
 
 <p>
-Pour accroître la polyvalence, il est possible d'utiliser différents numéros d'ID d'événement
-pour la transition ACTIVE (par défaut, une trame ON  ) et transition INACTIVE
-(par défaut, une trame OFF):
-<br> <code> MS18;21 </code>
+Pour accro&#238;tre la polyvalence, il est possible d'utiliser diff&#233;rents num&#233;ros d'ID d'&#233;v&#233;nement
+pour la transition ACTIVE (par d&#233;faut, une trame ON  ) et transition INACTIVE
+(par d&#233;faut, une trame OFF):
+<br><code> MS18;21</code>
 <p>
-ON et OFF de codage de CBUS n'est pas tout à fait conforme au modèle d'événement
-, et il peut être utile de communiquer la transition ACTIF ou INACTIF
-d'un capteur JMRI  à une trame OFF ou ON  CBUS respectivement.
-Les caractères "+" et "- " le font. Par exemple,
-<br> <code> MS-18;+21 </code> <br>
-définit un capteur qui va ACTIF quand une trame OFF avec numéro d'identification 18 est reçu,
-et va INACTIF quand une trame avec le numéro ID 21 est reçu.
+ON et OFF de codage de CBUS n'est pas tout &#224; fait conforme au mod&#232;le d'&#233;v&#233;nement
+, et il peut &#234;tre utile de communiquer la transition ACTIF ou INACTIF
+d'un capteur JMRI  &#224; une trame OFF ou ON  CBUS respectivement.
+Les caract&#232;res "+" et "- " le font. Par exemple,
+<br><code> MS-18;+21</code><br>
+d&#233;finit un capteur qui va ACTIF quand une trame OFF avec num&#233;ro d'identification 18 est re&#231;u,
+et va INACTIF quand une trame avec le num&#233;ro ID 21 est re&#231;u.
 <p>
-Les numéros d'événement CBUS (en général) contiennent un numéro de nœud dans leur octets les plus significatifs.
-Vous pouvez spécifier le numéro de nœud soit
-en utilisant un nombre plein 5 décimales pour le numéro d'événement lui-même,
-précédé par le numéro de nœud:
-<br> <code> MS200018 </code> <br>
-soit en utilisant les lettres "n" et "e" pour de préciser les différentes parties:
-<br><code>MSN2E18 </code> <br>
-
-<p>
-Vous pouvez masquer une partie du paquet de CBUS, de sorte que les valeurs dans la partie masquée vont toujours correspondre, en utilisant la lettre «M» de format. <br> <code> MS200018M07 </code> <br>Vous pouvez masquer une partie du paquet de CBUS, de sorte que les valeurs dans la partie masquée vont toujours correspondre, en utilisant la lettre «M» de format. <br> <code> MS200018M07 </code> <br>
-
-"M" indique le début d'un masque en hexadécimal qui sera appliquée, où les bits à 1 dans le masque seront bits à zéro dans la valeur résultante.
-Dans l'exemple ci-dessus, «18» correspondra à «1F» . Ceci est particulièrement utile pour faire correspondre par exemple des évènements courts CBUS , où les pièces du paquet incluent le numéro de nœud qui devrait (normalement) être ignoré
+Les num&#233;ros d'&#233;v&#233;nement CBUS (en g&#233;n&#233;ral) contiennent un num&#233;ro de noeud dans leur octets les plus significatifs.
+Vous pouvez sp&#233;cifier le num&#233;ro de noeud soit
+en utilisant un nombre &#224; 5 chiffres pour le num&#233;ro d'&#233;v&#233;nement lui-m&#234;me,
+pr&#233;c&#233;d&#233; par le num&#233;ro de noeud:
+<br><code> MS200018</code><br>
+soit en utilisant les lettres "N" et "E" pour pr&#233;ciser les diff&#233;rentes parties:
+<br><code>MSN2E18</code><br>
 
 <p>
- Enfin, il est possible de connecter arbitrairement un capteur à
-des trames CAN en précisant les données contenu 
-comme une chaîne hexadécimale:<br><code>MSX9100000000000012;X9100000000000019</code><br>
+Vous pouvez masquer une partie du paquet de CBUS, de sorte que les valeurs dans la partie masqu&#233;e vont toujours correspondre, en utilisant la lettre "M" de format. <br><code> MS200018M07</code><br>
 
-Ceci permet au capteur de faire abstraction de toute signification intrinsèque d'événements à "ON" et "OFF"
-, et lui permet de répondre à n'importe quel trame sur le réseau.(
+"M" indique le d&#233;but d'un masque en hexad&#233;cimal qui sera appliqu&#233;e, o&#244; les bits &#224; 1 dans le masque seront bits &#224; z&#233;ro dans la valeur r&#233;sultante.
+Dans l'exemple ci-dessus, "18" correspondra &#224; "1F" . Ceci est particuli&#232;rement utile pour faire correspondre par exemple des &#233;v&#232;nements courts CBUS, o&#244; les pi&#232;ces du paquet incluent le num&#233;ro de noeud qui devrait (normalement) &#234;tre ignor&#233;
 
-<h3> Création automatique </h3>
+<p>
+ Enfin, il est possible de connecter arbitrairement un capteur &#224;
+des trames CAN en pr&#233;cisant les donn&#233;es contenu 
+comme une cha&#238;ne hexad&#233;cimale:<br><code>MSX9100000000000012;X9100000000000019</code><br>
 
-JMRI tente automatiquement de créer des objets Capteur depuis le
+Ceci permet au Capteur de faire abstraction de toute signification intrins&#232;que d'&#233;v&#233;nements &#224; "ON" et "OFF"
+, et lui permet de r&#233;pondre &#224; n'importe quel trame sur le r&#233;seau.
+
+<h3> Cr&#233;ation automatique</h3>
+
+JMRI tente automatiquement de cr&#233;er des objets Capteur depuis le
 trafic qu'il entend sur le CBUS.
 <p>
-Lorsque JMRI entend un événement ON ou OFF sur le CBUS, il crée un capteur
-en utilisant l'ID d'événement correspondant.
-La valeur par défaut du capteur automatiquement sera créé à ON
+Lorsque JMRI entend un &#233;v&#233;nement ON ou OFF sur le CBUS, il cr&#233;e un capteur
+en utilisant l'ID d'&#233;v&#233;nement correspondant.
+La valeur par d&#233;faut du capteur sera cr&#233;&#233; automatiquement &#224; ON
 dans le cas de l'activation du capteur ACTIF
-et à OFF dans le cas de l'activation du capteur INACTIF
+et &#224; OFF dans le cas de l'activation du capteur INACTIF
 
 <p>
-Parce que les événements ne sont pas intrinsèquement associés avec des objet matériels spécifiques
-, et parce que les gens peuvent utiliser les ID d'événement de bien des manière, ceci
-ne pas fait ce qui est souhaité. Quand il ne le fait pas, vous pouvez 
-créer manuellement des capteurs appropriés en utilisant le bouton 
+Parce que les &#233;v&#233;nements ne sont pas intrins&#232;quement associ&#233;s avec des objet mat&#233;riels sp&#233;cifiques
+, et parce que les gens peuvent utiliser les ID d'&#233;v&#233;nement de bien des mani&#232;re, ceci
+ne pas fait ce qui est souhait&#233;. Quand il ne le fait pas, vous pouvez 
+cr&#233;er manuellement des Capteurs appropri&#233;s en utilisant le bouton 
 <a href="../../../../package/jmri/jmrit/beantable/SensorAddEdit.shtml">Ajouter...</a>
 sur le
 <a href="../../../../package/jmri/jmrit/beantable/SensorTable.shtml">Tableau Capteur</a>.
 
 <p>
 
-<h2>Aiguillages</h2>(
+<h2>Aiguillages</h2>
 
-(Pourrait être écrite, mais le schéma est similaire aux capteurs ci-dessus,
-sauf que JMRI émet des trames CBUS au lieu de les recevoir, et
-la lettre type est "T"au lieu de "S", par exemple, <code> MT-18; +21 </ code>)
+(Pourrait &#234;tre &#233;crit, mais le sch&#233;ma est similaire aux capteurs ci-dessus,
+sauf que JMRI &#233;met des trames CBUS au lieu de les recevoir, et
+la lettre type est "T"au lieu de "S", par exemple, <code> MT-18; +21</ code>)
 <!--#include virtual="/Footer" -->
 </body>
 </html>

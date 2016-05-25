@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<title>
+DecoderPro&reg; Main Window
+</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<h1>DecoderPro&reg; Main Window</h1>
+<h2>XpressNet Menu</h2>
+
+<div align="right">
+<p><a href="Main_Menu.shtml#System">Back to Index</a></p>
+</div>
+
+<hr>
+<p><strong>XpressNet Monitor</strong></p>
+<p>Opens the <a href="Main_Monitor_Window.shtml">Communications  Monitor Window</a> and automatically displays the information that is being sent and  received on the communications link between your computer and your DCC  system.</p>
+<p><strong><a name="Info"></a>XpressNet System Information</strong></p>
+<p>Opens the <a href="#InfoDialog">XPressNet System Information</a> Dialog.</p>
+<p><strong>Send XpressNet Command</strong></p>
+<p>Opens the Send XpressNet Packet prompt so that you can type in a Packet: and click on the 
+  <input type="submit" name="button3" id="button3" value="Send"> 
+  to transmit via XpressNet to your system.
+</p>
+<p><img src="images/Main_XpressNet_02.png" alt="Send Command" width="256" height="97"></p>
+<p><img src="images/separator.png" alt="separator" width="340" height="4"></p>
+<p><strong><a name="Database"></a>Command Station Database Manager</strong></p>
+<p>Opens the <a href="#StackMonitor">Command Station Stack Monitor</a> window that allows you to monitor the status of the command station stack (database).</p>
+<p><strong><a name="LI101"></a>LI101 Configuration Manager</strong></p>
+<p>Open the <a href="#LI101CU">LI101 Configuration Utility</a> Window.</p>
+<p><strong><a name="LZ100" id="LZ100"></a>LZ100 Configuration Manager</strong></p>
+<p>Open the <a href="#LZ100">LV100 Configuration Manager</a> Window</p>
+<p><strong><a name="LZV100"></a>LZV100 Configuration Manager</strong></p>
+<p>Open the <a href="#LZV100CM">LZV100 Configuration Manager</a> Window</p>
+<p><strong><a name="LV102"></a>LV102 Configuration Manager</strong></p>
+<p>Open the<a href="#LV102CM"> LV102 Configuration Manager</a> Window.</p>
+<hr>
+
+<h4><a name="InfoDialog"></a>XPressNet System Information Dialog</h4>
+<p>Click on the 
+  <input type="submit" name="button" id="button" value="Get System Info"> 
+  to query the system (Lenz or other) for system information that will be displayed in the dialog.  Click on 
+  <input type="submit" name="button2" id="button2" value="Close"> 
+  to close the dialog.
+</p>
+<p><img src="images/Main_XpressNet_01.png" alt="System Information"></p>
+<div>
+  <div align="right"><a href="#Info">Back</a></div>
+</div>
+<h4><a name="StackMonitor"></a>Command Station Stack Monitor</h4>
+<p>Click the 
+  <input type="submit" name="button4" id="button4" value="Refresh"> 
+  to update the display to the current information.</p>
+<p><img src="images/Main_XpressNet_03.png" alt="Database" width="523" height="186"></p>
+<div>
+  <div align="right"><a href="#Database">Back</a></div>
+</div>
+<h4><a name="LI101CU"></a>LI101 Configuration Utility Window</h4>
+<p><img src="images/Main_XpressNet_04.png" alt="configuration" width="516" height="140"></p>
+<div>
+  <div align="right"><a href="#LI101">Back</a></div>
+</div>
+<h4><a name="LV100CM"></a>LV100 Configuration Manager Window</h4>
+<p><img src="images/Main_XpressNet_05.png" alt="configuration" width="580" height="202"></p>
+<div><a href="#LZ100">Back</a></div>
+<h4><a name="LZV100CM"></a>LZV100 Configuration Manager Window</h4>
+<p><img src="images/Main_XpressNet_06.png" alt="configuration" width="585" height="400"></p>
+<div>
+  <div align="right">
+    <p><a href="#LZV100">Back</a></p>
+  </div>
+</div>
+<h4><a name="LV102CM" id="LV102CM"></a>LV102 Configuration Manager Window</h4>
+<p><img src="images/Main_XpressNet_07.png" alt="configuration" width="561" height="270"></p>
+<div>
+  <div align="right"><a href="#LV102">Back</a></div>
+</div>
+
+<hr>
+
+<div align="right">
+<p><a href="Main_Menu.shtml#System">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+</body>
+</html>

@@ -1,9 +1,5 @@
-// SerialMonFrame.java
-
 package jmri.jmrix.cmri.serial.serialmon;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import jmri.jmrix.cmri.serial.SerialListener;
 import jmri.jmrix.cmri.serial.SerialMessage;
 import jmri.jmrix.cmri.serial.SerialNode;
@@ -17,14 +13,15 @@ import jmri.jmrix.cmri.serial.cmrinetmetrics.CMRInetMetricsData;
  * @author	    Chuck Catania  Copyright (C) 2014, 2015, 2016
  * @version         $Revision: 17977 $
  */
-
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
 
     public SerialMonFrame() {
         super();
     }
 
-    protected String title() { return "CMRI Serial Packet Monitor"; }
+    protected String title() {
+        return "CMRI Serial Command Monitor";
+    }
 
     protected void init() {
         // connect to TrafficController
@@ -186,7 +183,5 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                 nextLine("unrecognized rep: \""+l.toString()+"\"\n", "");
             }
     }
-
-    static Logger log = LoggerFactory.getLogger(SerialMonFrame.class.getName());
 
 }

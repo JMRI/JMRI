@@ -1,6 +1,5 @@
-<?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?><!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -13,10 +12,10 @@
 <!-- for more details.                                                      -->
 <!-- version 1 - new file for QSi V8 files -->
 <!-- Steam generator selections -->
-<ienumVal>
-  <ienumChoice choice="Native Steam Generator" value="1"/>
-  <ienumChoice choice="Large Generator"/>
-  <ienumChoice choice="Cass - Long"/>
-  <ienumChoice choice="Cass - Short"/>
-  <ienumChoice choice="Small Generator"/>
-</ienumVal>
+<enumVal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <enumChoice choice="Native Steam Generator" value="1"/>
+  <enumChoice choice="Large Generator"/>
+  <enumChoice choice="Cass - Long"/>
+  <enumChoice choice="Cass - Short"/>
+  <enumChoice choice="Small Generator"/>
+</enumVal>

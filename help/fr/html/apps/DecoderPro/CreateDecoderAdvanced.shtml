@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id$ -->
+ <!--Translated by Herv&#233; Blorec le 2013-08-30 -->
+<title>JMRI: DecoderPro User Guide - Advanced Decoder Definitions</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html;  charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+
+<H2>Guide Utilisateur DecoderPro  - D&#233;finitions Avanc&#233;es des D&#233;codeurs </h2>
+
+<p>Cette page fournit des informations sur les fonctionnalit&#233;s avanc&#233;es dans
+les fichiers de d&#233;finiton d&#233;codeur pour le Programmateur Symbolique DecoderPro
+.</p>
+
+
+<h3>Identification</h3>
+Trois parties:
+<ul>
+<li>Fabricant - depuis CV8
+<li>Code Version - depuis CV7
+<li>Code Produit - Lu depuis un ou des CVs fabricant sp&#233;cifiques, ceci fonctionne pour des fabricants sp&#233;cifiques. Le processus de lecture est trait&#233; dans le code (the jmri.jmrit.decoderdefn.IdentifyDecoder class) et a &#233;t&#233; mis &#225; jour &#225; chaque fois qu'un fabricant commence &#225; fournir ce nombre dans un cv
+</ul>
+
+<h3>Visibilit&#233;</h3>
+ 
+L'&#233;l&#233;ment mod&#232;le a un attribut "montr&#233;". Ses valeurs possibles sont:
+
+<ul>
+<li>"yes" (par d&#233;faut) - le conportement traditionnel, toujours montrer ce mod&#232;le et la famille qu'il contient
+<li>"no" - Ne montre jamais ce mod&#232;lel, m&#234;me s'il correspond &#225; une possible s&#233;lection.
+           Utilis&#233; pour les anciennes d&#233;finitions qui ont &#233;t&#233; remplac&#233;es par des nouvelles. 
+<li>"maybe" - Montr&#233; seulement si &#231;a correspond &#225; une possible identification automatique.
+</ul>
+
+
+<h3>Mises &#225; jour et Migration</h3>
+
+Quelques fois nous rempla&#231;ons une d&#233;finition de d&#233;codeur par une meilleure.  L'ancienne est en cours d'utilisation,
+mais nous aimerions d&#233;placer les utilisateurs vers la nouvelle par la suite. Il y a des mod&#232;les d'attribut de niveaux qui peuvent &#234;tre ajout&#233;s &#225; l'ancienne ( pas la nouvelle) d&#233;finition pour facilter ceci:
+
+<code><pre>
+&lt;model show="no" model="A4X" replacementModel="A4X" replacementFamily="Jan 2012"&gt;
+</pre></code>
+
+L'utilisateur s&#233;lectionne "Update decoder definitions" depuis le Menu Debug, et
+toutes les entr&#233;es liste existantes qui pointe des d&#233;finitions de d&#233;codeur avec des "replacementModel" et/ou "replacement Family" d&#233;fini seront mises &#225; jour par ces remplacements.
+
+<!--#include virtual="/Footer" -->
+</div>
+</body>
+</html>

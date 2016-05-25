@@ -1,62 +1,51 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright Me 2008 -->
-<!-- $Id$ -->
-<title>JMRI: RailDriver Throttle Details</title>
+<title>JMRI Hardware Support - RailDriver Throttle Details</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
+<h1>Hardware Support: RailDriver Throttle Details</h1>
 
-
-
-<h2> 
-JMRI: RailDriver Throttle Details
-</h2>
-
-<img src="../../../images/bangdesk.gif" align="left">
-This page is under construction. 
-JMRI's RailDriver support was first available in 
-<a href="http://jmri.sf.net/releasenotes/jmri2.1.7.shtml">JMRI 2.1.7</a>.
+<p>RailDriver support was first available in 
+<a href="http://jmri.org/releasenotes/jmri2.1.7.shtml">JMRI 2.1.7</a>.
 It is evolving rapidly, so check back here or on the
-<a href="http://groups.yahoo.com/group/jmriusers/">jmriusers mailing list<a/>
-for changes.
+<a href="https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI users Yahoo group<a/> for changes.
 
 <br>
 <a href="RailDriver.gif">
 <img src="RailDriver.gif" align="right" width="389" height="236" alternate="RailDriver line drawing">
 </a>
 
-<p>
-
-While we develop the RailDriver support, it's primarily implemented
+<p>While we develop RailDriver support, it's primarily implemented
 via a 
-<a href="http://jmri.sf.net/jython/RailDriver.py">RailDriverThrottle.py</a>
+<a href="http://jmri.org/jython/RailDriver.py">RailDriverThrottle.py</a>
 script.  This lets users easily edit it to customize 
 to their desires while we sort out what's generally needed.
 
 <h2>Structure</h2>
 
-Because jinput and the RailDriver provide different component names
+<p>Because jinput and the RailDriver provide different component names
 on Windows, Mac OS X and Linux, the script is organized around 
-the number (index) of the component, not it's name.  All three platforms
-provide the components in the same order.
+the number (index) of the component, not it's name.<br />
+All three platforms provide the components in the same order.
 
+<p>Back to <a href="index.shtml">RailDriver page</a>
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

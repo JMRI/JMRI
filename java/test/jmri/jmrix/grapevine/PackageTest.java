@@ -1,5 +1,3 @@
-// PackageTest.java
-
 package jmri.jmrix.grapevine;
 
 import junit.framework.Assert;
@@ -9,20 +7,19 @@ import junit.framework.TestSuite;
 
 /**
  * Tests for the jmri.jmrix.grapevine package.
- * @author      Bob Jacobsen  Copyright 2003, 2007
- * @version   $Revision$
+ *
+ * @author Bob Jacobsen Copyright 2003, 2007
  */
 public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure
-
     public PackageTest(String s) {
         super(s);
     }
 
     public void testDefinitions() {
         Assert.assertEquals("Node definitions match", SerialSensorManager.SENSORSPERNODE,
-                                    SerialNode.MAXSENSORS+1);
+                SerialNode.MAXSENSORS + 1);
     }
 
     // Main entry point
@@ -49,14 +46,19 @@ public class PackageTest extends TestCase {
         suite.addTest(SerialTrafficControllerTest.suite());
         suite.addTest(SerialAddressTest.suite());
 
-        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
+        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             suite.addTest(jmri.jmrix.grapevine.serialmon.SerialMonTest.suite());
         }
-        
+
         return suite;
     }
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 }

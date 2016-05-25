@@ -1,5 +1,3 @@
-// PacketTableFrameTest.java
-
 package jmri.jmrix.pricom.pockettester;
 
 import junit.framework.Test;
@@ -8,8 +6,9 @@ import junit.framework.TestSuite;
 
 /**
  * JUnit tests for the MonitorFrame class
- * @author		Bob Jacobsen  Copyright 2005
- * @version		$Revision$
+ *
+ * @author	Bob Jacobsen Copyright 2005
+ * @version	$Revision$
  */
 public class PacketTableFrameTest extends TestCase {
 
@@ -26,7 +25,7 @@ public class PacketTableFrameTest extends TestCase {
         f.asciiFormattedMessage(PocketTesterTest.speed0123A);
         f.asciiFormattedMessage(PocketTesterTest.speed012A);
         f.asciiFormattedMessage(PocketTesterTest.acc0222A);
-        
+
         // close frame
         f.dispose();
     }
@@ -49,4 +48,3 @@ public class PacketTableFrameTest extends TestCase {
     }
 
 }
-

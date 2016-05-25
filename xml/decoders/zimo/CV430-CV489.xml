@@ -1,4135 +1,738 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
 <!-- version 1 - for Unified Software -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude">
-  <variable label="Swiss Mapping Group 1 F-key" CV="430">
+<!-- version 1.1 - Added CVs 490-507, enumChoice selections moved to seperate files, Mark Waters 26 Jan 2015 -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <variable item="Swiss Mapping Group 1 F-key" CV="430">
     <enumVal>
-      <enumChoice choice="F-Key">
-        <choice>F-Key</choice>
-      </enumChoice>
-      <enumChoice choice="F0" value="29">
-        <choice>F0</choice>
-      </enumChoice>
-      <enumChoice choice="F1" value="1">
-        <choice>F1</choice>
-      </enumChoice>
-      <enumChoice choice="F2">
-        <choice>F2</choice>
-      </enumChoice>
-      <enumChoice choice="F3">
-        <choice>F3</choice>
-      </enumChoice>
-      <enumChoice choice="F4">
-        <choice>F4</choice>
-      </enumChoice>
-      <enumChoice choice="F5">
-        <choice>F5</choice>
-      </enumChoice>
-      <enumChoice choice="F6">
-        <choice>F6</choice>
-      </enumChoice>
-      <enumChoice choice="F7">
-        <choice>F7</choice>
-      </enumChoice>
-      <enumChoice choice="F8">
-        <choice>F8</choice>
-      </enumChoice>
-      <enumChoice choice="F9">
-        <choice>F9</choice>
-      </enumChoice>
-      <enumChoice choice="F10">
-        <choice>F10</choice>
-      </enumChoice>
-      <enumChoice choice="F11">
-        <choice>F11</choice>
-      </enumChoice>
-      <enumChoice choice="F12">
-        <choice>F12</choice>
-      </enumChoice>
-      <enumChoice choice="F13">
-        <choice>F13</choice>
-      </enumChoice>
-      <enumChoice choice="F14">
-        <choice>F14</choice>
-      </enumChoice>
-      <enumChoice choice="F15">
-        <choice>F15</choice>
-      </enumChoice>
-      <enumChoice choice="F16">
-        <choice>F16</choice>
-      </enumChoice>
-      <enumChoice choice="F17">
-        <choice>F17</choice>
-      </enumChoice>
-      <enumChoice choice="F18">
-        <choice>F18</choice>
-      </enumChoice>
-      <enumChoice choice="F19">
-        <choice>F19</choice>
-      </enumChoice>
-      <enumChoice choice="F20">
-        <choice>F20</choice>
-      </enumChoice>
-      <enumChoice choice="F21">
-        <choice>F21</choice>
-      </enumChoice>
-      <enumChoice choice="F22">
-        <choice>F22</choice>
-      </enumChoice>
-      <enumChoice choice="F23">
-        <choice>F23</choice>
-      </enumChoice>
-      <enumChoice choice="F24">
-        <choice>F24</choice>
-      </enumChoice>
-      <enumChoice choice="F25">
-        <choice>F25</choice>
-      </enumChoice>
-      <enumChoice choice="F26">
-        <choice>F26</choice>
-      </enumChoice>
-      <enumChoice choice="F27">
-        <choice>F27</choice>
-      </enumChoice>
-      <enumChoice choice="F28">
-        <choice>F28</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 1 F-key</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 1 Tasto F</label>
   </variable>
-  <variable label="Swiss Mapping Group 1 M-key" CV="431" mask="XVVVVVVV">
+  <variable item="Swiss Mapping Group 1 M-key v33" CV="431">
+        <qualifier>
+          <variableref>Decoder Version</variableref>
+          <relation>lt</relation>
+          <value>34</value>
+        </qualifier>
     <enumVal>
-      <enumChoice choice="M-Key">
-        <choice>M-Key</choice>
-      </enumChoice>
-      <enumChoice choice="F0" value="29">
-        <choice>F0</choice>
-      </enumChoice>
-      <enumChoice choice="F1" value="1">
-        <choice>F1</choice>
-      </enumChoice>
-      <enumChoice choice="F2">
-        <choice>F2</choice>
-      </enumChoice>
-      <enumChoice choice="F3">
-        <choice>F3</choice>
-      </enumChoice>
-      <enumChoice choice="F4">
-        <choice>F4</choice>
-      </enumChoice>
-      <enumChoice choice="F5">
-        <choice>F5</choice>
-      </enumChoice>
-      <enumChoice choice="F6">
-        <choice>F6</choice>
-      </enumChoice>
-      <enumChoice choice="F7">
-        <choice>F7</choice>
-      </enumChoice>
-      <enumChoice choice="F8">
-        <choice>F8</choice>
-      </enumChoice>
-      <enumChoice choice="F9">
-        <choice>F9</choice>
-      </enumChoice>
-      <enumChoice choice="F10">
-        <choice>F10</choice>
-      </enumChoice>
-      <enumChoice choice="F11">
-        <choice>F11</choice>
-      </enumChoice>
-      <enumChoice choice="F12">
-        <choice>F12</choice>
-      </enumChoice>
-      <enumChoice choice="F13">
-        <choice>F13</choice>
-      </enumChoice>
-      <enumChoice choice="F14">
-        <choice>F14</choice>
-      </enumChoice>
-      <enumChoice choice="F15">
-        <choice>F15</choice>
-      </enumChoice>
-      <enumChoice choice="F16">
-        <choice>F16</choice>
-      </enumChoice>
-      <enumChoice choice="F17">
-        <choice>F17</choice>
-      </enumChoice>
-      <enumChoice choice="F18">
-        <choice>F18</choice>
-      </enumChoice>
-      <enumChoice choice="F19">
-        <choice>F19</choice>
-      </enumChoice>
-      <enumChoice choice="F20">
-        <choice>F20</choice>
-      </enumChoice>
-      <enumChoice choice="F21">
-        <choice>F21</choice>
-      </enumChoice>
-      <enumChoice choice="F22">
-        <choice>F22</choice>
-      </enumChoice>
-      <enumChoice choice="F23">
-        <choice>F23</choice>
-      </enumChoice>
-      <enumChoice choice="F24">
-        <choice>F24</choice>
-      </enumChoice>
-      <enumChoice choice="F25">
-        <choice>F25</choice>
-      </enumChoice>
-      <enumChoice choice="F26">
-        <choice>F26</choice>
-      </enumChoice>
-      <enumChoice choice="F27">
-        <choice>F27</choice>
-      </enumChoice>
-      <enumChoice choice="F28">
-        <choice>F28</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-M-key.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 1 M-key v33</label>
+  </variable>
+  <variable item="Swiss Mapping Group 1 M-key" CV="431">
+        <qualifier>
+          <variableref>Decoder Version</variableref>
+          <relation>ge</relation>
+          <value>34</value>
+        </qualifier>
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-M-key_v34.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 1 M-key</label>
   </variable>
-  <variable label="Swiss Mapping Group 1" CV="431" mask="VXXXXXXX">
+  <variable item="Swiss Mapping Group 1 A1 Fw" CV="432">
     <enumVal>
-      <enumChoice choice="No">
-        <choice>No</choice>
-      </enumChoice>
-      <enumChoice choice="Yes">
-        <choice>Yes</choice>
-      </enumChoice>
-    </enumVal>
-    <label>Swiss Mapping Group 1</label>
-  </variable>
-  <variable label="Swiss Mapping Group 1 A1 Fw" CV="432">
-    <enumVal>
-      <enumChoice choice="None">
-        <choice>None</choice>
-      </enumChoice>
-      <enumChoice choice="Front Light" value="14">
-        <choice>Front Light</choice>
-      </enumChoice>
-      <enumChoice choice="Rear Light" value="15">
-        <choice>Rear Light</choice>
-      </enumChoice>
-      <enumChoice choice="FO 1" value="1">
-        <choice>FO 1</choice>
-      </enumChoice>
-      <enumChoice choice="FO 2">
-        <choice>FO 2</choice>
-      </enumChoice>
-      <enumChoice choice="FO 3">
-        <choice>FO 3</choice>
-      </enumChoice>
-      <enumChoice choice="FO 4">
-        <choice>FO 4</choice>
-      </enumChoice>
-      <enumChoice choice="FO 5">
-        <choice>FO 5</choice>
-      </enumChoice>
-      <enumChoice choice="FO 6">
-        <choice>FO 6</choice>
-      </enumChoice>
-      <enumChoice choice="FO 7">
-        <choice>FO 7</choice>
-      </enumChoice>
-      <enumChoice choice="FO 8">
-        <choice>FO 8</choice>
-      </enumChoice>
-      <enumChoice choice="FO 9">
-        <choice>FO 9</choice>
-      </enumChoice>
-      <enumChoice choice="FO 10">
-        <choice>FO 10</choice>
-      </enumChoice>
-      <enumChoice choice="FO 11">
-        <choice>FO 11</choice>
-      </enumChoice>
-      <enumChoice choice="FO 12">
-        <choice>FO 12</choice>
-      </enumChoice>
-      <enumChoice choice="FO 13">
-        <choice>FO 13</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 1 A1 Fw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 1 A1 Avanti</label>
   </variable>
-  <variable label="Swiss Mapping Group 1 A2 Fw" CV="433">
+  <variable item="Swiss Mapping Group 1 A2 Fw" CV="433">
     <enumVal>
-      <enumChoice choice="None">
-        <choice>None</choice>
-      </enumChoice>
-      <enumChoice choice="Front Light" value="14">
-        <choice>Front Light</choice>
-      </enumChoice>
-      <enumChoice choice="Rear Light" value="15">
-        <choice>Rear Light</choice>
-      </enumChoice>
-      <enumChoice choice="FO 1" value="1">
-        <choice>FO 1</choice>
-      </enumChoice>
-      <enumChoice choice="FO 2">
-        <choice>FO 2</choice>
-      </enumChoice>
-      <enumChoice choice="FO 3">
-        <choice>FO 3</choice>
-      </enumChoice>
-      <enumChoice choice="FO 4">
-        <choice>FO 4</choice>
-      </enumChoice>
-      <enumChoice choice="FO 5">
-        <choice>FO 5</choice>
-      </enumChoice>
-      <enumChoice choice="FO 6">
-        <choice>FO 6</choice>
-      </enumChoice>
-      <enumChoice choice="FO 7">
-        <choice>FO 7</choice>
-      </enumChoice>
-      <enumChoice choice="FO 8">
-        <choice>FO 8</choice>
-      </enumChoice>
-      <enumChoice choice="FO 9">
-        <choice>FO 9</choice>
-      </enumChoice>
-      <enumChoice choice="FO 10">
-        <choice>FO 10</choice>
-      </enumChoice>
-      <enumChoice choice="FO 11">
-        <choice>FO 11</choice>
-      </enumChoice>
-      <enumChoice choice="FO 12">
-        <choice>FO 12</choice>
-      </enumChoice>
-      <enumChoice choice="FO 13">
-        <choice>FO 13</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 1 A2 Fw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 1 A2 Avanti</label>
   </variable>
-  <variable label="Swiss Mapping Group 1 A1 Rw" CV="434">
+  <variable item="Swiss Mapping Group 1 A1 Rw" CV="434">
     <enumVal>
-      <enumChoice choice="None">
-        <choice>None</choice>
-      </enumChoice>
-      <enumChoice choice="Front Light" value="14">
-        <choice>Front Light</choice>
-      </enumChoice>
-      <enumChoice choice="Rear Light" value="15">
-        <choice>Rear Light</choice>
-      </enumChoice>
-      <enumChoice choice="FO 1" value="1">
-        <choice>FO 1</choice>
-      </enumChoice>
-      <enumChoice choice="FO 2">
-        <choice>FO 2</choice>
-      </enumChoice>
-      <enumChoice choice="FO 3">
-        <choice>FO 3</choice>
-      </enumChoice>
-      <enumChoice choice="FO 4">
-        <choice>FO 4</choice>
-      </enumChoice>
-      <enumChoice choice="FO 5">
-        <choice>FO 5</choice>
-      </enumChoice>
-      <enumChoice choice="FO 6">
-        <choice>FO 6</choice>
-      </enumChoice>
-      <enumChoice choice="FO 7">
-        <choice>FO 7</choice>
-      </enumChoice>
-      <enumChoice choice="FO 8">
-        <choice>FO 8</choice>
-      </enumChoice>
-      <enumChoice choice="FO 9">
-        <choice>FO 9</choice>
-      </enumChoice>
-      <enumChoice choice="FO 10">
-        <choice>FO 10</choice>
-      </enumChoice>
-      <enumChoice choice="FO 11">
-        <choice>FO 11</choice>
-      </enumChoice>
-      <enumChoice choice="FO 12">
-        <choice>FO 12</choice>
-      </enumChoice>
-      <enumChoice choice="FO 13">
-        <choice>FO 13</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 1 A1 Rw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 1 A1Retro</label>
   </variable>
-  <variable label="Swiss Mapping Group 1 A2 Rw" CV="435">
+  <variable item="Swiss Mapping Group 1 A2 Rw" CV="435">
     <enumVal>
-      <enumChoice choice="None">
-        <choice>None</choice>
-      </enumChoice>
-      <enumChoice choice="Front Light" value="14">
-        <choice>Front Light</choice>
-      </enumChoice>
-      <enumChoice choice="Rear Light" value="15">
-        <choice>Rear Light</choice>
-      </enumChoice>
-      <enumChoice choice="FO 1" value="1">
-        <choice>FO 1</choice>
-      </enumChoice>
-      <enumChoice choice="FO 2">
-        <choice>FO 2</choice>
-      </enumChoice>
-      <enumChoice choice="FO 3">
-        <choice>FO 3</choice>
-      </enumChoice>
-      <enumChoice choice="FO 4">
-        <choice>FO 4</choice>
-      </enumChoice>
-      <enumChoice choice="FO 5">
-        <choice>FO 5</choice>
-      </enumChoice>
-      <enumChoice choice="FO 6">
-        <choice>FO 6</choice>
-      </enumChoice>
-      <enumChoice choice="FO 7">
-        <choice>FO 7</choice>
-      </enumChoice>
-      <enumChoice choice="FO 8">
-        <choice>FO 8</choice>
-      </enumChoice>
-      <enumChoice choice="FO 9">
-        <choice>FO 9</choice>
-      </enumChoice>
-      <enumChoice choice="FO 10">
-        <choice>FO 10</choice>
-      </enumChoice>
-      <enumChoice choice="FO 11">
-        <choice>FO 11</choice>
-      </enumChoice>
-      <enumChoice choice="FO 12">
-        <choice>FO 12</choice>
-      </enumChoice>
-      <enumChoice choice="FO 13">
-        <choice>FO 13</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 1 A2 Rw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 1 A2 Retro</label>
   </variable>
-  <variable label="Swiss Mapping Group 2 F-key" CV="436">
+  <variable item="Swiss Mapping Group 2 F-key" CV="436">
     <enumVal>
-      <enumChoice choice="F-Key">
-        <choice>F-Key</choice>
-      </enumChoice>
-      <enumChoice choice="F0" value="29">
-        <choice>F0</choice>
-      </enumChoice>
-      <enumChoice choice="F1" value="1">
-        <choice>F1</choice>
-      </enumChoice>
-      <enumChoice choice="F2">
-        <choice>F2</choice>
-      </enumChoice>
-      <enumChoice choice="F3">
-        <choice>F3</choice>
-      </enumChoice>
-      <enumChoice choice="F4">
-        <choice>F4</choice>
-      </enumChoice>
-      <enumChoice choice="F5">
-        <choice>F5</choice>
-      </enumChoice>
-      <enumChoice choice="F6">
-        <choice>F6</choice>
-      </enumChoice>
-      <enumChoice choice="F7">
-        <choice>F7</choice>
-      </enumChoice>
-      <enumChoice choice="F8">
-        <choice>F8</choice>
-      </enumChoice>
-      <enumChoice choice="F9">
-        <choice>F9</choice>
-      </enumChoice>
-      <enumChoice choice="F10">
-        <choice>F10</choice>
-      </enumChoice>
-      <enumChoice choice="F11">
-        <choice>F11</choice>
-      </enumChoice>
-      <enumChoice choice="F12">
-        <choice>F12</choice>
-      </enumChoice>
-      <enumChoice choice="F13">
-        <choice>F13</choice>
-      </enumChoice>
-      <enumChoice choice="F14">
-        <choice>F14</choice>
-      </enumChoice>
-      <enumChoice choice="F15">
-        <choice>F15</choice>
-      </enumChoice>
-      <enumChoice choice="F16">
-        <choice>F16</choice>
-      </enumChoice>
-      <enumChoice choice="F17">
-        <choice>F17</choice>
-      </enumChoice>
-      <enumChoice choice="F18">
-        <choice>F18</choice>
-      </enumChoice>
-      <enumChoice choice="F19">
-        <choice>F19</choice>
-      </enumChoice>
-      <enumChoice choice="F20">
-        <choice>F20</choice>
-      </enumChoice>
-      <enumChoice choice="F21">
-        <choice>F21</choice>
-      </enumChoice>
-      <enumChoice choice="F22">
-        <choice>F22</choice>
-      </enumChoice>
-      <enumChoice choice="F23">
-        <choice>F23</choice>
-      </enumChoice>
-      <enumChoice choice="F24">
-        <choice>F24</choice>
-      </enumChoice>
-      <enumChoice choice="F25">
-        <choice>F25</choice>
-      </enumChoice>
-      <enumChoice choice="F26">
-        <choice>F26</choice>
-      </enumChoice>
-      <enumChoice choice="F27">
-        <choice>F27</choice>
-      </enumChoice>
-      <enumChoice choice="F28">
-        <choice>F28</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 2 F-key</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 2 Tasto F</label>
   </variable>
-  <variable label="Swiss Mapping Group 2 M-key" CV="437" mask="XVVVVVVV">
+  <variable item="Swiss Mapping Group 2 M-key v33" CV="437">
+        <qualifier>
+          <variableref>Decoder Version</variableref>
+          <relation>lt</relation>
+          <value>34</value>
+        </qualifier>
     <enumVal>
-      <enumChoice choice="M-Key">
-        <choice>M-Key</choice>
-      </enumChoice>
-      <enumChoice choice="F0" value="29">
-        <choice>F0</choice>
-      </enumChoice>
-      <enumChoice choice="F1" value="1">
-        <choice>F1</choice>
-      </enumChoice>
-      <enumChoice choice="F2">
-        <choice>F2</choice>
-      </enumChoice>
-      <enumChoice choice="F3">
-        <choice>F3</choice>
-      </enumChoice>
-      <enumChoice choice="F4">
-        <choice>F4</choice>
-      </enumChoice>
-      <enumChoice choice="F5">
-        <choice>F5</choice>
-      </enumChoice>
-      <enumChoice choice="F6">
-        <choice>F6</choice>
-      </enumChoice>
-      <enumChoice choice="F7">
-        <choice>F7</choice>
-      </enumChoice>
-      <enumChoice choice="F8">
-        <choice>F8</choice>
-      </enumChoice>
-      <enumChoice choice="F9">
-        <choice>F9</choice>
-      </enumChoice>
-      <enumChoice choice="F10">
-        <choice>F10</choice>
-      </enumChoice>
-      <enumChoice choice="F11">
-        <choice>F11</choice>
-      </enumChoice>
-      <enumChoice choice="F12">
-        <choice>F12</choice>
-      </enumChoice>
-      <enumChoice choice="F13">
-        <choice>F13</choice>
-      </enumChoice>
-      <enumChoice choice="F14">
-        <choice>F14</choice>
-      </enumChoice>
-      <enumChoice choice="F15">
-        <choice>F15</choice>
-      </enumChoice>
-      <enumChoice choice="F16">
-        <choice>F16</choice>
-      </enumChoice>
-      <enumChoice choice="F17">
-        <choice>F17</choice>
-      </enumChoice>
-      <enumChoice choice="F18">
-        <choice>F18</choice>
-      </enumChoice>
-      <enumChoice choice="F19">
-        <choice>F19</choice>
-      </enumChoice>
-      <enumChoice choice="F20">
-        <choice>F20</choice>
-      </enumChoice>
-      <enumChoice choice="F21">
-        <choice>F21</choice>
-      </enumChoice>
-      <enumChoice choice="F22">
-        <choice>F22</choice>
-      </enumChoice>
-      <enumChoice choice="F23">
-        <choice>F23</choice>
-      </enumChoice>
-      <enumChoice choice="F24">
-        <choice>F24</choice>
-      </enumChoice>
-      <enumChoice choice="F25">
-        <choice>F25</choice>
-      </enumChoice>
-      <enumChoice choice="F26">
-        <choice>F26</choice>
-      </enumChoice>
-      <enumChoice choice="F27">
-        <choice>F27</choice>
-      </enumChoice>
-      <enumChoice choice="F28">
-        <choice>F28</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-M-key.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 2 M-key v33</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 2 Tasto M</label>
+  </variable>
+  <variable item="Swiss Mapping Group 2 M-key" CV="437">
+        <qualifier>
+          <variableref>Decoder Version</variableref>
+          <relation>ge</relation>
+          <value>34</value>
+        </qualifier>
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-M-key_v34.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 2 M-key</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 2 Tasto M</label>
   </variable>
-  <variable label="Swiss Mapping Group 2" CV="437" mask="VXXXXXXX">
+  <variable item="Swiss Mapping Group 2 A1 Fw" CV="438">
     <enumVal>
-      <enumChoice choice="off">
-        <choice>off</choice>
-      </enumChoice>
-      <enumChoice choice="on">
-        <choice>on</choice>
-      </enumChoice>
-    </enumVal>
-    <label>Swiss Mapping Group 2</label>
-  </variable>
-  <variable label="Swiss Mapping Group 2 A1 Fw" CV="438">
-    <enumVal>
-      <enumChoice choice="None">
-        <choice>None</choice>
-      </enumChoice>
-      <enumChoice choice="Front Light" value="14">
-        <choice>Front Light</choice>
-      </enumChoice>
-      <enumChoice choice="Rear Light" value="15">
-        <choice>Rear Light</choice>
-      </enumChoice>
-      <enumChoice choice="FO 1" value="1">
-        <choice>FO 1</choice>
-      </enumChoice>
-      <enumChoice choice="FO 2">
-        <choice>FO 2</choice>
-      </enumChoice>
-      <enumChoice choice="FO 3">
-        <choice>FO 3</choice>
-      </enumChoice>
-      <enumChoice choice="FO 4">
-        <choice>FO 4</choice>
-      </enumChoice>
-      <enumChoice choice="FO 5">
-        <choice>FO 5</choice>
-      </enumChoice>
-      <enumChoice choice="FO 6">
-        <choice>FO 6</choice>
-      </enumChoice>
-      <enumChoice choice="FO 7">
-        <choice>FO 7</choice>
-      </enumChoice>
-      <enumChoice choice="FO 8">
-        <choice>FO 8</choice>
-      </enumChoice>
-      <enumChoice choice="FO 9">
-        <choice>FO 9</choice>
-      </enumChoice>
-      <enumChoice choice="FO 10">
-        <choice>FO 10</choice>
-      </enumChoice>
-      <enumChoice choice="FO 11">
-        <choice>FO 11</choice>
-      </enumChoice>
-      <enumChoice choice="FO 12">
-        <choice>FO 12</choice>
-      </enumChoice>
-      <enumChoice choice="FO 13">
-        <choice>FO 13</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 2 A1 Fw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 2 A1 Avanti</label>
   </variable>
-  <variable label="Swiss Mapping Group 2 A2 Fw" CV="439">
+  <variable item="Swiss Mapping Group 2 A2 Fw" CV="439">
     <enumVal>
-      <enumChoice choice="None">
-        <choice>None</choice>
-      </enumChoice>
-      <enumChoice choice="Front Light" value="14">
-        <choice>Front Light</choice>
-      </enumChoice>
-      <enumChoice choice="Rear Light" value="15">
-        <choice>Rear Light</choice>
-      </enumChoice>
-      <enumChoice choice="FO 1" value="1">
-        <choice>FO 1</choice>
-      </enumChoice>
-      <enumChoice choice="FO 2">
-        <choice>FO 2</choice>
-      </enumChoice>
-      <enumChoice choice="FO 3">
-        <choice>FO 3</choice>
-      </enumChoice>
-      <enumChoice choice="FO 4">
-        <choice>FO 4</choice>
-      </enumChoice>
-      <enumChoice choice="FO 5">
-        <choice>FO 5</choice>
-      </enumChoice>
-      <enumChoice choice="FO 6">
-        <choice>FO 6</choice>
-      </enumChoice>
-      <enumChoice choice="FO 7">
-        <choice>FO 7</choice>
-      </enumChoice>
-      <enumChoice choice="FO 8">
-        <choice>FO 8</choice>
-      </enumChoice>
-      <enumChoice choice="FO 9">
-        <choice>FO 9</choice>
-      </enumChoice>
-      <enumChoice choice="FO 10">
-        <choice>FO 10</choice>
-      </enumChoice>
-      <enumChoice choice="FO 11">
-        <choice>FO 11</choice>
-      </enumChoice>
-      <enumChoice choice="FO 12">
-        <choice>FO 12</choice>
-      </enumChoice>
-      <enumChoice choice="FO 13">
-        <choice>FO 13</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 2 A2 Fw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 2 A2 Avanti</label>
   </variable>
-  <variable label="Swiss Mapping Group 2 A1 Rw" CV="440">
+  <variable item="Swiss Mapping Group 2 A1 Rw" CV="440">
     <enumVal>
-      <enumChoice choice="None">
-        <choice>None</choice>
-      </enumChoice>
-      <enumChoice choice="Front Light" value="14">
-        <choice>Front Light</choice>
-      </enumChoice>
-      <enumChoice choice="Rear Light" value="15">
-        <choice>Rear Light</choice>
-      </enumChoice>
-      <enumChoice choice="FO 1" value="1">
-        <choice>FO 1</choice>
-      </enumChoice>
-      <enumChoice choice="FO 2">
-        <choice>FO 2</choice>
-      </enumChoice>
-      <enumChoice choice="FO 3">
-        <choice>FO 3</choice>
-      </enumChoice>
-      <enumChoice choice="FO 4">
-        <choice>FO 4</choice>
-      </enumChoice>
-      <enumChoice choice="FO 5">
-        <choice>FO 5</choice>
-      </enumChoice>
-      <enumChoice choice="FO 6">
-        <choice>FO 6</choice>
-      </enumChoice>
-      <enumChoice choice="FO 7">
-        <choice>FO 7</choice>
-      </enumChoice>
-      <enumChoice choice="FO 8">
-        <choice>FO 8</choice>
-      </enumChoice>
-      <enumChoice choice="FO 9">
-        <choice>FO 9</choice>
-      </enumChoice>
-      <enumChoice choice="FO 10">
-        <choice>FO 10</choice>
-      </enumChoice>
-      <enumChoice choice="FO 11">
-        <choice>FO 11</choice>
-      </enumChoice>
-      <enumChoice choice="FO 12">
-        <choice>FO 12</choice>
-      </enumChoice>
-      <enumChoice choice="FO 13">
-        <choice>FO 13</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 2 A1 Rw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 2 A1 Retro</label>
   </variable>
-  <variable label="Swiss Mapping Group 2 A2 Rw" CV="441">
+  <variable item="Swiss Mapping Group 2 A2 Rw" CV="441">
     <enumVal>
-      <enumChoice choice="None">
-        <choice>None</choice>
-      </enumChoice>
-      <enumChoice choice="Front Light" value="14">
-        <choice>Front Light</choice>
-      </enumChoice>
-      <enumChoice choice="Rear Light" value="15">
-        <choice>Rear Light</choice>
-      </enumChoice>
-      <enumChoice choice="FO 1" value="1">
-        <choice>FO 1</choice>
-      </enumChoice>
-      <enumChoice choice="FO 2">
-        <choice>FO 2</choice>
-      </enumChoice>
-      <enumChoice choice="FO 3">
-        <choice>FO 3</choice>
-      </enumChoice>
-      <enumChoice choice="FO 4">
-        <choice>FO 4</choice>
-      </enumChoice>
-      <enumChoice choice="FO 5">
-        <choice>FO 5</choice>
-      </enumChoice>
-      <enumChoice choice="FO 6">
-        <choice>FO 6</choice>
-      </enumChoice>
-      <enumChoice choice="FO 7">
-        <choice>FO 7</choice>
-      </enumChoice>
-      <enumChoice choice="FO 8">
-        <choice>FO 8</choice>
-      </enumChoice>
-      <enumChoice choice="FO 9">
-        <choice>FO 9</choice>
-      </enumChoice>
-      <enumChoice choice="FO 10">
-        <choice>FO 10</choice>
-      </enumChoice>
-      <enumChoice choice="FO 11">
-        <choice>FO 11</choice>
-      </enumChoice>
-      <enumChoice choice="FO 12">
-        <choice>FO 12</choice>
-      </enumChoice>
-      <enumChoice choice="FO 13">
-        <choice>FO 13</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 2 A2 Rw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 2 A2 Retro</label>
   </variable>
-  <variable label="Swiss Mapping Group 3 F-key" CV="442">
+  <variable item="Swiss Mapping Group 3 F-key" CV="442">
     <enumVal>
-      <enumChoice choice="F-Key">
-        <choice>F-Key</choice>
-      </enumChoice>
-      <enumChoice choice="F0" value="29">
-        <choice>F0</choice>
-      </enumChoice>
-      <enumChoice choice="F1" value="1">
-        <choice>F1</choice>
-      </enumChoice>
-      <enumChoice choice="F2">
-        <choice>F2</choice>
-      </enumChoice>
-      <enumChoice choice="F3">
-        <choice>F3</choice>
-      </enumChoice>
-      <enumChoice choice="F4">
-        <choice>F4</choice>
-      </enumChoice>
-      <enumChoice choice="F5">
-        <choice>F5</choice>
-      </enumChoice>
-      <enumChoice choice="F6">
-        <choice>F6</choice>
-      </enumChoice>
-      <enumChoice choice="F7">
-        <choice>F7</choice>
-      </enumChoice>
-      <enumChoice choice="F8">
-        <choice>F8</choice>
-      </enumChoice>
-      <enumChoice choice="F9">
-        <choice>F9</choice>
-      </enumChoice>
-      <enumChoice choice="F10">
-        <choice>F10</choice>
-      </enumChoice>
-      <enumChoice choice="F11">
-        <choice>F11</choice>
-      </enumChoice>
-      <enumChoice choice="F12">
-        <choice>F12</choice>
-      </enumChoice>
-      <enumChoice choice="F13">
-        <choice>F13</choice>
-      </enumChoice>
-      <enumChoice choice="F14">
-        <choice>F14</choice>
-      </enumChoice>
-      <enumChoice choice="F15">
-        <choice>F15</choice>
-      </enumChoice>
-      <enumChoice choice="F16">
-        <choice>F16</choice>
-      </enumChoice>
-      <enumChoice choice="F17">
-        <choice>F17</choice>
-      </enumChoice>
-      <enumChoice choice="F18">
-        <choice>F18</choice>
-      </enumChoice>
-      <enumChoice choice="F19">
-        <choice>F19</choice>
-      </enumChoice>
-      <enumChoice choice="F20">
-        <choice>F20</choice>
-      </enumChoice>
-      <enumChoice choice="F21">
-        <choice>F21</choice>
-      </enumChoice>
-      <enumChoice choice="F22">
-        <choice>F22</choice>
-      </enumChoice>
-      <enumChoice choice="F23">
-        <choice>F23</choice>
-      </enumChoice>
-      <enumChoice choice="F24">
-        <choice>F24</choice>
-      </enumChoice>
-      <enumChoice choice="F25">
-        <choice>F25</choice>
-      </enumChoice>
-      <enumChoice choice="F26">
-        <choice>F26</choice>
-      </enumChoice>
-      <enumChoice choice="F27">
-        <choice>F27</choice>
-      </enumChoice>
-      <enumChoice choice="F28">
-        <choice>F28</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 3 F-key</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 3 Tasto F</label>
   </variable>
-  <variable label="Swiss Mapping Group 3 M-key" CV="443" mask="XVVVVVVV">
+  <variable item="Swiss Mapping Group 3 M-key v33" CV="443">
+        <qualifier>
+          <variableref>Decoder Version</variableref>
+          <relation>lt</relation>
+          <value>34</value>
+        </qualifier>
     <enumVal>
-      <enumChoice choice="M-Key">
-        <choice>M-Key</choice>
-      </enumChoice>
-      <enumChoice choice="F0" value="29">
-        <choice>F0</choice>
-      </enumChoice>
-      <enumChoice choice="F1" value="1">
-        <choice>F1</choice>
-      </enumChoice>
-      <enumChoice choice="F2">
-        <choice>F2</choice>
-      </enumChoice>
-      <enumChoice choice="F3">
-        <choice>F3</choice>
-      </enumChoice>
-      <enumChoice choice="F4">
-        <choice>F4</choice>
-      </enumChoice>
-      <enumChoice choice="F5">
-        <choice>F5</choice>
-      </enumChoice>
-      <enumChoice choice="F6">
-        <choice>F6</choice>
-      </enumChoice>
-      <enumChoice choice="F7">
-        <choice>F7</choice>
-      </enumChoice>
-      <enumChoice choice="F8">
-        <choice>F8</choice>
-      </enumChoice>
-      <enumChoice choice="F9">
-        <choice>F9</choice>
-      </enumChoice>
-      <enumChoice choice="F10">
-        <choice>F10</choice>
-      </enumChoice>
-      <enumChoice choice="F11">
-        <choice>F11</choice>
-      </enumChoice>
-      <enumChoice choice="F12">
-        <choice>F12</choice>
-      </enumChoice>
-      <enumChoice choice="F13">
-        <choice>F13</choice>
-      </enumChoice>
-      <enumChoice choice="F14">
-        <choice>F14</choice>
-      </enumChoice>
-      <enumChoice choice="F15">
-        <choice>F15</choice>
-      </enumChoice>
-      <enumChoice choice="F16">
-        <choice>F16</choice>
-      </enumChoice>
-      <enumChoice choice="F17">
-        <choice>F17</choice>
-      </enumChoice>
-      <enumChoice choice="F18">
-        <choice>F18</choice>
-      </enumChoice>
-      <enumChoice choice="F19">
-        <choice>F19</choice>
-      </enumChoice>
-      <enumChoice choice="F20">
-        <choice>F20</choice>
-      </enumChoice>
-      <enumChoice choice="F21">
-        <choice>F21</choice>
-      </enumChoice>
-      <enumChoice choice="F22">
-        <choice>F22</choice>
-      </enumChoice>
-      <enumChoice choice="F23">
-        <choice>F23</choice>
-      </enumChoice>
-      <enumChoice choice="F24">
-        <choice>F24</choice>
-      </enumChoice>
-      <enumChoice choice="F25">
-        <choice>F25</choice>
-      </enumChoice>
-      <enumChoice choice="F26">
-        <choice>F26</choice>
-      </enumChoice>
-      <enumChoice choice="F27">
-        <choice>F27</choice>
-      </enumChoice>
-      <enumChoice choice="F28">
-        <choice>F28</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-M-key.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 3 M-key v33</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 3 Tasto M</label>
+  </variable>
+  <variable item="Swiss Mapping Group 3 M-key" CV="443">
+        <qualifier>
+          <variableref>Decoder Version</variableref>
+          <relation>ge</relation>
+          <value>34</value>
+        </qualifier>
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-M-key_v34.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 3 M-key</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 3 Tasto M</label>
   </variable>
-  <variable label="Swiss Mapping Group 3" CV="443" mask="VXXXXXXX">
+  <variable item="Swiss Mapping Group 3 A1 Fw" CV="444">
     <enumVal>
-      <enumChoice choice="off">
-        <choice>off</choice>
-      </enumChoice>
-      <enumChoice choice="on">
-        <choice>on</choice>
-      </enumChoice>
-    </enumVal>
-    <label>Swiss Mapping Group 3</label>
-  </variable>
-  <variable label="Swiss Mapping Group 3 A1 Fw" CV="444">
-    <enumVal>
-      <enumChoice choice="None">
-        <choice>None</choice>
-      </enumChoice>
-      <enumChoice choice="Front Light" value="14">
-        <choice>Front Light</choice>
-      </enumChoice>
-      <enumChoice choice="Rear Light" value="15">
-        <choice>Rear Light</choice>
-      </enumChoice>
-      <enumChoice choice="FO 1" value="1">
-        <choice>FO 1</choice>
-      </enumChoice>
-      <enumChoice choice="FO 2">
-        <choice>FO 2</choice>
-      </enumChoice>
-      <enumChoice choice="FO 3">
-        <choice>FO 3</choice>
-      </enumChoice>
-      <enumChoice choice="FO 4">
-        <choice>FO 4</choice>
-      </enumChoice>
-      <enumChoice choice="FO 5">
-        <choice>FO 5</choice>
-      </enumChoice>
-      <enumChoice choice="FO 6">
-        <choice>FO 6</choice>
-      </enumChoice>
-      <enumChoice choice="FO 7">
-        <choice>FO 7</choice>
-      </enumChoice>
-      <enumChoice choice="FO 8">
-        <choice>FO 8</choice>
-      </enumChoice>
-      <enumChoice choice="FO 9">
-        <choice>FO 9</choice>
-      </enumChoice>
-      <enumChoice choice="FO 10">
-        <choice>FO 10</choice>
-      </enumChoice>
-      <enumChoice choice="FO 11">
-        <choice>FO 11</choice>
-      </enumChoice>
-      <enumChoice choice="FO 12">
-        <choice>FO 12</choice>
-      </enumChoice>
-      <enumChoice choice="FO 13">
-        <choice>FO 13</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 3 A1 Fw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 3 A1 Avanti</label>
   </variable>
-  <variable label="Swiss Mapping Group 3 A2 Fw" CV="445">
+  <variable item="Swiss Mapping Group 3 A2 Fw" CV="445">
     <enumVal>
-      <enumChoice choice="None">
-        <choice>None</choice>
-      </enumChoice>
-      <enumChoice choice="Front Light" value="14">
-        <choice>Front Light</choice>
-      </enumChoice>
-      <enumChoice choice="Rear Light" value="15">
-        <choice>Rear Light</choice>
-      </enumChoice>
-      <enumChoice choice="FO 1" value="1">
-        <choice>FO 1</choice>
-      </enumChoice>
-      <enumChoice choice="FO 2">
-        <choice>FO 2</choice>
-      </enumChoice>
-      <enumChoice choice="FO 3">
-        <choice>FO 3</choice>
-      </enumChoice>
-      <enumChoice choice="FO 4">
-        <choice>FO 4</choice>
-      </enumChoice>
-      <enumChoice choice="FO 5">
-        <choice>FO 5</choice>
-      </enumChoice>
-      <enumChoice choice="FO 6">
-        <choice>FO 6</choice>
-      </enumChoice>
-      <enumChoice choice="FO 7">
-        <choice>FO 7</choice>
-      </enumChoice>
-      <enumChoice choice="FO 8">
-        <choice>FO 8</choice>
-      </enumChoice>
-      <enumChoice choice="FO 9">
-        <choice>FO 9</choice>
-      </enumChoice>
-      <enumChoice choice="FO 10">
-        <choice>FO 10</choice>
-      </enumChoice>
-      <enumChoice choice="FO 11">
-        <choice>FO 11</choice>
-      </enumChoice>
-      <enumChoice choice="FO 12">
-        <choice>FO 12</choice>
-      </enumChoice>
-      <enumChoice choice="FO 13">
-        <choice>FO 13</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 3 A2 Fw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 3 A2 Avanti</label>
   </variable>
-  <variable label="Swiss Mapping Group 3 A1 Rw" CV="446">
+  <variable item="Swiss Mapping Group 3 A1 Rw" CV="446">
     <enumVal>
-      <enumChoice choice="None">
-        <choice>None</choice>
-      </enumChoice>
-      <enumChoice choice="Front Light" value="14">
-        <choice>Front Light</choice>
-      </enumChoice>
-      <enumChoice choice="Rear Light" value="15">
-        <choice>Rear Light</choice>
-      </enumChoice>
-      <enumChoice choice="FO 1" value="1">
-        <choice>FO 1</choice>
-      </enumChoice>
-      <enumChoice choice="FO 2">
-        <choice>FO 2</choice>
-      </enumChoice>
-      <enumChoice choice="FO 3">
-        <choice>FO 3</choice>
-      </enumChoice>
-      <enumChoice choice="FO 4">
-        <choice>FO 4</choice>
-      </enumChoice>
-      <enumChoice choice="FO 5">
-        <choice>FO 5</choice>
-      </enumChoice>
-      <enumChoice choice="FO 6">
-        <choice>FO 6</choice>
-      </enumChoice>
-      <enumChoice choice="FO 7">
-        <choice>FO 7</choice>
-      </enumChoice>
-      <enumChoice choice="FO 8">
-        <choice>FO 8</choice>
-      </enumChoice>
-      <enumChoice choice="FO 9">
-        <choice>FO 9</choice>
-      </enumChoice>
-      <enumChoice choice="FO 10">
-        <choice>FO 10</choice>
-      </enumChoice>
-      <enumChoice choice="FO 11">
-        <choice>FO 11</choice>
-      </enumChoice>
-      <enumChoice choice="FO 12">
-        <choice>FO 12</choice>
-      </enumChoice>
-      <enumChoice choice="FO 13">
-        <choice>FO 13</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 3 A1 Rw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 3 A1 Retro</label>
   </variable>
-  <variable label="Swiss Mapping Group 3 A2 Rw" CV="447">
+  <variable item="Swiss Mapping Group 3 A2 Rw" CV="447">
     <enumVal>
-      <enumChoice choice="None">
-        <choice>None</choice>
-      </enumChoice>
-      <enumChoice choice="Front Light" value="14">
-        <choice>Front Light</choice>
-      </enumChoice>
-      <enumChoice choice="Rear Light" value="15">
-        <choice>Rear Light</choice>
-      </enumChoice>
-      <enumChoice choice="FO 1" value="1">
-        <choice>FO 1</choice>
-      </enumChoice>
-      <enumChoice choice="FO 2">
-        <choice>FO 2</choice>
-      </enumChoice>
-      <enumChoice choice="FO 3">
-        <choice>FO 3</choice>
-      </enumChoice>
-      <enumChoice choice="FO 4">
-        <choice>FO 4</choice>
-      </enumChoice>
-      <enumChoice choice="FO 5">
-        <choice>FO 5</choice>
-      </enumChoice>
-      <enumChoice choice="FO 6">
-        <choice>FO 6</choice>
-      </enumChoice>
-      <enumChoice choice="FO 7">
-        <choice>FO 7</choice>
-      </enumChoice>
-      <enumChoice choice="FO 8">
-        <choice>FO 8</choice>
-      </enumChoice>
-      <enumChoice choice="FO 9">
-        <choice>FO 9</choice>
-      </enumChoice>
-      <enumChoice choice="FO 10">
-        <choice>FO 10</choice>
-      </enumChoice>
-      <enumChoice choice="FO 11">
-        <choice>FO 11</choice>
-      </enumChoice>
-      <enumChoice choice="FO 12">
-        <choice>FO 12</choice>
-      </enumChoice>
-      <enumChoice choice="FO 13">
-        <choice>FO 13</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 3 A2 Rw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 3 A2 Retro</label>
   </variable>
-  <variable label="Swiss Mapping Group 4 F-key" CV="448">
+  <variable item="Swiss Mapping Group 4 F-key" CV="448">
     <enumVal>
-      <enumChoice choice="F-Key">
-        <choice>F-Key</choice>
-      </enumChoice>
-      <enumChoice choice="F0" value="29">
-        <choice>F0</choice>
-      </enumChoice>
-      <enumChoice choice="F1" value="1">
-        <choice>F1</choice>
-      </enumChoice>
-      <enumChoice choice="F2">
-        <choice>F2</choice>
-      </enumChoice>
-      <enumChoice choice="F3">
-        <choice>F3</choice>
-      </enumChoice>
-      <enumChoice choice="F4">
-        <choice>F4</choice>
-      </enumChoice>
-      <enumChoice choice="F5">
-        <choice>F5</choice>
-      </enumChoice>
-      <enumChoice choice="F6">
-        <choice>F6</choice>
-      </enumChoice>
-      <enumChoice choice="F7">
-        <choice>F7</choice>
-      </enumChoice>
-      <enumChoice choice="F8">
-        <choice>F8</choice>
-      </enumChoice>
-      <enumChoice choice="F9">
-        <choice>F9</choice>
-      </enumChoice>
-      <enumChoice choice="F10">
-        <choice>F10</choice>
-      </enumChoice>
-      <enumChoice choice="F11">
-        <choice>F11</choice>
-      </enumChoice>
-      <enumChoice choice="F12">
-        <choice>F12</choice>
-      </enumChoice>
-      <enumChoice choice="F13">
-        <choice>F13</choice>
-      </enumChoice>
-      <enumChoice choice="F14">
-        <choice>F14</choice>
-      </enumChoice>
-      <enumChoice choice="F15">
-        <choice>F15</choice>
-      </enumChoice>
-      <enumChoice choice="F16">
-        <choice>F16</choice>
-      </enumChoice>
-      <enumChoice choice="F17">
-        <choice>F17</choice>
-      </enumChoice>
-      <enumChoice choice="F18">
-        <choice>F18</choice>
-      </enumChoice>
-      <enumChoice choice="F19">
-        <choice>F19</choice>
-      </enumChoice>
-      <enumChoice choice="F20">
-        <choice>F20</choice>
-      </enumChoice>
-      <enumChoice choice="F21">
-        <choice>F21</choice>
-      </enumChoice>
-      <enumChoice choice="F22">
-        <choice>F22</choice>
-      </enumChoice>
-      <enumChoice choice="F23">
-        <choice>F23</choice>
-      </enumChoice>
-      <enumChoice choice="F24">
-        <choice>F24</choice>
-      </enumChoice>
-      <enumChoice choice="F25">
-        <choice>F25</choice>
-      </enumChoice>
-      <enumChoice choice="F26">
-        <choice>F26</choice>
-      </enumChoice>
-      <enumChoice choice="F27">
-        <choice>F27</choice>
-      </enumChoice>
-      <enumChoice choice="F28">
-        <choice>F28</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 4 F-key</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 4 Tasto F</label>
   </variable>
-  <variable label="Swiss Mapping Group 4 M-key" CV="449" mask="XVVVVVVV">
+  <variable item="Swiss Mapping Group 4 M-key v33" CV="449">
+        <qualifier>
+          <variableref>Decoder Version</variableref>
+          <relation>lt</relation>
+          <value>34</value>
+        </qualifier>
     <enumVal>
-      <enumChoice choice="M-Key">
-        <choice>M-Key</choice>
-      </enumChoice>
-      <enumChoice choice="F0" value="29">
-        <choice>F0</choice>
-      </enumChoice>
-      <enumChoice choice="F1" value="1">
-        <choice>F1</choice>
-      </enumChoice>
-      <enumChoice choice="F2">
-        <choice>F2</choice>
-      </enumChoice>
-      <enumChoice choice="F3">
-        <choice>F3</choice>
-      </enumChoice>
-      <enumChoice choice="F4">
-        <choice>F4</choice>
-      </enumChoice>
-      <enumChoice choice="F5">
-        <choice>F5</choice>
-      </enumChoice>
-      <enumChoice choice="F6">
-        <choice>F6</choice>
-      </enumChoice>
-      <enumChoice choice="F7">
-        <choice>F7</choice>
-      </enumChoice>
-      <enumChoice choice="F8">
-        <choice>F8</choice>
-      </enumChoice>
-      <enumChoice choice="F9">
-        <choice>F9</choice>
-      </enumChoice>
-      <enumChoice choice="F10">
-        <choice>F10</choice>
-      </enumChoice>
-      <enumChoice choice="F11">
-        <choice>F11</choice>
-      </enumChoice>
-      <enumChoice choice="F12">
-        <choice>F12</choice>
-      </enumChoice>
-      <enumChoice choice="F13">
-        <choice>F13</choice>
-      </enumChoice>
-      <enumChoice choice="F14">
-        <choice>F14</choice>
-      </enumChoice>
-      <enumChoice choice="F15">
-        <choice>F15</choice>
-      </enumChoice>
-      <enumChoice choice="F16">
-        <choice>F16</choice>
-      </enumChoice>
-      <enumChoice choice="F17">
-        <choice>F17</choice>
-      </enumChoice>
-      <enumChoice choice="F18">
-        <choice>F18</choice>
-      </enumChoice>
-      <enumChoice choice="F19">
-        <choice>F19</choice>
-      </enumChoice>
-      <enumChoice choice="F20">
-        <choice>F20</choice>
-      </enumChoice>
-      <enumChoice choice="F21">
-        <choice>F21</choice>
-      </enumChoice>
-      <enumChoice choice="F22">
-        <choice>F22</choice>
-      </enumChoice>
-      <enumChoice choice="F23">
-        <choice>F23</choice>
-      </enumChoice>
-      <enumChoice choice="F24">
-        <choice>F24</choice>
-      </enumChoice>
-      <enumChoice choice="F25">
-        <choice>F25</choice>
-      </enumChoice>
-      <enumChoice choice="F26">
-        <choice>F26</choice>
-      </enumChoice>
-      <enumChoice choice="F27">
-        <choice>F27</choice>
-      </enumChoice>
-      <enumChoice choice="F28">
-        <choice>F28</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-M-key.xml"/>
     </enumVal>
-    <label>Swiss Mapping Group 2 M-key</label>
+    <label>Swiss Mapping Group 4 M-key v33</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 4 Tasto M</label>
   </variable>
-  <variable label="Swiss Mapping Group 4" CV="449" mask="VXXXXXXX">
+  <variable item="Swiss Mapping Group 4 M-key" CV="449">
+        <qualifier>
+          <variableref>Decoder Version</variableref>
+          <relation>ge</relation>
+          <value>34</value>
+        </qualifier>
     <enumVal>
-      <enumChoice choice="off">
-        <choice>off</choice>
-      </enumChoice>
-      <enumChoice choice="on">
-        <choice>on</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-M-key_v34.xml"/>
     </enumVal>
-    <label>Swiss Mapping Group 4</label>
+    <label>Swiss Mapping Group 4 M-key</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 4 Tasto M</label>
   </variable>
-  <variable label="Swiss Mapping Group 4 A1 Fw" CV="450">
+  <variable item="Swiss Mapping Group 4 A1 Fw" CV="450">
     <enumVal>
-      <enumChoice choice="None">
-        <choice>None</choice>
-      </enumChoice>
-      <enumChoice choice="Front Light" value="14">
-        <choice>Front Light</choice>
-      </enumChoice>
-      <enumChoice choice="Rear Light" value="15">
-        <choice>Rear Light</choice>
-      </enumChoice>
-      <enumChoice choice="FO 1" value="1">
-        <choice>FO 1</choice>
-      </enumChoice>
-      <enumChoice choice="FO 2">
-        <choice>FO 2</choice>
-      </enumChoice>
-      <enumChoice choice="FO 3">
-        <choice>FO 3</choice>
-      </enumChoice>
-      <enumChoice choice="FO 4">
-        <choice>FO 4</choice>
-      </enumChoice>
-      <enumChoice choice="FO 5">
-        <choice>FO 5</choice>
-      </enumChoice>
-      <enumChoice choice="FO 6">
-        <choice>FO 6</choice>
-      </enumChoice>
-      <enumChoice choice="FO 7">
-        <choice>FO 7</choice>
-      </enumChoice>
-      <enumChoice choice="FO 8">
-        <choice>FO 8</choice>
-      </enumChoice>
-      <enumChoice choice="FO 9">
-        <choice>FO 9</choice>
-      </enumChoice>
-      <enumChoice choice="FO 10">
-        <choice>FO 10</choice>
-      </enumChoice>
-      <enumChoice choice="FO 11">
-        <choice>FO 11</choice>
-      </enumChoice>
-      <enumChoice choice="FO 12">
-        <choice>FO 12</choice>
-      </enumChoice>
-      <enumChoice choice="FO 13">
-        <choice>FO 13</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 4 A1 Fw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 4 A1 Avanti</label>
   </variable>
-  <variable label="Swiss Mapping Group 4 A2 Fw" CV="451">
+  <variable item="Swiss Mapping Group 4 A2 Fw" CV="451">
     <enumVal>
-      <enumChoice choice="None">
-        <choice>None</choice>
-      </enumChoice>
-      <enumChoice choice="Front Light" value="14">
-        <choice>Front Light</choice>
-      </enumChoice>
-      <enumChoice choice="Rear Light" value="15">
-        <choice>Rear Light</choice>
-      </enumChoice>
-      <enumChoice choice="FO 1" value="1">
-        <choice>FO 1</choice>
-      </enumChoice>
-      <enumChoice choice="FO 2">
-        <choice>FO 2</choice>
-      </enumChoice>
-      <enumChoice choice="FO 3">
-        <choice>FO 3</choice>
-      </enumChoice>
-      <enumChoice choice="FO 4">
-        <choice>FO 4</choice>
-      </enumChoice>
-      <enumChoice choice="FO 5">
-        <choice>FO 5</choice>
-      </enumChoice>
-      <enumChoice choice="FO 6">
-        <choice>FO 6</choice>
-      </enumChoice>
-      <enumChoice choice="FO 7">
-        <choice>FO 7</choice>
-      </enumChoice>
-      <enumChoice choice="FO 8">
-        <choice>FO 8</choice>
-      </enumChoice>
-      <enumChoice choice="FO 9">
-        <choice>FO 9</choice>
-      </enumChoice>
-      <enumChoice choice="FO 10">
-        <choice>FO 10</choice>
-      </enumChoice>
-      <enumChoice choice="FO 11">
-        <choice>FO 11</choice>
-      </enumChoice>
-      <enumChoice choice="FO 12">
-        <choice>FO 12</choice>
-      </enumChoice>
-      <enumChoice choice="FO 13">
-        <choice>FO 13</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 4 A2 Fw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 4 A2 Avanti</label>
   </variable>
-  <variable label="Swiss Mapping Group 4 A1 Rw" CV="452">
+  <variable item="Swiss Mapping Group 4 A1 Rw" CV="452">
     <enumVal>
-      <enumChoice choice="None">
-        <choice>None</choice>
-      </enumChoice>
-      <enumChoice choice="Front Light" value="14">
-        <choice>Front Light</choice>
-      </enumChoice>
-      <enumChoice choice="Rear Light" value="15">
-        <choice>Rear Light</choice>
-      </enumChoice>
-      <enumChoice choice="FO 1" value="1">
-        <choice>FO 1</choice>
-      </enumChoice>
-      <enumChoice choice="FO 2">
-        <choice>FO 2</choice>
-      </enumChoice>
-      <enumChoice choice="FO 3">
-        <choice>FO 3</choice>
-      </enumChoice>
-      <enumChoice choice="FO 4">
-        <choice>FO 4</choice>
-      </enumChoice>
-      <enumChoice choice="FO 5">
-        <choice>FO 5</choice>
-      </enumChoice>
-      <enumChoice choice="FO 6">
-        <choice>FO 6</choice>
-      </enumChoice>
-      <enumChoice choice="FO 7">
-        <choice>FO 7</choice>
-      </enumChoice>
-      <enumChoice choice="FO 8">
-        <choice>FO 8</choice>
-      </enumChoice>
-      <enumChoice choice="FO 9">
-        <choice>FO 9</choice>
-      </enumChoice>
-      <enumChoice choice="FO 10">
-        <choice>FO 10</choice>
-      </enumChoice>
-      <enumChoice choice="FO 11">
-        <choice>FO 11</choice>
-      </enumChoice>
-      <enumChoice choice="FO 12">
-        <choice>FO 12</choice>
-      </enumChoice>
-      <enumChoice choice="FO 13">
-        <choice>FO 13</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 4 A1 Rw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 4 A1 Retro</label>
   </variable>
-  <variable label="Swiss Mapping Group 4 A2 Rw" CV="453">
+  <variable item="Swiss Mapping Group 4 A2 Rw" CV="453">
     <enumVal>
-      <enumChoice choice="None">
-        <choice>None</choice>
-      </enumChoice>
-      <enumChoice choice="Front Light" value="14">
-        <choice>Front Light</choice>
-      </enumChoice>
-      <enumChoice choice="Rear Light" value="15">
-        <choice>Rear Light</choice>
-      </enumChoice>
-      <enumChoice choice="FO 1" value="1">
-        <choice>FO 1</choice>
-      </enumChoice>
-      <enumChoice choice="FO 2">
-        <choice>FO 2</choice>
-      </enumChoice>
-      <enumChoice choice="FO 3">
-        <choice>FO 3</choice>
-      </enumChoice>
-      <enumChoice choice="FO 4">
-        <choice>FO 4</choice>
-      </enumChoice>
-      <enumChoice choice="FO 5">
-        <choice>FO 5</choice>
-      </enumChoice>
-      <enumChoice choice="FO 6">
-        <choice>FO 6</choice>
-      </enumChoice>
-      <enumChoice choice="FO 7">
-        <choice>FO 7</choice>
-      </enumChoice>
-      <enumChoice choice="FO 8">
-        <choice>FO 8</choice>
-      </enumChoice>
-      <enumChoice choice="FO 9">
-        <choice>FO 9</choice>
-      </enumChoice>
-      <enumChoice choice="FO 10">
-        <choice>FO 10</choice>
-      </enumChoice>
-      <enumChoice choice="FO 11">
-        <choice>FO 11</choice>
-      </enumChoice>
-      <enumChoice choice="FO 12">
-        <choice>FO 12</choice>
-      </enumChoice>
-      <enumChoice choice="FO 13">
-        <choice>FO 13</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 4 A2 Rw</label>
+     <label xml:lang="it">Mappatura Svizzera Gruppo 4 A2 Retro</label>
   </variable>
-  <variable label="Swiss Mapping Group 5 F-key" CV="454">
+  <variable item="Swiss Mapping Group 5 F-key" CV="454">
     <enumVal>
-      <enumChoice choice="F-Key">
-        <choice>F-key</choice>
-      </enumChoice>
-      <enumChoice choice="F0" value="29">
-        <choice>F0</choice>
-      </enumChoice>
-      <enumChoice choice="F1" value="1">
-        <choice>F1</choice>
-      </enumChoice>
-      <enumChoice choice="F2">
-        <choice>F2</choice>
-      </enumChoice>
-      <enumChoice choice="F3">
-        <choice>F3</choice>
-      </enumChoice>
-      <enumChoice choice="F4">
-        <choice>F4</choice>
-      </enumChoice>
-      <enumChoice choice="F5">
-        <choice>F5</choice>
-      </enumChoice>
-      <enumChoice choice="F6">
-        <choice>F6</choice>
-      </enumChoice>
-      <enumChoice choice="F7">
-        <choice>F7</choice>
-      </enumChoice>
-      <enumChoice choice="F8">
-        <choice>F8</choice>
-      </enumChoice>
-      <enumChoice choice="F9">
-        <choice>F9</choice>
-      </enumChoice>
-      <enumChoice choice="F10">
-        <choice>F10</choice>
-      </enumChoice>
-      <enumChoice choice="F11">
-        <choice>F11</choice>
-      </enumChoice>
-      <enumChoice choice="F12">
-        <choice>F12</choice>
-      </enumChoice>
-      <enumChoice choice="F13">
-        <choice>F13</choice>
-      </enumChoice>
-      <enumChoice choice="F14">
-        <choice>F14</choice>
-      </enumChoice>
-      <enumChoice choice="F15">
-        <choice>F15</choice>
-      </enumChoice>
-      <enumChoice choice="F16">
-        <choice>F16</choice>
-      </enumChoice>
-      <enumChoice choice="F17">
-        <choice>F17</choice>
-      </enumChoice>
-      <enumChoice choice="F18">
-        <choice>F18</choice>
-      </enumChoice>
-      <enumChoice choice="F19">
-        <choice>F19</choice>
-      </enumChoice>
-      <enumChoice choice="F20">
-        <choice>F20</choice>
-      </enumChoice>
-      <enumChoice choice="F21">
-        <choice>F21</choice>
-      </enumChoice>
-      <enumChoice choice="F22">
-        <choice>F22</choice>
-      </enumChoice>
-      <enumChoice choice="F23">
-        <choice>F23</choice>
-      </enumChoice>
-      <enumChoice choice="F24">
-        <choice>F24</choice>
-      </enumChoice>
-      <enumChoice choice="F25">
-        <choice>F25</choice>
-      </enumChoice>
-      <enumChoice choice="F26">
-        <choice>F26</choice>
-      </enumChoice>
-      <enumChoice choice="F27">
-        <choice>F27</choice>
-      </enumChoice>
-      <enumChoice choice="F28">
-        <choice>F28</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 5 F-key</label>
+     <label xml:lang="it">Mappatura Svizzera Gruppo 5 tasto F</label>
   </variable>
-  <variable label="Swiss Mapping Group 5 M-key" CV="455" mask="XVVVVVVV">
+  <variable item="Swiss Mapping Group 5 M-key v33" CV="455">
+        <qualifier>
+          <variableref>Decoder Version</variableref>
+          <relation>lt</relation>
+          <value>34</value>
+        </qualifier>
     <enumVal>
-      <enumChoice choice="M-Key">
-        <choice>M-Key</choice>
-      </enumChoice>
-      <enumChoice choice="F0" value="29">
-        <choice>F0</choice>
-      </enumChoice>
-      <enumChoice choice="F1" value="1">
-        <choice>F1</choice>
-      </enumChoice>
-      <enumChoice choice="F2">
-        <choice>F2</choice>
-      </enumChoice>
-      <enumChoice choice="F3">
-        <choice>F3</choice>
-      </enumChoice>
-      <enumChoice choice="F4">
-        <choice>F4</choice>
-      </enumChoice>
-      <enumChoice choice="F5">
-        <choice>F5</choice>
-      </enumChoice>
-      <enumChoice choice="F6">
-        <choice>F6</choice>
-      </enumChoice>
-      <enumChoice choice="F7">
-        <choice>F7</choice>
-      </enumChoice>
-      <enumChoice choice="F8">
-        <choice>F8</choice>
-      </enumChoice>
-      <enumChoice choice="F9">
-        <choice>F9</choice>
-      </enumChoice>
-      <enumChoice choice="F10">
-        <choice>F10</choice>
-      </enumChoice>
-      <enumChoice choice="F11">
-        <choice>F11</choice>
-      </enumChoice>
-      <enumChoice choice="F12">
-        <choice>F12</choice>
-      </enumChoice>
-      <enumChoice choice="F13">
-        <choice>F13</choice>
-      </enumChoice>
-      <enumChoice choice="F14">
-        <choice>F14</choice>
-      </enumChoice>
-      <enumChoice choice="F15">
-        <choice>F15</choice>
-      </enumChoice>
-      <enumChoice choice="F16">
-        <choice>F16</choice>
-      </enumChoice>
-      <enumChoice choice="F17">
-        <choice>F17</choice>
-      </enumChoice>
-      <enumChoice choice="F18">
-        <choice>F18</choice>
-      </enumChoice>
-      <enumChoice choice="F19">
-        <choice>F19</choice>
-      </enumChoice>
-      <enumChoice choice="F20">
-        <choice>F20</choice>
-      </enumChoice>
-      <enumChoice choice="F21">
-        <choice>F21</choice>
-      </enumChoice>
-      <enumChoice choice="F22">
-        <choice>F22</choice>
-      </enumChoice>
-      <enumChoice choice="F23">
-        <choice>F23</choice>
-      </enumChoice>
-      <enumChoice choice="F24">
-        <choice>F24</choice>
-      </enumChoice>
-      <enumChoice choice="F25">
-        <choice>F25</choice>
-      </enumChoice>
-      <enumChoice choice="F26">
-        <choice>F26</choice>
-      </enumChoice>
-      <enumChoice choice="F27">
-        <choice>F27</choice>
-      </enumChoice>
-      <enumChoice choice="F28">
-        <choice>F28</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-M-key.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 5 M-key v33</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 5 tasto M v33</label>
+  </variable>
+  <variable item="Swiss Mapping Group 5 M-key" CV="455">
+        <qualifier>
+          <variableref>Decoder Version</variableref>
+          <relation>ge</relation>
+          <value>34</value>
+        </qualifier>
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-M-key_v34.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 5 M-key</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 5 tasto M</label>
   </variable>
-  <variable label="Swiss Mapping Group 5" CV="455" mask="VXXXXXXX">
+  <variable item="Swiss Mapping Group 5 A1 Fw" CV="456">
     <enumVal>
-      <enumChoice choice="off">
-        <choice>off</choice>
-      </enumChoice>
-      <enumChoice choice="on">
-        <choice>on</choice>
-      </enumChoice>
-    </enumVal>
-    <label>Swiss Mapping Group 5</label>
-  </variable>
-  <variable label="Swiss Mapping Group 5 A1 Fw" CV="456">
-    <enumVal>
-      <enumChoice choice="None">
-        <choice>None</choice>
-      </enumChoice>
-      <enumChoice choice="Front Light" value="14">
-        <choice>Front Light</choice>
-      </enumChoice>
-      <enumChoice choice="Rear Light" value="15">
-        <choice>Rear Light</choice>
-      </enumChoice>
-      <enumChoice choice="FO 1" value="1">
-        <choice>FO 1</choice>
-      </enumChoice>
-      <enumChoice choice="FO 2">
-        <choice>FO 2</choice>
-      </enumChoice>
-      <enumChoice choice="FO 3">
-        <choice>FO 3</choice>
-      </enumChoice>
-      <enumChoice choice="FO 4">
-        <choice>FO 4</choice>
-      </enumChoice>
-      <enumChoice choice="FO 5">
-        <choice>FO 5</choice>
-      </enumChoice>
-      <enumChoice choice="FO 6">
-        <choice>FO 6</choice>
-      </enumChoice>
-      <enumChoice choice="FO 7">
-        <choice>FO 7</choice>
-      </enumChoice>
-      <enumChoice choice="FO 8">
-        <choice>FO 8</choice>
-      </enumChoice>
-      <enumChoice choice="FO 9">
-        <choice>FO 9</choice>
-      </enumChoice>
-      <enumChoice choice="FO 10">
-        <choice>FO 10</choice>
-      </enumChoice>
-      <enumChoice choice="FO 11">
-        <choice>FO 11</choice>
-      </enumChoice>
-      <enumChoice choice="FO 12">
-        <choice>FO 12</choice>
-      </enumChoice>
-      <enumChoice choice="FO 13">
-        <choice>FO 13</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 5 A1 Fw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 5 A1 Avanti</label>
   </variable>
-  <variable label="Swiss Mapping Group 5 A2 Fw" CV="457">
+  <variable item="Swiss Mapping Group 5 A2 Fw" CV="457">
     <enumVal>
-      <enumChoice choice="None">
-        <choice>None</choice>
-      </enumChoice>
-      <enumChoice choice="Front Light" value="14">
-        <choice>Front Light</choice>
-      </enumChoice>
-      <enumChoice choice="Rear Light" value="15">
-        <choice>Rear Light</choice>
-      </enumChoice>
-      <enumChoice choice="FO 1" value="1">
-        <choice>FO 1</choice>
-      </enumChoice>
-      <enumChoice choice="FO 2">
-        <choice>FO 2</choice>
-      </enumChoice>
-      <enumChoice choice="FO 3">
-        <choice>FO 3</choice>
-      </enumChoice>
-      <enumChoice choice="FO 4">
-        <choice>FO 4</choice>
-      </enumChoice>
-      <enumChoice choice="FO 5">
-        <choice>FO 5</choice>
-      </enumChoice>
-      <enumChoice choice="FO 6">
-        <choice>FO 6</choice>
-      </enumChoice>
-      <enumChoice choice="FO 7">
-        <choice>FO 7</choice>
-      </enumChoice>
-      <enumChoice choice="FO 8">
-        <choice>FO 8</choice>
-      </enumChoice>
-      <enumChoice choice="FO 9">
-        <choice>FO 9</choice>
-      </enumChoice>
-      <enumChoice choice="FO 10">
-        <choice>FO 10</choice>
-      </enumChoice>
-      <enumChoice choice="FO 11">
-        <choice>FO 11</choice>
-      </enumChoice>
-      <enumChoice choice="FO 12">
-        <choice>FO 12</choice>
-      </enumChoice>
-      <enumChoice choice="FO 13">
-        <choice>FO 13</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 5 A2 Fw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 5 A2 Avanti</label>
   </variable>
-  <variable label="Swiss Mapping Group 5 A1 Rw" CV="458">
+  <variable item="Swiss Mapping Group 5 A1 Rw" CV="458">
     <enumVal>
-      <enumChoice choice="None">
-        <choice>None</choice>
-      </enumChoice>
-      <enumChoice choice="Front Light" value="14">
-        <choice>Front Light</choice>
-      </enumChoice>
-      <enumChoice choice="Rear Light" value="15">
-        <choice>Rear Light</choice>
-      </enumChoice>
-      <enumChoice choice="FO 1" value="1">
-        <choice>FO 1</choice>
-      </enumChoice>
-      <enumChoice choice="FO 2">
-        <choice>FO 2</choice>
-      </enumChoice>
-      <enumChoice choice="FO 3">
-        <choice>FO 3</choice>
-      </enumChoice>
-      <enumChoice choice="FO 4">
-        <choice>FO 4</choice>
-      </enumChoice>
-      <enumChoice choice="FO 5">
-        <choice>FO 5</choice>
-      </enumChoice>
-      <enumChoice choice="FO 6">
-        <choice>FO 6</choice>
-      </enumChoice>
-      <enumChoice choice="FO 7">
-        <choice>FO 7</choice>
-      </enumChoice>
-      <enumChoice choice="FO 8">
-        <choice>FO 8</choice>
-      </enumChoice>
-      <enumChoice choice="FO 9">
-        <choice>FO 9</choice>
-      </enumChoice>
-      <enumChoice choice="FO 10">
-        <choice>FO 10</choice>
-      </enumChoice>
-      <enumChoice choice="FO 11">
-        <choice>FO 11</choice>
-      </enumChoice>
-      <enumChoice choice="FO 12">
-        <choice>FO 12</choice>
-      </enumChoice>
-      <enumChoice choice="FO 13">
-        <choice>FO 13</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 5 A1 Rw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 5 A1 Retro</label>
   </variable>
-  <variable label="Swiss Mapping Group 5 A2 Rw" CV="459">
+  <variable item="Swiss Mapping Group 5 A2 Rw" CV="459">
     <enumVal>
-      <enumChoice choice="None">
-        <choice>None</choice>
-      </enumChoice>
-      <enumChoice choice="Front Light" value="14">
-        <choice>Front Light</choice>
-      </enumChoice>
-      <enumChoice choice="Rear Light" value="15">
-        <choice>Rear Light</choice>
-      </enumChoice>
-      <enumChoice choice="FO 1" value="1">
-        <choice>FO 1</choice>
-      </enumChoice>
-      <enumChoice choice="FO 2">
-        <choice>FO 2</choice>
-      </enumChoice>
-      <enumChoice choice="FO 3">
-        <choice>FO 3</choice>
-      </enumChoice>
-      <enumChoice choice="FO 4">
-        <choice>FO 4</choice>
-      </enumChoice>
-      <enumChoice choice="FO 5">
-        <choice>FO 5</choice>
-      </enumChoice>
-      <enumChoice choice="FO 6">
-        <choice>FO 6</choice>
-      </enumChoice>
-      <enumChoice choice="FO 7">
-        <choice>FO 7</choice>
-      </enumChoice>
-      <enumChoice choice="FO 8">
-        <choice>FO 8</choice>
-      </enumChoice>
-      <enumChoice choice="FO 9">
-        <choice>FO 9</choice>
-      </enumChoice>
-      <enumChoice choice="FO 10">
-        <choice>FO 10</choice>
-      </enumChoice>
-      <enumChoice choice="FO 11">
-        <choice>FO 11</choice>
-      </enumChoice>
-      <enumChoice choice="FO 12">
-        <choice>FO 12</choice>
-      </enumChoice>
-      <enumChoice choice="FO 13">
-        <choice>FO 13</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 5 A2 Rw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 5 A2 Retro</label>
   </variable>
-  <variable label="Swiss Mapping Group 6 F-key" CV="460">
+  <variable item="Swiss Mapping Group 6 F-key" CV="460">
     <enumVal>
-      <enumChoice choice="F-Key">
-        <choice>F-Key</choice>
-      </enumChoice>
-      <enumChoice choice="F0" value="29">
-        <choice>F0</choice>
-      </enumChoice>
-      <enumChoice choice="F1" value="1">
-        <choice>F1</choice>
-      </enumChoice>
-      <enumChoice choice="F2">
-        <choice>F2</choice>
-      </enumChoice>
-      <enumChoice choice="F3">
-        <choice>F3</choice>
-      </enumChoice>
-      <enumChoice choice="F4">
-        <choice>F4</choice>
-      </enumChoice>
-      <enumChoice choice="F5">
-        <choice>F5</choice>
-      </enumChoice>
-      <enumChoice choice="F6">
-        <choice>F6</choice>
-      </enumChoice>
-      <enumChoice choice="F7">
-        <choice>F7</choice>
-      </enumChoice>
-      <enumChoice choice="F8">
-        <choice>F8</choice>
-      </enumChoice>
-      <enumChoice choice="F9">
-        <choice>F9</choice>
-      </enumChoice>
-      <enumChoice choice="F10">
-        <choice>F10</choice>
-      </enumChoice>
-      <enumChoice choice="F11">
-        <choice>F11</choice>
-      </enumChoice>
-      <enumChoice choice="F12">
-        <choice>F12</choice>
-      </enumChoice>
-      <enumChoice choice="F13">
-        <choice>F13</choice>
-      </enumChoice>
-      <enumChoice choice="F14">
-        <choice>F14</choice>
-      </enumChoice>
-      <enumChoice choice="F15">
-        <choice>F15</choice>
-      </enumChoice>
-      <enumChoice choice="F16">
-        <choice>F16</choice>
-      </enumChoice>
-      <enumChoice choice="F17">
-        <choice>F17</choice>
-      </enumChoice>
-      <enumChoice choice="F18">
-        <choice>F18</choice>
-      </enumChoice>
-      <enumChoice choice="F19">
-        <choice>F19</choice>
-      </enumChoice>
-      <enumChoice choice="F20">
-        <choice>F20</choice>
-      </enumChoice>
-      <enumChoice choice="F21">
-        <choice>F21</choice>
-      </enumChoice>
-      <enumChoice choice="F22">
-        <choice>F22</choice>
-      </enumChoice>
-      <enumChoice choice="F23">
-        <choice>F23</choice>
-      </enumChoice>
-      <enumChoice choice="F24">
-        <choice>F24</choice>
-      </enumChoice>
-      <enumChoice choice="F25">
-        <choice>F25</choice>
-      </enumChoice>
-      <enumChoice choice="F26">
-        <choice>F26</choice>
-      </enumChoice>
-      <enumChoice choice="F27">
-        <choice>F27</choice>
-      </enumChoice>
-      <enumChoice choice="F28">
-        <choice>F28</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 6 F-key</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 6 Tasto F</label>
   </variable>
-  <variable label="Swiss Mapping Group 6 M-key" CV="461" mask="XVVVVVVV">
+  <variable item="Swiss Mapping Group 6 M-key v33" CV="461">
+        <qualifier>
+          <variableref>Decoder Version</variableref>
+          <relation>lt</relation>
+          <value>34</value>
+        </qualifier>
     <enumVal>
-      <enumChoice choice="M-Key">
-        <choice>M-Key</choice>
-      </enumChoice>
-      <enumChoice choice="F0" value="29">
-        <choice>F0</choice>
-      </enumChoice>
-      <enumChoice choice="F1" value="1">
-        <choice>F1</choice>
-      </enumChoice>
-      <enumChoice choice="F2">
-        <choice>F2</choice>
-      </enumChoice>
-      <enumChoice choice="F3">
-        <choice>F3</choice>
-      </enumChoice>
-      <enumChoice choice="F4">
-        <choice>F4</choice>
-      </enumChoice>
-      <enumChoice choice="F5">
-        <choice>F5</choice>
-      </enumChoice>
-      <enumChoice choice="F6">
-        <choice>F6</choice>
-      </enumChoice>
-      <enumChoice choice="F7">
-        <choice>F7</choice>
-      </enumChoice>
-      <enumChoice choice="F8">
-        <choice>F8</choice>
-      </enumChoice>
-      <enumChoice choice="F9">
-        <choice>F9</choice>
-      </enumChoice>
-      <enumChoice choice="F10">
-        <choice>F10</choice>
-      </enumChoice>
-      <enumChoice choice="F11">
-        <choice>F11</choice>
-      </enumChoice>
-      <enumChoice choice="F12">
-        <choice>F12</choice>
-      </enumChoice>
-      <enumChoice choice="F13">
-        <choice>F13</choice>
-      </enumChoice>
-      <enumChoice choice="F14">
-        <choice>F14</choice>
-      </enumChoice>
-      <enumChoice choice="F15">
-        <choice>F15</choice>
-      </enumChoice>
-      <enumChoice choice="F16">
-        <choice>F16</choice>
-      </enumChoice>
-      <enumChoice choice="F17">
-        <choice>F17</choice>
-      </enumChoice>
-      <enumChoice choice="F18">
-        <choice>F18</choice>
-      </enumChoice>
-      <enumChoice choice="F19">
-        <choice>F19</choice>
-      </enumChoice>
-      <enumChoice choice="F20">
-        <choice>F20</choice>
-      </enumChoice>
-      <enumChoice choice="F21">
-        <choice>F21</choice>
-      </enumChoice>
-      <enumChoice choice="F22">
-        <choice>F22</choice>
-      </enumChoice>
-      <enumChoice choice="F23">
-        <choice>F23</choice>
-      </enumChoice>
-      <enumChoice choice="F24">
-        <choice>F24</choice>
-      </enumChoice>
-      <enumChoice choice="F25">
-        <choice>F25</choice>
-      </enumChoice>
-      <enumChoice choice="F26">
-        <choice>F26</choice>
-      </enumChoice>
-      <enumChoice choice="F27">
-        <choice>F27</choice>
-      </enumChoice>
-      <enumChoice choice="F28">
-        <choice>F28</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-M-key.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 6 M-key v33</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 6 Tasto M v33</label>
+  </variable>
+  <variable item="Swiss Mapping Group 6 M-key" CV="461">
+        <qualifier>
+          <variableref>Decoder Version</variableref>
+          <relation>ge</relation>
+          <value>34</value>
+        </qualifier>
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-M-key_v34.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 6 M-key</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 6 Tasto M</label>
   </variable>
-  <variable label="Swiss Mapping Group 6" CV="461" mask="VXXXXXXX">
+  <variable item="Swiss Mapping Group 6 A1 Fw" CV="462">
     <enumVal>
-      <enumChoice choice="off">
-        <choice>off</choice>
-      </enumChoice>
-      <enumChoice choice="on">
-        <choice>on</choice>
-      </enumChoice>
-    </enumVal>
-    <label>Swiss Mapping Group 6</label>
-  </variable>
-  <variable label="Swiss Mapping Group 6 A1 Fw" CV="462">
-    <enumVal>
-      <enumChoice choice="None">
-        <choice>None</choice>
-      </enumChoice>
-      <enumChoice choice="Front Light" value="14">
-        <choice>Front Light</choice>
-      </enumChoice>
-      <enumChoice choice="Rear Light" value="15">
-        <choice>Rear Light</choice>
-      </enumChoice>
-      <enumChoice choice="FO 1" value="1">
-        <choice>FO 1</choice>
-      </enumChoice>
-      <enumChoice choice="FO 2">
-        <choice>FO 2</choice>
-      </enumChoice>
-      <enumChoice choice="FO 3">
-        <choice>FO 3</choice>
-      </enumChoice>
-      <enumChoice choice="FO 4">
-        <choice>FO 4</choice>
-      </enumChoice>
-      <enumChoice choice="FO 5">
-        <choice>FO 5</choice>
-      </enumChoice>
-      <enumChoice choice="FO 6">
-        <choice>FO 6</choice>
-      </enumChoice>
-      <enumChoice choice="FO 7">
-        <choice>FO 7</choice>
-      </enumChoice>
-      <enumChoice choice="FO 8">
-        <choice>FO 8</choice>
-      </enumChoice>
-      <enumChoice choice="FO 9">
-        <choice>FO 9</choice>
-      </enumChoice>
-      <enumChoice choice="FO 10">
-        <choice>FO 10</choice>
-      </enumChoice>
-      <enumChoice choice="FO 11">
-        <choice>FO 11</choice>
-      </enumChoice>
-      <enumChoice choice="FO 12">
-        <choice>FO 12</choice>
-      </enumChoice>
-      <enumChoice choice="FO 13">
-        <choice>FO 13</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 6 A1 Fw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 6 A1 Avanti</label>
   </variable>
-  <variable label="Swiss Mapping Group 6 A2 Fw" CV="463">
+  <variable item="Swiss Mapping Group 6 A2 Fw" CV="463">
     <enumVal>
-      <enumChoice choice="None">
-        <choice>None</choice>
-      </enumChoice>
-      <enumChoice choice="Front Light" value="14">
-        <choice>Front Light</choice>
-      </enumChoice>
-      <enumChoice choice="Rear Light" value="15">
-        <choice>Rear Light</choice>
-      </enumChoice>
-      <enumChoice choice="FO 1" value="1">
-        <choice>FO 1</choice>
-      </enumChoice>
-      <enumChoice choice="FO 2">
-        <choice>FO 2</choice>
-      </enumChoice>
-      <enumChoice choice="FO 3">
-        <choice>FO 3</choice>
-      </enumChoice>
-      <enumChoice choice="FO 4">
-        <choice>FO 4</choice>
-      </enumChoice>
-      <enumChoice choice="FO 5">
-        <choice>FO 5</choice>
-      </enumChoice>
-      <enumChoice choice="FO 6">
-        <choice>FO 6</choice>
-      </enumChoice>
-      <enumChoice choice="FO 7">
-        <choice>FO 7</choice>
-      </enumChoice>
-      <enumChoice choice="FO 8">
-        <choice>FO 8</choice>
-      </enumChoice>
-      <enumChoice choice="FO 9">
-        <choice>FO 9</choice>
-      </enumChoice>
-      <enumChoice choice="FO 10">
-        <choice>FO 10</choice>
-      </enumChoice>
-      <enumChoice choice="FO 11">
-        <choice>FO 11</choice>
-      </enumChoice>
-      <enumChoice choice="FO 12">
-        <choice>FO 12</choice>
-      </enumChoice>
-      <enumChoice choice="FO 13">
-        <choice>FO 13</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 6 A2 Fw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 6 A2 Avanti</label>
   </variable>
-  <variable label="Swiss Mapping Group 6 A1 Rw" CV="464">
+  <variable item="Swiss Mapping Group 6 A1 Rw" CV="464">
     <enumVal>
-      <enumChoice choice="None">
-        <choice>None</choice>
-      </enumChoice>
-      <enumChoice choice="Front Light" value="14">
-        <choice>Front Light</choice>
-      </enumChoice>
-      <enumChoice choice="Rear Light" value="15">
-        <choice>Rear Light</choice>
-      </enumChoice>
-      <enumChoice choice="FO 1" value="1">
-        <choice>FO 1</choice>
-      </enumChoice>
-      <enumChoice choice="FO 2">
-        <choice>FO 2</choice>
-      </enumChoice>
-      <enumChoice choice="FO 3">
-        <choice>FO 3</choice>
-      </enumChoice>
-      <enumChoice choice="FO 4">
-        <choice>FO 4</choice>
-      </enumChoice>
-      <enumChoice choice="FO 5">
-        <choice>FO 5</choice>
-      </enumChoice>
-      <enumChoice choice="FO 6">
-        <choice>FO 6</choice>
-      </enumChoice>
-      <enumChoice choice="FO 7">
-        <choice>FO 7</choice>
-      </enumChoice>
-      <enumChoice choice="FO 8">
-        <choice>FO 8</choice>
-      </enumChoice>
-      <enumChoice choice="FO 9">
-        <choice>FO 9</choice>
-      </enumChoice>
-      <enumChoice choice="FO 10">
-        <choice>FO 10</choice>
-      </enumChoice>
-      <enumChoice choice="FO 11">
-        <choice>FO 11</choice>
-      </enumChoice>
-      <enumChoice choice="FO 12">
-        <choice>FO 12</choice>
-      </enumChoice>
-      <enumChoice choice="FO 13">
-        <choice>FO 13</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 6 A1 Rw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 6 A1 Retro</label>
   </variable>
-  <variable label="Swiss Mapping Group 6 A2 Rw" CV="465">
+  <variable item="Swiss Mapping Group 6 A2 Rw" CV="465">
     <enumVal>
-      <enumChoice choice="None">
-        <choice>None</choice>
-      </enumChoice>
-      <enumChoice choice="Front Light" value="14">
-        <choice>Front Light</choice>
-      </enumChoice>
-      <enumChoice choice="Rear Light" value="15">
-        <choice>Rear Light</choice>
-      </enumChoice>
-      <enumChoice choice="FO 1" value="1">
-        <choice>FO 1</choice>
-      </enumChoice>
-      <enumChoice choice="FO 2">
-        <choice>FO 2</choice>
-      </enumChoice>
-      <enumChoice choice="FO 3">
-        <choice>FO 3</choice>
-      </enumChoice>
-      <enumChoice choice="FO 4">
-        <choice>FO 4</choice>
-      </enumChoice>
-      <enumChoice choice="FO 5">
-        <choice>FO 5</choice>
-      </enumChoice>
-      <enumChoice choice="FO 6">
-        <choice>FO 6</choice>
-      </enumChoice>
-      <enumChoice choice="FO 7">
-        <choice>FO 7</choice>
-      </enumChoice>
-      <enumChoice choice="FO 8">
-        <choice>FO 8</choice>
-      </enumChoice>
-      <enumChoice choice="FO 9">
-        <choice>FO 9</choice>
-      </enumChoice>
-      <enumChoice choice="FO 10">
-        <choice>FO 10</choice>
-      </enumChoice>
-      <enumChoice choice="FO 11">
-        <choice>FO 11</choice>
-      </enumChoice>
-      <enumChoice choice="FO 12">
-        <choice>FO 12</choice>
-      </enumChoice>
-      <enumChoice choice="FO 13">
-        <choice>FO 13</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 6 A2 Rw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 6 A2 Retro</label>
   </variable>
-  <variable label="Swiss Mapping Group 7 F-key" CV="466">
+  <variable item="Swiss Mapping Group 7 F-key" CV="466">
     <enumVal>
-      <enumChoice choice="F-Key">
-        <choice>F-Key</choice>
-      </enumChoice>
-      <enumChoice choice="F0" value="29">
-        <choice>F0</choice>
-      </enumChoice>
-      <enumChoice choice="F1" value="1">
-        <choice>F1</choice>
-      </enumChoice>
-      <enumChoice choice="F2">
-        <choice>F2</choice>
-      </enumChoice>
-      <enumChoice choice="F3">
-        <choice>F3</choice>
-      </enumChoice>
-      <enumChoice choice="F4">
-        <choice>F4</choice>
-      </enumChoice>
-      <enumChoice choice="F5">
-        <choice>F5</choice>
-      </enumChoice>
-      <enumChoice choice="F6">
-        <choice>F6</choice>
-      </enumChoice>
-      <enumChoice choice="F7">
-        <choice>F7</choice>
-      </enumChoice>
-      <enumChoice choice="F8">
-        <choice>F8</choice>
-      </enumChoice>
-      <enumChoice choice="F9">
-        <choice>F9</choice>
-      </enumChoice>
-      <enumChoice choice="F10">
-        <choice>F10</choice>
-      </enumChoice>
-      <enumChoice choice="F11">
-        <choice>F11</choice>
-      </enumChoice>
-      <enumChoice choice="F12">
-        <choice>F12</choice>
-      </enumChoice>
-      <enumChoice choice="F13">
-        <choice>F13</choice>
-      </enumChoice>
-      <enumChoice choice="F14">
-        <choice>F14</choice>
-      </enumChoice>
-      <enumChoice choice="F15">
-        <choice>F15</choice>
-      </enumChoice>
-      <enumChoice choice="F16">
-        <choice>F16</choice>
-      </enumChoice>
-      <enumChoice choice="F17">
-        <choice>F17</choice>
-      </enumChoice>
-      <enumChoice choice="F18">
-        <choice>F18</choice>
-      </enumChoice>
-      <enumChoice choice="F19">
-        <choice>F19</choice>
-      </enumChoice>
-      <enumChoice choice="F20">
-        <choice>F20</choice>
-      </enumChoice>
-      <enumChoice choice="F21">
-        <choice>F21</choice>
-      </enumChoice>
-      <enumChoice choice="F22">
-        <choice>F22</choice>
-      </enumChoice>
-      <enumChoice choice="F23">
-        <choice>F23</choice>
-      </enumChoice>
-      <enumChoice choice="F24">
-        <choice>F24</choice>
-      </enumChoice>
-      <enumChoice choice="F25">
-        <choice>F25</choice>
-      </enumChoice>
-      <enumChoice choice="F26">
-        <choice>F26</choice>
-      </enumChoice>
-      <enumChoice choice="F27">
-        <choice>F27</choice>
-      </enumChoice>
-      <enumChoice choice="F28">
-        <choice>F28</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 7 F-key</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 7 Tasto F</label>
   </variable>
-  <variable label="Swiss Mapping Group 7 M-key" CV="467" mask="XVVVVVVV">
+  <variable item="Swiss Mapping Group 7 M-key v33" CV="467">
+        <qualifier>
+          <variableref>Decoder Version</variableref>
+          <relation>lt</relation>
+          <value>34</value>
+        </qualifier>
     <enumVal>
-      <enumChoice choice="M-Key">
-        <choice>M-Key</choice>
-      </enumChoice>
-      <enumChoice choice="F0" value="29">
-        <choice>F0</choice>
-      </enumChoice>
-      <enumChoice choice="F1" value="1">
-        <choice>F1</choice>
-      </enumChoice>
-      <enumChoice choice="F2">
-        <choice>F2</choice>
-      </enumChoice>
-      <enumChoice choice="F3">
-        <choice>F3</choice>
-      </enumChoice>
-      <enumChoice choice="F4">
-        <choice>F4</choice>
-      </enumChoice>
-      <enumChoice choice="F5">
-        <choice>F5</choice>
-      </enumChoice>
-      <enumChoice choice="F6">
-        <choice>F6</choice>
-      </enumChoice>
-      <enumChoice choice="F7">
-        <choice>F7</choice>
-      </enumChoice>
-      <enumChoice choice="F8">
-        <choice>F8</choice>
-      </enumChoice>
-      <enumChoice choice="F9">
-        <choice>F9</choice>
-      </enumChoice>
-      <enumChoice choice="F10">
-        <choice>F10</choice>
-      </enumChoice>
-      <enumChoice choice="F11">
-        <choice>F11</choice>
-      </enumChoice>
-      <enumChoice choice="F12">
-        <choice>F12</choice>
-      </enumChoice>
-      <enumChoice choice="F13">
-        <choice>F13</choice>
-      </enumChoice>
-      <enumChoice choice="F14">
-        <choice>F14</choice>
-      </enumChoice>
-      <enumChoice choice="F15">
-        <choice>F15</choice>
-      </enumChoice>
-      <enumChoice choice="F16">
-        <choice>F16</choice>
-      </enumChoice>
-      <enumChoice choice="F17">
-        <choice>F17</choice>
-      </enumChoice>
-      <enumChoice choice="F18">
-        <choice>F18</choice>
-      </enumChoice>
-      <enumChoice choice="F19">
-        <choice>F19</choice>
-      </enumChoice>
-      <enumChoice choice="F20">
-        <choice>F20</choice>
-      </enumChoice>
-      <enumChoice choice="F21">
-        <choice>F21</choice>
-      </enumChoice>
-      <enumChoice choice="F22">
-        <choice>F22</choice>
-      </enumChoice>
-      <enumChoice choice="F23">
-        <choice>F23</choice>
-      </enumChoice>
-      <enumChoice choice="F24">
-        <choice>F24</choice>
-      </enumChoice>
-      <enumChoice choice="F25">
-        <choice>F25</choice>
-      </enumChoice>
-      <enumChoice choice="F26">
-        <choice>F26</choice>
-      </enumChoice>
-      <enumChoice choice="F27">
-        <choice>F27</choice>
-      </enumChoice>
-      <enumChoice choice="F28">
-        <choice>F28</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-M-key.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 7 M-key v33</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 7 Tasto M v33</label>
+  </variable>
+  <variable item="Swiss Mapping Group 7 M-key" CV="467">
+        <qualifier>
+          <variableref>Decoder Version</variableref>
+          <relation>ge</relation>
+          <value>34</value>
+        </qualifier>
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-M-key_v34.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 7 M-key</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 7 Tasto M</label>
   </variable>
-  <variable label="Swiss Mapping Group 7" CV="467" mask="VXXXXXXX">
+  <variable item="Swiss Mapping Group 7 A1 Fw" CV="468">
     <enumVal>
-      <enumChoice choice="off">
-        <choice>off</choice>
-      </enumChoice>
-      <enumChoice choice="on">
-        <choice>on</choice>
-      </enumChoice>
-    </enumVal>
-    <label>Swiss Mapping Group 7</label>
-  </variable>
-  <variable label="Swiss Mapping Group 7 A1 Fw" CV="468">
-    <enumVal>
-      <enumChoice choice="None">
-        <choice>None</choice>
-      </enumChoice>
-      <enumChoice choice="Front Light" value="14">
-        <choice>Front Light</choice>
-      </enumChoice>
-      <enumChoice choice="Rear Light" value="15">
-        <choice>Rear Light</choice>
-      </enumChoice>
-      <enumChoice choice="FO 1" value="1">
-        <choice>FO 1</choice>
-      </enumChoice>
-      <enumChoice choice="FO 2">
-        <choice>FO 2</choice>
-      </enumChoice>
-      <enumChoice choice="FO 3">
-        <choice>FO 3</choice>
-      </enumChoice>
-      <enumChoice choice="FO 4">
-        <choice>FO 4</choice>
-      </enumChoice>
-      <enumChoice choice="FO 5">
-        <choice>FO 5</choice>
-      </enumChoice>
-      <enumChoice choice="FO 6">
-        <choice>FO 6</choice>
-      </enumChoice>
-      <enumChoice choice="FO 7">
-        <choice>FO 7</choice>
-      </enumChoice>
-      <enumChoice choice="FO 8">
-        <choice>FO 8</choice>
-      </enumChoice>
-      <enumChoice choice="FO 9">
-        <choice>FO 9</choice>
-      </enumChoice>
-      <enumChoice choice="FO 10">
-        <choice>FO 10</choice>
-      </enumChoice>
-      <enumChoice choice="FO 11">
-        <choice>FO 11</choice>
-      </enumChoice>
-      <enumChoice choice="FO 12">
-        <choice>FO 12</choice>
-      </enumChoice>
-      <enumChoice choice="FO 13">
-        <choice>FO 13</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 7 A1 Fw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 7 A1 Avanti</label>
   </variable>
-  <variable label="Swiss Mapping Group 7 A2 Fw" CV="469">
+  <variable item="Swiss Mapping Group 7 A2 Fw" CV="469">
     <enumVal>
-      <enumChoice choice="None">
-        <choice>None</choice>
-      </enumChoice>
-      <enumChoice choice="Front Light" value="14">
-        <choice>Front Light</choice>
-      </enumChoice>
-      <enumChoice choice="Rear Light" value="15">
-        <choice>Rear Light</choice>
-      </enumChoice>
-      <enumChoice choice="FO 1" value="1">
-        <choice>FO 1</choice>
-      </enumChoice>
-      <enumChoice choice="FO 2">
-        <choice>FO 2</choice>
-      </enumChoice>
-      <enumChoice choice="FO 3">
-        <choice>FO 3</choice>
-      </enumChoice>
-      <enumChoice choice="FO 4">
-        <choice>FO 4</choice>
-      </enumChoice>
-      <enumChoice choice="FO 5">
-        <choice>FO 5</choice>
-      </enumChoice>
-      <enumChoice choice="FO 6">
-        <choice>FO 6</choice>
-      </enumChoice>
-      <enumChoice choice="FO 7">
-        <choice>FO 7</choice>
-      </enumChoice>
-      <enumChoice choice="FO 8">
-        <choice>FO 8</choice>
-      </enumChoice>
-      <enumChoice choice="FO 9">
-        <choice>FO 9</choice>
-      </enumChoice>
-      <enumChoice choice="FO 10">
-        <choice>FO 10</choice>
-      </enumChoice>
-      <enumChoice choice="FO 11">
-        <choice>FO 11</choice>
-      </enumChoice>
-      <enumChoice choice="FO 12">
-        <choice>FO 12</choice>
-      </enumChoice>
-      <enumChoice choice="FO 13">
-        <choice>FO 13</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 7 A2 Fw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 7 A2 Avanti</label>
   </variable>
-  <variable label="Swiss Mapping Group 7 A1 Rw" CV="470">
+  <variable item="Swiss Mapping Group 7 A1 Rw" CV="470">
     <enumVal>
-      <enumChoice choice="None">
-        <choice>None</choice>
-      </enumChoice>
-      <enumChoice choice="Front Light" value="14">
-        <choice>Front Light</choice>
-      </enumChoice>
-      <enumChoice choice="Rear Light" value="15">
-        <choice>Rear Light</choice>
-      </enumChoice>
-      <enumChoice choice="FO 1" value="1">
-        <choice>FO 1</choice>
-      </enumChoice>
-      <enumChoice choice="FO 2">
-        <choice>FO 2</choice>
-      </enumChoice>
-      <enumChoice choice="FO 3">
-        <choice>FO 3</choice>
-      </enumChoice>
-      <enumChoice choice="FO 4">
-        <choice>FO 4</choice>
-      </enumChoice>
-      <enumChoice choice="FO 5">
-        <choice>FO 5</choice>
-      </enumChoice>
-      <enumChoice choice="FO 6">
-        <choice>FO 6</choice>
-      </enumChoice>
-      <enumChoice choice="FO 7">
-        <choice>FO 7</choice>
-      </enumChoice>
-      <enumChoice choice="FO 8">
-        <choice>FO 8</choice>
-      </enumChoice>
-      <enumChoice choice="FO 9">
-        <choice>FO 9</choice>
-      </enumChoice>
-      <enumChoice choice="FO 10">
-        <choice>FO 10</choice>
-      </enumChoice>
-      <enumChoice choice="FO 11">
-        <choice>FO 11</choice>
-      </enumChoice>
-      <enumChoice choice="FO 12">
-        <choice>FO 12</choice>
-      </enumChoice>
-      <enumChoice choice="FO 13">
-        <choice>FO 13</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 7 A1 Rw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 7 A1 Retro</label>
   </variable>
-  <variable label="Swiss Mapping Group 7 A2 Rw" CV="471">
+  <variable item="Swiss Mapping Group 7 A2 Rw" CV="471">
     <enumVal>
-      <enumChoice choice="None">
-        <choice>None</choice>
-      </enumChoice>
-      <enumChoice choice="Front Light" value="14">
-        <choice>Front Light</choice>
-      </enumChoice>
-      <enumChoice choice="Rear Light" value="15">
-        <choice>Rear Light</choice>
-      </enumChoice>
-      <enumChoice choice="FO 1" value="1">
-        <choice>FO 1</choice>
-      </enumChoice>
-      <enumChoice choice="FO 2">
-        <choice>FO 2</choice>
-      </enumChoice>
-      <enumChoice choice="FO 3">
-        <choice>FO 3</choice>
-      </enumChoice>
-      <enumChoice choice="FO 4">
-        <choice>FO 4</choice>
-      </enumChoice>
-      <enumChoice choice="FO 5">
-        <choice>FO 5</choice>
-      </enumChoice>
-      <enumChoice choice="FO 6">
-        <choice>FO 6</choice>
-      </enumChoice>
-      <enumChoice choice="FO 7">
-        <choice>FO 7</choice>
-      </enumChoice>
-      <enumChoice choice="FO 8">
-        <choice>FO 8</choice>
-      </enumChoice>
-      <enumChoice choice="FO 9">
-        <choice>FO 9</choice>
-      </enumChoice>
-      <enumChoice choice="FO 10">
-        <choice>FO 10</choice>
-      </enumChoice>
-      <enumChoice choice="FO 11">
-        <choice>FO 11</choice>
-      </enumChoice>
-      <enumChoice choice="FO 12">
-        <choice>FO 12</choice>
-      </enumChoice>
-      <enumChoice choice="FO 13">
-        <choice>FO 13</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 7 A2 Rw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 7 A2 Retro</label>
   </variable>
-  <variable label="Swiss Mapping Group 8 F-key" CV="472">
+  <variable item="Swiss Mapping Group 8 F-key" CV="472">
     <enumVal>
-      <enumChoice choice="F-Key">
-        <choice>F-Key</choice>
-      </enumChoice>
-      <enumChoice choice="F0" value="29">
-        <choice>F0</choice>
-      </enumChoice>
-      <enumChoice choice="F1" value="1">
-        <choice>F1</choice>
-      </enumChoice>
-      <enumChoice choice="F2">
-        <choice>F2</choice>
-      </enumChoice>
-      <enumChoice choice="F3">
-        <choice>F3</choice>
-      </enumChoice>
-      <enumChoice choice="F4">
-        <choice>F4</choice>
-      </enumChoice>
-      <enumChoice choice="F5">
-        <choice>F5</choice>
-      </enumChoice>
-      <enumChoice choice="F6">
-        <choice>F6</choice>
-      </enumChoice>
-      <enumChoice choice="F7">
-        <choice>F7</choice>
-      </enumChoice>
-      <enumChoice choice="F8">
-        <choice>F8</choice>
-      </enumChoice>
-      <enumChoice choice="F9">
-        <choice>F9</choice>
-      </enumChoice>
-      <enumChoice choice="F10">
-        <choice>F10</choice>
-      </enumChoice>
-      <enumChoice choice="F11">
-        <choice>F11</choice>
-      </enumChoice>
-      <enumChoice choice="F12">
-        <choice>F12</choice>
-      </enumChoice>
-      <enumChoice choice="F13">
-        <choice>F13</choice>
-      </enumChoice>
-      <enumChoice choice="F14">
-        <choice>F14</choice>
-      </enumChoice>
-      <enumChoice choice="F15">
-        <choice>F15</choice>
-      </enumChoice>
-      <enumChoice choice="F16">
-        <choice>F16</choice>
-      </enumChoice>
-      <enumChoice choice="F17">
-        <choice>F17</choice>
-      </enumChoice>
-      <enumChoice choice="F18">
-        <choice>F18</choice>
-      </enumChoice>
-      <enumChoice choice="F19">
-        <choice>F19</choice>
-      </enumChoice>
-      <enumChoice choice="F20">
-        <choice>F20</choice>
-      </enumChoice>
-      <enumChoice choice="F21">
-        <choice>F21</choice>
-      </enumChoice>
-      <enumChoice choice="F22">
-        <choice>F22</choice>
-      </enumChoice>
-      <enumChoice choice="F23">
-        <choice>F23</choice>
-      </enumChoice>
-      <enumChoice choice="F24">
-        <choice>F24</choice>
-      </enumChoice>
-      <enumChoice choice="F25">
-        <choice>F25</choice>
-      </enumChoice>
-      <enumChoice choice="F26">
-        <choice>F26</choice>
-      </enumChoice>
-      <enumChoice choice="F27">
-        <choice>F27</choice>
-      </enumChoice>
-      <enumChoice choice="F28">
-        <choice>F28</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 8 F-key</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 8 Tasto F</label>
   </variable>
-  <variable label="Swiss Mapping Group 8 M-key" CV="473" mask="XVVVVVVV">
+  <variable item="Swiss Mapping Group 8 M-key v33" CV="473">
+        <qualifier>
+          <variableref>Decoder Version</variableref>
+          <relation>lt</relation>
+          <value>34</value>
+        </qualifier>
     <enumVal>
-      <enumChoice choice="M-Key">
-        <choice>M-Key</choice>
-      </enumChoice>
-      <enumChoice choice="F0" value="29">
-        <choice>F0</choice>
-      </enumChoice>
-      <enumChoice choice="F1" value="1">
-        <choice>F1</choice>
-      </enumChoice>
-      <enumChoice choice="F2">
-        <choice>F2</choice>
-      </enumChoice>
-      <enumChoice choice="F3">
-        <choice>F3</choice>
-      </enumChoice>
-      <enumChoice choice="F4">
-        <choice>F4</choice>
-      </enumChoice>
-      <enumChoice choice="F5">
-        <choice>F5</choice>
-      </enumChoice>
-      <enumChoice choice="F6">
-        <choice>F6</choice>
-      </enumChoice>
-      <enumChoice choice="F7">
-        <choice>F7</choice>
-      </enumChoice>
-      <enumChoice choice="F8">
-        <choice>F8</choice>
-      </enumChoice>
-      <enumChoice choice="F9">
-        <choice>F9</choice>
-      </enumChoice>
-      <enumChoice choice="F10">
-        <choice>F10</choice>
-      </enumChoice>
-      <enumChoice choice="F11">
-        <choice>F11</choice>
-      </enumChoice>
-      <enumChoice choice="F12">
-        <choice>F12</choice>
-      </enumChoice>
-      <enumChoice choice="F13">
-        <choice>F13</choice>
-      </enumChoice>
-      <enumChoice choice="F14">
-        <choice>F14</choice>
-      </enumChoice>
-      <enumChoice choice="F15">
-        <choice>F15</choice>
-      </enumChoice>
-      <enumChoice choice="F16">
-        <choice>F16</choice>
-      </enumChoice>
-      <enumChoice choice="F17">
-        <choice>F17</choice>
-      </enumChoice>
-      <enumChoice choice="F18">
-        <choice>F18</choice>
-      </enumChoice>
-      <enumChoice choice="F19">
-        <choice>F19</choice>
-      </enumChoice>
-      <enumChoice choice="F20">
-        <choice>F20</choice>
-      </enumChoice>
-      <enumChoice choice="F21">
-        <choice>F21</choice>
-      </enumChoice>
-      <enumChoice choice="F22">
-        <choice>F22</choice>
-      </enumChoice>
-      <enumChoice choice="F23">
-        <choice>F23</choice>
-      </enumChoice>
-      <enumChoice choice="F24">
-        <choice>F24</choice>
-      </enumChoice>
-      <enumChoice choice="F25">
-        <choice>F25</choice>
-      </enumChoice>
-      <enumChoice choice="F26">
-        <choice>F26</choice>
-      </enumChoice>
-      <enumChoice choice="F27">
-        <choice>F27</choice>
-      </enumChoice>
-      <enumChoice choice="F28">
-        <choice>F28</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-M-key.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 8 M-key v33</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 8 Tasto M v33</label>
+  </variable>
+  <variable item="Swiss Mapping Group 8 M-key" CV="473">
+        <qualifier>
+          <variableref>Decoder Version</variableref>
+          <relation>ge</relation>
+          <value>34</value>
+        </qualifier>
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-M-key_v34.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 8 M-key</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 8 Tasto M</label>
   </variable>
-  <variable label="Swiss Mapping Group 8" CV="473" mask="VXXXXXXX">
+  <variable item="Swiss Mapping Group 8 A1 Fw" CV="474">
     <enumVal>
-      <enumChoice choice="off">
-        <choice>off</choice>
-      </enumChoice>
-      <enumChoice choice="on">
-        <choice>on</choice>
-      </enumChoice>
-    </enumVal>
-    <label>Swiss Mapping Group 8</label>
-  </variable>
-  <variable label="Swiss Mapping Group 8 A1 Fw" CV="474">
-    <enumVal>
-      <enumChoice choice="None">
-        <choice>None</choice>
-      </enumChoice>
-      <enumChoice choice="Front Light" value="14">
-        <choice>Front Light</choice>
-      </enumChoice>
-      <enumChoice choice="Rear Light" value="15">
-        <choice>Rear Light</choice>
-      </enumChoice>
-      <enumChoice choice="FO 1" value="1">
-        <choice>FO 1</choice>
-      </enumChoice>
-      <enumChoice choice="FO 2">
-        <choice>FO 2</choice>
-      </enumChoice>
-      <enumChoice choice="FO 3">
-        <choice>FO 3</choice>
-      </enumChoice>
-      <enumChoice choice="FO 4">
-        <choice>FO 4</choice>
-      </enumChoice>
-      <enumChoice choice="FO 5">
-        <choice>FO 5</choice>
-      </enumChoice>
-      <enumChoice choice="FO 6">
-        <choice>FO 6</choice>
-      </enumChoice>
-      <enumChoice choice="FO 7">
-        <choice>FO 7</choice>
-      </enumChoice>
-      <enumChoice choice="FO 8">
-        <choice>FO 8</choice>
-      </enumChoice>
-      <enumChoice choice="FO 9">
-        <choice>FO 9</choice>
-      </enumChoice>
-      <enumChoice choice="FO 10">
-        <choice>FO 10</choice>
-      </enumChoice>
-      <enumChoice choice="FO 11">
-        <choice>FO 11</choice>
-      </enumChoice>
-      <enumChoice choice="FO 12">
-        <choice>FO 12</choice>
-      </enumChoice>
-      <enumChoice choice="FO 13">
-        <choice>FO 13</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 8 A1 Fw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 8 A1 Avanti</label>
   </variable>
-  <variable label="Swiss Mapping Group 8 A2 Fw" CV="475">
+  <variable item="Swiss Mapping Group 8 A2 Fw" CV="475">
     <enumVal>
-      <enumChoice choice="None">
-        <choice>None</choice>
-      </enumChoice>
-      <enumChoice choice="Front Light" value="14">
-        <choice>Front Light</choice>
-      </enumChoice>
-      <enumChoice choice="Rear Light" value="15">
-        <choice>Rear Light</choice>
-      </enumChoice>
-      <enumChoice choice="FO 1" value="1">
-        <choice>FO 1</choice>
-      </enumChoice>
-      <enumChoice choice="FO 2">
-        <choice>FO 2</choice>
-      </enumChoice>
-      <enumChoice choice="FO 3">
-        <choice>FO 3</choice>
-      </enumChoice>
-      <enumChoice choice="FO 4">
-        <choice>FO 4</choice>
-      </enumChoice>
-      <enumChoice choice="FO 5">
-        <choice>FO 5</choice>
-      </enumChoice>
-      <enumChoice choice="FO 6">
-        <choice>FO 6</choice>
-      </enumChoice>
-      <enumChoice choice="FO 7">
-        <choice>FO 7</choice>
-      </enumChoice>
-      <enumChoice choice="FO 8">
-        <choice>FO 8</choice>
-      </enumChoice>
-      <enumChoice choice="FO 9">
-        <choice>FO 9</choice>
-      </enumChoice>
-      <enumChoice choice="FO 10">
-        <choice>FO 10</choice>
-      </enumChoice>
-      <enumChoice choice="FO 11">
-        <choice>FO 11</choice>
-      </enumChoice>
-      <enumChoice choice="FO 12">
-        <choice>FO 12</choice>
-      </enumChoice>
-      <enumChoice choice="FO 13">
-        <choice>FO 13</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 8 A2 Fw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 8 A2 Avanti</label>
   </variable>
-  <variable label="Swiss Mapping Group 8 A1 Rw" CV="476">
+  <variable item="Swiss Mapping Group 8 A1 Rw" CV="476">
     <enumVal>
-      <enumChoice choice="None">
-        <choice>None</choice>
-      </enumChoice>
-      <enumChoice choice="Front Light" value="14">
-        <choice>Front Light</choice>
-      </enumChoice>
-      <enumChoice choice="Rear Light" value="15">
-        <choice>Rear Light</choice>
-      </enumChoice>
-      <enumChoice choice="FO 1" value="1">
-        <choice>FO 1</choice>
-      </enumChoice>
-      <enumChoice choice="FO 2">
-        <choice>FO 2</choice>
-      </enumChoice>
-      <enumChoice choice="FO 3">
-        <choice>FO 3</choice>
-      </enumChoice>
-      <enumChoice choice="FO 4">
-        <choice>FO 4</choice>
-      </enumChoice>
-      <enumChoice choice="FO 5">
-        <choice>FO 5</choice>
-      </enumChoice>
-      <enumChoice choice="FO 6">
-        <choice>FO 6</choice>
-      </enumChoice>
-      <enumChoice choice="FO 7">
-        <choice>FO 7</choice>
-      </enumChoice>
-      <enumChoice choice="FO 8">
-        <choice>FO 8</choice>
-      </enumChoice>
-      <enumChoice choice="FO 9">
-        <choice>FO 9</choice>
-      </enumChoice>
-      <enumChoice choice="FO 10">
-        <choice>FO 10</choice>
-      </enumChoice>
-      <enumChoice choice="FO 11">
-        <choice>FO 11</choice>
-      </enumChoice>
-      <enumChoice choice="FO 12">
-        <choice>FO 12</choice>
-      </enumChoice>
-      <enumChoice choice="FO 13">
-        <choice>FO 13</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 8 A1 Rw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 8 A1 Retro</label>
   </variable>
-  <variable label="Swiss Mapping Group 8 A2 Rw" CV="477">
+  <variable item="Swiss Mapping Group 8 A2 Rw" CV="477">
     <enumVal>
-      <enumChoice choice="None">
-        <choice>None</choice>
-      </enumChoice>
-      <enumChoice choice="Front Light" value="14">
-        <choice>Front Light</choice>
-      </enumChoice>
-      <enumChoice choice="Rear Light" value="15">
-        <choice>Rear Light</choice>
-      </enumChoice>
-      <enumChoice choice="FO 1" value="1">
-        <choice>FO 1</choice>
-      </enumChoice>
-      <enumChoice choice="FO 2">
-        <choice>FO 2</choice>
-      </enumChoice>
-      <enumChoice choice="FO 3">
-        <choice>FO 3</choice>
-      </enumChoice>
-      <enumChoice choice="FO 4">
-        <choice>FO 4</choice>
-      </enumChoice>
-      <enumChoice choice="FO 5">
-        <choice>FO 5</choice>
-      </enumChoice>
-      <enumChoice choice="FO 6">
-        <choice>FO 6</choice>
-      </enumChoice>
-      <enumChoice choice="FO 7">
-        <choice>FO 7</choice>
-      </enumChoice>
-      <enumChoice choice="FO 8">
-        <choice>FO 8</choice>
-      </enumChoice>
-      <enumChoice choice="FO 9">
-        <choice>FO 9</choice>
-      </enumChoice>
-      <enumChoice choice="FO 10">
-        <choice>FO 10</choice>
-      </enumChoice>
-      <enumChoice choice="FO 11">
-        <choice>FO 11</choice>
-      </enumChoice>
-      <enumChoice choice="FO 12">
-        <choice>FO 12</choice>
-      </enumChoice>
-      <enumChoice choice="FO 13">
-        <choice>FO 13</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 8 A2 Rw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 8 A2 Retro</label>
   </variable>
-  <variable label="Swiss Mapping Group 9 F-key" CV="478">
+  <variable item="Swiss Mapping Group 9 F-key" CV="478">
     <enumVal>
-      <enumChoice choice="F-Key">
-        <choice>F-Key</choice>
-      </enumChoice>
-      <enumChoice choice="F0" value="29">
-        <choice>F0</choice>
-      </enumChoice>
-      <enumChoice choice="F1" value="1">
-        <choice>F1</choice>
-      </enumChoice>
-      <enumChoice choice="F2">
-        <choice>F2</choice>
-      </enumChoice>
-      <enumChoice choice="F3">
-        <choice>F3</choice>
-      </enumChoice>
-      <enumChoice choice="F4">
-        <choice>F4</choice>
-      </enumChoice>
-      <enumChoice choice="F5">
-        <choice>F5</choice>
-      </enumChoice>
-      <enumChoice choice="F6">
-        <choice>F6</choice>
-      </enumChoice>
-      <enumChoice choice="F7">
-        <choice>F7</choice>
-      </enumChoice>
-      <enumChoice choice="F8">
-        <choice>F8</choice>
-      </enumChoice>
-      <enumChoice choice="F9">
-        <choice>F9</choice>
-      </enumChoice>
-      <enumChoice choice="F10">
-        <choice>F10</choice>
-      </enumChoice>
-      <enumChoice choice="F11">
-        <choice>F11</choice>
-      </enumChoice>
-      <enumChoice choice="F12">
-        <choice>F12</choice>
-      </enumChoice>
-      <enumChoice choice="F13">
-        <choice>F13</choice>
-      </enumChoice>
-      <enumChoice choice="F14">
-        <choice>F14</choice>
-      </enumChoice>
-      <enumChoice choice="F15">
-        <choice>F15</choice>
-      </enumChoice>
-      <enumChoice choice="F16">
-        <choice>F16</choice>
-      </enumChoice>
-      <enumChoice choice="F17">
-        <choice>F17</choice>
-      </enumChoice>
-      <enumChoice choice="F18">
-        <choice>F18</choice>
-      </enumChoice>
-      <enumChoice choice="F19">
-        <choice>F19</choice>
-      </enumChoice>
-      <enumChoice choice="F20">
-        <choice>F20</choice>
-      </enumChoice>
-      <enumChoice choice="F21">
-        <choice>F21</choice>
-      </enumChoice>
-      <enumChoice choice="F22">
-        <choice>F22</choice>
-      </enumChoice>
-      <enumChoice choice="F23">
-        <choice>F23</choice>
-      </enumChoice>
-      <enumChoice choice="F24">
-        <choice>F24</choice>
-      </enumChoice>
-      <enumChoice choice="F25">
-        <choice>F25</choice>
-      </enumChoice>
-      <enumChoice choice="F26">
-        <choice>F26</choice>
-      </enumChoice>
-      <enumChoice choice="F27">
-        <choice>F27</choice>
-      </enumChoice>
-      <enumChoice choice="F28">
-        <choice>F28</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 9 F-key</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 9 Tasto F</label>
   </variable>
-  <variable label="Swiss Mapping Group 9 M-key" CV="479" mask="XVVVVVVV">
+  <variable item="Swiss Mapping Group 9 M-key v33" CV="479">
+        <qualifier>
+          <variableref>Decoder Version</variableref>
+          <relation>lt</relation>
+          <value>34</value>
+        </qualifier>
     <enumVal>
-      <enumChoice choice="M-Key">
-        <choice>M-Key</choice>
-      </enumChoice>
-      <enumChoice choice="F0" value="29">
-        <choice>F0</choice>
-      </enumChoice>
-      <enumChoice choice="F1" value="1">
-        <choice>F1</choice>
-      </enumChoice>
-      <enumChoice choice="F2">
-        <choice>F2</choice>
-      </enumChoice>
-      <enumChoice choice="F3">
-        <choice>F3</choice>
-      </enumChoice>
-      <enumChoice choice="F4">
-        <choice>F4</choice>
-      </enumChoice>
-      <enumChoice choice="F5">
-        <choice>F5</choice>
-      </enumChoice>
-      <enumChoice choice="F6">
-        <choice>F6</choice>
-      </enumChoice>
-      <enumChoice choice="F7">
-        <choice>F7</choice>
-      </enumChoice>
-      <enumChoice choice="F8">
-        <choice>F8</choice>
-      </enumChoice>
-      <enumChoice choice="F9">
-        <choice>F9</choice>
-      </enumChoice>
-      <enumChoice choice="F10">
-        <choice>F10</choice>
-      </enumChoice>
-      <enumChoice choice="F11">
-        <choice>F11</choice>
-      </enumChoice>
-      <enumChoice choice="F12">
-        <choice>F12</choice>
-      </enumChoice>
-      <enumChoice choice="F13">
-        <choice>F13</choice>
-      </enumChoice>
-      <enumChoice choice="F14">
-        <choice>F14</choice>
-      </enumChoice>
-      <enumChoice choice="F15">
-        <choice>F15</choice>
-      </enumChoice>
-      <enumChoice choice="F16">
-        <choice>F16</choice>
-      </enumChoice>
-      <enumChoice choice="F17">
-        <choice>F17</choice>
-      </enumChoice>
-      <enumChoice choice="F18">
-        <choice>F18</choice>
-      </enumChoice>
-      <enumChoice choice="F19">
-        <choice>F19</choice>
-      </enumChoice>
-      <enumChoice choice="F20">
-        <choice>F20</choice>
-      </enumChoice>
-      <enumChoice choice="F21">
-        <choice>F21</choice>
-      </enumChoice>
-      <enumChoice choice="F22">
-        <choice>F22</choice>
-      </enumChoice>
-      <enumChoice choice="F23">
-        <choice>F23</choice>
-      </enumChoice>
-      <enumChoice choice="F24">
-        <choice>F24</choice>
-      </enumChoice>
-      <enumChoice choice="F25">
-        <choice>F25</choice>
-      </enumChoice>
-      <enumChoice choice="F26">
-        <choice>F26</choice>
-      </enumChoice>
-      <enumChoice choice="F27">
-        <choice>F27</choice>
-      </enumChoice>
-      <enumChoice choice="F28">
-        <choice>F28</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-M-key.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 9 M-key v33</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 9 Tasto M v33</label>
+  </variable>
+  <variable item="Swiss Mapping Group 9 M-key" CV="479">
+        <qualifier>
+          <variableref>Decoder Version</variableref>
+          <relation>ge</relation>
+          <value>34</value>
+        </qualifier>
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-M-key_v34.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 9 M-key</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 9 Tasto M</label>
   </variable>
-  <variable label="Swiss Mapping Group 9" CV="479" mask="VXXXXXXX">
+  <variable item="Swiss Mapping Group 9 A1 Fw" CV="480">
     <enumVal>
-      <enumChoice choice="off">
-        <choice>off</choice>
-      </enumChoice>
-      <enumChoice choice="on">
-        <choice>on</choice>
-      </enumChoice>
-    </enumVal>
-    <label>Swiss Mapping Group 9</label>
-  </variable>
-  <variable label="Swiss Mapping Group 9 A1 Fw" CV="480">
-    <enumVal>
-      <enumChoice choice="None">
-        <choice>None</choice>
-      </enumChoice>
-      <enumChoice choice="Front Light" value="14">
-        <choice>Front Light</choice>
-      </enumChoice>
-      <enumChoice choice="Rear Light" value="15">
-        <choice>Rear Light</choice>
-      </enumChoice>
-      <enumChoice choice="FO 1" value="1">
-        <choice>FO 1</choice>
-      </enumChoice>
-      <enumChoice choice="FO 2">
-        <choice>FO 2</choice>
-      </enumChoice>
-      <enumChoice choice="FO 3">
-        <choice>FO 3</choice>
-      </enumChoice>
-      <enumChoice choice="FO 4">
-        <choice>FO 4</choice>
-      </enumChoice>
-      <enumChoice choice="FO 5">
-        <choice>FO 5</choice>
-      </enumChoice>
-      <enumChoice choice="FO 6">
-        <choice>FO 6</choice>
-      </enumChoice>
-      <enumChoice choice="FO 7">
-        <choice>FO 7</choice>
-      </enumChoice>
-      <enumChoice choice="FO 8">
-        <choice>FO 8</choice>
-      </enumChoice>
-      <enumChoice choice="FO 9">
-        <choice>FO 9</choice>
-      </enumChoice>
-      <enumChoice choice="FO 10">
-        <choice>FO 10</choice>
-      </enumChoice>
-      <enumChoice choice="FO 11">
-        <choice>FO 11</choice>
-      </enumChoice>
-      <enumChoice choice="FO 12">
-        <choice>FO 12</choice>
-      </enumChoice>
-      <enumChoice choice="FO 13">
-        <choice>FO 13</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 9 A1 Fw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 9 A1 Avanti</label>
   </variable>
-  <variable label="Swiss Mapping Group 9 A2 Fw" CV="481">
+  <variable item="Swiss Mapping Group 9 A2 Fw" CV="481">
     <enumVal>
-      <enumChoice choice="None">
-        <choice>None</choice>
-      </enumChoice>
-      <enumChoice choice="Front Light" value="14">
-        <choice>Front Light</choice>
-      </enumChoice>
-      <enumChoice choice="Rear Light" value="15">
-        <choice>Rear Light</choice>
-      </enumChoice>
-      <enumChoice choice="FO 1" value="1">
-        <choice>FO 1</choice>
-      </enumChoice>
-      <enumChoice choice="FO 2">
-        <choice>FO 2</choice>
-      </enumChoice>
-      <enumChoice choice="FO 3">
-        <choice>FO 3</choice>
-      </enumChoice>
-      <enumChoice choice="FO 4">
-        <choice>FO 4</choice>
-      </enumChoice>
-      <enumChoice choice="FO 5">
-        <choice>FO 5</choice>
-      </enumChoice>
-      <enumChoice choice="FO 6">
-        <choice>FO 6</choice>
-      </enumChoice>
-      <enumChoice choice="FO 7">
-        <choice>FO 7</choice>
-      </enumChoice>
-      <enumChoice choice="FO 8">
-        <choice>FO 8</choice>
-      </enumChoice>
-      <enumChoice choice="FO 9">
-        <choice>FO 9</choice>
-      </enumChoice>
-      <enumChoice choice="FO 10">
-        <choice>FO 10</choice>
-      </enumChoice>
-      <enumChoice choice="FO 11">
-        <choice>FO 11</choice>
-      </enumChoice>
-      <enumChoice choice="FO 12">
-        <choice>FO 12</choice>
-      </enumChoice>
-      <enumChoice choice="FO 13">
-        <choice>FO 13</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 9 A2 Fw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 9 A2 Avanti</label>
   </variable>
-  <variable label="Swiss Mapping Group 9 A1 Rw" CV="482">
+  <variable item="Swiss Mapping Group 9 A1 Rw" CV="482">
     <enumVal>
-      <enumChoice choice="None">
-        <choice>None</choice>
-      </enumChoice>
-      <enumChoice choice="Front Light" value="14">
-        <choice>Front Light</choice>
-      </enumChoice>
-      <enumChoice choice="Rear Light" value="15">
-        <choice>Rear Light</choice>
-      </enumChoice>
-      <enumChoice choice="FO 1" value="1">
-        <choice>FO 1</choice>
-      </enumChoice>
-      <enumChoice choice="FO 2">
-        <choice>FO 2</choice>
-      </enumChoice>
-      <enumChoice choice="FO 3">
-        <choice>FO 3</choice>
-      </enumChoice>
-      <enumChoice choice="FO 4">
-        <choice>FO 4</choice>
-      </enumChoice>
-      <enumChoice choice="FO 5">
-        <choice>FO 5</choice>
-      </enumChoice>
-      <enumChoice choice="FO 6">
-        <choice>FO 6</choice>
-      </enumChoice>
-      <enumChoice choice="FO 7">
-        <choice>FO 7</choice>
-      </enumChoice>
-      <enumChoice choice="FO 8">
-        <choice>FO 8</choice>
-      </enumChoice>
-      <enumChoice choice="FO 9">
-        <choice>FO 9</choice>
-      </enumChoice>
-      <enumChoice choice="FO 10">
-        <choice>FO 10</choice>
-      </enumChoice>
-      <enumChoice choice="FO 11">
-        <choice>FO 11</choice>
-      </enumChoice>
-      <enumChoice choice="FO 12">
-        <choice>FO 12</choice>
-      </enumChoice>
-      <enumChoice choice="FO 13">
-        <choice>FO 13</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 9 A1 Rw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 9 A1 Retro</label>
   </variable>
-  <variable label="Swiss Mapping Group 9 A2 Rw" CV="483">
+  <variable item="Swiss Mapping Group 9 A2 Rw" CV="483">
     <enumVal>
-      <enumChoice choice="None">
-        <choice>None</choice>
-      </enumChoice>
-      <enumChoice choice="Front Light" value="14">
-        <choice>Front Light</choice>
-      </enumChoice>
-      <enumChoice choice="Rear Light" value="15">
-        <choice>Rear Light</choice>
-      </enumChoice>
-      <enumChoice choice="FO 1" value="1">
-        <choice>FO 1</choice>
-      </enumChoice>
-      <enumChoice choice="FO 2">
-        <choice>FO 2</choice>
-      </enumChoice>
-      <enumChoice choice="FO 3">
-        <choice>FO 3</choice>
-      </enumChoice>
-      <enumChoice choice="FO 4">
-        <choice>FO 4</choice>
-      </enumChoice>
-      <enumChoice choice="FO 5">
-        <choice>FO 5</choice>
-      </enumChoice>
-      <enumChoice choice="FO 6">
-        <choice>FO 6</choice>
-      </enumChoice>
-      <enumChoice choice="FO 7">
-        <choice>FO 7</choice>
-      </enumChoice>
-      <enumChoice choice="FO 8">
-        <choice>FO 8</choice>
-      </enumChoice>
-      <enumChoice choice="FO 9">
-        <choice>FO 9</choice>
-      </enumChoice>
-      <enumChoice choice="FO 10">
-        <choice>FO 10</choice>
-      </enumChoice>
-      <enumChoice choice="FO 11">
-        <choice>FO 11</choice>
-      </enumChoice>
-      <enumChoice choice="FO 12">
-        <choice>FO 12</choice>
-      </enumChoice>
-      <enumChoice choice="FO 13">
-        <choice>FO 13</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 9 A2 Rw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 9 A2 Retro</label>
   </variable>
-  <variable label="Swiss Mapping Group 10 F-key" CV="484">
+  <variable item="Swiss Mapping Group 10 F-key" CV="484">
     <enumVal>
-      <enumChoice choice="F-Key">
-        <choice>F-Key</choice>
-      </enumChoice>
-      <enumChoice choice="F0" value="29">
-        <choice>F0</choice>
-      </enumChoice>
-      <enumChoice choice="F1" value="1">
-        <choice>F1</choice>
-      </enumChoice>
-      <enumChoice choice="F2">
-        <choice>F2</choice>
-      </enumChoice>
-      <enumChoice choice="F3">
-        <choice>F3</choice>
-      </enumChoice>
-      <enumChoice choice="F4">
-        <choice>F4</choice>
-      </enumChoice>
-      <enumChoice choice="F5">
-        <choice>F5</choice>
-      </enumChoice>
-      <enumChoice choice="F6">
-        <choice>F6</choice>
-      </enumChoice>
-      <enumChoice choice="F7">
-        <choice>F7</choice>
-      </enumChoice>
-      <enumChoice choice="F8">
-        <choice>F8</choice>
-      </enumChoice>
-      <enumChoice choice="F9">
-        <choice>F9</choice>
-      </enumChoice>
-      <enumChoice choice="F10">
-        <choice>F10</choice>
-      </enumChoice>
-      <enumChoice choice="F11">
-        <choice>F11</choice>
-      </enumChoice>
-      <enumChoice choice="F12">
-        <choice>F12</choice>
-      </enumChoice>
-      <enumChoice choice="F13">
-        <choice>F13</choice>
-      </enumChoice>
-      <enumChoice choice="F14">
-        <choice>F14</choice>
-      </enumChoice>
-      <enumChoice choice="F15">
-        <choice>F15</choice>
-      </enumChoice>
-      <enumChoice choice="F16">
-        <choice>F16</choice>
-      </enumChoice>
-      <enumChoice choice="F17">
-        <choice>F17</choice>
-      </enumChoice>
-      <enumChoice choice="F18">
-        <choice>F18</choice>
-      </enumChoice>
-      <enumChoice choice="F19">
-        <choice>F19</choice>
-      </enumChoice>
-      <enumChoice choice="F20">
-        <choice>F20</choice>
-      </enumChoice>
-      <enumChoice choice="F21">
-        <choice>F21</choice>
-      </enumChoice>
-      <enumChoice choice="F22">
-        <choice>F22</choice>
-      </enumChoice>
-      <enumChoice choice="F23">
-        <choice>F23</choice>
-      </enumChoice>
-      <enumChoice choice="F24">
-        <choice>F24</choice>
-      </enumChoice>
-      <enumChoice choice="F25">
-        <choice>F25</choice>
-      </enumChoice>
-      <enumChoice choice="F26">
-        <choice>F26</choice>
-      </enumChoice>
-      <enumChoice choice="F27">
-        <choice>F27</choice>
-      </enumChoice>
-      <enumChoice choice="F28">
-        <choice>F28</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 10 F-key</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 10 Tasto F</label>
   </variable>
-  <variable label="Swiss Mapping Group 10 M-key" CV="485" mask="XVVVVVVV">
+  <variable item="Swiss Mapping Group 10 M-key v33" CV="485">
+        <qualifier>
+          <variableref>Decoder Version</variableref>
+          <relation>lt</relation>
+          <value>34</value>
+        </qualifier>
     <enumVal>
-      <enumChoice choice="M-Key">
-        <choice>M-Key</choice>
-      </enumChoice>
-      <enumChoice choice="F0" value="29">
-        <choice>F0</choice>
-      </enumChoice>
-      <enumChoice choice="F1" value="1">
-        <choice>F1</choice>
-      </enumChoice>
-      <enumChoice choice="F2">
-        <choice>F2</choice>
-      </enumChoice>
-      <enumChoice choice="F3">
-        <choice>F3</choice>
-      </enumChoice>
-      <enumChoice choice="F4">
-        <choice>F4</choice>
-      </enumChoice>
-      <enumChoice choice="F5">
-        <choice>F5</choice>
-      </enumChoice>
-      <enumChoice choice="F6">
-        <choice>F6</choice>
-      </enumChoice>
-      <enumChoice choice="F7">
-        <choice>F7</choice>
-      </enumChoice>
-      <enumChoice choice="F8">
-        <choice>F8</choice>
-      </enumChoice>
-      <enumChoice choice="F9">
-        <choice>F9</choice>
-      </enumChoice>
-      <enumChoice choice="F10">
-        <choice>F10</choice>
-      </enumChoice>
-      <enumChoice choice="F11">
-        <choice>F11</choice>
-      </enumChoice>
-      <enumChoice choice="F12">
-        <choice>F12</choice>
-      </enumChoice>
-      <enumChoice choice="F13">
-        <choice>F13</choice>
-      </enumChoice>
-      <enumChoice choice="F14">
-        <choice>F14</choice>
-      </enumChoice>
-      <enumChoice choice="F15">
-        <choice>F15</choice>
-      </enumChoice>
-      <enumChoice choice="F16">
-        <choice>F16</choice>
-      </enumChoice>
-      <enumChoice choice="F17">
-        <choice>F17</choice>
-      </enumChoice>
-      <enumChoice choice="F18">
-        <choice>F18</choice>
-      </enumChoice>
-      <enumChoice choice="F19">
-        <choice>F19</choice>
-      </enumChoice>
-      <enumChoice choice="F20">
-        <choice>F20</choice>
-      </enumChoice>
-      <enumChoice choice="F21">
-        <choice>F21</choice>
-      </enumChoice>
-      <enumChoice choice="F22">
-        <choice>F22</choice>
-      </enumChoice>
-      <enumChoice choice="F23">
-        <choice>F23</choice>
-      </enumChoice>
-      <enumChoice choice="F24">
-        <choice>F24</choice>
-      </enumChoice>
-      <enumChoice choice="F25">
-        <choice>F25</choice>
-      </enumChoice>
-      <enumChoice choice="F26">
-        <choice>F26</choice>
-      </enumChoice>
-      <enumChoice choice="F27">
-        <choice>F27</choice>
-      </enumChoice>
-      <enumChoice choice="F28">
-        <choice>F28</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-M-key.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 10 M-key v33</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 10 Tasto M v33</label>
+  </variable>
+  <variable item="Swiss Mapping Group 10 M-key" CV="485">
+        <qualifier>
+          <variableref>Decoder Version</variableref>
+          <relation>ge</relation>
+          <value>34</value>
+        </qualifier>
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-M-key_v34.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 10 M-key</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 10 Tasto M</label>
   </variable>
-  <variable label="Swiss Mapping Group 10" CV="485" mask="VXXXXXXX">
+  <variable item="Swiss Mapping Group 10 A1 Fw" CV="486">
     <enumVal>
-      <enumChoice choice="off">
-        <choice>off</choice>
-      </enumChoice>
-      <enumChoice choice="on">
-        <choice>on</choice>
-      </enumChoice>
-    </enumVal>
-    <label>Swiss Mapping Group 10</label>
-  </variable>
-  <variable label="Swiss Mapping Group 10 A1 Fw" CV="486">
-    <enumVal>
-      <enumChoice choice="None">
-        <choice>None</choice>
-      </enumChoice>
-      <enumChoice choice="Front Light" value="14">
-        <choice>Front Light</choice>
-      </enumChoice>
-      <enumChoice choice="Rear Light" value="15">
-        <choice>Rear Light</choice>
-      </enumChoice>
-      <enumChoice choice="FO 1" value="1">
-        <choice>FO 1</choice>
-      </enumChoice>
-      <enumChoice choice="FO 2">
-        <choice>FO 2</choice>
-      </enumChoice>
-      <enumChoice choice="FO 3">
-        <choice>FO 3</choice>
-      </enumChoice>
-      <enumChoice choice="FO 4">
-        <choice>FO 4</choice>
-      </enumChoice>
-      <enumChoice choice="FO 5">
-        <choice>FO 5</choice>
-      </enumChoice>
-      <enumChoice choice="FO 6">
-        <choice>FO 6</choice>
-      </enumChoice>
-      <enumChoice choice="FO 7">
-        <choice>FO 7</choice>
-      </enumChoice>
-      <enumChoice choice="FO 8">
-        <choice>FO 8</choice>
-      </enumChoice>
-      <enumChoice choice="FO 9">
-        <choice>FO 9</choice>
-      </enumChoice>
-      <enumChoice choice="FO 10">
-        <choice>FO 10</choice>
-      </enumChoice>
-      <enumChoice choice="FO 11">
-        <choice>FO 11</choice>
-      </enumChoice>
-      <enumChoice choice="FO 12">
-        <choice>FO 12</choice>
-      </enumChoice>
-      <enumChoice choice="FO 13">
-        <choice>FO 13</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 10 A1 Fw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 10 A1 Avanti</label>
   </variable>
-  <variable label="Swiss Mapping Group 10 A2 Fw" CV="487">
+  <variable item="Swiss Mapping Group 10 A2 Fw" CV="487">
     <enumVal>
-      <enumChoice choice="None">
-        <choice>None</choice>
-      </enumChoice>
-      <enumChoice choice="Front Light" value="14">
-        <choice>Front Light</choice>
-      </enumChoice>
-      <enumChoice choice="Rear Light" value="15">
-        <choice>Rear Light</choice>
-      </enumChoice>
-      <enumChoice choice="FO 1" value="1">
-        <choice>FO 1</choice>
-      </enumChoice>
-      <enumChoice choice="FO 2">
-        <choice>FO 2</choice>
-      </enumChoice>
-      <enumChoice choice="FO 3">
-        <choice>FO 3</choice>
-      </enumChoice>
-      <enumChoice choice="FO 4">
-        <choice>FO 4</choice>
-      </enumChoice>
-      <enumChoice choice="FO 5">
-        <choice>FO 5</choice>
-      </enumChoice>
-      <enumChoice choice="FO 6">
-        <choice>FO 6</choice>
-      </enumChoice>
-      <enumChoice choice="FO 7">
-        <choice>FO 7</choice>
-      </enumChoice>
-      <enumChoice choice="FO 8">
-        <choice>FO 8</choice>
-      </enumChoice>
-      <enumChoice choice="FO 9">
-        <choice>FO 9</choice>
-      </enumChoice>
-      <enumChoice choice="FO 10">
-        <choice>FO 10</choice>
-      </enumChoice>
-      <enumChoice choice="FO 11">
-        <choice>FO 11</choice>
-      </enumChoice>
-      <enumChoice choice="FO 12">
-        <choice>FO 12</choice>
-      </enumChoice>
-      <enumChoice choice="FO 13">
-        <choice>FO 13</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 10 A2 Fw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 10 A2 Avanti</label>
   </variable>
-  <variable label="Swiss Mapping Group 10 A1 Rw" CV="488">
+  <variable item="Swiss Mapping Group 10 A1 Rw" CV="488">
     <enumVal>
-      <enumChoice choice="None">
-        <choice>None</choice>
-      </enumChoice>
-      <enumChoice choice="Front Light" value="14">
-        <choice>Front Light</choice>
-      </enumChoice>
-      <enumChoice choice="Rear Light" value="15">
-        <choice>Rear Light</choice>
-      </enumChoice>
-      <enumChoice choice="FO 1" value="1">
-        <choice>FO 1</choice>
-      </enumChoice>
-      <enumChoice choice="FO 2">
-        <choice>FO 2</choice>
-      </enumChoice>
-      <enumChoice choice="FO 3">
-        <choice>FO 3</choice>
-      </enumChoice>
-      <enumChoice choice="FO 4">
-        <choice>FO 4</choice>
-      </enumChoice>
-      <enumChoice choice="FO 5">
-        <choice>FO 5</choice>
-      </enumChoice>
-      <enumChoice choice="FO 6">
-        <choice>FO 6</choice>
-      </enumChoice>
-      <enumChoice choice="FO 7">
-        <choice>FO 7</choice>
-      </enumChoice>
-      <enumChoice choice="FO 8">
-        <choice>FO 8</choice>
-      </enumChoice>
-      <enumChoice choice="FO 9">
-        <choice>FO 9</choice>
-      </enumChoice>
-      <enumChoice choice="FO 10">
-        <choice>FO 10</choice>
-      </enumChoice>
-      <enumChoice choice="FO 11">
-        <choice>FO 11</choice>
-      </enumChoice>
-      <enumChoice choice="FO 12">
-        <choice>FO 12</choice>
-      </enumChoice>
-      <enumChoice choice="FO 13">
-        <choice>FO 13</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 10 A1 Rw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 10 A1 Retro</label>
   </variable>
-  <variable label="Swiss Mapping Group 10 A2 Rw" CV="489">
+  <variable item="Swiss Mapping Group 10 A2 Rw" CV="489">
     <enumVal>
-      <enumChoice choice="None">
-        <choice>None</choice>
-      </enumChoice>
-      <enumChoice choice="Front Light" value="14">
-        <choice>Front Light</choice>
-      </enumChoice>
-      <enumChoice choice="Rear Light" value="15">
-        <choice>Rear Light</choice>
-      </enumChoice>
-      <enumChoice choice="FO 1" value="1">
-        <choice>FO 1</choice>
-      </enumChoice>
-      <enumChoice choice="FO 2">
-        <choice>FO 2</choice>
-      </enumChoice>
-      <enumChoice choice="FO 3">
-        <choice>FO 3</choice>
-      </enumChoice>
-      <enumChoice choice="FO 4">
-        <choice>FO 4</choice>
-      </enumChoice>
-      <enumChoice choice="FO 5">
-        <choice>FO 5</choice>
-      </enumChoice>
-      <enumChoice choice="FO 6">
-        <choice>FO 6</choice>
-      </enumChoice>
-      <enumChoice choice="FO 7">
-        <choice>FO 7</choice>
-      </enumChoice>
-      <enumChoice choice="FO 8">
-        <choice>FO 8</choice>
-      </enumChoice>
-      <enumChoice choice="FO 9">
-        <choice>FO 9</choice>
-      </enumChoice>
-      <enumChoice choice="FO 10">
-        <choice>FO 10</choice>
-      </enumChoice>
-      <enumChoice choice="FO 11">
-        <choice>FO 11</choice>
-      </enumChoice>
-      <enumChoice choice="FO 12">
-        <choice>FO 12</choice>
-      </enumChoice>
-      <enumChoice choice="FO 13">
-        <choice>FO 13</choice>
-      </enumChoice>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
     <label>Swiss Mapping Group 10 A2 Rw</label>
+    <label xml:lang="it">Mappatur1 Svizzera Gruppo 10 A2 Retro</label>
   </variable>
+	<variables>
+        <qualifier>
+          <variableref>Decoder Version</variableref>
+          <relation>ge</relation>
+          <value>34</value>
+        </qualifier>
+  <variable item="Swiss Mapping Group 11 F-key" CV="490">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 11 F-key</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 11 Tasto F</label>
+  </variable>
+  <variable item="Swiss Mapping Group 11 M-key" CV="491">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-M-key_v34.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 11 M-key</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 11 Tasto M</label>
+  </variable>
+  <variable item="Swiss Mapping Group 11 A1 Fw" CV="492">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 11 A1 Fw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 11 A1 Avanti</label>
+  </variable>
+  <variable item="Swiss Mapping Group 11 A2 Fw" CV="493">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 11 A2 Fw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 11 A2 Avanti</label>
+  </variable>
+  <variable item="Swiss Mapping Group 11 A1 Rw" CV="494">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 11 A1 Rw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 11 A1 Retro</label>
+  </variable>
+  <variable item="Swiss Mapping Group 11 A2 Rw" CV="495">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 11 A2 Rw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 11 A2 Retro</label>
+  </variable>
+  <variable item="Swiss Mapping Group 12 F-key" CV="496">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 12 F-key</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 12 Tasto F</label>
+  </variable>
+  <variable item="Swiss Mapping Group 12 M-key" CV="497">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-M-key_v34.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 12 M-key</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 12 Tasto M</label>
+  </variable>
+  <variable item="Swiss Mapping Group 12 A1 Fw" CV="498">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 12 A1 Fw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 12 A1 Avanti</label>
+  </variable>
+  <variable item="Swiss Mapping Group 12 A2 Fw" CV="499">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 12 A2 Fw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 12 A2 Avanti</label>
+  </variable>
+  <variable item="Swiss Mapping Group 12 A1 Rw" CV="500">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 12 A1 Rw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 12 A1 Retro</label>
+  </variable>
+  <variable item="Swiss Mapping Group 12 A2 Rw" CV="501">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 12 A2 Rw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 12 A2 Retro</label>
+  </variable>
+  <variable item="Swiss Mapping Group 13 F-key" CV="502">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 13 F-key</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 13 Tasto F</label>
+  </variable>
+  <variable item="Swiss Mapping Group 13 M-key" CV="503">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-M-key_v34.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 13 M-key</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 13 Tasto M</label>
+  </variable>
+  <variable item="Swiss Mapping Group 13 A1 Fw" CV="504">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 13 A1 Fw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 13 A1 Avanti</label>
+  </variable>
+  <variable item="Swiss Mapping Group 13 A2 Fw" CV="505">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 13 A2 Fw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 13 A2 Avanti</label>
+  </variable>
+  <variable item="Swiss Mapping Group 13 A1 Rw" CV="506">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 13 A1 Rw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 13 A1 Retro</label>
+  </variable>
+  <variable item="Swiss Mapping Group 13 A2 Rw" CV="507">
+    <enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
+    </enumVal>
+    <label>Swiss Mapping Group 13 A2 Rw</label>
+    <label xml:lang="it">Mappatura Svizzera Gruppo 13 A2 Retro</label>
+  </variable>
+</variables>
 </variables>

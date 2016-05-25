@@ -1,69 +1,68 @@
-// AbstractSerialPortController.java
-
 package jmri.jmrix;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import gnu.io.CommPortIdentifier;
 import java.util.Enumeration;
 import java.util.Vector;
-
-import gnu.io.CommPortIdentifier;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provide an abstract base for *PortController classes.
  * <P>
- * This is complicated by the lack of multiple inheritance.
- * SerialPortAdapter is an Interface, and its implementing
- * classes also inherit from various PortController types.  But we
- * want some common behaviours for those, so we put them here.
+ * This is complicated by the lack of multiple inheritance. SerialPortAdapter is
+ * an Interface, and its implementing classes also inherit from various
+ * PortController types. But we want some common behaviours for those, so we put
+ * them here.
  *
  * @see jmri.jmrix.SerialPortAdapter
  *
- * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision$
+ * @author	Bob Jacobsen Copyright (C) 2001, 2002
  */
 abstract public class AbstractSerialPortController extends AbstractPortController implements SerialPortAdapter {
+
+    protected AbstractSerialPortController(SystemConnectionMemo connectionMemo) {
+        super(connectionMemo);
+    }
 
     /**
      * Standard error handling for port-busy case
      */
-    public String handlePortBusy(gnu.io.PortInUseException p,
-                            String portName,
-                            Logger log) {
-				log.error(portName+" port is in use: "+p.getMessage());
-                /*JOptionPane.showMessageDialog(null, "Port is in use",
-                                                "Error", JOptionPane.ERROR_MESSAGE);*/
-    			ConnectionStatus.instance().setConnectionState(portName, ConnectionStatus.CONNECTION_DOWN);
-                return portName+" port is in use";
+    public String handlePortBusy(gnu.io.PortInUseException p, String portName, Logger log) {
+        log.error(portName + " port is in use: " + p.getMessage());
+        /*JOptionPane.showMessageDialog(null, "Port is in use",
+         "Error", JOptionPane.ERROR_MESSAGE);*/
+        ConnectionStatus.instance().setConnectionState(portName, ConnectionStatus.CONNECTION_DOWN);
+        return portName + " port is in use";
     }
 
     /**
      * Standard error handling for port-not-found case
      */
-    public String handlePortNotFound(gnu.io.NoSuchPortException p,
-                            String portName,
-                            Logger log) {
-				log.error("Serial port "+portName+" not found");
-                /*JOptionPane.showMessageDialog(null, "Serial port "+portName+" not found",
-                                                "Error", JOptionPane.ERROR_MESSAGE);*/
-    			ConnectionStatus.instance().setConnectionState(portName, ConnectionStatus.CONNECTION_DOWN);
-                return portName+" not found";
+    public String handlePortNotFound(gnu.io.NoSuchPortException p, String portName, Logger log) {
+        log.error("Serial port " + portName + " not found");
+        /*JOptionPane.showMessageDialog(null, "Serial port "+portName+" not found",
+         "Error", JOptionPane.ERROR_MESSAGE);*/
+        ConnectionStatus.instance().setConnectionState(portName, ConnectionStatus.CONNECTION_DOWN);
+        return portName + " not found";
     }
-    
-    public void connect() throws Exception{
+
+    public void connect() throws Exception {
         openPort(mPort, "JMRI app");
     }
 
-    public void setPort(String port) { mPort= port;}
+    public void setPort(String port) {
+        mPort = port;
+    }
     protected String mPort = null;
+
     public String getCurrentPortName() {
         if (mPort == null) {
-            if(getPortNames()==null){
+            if (getPortNames() == null) {
                 //This shouldn't happen but in the tests for some reason this happens
                 log.error("Port names returned as null");
                 return null;
             }
-            if (getPortNames().size()<=0) {
+            if (getPortNames().size() <= 0) {
                 log.error("No usable ports returned");
                 return null;
             }
@@ -74,23 +73,28 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     }
 
     /**
-     * Set the baud rate.  This records it for later.
+     * Set the baud rate. This records it for later.
      */
-    public void configureBaudRate(String rate) { mBaudRate = rate;}
+    public void configureBaudRate(String rate) {
+        mBaudRate = rate;
+    }
     protected String mBaudRate = null;
+
     public String getCurrentBaudRate() {
-        if (mBaudRate == null) return validBaudRates()[0];
+        if (mBaudRate == null) {
+            return validBaudRates()[0];
+        }
         return mBaudRate;
     }
 
     /**
-     * Get an array of valid baud rates as integers. This allows subclasses
-     * to change the arrays of speeds.
-     * 
+     * Get an array of valid baud rates as integers. This allows subclasses to
+     * change the arrays of speeds.
+     *
      * This method need not be reimplemented unless the subclass is using
      * currentBaudNumber, which requires it.
      */
-    public int[] validBaudNumber() { 
+    public int[] validBaudNumber() {
         log.error("default validBaudNumber implementation should not be used");
         new Exception().printStackTrace();
         return null;
@@ -98,14 +102,15 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
 
     /**
      * Convert a baud rate string to a number.
-     * 
+     *
      * Uses the validBaudNumber and validBaudRates methods to do this.
+     *
      * @return -1 if no match (configuration system should prevent this)
      */
     public int currentBaudNumber(String currentBaudRate) {
         String[] rates = validBaudRates();
         int[] numbers = validBaudNumber();
-        
+
         // return if arrays invalid
         if (numbers == null) {
             log.error("numbers array null in currentBaudNumber");
@@ -115,25 +120,28 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
             log.error("rates array null in currentBaudNumber");
             return -1;
         }
-        if (numbers.length<1 || (numbers.length != rates.length) ) {
-            log.error("arrays wrong length in currentBaudNumber: "+numbers.length+","+rates.length);
+        if (numbers.length < 1 || (numbers.length != rates.length)) {
+            log.error("arrays wrong length in currentBaudNumber: " + numbers.length + "," + rates.length);
             return -1;
         }
-        
+
         // find the baud rate value, configure comm options
-        for (int i = 0; i<numbers.length; i++ )
-            if (rates[i].equals(currentBaudRate))
+        for (int i = 0; i < numbers.length; i++) {
+            if (rates[i].equals(currentBaudRate)) {
                 return numbers[i];
-        
+            }
+        }
+
         // no match
-        log.error("no match to ("+currentBaudRate+") in currentBaudNumber");
+        log.error("no match to (" + currentBaudRate + ") in currentBaudNumber");
         return -1;
-    }    
-    
+    }
+
     Vector<String> portNameVector = null;
+
     @SuppressWarnings("unchecked")
-	public Vector<String> getPortNames() {
-    	//reloadDriver(); // Refresh the list of communication ports
+    public Vector<String> getPortNames() {
+        //reloadDriver(); // Refresh the list of communication ports
         // first, check that the comm package can be opened and ports seen
         portNameVector = new Vector<String>();
         Enumeration<CommPortIdentifier> portIDs = CommPortIdentifier.getPortIdentifiers();
@@ -141,64 +149,63 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         while (portIDs.hasMoreElements()) {
             CommPortIdentifier id = portIDs.nextElement();
             // filter out line printers 
-            if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL)
-            	// accumulate the names in a vector
-            	portNameVector.addElement(id.getName());
-		  }
-         return portNameVector;
-    }
-    /*This in place here until all systems are converted over to the systemconnection memo
-    this will then become abstract, once all the code has been refactored*/
-    public SystemConnectionMemo getSystemConnectionMemo() { return null; }
-    
-    /*Set disable should be handled by the local port controller in each connection
-    this is abstract in the Portcontroller and can be removed once all the other codes has
-    been refactored */
-    public void setDisabled(boolean disabled) { 
-        mDisabled = disabled;
-    }
-    
-    /*Dispose should be handled by the port adapters and this should be abstract
-    However this is in place until all the other code has been refactored */
-    public void dispose(){
+            if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL) // accumulate the names in a vector
+            {
+                portNameVector.addElement(id.getName());
+            }
+        }
+        return portNameVector;
     }
 
-            /**
-     * This is called when a connection is initially lost.  It closes the client side
-     * socket connection, resets the open flag and attempts a reconnection.
+    @Override
+    public void dispose() {
+        super.dispose();
+    }
+
+    /**
+     * This is called when a connection is initially lost. It closes the client
+     * side socket connection, resets the open flag and attempts a reconnection.
      */
-    public void recover(){
-        if (!allowConnectionRecovery) return;
+    public void recover() {
+        if (!allowConnectionRecovery) {
+            return;
+        }
         opened = false;
         try {
             closeConnection();
-        } catch (Exception e) { }
+        } catch (Exception e) {
+        }
         reconnect();
     }
+
     /*Each serial port adapter should handle this and it should be abstract.
      However this is in place until all the other code has been refactored */
-    protected void closeConnection() throws Exception { System.out.println("crap Called"); }
+
+    protected void closeConnection() throws Exception {
+        System.out.println("crap Called");
+    }
 
     /*Each port adapter shoudl handle this and it should be abstract.
      However this is in place until all the other code has been refactored */
-    protected void resetupConnection(){ }
+    protected void resetupConnection() {
+    }
 
     /**
      * Attempts to reconnect to a failed Server
      */
-    public void reconnect(){
+    public void reconnect() {
         // If the connection is already open, then we shouldn't try a re-connect.
-        if (opened && !allowConnectionRecovery){
+        if (opened && !allowConnectionRecovery) {
             return;
         }
         reconnectwait thread = new reconnectwait();
         thread.start();
-        try{
+        try {
             thread.join();
         } catch (InterruptedException e) {
             log.error("Unable to join to the reconnection thread " + e.getMessage());
         }
-        if (!opened){
+        if (!opened) {
             log.error("Failed to re-establish connectivity");
         } else {
             log.info("Reconnected to " + getCurrentPortName());
@@ -206,14 +213,16 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         }
     }
 
-    class reconnectwait extends Thread{
-        public final static int THREADPASS     = 0;
-        public final static int THREADFAIL     = 1;
-        int         _status;
+    class reconnectwait extends Thread {
+
+        public final static int THREADPASS = 0;
+        public final static int THREADFAIL = 1;
+        int _status;
 
         public int status() {
             return _status;
         }
+
         public reconnectwait() {
             _status = THREADFAIL;
         }
@@ -223,7 +232,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
             boolean reply = true;
             int count = 0;
             int secondCount = 0;
-            while(reply){
+            while (reply) {
                 safeSleep(reconnectinterval, "Waiting");
                 count++;
                 try {
@@ -232,28 +241,30 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
                     while (portIDs.hasMoreElements()) {
                         CommPortIdentifier id = portIDs.nextElement();
                         // filter out line printers
-                        if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL)
-                            // accumulate the names in a vector
-                            if (id.getName().equals(mPort)){
+                        if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL) // accumulate the names in a vector
+                        {
+                            if (id.getName().equals(mPort)) {
                                 log.info(mPort + " port has reappeared as being valid trying to reconnect");
                                 openPort(mPort, "jmri");
                             }
                         }
-                } catch (Exception e) {}
-                reply=!opened;
-                if (count >=retryAttempts){
+                    }
+                } catch (Exception e) {
+                }
+                reply = !opened;
+                if (count >= retryAttempts) {
                     log.error("Unable to reconnect after " + count + " Attempts, increasing duration of retries");
                     //retrying but with twice the retry interval.
-                    reconnectinterval = reconnectinterval*2;
+                    reconnectinterval = reconnectinterval * 2;
                     count = 0;
                     secondCount++;
                 }
-                if (secondCount >=10){
+                if (secondCount >= 10) {
                     log.error("Giving up on reconnecting after 100 attempts to reconnect");
-                    reply=false;
+                    reply = false;
                 }
             }
-            if (!opened){
+            if (!opened) {
                 log.error("Failed to re-establish connectivity");
             } else {
                 log.error("Reconnected to " + getCurrentPortName());
@@ -261,7 +272,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
             }
         }
     }
-    
-    final static protected Logger log = LoggerFactory.getLogger(AbstractSerialPortController.class.getName());
+
+    private final static Logger log = LoggerFactory.getLogger(AbstractSerialPortController.class.getName());
 
 }

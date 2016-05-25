@@ -1,21 +1,19 @@
-
 package jmri.jmrit.display.configurexml;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.util.List;
-
-import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.MemoryComboIcon;
 import javax.swing.DefaultComboBoxModel;
 import jmri.Memory;
-import org.jdom.Element;
-import org.jdom.Attribute;
+import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.MemoryComboIcon;
+import org.jdom2.Attribute;
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handle configuration for display.MemorySpinnerIcon objects.
  *
- * @author Pete Cressman  Copyright (c) 2012
+ * @author Pete Cressman Copyright (c) 2012
  * @version $Revision: 1 $
  */
 public class MemoryComboIconXml extends PositionableLabelXml {
@@ -24,63 +22,57 @@ public class MemoryComboIconXml extends PositionableLabelXml {
     }
 
     /**
-     * Default implementation for storing the contents of a
-     * MemorySpinnerIcon
-     * @param o Object to store, of type MemorySpinnerIcon
+     * Default implementation for storing the contents of a MemorySpinnerIcon
+     *
+     * @param obj Object to store, of type MemorySpinnerIcon
      * @return Element containing the complete info
      */
-    public Element store(Object o) {
+    public Element store(Object obj) {
 
-    	MemoryComboIcon p = (MemoryComboIcon)o;
+        MemoryComboIcon memoryIcon = (MemoryComboIcon) obj;
 
         Element element = new Element("memoryComboIcon");
-        
+
         Element elem = new Element("itemList");
-        DefaultComboBoxModel model = p.getComboModel();
-        for(int i=0; i<model.getSize(); i++) {
-        	Element e = new Element("item");
-        	e.setAttribute("index", ""+i);
-        	e.addContent((String)model.getElementAt(i));
-        	elem.addContent(e);
+        DefaultComboBoxModel<String> model = memoryIcon.getComboModel();
+        for (int i = 0; i < model.getSize(); i++) {
+            Element e = new Element("item");
+            e.setAttribute("index", "" + i);
+            e.addContent((String) model.getElementAt(i));
+            elem.addContent(e);
         }
         element.addContent(elem);
 
         // include attributes
-        element.setAttribute("memory", p.getNamedMemory().getName());
-        storeCommonAttributes(p, element);
-        storeTextInfo(p, element);
-        
+        element.setAttribute("memory", memoryIcon.getNamedMemory().getName());
+        storeCommonAttributes(memoryIcon, element);
+        storeTextInfo(memoryIcon, element);
+
         element.setAttribute("class", "jmri.jmrit.display.configurexml.MemoryComboIconXml");
         return element;
     }
 
-
-    public boolean load(Element element) {
-        log.error("Invalid method called");
-        return false;
-    }
-
     /**
-     * Load, starting with the memoryComboIcon element, then
-     * all the value-icon pairs
+     * Load, starting with the memoryComboIcon element, then all the value-icon
+     * pairs
+     *
      * @param element Top level Element to unpack.
-     * @param o  an Editor as an Object
+     * @param o       an Editor as an Object
      */
-	public void load(Element element, Object o) {
+    public void load(Element element, Object o) {
         // create the objects
-        Editor p = (Editor)o;
+        Editor p = (Editor) o;
 
         Element elem = element.getChild("itemList");
-        @SuppressWarnings("unchecked")
-		List<Element> list = elem.getChildren("item");
+        List<Element> list = elem.getChildren("item");
         String[] items = new String[list.size()];
-        for (int i=0; i<list.size(); i++) {
+        for (int i = 0; i < list.size(); i++) {
             Element e = list.get(i);
             String item = e.getText();
 //            int idx = 0;
 //            try {
 //                idx = e.getAttribute("index").getIntValue();
-//            } catch ( org.jdom.DataConversionException ex) {
+//            } catch ( org.jdom2.DataConversionException ex) {
 //                log.error("failed to convert ComboBoxIcon index attribute");
 //                idx = i;
 //            }
@@ -91,7 +83,7 @@ public class MemoryComboIconXml extends PositionableLabelXml {
 
         loadTextInfo(l, element);
         String name;
-        Attribute attr = element.getAttribute("memory"); 
+        Attribute attr = element.getAttribute("memory");
         if (attr == null) {
             log.error("incorrect information for a memory location; must use memory name");
             p.loadFailed();
@@ -99,21 +91,21 @@ public class MemoryComboIconXml extends PositionableLabelXml {
         } else {
             name = attr.getValue();
         }
-        
+
         Memory m = jmri.InstanceManager.memoryManagerInstance().getMemory(name);
-        
-        if (m!=null) {
+
+        if (m != null) {
             l.setMemory(name);
         } else {
-            log.error("Memory named '"+attr.getValue()+"' not found.");
+            log.error("Memory named '" + attr.getValue() + "' not found.");
             p.loadFailed();
             return;
         }
-        
+
         p.putItem(l);
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.MEMORIES, element);
     }
 
-    static Logger log = LoggerFactory.getLogger(MemoryComboIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MemoryComboIconXml.class.getName());
 }

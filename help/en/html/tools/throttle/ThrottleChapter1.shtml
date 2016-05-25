@@ -1,20 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
   <title>Throttle: Getting Started </title>
   <meta name="keywords" content="JMRI decoderpro dcc nmra throttlepro">
   <meta name="Description" content="Throttle documentation for JMRI project">
-  <meta name="Keywords" content="JMRI">
   <meta name="Author" content="Paul Fraker (paul@frakers.com)">
   <meta name="Language" content="EN">
-  <meta name="Robots" content="Index, Follow">
-  <meta name="Revisit-After" content="7 Days">
-  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-  <!-- are an arbitrary design pattern used by the update.pl script to -->
-  <!-- easily replace the common header/footer code for all the web pages -->
-  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-  <!-- or change them to reflect your alternative logo -->
+   
   <!-- Style -->
   <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
@@ -29,10 +21,9 @@
 <!--#include virtual="Sidebar" -->
 
 <div id="mainContent">
-<h1><span style="color:#ff0000">Updated version of the Throttle
-documentation</span></h1>
+<h1>Current Throttle documentation</h1>
 
-<p>Please note that this documentation was updated, refer to links bellow:</p>
+<p>Please note that the Throttles Help was updated. Current version:</p>
 <ul>
   <li>The <a href="ToolsMenuThrottleEntry.shtml">Throttle menu in JMRI</a></li>
   <li>The <a href="BasicThrottleWindow.shtml">Throttle Window itself</a></li>
@@ -47,7 +38,9 @@ documentation</span></h1>
   </li>
 </ul>
 
-<h1>Where Do I Find The Throttles?</h1>
+<hr>
+<h1>Throttles in JMRI v2.x</h2>
+<h2>Where Do I Find the Throttles?</h2>
 
 <p>Chances are, if you are reading this text, then you probably saw reference
 to the "throttles" in the JMRI user group postings. And the first question that
@@ -58,7 +51,7 @@ going to do is show you how to gain access to the throttles. This section will
 also touch on the menu options that are available.</p>
 
 <p>First, it is important to understand that the JMRI Project is a group of
-many "<b>tools</b>" for your railroad — with many contributions from different
+many "<b>tools</b>" for your railroad - with many contributions from different
 programmers. There are four primary startup applications available</p>
 <ul>
   <li><b>DecoderPro</b> (the most widely and commonly known piece of the
@@ -74,30 +67,26 @@ find that many of the tools "cross over" to multiple startup applications. The
 <b>Throttle Tool</b> is a good example of this. No matter which of the above
 mentioned applications you start with, you will be able to find the
 throttles.</p>
-<br>
-<br>
-<br>
-<br>
-<a name="MainMenu"></a> 
 
+<a name="MainMenu"></a> 
 <h2>The Main (or Primary) Menu</h2>
 <dir>
   <p>In each of the startup applications noted above, there is always a
   "<i>primary</i>" main window displayed on your screen (similar to that shown
   below in figure 1-1). Close down this window and the whole application will
   terminate. This main window contains a primary set of menu options. This is
-  where you will find most of the tools and options available — including the
+  where you will find most of the tools and options available - including the
   Throttles.</p>
 </dir>
 <ul type="square">
   <li>Click on "<big>Tools</big>".<br>
   </li>
-  <li>This will open a sub-menu.<br>
+  <li>This will open a submenu.<br>
   </li>
   <li>Navigate your mouse pointer down until you locate
     "<big>Throttles</big>".<br>
   </li>
-  <li>This will open another sub-menu.<br>
+  <li>This will open another submenu.<br>
   </li>
   <li>This is the Throttles Menu (refer to figure 1-2).<br>
   </li>
@@ -106,48 +95,39 @@ throttles.</p>
 <p style="text-align: center; font-size: xx-small"><img width="410"
 height="228" src="images/jmri010.jpg" title="JMRI main menu structure"><br>
 Figure 1-1: JMRI main menu structure </p>
-<br>
-<br>
-<br>
-<br>
-<a name="ThrottlesSub"></a> 
 
-<h2>The Throttles Sub-menu</h2>
+<a name="ThrottlesSub"></a> 
+<h2>The Throttles Submenu</h2>
 <dir>
-  <p>The Throttles sub-menu (as shown in figure 1-2 below) contains the
+  <p>The Throttles submenu (as shown in figure 1-2 below) contains the
   following menu options, which are defined as:</p>
 </dir>
 <ul>
-  <li><b>New Throttle...</b> — opens a single new throttle window with default
-    throttle settings enabled.<br>
+  <li><b>New Throttle...</b> opens a single new Throttle window with default
+    Throttle settings enabled.<br>
     <br>
   </li>
-  <li><b>Save Throttle Layout...</b> — saves one or more currently opened
-    throttle windows to a user-named file on your hard drive.<br>
+  <li><b>Save Throttle Layout...</b> saves one or more currently opened
+    Throttle windows to a user-named file on your hard drive.<br>
     <br>
   </li>
-  <li><b>Load Throttle Layout...</b> — opens a previously saved throttle file.
-    This file can contain one or more throttle windows depending on how the
+  <li><b>Load Throttle Layout...</b> opens a previously saved Throttle file.
+    This file can contain one or more Throttle windows depending on how the
     layout was originally saved.<br>
     <br>
   </li>
-  <li><b>Save Throttle Preferences...</b> - Allows you to set up your overall
-    preferences for all throttle windows. </li>
+  <li><b>Save Throttle Preferences...</b> allows you to set up your overall
+    preferences for all Throttle windows. </li>
 </ul>
 
 <p style="text-align: center; font-size: xx-small"><img width="359"
 height="225" src="images/jmri009.jpg"
-title="JMRI Throttles sub-menu structure"><br>
-Figure 1-2: JMRI Throttles sub-menu structure </p>
-<br>
-<br>
-<br>
-<br>
-
+title="JMRI Throttles submenu structure"><br>
+Figure 1-2: JMRI Throttles submenu structure</p>
 
 <p>Use the links below to advance to the next chapter to walk through the
-process of opening up a new throttle window and setting up some of the
-available options, and lets not forget...run a locomotive.</p>
+process of opening up a new Throttle window and setting up some of the
+available options, and lets not forget... run a Locomotive.</p>
 
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
   <tbody>
@@ -168,10 +148,9 @@ available options, and lets not forget...run a locomotive.</p>
     </tr>
   </tbody>
 </table>
-<br>
-<br>
-<br>
-<br>
-<!--#include virtual="/Footer" --> </div>
-</body>
+<!--#include virtual="/Footer" -->
+
+      </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
+  </body>
 </html>

@@ -2,12 +2,12 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: index.shtml,v 1.3 2008/04/12 07:18:51 jacobsen Exp $ -->
-<!-- Translated by Blorec Hervé le 2011-10-01-->
+<!-- $Id$ -->
+<!-- UpDated by Blorec Herv&#233; le 2013-09-02-->
 <title>JMRI: Applications</title>
 
 <!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" TYPE="image/png">
@@ -26,59 +26,41 @@
 		JMRI: Applications
         </H2>
 
-	<P>JMRI offre plusieurs applications qui sont optimisées pour des objectifs spécifiques. Vous pouvez bien sûr également écrire les votres
+	<P>JMRI offre plusieurs applications qui sont optimis&#233;es pour des objectifs sp&#233;cifiques. Vous pouvez bien s&#251;r &#233;galement &#233;crire les votres
 	    <dl>
 		<dt><h3><a href="./DecoderPro/index.shtml">DecoderPro</a></h3></dt>
 		<dd>
-		    DecoderPro simplifie la tâche de configuration compliquée des décodeurs DCC
- 		    en fournissant des écrans sur lesquels vous pouvez sélectionner les différentes
+Un meilleur outil pour programmer les d&#233;codeurs		    
+DecoderPro simplifie la t&#226;che de configuration compliqu&#233;e des d&#233;codeurs DCC
+ 		    en fournissant des &#233;crans sur lesquels vous pouvez s&#233;lectionner les diff&#233;rentes
 		     options et valeurs que vous voulez.</dd>
 
 		<dt><h3><a href="./PanelPro/PanelPro.shtml">PanelPro</a></h3></dt>
 		<dd>
-		    L'exploitation CRT dérivée des panneaux contrôle CTC qui reflète en temps réel
-		    l'état de votre <em> chemin de fer et </em> vous permettent de le contrôler - presque comme un
-		     Prototype d'un répartiteur!
+		    L'exploitation CRT d&#233;riv&#233;e des panneaux contr&#244;le CTC qui refl&#232;te en temps r&#233;el
+		    l'&#233;tat de votre r&#233;seau <em>et</em> vous permettent de le contr&#244;ler - presque comme un
+		     r&#233;partiteur prototype!
 		</dd>
-		<dt><h3><a href="LocoTools/index.shtml">LocoNet Tools</a></h3></dt>
-		<dd> Un ensemble d'outils spécifiques Digitrax LocoNet:
-		    <UL>
-		  	<LI><dfn>moniteur LocoNet</dfn>
-		   	<LI><dfn> moniteur de Slot </dfn>
+		<dt><h3><a href="LocoTools/index.shtml">Outils LocoNet</a></h3></dt>
+		<dd> Un ensemble d'outils LocoNet sp&#233;cifiques Digitrax :
+		    <ul>
+		  	<li><dfn>moniteur LocoNet</dfn>
+		   	<li><dfn> moniteur de Slot </dfn>
                    	<LI> <dfn> source de paquets </dfn>
 		    	<LI> <dfn> programmateur PM4 </dfn>
-			<LI> <dfn> programmateur BDL16 </dfn>
-			<LI> <dfn> programmateur SE8C </ dfn>
-			<LI> <dfn> programmateur DS64 </ dfn>
-			<LI> <dfn> LocoIO programmateur</dfn>
-		    </UL>nF
-		Ils sont également disponibles dans DecoderPro et PanelPro lorsque ces derniers sont
-		configurés pour une connexion LocoNet, mais LocoTools leur fournit une façon  plus facile de les
-		utilisés. 
+			<li> <dfn> programmateur BDL16 </dfn>
+			<li> <dfn> programmateur SE8c </dfn>
+			<li> <dfn> programmateur DS64 </dfn>
+			<!-- <LI> <dfn> LocoIO programmateur</dfn> pour LocoIO utiliser DP3 -->
+		    </ul>
+		Ils sont &#233;galement disponibles dans DecoderPro et PanelPro lorsque ces derniers sont
+		configur&#233;s pour une connexion LocoNet, mais LocoTools leur fournit une fa&#231;on  plus facile de les
+		utilis&#233;s. 
 		</dd>
-
-		<dt><h3>JMRI Démo</h3></dt>
-		<dd>
-		    Nous avons également créé un programme de démonstration pour voir l'ensemble des
-		outils JMRI car ils sont développés: le contrôle et l'affichage de la
-		position des aiguillages, programmation des décodeurs, l'affichage et le contrôle
-		d'alimentation du réseau, de surveiller le trafic sur le réseau, etc
-		<P> Les deux principales différences entre ce dernier programme et le précédent
-		 sont les suivants:
-		    <LI>Le programme montre les éléments de menu pour l'ensemble des
-		systèmes matériels pris en charge, et pas seulement ceux qui sont actuellement configurés.
-	 	Cela vous permet d'explorer facilement les menus pour voir ce qui est disponible (mais
-		bien sûr quelques-uns des articles ne peuvent pas fonctionner sans une connexion
-		à un réseau .
-		    Par exemple, le logiciel d'un nouveau type de matériel apparaît souvent
-		ici en premier afin que les premiers à l'adopter puissent le vérifier. C'est
-		généralement examinée dans les notes de version pour chaque version.
-		    </UL>
-		</dd>
-
 
 	    </dl>
 
 <!--#include virtual="/Footer" -->
+</div> <!-- close #mainContent -->
 </body>
 </html>

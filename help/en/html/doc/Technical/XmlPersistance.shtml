@@ -9,13 +9,7 @@
     <META content="Bob Jacobsen" name=Author>
     <meta name="keywords" content="JMRI technical code xml persistance">
 
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+    <!--#include virtual="/Style" -->
 </head>
 
 <!--#include virtual="/Header" -->
@@ -127,9 +121,9 @@ modified.
 <p>
 Note that in some cases, there's an inheritance relationship amoung the
 persisting classes that can help.  For example, the LocoNet 
-<a href="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrix/loconet/configurexml/LnSensorManagerXml.html">LnSensorManagerXml</a>
+<a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/configurexml/LnSensorManagerXml.html">LnSensorManagerXml</a>
 class inherits from 
-<a href="http://jmri.sourceforge.net/JavaDoc/doc/jmri/configurexml/AbstractTurnoutManagerConfigXML.html">jmri.configurexml.AbstractSensorManagerConfigXML</a>, which does
+<a href="http://jmri.org/JavaDoc/doc/jmri/configurexml/AbstractTurnoutManagerConfigXML.html">jmri.configurexml.AbstractSensorManagerConfigXML</a>, which does
 almost all the work of storing and loading sensors.
 
 <p>
@@ -139,14 +133,14 @@ the format definition, see below.
 <a id="schema">
 <h2>Schema Management</h2>
 
-JMRI controls XML semantics usings 
+JMRI controls XML semantics using 
 <a href="XmlSchema.shtml">XML Schema</a>.
 
 <p>
 For example, layout information is stored in XML files as
 a "layout-config" element, whose contents are then defined via a
 schema file.  These files are kept in the 
-<a href="http://jmri.sf.net/xml/schema">xml/schema</a>
+<a href="http://jmri.org/xml/schema">xml/schema</a>
 directory.
 
 

@@ -31,9 +31,23 @@
         <revremark>aspect mapping revisions</revremark>
     </revision>
     
+    <revision>
+        <revnumber>2.1</revnumber>
+        <date>2013-12-30</date>
+        <authorinitials>JDL</authorinitials>
+        <revremark>fixed aspect name reference in appearence files. tweaked aspect mappings</revremark>
+    </revision>
+    
+    <revision>
+        <revnumber>2.2</revnumber>
+        <date>2015-06-12</date>
+        <authorinitials>JDL</authorinitials>
+        <revremark>added aspect mapping to Held Aspect</revremark>
+    </revision>
+    
   </revhistory>
 
-  <aspecttable>NYC 1956</aspecttable>
+  <aspecttable>NYC-1956</aspecttable>
   <name>Single searchlight dwarf signal</name>
   <reference>As described in the New York Central System publication "Rules of the Operating Department, Effective October 28, 1956."</reference>
   <description>Appearances for a one-searchlight dwarf signal head</description>
@@ -70,7 +84,7 @@
 
     <appearance>
       <aspectname>Stop</aspectname>
-      <show>green</show>
+      <show>red</show>
       <reference>Rule 292</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-1-low/Rule 292.gif</imagelink>
     </appearance>
@@ -181,6 +195,11 @@
       <ourAspect>Limited-Approach</ourAspect>
     </aspectMapping>
 
+    <aspectMapping>
+      <advancedAspect>Held</advancedAspect>
+      <ourAspect>Limited-Approach</ourAspect>
+    </aspectMapping>
+    
   </aspectMappings>
 
 </appearancetable>  

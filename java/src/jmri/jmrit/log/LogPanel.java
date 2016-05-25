@@ -1,20 +1,24 @@
 // LogPanel.java
-
 package jmri.jmrit.log;
 
+import java.awt.FlowLayout;
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.awt.FlowLayout;
-import javax.swing.*;
 
 /**
  * User interface for adding an item to the log file.
  * <P>
- * @author			Bob Jacobsen   Copyright (C) 2007
- * @version			$Revision$
+ * @author	Bob Jacobsen Copyright (C) 2007
+ * @version	$Revision$
  */
 public class LogPanel extends JPanel {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = 6095030332169881375L;
     // member declarations
     javax.swing.JLabel label = new javax.swing.JLabel("Message:");
     javax.swing.JButton sendButton = new javax.swing.JButton("Add");
@@ -30,20 +34,18 @@ public class LogPanel extends JPanel {
         add(p1);
         add(sendButton);
 
-
         sendButton.setToolTipText("Add message to the log file");
         sendButton.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    sendButtonActionPerformed(e);
-                }
-            });
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                sendButtonActionPerformed(e);
+            }
+        });
     }
-   
+
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
         log.error(textField.getText());
     }
 
-
-    static Logger log = LoggerFactory.getLogger(LogPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LogPanel.class.getName());
 
 }

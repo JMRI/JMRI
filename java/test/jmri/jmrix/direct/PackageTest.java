@@ -1,5 +1,3 @@
-// PackageTest.java
-
 package jmri.jmrix.direct;
 
 import junit.framework.Test;
@@ -8,13 +6,12 @@ import junit.framework.TestSuite;
 
 /**
  * Tests for the jmri.jmrix.direct package.
- * @author      Bob Jacobsen  Copyright 2004
- * @version   $Revision$
+ *
+ * @author Bob Jacobsen Copyright 2004
  */
 public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure
-
     public PackageTest(String s) {
         super(s);
     }

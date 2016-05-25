@@ -33,6 +33,18 @@
       <authorinitials>ST</authorinitials>
       <revremark>Branched from single head to dreate seperate mast with 'R' plate</revremark>
     </revision>
+    <revision>
+      <revnumber>1.04</revnumber>
+      <date>2014-03-05</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Added Permissive specific appearance to Restricted Signal</revremark>
+    </revision>
+    <revision>
+      <revnumber>1.05</revnumber>
+      <date>2014-06-23</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Corrected case error in image paths</revremark>
+    </revision>
   </revhistory>
   <aspecttable>CROR-2008</aspecttable>
   <name>Single head searchlight high signal with 'R' plate</name>
@@ -73,6 +85,9 @@
     <danger>
       <aspect>Restricting Signal</aspect>
     </danger>
+    <permissive>
+      <aspect>Restricting Signal</aspect>
+    </permissive>
     <dark>
       <aspect>Not Lit</aspect>
     </dark>

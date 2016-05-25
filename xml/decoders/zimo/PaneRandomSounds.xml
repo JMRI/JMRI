@@ -1,174 +1,207 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
-<pane name="Random Sounds">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <column>
-    <label label="Random Generator Z1">
-      <label>Random Generator Z1</label>
+    <label>
+      <text>Random Generator Z1</text>
+      <text xml:lang="it">Generatore Casuale Z1</text>
     </label>
     <separator/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <display item="Minimum interval for random generator Z1" label="Minimum interval">
       <label>Minimum interval</label>
+      <label xml:lang="it">Intervallo Minimo</label>
     </display>
     <display item="Maximum interval for random generator Z1" label="Maximum interval">
       <label>Maximum interval</label>
+      <label xml:lang="it">Intervallo Massimo</label>
     </display>
     <display item="Playback length for random generator Z1" label="Playback length">
       <label>Playback length</label>
+      <label xml:lang="it">Durata riproduzione</label>
     </display>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
-    <label label="Random Generator Z2">
-      <label>Random Generator Z2</label>
+    <label>
+      <text>Random Generator Z2</text>
+      <text xml:lang="it">Generatore Casuale Z2</text>
     </label>
     <separator/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <display item="Minimum interval for random generator Z2" label="Minimum interval">
       <label>Minimum interval</label>
+      <label xml:lang="it">Intervallo Minimo</label>
     </display>
     <display item="Maximum interval for random generator Z2" label="Maximum interval">
       <label>Maximum interval</label>
+      <label xml:lang="it">Intervallo Massimo</label>
     </display>
     <display item="Playback length for random generator Z2" label="Playback length">
       <label>Playback length</label>
+      <label xml:lang="it">Durata riproduzione</label>
     </display>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
-    <label label="Random Generator Z3">
-      <label>Random Generator Z3</label>
+    <label>
+      <text>Random Generator Z3</text>
+      <text xml:lang="it">Generatore Casuale Z3</text>
     </label>
     <separator/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <display item="Minimum interval for random generator Z3" label="Minimum interval">
       <label>Minimum interval</label>
+      <label xml:lang="it">Intervallo Minimo</label>
     </display>
     <display item="Maximum interval for random generator Z3" label="Maximum interval">
       <label>Maximum interval</label>
+      <label xml:lang="it">Intervallo Massimo</label>
     </display>
     <display item="Playback length for random generator Z3" label="Playback length">
       <label>Playback length</label>
+      <label xml:lang="it">Durata riproduzione</label>
     </display>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
-    <label label="Random Generator Z4">
-      <label>Random Generator Z4</label>
+    <label>
+      <text>Random Generator Z4</text>
+      <text xml:lang="it">Generatore Casuale Z4</text>
     </label>
     <separator/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <display item="Minimum interval for random generator Z4" label="Minimum interval">
       <label>Minimum interval</label>
+      <label xml:lang="it">Intervallo Minimo</label>
     </display>
     <display item="Maximum interval for random generator Z4" label="Maximum interval">
       <label>Maximum interval</label>
+      <label xml:lang="it">Intervallo Massimo</label>
     </display>
     <display item="Playback length for random generator Z4" label="Playback length">
       <label>Playback length</label>
+      <label xml:lang="it">Durata riproduzione</label>
     </display>
   </column>
   <column>
-    <label label="Random Generator Z5">
-      <label>Random Generator Z5</label>
+    <label>
+      <text>Random Generator Z5</text>
+      <text xml:lang="it">Generatore Casuale Z5</text>
     </label>
     <separator/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <display item="Minimum interval for random generator Z5" label="Minimum interval">
       <label>Minimum interval</label>
+      <label xml:lang="it">Intervallo Minimo</label>
     </display>
     <display item="Maximum interval for random generator Z5" label="Maximum interval">
       <label>Maximum interval</label>
+      <label xml:lang="it">Intervallo Massimo</label>
     </display>
     <display item="Playback length for random generator Z5" label="Playback length">
       <label>Playback length</label>
+      <label xml:lang="it">Durata riproduzione</label>
     </display>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
-    <label label="Random Generator Z6">
-      <label>Random Generator Z6</label>
+    <label>
+      <text>Random Generator Z6</text>
+      <text xml:lang="it">Generatore Casuale Z6</text>
     </label>
     <separator/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <display item="Minimum interval for random generator Z6" label="Minimum interval">
       <label>Minimum interval</label>
+      <label xml:lang="it">Intervallo Minimo</label>
     </display>
     <display item="Maximum interval for random generator Z6" label="Maximum interval">
       <label>Maximum interval</label>
+      <label xml:lang="it">Intervallo Massimo</label>
     </display>
     <display item="Playback length for random generator Z6" label="Playback length">
       <label>Playback length</label>
+      <label xml:lang="it">Durata riproduzione</label>
     </display>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
-    <label label="Random Generator Z7">
-      <label>Random Generator Z7</label>
+    <label>
+      <text>Random Generator Z7</text>
+      <text xml:lang="it">Generatore Casuale Z7</text>
     </label>
     <separator/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <display item="Minimum interval for random generator Z7" label="Minimum interval">
       <label>Minimum interval</label>
+      <label xml:lang="it">Intervallo Minimo</label>
     </display>
     <display item="Maximum interval for random generator Z7" label="Maximum interval">
       <label>Maximum interval</label>
+      <label xml:lang="it">Intervallo Massimo</label>
     </display>
     <display item="Playback length for random generator Z7" label="Playback length">
       <label>Playback length</label>
+      <label xml:lang="it">Durata riproduzione</label>
     </display>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
-    <label label="Random Generator Z8">
-      <label>Random Generator Z8</label>
+    <label>
+      <text>Random Generator Z8</text>
+      <text xml:lang="it">Generatore Casuale Z8</text>
     </label>
     <separator/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <display item="Minimum interval for random generator Z8" label="Minimum interval">
       <label>Minimum interval</label>
+      <label xml:lang="it">Intervallo Minimo</label>
     </display>
     <display item="Maximum interval for random generator Z8" label="Maximum interval">
       <label>Maximum interval</label>
+      <label xml:lang="it">Intervallo Massimo</label>
     </display>
     <display item="Playback length for random generator Z8" label="Playback length">
       <label>Playback length</label>
+      <label xml:lang="it">Durata riproduzione</label>
     </display>
   </column>
   <name>Random Sounds</name>
+  <name xml:lang="it">Suoni Casuali</name>
 </pane>

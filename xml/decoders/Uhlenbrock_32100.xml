@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
-<!-- $Id: Uhlenbrock_32100.xml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="2.0" lastUpdated="20140803"/>
   <version author="Jeff Schmaltz escopetas@comcast.net" version="1.0" lastUpdated="20110820"/>
   <!--
   This version was based on the English versions of the Uhlenbrock manuals - IntelliSoundModule 32 100
@@ -23,11 +24,16 @@
   This decoder XML is meant to be used with the "Custom" programmer format as very few of the
   SUSI variables have standard NMRA analogues.
 
-  Initial Version 1.0 - 20 Aug 11 
-
--->
+  Initial Version 1.0 - 20 Aug 11
+  -->
+  <!-- 	Version 2.0 :
+		Added Ranges 2 and 3 - and automatic switch between ranges on the IntelliSound pane
+		Created Xinclude file for the functions sound enum
+		Fixed F5 = CV908 (and not CV905)
+		German translation according to Uhlenbrock 32300 manual
+  -->
   <decoder>
-    <family name="IntelliSound Module" mfg="Uhlenbrock Elektronik">
+    <family name="IntelliSound Module" mfg="Uhlenbrock Elektronik" comment="Auxiliary Sound module for all locomotive decoders with SUSI connector">
       <model model="32100">
         <size length="20.8" width="10.8" height="5" units="mm"/>
       </model>
@@ -40,530 +46,754 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <variable label="SUSI-range" CV="897" default="1" tooltip="Will not read/write properly if multiple SUSI modules attached">
+      <variable item="SUSI-range" CV="897" default="1" tooltip="Will not read/write properly if multiple SUSI modules attached">
         <enumVal>
-          <enumChoice choice="Not used">
-            <choice>Not used</choice>
-          </enumChoice>
-          <enumChoice choice="Range I (CVs 900-939)">
+          <enumChoice choice="Range I (CVs 900-939)" value="1">
             <choice>Range I (CVs 900-939)</choice>
+            <choice xml:lang="de">Bereich I (CVs 900-939)</choice>
           </enumChoice>
           <enumChoice choice="Range II (CVs 940-979)">
             <choice>Range II (CVs 940-979)</choice>
+            <choice xml:lang="de">Bereich II (CVs 940-979)</choice>
           </enumChoice>
           <enumChoice choice="Range III (CVs 980-1019)">
             <choice>Range III (CVs 980-1019)</choice>
+            <choice xml:lang="de">Bereich III (CVs 980-1019)</choice>
           </enumChoice>
         </enumVal>
         <label>SUSI-range</label>
+		<label xml:lang="de">SUSI Adressbereich</label>
       </variable>
       <!-- Range I variables -->
-      <variable label="Range I Manufacturer ID" CV="900" readOnly="yes" item="Manufacturer" default="85">
+      <variable item="Range I Manufacturer ID" CV="900" readOnly="yes" default="85">
         <decVal/>
-        <label>Range I Manufacturer ID</label>
+        <label>Manufacturer ID</label>
+		<label xml:lang="de">Herstellerkennung</label>
       </variable>
-      <variable label="Range I Software version" CV="901" readOnly="yes" item="Decoder Version">
+      <variable item="Range I Software version" CV="901" readOnly="yes">
         <decVal/>
-        <label>Range I Software version</label>
+        <label>Software version</label>
+		<label xml:lang="de">Softwareversion</label>
       </variable>
-      <variable label="Range I Sound Volume" CV="902" default="255" tooltip="0-255">
+      <variable item="Range I Sound Volume" CV="902" default="255" tooltip="0-255">
         <decVal/>
-        <label>Range I Software version</label>
+        <label>Sound Volume</label>
+		<label xml:lang="de">Lautstärke des Sounds</label>
       </variable>
       <!-- Speculating that CV 903 is F0, not really clear from manuals -->
-      <variable label="Range I F0 activated sound" CV="903" default="0">
-        <enumVal>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="Bell or Horn 1">
-            <choice>Bell or Horn 1</choice>
-          </enumChoice>
-          <enumChoice choice="Whistle or Horn 2">
-            <choice>Whistle or Horn 2</choice>
-          </enumChoice>
-          <enumChoice choice="Operating sounds of the loco">
-            <choice>Operating sounds of the loco</choice>
-          </enumChoice>
-          <enumChoice choice="Uncoupling or door alarm">
-            <choice>Uncoupling or door alarm</choice>
-          </enumChoice>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="All sounds on/off">
-            <choice>All sounds on/off</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Range I F0 activated sound</label>
+      <variable item="Range I F0 activated sound" CV="903" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound1.xml"/>
+        <label>F0 activated sound</label>
+		<label xml:lang="de">F0 aktiviert Sound</label>
       </variable>
-      <variable label="Range I F1 activated sound" CV="904" default="3">
-        <enumVal>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="Bell or Horn 1">
-            <choice>Bell or Horn 1</choice>
-          </enumChoice>
-          <enumChoice choice="Whistle or Horn 2">
-            <choice>Whistle or Horn 2</choice>
-          </enumChoice>
-          <enumChoice choice="Operating sounds of the loco">
-            <choice>Operating sounds of the loco</choice>
-          </enumChoice>
-          <enumChoice choice="Uncoupling or door alarm">
-            <choice>Uncoupling or door alarm</choice>
-          </enumChoice>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="All sounds on/off">
-            <choice>All sounds on/off</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Range I F1 activated sound</label>
+      <variable item="Range I F1 activated sound" CV="904" default="3">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound1.xml"/>
+        <label>F1 activated sound</label>
+		<label xml:lang="de">F1 aktiviert Sound</label>
       </variable>
-      <variable label="Range I F2 activated sound" CV="905" default="2">
-        <enumVal>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="Bell or Horn 1">
-            <choice>Bell or Horn 1</choice>
-          </enumChoice>
-          <enumChoice choice="Whistle or Horn 2">
-            <choice>Whistle or Horn 2</choice>
-          </enumChoice>
-          <enumChoice choice="Operating sounds of the loco">
-            <choice>Operating sounds of the loco</choice>
-          </enumChoice>
-          <enumChoice choice="Uncoupling or door alarm">
-            <choice>Uncoupling or door alarm</choice>
-          </enumChoice>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="All sounds on/off">
-            <choice>All sounds on/off</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Range I F2 activated sound</label>
+      <variable item="Range I F2 activated sound" CV="905" default="2">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound1.xml"/>
+        <label>F2 activated sound</label>
+		<label xml:lang="de">F2 aktiviert Sound</label>
       </variable>
-      <variable label="Range I F3 activated sound" CV="906" default="4">
-        <enumVal>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="Bell or Horn 1">
-            <choice>Bell or Horn 1</choice>
-          </enumChoice>
-          <enumChoice choice="Whistle or Horn 2">
-            <choice>Whistle or Horn 2</choice>
-          </enumChoice>
-          <enumChoice choice="Operating sounds of the loco">
-            <choice>Operating sounds of the loco</choice>
-          </enumChoice>
-          <enumChoice choice="Uncoupling or door alarm">
-            <choice>Uncoupling or door alarm</choice>
-          </enumChoice>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="All sounds on/off">
-            <choice>All sounds on/off</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Range I F3 activated sound</label>
+      <variable item="Range I F3 activated sound" CV="906" default="4">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound1.xml"/>
+        <label>F3 activated sound</label>
+		<label xml:lang="de">F3 aktiviert Sound</label>
       </variable>
-      <variable label="Range I F4 activated sound" CV="907" default="1">
-        <enumVal>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="Bell or Horn 1">
-            <choice>Bell or Horn 1</choice>
-          </enumChoice>
-          <enumChoice choice="Whistle or Horn 2">
-            <choice>Whistle or Horn 2</choice>
-          </enumChoice>
-          <enumChoice choice="Operating sounds of the loco">
-            <choice>Operating sounds of the loco</choice>
-          </enumChoice>
-          <enumChoice choice="Uncoupling or door alarm">
-            <choice>Uncoupling or door alarm</choice>
-          </enumChoice>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="All sounds on/off">
-            <choice>All sounds on/off</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Range I F4 activated sound</label>
+      <variable item="Range I F4 activated sound" CV="907" default="1">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound1.xml"/>
+        <label>F4 activated sound</label>
+		<label xml:lang="de">F4 aktiviert Sound</label>
       </variable>
-      <variable label="Range I F5 activated sound" CV="905" default="0">
-        <enumVal>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="Bell or Horn 1">
-            <choice>Bell or Horn 1</choice>
-          </enumChoice>
-          <enumChoice choice="Whistle or Horn 2">
-            <choice>Whistle or Horn 2</choice>
-          </enumChoice>
-          <enumChoice choice="Operating sounds of the loco">
-            <choice>Operating sounds of the loco</choice>
-          </enumChoice>
-          <enumChoice choice="Uncoupling or door alarm">
-            <choice>Uncoupling or door alarm</choice>
-          </enumChoice>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="All sounds on/off">
-            <choice>All sounds on/off</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Range I F5 activated sound</label>
+      <variable item="Range I F5 activated sound" CV="908" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound1.xml"/>
+        <label>F5 activated sound</label>
+		<label xml:lang="de">F5 aktiviert Sound</label>
       </variable>
-      <variable label="Range I F6 activated sound" CV="909" default="0">
-        <enumVal>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="Bell or Horn 1">
-            <choice>Bell or Horn 1</choice>
-          </enumChoice>
-          <enumChoice choice="Whistle or Horn 2">
-            <choice>Whistle or Horn 2</choice>
-          </enumChoice>
-          <enumChoice choice="Operating sounds of the loco">
-            <choice>Operating sounds of the loco</choice>
-          </enumChoice>
-          <enumChoice choice="Uncoupling or door alarm">
-            <choice>Uncoupling or door alarm</choice>
-          </enumChoice>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="All sounds on/off">
-            <choice>All sounds on/off</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Range I F6 activated sound</label>
+      <variable item="Range I F6 activated sound" CV="909" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound1.xml"/>
+        <label>F6 activated sound</label>
+		<label xml:lang="de">F6 aktiviert Sound</label>
       </variable>
-      <variable label="Range I F7 activated sound" CV="910" default="0">
-        <enumVal>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="Bell or Horn 1">
-            <choice>Bell or Horn 1</choice>
-          </enumChoice>
-          <enumChoice choice="Whistle or Horn 2">
-            <choice>Whistle or Horn 2</choice>
-          </enumChoice>
-          <enumChoice choice="Operating sounds of the loco">
-            <choice>Operating sounds of the loco</choice>
-          </enumChoice>
-          <enumChoice choice="Uncoupling or door alarm">
-            <choice>Uncoupling or door alarm</choice>
-          </enumChoice>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="All sounds on/off">
-            <choice>All sounds on/off</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Range I F7 activated sound</label>
+      <variable item="Range I F7 activated sound" CV="910" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound1.xml"/>
+        <label>F7 activated sound</label>
+		<label xml:lang="de">F7 aktiviert Sound</label>
       </variable>
-      <variable label="Range I F8 activated sound" CV="911" default="8">
-        <enumVal>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="Bell or Horn 1">
-            <choice>Bell or Horn 1</choice>
-          </enumChoice>
-          <enumChoice choice="Whistle or Horn 2">
-            <choice>Whistle or Horn 2</choice>
-          </enumChoice>
-          <enumChoice choice="Operating sounds of the loco">
-            <choice>Operating sounds of the loco</choice>
-          </enumChoice>
-          <enumChoice choice="Uncoupling or door alarm">
-            <choice>Uncoupling or door alarm</choice>
-          </enumChoice>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="All sounds on/off">
-            <choice>All sounds on/off</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Range I F8 activated sound</label>
+      <variable item="Range I F8 activated sound" CV="911" default="8">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound1.xml"/>
+        <label>F8 activated sound</label>
+		<label xml:lang="de">F8 aktiviert Sound</label>
       </variable>
-      <variable label="Range I F9 activated sound" CV="912" default="0">
-        <enumVal>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="Bell or Horn 1">
-            <choice>Bell or Horn 1</choice>
-          </enumChoice>
-          <enumChoice choice="Whistle or Horn 2">
-            <choice>Whistle or Horn 2</choice>
-          </enumChoice>
-          <enumChoice choice="Operating sounds of the loco">
-            <choice>Operating sounds of the loco</choice>
-          </enumChoice>
-          <enumChoice choice="Uncoupling or door alarm">
-            <choice>Uncoupling or door alarm</choice>
-          </enumChoice>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="All sounds on/off">
-            <choice>All sounds on/off</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Range I F9 activated sound</label>
+      <variable item="Range I F9 activated sound" CV="912" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound1.xml"/>
+        <label>F9 activated sound</label>
+		<label xml:lang="de">F9 aktiviert Sound</label>
       </variable>
-      <variable label="Range I F10 activated sound" CV="913" default="0">
-        <enumVal>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="Bell or Horn 1">
-            <choice>Bell or Horn 1</choice>
-          </enumChoice>
-          <enumChoice choice="Whistle or Horn 2">
-            <choice>Whistle or Horn 2</choice>
-          </enumChoice>
-          <enumChoice choice="Operating sounds of the loco">
-            <choice>Operating sounds of the loco</choice>
-          </enumChoice>
-          <enumChoice choice="Uncoupling or door alarm">
-            <choice>Uncoupling or door alarm</choice>
-          </enumChoice>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="All sounds on/off">
-            <choice>All sounds on/off</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Range I F10 activated sound</label>
+      <variable item="Range I F10 activated sound" CV="913" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound1.xml"/>
+        <label>F10 activated sound</label>
+		<label xml:lang="de">F10 aktiviert Sound</label>
       </variable>
-      <variable label="Range I F11 activated sound" CV="914" default="0">
-        <enumVal>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="Bell or Horn 1">
-            <choice>Bell or Horn 1</choice>
-          </enumChoice>
-          <enumChoice choice="Whistle or Horn 2">
-            <choice>Whistle or Horn 2</choice>
-          </enumChoice>
-          <enumChoice choice="Operating sounds of the loco">
-            <choice>Operating sounds of the loco</choice>
-          </enumChoice>
-          <enumChoice choice="Uncoupling or door alarm">
-            <choice>Uncoupling or door alarm</choice>
-          </enumChoice>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="All sounds on/off">
-            <choice>All sounds on/off</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Range I F11 activated sound</label>
+      <variable item="Range I F11 activated sound" CV="914" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound1.xml"/>
+        <label>F11 activated sound</label>
+		<label xml:lang="de">F11 aktiviert Sound</label>
       </variable>
-      <variable label="Range I F12 activated sound" CV="915" default="0">
-        <enumVal>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="Bell or Horn 1">
-            <choice>Bell or Horn 1</choice>
-          </enumChoice>
-          <enumChoice choice="Whistle or Horn 2">
-            <choice>Whistle or Horn 2</choice>
-          </enumChoice>
-          <enumChoice choice="Operating sounds of the loco">
-            <choice>Operating sounds of the loco</choice>
-          </enumChoice>
-          <enumChoice choice="Uncoupling or door alarm">
-            <choice>Uncoupling or door alarm</choice>
-          </enumChoice>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="None">
-            <choice>None</choice>
-          </enumChoice>
-          <enumChoice choice="All sounds on/off">
-            <choice>All sounds on/off</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Range I F12 activated sound</label>
+      <variable item="Range I F12 activated sound" CV="915" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound1.xml"/>
+        <label>F12 activated sound</label>
+		<label xml:lang="de">F12 aktiviert Sound</label>
       </variable>
-      <variable label="Range I Chuff Control" CV="920" mask="XXXXXXXV" default="1">
+      <variable item="Range I Chuff Control" CV="920" mask="XXXXXXXV" default="1">
         <enumVal>
-          <enumChoice choice="Wheel sensor only"/>
-          <enumChoice choice="Decoder data and wheel sensor"/>
+		  <enumChoice choice="Wheel sensor only">
+			<choice>Wheel sensor only</choice>
+			<choice xml:lang="de">nur über Reedkontakt</choice>
+		  </enumChoice>
+          <enumChoice choice="Decoder data and wheel sensor">
+			<choice>Decoder data and wheel sensor</choice>
+			<choice xml:lang="de">automatisch und per Reedk.</choice>
+		  </enumChoice>
         </enumVal>
+        <label>Chuff Control</label>
+		<label xml:lang="de">Auspuffschlag Dampflok</label>
       </variable>
-      <variable label="Range I End step" CV="920" mask="VXXXXXXX" default="1">
+      <variable item="Range I End step" CV="920" mask="VXXXXXXX" default="1">
         <enumVal>
-          <enumChoice choice="Always on"/>
-          <enumChoice choice="Off when sound is off"/>
+          <enumChoice choice="Always on">
+			<choice>Always on</choice>
+			<choice xml:lang="de">immer eingeschaltet</choice>
+		  </enumChoice>
+          <enumChoice choice="Off when sound is off">
+			<choice>Off when sound is off</choice>
+			<choice xml:lang="de">abgeschaltet wenn Ton aus</choice>
+		  </enumChoice>
         </enumVal>
+        <label>End step</label>
+		<label xml:lang="de">Endstufe</label>
       </variable>
-      <variable label="Range I Trigger level with load increase" CV="921" default="5" tooltip="0-128 128=tone change is off">
+      <variable item="Range I Trigger level with load increase" CV="921" default="5">
         <decVal max="128"/>
-        <label>Range I Trigger level with load increase</label>
+        <label>Trigger level with load increase</label>
+		<label xml:lang="de">Auslöseschwelle bei Motorlastzunahme</label>
+		<tooltip>0-128, 128=tone change is off</tooltip>
+		<tooltip xml:lang="de">0-128, 128 = Tonänderung bei Lastzunahme ausgeschaltet</tooltip>
       </variable>
-      <variable label="Range I Trigger level with load decrease" CV="922" default="5" tooltip="0-128 128=tone change is off">
+      <variable item="Range I Trigger level with load decrease" CV="922" default="5">
         <decVal max="128"/>
-        <label>Range I Trigger level with load decrease</label>
+        <label>Trigger level with load decrease</label>
+		<label xml:lang="de">Auslöseschwelle bei Motorlastabnahme</label>
+		<tooltip>0-128, 128=tone change is off</tooltip>
+		<tooltip xml:lang="de">0-128, 128 = Tonänderung bei Lastabnahme ausgeschaltet</tooltip>
       </variable>
-      <variable label="Range I Trigger level for cooling fan in E-lok" CV="923" default="128" tooltip="0-255 255=cooling fan sound off">
+      <variable item="Range I Trigger level for cooling fan in E-lok" CV="923" default="128">
         <decVal/>
-        <label>Range I Trigger level for cooling fan in E-lok</label>
+        <label>Trigger level for cooling fan (E-loco)</label>
+		<label xml:lang="de">Schaltschwelle für Elektrolüfter (E-Lok)</label>
+		<tooltip>0-255, 255=cooling fan sound off</tooltip>
+		<tooltip xml:lang="de">0-255, 255 = kein Lüftergeräusch</tooltip>
       </variable>
-      <variable label="Range I Trigger level for brake screeching" CV="924" default="27" tooltip="0-255 255=brake screeching sound off">
+      <variable item="Range I Trigger level for brake screeching" CV="924" default="27">
         <decVal/>
-        <label>Range I Trigger level for brake screeching</label>
+        <label>Trigger level for brake screeching</label>
+		<label xml:lang="de">Schwelle für Bremsgeräusch</label>
+		<tooltip>0-255, 255=brake screeching sound off</tooltip>
+		<tooltip xml:lang="de">0-255, 255 = kein Bremsenquietschen</tooltip>
       </variable>
-      <variable label="Range I Sensitivity to load change" CV="925" default="4" tooltip="1=reacts rapidly to 8=reacts slowly">
+      <variable item="Range I Sensitivity to load change" CV="925" default="4">
         <decVal max="8"/>
-        <label>Range I Sensitivity to load change</label>
+        <label>Sensitivity to load change</label>
+		<label xml:lang="de">Empfindlichkeit auf Laständerungen</label>
+		<tooltip>1=reacts rapidly to 8=reacts slowly</tooltip>
+		<tooltip xml:lang="de">1 = reagiert sehr schnell bis 8 = reagiert sehr langsam</tooltip>
       </variable>
-      <variable label="Range I Time between two chuffs at max speed" CV="938" default="0">
+      <variable item="Range I Time between two chuffs at max speed" CV="938" default="0">
         <decVal/>
-        <label>Range I  Time between two chuffs at max speed</label>
+        <label> Time between two chuffs at max speed</label>
+		<label xml:lang="de">Zeit zwischen zwei Auspuffschlägen bei max. Geschw.</label>
+		<tooltip>Time between two chuffs at max speed</tooltip>
+		<tooltip xml:lang="de">Zeit zwischen zwei Auspuffschlägen bei maximaler Lokgeschwindigkeit ohne Kontakt</tooltip>
       </variable>
-      <variable label="Range I Time between two chuffs at speed step 1" CV="939" default="255">
+      <variable item="Range I Time between two chuffs at speed step 1" CV="939" default="255">
         <decVal/>
-        <label>Range I  Time between two chuffs at speed step 1</label>
+        <label> Time between two chuffs at speed step 1</label>
+		<label xml:lang="de">Zeit zwischen zwei Auspuffschlägen bei Stufe 1</label>
+		<tooltip>Time between two chuffs at speed step 1</tooltip>
+		<tooltip xml:lang="de">Zeit zwischen zwei Auspuffschlägen bei minimaler Lokgeschwindigkeit ohne Kontakt</tooltip>
+      </variable>
+	  <!-- Range II variables -->
+      <variable item="Range II Manufacturer ID" CV="940" readOnly="yes" default="85">
+        <decVal/>
+        <label>Manufacturer ID</label>
+		<label xml:lang="de">Herstellerkennung</label>
+      </variable>
+      <variable item="Range II Software version" CV="941" readOnly="yes">
+        <decVal/>
+        <label>Software version</label>
+		<label xml:lang="de">Softwareversion</label>
+      </variable>
+      <variable item="Range II Sound Volume" CV="942" default="255" tooltip="0-255">
+        <decVal/>
+        <label>Sound Volume</label>
+		<label xml:lang="de">Lautstärke des Sounds</label>
+      </variable>
+      <variable item="Range II F0 activated sound" CV="943" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound1.xml"/>
+        <label>F0 activated sound</label>
+		<label xml:lang="de">F0 aktiviert Sound</label>
+      </variable>
+      <variable item="Range II F1 activated sound" CV="944" default="3">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound1.xml"/>
+        <label>F1 activated sound</label>
+		<label xml:lang="de">F1 aktiviert Sound</label>
+      </variable>
+      <variable item="Range II F2 activated sound" CV="945" default="2">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound1.xml"/>
+        <label>F2 activated sound</label>
+		<label xml:lang="de">F2 aktiviert Sound</label>
+      </variable>
+      <variable item="Range II F3 activated sound" CV="946" default="4">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound1.xml"/>
+        <label>F3 activated sound</label>
+		<label xml:lang="de">F3 aktiviert Sound</label>
+      </variable>
+      <variable item="Range II F4 activated sound" CV="947" default="1">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound1.xml"/>
+        <label>F4 activated sound</label>
+		<label xml:lang="de">F4 aktiviert Sound</label>
+      </variable>
+      <variable item="Range II F5 activated sound" CV="948" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound1.xml"/>
+        <label>F5 activated sound</label>
+		<label xml:lang="de">F5 aktiviert Sound</label>
+      </variable>
+      <variable item="Range II F6 activated sound" CV="949" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound1.xml"/>
+        <label>F6 activated sound</label>
+		<label xml:lang="de">F6 aktiviert Sound</label>
+      </variable>
+      <variable item="Range II F7 activated sound" CV="950" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound1.xml"/>
+        <label>F7 activated sound</label>
+		<label xml:lang="de">F7 aktiviert Sound</label>
+      </variable>
+      <variable item="Range II F8 activated sound" CV="951" default="8">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound1.xml"/>
+        <label>F8 activated sound</label>
+		<label xml:lang="de">F8 aktiviert Sound</label>
+      </variable>
+      <variable item="Range II F9 activated sound" CV="952" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound1.xml"/>
+        <label>F9 activated sound</label>
+		<label xml:lang="de">F9 aktiviert Sound</label>
+      </variable>
+      <variable item="Range II F10 activated sound" CV="953" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound1.xml"/>
+        <label>F10 activated sound</label>
+		<label xml:lang="de">F10 aktiviert Sound</label>
+      </variable>
+      <variable item="Range II F11 activated sound" CV="954" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound1.xml"/>
+        <label>F11 activated sound</label>
+		<label xml:lang="de">F11 aktiviert Sound</label>
+      </variable>
+      <variable item="Range II F12 activated sound" CV="955" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound1.xml"/>
+        <label>F12 activated sound</label>
+		<label xml:lang="de">F12 aktiviert Sound</label>
+      </variable>
+      <variable item="Range II Chuff Control" CV="960" mask="XXXXXXXV" default="1">
+        <enumVal>
+		  <enumChoice choice="Wheel sensor only">
+			<choice>Wheel sensor only</choice>
+			<choice xml:lang="de">nur über Reedkontakt</choice>
+		  </enumChoice>
+          <enumChoice choice="Decoder data and wheel sensor">
+			<choice>Decoder data and wheel sensor</choice>
+			<choice xml:lang="de">automatisch und per Reedk.</choice>
+		  </enumChoice>
+        </enumVal>
+        <label>Chuff Control</label>
+		<label xml:lang="de">Auspuffschlag Dampflok</label>
+      </variable>
+      <variable item="Range II End step" CV="960" mask="VXXXXXXX" default="1">
+        <enumVal>
+          <enumChoice choice="Always on">
+			<choice>Always on</choice>
+			<choice xml:lang="de">immer eingeschaltet</choice>
+		  </enumChoice>
+          <enumChoice choice="Off when sound is off">
+			<choice>Off when sound is off</choice>
+			<choice xml:lang="de">abgeschaltet wenn Ton aus</choice>
+		  </enumChoice>
+        </enumVal>
+        <label>End step</label>
+		<label xml:lang="de">Endstufe</label>
+      </variable>
+      <variable item="Range II Trigger level with load increase" CV="961" default="5">
+        <decVal max="128"/>
+        <label>Trigger level with load increase</label>
+		<label xml:lang="de">Auslöseschwelle bei Motorlastzunahme</label>
+		<tooltip>0-128, 128=tone change is off</tooltip>
+		<tooltip xml:lang="de">0-128, 128 = Tonänderung bei Lastzunahme ausgeschaltet</tooltip>
+      </variable>
+      <variable item="Range II Trigger level with load decrease" CV="962" default="5">
+        <decVal max="128"/>
+        <label>Trigger level with load decrease</label>
+		<label xml:lang="de">Auslöseschwelle bei Motorlastabnahme</label>
+		<tooltip>0-128, 128=tone change is off</tooltip>
+		<tooltip xml:lang="de">0-128, 128 = Tonänderung bei Lastabnahme ausgeschaltet</tooltip>
+      </variable>
+      <variable item="Range II Trigger level for cooling fan in E-lok" CV="963" default="128">
+        <decVal/>
+        <label>Trigger level for cooling fan (E-loco)</label>
+		<label xml:lang="de">Schaltschwelle für Elektrolüfter (E-Lok)</label>
+		<tooltip>0-255, 255=cooling fan sound off</tooltip>
+		<tooltip xml:lang="de">0-255, 255 = kein Lüftergeräusch</tooltip>
+      </variable>
+      <variable item="Range II Trigger level for brake screeching" CV="964" default="27">
+        <decVal/>
+        <label>Trigger level for brake screeching</label>
+		<label xml:lang="de">Schwelle für Bremsgeräusch</label>
+		<tooltip>0-255, 255=brake screeching sound off</tooltip>
+		<tooltip xml:lang="de">0-255, 255 = kein Bremsenquietschen</tooltip>
+      </variable>
+      <variable item="Range II Sensitivity to load change" CV="965" default="4">
+        <decVal max="8"/>
+        <label>Sensitivity to load change</label>
+		<label xml:lang="de">Empfindlichkeit auf Laständerungen</label>
+		<tooltip>1=reacts rapidly to 8=reacts slowly</tooltip>
+		<tooltip xml:lang="de">1 = reagiert sehr schnell bis 8 = reagiert sehr langsam</tooltip>
+      </variable>
+      <variable item="Range II Time between two chuffs at max speed" CV="978" default="0">
+        <decVal/>
+        <label> Time between two chuffs at max speed</label>
+		<label xml:lang="de">Zeit zwischen zwei Auspuffschlägen bei max. Geschw.</label>
+		<tooltip>Time between two chuffs at max speed</tooltip>
+		<tooltip xml:lang="de">Zeit zwischen zwei Auspuffschlägen bei maximaler Lokgeschwindigkeit ohne Kontakt</tooltip>
+      </variable>
+      <variable item="Range II Time between two chuffs at speed step 1" CV="979" default="255">
+        <decVal/>
+        <label> Time between two chuffs at speed step 1</label>
+		<label xml:lang="de">Zeit zwischen zwei Auspuffschlägen bei Stufe 1</label>
+		<tooltip>Time between two chuffs at speed step 1</tooltip>
+		<tooltip xml:lang="de">Zeit zwischen zwei Auspuffschlägen bei minimaler Lokgeschwindigkeit ohne Kontakt</tooltip>
+      </variable>
+	  <!-- Range III variables -->
+      <variable item="Range III Manufacturer ID" CV="980" readOnly="yes" default="85">
+        <decVal/>
+        <label>Manufacturer ID</label>
+		<label xml:lang="de">Herstellerkennung</label>
+      </variable>
+      <variable item="Range III Software version" CV="981" readOnly="yes">
+        <decVal/>
+        <label>Software version</label>
+		<label xml:lang="de">Softwareversion</label>
+      </variable>
+      <variable item="Range III Sound Volume" CV="982" default="255" tooltip="0-255">
+        <decVal/>
+        <label>Sound Volume</label>
+		<label xml:lang="de">Lautstärke des Sounds</label>
+      </variable>
+      <variable item="Range III F0 activated sound" CV="983" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound1.xml"/>
+        <label>F0 activated sound</label>
+		<label xml:lang="de">F0 aktiviert Sound</label>
+      </variable>
+      <variable item="Range III F1 activated sound" CV="984" default="3">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound1.xml"/>
+        <label>F1 activated sound</label>
+		<label xml:lang="de">F1 aktiviert Sound</label>
+      </variable>
+      <variable item="Range III F2 activated sound" CV="985" default="2">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound1.xml"/>
+        <label>F2 activated sound</label>
+		<label xml:lang="de">F2 aktiviert Sound</label>
+      </variable>
+      <variable item="Range III F3 activated sound" CV="986" default="4">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound1.xml"/>
+        <label>F3 activated sound</label>
+		<label xml:lang="de">F3 aktiviert Sound</label>
+      </variable>
+      <variable item="Range III F4 activated sound" CV="987" default="1">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound1.xml"/>
+        <label>F4 activated sound</label>
+		<label xml:lang="de">F4 aktiviert Sound</label>
+      </variable>
+      <variable item="Range III F5 activated sound" CV="988" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound1.xml"/>
+        <label>F5 activated sound</label>
+		<label xml:lang="de">F5 aktiviert Sound</label>
+      </variable>
+      <variable item="Range III F6 activated sound" CV="989" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound1.xml"/>
+        <label>F6 activated sound</label>
+		<label xml:lang="de">F6 aktiviert Sound</label>
+      </variable>
+      <variable item="Range III F7 activated sound" CV="990" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound1.xml"/>
+        <label>F7 activated sound</label>
+		<label xml:lang="de">F7 aktiviert Sound</label>
+      </variable>
+      <variable item="Range III F8 activated sound" CV="991" default="8">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound1.xml"/>
+        <label>F8 activated sound</label>
+		<label xml:lang="de">F8 aktiviert Sound</label>
+      </variable>
+      <variable item="Range III F9 activated sound" CV="992" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound1.xml"/>
+        <label>F9 activated sound</label>
+		<label xml:lang="de">F9 aktiviert Sound</label>
+      </variable>
+      <variable item="Range III F10 activated sound" CV="993" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound1.xml"/>
+        <label>F10 activated sound</label>
+		<label xml:lang="de">F10 aktiviert Sound</label>
+      </variable>
+      <variable item="Range III F11 activated sound" CV="994" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound1.xml"/>
+        <label>F11 activated sound</label>
+		<label xml:lang="de">F11 aktiviert Sound</label>
+      </variable>
+      <variable item="Range III F12 activated sound" CV="995" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSound1.xml"/>
+        <label>F12 activated sound</label>
+		<label xml:lang="de">F12 aktiviert Sound</label>
+      </variable>
+      <variable item="Range III Chuff Control" CV="1000" mask="XXXXXXXV" default="1">
+        <enumVal>
+		  <enumChoice choice="Wheel sensor only">
+			<choice>Wheel sensor only</choice>
+			<choice xml:lang="de">nur über Reedkontakt</choice>
+		  </enumChoice>
+          <enumChoice choice="Decoder data and wheel sensor">
+			<choice>Decoder data and wheel sensor</choice>
+			<choice xml:lang="de">automatisch und per Reedk.</choice>
+		  </enumChoice>
+        </enumVal>
+        <label>Chuff Control</label>
+		<label xml:lang="de">Auspuffschlag Dampflok</label>
+      </variable>
+      <variable item="Range III End step" CV="1000" mask="VXXXXXXX" default="1">
+        <enumVal>
+          <enumChoice choice="Always on">
+			<choice>Always on</choice>
+			<choice xml:lang="de">immer eingeschaltet</choice>
+		  </enumChoice>
+          <enumChoice choice="Off when sound is off">
+			<choice>Off when sound is off</choice>
+			<choice xml:lang="de">abgeschaltet wenn Ton aus</choice>
+		  </enumChoice>
+        </enumVal>
+        <label>End step</label>
+		<label xml:lang="de">Endstufe</label>
+      </variable>
+      <variable item="Range III Trigger level with load increase" CV="1001" default="5">
+        <decVal max="128"/>
+        <label>Trigger level with load increase</label>
+		<label xml:lang="de">Auslöseschwelle bei Motorlastzunahme</label>
+		<tooltip>0-128, 128=tone change is off</tooltip>
+		<tooltip xml:lang="de">0-128, 128 = Tonänderung bei Lastzunahme ausgeschaltet</tooltip>
+      </variable>
+      <variable item="Range III Trigger level with load decrease" CV="1002" default="5">
+        <decVal max="128"/>
+        <label>Trigger level with load decrease</label>
+		<label xml:lang="de">Auslöseschwelle bei Motorlastabnahme</label>
+		<tooltip>0-128, 128=tone change is off</tooltip>
+		<tooltip xml:lang="de">0-128, 128 = Tonänderung bei Lastabnahme ausgeschaltet</tooltip>
+      </variable>
+      <variable item="Range III Trigger level for cooling fan in E-lok" CV="1003" default="128">
+        <decVal/>
+        <label>Trigger level for cooling fan (E-loco)</label>
+		<label xml:lang="de">Schaltschwelle für Elektrolüfter (E-Lok)</label>
+		<tooltip>0-255, 255=cooling fan sound off</tooltip>
+		<tooltip xml:lang="de">0-255, 255 = kein Lüftergeräusch</tooltip>
+      </variable>
+      <variable item="Range III Trigger level for brake screeching" CV="1004" default="27">
+        <decVal/>
+        <label>Trigger level for brake screeching</label>
+		<label xml:lang="de">Schwelle für Bremsgeräusch</label>
+		<tooltip>0-255, 255=brake screeching sound off</tooltip>
+		<tooltip xml:lang="de">0-255, 255 = kein Bremsenquietschen</tooltip>
+      </variable>
+      <variable item="Range III Sensitivity to load change" CV="1005" default="4">
+        <decVal max="8"/>
+        <label>Sensitivity to load change</label>
+		<label xml:lang="de">Empfindlichkeit auf Laständerungen</label>
+		<tooltip>1=reacts rapidly to 8=reacts slowly</tooltip>
+		<tooltip xml:lang="de">1 = reagiert sehr schnell bis 8 = reagiert sehr langsam</tooltip>
+      </variable>
+      <variable item="Range III Time between two chuffs at max speed" CV="1018" default="0">
+        <decVal/>
+        <label> Time between two chuffs at max speed</label>
+		<label xml:lang="de">Zeit zwischen zwei Auspuffschlägen bei max. Geschw.</label>
+		<tooltip>Time between two chuffs at max speed</tooltip>
+		<tooltip xml:lang="de">Zeit zwischen zwei Auspuffschlägen bei maximaler Lokgeschwindigkeit ohne Kontakt</tooltip>
+      </variable>
+      <variable item="Range III Time between two chuffs at speed step 1" CV="1019" default="255">
+        <decVal/>
+        <label> Time between two chuffs at speed step 1</label>
+		<label xml:lang="de">Zeit zwischen zwei Auspuffschlägen bei Stufe 1</label>
+		<tooltip>Time between two chuffs at speed step 1</tooltip>
+		<tooltip xml:lang="de">Zeit zwischen zwei Auspuffschlägen bei minimaler Lokgeschwindigkeit ohne Kontakt</tooltip>
       </variable>
     </variables>
   </decoder>
-  <pane name="SUSI Address Range I">
+  <pane>
+    <name>IntelliSound</name>
+	<name xml:lang="de">IntelliSound</name>
     <column>
-      <display item="SUSI-range"/>
-      <label label=""/>
-      <display item="Range I Manufacturer ID" label="Manufacturer ID"/>
-      <display item="Range I " label=""/>
-      <display item="Range I Software version" label="Software version"/>
-    </column>
-    <column>
-      <display item="Range I Sound Volume" label="Sound Volume"/>
-      <label label=""/>
-      <display item="Range I F0 activated sound" label="F0 activated sound"/>
-      <display item="Range I F1 activated sound" label="F1 activated sound"/>
-      <display item="Range I F2 activated sound" label="F2 activated sound"/>
-      <display item="Range I F3 activated sound" label="F3 activated sound"/>
-      <display item="Range I F4 activated sound" label="F4 activated sound"/>
-      <display item="Range I F5 activated sound" label="F5 activated sound"/>
-      <display item="Range I F6 activated sound" label="F6 activated sound"/>
-      <display item="Range I F7 activated sound" label="F7 activated sound"/>
-      <display item="Range I F8 activated sound" label="F8 activated sound"/>
-      <display item="Range I F9 activated sound" label="F9 activated sound"/>
-      <display item="Range I F10 activated sound" label="F10 activated sound"/>
-      <display item="Range I F11 activated sound" label="F11 activated sound"/>
-      <display item="Range I F12 activated sound" label="F12 activated sound"/>
-    </column>
-    <column>
-      <display item="Range I Chuff Control" label="Chuff Control"/>
-      <display item="Range I End step" label="End step"/>
-      <display item="Range I Trigger level with load increase" label="Trigger level with load increase"/>
-      <display item="Range I Trigger level with load decrease" label="Trigger level with load decrease"/>
-      <display item="Range I Trigger level for cooling fan in E-lok" label="Trigger level for cooling fan in E-lok"/>
-      <display item="Range I Trigger level for brake screeching" label="Trigger level for brake screeching"/>
-      <display item="Range I Sensitivity to load change" label="Sensitivity to load change"/>
-      <display item="Range I Time between two chuffs at max speed" label="Time between two chuffs at max speed"/>
-      <display item="Range I Time between two chuffs at speed step 1" label="Time between two chuffs at speed step 1"/>
+		<row>
+		  <column>
+			<display item="SUSI-range"/>
+			<label><text> </text></label>
+		  </column>
+		  <label><text>                    </text></label>
+		  <group>
+			<qualifier>
+			  <variableref>SUSI-range</variableref>
+			  <relation>eq</relation>
+			  <value>1</value>
+			</qualifier>
+		    <column>
+			  <display item="Range I Manufacturer ID"/>
+			  <display item="Range I Software version"/>
+			  <label><text> </text></label>
+		    </column>
+		  </group>
+		  <group>
+			<qualifier>
+			  <variableref>SUSI-range</variableref>
+			  <relation>eq</relation>
+			  <value>2</value>
+			</qualifier>
+		    <column>
+			  <display item="Range II Manufacturer ID"/>
+			  <display item="Range II Software version"/>
+			  <label><text> </text></label>
+		    </column>
+		  </group>
+		  <group>
+			<qualifier>
+			  <variableref>SUSI-range</variableref>
+			  <relation>eq</relation>
+			  <value>3</value>
+			</qualifier>
+		    <column>
+			  <display item="Range III Manufacturer ID"/>
+			  <display item="Range III Software version"/>
+			  <label><text> </text></label>
+		    </column>
+		  </group>
+		</row>
+		<separator/>
+		<group>
+		  <qualifier>
+		    <variableref>SUSI-range</variableref>
+		    <relation>eq</relation>
+		    <value>1</value>
+		  </qualifier>
+		  <column>
+		    <label>
+			  <text>CVs for SUSI range I :</text>
+			  <text xml:lang="de">CVs für SUSI Adressbereich I :</text>
+		    </label>
+		  </column>
+		</group>
+		<group>
+		  <qualifier>
+		    <variableref>SUSI-range</variableref>
+		    <relation>eq</relation>
+		    <value>2</value>
+		  </qualifier>
+		  <column>
+		    <label>
+			  <text>CVs for SUSI range II :</text>
+			  <text xml:lang="de">CVs für SUSI Adressbereich II :</text>
+		    </label>
+		  </column>
+		</group>
+		<group>
+		  <qualifier>
+		    <variableref>SUSI-range</variableref>
+		    <relation>eq</relation>
+		    <value>3</value>
+		  </qualifier>
+		  <column>
+		    <label>
+			  <text>CVs for SUSI range III :</text>
+			  <text xml:lang="de">CVs für SUSI Adressbereich III :</text>
+		    </label>
+		  </column>
+		</group>
+		<separator/>
+		<group>
+		  <qualifier>
+		    <variableref>SUSI-range</variableref>
+		    <relation>eq</relation>
+		    <value>1</value>
+		  </qualifier>
+		  <column>
+		    <label><text> </text></label>
+		    <display item="Range I Sound Volume"/>
+		    <label><text> </text></label>
+		  </column>
+		</group>
+		<group>
+		  <qualifier>
+		    <variableref>SUSI-range</variableref>
+		    <relation>eq</relation>
+		    <value>2</value>
+		  </qualifier>
+		  <column>
+		    <label><text> </text></label>
+		    <display item="Range II Sound Volume"/>
+		    <label><text> </text></label>
+		  </column>
+		</group>
+		<group>
+		  <qualifier>
+		    <variableref>SUSI-range</variableref>
+		    <relation>eq</relation>
+		    <value>3</value>
+		  </qualifier>
+		  <column>
+		    <label><text> </text></label>
+		    <display item="Range III Sound Volume"/>
+		    <label><text> </text></label>
+		  </column>
+		</group>
+		<row>
+		  <group>
+			<qualifier>
+			  <variableref>SUSI-range</variableref>
+			  <relation>eq</relation>
+			  <value>1</value>
+			</qualifier>
+			<column>
+			  <label><text> </text></label>
+			  <display item="Range I F0 activated sound"/>
+			  <display item="Range I F1 activated sound"/>
+			  <display item="Range I F2 activated sound"/>
+			  <display item="Range I F3 activated sound"/>
+			  <display item="Range I F4 activated sound"/>
+			  <display item="Range I F5 activated sound"/>
+			  <display item="Range I F6 activated sound"/>
+			  <display item="Range I F7 activated sound"/>
+			  <display item="Range I F8 activated sound"/>
+			  <display item="Range I F9 activated sound"/>
+			  <display item="Range I F10 activated sound"/>
+			  <display item="Range I F11 activated sound"/>
+			  <display item="Range I F12 activated sound"/>
+			</column>
+		  </group>
+		  <group>
+			<qualifier>
+			  <variableref>SUSI-range</variableref>
+			  <relation>eq</relation>
+			  <value>2</value>
+			</qualifier>
+			<column>
+			  <label><text> </text></label>
+			  <display item="Range II F0 activated sound"/>
+			  <display item="Range II F1 activated sound"/>
+			  <display item="Range II F2 activated sound"/>
+			  <display item="Range II F3 activated sound"/>
+			  <display item="Range II F4 activated sound"/>
+			  <display item="Range II F5 activated sound"/>
+			  <display item="Range II F6 activated sound"/>
+			  <display item="Range II F7 activated sound"/>
+			  <display item="Range II F8 activated sound"/>
+			  <display item="Range II F9 activated sound"/>
+			  <display item="Range II F10 activated sound"/>
+			  <display item="Range II F11 activated sound"/>
+			  <display item="Range II F12 activated sound"/>
+			</column>
+		  </group>
+		  <group>
+			<qualifier>
+			  <variableref>SUSI-range</variableref>
+			  <relation>eq</relation>
+			  <value>3</value>
+			</qualifier>
+			<column>
+			  <label><text> </text></label>
+			  <display item="Range III F0 activated sound"/>
+			  <display item="Range III F1 activated sound"/>
+			  <display item="Range III F2 activated sound"/>
+			  <display item="Range III F3 activated sound"/>
+			  <display item="Range III F4 activated sound"/>
+			  <display item="Range III F5 activated sound"/>
+			  <display item="Range III F6 activated sound"/>
+			  <display item="Range III F7 activated sound"/>
+			  <display item="Range III F8 activated sound"/>
+			  <display item="Range III F9 activated sound"/>
+			  <display item="Range III F10 activated sound"/>
+			  <display item="Range III F11 activated sound"/>
+			  <display item="Range III F12 activated sound"/>
+			</column>
+		  </group>
+		  <label><text>      </text></label>
+		  <group>
+			<qualifier>
+			  <variableref>SUSI-range</variableref>
+			  <relation>eq</relation>
+			  <value>1</value>
+			</qualifier>
+			<column>
+			  <display item="Range I Chuff Control"/>
+			  <display item="Range I End step"/>
+			  <label><text> </text></label>
+			  <display item="Range I Trigger level with load increase"/>
+			  <display item="Range I Trigger level with load decrease"/>
+			  <display item="Range I Trigger level for cooling fan in E-lok"/>
+			  <display item="Range I Trigger level for brake screeching"/>
+			  <display item="Range I Sensitivity to load change"/>
+			  <display item="Range I Time between two chuffs at max speed"/>
+			  <display item="Range I Time between two chuffs at speed step 1"/>
+			</column>
+		  </group>
+		  <group>
+			<qualifier>
+			  <variableref>SUSI-range</variableref>
+			  <relation>eq</relation>
+			  <value>2</value>
+			</qualifier>
+			<column>
+			  <display item="Range II Chuff Control"/>
+			  <display item="Range II End step"/>
+			  <label><text> </text></label>
+			  <display item="Range II Trigger level with load increase"/>
+			  <display item="Range II Trigger level with load decrease"/>
+			  <display item="Range II Trigger level for cooling fan in E-lok"/>
+			  <display item="Range II Trigger level for brake screeching"/>
+			  <display item="Range II Sensitivity to load change"/>
+			  <display item="Range II Time between two chuffs at max speed"/>
+			  <display item="Range II Time between two chuffs at speed step 1"/>
+			</column>
+		  </group>
+		  <group>
+			<qualifier>
+			  <variableref>SUSI-range</variableref>
+			  <relation>eq</relation>
+			  <value>3</value>
+			</qualifier>
+			<column>
+			  <display item="Range III Chuff Control"/>
+			  <display item="Range III End step"/>
+			  <label><text> </text></label>
+			  <display item="Range III Trigger level with load increase"/>
+			  <display item="Range III Trigger level with load decrease"/>
+			  <display item="Range III Trigger level for cooling fan in E-lok"/>
+			  <display item="Range III Trigger level for brake screeching"/>
+			  <display item="Range III Sensitivity to load change"/>
+			  <display item="Range III Time between two chuffs at max speed"/>
+			  <display item="Range III Time between two chuffs at speed step 1"/>
+			</column>
+		  </group>
+		</row>
     </column>
   </pane>
 </decoder-config>

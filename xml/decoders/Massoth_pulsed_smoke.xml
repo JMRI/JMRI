@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2007, 2008 All rights reserved -->
-<!-- $Id: Massoth_pulsed_smoke.xml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Jeff Schmaltz 493rdafa@gmail.com" version="1.0" lastUpdated="20130902"/>
-<!-- 
+  <!-- 
       This decoder XML is meant to be used with the "Custom" programmer format.
       The pane definitions are included below the decoder definition.  The Massoth
       decoders seem to fit the description of "weird" as mentioned in that
@@ -41,72 +41,68 @@
     </family>
     <programming direct="yes" paged="no" register="yes" ops="yes"/>
     <variables>
-      <variable label="Short Address" CV="1" default="3" item="Short Address">
-        <shortAddressVal/>
-        <label>Short Address</label>
-      </variable>
-      <variable label="Software Version Number" CV="7" item="Decoder Version" tooltip="The decoder version number (read only)">
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable CV="7" item="Decoder Version" tooltip="The decoder version number (read only)">
         <decVal/>
         <label>Software Version Number</label>
+         <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" default="123" item="Manufacturer" tooltip="The manufacturer's ID number (read only)">
+      <variable CV="8" readOnly="yes" default="123" item="Manufacturer" tooltip="The manufacturer's ID number (read only)">
         <decVal/>
         <label>Manufacturer ID</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
       </variable>
-      <variable label="Programming lock - unlock" CV="15" default="160" tooltip="unlock programming lock">
+      <variable item="Programming lock - unlock" CV="15" default="160" tooltip="unlock programming lock">
         <decVal/>
+        <label>Programming lock - unlock</label>
       </variable>
-      <variable label="Programming lock - lock" CV="16" default="160" tooltip="Preset fixed value smoke generator (see manual)">
+      <variable item="Programming lock - lock" CV="16" default="160" tooltip="Preset fixed value smoke generator (see manual)">
         <decVal/>
+        <label>Programming lock - lock</label>
       </variable>
-      <variable label="Long Address" CV="17" item="Extended Address" tooltip="Sets the Extended 4 digit address (Range 128-10239)">
-        <longAddressVal/>
-        <label>Long Address</label>
-      </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" default="0" item="Address Format" tooltip="Determines whether loco will use short or long address">
-        <enumVal>
-          <enumChoice choice="Short Address (CV1)">
-            <choice>Short Address (CV1)</choice>
-          </enumChoice>
-          <enumChoice choice="Long Address (CV17+18)">
-            <choice>Long Address (CV17+18)</choice>
-          </enumChoice>
-        </enumVal>
-      </variable>
-      <variable label="Bus Type" CV="49" mask="XXXVXXXX" default="0"
-         tooltip="Determines which protocol is used on the bus connection to other devices" >
+      <variable item="Bus Type" CV="49" mask="XXXVXXXX" default="0" tooltip="Determines which protocol is used on the bus connection to other devices">
         <enumVal>
           <enumChoice choice="Massoth"/>
           <enumChoice choice="SUSI"/>
         </enumVal>
+        <label>Bus Type</label>
       </variable>
-      <variable label="Digital diesel mode" CV="49" mask="VXXXXXXX" default="0"
-         tooltip="Determines mode for digital diesel operation" >
+      <variable item="Digital diesel mode" CV="49" mask="VXXXXXXX" default="0" tooltip="Determines mode for digital diesel operation">
         <enumVal>
           <enumChoice choice="Track"/>
           <enumChoice choice="Bus"/>
         </enumVal>
+        <label>Digital diesel mode</label>
       </variable>
-      <variable label="Preheating heater element" CV="60" default="0" tooltip="Range 0-32">
+      <variable item="Preheating heater element" CV="60" default="0" tooltip="Range 0-32">
         <decVal min="0" max="32"/>
+        <label>Preheating heater element</label>
       </variable>
-      <variable label="Fan speed stop" CV="61" default="30" tooltip="Range 0-100">
+      <variable item="Fan speed stop" CV="61" default="30" tooltip="Range 0-100">
         <decVal min="0" max="100"/>
+        <label>Fan speed stop</label>
       </variable>
-      <variable label="Fan speed start up" CV="62" default="100" tooltip="Range 0-100">
+      <variable item="Fan speed start up" CV="62" default="100" tooltip="Range 0-100">
         <decVal min="0" max="100"/>
+        <label>Fan speed start up</label>
       </variable>
-      <variable label="Fan speed drive" CV="63" default="100" tooltip="Range 0-100">
+      <variable item="Fan speed drive" CV="63" default="100" tooltip="Range 0-100">
         <decVal min="0" max="100"/>
+        <label>Fan speed drive</label>
       </variable>
-      <variable label="Fan speed roll out" CV="64" default="0" tooltip="Range 0-100">
+      <variable item="Fan speed roll out" CV="64" default="0" tooltip="Range 0-100">
         <decVal min="0" max="100"/>
+        <label>Fan speed roll out</label>
       </variable>
-      <variable label="Programming address POM" CV="107" default="10239" tooltip="Sets the Extended 4 digit address for programming on the Main (Range 128-10239)">
+      <variable item="Programming address POM" CV="107" default="10239" tooltip="Sets the Extended (Long) address for programming on the Main (Range 128-10239)">
         <longAddressVal/>
         <label>Long Address</label>
       </variable>
-      <variable label="Preheating function key" CV="110" default="0" tooltip="Function key which switches preheating">
+      <variable item="Preheating function key" CV="110" default="0" tooltip="Function key which switches preheating">
         <enumVal>
           <enumChoice choice="F0" value="0">
             <choice>F0</choice>
@@ -160,15 +156,16 @@
             <choice>F16</choice>
           </enumChoice>
         </enumVal>
+        <label>Preheating function key</label>
       </variable>
-      <variable label="Smoke Generator type" CV="113" default="20"
-         tooltip="Must be changed if voltage of heating element changed" >
+      <variable item="Smoke Generator type" CV="113" default="20" tooltip="Must be changed if voltage of heating element changed">
         <enumVal>
           <enumChoice choice="Analog" value="5"/>
           <enumChoice choice="Digital" value="20"/>
         </enumVal>
+        <label>Smoke Generator type</label>
       </variable>
-      <variable label="Fan function key" CV="120" default="7" tooltip="Function key which switches preheating">
+      <variable item="Fan function key" CV="120" default="7" tooltip="Function key which switches preheating">
         <enumVal>
           <enumChoice choice="F0" value="0">
             <choice>F0</choice>
@@ -222,14 +219,15 @@
             <choice>F16</choice>
           </enumChoice>
         </enumVal>
+        <label>Fan function key</label>
       </variable>
-      <variable label="Fan delay" CV="124"  tooltip="0,5 sec. per value">
+      <variable item="Fan delay" CV="124" tooltip="0,5 sec. per value">
         <decVal/>
+        <label>Fan delay</label>
       </variable>
-      <variable label="New ID for Decoder Type" CV="255" readOnly="yes" default="160" 
-        item="Product Number"
-        tooltip="New ID for Decoder Type (read only)(Only needed for Software Update)">
+      <variable CV="255" readOnly="yes" default="160" item="Product Number" tooltip="New ID for Decoder Type (read only)(Only needed for Software Update)">
         <decVal/>
+        <label>New ID for Decoder Type</label>
       </variable>
     </variables>
     <resets>
@@ -237,57 +235,92 @@
       <factReset label="Reset lights and functions" CV="7" default="77"/>
     </resets>
   </decoder>
-  <pane name="Basic">
+  <pane>
     <column>
       <dccaddress/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Short Address"/>
       <display item="Extended Address"/>
       <display item="Address Format"/>
-      <label label=" "/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
       <display item="Programming address POM"/>
-      <label label=" "/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
     </column>
     <column>
-      <label label=" "/>
-      <label label=" "/>
-      <label label=" "/>
-      <label label=" "/>
-      <label label=" "/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
       <separator/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Manufacturer"/>
       <display item="Decoder Version"/>
       <display item="Product Number"/>
     </column>
     <name>Basic</name>
   </pane>
-  <pane name="Pulsed Smoke Unit">
+  <pane>
+    <name>Pulsed Smoke Unit</name>
     <column>
       <display item="Bus Type"/>
       <display item="Digital diesel mode"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Programming lock - unlock"/>
       <display item="Programming lock - lock"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Preheating heater element"/>
       <display item="Preheating function key"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Fan speed stop"/>
       <display item="Fan speed start up"/>
       <display item="Fan speed drive"/>
       <display item="Fan speed roll out"/>
       <display item="Fan delay"/>
       <display item="Fan function key"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Smoke Generator type"/>
-      <label label=" "/>
+      <label>
+        <text> </text>
+      </label>
     </column>
   </pane>
-  <pane name="CVs">
+  <pane>
     <column>
       <cvtable/>
     </column>

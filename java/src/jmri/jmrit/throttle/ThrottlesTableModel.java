@@ -3,8 +3,8 @@ package jmri.jmrit.throttle;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.table.AbstractTableModel;
-import jmri.DccThrottle;
 import jmri.DccLocoAddress;
+import jmri.DccThrottle;
 import jmri.LocoAddress;
 
 public class ThrottlesTableModel extends AbstractTableModel implements AddressListener, java.beans.PropertyChangeListener {
@@ -34,8 +34,9 @@ public class ThrottlesTableModel extends AbstractTableModel implements AddressLi
 
     public void removeThrottleFrame(ThrottleFrame tf, DccLocoAddress la) {
         throttleFrames.remove(tf);
-        if(la!=null)
+        if (la != null) {
             jmri.InstanceManager.throttleManagerInstance().removeListener(la, this);
+        }
         fireTableDataChanged();
     }
 
@@ -43,7 +44,7 @@ public class ThrottlesTableModel extends AbstractTableModel implements AddressLi
     }
 
     public void notifyAddressReleased(LocoAddress addr) {
-        DccLocoAddress la = (DccLocoAddress)addr;
+        DccLocoAddress la = (DccLocoAddress) addr;
         fireTableDataChanged();
         jmri.InstanceManager.throttleManagerInstance().removeListener(la, this);
     }
@@ -53,14 +54,14 @@ public class ThrottlesTableModel extends AbstractTableModel implements AddressLi
         throttle.addPropertyChangeListener(this);
     }
 
-        public void notifyConsistAddressChosen(int newAddress, boolean isLong) { 
-        }
-                
-        public void notifyConsistAddressReleased(int address, boolean isLong) {
-        }
+    public void notifyConsistAddressChosen(int newAddress, boolean isLong) {
+    }
 
-        public void notifyConsistAddressThrottleFound(DccThrottle throttle) {
-        }
+    public void notifyConsistAddressReleased(int address, boolean isLong) {
+    }
+
+    public void notifyConsistAddressThrottleFound(DccThrottle throttle) {
+    }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if ((e.getPropertyName().equals("SpeedSetting")) || (e.getPropertyName().equals("SpeedSteps")) || (e.getPropertyName().equals("IsForward"))) {

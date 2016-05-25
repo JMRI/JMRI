@@ -1,12 +1,10 @@
 //NceAIUChecker.java
-
 package jmri.jmrix.nce;
 
+import javax.swing.JOptionPane;
+import jmri.jmrix.ConnectionStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import javax.swing.JOptionPane;
-
-import jmri.jmrix.ConnectionStatus;
 
 /* 
  * Checks to see if AIU broadcasts are enabled and warns user to 
@@ -18,78 +16,77 @@ import jmri.jmrix.ConnectionStatus;
  * @version     $Revision$
  * 
  */
-
 public class NceAIUChecker implements NceListener {
 
-	private static final int MEM_AIU = 0xDC15; 	// NCE CS AIU memory address 
-	private static final int REPLY_LEN = 1; 	// number of bytes read
-	private boolean EXPECT_REPLY = false; 		// flag 
+    private static final int MEM_AIU = 0xDC15; 	// NCE CS AIU memory address 
+    private static final int REPLY_LEN = 1; 	// number of bytes read
+    private boolean EXPECT_REPLY = false; 		// flag 
 
-	private NceTrafficController tc = null;
-	
-	public NceAIUChecker(NceTrafficController t) {
-		super();
-		this.tc = t;
-	}
-	
-	public NceMessage nceAiuPoll() {
+    private NceTrafficController tc = null;
 
-		if (tc.getCommandOptions() <= NceTrafficController.OPTION_1999)
-			return null;
-		
-		// If USB, just return
-		if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE)
-			return null;
-		
-		// read one byte from NCE memory to determine if AIU broadcasts are enabled
+    public NceAIUChecker(NceTrafficController t) {
+        super();
+        this.tc = t;
+    }
 
-		byte[] bl = NceBinaryCommand.accMemoryRead1(MEM_AIU);
-		NceMessage m = NceMessage.createBinaryMessage(tc, bl, REPLY_LEN);
-		EXPECT_REPLY = true;
-		return m;
+    public NceMessage nceAiuPoll() {
 
-	}
+        if (tc.getCommandOptions() <= NceTrafficController.OPTION_1999) {
+            return null;
+        }
 
-	public void message(NceMessage m) {
-		if (log.isDebugEnabled()) {
-			log.debug("unexpected message");
-		}
-	}
+        // If USB, just return
+        if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) {
+            return null;
+        }
 
-	public void reply(NceReply r) {
-		if (!EXPECT_REPLY && log.isDebugEnabled()){
-			log.debug("Unexpected reply in AIU broadcast checker");
-			return;
-		}
-		EXPECT_REPLY = false;
-		if (r.getNumDataElements() == REPLY_LEN) {
+        // read one byte from NCE memory to determine if AIU broadcasts are enabled
+        byte[] bl = NceBinaryCommand.accMemoryRead1(MEM_AIU);
+        NceMessage m = NceMessage.createBinaryMessage(tc, bl, REPLY_LEN);
+        EXPECT_REPLY = true;
+        return m;
 
-			// if broadcasts are enabled, put up warning
-			
-			byte AIUstatus = (byte) r.getElement(0);
-			if (AIUstatus > 1){
-				log.warn("AIU check broadcast return value is out of range");
-			}
-			if (AIUstatus == 1) {
-				log.warn("AIU broadcasts are enabled");
-				ConnectionStatus.instance().setConnectionState(
-						tc.getPortName(),
-						ConnectionStatus.CONNECTION_DOWN);
-				JOptionPane.showMessageDialog(null,
-								"JMRI has detected that AIU broadcasts are enabled. \n"
-								+ "You must disable AIU broadcasts for proper operation of this program. \n" 
-								+ "For more information, see Setup Command Station in your NCE System Reference Manual.",
-								"Warning", JOptionPane.INFORMATION_MESSAGE);
+    }
 
-			}
+    public void message(NceMessage m) {
+        if (log.isDebugEnabled()) {
+            log.debug("unexpected message");
+        }
+    }
 
-		} else
-			log.warn("wrong number of read bytes for revision check");
-	}
+    public void reply(NceReply r) {
+        if (!EXPECT_REPLY && log.isDebugEnabled()) {
+            log.debug("Unexpected reply in AIU broadcast checker");
+            return;
+        }
+        EXPECT_REPLY = false;
+        if (r.getNumDataElements() == REPLY_LEN) {
 
-	static Logger log = LoggerFactory
-	.getLogger(NceAIUChecker.class.getName());
+            // if broadcasts are enabled, put up warning
+            byte AIUstatus = (byte) r.getElement(0);
+            if (AIUstatus > 1) {
+                log.warn("AIU check broadcast return value is out of range");
+            }
+            if (AIUstatus == 1) {
+                log.warn("AIU broadcasts are enabled");
+                ConnectionStatus.instance().setConnectionState(
+                        tc.getPortName(),
+                        ConnectionStatus.CONNECTION_DOWN);
+                JOptionPane.showMessageDialog(null,
+                        "JMRI has detected that AIU broadcasts are enabled. \n"
+                        + "You must disable AIU broadcasts for proper operation of this program. \n"
+                        + "For more information, see Setup Command Station in your NCE System Reference Manual.",
+                        "Warning", JOptionPane.INFORMATION_MESSAGE);
+
+            }
+
+        } else {
+            log.warn("wrong number of read bytes for revision check");
+        }
+    }
+
+    private final static Logger log = LoggerFactory
+            .getLogger(NceAIUChecker.class.getName());
 
 }
 /* @(#)NceAIUChecker.java */
-

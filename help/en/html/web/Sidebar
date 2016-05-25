@@ -1,36 +1,29 @@
 <!-- Sidebar -->
+<!-- This is the common sidebar definition for html/web pages -->
 	  <hr class="hide">
 	  <div id="mBody">
 	  <div id="side"> <!-- Block of text on left side of page -->
-	    <div style="text-align: center">JMRI web access</div>
+	    <div style="text-align: center">JMRI Web Access</div>
 	    <dl>
 
 		<dt><h3><a href="index.shtml">Basic Use</a></h3></dt>
-		<dd>JMRI has built-in support for working with your
-		layout from a web browser.
-		    <UL>
-		    <LI><dfn><a href="index.shtml#Start">Getting Started</a></dfn></li>
-		    <LI><dfn><a href="index.shtml#Configure">Configuring</a></dfn></li>
-		    <LI><dfn><a href="index.shtml#URLs">URLs</a></dfn></li>
-		    </UL>
-		</dd>
-
-		<dt><h3><a href="WebServer.shtml">Advanced Configuration</a></h3></dt>
-		<dd>Details of JMRI's built-in web support.
-		    <UL>
-		    <LI><dfn><a href="WebServer.shtml">JMRI Web Server</a></dfn>
-		    </UL>
+		<dd>JMRI supports working with your layout from a web browser.
+		    <ul>
+		    <li><dfn><a href="index.shtml#Start">Getting Started</a></dfn></li>
+		    <li><dfn><a href="index.shtml#Configure">Configure</a></dfn></li>
+		    <li><dfn><a href="index.shtml#files">URLs</a></dfn></li>
+		    </ul>
 		</dd>
 
 		<dt><h3>Servlets</h3></dt>
 		<dd>Details of the JMRI web components.
-		    <UL>
-		    <LI><dfn><a href="FrameServlet.shtml">Frame servlet</a></dfn></li>
-		    <LI><dfn><a href="RosterServlet.shtml">Roster servlet</a></dfn></li>
-		    <LI><dfn><a href="PanelServlet.shtml">Panel servlet</a></dfn></li>
-		    <LI><dfn><a href="XMLIO.shtml">XMLIO servlet</a></dfn></li>
-		    <LI><dfn><a href="JsonServlet.shtml">Json servlet</a></dfn></li>
-		    </UL>
+		    <ul>
+		    <li><dfn><a href="FrameServlet.shtml">Frame servlet</a></dfn></li>
+		    <li><dfn><a href="RosterServlet.shtml">Roster servlet</a></dfn></li>
+		    <li><dfn><a href="PanelServlet.shtml">Panel servlet</a></dfn></li>
+		    <li><dfn><a href="XMLIO.shtml">XMLIO servlet</a></dfn></li>
+		    <li><dfn><a href="JsonServlet.shtml">Json servlet</a></dfn></li>
+		    </ul>
 		</dd>
 
 	    </dl>

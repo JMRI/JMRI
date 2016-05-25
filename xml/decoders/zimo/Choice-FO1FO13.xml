@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - for Unified Software V32+, Mark Waters 26 Jan 2015 -->
+<enumChoiceGroup xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <enumChoice choice="None">
+        <choice>None</choice>
+        <choice xml:lang="it">Nessuna</choice>
+      </enumChoice>
+      <enumChoice choice="Front Light" value="14">
+        <choice>Front Light</choice>
+        <choice xml:lang="it">Luce frontale</choice>
+      </enumChoice>
+      <enumChoice choice="Rear Light" value="15">
+        <choice>Rear Light</choice>
+        <choice xml:lang="it">Luce retro</choice>
+      </enumChoice>
+      <enumChoice choice="FO 1" value="1">
+        <choice>FO 1</choice>
+      </enumChoice>
+      <enumChoice choice="FO 2">
+        <choice>FO 2</choice>
+      </enumChoice>
+      <enumChoice choice="FO 3">
+        <choice>FO 3</choice>
+      </enumChoice>
+      <enumChoice choice="FO 4">
+        <choice>FO 4</choice>
+      </enumChoice>
+      <enumChoice choice="FO 5">
+        <choice>FO 5</choice>
+      </enumChoice>
+      <enumChoice choice="FO 6">
+        <choice>FO 6</choice>
+      </enumChoice>
+      <enumChoice choice="FO 7">
+        <choice>FO 7</choice>
+      </enumChoice>
+      <enumChoice choice="FO 8">
+        <choice>FO 8</choice>
+      </enumChoice>
+      <enumChoice choice="FO 9">
+        <choice>FO 9</choice>
+      </enumChoice>
+      <enumChoice choice="FO 10">
+        <choice>FO 10</choice>
+      </enumChoice>
+      <enumChoice choice="FO 11">
+        <choice>FO 11</choice>
+      </enumChoice>
+      <enumChoice choice="FO 12">
+        <choice>FO 12</choice>
+      </enumChoice>
+      <enumChoice choice="FO 13">
+        <choice>FO 13</choice>
+      </enumChoice>
+</enumChoiceGroup>

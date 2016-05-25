@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Function Settings</name>
+  <column>
+    <separator/>
+    <label>
+      <text>General Physical Output Settings</text>
+      <text xml:lang="it">Progr.Funzioni Uscita</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <display item="ESU V4 Function Settings General Slider 1" layout="above" label=""/>
+      <display item="ESU V4 Function Settings General Slider 1" layout="above" format="hslider"/>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <display item="ESU V4 Function Settings General Slider 2" layout="above" label=""/>
+      <display item="ESU V4 Function Settings General Slider 2" layout="above" format="hslider"/>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <display item="ESU V4 Function Settings General Slider 3" layout="above" label=""/>
+      <display item="ESU V4 Function Settings General Slider 3" layout="above" format="hslider"/>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <separator/>
+    <label>
+      <text>Automatic Uncoupling</text>
+      <text xml:lang="it">Sgancio Autom.</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <display item="ESU V4 Function Settings Auto Uncoupling Slider 1" layout="above" label=""/>
+      <display item="ESU V4 Function Settings Auto Uncoupling Slider 1" layout="above" format="hslider"/>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <display item="ESU V4 Function Settings Auto Uncoupling Slider 2" layout="above" label=""/>
+      <display item="ESU V4 Function Settings Auto Uncoupling Slider 2" layout="above" format="hslider"/>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <display item="ESU V4 Function Settings Auto Uncoupling Slider 3" layout="above" label=""/>
+      <display item="ESU V4 Function Settings Auto Uncoupling Slider 3" layout="above" format="hslider"/>
+    </row>
+  </column>
+  <column>
+    <separator/>
+    <label>
+      <text>ESU Smoke Unit</text>
+      <text xml:lang="it">Gener.Fumo ESU</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <display item="ESU V4 Function Settings Smoke Unit Slider 1" layout="above" label=""/>
+      <display item="ESU V4 Function Settings Smoke Unit Slider 1" layout="above" format="hslider"/>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <display item="ESU V4 Function Settings Smoke Unit Slider 2" layout="above" label=""/>
+      <display item="ESU V4 Function Settings Smoke Unit Slider 2" layout="above" format="hslider"/>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <display item="ESU V4 Function Settings Smoke Unit Slider 3" layout="above" label=""/>
+      <display item="ESU V4 Function Settings Smoke Unit Slider 3" layout="above" format="hslider"/>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <display item="ESU V4 Function Settings Smoke Unit Slider 4" layout="above" label=""/>
+      <display item="ESU V4 Function Settings Smoke Unit Slider 4" layout="above" format="hslider"/>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <separator/>
+    <label>
+      <text>Smoke Chuffs</text>
+      <text xml:lang="it">Chuff Fumo</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <display item="ESU V4 Function Settings Smoke Chuffs Slider 1" layout="above" label=""/>
+      <display item="ESU V4 Function Settings Smoke Chuffs Slider 1" layout="above" format="hslider"/>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <display item="ESU V4 Function Settings Smoke Chuffs Slider 2" layout="above" label=""/>
+      <display item="ESU V4 Function Settings Smoke Chuffs Slider 2" layout="above" format="hslider"/>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <display item="ESU V4 Function Settings Smoke Chuffs Slider 3" layout="above" label=""/>
+      <display item="ESU V4 Function Settings Smoke Chuffs Slider 3" layout="above" format="hslider"/>
+    </row>
+  </column>
+</pane>

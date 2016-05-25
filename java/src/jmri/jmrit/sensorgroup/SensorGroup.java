@@ -1,22 +1,23 @@
 // SensorGroup.java
-
 package jmri.jmrit.sensorgroup;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.*;
 import java.util.ArrayList;
 import java.util.List;
+import jmri.InstanceManager;
+import jmri.Route;
+import jmri.RouteManager;
+import jmri.Sensor;
 import jmri.implementation.DefaultRoute;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Object for representing, creating and editing sensor groups.
  * <P>
- * Sensor groups are implemented by (groups) of Routes, not by
- * any other object.
+ * Sensor groups are implemented by (groups) of Routes, not by any other object.
  *
- * @author			Bob Jacobsen   Copyright (C) 2007
- * @version			$Revision$
+ * @author	Bob Jacobsen Copyright (C) 2007
+ * @version	$Revision$
  */
 public class SensorGroup {
 
@@ -25,13 +26,12 @@ public class SensorGroup {
      */
     //private SensorGroup() {
     //}
-
-    private final static String namePrefix  = "SENSOR GROUP:";  // should be upper case
+    private final static String namePrefix = "SENSOR GROUP:";  // should be upper case
     private final static String nameDivider = ":";
-        
+
     String name;
     ArrayList<String> sensorList;
-    
+
     /**
      * Create one, looking up an existing one if present
      */
@@ -41,29 +41,29 @@ public class SensorGroup {
         RouteManager rm = InstanceManager.routeManagerInstance();
         String group = name.toUpperCase();
         List<String> l = rm.getSystemNameList();
-        String prefix = (namePrefix+group+nameDivider).toUpperCase();
-        
+        String prefix = (namePrefix + group + nameDivider).toUpperCase();
+
         sensorList = new ArrayList<String>();
-        for (int i = 0; i<l.size(); i++) {
+        for (int i = 0; i < l.size(); i++) {
             String routeName = l.get(i);
             if (routeName.startsWith(prefix)) {
                 String sensor = routeName.substring(prefix.length());
                 // remember that sensor
                 sensorList.add(sensor);
             }
-        }  
+        }
     }
 
     void addPressed() {
-        log.debug("start with "+sensorList.size()+" lines");
+        log.debug("start with " + sensorList.size() + " lines");
         RouteManager rm = InstanceManager.routeManagerInstance();
         String group = name.toUpperCase();
-        
+
         // remove the old routes
-        List<String> l = rm.getSystemNameList();     
-        String prefix = (namePrefix+group+nameDivider).toUpperCase();
-        
-        for (int i = 0; i<l.size(); i++) {
+        List<String> l = rm.getSystemNameList();
+        String prefix = (namePrefix + group + nameDivider).toUpperCase();
+
+        for (int i = 0; i < l.size(); i++) {
             String routeName = l.get(i);
             if (routeName.startsWith(prefix)) {
                 // OK, kill this one
@@ -71,20 +71,22 @@ public class SensorGroup {
                 r.deActivateRoute();
                 rm.deleteRoute(r);
             }
-        }        
+        }
 
         // add the new routes
-        for (int i = 0; i<sensorList.size(); i++) {
+        for (int i = 0; i < sensorList.size(); i++) {
             String sensor = sensorList.get(i);
-            String routeName = namePrefix+group+nameDivider+sensor;
+            String routeName = namePrefix + group + nameDivider + sensor;
             Route r = new DefaultRoute(routeName);
             // add the control sensor
             r.addSensorToRoute(sensor, Route.ONACTIVE);
             // add the output sensors
-            for (int j=0; j<sensorList.size(); j++) {
+            for (int j = 0; j < sensorList.size(); j++) {
                 String outSensor = sensorList.get(j);
                 int mode = Sensor.INACTIVE;
-                if (i==j) mode = Sensor.ACTIVE;
+                if (i == j) {
+                    mode = Sensor.ACTIVE;
+                }
                 r.addOutputSensor(outSensor, mode);
             }
             // make it persistant & activate
@@ -93,7 +95,6 @@ public class SensorGroup {
         }
     }
 
-    
-    static Logger log = LoggerFactory.getLogger(SensorGroup.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SensorGroup.class.getName());
 
 }

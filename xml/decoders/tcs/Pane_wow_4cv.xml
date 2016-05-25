@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2013 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - for Unified Software -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>4 CV Programming</name>
+  <column>
+    <row>
+      <column>
+        <label>
+          <text>   </text>
+        </label>
+        <label>
+          <text>Must have JMRI 3.9.5 or later.</text>
+          <text xml:lang="it">Dovete avere JMRI 3.9.5 o successivo.</text>
+        </label>
+        <label>
+          <text>   </text>
+        </label>
+        <label>
+          <text>To Write 4 CV value:</text>
+        </label>
+        <label>
+          <text>Set each of the four CV to desired value</text>
+        </label>
+        <label>
+          <text>Press "Write full sheet"</text>
+        </label>
+        <label>
+          <text>   </text>
+        </label>
+        <label>
+          <text>To Read 4 CV value (except for sound volumes):</text>
+        </label>
+        <label>
+          <text>Set CV201 to desired primary index value of 101, 103, 104 or 105</text>
+        </label>
+        <label>
+          <text>Set CV202 to desired secondary index value</text>
+        </label>
+        <label>
+          <text>Set CV204 to any value</text>
+        </label>
+        <label>
+          <text>Press "Write full sheet"</text>
+        </label>
+        <label>
+          <text>Press "Read full sheet"</text>
+        </label>
+        <label>
+          <text>   </text>
+        </label>
+        <label>
+          <text>To Read 4 CV for sound volumes:</text>
+        </label>
+        <label>
+          <text>Set CV201 to primary index value of 102 or 106</text>
+        </label>
+        <label>
+          <text>Set CV203 and CV204 to sound or group ID value</text>
+        </label>
+        <label>
+          <text>Press "Write full sheet"</text>
+        </label>
+        <label>
+          <text>Press "Read full sheet"</text>
+        </label>
+        <label>
+          <text>   </text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+		<display item="CV201"/>
+		<display item="CV202"/>
+		<display item="CV203"/>
+		<display item="CV204"/>
+      </column>
+    </row>
+	<label>
+	  <text>   </text>
+	</label>
+    <row>
+      <column>
+        <label>
+          <text>CV201 (write)</text>
+        </label>
+        <label>
+          <text>1</text>
+        </label>
+        <label>
+          <text>2</text>
+        </label>
+        <label>
+          <text>3</text>
+        </label>
+        <label>
+          <text>4</text>
+        </label>
+        <label>
+          <text>5</text>
+        </label>
+        <label>
+          <text>6</text>
+        </label>
+      </column>
+	  <label>
+		<text>   </text>
+	  </label>
+      <column>
+        <label>
+          <text>CV201 (read)</text>
+        </label>
+        <label>
+          <text>101</text>
+        </label>
+        <label>
+          <text>102</text>
+        </label>
+        <label>
+          <text>103</text>
+        </label>
+        <label>
+          <text>104</text>
+        </label>
+        <label>
+          <text>n/a</text>
+        </label>
+        <label>
+          <text>106</text>
+        </label>
+      </column>
+	  <label>
+		<text>   </text>
+	  </label>
+      <column>
+        <label>
+          <text>CV202</text>
+        </label>
+        <label>
+          <text>Button #</text>
+        </label>
+        <label>
+          <text>Volume Level</text>
+        </label>
+        <label>
+          <text>Speed step</text>
+        </label>
+        <label>
+          <text>CV #</text>
+        </label>
+        <label>
+          <text>Any</text>
+        </label>
+        <label>
+          <text>Volume Level</text>
+        </label>
+      </column>
+	  <label>
+		<text>   </text>
+	  </label>
+      <column>
+        <label>
+          <text>CV203</text>
+        </label>
+        <label>
+          <text>Sound # High</text>
+        </label>
+        <label>
+          <text>Sound # High</text>
+        </label>
+        <label>
+          <text>Rate Value High</text>
+        </label>
+        <label>
+          <text>CV Value High</text>
+        </label>
+        <label>
+          <text>Any</text>
+        </label>
+        <label>
+          <text>0</text>
+        </label>
+      </column>
+	  <label>
+		<text>   </text>
+	  </label>
+      <column>
+        <label>
+          <text>CV204</text>
+        </label>
+        <label>
+          <text>Sound # Low</text>
+        </label>
+        <label>
+          <text>Sound # Low</text>
+        </label>
+        <label>
+          <text>Rate Value Low</text>
+        </label>
+        <label>
+          <text>CV Value Low</text>
+        </label>
+        <label>
+          <text>Reset Type</text>
+        </label>
+        <label>
+          <text>Sound Group</text>
+        </label>
+      </column>
+	  <label>
+		<text>   </text>
+	  </label>
+      <column>
+        <label>
+          <text>Action</text>
+        </label>
+        <label>
+          <text>Assign sound to function buttons</text>
+        </label>
+        <label>
+          <text>Individual volume change</text>
+        </label>
+        <label>
+          <text>Chuff rate (steam only)</text>
+        </label>
+        <label>
+          <text>Sound CV</text>
+        </label>
+        <label>
+          <text>Factory reset</text>
+        </label>
+        <label>
+          <text>Group volume change</text>
+        </label>
+      </column>
+    </row>
+  </column>
+</pane>

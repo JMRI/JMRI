@@ -1,21 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI: ViewSpecialActions
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help Transit Special Actions">
+ </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <meta content="Bob Jacobsen" name="Author">
+    <meta name="keywords" content="JMRI help Transit Special Actions">
 
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+<!--#include virtual="/Style" -->
 </head>
 
 <body>
@@ -23,9 +16,9 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Actions</H1>
+<h1>Actions</h1>
     
-<H2>What are Actions?</H2>
+<h2>What are Actions?</h2>
 <p><b>Actions</b> are tasks that can be initiated automatically as a train, running in 
 automatic mode, traverses the layout following a 
 <b><a href="TransitTable.shtml">Transit</a></b>. One or more <b>Actions</b> may 
@@ -64,35 +57,37 @@ Actions. An Action is initiated when the train enters the Section with the Actio
 request. To decide when to perform the Action after the Section is entered, the 
 program looks at the <i>when</i> event. Currently available <i>when</i> events are:</p>
 
-<p><ul>
-<li><b>On Section Entry</b> - When the automatic train enters the current 
-Section.
-<li><b>On Section Exit</b> - When the automatic train exits the current 
-Section. This means when the last detectable car leaves the Section, and the 
-Section is unoccupied.
-<li><b>On Block Entry</b> - When the automatic train enters a 
-specified Block in the Section. For Sections with only one Block, this is 
-equivalent to <b>On Section Entry</b>.</li>
-<li><b>On Block Exit</b> - When the automatic train exits a 
-specified Block in the Section. This means when the last detectable car leaves 
-the specified Block, and the Block is unoccupied. For Sections with only one 
-Block, this is equivalent to <b>On Section Exit</b>.</li>
-<li><b>On Train Stop</b> - When the automatic train stops. This may be 
-used, for example, for stopping the bell in a sound decoder or initiating other 
-actions when the train stops at a station.</li>
-<li><b>On Train Start</b> - When the automatic trains starts up after having 
-been stopped. This may be used, for example, to initiate actions when a train 
-starts up after a station stop.</li>
-<li><b>On Sensor ACTiVE</b> - When the specified Sensor moves to the 
-active state. The specified Sensor may be either internal or hardware, and must 
-be in the Sensor Table. This might be used, for example, with a hardware Sensor 
-connected to a fascia push button to trigger an action. It could also be used to 
-trigger actions using hardware position sensors on the layout. With internal 
-sensors it can provide a link to Logixs.</li>
-<li><b>On Sensor INACTIVE</b> - When the specified Sensor moves to the 
-inactive state. This is the same as above, but with the opposite sensor state. 
-Use the one that best fits your hardware or Logix.</li>
-</ul></p>
+<p>
+	<ul>
+	<li><b>On Section Entry</b> - When the automatic train enters the current 
+	Section.
+	<li><b>On Section Exit</b> - When the automatic train exits the current 
+	Section. This means when the last detectable car leaves the Section, and the 
+	Section is unoccupied.
+	<li><b>On Block Entry</b> - When the automatic train enters a 
+	specified Block in the Section. For Sections with only one Block, this is 
+	equivalent to <b>On Section Entry</b>.</li>
+	<li><b>On Block Exit</b> - When the automatic train exits a 
+	specified Block in the Section. This means when the last detectable car leaves 
+	the specified Block, and the Block is unoccupied. For Sections with only one 
+	Block, this is equivalent to <b>On Section Exit</b>.</li>
+	<li><b>On Train Stop</b> - When the automatic train stops. This may be 
+	used, for example, for stopping the bell in a sound decoder or initiating other 
+	actions when the train stops at a station.</li>
+	<li><b>On Train Start</b> - When the automatic trains starts up after having 
+	been stopped. This may be used, for example, to initiate actions when a train 
+	starts up after a station stop.</li>
+	<li><b>On Sensor ACTiVE</b> - When the specified Sensor moves to the 
+	active state. The specified Sensor may be either internal or hardware, and must 
+	be in the Sensor Table. This might be used, for example, with a hardware Sensor 
+	connected to a fascia push button to trigger an action. It could also be used to 
+	trigger actions using hardware position sensors on the layout. With internal 
+	sensors it can provide a link to Logix.</li>
+	<li><b>On Sensor INACTIVE</b> - When the specified Sensor moves to the 
+	inactive state. This is the same as above, but with the opposite sensor state. 
+	Use the one that best fits your hardware or Logix.</li>
+	</ul>
+</p>
 <p>An optional delay, specified in milliseconds, is available for each <i>when</i> 
 event. No delay is the default.  If an optional delay time is not entered (or a 
 delay time of zero is entered), the action will be performed immediately after 
@@ -100,68 +95,70 @@ the <i>when</i> event occurs. If a delay time is specified, the program will wai
 for the specified time after the <i>when</i> event occurs before performing the 
 action.</p>
 <p>Currently available <i>what</i> actions are:
-<p><ul>
-<li><b>Pause Train</b> - Stop the train for a specified number of fast clock minutes. 
-This item may be used to request a station stop.</li>
-<li><b>Set Maximum Speed</b> - Set the maximum speed to a specified percentage 
-of the maximum hardware speed. When a train is run in automatic mode, the 
-program will never exceed the maximum speed. For example, this item may be used 
-to force an automatic train to run slower through a town. Setting maximum speed 
-does not affect the current speed of the train if it is less than the specified 
-maximum speed.</li>
-<li><b>Set Train Speed</b> - Set the current train speed to the target percentage. 
-The throttle will send the new speed to the locomotive immediately. How long it takes 
-the train to reach the new speed after that depends upon the locomotive decoder. 
-The new speed may be either lower or higher than the previous value, but will not be 
-allowed to exceed the maximum speed.</li>
-<li><b>Ramp Train Speed</b> - Set the current train speed to the target percentage  
-by ramping to the target value using the default ramp rate of the automatically 
-running train. If the default ramp rate of the train is RAMP_NONE, this action is 
-equivalent to <b>Set Train Speed</b>. The new speed may be either lower or higher 
-than the previous value, but will not be allowed to exceed the maximum speed.</li>
-<li><b>Go to Manual Mode</b> - Drop out of automatic mode to allow a human 
-engineer to perform work with a manual throttle. This action supports the scenario 
-where a train might be run automatically to a work site, where a human operator 
-takes over to perform work, after which automatic running is continued. The train 
-will remain in manual mode until directed by the dispatcher to resume automatic 
-operation. An optional <b>Done Sensor</b> allows an operator remote from the 
-dispatcher to notify the dispatcher that work has been completed and automatic 
-running can be resumed. When the <b>Done Sensor</b> goes active, the status of 
-the train is changed from WORKING to READY. For more information on this action, 
-see <b><a href="../dispatcher/DispatcherFrame.shtml">Dispatcher</a></b>. <b>Note:</b> 
-When the train is in manual mode, the computer does not have a throttle for the 
-train available, so delayed actions that happen then and require a throttle are 
-ignored. </li>
-<li><b>Set Locomotive Light</b> - Sets the locomotive light either <i>On</i> or 
-<i>Off</i> as selected.</li>
-<li><b>Start Bell</b> - Start bell ringing on a sound decoder. This 
-item will turn throttle function 1 on.</li>
-<li><b>Stop Bell</b> - Stop bell ringing on a sound decoder. This 
-item will turn throttle function 1 off.</li>
-<li><b>Sound Horn</b> - Sound the horn (whistle) of a sound decoder for a specified 
-time. This item is equivalent to holding down throttle function 2 for the 
-specified time.</li>
-<li><b>Pattern Sound Horn</b> - Sound the horn (whistle) in a manner specified by 
-a user-entered pattern. The pattern consists of short and long blasts, specified as 
-"s" and "l" in the pattern. For example a pattern of "lsl" specifies long-short-long. 
-The user sets the duration of the short and long blasts. The short blast 
-duration is used as the wait time between blasts. Actual times realized will 
-depend on the sound decoder and how busy the computer is. The horn/whistle is 
-assumed to be throttle function 2.</li>
-<li><b>Set Decoder Function</b> - Sets the specified decoder function either 
-<i>On</i> or <i>Off</i> as selected. This works for both sound decoders and 
-decoders without sound.</li>
-<li><b>Set Sensor ACTIVE</b> - Set a specified Sensor active. The specified 
-Sensor must be in the Sensor Table. If the specified Sensor is already in the 
-active state, it is first toggled to the inactive state, then set active. This 
-action may be used, for example, with an internal sensor to trigger a Logix, set  
-a Route, or to set a Light. It offers access to a wide variety of actions not 
-included here, such as running scripts or playing sounds.</li>
-<li><b>Set Sensor INACTIVE</b> - Set a specified Sensor inactive. The specified 
-Sensor must be in the Sensor Table. If the specified Sensor is already in the 
-inactive state, it is first toggled to the active state, then set inactive. This 
-is equivalent to the action above, except with a different target Sensor state.</li>
-</ul></p>
+<p>
+	<ul>
+	<li><b>Pause Train</b> - Stop the train for a specified number of fast clock minutes. 
+	This item may be used to request a station stop.</li>
+	<li><b>Set Maximum Speed</b> - Set the maximum speed to a specified percentage 
+	of the maximum hardware speed. When a train is run in automatic mode, the 
+	program will never exceed the maximum speed. For example, this item may be used 
+	to force an automatic train to run slower through a town. Setting maximum speed 
+	does not affect the current speed of the train if it is less than the specified 
+	maximum speed.</li>
+	<li><b>Set Train Speed</b> - Set the current train speed to the target percentage. 
+	The throttle will send the new speed to the locomotive immediately. How long it takes 
+	the train to reach the new speed after that depends upon the locomotive decoder. 
+	The new speed may be either lower or higher than the previous value, but will not be 
+	allowed to exceed the maximum speed.</li>
+	<li><b>Ramp Train Speed</b> - Set the current train speed to the target percentage  
+	by ramping to the target value using the default ramp rate of the automatically 
+	running train. If the default ramp rate of the train is RAMP_NONE, this action is 
+	equivalent to <b>Set Train Speed</b>. The new speed may be either lower or higher 
+	than the previous value, but will not be allowed to exceed the maximum speed.</li>
+	<li><b>Go to Manual Mode</b> - Drop out of automatic mode to allow a human 
+	engineer to perform work with a manual throttle. This action supports the scenario 
+	where a train might be run automatically to a work site, where a human operator 
+	takes over to perform work, after which automatic running is continued. The train 
+	will remain in manual mode until directed by the dispatcher to resume automatic 
+	operation. An optional <b>Done Sensor</b> allows an operator remote from the 
+	dispatcher to notify the dispatcher that work has been completed and automatic 
+	running can be resumed. When the <b>Done Sensor</b> goes active, the status of 
+	the train is changed from WORKING to READY. For more information on this action, 
+	see <b><a href="../dispatcher/DispatcherFrame.shtml">Dispatcher</a></b>. <b>Note:</b> 
+	When the train is in manual mode, the computer does not have a throttle for the 
+	train available, so delayed actions that happen then and require a throttle are 
+	ignored.</li>
+	<li><b>Set Locomotive Light</b> - Sets the locomotive light either <i>On</i> or 
+	<i>Off</i> as selected.</li>
+	<li><b>Start Bell</b> - Start bell ringing on a sound decoder. This 
+	item will turn throttle function 1 on.</li>
+	<li><b>Stop Bell</b> - Stop bell ringing on a sound decoder. This 
+	item will turn throttle function 1 off.</li>
+	<li><b>Sound Horn</b> - Sound the horn (whistle) of a sound decoder for a specified 
+	time. This item is equivalent to holding down throttle function 2 for the 
+	specified time.</li>
+	<li><b>Pattern Sound Horn</b> - Sound the horn (whistle) in a manner specified by 
+	a user-entered pattern. The pattern consists of short and long blasts, specified as 
+	"s" and "l" in the pattern. For example a pattern of "lsl" specifies long-short-long. 
+	The user sets the duration of the short and long blasts. The short blast 
+	duration is used as the wait time between blasts. Actual times realized will 
+	depend on the sound decoder and how busy the computer is. The horn/whistle is 
+	assumed to be throttle function 2.</li>
+	<li><b>Set Decoder Function</b> - Sets the specified decoder function either 
+	<i>On</i> or <i>Off</i> as selected. This works for both sound decoders and 
+	decoders without sound.</li>
+	<li><b>Set Sensor ACTIVE</b> - Set a specified Sensor active. The specified 
+	Sensor must be in the Sensor Table. If the specified Sensor is already in the 
+	active state, it is first toggled to the inactive state, then set active. This 
+	action may be used, for example, with an internal sensor to trigger a Logix, set  
+	a Route, or to set a Light. It offers access to a wide variety of actions not 
+	included here, such as running scripts or playing sounds.</li>
+	<li><b>Set Sensor INACTIVE</b> - Set a specified Sensor inactive. The specified 
+	Sensor must be in the Sensor Table. If the specified Sensor is already in the 
+	inactive state, it is first toggled to the active state, then set inactive. This 
+	is equivalent to the action above, except with a different target Sensor state.</li>
+	</ul>
+</p>
 
 <h2>The View Actions Window</h2>
 <p>The <b>View Actions</b> window displays Actions that are 
@@ -181,6 +178,8 @@ The order of the Actions is not important.</p>
 </p>
 
 <!--#include virtual="/Footer" -->
+
+      </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
 </body>
 </html>
-

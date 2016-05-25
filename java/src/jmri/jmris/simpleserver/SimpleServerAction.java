@@ -1,34 +1,36 @@
 // SimpleServerAction.java
-
 package jmri.jmris.simpleserver;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
 
 /**
- * Swing action to create and register a
- * SimpleServerControlFrame object
+ * Swing action to create and register a SimpleServerControlFrame object
  *
- * @author              Paul Bender Copyright (C) 2010
- * @version             $Revision$
+ * @author Paul Bender Copyright (C) 2010
+ * @version $Revision$
  */
- public class SimpleServerAction extends AbstractAction {
+public class SimpleServerAction extends AbstractAction {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = 9027149722115966187L;
 
     public SimpleServerAction(String s) {
-	super(s);
-        }
+        super(s);
+    }
 
-    public SimpleServerAction() { this("Start Simple Jmri Server");}
+    public SimpleServerAction() {
+        this("Start Simple Jmri Server");
+    }
 
     public void actionPerformed(ActionEvent e) {
 
-		// SimpleServerFrame f = new SimpleServerFrame();
-		// f.setVisible(true);
-                SimpleServer.instance().start();
-	}
-   static Logger log = LoggerFactory.getLogger(SimpleServerAction.class.getName());
+        // SimpleServerFrame f = new SimpleServerFrame();
+        // f.setVisible(true);
+        SimpleServerManager.getInstance().getServer().start();
+    }
 }
 
 

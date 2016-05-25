@@ -1,59 +1,65 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author: zoo $) 2008 -->
-<!-- $Id: index.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
-<title>JMRI: Marklin Command Station 2</title>
+<title>JMRI Hardware Support - M&auml;rklin Command Station 2</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1> 
-JMRI: Marklin Command Station 2
-</h1>
-JMRI can connect to a Marklin Command Station 2 using the built in ethernet interface.<br>
-It is possible for multiple PCs to connect to the CS2 using IP/UDP.
+<h1>Hardware Support: M&auml;rklin Command Station 2 (CS2)</h1>
 <p>
-The CS2 uses its own CAN BUS protocol running over UDP, responses from the CS2 are sent out as a broadcast message 
+JMRI can connect to a M&auml;rklin Command Station 2 using the built in Ethernet interface.<br>
+It is possible for multiple PCs to connect to a CS2 using IP/UDP.
+<p>
+The CS2 uses its own CAN BUS protocol running over UDP; responses from the CS2 are sent out as a broadcast message 
 and therefore the PCs connecting to the CS2 must be in the same IP subnet otherwise the reply messages will not get seen.
 <p>
-This implementation of the CS2 CAN protocol was developed and tested on firmware version 2.
-<b>
-This interface is still under development if you find any issues then please raise a issue on the yahoo group</b>
+This implementation of the CS2 CAN protocol was developed and tested on CS2 firmware version 2.
 <p>
-To configure the connection:
+Support for the M&auml;rklin CS2 was first available in 
+<a href="http://jmri.org/releasenotes/jmri3.1.1.shtml">JMRI 3.1.1</a>.
+
+<a name="limitations"></a><h2>Limitations</h2>
+<b>
+This interface is still under development; if you find any issues then please raise a issue on the <a href="https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI users</a> mailing list.</b>
+<p>
+Consisting, and Programming are not yet supported.
+
+<a name="connecting"></a><h2>Connecting</h2>
+<p>To configure the connection:
 <ul>
-<li>Open the JMRI "Preferences" under the "Edit" menu,
-<li>Select "MARKLIN" as the manufacuturer, then the connection type is Command Station 2,
-<li>Enter in the address assigned to the CS2.
-<li>Click "Save".
+	<li>Open the JMRI "Preferences" under the "Edit" menu,
+	<li>Select "MARKLIN" as the manufacturer, and Command Station 2 as the Connection type,
+	<li>Enter in the address assigned to the CS2.
+	<li>Click "Save".
 </ul>
 
 <p>
 Turnouts, Sensors, Throttle and power support is available for 
 a JMRI-connected CS2 unit.
 <p>
-Throttle support includes the ability to select a specific protocol (Marklin, DCC & mfx)
-<p>
+Throttle support includes the ability to select a specific protocol (M&auml;rklin, DCC &amp; mfx)
 
-Consisting, and Programming are not yet support.
-<p>
-Support for the Marklin CS2 was first available in 
-<a href="http://jmri.sf.net/releasenotes/jmri3.1.1.shtml">JMRI 3.1.1</a>.
-    
+<img src="images/MarklinMenu416.png" width="251" height="74" align="right" alt="Menu">
+<a name="tools"></a><h2>JMRI Tools</h2>
+<h4>Monitor Marklin Commands</h4>
+<img src="images/MarklinCommandMonitor.png" width="410" height="88" alt="Menu">
+<h4>Send Marklin Commands</h4>
+<img src="images/MarklinCS2SendCommand.png" width="252" height="137" alt="Menu">
+  
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

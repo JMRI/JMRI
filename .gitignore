@@ -1,0 +1,43 @@
+# build artifacts
+jmri.jar
+/dist
+java/docs
+
+# test artifacts
+junit-results.xml
+junit*.properties
+findbugs.xml
+findbugs.html
+
+# runtime artifacts
+messages.log*
+session.log
+
+# transient artifacts
+.ant-targets-build.xml
+/java/classes
+/java/tmp
+/java/doc
+*.class
+/temp
+.pydevproject
+*.swp
+/lib/cachedir
+/xml/XSLT/DTD
+/xml/XSLT/properties
+/xml/XSLT/xml
+/xml/XSLT/pages
+
+# private / per-user configuration files
+/nbproject/private
+/.idea/workspace.xml
+local.properties
+*.original~
+
+# CATS source, sometimes present for test
+/java/src/cats
+
+# OS junk files
+[Tt]humbs.db
+*.DS_Store
+/jmri-fb.html

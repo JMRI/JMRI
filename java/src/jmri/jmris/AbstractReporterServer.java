@@ -4,7 +4,8 @@ package jmri.jmris;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Reporter;
@@ -20,8 +21,11 @@ import org.slf4j.LoggerFactory;
  */
 abstract public class AbstractReporterServer {
 
+    private final HashMap<String, ReporterListener> reporters;
+    private static final Logger log = LoggerFactory.getLogger(AbstractReporterServer.class);
+
     public AbstractReporterServer() {
-        reporters = new ArrayList<String>();
+        reporters = new HashMap<String, ReporterListener>();
     }
 
     /*
@@ -34,15 +38,15 @@ abstract public class AbstractReporterServer {
     abstract public void parseStatus(String statusString) throws JmriException, IOException;
 
     synchronized protected void addReporterToList(String reporterName) {
-        if (!reporters.contains(reporterName)) {
-            reporters.add(reporterName);
-            InstanceManager.reporterManagerInstance().getReporter(reporterName)
-                    .addPropertyChangeListener(new ReporterListener(reporterName));
+        if (!reporters.containsKey(reporterName)) {
+            reporters.put(reporterName, new ReporterListener(reporterName));
+            InstanceManager.reporterManagerInstance().getReporter(reporterName).addPropertyChangeListener(reporters.get(reporterName));
         }
     }
 
     synchronized protected void removeReporterFromList(String reporterName) {
-        if (reporters.contains(reporterName)) {
+        if (reporters.containsKey(reporterName)) {
+            InstanceManager.reporterManagerInstance().getReporter(reporterName).removePropertyChangeListener(reporters.get(reporterName));
             reporters.remove(reporterName);
         }
     }
@@ -74,6 +78,13 @@ abstract public class AbstractReporterServer {
         } catch (Exception ex) {
             log.error("set reporter report", ex);
         }
+    }
+
+    public void dispose() {
+        for (Map.Entry<String, ReporterListener> memory : this.reporters.entrySet()) {
+            InstanceManager.memoryManagerInstance().getMemory(memory.getKey()).removePropertyChangeListener(memory.getValue());
+        }
+        this.reporters.clear();
     }
 
     class ReporterListener implements PropertyChangeListener {
@@ -108,7 +119,4 @@ abstract public class AbstractReporterServer {
         String name = null;
         Reporter reporter = null;
     }
-    protected ArrayList<String> reporters = null;
-    String newState = "";
-    static Logger log = LoggerFactory.getLogger(AbstractReporterServer.class.getName());
 }

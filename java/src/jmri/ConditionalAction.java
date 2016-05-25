@@ -1,5 +1,3 @@
-// ConditionalAction.java
-
 package jmri;
 
 import java.awt.event.ActionListener;
@@ -7,14 +5,14 @@ import javax.swing.Timer;
 import jmri.jmrit.Sound;
 
 /**
- * The consequent of the antecedent of the conditional proposition. 
- * The data for the action to be taken when a Conditional calculates to True
+ * The consequent of the antecedent of the conditional proposition. The data for
+ * the action to be taken when a Conditional calculates to True
  * <P>
- * 
+ *
  * @author Pete Cressman Copyright (C) 2009
- * @version   $Revision$
  */
 public interface ConditionalAction {
+
     /**
      * Integer data for action
      */
@@ -73,37 +71,39 @@ public interface ConditionalAction {
     void setType(int type);
 
     public String description(boolean triggerType);
-    
+
     /*
-    * get timer for delays and other timed events
-    */
+     * get timer for delays and other timed events
+     */
     Timer getTimer();
 
     /*
-    * set timer for delays and other timed events
-    */
+     * set timer for delays and other timed events
+     */
     void setTimer(Timer timer);
-    
+
     boolean isTimerActive();
 
     void startTimer();
 
     void stopTimer();
-    
+
     /*
-    * set listener for delays and other timed events
-    */
+     * set listener for delays and other timed events
+     */
     ActionListener getListener();
 
     /*
-    * set listener for delays and other timed events
-    */
+     * set listener for delays and other timed events
+     */
     void setListener(ActionListener listener);
-    
+
     /**
-    * get Sound file
-    */
+     * get Sound file
+     */
     public Sound getSound();
-    
+
     public NamedBeanHandle<?> getNamedBean();
+
+    public NamedBean getBean();
 }

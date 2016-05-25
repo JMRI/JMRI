@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2006 All rights reserved -->
-<!-- $Id: Uhlenbrock_73500.xml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -13,127 +13,75 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="2" lastUpdated="20140511"/>
   <version author="Simon Ginsburg" version="1" lastUpdated="20051018"/>
+  <!-- Version 2 - renamed family to match (new) other Uhlenbrock definitions  -->  
   <decoder>
-    <family name="Mini-Multiprotocoll Decoder" mfg="Uhlenbrock Elektronik" lowVersionID="8" highVersionID="8">
+    <family name="Mini Multi-Protocol Decoder" mfg="Uhlenbrock Elektronik" lowVersionID="8" highVersionID="8" comment="Decoders not sorted (necessarily) in numerical order">
       <model model="73500"/>
       <model model="73510"/>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
-        <shortAddressVal/>
-        <label>Primary Address</label>
-        <comment>Short address</comment>
-      </variable>
-      <variable label="Vstart" CV="2" comment="Speed setting between 1 and 63" default="01">
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable item="Vstart" CV="2" comment="Speed setting between 1 and 63" default="01">
         <decVal max="63"/>
         <label>Vstart</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Startspannung</label>
         <comment>Speed setting between 1 and 63</comment>
       </variable>
-      <variable label="Acceleration Rate" CV="3" comment="A value of 1 will increase each 5 milliseconds by 1" item="Accel" default="02">
+      <variable CV="3" comment="A value of 1 will increase each 5 milliseconds by 1" item="Accel" default="02">
         <decVal max="63"/>
         <label>Acceleration Rate</label>
+        <label xml:lang="it">Accellerazione (0-63)</label>
+        <label xml:lang="fr">Accelération (0-63)</label>
+        <label xml:lang="de">Anfahrverzögerung (0-63)</label>
         <comment>A value of 1 will increase each 5 milliseconds by 1</comment>
       </variable>
-      <variable label="Deceleration Rate" CV="4" comment="A value of 1 will increase each 5 milliseconds by 1" item="Decel" default="02">
+      <variable CV="4" comment="A value of 1 will increase each 5 milliseconds by 1" item="Decel" default="02">
         <decVal max="63"/>
         <label>Deceleration Rate</label>
+        <label xml:lang="it">Decellerazione (0-63)</label>
+        <label xml:lang="fr">Décélération (0-63)</label>
+        <label xml:lang="de">Bremszeit (0-63)</label>
         <comment>A value of 1 will increase each 5 milliseconds by 1</comment>
       </variable>
-      <variable label="Vhigh" CV="5" comment="Speed setting between 1 and 63" default="48">
+      <variable item="Vhigh" CV="5" comment="Speed setting between 1 and 63" default="48">
         <decVal max="63"/>
         <label>Vhigh</label>
         <comment>Speed setting between 1 and 63</comment>
       </variable>
-      <variable label="Vmid" CV="6" comment="Speed setting between 1 and 63" default="24">
+      <variable item="Vmid" CV="6" comment="Speed setting between 1 and 63" default="24">
         <decVal max="63"/>
         <label>Vmid</label>
         <comment>Speed setting between 1 and 63</comment>
       </variable>
-      <variable label="Manufacturer Version No: " CV="7" readOnly="yes" item="Decoder Version" default="8">
+      <variable CV="7" readOnly="yes" item="Decoder Version" default="8">
         <decVal/>
         <label>Manufacturer Version No: </label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
       </variable>
-      <variable label="Manufacturer ID: " CV="8" readOnly="yes" item="Manufacturer" default="85">
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="85">
         <decVal/>
         <label>Manufacturer ID: </label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
       </variable>
-      <variable label="Extended Address" CV="17" item="Long Address">
-        <longAddressVal/>
-        <label>Extended Address</label>
-      </variable>
-      <variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
-        <decVal/>
-        <label>Consist Address</label>
-      </variable>
-      <variable label="Consist Direction" CV="19" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-          </enumChoice>
-          <enumChoice choice="Reversed">
-            <choice>Reversed</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Direction</label>
-      </variable>
-      <variable label="Locomotive Direction" CV="29" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="reversed">
-            <choice>reversed</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Locomotive Direction</label>
-      </variable>
-      <variable label="FL Location" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
-        <enumVal>
-          <enumChoice choice="14 speed step format">
-            <choice>14 speed step format</choice>
-          </enumChoice>
-          <enumChoice choice="28 speed step format">
-            <choice>28 speed step format</choice>
-          </enumChoice>
-        </enumVal>
-        <label>FL Location</label>
-      </variable>
-      <variable label="Speed Table Definition" CV="29" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="Use Vstart, Vmid, Vhigh">
-            <choice>Use Vstart, Vmid, Vhigh</choice>
-          </enumChoice>
-          <enumChoice choice="Use table in CVs 66 through 95">
-            <choice>Use table in CVs 66 through 95</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed Table Definition</label>
-      </variable>
-      <variable label="Address Format" CV="29" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="One byte (short) address">
-            <choice>One byte (short) address</choice>
-          </enumChoice>
-          <enumChoice choice="Two byte (extended) address">
-            <choice>Two byte (extended) address</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Address Format</label>
-      </variable>
-      <variable label="Main Motor Control" CV="49" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-        </enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
+      <variable item="Main Motor Control" CV="49" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
         <label>Main Motor Control</label>
       </variable>
-      <variable label="Braking End" CV="49" mask="XXXXXVXX">
+      <variable item="Braking End" CV="49" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="to standstill">
             <choice>to standstill</choice>
@@ -144,18 +92,11 @@
         </enumVal>
         <label>Braking End</label>
       </variable>
-      <variable label="SX Programming" CV="49" mask="XXXXVXXX" default="1">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+      <variable item="SX Programming" CV="49" mask="XXXXVXXX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>SX Programming</label>
       </variable>
-      <variable label="Data Format" CV="49" mask="XXXVXXXX">
+      <variable item="Data Format" CV="49" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="Motorola and DDC">
             <choice>Motorola and DDC</choice>
@@ -166,18 +107,11 @@
         </enumVal>
         <label>Data Format</label>
       </variable>
-      <variable label="Motorola Format" CV="49" mask="XXVXXXXX" default="1">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+      <variable item="Motorola Format" CV="49" mask="XXVXXXXX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Motorola Format</label>
       </variable>
-      <variable label="Lightplugs" CV="49" mask="XVXXXXXX">
+      <variable item="Lightplugs" CV="49" mask="XVXXXXXX">
         <enumVal>
           <enumChoice choice="straight">
             <choice>straight</choice>
@@ -188,7 +122,7 @@
         </enumVal>
         <label>Lightplugs</label>
       </variable>
-      <variable label="Braking with" CV="49" mask="VXXXXXXX">
+      <variable item="Braking with" CV="49" mask="VXXXXXXX">
         <enumVal>
           <enumChoice choice="Braking signal only">
             <choice>Braking signal only</choice>
@@ -199,11 +133,11 @@
         </enumVal>
         <label>Braking with</label>
       </variable>
-      <variable label="Function output dimming" CV="50" default="32">
+      <variable item="Function output dimming" CV="50" default="32">
         <decVal min="0" max="63"/>
         <label>Function output dimming</label>
       </variable>
-      <variable label="Analog/Digitalswitch" CV="51">
+      <variable item="Analog/Digitalswitch" CV="51">
         <enumVal>
           <enumChoice choice="Digital operation">
             <choice>Digital operation</choice>
@@ -214,64 +148,66 @@
         </enumVal>
         <label>Analog/Digitalswitch</label>
       </variable>
-      <variable label="End braking speed" CV="52" default="30" tooltip="Valid when CV49 Bit 2=1 and Bit 7=1">
+      <variable item="End braking speed" CV="52" default="30" tooltip="Valid when CV49 Bit 2=1 and Bit 7=1">
         <decVal/>
         <label>End braking speed</label>
       </variable>
-      <variable label="Repetition rate" CV="53" default="80" tooltip="Value * 53 um; useful values 60-255">
+      <variable item="Repetition rate" CV="53" default="80" tooltip="Value * 53 um; useful values 60-255">
         <decVal/>
         <label>Repetition rate</label>
       </variable>
-      <variable label="Raise Motor voltage" CV="54" default="2" tooltip="Motor control parameter">
+      <variable item="Raise Motor voltage" CV="54" default="2" tooltip="Motor control parameter">
         <decVal/>
         <label>Raise Motor voltage</label>
       </variable>
-      <variable label="Drop Motor voltage" CV="55" default="2" tooltip="Motor control parameter">
+      <variable item="Drop Motor voltage" CV="55" default="2" tooltip="Motor control parameter">
         <decVal/>
         <label>Drop Motor voltage</label>
       </variable>
-      <variable label="AD Converter parameter" CV="56" default="1" readOnly="yes" tooltip="Do not change">
+      <variable item="AD Converter parameter" CV="56" default="1" readOnly="yes" tooltip="Do not change">
         <decVal/>
         <label>AD Converter parameter</label>
       </variable>
-      <variable label="SX Speed table" CV="57" default="5" tooltip="Increment value for steps 29-31">
+      <variable item="SX Speed table" CV="57" default="5" tooltip="Increment value for steps 29-31">
         <decVal/>
         <label>SX Speed table</label>
       </variable>
-      <variable label="AD Timeslot" CV="58" default="14" tooltip="Timeslot for AD converter sensor">
+      <variable item="AD Timeslot" CV="58" default="14" tooltip="Timeslot for AD converter sensor">
         <decVal/>
         <label>AD Timeslot</label>
       </variable>
-      <variable label="Short circuit supervision" CV="60" default="82" readOnly="yes" tooltip="Do not change! 0=deactivated">
+      <variable item="Short circuit supervision" CV="60" default="82" readOnly="yes" tooltip="Do not change! 0=deactivated">
         <decVal/>
         <label>Short circuit supervision</label>
       </variable>
-      <variable label="Temperature switchoff limit" CV="61" default="0" tooltip="Different with each decoder, 0=deactivated">
+      <variable item="Temperature switchoff limit" CV="61" default="0" tooltip="Different with each decoder, 0=deactivated">
         <decVal/>
         <label>Temperature switchoff limit</label>
       </variable>
-      <variable label="Reserved CV for SX programming" CV="62" default="0" readOnly="yes" tooltip="Used with SX programming">
+      <variable item="Reserved CV for SX programming" CV="62" default="0" readOnly="yes" tooltip="Used with SX programming">
         <decVal/>
         <label>Reserved CV for SX programming</label>
       </variable>
-      <variable label="Offset Register" CV="63" default="0" readOnly="yes" tooltip="Used with Motorola programming">
+      <variable item="Offset Register" CV="63" default="0" readOnly="yes" tooltip="Used with Motorola programming">
         <decVal/>
         <label>Offset Register</label>
       </variable>
-      <variable label="Page Register" CV="64" default="0" readOnly="yes" tooltip="Used with DDC paged mode programming">
+      <variable item="Page Register" CV="64" default="0" readOnly="yes" tooltip="Used with DDC paged mode programming">
         <decVal/>
         <label>Page Register</label>
       </variable>
-      <variable label="Speed Table" CV="67">
+      <variable item="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
     </variables>
     <resets>
-      <factReset label="Reset All CVs" CV="59" default="1"/>
+      <factReset label="Reset All CVs" CV="59" default="1">
+         <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
     </resets>
   </decoder>
-  <pane name="Uhlenbrock">
+  <pane>
     <column>
       <display item="Main Motor Control"/>
       <display item="Braking End"/>
@@ -280,8 +216,8 @@
       <display item="Motorola Format"/>
       <display item="Lightplugs"/>
       <display item="Braking with"/>
-      <label label=" ">
-        <label> </label>
+      <label>
+        <text> </text>
       </label>
       <display item="Analog/Digitalswitch"/>
     </column>
@@ -295,8 +231,8 @@
       <display item="SX Speed table"/>
       <display item="AD Timeslot"/>
       <display item="Temperature switchoff limit"/>
-      <label label="These CV's are Read-Only: ">
-        <label>These CV's are Read-Only: </label>
+      <label>
+        <text>These CV's are Read-Only: </text>
       </label>
       <display item="Short circuit supervision"/>
       <display item="SX register"/>

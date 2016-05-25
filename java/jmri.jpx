@@ -56,16 +56,6 @@
   <property category="runtime.4" name="appserver.vmparameters" value="-Dvbroker.agent.port=14000 -Djava.library.path=/BorlandEnterpriseServer/lib;/BorlandEnterpriseServer/bin -Dborland.enterprise.licenseDir=/BorlandEnterpriseServer/var/servers/tom/adm -Dejb.module_preload=true"/>
   <property category="runtime.4" name="jsprunner.launchuri" value="/"/>
   <property category="runtime.4" name="test.harness" value="junit.textui.TestRunner"/>
-  <property category="runtime.5" name="ConfigurationName" value="CornwallRR"/>
-  <property category="runtime.5" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
-  <property category="runtime.5" name="application.class" value="apps.cornwall.CornwallRR"/>
-  <property category="runtime.5" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw -Dapple.laf.useScreenMenuBar=true"/>
-  <property category="runtime.5" name="appserver.ejbJarsSaved" value="1"/>
-  <property category="runtime.5" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
-  <property category="runtime.5" name="appserver.servername" value="standard"/>
-  <property category="runtime.5" name="appserver.vmparameters" value="-Dvbroker.agent.port=14000 -Djava.library.path=/BorlandEnterpriseServer/lib;/BorlandEnterpriseServer/bin -Dborland.enterprise.licenseDir=/BorlandEnterpriseServer/var/servers/tom/adm -Dejb.module_preload=true"/>
-  <property category="runtime.5" name="jsprunner.launchuri" value="/"/>
-  <property category="runtime.5" name="test.harness" value="junit.textui.TestRunner"/>
   <property category="runtime.6" name="ConfigurationName" value="PacketPro"/>
   <property category="runtime.6" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
   <property category="runtime.6" name="application.class" value="apps.PacketPro.PacketPro"/>
@@ -187,8 +177,6 @@
     <property category="archiving" name="archiverClass" value="com.borland.jbuilder.wizard.archive.ApplicationArchiver"/>
     <property category="archiving" name="buildWithProject" value="0"/>
     <property category="archiving" name="extraDeployRoots.1" value="F:resources/decoderpro.gif"/>
-    <property category="archiving" name="extraDeployRoots.2" value="F:resources/icons/cornwall/cornwall_logo.gif"/>
-    <property category="archiving" name="extraDeployRoots.3" value="C:apps.cornwall.*"/>
     <property category="archiving" name="extraDeployRoots.4" value="C:apps.DecoderPro.*"/>
     <property category="archiving" name="extraDeployRoots.5" value="C:apps.JmriDemo.*"/>
     <property category="archiving" name="extraDeployRoots.6" value="C:apps.LocoTools.*"/>
@@ -209,7 +197,6 @@
     <property category="nodeJavadoc" name="displayAllOutput" value="1"/>
   </node>
   <file path="test/apps/tests/AllTest.java"/>
-  <file path="src/apps/cornwall/CornwallRR.java"/>
   <file path="src/resources/decoderpro.gif"/>
   <file path="src/apps/DecoderPro/DecoderPro.java"/>
   <file path="src/apps/JmriDemo/JMRIdemo.java"/>

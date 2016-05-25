@@ -1,5 +1,3 @@
-// SwingTest.java
-
 package jmri.jmrix.can.cbus.swing;
 
 import junit.framework.Test;
@@ -8,13 +6,12 @@ import junit.framework.TestSuite;
 
 /**
  * Tests for the jmri.jmrix.can.cbus.swing package.
- * @author      Bob Jacobsen  Copyright 2008
- * @version   $Revision$
+ *
+ * @author Bob Jacobsen Copyright 2008
  */
 public class SwingTest extends TestCase {
 
     // from here down is testing infrastructure
-
     public SwingTest(String s) {
         super(s);
     }

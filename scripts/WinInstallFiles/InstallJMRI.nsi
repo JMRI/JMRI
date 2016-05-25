@@ -50,6 +50,55 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.22.4
+; - Remove more outmoded jetty files
+; -------------------------------------------------------------------------
+; - Version 0.1.22.3
+; - Fix decpro5 file name (.ico missing)
+; -------------------------------------------------------------------------
+; - Version 0.1.22.2
+; - Remove references to DecoderPro3
+; - Remove download of Java as this hasn't worked properly for a while
+; - instead halt with a message to download if not found
+; -------------------------------------------------------------------------
+; - Version 0.1.22.1
+; - Remove old JOAL libraries
+; - Change minimum JRE version to 1.8
+; -------------------------------------------------------------------------
+; - Version 0.1.22.0
+; - Remove support for installing the old DecoderPro
+; -------------------------------------------------------------------------
+; - Version 0.1.21.5
+; - Updated "-CleanUp" so that another set of old files are removed,
+;    including:
+;       jetty(release 8.1.0.v20120127)-related libraries
+;       old log4j library
+;       jspwin DLL
+;    are removed before installation.
+; -------------------------------------------------------------------------
+; - Version 0.1.21.4
+; - Updated "-CleanUp" so that any previous jetty-related .jar files and
+;   servlet .jar files are removed before installation.
+; - Delete files related to XmlIO which is removed as of JMRI 3.11.3
+; - Delete files which were removed as part of re-work of Zimo decoder
+;   definition rework for JMRI 3.11.3
+; -------------------------------------------------------------------------
+; - Version 0.1.21.3
+; - Updated "-CleanUp" so that any previous slf4j .jar files are removed
+; -   before installation.
+; -------------------------------------------------------------------------
+; - Version 0.1.21.2
+; - Updated "-CleanUp" so that any previous desktop icons are removed before
+; -   installation.
+; - Updated "-CleanUp" so that if the Start Menu folder already exits, it
+; -   is removed before installation.
+; - Provided work-around for deletion of Preferences.lnk on systems which
+; -   are slow to change file attributes.
+; -------------------------------------------------------------------------
+; - Version 0.1.21.1
+; - Updated Uninstall operations so that DecoderPro3 icons on Desktop and in
+; - Start Menu are deleted during Unninstall process
+; -------------------------------------------------------------------------
 ; - Version 0.1.21.0
 ; - Add request for administrator level access when installing to correct
 ; - for bug highlighted by Suzie Tall
@@ -213,9 +262,9 @@
 !endif
 !ifndef JRE_VER
   ; -- usually, this will be determined by the build.xml ant script
-  !define JRE_VER   "1.6"                       ; Required JRE version
+  !define JRE_VER   "1.8"                       ; Required JRE version
 !endif
-!define INST_VER  "0.1.21.0"                    ; Installer version
+!define INST_VER  "0.1.22.4"                    ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
@@ -381,7 +430,7 @@ SectionGroup "JMRI Core Files" SEC_CORE
 
   Section "-CleanUp" ; SEC_CLEANUP
     SectionIn RO  ; This section always selected
-    
+
     ; -- Clean up of JMRI folder
     SetOutPath "$INSTDIR"
 
@@ -390,10 +439,102 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$OUTDIR\jh.jar"
     Delete "$OUTDIR\jdom-jdk11.jar"
 
+    ; -- Delete older outmoded jetty .jar and outmoded servlet files, as of
+    ;    JMRI 3.11.3 (added for version 0.1.21.5 of Windows installer)
+    Delete "$OUTDIR\lib\jetty-continuation-8.1.0.v20120127.jar"
+    Delete "$OUTDIR\lib\jetty-http-8.1.0.v20120127.jar"
+    Delete "$OUTDIR\lib\jetty-io-8.1.0.v20120127.jar"
+    Delete "$OUTDIR\lib\jetty-security-8.1.0.v20120127.jar"
+    Delete "$OUTDIR\lib\jetty-server-8.1.0.v20120127.jar"
+    Delete "$OUTDIR\lib\jetty-servlet-8.1.0.v20120127.jar"
+    Delete "$OUTDIR\lib\jetty-util-8.1.0.v20120127.jar"
+    Delete "$OUTDIR\lib\jetty-websocket-8.1.0.v20120127.jar"
+    Delete "$OUTDIR\lib\log4j.jar"
+    Delete "$OUTDIR\lib\jspWin.dll"
+
+    ; -- Delete outmoded jetty .jar and outmoded servlet files, as of JMRI 3.11.3
+    Delete "$OUTDIR\lib\jetty-continuation-8.1.11.v20130520.jar"
+    Delete "$OUTDIR\lib\jetty-http-8.1.11.v20130520.jar"
+    Delete "$OUTDIR\lib\jetty-io-8.1.11.v20130520.jar"
+    Delete "$OUTDIR\lib\jetty-security-8.1.11.v20130520.jar"
+    Delete "$OUTDIR\lib\jetty-server-8.1.11.v20130520.jar"
+    Delete "$OUTDIR\lib\jetty-servlet-8.1.11.v20130520.jar"
+    Delete "$OUTDIR\lib\jetty-util-8.1.11.v20130520.jar"
+    Delete "$OUTDIR\lib\jetty-websocket-8.1.11.v20130520.jar"
+    Delete "$OUTDIR\lib\servlet-api-3.0.jar"
+
+    ; -- Delete outmoded jetty .jar and outmoded servlet files, as of JMRI 4.3.1
+    Delete "$OUTDIR\lib\jetty-http-9.2.7.v20150116.jar"
+    Delete "$OUTDIR\lib\jetty-io-9.2.7.v20150116.jar"
+    Delete "$OUTDIR\lib\jetty-security-9.2.7.v20150116.jar"
+    Delete "$OUTDIR\lib\jetty-server-9.2.7.v20150116.jar"
+    Delete "$OUTDIR\lib\jetty-servlet-9.2.7.v20150116.jar"
+    Delete "$OUTDIR\lib\jetty-util-9.2.7.v20150116.jar"
+    Delete "$OUTDIR\lib\websocket-api-9.2.7.v20150116.jar"
+    Delete "$OUTDIR\lib\websocket-client-9.2.7.v20150116.jar"
+    Delete "$OUTDIR\lib\websocket-common-9.2.7.v20150116.jar"
+    Delete "$OUTDIR\lib\websocket-server-9.2.7.v20150116.jar"
+    Delete "$OUTDIR\lib\websocket-servlet-9.2.7.v20150116.jar"
+
+    ; -- Delete XmlIO-related files, as of JMRI 3.11.3
+    Delete "$OUTDIR\help\en\package\jmri\jmrit\inControl\images\2Throttles.png"
+    Delete "$OUTDIR\help\en\package\jmri\jmrit\inControl\images\AnalogClock.png"
+    Delete "$OUTDIR\help\en\package\jmri\jmrit\inControl\images\Help.png"
+    Delete "$OUTDIR\help\en\package\jmri\jmrit\inControl\images\inControlIcon.png"
+    Delete "$OUTDIR\help\en\package\jmri\jmrit\inControl\images\LocoSettings.png"
+    Delete "$OUTDIR\help\en\package\jmri\jmrit\inControl\images\Panel.png"
+    Delete "$OUTDIR\help\en\package\jmri\jmrit\inControl\images\QueryStringHelp.png"
+    Delete "$OUTDIR\help\en\package\jmri\jmrit\inControl\images\Scan2BeInControl.png"
+    Delete "$OUTDIR\help\en\package\jmri\jmrit\inControl\images\Settings.png"
+    Delete "$OUTDIR\help\en\package\jmri\jmrit\inControl\images\Throttle1.png"
+    Delete "$OUTDIR\help\en\package\jmri\jmrit\inControl\images\Throttle2.png"
+    Delete "$OUTDIR\help\en\package\jmri\jmrit\inControl\images\.png"
+    RmDir  "$OUTDIR\help\en\package\jmri\jmrit\inControl\images"
+    RmDir  "$OUTDIR\help\en\package\jmri\jmrit\inControl"
+
+    Delete "$OUTDIR\help\fr\package\jmri\jmrit\inControl\images\2Throttles.png"
+    Delete "$OUTDIR\help\fr\package\jmri\jmrit\inControl\images\AnalogClock.png"
+    Delete "$OUTDIR\help\fr\package\jmri\jmrit\inControl\images\Help.png"
+    Delete "$OUTDIR\help\fr\package\jmri\jmrit\inControl\images\inControlIcon.png"
+    Delete "$OUTDIR\help\fr\package\jmri\jmrit\inControl\images\LocoSettings.png"
+    Delete "$OUTDIR\help\fr\package\jmri\jmrit\inControl\images\Panel.png"
+    Delete "$OUTDIR\help\fr\package\jmri\jmrit\inControl\images\QueryStringHelp.png"
+    Delete "$OUTDIR\help\fr\package\jmri\jmrit\inControl\images\Scan2BeInControl.png"
+    Delete "$OUTDIR\help\fr\package\jmri\jmrit\inControl\images\Settings.png"
+    Delete "$OUTDIR\help\fr\package\jmri\jmrit\inControl\images\Throttle1.png"
+    Delete "$OUTDIR\help\fr\package\jmri\jmrit\inControl\images\Throttle2.png"
+    Delete "$OUTDIR\help\fr\package\jmri\jmrit\inControl\images\.png"
+    RmDir  "$OUTDIR\help\fr\package\jmri\jmrit\inControl\images"
+    RmDir  "$OUTDIR\help\fr\package\jmri\jmrit\inControl"
+
+    Delete "$OUTDIR\web\css\inControl.css"
+    Delete "$OUTDIR\web\css\JMRI_XMLIO_TEST.css"
+    Delete "$OUTDIR\web\css\Scan2BeInControl.css"
+    Delete "$OUTDIR\web\js\inControl.js"
+    Delete "$OUTDIR\web\js\JMRI_XMLIO_TEST.js"
+    Delete "$OUTDIR\web\js\Scan2BeInControl.js"
+    Delete "$OUTDIR\web\inControl.html"
+    Delete "$OUTDIR\web\inControl.jar"
+    Delete "$OUTDIR\web\JMRI_XMLIO_test.html"
+    Delete "$OUTDIR\web\Scan2BeInControl.html"
+
+    ; Delete files which were removed as part of re-work of Zimo decoder
+    ;   definition rework for JMRI 3.11.3
+    Delete "$OUTDIR\xml\decoders\zimo\CV739-CV744threeSwitchIP.xml"
+    Delete "$OUTDIR\xml\decoders\zimo\CV739-CV744twoSwitchIP.xml"
+    Delete "$OUTDIR\xml\decoders\zimo\CV739-CV768.xml"
+
     ; -- Delete old .jar & support files in lib/ directory
+    Delete "$OUTDIR\lib\activation.jar"
     Delete "$OUTDIR\lib\crimson.jar"
     Delete "$OUTDIR\lib\comm.jar"
     Delete "$OUTDIR\lib\servlet.jar"
+    Delete "$OUTDIR\lib\slf4j-api-1.6.4.jar"
+    Delete "$OUTDIR\lib\slf4j-log4j12-1.6.4.jar"
+    Delete "$OUTDIR\lib\slf4j-api-1.7.2.jar"
+    Delete "$OUTDIR\lib\slf4j-log4j12-1.7.2.jar"
+    Delete "$OUTDIR\lib\slf4j-api-1.7.5.jar"
+    Delete "$OUTDIR\lib\slf4j-log4j12-1.7.5.jar"
 
     ; -- Delete .jar & support files installed using previous layout
     Delete "$OUTDIR\activation.jar"
@@ -405,6 +546,7 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$OUTDIR\gluegen-rt.jar"
     Delete "$OUTDIR\javacsv.jar"
     Delete "$OUTDIR\javax.comm.properties"
+    Delete "$OUTDIR\jdom-2.0.5.jar"
     Delete "$OUTDIR\jdom.jar"
     Delete "$OUTDIR\jhall.jar"
     Delete "$OUTDIR\jinput-dx8.dll"
@@ -441,6 +583,9 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$OUTDIR\lib\jinput-wintab.dll"
     Delete "$OUTDIR\lib\joal_native.dll"
 
+    ; -- Delete old JOAL .dll files
+    Delete "$OUTDIR\lib\x86\joal_native.dll"
+
     ; -- Delete old log files from program folder
     Delete "$OUTDIR\messages.log"
     Delete "$OUTDIR\uninstal.log" ; from InstallerVise installer
@@ -459,15 +604,46 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$OUTDIR\resources\RedPowerLED.gif"
     Delete "$OUTDIR\resources\YellowPowerLED.gif"
 
+    ; -- If the current install Start Menu folder exists, remove any
+    ; --        predictably-named JMRI-related contents.
+
+    !insertmacro MUI_STARTMENU_GETFOLDER JMRIStartMenu $0
+
+    ; -- Change file attributes early so they have time to propagate on systems
+    ; --        with unexpected delays in the filesystem.
+    SetFileAttributes "$SMPROGRAMS\$0\Tools and Demos\Preferences.lnk" NORMAL
+
+    Delete "$SMPROGRAMS\$0\DecoderPro.lnk"
+    Delete "$SMPROGRAMS\$0\DecoderPro3.lnk"
+    Delete "$SMPROGRAMS\$0\PanelPro.lnk"
+    Delete "$SMPROGRAMS\$0\SoundPro.lnk"
+    Delete "$SMPROGRAMS\$0\Tools and Demos\JmriDemo.lnk"
+    Delete "$SMPROGRAMS\$0\Tools and Demos\LocoTools.lnk"
+    Delete "$SMPROGRAMS\$0\Tools and Demos\CornwallRR.lnk"
+    Delete "$SMPROGRAMS\$0\Tools and Demos\InstallTest.lnk"
+    Delete "$SMPROGRAMS\$0\Tools and Demos\InstallTest.pif" ; -- for Win98
+    Delete "$SMPROGRAMS\$0\Tools and Demos\DecoderPro3.lnk"
+    Delete "$SMPROGRAMS\$0\Tools and Demos\Preferences.lnk"
+    Delete "$SMPROGRAMS\$0\Uninstall.lnk"
+    RMDir "$SMPROGRAMS\$0\Tools and Demos\"
+    RMDir "$SMPROGRAMS\$0\"
+
+    ; -- Remove any predictably-named JMRI shortcuts from the Desktop
+
+    Delete "$DESKTOP\DecoderPro.lnk"
+    Delete "$DESKTOP\DecoderPro3.lnk"
+    Delete "$DESKTOP\PanelPro.lnk"
+    Delete "$DESKTOP\SoundPro.lnk"
+
   SectionEnd ; SEC_CLEANUP
-  
+
   Section "Main" SEC_MAIN
     SectionIn RO  ; This section always selected
     ; -- Check for JRE
     Call CheckJRE
     ; -- Main JMRI files
     SetOutPath "$INSTDIR"
-    
+
     ; -- Install main JMRI files
     ; -- Library & Support Files now moved from here
     File /a "${SRCDIR}\*.jar"
@@ -477,25 +653,26 @@ SectionGroup "JMRI Core Files" SEC_CORE
     File /a "${SRCDIR}\default.lcf"
     File /a "${SRCDIR}\*.ico"
     File /a "${SRCDIR}\lib\security.policy"
+    File /a "${SRCDIR}\python.properties"
 
   SectionEnd ; SEC_MAIN
-  
+
   Section "COM Library" SEC_COMLIB
     SectionIn RO  ; This section always selected
-    
+
     ; -- If we're upgrading, we need to make sure that
     ; -- any previously loaded library files in the JRE
     ; -- are removed
-    
+
     StrCmp $UPGRADING "1" 0 InstallComLib
       Delete "$JAVADIR\lib\javax.comm.properties"
       Delete "$JAVADIR\lib\ext\Serialio.jar"
       Delete "$JAVADIR\bin\jspWin.dll"
       Delete "$JAVADIR\bin\win32com.dll"
-    
+
     InstallComLib:
       SetOutPath "$INSTDIR\lib"
-    
+
       ; -- SerialIO native library
       File /a "${SRCDIR}\jspWin.dll"
 
@@ -512,16 +689,16 @@ SectionGroup "JMRI Core Files" SEC_CORE
     SectionIn RO  ; This section always selected
     ; -- Library files installed here
     SetOutPath "$INSTDIR\lib"
-    
+
     ; -- Match all files in 'lib' but do not recurse into sub-directories
     File /a "${SRCDIR}\lib\*.*"
-    
+
     ; -- Install x86 library files
     SetOutPath "$INSTDIR\lib\x86"
-    
+
     ; -- Match all files in 'lib\windows\x86' but do not recurse into sub-directories
     File /a "${SRCDIR}\lib\windows\x86\*.*"
-    
+
     ; -- Install x64 library files
     SetOutPath "$INSTDIR\lib\x64"
 
@@ -535,27 +712,27 @@ SectionGroup "JMRI Core Files" SEC_CORE
     ;ExecWait `"$TEMP\oalinst.exe" -s`
     ;Delete "$TEMP\oalinst.exe"
   SectionEnd ; SEC_LIB
-  
+
   Section "Jython files" SEC_JYTHON
     SectionIn RO  ; This section always selected
     ; -- Jython script files here
     SetOutPath "$INSTDIR\jython"
     File /a /r "${SRCDIR}\jython\*.*"
   SectionEnd ; SEC_JYTHON
-  
+
   Section "Resource files" SEC_RES
     SectionIn RO  ; This section always selected
     ; -- Resource files here
     SetOutPath "$INSTDIR\resources"
     File /a /r "${SRCDIR}\resources\*.*"
   SectionEnd ; SEC_RES
-  
+
   Section "XML files" SEC_XML
     SectionIn RO  ; This section always selected
     ; -- Check to see if we've been previously installed with the new installer
     ; -- and if so, remove obsolete decoder definitions
     StrCmp $REMOVEOLDJMRI.BACKUPONLY "1" RemoveObsolete InstallXML
-    
+
     RemoveObsolete:
       Call RemoveObsoleteDecoderDefinitions
 
@@ -564,7 +741,7 @@ SectionGroup "JMRI Core Files" SEC_CORE
       SetOutPath "$INSTDIR\xml"
       File /a /r "${SRCDIR}\xml\*.*"
   SectionEnd ; SEC_XML
-  
+
   Section "Web files" SEC_WEB
     SectionIn RO  ; This section always selected
     ; -- Web files here
@@ -586,24 +763,19 @@ SectionGroup "Start menu shortcuts" SEC_SMSC
     ; -- Create shortcuts for standard JMRI components
     CreateShortcut "$SMPROGRAMS\$SMFOLDER\DecoderPro.lnk" \
                    "$INSTDIR\LaunchJMRI.exe" \
-                   "apps.DecoderPro.DecoderPro" \
-                   "$INSTDIR\decpro5.ico" 0 "" "" \
-                   "Start Decoder Pro"
-    CreateShortcut "$SMPROGRAMS\$SMFOLDER\DecoderPro3.lnk" \
-                   "$INSTDIR\LaunchJMRI.exe" \
                    "apps.gui3.dp3.DecoderPro3" \
-                   "$INSTDIR\dp3.ico" 0 "" "" \
-                   "Start Decoder Pro 3"
+                   "$INSTDIR\decpro5.ico" 0 "" "" \
+                   "Start DecoderPro"
     CreateShortcut "$SMPROGRAMS\$SMFOLDER\PanelPro.lnk" \
                    "$INSTDIR\LaunchJMRI.exe" \
                    "apps.PanelPro.PanelPro" \
                    "$INSTDIR\PanelPro80x80.ico" 0 "" "" \
-                   "Start Panel Pro"
+                   "Start PanelPro"
     CreateShortcut "$SMPROGRAMS\$SMFOLDER\SoundPro.lnk" \
                    "$INSTDIR\LaunchJMRI.exe" \
                    "apps.SoundPro.SoundPro" \
                    "$INSTDIR\SoundPro80x80.ico" 0 "" "" \
-                   "Start Sound Pro"
+                   "Start SoundPro"
     CreateDirectory "$SMPROGRAMS\$SMFOLDER\Tools and Demos"
     CreateShortcut "$SMPROGRAMS\$SMFOLDER\Tools and Demos\InstallTest.lnk" \
                    "$INSTDIR\InstallTest.bat" \
@@ -634,34 +806,20 @@ SectionGroup "Start menu shortcuts" SEC_SMSC
                    "apps.JmriDemo.JMRIdemo" \
                    "$INSTDIR\decpro5.ico" 0 "" "" \
                    "Start JMRI Demo"
-    CreateShortcut "$SMPROGRAMS\$SMFOLDER\Tools and Demos\CornwallRR.lnk" \
-                   "$INSTDIR\LaunchJMRI.exe" \
-                   "apps.cornwall.CornwallRR" \
-                   "$INSTDIR\decpro5.ico" 0 "" "" \
-                   "Start CornwallRR"
     !insertmacro MUI_STARTMENU_WRITE_END
   SectionEnd ; SEC_OCSMSC
 SectionGroupEnd ; SEC_SMSC
 
 SectionGroup "Desktop Shortcuts" SEC_DTSC
   ; -- Create Desktop shortcuts
-  Section /o "DecoderPro" SEC_DPDTSC
-    SectionIn 2
+  Section "DecoderPro" SEC_DPDTSC
+    SectionIn 1 2
     CreateShortcut "$DESKTOP\DecoderPro.lnk" \
                    "$INSTDIR\LaunchJMRI.exe" \
-                   "apps.DecoderPro.DecoderPro" \
-                   "$INSTDIR\decpro5.ico" 0 "" "" \
-                   "Start Decoder Pro"
-  SectionEnd ; SEC_DPDTSC
-
-  Section "DecoderPro3" SEC_DP3DTSC
-    SectionIn 1 2
-    CreateShortcut "$DESKTOP\DecoderPro3.lnk" \
-                   "$INSTDIR\LaunchJMRI.exe" \
                    "apps.gui3.dp3.DecoderPro3" \
-                   "$INSTDIR\dp3.ico" 0 "" "" \
-                   "Start Decoder Pro 3"
-  SectionEnd ; SEC_DP3DTSC
+                   "$INSTDIR\decpro5.ico" 0 "" "" \
+                   "Start DecoderPro"
+  SectionEnd ; SEC_DPDTSC
 
   Section "PanelPro" SEC_PPDTSC
     SectionIn 1 2
@@ -669,7 +827,7 @@ SectionGroup "Desktop Shortcuts" SEC_DTSC
                    "$INSTDIR\LaunchJMRI.exe" \
                    "apps.PanelPro.PanelPro" \
                    "$INSTDIR\PanelPro80x80.ico" 0 "" "" \
-                   "Start Panel Pro"
+                   "Start PanelPro"
   SectionEnd ; SEC_PPDTSC
 
   Section /o "SoundPro" SEC_SPDTSC
@@ -678,7 +836,7 @@ SectionGroup "Desktop Shortcuts" SEC_DTSC
                    "$INSTDIR\LaunchJMRI.exe" \
                    "apps.SoundPro.SoundPro" \
                    "$INSTDIR\SoundPro80x80.ico" 0 "" "" \
-                   "Start Sound Pro"
+                   "Start SoundPro"
   SectionEnd ; SEC_SPDTSC
 
 SectionGroupEnd ; SEC_DTSC
@@ -745,10 +903,16 @@ Section "Uninstall" ; SEC_CRUNINST
   StrCpy $0 "$INSTDIR\install.log"
   Push $0
   Call un.DeleteFromLog
-  
+
   ; -- Remove all shortcuts
   !insertmacro MUI_STARTMENU_GETFOLDER JMRIStartMenu $0
+
+    ; -- Change file attributes early so they have time to propagate on systems
+    ; --        with unexpected delays in the filesystem.
+    SetFileAttributes "$SMPROGRAMS\$0\Tools and Demos\Preferences.lnk" NORMAL
+
   Delete "$SMPROGRAMS\$0\DecoderPro.lnk"
+  Delete "$SMPROGRAMS\$0\DecoderPro3.lnk"
   Delete "$SMPROGRAMS\$0\PanelPro.lnk"
   Delete "$SMPROGRAMS\$0\SoundPro.lnk"
   Delete "$SMPROGRAMS\$0\Tools and Demos\JmriDemo.lnk"
@@ -757,7 +921,6 @@ Section "Uninstall" ; SEC_CRUNINST
   Delete "$SMPROGRAMS\$0\Tools and Demos\InstallTest.lnk"
   Delete "$SMPROGRAMS\$0\Tools and Demos\InstallTest.pif" ; -- for Win98
   Delete "$SMPROGRAMS\$0\Tools and Demos\DecoderPro3.lnk"
-  SetFileAttributes "$SMPROGRAMS\$0\Tools and Demos\Preferences.lnk" NORMAL
   Delete "$SMPROGRAMS\$0\Tools and Demos\Preferences.lnk"
   Delete "$SMPROGRAMS\$0\Uninstall.lnk"
   RMDir "$SMPROGRAMS\$0\Tools and Demos\"
@@ -765,6 +928,7 @@ Section "Uninstall" ; SEC_CRUNINST
   Delete "$DESKTOP\DecoderPro.lnk"
   Delete "$DESKTOP\PanelPro.lnk"
   Delete "$DESKTOP\SoundPro.lnk"
+  Delete "$DESKTOP\DecoderPro3.lnk"
 
   ; -- Remove registry entries
   DeleteRegKey SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\JMRI"
@@ -796,10 +960,9 @@ LangString DESC_SEC_XML ${LANG_ENGLISH} "XML files (Decoder definitions, etc.)"
 LangString DESC_SEC_WEB ${LANG_ENGLISH} "Web files"
 LangString DESC_SEC_SMSC ${LANG_ENGLISH} "Select Start Menu Shortcuts to create"
 LangString DESC_SEC_SCSMSC ${LANG_ENGLISH} "Creates Start menu shortcuts for DecoderPro, PanelPro and InstallTest"
-LangString DESC_SEC_OCSMSC ${LANG_ENGLISH} "Creates Start menu shortcuts for JMRI Demo and CornwallRR"
+LangString DESC_SEC_OCSMSC ${LANG_ENGLISH} "Creates Start menu shortcut for JMRI Demo"
 LangString DESC_SEC_DTSC ${LANG_ENGLISH} "Select Desktop Shortcuts to create."
 LangString DESC_SEC_DPDTSC ${LANG_ENGLISH} "Creates a Desktop shortcut for DecoderPro"
-LangString DESC_SEC_DP3DTSC ${LANG_ENGLISH} "Creates a Desktop shortcut for DecoderPro3"
 LangString DESC_SEC_PPDTSC ${LANG_ENGLISH} "Creates a Desktop shortcut for PanelPro"
 LangString DESC_SEC_SPDTSC ${LANG_ENGLISH} "Creates a Desktop shortcut for SoundPro"
 LangString DESC_SEC_CRUNINST ${LANG_ENGLISH} "Creates an Uninstaller for ${APP}"
@@ -821,7 +984,6 @@ LangString MESSAGE_WIN2K_OR_LATER ${LANG_ENGLISH} "${APP} version ${JMRI_VER} is
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC_OCSMSC} $(DESC_SEC_OCSMSC)
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC_DTSC} $(DESC_SEC_DTSC)
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC_DPDTSC} $(DESC_SEC_DPDTSC)
-  !insertmacro MUI_DESCRIPTION_TEXT ${SEC_DP3DTSC} $(DESC_SEC_DP3DTSC)
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC_PPDTSC} $(DESC_SEC_PPDTSC)
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC_SPDTSC} $(DESC_SEC_SPDTSC)
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC_CRUNINST} $(DESC_SEC_CRUNINST)
@@ -838,7 +1000,7 @@ Function .onInit
 ; -------------------------------------------------------------------------
 
   !insertmacro MULTIUSER_INIT
-  
+
   ; -- Determine if we're running on Windows 98 or ME
   ; -- If so, show a message and then abort
   StrCmp $PROFILE "" 0 Check64 ; -- prior to Win2k this is blank
@@ -859,7 +1021,7 @@ Function un.onInit
 ; -------------------------------------------------------------------------
 
   !insertmacro MULTIUSER_UNINIT
-  
+
   ; -- Check if InstallMode is the same as the command-line
   ${un.GetParameters} $0
   StrCmp $0 "/$MultiUser.InstallMode" +2
@@ -874,19 +1036,19 @@ Function DirectoryLeave
 
   ; -- Save variables to the stack
   Push $0
-  
+
   ; -- Check to see if Install Directory is set to 'Program Files'
   StrCmp $INSTDIR $PROGRAMFILES Invalid Valid
 
   Invalid:
     ; -- If so, display a message and ask user to re-select
     MessageBox MB_OK|MB_ICONEXCLAMATION "$(MESSAGE_INVALID_DIRECTORY)"
-    
+
     ; -- Restore variables from the stack
     Pop $0
     ; -- Abort the movement to the next page
     Abort
-  
+
   Valid:
     ; -- Restore variables from the stack
     Pop $0
@@ -914,10 +1076,10 @@ Function CheckJRE
   Push $1
   Push $2
   Push $3
-  
+
   ; -- Initialise JRE architecture variable
   StrCpy $x64JRE 0
-  
+
   ; -- If we're running x64, first check for 64-bit JRE
   StrCmp 0 $x64 JRESearch
     DetailPrint "Setting x64 registry view..."
@@ -941,7 +1103,7 @@ Function CheckJRE
         StrCpy $x64JRE 0
         IntOp $JREINSTALLCOUNT $JREINSTALLCOUNT - 1
         Goto JRESearch
-      
+
   JREInitInstall:
       StrCpy $3 "No JAVA installation found"
       ; -- If this is the first time around the loop then try to run/download a JRE
@@ -963,9 +1125,9 @@ Function CheckJRE
     ; -- below that of the installer. It needs to be of the format jre*.exe
     ; -- (This is to allow for automatic off-line installation
     ; -- and creation of turn-key distribution CD's)
-    
+
     FindFirst $2 $JREINSTALLER "$EXEDIR\JRE\jre*.exe"
-    
+
     OfflineJREInstall:
     StrCmp $JREINSTALLER "" DownloadJREQuery
       StrCpy $JREINSTALLER "$EXEDIR\JRE\$JREINSTALLER"
@@ -978,22 +1140,22 @@ Function CheckJRE
     Call CheckInternetConnection
     Pop $0 ; Get the return value
     StrCmp $0 "offline" NoJRE
-    MessageBox MB_YESNO|MB_ICONQUESTION "$3$\nWould you like to download JAVA from the internet?" IDYES DownloadJRE IDNO NoJRE
+;    MessageBox MB_YESNO|MB_ICONQUESTION "$3$\nWould you like to download JAVA from the internet?" IDYES DownloadJRE IDNO NoJRE
 
   NoJRE:
     MessageBox MB_ICONSTOP "$3$\nYou need to install JAVA ${JRE_VER} or later$\nThis can be downloaded from ${JRE_URL}$\nInstallation of ${APP} ${JMRI_VER} cannot continue"
     Quit
 
-  DownloadJRE:
-    StrCpy $JREINSTALLER "$TEMP\JRE.exe"
-    nsisDL::Download /TIMEOUT=30000 ${JRE_URL} $JREINSTALLER
-    Pop $0 ; Get the return value
-    StrCmp $0 "success" DownloadOK
-      MessageBox MB_ICONSTOP "Failure downloading JAVA$\nPlease try manually from ${JRE_URL}$\nInstallation of ${APP} ${JMRI_VER} cannot continue"
-      Quit
-
-  DownloadOK:
-    StrCpy $OFFLINEINSTALL "0"
+;  DownloadJRE:
+;    StrCpy $JREINSTALLER "$TEMP\JRE.exe"
+;    nsisDL::Download /TIMEOUT=30000 ${JRE_URL} $JREINSTALLER
+;    Pop $0 ; Get the return value
+;    StrCmp $0 "success" DownloadOK
+;      MessageBox MB_ICONSTOP "Failure downloading JAVA$\nPlease try manually from ${JRE_URL}$\nInstallation of ${APP} ${JMRI_VER} cannot continue"
+;      Quit
+;
+;  DownloadOK:
+;    StrCpy $OFFLINEINSTALL "0"
 
   StartJREInstall:
     ExecWait $JREINSTALLER ; Run the JRE installer
@@ -1057,7 +1219,7 @@ Function CheckInternetConnection
   IntOp $1 $2 & ${INTERNET_CONNECTION_OFFLINE}
   StrCmp $1 ${INTERNET_CONNECTION_OFFLINE} 0 +2
     DetailPrint "System is in offline mode"
-  
+
   DetailPrint "...done. Internet Connection is $0"
 
   ; -- Restore variables from the stack
@@ -1081,20 +1243,20 @@ Function nsDialogRemoveOldJMRI
   Push $2
   Push $3
   Push $4
-  
+
   ; -- Default to not upgrading
   StrCpy $UPGRADING 0
-  
+
   ; -- First check if JMRI has been installed (Current User first, then All Users)
   ReadRegStr $0 HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\JMRI" "DisplayName"
   StrCmp $0 "" 0 CheckOld
   ReadRegStr $0 HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\JMRI" "DisplayName"
   StrCmp $0 "" Done
-  
+
   CheckOld:
     ; -- If we get to here, then an old JMRI installation exists
     StrCpy $UPGRADING 1
-    
+
     ; -- Default to uninstall and backup
     StrCpy $REMOVEOLDJMRI.BACKUPONLY 0
     StrCpy $2 "This previous installation should be removed.$\r$\nThis wizard will backup any existing roster files and settings."
@@ -1107,11 +1269,11 @@ Function nsDialogRemoveOldJMRI
     StrCmp $4 "" 0 Backup
     ReadRegStr $4 HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\JMRI" "DisplayVersion"
     StrCmp $4 "" Remove Backup
-  
+
   Backup:
     ; -- If we get to here, we've been previously installed by the new installer
     ; -- so, we can read the install location and prompt for backup
-    
+
     ; -- As we've not yet set the installation context (i.e. All Users or Current User)
     ; -- first attempt to get the registry string from 'Current User'
     ReadRegStr $0 HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\JMRI" "InstallLocation"
@@ -1119,7 +1281,7 @@ Function nsDialogRemoveOldJMRI
     ; -- Location wasn't in 'Current User' - attempt to retrieve from 'All Users'
     ReadRegStr $0 HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\JMRI" "InstallLocation"
     StrCmp $0 "" PrepareBackup CopyToInstDir
-    
+
   CopyToInstDir:
     StrCpy $INSTDIR $0
 
@@ -1133,11 +1295,11 @@ Function nsDialogRemoveOldJMRI
     Var /GLOBAL REMOVEOLDJMRI.CHECKBOX
 
     !insertmacro MUI_HEADER_TEXT "Check for previous version" "Check for a previous installation of ${APP}."
-    
+
     ; -- Return the HWND of this dialog
     nsDialogs::Create 1018
     Pop $0
-    
+
     ; -- Create the controls and assign call-back functions
     ${NSD_CreateLabel} 0u 0u 100% 12u "${APP} setup has detected a previous installation of ${APP}."
     Pop $0
@@ -1148,7 +1310,7 @@ Function nsDialogRemoveOldJMRI
     ${NSD_CreateText} 0u 50u 100% 12u "$PROFILE\JMRI_backup"
     Pop $0
     SendMessage $0 ${EM_SETREADONLY} 1 0
-    
+
     ${NSD_CreateLabel} 0u 70u 100% 12u "Any existing backup will be moved to the following location:"
     Pop $0
     ${NSD_CreateText} 0u 84u 100% 12u "$PROFILE\JMRI_backup_old"
@@ -1193,7 +1355,7 @@ Function RemoveOldJMRICheckboxChange
 
   ; -- Get pointer to the 'Next >' button
   GetDlgItem $0 $HWNDPARENT 1
-  
+
   ; -- Get current state
   ${NSD_GetState} $REMOVEOLDJMRI.CHECKBOX $1
   StrCpy $REMOVEOLDINSTALL $1
@@ -1240,7 +1402,7 @@ Function RemoveOldJMRI
   Rename "$PROFILE\JMRI_backup" "$PROFILE\JMRI_backup_old"
   CreateDirectory "$PROFILE\JMRI_backup"
   CopyFiles "$PROFILE\JMRI\*.*" "$PROFILE\JMRI_backup"
-  
+
   ; -- Check if uninstall required
   StrCmp $REMOVEOLDJMRI.BACKUPONLY "1" Done
 
@@ -1253,7 +1415,7 @@ Function RemoveOldJMRI
   ; -- Check if InstallerVise uninstaller has run
   ReadRegStr $0 HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\JMRI" "DisplayName"
   StrCmp $0 "" Done
-  
+
   MessageBox MB_OK|MB_ICONSTOP "The previous installation of ${APP} was not successfully removed. This installation cannot continue."
   Quit
 
@@ -1283,7 +1445,7 @@ Function SaveLog
   FindWindow $0 "#32770" "" $HWNDPARENT
   GetDlgItem $0 $0 1016
   StrCmp $0 0 Exit
-  
+
   ; -- Create the file
   FileOpen $5 $5 "w"
   StrCmp $5 "" Exit
@@ -1344,14 +1506,14 @@ Function un.DeleteFromLog
   Push $4 ; -- Current line
   Push $5 ; -- Temporary variable
   Push $6 ; -- Temporary variable
-  
+
   ; -- Open the log file readonly
   FileOpen $3 "$0" "r"
 
   NextLogEntry:
     ; -- Read the next line of the file
     FileRead $3 $4
-    
+
     ; -- Determine the log entry type
     ; -- Check if this entry is for a directory
     StrCpy $5 $4 15
@@ -1360,10 +1522,10 @@ Function un.DeleteFromLog
     ; -- Check if this entry is for a file
     StrCpy $5 $4 9
     StrCmp $5 "Extract: " RemoveFile
-    
+
     ; -- Check if at end of log
     StrCmp $4 "" Done
-    
+
     ; -- Don't care about this log entry type - retrieve next log entry
     Goto NextLogEntry
 
@@ -1404,7 +1566,7 @@ Function un.DeleteFromLog
     ; -- trim off the "... 100%"
     IntOp $5 $5 - "8"
     StrCpy $2 $2 $5
-    
+
   DeleteFile:
     Delete "$1\$2" ; Try to delete the new file
     Goto NextLogEntry
@@ -1439,7 +1601,7 @@ Function un.GetParent
 
   ; -- Initialise counter
   StrCpy $1 0
-  
+
   ; -- Retrieve length of string
   StrLen $2 $0
 
@@ -1475,7 +1637,7 @@ Function CheckIf64bit
 
   ; -- Save variables to the stack
   Push $0
-  
+
   ; -- Determine if we're running on x64
   System::Call kernel32::GetCurrentProcess()i.s
   System::Call kernel32::IsWow64Process(is,*i.s)
@@ -1483,7 +1645,7 @@ Function CheckIf64bit
 
   ; -- Restore variables from the stack
   Exch $0
-  
+
 FunctionEnd
 
 Function RemoveObsoleteDecoderDefinitions

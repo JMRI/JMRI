@@ -1,80 +1,95 @@
-// ManagerDefaultsConfigPane.java
-
 package apps;
 
-import javax.swing.*;
-
-import java.util.List;
+import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
+import java.util.List;
+import java.util.ResourceBundle;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import jmri.InstanceManager;
+import jmri.jmrix.SystemConnectionMemo;
 import jmri.managers.ManagerDefaultSelector;
+import jmri.profile.ProfileManager;
+import jmri.swing.PreferencesPanel;
+import jmri.util.javaworld.GridLayout2;
+import jmri.util.swing.JmriPanel;
 
 /**
  * Provide GUI to configure InstanceManager defaults.
  * <P>
  *
- * @author      Bob Jacobsen   Copyright (C)  2010
- * @version	$Revision$
+ * @author Bob Jacobsen Copyright (C) 2010
  * @since 2.9.5
  */
-public class ManagerDefaultsConfigPane extends jmri.util.swing.JmriPanel {
+public class ManagerDefaultsConfigPane extends JmriPanel implements PreferencesPanel {
+
+    private static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
+    private boolean dirty = false;
 
     public ManagerDefaultsConfigPane() {
-    
+
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        
+
         matrix = new JPanel();
         add(matrix);
-        ManagerDefaultSelector.instance.addPropertyChangeListener(new PropertyChangeListener(){
-            public void propertyChange(PropertyChangeEvent e) {
-                if(e.getPropertyName().equals("Updated")){
-                    update();
-                }
+        InstanceManager.getDefault(ManagerDefaultSelector.class).addPropertyChangeListener((PropertyChangeEvent e) -> {
+            if (e.getPropertyName().equals("Updated")) {
+                update();
             }
         });
         update();
     }
-    
+
     JPanel matrix;
-    
+
     /**
-     * Invoke when first displayed to load
-     * and present options
+     * Invoke when first displayed to load and present options
      */
     public void update() {
         matrix.removeAll();
-        
+
         // this doesn't find non-migrated systems, how do we handle that eventually?
-        List<Object> connList = jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class);
-        if (connList!=null){
+        List<SystemConnectionMemo> connList = InstanceManager.getList(SystemConnectionMemo.class);
+        if (connList != null) {
+            log.debug("update of {} connections", connList.size());
             reloadConnections(connList);
         } else {
+            log.debug("update with no new-form system connections configured");
             matrix.add(new JLabel("No new-form system connections configured"));
         }
     }
-    
-    void reloadConnections(List<Object> connList) {
-        matrix.setLayout(new jmri.util.javaworld.GridLayout2(connList.size()+1, ManagerDefaultSelector.instance.knownManagers.length+1));
+
+    void reloadConnections(List<SystemConnectionMemo> connList) {
+        log.debug(" reloadConnections");
+        ManagerDefaultSelector manager = InstanceManager.getDefault(ManagerDefaultSelector.class);
+        matrix.setLayout(new GridLayout2(connList.size() + 1, manager.knownManagers.length + 1));
         matrix.add(new JLabel(""));
-        
-        for (ManagerDefaultSelector.Item item : ManagerDefaultSelector.instance.knownManagers) {
+
+        for (ManagerDefaultSelector.Item item : manager.knownManagers) {
             matrix.add(new JLabel(item.typeName));
         }
-        groups = new ButtonGroup[ManagerDefaultSelector.instance.knownManagers.length];
-        for (int i = 0; i<ManagerDefaultSelector.instance.knownManagers.length; i++) groups[i] = new ButtonGroup();
-        for (int x = 0; x<connList.size(); x++){
-            jmri.jmrix.SystemConnectionMemo memo = (jmri.jmrix.SystemConnectionMemo)connList.get(x);
+        groups = new ButtonGroup[manager.knownManagers.length];
+        for (int i = 0; i < manager.knownManagers.length; i++) {
+            groups[i] = new ButtonGroup();
+        }
+        boolean[] selected = new boolean[manager.knownManagers.length];
+        for (int x = 0; x < connList.size(); x++) { // up to down
+            jmri.jmrix.SystemConnectionMemo memo = connList.get(x);
             String name = memo.getUserName();
             matrix.add(new JLabel(name));
             int i = 0;
-            for (ManagerDefaultSelector.Item item : ManagerDefaultSelector.instance.knownManagers) {
+            for (ManagerDefaultSelector.Item item : manager.knownManagers) { // left to right
                 if (memo.provides(item.managerClass)) {
-                    JRadioButton r = new SelectionButton(name, item.managerClass);
+                    JRadioButton r = new SelectionButton(name, item.managerClass, this);
                     matrix.add(r);
                     groups[i].add(r);
-                    if (x == connList.size()-1 && ManagerDefaultSelector.instance.getDefault(item.managerClass)==null) {
-                    	r.setSelected(true);
+                    if ( !selected[i] && manager.getDefault(item.managerClass) == null) {
+                        r.setSelected(true);
+                        selected[i] = true;
                     }
                 } else {
                     // leave a blank
@@ -86,39 +101,99 @@ public class ManagerDefaultsConfigPane extends jmri.util.swing.JmriPanel {
             }
         }
         revalidate();
-        
+
     }
-    
+
     ButtonGroup[] groups;
-    
+
+    @Override
+    public String getPreferencesItem() {
+        return "DEFAULTS"; // NOI18N
+    }
+
+    @Override
+    public String getPreferencesItemText() {
+        return rb.getString("MenuDefaults"); // NOI18N
+    }
+
+    @Override
+    public String getTabbedPreferencesTitle() {
+        return rb.getString("TabbedLayoutDefaults"); // NOI18N
+    }
+
+    @Override
+    public String getLabelKey() {
+        return rb.getString("LabelTabbedLayoutDefaults"); // NOI18N
+    }
+
+    @Override
+    public JComponent getPreferencesComponent() {
+        return this;
+    }
+
+    @Override
+    public boolean isPersistant() {
+        return true;
+    }
+
+    @Override
+    public String getPreferencesTooltip() {
+        return null;
+    }
+
+    @Override
+    public void savePreferences() {
+        InstanceManager.getDefault(ManagerDefaultSelector.class).savePreferences(ProfileManager.getDefault().getActiveProfile());
+    }
+
+    @Override
+    public boolean isDirty() {
+        return this.dirty;
+    }
+
+    @Override
+    public boolean isRestartRequired() {
+        return this.isDirty();
+    }
+
+    @Override
+    public boolean isPreferencesValid() {
+        return true; // no validity checking performed
+    }
+
     /**
      * Captive class to track changes
      */
     static class SelectionButton extends JRadioButton {
-        SelectionButton(String name, Class<?> managerClass) {
+
+        SelectionButton(String name, Class<?> managerClass, ManagerDefaultsConfigPane pane) {
             super();
             this.managerClass = managerClass;
             this.name = name;
-            
-            if (name.equals(ManagerDefaultSelector.instance.getDefault(managerClass))) 
-                this.setSelected(true);
 
-            addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    if (isSelected())
-                        ManagerDefaultSelector.instance.setDefault(SelectionButton.this.managerClass, SelectionButton.this.name);
+            if (name.equals(InstanceManager.getDefault(ManagerDefaultSelector.class).getDefault(managerClass))) {
+                this.setSelected(true);
+            }
+
+            addActionListener((ActionEvent e) -> {
+                if (isSelected()) {
+                    InstanceManager.getDefault(ManagerDefaultSelector.class).setDefault(SelectionButton.this.managerClass, SelectionButton.this.name);
+                    pane.dirty = true;
                 }
             });
 
         }
         String name;
         Class<?> managerClass;
+
         @Override
         public void setSelected(boolean t) {
             super.setSelected(t);
-            if (t)
-                ManagerDefaultSelector.instance.setDefault(this.managerClass, this.name);
+            if (t) {
+                InstanceManager.getDefault(ManagerDefaultSelector.class).setDefault(this.managerClass, this.name);
+            }
         }
     }
+    
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ManagerDefaultsConfigPane.class.getName());
 }
-

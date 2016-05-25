@@ -1,13 +1,13 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: sensors.shtml,v 1.3 2010/06/06 22:04:59 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-09-22-->
+<!-- $Id$ -->
+<!-- UpDated  by Blorec Herv&#233;  2013-09-19-->
 <html lang="fr">
 <head>
  <TITLE>
       JMRI Hardware Guide: RPS Sensors
  </TITLE>
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -24,70 +24,70 @@
     <div id="mainContent">
 
 <h1> 
-JMRI Guide Matériel: Capteurs RPS 
+JMRI Guide Mat&#233;riel: Capteurs RPS 
 </h1>
 
-<em>S'il vous plaît noter que le support de JMRI pour le  RPS s'améliore rapidement.
-Cette page fait référence à la plus récente version d'essai JMRI. Si vous utilisez
-un système RPS, vous devez mettre à jour les versions de test par celles qui
+<em>S'il vous pla&#238;t noter que le support de JMRI pour le  RPS s'am&#233;liore rapidement.
+Cette page fait r&#233;f&#233;rence &#224; la plus r&#233;cente version d'essai JMRI. Si vous utilisez
+un syst&#232;me RPS, vous devez mettre &#224; jour les versions de test par celles qui
  
-<a href="http://jmri.sf.net/download/index.shtml">sont annoncées</a>.</em>
+<a href="http://jmri.org/download/index.shtml">sont annonc&#233;es</a>.</em>
 
 <p>
 Le  
-<a href="http://www.proto87.com/RPS-MR-position-detection-system.html">Système RPS</a>
-fournit une localisation absolue du matériel roulant équipés du RPS d.
+<a href="http://www.proto87.com/RPS-MR-position-detection-system.html">Syst&#232;me RPS</a>
+fournit une localisation absolue du mat&#233;riel roulant &#233;quip&#233;s du RPS.
 
 <P>
-JMRI peut utiliser ceci pour désigner un
-<a href="../../tools/Sensors.shtml">Capteur</a> JMRI 
-quand un émetteur de RPS est dans une zone spécifique, qui peut à son tour être utilisé pour contrôler d'autres
-Fonctions JMRI telles que  
-<a href="../../tools/Signals.shtml">signaux</a>, 
-<a href="../../tools/Routes.shtml">Itinéraires</a> et
+JMRI peut utiliser pour d&#233;finir un
+<a href="../../tools/Sensors.shtml">Capteur JMRI</a> 
+quand un &#233;metteur RPS est dans une zone sp&#233;cifique, qui peut &#224; son tour &#234;tre utilis&#233; pour contr&#244;ler d'autres
+fonctions JMRI telles que  
+<a href="../../tools/Signals.shtml">Signaux</a>, 
+<a href="../../tools/Routes.shtml">Itin&#233;raires</a> et
 <a href="../../tools/Logix.shtml">Logix</a>  .
 
 <p>
-Un capteur de RPS est associé à une zone délimitée par une série de
+Un capteur de RPS est associ&#233; &#224; une zone d&#233;limit&#233;e par une s&#233;rie de
 points et les lignes entre eux.
 
-<h2> Définir un capteur </h2>
-Il y a deux façons de créer un capteur de RPS et de définir les
-zone sur le réseau miniature qu'il recouvre.
+<h2> D&#233;finir un capteur </h2>
+Il y a deux fa&#231;ons de cr&#233;er un Capteur RPS et de d&#233;finir la
+zone sur le r&#233;seau miniature qu'il recouvre.
 
-<h3> Par des coordonnées </h3>
+<h3> Par des coordonn&#233;es </h3>
 
-Vous pouvez entrer une série de coordonnées qui énumèrent les coins
-de la région à couvrir. Par exemple, les points
-définissant un carré d'une unité de côté, sont les suivants:
+Vous pouvez entrer une s&#233;rie de coordonn&#233;es qui &#233;num&#232;rent les coins
+de la r&#233;gion &#224; couvrir. Par exemple, les points
+d&#233;finissant un carr&#233; d'une unit&#233; de c&#244;t&#233;, sont les suivants:
 <code> <pre>
   (0,0,0)
   (1,0,0)
   (1,1,0)
   (0,1,0)
 </pre> </code>
-Si vous utilisez le bouton Tableau de Capteur "Ajouter ..." 
-pour créer un capteur avec le nom système
+Si vous utilisez le bouton "Ajouter ..." du Tableau de Capteur 
+pour cr&#233;er un capteur avec le nom syst&#232;me
 <code> <pre>
    RS (0,0,0); (1,0,0); (1,1,0); (0,1,0)
 </pre> </code>
-vous aurez un capteur RPS qui se montre «ACTIF» quand un
-émetteur est présent dans cette zone, et "INACTIF" autrement.
+vous aurez un capteur RPS qui se montre "ACTIF" quand un
+&#233;metteur est pr&#233;sent dans cette zone, et "INACTIF" autrement.
 <p>
-Le «R» signifie RPS système, «S» signifie que vous avez défini un capteur,
-et le reste du nom définit les coordonnées des coins
-de la zone à inclure dans le capteur.
-Chaque coin est spécifié par son X, Y et Z, tous regroupés
- avec des parenthèses. Les coins doivent être séparés par des
+Le "R" signifie RPS syst&#232;me, "S" signifie que vous avez d&#233;fini un Capteur,
+et le reste du nom d&#233;finit les coordonn&#233;es des coins
+de la zone &#224; inclure dans le capteur.
+Chaque coin est sp&#233;cifi&#233; par son X, Y et Z, tous regroup&#233;s
+ avec des parenth&#232;ses. Les coins doivent &#234;tre s&#233;par&#233;s par des
 virgules, voir l'exemple ci-dessus.
 
 <p>
-Une fois que vous avez défini votre capteur, vous pouvez utiliser l'
-<a href="../../../package/jmri/jmrix/rps/trackingpanel/RpsTrackingFrame.shtml">affichage du suivi </a>
-pour voir si c'est au bon endroit sur votre réseau.
+Une fois que vous avez d&#233;fini votre capteur, vous pouvez utiliser l'
+<a href="../../../package/jmri/jmrix/rps/trackingpanel/RpsTrackingFrame.shtml"> affichage du suivi </a>
+pour voir si c'est au bon endroit sur votre r&#233;seau.
 
 <h3> Utilisation de l'outil de suivi </h3>
-(Pour être écrit, pour l'instant voir la
+(A &#233;crire, pour l'instant voir la
 <a href="../../../package/jmri/jmrix/rps/trackingpanel/RpsTrackingFrame.shtml">page d'aide de l'affichage du suivi</a>.)
 
 <h2> Pour plus d'information </h2>

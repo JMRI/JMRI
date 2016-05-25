@@ -1,5 +1,7 @@
 # basic setup for JavaOne demo
 
+import java
+
 # define constants
 
 directoryname = "javaone"+java.io.File.separator

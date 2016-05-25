@@ -1,10 +1,8 @@
-// SymbolicProgTest.java
-
 package jmri.jmrit.symbolicprog;
 
-import jmri.managers.DefaultProgrammerManager;
 import jmri.InstanceManager;
 import jmri.Programmer;
+import jmri.managers.DefaultProgrammerManager;
 import jmri.progdebugger.ProgDebugger;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -12,8 +10,8 @@ import junit.framework.TestSuite;
 
 /**
  * Test the jmri.jmrix.symbolicprog package.
- * @author			Bob Jacobsen Copyright 2006
- * @version         $Revision$
+ *
+ * @author	Bob Jacobsen Copyright 2006
  */
 public class PackageTest extends TestCase {
 
@@ -26,7 +24,6 @@ public class PackageTest extends TestCase {
     }
 
     // from here down is testing infrastructure
-
     public PackageTest(String s) {
         super(s);
     }
@@ -41,6 +38,8 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite(PackageTest.class);
         suite.addTest(jmri.jmrit.symbolicprog.BundleTest.suite());
+        suite.addTest(jmri.jmrit.symbolicprog.ArithmeticQualifierTest.suite());
+        suite.addTest(jmri.jmrit.symbolicprog.QualifierAdderTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.FnMapPanelTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.CompositeVariableValueTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.Pr1ImporterTest.suite());
@@ -61,11 +60,14 @@ public class PackageTest extends TestCase {
     }
 
     // The minimal setup for log4J
-    protected void setUp() throws Exception { 
+    protected void setUp() throws Exception {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
     }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 
 }

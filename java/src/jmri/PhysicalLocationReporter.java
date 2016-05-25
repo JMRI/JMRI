@@ -1,13 +1,10 @@
 package jmri;
 
-/* <hr>
- * PhysicalLocationReporter Interface
- * </hr>
+import jmri.util.PhysicalLocation;
+
+/**
  * Implements a common way that a Reporter that supports having a Physical Location
  * can report that location to querying objects.
-/*
-
-/*
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -23,14 +20,13 @@ package jmri;
  * <P>
  *
  * @author			Mark Underwood Copyright (C) 2012
- * @version			$Revision: 18722 $
  */
-
-import jmri.util.PhysicalLocation;
-
 public interface PhysicalLocationReporter {
 
-    static public enum Direction { UNKNOWN, ENTER, EXIT }
+    static public enum Direction {
+
+        UNKNOWN, ENTER, EXIT
+    }
 
     public LocoAddress getLocoAddress(String s);
 
@@ -41,4 +37,3 @@ public interface PhysicalLocationReporter {
     public PhysicalLocation getPhysicalLocation(String s);
 
 }
-

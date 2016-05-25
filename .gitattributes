@@ -1,0 +1,75 @@
+# Common Git rules for JMRI/JMRI repository
+#
+# See also the JMRI/website repository file of the same name
+#
+# Initially from https://github.com/Danimoth/gitattributes/blob/master/Java.gitattributes
+# see also http://adaptivepatchwork.com/2012/03/01/mind-the-end-of-your-line/
+
+# Handle line endings automatically for files detected as text
+# and leave all files detected as binary untouched.
+* text=auto
+
+#
+# The above will handle all files NOT found below
+#
+# These files are text and should be normalized (Convert crlf => lf)
+# This list should be kept consistent with the one in the build.xml ant "fixlineends" target
+#
+*.csh           text
+*.css           text
+*.df            text
+*.dtd           text
+*.htm           text
+*.html          text
+*.java          text
+*.js            text
+*.json          text
+*.jsp           text
+*.jspf          text
+*.lcf           text
+*.md            text
+*.php           text
+*.pl            text
+*.plist         text
+*.policy        text
+*.prefs         text
+*.properties    text
+*.project       text
+*.py            text
+*.sh            text
+*.shtml         text
+*.svg           text
+*.tld           text
+*.txt           text
+*.xml           text
+*.xsd           text
+*.xsl           text
+COPYING         text
+Footer          text
+README          text
+Header          text
+Sidebar         text
+TODO            text
+.classpath      text
+
+# These files are binary and should be left untouched
+# (binary is a macro for -text -diff)
+*.app           binary
+*.class         binary
+*.dll           binary
+*.dylib         binary
+*.ear           binary
+*.gif           binary
+*.GIF           binary
+*.ico           binary
+*.jar           binary
+*.jnilib        binary
+*.jpg           binary
+*.jpeg          binary
+*.pdf           binary
+*.png           binary
+*.so            binary
+*.vsd           binary
+*.war           binary
+*.wav           binary
+*.zip           binary

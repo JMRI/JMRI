@@ -1,44 +1,41 @@
 package jmri.util.swing;
 
-import jmri.Manager;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JComboBox;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 import jmri.InstanceManager;
+import jmri.Manager;
 import jmri.NamedBean;
 import jmri.util.ConnectionNameFromSystemName;
 
-import javax.swing.JPanel;
-import javax.swing.JComboBox;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
-import javax.swing.ButtonGroup;
-import javax.swing.BoxLayout;
+public class BeanSelectCreatePanel extends JPanel {
 
-import java.awt.event.ActionEvent;
-import java.awt.FlowLayout;
-
-import java.util.List;
-import java.util.ArrayList;
-
-public class BeanSelectCreatePanel extends JPanel{
-    
     Manager _manager;
     NamedBean _defaultSelect;
     String _reference = null;
     JRadioButton existingItem = new JRadioButton();
     JRadioButton newItem;
     ButtonGroup selectcreate = new ButtonGroup();
-    
+
     JmriBeanComboBox existingCombo;
     JTextField hardwareAddress = new JTextField(8);
-    JComboBox prefixBox = new JComboBox();
+    JComboBox<String> prefixBox = new JComboBox<String>();
     jmri.UserPreferencesManager p;
-    String systemSelectionCombo = this.getClass().getName()+".SystemSelected";
-        
+    String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
+
     /**
-    * Create a JPanel, that provides the option to the user to either select an 
-    * already created bean, or to create one on the fly.
-    * This only currently works with Turnouts, Sensors, Memories and Blocks.
-    */
-    public BeanSelectCreatePanel(Manager manager, NamedBean defaultSelect){
+     * Create a JPanel, that provides the option to the user to either select an
+     * already created bean, or to create one on the fly. This only currently
+     * works with Turnouts, Sensors, Memories and Blocks.
+     */
+    public BeanSelectCreatePanel(Manager manager, NamedBean defaultSelect) {
         _manager = manager;
         _defaultSelect = defaultSelect;
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
@@ -54,12 +51,12 @@ public class BeanSelectCreatePanel extends JPanel{
                 update();
             }
         });
-        
+
         selectcreate.add(existingItem);
         selectcreate.add(newItem);
         existingCombo = new JmriBeanComboBox(_manager, defaultSelect, JmriBeanComboBox.USERNAMESYSTEMNAME);
         //If the combo list is empty we go straight to creation.
-        if (existingCombo.getItemCount()==0) {
+        if (existingCombo.getItemCount() == 0) {
             newItem.setSelected(true);
         }
         existingCombo.setFirstItemBlank(true);
@@ -69,40 +66,42 @@ public class BeanSelectCreatePanel extends JPanel{
         bean.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 0));
         radio.add(existingItem);
         radio.add(newItem);
-        
-        if (_manager instanceof jmri.managers.AbstractProxyManager){
+
+        if (_manager instanceof jmri.managers.AbstractProxyManager) {
             List<Manager> managerList = new ArrayList<Manager>();
-            if(_manager instanceof jmri.TurnoutManager){
+            if (_manager instanceof jmri.TurnoutManager) {
                 jmri.managers.ProxyTurnoutManager proxy = (jmri.managers.ProxyTurnoutManager) InstanceManager.turnoutManagerInstance();
                 managerList = proxy.getManagerList();
-            } else if (_manager instanceof jmri.SensorManager){
+            } else if (_manager instanceof jmri.SensorManager) {
                 jmri.managers.ProxySensorManager proxy = (jmri.managers.ProxySensorManager) InstanceManager.sensorManagerInstance();
                 managerList = proxy.getManagerList();
-            } else if (_manager instanceof jmri.LightManager){
+            } else if (_manager instanceof jmri.LightManager) {
                 jmri.managers.ProxyLightManager proxy = (jmri.managers.ProxyLightManager) InstanceManager.lightManagerInstance();
                 managerList = proxy.getManagerList();
-            } else if (_manager instanceof jmri.ReporterManager){
+            } else if (_manager instanceof jmri.ReporterManager) {
                 jmri.managers.ProxyReporterManager proxy = (jmri.managers.ProxyReporterManager) InstanceManager.reporterManagerInstance();
                 managerList = proxy.getManagerList();
             }
-            for(int x = 0; x<managerList.size(); x++){
+            for (int x = 0; x < managerList.size(); x++) {
                 String manuName = ConnectionNameFromSystemName.getConnectionName(managerList.get(x).getSystemPrefix());
                 Boolean addToPrefix = true;
                 //Simple test not to add a system with a duplicate System prefix
-                for (int i = 0; i<prefixBox.getItemCount(); i++){
-                    if(((String)prefixBox.getItemAt(i)).equals(manuName))
-                        addToPrefix=false;
+                for (int i = 0; i < prefixBox.getItemCount(); i++) {
+                    if ((prefixBox.getItemAt(i)).equals(manuName)) {
+                        addToPrefix = false;
+                    }
                 }
-                if (addToPrefix)
+                if (addToPrefix) {
                     prefixBox.addItem(manuName);
+                }
             }
-            if(p.getComboBoxLastSelection(systemSelectionCombo)!=null)
+            if (p.getComboBoxLastSelection(systemSelectionCombo) != null) {
                 prefixBox.setSelectedItem(p.getComboBoxLastSelection(systemSelectionCombo));
-        }
-        else {
+            }
+        } else {
             prefixBox.addItem(ConnectionNameFromSystemName.getConnectionName(_manager.getSystemPrefix()));
         }
-        
+
         bean.add(existingCombo);
         bean.add(prefixBox);
         bean.add(hardwareAddress);
@@ -112,22 +111,24 @@ public class BeanSelectCreatePanel extends JPanel{
         add(bean);
         update();
     }
-    
-    void update(){
+
+    void update() {
         boolean select = true;
-        if (newItem.isSelected()) select=false;
+        if (newItem.isSelected()) {
+            select = false;
+        }
         prefixBox.setVisible(false);
         hardwareAddress.setVisible(false);
         existingCombo.setVisible(false);
-        if(select) {
+        if (select) {
             existingCombo.setVisible(true);
         } else {
             prefixBox.setVisible(true);
             hardwareAddress.setVisible(true);
         }
     }
-    
-    public void setEnabled(boolean enabled){
+
+    public void setEnabled(boolean enabled) {
         existingItem.setEnabled(enabled);
         hardwareAddress.setEnabled(enabled);
         prefixBox.setEnabled(enabled);
@@ -135,52 +136,51 @@ public class BeanSelectCreatePanel extends JPanel{
         existingCombo.setEnabled(enabled);
         super.setEnabled(enabled);
     }
-	
-	public void refresh(){
-		existingCombo.refreshCombo();
-	}
-    
+
+    public void refresh() {
+        existingCombo.refreshCombo();
+    }
+
     /**
-    * get the display name of the bean that has either been selected in the drop down list or
-    * has been created
-    */
-    public String getDisplayName(){
-        if(existingItem.isSelected()){
+     * get the display name of the bean that has either been selected in the
+     * drop down list or has been created
+     */
+    public String getDisplayName() {
+        if (existingItem.isSelected()) {
             return existingCombo.getSelectedDisplayName();
         } else {
             try {
                 NamedBean nBean = createBean();
                 return nBean.getDisplayName();
-            } catch (jmri.JmriException e){
+            } catch (jmri.JmriException e) {
                 return "";
             }
         }
     }
-    
+
     /**
-    * get the named bean that has either been selected in the drop down list or
-    * has been created
-    */
-    
+     * get the named bean that has either been selected in the drop down list or
+     * has been created
+     */
     public NamedBean getNamedBean() throws jmri.JmriException {
-        if(existingItem.isSelected()){
+        if (existingItem.isSelected()) {
             return existingCombo.getSelectedBean();
         }
         try {
             return createBean();
-        } catch (jmri.JmriException e){
+        } catch (jmri.JmriException e) {
             throw e;
         }
     }
-    
-    private NamedBean createBean() throws jmri.JmriException{
+
+    private NamedBean createBean() throws jmri.JmriException {
         String prefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem());
         NamedBean nBean = null;
-        if (_manager instanceof jmri.TurnoutManager){
+        if (_manager instanceof jmri.TurnoutManager) {
             String sName = "";
             try {
-                sName=InstanceManager.turnoutManagerInstance().createSystemName(hardwareAddress.getText(), prefix);
-            } catch (jmri.JmriException e){
+                sName = InstanceManager.turnoutManagerInstance().createSystemName(hardwareAddress.getText(), prefix);
+            } catch (jmri.JmriException e) {
                 throw e;
             }
             try {
@@ -189,11 +189,11 @@ public class BeanSelectCreatePanel extends JPanel{
                 // user input no good
                 throw new jmri.JmriException("ErrorTurnoutAddFailed");
             }
-        } else if (_manager instanceof jmri.SensorManager){
+        } else if (_manager instanceof jmri.SensorManager) {
             String sName = "";
             try {
-                sName=InstanceManager.sensorManagerInstance().createSystemName(hardwareAddress.getText(), prefix);
-            } catch (jmri.JmriException e){
+                sName = InstanceManager.sensorManagerInstance().createSystemName(hardwareAddress.getText(), prefix);
+            } catch (jmri.JmriException e) {
                 throw e;
             }
             try {
@@ -204,7 +204,7 @@ public class BeanSelectCreatePanel extends JPanel{
             }
         } else {
             String sName = _manager.makeSystemName(hardwareAddress.getText());
-            if(_manager instanceof jmri.MemoryManager) {
+            if (_manager instanceof jmri.MemoryManager) {
                 try {
                     nBean = InstanceManager.memoryManagerInstance().provideMemory(sName);
                 } catch (IllegalArgumentException ex) {
@@ -220,34 +220,36 @@ public class BeanSelectCreatePanel extends JPanel{
                 }
             }
         }
-        if (nBean==null)
+        if (nBean == null) {
             throw new jmri.JmriException("Unable to create bean");
-        if ((_reference!=null && !_reference.equals("")) && (nBean.getComment()==null || nBean.getComment().equals("")))
+        }
+        if ((_reference != null && !_reference.equals("")) && (nBean.getComment() == null || nBean.getComment().equals(""))) {
             nBean.setComment(_reference);
+        }
         setDefaultNamedBean(nBean);
         return nBean;
     }
 
     /**
-    * Set a reference that can be set against the comment for a bean, only if
-    * the bean has no previous comment.
-    */
-    public void setReference(String ref){
+     * Set a reference that can be set against the comment for a bean, only if
+     * the bean has no previous comment.
+     */
+    public void setReference(String ref) {
         _reference = ref;
     }
-    
+
     /**
-    * Sets the default selected item in the combo box, when this is set the 
-    * combo box becomes active and the add hardware box details are then hidden
-    */
-    public void setDefaultNamedBean(NamedBean nBean){
+     * Sets the default selected item in the combo box, when this is set the
+     * combo box becomes active and the add hardware box details are then hidden
+     */
+    public void setDefaultNamedBean(NamedBean nBean) {
         _defaultSelect = nBean;
         existingCombo.setSelectedBean(_defaultSelect);
         existingItem.setSelected(true);
         update();
     }
-    
-    public void dispose(){
+
+    public void dispose() {
         existingCombo.dispose();
     }
 

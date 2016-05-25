@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<title>Comprehensive Programmer - Consisting Functions Pane</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<a name="Top"></a>
+
+<h1>DecoderPro&reg; Comprehensive Programmer</h1>
+<h2>Consisting Functions Pane</h2>
+
+<div align="right">
+<p><a href="Comp_Analog.shtml">Previous | </a>
+  <a href="Comp_Advanced.shtml">Next </a>
+</p><p><a href="index.shtml#Advanced%20Programmer">Back to Index</a>
+</p></div>
+
+<hr>
+
+<p>Consisting is a means to have two or more locomotives respond to
+orders from the command station, and do it together in unison. There
+are a number of terms used to describe consisting, and the
+manufacturers don&#8217;t agree what those terms should be. The NMRA has
+adopted terminology, so that is what will be used in this discussion.</p>
+
+<p>Address Consisting. You merely set the address of every locomotive
+to be the same, and we can use the Basic Programmer pane to do this.
+Then a DCC instruction sent to a locomotive with address XX will cause
+all the locomotives with address XX to respond. It works well for
+locomotives that are always run together, and is portable from one
+layout to the other. The disadvantage is that it&#8217;s a pain to keep
+re-addressing your locomotives if you don&#8217;t always run them together. </p>
+
+<p>So, the NMRA came up with two additional means of consisting. One is
+set up in, and remembered by the command station, and the other is set
+in the decoders. </p>
+
+<p>The NMRA calls the command station based system Basic Consisting.
+The command station keeps a list of all the locos in the consist. When
+an action is needed the command station sends an individual packet to
+every locomotive in the consist, which causes them to then act
+together. Since this method is command station based the consist is not
+portable to another system. Also, since it does not need to be
+programmed into the decoders, DecoderPro doesn&#8217;t need to deal with it.</p>
+
+<p>The NMRA calls the decoder based system Advanced Consisting. To
+implement this system the decoder has to have a special memory space
+(CV19) which is used to store a consist address. This type of
+consisting is portable between layouts, since the information that the
+loco is part of a consist, and the address information for that consist
+is carried in the decoder. The disadvantage is that once the locomotive
+is assigned to a consist it will only respond to the consist address.
+If you forget to &#8220;break&#8221; the consist at the end of an operation, you
+will be puzzled as to why your locomotive won&#8217;t respond to requests for
+motion, even though it will respond to some of the lighting functions.</p>
+
+
+<p>DecoderPro utilizes the Consisting Pane to set up NMRA Advanced
+Consists and the response of the locomotive to function requests sent
+to the consist address.
+</p>
+<h1><img style="width: 920px; height: 799px;" src="images/Comp_07_Consisting.png" alt="Consist panel"></h1>
+<p>The  Advanced Consist Address is for <strong>EPF</strong> (<strong>Extended Packet Format</strong>, as  defined by the NMRA Recommended Practices for DCC).&nbsp; If the consist address is <strong>any value other than zero</strong>,
+the locomotive is considered to be in a consist and will only respond
+to instructions sent to the consist address. Thus we set a short
+address here to create a multiple engine group that will all respond to
+the same address. Think of it as an MU specific locomotive address.
+&nbsp;Since the address is in the same range as non-consisted
+locomotives with short addresses, we need to be sure the address is
+unique on the layout.&nbsp; A way of doing this is to use higher end of
+the short address range starting from 127 and going down.&nbsp; Most
+folks working with single locomotives with short addresses tend to be
+using the manufacturer&#8217;s default of 3, or other low values,
+typically&nbsp;for their logging locomotives.</p>
+<p>This Pane also allows one to instruct the decoder what effects are
+to be active when the locomotive is in a consist, assuming the decoder
+is capable of responding appropriately.&nbsp; As an example, this
+allows you to specify if the headlights and other lighting functions
+are to be always off if the locomotive is in the middle, or tail
+end.&nbsp; This can be handy if only the &#8220;B&#8221; unit has sound.&nbsp; You
+can set it&#8217;s lights to be off in a consist, but it can sound it&#8217;s horn
+even though it&#8217;s in the consist.
+</p><p>If you've had your locomotives on another layout and ran them
+together, but can't get them to run separately on your home system,
+check this to see if it's consist address has been set.
+</p>
+
+<hr>
+<div align="right">
+<p><a href="Comp_Analog.shtml">Previous | </a> <a href="Comp_Advanced.shtml">Next </a>
+</p><p><a href="index.shtml#Advanced%20Programmer">Back to Index</a> </p></div>
+
+<!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
+</html>

@@ -1,17 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SpeedometerFrame.shtml,v 1.4 2010/04/03 19:11:34 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-11-5--> 
+<!--  $Id$ -->
+<!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12--> 
 <html lang="fr">
 <head>
  <TITLE>
       JMRI: Speedometer
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="JMRI help Route Add Edit">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -24,23 +24,23 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Tachymètre </H1>
+<H1>Tachym&#232;tre </H1>
 <p>
-Le compteur de vitesse mesure le temps d'un capteur à un autre, puis calcule la vitesse en fonction
- de la distance parcourue par le temps prit pour le faire.
+Le compteur de vitesse mesure le temps d'un capteur &#224 un autre, puis calcule la vitesse en fonction
+ de la distance parcourue et du temps mis pour le faire.
 <p>
-Entrez un capteur Sysname dans le champs "démarre minuteries sur" . Puis entrer dans un autre capteur Sysname  dans le champs
-"arrête le Chrono 1 sur ". Mesurer la distance entre les deux, convertir en pieds pour votre
-échelle et entrez cela dans le champs " Distance 1 ".
+Entrez un capteur Sysname dans le champs "d&#233;marre minuteries sur". Puis entrer dans un autre capteur Sysname  dans le champs
+"arr&#224te le Chrono 1 sur". Mesurer la distance entre les deux, convertir en pieds pour votre
+&#233;chelle et entrez cela dans le champs "Distance 1".
 <p>
-La vitesse de votre train entre les deux capteurs sera affichée dans le champ 'Vitesse Chrono 1 ».
+La vitesse de votre train entre les deux capteurs sera affich&#233;e dans le champ "Vitesse Chrono 1".
 <p>
-Vous pouvez ajouter un troisième capteur dans le champs "chronomètre deux s'arrêtera deux sur"  et qui donnera la vitesse entre
-le capteur de départ et que le capteur dans le champ "Timer 2 Vitesse ". Vous avez également besoin d'entrer la valeur
-dans le champ "Distance 2"'en pieds à l'échelle entre le capteur de départ et ce capteur.
+Vous pouvez ajouter un troisi&#232;me capteur dans le champs "chronom&#232;tre deux s'arr&#224tera deux sur"  et qui donnera la vitesse entre
+le capteur de d&#233;part et que le capteur dans le champ "Timer 2 Vitesse . Vous avez &#233;galement besoin d'entrer la valeur
+dans le champ "Distance 2"'en pieds &#224 l'&#233;chelle entre le capteur de d&#233;part et ce capteur.
 <p>
-Vous pouvez choisir de déclencher le début/fin de la minuterie avec les boutons d'entrée ou de sortie. Les indicateurs
-sur le côté droit du volet sont l'étatdes capteurs que vous avez sélectionnés.
+Vous pouvez choisir de d&#233;clencher la minuterie en entr&#233;e/sortie du capteur avec les boutons "Entr&#233;e" ou de "Sortie". Les indicateurs
+sur le c&#244t&#233; droit du volet sont l'&#233;tat des capteurs que vous avez s&#233;lectionn&#233;s.
 <p>
    
 Ceci est la page d'aide help/en/package/jmri/jmrit/speedometer/SpeedometerFrame 

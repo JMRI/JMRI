@@ -1,14 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Translated by Blorec Hervé le 2011-09-28-->
-
+<!-- UpDated by Blorec Herv&#233;  2013-10-02-->
+<html lang="fr"><head>
   <meta name="keywords" content="JMRI throttle">
   <meta name="Description" content="Throttle documentation for JMRI project">
   <meta name="Keywords" content="JMRI">
   <meta name="Author" content="Lionel Jeanson">
-  <meta name="Language" content="fr">
+  <meta name="Language" content="FR">
  
   
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/"><!-- /Style -->
@@ -18,184 +18,184 @@
 <!--#include virtual="Sidebar" -->
 
 <div id="mainContent">
-<h1>Contrôle Avancé d'un Régulateur</h1>
+<h1>Contr&#244;le Avanc&#233; d'un R&#233;gulateur</h1>
 
-<h2>Contrôle du clavier de la fenêtre du Régulateur standard </h2>
+<h2>Contr&#244;le du clavier de la fen&#234;tre du R&#233;gulateur standard</h2>
 
-Vous pouvez utiliser votre régulateur JMRI à partir du clavier en plus d'utiliser une souris.
+Vous pouvez utiliser votre r&#233;gulateur JMRI &#224; partir du clavier en plus d'utiliser une souris.
 
 <div style="margin-left: 40px;">
-Manettes dans la fenêtre courante: Alt + gauche/droite <br>
-Fenêtres Régulateur (Throttle): Shift + gauche/droite <br>
+Manettes dans la fen&#234;tre courante: Alt + gauche/droite <br>
+Fen&#234;tres R&#233;gulateur (Throttle): Shift + gauche/droite <br>
 </div>
 <br>
-Vous pouvez faire fonctionner le régulateur en utilisant votre clavier (le Panneau de configuration dans la fenêtre d'accélérateur doit être sélectionné): <br>
+Vous pouvez faire fonctionner le r&#233;gulateur en utilisant votre clavier (le Panneau de configuration dans la fen&#234;tre d'acc&#233;l&#233;rateur doit &#234;tre s&#233;lectionn&#233;): <br>
 
 
-<h4> vitesse </h4>
+<h4> vitesse</h4>
 <dl style="margin-left: 40px;">
-   <dt>  pavé numérique  + </dt>
-     Augmentation de la vitesse <dd> </dd>
-   <dt> pavé numérique - </dt>
-    Diminution de la Vitesse <dd> </dd>
-   <dt> Flèche Gauche </dt>
-     Augmenter la vitesse <dd> </dd>
-   <dt> Droite </dt>
-     Vitesse Diminution <dd> </dd>
-   page <dt> Up </dt>
+   <dt>  pav&#233; num&#233;rique  +</dt>
+    <dd> Augmentation de la vitesse</dd>
+   <dt> pav&#233; num&#233;rique -</dt>
+    <dd>Diminution de la Vitesse </dd>
+   <dt> Fl&#232;che Gauche</dt>
+   <dd>  Augmenter la vitesse</dd>
+   <dt> Droite</dt>
+    <dd> Vitesse Diminution</dd>
+   <dt>page  Up</dt>
     <dd>Augmentation rapide de la Vitesse Augmentation (environ 10% pour chaque pression de la touche
-  <dt>Page Bas </dt>
-<dd>Diminution rapide de la Vitesse (environ 10% pour chaque pression de la touche) </dd>
-<dt> pavé numérique * </dt>
-<dd> Inactif (Idle) ( Règle la vitesse à 0, tout élan de vitesse est activé) </dd>
-<dt> pavé numérique / </dt>
-Urgence <dd> Stop! ( Stoppe instantanément la locomotive) </dd>
+  <dt>Page Bas</dt>
+<dd>Diminution rapide de la Vitesse (environ 10% pour chaque pression de la touche)</dd>
+<dt> pav&#233; num&#233;rique *</dt>
+<dd> Inactif (Idle) ( R&#232;gle la vitesse &#224; 0, tout &#233;lan de vitesse est activ&#233;)</dd>
+<dt> pav&#233; num&#233;rique /</dt>
+<dd>Urgence  Stop! ( Stoppe instantan&#233;ment la locomotive)</dd>
 </dl>
 
-<h4> Direction </h4>
+<h4> Direction</h4>
 <dl style="margin-left: 40plargeur x;">
-<dt> Flèche </dt>
-<dd> Arrière </dd>
-<dt> Flèche </dt>
-<dd> Avant </dd>
+<dt> Fl&#232;che</dt>
+<dd> Arri&#232;re</dd>
+<dt> Fl&#232;che</dt>
+<dd> Avant</dd>
 </dl>
 
 <h4> Fonctions</h4>
 <dl style = "margin-left: 40dpx;">
-   <dt> Pavé numérilargeur que 0-9 </dt>
-    <dd> Fonctions  0-9 </dd>
-   <dt> Pavé numérique. </dt>
-     Fonction <dd> 10 </dd>
-   <dt> F11 - F24 </dt>
-    <dd>  Fonction 11 à  Fonction 24 </dd>
+   <dt> Pav&#233; num&#233;rique 0-9</dt>
+    <dd> Fonctions  0-9</dd>
+   <dt> Pav&#233; num&#233;rique.</dt>
+    <dd> Fonction  10</dd>
+   <dt> F11 - F24</dt>
+    <dd>  Fonction 11 &#224; Fonction 24</dd>
 </dl>
 
 
 
-<h2> Régulateur personnalisé avec Jynstruments </h2>
+<h2> R&#233;gulateur personnalis&#233; avec Jynstruments</h2>
 
-<a href="../scripting/Jynstruments.shtml"> Jynstruments </a>
-sont des outils puissants pour la création personnalisée de régulateurs JMRI.
+<a href="../scripting/Jynstruments.shtml"> Jynstruments</a>
+sont des outils puissants pour la cr&#233;ation personnalis&#233;e de r&#233;gulateurs JMRI.
 Il ya
-<a href="../scripting/Jynstruments.shtml"> beaucoup plus d'informations </a>
-sur la création et la personnalisation sur une
-<a  href="../scripting/Jynstruments.shtml"> Page séparée </a>.
-Ici, nous nous concentrons sur l'aide du régulateur sur mesure.
+<a href="../scripting/Jynstruments.shtml"> beaucoup plus d'informations</a>
+sur la cr&#233;ation et la personnalisation sur une
+<a  href="../scripting/Jynstruments.shtml"> Page s&#233;par&#233;e</a>.
+Ici, nous nous concentrons sur l'aide du r&#233;gulateur sur mesure.
 <p>
-<a href="http://jmri.org/jython/Jynstruments/ThrottleWindowToolBar/"> deux
-Jynstruments </a>fournis ci-dessous sont pour des régulateurs déjà affectés, la Fenêtre du Régulateur que vous contrôlez doit être mise en place avant.
-Ensuite, c'est seulement une question de déplacement d'un dossier sur
-la<a href="ThrottleToolBar.shtml"> Fenêtre Régulateur <span style="font-weight: bold;"> barre d'outils </span></a>.
+Les <a href="http://jmri.org/jython/Jynstruments/ThrottleWindowToolBar/"> deux
+Jynstruments</a> fournis ci-dessous sont pour des r&#233;gulateurs d&#233;j&#224; affect&#233;s, la Fen&#234;tre du R&#233;gulateur que vous contr&#244;lez doit &#234;tre mise en place avant.
+Ensuite, c'est seulement une question de d&#233;placement d'un dossier sur
+la<a href="ThrottleToolBar.shtml"> barre d'outils de la <span style="font-weight: bold;"> Fen&#234;tre R&#233;gulateur</span></a>.
 <p>
-<span style="font-style: italic;"> Notez que le contenu de la fenêtre régulateur est
-Jynstrumentable aussi, donc ici nous laissons tomber le Jynstruments sur la barre elle-même,
-pas sur le contenu de la fenêtre. </span> <br>
+<span style="font-style: italic;"> Notez que le contenu de la fen&#234;tre r&#233;gulateur est
+Jynstrumentable aussi, donc ici nous laissons tomber le Jynstruments sur la barre elle-m&#234;me,
+pas sur le contenu de la fen&#234;tre.</span> <br>
 
 <a name="joypad" />
-<h3> USB Joypad (USBControl.jyn) </h3>
-Il y a un Jynstrument nommé USBControl.jyn  sur une fenêtre barre d'outils Régulateur
-pour prendre le contrôle de cette fenêtre avec une manette. Voir les fichiers.Py pour les
-paramètres par défaut du bouton, et les personnalisations possibles. 
+<h3> USB Joypad (USBControl.jyn)</h3>
+Il y a un Jynstrument nomm&#233; USBControl.jyn  sur une fen&#234;tre barre d'outils R&#233;gulateur
+pour prendre le contr&#244;le de cette fen&#234;tre avec une manette. Voir les fichiers.Py pour les
+param&#232;tres par d&#233;faut du bouton, et les personnalisations possibles. 
 
-<p> Particulièrement  vous pourriez vouloir définir un fichier de "pilote" pour votre propre appareil,
-à partir de default.largeur py, le copier, le renommer avec le nom de l'appareil comme on le voit
-par JMRI sans espace ou ".", puis utilisez la <a href="../../../package/jmri/jmrix/jinput/treemodel/TreeFrame.shtml"> fenêtre de contrôle d'entrée JMRI
-Jinput USB </a> (accessible depuis le menu Debug) pour obtenir vos
-noms de Composants et de la valeur, </p>
+<p> Particuli&#232;rement  vous pourriez vouloir d&#233;finir un fichier de "pilote" pour votre propre appareil,
+&#224; partir de default.largeur py, le copier, le renommer avec le nom de l'appareil comme vu
+par JMRI sans espace ou ".", puis utilisez la <a href="../../../package/jmri/jmrix/jinput/treemodel/TreeFrame.shtml"> fen&#234;tre de contr&#244;le d'entr&#233;e JMRI
+Jinput USB</a> (accessible depuis le menu Debug) pour obtenir vos
+noms de Composants et de la valeur,</p>
 
 <p></p>
 
 <p> <span style="font-style: italic;"> Notez qu'un fichier classique de Jython existe pour
-prendre le contrôle d'une fenêtre de régulateur avec un périphérique USB, celui-ci est plus complexe
-mais plus facile à utiliser (AMHA). </span> 
+prendre le contr&#244;le d'une fen&#234;tre de r&#233;gulateur avec un p&#233;riph&#233;rique USB, celui-ci est plus complexe
+mais plus facile &#224; utiliser (AMHA).</span> 
 
-<h4> <span slargeur tyle="font-style: italic;"> </ span> Commandes par Défaut: </h4>
-<h5 style="margin-left: 40px;"> Manettes de Navigation: </h5>
-<div style="margin-left: 80px;"> Pour parcourir les régulateurs actuellement affectés
- pour la fenêtre de commande, les boutons POV droite et gauche sont
-utilisés. (pov également connu comme chapeau de commutateur, c'est les quatre ou huit
-Boutons de directions sur la gauche du pavé numérique)<br>
+<h4> <span slargeur tyle="font-style: italic;"></span> Commandes par D&#233;faut:</h4>
+<h5 style="margin-left: 40px;"> Manettes de Navigation:</h5>
+<div style="margin-left: 80px;"> Pour parcourir les r&#233;gulateurs actuellement affect&#233;s
+ pour la fen&#234;tre de commande, les boutons POV droite et gauche sont
+utilis&#233;s. (pov &#233;galement connu comme  commutateur chapeau, c'est les quatre ou huit
+Boutons de directions sur la gauche du pav&#233; num&#233;rique)<br>
 </div>
 <h5 style="margin-left: 40px;">Vitesse:</h5>
-<div style="margin-left: 80px;">La vitesse est contrôlée par l'axe «x» qui se trouve généralement sur le stick gauche. <br>
+<div style="margin-left: 80px;">La vitesse est contr&#244;l&#233;e par l'axe "x" qui se trouve g&#233;n&#233;ralement sur le stick gauche. <br>
 <br>
-Notez que les boutons 0 à 3 (ou 1 à 4) sont affectés à une certaine vitesse
-défini du ralenti (vitesse 0), pour ralentir (vitesse 0,3), pour une croisière (vitesse
-0,8), max (vitesse 1). Une double pression sur le bouton pour la vitesse 0 enverra  un arrêt d'urgence. <br>
+Notez que les boutons 0 &#224; 3 (ou 1 &#224; 4) sont affect&#233;s &#224; une certaine vitesse
+d&#233;fini du ralenti (vitesse 0), pour ralentir (vitesse 0,3), pour une croisi&#232;re (vitesse
+0,8), max (vitesse 1). Une double pression sur le bouton pour la vitesse 0 enverra  un arr&#234;t d'urgence. <br>
 </Div>
-<h5 style="margin-left: 40px;"> Direction: </h5>
-<div style="margin-left: 80px;">La direction est contrôlée par l'axe «z» qui se trouve généralement sur le stick droit <br> 
+<h5 style="margin-left: 40px;"> Direction:</h5>
+<div style="margin-left: 80px;">La direction est contr&#244;l&#233;e par l'axe "z" qui se trouve g&#233;n&#233;ralement sur le stick droit <br> 
 </Div>
-<h5 style="margin-left: 40px;"> Boutons de Fonctions: </h5>
+<h5 style="margin-left: 40px;"> Boutons de Fonctions:</h5>
 <div style="margin-left: 80px;"> Tous les boutons restants sont
-dédiés à des fonctions (généralement celui de gauche sur le côté, sous, et au milieu de la manette) : </h5>
+d&#233;di&#233;s &#224; des fonctions (g&#233;n&#233;ralement celui de gauche sur le c&#244;t&#233;, sous, et au milieu de la manette) :</h5>
 
 </div>
 <br>largeur 
-<span style="font-style: italic;">Notez que la disposition des boutons des manettes et même
- les actions de la manette diffèrent d'un fabricant à l'autre, vous
-devrez personnaliser un driver.py pour votre propre matériel. </span> <br>
+<span style="font-style: italic;">Notez que la disposition des boutons des manettes et m&#234;me
+ les actions de la manette diff&#232;rent d'un fabricant &#224; l'autre, vous
+devrez personnaliser un driver.py pour votre propre mat&#233;riel.</span> <br>
 <br>
 
 
 <a name="wii"/>
-Nintendo Wiimote <h3> (WiimoteThrottle.jyn) </h3>
-Il y a une Jynstrument nommée WiimoteThrottle.jyn  sur une barre d'outils de la Fenêtre Régulateur
- pour prendre le contrôle de cette fenêtre avec un dispositif couramment assignée de la Wiimote de Nintendo.
-<span style="font-weight: bold;"> Voir le fichier curentlydispositif.py pour </span> bouton Paramètres par défaut et <span style="font-weight: bold;"> mis en place. </span> (quelques fichiers .jar doivent être téléchargés et copiés dans le dossier lib JMRI) <br style="font-weight: bold;">
+Nintendo Wiimote <h3> (WiimoteThrottle.jyn)</h3>
+Il y a une Jynstrument nomm&#233;e WiimoteThrottle.jyn  sur une barre d'outils de la Fen&#234;tre R&#233;gulateur
+ pour prendre le contr&#244;le de cette fen&#234;tre avec un dispositif couramment assign&#233;e de la Wiimote de Nintendo.
+<span style="font-weight: bold;"> Voir le fichier curentlydispositif.py pour</span> bouton Param&#232;tres par d&#233;faut et <span style="font-weight: bold;"> mis en place.</span> (quelques fichiers .jar doivent &#234;tre t&#233;l&#233;charg&#233;s et copi&#233;s dans le dossier lib JMRI) <br style="font-weight: bold;">
 <br>
-Pour l'instant, aucun des accéléromètres de la Wiimote ne sont utilisés,
-donc ce n'est qu'une sorte de luxe à distance comme nous n'utilisons que les boutons. Mais
-il s'intègre très bien dans une main et une fois que vous connaissez les paramètres, vous n'avez même pas
- à regarder pour l'utiliser. <br>
-<h4>Contrôles par Défaut: </h4>
+Pour l'instant, aucun des acc&#233;l&#233;rom&#232;tres de la Wiimote ne sont utilis&#233;s,
+donc ce n'est qu'une sorte de luxe &#224; distance comme nous n'utilisons que les boutons. Mais
+il s'int&#232;gre tr&#232;s bien dans une main et une fois que vous connaissez les param&#232;tres, vous n'avez m&#234;me pas
+ &#224; regarder pour l'utiliser. <br>
+<h4>Contr&#244;les par D&#233;faut:</h4>
 largeur 
-<h5 style="margin-left: 40px;"> Manettes de Navigation: </h5>
+<h5 style="margin-left: 40px;"> Manettes de Navigation:</h5>
 
-<div style="margin-left: 80px;"> Pour parcourir les manettes afffectées actuellement
-pour la fenêtre de contrôle, les touches gauche et droite sont utilisées. <br>
+<div style="margin-left: 80px;"> Pour parcourir les manettes afffect&#233;es actuellement
+pour la fen&#234;tre de contr&#244;le, les touches gauche et droite sont utilis&#233;es. <br>
 </ div>
 
-<h5 style="margin-left: 40px;"> Vitesse: </h5>
+<h5 style="margin-left: 40px;"> Vitesse:</h5>
 
-<div style="margin-left: 80px;">La vitesse est contrôlée par les boutons A (décélérer) et B (accélérer) <br>
+<div style="margin-left: 80px;">La vitesse est contr&#244;l&#233;e par les boutons A (d&#233;c&#233;l&#233;rer) et B (acc&#233;l&#233;rer) <br>
 <br>
-Notez que les boutons 1 et 2 sont utilisés pour une certaine vitesse
-déterminé, du ralenti (vitesse 0 - touche 2 fois), de ralentir (vitesse 0,3 -
-le bouton 2 fois), pour une vitesse de croisière (vitesse 0,8 - bouton 1 fois), au max (vitesse 1
+Notez que les boutons 1 et 2 sont utilis&#233;s pour une certaine vitesse
+d&#233;termin&#233;, du ralenti (vitesse 0 - touche 2 fois), de ralentir (vitesse 0,3 -
+le bouton 2 fois), pour une vitesse de croisi&#232;re (vitesse 0,8 - bouton 1 fois), au max (vitesse 1
 - Bouton 1 fois). En appuyant sur les boutons 1 et 2 vous enverrez
-un arrêt d'urgence et  ferez vibrer la Wiimote.
+un arr&#234;t d'urgence et  ferez vibrer la Wiimote.
 </div>
 <h5 style="margin-left: 40px;">Direction:</h5>
 
-<div style="margin-left: 80px;">La direction est contrôlée par les boutons + et -. <br>
+<div style="margin-left: 80px;">La direction est contr&#244;l&#233;e par les boutons + et -. <br>
 </div>
 
-<h5 style="margin-left: 40px;"> Boutons de fonctions: </h5>
+<h5 style="margin-left: 40px;"> Boutons de fonctions:</h5>
 
-<div style="margin-left: 80px;"> La lumière (fonction 0) est contrôlée par le bouton Home. <br>
-Et comme il n'y a plus de boutons disponibles, aucune autre fonction ne peut être
-contrôlées par défaut, mais comme il s'agit d'un script Jython, n'hésitez pas à le
+<div style="margin-left: 80px;"> La lumi&#232;re (fonction 0) est contr&#244;l&#233;e par le bouton Home. <br>
+Et comme il n'y a plus de boutons disponibles, aucune autre fonction ne peut &#234;tre
+contr&#244;l&#233;es par d&#233;faut, mais comme il s'agit d'un script Jython, n'h&#233;sitez pas &#224; le
 personnaliser, et si quelqu'un est capable de faire quelque chose avec les
-accéléromètres, vous êtes les bienvenus! <br>
+acc&#233;l&#233;rom&#232;tres, vous &#234;tes les bienvenus! <br>
 </div>
 
-<h2>RailDriver </h2>
-S'il vous plaît,<a href="../../hardware/raildriver/index.shtml"> voir là. </A><br>
+<h2>RailDriver</h2>
+S'il vous pla&#238;t,<a href="../../hardware/raildriver/index.shtml"> voir l&#224;.</A><br>
 <br>
 
 <a name="iphone" />
- <h2>IPhone et IPod Touch  </h2>
+ <h2>IPhone et IPod Touch </h2>
 
-Il ya une application tierce appelée
-<a href="http://withrottle.com/"> WiThrottle </a>
-qui travaille avec JMRI vous permettant de contrôler les trains avec votre
+Il ya une application tierce appel&#233;e
+<a href="http://withrottle.com/"> WiThrottle</a>
+qui travaille avec JMRI vous permettant de contr&#244;ler les trains avec votre
 iPhone ou iPod Touch.
 
 <p>
-Vous pouvez également parcourir le
-<a href="../../web/index.shtml"> serveur web JMRI </a>
-à partir de Safari sur votre iPhone ou iPod Touch.
+Vous pouvez &#233;galement parcourir le
+<a href="../../web/index.shtml"> serveur web JMRI</a>
+&#224; partir de Safari sur votre iPhone ou iPod Touch.
 </p>
 </div>
 <!--#include virtual="/Footer" -->

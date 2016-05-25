@@ -1,30 +1,35 @@
 // LayoutBlockRouteTableModel.java
-
 package jmri.jmrit.display.layoutEditor.blockRoutingTable;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrit.display.layoutEditor.*;
 import java.beans.PropertyChangeListener;
 import java.util.ResourceBundle;
+import jmri.jmrit.display.layoutEditor.LayoutBlock;
+import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Table data model for display of Roster variable values.
- *<P>
+ * <P>
  * Any desired ordering, etc, is handled outside this class.
- *<P>
- * The initial implementation doesn't automatically update when
- * roster entries change, doesn't allow updating of the entries,
- * and only shows some of the fields.  But it's a start....
+ * <P>
+ * The initial implementation doesn't automatically update when roster entries
+ * change, doesn't allow updating of the entries, and only shows some of the
+ * fields. But it's a start....
  *
- * @author              Bob Jacobsen   Copyright (C) 2009, 2010
- * @version             $Revision$
+ * @author Bob Jacobsen Copyright (C) 2009, 2010
+ * @version $Revision$
  * @since 2.7.5
  */
 public class LayoutBlockRouteTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = -2084837727852885212L;
+
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
-    
+
     public static final int DESTCOL = 0;
     static final int NEXTHOPCOL = 1;
     static final int HOPCOUNTCOL = 2;
@@ -34,47 +39,62 @@ public class LayoutBlockRouteTableModel extends javax.swing.table.AbstractTableM
     static final int STATECOL = 6;
     static final int VALIDCOL = 7;
 
-    static final int NUMCOL = 7+1;
-    
+    static final int NUMCOL = 7 + 1;
+
     boolean editable = false;
-    
+
     public LayoutBlockRouteTableModel(boolean editable, LayoutBlock lBlock) {
         this.editable = editable;
         this.lBlock = lBlock;
         lBlock.addPropertyChangeListener(this);
     }
-    
+
     public int getRowCount() {
         return lBlock.getNumberOfRoutes();
     }
 
-    public int getColumnCount( ){
+    public int getColumnCount() {
         return NUMCOL;
     }
+
     @Override
     public String getColumnName(int col) {
         switch (col) {
-        case DESTCOL:         return rb.getString("Destination");
-        case NEXTHOPCOL:    return rb.getString("NextHop");
-        case HOPCOUNTCOL:    return rb.getString("HopCount");
-        case DIRECTIONCOL:   return rb.getString("Direction");
-        case METRICCOL:     return rb.getString("Metric");
-        case LENGTHCOL:     return rb.getString("Length");
-        case STATECOL:        return rb.getString("State");
-        case VALIDCOL:       return rb.getString("Valid");
-        
-        default:            return "<UNKNOWN>";
+            case DESTCOL:
+                return rb.getString("Destination");
+            case NEXTHOPCOL:
+                return rb.getString("NextHop");
+            case HOPCOUNTCOL:
+                return rb.getString("HopCount");
+            case DIRECTIONCOL:
+                return rb.getString("Direction");
+            case METRICCOL:
+                return rb.getString("Metric");
+            case LENGTHCOL:
+                return rb.getString("Length");
+            case STATECOL:
+                return rb.getString("State");
+            case VALIDCOL:
+                return rb.getString("Valid");
+
+            default:
+                return "<UNKNOWN>";
         }
     }
-    
+
     @Override
     public Class<?> getColumnClass(int col) {
-        if (col == HOPCOUNTCOL) return Integer.class;
-        else if (col == METRICCOL) return Integer.class;
-        else if (col == LENGTHCOL) return Float.class;
-        else return String.class;
+        if (col == HOPCOUNTCOL) {
+            return Integer.class;
+        } else if (col == METRICCOL) {
+            return Integer.class;
+        } else if (col == LENGTHCOL) {
+            return Float.class;
+        } else {
+            return String.class;
+        }
     }
-    
+
     /**
      * Editable state must be set in ctor.
      */
@@ -82,52 +102,62 @@ public class LayoutBlockRouteTableModel extends javax.swing.table.AbstractTableM
     public boolean isCellEditable(int row, int col) {
         return false;
     }
-    
+
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().toString().equals("length")) {
             fireTableDataChanged();
         } else if (e.getPropertyName().toString().equals("routing")) {
             fireTableDataChanged();
-        }
-        else if (matchPropertyName(e)){
+        } else if (matchPropertyName(e)) {
             // a value changed.  Find it, to avoid complete redraw
-            int row = (Integer)e.getNewValue();
+            int row = (Integer) e.getNewValue();
             // since we can add columns, the entire row is marked as updated
             fireTableRowsUpdated(row, row);
         }
     }
-    
-    	protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
-		return (e.getPropertyName().indexOf("state")>=0 || e.getPropertyName().indexOf("hop")>=0 
-		        || e.getPropertyName().indexOf("metric")>=0 || e.getPropertyName().indexOf("valid")>=0
-                  || e.getPropertyName().indexOf("neighbourmetric")>=0 );
-	}
-    
+
+    protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
+        return (e.getPropertyName().indexOf("state") >= 0 || e.getPropertyName().indexOf("hop") >= 0
+                || e.getPropertyName().indexOf("metric") >= 0 || e.getPropertyName().indexOf("valid") >= 0
+                || e.getPropertyName().indexOf("neighbourmetric") >= 0);
+    }
+
     /**
      * Provides the empty String if attribute doesn't exist.
      */
     public Object getValueAt(int row, int col) {
         // get roster entry for row
-        if (lBlock == null){
-        	log.debug("layout Block is null!");
-        	return "Error";
-        }    
+        if (lBlock == null) {
+            log.debug("layout Block is null!");
+            return "Error";
+        }
         switch (col) {
-        case DESTCOL:       return lBlock.getRouteDestBlockAtIndex(row).getDisplayName();
-        case NEXTHOPCOL:    String nextBlock = lBlock.getRouteNextBlockAtIndex(row).getDisplayName();
-                            if (nextBlock.equals(lBlock.getDisplayName()))
-                                nextBlock = rb.getString("DirectConnect");
-                            return nextBlock;
-        case HOPCOUNTCOL:   return Integer.valueOf(lBlock.getRouteHopCountAtIndex(row));
-        case DIRECTIONCOL:  return jmri.Path.decodeDirection(Integer.valueOf(lBlock.getRouteDirectionAtIndex(row)));
-        case METRICCOL:     return Integer.valueOf(lBlock.getRouteMetric(row));
-        case LENGTHCOL:     return Float.valueOf(lBlock.getRouteLengthAtIndex(row));
-        case STATECOL:      return lBlock.getRouteStateAsString(row);
-        case VALIDCOL:      String value ="";
-                            if(lBlock.getRouteValid(row))
-                                value = "*";
-                            return value;
-        default:            return "<UNKNOWN>";
+            case DESTCOL:
+                return lBlock.getRouteDestBlockAtIndex(row).getDisplayName();
+            case NEXTHOPCOL:
+                String nextBlock = lBlock.getRouteNextBlockAtIndex(row).getDisplayName();
+                if (nextBlock.equals(lBlock.getDisplayName())) {
+                    nextBlock = rb.getString("DirectConnect");
+                }
+                return nextBlock;
+            case HOPCOUNTCOL:
+                return Integer.valueOf(lBlock.getRouteHopCountAtIndex(row));
+            case DIRECTIONCOL:
+                return jmri.Path.decodeDirection(Integer.valueOf(lBlock.getRouteDirectionAtIndex(row)));
+            case METRICCOL:
+                return Integer.valueOf(lBlock.getRouteMetric(row));
+            case LENGTHCOL:
+                return Float.valueOf(lBlock.getRouteLengthAtIndex(row));
+            case STATECOL:
+                return lBlock.getRouteStateAsString(row);
+            case VALIDCOL:
+                String value = "";
+                if (lBlock.getRouteValid(row)) {
+                    value = "*";
+                }
+                return value;
+            default:
+                return "<UNKNOWN>";
         }
     }
 
@@ -138,23 +168,26 @@ public class LayoutBlockRouteTableModel extends javax.swing.table.AbstractTableM
 
     public int getPreferredWidth(int column) {
         int retval = 20; // always take some width
-        retval = Math.max(retval, new javax.swing.JLabel(getColumnName(column)).getPreferredSize().width+15);  // leave room for sorter arrow
-        for (int row = 0 ; row < getRowCount(); row++) {
-            if (getColumnClass(column).equals(String.class))
+        retval = Math.max(retval, new javax.swing.JLabel(getColumnName(column)).getPreferredSize().width + 15);  // leave room for sorter arrow
+        for (int row = 0; row < getRowCount(); row++) {
+            if (getColumnClass(column).equals(String.class)) {
                 retval = Math.max(retval, new javax.swing.JLabel(getValueAt(row, column).toString()).getPreferredSize().width);
-            else if (getColumnClass(column).equals(Integer.class))
+            } else if (getColumnClass(column).equals(Integer.class)) {
                 retval = Math.max(retval, new javax.swing.JLabel(getValueAt(row, column).toString()).getPreferredSize().width);
-        }    
-        return retval+5;
+            }
+        }
+        return retval + 5;
     }
-    
+
     // drop listeners
     public void dispose() {
     }
 
-    public jmri.Manager getManager() { return jmri.InstanceManager.layoutBlockManagerInstance(); }
+    public jmri.Manager getManager() {
+        return jmri.InstanceManager.getDefault(LayoutBlockManager.class);
+    }
 
     LayoutBlock lBlock;
-    
-    static final Logger log = LoggerFactory.getLogger(LayoutBlockRouteTableModel.class.getName());
+
+    private final static Logger log = LoggerFactory.getLogger(LayoutBlockRouteTableModel.class.getName());
 }

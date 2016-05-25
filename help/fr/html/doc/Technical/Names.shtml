@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Names.shtml,v 1.22 2011/04/10 18:29:38 matthewharris Exp $ -->
+<!--  $Id$ -->
 
-<!-- Translated by Blorec Hervé le 2011-09-20-->  
+<!-- UpDated by Blorec Herv&#233; le 2013-09-07-->  
 
 <html lang="fr">
 <head>
@@ -19,7 +19,7 @@
     <!-- or change them to reflect your alternative logo -->
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -32,166 +32,167 @@
 
 	<div id="mainContent">
 
-<H1>JMRI: Les Noms et Désignations</H1>
+<H1>JMRI: Les Noms et D&#233;signations</H1>
 
-Cette page explique comment les objets JMRI sont nommés, combien de ces noms sont 
-pour référencer les objets (matériel et logiciel), et combien de noms lisible par 
-l'utilisateur sont utilisés..
+Cette page explique comment les objets JMRI sont nomm&#233;s, combien de ces noms sont utilis&#233;s
+pour r&#233;f&#233;rencer les objets (mat&#233;riel et logiciel), et combien de noms lisibles par 
+l'utilisateur sont utilis&#233;s..
 
 <h2>Qu'est-ce qu'un nom?</h2>
 
-Pourquoi avons-nous besoin de noms pour tout, plutôt que simplement des références dans le code?
+Pourquoi avons-nous besoin de noms pour tout, plut&#244;t que simplement des r&#233;f&#233;rences dans le code?
 Il ya plusieurs utilisations importantes:
 <OL>
-<LI> Lorsque vous travaillez avec l'entrée utilisateur, par exemple, en saisissant un nombre dans un champ,
+<LI> Lorsque vous travaillez avec l'entr&#233;e utilisateur, par exemple, en saisissant un nombre dans un champ,
 le code aura besoin de savoir comment cartographier les informations fournies par l'utilisateur
 sur des objets. Parfois, l'utilisateur voudra nommer les objets
 avec un nom d'utilisateur arbitraire, par exemple, "Aiguillage Lockport-Est".
-Ceux-ci peuvent ne pas être connus avant que leur mise en correspondance avec du matériel n'aient été réalisés.
-Mais d'autres fois ce seront de 'novo' identifications que le
-code doit comprendre, par exemple, quelque chose qui signifie "LocoNet aiguillage 23 .
+Ceux-ci peuvent ne pas &#234;tre connus avant que leur mise en correspondance avec du mat&#233;riel n'aient &#233;t&#233; r&#233;alis&#233;es.
+Mais d'autres fois ce seront de nouvelles identifications que le
+code doit comprendre, par exemple, quelque chose qui signifie "LocoNet Aiguillage 23 .
 
-<LI> Nous imaginons que les configurations sont stockées dans des fichiers XML,
+<LI> Nous imaginons que les configurations sont stock&#233;es dans des fichiers XML,
 sous une forme symbolique. Les noms sont un moyen pratique de relier des objets
-et des références d'objets dans ce genre de configuration.
+et des r&#233;f&#233;rences d'objets dans ce genre de configuration.
 </OL>
 
 <a name="type">
-<H2>Eléments avec des noms</h2></a>
+<H2>El&#233;ments avec des noms</h2></a>
 Il y a un certain nombre de choses qui peuvent avoir besoin des noms:
 <UL>
-<LI>Apparences pour les signaux
+<LI>Aspects pour les signaux
 <LI>Cantons (segment de voies)
-<LI>Tête de signal
-<LI>Lumières(un type de sortie)
-<LI>Mémoires
+<LI>t&#234;te de signal
+<LI>Lumi&#232;res(un type de sortie)
+<LI>M&#233;moires
 <LI>Sorties
 <LI>Alimentation districts et sous-districts d'Alimentation
-<LI>Itinéraires
-<LI>entrée Capteurs
+<LI>Itin&#233;raires
+<LI>entr&#233;e Capteurs
 <LI>Aiguillages
 <LI>logiX
 </UL>
 
-Certains d'entre eux sont associés à un périphérique matériel spécifique, par exemple un aiguillage particulier
-. D'autres sont plus virtuels, par exemple, un itinéraire, qui est une collection de contrôle
+Certains d'entre eux sont associ&#233;s &#224; un p&#233;riph&#233;rique mat&#233;riel sp&#233;cifique, par exemple un aiguillage particulier
+. D'autres sont plus virtuels, par exemple, un itin&#233;raire, qui est une collection de contr&#244;le
 d'information au sein du programme.
 
-<h2>Noms Système et Utilisateur</h2>
+<h2>Noms Syst&#232;me et Utilisateur</h2>
 
- Les utilisateurs JMRI ont à la fois "noms de système»et «nom d'utilisateur " pour référencer des choses 
+ JMRI utilisent &#224; la fois les "noms syst&#232;me" et les "noms utilisateur " pour r&#233;f&#233;rencer des choses 
 
 <P>
 Nous voulons que les utilisateurs puissent appeler les choses comme ils veulent.
-Des noms tels que "p (24,23) *" ne sont pas utiles. Chaque élément nommé pourra donc
-avoir un "nom d'utilisateur ", qui est une chaîne entièrement libre. Vous pouvez mettre
+Des noms tels que "p (24,23) *" ne sont pas utiles. Chaque &#233;l&#233;ment nomm&#233; pourra donc
+avoir un "nom utilisateur ", qui est une cha&#238;ne enti&#232;rement libre. Vous pouvez mettre
 ce que vous voulez dedans, tant que ce n'est pas un duplicata de nom
-donné à autre chose. Par exemple, on pourrait appeler un Aiguillage "West syard lead"
-ou "aiguillage 32 " ou "fil vert du contrôleur" ou autre chose.
+donn&#233; &#224; autre chose. Par exemple, on pourrait appeler un Aiguillage "West yard lead"
+ou "aiguillage 32 " ou "fil vert du contr&#244;leur" ou autre chose.
 
 <p>
-dans le même temps, nous avons besoin d'un nom de raccourci, un identifiant vraiment unique,
-pour nous parler des objets spécifiques. cela ne doit pas être commode, mais
+Dans le m&#234;me temps, nous avons besoin d'un nom de raccourci, un identifiant vraiment unique,
+pour nous parler des objets sp&#233;cifiques. Ça ne doit pas &#234;tre commode, mais
 nous devons avoir une cartographie claire de nom pour l'objet et retour. Par exemple,
-nous avons besoin d'une manière très spécifique pour identifier les "Aiguillage LocoNet de 23. Nous appelons ceci
-"noms de système". Le Code JMRI sera la carte de ceux-ci vers et depuis le matériel où tous les renseignements peuvent être nécessaire.
+nous avons besoin d'une mani&#232;re tr&#232;s sp&#233;cifique pour identifier les "Aiguillage LocoNet 23. Nous appelons ceci
+"noms de syst&#232;me". Le Code JMRI sera la carte de ceux-ci vers et depuis toutes les informations
+ mat&#233;riel peut &#234;tre n&#233;cessaire.
 
-<H2>Format du Nom Système</h2>
+<H2>Format du Nom Syst&#232;me</h2>
 
-Un nom de système est formé d'une seule lettre représentant le matériel du système,
+Un nom syst&#232;me est form&#233; d'une seule lettre repr&#233;sentant le mat&#233;riel du syst&#232;me,
 suivie d'une seule lettre indiquant le type,
-suivi par le système et d' une chaînes de type spécifique.
-La chaîne est censée être liée à l'adressage matériel, mais
+suivi par le syst&#232;me et d' une cha&#238;nes de type sp&#233;cifique.
+La cha&#238;ne est cens&#233;e &#234;tre li&#233;e &#224; l'adressage mat&#233;riel, mais
 c'est par ailleurs sans contrainte.
 <P>
 Exemples:
 <UL>
-<LI> LT23 - <u> L </u> oconet <u> T </u> urnout <u> 23 </u>.
-<LI> CS12 <LI> - Les 12 <u> </u> e <u> C </u>/IRM <u> S </u> Ensor .
+<LI>LT23 - <u>L</u>oconet <u>T</u>urnout <u>23</u>.
+<LI>CS12 <LI> - Les <u>12</u> <u>C</u>/IRM <u>S</u>Ensor .
 </ul>
 
-Notez qu'il n'y a aucune hypothèse de modèle pour les noms, ils ne sont pas
- affecter de façon monotone, ils ne sont pas limités à un seul système.
+Notez qu'il n'y a aucune hypoth&#232;se de mod&#232;le pour les noms, ils ne sont pas
+ affecter de fa&#231;on monotone, ils ne sont pas limit&#233;s &#224; un seul syst&#232;me.
 
 <a name="hardware">
-<H3>Matériel  système de lettres</h3></a>
-Notez que certains d'entre eux sont des espaces réservés, et n'ont pas de mise en œuvre sous-jacente.
+<H3>Mat&#233;riel, lettres syst&#232;me  </h3></a>
+Notez que certaines d'entre elles sont des espaces r&#233;serv&#233;s, et n'ont pas de mise en oeuvre sous-jacente.
 (les liens vont vers des pages  JMRI avec plus d'informations))
 <ul>
-<LI>A CTI <a href="../../hardware/acela/index.shtml"> Acela </a>
-<LI>B (réservé aux CTI-Brain Train)
-<LI>C <a href="../../hardware/cmri/CMRI.shtml"> C/IRM série </a>
-<LI>D <a href="../../hardware/SRCP/index.shtml"> SRCP </a>
-<LI>E <a href="../../hardware/easydcc/EasyDCC.shtml"> EasyDCC </a>
+<LI>A CTI <a href="../../hardware/acela/index.shtml">Acela</a>
+<LI>B (r&#233;serv&#233; aux CTI-Brain Train)
+<LI>C <a href="../../hardware/cmri/CMRI.shtml">C/IRM s&#233;rie</a>
+<LI>D <a href="../../hardware/SRCP/index.shtml">SRCP</a>
+<LI>E <a href="../../hardware/easydcc/EasyDCC.shtml">EasyDCC</a>
 <LI>F <a href="../../hardware/rfid/index.shtml">RFID tag readers</a> 
-<LI>G ProTrak <a href="../../hardware/grapevine/index.shtml"> Grapevine </a>
+<LI>G ProTrak <a href="../../hardware/grapevine/index.shtml">Grapevine</a>
 <LI>H
-<LI> I Interne  par exemple, objets sans matériel associé
+<LI> I Interne  par exemple, objets sans mat&#233;riel associ&#233;
 <LI> J
-<LI> K <a href="../../hardware/maple/index.shtml"> Systèmes Maple </a>
-<LI> L <a href="../../hardware/loconet/Digitrax.shtml"> LocoNet </a>
-<LI> M Bus de commandes du réseau de modèle de chemin de fer, dont le premier est
- <a href="../../hardware/can/cbus/index.shtml"> MERG CBUS </a>
-<LI> N <a href="../../hardware/nce/NCE.shtml"> RCE </a> (également <a href ="../../matériel/nce/Wangrow.shtml "> Wangrow </a> en ce moment)
-<LI> O <a href="../../hardware/oaktree/OakTree.shtml"> Oak Tree Systems </a>
-<LI> P <a href="../../hardware/powerline/index.shtml"> transmission CPL </a>, par exemple X10 et INSTEON
+<LI> K <a href="../../hardware/maple/index.shtml">Syst&#232;mes Maple</a>
+<LI> L <a href="../../hardware/loconet/Digitrax.shtml">LocoNet</a>
+<LI> M Bus de commandes du r&#233;seau de mod&#232;le de chemin de fer, dont le premier est
+ <a href="../../hardware/can/cbus/index.shtml">MERG CBUS</a>
+<LI> N <a href="../../hardware/nce/NCE.shtml">RCE</a> (&#233;galement <a href ="../../mat&#233;riel/nce/Wangrow.shtml ">Wangrow</a> en ce moment)
+<LI> O <a href="../../hardware/oaktree/OakTree.shtml">Oak Tree Systems</a>
+<LI> P <a href="../../hardware/powerline/index.shtml">transmission CPL</a>, par exemple X10 et INSTEON
 <LI> Q <a href="../../hardware/qsi/index.shtml"> QSI interface de programmation </a>
-<LI> R <a href="../../hardware/rps/index.shtml"> système RPS </a>
-<LI> S <a href="../../hardware/sprog/SPROG.shtml"> Sprog </a>
-<LI> T <a href="../../hardware/tmcc/index.shtml"> Lionel TMCC </a>
-<li> U <a href="../../hardware/ecos/index.shtml"> ESU ECoS </a>
-<LI> V TracTronics <a href="../../hardware/secsi/index.shtml"> SECSI </a>
-<LI> W (réservé pour Wangrow, mais qui est actuellement toujours combiné avec des NCE)
-<LI> X <a href="../../hardware/XPressNet/index.shtml"> XpressNet </a>
-<LI> Z <a href="../../hardware/zimo/Zimo.shtml"> Zimo MX-1 </a>
+<LI> R <a href="../../hardware/rps/index.shtml">syst&#232;me RPS</a>
+<LI> S <a href="../../hardware/sprog/SPROG.shtml">Sprog</a>
+<LI> T <a href="../../hardware/tmcc/index.shtml">Lionel TMCC</a>
+<li> U <a href="../../hardware/ecos/index.shtml">ESU ECoS</a>
+<LI> V TracTronics <a href="../../hardware/secsi/index.shtml">SECSI</a>
+<LI> W (r&#233;serv&#233; pour Wangrow, mais qui est actuellement toujours combin&#233; avec des NCE)
+<LI> X <a href="../../hardware/XPressNet/index.shtml">XpressNet</a>
+<LI> Z <a href="../../hardware/zimo/Zimo.shtml">Zimo MX-1</a>
 </ul>
    
 <a name="types">
-<H3>Lettres type de périphérique</h3></a>
-Notez que certains d'entre eux sont des espaces réservés, et n'ont pas de mise en œuvre sous-jacente. En outre,
-il n'y a aucune garantie que tout système matériel donné ne les mettra jamais en œuvre. 
+<H3>Lettres type de p&#233;riph&#233;rique</h3></a>
+Notez que certains d'entre eux sont des espaces r&#233;serv&#233;s, et n'ont pas de mise en oeuvre sous-jacente. En outre,
+il n'y a aucune garantie que tout syst&#232;me mat&#233;riel donn&#233; ne les mettra jamais en oeuvre. 
+<li>
 
+<li>A Audio - un objet logiciel interne qui contient des informations sur un &#233;chantillon  son
+pour &#234;tre plac&#233; &#224; une position sp&#233;cifique dans l'espace 3D
 
-<li>A Audio - un objet logiciel interne qui contient des informations sur un échantillon  son
-pour être placé à une position spécifique dans l'espace 3D
-
-<li>B Bloc(Canton) - un objet logiciel qui permet de suivre le contenu d'un canton spécifique
+<li>B Bloc(Canton) - un objet logiciel qui permet de suivre le contenu d'un canton sp&#233;cifique
 de la voie
 
-<li>D iDentité -Un objet logiciel qui contient des informations sur une plaque d'identité qui est, généralement, attaché à un morceau de matériel roulant. Ces objets ne sont pas spécifiques au système, mais sont des objets internes, donc ont des noms commençant par l'ID. Le matériel sous-jacent va utiliser des objets Reporter pour communiquer avec JMRI quand un objet identité spécifique a été vu
+<li>D iDentit&#233; -Un objet logiciel qui contient des informations sur une plaque d'identit&#233; qui est, g&#233;n&#233;ralement, attach&#233; &#224; un morceau de mat&#233;riel roulant. Ces objets ne sont pas sp&#233;cifiques au syst&#232;me, mais sont des objets internes, donc ont des noms commen&#231;ant par l'ID. Le mat&#233;riel sous-jacent va utiliser des objets Reporter pour communiquer avec JMRI quand un objet identit&#233; sp&#233;cifique a &#233;t&#233; vu
 
-<LI>F Mât de signal (F n'est pas particulièrement mnémonique, peut-être qu'un mât à deux têtes
-ressemble à un F sur le côté? Toutes les bonnes lettres ont été prises)
+<LI>F M&#226;t Signal (F n'est pas particuli&#232;rement mn&#233;monique, peut-&#234;tre qu'un m&#226;t &#224; deux t&#234;tes
+ressemble &#224; un F sur le c&#244;t&#233;? Toutes les bonnes lettres ont &#233;t&#233; prises)
 
-<LI> H signal Head (Tête de signal)  - Une partie d'un signal (qui peut avoir plusieurs têtes).
-Également interprété pour inclure des indicateurs sur les panneaux de contrôle qui
+<LI> H T&#234;te signal   - Une partie d'un signal (qui peut avoir plusieurs t&#234;tes).
+&#201;galement interpr&#233;t&#233; pour inclure des indicateurs sur les panneaux de contr&#244;le qui
 agissent pour afficher les aspects des signaux
 
 
-<LI>M Mémoire - Pour l'instant, cela n'a pas vraiment d'équivalent dans le matériel de réseau,
-mais est utilisé comme un endroit pour stocker temporairement des informations et un affichage sur panneaux, etc.
+<LI>M M&#233;moire - Pour l'instant, cela n'a pas vraiment d'&#233;quivalent dans le mat&#233;riel de r&#233;seau,
+mais est utilis&#233; comme un endroit pour stocker temporairement des informations et un affichage sur panneaux, etc.
 
-<LI>L Lumière -une autre forme de sortie, par exemple, utilisé pour voyants de contrôle sur un réseau 
+<LI>L Light (Lumi&#232;re) -une autre forme de sortie, par exemple, utilis&#233; pour voyants de contr&#244;le sur un r&#233;seau 
 
-<LI> P - Gestionnaire d'alimentation par exemple du réseau, à savoir, district, sous - district; tous les systèmes ne font pas de distinction entre ceux-ci, de sorte que la lettre type d'appareil ne le fait pas non plus.. Par exemple, la partie du système spécifique pourrait être B pour la puissance du réseau principale, par exemple LPB ou S42 pour 2 canaux sous-district sur la carte 4, par exemple LPS42.
+<LI> P - Gestionnaire d'alimentation par exemple du r&#233;seau, &#224; savoir, district, sous - district; tous les syst&#232;mes ne font pas de distinction entre ceux-ci, de sorte que la lettre type d'appareil ne le fait pas non plus.. Par exemple, la partie du syst&#232;me sp&#233;cifique pourrait &#234;tre B pour la puissance du r&#233;seau principale, par exemple LPB ou S42 pour 2 canaux sous-district sur la carte 4, par exemple LPS42.
 
-<LI> R Reporters -(Journaux) un mécanisme d'usage général pour communication d'informations complexes
-du réseau, par exemple, identification locomotive depuis certains matériels, Transpondeur,
-Numéros des étiquettes RFID, etc.
+<LI> R Rapports - un m&#233;canisme d'usage g&#233;n&#233;ral pour communication d'informations complexes
+du r&#233;seau, par exemple, identification locomotive depuis certains mat&#233;riels, Transpondeur,
+Num&#233;ros des &#233;tiquettes RFID, etc.
 
-<LI>S Capteurs - en général les capteurs d'entrée ont un but qui est généralement
-d'être ACTIF ou INACTIF. C'est le plus couramment utilisé pour le remplissage des 
-détecteurs de cantons.
+<LI>S Sensor (Capteurs) - en g&#233;n&#233;ral les capteurs d'entr&#233;e ont un but qui est g&#233;n&#233;ralement
+d'&#234;tre ACTIF ou INACTIF. C'est le plus couramment utilis&#233; pour le remplissage des 
+d&#233;tecteurs de cantons.
 
-<LI> T Turnout (aiguillage) - en fait une sortie à usage général sur le réseau
-<LI> X Logix - un ensemble d'équations logiques utilisées pour contrôler le réseau 
+<LI> T Turnout (Aiguillage) - en fait une sortie &#224; usage g&#233;n&#233;ral sur le r&#233;seau
+<LI> X Logix - un ensemble d'&#233;quations logiques utilis&#233;es pour contr&#244;ler le r&#233;seau 
 </ul>
 
 <a name="systeminfo">
-<h3>Info-spécifiques Système</H3></a>
-Chaque système matériel différent peut spécifier la "chaine " qui suit le système et la lettre type.
-Généralement spécifique, ce sont de petits nombres, mais leur signification exacte est très spécifique au système.
-Pour plus d'informations, s'il vous plaît voir les pages spécifiques pour 
+<h3>Info-sp&#233;cifiques Syst&#232;me</H3></a>
+Chaque syst&#232;me mat&#233;riel diff&#233;rent peut sp&#233;cifier la "chaine " qui suit le syst&#232;me et la lettre type.
+G&#233;n&#233;ralement sp&#233;cifique, ce sont de petits nombres, mais leur signification exacte est tr&#232;s sp&#233;cifique au syst&#232;me.
+Pour plus d'informations, s'il vous pla&#238;t voir les pages sp&#233;cifiques pour 
 
 <UL>
 <LI><A HREF="../../hardware/cmri/CMRI.shtml#numbers">C/MRI</a>
@@ -204,39 +205,39 @@ Pour plus d'informations, s'il vous plaît voir les pages spécifiques pour
 </UL>
 
 <P>
-Les objets «internes »  peuvent également être adressés et manipulés, mais ils n'ont pas de stricte
-correspondance avec certains matériels sur le réseau. Par exemple, si une tête de signal
-est mise en œuvre sur trois sorties différentes, LT1, LT2 et LT3, l'objet tête du signal
-pourrait être appelé IH3.
+Les objets "internes" peuvent &#233;galement &#234;tre adress&#233;s et manipul&#233;s, mais ils n'ont pas de stricte
+correspondance avec certains mat&#233;riels sur le r&#233;seau. Par exemple, si une t&#234;te signal
+est mise en oeuvre sur trois sorties diff&#233;rentes, LT1, LT2 et LT3, l'objet t&#234;te de signal
+pourrait &#234;tre appel&#233; IH3.
 
 
 <a name="special">
-<H2>Convention de Désignation pour un usage automatique</h2></a>
+<H2>Convention de D&#233;signation pour un usage automatique</h2></a>
 
-Certaines constructions de niveau supérieur créent leurs propres éléments. Par exemple, un
+Certaines constructions de niveau sup&#233;rieur cr&#233;ent leurs propres &#233;l&#233;ments. Par exemple, un
 "Groupe Capteur"
-C'est vraiment juste une collection d'Itinéraires
-qui implémente la logique de groupe capteur, il n'y a pas d'objet spécifique dans le
-programme qui met en œuvre le groupe de capteurs. Au lieu de cela, lorsque l'utilisateur
-crée un groupe capteur "mon groupe", une série d'itinéraires avec des noms de système, comme:
+C'est vraiment juste une collection d'Itin&#233;raires
+qui impl&#233;mente la logique de groupe capteur, il n'y a pas d'objet sp&#233;cifique dans le
+programme qui met en oeuvre le groupe de capteurs. Au lieu de cela, lorsque l'utilisateur
+cr&#233;e un groupe capteur "mon groupe", une s&#233;rie d'itin&#233;raires avec des noms de syst&#232;me, comme:
 <code> <pre>
 CAPTEUR GROUPE: mon groupe: LS1
-CAPTEURSENSOR GROUPE: mon groupe: LS2
+CAPTEUR GROUPE: mon groupe: LS2
 </pre> </code>
-sont créés qui met en œuvre le groupe. L'outil de groupe de capteurs sait regarder
-pour les itinéraire de ce nom.
+sont cr&#233;&#233;s qui met en oeuvre le groupe. L'outil de groupe capteurs sait regarder
+pour les itin&#233;raire de ce nom.
 
 <P>
-Pour ce faire, deux règles informelles sont utilisées:
+Pour ce faire, deux r&#232;gles informelles sont utilis&#233;es:
 <UL>
-<LI>Les utilisateurs ne devraient pas utiliser les  caractères ":" ou "$"  dans les noms de système ou utilisateur.
+<LI>Les utilisateurs ne devront pas utiliser les  caract&#232;res ":" ou "$"  dans les noms de syst&#232;me ou utilisateur.
 Les outils automatiques doivent utiliser au moins un de ceux-ci afin de s'assurer qu'ils n'entrent pas en collision
 avec un nom choisi par l'utilisateur.
-<LI> Les outils qui utilisent cette méthode ont leur nom d'outil au début de tous les noms de système
-qu'ils créent, comme «CAPTEUR GROUPESENSOR GROUP" a été utilisée ci-dessus.
+<LI> Les outils qui utilisent cette m&#233;thode ont leur nom d'outil au d&#233;but de tous les noms de syst&#232;me
+qu'ils cr&#233;ent, comme "SENSOR GROUP" a &#233;t&#233; utilis&#233;e ci-dessus.
 </UL>
 <P>
-La liste des outils travaillent de cette manière:
+La liste des outils travaillant de cette mani&#232;re:
 <UL>
 <LI> CAPTEUR GROUPE - jmri.jmrit.sensorgroup
 <LI> USS CTC - jmri.jmrit.ussctc
@@ -245,13 +246,13 @@ T</UL>
 <H2>Notes</h2>
 <UL>
 
-<LI>Certains appareils ne sont pas vraiment nommés.
+<LI>Certains appareils ne sont pas vraiment nomm&#233;s.
 Le programmateur DCC est le premier exemple, mais il peut y en avoir d'autres.
 
-<LI>La convention nom système ne fournit pas un moyen facile d'identifier plus
-un adaptateur d'un type donné. Par exemple, si vous êtes connecté à plus d'un LocoNet, ou à plus d'une station de commande d'un seul type, qui alimentent des parties distinctes d'un réseau unique, comment adressez-vous ceci?
+<LI>La convention nom syst&#232;me ne fournit pas un moyen facile d'identifier plus d'
+un adaptateur d'un type donn&#233;. Par exemple, si vous &#234;tes connect&#233; &#224; plus d'un LocoNet, ou &#224; plus d'une station de commande d'un seul type, qui alimentent des parties distinctes d'un r&#233;seau unique, comment adressez-vous ceci?
 
-<LI> De même, il n'y a aucune disposition pour un seul programme pour faire face à plus d'un réseau. Si c'est nécessaire, nous devons comprendre ce que le programme tente de faire
+<LI> De m&#234;me, il n'y a aucune disposition pour un seul programme pour faire face &#224; plus d'un r&#233;seau. Si c'est n&#233;cessaire, nous devons comprendre ce que le programme tente de faire
 
 
 </UL>

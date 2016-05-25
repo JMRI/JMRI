@@ -12,8 +12,9 @@
 # Switch, feedback and sensor type LocoNet messages can be sent
 # The original PM4 button and action are not used
 #
-# The next line is maintained by CVS, please don't change it
-# $Revision$
+# version 1.3 - 2/6/13 Changed DCC Signal packet to match JMRI definition
+
+import jmri
 
 import java
 import javax.swing
@@ -119,19 +120,22 @@ def whenSendDccButtonClicked(event) :
          im1 = 0
          im2 = 96
      else :	    # Signal packet - 10AAAAAA 0 0AAA0aa1 0 000XXXXX 0 EEEEEEEE
-                # a - one of four outputs & in this case considered as part of the address
+                # a - two low bit of the address
                 # A - address, X - aspect number
-         addr = int(sgAddress.text) + 3  # change text to a number & add offset
-         toLsb = addr & 3       # extract bits 0,1 for second byte 0xxx0AA1
+         addr = int(sgAddress.text) - 1 # change text to a number and subtrac one
+         # print "raw address", addr
+         toLsb = addr & 3       # extract bits 1,0 for second byte 0xxx0AA1
          addr = addr / 4        # shift down by two
-         dhi = 1 + 32 
-         im1 = addr & 0x3F      # extract six bits 3-8 for first byte 10AAAAAA
-         im2 = addr / 64        # shift down by six
-         print "im1, im2", im1, im2
+         # print "mod address", addr
+         dhi = 1                # bit 7 of im1 is a one (10AAAAAA)
+         im1 = addr & 0x3F      # extract six bits 7-2 for first byte 10AAAAAA
+         im2 = addr / 64         # shift down by 6 bits
+         # print "im1, im2", im1, im2
          im2 =  7 - im2     # invert the three bits by subtracting from seven
-         print "im2 inverted", im2
+         # print "im2 inverted", im2
          im2 = im2 * 16     # shift up by 5 bits
          im2 = im2 + (toLsb * 2) + 1
+         # print "im2 final", im2
          im3 = int(aspect.text)
          numOfBytes = 3
          

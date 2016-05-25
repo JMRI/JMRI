@@ -2,20 +2,18 @@ package jmri.util.table;
 
 // This was adapted from Core Swing Advanced Programming, Prentice Hall
 // Changes:  Change package
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.EventObject;
-
 import javax.swing.CellEditor;
-import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.EventListenerList;
 
 public class BasicCellEditor implements CellEditor,
-                                        PropertyChangeListener {
+        PropertyChangeListener {
+
     public BasicCellEditor() {
         this.editor = null;
     }
@@ -83,7 +81,7 @@ public class BasicCellEditor implements CellEditor,
                 if (changeEvent == null) {
                     changeEvent = new ChangeEvent(this);
                 }
-                ((CellEditorListener)l[i+1]).editingStopped(changeEvent);
+                ((CellEditorListener) l[i + 1]).editingStopped(changeEvent);
             }
         }
     }
@@ -95,21 +93,20 @@ public class BasicCellEditor implements CellEditor,
                 if (changeEvent == null) {
                     changeEvent = new ChangeEvent(this);
                 }
-                ((CellEditorListener)l[i+1]).editingCanceled(changeEvent);
+                ((CellEditorListener) l[i + 1]).editingCanceled(changeEvent);
             }
         }
     }
 
     // Implementation of the PropertyChangeListener interface
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals("ancestor") &&
-            evt.getNewValue() != null) {
+        if (evt.getPropertyName().equals("ancestor")
+                && evt.getNewValue() != null) {
             // Added to table - notify the editor
             editingStarted(editingEvent);
         }
     }
 
-    static JCheckBox checkBox = new JCheckBox();
     static ChangeEvent changeEvent;
     protected JComponent editor;
     protected EventListenerList listeners = new EventListenerList();

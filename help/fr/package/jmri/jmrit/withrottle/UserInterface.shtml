@@ -1,9 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <head>
-<!-- Copyright ($Author: bhoffman351 $) 2009 -->
-<!-- $Id: UserInterface.shtml,v 1.12 2011/04/27 01:50:06 bhoffman351 Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-11-3--> 
+<!-- Copyright ($Author$) 2009 -->
+<!-- $Id$ -->
+<!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-13--> 
 <title>JMRI: WiFi Throttle</title>
 
 <!-- Style -->
@@ -23,47 +23,46 @@
     <div id="mainContent">
 
 <h1> 
-JMRI: Régulateur WiFi
+JMRI: R&#233;gulateur WiFi
 </h1>
 
 <a href="http://withrottle.com"> 
    <img height="250" width="150" src="images/WiT150x250.png" align="right">
 </a>
-Cette fenêtre contrôle la connexion entre les manettes WiFi,
-par exemple un IPhone, IPod Touch, ou téléphone Android, et JMRI.
+Cette fen&#234;tre commande la connexion entre les manettes WiFi,
+par exemple un IPhone, IPod Touch, ou t&#233;l&#233;phone Android, et JMRI.
 
 
 <p>
-Il peut être configuré pour démarrer automatiquement avec le
-"<a href="../../../apps/TabbedPreferences.shtml#Startup"> Démarrage </a>" dans la section
-"<a href="../../../apps/TabbedPreferences.shtml"> JMRI Préférences </a>"
-section Préférences JMRI sous la rubrique «Actions».
+Il peut &#234;tre configur&#233; pour d&#233;marrer automatiquement avec le
+"<a href="../../../apps/TabbedPreferences.shtml#Startup"> D&#233;marrage </a>" dans la section
+"<a href="../../../apps/TabbedPreferences.shtml"> JMRI Pr&#233;f&#233;rences </a>"
+section Pr&#233;f&#233;rences JMRI sous la rubrique ï¿½Actionsï¿½.
 
 <p>
-<a href="../../../apps/TabbedPreferences.shtml#WiThrottle"> Les Préférences </a>
-pour les manettes WiFi peuvent être trouvées dans les Préférences JMRI
-sous la rubrique RégulateurWi.
+<a href="../../../apps/TabbedPreferences.shtml#WiThrottle"> Les Pr&#233;f&#233;rences </a>
+pour les manettes WiFi peuvent &#234;tre trouv&#233;es dans les Pr&#233;f&#233;rences JMRI
+sous la rubrique R&#233;gulateurWi.
 
 <p>
-Cet utilitaire diffuse ses informations de connexion  à travers le
-réseau local afin qu'il puisse être capté par un dispositif à la recherche du
- service. Ceci élimine d'avoir à entrer vos informations de connexion
-dans l'appareil. Si l'ordinateur exécutant JMRI est protégé par un
-logiciel pare-feu , vous pouvez avoir besoin de désactiver le pare-feu pour permettre aux
-Régulateurs WiFi de se connecter.
+Cet utilitaire diffuse ses informations de connexion  &#224; travers le
+r&#233;seau local afin qu'il puisse &#234;tre capt&#233; par un dispositif &#224; la recherche du
+ service. Ceci &#233;limine d'avoir &#224; entrer vos informations de connexion
+dans l'appareil. Si l'ordinateur ex&#233;cutant JMRI est prot&#233;g&#233; par un
+logiciel pare-feu , vous pouvez avoir besoin de d&#233;sactiver le pare-feu pour permettre aux
+R&#233;gulateurs WiFi de se connecter.
 
 <p>
-Lorsque vous utilisez un régulateur WiFi, si l'ordinateur passe en mode veille, le
-contrôle sera perdu. Il peut être nécessaire d'ajuster les préférences du système pour
-empêcher l'ordinateur de se mettre en veille quand il est inactif.
+Lorsque vous utilisez un r&#233;gulateur WiFi, si l'ordinateur passe en mode veille, la
+commande sera perdu. Il peut &#234;tre n&#233;cessaire d'ajuster les pr&#233;f&#233;rences du syst&#232;me pour
+emp&#234;cher l'ordinateur de se mettre en veille quand il est inactif.
 
 <P>
-Pour utiliser votre IPhone ou IPod Touch avec JMRI comme un régulateur, vous
-exécuter les applications sur
-la page <a href="http://withrottle.com"> WiThrottle </a>.
+Pour utiliser votre IPhone ou IPod Touch avec JMRI comme un r&#233;gulateur, vous
+ex&#233;cuter 
+l'application <a href="http://withrottle.com">WiThrottle</a> sur l'iPphone ou l'iPod Touch. L'application est disponible librement pour t&#233;l&#233;chargement sur l'iTunes store
 
-de l'IPhone ou l'IPod Touch. L'application de de base est
-disponible en téléchargement gratuit surl'ITunes Store.
+
 
 <P>
  <a href="EngineDriverAndroidThrottle.shtml">
@@ -71,44 +70,61 @@ disponible en téléchargement gratuit surl'ITunes Store.
 
 
 </a>
-Pour utiliser votre téléphone Android avec JMRI comme un régulateur, vous
-exécuter le programme
-<a href="EngineDriverAndroidThrottle.shtml"> Pilote Machine</a>
- sur le téléphone Android.
+Pour utiliser votre t&#233;l&#233;phone Android avec JMRI comme un r&#233;gulateur, vous
+ex&#233;cuter le programme
+<a href="EngineDriverAndroidThrottle.shtml"> Engine Driver</a>
+ sur le t&#233;l&#233;phone Android.
 
 <p>
-Le protocole est décrit sur une
-<a href="Protocol.shtml">page separée</a>.
-Pour en savoir plus sur JMRI en réseau voir la 
-<a href="../../../../html/doc/Technical/Networking.shtml">page technique sur le réseau local</a>.
-
-<p>
-<h3>
-Étiquettes Fonctions
-</h3>
-
-Étiquettes Fonctions peuvent être personnalisées pour chaque fiche à travers JMRI .
-Ces Étiquettes peuvent être affichées à la place des des génériques F1, F2...sur l'écran de l'équipement mobile.
-Les Étiquettes peuvent être ajoutées quand une nouvelle fiche est créées,
-ou par l'édition d'une fiche existante sous l'onglet Étiquettes Fonctions.
-Pour entrer des étiquettes de fonction, le format du programmateur doit être soit "Avancé" soit "Personnalisé".
+Le protocole est d&#233;crit sur une
+<a href="Protocol.shtml"> page separ&#233;e</a>.
+Pour en savoir plus sur JMRI en r&#233;seau voir la 
+<a href="../../../../html/doc/Technical/Networking.shtml"> page technique sur le r&#233;seau local</a>.
 
 <p>
 <h3>
-Itinéraires et Aiguillages
-
+&#201;tiquettes Fonctions
 </h3>
-L'application peut contrôler tous les aiguillages (et itinéraires) que JMRI contrôle. S'is sont disponibless dans la table aiguillage (ou itinéraire) de JMRI,
-ils sont automatiquement disponibles des les régulateurs WiFi. 
-S'il n'y a pas d'aiguillages (ou itinéraires dans la table(s, alors l'écran de commande pour eux n'apparaitra pas dans l'application.
-Par défaut,il peut faire tout ceci.
-Toutefois, si JMRI n'est pas capable de les contrôler, les régulateurs ne seront pas capables de le faire.
+
+Les &#201;tiquettes Fonctions peuvent &#234;tre personnalis&#233;es pour chaque Liste &#224; travers JMRI .
+Ces &#201;tiquettes peuvent &#234;tre affich&#233;es &#224; la place des des g&#233;n&#233;riques F1, F2...sur l'&#233;cran de l'&#233;quipement mobile.
+Les &#201;tiquettes peuvent &#234;tre ajout&#233;es quand une nouvelle entr&#233;e Liste est cr&#233;&#233;es,
+ou par l'&#233;dition d'une fiche existante sous l'onglet &#201;tiquettes Fonctions.
+Pour entrer des &#233;tiquettes de fonction, le format du programmateur doit &#234;tre soit "Avanc&#233;" soit "Personnalis&#233;".
 
 <p>
-En supplément, vous pouvez limiter quels aiguillages apparaissent.
-Il y a un élément appelé "Filtre de Contrôles"
-qui vous permet de dire quels aiguillages afficher sur l'écran ou le cacher.
+<h3>
+Itin&#233;raires et Aiguillages
 
+</h3>
+L'application peut commander tous les aiguillages (et itin&#233;raires) que JMRI commande. S'is sont disponibless dans le tableau aiguillage (ou itin&#233;raire) de JMRI,
+ils sont automatiquement disponibles dans les r&#233;gulateurs WiFi.ï¿½
+S'il n'y a pas d'aiguillages (ou itin&#233;raires dans le tableau(x) alors l'&#233;cran de commande pour eux n'apparaitra pas dans l'application.
+Par d&#233;faut,il peut faire tout ceci.
+Toutefois, si JMRI n'est pas capable de les commander, les r&#233;gulateurs ne seront pas capables de le faire.
+
+<p>
+En suppl&#233;ment, vous pouvez limiter quels aiguillages apparaissent.
+Dans JMRI avec la fen&#234;tre Withrottle active, il y a un menu Withrottle.
+Il y a un &#233;l&#233;ment appel&#233; "Filtre de Commandes"
+qui vous permet de dire quels aiguillages afficher sur l'&#233;cran ou le cacher.
+<p>
+<h3>Couplage Avanc&#233;</h3>
+
+Il ya maintenant deux options pour manipule le Couplage Assist&#233; (ou D&#233;codeur Assist&#233;) Compos&#233;e.
+Cela peut &#234;tre choisi parmi le <a href="../../../apps/TabbedPreferences.shtml#WiThrottle"> WiThrottle</a> partie des pr&#233;f&#233;rences JMRI.
+
+<p>
+
+La valeur par d&#233;faut est <b>Format NMRA</b>. Cela va construire une couplage en utilisant les commandes de couplages NMRA.
+Il n'utilise pas de techniques sp&#233;cifiques pour le syst&#232;me DCC connect&#233;.
+Cela permet aux manettes WiFi de travailler dans un syst&#232;me DCC de mani&#232;re ind&#233;pendante.
+Ces couplage peuvent mieux fonctionnerr pour la construction et la commande avec p&#233;riph&#233;riques WiFi.
+
+<p>
+La deuxi&#232;me option est <b>DCC Sp&#233;cifique &#224; la Marque</b> qui construira le couplage d'une mani&#232;re o&#249; ils vont fonctionner comme s'ils &#233;taient construits en utilisant un R&#233;gulateur du fabricant de DCC.
+ceux-ci suivront les caract&#233;ristiques sp&#233;cifiques au fabricant pour la construction et la commande des couplages.
+Ces couplages devraient mieux fontionner lors qu'ils sont construits avec un dispositif WiFi, mais command&#233;s par un r&#233;gulateur du fabricant de votre syst&#232;me DCC.
 <p>
 Ceci est la page d'aide help/en/package/jmri/jmrit/withrottle/UserInterface
 <!--#include virtual="/Footer" -->

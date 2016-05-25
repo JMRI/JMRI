@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<title>JMRI OperationsPro - Modify Trains by Car Type</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<a name="Top"></a>
+
+<h1>Using JMRI&reg; to Operate Trains</h1>
+<h2>OperationsPro: Modify Trains by Car Type window</h2>
+<hr>
+
+<p align="right">
+<a name="top"></a> <a href="Ops_Cars_Menu.shtml"><strong>Back</strong></a>
+</p>
+
+<table border="0" cellpadding="2" cellspacing="1" width="93%">
+  <tbody><tr>
+    <td rowspan="4" valign="top" width="330"><img src="images/Ops_Location_Modify_Trains.png" alt="modify trains" height="356" width="300"></td>
+  </tr>
+  <tr>
+    <td valign="top"><p><strong>Type </strong></p>
+    <p>Select the Car Type from the drop-down list:</p></td>
+    <td valign="top"><img src="images/Ops_ModifyTrains_Type.png" alt="type" height="208" width="297"></td>
+  </tr>
+  <tr>
+    <td valign="top"><p><strong>Trains</strong></p>
+    <p>Check the desired Trains:</p></td>
+    <td><strong><img src="images/Ops_ModifyTrains_Trains.png" alt="trains" height="243" width="312"></strong></td>
+  </tr>
+  <tr>
+    <td height="105" valign="top"><p>The <strong>Clear all</strong> button clears all selections.</p>
+    <p>The <strong>Select all</strong> button selects all the Trains items.</p>
+    <p>The <strong>Save</strong> button saves changes to your Car Roster.</p></td>
+    <td valign="top"><img src="images/Ops_ModifyTrains_buttons.png" alt="buttons" height="82" width="337"></td>
+  </tr>
+</tbody>
+</table>
+
+<h3>Modify Trains by Car Type window menu</h3>
+<img src="images/Ops_ModifyTrainsbyCarType.png" alt="menu" height="121" width="309">
+<p><strong>Tools</strong> <img src="images/arrow.gif"></p>
+<ul>
+<li><strong>Print Trains by Car Types</strong>
+<p>Print out example:</p>
+<img src="images/Ops_Print_TrainbyCarTypes.png" alt="print" height="392" width="723"></li>
+<li><strong>Preview Trains by Car Types</strong>
+<p>The Print Preview windows opens using your System Printer:</p>
+<img src="images/Ops_Preview_TrainsbyCars.png" alt="preview" height="360" width="675"></li>
+
+<p><strong><a href="#Top">Back</a></strong></p>
+<p align="right"><a href="Ops_Cars_Menu.shtml"><strong>Back</strong></a></p>
+<hr>
+
+<!--#include virtual="/Footer" -->
+</div>
+</div>
+</body>
+</html>

@@ -1,18 +1,18 @@
 package jmri.jmrix.loconet.locostats;
 
-import org.apache.log4j.Logger;
 import javax.swing.JFrame;
-
-import junit.framework.*;
-
-import jmri.jmrix.loconet.*;
-
+import jmri.jmrix.loconet.LnConstants;
+import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.util.JmriJFrame;
+import junit.framework.Assert;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * Tests for the LocoStatsFrame class
+ *
  * @author	Bob Jacobsen Copyright (C) 2006, 2008, 2010
- * @version     $Revision$
  */
 public class LocoStatsFrameTest extends TestCase {
 
@@ -22,7 +22,9 @@ public class LocoStatsFrameTest extends TestCase {
             public void requestUpdate() {  // replace actual transmit
                 updatePending = true;
             }
-            void report(String m) {}  // suppress messages
+
+            void report(String m) {
+            }  // suppress messages
         };
         p.initComponents();
         f.getContentPane().add(p);
@@ -34,58 +36,53 @@ public class LocoStatsFrameTest extends TestCase {
     }
 
     public void testDefaultFormat() throws Exception {
-        getFrame("Default LocoStats Window",0);
-    	JFrame f = jmri.util.JmriJFrame.getFrame("Default LocoStats Window");
-    	Assert.assertTrue("found frame", f !=null );
-    	if (f != null)
-    		f.dispose();
+        getFrame("Default LocoStats Window", 0);
+        JFrame f = jmri.util.JmriJFrame.getFrame("Default LocoStats Window");
+        Assert.assertTrue("found frame", f != null);
+        f.dispose();
     }
-    
-    public void testLocoBufferFormat()throws Exception {
+
+    public void testLocoBufferFormat() throws Exception {
         LocoStatsPanel p = getFrame("LocoBuffer Stats Window", 150);
         p.requestUpdate();
         p.message(new LocoNetMessage(
-            new int[]{LnConstants.OPC_PEER_XFER, 0x10, 0x50, 0x50, 0x01, 0x0,
-                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+                new int[]{LnConstants.OPC_PEER_XFER, 0x10, 0x50, 0x50, 0x01, 0x0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         ));
         JFrame f = jmri.util.JmriJFrame.getFrame("LocoBuffer Stats Window");
-    	Assert.assertTrue("found frame", f !=null );
-    	if (f != null)
-    		f.dispose();
+        Assert.assertTrue("found frame", f != null);
+        f.dispose();
     }
-    
+
     public void testPR2Format() throws Exception {
         LocoStatsPanel p = getFrame("PR2 Stats Window", 300);
         p.requestUpdate();
         p.message(new LocoNetMessage(
-            new int[]{LnConstants.OPC_PEER_XFER, 0x10, 0x22, 0x22, 0x01, 
-                        0x00, 1, 2, 0, 4, 
-                        0x00, 5, 6, 0, 0, 
-                      0}
+                new int[]{LnConstants.OPC_PEER_XFER, 0x10, 0x22, 0x22, 0x01,
+                    0x00, 1, 2, 0, 4,
+                    0x00, 5, 6, 0, 0,
+                    0}
         ));
-    	JFrame f = jmri.util.JmriJFrame.getFrame("PR2 Stats Window");
-    	Assert.assertTrue("found frame", f !=null );
-    	if (f != null)
-    		f.dispose();
+        JFrame f = jmri.util.JmriJFrame.getFrame("PR2 Stats Window");
+        Assert.assertTrue("found frame", f != null);
+        f.dispose();
     }
-    
+
     public void testMS100Format() throws Exception {
         LocoStatsPanel p = getFrame("MS100 Stats Window", 450);
         p.requestUpdate();
         p.message(new LocoNetMessage(
-            new int[]{LnConstants.OPC_PEER_XFER, 0x10, 0x22, 0x22, 0x01, 
-                        0x00, 1, 2, 0x20, 4, 
-                        0x00, 5, 6, 0, 0, 
-                      0}
+                new int[]{LnConstants.OPC_PEER_XFER, 0x10, 0x22, 0x22, 0x01,
+                    0x00, 1, 2, 0x20, 4,
+                    0x00, 5, 6, 0, 0,
+                    0}
         ));
         JFrame f = jmri.util.JmriJFrame.getFrame("MS100 Stats Window");
-    	Assert.assertTrue("found frame", f !=null );
-    	if (f != null)
-    		f.dispose();
-    }   
-    
-    // from here down is testing infrastructure
+        Assert.assertTrue("found frame", f != null);
+        f.dispose();
+    }
 
+    // from here down is testing infrastructure
     public LocoStatsFrameTest(String s) {
         super(s);
     }
@@ -101,6 +98,4 @@ public class LocoStatsFrameTest extends TestCase {
         TestSuite suite = new TestSuite(LocoStatsFrameTest.class);
         return suite;
     }
-
-    static Logger log = Logger.getLogger(LocoStatsFrameTest.class.getName());
 }

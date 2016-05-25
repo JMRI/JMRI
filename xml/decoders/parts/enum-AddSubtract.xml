@@ -1,12 +1,16 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id: enum-disabledEnabled.xml 22112 2012-12-30 02:13:36Z jacobsen $ -->
+<!-- $Id$ -->
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-    <enumChoice choice="Add value to base acceleration rate (increases acceleration delay)">
-		<choice>Add value to base acceleration rate (increases acceleration delay)</choice>
-    </enumChoice>
-    <enumChoice choice="Subtract value from base acceleration rate (decreases acceleration delay)">
-		<choice>Subtract value from base acceleration rate (decreases acceleration delay)</choice>
-    </enumChoice>
+  <enumChoice choice="Add value to base acceleration rate (increases acceleration delay)">
+    <choice>Add value to base acceleration rate (increases acceleration delay)</choice>
+    <choice xml:lang="it">Aggiunge valore al tasso di accellerazione base</choice>
+    <choice xml:lang="de">Addiere Wert zur Basis-Beschleunigung</choice>
+  </enumChoice>
+  <enumChoice choice="Subtract value from base acceleration rate (decreases acceleration delay)">
+    <choice>Subtract value from base acceleration rate (decreases acceleration delay)</choice>
+    <choice xml:lang="it">Sottrae valore al tasso di accellerazione base</choice>
+    <choice xml:lang="de">Subtrahiere Wert von der Basis-Beschleunigung</choice>
+  </enumChoice>
 </enumVal>

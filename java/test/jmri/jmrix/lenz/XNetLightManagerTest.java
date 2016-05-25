@@ -1,28 +1,29 @@
 package jmri.jmrix.lenz;
 
-import org.apache.log4j.Logger;
 import jmri.Light;
 import jmri.LightManager;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- Tests for the jmri.jmrix.acela.AcelaTurnoutManager class.
- * @author                      Paul Bender Copyright (C) 2010
- * @version                     $Revision$
+ * Tests for the jmri.jmrix.acela.AcelaTurnoutManager class.
+ *
+ * @author Paul Bender Copyright (C) 2010
  */
-public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTest  {
+public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTest {
 
     XNetInterfaceScaffold xnis = null;
 
     public String getSystemName(int i) {
-        return "XL"+i;
+        return "XL" + i;
     }
 
-   public void testAsAbstractFactory () {
+    public void testAsAbstractFactory() {
         // create and register the manager object
-        XNetLightManager xlm = new XNetLightManager(xnis,"X");
+        XNetLightManager xlm = new XNetLightManager(xnis, "X");
         jmri.InstanceManager.setLightManager(xlm);
 
         // ask for a Light, and check type
@@ -30,21 +31,24 @@ public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTest  {
 
         Light tl = lm.newLight("XL21", "my name");
 
-
-        if (log.isDebugEnabled()) log.debug("received light value "+tl);
-        Assert.assertTrue( null != (XNetLight)tl);
+        if (log.isDebugEnabled()) {
+            log.debug("received light value " + tl);
+        }
+        Assert.assertTrue(null != (XNetLight) tl);
 
         // make sure loaded into tables
-        if (log.isDebugEnabled()) log.debug("by system name: "+lm.getBySystemName("XL21"));
-        if (log.isDebugEnabled()) log.debug("by user name:   "+lm.getByUserName("my name"));
+        if (log.isDebugEnabled()) {
+            log.debug("by system name: " + lm.getBySystemName("XL21"));
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("by user name:   " + lm.getByUserName("my name"));
+        }
 
         Assert.assertTrue(null != lm.getBySystemName("XL21"));
         Assert.assertTrue(null != lm.getByUserName("my name"));
     }
 
-
     // from here down is testing infrastructure
-
     public XNetLightManagerTest(String s) {
         super(s);
     }
@@ -59,7 +63,7 @@ public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTest  {
     public static Test suite() {
         TestSuite suite = new TestSuite(XNetLightManagerTest.class);
         return suite;
-}
+    }
 
     // The minimal setup for log4J
     protected void setUp() {
@@ -67,15 +71,16 @@ public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTest  {
         // prepare an interface, register
         xnis = new XNetInterfaceScaffold(new LenzCommandStation());
         // create and register the manager object
-        l = new XNetLightManager(xnis,"X");
+        l = new XNetLightManager(xnis, "X");
         jmri.InstanceManager.setLightManager(l);
-      
-    }
-    @Override
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
-    static Logger log = Logger.getLogger(XNetLightManagerTest.class.getName());
+    }
+
+    @Override
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(XNetLightManagerTest.class.getName());
 
 }
-
-

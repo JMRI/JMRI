@@ -1,31 +1,27 @@
 // JMRIClientTrafficController.java
-
 package jmri.jmrix.jmriclient;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractMRTrafficController;
 
 /**
- * Converts Stream-based I/O to/from JMRIClient messages.  The "JMRIClientInterface"
- * side sends/receives message objects.
+ * Converts Stream-based I/O to/from JMRIClient messages. The
+ * "JMRIClientInterface" side sends/receives message objects.
  * <P>
- * The connection to
- * a JMRIClientPortController is via a pair of *Streams, which then carry sequences
- * of characters for transmission.     Note that this processing is
- * handled in an independent thread.
+ * The connection to a JMRIClientPortController is via a pair of *Streams, which
+ * then carry sequences of characters for transmission. Note that this
+ * processing is handled in an independent thread.
  * <P>
- * This handles the state transistions, based on the
- * necessary state in each message.
- * 
- * @author Bob Jacobsen  Copyright (C) 2001
+ * This handles the state transistions, based on the necessary state in each
+ * message.
+ *
+ * @author Bob Jacobsen Copyright (C) 2001
  * @version $Revision$
  */
 public class JMRIClientTrafficController extends AbstractMRTrafficController
-	implements JMRIClientInterface {
+        implements JMRIClientInterface {
 
     public JMRIClientTrafficController() {
         super();
@@ -33,7 +29,6 @@ public class JMRIClientTrafficController extends AbstractMRTrafficController
     }
 
     // The methods to implement the JMRIClientInterface
-
     public synchronized void addJMRIClientListener(JMRIClientListener l) {
         this.addListener(l);
     }
@@ -42,24 +37,26 @@ public class JMRIClientTrafficController extends AbstractMRTrafficController
         this.removeListener(l);
     }
 
-
     /**
-     * Forward a JMRIClientMessage to all registered JMRIClientInterface listeners.
+     * Forward a JMRIClientMessage to all registered JMRIClientInterface
+     * listeners.
      */
     protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m) {
-        ((JMRIClientListener)client).message((JMRIClientMessage)m);
+        ((JMRIClientListener) client).message((JMRIClientMessage) m);
     }
 
     /**
-     * Forward a JMRIClientReply to all registered JMRIClientInterface listeners.
+     * Forward a JMRIClientReply to all registered JMRIClientInterface
+     * listeners.
      */
     protected void forwardReply(AbstractMRListener client, AbstractMRReply m) {
-        ((JMRIClientListener)client).reply((JMRIClientReply)m);
+        ((JMRIClientListener) client).reply((JMRIClientReply) m);
     }
 
     protected AbstractMRMessage pollMessage() {
-		return null;
+        return null;
     }
+
     protected AbstractMRListener pollReplyHandler() {
         return null;
     }
@@ -74,24 +71,32 @@ public class JMRIClientTrafficController extends AbstractMRTrafficController
     protected AbstractMRMessage enterProgMode() {
         return JMRIClientMessage.getProgMode();
     }
+
     protected AbstractMRMessage enterNormalMode() {
         return JMRIClientMessage.getExitProgMode();
     }
 
-    protected AbstractMRReply newReply() { return new JMRIClientReply(); }
+    protected AbstractMRReply newReply() {
+        return new JMRIClientReply();
+    }
 
     protected boolean endOfMessage(AbstractMRReply msg) {
-        int index = msg.getNumDataElements()-1;
-        if (msg.getElement(index) == 0x0D) return true;
-        if (msg.getElement(index) == 0x0A) return true;
-        else return false;
+        int index = msg.getNumDataElements() - 1;
+        if (msg.getElement(index) == 0x0D) {
+            return true;
+        }
+        if (msg.getElement(index) == 0x0A) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     protected void setInstance() { /*do nothing*/ }
-  public JMRIClientTrafficController instance() { return this; }
 
-    static Logger log = LoggerFactory.getLogger(JMRIClientTrafficController.class.getName());
+    public JMRIClientTrafficController instance() {
+        return this;
+    }
 }
 
 /* @(#)JMRIClientTrafficController.java */
-

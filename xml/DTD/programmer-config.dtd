@@ -51,6 +51,8 @@
 <!ATTLIST programmer showFnLanelPane (yes | no ) "no">
 <!-- Show roster media pane? -->
 <!ATTLIST programmer showRosterMediaPane (yes | no ) "no">
+<!-- Show CV numbers in tooltips? -->
+<!ATTLIST programmer showCvNumbers ( yes | no ) "no" >
 
 <!-- The pane sections define each tabbed pane of options -->
 <!ELEMENT pane (column | row)*>
@@ -59,17 +61,14 @@
 <!ATTLIST pane nameFmt (label | item) "label">
 
 <!-- The column and row sections describe the layout of a pane -->
-<!ELEMENT column ((row | display | label | separator | cvtable | indxcvtable | fnmapping | dccaddress )*)>
-<!ELEMENT row ((column | display | label | separator | cvtable | indxcvtable | fnmapping | dccaddress )*)>
+<!ELEMENT column ((row | display | label | separator | cvtable | fnmapping | dccaddress )*)>
+<!ELEMENT row ((column | display | label | separator | cvtable | fnmapping | dccaddress )*)>
 
 <!-- Insert a separator line -->
 <!ELEMENT separator EMPTY>
 
 <!-- Insert a cv table -->
 <!ELEMENT cvtable EMPTY>
-
-<!-- Insert an indexed cv table -->
-<!ELEMENT indxcvtable EMPTY>
 
 <!-- Insert a function mapping display/edit panel -->
 <!ELEMENT fnmapping EMPTY>

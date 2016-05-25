@@ -1,16 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI: Send CTI Acela Message
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help Send CTI acela message packet">
+ </title>
+    <meta content="Bob Jacobsen" name="Author">
+    <meta name="keywords" content="JMRI help Send CTI acela message packet">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -23,12 +21,12 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Send CTI Acela Message
-</H1>
+<h1>Send CTI Acela Message</h1>
     
 This is the help/jmri/jmrix/acela/packetgen/SerialPacketGenFrame help page
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
-

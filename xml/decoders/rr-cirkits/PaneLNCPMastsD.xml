@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005, 2011 All rights reserved -->
 <!--                                                                        -->
@@ -13,38 +13,48 @@
 <!-- for more details.                                                      -->
 <!-- version 1 - new file includes for LNCP files -->
 <!-- Panes to show Masts -->
-<pane name="Masts D">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Masts D</name>
   <column>
     <row>
       <column>
-        <label label="Select either 'Output mode' (LocoNet command - Closed/Thrown plus a Mast #) OR 'DCC mode' (A mast address plus its Aspect).">
-          </label>
-        <label label="All commands are entered as their actual LocoNet numbers. For example to respond to LT9 Closed enter Command as 9 C.">
-          </label>
+        <label>
+          <text>Select either 'Output mode' (LocoNet command - Closed/Thrown plus a Mast #) OR 'DCC mode' (A mast address plus its Aspect).</text>
+        </label>
+        <label>
+          <text>All commands are entered as their actual LocoNet numbers. For example to respond to LT9 Closed enter Command as 9 C.</text>
+        </label>
       </column>
     </row>
     <separator/>
     <separator/>
     <row>
-      <label label="Aspect#    Mode        ">
-           </label>
-      <label label="  Command     ">
-           </label>
+      <label>
+        <text>Aspect#    Mode        </text>
+      </label>
+      <label>
+        <text>  Command     </text>
+      </label>
       <separator/>
-      <label label=" Lamp A  Phase/Flash        ">
-           </label>
+      <label>
+        <text> Lamp A  Phase/Flash        </text>
+      </label>
       <separator/>
-      <label label=" Lamp B  Phase/Flash        ">
-           </label>
+      <label>
+        <text> Lamp B  Phase/Flash        </text>
+      </label>
       <separator/>
-      <label label=" Lamp C  Phase/Flash        ">
-           </label>
+      <label>
+        <text> Lamp C  Phase/Flash        </text>
+      </label>
       <separator/>
-      <label label=" Lamp D  Phase/Flash        ">
-           </label>
+      <label>
+        <text> Lamp D  Phase/Flash        </text>
+      </label>
       <separator/>
-      <label label="   Lighting Effects         ">
-           </label>
+      <label>
+        <text>   Lighting Effects         </text>
+      </label>
     </row>
     <separator/>
     <separator/>
@@ -55,8 +65,9 @@
       <column>
         <display item="MA25 Address Mode" format="onradiobutton" label="    "/>
       </column>
-      <label label="         ">
-           </label>
+      <label>
+        <text>         </text>
+      </label>
       <column>
         <display item="MA25 A" tooltip="Select one of 32 available lamps" label=" ">
           </display>
@@ -65,8 +76,9 @@
         <display item="MA25 A PR" tooltip="Lamp A action Type" label="">
           </display>
       </column>
-      <label label=" ">
-           </label>
+      <label>
+        <text> </text>
+      </label>
       <column>
         <display item="MA25 B" tooltip="Select one of 32 available lamps" label=" ">
           </display>
@@ -75,8 +87,9 @@
         <display item="MA25 B PR" tooltip="Lamp B action Type" label="">
           </display>
       </column>
-      <label label=" ">
-           </label>
+      <label>
+        <text> </text>
+      </label>
       <column>
         <display item="MA25 C" tooltip="Select one of 32 available lamps" label=" ">
           </display>
@@ -85,8 +98,9 @@
         <display item="MA25 C PR" tooltip="Lamp C action Type" label="">
           </display>
       </column>
-      <label label=" ">
-           </label>
+      <label>
+        <text> </text>
+      </label>
       <column>
         <display item="MA25 D" tooltip="Select one of 32 available lamps" label=" ">
           </display>
@@ -95,14 +109,16 @@
         <display item="MA25 D PR" tooltip="Lamp D action Type" label="">
           </display>
       </column>
-      <label label=" ">
-           </label>
+      <label>
+        <text> </text>
+      </label>
       <column>
         <display item="MA25 Effect" label="Effect">
           </display>
       </column>
-      <label label=" ">
-           </label>
+      <label>
+        <text> </text>
+      </label>
     </row>
     <row>
       <column>
@@ -125,8 +141,9 @@
         <display item="MA25 Aspect" tooltip="Signal Aspect" label=" ">
           </display>
       </column>
-      <label label="   ">
-           </label>
+      <label>
+        <text>   </text>
+      </label>
       <column>
         <display item="MA25 Secondary Address" tooltip="LocoNet command #" label="   2nd Event">
           </display>
@@ -143,8 +160,9 @@
         <display item="MA25 Transition" tooltip="LocoNet message sent at" label="   message">
           </display>
       </column>
-      <label label="     ">
-           </label>
+      <label>
+        <text>     </text>
+      </label>
     </row>
     <separator/>
     <row>
@@ -154,8 +172,9 @@
       <column>
         <display item="MA26 Address Mode" format="onradiobutton" label="    "/>
       </column>
-      <label label="         ">
-           </label>
+      <label>
+        <text>         </text>
+      </label>
       <column>
         <display item="MA26 A" tooltip="Select one of 32 available lamps" label=" ">
           </display>
@@ -164,8 +183,9 @@
         <display item="MA26 A PR" tooltip="Lamp A action Type" label="">
           </display>
       </column>
-      <label label=" ">
-           </label>
+      <label>
+        <text> </text>
+      </label>
       <column>
         <display item="MA26 B" tooltip="Select one of 32 available lamps" label=" ">
           </display>
@@ -174,8 +194,9 @@
         <display item="MA26 B PR" tooltip="Lamp B action Type" label="">
           </display>
       </column>
-      <label label=" ">
-           </label>
+      <label>
+        <text> </text>
+      </label>
       <column>
         <display item="MA26 C" tooltip="Select one of 32 available lamps" label=" ">
           </display>
@@ -184,8 +205,9 @@
         <display item="MA26 C PR" tooltip="Lamp C action Type" label="">
           </display>
       </column>
-      <label label=" ">
-           </label>
+      <label>
+        <text> </text>
+      </label>
       <column>
         <display item="MA26 D" tooltip="Select one of 32 available lamps" label=" ">
           </display>
@@ -194,14 +216,16 @@
         <display item="MA26 D PR" tooltip="Lamp D action Type" label="">
           </display>
       </column>
-      <label label=" ">
-           </label>
+      <label>
+        <text> </text>
+      </label>
       <column>
         <display item="MA26 Effect" label="Effect">
           </display>
       </column>
-      <label label=" ">
-           </label>
+      <label>
+        <text> </text>
+      </label>
     </row>
     <row>
       <column>
@@ -224,8 +248,9 @@
         <display item="MA26 Aspect" tooltip="Signal Aspect" label=" ">
           </display>
       </column>
-      <label label="   ">
-           </label>
+      <label>
+        <text>   </text>
+      </label>
       <column>
         <display item="MA26 Secondary Address" tooltip="LocoNet command #" label="   2nd Event">
           </display>
@@ -242,8 +267,9 @@
         <display item="MA26 Transition" tooltip="LocoNet message sent at" label="   message">
           </display>
       </column>
-      <label label="     ">
-           </label>
+      <label>
+        <text>     </text>
+      </label>
     </row>
     <separator/>
     <row>
@@ -253,8 +279,9 @@
       <column>
         <display item="MA27 Address Mode" format="onradiobutton" label="    "/>
       </column>
-      <label label="         ">
-           </label>
+      <label>
+        <text>         </text>
+      </label>
       <column>
         <display item="MA27 A" tooltip="Select one of 32 available lamps" label=" ">
           </display>
@@ -263,8 +290,9 @@
         <display item="MA27 A PR" tooltip="Lamp A action Type" label="">
           </display>
       </column>
-      <label label=" ">
-           </label>
+      <label>
+        <text> </text>
+      </label>
       <column>
         <display item="MA27 B" tooltip="Select one of 32 available lamps" label=" ">
           </display>
@@ -273,8 +301,9 @@
         <display item="MA27 B PR" tooltip="Lamp B action Type" label="">
           </display>
       </column>
-      <label label=" ">
-           </label>
+      <label>
+        <text> </text>
+      </label>
       <column>
         <display item="MA27 C" tooltip="Select one of 32 available lamps" label=" ">
           </display>
@@ -283,8 +312,9 @@
         <display item="MA27 C PR" tooltip="Lamp C action Type" label="">
           </display>
       </column>
-      <label label=" ">
-           </label>
+      <label>
+        <text> </text>
+      </label>
       <column>
         <display item="MA27 D" tooltip="Select one of 32 available lamps" label=" ">
           </display>
@@ -293,14 +323,16 @@
         <display item="MA27 D PR" tooltip="Lamp D action Type" label="">
           </display>
       </column>
-      <label label=" ">
-           </label>
+      <label>
+        <text> </text>
+      </label>
       <column>
         <display item="MA27 Effect" label="Effect">
           </display>
       </column>
-      <label label=" ">
-           </label>
+      <label>
+        <text> </text>
+      </label>
     </row>
     <row>
       <column>
@@ -323,8 +355,9 @@
         <display item="MA27 Aspect" tooltip="Signal Aspect" label=" ">
           </display>
       </column>
-      <label label="   ">
-           </label>
+      <label>
+        <text>   </text>
+      </label>
       <column>
         <display item="MA27 Secondary Address" tooltip="LocoNet command #" label="   2nd Event">
           </display>
@@ -341,8 +374,9 @@
         <display item="MA27 Transition" tooltip="LocoNet message sent at" label="   message">
           </display>
       </column>
-      <label label="     ">
-           </label>
+      <label>
+        <text>     </text>
+      </label>
     </row>
     <separator/>
     <row>
@@ -352,8 +386,9 @@
       <column>
         <display item="MA28 Address Mode" format="onradiobutton" label="    "/>
       </column>
-      <label label="         ">
-           </label>
+      <label>
+        <text>         </text>
+      </label>
       <column>
         <display item="MA28 A" tooltip="Select one of 32 available lamps" label=" ">
           </display>
@@ -362,8 +397,9 @@
         <display item="MA28 A PR" tooltip="Lamp A action Type" label="">
           </display>
       </column>
-      <label label=" ">
-           </label>
+      <label>
+        <text> </text>
+      </label>
       <column>
         <display item="MA28 B" tooltip="Select one of 32 available lamps" label=" ">
           </display>
@@ -372,8 +408,9 @@
         <display item="MA28 B PR" tooltip="Lamp B action Type" label="">
           </display>
       </column>
-      <label label=" ">
-           </label>
+      <label>
+        <text> </text>
+      </label>
       <column>
         <display item="MA28 C" tooltip="Select one of 32 available lamps" label=" ">
           </display>
@@ -382,8 +419,9 @@
         <display item="MA28 C PR" tooltip="Lamp C action Type" label="">
           </display>
       </column>
-      <label label=" ">
-           </label>
+      <label>
+        <text> </text>
+      </label>
       <column>
         <display item="MA28 D" tooltip="Select one of 32 available lamps" label=" ">
           </display>
@@ -392,14 +430,16 @@
         <display item="MA28 D PR" tooltip="Lamp D action Type" label="">
           </display>
       </column>
-      <label label=" ">
-           </label>
+      <label>
+        <text> </text>
+      </label>
       <column>
         <display item="MA28 Effect" label="Effect">
           </display>
       </column>
-      <label label=" ">
-           </label>
+      <label>
+        <text> </text>
+      </label>
     </row>
     <row>
       <column>
@@ -422,8 +462,9 @@
         <display item="MA28 Aspect" tooltip="Signal Aspect" label=" ">
           </display>
       </column>
-      <label label="   ">
-           </label>
+      <label>
+        <text>   </text>
+      </label>
       <column>
         <display item="MA28 Secondary Address" tooltip="LocoNet command #" label="   2nd Event">
           </display>
@@ -440,8 +481,9 @@
         <display item="MA28 Transition" tooltip="LocoNet message sent at" label="   message">
           </display>
       </column>
-      <label label="     ">
-           </label>
+      <label>
+        <text>     </text>
+      </label>
     </row>
     <separator/>
     <row>
@@ -451,8 +493,9 @@
       <column>
         <display item="MA29 Address Mode" format="onradiobutton" label="    "/>
       </column>
-      <label label="         ">
-           </label>
+      <label>
+        <text>         </text>
+      </label>
       <column>
         <display item="MA29 A" tooltip="Select one of 32 available lamps" label=" ">
           </display>
@@ -461,8 +504,9 @@
         <display item="MA29 A PR" tooltip="Lamp A action Type" label="">
           </display>
       </column>
-      <label label=" ">
-           </label>
+      <label>
+        <text> </text>
+      </label>
       <column>
         <display item="MA29 B" tooltip="Select one of 32 available lamps" label=" ">
           </display>
@@ -471,8 +515,9 @@
         <display item="MA29 B PR" tooltip="Lamp B action Type" label="">
           </display>
       </column>
-      <label label=" ">
-           </label>
+      <label>
+        <text> </text>
+      </label>
       <column>
         <display item="MA29 C" tooltip="Select one of 32 available lamps" label=" ">
           </display>
@@ -481,8 +526,9 @@
         <display item="MA29 C PR" tooltip="Lamp C action Type" label="">
           </display>
       </column>
-      <label label=" ">
-           </label>
+      <label>
+        <text> </text>
+      </label>
       <column>
         <display item="MA29 D" tooltip="Select one of 32 available lamps" label=" ">
           </display>
@@ -491,14 +537,16 @@
         <display item="MA29 D PR" tooltip="Lamp D action Type" label="">
           </display>
       </column>
-      <label label=" ">
-           </label>
+      <label>
+        <text> </text>
+      </label>
       <column>
         <display item="MA29 Effect" label="Effect">
           </display>
       </column>
-      <label label=" ">
-           </label>
+      <label>
+        <text> </text>
+      </label>
     </row>
     <row>
       <column>
@@ -521,8 +569,9 @@
         <display item="MA29 Aspect" tooltip="Signal Aspect" label=" ">
           </display>
       </column>
-      <label label="   ">
-           </label>
+      <label>
+        <text>   </text>
+      </label>
       <column>
         <display item="MA29 Secondary Address" tooltip="LocoNet command #" label="   2nd Event">
           </display>
@@ -539,8 +588,9 @@
         <display item="MA29 Transition" tooltip="LocoNet message sent at" label="   message">
           </display>
       </column>
-      <label label="     ">
-           </label>
+      <label>
+        <text>     </text>
+      </label>
     </row>
     <separator/>
     <row>
@@ -550,8 +600,9 @@
       <column>
         <display item="MA30 Address Mode" format="onradiobutton" label="    "/>
       </column>
-      <label label="         ">
-           </label>
+      <label>
+        <text>         </text>
+      </label>
       <column>
         <display item="MA30 A" tooltip="Select one of 32 available lamps" label=" ">
           </display>
@@ -560,8 +611,9 @@
         <display item="MA30 A PR" tooltip="Lamp A action Type" label="">
           </display>
       </column>
-      <label label=" ">
-           </label>
+      <label>
+        <text> </text>
+      </label>
       <column>
         <display item="MA30 B" tooltip="Select one of 32 available lamps" label=" ">
           </display>
@@ -570,8 +622,9 @@
         <display item="MA30 B PR" tooltip="Lamp B action Type" label="">
           </display>
       </column>
-      <label label=" ">
-           </label>
+      <label>
+        <text> </text>
+      </label>
       <column>
         <display item="MA30 C" tooltip="Select one of 32 available lamps" label=" ">
           </display>
@@ -580,8 +633,9 @@
         <display item="MA30 C PR" tooltip="Lamp C action Type" label="">
           </display>
       </column>
-      <label label=" ">
-           </label>
+      <label>
+        <text> </text>
+      </label>
       <column>
         <display item="MA30 D" tooltip="Select one of 32 available lamps" label=" ">
           </display>
@@ -590,14 +644,16 @@
         <display item="MA30 D PR" tooltip="Lamp D action Type" label="">
           </display>
       </column>
-      <label label=" ">
-           </label>
+      <label>
+        <text> </text>
+      </label>
       <column>
         <display item="MA30 Effect" label="Effect">
           </display>
       </column>
-      <label label=" ">
-           </label>
+      <label>
+        <text> </text>
+      </label>
     </row>
     <row>
       <column>
@@ -620,8 +676,9 @@
         <display item="MA30 Aspect" tooltip="Signal Aspect" label=" ">
           </display>
       </column>
-      <label label="   ">
-           </label>
+      <label>
+        <text>   </text>
+      </label>
       <column>
         <display item="MA30 Secondary Address" tooltip="LocoNet command #" label="   2nd Event">
           </display>
@@ -638,8 +695,9 @@
         <display item="MA30 Transition" tooltip="LocoNet message sent at" label="   message">
           </display>
       </column>
-      <label label="     ">
-           </label>
+      <label>
+        <text>     </text>
+      </label>
     </row>
     <separator/>
     <row>
@@ -649,8 +707,9 @@
       <column>
         <display item="MA31 Address Mode" format="onradiobutton" label="    "/>
       </column>
-      <label label="         ">
-           </label>
+      <label>
+        <text>         </text>
+      </label>
       <column>
         <display item="MA31 A" tooltip="Select one of 32 available lamps" label=" ">
           </display>
@@ -659,8 +718,9 @@
         <display item="MA31 A PR" tooltip="Lamp A action Type" label="">
           </display>
       </column>
-      <label label=" ">
-           </label>
+      <label>
+        <text> </text>
+      </label>
       <column>
         <display item="MA31 B" tooltip="Select one of 32 available lamps" label=" ">
           </display>
@@ -669,8 +729,9 @@
         <display item="MA31 B PR" tooltip="Lamp B action Type" label="">
           </display>
       </column>
-      <label label=" ">
-           </label>
+      <label>
+        <text> </text>
+      </label>
       <column>
         <display item="MA31 C" tooltip="Select one of 32 available lamps" label=" ">
           </display>
@@ -679,8 +740,9 @@
         <display item="MA31 C PR" tooltip="Lamp C action Type" label="">
           </display>
       </column>
-      <label label=" ">
-           </label>
+      <label>
+        <text> </text>
+      </label>
       <column>
         <display item="MA31 D" tooltip="Select one of 32 available lamps" label=" ">
           </display>
@@ -689,14 +751,16 @@
         <display item="MA31 D PR" tooltip="Lamp D action Type" label="">
           </display>
       </column>
-      <label label=" ">
-           </label>
+      <label>
+        <text> </text>
+      </label>
       <column>
         <display item="MA31 Effect" label="Effect">
           </display>
       </column>
-      <label label=" ">
-           </label>
+      <label>
+        <text> </text>
+      </label>
     </row>
     <row>
       <column>
@@ -719,8 +783,9 @@
         <display item="MA31 Aspect" tooltip="Signal Aspect" label=" ">
           </display>
       </column>
-      <label label="   ">
-           </label>
+      <label>
+        <text>   </text>
+      </label>
       <column>
         <display item="MA31 Secondary Address" tooltip="LocoNet command #" label="   2nd Event">
           </display>
@@ -737,8 +802,9 @@
         <display item="MA31 Transition" tooltip="LocoNet message sent at" label="   message">
           </display>
       </column>
-      <label label="     ">
-           </label>
+      <label>
+        <text>     </text>
+      </label>
     </row>
     <separator/>
     <row>
@@ -748,8 +814,9 @@
       <column>
         <display item="MA32 Address Mode" format="onradiobutton" label="    "/>
       </column>
-      <label label="         ">
-           </label>
+      <label>
+        <text>         </text>
+      </label>
       <column>
         <display item="MA32 A" tooltip="Select one of 32 available lamps" label=" ">
           </display>
@@ -758,8 +825,9 @@
         <display item="MA32 A PR" tooltip="Lamp A action Type" label="">
           </display>
       </column>
-      <label label=" ">
-           </label>
+      <label>
+        <text> </text>
+      </label>
       <column>
         <display item="MA32 B" tooltip="Select one of 32 available lamps" label=" ">
           </display>
@@ -768,8 +836,9 @@
         <display item="MA32 B PR" tooltip="Lamp B action Type" label="">
           </display>
       </column>
-      <label label=" ">
-           </label>
+      <label>
+        <text> </text>
+      </label>
       <column>
         <display item="MA32 C" tooltip="Select one of 32 available lamps" label=" ">
           </display>
@@ -778,8 +847,9 @@
         <display item="MA32 C PR" tooltip="Lamp C action Type" label="">
           </display>
       </column>
-      <label label=" ">
-           </label>
+      <label>
+        <text> </text>
+      </label>
       <column>
         <display item="MA32 D" tooltip="Select one of 32 available lamps" label=" ">
           </display>
@@ -788,14 +858,16 @@
         <display item="MA32 D PR" tooltip="Lamp D action Type" label="">
           </display>
       </column>
-      <label label=" ">
-           </label>
+      <label>
+        <text> </text>
+      </label>
       <column>
         <display item="MA32 Effect" label="Effect">
           </display>
       </column>
-      <label label=" ">
-           </label>
+      <label>
+        <text> </text>
+      </label>
     </row>
     <row>
       <column>
@@ -818,8 +890,9 @@
         <display item="MA32 Aspect" tooltip="Signal Aspect" label=" ">
           </display>
       </column>
-      <label label="   ">
-           </label>
+      <label>
+        <text>   </text>
+      </label>
       <column>
         <display item="MA32 Secondary Address" tooltip="LocoNet command #" label="   2nd Event">
           </display>
@@ -836,8 +909,9 @@
         <display item="MA32 Transition" tooltip="LocoNet message sent at" label="   message">
           </display>
       </column>
-      <label label="     ">
-           </label>
+      <label>
+        <text>     </text>
+      </label>
     </row>
     <separator/>
     <separator/>

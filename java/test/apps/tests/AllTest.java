@@ -1,5 +1,3 @@
-// AllTest.java
-
 package apps.tests;
 
 import junit.framework.Test;
@@ -12,20 +10,18 @@ import junit.framework.TestSuite;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author	Bob Jacobsen
- * @version	$Revision$
  */
-public class AllTest extends TestCase  {
+public class AllTest extends TestCase {
+
     public AllTest(String s) {
         super(s);
     }
@@ -34,11 +30,10 @@ public class AllTest extends TestCase  {
     // work in both the test routines themselves, and also in the TestSuite
     // code.  And even though it should be protected by a static, it runs
     // twice!  There are probably two sets of classes being created here...
-
     // Main entry point
     static public void main(String[] args) {
-		String[] testCaseName = {"-noloading", AllTest.class.getName()};
-		junit.swingui.TestRunner.main(testCaseName);
+        String[] testCaseName = {"-noloading", AllTest.class.getName()};
+        junit.swingui.TestRunner.main(testCaseName);
     }
 
     // test suite
@@ -49,15 +44,22 @@ public class AllTest extends TestCase  {
         suite.addTest(jmri.PackageTest.suite());
         suite.addTest(apps.PackageTest.suite());
 
+        // at the end, we check for Log4J messages again
+        suite.addTest(jmri.util.Log4JErrorIsErrorTest.suite());
         return suite;
     }
 
-    public static void initLogging(){
+    public static void initLogging() {
         apps.tests.Log4JFixture.initLogging();
     }
-    
+
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 
 }

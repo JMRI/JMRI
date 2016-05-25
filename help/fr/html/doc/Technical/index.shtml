@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.11 2010/01/20 02:12:51 jacobsen Exp $ -->
-<!-- Translated by Blorec Hervé le 2011-04-06--> 
+<!-- $Id$ -->
+<!-- UpDated by Blorec Herv&#233;  2013-09-06--> 
 <html lang="fr">
 <head>
     <TITLE>
@@ -17,7 +17,7 @@
     <!-- or change them to reflect your alternative logo -->
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset= utf-8">
+  <META http-equiv=Content-Type content="text/html; charset= ISO-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -36,206 +36,194 @@
 	    <H1>JMRI: Infos Techniques </H1>
 
 Vous n'avez pas besoin pour travailler avec votre propre copie du code source JMRI, des compilateurs,
-etc, si vous voulez juste exécuter les programmes. Vous pouvez télécharger des copies entièrement construites par les
-<A HREF="/download"> page de téléchargement </a>.
+etc, si vous voulez juste ex&#233;cuter les programmes. Vous pouvez t&#233;l&#233;charger des copies enti&#232;rement construites par les
+<A HREF="/download"> page de t&#233;l&#233;chargement </a>.
 Mais si vous voulez jouer avec le code, ou obtenir une copie du programme
-qui contient les mises à jour depuis que la dernière version téléchargeable a été publiée,
-cette section du site web vous aidera à démarrer.
+qui contient les mises &#224; jour depuis que la derni&#232;re version t&#233;l&#233;chargeable a &#233;t&#233; publi&#233;e,
+cette section du site web vous aidera &#224; d&#233;marrer.
 
 <a id="moreinfo">
 <h2>Info Aspects techniques sur le projet JMRI</h2></a>
-<p>JMRI est conçu comme un
-point de départ pour les amateurs qui veulent contrôler leur réseau à partir d'un ordinateur sans avoir à créer un ensemble de
-système à partir de zéro. </ p>
+<p>JMRI est con&#231;u comme un
+point de d&#233;part pour les amateurs qui veulent contr&#244;ler leur r&#233;seau &#224; partir d'un ordinateur sans avoir &#224; cr&#233;er un ensemble de
+syst&#232;me &#224; partir de z&#233;ro. </p>
 
-<p> Pour ce faire, nous avons divisé le problème en deux parties avec un interface entre-deux:
+<p> Pour ce faire, nous avons divis&#233; le probl&#232;me en deux parties avec un interface entre-deux:
 <ul>
-<li> Le «dessus » de l'interface sont les outils cool que les gens veulent. Nous fournissons des programmateurs pour les décodeurs DCC,
-      contrôles de réseaux, des outils d'automatisation, etc. Les gens qui contribuent en permanence sont de mieux en mieux
-       outillés et travaillent sur beaucoup de type d'ordinateurs, avec beaucoup de types de réseaux.
-<li>Au "dessous " de l'interface se trouve un code qui se connecte à des dispositifs matériels. Nous vous nous sommes connectés à un
-      <a href="../../hardware"> gamme complète de systèmes </a>: C/MRI, Digitrax, EasyDCC, Lenz, NCE, etc. Nous sommes certainement
-      intéressés par le raccordement à d'autres systèmes.
+<li> Le "dessus" de l'interface sont les outils cool que les gens veulent. Nous fournissons des programmateurs pour les d&#233;codeurs DCC,
+      contr&#244;les de r&#233;seaux, des outils d'automatisation, etc. Les gens qui contribuent en permanence sont de mieux en mieux
+       outill&#233;s et travaillent sur beaucoup de type d'ordinateurs, avec beaucoup de types de r&#233;seaux.
+<li>Au "dessous " de l'interface se trouve un code qui se connecte &#224; des dispositifs mat&#233;riels. Nous vous nous sommes connect&#233;s &#224; un
+      <a href="../../hardware"> gamme compl&#232;te de syst&#232;mes </a>: C/MRI, Digitrax, EasyDCC, Lenz, NCE, etc. Nous sommes certainement
+      int&#233;ress&#233;s par le raccordement &#224; d'autres syst&#232;mes.
 </ul></p>
 
-<p> La stratégie à long terme est de:
+<p> La strat&#233;gie &#224; long terme est de:
 <ul>
-<li> Créer un ensemble  d'interfaces communes ,à la disposition du public, pour le code de contrôle des chemins de fer modèles réduits
-    ,qui peut être utilisé avec tout type de réseaux, à partir de tout type d'ordinateur.
-<li> Rendre ceci utile en fournissant des implémentations de qualité pour autant de types de réseaux que possible.
-<li> Encourager l'interopérabilité des matériels et logiciels de réseaux grâce à l'utilisation d'd'interfaces communes.
+<li> Cr&#233;er un ensemble  d'interfaces communes ,&#224; la disposition du public, pour le code de contr&#244;le des chemins de fer mod&#232;les r&#233;duits
+    ,qui peut &#234;tre utilis&#233; avec tout type de r&#233;seaux, &#224; partir de tout type d'ordinateur.
+<li> Rendre ceci utile en fournissant des impl&#233;mentations de qualit&#233; pour autant de types de r&#233;seaux que possible.
+<li> Encourager l'interop&#233;rabilit&#233; des mat&#233;riels et logiciels de r&#233;seaux gr&#226;ce &#224; l'utilisation d'interfaces communes.
 </ul></p>
 
-<p> À court terme, nous avons créé plusieurs programmes basés sur les bibliothèques JMRI pour faire avancer le projet et  démontrer ainsi
-ses capacités.
-(<a href="http://jmri.org/releasenotes/history.html"> Pourquoi tant de programmes ?...</ a>)
+<p> &#224; court terme, nous avons cr&#233;&#233; plusieurs programmes bas&#233;s sur les biblioth&#232;ques JMRI pour faire avancer le projet et  d&#233;montrer ainsi ses capacit&#233;s.
+(<a href="http://jmri.org/releasenotes/history.html"> Pourquoi tant de programmes ?...</a>)
 </ p>
 
 <p> Le plus populaire est
-<a href="../../apps/DecoderPro"> DecoderPro </a>, un outil de programmation pour les décodeurs. Il simplifie les travail
-de configuration compliqué des décodeurs DCC en fournissant des écrans dans lesquels  vous pouvez sélectionner les différentes 
+<a href="../../apps/DecoderPro"> DecoderPro </a>, un outil de programmation pour les d&#233;codeurs. Il simplifie le travail
+de configuration compliqu&#233; des d&#233;codeurs DCC en fournissant des &#233;crans dans lesquels  vous pouvez s&#233;lectionner les diff&#233;rentes 
 options et valeurs que vous souhaitez.
-Ces écrans affichent le contenu exact de chaque type décodeur spécifique . Les deux écrans de programmation et d'information décodeur sont
-stockés dans des fichiers textes, de sorte que vous pouvez en créer de nouveaux comme  vous le désirez. </p> 
+Ces &#233;crans affichent le contenu exact de chaque type d&#233;codeur sp&#233;cifique. Les deux &#233;crans de programmation et d'information d&#233;codeur sont stock&#233;s dans des fichiers textes, de sorte que vous pouvez en cr&#233;er de nouveaux comme  vous le d&#233;sirez. </p> 
 
-<h2>Comment pouvez-vous modifier la façon dont JMRI fait les choses?</h2></a>
+<h2>Comment pouvez-vous modifier la fa&#231;on dont JMRI fait les choses?</h2></a>
 
-Il ya plusieurs façons pour modifier JMRI:
+Il ya plusieurs fa&#231;ons pour modifier JMRI:
 <ol>
-     <li> Vous pouvez utiliser les interfaces JMRI pour écrire des programmes pour vos propres réseaux. Faire de cette facilité est 
+     <li> Vous pouvez utiliser les interfutf-8aces JMRI pour &#233;crire des programmes pour vos propres r&#233;seaux. Faire de cette facilit&#233; est 
   	  un objectif important.
           Cela peut se faire via notre <A HREF="../../tools/scripting/index.shtml"> langage de script </a>.
    
-     <li> Vous pouvez ajouter du code Java au programme ou modifier le code actuel .Fixer les choses qui vous dérangent (bugs aka  
-  	  est une méthode facile pour plonger dedans et contribuer.
+     <li> Vous pouvez ajouter du code Java au programme ou modifier le code actuel. Fixer les choses qui vous d&#233;rangent (bugs aka) 
+  	  est une m&#233;thode facile pour plonger dedans et contribuer.
 
-     <li> Vous pouvez écrire de nouveaux outils d'usage général. Bien que ce soit un peu plus difficile que d'écrire 
-	  l'automatisation pour votre propre réseau, des outils d'écriture que d'autres gens puissent utiliser peut être très
+     <li> Vous pouvez &#233;crire de nouveaux outils d'usage g&#233;n&#233;ral. Bien que ce soit un peu plus difficile que d'&#233;crire 
+	  l'automatisation pour votre propre r&#233;seau, des outils d'&#233;criture que d'autres gens puissent utiliser peut &#234;tre tr&#232;s
           satisfaisant.
 
-     <li> Vous pouvez mettre en œuvre les interfaces JMRI pour un nouveau système. Avoir JMRI qui travaille avec d'autres systèmes 
-	  est un objectif important. Une fois que la mise en œuvre avec un autre système fonctionne,des outils généraux (par exemple 
-	  programmeur symbolique, outils d'automatismes, de signalisation, etc) peuvent être utilisés immédiatement.
+     <li> Vous pouvez mettre enoeuvre les interfaces JMRI pour un nouveau syst&#232;me. Avoir JMRI qui travaille avec d'autres syst&#232;mes 
+	  est un objectif important. Une fois que la mise en oeuvre avec un autre syst&#232;me fonctionne,des outils g&#233;n&#233;raux (par exemple programmeur symbolique, outils d'automatismes, de signalisation, etc) peuvent &#234;tre utilis&#233;s imm&#233;diatement.
         </ol>
 
-<h2>Renseignements sur le projet JMRI (Pour les personnes intéressées à la façon dont le logiciel est en cours d'écriture</h2>
+<h2>Renseignements sur le projet JMRI (Pour les personnes int&#233;ress&#233;es &#224; la fa&#231;on dont le logiciel est en cours d'&#233;criture</h2>
 
-Une grande partie des discussion sur le développement JMRI a lieu sur la liste de diffusion JMRI-Developers:
+Une grande partie des discussion sur le d&#233;veloppement JMRI a lieu sur la liste de diffusion JMRI-Developers:
 <a href="https://lists.sourceforge.net/lists/listinfo/jmri-developers"> Abonnez-vous </a>,
 <a href="http://sourceforge.net/mailarchive/forum.php?forum_name=jmri-developers"> Archive </a>
 
 <p>
 Le <a href="http://jmri.wiki.sourceforge.net/"> Wiki Developer  </a>
-C'est là que nous essayons de documenter la structure du code et comment elle évolue.
-(Il s'agit d'un effort expérimental, pas encore vraiment de travail, mais nous continuons à essayer ...)
+C'est l&#224; que nous essayons de documenter la structure du code et comment elle &#233;volue.
+(Il s'agit d'un effort exp&#233;rimental, pas encore vraiment de travail, mais nous continuons &#224; essayer ...)
 
 <p>
+SourceForge.net fournit l'h&#233;bergement de projets: <ul>
 <li> <A HREF="http://sourceforge.net/projects/jmri/"> page du projet JMRI  </A> et
 <A HREF="http://sourceforge.net/export/projhtml.php?group_id=26788"> projet de statistiques </A>.
-Trackers <li>
-<A HREF="http://sourceforge.net/tracker/?group_id=26788&atid=388313"> Problèmes </A>,
-<A HREF="http://sourceforge.net/tracker/?group_id=26788&atid=388316"> fonctionnalités demandées</A>, et
+ <li>Trackers pour les
+<A HREF="http://sourceforge.net/tracker/?group_id=26788&atid=388313"> Probl&#232;mes </A>,
+<A HREF="http://sourceforge.net/tracker/?group_id=26788&atid=388316"> fonctionnalit&#233;s demand&#233;es</A>, et
 <A HREF="http://sourceforge.net/tracker/?group_id=26788&atid=388315"> Correctifs </A>.
-<li> SourceForge hébergé <A HREF="http://jmri.cvs.sourceforge.net/"> CVS </A>
+<li> SourceForge h&#233;berge le <A HREF="http://jmri.cvs.sourceforge.net/"> d&#233;p&#244;t Subversion </A>
 que vous pouvez <A HREF="http://jmri.cvs.sourceforge.net/"> parcourir </a>.
 </ ul>
 
 <h2> Code </h2>
-Tout le code est disponible à partir JMRI CVS. Voir pour <a href="getcode.shtml"> "Obtenir le code via CVS" </a> et les pages
-<a href="CVSFAQ.shtml">  FAQ CVS </a>  pour plus d'informations sur la façon de le faire.
+Tout le code JMRI est disponible &#224; partir de Subversion. Voir pour <a href="getgitcode.shtml"> "Obtenir le code via Git" </a> et les pages
+<a href="GitFAQ.shtml">  FAQ Git </a>  pour plus d'informations sur la fa&#231;on de le faire.
 <p>
 Si vous voulez juste regarder le contenu de quelques fichiers, vous pouvez
-<A HREF="http://jmri.cvs.sourceforge.net/"> voir CVS </a> sur le web.</ul>
+<a href="http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/">parcourir le d&#233;p&#244;t
+Subversion </a> sur le web.</ul>
 
 
 <h2>Construire Votre Propre Copie</h2>
 
-En plus d'obtenir une copie du code source JMRI et de le lire,vous pouvez également compiler votre propre version du 
-programme pour l'exécuter. Vous pouvez même inclure vos propres modifications si vous le souhaitez.
+En plus d'obtenir une copie du code source JMRI et de le lire,vous pouvez &#233;galement compiler votre propre version du 
+programme pour l'ex&#233;cuter. Vous pouvez m&#234;me inclure vos propres modifications si vous le souhaitez.
 
 <P>
-Il y a différentes façons pour le faire. Si vous êtes déjà familier avec l'un des "environnements de développement intégrés (IDE) populaires 
-regardez la barre de navigation à gauche pour obtenir des instructions sur la façon de construire à l'aide JMRI
+Il y a diff&#233;rentes fa&#231;ons pour le faire. Si vous &#234;tes d&#233;j&#224; familier avec l'un des "environnements de d&#233;veloppement int&#233;gr&#233;s" (IDE) populaires 
+regardez la barre de navigation &#224; gauche pour obtenir des instructions sur la fa&#231;on de construire &#224; l'aide JMRI
 <a href="NetBeans.shtml"> NetBeans </a>,
-<a href="XCode.shtml"> XCode </a>,
 <a href="Eclipse.shtml"> Eclipse </a> ou
-<a href="JBuilder.shtml"> JBuilder </a>.
 <P>
-NetBeans fournit un système très pratique pour la construction, en cours d'exécution, et le cas échéant le débogage du programme. 
-Si vous n'êtes pas familiariser avec une autre méthode, nous vous recommandons d'essayer
+NetBeans fournit un syst&#232;me tr&#232;s pratique pour la construction,  d'ex&#233;cution, et le cas &#233;ch&#233;ant de d&#233;bogage du programme. 
+Si vous n'&#234;tes pas familiariser avec une autre m&#233;thode, nous vous recommandons d'essayer
 <a href="NetBeans.shtml"> NetBeans </a>.
 <P>
-Sinon, si vous souhaitez éditer le code avec votre éditeur de texte favori et le compiler à partir d'une ligne de commande,
- s'il vous plaît voir la page d'instructions pour
+Sinon, si vous souhaitez &#233;diter le code avec votre &#233;diteur de texte favori et le compiler &#224; partir d'une ligne de commande,
+ s'il vous pla&#238;t voir la page d'instructions pour
 <a  href="Ant.shtml"> construire avec Ant </a>.
 
 
 <h2><A name="contributing">Contribution</h2></a>
 
-Nous encourageons les contributions de code, les définitions décodeur, l'amélioration de
+Nous encourageons les contributions de code, les d&#233;finitions d&#233;codeur, l'am&#233;lioration de
 pages web, etc, pour le projet JMRI de sorte que
-nous puissions les distribuer au reste de la communauté.
+nous puissions les distribuer au reste de la communaut&#233;.
 <P>
-Pour la premiere des petites contributions, par exemple, un fichier nouveau décodeur ou correction d'un petit bug,
-s'il vous plaît remplir une nouvelle  entrée "Patches" sur SourceForge à l'aide
+Pour la premiere des petites contributions, par exemple, un fichier nouveau d&#233;codeur ou correction d'un petit bug,
+s'il vous pla&#238;t remplir une nouvelle  entr&#233;e "Patches" sur SourceForge &#224; l'aide
 <A HREF="http://sourceforge.net/tracker/?group_id=26788&atid=388315"> nos  pages patchs </a>
-(cliquez sur Nouveau dans les milieu à gauche, puis remplissez le formulaire qui en résulte).
+(cliquez sur Nouveau dans les milieu &#224; gauche, puis remplissez le formulaire qui en r&#233;sulte).
 Vous pouvez joindre l'ensemble du dossier. Si c'est plusieurs fichiers,
 et que vous utilisez un IDE comme
-<A href="">NetBeans </a>, il est très facile de créer un "fichier de patch"
-pour effectuer vos modifications, et qui nous permettra d'économiser une quantité importante de
-travail en les fusionnant. S'il vous plaît voir les pages
-<A href="NetBeans.shtml#patch"> pour créer un fichier patch avec NetBeans </a>.
+<A href="NetBeans.shtml">NetBeans </a>, il est tr&#232;s facile de cr&#233;er un fichier "diff patch"
+pour effectuer vos modifications, et qui nous permettra d'&#233;conomiser une quantit&#233; importante de
+travail en les fusionnant. S'il vous pla&#238;t voir les pages
+<A href="NetBeans.shtml#patch"> pour cr&#233;er un fichier patch avec NetBeans </a>.
 
 <P>
-Il nous fait gagner beaucoup de travail si, avant de créer et d'envoyer les fichier patch, vous vous assurez que votre copie de ce code 
-est à jour, et que les <A HREF="JUnit.shtml#run">Tests unité  </a> travaillent tous.
+Il nous fait gagner beaucoup de travail si, avant de cr&#233;er et d'envoyer les fichier patch, vous vous assurez que votre copie de ce code 
+est &#224; jour, et que les <A HREF="JUnit.shtml#run">Tests unit&#233;  </a> travaillent tous.
 <P>
-Si vous faites une quantité importante de développement, s'il vous plaît, contactez-nous afin que nous puissions permettre de directement
-valider vos changements dans notre dépôt CVS.
+Si vous faites une quantit&#233; importante de d&#233;veloppement, s'il vous pla&#238;t, contactez-nous afin que nous puissions vous permettre de 
+valider directement vos changements dans notre d&#233;p&#244;t Subversion.
 <P>
-Lorsque vous particpez à votre code de JMRI pour la première fois, nous allons vous demander de signer un formulaire de cession qui
-nous permet d'enregistrer le droit d'auteur sur les code, et nous donne pouvoir pour encourager les contributions de code, les définitions 
-de décodeur, l'amélioration de pages web, etc, pour le projet JMRI sorte que nous pouvons les distribuer au reste de la communauté.
-<P>
-
-
-la licence est de durée illimitée pour redistribuer avec les <A HREF="#use"> licences JMRI </a>compatibles .
+Lorsque vous particpez avec votre code de JMRI pour la premi&#232;re fois, nous allons vous demander de signer un formulaire de cession qui nous permet d'enregistrer le droit d'auteur sur les code, et nous donne une licence &#224; dur&#233;e illimit&#233;e  pour le redistribuer en respectant la <A HREF="#use"> licence JMRI </a>
 (Nous regrettons cette paperasse, mais
-<A HREF="http://jmri.sourceforge.net/k/copycomparison.html">  détournement du droit d'auteur de Matt Katzer  </a>  le rend nécessaire).
-Si d'autres personnes ont également contribué à la contribution, s'il vous plaît faites nous savoir si
-nous pouvons les ajouter à la <A HREF="../../../Acknowledgements.shtml"> page de remerciements </a><P>
-Si vous faites une quantité importante de développement, s'il vous plaît contactez-nous afin que nous puissions permettre de directement
-valider vos changements dans notre dépôt CVS.
-<.
+<A HREF="http://jmri.org/k/copycomparison.html">  d&#233;tournement du droit d'auteur de Matt Katzer</a> le rend n&#233;cessaire).
+Si d'autres personnes ont &#233;galement contribu&#233; &#224; la contribution, s'il vous pla&#238;t faites nous savoir si
+nous pouvons les ajouter &#224; la <A HREF="../../../Acknowledgements.shtml"> page de remerciements </a>
 
 <h2><A Href name="use">Licences</h2></a>
-Nous encourageons les gens à construire leurs propres projets JMRI. C'est les raison initiales du lancement du projet!
+Nous encourageons les gens &#224; construire leurs propres projets JMRI. C'est les raison initiales du lancement du projet!
 
 <P>
-JMRI n'est concédé que sous les «GNU General Public License ", parfois appelée les «GPL». Nous utilisons la version 2 de la licence, 
-ainsi que l '«exception classpath" permettant aux gens de relier JMRI avec leur propre code dans des conditions plus détendue.
-Des copies de la licence sont distribuées avec la source et les téléchargements exécutables, et peuvent être obtenu à partir du
+JMRI n'est conc&#233;d&#233; que sous les "GNU General Public License ", parfois appel&#233;e les "GPL". Nous utilisons la version 2 de la licence, 
+ainsi que l '"exception classpath" permettant aux gens de relier JMRI avec leur propre code dans des conditions plus d&#233;tendues.
+Des copies de la licence sont distribu&#233;es avec la source et les t&#233;l&#233;chargements ex&#233;cutables, et peuvent &#234;tre obtenu &#224; partir du
 <A HREF="../../../COPYING">  Web </a>.
 
 <P>
-C'est à la fois une "open source" et une licence "libre". Pour plus d'informations
-sur ces définitions, s'il vous plaît voir les pages web
+C'est &#224; la fois une "open source" et une licence "libre". Pour plus d'informations
+sur ces d&#233;finitions, s'il vous pla&#238;t voir les pages web
 <A HREF="http://www.opensource.org/">  Initiative Open Source </a>
 , y compris leurs
 <A HREF="http://www.opensource.org/docs/definition.php"> description de ce que signifie l'Open Source  </a>,
 et les pages web
-<A HREF="http://www.gnu.org/"> Free Software Foundation </a> , en particulier leur
+<A HREF="http://www.gnu.org/"> Free Software Foundation </a>, en particulier leur
 <A HREF="http://www.gnu.org/licenses/"> page de licence </a>.
 <P>
-Officieusement, la licence signifie qu'il n'y a que quelques limites sur ce que vous
-pouvez faire avec JMRI. (Consultez le libellé exact des
+Officieusement, la licence signifie qu'il n'y a que quelques limitations sur ce que vous
+pouvez faire avec JMRI. (Consultez le libell&#233; exact des
 <A HREF="../../../COPYING"> licences </a>
-pour les détails derrière les résumé ci-après):
+pour les d&#233;tails derri&#232;re les r&#233;sum&#233; ci-apr&#232;s):
 <UL>
 <LI> Vous pouvez le redistribuer, gratuitement ou moyennant une compensation pour couvrir vos frais.  
 <LI>Vous pouvez
-élaborer des programmes supplémentaires sur tout ou partie de JMRI, et distribuer JMRI avec eux.
+&#233;laborer des programmes suppl&#233;mentaires sur tout ou partie de JMRI, et distribuer JMRI avec eux.
 C'est OK si vous charger votre programme.
 <LI> Vous pouvez modifier le code JMRI pour vos propres besoins.
-<LI> Vous pouvez distribuer le code modifié, mais dans ce cas, vous devez soit mettre vos modifications à notre disposition, ou
-distribuer également une version non modifiée en même temps.
+<LI> Vous pouvez distribuer le code modifi&#233;, mais dans ce cas, vous devez soit mettre vos modifications &#224; notre disposition, ou
+distribuer &#233;galement une version non modifi&#233;e en m&#234;me temps.
 <LI>
-Vous ne pouvez pas utiliser une partie ou la totalité de JMRI dans un autre projet sans donner crédit à JMRI, ou prendre des 
-arrangements spéciaux avec nous.
+Vous ne pouvez pas utiliser une partie ou la totalit&#233; de JMRI dans un autre projet sans donner cr&#233;dit &#224; JMRI, ou prendre des 
+arrangements sp&#233;ciaux avec nous.
 <P>
-Cela inclut les fichiers de définition décodeur: Vous êtes invités à les utiliser, y compris reformater leur contenu sous une 
-autre forme, mais vous devez donner crédit pour JMRI leur contenu.
+Cela inclut les fichiers de d&#233;finition d&#233;codeur: Vous &#234;tes invit&#233;s &#224; les utiliser, y compris reformater leur contenu sous une 
+autre forme, mais vous devez donner cr&#233;dit pour JMRI leur contenu.
 </ UL>
 
-Si vous avez des questions à ce sujet, s'il vous plaît
+Si vous avez des questions &#224; ce sujet, s'il vous pla&#238;t
 <A HREF="mailto:jmri@pacbell.net"> nous contacter </a>
 directement.
 
 <h2>Swarm Code Developer</h2>
-<p>Nous avons créé un <a href="/community/codeswarm.shtml"> Code Swarm of JMRI
-développement </a> depuis sa création enJanvier 2009. A Swarm Code est une fascinante
-et dynamique représentation visuelle du changement en tant que développeurs d'aller et venir et faire des
+<p>Nous avons cr&#233;&#233; un <a href="/community/codeswarm.shtml"> Code Swarm of JMRI
+d&#233;veloppement </a> depuis sa cr&#233;ation en Janvier 2009. A Swarm Code est une fascinante
+et dynamique repr&#233;sentation visuelle du changement en tant que d&#233;veloppeurs d'aller et venir et faire des
 modifications dans les fichiers qui composent un projet. Plus d'informations sont disponibles sur
 <a href="/community/codeswarm.shtml"> Code Swarm </a>.
 <!--#include virtual="/Footer" -->

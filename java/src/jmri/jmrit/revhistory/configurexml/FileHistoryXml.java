@@ -1,59 +1,57 @@
 package jmri.jmrit.revhistory.configurexml;
 
-import org.jdom.Element;
 import java.util.ArrayList;
-
 import jmri.jmrit.revhistory.FileHistory;
+import org.jdom2.Element;
 
 /**
  * Load/Store FileHistory objects.
  * <p>
- * This interacts somewhat differently with the ConfigureXML system.
- * FileHistory objects are _not_ registed with the manager, but rather 
- * handled explicitly by them.  The "load()" method is therefore a null-op
- * here.
+ * This interacts somewhat differently with the ConfigureXML system. FileHistory
+ * objects are _not_ registed with the manager, but rather handled explicitly by
+ * them. The "load()" method is therefore a null-op here.
  *
- * @author Bob Jacobsen  Copyright (c) 2010
+ * @author Bob Jacobsen Copyright (c) 2010
  * @version $Revision$
  */
-
 public class FileHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
-    
+
     /**
-     * Usual configurexml method, this one doesn't
-     * do anything because the content is explicitly loaded 
-     * from the file
+     * Usual configurexml method, this one doesn't do anything because the
+     * content is explicitly loaded from the file
      */
-    public boolean load(Element e) throws Exception {
+    @Override
+    public boolean load(Element shared, Element perNode) throws Exception {
         return true;
     }
-    
+
     /**
      * Load RevHistory from an element.
      *
-     * <p>If no RevHistory already present in InstanceManager,
-     * creates one and adds this.  
+     * <p>
+     * If no RevHistory already present in InstanceManager, creates one and adds
+     * this.
      * <P>
      * Then adds, instead of replacing, the history information
      */
     public boolean loadDirectly(Element e) throws Exception {
-        if (!e.getName().equals("filehistory"))
-            throw new Exception("Unexpected element name: "+e.getName());
-        
+        if (!e.getName().equals("filehistory")) {
+            throw new Exception("Unexpected element name: " + e.getName());
+        }
+
         FileHistory rmain = jmri.InstanceManager.getDefault(FileHistory.class);
-        
+
         FileHistory r = loadFileHistory(e);
-        rmain.addOperation("Load","", r);
-        
+        rmain.addOperation("Load", "", r);
+
         return true;
     }
-    
+
     static public FileHistory loadFileHistory(Element e) {
         FileHistory r = new FileHistory();
-        
-        @SuppressWarnings("unchecked")
+
         java.util.List<Element> list = e.getChildren("operation");
-        for (int i = 0; i<list.size(); i++) {
+        for (int i = 0; i < list.size(); i++) {
             loadOperation(r, list.get(i));
         }
         return r;
@@ -64,43 +62,42 @@ public class FileHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
 
         String type = null;
         s = e.getChild("type");
-        if (s!=null) {
+        if (s != null) {
             type = s.getText();
         }
-        
+
         String date = null;
         s = e.getChild("date");
-        if (s!=null) {
+        if (s != null) {
             date = s.getText();
         }
-        
+
         String filename = null;
         s = e.getChild("filename");
-        if (s!=null) {
+        if (s != null) {
             filename = s.getText();
         }
-                
+
         FileHistory filehistory = null;
         s = e.getChild("filehistory");
-        if (s!=null) {
+        if (s != null) {
             filehistory = loadFileHistory(s);
         }
-        
+
         r.addOperation(type, date, filename, filehistory);
     }
 
-
     /**
-     * Create a set of configured objects from their
-     * XML description, using an auxiliary object.
+     * Create a set of configured objects from their XML description, using an
+     * auxiliary object.
      * <P>
      * For example, the auxilary object o might be a manager or GUI of some type
      * that needs to be informed as each object is created.
      *
      * @param e Top-level XML element containing the description
      * @param o Implementation-specific Object needed for the conversion
-     * @throws Exception when a error prevents creating the objects as
-     *          as required by the input XML.  
+     * @throws Exception when a error prevents creating the objects as as
+     *                   required by the input XML.
      */
     public void load(Element e, Object o) throws Exception {
         throw new Exception("Method not coded");
@@ -108,58 +105,63 @@ public class FileHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
 
     /**
      * Store the
-     * @param o The object to be recorded.  Specific XmlAdapter
-     *          implementations will require this to be of a specific
-     *          type; that binding is done in ConfigXmlManager.
+     *
+     * @param o The object to be recorded. Specific XmlAdapter implementations
+     *          will require this to be of a specific type; that binding is done
+     *          in ConfigXmlManager.
      * @return The XML representation Element
      */
     public Element store(Object o) {
         return storeDirectly(o);
     }
-    
+
     static int defaultDepth = 5;
-    
+
     static public Element storeDirectly(Object o) {
-        final FileHistory r = (FileHistory)o;
-        if (r == null) return null;  // no file history object, not recording
-        
+        final FileHistory r = (FileHistory) o;
+        if (r == null) {
+            return null;  // no file history object, not recording
+        }
         Element e = historyElement(r, defaultDepth);
-        
+
         // add one more element for this store
-        FileHistory.OperationMemo rev = 
-                r.new OperationMemo() {{
-                    type = "Store";
-                    date = (new java.util.Date()).toString();
-                    filename = "";
-                    history = null;
-                }};
+        FileHistory.OperationMemo rev
+                = r.new OperationMemo() {
+                    {
+                        type = "Store";
+                        date = (new java.util.Date()).toString();
+                        filename = "";
+                        history = null;
+                    }
+                };
 
         e.addContent(
-            operationElement(rev, 10)
+                operationElement(rev, 10)
         );
         // and return
         return e;
     }
+
     static Element historyElement(FileHistory r, int depth) {
         ArrayList<FileHistory.OperationMemo> list = r.getList();
-        
+
         Element e = new Element("filehistory");
 
-        for (int i = 0; i<list.size(); i++) {
+        for (int i = 0; i < list.size(); i++) {
             Element operation = operationElement(list.get(i), depth);
-            e.addContent(operation);            
+            e.addContent(operation);
         }
-        
+
         return e;
     }
-    
+
     static Element operationElement(FileHistory.OperationMemo r, int depth) {
         Element rev = new Element("operation");
 
         Element revnumber = new Element("type");
-        revnumber.addContent(""+r.type);
+        revnumber.addContent("" + r.type);
         rev.addContent(revnumber);
-        
+
         Element date = new Element("date");
         date.addContent(r.date);
         rev.addContent(date);
@@ -167,10 +169,11 @@ public class FileHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
         Element authorinitials = new Element("filename");
         authorinitials.addContent(r.filename);
         rev.addContent(authorinitials);
-        
-        if (r.history != null && depth >= 1) 
-            rev.addContent(historyElement(r.history, depth-1));
-            
+
+        if (r.history != null && depth >= 1) {
+            rev.addContent(historyElement(r.history, depth - 1));
+        }
+
         return rev;
     }
 }

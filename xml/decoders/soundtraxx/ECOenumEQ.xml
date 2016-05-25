@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new include file for SoundTraxx Econami (Micheal Mosher)   -->
+<!-- version 1.1 - fixed enum value for User Adjustable to 7 (Alain LM)     -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <enumChoice>
+    <choice>Flat (off)</choice>
+    <choice xml:lang="it">Piatto (off)</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Micro Speaker (under 1 inch)</choice>
+    <choice xml:lang="it">Altop.Piccolissimo (meno di 2,5 cm)</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Small Speaker (1-2 inches)</choice>
+    <choice xml:lang="it">Altop.Piccolo (2-5 cm)</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Medium Speaker (2-4 inches)</choice>
+    <choice xml:lang="it">Altop.medio (5-10 cm)</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Large Speaker (over 4 inches)</choice>
+    <choice xml:lang="it">Altop.grande (oltre 10 cm)</choice>
+  </enumChoice>
+  <enumChoice value="7">
+    <choice>User Adjustable</choice>
+    <choice xml:lang="it">Altop.configurabile</choice>
+  </enumChoice>
+</enumVal>

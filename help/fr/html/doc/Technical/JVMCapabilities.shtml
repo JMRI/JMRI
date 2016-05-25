@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: JVMCapabilities.shtml,v 1.7 2010/01/08 06:24:40 jacobsen Exp $ -->
-<!-- Translated by Blorec Hervé le 2011-05-06-->
+<!-- $Id$ -->
+<!-- UpDated by Blorec Herv&#233; le 2013-09-06-->
 <html lang="fr">
 <head>
     <TITLE>
@@ -17,7 +17,7 @@
     <!-- or change them to reflect your alternative logo -->
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1
 ">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
@@ -31,30 +31,30 @@
 
 	<div id="mainContent">
 
-	    <H1>JMRI: Caractéristiques Java spécifique à la version</H1>
+	    <H1>JMRI: Caract&#233;ristiques Java sp&#233;cifique &#224; la version</H1>
 
-Cette page contient des informations sur la compatibilité et les fonctionnalités des différentes Versions de Java. Nous utilisons 
-cette information pour décider de notre <a href="TechRoadMap.shtml"> feuille de route </a> pour les versions futures de JMRI.
+Cette page contient des informations sur la compatibilit&#233; et les fonctionnalit&#233;s des diff&#233;rentes Versions de Java. Nous utilisons 
+cette information pour d&#233;cider de notre <a href="TechRoadMap.shtml"> feuille de route </a> pour les versions futures de JMRI.
 
- <h2>Capacités </h2>
+ <h2>Capacit&#233;s </h2>
 
-Cette section répertorie les nouvelles fonctions de Java, et quelles Version de Java firent leurs premières apparitions. 
-La colonne "JDK" indique le premier Java Development Kit qui pourrait rassembler les fonctionnalités, la colonne "JRE"
-indique l'environnement d'exécution d'abord que pourrait exécuter la fonctionnalité, y compris la JVM et les bibliothèque de soutien.
+Cette section r&#233;pertorie les nouvelles fonctions de Java, et quelles Version de Java firent leurs premi&#232;res apparitions. 
+La colonne "JDK" indique le premier Java Development Kit qui pourrait rassembler les fonctionnalit&#233;s, la colonne "JRE"
+indique l'environnement d'ex&#233;cution d'abord que pourrait ex&#233;cuter la fonctionnalit&#233;, y compris la JVM et les biblioth&#232;que de soutien.
 <P>
 <table border="1">
-<tr><th>Entité</th>        <th>JDK</th>    <th>JRE</th></tr>
+<tr><th>Entit&#233;</th>        <th>JDK</th>    <th>JRE</th></tr>
 <tr><td>Collections</td>    <td>1.3</td>    <td>1.3</td></tr>
 <tr><td>Java2D</td>         <td>1.3</td>    <td>1.3</td></tr>
-<tr><td>Mise à Jour Impression</td><td>1.3</td>    <td>1.3</td></tr>
+<tr><td>Mise &#224; Jour Impression</td><td>1.3</td>    <td>1.3</td></tr>
 <tr><td>JUnit 3.8</td>      <td>1.3</td>    <td>1.3</td></tr>
 
 <tr><td>JDOM 1.0</td>       <td>1.4</td>    <td>1.3</td></tr>
 <tr><td>Java regexp</td>    <td>1.4</td>    <td>1.4</td></tr>
 <tr><td>Java3D</td>         <td>1.4</td>    <td>1.4</td></tr>
-<tr><td>Mise à Jour JavaHelp</td><td>1.4</td>    <td>1.4</td></tr>
-<tr><td>Drag and Drop</td>  <td>1.4 (additionel <br>amélioration en 1.6)</td><td>1.4, 1.6</td></tr>
-<tr><td>Logging API</td>  <td>1.4 (additionel <br>amélioration en 1.6)</td><td>1.4, 1.6</td></tr>
+<tr><td>Mise &#224; Jour JavaHelp</td><td>1.4</td>    <td>1.4</td></tr>
+<tr><td>Drag and Drop</td>  <td>1.4 (additionel <br>am&#233;lioration en 1.6)</td><td>1.4, 1.6</td></tr>
+<tr><td>Logging API</td>  <td>1.4 (additionel <br>am&#233;lioration en 1.6)</td><td>1.4, 1.6</td></tr>
 <tr><td>XML catalog resolver</td><td>1.3?</td><td>1.4?</td></tr>
 
 <tr><td>Annotations</td>    <td>1.5</td>    <td>1.3</td></tr>
@@ -71,22 +71,22 @@ indique l'environnement d'exécution d'abord que pourrait exécuter la fonctionn
 <tr><td>JTable Sorting</td> <td>1.6</td><td>1.6</td></tr>
 <tr><td>Webstart compatibility</td> <td>1.6</td><td>1.6</td></tr>
 </table>
-(* indicates that a compatibility library is used in the early version)
+(* Indique qu'une librairie compatible est utilis&#233;e pour la premi&#232;re version)
 
-<h2>JRE disponibilité</h2>
+<h2>Disponibilit&#233; JRE</h2>
 
-Cette section énumère les version disponible les plus récentes de Java Runtime pour  différentes versions du système d'exploitation. 
-S'il vous plaît noter que tous les les utilisateurs de ce système d'exploitation n'auront pas fait les mis à jour vers cette version de Java;
+Cette section &#233;num&#232;re les version disponible les plus r&#233;centes de Java Runtime pour  diff&#233;rentes versions du syst&#232;me d'exploitation. 
+S'il vous pla&#238;t noter que tous les  utilisateurs de ce syst&#232;me d'exploitation n'auront pas fait les mis &#224; jour vers cette version de Java;
 beaucoup utilisent une version plus ancienne.
-Pour information supplémentaire
+Pour information suppl&#233;mentaire
 <P>
 <table border="1">
 <tr><th>OS et plateforme</th><th>Dernier JRE</th></tr>
 <tr><td>Linux</td><td>(1.6?)</td></tr>
 <tr><td>Windows Vista</td><td>1.6</td></tr>
 <tr><td>Windows XP</td><td>1.6</td></tr>for additional information
-<tr><td>Mac OS X 10.4 et ultérieur sur intel</td><td>1.6</td></tr>
-<tr><td>Mac OS X 10.3 et ultérieur sur PowerPC</td><td>1.5</td></tr>
+<tr><td>Mac OS X 10.4 et ult&#233;rieur sur intel</td><td>1.6</td></tr>
+<tr><td>Mac OS X 10.3 et ult&#233;rieur sur PowerPC</td><td>1.5</td></tr>
 <tr><td>Windows 98 (2nfor additional informationd Ed)</td><td>1.5-11</td></tr>
 <tr><td>Windows 98</td><td>1.4.2_14</td></tr>
 <tr><td>Windows 95</td><td>1.3.1_20</td></tr>

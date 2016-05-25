@@ -1,5 +1,3 @@
-// ReportContextAction.java
-
 package apps;
 
 import java.awt.BorderLayout;
@@ -7,38 +5,38 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import jmri.util.swing.JmriPanel;
-import jmri.util.swing.WindowInterface;
-import javax.swing.Icon;
-
 import jmri.jmrit.mailreport.ReportContext;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JmriPanel;
+import jmri.util.swing.WindowInterface;
 
 /**
  * Swing action to display the JMRI context for the user
  *
- * @author	Bob Jacobsen    Copyright (C) 2007
- * @author  Matt Harris Copyright (C) 2008
+ * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Matt Harris Copyright (C) 2008
  *
- * @version         $Revision$
  */
 public class ReportContextAction extends jmri.util.swing.JmriAbstractAction {
 
     public ReportContextAction(String s, WindowInterface wi) {
-    	super(s, wi);
-    }
-     
- 	public ReportContextAction(String s, Icon i, WindowInterface wi) {
-    	super(s, i, wi);
+        super(s, wi);
     }
 
-    public ReportContextAction() { super(Bundle.getMessage("TitleContext"));}
+    public ReportContextAction(String s, Icon i, WindowInterface wi) {
+        super(s, i, wi);
+    }
+
+    public ReportContextAction() {
+        super(Bundle.getMessage("TitleContext"));
+    }
 
     JTextArea pane;
 
@@ -55,12 +53,12 @@ public class ReportContextAction extends jmri.util.swing.JmriAbstractAction {
         pane.setWrapStyleWord(true);
         pane.setColumns(120);
 
-        JScrollPane  scroll = new JScrollPane(pane);
+        JScrollPane scroll = new JScrollPane(pane);
         frame.add(scroll, BorderLayout.CENTER);
-        
+
         ReportContext r = new ReportContext();
         addString(r.getReport(true));
-        
+
         pane.append("\n"); // add a little space at bottom
 
         // Add button to allow copy to clipboard
@@ -95,17 +93,16 @@ public class ReportContextAction extends jmri.util.swing.JmriAbstractAction {
     }
 
     void addString(String val) {
-        pane.append(val+"\n");
+        pane.append(val + "\n");
     }
+
     void addProperty(String prop) {
-        addString(prop+": "+System.getProperty(prop)+"  ");
+        addString(prop + ": " + System.getProperty(prop) + "  ");
     }
-    
+
     // never invoked, because we overrode actionPerformed above
     public JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }
-    
-}
 
-/* @(#)ReportContextAction.java */
+}

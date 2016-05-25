@@ -124,7 +124,7 @@ to the switch lead.  For more information, see the
 turnouts.  For LocoNet turnouts, this informs the program that the turnout is
 being driven by a Digitrax DS54 with two microswitches attached
 to the switch and aux leads.  For more information, see the
-<A HREF="../../hardware/loconet/DS54.shtml">DS54 page</a>. For XPressNet turnouts, this informs the program that the turnout is being driven by an LS100 and te feedback inputs have been connected as described in the <a href="http://www.lenz.com/manuals/accessorydecoders/ls100110.pdf">LS100 manual (external link, PDF)</a>.</DD>
+<A HREF="../../hardware/loconet/DS54.shtml">DS54 page</a>. For XPressNet turnouts, this informs the program that the turnout is being driven by an LS100 and the feedback inputs have been connected as described in the <a href="http://www.lenz.com/manuals/accessorydecoders/ls100110.pdf">LS100 manual (external link, PDF)</a>.</DD>
 
 </DL>
 
@@ -185,21 +185,53 @@ movement has taken place.  This sets the known state in JMRI
 to THROWN.
 <li>Later, and independently, you move the turnout on the layout to the CLOSED position, 
 perhaps with a ground throw or local pushbutton.
-<li>This causes the feedback information send to JMRI to change.
+<li>This causes the feedback information sent to JMRI to change.
 <li>Because of this, the known state is changed to CLOSED.
 <li>At this point, JMRI makes the assumption that 
 you wanted this to happen; in effect, a command was given on the layout
 (not in the program) to move the turnout.  So JMRI changes the 
 commanded state to CLOSED also.
-</ul>
+</ol>
 
 Note that this last transition in commanded state does not send commands to
-the layout; it's just a change within in the program.
+the layout; it's just a change within the program.
 
 <h3>TWOSENSOR feedback and inconsistent state</h3>
 
+TWOSENSOR feedback uses two separate sensors to indicate when the turnout has 
+successfully gone to CLOSED and THROWN state.  During the transition between those two,
+it's in neither state, so the turnout state appears as INCONSISTENT. For example:
+<ol>
+<li>The turnout is currently showing CLOSED, with the closed-sensing Sensor showing active
+and the thrown-sensing Sensor showing inactive.
+<li>You command the turnout to move, and it starts moving.
+<li>The closed-sensing Sensor going inactive as the points lift off, and the turnout
+starts to show INCONSISTENT.
+<li>The thrown-sensing Sensor goes Active as the points settle on closed, and the Turnout will start
+to show Closed.
+</ol>
+
+The same happens if you remotely start the turnout moving, for example with a local push-button.
+<ol>
+<li>The turnout starts to move
+<li>The sensor indicates that by going inactive, and the turnout shows INCONSISTENT
+<li>The other sensor sees the turnout settle into place, and the final state is shown.
+<li>JMRI thinks you must have done that intentionally, and sets the commanded state equal to the feedback state.
+</ol>
+
+(N.b.:  Sometimes the mechanical linkages are not perfect, and the "to" sensor will go Active
+before the "from sensor goes Inactive.  The program handles this the same way:  It will show 
+INCONSISTENT if either both sensors are Active, or both Inactive)
 
 <h3>Bus-based systems and input messages</h3>
+
+Some DCC systems, e.g. LocoNet, XPressNet and NCE systems, can handle commands to 
+turnouts from multiple sources.  When set to MONITORING feedback, JMRI looks for those
+for confirmation of the proper state of the turnout:  Seeing the message sent is considered
+confirmation that the turnout has changed. 
+<p>
+With MONITORING set, when something outside of JMRI (e.g. another program; a handheld throttle)
+changes the turnout state, JMRI will accept that and change its internal state for the turnout.
 
 <!--#include virtual="/Footer" -->
 

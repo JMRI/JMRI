@@ -1,10 +1,12 @@
 //SimpleSensorServer.java
 package jmri.jmris.simpleserver;
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import jmri.Sensor;
 import jmri.jmris.AbstractSensorServer;
-import org.eclipse.jetty.websocket.WebSocket.Connection;
+import jmri.jmris.JmriConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,9 +20,9 @@ import org.slf4j.LoggerFactory;
 public class SimpleSensorServer extends AbstractSensorServer {
 
     private DataOutputStream output;
-    private Connection connection;
+    private JmriConnection connection;
 
-    public SimpleSensorServer(Connection connection) {
+    public SimpleSensorServer(JmriConnection connection) {
         super();
         this.connection = connection;
     }
@@ -60,18 +62,18 @@ public class SimpleSensorServer extends AbstractSensorServer {
             if (log.isDebugEnabled()) {
                 log.debug("Setting Sensor INACTIVE");
             }
-            initSensor(statusString.substring(index, statusString.indexOf(" ", index + 1)));
-            setSensorInactive(statusString.substring(index, statusString.indexOf(" ", index + 1)));
+            initSensor(statusString.substring(index, statusString.indexOf(" ", index + 1)).toUpperCase());
+            setSensorInactive(statusString.substring(index, statusString.indexOf(" ", index + 1)).toUpperCase());
         } else if (statusString.contains("ACTIVE")) {
             if (log.isDebugEnabled()) {
                 log.debug("Setting Sensor ACTIVE");
             }
-            initSensor(statusString.substring(index, statusString.indexOf(" ", index + 1)));
-            setSensorActive(statusString.substring(index, statusString.indexOf(" ", index + 1)));
+            initSensor(statusString.substring(index, statusString.indexOf(" ", index + 1)).toUpperCase());
+            setSensorActive(statusString.substring(index, statusString.indexOf(" ", index + 1)).toUpperCase());
         } else {
             // default case, return status for this sensor/
-            Sensor sensor = jmri.InstanceManager.sensorManagerInstance().provideSensor(statusString.substring(index));
-            sendStatus(statusString.substring(index), sensor.getKnownState());
+            Sensor sensor = jmri.InstanceManager.sensorManagerInstance().provideSensor(statusString.substring(index).toUpperCase());
+            sendStatus(statusString.substring(index).toUpperCase(), sensor.getKnownState());
 
         }
     }
@@ -83,5 +85,5 @@ public class SimpleSensorServer extends AbstractSensorServer {
             this.connection.sendMessage(message);
         }
     }
-    static Logger log = LoggerFactory.getLogger(SimpleSensorServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SimpleSensorServer.class.getName());
 }

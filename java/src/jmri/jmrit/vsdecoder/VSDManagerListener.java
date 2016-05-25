@@ -18,9 +18,9 @@ package jmri.jmrit.vsdecoder;
  * @author			Mark Underwood Copyright (C) 2011
  * @version			$Revision$
  */
-
 import java.util.EventListener;
 
 public interface VSDManagerListener extends EventListener {
+
     public void eventAction(VSDManagerEvent evt);
 }

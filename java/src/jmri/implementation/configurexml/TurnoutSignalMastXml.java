@@ -1,13 +1,13 @@
 package jmri.implementation.configurexml;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.List;
 import jmri.InstanceManager;
+import jmri.SignalAppearanceMap;
 import jmri.Turnout;
 import jmri.implementation.TurnoutSignalMast;
-import jmri.SignalAppearanceMap;
-import java.util.List;
-import org.jdom.Element;
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML configuration for a DefaultSignalMastManager objects.
@@ -15,132 +15,136 @@ import org.jdom.Element;
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
  * @version $Revision: 18102 $
  */
-public class TurnoutSignalMastXml 
-            extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
+public class TurnoutSignalMastXml
+        extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
-    public TurnoutSignalMastXml() {}
+    public TurnoutSignalMastXml() {
+    }
 
     /**
      * Default implementation for storing the contents of a
      * DefaultSignalMastManager
+     *
      * @param o Object to store, of type TripleTurnoutSignalHead
      * @return Element containing the complete info
      */
     public Element store(Object o) {
-        TurnoutSignalMast p = (TurnoutSignalMast)o;
+        TurnoutSignalMast p = (TurnoutSignalMast) o;
         Element e = new Element("turnoutsignalmast");
         e.setAttribute("class", this.getClass().getName());
         e.addContent(new Element("systemName").addContent(p.getSystemName()));
 
         storeCommon(p, e);
         Element unlit = new Element("unlit");
-        if(p.allowUnLit()){
+        if (p.allowUnLit()) {
             unlit.setAttribute("allowed", "yes");
             unlit.addContent(new Element("turnout").addContent(p.getUnLitTurnoutName()));
-            if(p.getUnLitTurnoutState()==Turnout.CLOSED)
+            if (p.getUnLitTurnoutState() == Turnout.CLOSED) {
                 unlit.addContent(new Element("turnoutstate").addContent("closed"));
-            else
+            } else {
                 unlit.addContent(new Element("turnoutstate").addContent("thrown"));
+            }
         } else {
             unlit.setAttribute("allowed", "no");
         }
         e.addContent(unlit);
         SignalAppearanceMap appMap = p.getAppearanceMap();
-        if(appMap!=null){
+        if (appMap != null) {
             java.util.Enumeration<String> aspects = appMap.getAspects();
-            while(aspects.hasMoreElements()){
+            while (aspects.hasMoreElements()) {
                 String key = aspects.nextElement();
                 Element el = new Element("aspect");
                 el.setAttribute("defines", key);
                 el.addContent(new Element("turnout").addContent(p.getTurnoutName(key)));
-                if(p.getTurnoutState(key)==Turnout.CLOSED)
+                if (p.getTurnoutState(key) == Turnout.CLOSED) {
                     el.addContent(new Element("turnoutstate").addContent("closed"));
-                else
+                } else {
                     el.addContent(new Element("turnoutstate").addContent("thrown"));
+                }
                 e.addContent(el);
             }
         }
         List<String> disabledAspects = p.getDisabledAspects();
-        if(disabledAspects!=null){
+        if (disabledAspects != null) {
             Element el = new Element("disabledAspects");
-            for(String aspect: disabledAspects){
+            for (String aspect : disabledAspects) {
                 Element ele = new Element("disabledAspect");
                 ele.addContent(aspect);
                 el.addContent(ele);
             }
-            if(disabledAspects.size()!=0)
+            if (disabledAspects.size() != 0) {
                 e.addContent(el);
+            }
         }
-        if(p.resetPreviousStates())
+        if (p.resetPreviousStates()) {
             e.addContent(new Element("resetPreviousStates").addContent("yes"));
+        }
         return e;
     }
 
-    /**
-     * Create a DefaultSignalMastManager
-     * @param element Top level Element to unpack.
-     * @return true if successful
-     */
-    @SuppressWarnings("unchecked")
-    public boolean load(Element element) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         TurnoutSignalMast m;
-        String sys = getSystemName(element);
+        String sys = getSystemName(shared);
         m = new jmri.implementation.TurnoutSignalMast(sys);
-        
-        if (getUserName(element) != null)
-            m.setUserName(getUserName(element));
-        
-        loadCommon(m, element);
-        
-        if(element.getChild("unlit")!=null){
-            Element unlit = element.getChild("unlit");
-            if(unlit.getAttribute("allowed")!=null){
-                if(unlit.getAttribute("allowed").getValue().equals("no")){
+
+        if (getUserName(shared) != null) {
+            m.setUserName(getUserName(shared));
+        }
+
+        loadCommon(m, shared);
+
+        if (shared.getChild("unlit") != null) {
+            Element unlit = shared.getChild("unlit");
+            if (unlit.getAttribute("allowed") != null) {
+                if (unlit.getAttribute("allowed").getValue().equals("no")) {
                     m.setAllowUnLit(false);
                 } else {
                     m.setAllowUnLit(true);
                     String turnout = unlit.getChild("turnout").getText();
                     String turnoutState = unlit.getChild("turnoutstate").getText();
                     int turnState = Turnout.THROWN;
-                    if(turnoutState.equals("closed"))
+                    if (turnoutState.equals("closed")) {
                         turnState = Turnout.CLOSED;
+                    }
                     m.setUnLitTurnout(turnout, turnState);
                 }
             }
         }
-        
-        List<Element> list = element.getChildren("aspect");
+
+        List<Element> list = shared.getChildren("aspect");
         for (int i = 0; i < list.size(); i++) {
             Element e = list.get(i);
             String aspect = e.getAttribute("defines").getValue();
             String turnout = e.getChild("turnout").getText();
             String turnoutState = e.getChild("turnoutstate").getText();
             int turnState = Turnout.THROWN;
-            if(turnoutState.equals("closed"))
+            if (turnoutState.equals("closed")) {
                 turnState = Turnout.CLOSED;
+            }
             m.setTurnout(aspect, turnout, turnState);
         }
-        Element e = element.getChild("disabledAspects");
-        if(e!=null){
+        Element e = shared.getChild("disabledAspects");
+        if (e != null) {
             list = e.getChildren("disabledAspect");
-            for(Element aspect: list){
+            for (Element aspect : list) {
                 m.setAspectDisabled(aspect.getText());
             }
         }
-        if (( element.getChild("resetPreviousStates") != null) && 
-            element.getChild("resetPreviousStates").getText().equals("yes") ){
-                m.resetPreviousStates(true);
+        if ((shared.getChild("resetPreviousStates") != null)
+                && shared.getChild("resetPreviousStates").getText().equals("yes")) {
+            m.resetPreviousStates(true);
         }
-        
+
         InstanceManager.signalMastManagerInstance()
-            .register(m);
-        
+                .register(m);
+
         return true;
     }
 
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
-    
-    static Logger log = LoggerFactory.getLogger(TurnoutSignalMastXml.class.getName());
+
+    private final static Logger log = LoggerFactory.getLogger(TurnoutSignalMastXml.class.getName());
 }

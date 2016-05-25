@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2006 All rights reserved-->
-<!-- $ $-->
+<!-- $Id$ -->
 <!-- -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under-->
 <!-- the terms of version 2 of the GNU General Public License as published-->
@@ -13,297 +13,128 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License-->
 <!-- for more details.-->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="3" lastUpdated="2014/05/10"/>
+  <version author="Alain Le Marchand" version="2" lastUpdated="2014/03/02"/>
   <version author="Xavier Chazelle" version="1.1" lastUpdated="2009/01/06"/>
+  <!-- Version 2 - Increased Hi version value to 4, change family name to Mini instead of Micro, No Speed Table, Fix enum for CV54 (Alain Le Marchand) -->
+  <!-- Version 3 - Refactoring with fragment files, change family name to Mini Multi-Protocol  
+				   Used generic items on standard panes (motor, lights, analog) as much as possible
+	               Using English/German terms as defined in official Uhlenbrock documentation  (Alain Le Marchand)    -->
   <decoder>
-    <family name="MicroMultiprotocol Decoder" mfg="Uhlenbrock Elektronik">
-      <model model="73400" highVersionID="2" numOuts="2" maxMotorCurrent="0.6A" formFactor="N" comment="wired version">
+    <family name="Mini Multi-Protocol Decoder" mfg="Uhlenbrock Elektronik" highVersionID="4" comment="Decoders not sorted (necessarily) in numerical order">
+      <model model="73400" numOuts="2" maxMotorCurrent="0.6A" formFactor="N" productID="73400" comment="wired version">
         <output name="1" label="F0F" connection="wire" maxcurrent="0.2A"/>
         <output name="2" label="F0R" connection="wire" maxcurrent="0.2A"/>
-        <size length="10.8 " width="7.5 " height="2.4 " units="mm"/>
+        <size length="10.8" width="7.5" height="2.4" units="mm"/>
       </model>
-      <model model="73410" highVersionID="2" numOuts="2" maxMotorCurrent="0.6A" formFactor="N" comment="NEM651 version" connector="NMRAsmall">
+      <model model="73410" numOuts="2" maxMotorCurrent="0.6A" formFactor="N" productID="73410" connector="NEM651" comment="NEM651 version (Piko #46210)">
         <output name="1" label="F0F" connection="plug" maxcurrent="0.2A"/>
         <output name="2" label="F0R" connection="plug" maxcurrent="0.2A"/>
-        <size length="10.8 " width="7.5 " height="2.4 " units="mm"/>
+        <size length="10.8" width="7.5" height="2.4" units="mm"/>
       </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
-        <shortAddressVal/>
-        <label>Primary Address</label>
-        <comment>Short address</comment>
-      </variable>
-      <variable label="Vstart" CV="2" comment="Speed setting between 1 and 63" default="01">
-        <decVal max="63"/>
-        <label>Vstart</label>
-        <comment>Speed setting between 1 and 63</comment>
-      </variable>
-      <variable label="Acceleration Rate" CV="3" comment="A value of 1 will increase each 5 milliseconds by 1" item="Accel" default="02">
-        <decVal max="63"/>
-        <label>Acceleration Rate</label>
-        <comment>A value of 1 will increase each 5 milliseconds by 1</comment>
-      </variable>
-      <variable label="Deceleration Rate" CV="4" comment="A value of 1 will increase each 5 milliseconds by 1" item="Decel" default="02">
-        <decVal max="63"/>
-        <label>Deceleration Rate</label>
-        <comment>A value of 1 will increase each 5 milliseconds by 1</comment>
-      </variable>
-      <variable label="Vhigh" CV="5" comment="Speed setting between 1 and 63" default="48">
-        <decVal max="63"/>
-        <label>Vhigh</label>
-        <comment>Speed setting between 1 and 63</comment>
-      </variable>
-      <variable label="Vmid" CV="6" comment="Speed setting between 1 and 63" default="24">
-        <decVal max="63"/>
-        <label>Vmid</label>
-        <comment>Speed setting between 1 and 63</comment>
-      </variable>
-      <variable label="Manufacturer Version No: " CV="7" item="Decoder Version" default="8" readOnly="yes">
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/vStartHighMid-accelDecel.xml"/>
+      <variable item="Decoder Version" CV="7" default="4" readOnly="yes">
         <decVal/>
         <label>Manufacturer Version No: </label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
       </variable>
-      <variable label="Manufacturer ID: " CV="8" item="Manufacturer" default="85" readOnly="yes">
+      <variable item="Manufacturer" CV="8" readOnly="yes" default="85">
         <decVal/>
         <label>Manufacturer ID: </label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
       </variable>
-      <variable label="Extended Address" CV="17" comment="4 digit address (Range 128-10240)" item="Long Address">
-        <longAddressVal/>
-        <label>Extended Address</label>
-        <comment>4 digit address (Range 128-10240)</comment>
-      </variable>
-      <variable label="Consist Address" CV="19" comment="0-127 0= no consist" item="Consist Address" default="0" mask="XVVVVVVV">
-        <decVal/>
-        <label>Consist Address</label>
-        <comment>0-127 0= no consist</comment>
-      </variable>
-      <variable label="Consist Direction" CV="19" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-          </enumChoice>
-          <enumChoice choice="Reversed">
-            <choice>Reversed</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Direction</label>
-      </variable>
-      <variable label="Locomotive Direction" CV="29" default="0" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="reversed">
-            <choice>reversed</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Locomotive Direction</label>
-      </variable>
-      <variable label="FL Location" CV="29" item="Speed Step Mode" default="1" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="14 speed step format">
-            <choice>14 speed step format</choice>
-          </enumChoice>
-          <enumChoice choice="28 speed step format">
-            <choice>28 speed step format</choice>
-          </enumChoice>
-        </enumVal>
-        <label>FL Location</label>
-      </variable>
-      <variable label="Analog (DC) Operation" CV="29" default="0" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="digital only">
-            <choice>digital only</choice>
-          </enumChoice>
-          <enumChoice choice="digital or analog">
-            <choice>digital or analog</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Analog (DC) Operation</label>
-      </variable>
-      <variable label="Speed Table Definition" CV="29" mask="XXXVXXXX">
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv29analog.xml"/>
+      <variable item="Speed Table Definition" CV="29" default="0" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="Use Vstart, Vmid, Vhigh">
             <choice>Use Vstart, Vmid, Vhigh</choice>
+            <choice xml:lang="it">Usa Tensione  (Vstart, Vmid, Vhigh)</choice>
+            <choice xml:lang="fr">Utiliser V démarrage (Vstart, Vmid, Vhigh)</choice>
+            <choice xml:lang="de">Anfahr-, Mitten-, Höchst-geschwindigkeit nutzen</choice>
           </enumChoice>
-          <enumChoice choice="Use table in CVs 67 through 94">
-            <choice>Use table in CVs 67 through 94</choice>
+	  <!--
+          <enumChoice choice="(Not supported) Use table in CVs 67 through 94">
+            <choice>(Not supported) Use table in CVs 67 through 94</choice>
+            <choice xml:lang="de">(Nicht unterstützt) Geschwindigkeitskennlinie nutzen</choice>
           </enumChoice>
+	  -->
         </enumVal>
-        <label>Speed Table Definition</label>
+        <label>Speed Table Definition - Not Used</label>
+        <label xml:lang="de">Geschwindigkeitskennlinie - Nicht belegt</label>
+        <label xml:lang="fr">Tableau de vitesse=no</label>
+        <label xml:lang="it">Tabella Velocità non usata</label>
       </variable>
-      <variable label="Address Format" CV="29" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="One byte (short) address">
-            <choice>One byte (short) address</choice>
-          </enumChoice>
-          <enumChoice choice="Two byte (extended) address">
-            <choice>Two byte (extended) address</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Address Format</label>
-      </variable>
-      <variable label="Main Motor Control - load regulation" CV="49" default="0" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Main Motor Control - load regulation</label>
-      </variable>
-      <variable label="Sound module" CV="49" default="0" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+      <!-- CV49 Uhlenbrock decoder configuration - common bits -->
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv49common.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv49dataformat.xml"/>
+      <!-- CV49 specific bits for this decoder-->
+      <variable item="Sound module" CV="49" default="0" mask="XXXXXXVX">
+    	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Sound module</label>
+        <label xml:lang="de">Soundmodul</label>
       </variable>
-      <variable label="LISSY module" CV="49" default="0" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>LISSY module</label>
+      <variable item="LISSY module" CV="49" default="0" mask="XXXXXVXX">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>LISSY mini transmitter</label>
+        <label xml:lang="de">LISSY Mini-Sendemodul</label>
       </variable>
-      <variable label="Digital format" CV="49" comment="DCC and Motorala or DCC or Motorala" default="0" mask="XXXVVXXX">
-        <enumVal>
-          <enumChoice choice="DCC and Motorala">
-            <choice>DCC and Motorala</choice>
-          </enumChoice>
-          <enumChoice choice="DCC only">
-            <choice>DCC only</choice>
-          </enumChoice>
-          <enumChoice choice="Motorala only">
-            <choice>Motorala only</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Digital format</label>
-        <comment>DCC and Motorala or DCC or Motorala</comment>
+      <!-- End CV49 specifics -->
+      <variable item="Function F0F options" CV="50" tooltip="min=0, max=32" default="16">
+        <decVal max="32" min="0"/>
+        <label>Lights/Function outputs dimming</label>
+        <label xml:lang="de">Dimmung Licht/Funktionsausgänge</label>		
       </variable>
-      <variable label="Lights output swap" CV="49" default="0" mask="XVXXXXXX">
-        <enumVal>
-          <enumChoice choice="straight">
-            <choice>straight</choice>
-          </enumChoice>
-          <enumChoice choice="reverse">
-            <choice>reverse</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Lights output swap</label>
-      </variable>
-      <variable label="Braking condition" CV="49" default="0" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="Braking signal only">
-            <choice>Braking signal only</choice>
-          </enumChoice>
-          <enumChoice choice="with analog voltage">
-            <choice>with analog voltage</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Braking condition</label>
-      </variable>
-      <variable label="Lights output dimming" CV="50" tooltip="min=0, max=31" default="16">
-        <decVal max="31" min="0"/>
-        <label>Lights output dimming</label>
-      </variable>
-      <variable label="Repetition rate" CV="53" tooltip="Lower if the locomotive does not run smoothly" default="40">
+      <variable item="EMF Option 1" CV="53" default="40">
         <decVal/>
         <label>Repetition rate</label>
+	<label xml:lang="de">Wiederholrate der Motorregelung</label>
+	<tooltip>Lower if the locomotive does not run smoothly</tooltip>
+	<tooltip xml:lang="de">verkleinern, wenn Lok ungleichmäßig läuft</tooltip>
       </variable>
-      <variable label="Fixed or variable repetition rate" CV="54" tooltip="128 fixed or 132 speed dependant" default="0" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="fixed repetition rate" value="128">
-            <choice>fixed repetition rate</choice>
-          </enumChoice>
-          <enumChoice choice="speed dependent repetition rate (default)" value="132">
-            <choice>speed dependent repetition rate (default)</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Fixed or variable repetition rate</label>
-      </variable>
-      <variable label="AD Timeslot" CV="58" default="8" tooltip="Increase if loc does not run smoothly at low speeds - Decrease if the top speed is too low after CV53 has been lowered">
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv54motorReg.xml"/>
+      <variable item="EMF Option 2" CV="58" default="8">
         <decVal/>
-        <label>AD Timeslot</label>
+        <label>Time slot for AD measurement</label>
+	<label xml:lang="de">Zeitschlitz für AD Wandlermessung</label>
+	<tooltip>Increase if loc does not run smoothly at low speeds - Decrease if the top speed is too low after CV53 has been lowered</tooltip>
+	<tooltip xml:lang="de">vergrößern, wenn Lok bei geringer Geschwindigkeit ungleichmäßig läuft; verkleinern, wenn bei heruntergesetztem CV 53 Höchstgeschwindigkeit der Lok zu gering ist</tooltip>
       </variable>
-      <variable label="Short circuit supervision" CV="60" default="15" readOnly="yes" tooltip="Do not change! 0=deactivated - 15=activated">
-        <decVal/>
-        <label>Short circuit supervision</label>
+      <variable item="Short circuit supervision" CV="60" default="28" readOnly="yes">
+        <decVal max="28"/>
+        <label>Motor Short circuit supervision</label>
+	<label xml:lang="de">Kurzschlussüberwachung Motor</label>
+        <tooltip>Do not change! 0=deactivated - 28=activated</tooltip>
       </variable>
-      <variable label="Offset Register" CV="65" default="0" readOnly="yes" tooltip="For CV programming with a Motorola digital controller">
-        <decVal/>
-        <label>Offset Register</label>
+      <variable item="Lights Short circuit supervision" CV="62" default="18" readOnly="yes">
+        <decVal max="18"/>
+        <label>Lights Short circuit supervision</label>
+	<label xml:lang="de">Kurzschlussüberwachung Licht</label>
+        <tooltip>Do not change! 0=deactivated - 18=activated</tooltip>        
       </variable>
-      <variable label="Page Register" CV="66" default="0" readOnly="yes" tooltip="used in DCC page mode">
-        <decVal/>
-        <label>Page Register</label>
-      </variable>
-      <variable label="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
-      <variable label="Error register" CV="100" default="0" readOnly="yes" mask="XXXXXXVV" tooltip="0 = No error (reset error register)">
-        <enumVal>
-          <enumChoice choice="No error" value="0">
-            <choice>No error</choice>
-          </enumChoice>
-          <enumChoice choice="Motor short circuit" value="1">
-            <choice>Motor short circuit</choice>
-          </enumChoice>
-          <enumChoice choice="Light short circuit" value="2">
-            <choice>Light short circuit</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Error register</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv65.66registers.xml"/>
+      <!-- No Speed Table for this decoder -->
+      <!-- <variable label="Speed Table" CV="67"> -->
+      <!--   <speedTableVal/> -->
+      <!--   <label>Speed Table</label> -->
+      <!-- </variable> -->
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv100error.xml"/>
     </variables>
     <resets>
-      <factReset label="Reset All CVs" CV="59" default="1"/>
+      <factReset label="Reset All CVs" CV="59" default="1">
+         <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
     </resets>
   </decoder>
-  <pane name="Uhlenbrock">
-    <column>
-      <label label="CV49 - decoder configuration">
-        <label>CV49 - decoder configuration</label>
-      </label>
-      <display item="Sound module"/>
-      <display item="LISSY module"/>
-      <display item="Digital format"/>
-      <display item="Braking condition"/>
-      <separator/>
-      <label label="Lights: ">
-        <label>Lights: </label>
-      </label>
-      <display item="Lights output swap"/>
-      <display item="Lights output dimming"/>
-    </column>
-    <column>
-      <display item="Main Motor Control - load regulation"/>
-      <label label="CV53 54 58 - Regulation, Back-EMF parameters">
-        <label>CV53 54 58 - Regulation, Back-EMF parameters</label>
-      </label>
-      <display item="Repetition rate"/>
-      <display item="Fixed or variable repetition rate"/>
-      <display item="AD Timeslot"/>
-      <separator/>
-      <label label="These CV's are Read-Only: ">
-        <label>These CV's are Read-Only: </label>
-      </label>
-      <display item="Short circuit supervision"/>
-      <display item="Error register"/>
-      <display item="Offset Register"/>
-      <display item="Page Register"/>
-    </column>
-    <name>Uhlenbrock</name>
-  </pane>
+  <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneUhlenbrock.xml"/>
 </decoder-config>

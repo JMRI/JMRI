@@ -1,17 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: EditLayoutTurnout.shtml,v 1.4 2008/11/01 17:33:00 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-12-08--> 
+<!-- $Id$ -->
+<!-- UpDated by Herv&#233; Blorec <bzh56420@yahoo.fr>  2013-10-23--> 
 <html lang="fr">
 <head>
  <TITLE>
       JMRI: Edit Turnout Help
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="JMRI help Layout Editor Turnout">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -28,78 +28,85 @@
 
 <H2>Aiguillages</H2>
 
-L'Éditeur de TCO prend en charge six types différents d'appareils de voie (aiguillages): HR (<b>Droit</b>), LH (<b>Gauche </b>), WYE (<b> Symétrique</b>),Double Xover( <b>Bretelle Double</b>), RH Xover (<b>Bretelle Droite</b>),
+L'&#233;diteur de R&#233;seau prend en charge six types diff&#233;rents d'appareils de voie (aiguillages): HR (<b>Droit</b>), LH (<b>Gauche </b>), WYE (<b> Sym&#233;trique</b>),Double Xover( <b>Bretelle Double</b>), RH Xover (<b>Bretelle Droite</b>),
 et Xover <b> Bretelle Gauche</b>). L'
-Les deux autres types d'appareils de voie, parfois utilisés dans des réeaux de trains miniatures sont: la jonction double
-et l'aiguillage trois voies, on peut les réaliser en utilisant deux aiguillages LH ou RH . Une Jonction Double peut être représentée par deux aiguillages droit  ou gauche avec leurs pointes réunies par un court segment de voie
- Une fois qu'un aiguillage a été créé, son
-type ne peut pas être changé. Changer le type d'un aiguillage nécessite de le retirer et de
-recréer l'aiguillage.
+Les deux autres types d'appareils de voie, parfois utilis&#233;s dans des r&#233;eaux de trains miniatures sont: la jonction double
+et l'aiguillage trois voies, on peut les r&#233;aliser en utilisant deux aiguillages LH ou RH . Une Jonction Double peut &#234;tre repr&#233;sent&#233;e par deux aiguillages droit  ou gauche avec leurs pointes r&#233;unies par un court segment de voie
+ Une fois qu'un aiguillage a &#233;t&#233; cr&#233;&#233;, son
+type ne peut pas &#234;tre chang&#233;. Changer le type d'un aiguillage n&#233;cessite de le retirer et de
+recr&#233;er l'aiguillage.
 
-<H2>Lier Des Dessins d'Aiguillages à Des Aiguillage Réels</H2>
+<H2>Lier Des Dessins d'Aiguillages &#224; Des Aiguillage R&#233;els</H2>
 
-Les dessins d'Aiguillage dans un schéma de voies sont dessinés en utilisant les lignes solides pour les deux
-Jambes directes et divergents  jusqu'à ce que les dessins des Aiguillage soient liés aux
-aiguillages dans la table Aiguillage. Une fois liés aux aiguillages réels, les dessins d'aiguillages
- montrent les «états connus" des Aiguillages qu'ils représentent. Cette fonctionnalité
-peut être désactivée en décochant <b>Autoriser Animation des Aiguillage</b> dans le menu Options. Après la liaison,
-vous pouvez basculer chaque Aiguillage de votre réseau en cliquant sur le point central de son
-dessin (à condition que <b> Autoriser Contrôle par le TCO</b> soit cochée dans le
-Menu Options, et votre système de contrôle informatique de DCC active les aiguillages). L'
-capacité de basculer en cliquant peut être désactivée en cochant <b> Désactivé</b> dans le
+Les dessins d'Aiguillage dans un sch&#233;ma de voies sont dessin&#233;s en utilisant les lignes pleines pour les deux
+voies directes et divergentes  jusqu'&#224; ce que les dessins des Aiguillage soient li&#233;s aux
+aiguillages dans le Tableau Aiguillage. Une fois li&#233;s aux aiguillages r&#233;els, les dessins d'aiguillages
+ montrent les «&#233;tats connus" des Aiguillages qu'ils repr&#233;sentent. Cette fonctionnalit&#233;
+peut &#234;tre d&#233;sactiv&#233;e en d&#233;cochant <b>Autoriser Animation des Aiguillage</b> dans le menu Options. Apr&#232;s la liaison,
+vous pouvez basculer chaque Aiguillage de votre r&#233;seau en cliquant sur le point central de son
+dessin (&#224; condition que <b> Autoriser Commandee du R&#233;seau</b> soit coch&#233; dans le
+Menu Options, et votre syst&#232;me DCC met en oeuvre la commandele informatique des aiguillages). L'
+capacit&#233; de basculer en cliquant peut &#234;tre d&#233;sactiv&#233;e en cochant <b>D&#233;sactiv&#233;</b> dans le
 menu contextuel Aiguillage.</P>
 <P>
-Vous pouvez lier chaque dessin d'aiguillage avec un  aiguillage réel(interne ou matériel)
-dans la table Aiguillage comme les dessins d'aiguillage sont créés, en entrant son nom de la Table Aiguillage (nom système soit ou nom utilisateur) dans le champs <b>Aiguillage : Nom</b>
-(Rangée du haut de la barre d'outils) avant de cliquer pour créer cet aiguillage. Alternativement,
-vous pouvez créer vos dessins d'aiguillage d'abord, puis sélectionnez <b>Modifier ...</b> dans chaque
-menu contextuel d'aiguillage à l'ouverture d'un dialogue <b>Modifier Aiguillage</b> qui permet la saisie du
- nom de l'aiguillage.</P>
+Vous pouvez lier chaque dessin d'aiguillage avec un aiguillage r&#233;el(interne ou mat&#233;riel)
+dans le Table Aiguillage quand les dessins d'aiguillage sont cr&#233;&#233;s, en entrant son nom de le Tableau Aiguillage (soit nom syst&#232;me  soit nom utilisateur) dans le champs <b>Aiguillage : Nom</b> (Rang&#233;e du haut de la barre d'outils) avant de cliquer pour cr&#233;er cet aiguillage. Alternativement,
+vous pouvez cr&#233;er vos dessins d'aiguillage d'abord, puis s&#233;lectionnez <b>Modifier ...</b> dans chaque
+menu contextuel d'aiguillage &#224; l'ouverture d'un dialogue <b>Modifier Aiguillage</b> qui permet la saisie du nom de l'aiguillage.</P>
+<p>
+ Il est &#233;galement possible de relier un deuxi&#232;me aigullage pour qu'il fonctionne en m&#234;me temps que
+celui sp&#233;cifi&#233; pour cet aiguillage. Lorsque l'aiguillage est une bretelle, une  deuxi&#232;me adresse aiguillage
+ peut &#234;tre sp&#233;cifi&#233;e, de sorte que si la bretelle est command&#233;e par deux adresses aiguillages DCC diff&#233;rentes
+Les deux aiguillages seront d&#233;vi&#233;s. <br>
+O&#249; l'aiguillage est soit un D, G ou Y, et deux aiguillages physiquesl sont contr&#244;l&#233;s
+par la m&#234;me adresse DCC vous pouvez ajouter un aigullage au panneau en utilisant l'adresse r&#233;elle
+et le deuxi&#232;me aiguillage utilisant un aiguillage "Interne", vous pouvez ensuite lier les deux ensemble
+de sorte que si un aiguillage est d&#233;vi&#233;, l'autre suivra.
 
-<H2>Paramétrage de l'Aiguillage d'un Canton</H2>
 
-En option, vous pouvez désigner de quel <b>Canton</b> un Aiguillage fait partie soit en
+<H2>Param&#233;trage de l'Aiguillage d'un Canton</H2>
+
+En option, vous pouvez d&#233;signer de quel <b>Canton</b> un Aiguillage fait partie soit en
 entrant un nom de canton dans le champs <b>Canton: Nom</b> de la barre d'outil avant
-la création de chaque dessin d'aiguillage, ou en entrant un nom de canton dans le dialogue Edition Aiguillage
-à un moment ultérieur. La boîte de dialogue Modifier Aiguillage permet également la demande d'une option Créer/Modifier un Canton
-, où l'information du canton pour l'aiguillage peut être entrée
-ou modifiée. Les cantons sont discutés plus en détail sur la page d'aide de l'option Création/Edition
+la cr&#233;ation de chaque dessin d'aiguillage, ou en entrant un nom de canton dans le dialogue Edition Aiguillage
+&#224; un moment ult&#233;rieur. La bo&#238;te de dialogue Modifier Aiguillage permet &#233;galement un dialogue Cr&#233;er/Modifier un Canton
+, o&#249; l'information du canton pour l'aiguillage peut &#234;tre entr&#233;
+ou modifi&#233;e. Les cantons sont discut&#233;s plus en d&#233;tail sur la page d'aide de l'option Cr&#233;ation/Edition
 de Canton.</P>
 
-<H2>Poursuite d'Itinéraires Suivant l'État de l'Aiguillage</H2>
+<H2>Poursuite d'Itin&#233;raires Suivant l'&#233;tat de l'Aiguillage</H2>
 
-Quand une voie se branche à une voie principale à un Aiguillage Droit ou Gauche, la
-Voie Principale continue normalement à travers l'aiguillage en suivant la voie directe ( chemin fermé). Parfois, cependant, la ligne principale suit le la voie divergente  (le chemin dévié). Pour permettre l'entrée de cette information, le dialogue Édition
- Aiguillage contient une entrée appelée <b>Itinéraire continue Suivant l'Etat de l'Aiguillage</b> 
-Poursuivant l'Itinéraire par l'État par défaut de l'Aiguillage vers Direct quand un dessin d'aiguillage est créé. Vous devrez le changer pour Dévié si la Ligne Principale suit la chemin Devié à travers l'aiguillage. Pour un aiguillage triple, vous devrez toujours vérifier pour voir si la Continuité de l'Itinéraire pour l'État de l'Aiguillage est correctement réglé, vérifiez l'état de l'aiguillage dans la Table Aiguillage quand l'aiguillage est correctement régler pour effacer la ligne principale
-. L'état du Tableau Aiguillage doit correspondre à l'état de Continuité de l'Itinéraire à travers l'aiguillage qui a été choisi dans le dialogue Modifer Aiguillage
-. Définir la voie principale est
-facultative; si vous n'avez pas défini de voie principale, ce point peut être ignoré</p>
+Quand une voie se branche &#224; une voie principale &#224; un Aiguillage Droit ou Gauche, la
+Voie Principale continue normalement &#224; travers l'aiguillage en suivant la voie droite. Parfois, cependant, la ligne principale suit  la voie divergente . Pour permettre l'entr&#233;e de cette information, le dialogue &#233;dition
+ Aiguillage contient une entr&#233;e appel&#233;e <b>Itin&#233;raire continue Suivant l'Etat de l'Aiguillage</b> 
+Par d&#233;faut, l'itin&#233;raire se poursuit par la voie droite de l'aiguillage quand un dessin d'aiguillage est cr&#233;&#233;. Vous devrez le changer pour D&#233;vi&#233; si la Ligne Principale suit la chemin Devi&#233; &#224; travers l'aiguillage. Pour un aiguillage triple, vous devrez toujours v&#233;rifier pour voir si la Continuit&#233; de l'Itin&#233;raire pour l'&#233;tat de l'Aiguillage est correctement r&#233;gl&#233;, v&#233;rifiez l'&#233;tat de l'aiguillage dans le Tableau Aiguillage quand l'aiguillage est correctement r&#233;gler pour effacer la ligne principale
+. L'&#233;tat du Tableau Aiguillage doit correspondre &#224; l'&#233;tat de Continuit&#233; de l'Itin&#233;raire &#224; travers l'aiguillage qui a &#233;t&#233; choisi dans le dialogue Modifer Aiguillage
+. D&#233;finir la voie principale est facultatif; si vous n'avez pas d&#233;fini de voie principale, ce point peut &#234;tre ignor&#233;</p>
 
 <h2>Bretelles </h2>
 
-Les Bretelles doubles diffèrent des autres aiguillages de façons importantes.
-Comme d'autres aiguillages, Les bretelle doubles ont deux états - croisé et droit. Pour le
-changement d'état d'une bretelle, cependant, cela nécessite deux ou quatre aiguillages pour
-le changement à l'unisson. Ceci peut être accompli en utilisant un à quatre moteurs
-. Normalement, un croisement est affecté à une entrée aiguillage unique dans la
-table aiguillage, mais il peut avoir y en avoir plusieurs si les commandes des moteurs sont contrôlés par
-différents décodeurs stationnaires. (Vous pouvez utiliser deux itinéraires JMRI contrôlés par le
-même aiguillage interne pour faire  travailler de multiples moteurs ensembles. Dans ce
-cas, entrez l'aiguillage interne comme un aiguillage lié au dessin de la bretelle double.
-.) Avec les bretelles doubles, les voies de la bretelle sont toujours considérées comme des
-voie d'évitement , et  toute voie principale entrant dans la bretelle, la quitte sur le
- même axe que son entrée. Donc il n'y a pas de d'entrée État de Continuation d'itinéraire sur la Bretelle Double dans la boite de dialogue Édition bretelle double.</p>
+Les Bretelles doubles diff&#232;rent des autres aiguillages de fa&#231;ons importantes.
+Comme d'autres aiguillages, Les bretelle doubles ont deux &#233;tats - crois&#233; et droit. Pour le
+changement d'&#233;tat d'une bretelle, cependant, cela n&#233;cessite deux ou quatre aiguillages pour
+le changement &#224; l'unisson. Ceci peut &#234;tre accompli en utilisant un &#224; quatre moteurs
+. Normalement, une bretelle est affect&#233;e &#224; une entr&#233;e aiguillage unique dans le
+Tableau Aiguillage, mais il peut y en avoir plusieurs si les commandes des moteurs sont contr&#244;l&#233;s par
+diff&#233;rents d&#233;codeurs stationnaires. (Vous pouvez utiliser deux itin&#233;raires JMRI contr&#244;l&#233;s par le
+m&#234;me aiguillage interne pour faire travailler de multiples moteurs ensembles. Dans ce
+cas, entrez l'aiguillage interne comme un aiguillage li&#233; au dessin de la bretelle double.
+.) Avec les bretelles doubles, les voies de la bretelle sont toujours consid&#233;r&#233;es comme des
+voie d'&#233;vitement , et  toute voie principale entrant dans la bretelle, la quitte sur le
+ m&#234;me axe que son entr&#233;e. Donc il n'y a pas de d'entr&#233;e &#233;tat de Continuation d'itin&#233;raire sur la Bretelle Double dans la boite de dialogue &#233;dition bretelle double.</p>
 <p>
-Si vous définissez des Cantons comprenant une bretelle double, notez que la bretelle double a quatre points de connexions , dont chacun peut être connecté à une autre voie canton
-. Ainsi les éléments d'une bretelle double, peuvent être dans un, deux, trois ou quatre Cantons différents
-. La boîte de dialogue Modifier bretelle double permet l'entrée d'un maximum de
-quatre Cantons, chacun lié à un des quatre points de connexion. Le premier Canton
-entré doit être le <b>Canton : Nom</b> sur le terrain; ce Canton est lié au point de connexion situé à la partie supérieure gauche
- (si la bretelle n'a pas été tournée), et sert de
-Canton par défaut pour la bretelle. Si les entrées des <b>Cantons 2</b>, <b> Canton 3</b>,
-ou <b> Canton 4</b>  sont vides, le Canton par défaut est utilisé. Les points de connexions des Cantons
- sont numérotés 1, 2, 3 et 4, partant de la connexion en haut à gauche
+Si vous d&#233;finissez des Cantons comprenant des bretells doubles, notez que la bretelle double a quatre points de connexions , dont chacun peut &#234;tre connect&#233; &#224; un autre canton
+. Ainsi les &#233;l&#233;ments d'une bretelle double, peuvent &#234;tre dans un, deux, trois ou quatre Cantons diff&#233;rents
+. La bo&#238;te de dialogue Modifier bretelle double permet l'entr&#233;e d'un maximum de
+quatre Cantons, chacun li&#233; &#224; un des quatre points de connexion. Le premier Canton
+entr&#233; doit &#234;tre le <b>Canton : Nom</b> sur le terrain; ce Canton est li&#233; au point de connexion situ&#233; &#224; la partie sup&#233;rieure gauche
+ (si la bretelle n'a pas &#233;t&#233; tourn&#233;e), et sert de
+Canton par d&#233;faut pour la bretelle. Si les entr&#233;es des <b>Cantons 2</b>, <b> Canton 3</b>,
+ou <b> Canton 4</b>  sont vides, le Canton par d&#233;faut est utilis&#233;. Les points de connexions des Cantons
+ sont num&#233;rot&#233;s 1, 2, 3 et 4, partant de la connexion en haut &#224; gauche
  dans le sens horaire.</p>
 
 <!--#include virtual="/Footer" -->

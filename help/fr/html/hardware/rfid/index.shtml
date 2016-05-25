@@ -1,13 +1,13 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <head>
-<!-- Copyright ($Author: matthewharris $) 2008 -->
-<!-- $Id: index.shtml,v 1.1 2011/04/10 18:29:38 matthewharris Exp $ -->
-<!--Translated by Hervé Blorec le 2011/9/22-->
+<!-- Copyright ($Author$) 2008 -->
+<!-- $Id$ -->
+<!-- UpDated by Herv&#233; Blorec  2013-09-18-->
 <title>JMRI: RFID Reader Support</title>
 
 <!-- Style -->
-<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <link REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <link REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -26,114 +26,80 @@
 JMRI: Support Lecteur RFID 
 </h1>
 
-<em>Le support sur cette page est en rapide évolution; le code actuel peut être en avance ou en retard sur la documentation pour un jour donné.</em><p>
+<em>Le support sur cette page est en rapide &#233;volution; le code actuel peut &#234;tre en avance ou en retard sur la documentation pour un jour donn&#233;.</em><p>
 
 JMRI fournit un support pour les 
 <a href="../../../html/tools/Sensors.shtml"> Capteurs</a>
-JMRI en général et<a href="../../../html/tools/Reporters.shtml"> Reporters</a>
-en termes "d'évènements" du Lecteur RFID. 
+JMRI en g&#233;n&#233;ral et<a href="../../../html/tools/Reporters.shtml"> Rapports</a>
+en termes "d'&#233;v&#232;nements" du Lecteur RFID. 
 
-<h2>Désignation</h2>
+<h2>D&#233;signation</h2>
 
-La lettre du système <a href="../../../html/doc/Technical/Names.shtml"> lettre du système</a>
-pour les connexions RFID est «F». Les détails de la RFID
-les noms d'événement et d'objets sont décrits ci-dessous.
+La <a href="../../../html/doc/Technical/Names.shtml"> lettre du syst&#232;me</a>
+pour les connexions RFID est "F". Les d&#233;tails de la RFID
+des noms d'&#233;v&#233;nement et d'objets sont d&#233;crits ci-dessous.
 
 
 <p>
-JMRI associe les événements RFID avec des Objets individuels
-JMRI (Capteurs, Journals, etc) via le
-Noms système JMRI. Un nom système comme le
+JMRI associe les &#233;v&#233;nements RFID avec des Objets individuels
+JMRI (Capteurs, Rapports, etc) via le
+Noms syst&#232;me JMRI. Un nom syst&#232;me comme le
 "<code>FSA</code>"
-définit un capteur qui suit le lecteur "A" , tandis qu'un système comme le nom
-"<code> FRB </code>"
-définit un Journal qui suit le lecteur «B» .
+d&#233;finit un capteur qui suit le lecteur "A" , tandis qu'un nom syst&#232;me comme "<code> FRB </code>"
+d&#233;finit un Rapport qui suit le lecteur "B" .
 <h2>Capteurs</h2>
 
-Les lectures RFID dans les applications à venir de JMRI peuvent être accessibles via des objets Capteur JMRI.  Le nom système du capteur 
-détermine à quel lecteur RFID il correspond.
+Les lectures RFID dans les applications &#224; venir de JMRI peuvent &#234;tre accessibles via des objets Capteur JMRI. Le nom syst&#232;me du capteur d&#233;termine &#224; quel lecteur RFID il correspond.
 
 <p>
-Un capteur est définie par deux événements: Celui qui l'ACTIVE, et 
-celui qui le DÉSACTIVE. Quand une étiquette RFID se trouve dans la proximité d'un
-Lecteur RFID, le capteur associé est ACTIF; en dehors de ces moments, il est INACTIF.
-Vous créez les capteurs en utilisant le bouton 
+Un capteur est d&#233;fini par deux &#233;v&#233;nements: Celui qui l'ACTIVE, et 
+celui qui le D&#201;SACTIVE. Quand une &#233;tiquette RFID se trouve &#224; proximit&#233; d'un
+Lecteur RFID, le capteur associ&#233; est ACTIF; en dehors de ces moments, il est INACTIF.
+Vous cr&#233;ez les capteurs en utilisant le bouton 
 <a href="../../../../fr/package/jmri/jmrit/beantable/SensorAddEdit.shtml">Ajouter...</a>
 sur la
 <a href="../../../../fr/package/jmri/jmrit/beantable/SensorTable.shtml">Table Capteur</a>.
 
+<h2>Rapports</h2>
+Les lectures RFID &#224; venir dans les applications JMRI sont &#233;galement accessibles via les
+Objets Rapports JMRI. Le nom syst&#232;me
+<!-- <a Href="Names.shtml"> du Rapport </a> --> du Rapport
+d&#233;termine quel lecteur RFID il correspond.
 
-<h2>Désignation</h2>
-
-La lettre du système <a href="../../../html/doc/Technical/Names.shtml"> lettre du système</a>
-pour les connexions RFID est «F». Les détails de la RFID
-les noms d'événement et d'objets sont décrits ci-dessous.
+<p>
+Un Rapport peut contenir des informations arbitraires, contrairement &#224; un capteur qui n'est qu'actif ou inactif. Chaque Rapport est associ&#233; &#224; une source d'information sp&#233;cifique
+sur le r&#233;seau, et fait que les informations sur les appareils sont disponibles dans le reste de JMRI.
 
 
 <p>
-JMRI associe les événements RFID avec des Objets individuels
-JMRI (Capteurs, Journals, etc) via le
-Noms système JMRI. Un nom système comme le
-"<code>FSA</code>"
-définit un capteur qui suit le lecteur "A" , tandis qu'un système comme le nom
-"<code> FRB </code>"
-définit un Journal qui suit le lecteur «B» .
-<h2>Capteurs</h2>
+Quand un Lecteur RFID rapporte qu'une &#233;tiquette sp&#233;cifique a &#233;t&#233; vue, le Rapport correspondant
+ contiendra des informations sur l' 
+<a href="../../tools/IdTags.shtml"> IdTag</a> sp&#233;cifique vue. Ceci permet alors &#224; d'autres outils JMRI de r&#233;agir &#224; cette information 
 
-Les lectures RFID dans les applications à venir de JMRI peuvent être accessibles via des objets Capteur JMRI. Le nom système du capteur  
-détermine à quel lecteur RFID il correspond.
+<h2>Tableau Rapport</h2>
+Le
+<a href="../../../package/jmri/jmrit/beantable/ReporterTable.shtml"> tableau Rapport</a>
+offre un acc&#232;s facile au contenu de tous les Rapports que JMRI conna&#238;t.
+Il ya aussi une touche
+<a href="../../../package/jmri/jmrit/beantable/ReporterAddEdit.shtml"> "Ajouter ..." </a>
+pour cr&#233;er vos propres Rapports internes; JMRI cr&#233;e automatiquement des
+Objets Rapport pour les p&#233;riph&#233;riques sur le r&#233;seau.
 
-<p>
-Un capteur est définie par deux événements: Celui qui l'ACTIVE, et 
-celui qui le DÉSACTIVE. Quand une étiquette RFID se trouve à proximité d'un
-Lecteur RFID, le capteur associé est ACTIF; en dehors de ces moments, il est INACTIF.
-Vous créez les capteurs en utilisant le bouton 
-<a href="../../../../fr/package/jmri/jmrit/beantable/SensorAddEdit.shtml">Ajouter...</a>
-sur la
-<a href="../../../../fr/package/jmri/jmrit/beantable/SensorTable.shtml">Table Capteur</a>.
-
-
-
-
-<h2>Journaux</h2>
-
-Les lectures RFID dans les applications à venir JMRI peuvent aussi être accessibles via les
-Objets Journal JMRI. Le nom système du Journal
-détermine à quel lecteur RFID il correspond.
-<p>
-.Un journal peut contenir des informations arbitraires, contrairement à un capteur qui n'est qu'actif 
-ou inactif. Chaque journal est associée à une source d'informations spécifiques
-sur le réseau, et fait que les informations périphériques soient disponibles pour le reste du JMRI.
-
-<p>
-Quand un lecteur RFID rapporte qu'une balise spécifique a été vue, 
-le Journal correspondant contiendra des détails sur la vue spécifique
-<a href="../../tools/IdTags.shtml"> IdTag </a>
-. Ceci permet alors aux autres outils JMRI de réagir à cette information.
-
-
-
-<h2>Table Journal</h2>
-.La
- <a href="../../package/jmri/jmrit/beantable/ReporterTable.shtml">Table Journal </a>
-fournit un accès facile au contenu de tous les Journaux que JMRI connaît.
-Il y a aussi un bouton <a href="../../package/jmri/jmrit/beantable/ReporterAddEdit.shtml">  «Ajouter ...»  </a>
-pour créer vos propres Journaux internes; JMRI crée automatiquement les
-Objets Journaux pour les appareils sur le réseau.
-
-<h2>Affichage des Valeurs des Jounaux sur les Panneaux</h2>
-La valeur d'un journale peut être affichée sur un panneau via une icône.
+<h2> affichage des Valeurs du Rapport sur des Panneaux</h2>
+La valeur d'un Rapport peut &#234;tre affich&#233;e sur un panneau par l'interm&#233;diaire d'une ic&#244;ne.
 Pour ce faire:
 <ul>
-<li> Sur la fenêtre Éditeur de panneau pour votre panneau, trouver le bouton "Ajouter Journal"
+<li> Sur la fen&#234;tre de l'&#201;diteur du Panneau pour votre panneau, trouver le bouton "Ajouter Rapport"
 .
-<li> Dans la boîte de texte à côté de ce bouton, tapez le nom utilisateur ou système du Journal désiré.
-<li> Cliquez sur le bouton. L'icône Journal sera placé sur le panneau.
-Si elle n'est pas visible, qui pourrait arriver si la valeur est actuellement vide;
-utiliser le tableau Journal pour changer la valeur à quelque chose qui sera visible.
-<li> Vous pouvez faire glisser l'icône à l'endroit où vous voulez de la manière habituelle.
-<li> Le menu pop-up sur l'icône vous permet de changer le formatage.
+<li> Dans la zone de texte &#224; c&#244;t&#233; de ce bouton, tapez le nom utilisateur ou le nom syst&#232;me du
+Rapport d&#233;sir&#233;.
+<li> Cliquez sur le bouton. L'ic&#244;ne Rapport sera plac&#233;e sur le panneau.
+Si elle n'est pas visible, cela pourrait &#234;tre parce que la valeur est actuellement vide;
+utiliser le tableau de Rapport pour changer la valeur &#224; quelque chose qui sera visible.
+<li> Vous pouvez faire glisser l'ic&#244;ne &#224; l'endroit o&#249; vous voulez de la mani&#232;re habituelle.
+<li> Le menu contextuelle sur l'ic&#244;ne vous permettra de changer la mise en forme.
 </ul>
+
 
 <!--#include virtual="/Footer" -->
 </body>

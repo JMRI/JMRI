@@ -1,38 +1,38 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
-<head>
-<!--
+    <head>
+        <!--
+        
+          $Id$
+        
+          Made with permission from the Sun version at
+          http://java.sun.com/j2se/javadoc/writingdoccomments/package-template
+        
+          Copyright 2003
+        
+        -->
+    </head>
+    <body bgcolor="white">
 
-  $Id$
+        Provides implementations of various JMRI interfaces.
 
-  Made with permission from the Sun version at
-  http://java.sun.com/j2se/javadoc/writingdoccomments/package-template
+        <p>
+            As a long term project, we're moving various Abstract* and Default*
+            implementations out of the {@link jmri} package itself, and moved 
+            into here. In the meantime, you'll find many of them still in 
+            {@link jmri}.
 
-  Copyright 2003
+        <p>
+            Implementations of managers can be found in the
+            {@link jmri.managers} package.
 
--->
-</head>
-<body bgcolor="white">
+        <p>
+            Implementations that use Swing should be put in the
+            {@link jmri.implementation.swing} package.
 
-Provides implementations of various JMRI interfaces.
+            <!-- Put @see and @since tags down here. -->
+            @see jmri.managers
+            @since 2.1.5
 
-<p>
-As a long term project, we're moving various Abstract* and Default*
-implementations out of the {@link jmri} package itself, and moved 
-into here. In the meantime, you'll find many of them still in 
-{@link jmri}.
-
-<p>
-Implementations of managers can be found in the
-{@link jmri.managers} package.
-
-<p>
-Implementations that use Swing should be put in the
-{@link jmri.implementation.swing} package.
-
-<!-- Put @see and @since tags down here. -->
-@see jmri.managers
-@since 2.1.5
-
-</body>
+    </body>
 </html>

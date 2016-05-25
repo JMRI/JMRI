@@ -1,9 +1,8 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
-    <resets>
-      <factReset label="HARD RESET all CVs reset to default values" CV="8" default="8"/>
-      <factReset label="HARD RESET all CVs reset to default for the current Sound Project or CVset" CV="8" default="0"/>
-      <factReset label="HARD RESET for LGB operation (14 speed steps,pulse chain)" CV="8" default="9"/>
-    </resets>
-
+  <!-- v1.1,  Edited CV8 values to reflect what they actually do rather than what the manual says.   Mark Waters, 11 Mar 2016 -->
+<resets xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <factReset label="HARD RESET all CVs reset to default values CV8=0" CV="8" default="0"/>
+  <factReset label="HARD RESET all CVs reset to default for the current Sound Project or CVset CV8=8" CV="8" default="8"/>
+  <factReset label="HARD RESET for LGB operation (14 speed steps,pulse chain)" CV="8" default="9"/>
+</resets>

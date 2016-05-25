@@ -1,15 +1,12 @@
 package jmri.jmrix.srcp;
 
-import org.apache.log4j.Logger;
+import java.io.StringReader;
+import jmri.jmrix.srcp.parser.ParseException;
+import jmri.jmrix.srcp.parser.SRCPClientParser;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import jmri.jmrix.srcp.parser.SRCPClientParser;
-import jmri.jmrix.srcp.parser.ParseException;
-
-import java.io.StringReader;
 
 /**
  * SRCPReplyTest.java
@@ -17,7 +14,6 @@ import java.io.StringReader;
  * Description:	tests for the jmri.jmrix.srcp.SRCPReply class
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class SRCPReplyTest extends TestCase {
 
@@ -36,16 +32,17 @@ public class SRCPReplyTest extends TestCase {
 
     // Test the parser constructor.
     public void testParserCtor() {
-        String s = "100 OK REASON GOES HERE\n\r";
+        String s = "12345678910 400 ERROR Reason GOES HERE\n\r";
         SRCPClientParser p = new SRCPClientParser(new StringReader(s));
         SRCPReply m = null;
         try {
-            m = new SRCPReply(p.inforesponse());
+            m = new SRCPReply(p.commandresponse());
         } catch (ParseException pe) {
             // m is already null if there is an exception parsing the string
         }
         Assert.assertNotNull(m);
-        Assert.assertTrue("Parser Constructor Correct", s.equals("" + m));
+        Assert.assertEquals("Parser Constructor Correct", s, m.toString());
+        //Assert.assertTrue("Parser Constructor Correct", s.equals(m.toString()));
     }
 
     // from here down is testing infrastructure
@@ -75,5 +72,4 @@ public class SRCPReplyTest extends TestCase {
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-    static Logger log = Logger.getLogger(SRCPReplyTest.class.getName());
 }

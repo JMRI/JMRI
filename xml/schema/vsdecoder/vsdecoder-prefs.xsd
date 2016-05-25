@@ -31,12 +31,12 @@ Top Level Elements not brought over from DTD
            xmlns:jmri="http://jmri.org/xml/schema/JMRIschema"
            xsi:schemaLocation="
                 http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd
-                http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/DocBook.xsd
+                http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/docbook.xsd
             "
         >
 
     <xs:include schemaLocation="http://jmri.org/xml/schema/types/general.xsd"/>
-    <xs:import namespace='http://docbook.org/ns/docbook' schemaLocation='http://jmri.org/xml/schema/docbook/DocBook.xsd'/>
+    <xs:import namespace='http://docbook.org/ns/docbook' schemaLocation='http://jmri.org/xml/schema/docbook/docbook.xsd'/>
 
     <xs:annotation>
         <xs:documentation>

@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: jacobsen $) 2009 -->
+<!-- $Id: index.shtml 25755 2014-05-03 21:25:55Z jacobsen $ -->
+<title>N&amp;W 1981 Signaling Definition</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h2>
+N&amp;W 1981 Signal Definitions
+</h2>
+
+This directory contains signaling definitions corresponding to the Norfolk and Western 1981 rule book and applies to color position light, color light, search light, and semaphore signals.  These definitions cover the former N&amp;W, Virginian, Nickel Plate, Wabash, P&amp;WV, and ACY territories.
+<p>
+<h3>Color Position Light Signals</h3>
+
+The 2 arm version of the NW CPLs are illustrated using two complete round faces.  In the field, the actual signal may not have included a complete face depending on the indications needed for a given location. In general, a two arm signal would be used at an interlocking or as the advance signal for an interlocking.  Signal installations at the end of a siding may only have a single head.  A number plate was drawn on the Rule 291 signal icon to show a stop and proceed indication.
+<p>
+The single arm absolute signals include a single marker for the stop and stay indication.  I have mapped the single red marker to lunar so that a signal decoder such as the Team Digital SHD2 can drive the entire signal off 4 outputs.
+<p>
+The rule book illustrates two versions of the NW CPL dwarf.  Early versions of this style dwarf had the arc from 12 to 3-o-clock position.  Due to clearnance issues, the arc was change to the 9 to 12-o-clock position.  I don't know if this changed the aspects the signal could display.  I am assuming that either version could display the up to 4 aspects.  There is a stop and proceed version that includes a numbner plate.  The left lower red light is mapped to lunar based on the later version of the signal.
+<p>
+<h3>Color Light, Search Light, and Semaphore Signals</h3>
+<p>
+These signals encompass the all of the non color position light signals.  The rule book does not really make a distinction between the types of signal heads.  The images in the rule book are drawn as possible semaphore signals with the exception of the indications which have a lunar light.  In those rules, separate signal images were drawn without semaphore blades showing the lunar aspect.
+<p>
+I believe the signals with lunar aspects are of Wabash origin.  They allow for a complete set of aspects with two arms in locations that would typically take three.
+</body>
+
+
+<p>
+See the
+<a href="aspects.xml">aspect page</a>.
+
+<p>
+Signal Mast definitions:
+<ul>
+<li><a href="appearance-CPL-1-arm-absolute.xml">Single Arm Absolute Color Position Light Mast Signals</a>
+<li><a href="appearance-CPL-1-arm-permissive.xml">Single Arm Permissive Color Light Position Mast Signals</a>
+<li><a href="appearance-CPL-2-arm-absolute.xml">2 Arm Absolute Color Position Light Mast Signals</a>
+<li><a href="appearance-CPL-2-arm-permissive.xml">2 Arm Permissive Color Position Light Mast Signals</a>
+<li><a href="appearance-CPL-Dwarf-absolute.xml">Absolute Color Position Light Dwarf Signals</a>
+<li><a href="appearance-CPL-Dwarf-permissive.xml">Permissive Color Position Light Dwarf Signals</a>
+<li><a href="appearance-SL-1-high-absolute.xml">Color Light Single Arm Absolute Mast Signals</a>
+<li><a href="appearance-SL-1-high-permissive.xml">Color Light Single Arm Permissive Mast Signals</a>
+<li><a href="appearnace-SL-1-low-absolute.xml">Color Light Single Arm Absolute Dwarf Signals</a>
+<li><a href="appearance-SL-1-low-permissive.xml">Color Light Single Arm Permissive Dwarf Signals</a>
+<li><a href="appearance-SL-2-high-absolute.xml">Color Light 2 Arm Absolute Mast Signals</a>
+<li><a href="appearance-SL-2-high-permissive.xml">Color Light 2 Arm Permissive Mast Signals</a>
+<li><a href="appearance-SL-2-low-absolute.xml">Color Light 2 Arm Absolute Dwarf Signals</a>
+<li><a href="appearance-SL-3-high-absolute.xml">Color Light 3 Arm Absolute Mast Signals</a>
+<li><a href="appearance-Wab-2-high-absolute.xml">Color Light 2 Arm Absolute Mast Signals with Lunar Aspects</a>
+<li><a href="appearance-Wab-2-low-absolute.xml">Color Light 2 Arm Absolute Dwarf Signals with Lunar Aspects</a>
+</ul>
+    </div>
+</div>
+<!--#include virtual="/Footer" -->
+</body>
+</html>

@@ -4,9 +4,6 @@
 # Author: Ken Cameron, copyright 2008
 # Part of the JMRI distribution
 #
-# The next line is maintained by CVS, please don't change it
-# $Revision$
-#
 # The start button is inactive until data has been entered.
 #
 # The test button is to force re-evaluation of all block and signal values.
@@ -92,6 +89,7 @@
 # allow for the removal of the PropertyChangeListener.
 #
 
+import jmri
 import java
 import javax.swing
 
@@ -255,8 +253,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                     self.doHalt()
                 else :
                     self.findNewSpeed(self.nextBlock, self.beyondBlock)
-            nearSig = jmri.InstanceManager.layoutBlockManagerInstance().getFacingSignalHead(self.currentBlock, self.nextBlock)
-            farSig = jmri.InstanceManager.layoutBlockManagerInstance().getFacingSignalHead(self.nextBlock, self.beyondBlock)
+            nearSig = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager).getFacingSignalHead(self.currentBlock, self.nextBlock)
+            farSig = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager).getFacingSignalHead(self.nextBlock, self.beyondBlock)
             if (self.isRunning and nearSig != None) :
                 self.signalNext.setIcon(self.cvtAppearanceIcon(nearSig))
                 self.signalNextText.text = self.cvtAppearanceText(nearSig)
@@ -373,7 +371,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                     self.doHalt()
                 else :
                     self.msgText("looking for signal between " + self.giveBlockName(cBlock) + " and " + self.giveBlockName(nBlock) + "\n")
-                    s = jmri.InstanceManager.layoutBlockManagerInstance().getFacingSignalHead(cBlock, nBlock)
+                    s = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager).getFacingSignalHead(cBlock, nBlock)
                     if (s != None) :
                         self.msgText("Found signal: " + self.giveSignalName(s) + " displaying: " + self.cvtAppearanceText(s) + "\n")
                         self.speedFromAppearance(s)

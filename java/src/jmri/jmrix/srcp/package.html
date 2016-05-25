@@ -1,36 +1,36 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
-<head>
-<!--
+    <head>
+        <!--
+        
+          $Id$
+        
+          Made with permission from the Sun version at
+          http://java.sun.com/j2se/javadoc/writingdoccomments/package-template
+        
+          Copyright 2003
+        
+        -->
+    </head>
+    <body bgcolor="white">
 
-  $Id$
+        Provide a JMRI connection to an 
+        <a href="http://srcpd.sourceforge.net/">SRCP server</a>.
 
-  Made with permission from the Sun version at
-  http://java.sun.com/j2se/javadoc/writingdoccomments/package-template
+        <h2>Implementation Notes</h2>
 
-  Copyright 2003
+        Every SRCP message or reply ends in a 0x0A character, which is
+        an "\n" character in Java. These have to be explicitly added to 
+        messages when they are created.
 
--->
-</head>
-<body bgcolor="white">
+        <h2>Notes</h2>
 
-Provide a JMRI connection to an 
-<a href="http://srcpd.sourceforge.net/">SRCP server</a>.
+        Made from the EasyDCC base, so look there for 
+        e.g. the Consist and ConsistManager classes when needed.
 
-<h2>Implementation Notes</h2>
+        <!-- Put @see and @since tags down here. -->
+        <!-- @see jmri.InstanceManager -->
+        @since 2.1.6
 
-Every SRCP message or reply ends in a 0x0A character, which is
-an "\n" character in Java. These have to be explicitly added to 
-messages when they are created.
-
-<h2>Notes</h2>
-
-Made from the EasyDCC base, so look there for 
-e.g. the Consist and ConsistManager classes when needed.
-
-<!-- Put @see and @since tags down here. -->
-<!-- @see jmri.InstanceManager -->
-@since 2.1.6
-
-</body>
+    </body>
 </html>

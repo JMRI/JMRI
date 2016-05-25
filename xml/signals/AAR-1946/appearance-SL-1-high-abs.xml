@@ -53,7 +53,7 @@
      </revision>    
   </revhistory>
 
-  <aspecttable>AAR-2</aspecttable>
+  <aspecttable>AAR 1946</aspecttable>
   <name>Single searchlight high absolute signal</name>
   <reference>As described in the August 1946 version of the AAR publication "American Railway Signaling Principles and Practices", chapter II.</reference>
   <description>Appearances for one-searchlight signal head without other badging</description>
@@ -72,6 +72,13 @@
       <show>yellow</show>
       <reference>Page 47 C</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/SL-1-high-abs/rule-285.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Restricting</aspectname>
+      <show>red</show>
+      <reference>Page 50 C</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/SL-1-high-abs/rule-290.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -160,6 +167,16 @@
 
      <aspectMapping>
       <advancedAspect>Approach</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Restricting</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Stop and Proceed</advancedAspect>
       <ourAspect>Approach</ourAspect>
     </aspectMapping>
 

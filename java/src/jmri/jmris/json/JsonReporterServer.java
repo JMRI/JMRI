@@ -1,16 +1,22 @@
 //JsonReporterServer.java
 package jmri.jmris.json;
 
+import static jmri.jmris.json.JSON.DATA;
+import static jmri.jmris.json.JSON.METHOD;
+import static jmri.jmris.json.JSON.NAME;
+import static jmri.jmris.json.JSON.PUT;
+import static jmri.jmris.json.JSON.REPORT;
+import static jmri.jmris.json.JSON.REPORTER;
+import static jmri.jmris.json.JSON.TYPE;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
+import java.util.Locale;
 import jmri.JmriException;
 import jmri.jmris.AbstractReporterServer;
 import jmri.jmris.JmriConnection;
-import static jmri.jmris.json.JSON.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * JSON Server interface between the JMRI reporter manager and a network
@@ -27,10 +33,8 @@ import org.slf4j.LoggerFactory;
  */
 public class JsonReporterServer extends AbstractReporterServer {
 
-    private JmriConnection connection;
-    private ObjectMapper mapper;
-    static Logger log = LoggerFactory.getLogger(JsonReporterServer.class);
-
+    private final JmriConnection connection;
+    private final ObjectMapper mapper;
     public JsonReporterServer(JmriConnection connection) {
         super();
         this.connection = connection;
@@ -56,7 +60,7 @@ public class JsonReporterServer extends AbstractReporterServer {
 
     @Override
     public void sendErrorStatus(String reporterName) throws IOException {
-        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.handleError(500, Bundle.getMessage("ErrorObject", REPORTER, reporterName))));
+        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.handleError(500, Bundle.getMessage(this.connection.getLocale(), "ErrorObject", REPORTER, reporterName))));
     }
 
     @Override
@@ -64,14 +68,14 @@ public class JsonReporterServer extends AbstractReporterServer {
         throw new JmriException("Overridden but unsupported method"); // NOI18N
     }
 
-    public void parseRequest(JsonNode data) throws JmriException, IOException, JsonException {
+    public void parseRequest(Locale locale, JsonNode data) throws JmriException, IOException, JsonException {
         String name = data.path(NAME).asText();
         if (data.path(METHOD).asText().equals(PUT)) {
-            JsonUtil.putReporter(name, data);
+            JsonUtil.putReporter(locale, name, data);
         } else {
-            JsonUtil.setReporter(name, data);
+            JsonUtil.setReporter(locale, name, data);
         }
-        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getReporter(name)));
+        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getReporter(locale, name)));
         this.addReporterToList(name);
     }
 }

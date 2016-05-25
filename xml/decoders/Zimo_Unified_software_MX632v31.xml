@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2005, 2006, 2007 All rights reserved -->
-<!-- $Id: Zimo_MX632_v31.xml,v 1.0 2010/05/10 03:38:52 jacobsen Exp $ -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Mark Waters mark16jmri@mybtinternet.com" version="1.1" lastUpdated="20160123"/>
   <version author="Mark Waters mark16w-jmri@yahoo.co.uk" version="1" lastUpdated="20121202"/>
   <!-- This decoder configuration file is based on the Zimo_MX640_v9.xml                     -->
   <!-- V 1 file, dated 20090222. With the Sound tabs from Jeff Schmaltz' MX69/MX690 file.    -->
@@ -26,9 +27,10 @@
   <!-- Continued the practice of using unrelated "item" names to place Zimo unique           -->
   <!-- variables on the proper pane of the Comprehensive programmer.                         -->
   <!-- V 1 new file -->
+  <!-- V 1.1 additional productID 220 -->
   <decoder>
     <family name="Zimo Unified software (version 25+)" mfg="Zimo">
-      <model model="MX632 version 31" lowVersionID="31" highVersionID="31" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" numOuts="10" numFns="14" productID="212">
+      <model model="MX632 version 31" lowVersionID="31" highVersionID="31" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" numOuts="10" numFns="14" productID="212,220">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -41,7 +43,7 @@
         <output name="10" label="FO 8"/>
         <size length="28" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX632R version 31" lowVersionID="31" highVersionID="31" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="NMRAmedium" numOuts="10" numFns="14" productID="212">
+      <model model="MX632R version 31" lowVersionID="31" highVersionID="31" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="NMRAmedium" numOuts="10" numFns="14" productID="212,220">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -54,7 +56,7 @@
         <output name="10" label="FO 8"/>
         <size length="28" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX632D version 31" lowVersionID="31" highVersionID="31" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="212">
+      <model model="MX632D version 31" lowVersionID="31" highVersionID="31" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="212,220">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -67,7 +69,7 @@
         <output name="10" label="FO 8"/>
         <size length="28" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX632V version 31" lowVersionID="31" highVersionID="31" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="other" numOuts="10" numFns="14" productID="212">
+      <model model="MX632V version 31" lowVersionID="31" highVersionID="31" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="other" numOuts="10" numFns="14" productID="212,220">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -80,7 +82,7 @@
         <output name="10" label="FO 8"/>
         <size length="28" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX632VD version 31" lowVersionID="31" highVersionID="31" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="212">
+      <model model="MX632VD version 31" lowVersionID="31" highVersionID="31" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="212,220">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -93,7 +95,7 @@
         <output name="10" label="FO 8"/>
         <size length="28" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX632W version 31" lowVersionID="31" highVersionID="31" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="other" numOuts="10" numFns="14" productID="212">
+      <model model="MX632W version 31" lowVersionID="31" highVersionID="31" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="other" numOuts="10" numFns="14" productID="212,220">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -106,7 +108,7 @@
         <output name="10" label="FO 8"/>
         <size length="28" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX632WD version 31" lowVersionID="31" highVersionID="31" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="212">
+      <model model="MX632WD version 31" lowVersionID="31" highVersionID="31" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="212,220">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -126,9 +128,10 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV100-CV152version30.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV153-CV157version28.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV161-CV185Servo.xml"/>
-      <variable label="Decoder ID 1" CV="250" default="212" readOnly="yes">
+      <variable item="Decoder ID 1" CV="250" default="212" readOnly="yes">
         <decVal/>
         <label>Decoder ID 1</label>
+        <label xml:lang="it">ID 1 Decoder: </label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV400-CV428.xml"/>
     </variables>

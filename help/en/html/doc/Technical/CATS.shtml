@@ -35,14 +35,14 @@
 The Crandic Automated Traffic System (CATS) is a JMRI-based application by 
 Rodney Black for controlling and operating a model railroad. 
 There's more information on the 
-<a href="http://home.comcast.net/~kb0oys/">CATS web site</a>.
+<a href="http://cats4ctc.org/">CATS web site</a>.
 
 <p>
 JMRI is a library, and CATS is a large, separately maintained application
 that uses the library.  As such, CATS provides an important 
 reference case for JMRI developers as they extend and adapt their code.
 CATS should continue to work for it's users, with a minimum of extranous
-effort for the CATS developers!
+effort for the CATS developers, even as JMRI changes!
 
 <H3>Integration for testing</h3>
 
@@ -50,28 +50,77 @@ CATS has two package trees, "cats.*" and "developer.*", roughly
 corresponding to the two CATS applications.
 
 <p>
-CATS development does not use CVS, and the code is not generally
+CATS development does not use a public code repository, and the code is not generally
 available while it's being developed.  
-Rodney Black periodoically mades releases
+Rodney Black periodically makes releases
 available, including source code, as zip-file archives at the
-<a href="http://home.comcast.net/~kb0oys/">CATS web site</a>.
+<a href="http://cats4ctc.wikidot.com">CATS web site</a>,
+see the download links at the bottom of the 
+<a href="http://cats4ctc.wikidot.com/main:downloads">CATS license page</a>.
 
 <p>
-Since July 2009, the current CATS distribution works
-with JMRI 2.6 and current (2.7.*) test versions.  
+As of early 2016, the current CATS distribution (2038) works
+with JMRI 4.0.1 through to the current (4.3) test versions.  
 From this baseline, we want to keep CATS compiling during
-ongoing JMRI development.
+ongoing JMRI development. Changes that break CATS should be
+handled through deprecation, at least for one JMRI production release.
 
 <h3>Compiling CATS with JMRI</h3>
 
-(drop directories directly under java/src/; ant will do the rest)
+Download the CATS source and unpack.  You'll get a "cats" and "designer" 
+directory.  (Designer is meant to be independent of JMRI, but we 
+compile it together just in case)  Depending on how you unpacked, 
+you might find those duplicated:  cats/cats.  Take the lowest level
+"cats" and "designer" directory and move them directly under
+JMRI's java/src directory, i.e. alongside the existing apps and jmri directories:
+<pre><code>
+% ls java/src/<br/>
+META-INF   apps   cats   designer   jmri
+</code></pre>
 
 <p>
 CATS doesn't have any unit tests, so there's nothing to go in the 
 "test" source tree.
 
 <p>
-To simplify CVS work, the two CATS directories are ignored...
+The Ant compilation rules will then compile CATS every time you 
+compile JMRI itself. This will show you errors, deprecation warnings, etc.
+
+<p>
+To simplify JMRI repository work, 
+the two CATS-related directories are ignored when doing repository operations.
+
+<p>
+Note that this does include the CATS source within the build, so any
+jar files you create will also include CATS.  Don't use jar files from 
+a build like this for JMRI-only purposes.
+
+<p>
+JMRI itself has lots of deprecation warnings, so if you want to see just
+the CATS ones:
+<ul>
+<li>ant clean compile
+<li>rm -rf java/classes/cats java/classes/designer
+<li>ant -Ddeprecation="on" compile
+</ul>
+The first compilation will compile everything.  The second one will only compile the
+CATS source, so will only give you warnings from those classes.
+
+<h3>Running CATS from a local JMRI build</h3>
+
+Download the most recent CATS release from the bottom of the 
+<a href="http://cats4ctc.wikidot.com/main:downloads">CATS license page</a>.
+As of this writing (Feb 2016), that was the 
+&quot;<a href="http://cats4ctc.wikidot.com/local--files/main:downloads/release2038.zip">CATS and designer package (compatible with JMRI 4.0.1 to latest - 2.53 MB)</a>&quot; 
+link which gives version 2038 of CATS.
+
+<p>
+Move the contents, including the startup scripts "cats.csh" (Linux, Mac OS X) and "cats.bat" (Windows)
+and other related files, into your top-level JMRI directory.
+<p>
+If you've compiled CATS locally, you don't need the cats.jar or designer.jar files.
+<p>
+Then just execute the appropriate "cats.csh" (Linux, Mac OS X) and "cats.bat" (Windows) script.
 
 <!--#include virtual="/Footer" -->
 

@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<title>JMRI OperationsPro Manual: Getting Started</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<a name="Top"></a>
+<h1><img src="images/Logo.gif" alt="JMRI DecoderPro Logo" width=163 height=117 vspace="15" border=10 class="BOXIT"></h1>
+
+<h1>Using JMRI&reg; to Operate Trains</h1>
+<h2>What DCC systems will OperationsPro work with?</h2>
+
+<div align="right">
+<p><a href="Basic_Programming.shtml"> </a><a href="Start_DCC.shtml">Previous</a> <a href="Start_DCC_Hardware.shtml">| Next</a>
+<p><a href="index.shtml#GettingStarted">Back to Index</a>
+</div>
+
+<hr>
+<p>
+View the full list of <a href="../../html/hardware/index.shtml">DCC systems that work with the <em.current</em> version of JMRI</a>.
+
+<p>
+Depending on the specifics of your system and computer, an additional hardware
+interface may be required.
+
+<hr>
+<div align="right">
+<p><a href="Start_DCC.shtml">Previous</a> <a href="Start_DCC_Hardware.shtml">| Next</a>
+<p><a href="index.shtml#GettingStarted">Back to Index</a></div>
+
+<!--#include virtual="/Footer" -->
+</div>
+</div>
+</body>
+</html>

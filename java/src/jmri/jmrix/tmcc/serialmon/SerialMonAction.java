@@ -1,41 +1,44 @@
 // SerialMonAction.java
-
 package jmri.jmrix.tmcc.serialmon;
 
+import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.awt.event.ActionEvent;
-
-import javax.swing.AbstractAction;
 
 /**
- * Swing action to create and register a
- *       			SerialMonFrame object
+ * Swing action to create and register a SerialMonFrame object
  *
- * @author			Bob Jacobsen    Copyright (C) 2001, 2006
- * @version			$Revision$
+ * @author	Bob Jacobsen Copyright (C) 2001, 2006
+ * @version	$Revision$
  */
-public class SerialMonAction 			extends AbstractAction {
+public class SerialMonAction extends AbstractAction {
 
-	public SerialMonAction(String s) { super(s);}
+    /**
+     *
+     */
+    private static final long serialVersionUID = -3766538645555647422L;
+
+    public SerialMonAction(String s) {
+        super(s);
+    }
 
     public SerialMonAction() {
         this("TMCC monitor");
     }
 
     public void actionPerformed(ActionEvent e) {
-		// create a SerialMonFrame
-		SerialMonFrame f = new SerialMonFrame();
-		try {
-			f.initComponents();
-			}
-		catch (Exception ex) {
-			log.warn("SerialMonAction starting SerialMonFrame: Exception: "+ex.toString());
-			}
-		f.setVisible(true);
-	}
+        // create a SerialMonFrame
+        SerialMonFrame f = new SerialMonFrame();
+        try {
+            f.initComponents();
+        } catch (Exception ex) {
+            log.warn("SerialMonAction starting SerialMonFrame: Exception: " + ex.toString());
+        }
+        f.setVisible(true);
+    }
 
-	static Logger log = LoggerFactory.getLogger(SerialMonAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialMonAction.class.getName());
 
 }
 

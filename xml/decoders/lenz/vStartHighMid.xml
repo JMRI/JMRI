@@ -1,7 +1,7 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2012 All rights reserved -->
-<!-- $Id: vStartHighMid.xml 22090 2012-12-29 02:30:04Z jacobsen $ -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -39,25 +39,32 @@
       <revremark>Revision in original Lenz_Gold.xml file</revremark>
     </revision>
   </revhistory>
-  <variable label="Start Volts (0-255)" CV="2" item="Vstart" default="0" comment="Range 0-255">
+  <variable CV="2" item="Vstart" default="0" comment="Range 0-255">
     <decVal min="0" max="255"/>
     <label>Start Volts (0-255)</label>
     <label xml:lang="it">Tensione di partenza (0-255)</label>
+    <label xml:lang="fr">V démarr. (0-255)</label>
+    <label xml:lang="de">Anfahrspannung (0-255)</label>
     <comment>Range 0-255</comment>
     <comment xml:lang="it">Valori da 0 a 255</comment>
+    <comment xml:lang="de">Wertebereich 0-255</comment>
   </variable>
-  <variable label="Max Volts (0-255)" CV="5" item="Vhigh" default="255" comment="Sets the maximum voltage at full throttle">
+  <variable CV="5" item="Vhigh" default="255" comment="Sets the maximum voltage at full throttle">
     <decVal min="0" max="255"/>
     <label>Max Volts (0-255)</label>
     <label xml:lang="it">Tensione massima (0-255)</label>
+    <label xml:lang="de">Vmax (0-255)</label>
     <comment>Sets the maximum voltage at full throttle</comment>
     <comment xml:lang="it">Stabilisce la tensione alla velocità massima</comment>
+    <comment xml:lang="de">Legt die Höchstgeschwindigkeit fest</comment>
   </variable>
-  <variable label="Vmid (0-255)" CV="6" item="Vmid" default="48" comment="Range 0-255">
+  <variable CV="6" item="Vmid" default="48" comment="Range 0-255">
     <decVal min="0" max="255"/>
     <label>Vmid (0-255)</label>
     <label xml:lang="it">Tensione intermedia (0-255)</label>
+    <label xml:lang="de">Vmittel (0-255)</label>
     <comment>Range 0-255</comment>
     <comment xml:lang="it">Valori da 0 a 255</comment>
+    <comment xml:lang="de">Wertebereich 0-255</comment>
   </variable>
 </variables>

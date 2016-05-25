@@ -1,17 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: DecoderPro.shtml,v 1.9 2010/03/06 20:07:59 jacobsen Exp $ -->
-<!--Translated by Hervé Blorec le 2011/9/21-->
+<!-- $Id$ -->
+<!--UpDated by Herv&#233; Blorec 2013-10-08-->
 <html lang="fr">
 <head>
  <TITLE>
       JMRI: DecoderPro Main Window
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="JMRI help preferences">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -24,38 +24,40 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>JMRI: Fenêtre Principale DecoderPro </H1>
+<H1>JMRI: Fen&#234;tre Principale DecoderPro </H1>
 
-La fenêtre principale DecoderPro vous donne accès à toutes les
-capacités de JMRI.
+La fen&#234;tre principale DecoderPro vous donne acc&#232;s &#224; toutes les
+capacit&#233;s de JMRI.our plus d'informations sur
+DecoderPro lui-m&#234;me, s'il vous pla&#238;t voir
+<a href="../../../manual/index.shtml"> le manuel en ligne DecoderPro </a>.
 
 <p>
-Aide sur les menus spécifiques:
+Aide sur les menus sp&#233;cifiques:
 <ul>
-<li>Éditer - (<a href="../TabbedPreferences.shtml">Préférences</a>)
+<li>Modifier - (<a href="../TabbedPreferences.shtml">Pr&#233;f&#233;rences</a>)
 <li><a href="../../jmri/jmrit/ToolsMenu.shtml">Outils</a>
 <li><a href="../../../html/apps/DecoderPro/Roster.shtml#menu">Liste</a>
 <li><a href="../../jmri/jmrit/display/PanelMenuHelp.shtml">Panneaux</a>
-<li>(Menu spécifique à votre connexion au réseau apparaît ici))
+<li>(Le menu sp&#233;cifique &#224; votre connexion au r&#233;seau appara&#238;t ici))
 <li><a href="../../../package/jmri/jmrit/DebugMenu.shtml">Debogage</a>
-<li>Fenêtre - Affiche les fenêtres actuellement disponibles
+<li>Fen&#234;tre - Affiche les fen&#234;tres actuellement disponibles
     <ul> 
-    <li>Minimiser -réduire la fenêtre actuelle, elle se cache .
+    <li>Minimiser -r&#233;duire la fen&#234;tre actuelle, elle se cache .
 </ul>
 <li>Aide
   <ul>
-  <li>Aide Fenêtre - Ouvre une page d'aide spécifique à la fenêtre courante. Pour la fenêtre principale, c'est cette page.
-  <li>Aide Générale - Ouvre la page d'aide principale JMRI.
+  <li>Aide Fen&#234;tre - Ouvre une page d'aide sp&#233;cifique &#224; la fen&#234;tre courante. Pour la fen&#234;tre principale, c'est cette page.
+  <li>Aide G&#233;n&#233;rale - Ouvre la page d'aide principale JMRI.
   <li>Licence - Affiche la licence JMRI.
-  <li>Localisations - Montre où les répertoires programm JMRI  et les préférences sont situés
-  <li>Contexte - Affiche des informations sur votre configuration de JMRI qui pourraient être utiles quand quelqu'un essaie d'aider à résoudre un problème..
-  <li>Télécharger Infos Débogage -  Ouvre une fenêtre de téléchargement d'infos de débogage.
+  <li>Localisations - Montre o&#249; les r&#233;pertoires programm JMRI  et les pr&#233;f&#233;rences sont situ&#233;s
+  <li>Contexte - Affiche des informations sur votre configuration de JMRI qui pourraient &#234;tre utiles quand quelqu'un essaie d'aider &#224; r&#233;soudre un probl&#232;me..
+  <li>T&#233;l&#233;charger Infos D&#233;bogage -  Ouvre une fen&#234;tre de t&#233;l&#233;chargement d'infos de d&#233;bogage.
   </ul>
 </ul>
 
 <p>
-Les boutons de cette fenêtre sont des raccourcis vers les programmateurs de décodeur.
-Plus un lien vers l'aide à  l'écriture dans un Programmateur Symbolique DecoderPro 
+Les boutons de cette fen&#234;tre sont des raccourcis vers les programmateurs de d&#233;codeur.
+Plus un lien vers l'aide &#224; l'&#233;criture dans un Programmateur Symbolique DecoderPro 
 et un bouton Quitter qui termine le programme JMRI.
 
 <p>

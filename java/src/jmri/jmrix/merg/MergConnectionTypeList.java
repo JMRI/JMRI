@@ -1,5 +1,3 @@
-// MergConnectionTypeList.java
-
 package jmri.jmrix.merg;
 
 /**
@@ -7,27 +5,27 @@ package jmri.jmrix.merg;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author      Matthew Harris  Copyright (c) 2011
- * @version     $Revision$
+ * @author Matthew Harris Copyright (c) 2011
  */
 public class MergConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
+    public static final String MERG = "MERG";
+
+    @Override
     public String[] getAvailableProtocolClasses() {
         // set the connection types to have MERG at the front
         jmri.jmrix.can.ConfigurationManager.setMERG();
 
-        return new String[] {
+        return new String[]{
             "jmri.jmrix.can.adapters.gridconnect.canrs.serialdriver.ConnectionConfig",
             "jmri.jmrix.can.adapters.gridconnect.net.MergConnectionConfig",
             "jmri.jmrix.can.adapters.gridconnect.canusb.serialdriver.ConnectionConfig",
@@ -37,6 +35,9 @@ public class MergConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
             "jmri.jmrix.rfid.serialdriver.ConnectionConfig"
         };
     }
-}
 
-/* @(#)MergConnectionTypeList.java */
+    @Override
+    public String[] getManufacturers() {
+        return new String[]{MERG};
+    }
+}

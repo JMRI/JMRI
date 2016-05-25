@@ -1,19 +1,14 @@
-// EditorPaneTest.java
 package jmri.jmrix.loconet.sdfeditor;
 
-import org.apache.log4j.Logger;
+import jmri.jmrix.loconet.sdf.SdfBuffer;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import jmri.jmrix.loconet.sdf.SdfBuffer;
-
-
 /**
  * Tests for the jmri.jmrix.loconet.sdfeditor.EditorPane class.
  *
- * @author			Bob Jacobsen  Copyright 2007
- * @version         $Revision$
+ * @author	Bob Jacobsen Copyright 2007
  */
 public class EditorPaneTest extends TestCase {
 
@@ -23,9 +18,8 @@ public class EditorPaneTest extends TestCase {
     }
 
     // from here down is testing infrastructure
-
     public EditorPaneTest(String s) {
-    	super(s);
+        super(s);
     }
 
     // Main entry point
@@ -40,10 +34,13 @@ public class EditorPaneTest extends TestCase {
         return suite;
     }
 
-    static Logger log = Logger.getLogger(EditorPaneTest.class.getName());
-
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 
 }

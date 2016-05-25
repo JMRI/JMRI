@@ -1,15 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: PanelTarget.shtml,v 1.9 2009/08/23 07:21:12 pete_cressman Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-12-19--> 
+<!-- $Id$ -->
+<!--  UpDated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013*11-01--> 
 <HTML LANG="fr">
 <HEAD>
 <TITLE>JMRI: Panel Help</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <META CONTENT="Bob Jacobsen" NAME="Author">
 <META NAME="keywords" CONTENT="JMRI help Panel">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -26,94 +26,94 @@
 
 <H1> Le Panneau</H1>
 
-Un panneau est un ensemble d'icônes représentant les différentes composantes d'un réseau.
-Certaines des icônes disponibles dans JMRI comprennent les aiguillages, signaux, et
-capteurs. Vous pouvez également inclure une icône de fond pour votre TCO.<p>
-L'éditeur de panneau que vous utilisez pour créer un panneau est
-décrits sur une
-<a href="PanelEditor.shtml"> page d'aide séparée</a>.
+Un panneau est un ensemble d'ic&#244;nes repr&#233;sentant les diff&#233;rentes composantes d'un r&#233;seau.
+Certaines des ic&#244;nes disponibles dans JMRI comprennent les aiguillages, signaux, et
+capteurs. Vous pouvez &#233;galement inclure une ic&#244;ne de fond pour votre TCO.<p>
+L'&#233;diteur de panneau que vous utilisez pour cr&#233;er un panneau est
+d&#233;crits sur une
+<a href="PanelEditor.shtml"> page d'aide s&#233;par&#233;e</a>.
 
-<H2> Opération sur le Panneaul</H2>
-cliquer sur un symbole d'aiguillage le fait basculer de direct à dévié et 
-vice-versa. Un aiguillage a également des états «inconnu» et «incohérent»,
-représentés par une icône avec un point d'interrogation et X respectivement. Ces état
-représentent le cas où aucune information n'a été reçue, et où 
-l'information est dépourvue de cohérence interne (par exemple, à la fois direct et dévié 
-en même temps).
-<P> Ce contrôle peut être utilisé de diverses façons. Par exemple, vous pourriez avoir
-une icône d'aiguillage couvrant un aiguillage sur un TCO. Lorsque vous
-cliquez dessus, l'aiguillage sur le TCO serait commandé pour changer, et
-le schéma de TCO montrerait sur quel chemin un train serait routé. Ou vous
-pourriez utiliser des icônes qui montrent un levier vers la droite ou la gauche, et créer un
-panneau qui ressemble à un panneau traditionnel des Etats-Unis & S.</P>
-<P> Le «Capteur» peut être utilisé pour représenter les indicateurs d'occupation ou d'autres
-entrées. L'icône par défaut est un petit cercle, avec la couleur utilisée pour représenter
-l'état du capteur. Ceux ci réagissent automatiquement aux changements sur le réseau
-. Cliquer sur un capteur provoque le basculement du capteur entre les états
-«actifs» et «inactif» et vice versa. Avec les icônes par défaut, actif
-est un cercle vert et inactif est un cercle vide. Ils sont destinés à
-représenter un indicateur du panneau éclairé/éteint. Un cercle rouge représente l'état
-«Inconnu» , utilisé lorsque aucune information n'a encore été reçue du réseau.</P>
+<H2> Op&#233;ration sur le Panneau</H2>
+Cliquer sur un symbole d'aiguillage le fait basculer de droit &#224; d&#233;vi&#233; et 
+vice-versa. Un aiguillage a &#233;galement des &#233;tats "inconnu" et "incoh&#233;rent",
+repr&#233;sent&#233;s par une ic&#244;ne avec un point d'interrogation et X respectivement. Ces &#233;tat
+repr&#233;sentent le cas o&#249; aucune information n'a &#233;t&#233; re&#231;ue, et o&#249; 
+l'information est d&#233;pourvue de coh&#233;rence interne (par exemple, &#224; la fois droit et d&#233;vi&#233; 
+en m&#234;me temps).
+<P> Cette commandee peut &#234;tre utilis&#233;e de diverses fa&#231;ons. Par exemple, vous pourriez avoir
+une ic&#244;ne d'aiguillage couvrant un aiguillage sur un TCO. Lorsque vous
+cliquez dessus, l'aiguillage sur le r&#233;seau serait command&#233; pour changer, et
+le sch&#233;ma de TCO montrerait sur quel chemin un train serait rout&#233;. Ou vous
+pourriez utiliser des ic&#244;nes qui montrent un levier vers la droite ou la gauche, et cr&#233;er un
+panneau qui ressemble &#224; un panneau traditionnel Am&#233;ricain.</P>
+<P> Le "Capteur" peut &#234;tre utilis&#233; pour repr&#233;senter les indicateurs d'occupation ou d'autres
+entr&#233;es. L'ic&#244;ne par d&#233;faut est un petit cercle, avec la couleur utilis&#233;e pour repr&#233;senter
+l'&#233;tat du capteur. Ceux ci r&#233;agissent automatiquement aux changements sur le r&#233;seau
+. Cliquer sur un capteur provoque le basculement du capteur entre les &#233;tats
+"actif" et "inactif" et vice versa. Avec les ic&#244;nes par d&#233;faut, actif
+est un cercle vert et inactif est un cercle vide. Ils sont destin&#233;s &#224;
+repr&#233;senter un indicateur du panneau &#233;clair&#233;/&#233;teint. Un cercle rouge repr&#233;sente l'&#233;tat
+"Inconnu" , utilis&#233; lorsque aucune information n'a encore &#233;t&#233; re&#231;ue du r&#233;seau.</P>
 
-<H2> Création d'un Panneau</H2>
-Les panneaux sont créés avec un
- <A HREF="PanelEditor.shtml">Éditeur de Panneau</A>,
-qui vous permet de placer des images pour représenter les aiguillages, les capteurs (sur
-certains systèmes) et des voies.
+<H2> Cr&#233;ation d'un Panneau</H2>
+Les panneaux sont cr&#233;&#233;s avec un
+ <A HREF="PanelEditor.shtml">&#201;diteur de Panneau</A>,
+qui vous permet de placer des images pour repr&#233;senter les aiguillages, les capteurs (sur
+certains syst&#232;mes) et des voies.
 
 <H2> Menus contextuels</H2>
 
-Si les "éléments du Panneau de menu contextuel actif" est cochée dans l'Éditeur de Panneau, un petit menu contextuel apparaît lorsque vous cliquez à droite d'une icône.
-La plupart des icônes vous permettent de faire pivoter et supprimer l'icône. Il existe d'autres
-options, selon le type d'icône, par exemple, vous pouvez désactiver un
-aiguillage de sorte qu'il ne contrôle pas réellement quoi que ce soit.
+Si les "&#233;l&#233;ments du Panneau de menu contextuel actif" sont coch&#233;s dans l'&#201;diteur de Panneau, un petit menu contextuel appara&#238;t lorsque vous cliquez &#224; droite d'une ic&#244;ne.
+La plupart des ic&#244;nes vous permettent de faire pivoter et supprimer l'ic&#244;ne. Il existe d'autres
+options, selon le type d'ic&#244;ne, par exemple, vous pouvez d&#233;sactiver un
+aiguillage de sorte qu'il ne contr&#244;le pas r&#233;ellement quoi que ce soit.
 
 <p>
-Si elle est activée via les cases à cocher sur le
- <a href="PanelEditor.shtml">Éditeur de Panneau</a>,
-vous pouvez déplacer une icône en la faisant glisser autour du panneau. Pour 
-un positionnement plus précis, de nombreuses icônes peuvent accéder à l'
-<a href="CoordinateEdit.shtml">Éditeur de Coordonnées</a>, 
-pour déplacer l'icône d'un nombre précis de pixels ou le régler sur une
+Si elle est activ&#233;e via les cases &#224; cocher sur l'
+ <a href="PanelEditor.shtml">&#201;diteur de Panneau</a>,
+vous pouvez d&#233;placer une ic&#244;ne en la faisant glisser autour du panneau. Pour 
+un positionnement plus pr&#233;cis, de nombreuses ic&#244;nes peuvent acc&#233;der &#224; l'
+<a href="CoordinateEdit.shtml">&#201;diteur de Coordonn&#233;es</a>, 
+pour d&#233;placer l'ic&#244;ne d'un nombre pr&#233;cis de pixels ou la r&#233;gler sur une
 localisation absolue.</p>
 
-<P> Lorsque les cases à cocher dans l'Éditeur de Panneau le permettent,le menu contextuel
-peut inclure des éléments pour rappeler à l'éditeur d'icône de changer les icônes ou les
-entités qu'il représente. Autres éléments susceptibles d'être disponibles sont: rotations,
-échelle, tailles de police, couleurs etc
+<P> Lorsque les cases &#224; cocher dans l'&#201;diteur de Panneau le permettent, le menu contextuel
+peut inclure des &#233;l&#233;ments pour rappeler &#224; l'&#233;diteur d'ic&#244;ne de changer les ic&#244;nes ou les
+entit&#233;s qu'il repr&#233;sente. Autres &#233;l&#233;ments susceptibles d'&#234;tre disponibles sont: rotations,
+&#233;chelle, tailles de police, couleurs etc
 
-<P> Le menu contextuel peut également changer si la configuration d'un article est
-changé. Par exemple, si vous ajoutez une rétrosignalisation à un aiguillage, le menu contextuel
-comprend un nouvel élément appelé "TroisÉtats". TroisÉtats vous permet d'utiliser
-l'icône incohérent, ce qui est l'une des quatre icônes possibles disponibles
-pour un aiguillage. Normalement, lorsque vous cliquer d'abord sur une icône d'aiguillage elle
-commande le TCO pour changer l'état de l'aiguillage. Si vous utilisez
-la rétrosignalisation pour un aiguillage particulier, l'affichage de l'icône va attendre d'avoir le retourdu réseau avant de modifier l'icône de aiguillage en icône directe ou déviée. En utilisant TroisÉtats, l'icône va changer immédiatement à l'icône incohérent lorsque l'aiguillage est cliqué. Incohérent dans ce cas
-signifie que j'ai commandé le changement de l'aiguillage et nous sommes maintenant en attente de
-savoir s'il s'est réellement passé, et quand le réseau retourne "l'état connu" réel
-de l'aiguillage, l'icône va changer cet état. Si
-vous n'utilisez pas TroisÉtats, lorsque vous cliquez sur l'icône, il peut prendre un certain
-temps (de quelques millisecondes à quelques secondes en fonction du système) avant que l'icône ne
-réponde avec l'état connu de l'aiguillage.</P>
+<P> Le menu contextuel peut &#233;galement changer si la configuration d'un &#233;l&#233;ment est
+chang&#233;. Par exemple, si vous ajoutez une r&#233;trosignalisation &#224; un aiguillage, le menu contextuel
+comprend un nouvel &#233;l&#233;ment appel&#233; "Trois&#201;tats". Trois&#201;tats vous permet d'utiliser
+l'ic&#244;ne incoh&#233;rent, ce qui est l'une des quatre ic&#244;nes possibles disponibles
+pour un aiguillage. Normalement, lorsque vous cliquer d'abord sur une ic&#244;ne d'aiguillage elle
+commande le r&#233;seau pour changer l'&#233;tat de l'aiguillage. Si vous utilisez
+la r&#233;trosignalisation pour un aiguillage particulier, l'affichage de l'ic&#244;ne va attendre d'avoir le retour du r&#233;seau avant de modifier l'ic&#244;ne de aiguillage en ic&#244;ne directe ou d&#233;vi&#233;e. En utilisant Trois&#201;tats, l'ic&#244;ne va changer imm&#233;diatement &#224; l'ic&#244;ne incoh&#233;rent lorsque l'aiguillage est cliqu&#233;. Incoh&#233;rent dans ce cas
+signifie que j'ai command&#233; le changement de l'aiguillage et nous sommes maintenant en attente de
+savoir s'il s'est r&#233;ellement pass&#233;, et quand le r&#233;seau retourne "l'&#233;tat connu" r&#233;el
+de l'aiguillage, l'ic&#244;ne va changer cet &#233;tat. Si
+vous n'utilisez pas Trois&#201;tats, lorsque vous cliquez sur l'ic&#244;ne, il peut prendre un certain
+temps (de quelques millisecondes &#224; quelques secondes en fonction du syst&#232;me) avant que l'ic&#244;ne ne
+r&#233;ponde avec l'&#233;tat connu de l'aiguillage.</P>
 
 <H2> Marqueur</H2>
 
-Le menu du panneau comprend un point intitulé "Marqueur". Vous pouvez utiliser un marqueur pour
-représenter une locomotive ou un autre périphérique sur votre TCO. Vous pouvez déplacer les
+Le menu du panneau comprend un point intitul&#233; "Marqueur". Vous pouvez utiliser un marqueur pour
+repr&#233;senter une locomotive ou un autre p&#233;riph&#233;rique sur votre TCO. Vous pouvez d&#233;placer les
 marqueur autour du TCO pour afficher la position actuelle de la locomotive.
 Les marqueurs sont toujours mobiles, et de leurs menus contextuels sont toujours actifs. Pour
-créer un marqueur, sélectionnez "Ajouter loco" ou "Ajouter loco à partir de la liste" du menu
-«Marqueur». «loco Ajouter partir de la liste" va utiliser le numéro de de la ligne à partir
-votre fichier Liste comme étiquette, si le numéro de la ligne n'a pas été entré lorsque
-vous avez créé votre liste, le programme affichera l'adresse DCC de la Loco
+cr&#233;er un marqueur, s&#233;lectionnez "Ajouter loco" ou "Ajouter loco &#224; partir de la liste" du menu
+"Marqueur". "loco Ajouter partir de la liste" va utiliser le num&#233;ro de de la ligne &#224; partir de
+votre fichier Liste comme &#233;tiquette, si le num&#233;ro de la ligne n'a pas &#233;t&#233; entr&#233; lorsque
+vous avez cr&#233;&#233; votre liste, le programme affichera l'adresse DCC de la Loco
 Loco. Pour supprimer les marqueurs de votre TCO, utilisez l'option du menu "Supprimer les marqueurs" 
 .
-<P> Le marqueur menu contextuel vous permet de changer la couleur du marqueur,
-la taille de la police, le style et la couleur. Le menu vous permet également de retirer le
-marqueurs à partir du TCO.
+<P> Le menu contextuel marqueur vous permet de changer la couleur du marqueur,
+la taille de la police, le style et la couleur. Le menu vous permet &#233;galement de retirer le
+marqueurs &#224; partir du TCO.
 
 <P> Si vous souhaitez conserver vos marqueurs entre les sessions d'exploitation, vous
-peut sauver le TCO et les marqueurs seront sauvegardés dans votre fichier panneau. 
+pouvez sauver le TCO et les marqueurs seront sauvegard&#233;s dans votre fichier panneau. 
 
 <!--#include virtual="/Footer" -->
 </BODY>

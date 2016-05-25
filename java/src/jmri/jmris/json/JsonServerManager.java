@@ -1,51 +1,70 @@
 package jmri.jmris.json;
 
-import java.io.File;
 import jmri.InstanceManager;
-import jmri.util.FileUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+/**
+ * This class is obsolete. Use {@link jmri.jmris.json.JsonServer} and
+ * {@link jmri.jmris.json.JsonServerPreferences} directly.
+ *
+ * @author Randall Wood
+ * @deprecated This class will be removed during the JMRI 5.x development cycle.
+ */
+@Deprecated
 public class JsonServerManager {
 
-    static private JsonServerManager instance = null;
-    private JsonServerPreferences preferences;
-    private JsonServer server;
-    static Logger log = LoggerFactory.getLogger(JsonServer.class.getName());
-
-    private JsonServerManager() {
-        if (InstanceManager.getDefault(JsonServerPreferences.class) == null) {
-            InstanceManager.store(new JsonServerPreferences(FileUtil.getUserFilesPath() + "networkServices" + File.separator + "JsonServerPreferences.xml"), JsonServerPreferences.class); // NOI18N
-        }
-        preferences = InstanceManager.getDefault(JsonServerPreferences.class);
-    }
-
+    /**
+     *
+     * @return The default JsonServerManager instance.
+     * @deprecated Use {@link jmri.jmris.json.JsonServer#getDefault()} and
+     * {@link jmri.jmris.json.JsonServerPreferences#getDefault()} instead.
+     */
+    @Deprecated
     public static JsonServerManager getInstance() {
-        if (instance == null) {
-            instance = new JsonServerManager();
+        if (InstanceManager.getDefault(JsonServerManager.class) == null) {
+            InstanceManager.store(new JsonServerManager(), JsonServerManager.class);
         }
-        return instance;
+        return InstanceManager.getDefault(JsonServerManager.class);
     }
 
+    /**
+     *
+     * @return The default JsonServerPreferences instance.
+     * @deprecated Use
+     * {@link jmri.jmris.json.JsonServerPreferences#getDefault()} instead.
+     */
+    @Deprecated
     public JsonServerPreferences getPreferences() {
-        if (preferences == null) {
-            preferences = new JsonServerPreferences();
-        }
-        return preferences;
+        return JsonServerPreferences.getDefault();
     }
 
+    /**
+     *
+     * @return The default JsonServerPreferences instance.
+     * @deprecated Use
+     * {@link jmri.jmris.json.JsonServerPreferences#getDefault()} instead.
+     */
+    @Deprecated
     public static JsonServerPreferences getJsonServerPreferences() {
-        return getInstance().getPreferences();
+        return JsonServerPreferences.getDefault();
     }
 
+    /**
+     *
+     * @return The default JsonServer instance.
+     * @deprecated Use {@link jmri.jmris.json.JsonServer#getDefault()} instead.
+     */
+    @Deprecated
     public JsonServer getServer() {
-        if (server == null) {
-            server = new JsonServer(this.getPreferences().getPort(), this.getPreferences().getHeartbeatInterval());
-        }
-        return server;
+        return JsonServer.getDefault();
     }
 
+    /**
+     *
+     * @return The default JsonServer instance.
+     * @deprecated Use {@link jmri.jmris.json.JsonServer#getDefault()} instead.
+     */
+    @Deprecated
     public static JsonServer getJsonServer() {
-        return getInstance().getServer();
+        return JsonServer.getDefault();
     }
 }

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="F Bkg none, label Bkg none" x="1" y="23" height="150" width="350" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="yes" panelmenu="yes" scrollable="both" redBackground="255" greenBackground="255" blueBackground="255" >
+    <positionablelabel x="0" y="0" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="...." size="13" style="0" red="0" green="0" blue="0" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+  </paneleditor>
+  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="F Bkg blue, label Bkg none" x="1" y="200" height="150" width="350" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="yes" panelmenu="yes" scrollable="both" redBackground="0" greenBackground="0" blueBackground="255">
+    <positionablelabel x="0" y="0" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="...." size="13" style="0" red="0" green="0" blue="0" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+  </paneleditor>
+  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="F Bkg none, label Bkg yellow" x="400" y="23" height="150" width="350" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="yes" panelmenu="yes" scrollable="both" redBackground="255" greenBackground="255" blueBackground="255" >
+    <positionablelabel x="0" y="0" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="...." size="13" style="0" red="0" green="0" blue="0" redBack="255" greenBack="255" blueBack="0" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+  </paneleditor>
+  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="F Bkg blue, label Bkg yellow" x="400" y="200" height="150" width="350" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="yes" panelmenu="yes" scrollable="both" redBackground="0" greenBackground="0" blueBackground="255">
+    <positionablelabel x="0" y="0" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="...." size="13" style="0" red="0" green="0" blue="0" redBack="255" greenBack="255" blueBack="0" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+  </paneleditor>
+</layout-config>

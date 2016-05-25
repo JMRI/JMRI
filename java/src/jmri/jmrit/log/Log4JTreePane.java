@@ -1,5 +1,4 @@
 // Log4JTreePane.java
-
 package jmri.jmrit.log;
 
 import java.util.ArrayList;
@@ -14,77 +13,79 @@ import org.apache.log4j.spi.LoggerRepository;
 /**
  * Show the current Log4J Logger tree; not dynamic.
  *
- * @author Bob Jacobsen  Copyright 2010
+ * @author Bob Jacobsen Copyright 2010
  * @since 2.9.4
  * @version $Revision$
  */
-
 public class Log4JTreePane extends jmri.util.swing.JmriPanel {
 
     /**
-     * Provide a help target string which an enclosing
-     * frame can provide as a help reference.
+     * Provide a help target string which an enclosing frame can provide as a
+     * help reference.
      */
     //public String getHelpTarget() { return "Acknowledgements.shtml"; }
+    /**
+     *
+     */
+    private static final long serialVersionUID = -8179937923267615464L;
 
     /**
      * Provide a recommended title for an enclosing frame.
      */
     @Override
-    public String getTitle() { 
-        return Bundle.getMessage("MenuItemLogTreeAction"); 
+    public String getTitle() {
+        return Bundle.getMessage("MenuItemLogTreeAction");
     }
-    
+
     /**
      * Provide menu items
      */
     //public List<JMenu> getMenus() { return null; }
-    
     public Log4JTreePane() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
-    
+
     /**
-     * 2nd stage of initialization, invoked after
-     * the constructor is complete.
+     * 2nd stage of initialization, invoked after the constructor is complete.
      */
     @SuppressWarnings("unchecked")
     @Override
     public void initComponents() throws Exception {
         LoggerRepository repo = Logger.getRootLogger().getLoggerRepository();
-        
+
         List<String> list = new ArrayList<String>();
-        for (java.util.Enumeration<Logger> e = repo.getCurrentLoggers() ; e.hasMoreElements() ;) {
+        for (java.util.Enumeration<Logger> e = repo.getCurrentLoggers(); e.hasMoreElements();) {
             Logger l = e.nextElement();
             list.add(l.getName() + " - "
-                    + (l.getLevel()!=null
-                        ? "[" + l.getLevel().toString() + "]"
-                        : "{" + Logger.getRootLogger().getLevel().toString() + "}"));
+                    + (l.getLevel() != null
+                            ? "[" + l.getLevel().toString() + "]"
+                            : "{" + Logger.getRootLogger().getLevel().toString() + "}"));
         }
         java.util.Collections.sort(list);
         StringBuilder result = new StringBuilder();
         for (String s : list) {
             result.append(s).append("\n");
         }
-        
+
         JTextArea text = new JTextArea();
         text.setText(result.toString());
         JScrollPane scroll = new JScrollPane(text);
         add(scroll);
-        
+
         // start scrolled to top
         text.setCaretPosition(0);
         JScrollBar b = scroll.getVerticalScrollBar();
         b.setValue(b.getMaximum());
     }
-    
+
     /**
-     * 3rd stage of initialization, invoked after
-     * Swing components exist.
+     * 3rd stage of initialization, invoked after Swing components exist.
      */
     @Override
-    public void initContext(Object context) throws Exception {}
-    
+    public void initContext(Object context) throws Exception {
+    }
+
     @Override
-    public void dispose() {}
+    public void dispose() {
+    }
 }

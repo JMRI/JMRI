@@ -1,52 +1,44 @@
-// LocoSelTreePane.java
-
 package jmri.jmrit.symbolicprog;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import javax.swing.JToggleButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JToggleButton;
+import jmri.jmrit.progsupport.ProgModeSelector;
 
 /**
  * Provide GUI controls to select a new decoder.
  * <P>
- * This is an extension of the CombinedLocoSelPane class to use
- * a JTree instead of a JComboBox for the decoder selection.
- * The loco selection (Roster manipulation) parts are unchanged.
+ * This is an extension of the CombinedLocoSelPane class to use a JTree instead
+ * of a JComboBox for the decoder selection. The loco selection (Roster
+ * manipulation) parts are unchanged.
  * <P>
- * The JComboBox implementation always had to have selected entries, so
- * we added dummy "select from .." items at the top & used those to
- * indicate that there was no selection in that box.
- * Here, the lack of a selection indicates there's no selection.
+ * The JComboBox implementation always had to have selected entries, so we added
+ * dummy "select from .." items at the top {@literal &} used those to indicate
+ * that there was no selection in that box. Here, the lack of a selection
+ * indicates there's no selection.
  *
- * @author			Bob Jacobsen   Copyright (C) 2001, 2002, 2008
- * @version			$Revision$
+ * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2008, 2015
  */
-public class LocoSelTreePane extends CombinedLocoSelTreePane  {
+public class LocoSelTreePane extends CombinedLocoSelTreePane {
 
-    public LocoSelTreePane(JLabel s) {
-            super(s);
-    }
-
-    public LocoSelTreePane() {
-            super();
+    public LocoSelTreePane(JLabel s, ProgModeSelector selector) {
+        super(s, selector);
     }
 
     // don't show the select-roster-entry box
-    protected JPanel layoutRosterSelection() { return null; }
-    
-    protected JPanel layoutDecoderSelection() { 
+    protected JPanel layoutRosterSelection() {
+        return null;
+    }
+
+    protected JPanel layoutDecoderSelection() {
         JPanel pan = super.layoutDecoderSelection();
         viewButtons.setVisible(false);
         return pan;
     }
-    
+
     // don't show the Ident button
     JToggleButton addDecoderIdentButton() {
         return null;
     }
-    
-    static Logger log = LoggerFactory.getLogger(LocoSelTreePane.class.getName());
 
 }

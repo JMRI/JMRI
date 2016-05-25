@@ -1,16 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI: PanelPro Main Window
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help preferences">
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="JMRI help preferences">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -23,7 +21,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>JMRI: PanelPro Main Window</H1>
+<h1>JMRI: PanelPro Main Window</h1>
 
 The PanelPro main window gives you access to all the 
 capabilities of JMRI.
@@ -38,13 +36,13 @@ Help on specific menus:
 <li>(Menus specific to your layout connection will appear here)
 <li><a href="../../../package/jmri/jmrit/DebugMenu.shtml">Debug</a>
 <li>Window - Shows the currently available windows
-    <ul>
-    <li>Minimize - minimize the current window, hides it.
-</ul>
+  <ul>
+  <li>Minimize - minimize the current window, hides it.
+  </ul>
 <li>Help
   <ul>
   <li>Window Help - Opens a help page specific to the current window. For the main window, that's this page.
-  <li>General Help - Opens the main JMRI help page
+  <li>General Help - Opens the main JMRI Help page
   <li>License - Displays the JMRI license.
   <li>Locations - Show where the JMRI program and preferences directories are located
   <li>Context - Displays information about your setup of JMRI that might be useful 
@@ -57,6 +55,8 @@ Help on specific menus:
 This is the apps.PanelPro.PanelPro.shtml help page
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
 

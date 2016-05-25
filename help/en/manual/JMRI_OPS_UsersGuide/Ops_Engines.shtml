@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<title>JMRI OperationsPro - Locomotives</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+<div id="mainContent"><a name="Top"></a>
+
+<h1>Using JMRI&reg; to Operate Trains</h1>
+<h2>OperationsPro: Locomotives Window</h2>
+<div align="right">
+<p><a href="Ops_Cars.shtml">Previous </a> | <a href="Ops_Routes.shtml">Next</a></p>
+<p><a href="index.shtml#Operations">Back to Index</a></p>
+</div>
+<hr>
+
+<p>The Locomotives window allows you to edit your Locomotive (Engine) Roster.
+You
+can enter a Locomotive's number, road, model, type, and length. You can
+optionally add the engine's build date and owner. If you want a group
+of Locomotives to be assigned as a unit, you can create a "Consist". The
+Locomotive type is used by the program to determine where engines are
+picked up and or stored at the various Locations on your layout. Some
+of default Locomotive types are electric, diesel, gas turbine, and steam.</p>
+<p style="margin-left: 40px;"><img style="width: 800px; height: 403px;" alt="locomotives" src="images/Ops_Engine.png"><br></p>
+<h3><a href="Ops_Engines_menu.shtml">Menu Bar</a></h3>
+<strong style="font-weight: bold;"><em>Body of window<br></em></strong><div style="margin-left: 40px;">Lists the entire roster of your locomotives that you have defined in Operations.<br>Each entry contains:<br><div style="margin-left: 40px;"><a href="Ops_SetEngines.shtml">Set button</a><br><a href="Ops_EditEngines.shtml">Edit button</a></div></div><strong style="font-weight: bold;"><em>Bottom of the window</em></strong>
+<p><strong>Sort by</strong> -- select the radio
+button for the attribute you wish to sort by. &nbsp; (Last sorts by last moved)</p>
+<p> <input name="button" id="button" value="Add" type="submit">
+when selected opens the <a href="Ops_AddEngine.shtml">Add
+Locomotive</a> window.</p>
+<p> <input name="button3" id="button3" value="Save" type="button"> Saves the locomotive
+roster to disk.
+</p>
+<p><input name="button2" id="button2" value="Find" type="submit"> <input name="textfield" id="textfield" type="text">
+Locate a Locomotive in your Roster, when you type the road number into the text box.</p>
+<hr>
+
+<div align="right">
+<p><a href="Ops_Cars.shtml">Previous </a> | <a href="Ops_Routes.shtml">Next</a></p>
+<p><a href="index.shtml#Operations">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</div>
+</div>
+</body>
+</html>

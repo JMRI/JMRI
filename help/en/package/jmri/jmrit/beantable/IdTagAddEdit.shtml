@@ -1,21 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
  <title>
-      JMRI: Adding/Editing Id Tags
+      JMRI: Adding/Editing ID Tags
  </title>
-    <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <meta content="Matthew Harris" name=Author>
-    <meta name="keywords" content="JMRI help Id Tag Add Edit">
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <meta content="Matthew Harris" name="Author">
+    <meta name="keywords" content="JMRI help ID Tag Add Edit">
 
-<!-- Style -->
-  <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+<!--#include virtual="/Style" -->
 </head>
 
 <body>
@@ -23,26 +16,32 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>Adding/Editing Id Tags</h1>
+<h1>Adding/Editing ID Tags</h1>
     
-To create an Id Tag, click the
-"Add..." button on the 
-<a href="IdTagTable.shtml">Id Tag Table</a>.
-This will open a small new window with space to enter
-a system name and user name for the new Id Tag, plus
-an "Add" button.
+<p>To create an ID Tag, click the
+"Add..." button at the bottom of the 
+<a href="IdTagTable.shtml">ID Tag Table</a> pane.<br>
+This will open a new pane with space to enter
+a System Name and User Name for the new ID Tag, plus
+an "Add" button to confirm your entry.
 <p>
-You must enter a unique system name.  System names for Id Tags should have
-the following pattern.  They should start with "ID" for "Internal iDentity", 
-followed by the actual tag number itself.
+You must enter a unique System Name.  System Names for ID Tags should have
+the following pattern:
+	<ul>
+	<li>they should start with "ID" for "Internal iDentity", 
+	<li>followed by the actual Tag number itself.
+	</ul>
 
 <p>
-The user name is optional, but if given has to be unique.
+The User Name is optional, but if given has to be unique.
 
 <p>
-The tag ID shown in the table is determined from the system name.
+The Tag ID shown in the table is determined from the System Name.
+
+<p>Back to the <a href="IdTagTable.shtml">ID Tag Table help page<a>.</p>
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
-

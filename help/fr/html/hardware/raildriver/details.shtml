@@ -2,12 +2,12 @@
 <html lang="fr">
 <head>
 <!-- Copyright Me 2008 -->
-<!-- $Id: details.shtml,v 1.2 2008/06/30 18:13:40 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-09-22-->
+<!-- $Id$ -->
+<!-- UpDated  by Blorec Herv&#233; 2013-09-18-->
 <title>JMRI: RailDriver Throttle Details</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -26,14 +26,14 @@
 
 
 <h2> 
-JMRI: Détails Régulateurs RailDrive
+JMRI: D&#233;tails R&#233;gulateurs RailDriver
 </h2>
 
 <img src="../../../images/bangdesk.gif" align="left">
 Cette page est en construction.
-Le support RailDriver JMRI a d'abord été disponible en
-<a href="http://jmri.sf.net/releasenotes/jmri2.1.7.shtml"> JMRI 2.1.7 </a>.
-Il évolue rapidement, alors revenez ici ou sur le
+Le support RailDriver JMRI a d'abord &#233;t&#233; disponible en
+<a href="http://jmri.org/releasenotes/jmri2.1.7.shtml"> JMRI 2.1.7 </a>.
+Il &#233;volue rapidement, alors revenez ici ou sur le
 <a href="http://groups.yahoo.com/group/jmriusers/">  jmriusers mailing liste </a>
 pour des changements.
 
@@ -45,19 +45,19 @@ href="RailDriver.gif">
 
 <p>
 
-Alors que nous développons le support RailDriver, il est principalement mis en œuvre
+Alors que nous d&#233;veloppons le support RailDriver, il est principalement mis en oeuvre
 via un script
-<a href="http://jmri.sf.net/jython/RailDriver.py"> RailDriverThrottle.py </a>.
- Ceci permet aux utilisateurs de l'éditer facilement pour le personnaliser
-suivant leurs désirs tandis que nous trions ce qui est généralement nécessaire.
+<a href="http://jmri.org/jython/RailDriver.py"> RailDriverThrottle.py </a>.
+ Ceci permet aux utilisateurs de l'&#233;diter facilement pour le personnaliser
+suivant leurs d&#233;sirs tandis que nous trions ce qui est g&#233;n&#233;ralement n&#233;cessaire.
 <p>
 
 <h2> Structure </h2>
 
-Parce jinput et le RailDriver fournissent des noms pour les  différents composants
-sur Windows, Mac OS X et Linux, le script est organisé autour du
-nombre (index) de la composante, et non pas de son nom. Les trois plates-formes
-fournissent les composants dans le même ordre.
+Parce jinput et le RailDriver fournissent des noms pour les diff&#233;rents composants
+sur Windows, Mac OS X et Linux, le script est organis&#233; autour du
+num&#233;ro (index) de la composante, et non pas de son nom. Les trois plates-formes
+fournissent les composants dans le m&#234;me ordre.
 
 
 <!--#include virtual="/Footer" -->

@@ -1,101 +1,94 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<HTML LANG="en">
-<HEAD>
-<TITLE>JMRI: Sensor Table Help</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<META CONTENT="Bob Jacobsen" NAME="Author">
-<META NAME="keywords" CONTENT="JMRI help Sensor Table">
+<html lang="en">
+<head>
+<title>JMRI: Sensor Table Help</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta content="Bob Jacobsen" name="Author">
+<meta name="keywords" content="JMRI help Sensor Table">
 
-<!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
-</HEAD>
+<!--#include virtual="/Style" -->
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>The Sensor Table</H1>
+<h1>The Sensor Table</h1>
 
-<P>This table contains a list of the sensors that exist for this
-panel.
+<p>The Sensor Table contains a list of the Sensors that exist for this
+Panel.
 
-<H2>Sensor Table Columns</H2>
+<h2>Sensor Table Columns</h2>
 
-<DL>
-	<DT>User Name</DT>
-	<DD>You can directly enter or change the "User Name" for an
-	existing sensor.</DD>
+<dl>
+	<dt>User Name</dt>
+	<dd>You can directly enter or change the "User Name" for an
+	existing Sensor.</dd>
 
-	<DT>State</DT>
-	<DD>Pushing the "State" command button will change the state of an
-	existing sensor.</DD>
+	<dt>State</dt>
+	<dd>Pushing the "State" command button will change the state of an
+	existing Sensor.</dd>
 
-	<DT>Delete</DT>
-	<DD>Pushing the "Delete" button will remove the sensor from the
+	<dt>Delete</dt>
+	<dd>Pushing the "Delete" button will remove the Sensor from the
 	table. 
 	<p>
-	Note that this doesn't remove the sensor from any files you've
-	saved that contain it.  If you load one of those files, perhaps
-	when you restart the program, the sensor will reappear.
+	Note that this doesn't remove the Sensor from any files you've
+	saved that contain it. If you load one of those files, perhaps
+	when you restart the program, the Sensor will reappear.
 	You should use one of the "Store to file" options in the "File"
-	menu to save new versions of any files that contain this sensor.
-	</DD>
+	menu to save new versions of any files that contain this Sensor.
+	</dd>
 
-	<DT>Inverted</DT>
-	<DD>When checked, the sensor command and status is inverted. For
-	example, an inverted sensor means that when the layout sends an
-	"active" sensor command, it becomes "inactive" to JMRI.</DD>
+	<dt>Inverted</dt>
+	<dd>When checked, the Sensor command and status is inverted. For
+	example, an inverted Sensor means that when the layout sends an
+	"active" Sensor command, the Sensor becomes "inactive" to JMRI.</dd>
     
-    <DT>Use Global Delay</DT>
-    <DD>When checked, the sensor will use the system values specified in the
-    "Debounce|Defaults.." menu option for the duration which the system waits for
+    <dt>Use Global Delay</dt>
+    <dd>When checked, the Sensor will use the system values specified in the
+    "Debounce|Defaults..." menu option for the duration which the system waits for
     before it registers the change of state.
-    <p><A HREF="#Debounce">See Sensor Debounce below</A>
-    </DD>
-    <DT>Active Delay/ InActive Delay</DT>
-    <DD>Specify the amount of time in milliSeconds that the system waits before 
-    registering the state change of a sensor.
-    <p><A HREF="#Debounce">See Sensor Debounce below</A></DD>
+    <p><a href="#Debounce">See Sensor Debounce below</a>
+    </dd>
+    <dt>Active Delay/ InActive Delay</dt>
+    <dd>Specify the amount of time in milliseconds that the system waits before 
+    registering the state change of a Sensor.
+    <p><a href="#Debounce">See Sensor Debounce below</a></dd>
     
-</DL>
+</dl>
 
-<H2>Sensor Table Controls</H2>
+<h2>Sensor Table Controls</h2>
 
-There is also a button at the bottom of the Sensor Table
+There is a button at the bottom of the Sensor Table:
 
-<DL>	
-	<DT>Add</DT>
-	<DD>Push this button to add a new sensor. For more information see
-	<A HREF="SensorAddEdit.shtml">Adding/Editing Sensors</A>.</DD>
-</DL>
+<dl>	
+	<dt>Add...</dt>
+	<dd>Push this button to add a new Sensor. For more information see
+	<a href="SensorAddEdit.shtml">Adding/Editing Sensors</a>.</dd>
+</dl>
 
-<H2><A NAME="Debounce"></A>Sensor Debounce</H2>
-<p>The Sensor Debounce facility is there to help prevent false triggers of a sensor
+<h2><a name="Debounce"></a>Sensor Debounce</h2>
+<p>The Sensor Debounce facility is there to help prevent false triggers of a Sensor
 being passed into the system and triggering other events in the system.<br>
-Such false triggers could be due to a dirty piece of track or electrical interferance.
+Such false triggers could be due to a dirty piece of track or electrical interference.
 
-<p>The facility allows you to assign a period in miliseconds before the change
-is registered with the rest of the system.  If after that period the state has
-not changed then the sensor state will be passed onto the rest the of the system.<br>
+<p>Debounce allows you to assign a period in milliseconds before the change
+is registered with the rest of the system.  If within that period the state has
+not changed, the Sensor state will be passed onto the rest the of the system.<br>
     
-However if the sensors state is different after the timer has finished, then the 
-system will restart the process, this time after the timer has finished it will
-check to see if the sensor state is in the same state as it was before it restarted 
-the process.  If not the process is re-started again until the state is the same
+However if the Sensors state is different after the timer has finished, then the 
+system will restart the process. This time, after the timer has finished it will
+check to see if the Sensor is in the same state as it was before it restarted 
+the process. If not, the process is re-started again until the state is the same
 before and after the timer is run.
     
-    
-    </DD>
+    </dd>
 <!--#include virtual="/Footer" -->
-</BODY>
-</HTML>
+
+      </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
+</body>
+</html>
 

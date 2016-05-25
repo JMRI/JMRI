@@ -1,27 +1,24 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//FR" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <head>
-<!-- Copyright ($Author: jacobsen $) 2009 -->
-<!-- $Id: TemplatePlain.shtml,v 1.7 2009/01/12 07:49:27 jacobsen Exp $ -->
+<!-- Copyright ($Author$) 2009 -->
 <!-- Translated by Blorec Hervé le 2011-22-05-->
 
 <title>JMRI: ???Page Title</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" CONTENT="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+ <div class="nomenu" id="mBody">
+   <div id="mainContent">
 
 <h1> 
 JMRI: Titre Page???
@@ -29,12 +26,14 @@ JMRI: Titre Page???
 
 Contenu????
 
-Ce fichier indique la matière en haut et en bas d'une page simple, sans menu latéral (sur le web)
+Ce fichier indique la matière en haut et en bas d'une page simple, sans menu latéral (sur le web).
 
 
 
 
     
 <!--#include virtual="/Footer" -->
+  </div><!-- ferme #mainContent-->
+ </div> <!-- ferme #mBody-->
 </body>
 </html>

@@ -1,62 +1,55 @@
-// Audio.java
-
 package jmri;
 
 /**
  * Represent an Audio, a place to store or control sound information.
  * <P>
- * The AbstractAudio class contains a basic implementation of the state and messaging
- * code, and forms a useful start for a system-specific implementation.
- * Specific implementations in the jmrix package, e.g. for LocoNet and NCE, will
- * convert to and from the layout commands.
+ * The AbstractAudio class contains a basic implementation of the state and
+ * messaging code, and forms a useful start for a system-specific
+ * implementation. Specific implementations in the jmrix package, e.g. for
+ * LocoNet and NCE, will convert to and from the layout commands.
  * <P>
- * The states  and names are Java Bean parameters, so that listeners can be
+ * The states and names are Java Bean parameters, so that listeners can be
  * registered to be notified of any changes.
  * <P>
- * Each Audio object has a two names.  The "user" name is entirely free form, and
- * can be used for any purpose.  The "system" name is provided by the system-specific
- * implementations, and provides a unique mapping to the layout control system
- * (e.g. LocoNet, NCE, etc) and address within that system.
+ * Each Audio object has a two names. The "user" name is entirely free form, and
+ * can be used for any purpose. The "system" name is provided by the
+ * system-specific implementations, and provides a unique mapping to the layout
+ * control system (e.g. LocoNet, NCE, etc) and address within that system.
  * <P>
  *
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author  Matthew Harris copyright (c) 2009
- * @version $Revision$
+ * @author Matthew Harris copyright (c) 2009
  */
 public interface Audio extends NamedBean {
 
     // Define Object sub-type constants
-
     /**
      * Definition of AudioSource NamedBean sub-type code
      */
-    public static final char SOURCE    = 'S';
+    public static final char SOURCE = 'S';
 
     /**
      * Definition of AudioBuffer NamedBean sub-type code
      */
-    public static final char BUFFER    = 'B';
+    public static final char BUFFER = 'B';
 
     /**
      * Definition of AudioListener NamedBean sub-type code
      */
-    public static final char LISTENER  = 'L';
+    public static final char LISTENER = 'L';
 
     // Define orientation constants
-
     /**
      * Definition of Audio object orientation at vector code
      */
@@ -68,38 +61,34 @@ public interface Audio extends NamedBean {
     public static final int UP = 0x02;
 
     // Define state variables for Audio objects
-
     /**
      * Default state for any newly created Audio object
      */
-    public static final int STATE_INITIAL    = 0x00;
+    public static final int STATE_INITIAL = 0x00;
 
     // Define applicable states for Source sub-types
-
     /**
      * State code for an AudioSource when stopped
      */
-    public static final int STATE_STOPPED    = 0x10;
+    public static final int STATE_STOPPED = 0x10;
 
     /**
      * State code for an AudioSource when playing
      */
-    public static final int STATE_PLAYING    = 0x11;
+    public static final int STATE_PLAYING = 0x11;
 
     // Define applicable states for Buffer sub-types
-
     /**
      * State code for an AudioBuffer when empty
      */
-    public static final int STATE_EMPTY      = 0x20;
+    public static final int STATE_EMPTY = 0x20;
 
     /**
      * State code for an AudioBuffer when loaded
      */
-    public static final int STATE_LOADED     = 0x21;
+    public static final int STATE_LOADED = 0x21;
 
     // Define applicable states for Listener sub-types
-
     /**
      * State code for an AudioListener when positioned
      */
@@ -108,26 +97,22 @@ public interface Audio extends NamedBean {
     /**
      * State code for an AudioListener when moving
      */
-    public static final int STATE_MOVING     = 0x31;
+    public static final int STATE_MOVING = 0x31;
 
     // Define Audio command constants
-
     // Constants defining Factory related commands
-
     /**
      * Command to initialise AudioFactory
      */
     public static final int CMD_INIT_FACTORY = 0x01;
 
     // Constants defining Buffer related commands
-
     /**
      * Command to load the sound
      */
     public static final int CMD_LOAD_SOUND = 0x20;
 
     // Constants defining Source related commands
-
     /**
      * Command to bind Buffer to Source
      */
@@ -194,7 +179,6 @@ public interface Audio extends NamedBean {
     public static final int CMD_RESET_POSITION = 0x49;
 
     // Define state variables for fade states
-
     /**
      * Fade state of Source when not fading
      */
@@ -232,6 +216,7 @@ public interface Audio extends NamedBean {
      * <li>L = Listener
      * <li>S = Source
      * </ul>
+     *
      * @return subType char
      */
     public char getSubType();
@@ -242,5 +227,3 @@ public interface Audio extends NamedBean {
     public void stateChanged(int oldState);
 
 }
-
-/* @(#)Audio.java */

@@ -1,13 +1,8 @@
-// NcePowerManagerTest.java
-
 package jmri.jmrix.nce;
 
-import org.apache.log4j.Logger;
+import java.util.Vector;
 import jmri.JmriException;
 import jmri.jmrix.AbstractPowerManagerTest;
-
-import java.util.Vector;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -23,34 +18,36 @@ public class NcePowerManagerTest extends AbstractPowerManagerTest {
      * provide an implementation to detect outbound messages
      */
     public class NceInterfaceScaffold extends NceTrafficController {
+
         public NceInterfaceScaffold() {
         }
 
         // override some NceInterfaceController methods for test purposes
-
-        public boolean status() { return true;
+        public boolean status() {
+            return true;
         }
 
         /**
          * record messages sent, provide access for making sure they are OK
          */
         public Vector<NceMessage> outbound = new Vector<NceMessage>();  // public OK here, so long as this is a test class
+
         public void sendNceMessage(NceMessage m, jmri.jmrix.nce.NceListener l) {
             // save a copy
             outbound.addElement(m);
         }
 
         // test control member functions
-
         /**
          * forward a message to the listeners, e.g. test receipt
          */
-        protected void sendTestMessage (NceMessage m) {
+        protected void sendTestMessage(NceMessage m) {
             // forward a test message to Listeners
             notifyMessage(m, null);
             return;
         }
-        protected void sendTestReply (NceReply m) {
+
+        protected void sendTestReply(NceReply m) {
             // forward a test message to Listeners
             notifyReply(m, null);
             return;
@@ -118,7 +115,6 @@ public class NcePowerManagerTest extends AbstractPowerManagerTest {
     }
 
     // from here down is testing infrastructure
-
     public NcePowerManagerTest(String s) {
         super(s);
     }
@@ -134,7 +130,5 @@ public class NcePowerManagerTest extends AbstractPowerManagerTest {
         TestSuite suite = new TestSuite(NcePowerManagerTest.class);
         return suite;
     }
-
-    static Logger log = Logger.getLogger(NcePowerManagerTest.class.getName());
 
 }

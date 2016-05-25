@@ -6,8 +6,18 @@
  */
 package jmri.swing;
 
-import java.awt.*;
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
 /**
@@ -17,7 +27,17 @@ import javax.swing.border.TitledBorder;
  */
 public class JTitledSeparator extends JPanel {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = 4197641321226803099L;
+
     private final static class SeparatorPane extends JPanel {
+
+        /**
+         *
+         */
+        private static final long serialVersionUID = 17667095414633319L;
 
         private SeparatorPane() {
             super(new GridBagLayout());
@@ -26,14 +46,13 @@ public class JTitledSeparator extends JPanel {
             add(new JSeparator(), new GridBagConstraints(0, 0, 1, 1, 1, 0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
         }
 
-        @SuppressWarnings("deprecation")
         @Override
-        public void reshape(int x, int y, int w, int h) {
-            super.reshape(x, y, w, h);
+        public void setBounds(int x, int y, int w, int h) {
+            super.setBounds(x, y, w, h);
             doLayout();
         }
     }
-    private JLabel label = new JLabel();
+    private final JLabel label = new JLabel();
 
     /**
      * Construct a separator with a title.
@@ -44,10 +63,14 @@ public class JTitledSeparator extends JPanel {
         super(new BorderLayout());
         JPanel westPanel = new JPanel(new BorderLayout()) {
 
-            @SuppressWarnings("deprecation")
+            /**
+             *
+             */
+            private static final long serialVersionUID = 2501748738360927763L;
+
             @Override
-            public void reshape(int x, int y, int w, int h) {
-                super.reshape(x, y, w, h);
+            public void setBounds(int x, int y, int w, int h) {
+                super.setBounds(x, y, w, h);
                 doLayout();
             }
         };
@@ -63,9 +86,9 @@ public class JTitledSeparator extends JPanel {
         }
         SeparatorPane separatorPane = new SeparatorPane();
         if (isLeftToRight) {
-            separatorPane.setBorder(BorderFactory.createEmptyBorder(0, 1, 0, 0));
+            separatorPane.setBorder(BorderFactory.createEmptyBorder(0, 2, 0, 0));
         } else {
-            separatorPane.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 1));
+            separatorPane.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 2));
         }
         add(separatorPane, BorderLayout.CENTER);
         setTitle(title);

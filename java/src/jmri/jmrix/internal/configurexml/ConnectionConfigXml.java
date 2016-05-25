@@ -1,80 +1,71 @@
 package jmri.jmrix.internal.configurexml;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.InstanceManager;
-import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
 import jmri.jmrix.SerialPortAdapter;
+import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
 import jmri.jmrix.internal.ConnectionConfig;
 import jmri.jmrix.internal.InternalAdapter;
-
-import org.jdom.*;
+import org.jdom2.Element;
 
 /**
  * Handle XML persistance of virtual layout connections
  * <P>
- * This class is invoked from jmrix.JmrixConfigPaneXml on write,
- * as that class is the one actually registered. Reads are brought
- * here directly via the class attribute in the XML.
+ * This class is invoked from jmrix.JmrixConfigPaneXml on write, as that class
+ * is the one actually registered. Reads are brought here directly via the class
+ * attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2010
- * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
     public ConnectionConfigXml() {
         super();
     }
-    
+
     protected void getInstance() {
         adapter = new InternalAdapter();
     }
-    
+
     protected SerialPortAdapter adapter;
 
     protected void getInstance(Object object) {
-        adapter = ((ConnectionConfig)object).getAdapter();
+        adapter = ((ConnectionConfig) object).getAdapter();
     }
 
-    /*protected void getInstance() {
-        log.error("unexpected call to getInstance");
-        new Exception().printStackTrace();
-    }*/
 
+    @Override
     public Element store(Object o) {
         getInstance(o);
+        
+        if (adapter == null) return null;
+        
         Element e = new Element("connection");
         storeCommon(e, adapter);
-        
+
         e.setAttribute("class", this.getClass().getName());
 
         return e;
     }
-    /**
-     * Port name carries the hostname for the network connection
-     * @param e Top level Element to unpack.
-      */
-    public boolean load(Element e) {
-    	boolean result = true;
+
+    @Override
+    public boolean load(Element shared, Element perNode) {
+        boolean result = true;
         getInstance();
 
-        loadCommon(e, adapter);
+        this.loadCommon(shared, perNode, adapter);
         // register, so can be picked up
         register();
-        
-        if (adapter.getDisabled()){
+
+        if (adapter.getDisabled()) {
             return result;
         }
         adapter.configure();
-        
+
         return result;
     }
 
+    @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
-
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
 
 }

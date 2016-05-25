@@ -4,12 +4,13 @@ package jmri.jmris.simpleserver;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.eclipse.jetty.websocket.WebSocket.Connection;
-
 import jmri.PowerManager;
 import jmri.jmris.AbstractPowerServer;
+import jmri.jmris.JmriConnection;
+import jmri.jmris.simpleserver.parser.JmriServerParser;
+import jmri.jmris.simpleserver.parser.ParseException;
+import jmri.jmris.simpleserver.parser.SimpleNode;
+import jmri.jmris.simpleserver.parser.SimpleVisitor;
 
 /**
  * Simple Server interface between the JMRI power manager and a network
@@ -21,17 +22,15 @@ import jmri.jmris.AbstractPowerServer;
 public class SimplePowerServer extends AbstractPowerServer {
 
     private DataOutputStream output;
-    private Connection connection;
-    static Logger log = LoggerFactory.getLogger(SimplePowerServer.class.getName());
-
+    private JmriConnection connection;
     public SimplePowerServer(DataInputStream inStream, DataOutputStream outStream) {
         output = outStream;
         mgrOK();
     }
 
-    public SimplePowerServer(Connection cnctn) {
-    	this.connection = cnctn;
-    	mgrOK();
+    public SimplePowerServer(JmriConnection cnctn) {
+        this.connection = cnctn;
+        mgrOK();
     }
 
     /*
@@ -55,24 +54,28 @@ public class SimplePowerServer extends AbstractPowerServer {
 
     @Override
     public void parseStatus(String statusString) throws jmri.JmriException {
-        if (statusString.contains("ON")) {
-            if (log.isDebugEnabled()) {
-                log.debug("Setting Power ON");
-            }
-            setOnStatus();
-        } else if (statusString.contains("OFF")) {
-            if (log.isDebugEnabled()) {
-                log.debug("Setting Power OFF");
-            }
-            setOffStatus();
+        JmriServerParser p = new JmriServerParser(new java.io.StringReader(statusString));
+        try{
+           try{
+              SimpleNode e=p.powercmd();
+              SimpleVisitor v = new SimpleVisitor();
+              e.jjtAccept(v,this);
+              if(v.getOutputString() != null ){
+                 sendStatus(v.getOutputString());
+              } 
+           } catch(ParseException pe){
+              sendErrorStatus();
+           }
+        } catch(IOException ioe) {
+          // we should check to see if there is an  
         }
     }
-    
+
     public void sendStatus(String status) throws IOException {
-    	if (this.output != null) {
-    		this.output.writeBytes(status);
-    	} else {
-    		this.connection.sendMessage(status);
-    	}
+        if (this.output != null) {
+            this.output.writeBytes(status);
+        } else {
+            this.connection.sendMessage(status);
+        }
     }
 }

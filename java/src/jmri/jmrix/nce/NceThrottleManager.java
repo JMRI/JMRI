@@ -1,18 +1,17 @@
 package jmri.jmrix.nce;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
-import jmri.DccLocoAddress;
-
 import jmri.jmrix.AbstractThrottleManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * NCE implementation of a ThrottleManager.
  * <P>
- * @author	    Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision$
+ * @author	Bob Jacobsen Copyright (C) 2001
+ * @version $Revision$
  */
 public class NceThrottleManager extends AbstractThrottleManager {
 
@@ -24,7 +23,7 @@ public class NceThrottleManager extends AbstractThrottleManager {
         this.tc = memo.getNceTrafficController();
         this.prefix = memo.getSystemPrefix();
     }
-    
+
     NceTrafficController tc = null;
     String prefix = "";
 
@@ -32,35 +31,39 @@ public class NceThrottleManager extends AbstractThrottleManager {
         // the NCE protocol doesn't require an interaction with the command
         // station for this, so immediately trigger the callback.
         DccLocoAddress address = (DccLocoAddress) a;
-        log.debug("new NceThrottle for "+address);
-        notifyThrottleKnown(new NceThrottle((NceSystemConnectionMemo)adapterMemo, address), address);
+        log.debug("new NceThrottle for " + address);
+        notifyThrottleKnown(new NceThrottle((NceSystemConnectionMemo) adapterMemo, address), address);
     }
 
     /**
-     * Address 1 and above can be long
-     **/
+     * Addresses 0-10239 can be long
+     *
+     */
     public boolean canBeLongAddress(int address) {
-        return (address>=1);
+        return ((address >= 0) && (address <= 10239));
     }
-    
+
     /**
-     * The full range of short addresses are available
-     **/
+     * The short addresses 1-127 are available
+     *
+     */
     public boolean canBeShortAddress(int address) {
-        return (address<=127);
+        return ((address >= 1) && (address <= 127));
     }
 
     /**
      * Are there any ambiguous addresses (short vs long) on this system?
      */
-    public boolean addressTypeUnique() { return false; }
-    
-    public int supportedSpeedModes() {
-    	return(DccThrottle.SpeedStepMode128 | DccThrottle.SpeedStepMode28);
+    public boolean addressTypeUnique() {
+        return false;
     }
-    
-    public boolean disposeThrottle(jmri.DccThrottle t, jmri.ThrottleListener l){
-        if (super.disposeThrottle(t, l)){
+
+    public int supportedSpeedModes() {
+        return (DccThrottle.SpeedStepMode128 | DccThrottle.SpeedStepMode28);
+    }
+
+    public boolean disposeThrottle(jmri.DccThrottle t, jmri.ThrottleListener l) {
+        if (super.disposeThrottle(t, l)) {
             NceThrottle nct = (NceThrottle) t;
             nct.throttleDispose();
             return true;
@@ -68,6 +71,6 @@ public class NceThrottleManager extends AbstractThrottleManager {
         return false;
     }
 
-    static Logger log = LoggerFactory.getLogger(NceThrottleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceThrottleManager.class.getName());
 
 }

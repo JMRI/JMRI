@@ -1,20 +1,17 @@
-// CreateRosterGroupAction.java
-
 package jmri.jmrit.roster.swing;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-import jmri.util.swing.JmriAbstractAction;
-import jmri.util.swing.WindowInterface;
-import javax.swing.Icon;
 import java.util.ResourceBundle;
-
+import javax.swing.Icon;
 import javax.swing.JOptionPane;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.util.swing.JmriAbstractAction;
+import jmri.util.swing.WindowInterface;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Create a roster group.
@@ -23,32 +20,30 @@ import jmri.jmrit.roster.RosterEntry;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Kevin Dickerson   Copyright (C) 2009
- * @version	$Revision$
+ * @author	Kevin Dickerson Copyright (C) 2009
  */
 public class CreateRosterGroupAction extends JmriAbstractAction {
 
     public CreateRosterGroupAction(String s, WindowInterface wi) {
-    	super(s, wi);
+        super(s, wi);
     }
-     
- 	public CreateRosterGroupAction(String s, Icon i, WindowInterface wi) {
-    	super(s, i, wi);
+
+    public CreateRosterGroupAction(String s, Icon i, WindowInterface wi) {
+        super(s, i, wi);
     }
+
     /**
-     * @param s Name of this action, e.g. in menus
-     * @param who Component that action is associated with, used
-     *              to ensure proper position in of dialog boxes
+     * @param s   Name of this action, e.g. in menus
+     * @param who Component that action is associated with, used to ensure
+     *            proper position in of dialog boxes
      */
     public CreateRosterGroupAction(String s, Component who) {
         super(s);
@@ -61,14 +56,14 @@ public class CreateRosterGroupAction extends JmriAbstractAction {
     @Override
     public void actionPerformed(ActionEvent event) {
 
-        String entry = (String)JOptionPane.showInputDialog(_who,
-                                     "<html><b>"+ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("MenuGroupCreate")+"</b></html>",
-                                     ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("MenuGroupCreate"),
-                                     JOptionPane.INFORMATION_MESSAGE,
-                                     null, // icon
-                                     null, // initial values
-                                     null);// preselected initial value
-        if(entry == null || entry.equals(Roster.ALLENTRIES)){
+        String entry = (String) JOptionPane.showInputDialog(_who,
+                "<html><b>" + ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("MenuGroupCreate") + "</b></html>",
+                ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("MenuGroupCreate"),
+                JOptionPane.INFORMATION_MESSAGE,
+                null, // icon
+                null, // initial values
+                null);// preselected initial value
+        if (entry == null || entry.equals(Roster.ALLENTRIES)) {
             return;
         }
         if (rosterEntries != null) {
@@ -78,10 +73,10 @@ public class CreateRosterGroupAction extends JmriAbstractAction {
                 re.updateFile();
             }
         }
-        Roster.instance().addRosterGroupList(entry);
+        Roster.instance().addRosterGroup(entry);
         Roster.writeRosterFile();
     }
-    
+
     // never invoked, because we overrode actionPerformed above
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
@@ -95,6 +90,7 @@ public class CreateRosterGroupAction extends JmriAbstractAction {
      * <dt>RosterEntries</dt>
      * <dd>An ArrayList&lt;RosterEntry&gt; of roster entries.
      * </dl>
+     *
      * @param key
      * @param value
      */
@@ -102,10 +98,10 @@ public class CreateRosterGroupAction extends JmriAbstractAction {
     @SuppressWarnings("unchecked")
     public void setParameter(String key, Object value) {
         if (key.equals("RosterEntries") && value.getClass().equals(ArrayList.class)) {
-            rosterEntries = (ArrayList<RosterEntry>)value;
+            rosterEntries = (ArrayList<RosterEntry>) value;
         }
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(CreateRosterGroupAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CreateRosterGroupAction.class.getName());
 }

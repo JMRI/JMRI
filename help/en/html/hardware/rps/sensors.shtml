@@ -1,58 +1,49 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
-      JMRI Hardware Guide: RPS Sensors
- </TITLE>
+ <title>JMRI Hardware Support - NAC Services RPS Sensors</title>
+ 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1> 
-JMRI Hardware Guide: RPS Sensors
-</h1>
+<h1>Hardware Support: NAC Services RPS Sensors</h1>
 
 <em>Please note that JMRI's RPS support is being rapidly improved.
-This page refers to most recent JMRI test version.  If you're using
+This page refers to most recent JMRI test version. If you're using
 an RPS system, you should update to new test versions as they 
-<a href="http://jmri.sf.net/download/index.shtml">are announced</a>.</em>
+<a href="http://jmri.org/download/index.shtml">are announced</a>.</em>
 
-<p>
-The 
-<a href="http://www.proto87.com/RPS-MR-position-detection-system.html">RPS System</a>
-provides absolute location of RPS-equipped rolling stock.
+<p>The <a href="http://www.proto87.com/model-trains-DCC-decoders.html">RPS System</a>
+provides an absolute location of RPS-equipped rolling stock.
 <P>
-JMRI can use that to set JMRI 
-<a href="../../tools/Sensors.shtml">Sensors</a>
+JMRI can use that to set <a href="../../tools/Sensors.shtml">Sensors</a>
 when a RPS transmitter is in a specific area, which can in turn be used to control other
 JMRI functions such as 
-<a href="../../tools/Signals.shtml">signals</a>, 
+<a href="../../tools/Signals.shtml">Signals</a>, 
 <a href="../../tools/Routes.shtml">Routes</a> and 
 <a href="../../tools/Logix.shtml">Logix</a>.
 
+<a name="connecting"></a><h2>Connecting</h2>
+<h3>Defining a Sensor</h3>
 <p>
-An RPS sensor is associated with an area bounded by a series of
-points and the lines between them.
-
-<h2>Defining a Sensor</h2>
+An RPS Sensor is associated with an area bounded by a series of
+points and the lines between those points.<br>
 There are two ways to create an RPS Sensor and define the 
 area on the layout that it covers.
 
-<h3>By Coordinates</h3>
+<h4>By Coordinates</h4>
 
 You can enter a series of coordinates that list the corners 
 of the region to be covered.  For example, the points
@@ -64,37 +55,39 @@ defining a square one unit on a side are:
  (0,1,0)
 </pre></code>
 If you use the Sensor Table's "Add..." button
-to create a sensor with the system name
+to create a Sensor with the System Name
 <code><pre>
   RS(0,0,0);(1,0,0);(1,1,0);(0,1,0)
 </pre></code>
 you'll get an RPS Sensor that shows "ACTIVE" when a 
-transmitter is present in that area, and "INACTIVE" otherwise.
+Transmitter is present in that area, and "INACTIVE" otherwise.
 <p>
 The "R" means the RPS system, "S" means you're defining a Sensor,
 and the rest of the name defines the coordinates of the corners
-of the region to include in the sensor.
+of the region to include in the Sensor.
 Each corner is specified by its X, Y and Z values, all grouped
-together with parantheses.  The corners should be separated by
+together with parentheses.  The corners should be separated by
 semicolons; see the example above.
 
 <p>
-Once you've defined your sensor, you can use the 
-<a href="../../../package/jmri/jmrix/rps/trackingpanel/RpsTrackingFrame.shtml">tracking display</a>
+Once you've defined your Sensor, you can use the 
+<a href="../../../package/jmri/jmrix/rps/trackingpanel/RpsTrackingFrame.shtml">Tracking display</a>
 to see if it's in the right place on your layout.
 
-<h3>Using the Tracking Tool</h3>
+<h4>Using the Tracking Tool</h4>
 (To be written, for now see the
-<a href="../../../package/jmri/jmrix/rps/trackingpanel/RpsTrackingFrame.shtml">tracking display help page</a>.)
+<a href="../../../package/jmri/jmrix/rps/trackingpanel/RpsTrackingFrame.shtml">Tracking display help page</a>.)
 
-<h2>For More Information</h2>
-
-There's more information available on the 
-<a href="http://www.proto87.com/RPS-MR-position-detection-system.html">RPS Web Site</a>.
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>JMRI Help</h3>
+Back to the <a href="index.shtml">Main RPS Help</a> page.
+<h3>Third Party info</h3>
+More information is available on the 
+<a href="http://www.proto87.com/model-trains-DCC-decoders.html">RPS Web Site</a>.
 <p>
-See also the 
-<a href="index.shtml">main JMRI RPS page</a>.
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

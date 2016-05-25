@@ -1,78 +1,85 @@
-// AddSensorPanel.java
-
 package jmri.jmrit.beantable;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-
-import javax.swing.*;
-import java.util.ResourceBundle;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
- * JPanel to create a new JMRI devices
- * HiJacked to serve other beantable tables.
+ * JPanel to create a new JMRI devices HiJacked to serve other beantable tables.
  *
- * @author	Bob Jacobsen    Copyright (C) 2009
- * @author  Pete Cressman    Copyright (C) 2010
- * @version     $Revision$
+ * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Pete Cressman Copyright (C) 2010
  */
-
 public class AddNewDevicePanel extends jmri.util.swing.JmriPanel {
 
     public AddNewDevicePanel(JTextField sys, JTextField userName,
-                             String addButtonLabel, ActionListener listener) {
-            sysName = sys;
-            setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-            JPanel p;
-            p = new JPanel(); 
-            p.setLayout(new FlowLayout());
-            p.setLayout(new java.awt.GridBagLayout());
-            java.awt.GridBagConstraints c = new java.awt.GridBagConstraints();
-            c.gridwidth  = 1;
-            c.gridheight = 1;
-            c.gridx = 0;
-            c.gridy = 0;
-            c.anchor = java.awt.GridBagConstraints.EAST;
-            p.add(sysNameLabel,c);
-            c.gridy = 1;
-            p.add(userNameLabel,c);
-            c.gridx = 1;
-            c.gridy = 0;
-            c.anchor = java.awt.GridBagConstraints.WEST;
-            c.weightx = 1.0;
-            c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
-            p.add(sysName,c);
-            c.gridy = 1;
-            p.add(userName,c);
-            add(p);
+            String addButtonLabel, ActionListener okListener, ActionListener cancelListener) {
+        sysName = sys;
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        JPanel p;
+        p = new JPanel();
+        p.setLayout(new FlowLayout());
+        p.setLayout(new java.awt.GridBagLayout());
+        java.awt.GridBagConstraints c = new java.awt.GridBagConstraints();
+        c.gridwidth = 1;
+        c.gridheight = 1;
+        c.gridx = 0;
+        c.gridy = 0;
+        c.anchor = java.awt.GridBagConstraints.EAST;
+        p.add(sysNameLabel, c);
+        c.gridy = 1;
+        p.add(userNameLabel, c);
+        c.gridx = 1;
+        c.gridy = 0;
+        c.anchor = java.awt.GridBagConstraints.WEST;
+        c.weightx = 1.0;
+        c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
+        p.add(sysName, c);
+        c.gridy = 1;
+        p.add(userName, c);
+        add(p);
 
-            add(ok = new JButton(rb.getString(addButtonLabel)));
-            ok.addActionListener(listener);
-            ok.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent a) {
-                        reset();
-                    }
-            });
+        // button(s) at bottom of window
+        JPanel panelBottom = new JPanel();
+        panelBottom.setLayout(new FlowLayout(FlowLayout.TRAILING));
+        // only add a Cancel button when the the OKbutton string is OK (so don't show on Picker Panels)
+        if (addButtonLabel.equals("ButtonOK")) {
+            panelBottom.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
+            cancel.addActionListener(cancelListener);
+        }
 
-            reset();
-            sysName.addKeyListener(new KeyAdapter() {
-                    public void keyReleased(KeyEvent a){
-                        if (sysName.getText().length() > 0) {
-                            ok.setEnabled(true);
-                            ok.setToolTipText(null);
-                        }
-                    }
-                });
+        panelBottom.add(ok = new JButton(Bundle.getMessage(addButtonLabel)));
+        ok.addActionListener(okListener);
+
+        ok.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent a) {
+                reset();
+            }
+        });
+
+        add(panelBottom);
+
+        reset();
+        sysName.addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent a) {
+                if (sysName.getText().length() > 0) {
+                    ok.setEnabled(true);
+                    ok.setToolTipText(null);
+                }
+            }
+        });
     }
 
     void reset() {
         ok.setEnabled(false);
-        ok.setToolTipText(rb.getString("ToolTipWillActivate"));
+        ok.setToolTipText(Bundle.getMessage("ToolTipWillActivate"));
     }
 
     public void addLabels(String labelSystemName, String labelUserName) {
@@ -81,13 +88,8 @@ public class AddNewDevicePanel extends jmri.util.swing.JmriPanel {
     }
 
     JButton ok;
+    JButton cancel;
     JTextField sysName;
-    JLabel sysNameLabel = new JLabel(rb.getString("LabelSystemName"));
-    JLabel userNameLabel = new JLabel(rb.getString("LabelUserName"));
-
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
-    static final Logger log = LoggerFactory.getLogger(AddNewDevicePanel.class.getName());
+    JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
+    JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
 }
-
-
-/* @(#)AddNewDevicePanel.java */

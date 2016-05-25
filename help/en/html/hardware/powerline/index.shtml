@@ -1,64 +1,59 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id$ -->
-<title>JMRI: Powerline Controllers</title>
+<title>JMRI Hardware Support - Powerline Controllers</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
-<!--#include virtual="/Header" -->
+<body><!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-
-<h2> 
-JMRI:  Powerline Controllers
-</h2>
-
-This page talks about how to configure JMRI to talk
-to powerline controllers, e.g. X10, Insteon. 
-
+<h1>Hardware Support: Powerline Controllers</h1>
 <p>
-See also the associated
-<a href="Compatibility.shtml">compatibility page</a> to see what interfaces
-have been supported.
+This page describes how to configure JMRI to talk
+to Powerline controllers, e.g. X10, Insteon.</p>
 
+<a name="hardware"></a><h2>Supported Hardware</h2>
+<p>The <a href="Compatibility.shtml">Powerline compatibility page</a> shows which Adapters
+are supported by JMRI.</p>
+
+<a name="connecting"></a><h2>Connecting</h2>
 <p>
-For information on how to address your equipment via JMRI, please
-see the 
-<a href="Names.shtml">page on addressing and JMRI names</a> for X10.
-
-<p>
-JMRI Lights work intuitively with powerline devices.  When the JMRI
-Light is set "ON", a command is send to the remote device to set it "ON".
-Ditto for "OFF". 
-
+JMRI Lights work intuitively with Powerline devices.  When a JMRI
+Light is set "ON", a command is sent to the remote device to set it "ON".
+Ditto for "OFF".</p>
 <p>
 There's also limited support for dimming (variable brightness) Lights.
-See the 
+See the JMRI
 <a href="../../../package/jmri/jmrit/simplelightctrl/SimpleLightCtrl.shtml">"Light Control" page</a> 
-for more information on this.
-
+for more information on this.</p>
 <p>
 JMRI Turnouts are available for X10.  When the JMRI Turnout
 is set to "THROWN", a command is sent to the remote device to 
-set it to "BRIGHT".  This is an immediate, full-power on.  When the Turnout
-is set to "CLOSED", the remote device is sent a command to go "OFF".  Depending
+set it to "BRIGHT".  This is an immediate, full-power on.<br>
+When the Turnout is set to "CLOSED", the remote device is sent a command to go "OFF".  Depending
 on the X10 hardware, this may be either an immediate off, or be slowly dimmed. 
 </p>
-</div>
-</div>
+
+<a name="tools"></a><h2>JMRI Tools</h2>
+N/A
+
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>JMRI Help</h3>
+<p>For information on how to address your equipment via JMRI see the 
+<a href="Names.shtml">Powerline Names Help page</a> for X10.</p>
+
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

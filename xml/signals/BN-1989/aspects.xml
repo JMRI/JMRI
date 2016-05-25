@@ -1,35 +1,44 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../../XSLT/aspecttable.xsl" type="text/xsl"?>
-
-<aspecttable
-    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
->
+<aspecttable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/aspecttable.xsd">
   <name>BN-1989</name>
   <date>1989</date>
   <reference>As described in the October 1989 Burlington Northern Railroad Southern Region, Debraska Division Timetable #2. In effect at 0001 Continental Mountain Time, Sunday October 29, 1989.</reference>
-
   <copyright xmlns="http://docbook.org/ns/docbook">
-    <year>2009</year><year>2010</year><holder>JMRI</holder>
+    <year>2009</year>
+    <year>2010</year>
+    <year>2013</year>
+    <holder>JMRI</holder>
   </copyright>
-
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
-        <personname><firstname>James</firstname><surname>Koretsky</surname></personname>
-    </author>    
+      <personname>
+        <firstname>James</firstname>
+        <surname>Koretsky</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Suzie</firstname>
+        <surname>Tall</surname>
+      </personname>
+    </author>
   </authorgroup>
-
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
-        <revnumber>1</revnumber>
-        <date>2010-02-08</date>
-        <authorinitials>JK</authorinitials>
-        <revremark>Initial version</revremark>
-    </revision>    
+      <revnumber>1</revnumber>
+      <date>2010-02-08</date>
+      <authorinitials>JK</authorinitials>
+      <revremark>Initial version</revremark>
+    </revision>
+    <revision>
+      <revnumber>1.2</revnumber>
+      <date>2013-12-29</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Replaced masts with new mast definitions, completed mapping, added rest of specific appearances and added default aspect numbers.</revremark>
+    </revision>
   </revhistory>
-
   <aspects>
-
     <aspect>
       <name>Clear</name>
       <rule>Rule 230</rule>
@@ -37,8 +46,8 @@
       <speed>Normal</speed>
       <speed2>Normal</speed2>
       <route>Normal</route>
+      <dccAspect>15</dccAspect>
     </aspect>
-
     <aspect>
       <name>Advance Approach</name>
       <rule>Rule 232</rule>
@@ -46,35 +55,35 @@
       <speed>Normal</speed>
       <speed2>Normal</speed2>
       <route>Normal</route>
+      <dccAspect>12</dccAspect>
     </aspect>
-  
     <aspect>
       <name>Approach Diverging</name>
       <rule>Rule 233</rule>
       <indication>Proceed prepared to advance on diverging route at the next signal at prescribed speed through turnout.</indication>
-      <speed>Medium</speed>
+      <speed>Normal</speed>
       <speed2>Normal</speed2>
-      <route>Diverging</route>
+      <route>Normal</route>
+      <dccAspect>11</dccAspect>
     </aspect>
- 
     <aspect>
       <name>Approach Medium</name>
       <rule>Rule 234</rule>
       <indication>Proceed prepared to pass next signal not exceeding 35 MPH.</indication>
-      <speed>Medium</speed>
-      <speed2>Medium</speed2>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
       <route>Normal</route>
+      <dccAspect>10</dccAspect>
     </aspect>
-
     <aspect>
       <name>Approach Restricting</name>
       <rule>Rule 235</rule>
       <indication>Proceed prepared to pass next signal at restricted speed.</indication>
-      <speed>Medium</speed>
-      <speed2>Limited</speed2>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
       <route>Normal</route>
+      <dccAspect>9</dccAspect>
     </aspect>
-
     <aspect>
       <name>Approach</name>
       <rule>Rule 236</rule>
@@ -82,26 +91,26 @@
       <speed>Medium</speed>
       <speed2>Medium</speed2>
       <route>Normal</route>
+      <dccAspect>7</dccAspect>
     </aspect>
-
     <aspect>
       <name>Diverging Clear</name>
       <rule>Rule 237</rule>
       <indication>Proceed on diverging route not exceeding prescribed speed through turnout.</indication>
-      <speed>Medium</speed>
+      <speed>Normal</speed>
       <speed2>Normal</speed2>
       <route>Diverging</route>
+      <dccAspect>6</dccAspect>
     </aspect>
-
     <aspect>
       <name>Diverging Approach Medium</name>
       <rule>Rule 238</rule>
       <indication>Proceed on diverging route not exceeding prescribed speed through turnout prepared to pass next signal not exceeding 35 MPH.</indication>
-      <speed>Medium</speed>
-      <speed2>Medium</speed2>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
       <route>Diverging</route>
+      <dccAspect>5</dccAspect>
     </aspect>
-
     <aspect>
       <name>Diverging Approach</name>
       <rule>Rule 239</rule>
@@ -109,8 +118,8 @@
       <speed>Medium</speed>
       <speed2>Medium</speed2>
       <route>Diverging</route>
+      <dccAspect>4</dccAspect>
     </aspect>
-
     <aspect>
       <name>Restricted Proceed</name>
       <rule>Rule 241</rule>
@@ -118,8 +127,8 @@
       <speed>Restricted</speed>
       <speed2>Restricted</speed2>
       <route>Either</route>
+      <dccAspect>2</dccAspect>
     </aspect>
-
     <aspect>
       <name>Stop</name>
       <rule>Rule 242</rule>
@@ -127,16 +136,30 @@
       <speed>Stop</speed>
       <speed2>Stop</speed2>
       <route>Either</route>
+      <dccAspect>0</dccAspect>
     </aspect>
-
+    <aspect>
+      <name>Unlit</name>
+      <rule>-</rule>
+      <indication>Unlit</indication>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>31</dccAspect>
+    </aspect>
   </aspects>
-
   <appearancefiles>
-    <appearancefile href="appearance-SL-1.xml"/>
-    <appearancefile href="appearance-SL-2.xml"/>
-    <appearancefile href="appearance-SL-3.xml"/>
+    <appearancefile href="appearance-SL-1N.xml" />
+    <appearancefile href="appearance-SL-1L.xml" />
+    <appearancefile href="appearance-SL-1S.xml" />
+    <appearancefile href="appearance-SL-1R.xml" />
+    <appearancefile href="appearance-SL-2N.xml" />
+    <appearancefile href="appearance-SL-2L.xml" />
+    <appearancefile href="appearance-SL-2S.xml" />
+    <appearancefile href="appearance-SL-2R.xml" />
+    <appearancefile href="appearance-SL-3N.xml" />
+    <appearancefile href="appearance-SL-3L1.xml" />
+    <appearancefile href="appearance-SL-3L2.xml" />
+    <appearancefile href="appearance-SL-3S.xml" />
   </appearancefiles>
-
-  
 </aspecttable>
-  

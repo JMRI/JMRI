@@ -1,10 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
-  <title>JMRI Hardware Guide: Digitrax DCC </title>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META name="keywords" content="Digitrax LocoNet LocoBuffer LocoBuffer-II
+  <title>JMRI Hardware Support - Digitrax LocoNet</title>
+    <meta name="keywords" content="Digitrax LocoNet LocoBuffer LocoBuffer-II
           LocoBuffer-USB MS100 PR2 PR3 DCS100 DCS50 DCS51 DB150 JMRI">
 
   <!-- Style -->
@@ -22,33 +20,45 @@
 <div class="nomenu" id="mBody">
 
 <div id="mainContent">
-<h1>JMRI Hardware Guide: Digitrax DCC </h1>
+<h1>Support: Digitrax LocoNet&reg;</h1>
 
 <div class="toc">
 <ul>
-  <li><a href="#LocoNetConnect">LocoNet&reg; Connections</a></li>
-  <li><a href="#Programmer">PR2 and PR3 Programmers</a></li>
-  <li><a href="#Setup">Setup</a></li>
-  <li><a href="#Using">Using JMRI with LocoNet&reg;</a></li>
-  <li><a href="#Limitation">LocoNet&reg; Conenction Limitations</a></li>
-  <li><a href="#Network">Networked Computers and LocoNet&reg;</a></li>
+  <li><a href="#LocoNetConnect">Supported Hardware</a>
+  <ul>
+  	<li><a href="#Programmer">PR2 and PR3 Programmers</a></li>
+  </ul></li>
+  <li><a href="#Limitation">Limitations</a></li>
+  <li><a href="#Setup">Connecting</a>
+  <ul>
+  	<li><a href="#Using">Using JMRI with LocoNet&reg;</a></li>
+  	<li><a href="#Network">Networked Computers and LocoNet&reg;</a></li>
+  </ul></li>
   <li><a href="#Debugging">Debugging</a>
   <ul>
-      <li><a href="#ErraticReadback">Erratic or Non-Functioning CV Readback</a></li>
-      <li><a href="#TurnoutCmdHandling">Command Station Turnout Command Rejection 
-              and JMRI Turnout Command Handling</a></li>
+	  <li><a href="#ErraticReadback">Erratic or Non-Functioning CV Readback</a></li>
+	  <li><a href="#TurnoutCmdHandling">Command Station Turnout Command Rejection 
+	          and JMRI Turnout Command Handling</a>
+	  <ul>
+	    <li><a href="#turncmdhandsettings">Turnout Command Handling Settings</a></li>
+	    <li><a href="#alternatives">Avoidance strategies</a></li>
+	    <li><a href="#cmdStationTrkPwrOff">Turnout command rejection when 
+	        track power is off</a></li>
+	    <li><a href="#multConnTurnoutReject">Turnout command rejection and multiple 
+	        active LocoNet connections</a></li>
+	  </ul></li>      
   </ul></li>
-  <li><a href="#SeeAlso">See Also</a></li>
+  <li><a href="#SeeAlso">Documentation</a></li>
+  <li><a href="#Support">Support</a></li>
 </ul>
 </div>
 
-<h2><a name="LocoNetConnect">LocoNet&reg; Connections</a></h2>
-
+<a name="LocoNetConnect"></a><a name="hardware"></a><h2>Supported Hardware</h2>
 <p>JMRI software, including DecoderPro and PanelPro, works with your Digitrax command
 station to program decoders. To do this, it communicates with the command
-station over the LocoNet&reg; using one of several types of &reg; adapter.</p>
+station over the LocoNet&reg; using one of several types of <a href="#adapters">adapter</a>.</p>
 
-<h3>Supported Command Stations</h3>
+<h3>Command Stations</h3>
 <p>JMRI software supports the following LocoNet-based command stations:</p>
 <ul>
   <li>Zephyr Starter Set</li>
@@ -62,8 +72,7 @@ station over the LocoNet&reg; using one of several types of &reg; adapter.</p>
   <li>DB150 Command Station/Booster</li>
   <li>DCS100 Command Station/Booster</li>
   <li>DCS200 Command Station/Booster</li>
-  <li><a href="Uhlenbrock.shtml">Intellibox: The Uhlenbrock Central
-  Unit</a></li>
+  <li><a href="Uhlenbrock.shtml">Intellibox: The Uhlenbrock Central Unit</a></li>
   <li><a href="Uhlenbrock.shtml">Intellibox II or IB-Com</a></li>
   <li>DCC-Mux: DCC data combiner with built-in LocoNet command station </li>
 </ul>
@@ -75,7 +84,7 @@ station over the LocoNet&reg; using one of several types of &reg; adapter.</p>
     connection instead of a real LocoNet connection.  This is the "LocoNet 
     Simulator".</p>
 
-<h3>Supported Computer Interfaces</h3>
+<a name="adapters" id="adapters"><h3>Computer Interfaces</h3></a>
 <p>To connect your computer to the LocoNet, and hence to the command station,
 you need one of the following adapters:</p>
 <ul>
@@ -84,6 +93,7 @@ you need one of the following adapters:</p>
   <li><a title="RR-CirKits Serial interface" href="LocoBufferII.shtml">LocoBuffer II</a></li>
   <li><a title="Original Kit Version" href="LocoBuffer.shtml">LocoBuffer</a></li>
   <li><a title="Digitrax Serial interface" href="MS100.shtml">MS-100</a></li>
+  <li><a title="BT LocoBridge" href="BTLocoBridge.shtml">Bluetooth LocoBridge</a></li> 
 </ul>
 
 <p>Generally, any of these can be used with any type of computer to communicate
@@ -97,11 +107,11 @@ type available on some older computers.</p>
     on most Windows Vista machines. If you have problems with the MS100, 
     you might not be able to fix them, and nobody may be able to help you.</p>
 
-<p>The Uhlenbrock Intellibox can also be controlled directly through it's
-serial port; there's a <a href="Uhlenbrock.shtml">separate page</a> on how to
+<p>The Uhlenbrock Intellibox command stations can also be controlled directly through it's
+serial port or USB connection; there's a <a href="Uhlenbrock.shtml">separate page</a> on how to
 do this. </p>
 
-<h2><a name="Programmer">PR2 and PR3 Programmers</a></h2>
+<h4><a name="Programmer">PR2 and PR3 Programmers</a></h4>
 JMRI can also use a <a title="Digitrax programmer" href="PR2.shtml">Digitrax PR2</a>
 or <a title="Digitrax Programmer/USB interface" href="PR3.shtml">PR3</a> to program 
 and test decoders. The PR2 is a stand-alone decoder programming unit which does 
@@ -111,23 +121,51 @@ For more information on using a PR2 with DecoderPro, please see the
 as either a stand alone programmer, or as an interface to to a LocoNet. There 
 is more information on the <a href="PR3.shtml">PR3 setup page</a>. 
 
-<h2><a name="Setup">Setup</a></h2>
+<h2><a name="Limitation">Limitations</a></h2>
 
-<p>To connect your computer to a Digitrax DCC system, you need a  <a
+<p><b>Uhlenbrock Intellibox</b> - The Intellibox has two LocoNet connections,
+called LocoNet-T and LocoNet-B. The LocoNet-T connection can drive more
+devices, but does not provide the Rail-Synch signals that some LocoNet devices
+(particularly boosters and the BDL16, BDL162 and BDL168) require. A LocoBuffer 
+should be connected to the LocoNet-T connection. </p>
+
+<p><b>Uhlenbrock Intellibox II and IB-Com</b> - 
+The Intellibox II and IB-Com have two 
+LocoNet connections, called LocoNet-T and LocoNet-B. The LocoNet-T 
+connection can drive more devices, but does not provide the Rail-Synch signals that 
+some LocoNet devices (particularly boosters and the BDL16, BDL162 and BDL168) require. 
+A LocoBuffer should be connected to the LocoNet-T connection.</p>
+
+<p><strong>PR-1 not supported</strong> - Note that DecoderPro cannot directly
+program decoders via a PR1 programmer. JMRI supports decoder programming either
+via the PR3 as a stand-alone programmer or via a command station.</p>
+
+<p><b>Mac OS X and the MS100</b> - Because Mac OS X can't communicate at the
+special baud rate used by the MS100, the MS100 won't work with Mac OS X. You
+should get a LocoBuffer-USB instead.</p>
+
+<p><b>Microsoft Vista and the MS100</b> - It has been reported that Vista does
+not support the special baud rate used by the MS100. If you find that your
+MS100 does not work on your Vista machine you should get a LocoBuffer-USB or
+PR3 instead.
+</p>
+<a name="Setup"></a><h2>Connecting</h2>
+
+<p>To connect your computer to a Digitrax DCC system, you need a <a
 title="RR-CirKits USB interface" href="LocoBufferUSB.shtml">LocoBuffer-USB</a>,
 <a title="Digitrax USB interface" href="PR3.shtml">PR3</a>, <a
 title="RR-CirKits Serial interface"
 href="LocoBufferII.shtml">LocoBuffer-II</a>, <a title="Original Kit Version"
-href="LocoBuffer.shtml">LocoBuffer</a>, or <a title="Digitrax Serial interface"
+href="LocoBuffer.shtml">LocoBuffer</a> or <a title="Digitrax Serial interface"
 href="MS100.shtml">MS100</a> to act as an adapter. See below for more
-information on these. The LocoBuffer-USB is highly recommended. </p>
+information on these. The LocoBuffer-USB is highly recommended.</p>
 
 <p>Note that except for the PR3, these are only LocoNet interfaces, not stand
 alone programmers like the Digitrax PR2 and PR3. Readback of decoder CVs is possible when 
 using a programming track controlled by a PR3 (in stand-alone programming mode) or
 a programming track controlled by a Chief or Zephyr command station.  The Empire 
 Builder command station does not allow Readback of decoder CVs; users of the 
-Empire Builder can add CV readback capability by using a programming track 
+Empire Builder can add CV Readback capability by using a programming track 
 connected to a PR3 operating in stand-alone programming mode.
 </p>
 
@@ -154,7 +192,7 @@ connected to a PR3 operating in stand-alone programming mode.
       connection will be selected by default.  It may be necessary to use tools 
       provided with the computer operating system to determine which "Serial Port" 
       is appropriate for your particular situation.</li>
-  <li>Select the appropriate "Command Station Type".  
+  <li>Select the appropriate "Command Station Type":  
       <p>When the "Connection Type" is set for the PR3, the "Command Station Type"
           can be set to "PR3 in stand-alone programming mode" or set to one of the
           command station types.  When set for stand-alone programming, the PR3 
@@ -173,6 +211,7 @@ connected to a PR3 operating in stand-alone programming mode.
           "MS100 mode") to allow PanelPro to communicate with the Empire Builder 
           command station and LocoNet-connected peripherals.  More PR3 setup 
           information can be found on the <a href="PR3.shtml">PR3 setup page</a>.</p>
+  </li>
   <li>The "Connection Prefix" is used to help JMRI communicate separately with 
       multiple "connections" to layout hardware.  Each "connection" must have a 
       unique identifier, which is specified as the "Connection Prefix".  By default, 
@@ -213,29 +252,29 @@ connected to a PR3 operating in stand-alone programming mode.
             unless you later consistently get a JMRI console message about the 
             LocoBuffer control leads being improperly set up, in which case you might 
             want to try to bypass that by selecting "no flow control". This box will be 
-      blank if you've selected LocoBuffer-USB, PR3 or MS100. </li>
+      blank if you've selected LocoBuffer-USB, PR3 or MS100.</li>
               
       </ul>
-=======
   
   <li>Click "Save". You'll be asked if it's OK for the program to quit, click
-    "Yes". </li>
-  <li style="text-align:left;">Restart the program. You should be up and
+    "Yes".</li>
+  <li style="text-align:left;">Restart JMRI. You should be up and
     running. <br>
   </li>
+</li>
 </ol>
 
-<p>If you are going to control turnouts, signals or other devices on your
+<p>If you are going to control Turnouts, Signals or other devices on your
 layout from JMRI or another program, we recommend that you set the command
-station's "Meter route/switch output when not in trinary" option off. (T) When
-on, this option greatly reduces the number of commands the LocoNet can handle
+station's "Meter route/switch output when not in trinary" option "Off" (Thrown). When
+On, this option greatly reduces the number of commands the LocoNet can handle
 each second, which can cause significant delays when you're controlling
 signals, etc. To turn it off, you can use the "Configure Command Station" tool
-in the <b>LocoNet</b> menu to set Option Switch 31 to "T" (thrown), or set it 
-directly in the command station using a Digitrax throttle. </p>
+in the <b>LocoNet</b> menu to set Option Switch 31 to "T" (Thrown), or set it 
+directly in the command station using a Digitrax Throttle. </p>
 
-<p>If you will have multiple connections, the "Defaults" settings in the 
-    "Preferences" window may be used to direct certain types of operations to 
+<p>If you will have multiple connections, the "Defaults" tab in the 
+    "Preferences" panel may be used to direct certain types of operations to 
     different connections.  A good example of this is a system with two PR3 
     connections, one in stand-alone programmer mode for programming decoder CVs, 
     and the other for communication with a layout LocoNet and command station.
@@ -263,36 +302,10 @@ and can even work remotely. At least one of the networked computers must have a
 functioning LocoNet interface. See <a href="LocoNetworking.shtml">this page</a> 
 for more information.
 
-<h2><a name="Limitation">LocoNet&reg; Conenction Limitations</a></h2>
 
-<p><b>Uhlenbrock Intellibox</b> - The Intellibox has two LocoNet connections,
-called LocoNet-T and LocoNet-B. The LocoNet-T connection can drive more
-devices, but does not provide the Rail-Synch signals that some LocoNet devices
-(particularly boosters and the BDL16, BDL162 and DL1B68) require. A LocoBuffer 
-should be connected to the LocoNet-T connection. </p>
 
-<p><b>Uhlenbrock Intellibox II and IB-Com</b> - These systems currently do not support 
-programming, either via a programming track or on the main.<br>
-The Intellibox II and IB-Com has two 
-LocoNet connections, called LocoNet-T and LocoNet-B. The LocoNet-T 
-connection can drive more devices, but does not provide the Rail-Synch signals that 
-some LocoNet devices (particularly boosters and the BDL16, BDL162 and DL1B68) require. 
-A LocoBuffer should be connected to the LocoNet-T connection. </p>
-
-<p><strong>PR-1 not supported</strong> - Note that DecoderPro cannot directly
-program decoders via a PR1 programmer. JMRI supports decoder programming either
-via the PR3 as a stand-alone programmer or via a command station.</p>
-
-<p><b>Mac OS X and the MS100</b> - Because Mac OS X can't communicate at the
-special baud rate used by the MS100, the MS100 won't work with Mac OS X. You
-should get a LocoBuffer-USB instead. </p>
-
-<p><b>Microsoft Vista and the MS100</b> - It has been reported that Vista does
-not support the special baud rate used by the MS100. If you find that your
-MS100 does not work on your Vista machine you should get a LocoBuffer-USB or
-PR3 instead.<br>
-</p>
 <h2><a name="Debugging">Debugging</a></h2>
+
 <ul>
     <li>When using the LocoBuffer or LocoBuffer-II, be sure that the JMRI 
         preferences for the connection are set to use the same Baud rate as the 
@@ -318,45 +331,50 @@ PR3 instead.<br>
         the PR3 or to have intermittent communication.  Users should consider
         replacing the original USB cable from the PR3 with a known-good USB
         cable.</li>
-    <li><b><a name="ErraticReadback">Erratic or Non-Functioning CV Readback</a></b>
-        <ul>
-            <li>Some mobile decoders will only allow proper readback of CV values when
-                there is a sufficient electrical load connected to the F0F (front 
-                headlamp) output connections or the motor connections.  This means that 
-                an incandescent lamp or LED is properly connected to the front headlamp
-                connection and functional.  Other mobile decoders will only provide 
-                proper CV readback when a motor is connected to the mobile
-                decoder motor connections.  Consult the documentation for your mobile 
-                decoder to determine what connections are required to allow proper 
-                CV readback.</li>
-            <li>Some Digitrax hardware is capable of successful CV read and write 
-                operations on some mobile decoders but is unable to reliably read and/or 
-                write CVs for other mobile decoders.  This problem is most obvious with 
-                sound decoders from some manufacturers.  Some suggestions are listed here.
-                <ul>
-                    <li>When using a Zephyr (DCS50) or Zephyr Xtra (DCS51), enable its 
-                        "Blast Mode" programming feature.  This will often allow correct
-                        writing of mobile decoder CV values.</li>
-                    <li>"Programming on the main" can allow a Chief (DCS100 or DCS200) to
-                        properly write to difficult mobile decoder's CV values.</li>
-                    <li>A programming booster, such as the <i>SoundTraxx</i> 
-                        <b>PTB-100</b> or the <i>DCC Specialties</i> <b>Power Pax</b> 
-                        can often be used between the command station programming track 
-                        connections and the programming track to allow successful 
-                        read and write access of CVs on mobile decoders which do not
-                        allow readback on a programming track connected directly to the
-                        programming hardware.</li>
-                    <li>Some PR3 users report that the PR3 programming track can 
-                        successfully read and program sound decoders when the PR3 is 
-                        powered using an 18VDC power supply instead of a lower-voltage
-                        power supply such as the PS12 or PS14.</li>
-                </ul>
-                
-            </li>
         </ul>
-        
-    <li><b><a name="TurnoutCmdHandling">Command Station Turnout Command Rejection 
-                and JMRI Turnout Command Handling</a></b> 
+<h4><a name="ErraticReadback">Erratic or Non-Functioning CV Readback</a></h4>
+    <ul>
+        <li>Some mobile decoders will only allow proper Readback of CV values when
+            there is a sufficient electrical load connected to the F0F (front 
+            headlamp) output connections or the motor connections.  This means that 
+            an incandescent lamp or LED is properly connected to the front headlamp
+            connection and functional.  Other mobile decoders will only provide 
+            proper CV Readback when a motor is connected to the mobile
+            decoder motor connections.  Consult the documentation for your mobile 
+            decoder to determine what connections are required to allow proper 
+            CV readback.</li>
+        <li>Some Digitrax hardware is capable of successful CV read and write 
+            operations on some mobile decoders but is unable to reliably read and/or 
+            write CVs for other mobile decoders.  This problem is most obvious with 
+            sound decoders from some manufacturers.  Some suggestions are listed here.
+            <ul>
+                <li>When using a Zephyr (DCS50) or Zephyr Xtra (DCS51), enable its 
+                    "Blast Mode" programming feature.  This will often allow correct
+                    writing of mobile decoder CV values.</li>
+                <li>"Programming on the main" can allow a Chief (DCS100 or DCS200) to
+                    properly write to difficult mobile decoder's CV values.</li>
+                <li>A programming booster, such as the <i>SoundTraxx</i> 
+                    <b>PTB-100</b> or the <i>DCC Specialties</i> <b>Power Pax</b> 
+                    can often be used between the command station programming track 
+                    connections and the programming track to allow successful 
+                    read and write access of CVs on mobile decoders which do not
+                    allow Readback on a programming track connected directly to the
+                    programming hardware.</li>
+                <li>Some PR3 users report that the PR3 programming track can 
+                    successfully read and program sound decoders when the PR3 is 
+                    powered using an 18 Volts DC power supply instead of a 
+                    lower-voltage power supply such as the PS12 or PS14. 
+                    <strong>Do this at your own risk!</strong> <em>Current 
+                    Digitrax documentation for the PR3 defines a maximum 
+                    input voltage of 15 Volts DC, where previously the 
+                    maximum voltage was listed as 20 Volts DC. Use of input 
+                    voltages higher than 15 Volts DC could damage the PR3 
+                    hardware.</em></li>
+            </ul>
+        </li>
+</ul>  
+<h4><a name="TurnoutCmdHandling">Command Station Turnout Command Rejection 
+                and JMRI Turnout Command Handling</a></h4> 
         <p>Digitrax command stations pass LocoNet switch command messages to
             the DCC track signal so that track-connected accessory decoders can
             receive the switch commands.  Digitrax command stations seem to buffer 
@@ -365,22 +383,24 @@ PR3 instead.<br>
             throttle control operations.  This buffer is limited, and under 
             conditions of heavy LocoNet switch command traffic, can overflow.  
             When this happens, the command station will respond with a message 
-            (a \<LONG_ACK\> opcode) saying that it rejected (did not accept) the switch 
+            (a <code>\&lt;LONG_ACK\&gt;</code> opcode) saying that it rejected (did not accept) the switch 
             command.  When the command station gives this response, the switch
-            command is not placed into the buffer and is forgotten.</p>
-        <p>This can be problematic, depending on how the device which sent the 
+            command is not placed into the buffer and is forgotten.<br>
+        This can be problematic, depending on how the device which sent the 
             switch command responds to the rejection message on LocoNet.  
             Many LocoNet devices do not notice the rejection message, so do 
             not attempt to re-send the switch command.  Other LocoNet devices 
             can pay attention to the rejection message and can wait a while before
             re-sending the message.  Some LocoNet devices can be programmed either
             to resend the switch command if the rejection message is seen, or to 
-            not resend if the rejection message is seen.</p>
-        <p>This wide variety of behaviors can cause inconsistent or unreliable 
+            not resend if the rejection message is seen.<br>
+        This wide variety of behaviors can cause inconsistent or unreliable 
             behavior of any device which relies on stationary decoder messages 
             on the DCC track signal.  Note that this can include devices which 
             connect to LocoNet and which monitor the DCC track signal which 
             is available on the LocoNet cable "RailSync" wires.</p>
+<ul>
+<li><a name="turncmdhandsettings">Turnout Command Handling Settings</a>
         <p>JMRI has various mechanisms to help handle these temporary LocoNet switch
             command buffer overloads.  These mechanisms are controlled by the "Turnout 
             Command Handling" option for each LocoNet-based connection.  The four 
@@ -395,7 +415,7 @@ PR3 instead.<br>
         <li>Spread - This mode is the same as "Normal", described above, except that
             JMRI implements additional delay between any switch commands which
             it sends to LocoNet.  This should reduce the
-            liklihood that JMRI commands would cause an overflow of the the 
+            likelihood that JMRI commands would cause an overflow of the the 
             Digitrax command station switch command buffer, but does not have any
             effect on other LocoNet devices which generate LocoNet switch
             commands.  The retry mechanism described above for the "Normal" mode 
@@ -409,21 +429,23 @@ PR3 instead.<br>
             by JMRI to LocoNet.</li>
         </ul>
         <p>These options do not take effect until the preferences are saved and 
-            JMRI is restarted.</p>
-        <p>None of these options can <i>guarantee</i> that
+            JMRI is restarted.<br>
+        None of these options can <i>guarantee</i> that
             <i>all</i> LocoNet switch messages <i>will</i> be passed to the DCC 
             track signal.</p>
-        <p>Some users may be able to reduce the liklihood of this problem occurring by allowing
+</li>
+<li><a name="alternatives">Avoidance strategies</a>
+        <p>Some users may be able to reduce the likelihood of this problem occurring by allowing
             signal hardware to generate blinking signal aspects instead of programming 
-            JMRI to sequentially send "on" and "off" messages to the signal hardware.</p>
-        <p>Other users who do not have <i>any</i> hardware which are controlled by DCC 
+            JMRI to sequentially send "on" and "off" messages to the signal hardware.<br>
+        Other users who do not have <i>any</i> hardware which are controlled by DCC 
             stationary decoder messages on the DCC track signal (or on the LocoNet 
             cable's RailSync wires) may decide to prevent the command station from 
             forwarding <i>any</i> LocoNet switch control messages to the DCC track 
             signal (and RailSync wires) by enabling the command station's "Bushby bit".
             See the JMRI LocoNet <a href="../../../package/jmri/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame.shtml">
-            Configure Command Station</a> tool.</p>
-        <p>One good way to avoid this problem is to prevent the Digitrax command 
+            Configure Command Station</a> tool.<br>
+        One good way to avoid this problem is to prevent the Digitrax command 
             station from receiving the LocoNet switch control messages.  This can
             be done by using only devices which send and/or receive switch control
             messages via the LocoNet data bus, and to implement a <i>standalone</i>
@@ -435,26 +457,42 @@ PR3 instead.<br>
             <a href="StandaloneLocoNet.shtml">Standalone LocoNet&reg;</a> for 
             background, ideas, and suggestions for implementing a standalone 
             LocoNet.</p>
+</li>
+<li><a name="cmdStationTrkPwrOff">Turnout command rejection when track 
+                power is off</a>
+        <p>Some more recent Digitrax command stations will refuse to accept switch
+            commands when track power is turned off.  This can result in a "storm" 
+            of repeated switch messages on LocoNet if track power is off when switch
+            messages are sent.  This problem can be avoided by ensuring that track
+            power is on when switch messages are to be sent.</p>
+            </li>
+<li><a name="multConnTurnoutReject">Turnout command rejection and multiple 
+                active LocoNet connections</a>
+        <p>When JMRI has multiple active connections to a single LocoNet, it may 
+            be necessary to configure all but one of the active LocoNet 
+            connections for "Turnout Command Handling" type of "Only One", with 
+            one active LocoNet connection configured for one of the other 
+            "Turnout Command Handling" types.  Failure to do this could cause 
+            the various JMRI LocoNet connection instances to independently 
+            attempt to resolve any turnout messages which have been rejected by 
+            the command station.  This could result in a storm of turnout 
+            command retries on LocoNet.<br>
+        Similarly, when multiple JMRI instances are working with the same 
+            LocoNet, only one JMRI connection to the LocoNet should be configured
+            for a "Turnout Command Handling" type other than "Only One".  Failure 
+            to do this could cause the various JMRI LocoNet connection instances 
+            to independently attempt to resolve any turnout messages which have 
+            been rejected by the command station.  This could result in a storm 
+            of turnout command retries on LocoNet.</p>
+</li>
 </ul>
 
-<h2><a name="Support">Support</a></h2>
-<p>Support for Digitrax hardware products is available through <a href="http://www.digitrax.com">
-        Digitrax, Inc.</a>  Digitrax product manuals may be found 
-        <a href="http://www.digitrax.com/manuals.php">here</a>.  
-        Note that Digitrax does not provide support for JMRI software.</p>
-<p>Many knowledgeable Digitrax users contribute to the <a href="http://groups.yahoo.com/group/Digitrax">
-        Digitrax User's "Yahoo Group"</a>.  If you have a problem with Digitrax equipment, 
-        this is a good place to pose your Digitrax-specific problems.  This 
-        user's group is run by and for Digitrax users.  It is not directly 
-        supported by Digitrax.  </p>
-<p>For JMRI-specific questions, including questions about how JMRI and Digitrax 
-hardware interact, the <a href="http://groups.yahoo.com/group/jmriusers">
-    JMRI Users "Yahoo group"</a> is very helpful.</p>  
-
-<h2><a name="SeeAlso">See also</a></h2>
+<a name="SeeAlso"></a><h2>Documentation</h2>
+<h3>JMRI Help</h3>
 <p>JMRI provides specific support for the a variety of Digitrax and 3rd-party 
     LocoNet-based hardware, as well as a variety of tools to configure 
-    LocoNet hardware.  Some links are shown here:
+    LocoNet hardware.<br />
+    Some links:
 <ul>
     <li>Computer-to-LocoNet&reg; Interface Hardware
         <ul>
@@ -463,20 +501,11 @@ hardware interact, the <a href="http://groups.yahoo.com/group/jmriusers">
             <li><a href="LocoBuffer.shtml">LocoBuffer</a></li>
             <li><a href="PR3.shtml">Digitrax PR3</a></li>
             <li><a href="PR2.shtml">Digitrax PR2</a></li>
-            <li><a href="MS100.shtml">Digitrax MS100</a></li>
-            <li>Compatibility of the MS100 with some <a href="KeyspanUSB.shtml">
-                    Keyspan USB-to-serial converters</a></li>
-            <li><a href="../../../package/jmri/jmrix/loconet/locostats/LocoStatsFrame.shtml">
-                    LocoNet&reg; Interface Statistics Tool</a></li>
+            <li><a href="BTLocoBridge.shtml">Bluetooth LocoBridge</a></li>
+            <li><a href="MS100.shtml">Digitrax MS100</a> (Strongly not recommended)</li>
         </ul>
     </li>
     <li><a href="LocoNetTools.shtml">JMRI's Tools for LocoNet&reg; Devices</a></li>
-    <li>3rd-party Command Stations
-        <ul>
-            <li><a href="Fleischmann.shtml">Fleischmann Twin Centre</a></li>
-            <li><a href="Uhlenbrock.shtml">Uhlenbrock Command Station</a></li>
-        </ul>
-    </li>
     <li>LocoNet-related Tools
         <ul>
             <li><a href="../../../package/jmri/jmrix/loconet/locomon/LocoMonFrame.shtml">Monitor LocoNet</a></li>
@@ -487,7 +516,7 @@ hardware interact, the <a href="http://groups.yahoo.com/group/jmriusers">
             <li><a href="../../../package/jmri/jmrix/loconet/ds64/DS64Frame.shtml">Configure DS64</a></li>
             <li><a href="../../../package/jmri/jmrix/loconet/pm4/PM4Frame.shtml">Configure PM4x</a></li>
             <li><a href="../../../package/jmri/jmrix/loconet/se8/SE8Frame.shtml">Configure SE8C</a></li>
-            <li><a href="../../../package/jmri/jmrix/loconet/locoio/LocoIOFrame.shtml">Configure LocoIO</a></li>
+            <li><a href="../../../package/jmri/jmrix/loconet/locoio/LocoIOFrame.shtml">Configure LocoIO</a> (No longer supported, preferred method is via <a href="../../apps/DecoderPro/index.shtml">DecoderPro3</a>)</li>
             <li><a href="../../../package/jmri/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame.shtml">Configure Command Station</a></li>
             <li><a href="../../../package/jmri/jmrix/loconet/locoid/LocoIdFrame.shtml">Configure LocoNet ID</a></li>
             <li><a href="../../../package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml">Configure Duplex Group</a></li>
@@ -498,10 +527,16 @@ hardware interact, the <a href="http://groups.yahoo.com/group/jmriusers">
             <li><a href="../../../package/jmri/jmrix/loconet/soundloader/LoaderFrame.shtml">Download Sounds</a></li>
         </ul>
     </li>
-    <li>Other
+    <li>3rd-party Command Stations
         <ul>
-            <li><a href="Addressing.shtml">JMRI addressing</a> of LocoNet&reg; turnouts, 
-                sensors and transponding zones</li>
+            <li><a href="Fleischmann.shtml">Fleischmann Twin Centre</a></li>
+            <li><a href="Uhlenbrock.shtml">Uhlenbrock Command Station</a></li>
+        </ul>
+    </li>
+    <li>Other LocoNet-related information and features
+        <ul>
+            <li><a href="Addressing.shtml">JMRI addressing</a> of LocoNet&reg; Turnouts, 
+                Sensors and Transponding zones</li>
             <li><a href="LocoNetSim.shtml">LocoNet&reg; Simulator</a></li>
             <li><a href="LocoNetClasses.shtml">JMRI High-level Structures for LocoNet&reg; Interfacing</a></li>
             <li><a href="LocoNetworking.shtml">Connecting multiple computers to a LocoNet&reg; layout</a>
@@ -515,10 +550,24 @@ hardware interact, the <a href="http://groups.yahoo.com/group/jmriusers">
         </ul>
     </li>    
 </ul>
+<a name="Support"><h3>Third Party/Support</h3></a>
+<p>Support for Digitrax hardware products is available through <a href="http://www.digitrax.com">
+        Digitrax, Inc.</a> Digitrax product manuals may be found 
+        <a href="http://www.digitrax.com/support/manuals/">here</a>.  
+        Note that Digitrax does not provide support for JMRI software.</p>
+<p>Many knowledgeable Digitrax users contribute to the <a href="https://groups.yahoo.com/neo/groups/Digitrax/info">
+        Digitrax users Yahoo group</a>. If you have a problem with Digitrax equipment, 
+        this is a good place to pose your Digitrax-specific problems.  This 
+        user's group is run by and for Digitrax users.  It is not directly 
+        supported by Digitrax.  </p>
+<p>For JMRI-specific questions, including questions about how JMRI and Digitrax 
+hardware interact, the <a href="https://groups.yahoo.com/neo/groups/jmriusers/info">
+    JMRI users Yahoo group</a> is very helpful.</p>  
 
 <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
+
 <!--#include virtual="/Footer" -->
-        </div>
-    </div>
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

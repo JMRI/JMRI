@@ -1,17 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: RosterGroupTable.shtml,v 1.1 2010/01/16 22:50:11 kevin-dickerson Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-11-6--> 
+<!--  $Id$ -->
+<!-- UpDated by Herv&#233; Blorec bzh56420@yahoo.fr--> 
 <html lang="fr">
 <head>
  <TITLE>
       JMRI: Power Control
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="JMRI help Roster Grouping">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -26,7 +26,9 @@
 
 <H1>Groupement de Liste</H1>
     
-Ce tableau répertorie toutes les Fiches, à partir du menu déroulant en haut sélectionnez le groupe que vous souhaitez consulter ajouter/supprimer des fiches. Placer une coche va ajouter  la Fiche dans le Groupe Liste, enlever la coche va supprimer cette Fiche du groupe Liste.
+Ce tableau r&#233;pertorie toutes les entr&#233;es Liste, &#224; partir du menu d&#233;roulant en haut s&#233;lectionnez le groupe que vous souhaitez consulter ajouter/supprimer des fiches. Placer une coche va ajouter la Fiche dans le Groupe Liste, enlever la coche va supprimer cette Fiche du groupe Liste.
+
+Ceci est la page d'aide help/fr/package/jmri/jmrit/roster/swing/RosterGroupTable.shtml
 <!--#include virtual="/Footer" -->
 </body>
 </html>

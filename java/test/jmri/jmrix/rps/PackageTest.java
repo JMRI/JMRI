@@ -1,5 +1,3 @@
-// PackageTest.java
-
 package jmri.jmrix.rps;
 
 import junit.framework.Test;
@@ -8,13 +6,12 @@ import junit.framework.TestSuite;
 
 /**
  * Tests for the jmri.jmrix.rps package.
- * @author      Bob Jacobsen  Copyright 2006
- * @version   $Revision$
+ *
+ * @author Bob Jacobsen Copyright 2006
  */
 public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure
-
     public PackageTest(String s) {
         super(s);
     }
@@ -37,8 +34,9 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.rps.RpsSensorTest.suite());
         suite.addTest(jmri.jmrix.rps.RegionTest.suite());
         suite.addTest(jmri.jmrix.rps.TransformTest.suite());
+        suite.addTest(BundleTest.suite());
 
-        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
+        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             suite.addTest(jmri.jmrix.rps.reversealign.AlignmentPanelTest.suite());
             suite.addTest(jmri.jmrix.rps.serial.SerialAdapterTest.suite());
             suite.addTest(RpsPositionIconTest.suite());
@@ -47,7 +45,7 @@ public class PackageTest extends TestCase {
             suite.addTest(jmri.jmrix.rps.csvinput.CsvTest.suite()); // do 3rd to display in front
             suite.addTest(jmri.jmrix.rps.trackingpanel.TrackingPanelTest.suite()); // do 4th to display in front
         }
-        
+
         // test all algorithms as a bunch
         suite.addTest(AlgorithmsTest.suite());
 

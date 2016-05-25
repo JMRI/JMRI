@@ -15,7 +15,7 @@
 #
 # You can run separate instances of the program with their
 # own preferences and setup if you either
-# *) Provide the name of a configuration file as the 1st argument
+# *) Provide the name of a configuration file as a parameter
 # or
 # *) Copy and rename this script.
 #
@@ -32,6 +32,16 @@
 # $Revision$ (SVN maintains this line, do not edit please)
 #
 
+function usage() {
+cat <<EOM
+Usage: $( basename $0 ) [--help] [OPTIONS]
+  -c CONFIG, --config=CONFIG     Start JMRI with configuration CONFIG
+  -d, --debug                    Add verbose output to this script
+  -JOPTION                       Pass the option OPTION to the JVM
+  -p PROFILE, --profile=PROFILE  Start JMRI with the profile PROFILE
+EOM
+}
+
 # get the script's location as an absolute path
 SCRIPTDIR=$(cd "$( dirname "${0}" )" && pwd)
 
@@ -39,43 +49,58 @@ SCRIPTDIR=$(cd "$( dirname "${0}" )" && pwd)
 DEFAULT_APP_NAME="@NAME@"
 CLASSNAME="@CLASS@"
 
+# ensure JMRI options are always set
+JMRI_OPTIONS=${JMRI_OPTIONS:-}
+
+# set default config name
+CONFIGNAME=""
+
 # set DEBUG to anything to see debugging output
 # DEBUG=yes
 
+# process command line arguments
+while [ $# -gt 0 ] ; do
+    case $1 in
+        -d|--debug) DEBUG="yes" ;;
+        --profile=*) JMRI_OPTIONS="${JMRI_OPTIONS} -Dorg.jmri.profile=${1#*=}" ;;
+        -p) JMRI_OPTIONS="${JMRI_OPTIONS} -Dorg.jmri.profile=$2" ; shift ;;
+        --config=*) CONFIGNAME="${1#*=}" ;;
+        -c) CONFIGNAME="$2" ; shift ;;
+        -J*) JMRI_OPTIONS="${JMRI_OPTIONS} ${1#-J}" ;;
+        --help) usage ; exit 2 ;;
+    esac
+    shift
+done
 
 ## ask the user if they want to install Java, and open the Java web site if yes
 OfferJavaDownload() {
     x=`/usr/bin/osascript << EOT
     tell application "Finder"
-	activate
-	set myReply to button returned of (display dialog "No Java can be found on the system.\nWould you like to download Java now?" \
-	     buttons { "No", "Yes" } \
-	     with icon stop  \
-	     with title "JMRI Installation Problem")
+    activate
+    set myReply to button returned of (display dialog "No Java can be found on the system.\nWould you like to download Java now?" \
+         buttons { "No", "Yes" } \
+         with icon stop  \
+         with title "JMRI Installation Problem")
     end tell
 EOT
   `
-    if [ "$x" = "Yes" ]
-    then
+    if [ "$x" = "Yes" ] ; then
         open http://java.com/
     fi
     exit 1
 }
 
 
-if [ -z "$OS" ]
-then
+if [ -z "$OS" ] ; then
     # start finding the architecture specific library directories
     OS=`uname -s`
 
     # normalize to match our standard names
-    if [ "$OS" = "Linux" ]
-    then
+    if [ "$OS" = "Linux" ] ; then
       OS="linux"
     fi
 
-    if [ "$OS" = "Darwin" ]
-    then
+    if [ "$OS" = "Darwin" ] ; then
       OS="macosx"
     fi
 fi
@@ -99,38 +124,36 @@ fi
 # * As a last resort, use the default 'java' command and let the user 
 #   deal with it.  
 
-if [ "$OS" = "macosx" ]; then
+if [ "$OS" = "macosx" ] ; then
     # on Mac OS X, we default to logging, since the Console app make it less visible unless you look for it
     DEBUG=yes
 
     # this is the current (1.7.0_45ish) location of the Oracle installed Java 7 JRE (but not the JDK)
     PLUGINDIR="/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home"
-    if [ -x "$PLUGINDIR/bin/java" ]
-    then
+    if [ -x "$PLUGINDIR/bin/java" ] ; then
         JAVA_HOME="$PLUGINDIR"
         JAVACMD=("$PLUGINDIR/bin/java")
 
         export JAVA_HOME
 
     # check for Apple method of directly locating java binaries (may find a Java 6 JRE or a Java 7 JDK)
-    elif [ -x /usr/libexec/java_home ]; then
-	VERSION=$(/usr/libexec/java_home -exec java -version)
-	if [ $? == 0 ]
-        then
+    elif [ -x /usr/libexec/java_home ] ; then
+        VERSION=$(/usr/libexec/java_home -exec java -version)
+        if [ $? == 0 ] ; then
             JAVACMD=("/usr/libexec/java_home" "-exec" "java")
         else
             OfferJavaDownload
-	fi
+        fi
     else
-	# this isn't supposed to happen on any Mac that I know of in 2013... but you never know
+        # this isn't supposed to happen on any Mac that I know of in 2013... but you never know
         OfferJavaDownload
     fi
 fi
 
 
 # define JMRI_HOME if it is not defined
-if [ -z "${JMRI_HOME}" ]; then
-    if [ "$OS" = "macosx" ]; then
+if [ -z "${JMRI_HOME}" ] ; then
+    if [ "$OS" = "macosx" ] ; then
         # on OS X, the .app bundle is assumed to reside in the default JMRI_HOME
         BUNDLEDIR=$(cd "${SCRIPTDIR}/../.." && pwd)
         JMRI_HOME=$(cd "${BUNDLEDIR}/.." && pwd)
@@ -149,60 +172,61 @@ SYSLIBPATH=
 
 LIBDIR="lib"
 
-if [ -d "${LIBDIR}/$OS" ]
-then
-  SYSLIBPATH="${LIBDIR}/$OS"
+if [ -d "${LIBDIR}/$OS" ] ; then
+    SYSLIBPATH="${LIBDIR}/$OS"
 fi
 
 # one or another of these commands should return a useful value, except that sometimes
 # it is spelled funny (e,g, amd64, not x86_64).
 
-if [ -z "$ARCH" ]
-then
-    for cmd in "arch" "uname -i" "uname -p" "uname -m"
-    do
-      ARCH=`$cmd 2>/dev/null`
-      if [ -n "$ARCH" ]
-      then
+if [ -z "$ARCH" ] ; then
+    for cmd in "arch" "uname -i" "uname -p" "uname -m" ; do
+        ARCH=`$cmd 2>/dev/null`
+        if [ -n "$ARCH" ] ; then
             # canonicalize the architecture names where possible
             # we currently have AMD64 / X86_64
-            if [ "$ARCH" = "amd64" ]
-            then
-              ARCH="x86_64"
+            if [ "$ARCH" = "amd64" ] ; then
+                ARCH="x86_64"
             fi
 
             # and all the flavors of ia32 (traditional x86)
-            if [ "$ARCH" = "i686" -o "$ARCH" = "i586" -o "$ARCH" = "i486" ]
-            then
-              ARCH="i386"
+            if [ "$ARCH" = "i686" -o "$ARCH" = "i586" -o "$ARCH" = "i486" ] ; then
+                ARCH="i386"
             fi
 
-        # Now deal with ARM architecture 
-        #   armv6l contains hard-float version, armv5 contains soft-float version
+            # Now deal with ARM architecture:
+            #   armv5 contains v5 soft-float version
+            #   armv6l contains v6 hard-float version
+            #   armv7l contains v7 hard-float version
+            #   aarch64 contains 64-bit v8 version
 
-        if [ "$ARCH" = "armv5tel" ]; then
-          ARCH="armv5"
-        fi
+            if [ "${ARCH:0:3}" = "arm" ] ; then
 
-        if [ "$ARCH" = "armv6l" ]; then
-          #determine hard vs. soft float using readelf
-          HARDFLOAT=`readelf -a /usr/bin/readelf | grep armhf`  
-          if [ -z "$HARDFLOAT" ]; then
-            ARCH="armv5"
-          else    
-            ARCH="armv6l"
-          fi
-        fi
-
-            if [ -d "${SYSLIBPATH}/$ARCH" ]
-            then
-               SYSLIBPATH="${SYSLIBPATH}/$ARCH:$SYSLIBPATH"
-
-               # we're only interested in ONE of these values, so as soon as we find a supported
-               # architecture directory, continue processing and start up the program
-               break
+                #determine arm version & hard vs. soft float using readelf
+                ARCHVERSION=`readelf -A /proc/self/exe | grep Tag_CPU_arch | cut -d : -f2`  
+                if [ -z "$ARCHVERSION" -o "${ARCHVERSION:1:2}" = "v5" ] ; then
+                    ARCH="armv5"
+                elif [ "${ARCHVERSION:1:2}" = "v6" ] ; then
+                    ARCH="armv6l"
+                elif [ "${ARCHVERSION:1:2}" = "v7" ] ; then
+                    ARCH="armv7l"
+                else
+                    ARCH="armv5"
+                fi
             fi
-      fi
+
+            if [ "$ARCH" = "aarch64" -o "$ARCH" = "arm64" ] ; then
+                ARCH="aarch64"
+            fi
+
+            if [ -d "${SYSLIBPATH}/$ARCH" ] ; then
+                SYSLIBPATH="${SYSLIBPATH}/$ARCH:$SYSLIBPATH"
+
+                # we're only interested in ONE of these values, so as soon as we find a supported
+                # architecture directory, continue processing and start up the program
+                break
+            fi
+        fi
     done
 fi
 
@@ -211,17 +235,15 @@ fi
 CP=".:classes:java/classes"
 # list of jar files in home, not counting jmri.jar
 LOCALJARFILES=`ls ${LIBDIR}/*.jar | grep -v jmri.jar | tr "\n" ":"`
-if [ ${LOCALJARFILES} ]
-then
-  CP="${CP}:${LOCALJARFILES}"
+if [ ${LOCALJARFILES} ] ; then
+    CP="${CP}:${LOCALJARFILES}"
 fi
 # add jmri.jar
 CP="${CP}:jmri.jar"
 # and contents of lib
 CP="${CP}:`ls -m ${LIBDIR}/*.jar | tr -d ' \n' | tr ',' ':'`"
 
-if [ -d /System/Library/Java ]
-then
+if [ -d /System/Library/Java ] ; then
     CP="${CP}":/System/Library/Java
 fi
 
@@ -233,7 +255,7 @@ fi
 
 # configuration file name is 1st argument.
 # If not provided, build config file name dynamically
-if [ "$OS" = "macosx" ]; then
+if [ "$OS" = "macosx" ] ; then
     # OS X can have spaces in the application name
     APPNAME=`basename -s .app "${BUNDLEDIR}"`
 else
@@ -244,13 +266,11 @@ fi
 
 # we only process a config file name when the application is
 # NOT the default one this script was built for.
-if [ "$APPNAME" != "$DEFAULT_APP_NAME" ]
-then
-
-    CONFIGNAME=`echo $APPNAME | tr -d '[:space:]' | tr -d '=' `
-
+if [ "$APPNAME" != "$DEFAULT_APP_NAME" ] ; then
+    if [ -z "${CONFIGNAME}" ] ; then
+        CONFIGNAME=`echo $APPNAME | tr -d '[:space:]' | tr -d '=' `
+    fi
     CONFIGFILE="config=${CONFIGNAME}Config.xml"
-
     [ -n "${DEBUG}" ] && echo "CONFIGFILE: '${CONFIGFILE}'"
 fi
 
@@ -258,22 +278,53 @@ fi
 #
 # Add JVM and RMI options to user options, if any
 
-if [ "$OS" = "macosx" ]; then
+if [ "$OS" = "macosx" ] ; then
     # since bash mangles the application name and icon in $OPTIONS,
     # these are not stored in $OPTIONS
-    MEMORY_OPTIONS="-Xms96m -Xmx640m"
     OS_OPTIONS="-Dapple.laf.useScreenMenuBar=true"
     OS_OPTIONS="${OS_OPTIONS} -Dcom.apple.macos.useScreenMenuBar=true"
     OS_OPTIONS="${OS_OPTIONS} -Dfile.encoding=UTF-8"
-    if [ -f "${BUNDLEDIR}/Contents/Resources/@ICON@.icns" ]; then
+    if [ -f "${BUNDLEDIR}/Contents/Resources/@ICON@.icns" ] ; then
         APPICON="${BUNDLEDIR}/Contents/Resources/@ICON@.icns"
     else
         APPICON=`find "${BUNDLEDIR}" | grep -s -m 1 icns`
     fi
-else
-    MEMORY_OPTIONS="-Xms30m -Xmx200m"
 fi
 
+#
+# set memory options
+#
+heap_size () {
+    mem=640
+    case "`uname`" in
+        Linux*)
+            mem=`cat /proc/meminfo | grep MemTotal | tr -d [:space:][:alpha:]:`
+            mem=`expr $mem / 1024`
+            ;;
+        SunOS*)
+            mem=`/usr/sbin/prtconf | grep Memory | /usr/bin/tr -dc '[0-9]'`
+            ;;
+        Darwin*)
+            mem=`/usr/sbin/sysctl hw.memsize | tr -d [:alpha:][:space:].:`
+            mem=`expr $mem / 1048576`
+            ;;
+        *)
+            ;;
+    esac
+    if [ -z "$mem" ] ; then
+        mem=640
+    fi
+    mem=`expr $mem / 2`
+    if [ $mem -gt 768 ] ; then
+        mem=768
+    elif [ $mem -lt 192 ] ; then
+        mem=192
+    fi
+    echo $mem
+    return 0
+}
+
+MEMORY_OPTIONS="-Xms96m -Xmx`heap_size`m"
 
 OPTIONS="${JMRI_OPTIONS} -noverify"
 OPTIONS="${OPTIONS} -Djava.security.policy=${LIBDIR}/security.policy"
@@ -287,38 +338,37 @@ OPTIONS="${OPTIONS} ${OS_OPTIONS} ${MEMORY_OPTIONS}"
 OPTIONS="${OPTIONS} -Dgnu.io.rxtx.NoVersionOutput=true"
 [ -n "${DEBUG}" ] && echo "OPTIONS: '${OPTIONS}'"
 
-if [ -n "$JMRI_SERIAL_PORTS" ]
-then
-  JMRI_SERIAL_PORTS="$JMRI_SERIAL_PORTS,"
+if [ -n "$JMRI_SERIAL_PORTS" ] ; then
+    JMRI_SERIAL_PORTS="$JMRI_SERIAL_PORTS,"
 fi
 
-# locate alternate serial ports
-ALTPORTS=`(echo "$JMRI_SERIAL_PORTS"; ls -fm /dev/ttyS* /dev/ttyUSB* /dev/ttyACM* 2>/dev/null ) | tr -d " \n" | tr "," ":"`
-if [ "${ALTPORTS}" ]
-then
-  ALTPORTS=-Dgnu.io.rxtx.SerialPorts=${ALTPORTS}
+if [ "$OS" = "macosx" ] ; then
+    ALTPORTS=
+else
+    # locate alternate serial ports
+    ALTPORTS=$( echo "$JMRI_SERIAL_PORTS $( ls -fm /dev/ttyS* /dev/ttyUSB* /dev/ttyACM* /dev/ttyAMA* 2>/dev/null )" | tr -d " \n" | tr "," ":" )
+    if [ "${ALTPORTS}" ] ; then
+        ALTPORTS=-Dgnu.io.rxtx.SerialPorts=${ALTPORTS}
+    fi
+    [ -n "${DEBUG}" ] && echo "ALTPORTS: '${ALTPORTS}'"
 fi
-[ -n "${DEBUG}" ] && echo "ALTPORTS: '${ALTPORTS}'"
-
 
 declare -a DOCK_OPTIONS
 # Apple dock extensions to java get mangled by bash if included in ${OPTIONS}
-if [ "$OS" = "macosx" ]
-then
-  DOCK_OPTIONS=(-Xdock:name="${APPNAME}" -Xdock:icon="${APPICON}")
-  [ -n "${DEBUG}" ] && echo "DOCK_OPTIONS: '${DOCK_OPTIONS[@]}'"
+if [ "$OS" = "macosx" ] ; then
+    DOCK_OPTIONS=(-Xdock:name="${APPNAME}" -Xdock:icon="${APPICON}")
+    [ -n "${DEBUG}" ] && echo "DOCK_OPTIONS: '${DOCK_OPTIONS[@]}'"
 fi
 
 
 RESTART_CODE=100
 EXIT_STATUS=${RESTART_CODE}
-while [ "${EXIT_STATUS}" -eq "${RESTART_CODE}" ]
-do
+while [ "${EXIT_STATUS}" -eq "${RESTART_CODE}" ] ; do
 
-  "${JAVACMD[@]}" "${DOCK_OPTIONS[@]}" ${OPTIONS} ${ALTPORTS} -cp "${CP}" "${CLASSNAME}" ${CONFIGFILE}
+    "${JAVACMD[@]}" "${DOCK_OPTIONS[@]}" ${OPTIONS} ${ALTPORTS} -cp "${CP}" "${CLASSNAME}" ${CONFIGFILE}
 
-  EXIT_STATUS=$?
-  [ -n "${DEBUG}" ] && echo Exit Status: "${EXIT_STATUS}"
+    EXIT_STATUS=$?
+    [ -n "${DEBUG}" ] && echo Exit Status: "${EXIT_STATUS}"
 done
 
 exit $EXIT_STATUS

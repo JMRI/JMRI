@@ -1,13 +1,13 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.12 2010/06/06 22:04:59 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-09-22-->
+<!-- $Id$ -->
+<!-- UpDated  by Blorec Herv&#233;  2013-09-19-->
 <html lang="fr">
 <head>
  <TITLE>
-      JMRI Hardware Guide: NAC Services RPS
+      JMRI Hardware Guide: Services RPS
  </TITLE>
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -23,181 +23,176 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1> 
- Guide Matériel JMRI: NAC Services RPS
+<h1> NAC 
+ Guide Mat&#233;riel JMRI: Services RPS
 </h1>
 
-<em>S'il vous plaît noter que le support de JMRI pour le RPS s'améliore rapidement.
-Cette page fait référence à la plus récente version d'essai JMRI. Si vous utilisez
-un système RPS, vous devez mettre à jour les versions de test de nouvelles comme celles qui
-<a href="http://jmri.sf.net/download/index.shtml">sont annoncées</a>.</em>
+<em>S'il vous pla&#238;t noter que le support de JMRI pour le RPS s'am&#233;liore rapidement.
+Cette page fait r&#233;f&#233;rence &#224; la plus r&#233;cente version d'essai JMRI. Si vous utilisez
+un syst&#232;me RPS, vous devez mettre &#224; jour pour les nouvellesl versions de test quand elles 
+<a href="http://jmri.org/download/index.shtml">sont annonc&#233;es</a>.</em>
 
 <p>
 Le
-<a href="http://www.proto87.com/RPS-MR-position-detection-system.html"> Système RPS </a>
+<a href="http://www.proto87.com/RPS-MR-position-detection-system.html"> Syst&#232;me RPS </a>
 vous permet de localiser la
-position exacte des locomotives et d'autre matériel roulant
-qui ont été équipés de décodeurs émetteurs.
-Le système permet jusqu'à 10 mesures par seconde et chaque
-lecture une précision supérieure à un pouce, ce qui
+position exacte des locomotives et d'autre mat&#233;riel roulant
+qui ont &#233;t&#233; &#233;quip&#233;s de d&#233;codeurs &#233;metteurs.
+Le syst&#232;me permet jusqu'&#224; 10 mesures par seconde et chaque
+lecture une pr&#233;cision sup&#233;rieure &#224; un pouce, ce qui
 fait de nombreuses utilisations possibles
 
-<h2> Systèmes DCC supportés </h2>
+<h2> Syst&#232;mes DCC support&#233;s </h2>
 
-Le système RPS fonctionne en conjonction avec votre système DCC
-pour contrôler quand les émetteurs RPS sont activés.
-Vous avez donc besoin d'une connexion entre votre système DCC
+Le syst&#232;me RPS fonctionne en conjonction avec votre syst&#232;me DCC
+pour contr&#244;ler quand les &#233;metteurs RPS sont activ&#233;s.
+Vous avez donc besoin d'une connexion entre votre syst&#232;me DCC
  et JMRI pour utiliser RPS.
 <p>
-A l'heure actuelle, RPS est pris en charge avec les systèmes DCC :
+A l'heure actuelle, RPS est pris en charge avec les syst&#232;mes DCC :
 <ul>
      <LI> Digitrax
      <LI> Lenz
      <li> RCE
 </ul>
-D'autres peuvent travailler, et nous sommes intéressés à le faire, mais ils
-n'ont pas encore été testés en combinaison avec RPS .
+D'autres peuvent travailler, et nous sommes int&#233;ress&#233;s &#224; le faire, mais ils
+n'ont pas encore &#233;t&#233; test&#233;s en combinaison avec RPS .
 
      
       
-<h2>Configuration du système </h2>
-Tout d'abord, rendre votre système DCC actif et connecté à JMRI.
-Comme un bon test de la connexion, vous devriez être capable de mettre
-votre réseau miniature sous ou hors tension sous le contrôle de l'Alimentation dans le menu Outils de JMRI .
+<h2>Configuration du syst&#232;me </h2>
+Tout d'abord, rendre votre syst&#232;me DCC actif et connect&#233; &#224; JMRI.
+Comme un bon test de la connexion, vous devriez &#234;tre capable de mettre
+votre r&#233;seau miniature sous ou hors tension &#224; partir de la Commande Alimentation JMRI dans le menu Outils.
 
-<p> Ensuite configurer le matériel en suivant les instructions  RPS.
-Vous pouvez uniquement installer quelques-uns (mais un minimum de trois)
-récepteurs alors que vous avez d'abord mis votre système actif .
+<p> Ensuite configurer le mat&#233;riel RPS en suivant les instructions.
+Vous pouvez uniquement installer quelques ( un minimum de trois)
+r&#233;cepteurs alors que vous avez d'abord mis votre syst&#232;me actif .
 <p>
-Ensuite, connectez votre ordinateur à la RPS en utilisant soit une connexion USB
-soit un câble RS232 à partir d'un port série.
-Si vous utilisez un câble RS232, il devrait être un câble "droit"
-ou câble "modem" , mais <I> pas </I> un câble "croisé" ou "null-modem".
+Ensuite, connectez votre ordinateur au RPS en utilisant soit une connexion USB
+soit un c&#226;ble RS232 &#224; partir d'un port s&#233;rie.
+Si vous utilisez un c&#226;ble RS232, il devra &#234;tre un c&#226;ble "droit"
+ou c&#226;ble "modem" , mais <I> pas </I> un c&#226;ble "crois&#233;" ou "null-modem".
 <p>
 Ensuite, configurez le programme JMRI.
 <UL>
-   <LI> Démarrer votre programme JMRI  basé sur (DecoderPro, PanelPro, etc.)
-   <li> Allez dans le panneau des préférences du programme.
-   Celui-ci s'ouvre automatiquement la première fois qu'un programme est exécuté, où vous
-   pouvez le sélectionner dans le menu "Édition".
+   <LI> D&#233;marrer votre programme bas&#233; sur JMRI (DecoderPro, PanelPro, etc.)
+   <li> Allez dans le panneau des pr&#233;f&#233;rences du programme.
+   Celui-ci s'ouvre automatiquement la premi&#232;re fois qu'un programme est ex&#233;cut&#233;, ou vous
+   pouvez le s&#233;lectionner dans le menu "&#233;dition".
 
-   <li> Votre connexion DCC doit déjà être configurée
-   dans la section supérieure, voir ci-dessus.
+   <li> Votre connexion DCC doit d&#233;j&#224; &#234;tre configur&#233;e
+   dans la section sup&#233;rieure, voir ci-dessus.
   
-   <li> Cliquez sur "Afficher les préférences avancées" pour ouvrir une nouvelle
-   partie de la fenêtre des préférences.
+   <li> Cliquez sur "Afficher les pr&#233;f&#233;rences avanc&#233;es" pour ouvrir une nouvelle
+   partie de la fen&#234;tre des pr&#233;f&#233;rences.
   
-   <li> Sélectionnez "station de base RPS" dans la boîte de sélection "connexion Aux 2"
+   <li> S&#233;lectionnez "station de base RPS" dans la bo&#238;te de s&#233;lection "connexion Aux 2"
    .
   
-   <LI> Dans la boîte de sélection de port associé, choisissez le nom du
-   port série que vous avez connecté au système de RPS.
+   <LI> Dans la bo&#238;te de s&#233;lection de port associ&#233;, choisissez le nom du
+   port s&#233;rie que vous avez connect&#233; au syst&#232;me de RPS.
 
    <li> La vitesse de transmission va afficher une valeur fixe de
    115200 bauds.
 
-  <li>Comme mesure temporaire pendant le développement du système,
-   il y a une option "protocole" à sélectionner.
-   Les choix valident sont "Version 1" et "Version 2"; votre matériel détermine lequel
-   utiliser. La plupart des systèmes actuels de RPS utilisent "version 2".
-   Cette sélection sera éventuellement automatisée.
+  <li>Comme mesure temporaire pendant le d&#233;veloppement du syst&#232;me,
+   il y a une option "protocole" &#224; s&#233;lectionner.
+   Les choix valides sont "Version 1" et "Version 2"; votre mat&#233;riel d&#233;termine lequel
+   utiliser. La plupart des syst&#232;mes actuels de RPS utilisent "version 2".
+   Cette s&#233;lection sera &#233;ventuellement automatis&#233;e.
   
-   <li> Cliquez sur "Enregistrer". Il vous sera demandé si c'est OK pour quitter le programme, cliquez sur "Oui".
+   <li> Cliquez sur "Enregistrer". Il vous sera demand&#233; si c'est OK pour quitter le programme, cliquez sur "Oui".
 
-   <li> Redémarrez le programme. Il devrait afficher qu'il est connecté
-   à votre système DCC, et juste en dessous dire qu'il est connecté à
+   <li> Red&#233;marrez le programme. Il devrait afficher qu'il est connect&#233;
+   &#224; votre syst&#232;me DCC, et juste en dessous dire qu'il est connect&#233; &#224;
    la station de base RPS sur le bon port.
   
    <li> Ensuite, vous devez saisir les informations d'alignement.
-   Dans le menu RPS, sélectionnez
-<a href="../../../package/jmri/jmrix/rps/aligntable/AlignTableFrame.shtml">"Contrôle du récepteur  </a>".
-   Cela va ouvrir une nouvelle fenêtre.
+   Dans le menu RPS, s&#233;lectionnez
+<a href="../../../package/jmri/jmrix/rps/aligntable/AlignTableFrame.shtml"> Commande du r&#233;cepteur</a>".
+   Cela va ouvrir une nouvelle fen&#234;tre.
 
-  <li>Au milieu de cette fenêtre, saisissez le numéro récepteur le plus élevé vous avez.
-   Par exemple, si vous avez trois récepteurs numérotés 2, 3 et 6,
+  <li>Au milieu de cette fen&#234;tre, saisissez le num&#233;ro du r&#233;cepteur le plus &#233;lev&#233; vous avez.
+   Par exemple, si vous avez trois r&#233;cepteurs num&#233;rot&#233;s 2, 3 et 6,
    entrez 6 dans le domaine.
 
-<h2>Configuration du système </h2>
-Tout d'abord, votre système DCC travaille et est connecté à JMRI.
-Comme un bon test de la connexion, vous devriez être capable de commuter
-votre alimentation de réseau On et Off depuis la commande Alimentation JMRI dans le menu Outils.
 
-   Appuyez sur le bouton "Valider" à côté de ce champs.
   
    <li> Dans le tableau du haut, entrer dans les position
- X, Y et Z de chacun de vos récepteurs. Si vous n'avez pas un
-   récepteur avec un numéro particulier, n'inscrivez rien dans la rangée.
+ X, Y et Z de chacun de vos r&#233;cepteurs. Si vous n'avez pas un
+   r&#233;cepteur avec un num&#233;ro particulier, n'inscrivez rien dans la rang&#233;e.
    Pour l'instant, il suffit d'entrer des valeurs approximatives.
   
-   <li> Cochez les cases près de chaque récepteur que vous avez raccordé,
-   et assurez-vous qu'il n'y a aucune case cochée à côté des numéros de récepteur
-   qui ne sont pas encore connectés.
+   <li> Cochez les cases pr&#232;s de chaque r&#233;cepteur que vous avez raccord&#233;,
+   et assurez-vous qu'il n'y a aucune case coch&#233;e &#224; c&#244;t&#233; des num&#233;ros de r&#233;cepteur
+   qui ne sont pas encore connect&#233;s.
   
    
   
-  <li> Cliquez sur le «Set Defaults" pour sauvegarder ces positions comme des valeurs par défaut.
-   Elles apparaitront à nouveau au prochain démarrage du programme.
+  <li> Cliquez sur le "Set Defaults" pour sauvegarder ces positions comme des valeurs par d&#233;faut.
+   Elles apparaitront &#224; nouveau au prochain d&#233;marrage du programme.
 </ul>
 
-À ce stade, votre système RPS est prêt .
+&#224; ce stade, votre syst&#232;me RPS est pr&#234;t .
 <p>
-Pour que votre système RPS commencer à mesurer les positions, vous avez à
-lui dire de sonder des locomotives dans lesquelles vous avez installées des
-émetteurs RPS. Pour ce faire:
+Pour que votre syst&#232;me RPS commencer &#224; mesurer les positions, vous avez &#224;
+lui dire de sonder des locomotives dans lesquelles vous avez install&#233;es des
+&#233;metteurs RPS. Pour ce faire:
 <ul>
-    <li> Ouvrez le 
-     « <a href="../../../package/jmri/jmrix/rps/swing/polling/PollTableFrame.shtml">Poll Control </a>"
-     à partir du menu RPS
+    <li> Ouvrez le » 
+     " <a href="../../../package/jmri/jmrix/rps/swing/polling/PollTableFrame.shtml">Poll Control </a>"
+     &#224; partir du menu RPS
      <li> Vous devriez voir l'ensemble des locomotives dans votre liste
-     <li> Cochez la case sous la rubrique «Poll» pour chacune
-         des locomotive dans laquelle une transmission RPS est installée
-     <li> Cochez la case "Scrutation" pour commencer à faire des mesures
-     <li> Cliquez sur "Valeurs Default Store New" pour stocker ces paramètres afin
-         qu'ils soient utilisés la prochaine fois que vous démarrez le programme.
+     <li> Cochez la case sous la rubrique "Poll"pour chacune
+         des locomotive dans laquelle une transmission RPS est install&#233;e
+     <li> Cochez la case "Scrutation" pour commencer &#224; faire des mesures
+     <li> Cliquez sur "Valeurs Default Store New" pour stocker ces param&#232;tres afin
+         qu'ils soient utilis&#233;s la prochaine fois que vous d&#233;marrez le programme.
 </ul>
 
     
 <p>
-Pour voir sile système fonctionne, ouvrez l'
- <a href="../../../package/jmri/jmrix/rps/swing/debugger/DebuggerFrame.shtml">"Affichage de débogage </a>"
-à partir du menu RPS. Vous devriez voir les lectures à venir
-à l'intérieur et être convertis en positions. Vous pouvez également consulter les
+Pour voir si le syst&#232;me fonctionne, ouvrez l'
+ <a href="../../../package/jmri/jmrix/rps/swing/debugger/DebuggerFrame.shtml">"Affichage de d&#233;bogage </a>"
+&#224; partir du menu RPS. Vous devriez voir les lectures &#224; venir
+&#224; l'int&#233;rieur et &#234;tre convertis en positions. Vous pouvez &#233;galement consulter les
 communications avec l'appareil en ouvrant le "Moniteur RPS"
-à partir du menu RPS.
+&#224; partir du menu RPS.
 
 <h2>Outils RPS  </h2>
 
 JMRI fournit un certain nombre d'outils dans le menu RPS pour
-travailler avec le système RPS:
+travailler avec le syst&#232;me RPS:
 <dl>
-<dt><a href="../../../package/jmri/jmrix/rps/aligntable/AlignTableFrame.shtml"> Contrôle du récepteur </a>
-<dd> C'est là que vous entrez les informations de position au sujet des positions de votre récepteur
+<dt><a href="../../../package/jmri/jmrix/rps/aligntable/AlignTableFrame.shtml"> R&#233;cepteur de Contr&#244;le </a>
+<dd> C'est l&#224; que vous entrez les informations de position au sujet des positions de votre r&#233;cepteur
  etc
- <dt> <a href="../../../package/jmri/jmrix/rps/swing/polling/PollTableFrame.shtml"> Contrôle Scrutation </a>
-<dd> C'est là que vous dites à JMRI quelles locomotives sont équipées d'émetteurs RPS
-, et à quelle fréquence vous voulez que JMRI les interroge
+ <dt> <a href="../../../package/jmri/jmrix/rps/swing/polling/PollTableFrame.shtml"> Contr&#244;le Scrutation </a>
+<dd> C'est l&#224; que vous dites &#224; JMRI quelles locomotives sont &#233;quip&#233;es d'&#233;metteurs RPS
+, et &#224; quelle fr&#233;quence vous voulez que JMRI les interroge
 
- <dt><a href="../../../package/jmri/jmrix/rps/swing/debugger/DebuggerFrame.shtml"> Affichage de débogage  </a>
-<dd> Cette page vous donne les lectures et les mesures que le système restitut
+ <dt><a href="../../../package/jmri/jmrix/rps/swing/debugger/DebuggerFrame.shtml"> Affichage de d&#233;bogage  </a>
+<dd> Cette page vous donne les lectures et les mesures que le syst&#232;me restitut
 
- <dt><a  href="../../../package/jmri/jmrix/rps/trackingpanel/RpsTrackingFrame.shtml">Suivi affichage </a>
-<dd> Cela montre les points comme ils sont mesurés sur un affichage graphique.
+ <dt><a  href="../../../package/jmri/jmrix/rps/trackingpanel/RpsTrackingFrame.shtml">Affichage du suivi </a>
+<dd> Cela montre les points comme ils sont mesur&#233;s sur un affichage graphique.
 
-<dt><a  href="../../../package/jmri/jmrix/rps/swing/soundset/SoundSetFrame.shtml"> Contrôle Vitesse du Son </a>
-<dd> Cela vous permet de voir et de régler la vitesse du son utilisé par le système RPS, et peut être réglée automatiquement
+<dt><a  href="../../../package/jmri/jmrix/rps/swing/soundset/SoundSetFrame.shtml"> Contr&#244;le Vitesse du Son </a>
+<dd> Cela vous permet de voir et de r&#233;gler la vitesse du son utilis&#233; par le syst&#232;me RPS, et peut &#234;tre de le r&#233;gler automatiquement 
 dans certains cas.
 
 </dl>
 
-Vous pouvez également afficher des informations RPS sur les TCO PanelPro utilisant une
-"<a href="../../../package/jmri/jmrit/display/RpsIcon.shtml"> Icône RPS </a>".
+Vous pouvez &#233;galement afficher des informations RPS sur les TCO PanelPro utilisant une
+"<a href="../../../package/jmri/jmrit/display/RpsIcon.shtml"> Ic&#244;ne RPS </a>".
 <p>
-Les informations RPS peuvent être utilisées pour détecter l'occupation à l'aide
+Les informations RPS peuvent &#234;tre utilis&#233;es pour d&#233;tecter l'occupation &#224; l'aide
 <a href="sensors.shtml"> Capteurs RPS JMRI  </a>.<dt>
 
 <h2> Pour plus d'information </h2>
 
-Il y  Capteursa plus d'informations disponibles sur le
+Il y a plus d'informations disponibles sur le
 <a href="http://www.proto87.com/RPS-MR-position-detection-system.html"> Site Web RPS  </a>.
 
 <!--#include virtual="/Footer" -->

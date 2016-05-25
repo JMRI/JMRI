@@ -1,19 +1,15 @@
-// SRCPMessage.java
-
 package jmri.jmrix.srcp;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Encodes a message to an SRCP server.  The SRCPReply
- * class handles the response from the command station.
+ * Encodes a message to an SRCP server. The SRCPReply class handles the response
+ * from the command station.
  * <P>
- * The {@link SRCPReply}
- * class handles the response from the command station.
+ * The {@link SRCPReply} class handles the response from the command station.
  *
- * @author			Bob Jacobsen  Copyright (C) 2001, 2004, 2008
- * @version			$Revision$
+ * @author	Bob Jacobsen Copyright (C) 2001, 2004, 2008
  */
 public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
 
@@ -22,17 +18,17 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     // create a new one
-    public  SRCPMessage(int i) {
+    public SRCPMessage(int i) {
         super(i);
     }
 
     // copy one
-    public  SRCPMessage(SRCPMessage m) {
+    public SRCPMessage(SRCPMessage m) {
         super(m);
     }
 
     // from String
-    public  SRCPMessage(String m) {
+    public SRCPMessage(String m) {
         super(m);
     }
 
@@ -59,7 +55,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
         m.setBinary(false);
         return m;
     }
-    
+
     /* 
      * get a static message to add a locomotive to a Standard Consist 
      * in the normal direction
@@ -68,14 +64,14 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
      * locomotive to add
      * @return an SRCPMessage of the form GN cc llll 
      */
-    static public SRCPMessage getAddConsistNormal(int ConsistAddress,jmri.DccLocoAddress LocoAddress) {
+    static public SRCPMessage getAddConsistNormal(int ConsistAddress, jmri.DccLocoAddress LocoAddress) {
         SRCPMessage m = new SRCPMessage(10);
         m.setBinary(false);
         m.setOpCode('G');
-        m.setElement(1,'N');
-        m.setElement(2,' ');
+        m.setElement(1, 'N');
+        m.setElement(2, ' ');
         m.addIntAsTwoHex(ConsistAddress, 3);
-        m.setElement(5,' ');
+        m.setElement(5, ' ');
         m.addIntAsFourHex(LocoAddress.getNumber(), 6);
         return m;
     }
@@ -88,14 +84,14 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
      * locomotive to add
      * @return an SRCPMessage of the form GS cc llll 
      */
-    static public SRCPMessage getAddConsistReverse(int ConsistAddress,jmri.DccLocoAddress LocoAddress) {
+    static public SRCPMessage getAddConsistReverse(int ConsistAddress, jmri.DccLocoAddress LocoAddress) {
         SRCPMessage m = new SRCPMessage(10);
         m.setBinary(false);
         m.setOpCode('G');
-        m.setElement(1,'R');
-        m.setElement(2,' ');
+        m.setElement(1, 'R');
+        m.setElement(2, ' ');
         m.addIntAsTwoHex(ConsistAddress, 3);
-        m.setElement(5,' ');
+        m.setElement(5, ' ');
         m.addIntAsFourHex(LocoAddress.getNumber(), 6);
         return m;
     }
@@ -107,14 +103,14 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
      * locomotive to remove
      * @return an SRCPMessage of the form GS cc llll 
      */
-    static public SRCPMessage getSubtractConsist(int ConsistAddress,jmri.DccLocoAddress LocoAddress) {
+    static public SRCPMessage getSubtractConsist(int ConsistAddress, jmri.DccLocoAddress LocoAddress) {
         SRCPMessage m = new SRCPMessage(10);
         m.setBinary(false);
         m.setOpCode('G');
-        m.setElement(1,'S');
-        m.setElement(2,' ');
+        m.setElement(1, 'S');
+        m.setElement(2, ' ');
         m.addIntAsTwoHex(ConsistAddress, 3);
-        m.setElement(5,' ');
+        m.setElement(5, ' ');
         m.addIntAsFourHex(LocoAddress.getNumber(), 6);
         return m;
     }
@@ -128,8 +124,8 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
         SRCPMessage m = new SRCPMessage(5);
         m.setBinary(false);
         m.setOpCode('G');
-        m.setElement(1,'K');
-        m.setElement(2,' ');
+        m.setElement(1, 'K');
+        m.setElement(2, ' ');
         m.addIntAsTwoHex(ConsistAddress, 3);
         return m;
     }
@@ -143,95 +139,101 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
         SRCPMessage m = new SRCPMessage(5);
         m.setBinary(false);
         m.setOpCode('G');
-        m.setElement(1,'D');
-        m.setElement(2,' ');
+        m.setElement(1, 'D');
+        m.setElement(2, ' ');
         m.addIntAsTwoHex(ConsistAddress, 3);
         return m;
     }
 
-    static public SRCPMessage getProgMode() {
-	String msg = "INIT 1 SM NMRA\n";
-	SRCPMessage m = new SRCPMessage(msg);
+    static public SRCPMessage getProgMode(int bus) {
+        String msg = "INIT " + bus + " SM NMRA\n";
+        SRCPMessage m = new SRCPMessage(msg);
         return m;
     }
 
-    static public SRCPMessage getExitProgMode() {
-	String msg = "TERM 1 SM\n";
-	SRCPMessage m = new SRCPMessage(msg);
+    static public SRCPMessage getExitProgMode(int bus) {
+        String msg = "TERM " + bus + "  SM\n";
+        SRCPMessage m = new SRCPMessage(msg);
         return m;
     }
 
-    static public SRCPMessage getReadDirectCV(int cv) {
-	String msg = "GET 1 SM 0 CV " + cv + "\n";
-	SRCPMessage m = new SRCPMessage(msg);
+    static public SRCPMessage getReadDirectCV(int bus, int cv) {
+        String msg = "GET " + bus + " SM 0 CV " + cv + "\n";
+        SRCPMessage m = new SRCPMessage(msg);
         m.setTimeout(LONG_TIMEOUT);
         return m;
     }
 
-    static public SRCPMessage getConfirmDirectCV(int cv, int val) {
-	String msg = "VERIFY 1 SM 0 CV " + cv + " " + val + "\n";
-	SRCPMessage m = new SRCPMessage(msg);
+    static public SRCPMessage getConfirmDirectCV(int bus, int cv, int val) {
+        String msg = "VERIFY " + bus + " SM 0 CV " + cv + " " + val + "\n";
+        SRCPMessage m = new SRCPMessage(msg);
         m.setTimeout(LONG_TIMEOUT);
         return m;
-    
+
     }
 
-    static public SRCPMessage getWriteDirectCV(int cv, int val) {
-	String msg = "SET 1 SM 0 CV " + cv + " " + val + "\n";
-	SRCPMessage m = new SRCPMessage(msg);
-        m.setTimeout(LONG_TIMEOUT);
-        return m;
-    }
-
-    static public SRCPMessage getReadDirectBitCV(int cv,int bit) {
-	String msg = "GET 1 SM 0 CVBIT " + cv + " " + bit +"\n";
-	SRCPMessage m = new SRCPMessage(msg);
+    static public SRCPMessage getWriteDirectCV(int bus, int cv, int val) {
+        String msg = "SET " + bus + " SM 0 CV " + cv + " " + val + "\n";
+        SRCPMessage m = new SRCPMessage(msg);
         m.setTimeout(LONG_TIMEOUT);
         return m;
     }
 
-    static public SRCPMessage getConfirmDirectBitCV(int cv, int bit, int val) {
-	String msg = "VERIFY 1 SM 0 CV " + cv + " " + bit + " " + val + "\n";
-	SRCPMessage m = new SRCPMessage(msg);
-        m.setTimeout(LONG_TIMEOUT);
-        return m;
-    
-    }
-
-    static public SRCPMessage getWriteDirectBitCV(int cv, int bit, int val) {
-	String msg = "SET 1 SM 0 CV " + cv + " " + bit + " " + val + "\n";
-	SRCPMessage m = new SRCPMessage(msg);
+    static public SRCPMessage getReadDirectBitCV(int bus, int cv, int bit) {
+        String msg = "GET " + bus + " SM 0 CVBIT " + cv + " " + bit + "\n";
+        SRCPMessage m = new SRCPMessage(msg);
         m.setTimeout(LONG_TIMEOUT);
         return m;
     }
 
-    static public SRCPMessage getReadRegister(int reg) {
-        if (reg>8) log.error("register number too large: "+reg);
-	String msg = "GET 1 SM 0 REG " + reg + "\n";
-	SRCPMessage m = new SRCPMessage(msg);
+    static public SRCPMessage getConfirmDirectBitCV(int bus, int cv, int bit, int val) {
+        String msg = "VERIFY " + bus + " SM 0 CV " + cv + " " + bit + " " + val + "\n";
+        SRCPMessage m = new SRCPMessage(msg);
+        m.setTimeout(LONG_TIMEOUT);
+        return m;
+
+    }
+
+    static public SRCPMessage getWriteDirectBitCV(int bus, int cv, int bit, int val) {
+        String msg = "SET " + bus + " SM 0 CV " + cv + " " + bit + " " + val + "\n";
+        SRCPMessage m = new SRCPMessage(msg);
         m.setTimeout(LONG_TIMEOUT);
         return m;
     }
 
-    static public SRCPMessage getConfirmRegister(int reg, int val) {
-        if (reg>8) log.error("register number too large: "+reg);
-	String msg = "VERIFY 1 SM 0 REG " + reg + " " + val + "\n";
-	SRCPMessage m = new SRCPMessage(msg);
+    static public SRCPMessage getReadRegister(int bus, int reg) {
+        if (reg > 8) {
+            log.error("register number too large: " + reg);
+        }
+        String msg = "GET " + bus + " SM 0 REG " + reg + "\n";
+        SRCPMessage m = new SRCPMessage(msg);
         m.setTimeout(LONG_TIMEOUT);
         return m;
     }
 
-    static public SRCPMessage getWriteRegister(int reg, int val) {
-        if (reg>8) log.error("register number too large: "+reg);
-	String msg = "SET 1 SM 0 REG " + reg + " " + val + "\n";
-	SRCPMessage m = new SRCPMessage(msg);
+    static public SRCPMessage getConfirmRegister(int bus, int reg, int val) {
+        if (reg > 8) {
+            log.error("register number too large: " + reg);
+        }
+        String msg = "VERIFY " + bus + " SM 0 REG " + reg + " " + val + "\n";
+        SRCPMessage m = new SRCPMessage(msg);
         m.setTimeout(LONG_TIMEOUT);
         return m;
     }
 
-    static final int LONG_TIMEOUT=180000;  // e.g. for programming options
+    static public SRCPMessage getWriteRegister(int bus, int reg, int val) {
+        if (reg > 8) {
+            log.error("register number too large: " + reg);
+        }
+        String msg = "SET " + bus + " SM 0 REG " + reg + " " + val + "\n";
+        SRCPMessage m = new SRCPMessage(msg);
+        m.setTimeout(LONG_TIMEOUT);
+        return m;
+    }
 
-    static Logger log = LoggerFactory.getLogger(SRCPMessage.class.getName());
+    static final int LONG_TIMEOUT = 180000;  // e.g. for programming options
+
+    private final static Logger log = LoggerFactory.getLogger(SRCPMessage.class.getName());
 
 }
 

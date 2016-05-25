@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2004 All rights reserved -->
-<!-- $Id: Lenz_51.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -57,182 +57,113 @@
     </family>
     <programming direct="byteOnly" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
-        <shortAddressVal/>
-        <label>Primary Address</label>
-        <label xml:lang="it">Indirizzo primario</label>
-        <comment>Short address</comment>
-        <comment xml:lang="it">Indirizzo Corto</comment>
-      </variable>
-      <variable label="Start Volts" CV="2" item="Vstart" comment="Range 1-15" default="4">
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable CV="2" item="Vstart" comment="Range 1-15" default="4">
         <decVal max="15"/>
         <label>Start Volts</label>
-        <label xml:lang="it">Tensione di Partenza</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V dÃ©marr.</label>
+        <label xml:lang="de">Startspannung</label>
         <comment>Range 1-15</comment>
         <comment xml:lang="it">Valori 1-15</comment>
+        <comment xml:lang="de">Range 1-15</comment>
       </variable>
-      <variable label="Accel" CV="3" comment="Range 1-31" default="4">
+      <variable item="Accel" CV="3" comment="Range 1-31" default="4">
         <decVal max="31"/>
         <label>Accel</label>
         <label xml:lang="it">Accellerazione</label>
         <comment>Range 1-31</comment>
-       <comment xml:lang="it">Valori 1-31</comment>
+        <comment xml:lang="it">Valori 1-31</comment>
+        <label xml:lang="de">Accel</label>
+        <comment xml:lang="de">Range 1-31</comment>
       </variable>
-      <variable label="Decel" CV="4" comment="Range 1-31" default="1">
+      <variable item="Decel" CV="4" comment="Range 1-31" default="1">
         <decVal max="31"/>
         <label>Decel</label>
         <label xml:lang="it">Decellerazione</label>
         <comment>Range 1-31</comment>
-       <comment xml:lang="it">Valori 1-31</comment>
+        <comment xml:lang="it">Valori 1-31</comment>
+        <label xml:lang="de">Decel</label>
+        <comment xml:lang="de">Range 1-31</comment>
       </variable>
-      <variable label="Vhigh" CV="5" default="255">
+      <variable item="Vhigh" CV="5" default="255">
         <decVal max="10"/>
         <label>Vhigh</label>
         <label xml:lang="it">Vhigh</label>
+        <label xml:lang="de">Vhigh</label>
       </variable>
-      <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version" default="51">
+      <variable CV="7" readOnly="yes" item="Decoder Version" default="51">
         <decVal/>
         <label>Version ID</label>
-       <label xml:lang="it">ID Versione</label>
+         <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version dÃ©codeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer" default="99">
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="99">
         <decVal/>
         <label>Manufacturer ID</label>
-       <label xml:lang="it">ID Costruttore</label>
+         <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
       </variable>
-      <variable label="EMF frequency" CV="9" comment="Range 0-15" item="Total PWM Period" default="4">
+      <variable CV="9" comment="Range 0-15" item="Total PWM Period" default="4">
         <decVal/>
         <label>EMF frequency</label>
-       <label xml:lang="it">Frequenza EMF</label>
+        <label xml:lang="it">Frequenza EMF</label>
         <comment>Range 0-15</comment>
-       <comment xml:lang="it">Valori 1-15</comment>
+        <comment xml:lang="it">Valori 1-15</comment>
+        <label xml:lang="de">Total PWM Period</label>
+        <comment xml:lang="de">Range 0-15</comment>
       </variable>
-      <variable label="Long Address" CV="17" item="Extended Address" comment="4 digit address (Range 0001-9999)">
-        <longAddressVal/>
-        <label>Long Address</label>
-       <label xml:lang="it">Indirizzo Esteso</label>
-        <comment>4 digit address (Range 0001-9999)</comment>
-       <comment xml:lang="it">Indirizzo a 4 cifre (0001-9999)</comment>
-      </variable>
-      <variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
-        <decVal/>
-        <label>Consist Address</label>
-      <label xml:lang="it">Indirizzo Consist</label>
-      </variable>
-      <variable label="Consist Direction" CV="19" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-           <choice xml:lang="it">Normale</choice>
-          </enumChoice>
-          <enumChoice choice="Reversed">
-            <choice>Reversed</choice>
-          <choice xml:lang="it">Invertita</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Direction</label>
-      <label xml:lang="it">Direzione Consist</label>
-      </variable>
-      <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
-        <enumVal>
-          <enumChoice choice="Forward">
-            <choice>Forward</choice>
-          <choice xml:lang="it">Avanti</choice>
-          </enumChoice>
-          <enumChoice choice="Reverse">
-            <choice>Reverse</choice>
-          <choice xml:lang="it">Indietro</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Normal direction of motion</label>
-         <label xml:lang="it">Normale direzione di marcia</label>
-      </variable>
-      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="0">
-        <enumVal>
-          <enumChoice choice="14">
-            <choice>14</choice>
-          </enumChoice>
-          <enumChoice choice="28">
-            <choice>28</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed Steps</label>
-         <label xml:lang="it">Step Velocità</label>
-      </variable>
-      <variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Analog conversion mode</label>
-         <label xml:lang="it">Modo Conversione Analogica</label>
-      </variable>
-      <variable label="Use Speed Table" CV="29" mask="XXXVXXXX" item="Speed Table Definition">
-        <enumVal>
-          <enumChoice choice="Don't use Speed Table">
-            <choice>Don't use Speed Table</choice>
-            <choice xml:lang="it">Non usare Tabella velocità</choice>
-          </enumChoice>
-          <enumChoice choice="Use Speed Table">
-            <choice>Use Speed Table</choice>
-            <choice xml:lang="it">Usare Tabella velocità</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Use Speed Table</label>
-        <label xml:lang="it">Utilizzo Tabella velocità</label>
-      </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format">
-        <enumVal>
-          <enumChoice choice="2 digit addressing">
-            <choice>2 digit addressing</choice>
-            <choice xml:lang="it">Indirizzo a 2 cifre</choice>
-          </enumChoice>
-          <enumChoice choice="4 digit addressing">
-            <choice>4 digit addressing</choice>
-            <choice xml:lang="it">Indirizzo a 4 cifre</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Addressing Mode</label>
-        <label xml:lang="it">Tipo di indirizzo</label>
-      </variable>
-      <variable label="Back EMF control" CV="60" mask="XXXXXXXV" default="1">
+      <!-- CV=19 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table1-28.xml"/>
+      <variable item="Back EMF control" CV="60" mask="XXXXXXXV" default="1">
         <enumVal>
           <enumChoice choice="Back EMF control inactive">
             <choice>Back EMF control inactive</choice>
             <choice xml:lang="it">Controllo BEMF Inattivo</choice>
+            <choice xml:lang="de">Back EMF control inactive</choice>
           </enumChoice>
           <enumChoice choice="Back EMF control active">
             <choice>Back EMF control active</choice>
             <choice xml:lang="it">Controllo BEMF Attivo</choice>
+            <choice xml:lang="de">Back EMF control active</choice>
           </enumChoice>
         </enumVal>
         <label>Back EMF control</label>
         <label xml:lang="it">Controllo BEMF</label>
+        <label xml:lang="de">Back EMF control</label>
       </variable>
-      <variable label="Brake Momentum on DC" CV="60" item="DC Brake Momentum" mask="XXXXXVXX" default="0" comment="Governs how loco acts in DC track block">
+      <variable CV="60" item="DC Brake Momentum" mask="XXXXXVXX" default="0" comment="Governs how loco acts in DC track block">
         <enumVal>
           <enumChoice choice="Loco runs under DC analog voltage control">
             <choice>Loco runs under DC analog voltage control</choice>
             <choice xml:lang="it">Loco usa Tensione in Analogico</choice>
+            <choice xml:lang="de">Loco runs under DC analog voltage control</choice>
           </enumChoice>
           <enumChoice choice="Loco brakes to a stop using momentum set in CV4">
             <choice>Loco brakes to a stop using momentum set in CV4</choice>
             <choice xml:lang="it">Loco frena fino a fermarsi usando Inerzia impostata in CV4</choice>
+            <choice xml:lang="de">Loco brakes to a stop using momentum set in CV4</choice>
           </enumChoice>
         </enumVal>
         <label>Brake Momentum on DC</label>
         <label xml:lang="it">Inerzia Frenata in Analogico</label>
         <comment>Governs how loco acts in DC track block</comment>
         <comment xml:lang="it">Controlla il comportamento della loco in un blocco Analogico</comment>
+        <label xml:lang="de">DC Brake Momentum</label>
+        <comment xml:lang="de">Governs how loco acts in DC track block</comment>
       </variable>
-      <variable label="Speed Table" CV="67">
+      <variable item="Speed Table" CV="67">
         <speedTableVal entries="15" max="63"/>
         <label>Speed Table</label>
-       <label xml:lang="it">Tabella velocità</label>
+        <label xml:lang="it">Tabella velocitÃ </label>
+        <label xml:lang="de">Speed Table</label>
       </variable>
       <!-- Define the fixed Function-Output mapping -->
       <constant item="FL(f) controls output 1" minOut="1" default="1"/>
@@ -245,11 +176,12 @@
       <constant item="F6 controls output 8" minOut="8" default="1"/>
     </variables>
   </decoder>
-  <pane name="Lenz">
+  <pane>
+    <name>Lenz</name>
+    <name xml:lang="de">Lenz</name>
     <column>
       <display item="Back EMF control"/>
       <display item="Brake Momentum on DC"/>
     </column>
-    <name>Lenz</name>
   </pane>
 </decoder-config>

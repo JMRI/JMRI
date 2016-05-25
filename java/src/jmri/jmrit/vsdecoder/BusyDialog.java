@@ -18,54 +18,58 @@ package jmri.jmrit.vsdecoder;
  * @author			Mark Underwood Copyright (C) 2011
  * @version			$Revision: 18410 $
  */
-
-import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import javax.swing.BorderFactory;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JProgressBar;
 
 // class BusyDialog
 //
 // Creates a simple "indeterminate" busy spinner dialog...
-
 class BusyDialog extends JDialog {
 
-    JFrame frame; 
+    /**
+     *
+     */
+    private static final long serialVersionUID = -8208365926206646918L;
+    JFrame frame;
     JProgressBar pbar;
 
     public BusyDialog(JFrame frame, String title, boolean modal) {
-	super(frame, title, modal);
-	this.frame = frame;
-	initComponents();
+        super(frame, title, modal);
+        this.frame = frame;
+        initComponents();
     }
 
     public void initComponents() {
 
-	setLocationRelativeTo(frame);
-	setPreferredSize(new Dimension(200, 100));
-	setMinimumSize(new Dimension(200, 100));
-	setLayout(new BorderLayout(10, 10));
+        setLocationRelativeTo(frame);
+        setPreferredSize(new Dimension(200, 100));
+        setMinimumSize(new Dimension(200, 100));
+        setLayout(new BorderLayout(10, 10));
 
-	pbar = new JProgressBar();
-	pbar.setIndeterminate(true);
-	pbar.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
-	//pbar.setBorderPainted(true);
-	this.add(pbar, BorderLayout.CENTER);
+        pbar = new JProgressBar();
+        pbar.setIndeterminate(true);
+        pbar.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        //pbar.setBorderPainted(true);
+        this.add(pbar, BorderLayout.CENTER);
     }
 
+    @SuppressWarnings("deprecation")
     public void start() {
-	this.pack();
-	this.setVisible(true);
-	this.getContentPane().paintAll(pbar.getGraphics());
-	this.show();
+        this.pack();
+        this.setVisible(true);
+        this.getContentPane().paintAll(pbar.getGraphics());
+        this.show();
     }
-
 
     public void finish() {
-	this.dispose();
-	
+        this.dispose();
+
     }
 
     // Unused, for now.  Commented out to avoid the compiler warning.
     //private static final Logger log = LoggerFactory.getLogger(VSDecoderPane.class.getName());
-
 }

@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
+<appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year>
+    <year>2015</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Dick</firstname>
+        <surname>Bronson</surname>
+      </personname>
+      <email>dick@rr-cirkits.com</email>
+    </author>
+    <author>
+      <personname>
+        <firstname>Bob</firstname>
+        <surname>Jacobsen</surname>
+      </personname>
+      <email>jake@physics.berkeley.edu</email>
+    </author>
+    <author>
+      <personname>
+        <firstname>Suzie</firstname>
+        <surname>Tall</surname>
+      </personname>
+      <email>suzie_tall@yahoo.co.uk</email>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2015-05-20</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Initial version</revremark>
+    </revision>
+  </revhistory>
+  <aspecttable>SPTCO-1969</aspecttable>
+  <name>Triple head searchlight high signal with Lunar</name>
+  <reference>As described in the 1969 Rulebook.</reference>
+  <description>Appearances for a triple head searchlight signal head with Lunar on the lower head.</description>
+  <appearances>
+    <appearance>
+      <aspectname>Block Signal Green</aspectname>
+      <show>green</show>
+      <show>red</show>
+      <show>dark</show>
+      <reference>Page 80 (D)</reference>
+      <imagelink type="noflash">../../../resources/icons/smallschematics/aspects/SPTCO-1969/SL-3-L/rule-282.gif</imagelink>
+      <imagelink type="shaped">../../../resources/icons/smallschematics/aspects/SPTCO-1969/SL-3-L/rule-282-a.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Block Signal Green for Diverging Route</aspectname>
+      <show>red</show>
+      <show>green</show>
+      <show>dark</show>
+      <reference>Page 81 (D)</reference>
+      <imagelink type="noflash">../../../resources/icons/smallschematics/aspects/SPTCO-1969/SL-3-L/rule-283.gif</imagelink>
+      <imagelink type="shaped">../../../resources/icons/smallschematics/aspects/SPTCO-1969/SL-3-L/rule-283-a.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Block Signal Yellow over Green</aspectname>
+      <show>yellow</show>
+      <show>green</show>
+      <show>dark</show>
+      <reference>(Page 81)</reference>
+      <imagelink type="noflash">../../../resources/icons/smallschematics/aspects/SPTCO-1969/SL-3-L/rule-284.gif</imagelink>
+      <imagelink type="shaped">../../../resources/icons/smallschematics/aspects/SPTCO-1969/SL-3-L/rule-284-a.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Approach Signal Yellow</aspectname>
+      <show>yellow</show>
+      <show>red</show>
+      <show>dark</show>
+      <reference>Page 82 (E)</reference>
+      <imagelink type="noflash">../../../resources/icons/smallschematics/aspects/SPTCO-1969/SL-3-L/rule-285.gif</imagelink>
+      <imagelink type="shaped">../../../resources/icons/smallschematics/aspects/SPTCO-1969/SL-3-L/rule-285-a.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Approach Medium - Flashing Yellow</aspectname>
+      <show>flashyellow</show>
+      <show>red</show>
+      <show>dark</show>
+      <reference>Page 83 (C)</reference>
+      <imagelink type="noflash">../../../resources/icons/smallschematics/aspects/SPTCO-1969/SL-3-L/rule-285A.gif</imagelink>
+      <imagelink type="shaped">../../../resources/icons/smallschematics/aspects/SPTCO-1969/SL-3-L/rule-285A-a.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Home Signal Yellow for Diverging Route</aspectname>
+      <show>red</show>
+      <show>yellow</show>
+      <show>dark</show>
+      <reference>Page 85 (C)</reference>
+      <imagelink type="noflash">../../../resources/icons/smallschematics/aspects/SPTCO-1969/SL-3-L/rule-288.gif</imagelink>
+      <imagelink type="shaped">../../../resources/icons/smallschematics/aspects/SPTCO-1969/SL-3-L/rule-288-a.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Restricting</aspectname>
+      <show>flashred</show>
+      <show>red</show>
+      <show>dark</show>
+      <reference>Page 88 (A)</reference>
+      <imagelink type="noflash">../../../resources/icons/smallschematics/aspects/SPTCO-1969/SL-3-L/rule-290A.gif</imagelink>
+      <imagelink type="shaped">../../../resources/icons/smallschematics/aspects/SPTCO-1969/SL-3-L/rule-290A-a.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Home Signal Red over Lunar</aspectname>
+      <show>red</show>
+      <show>red</show>
+      <show>lunar</show>
+      <reference>Page 86 A</reference>
+      <imagelink type="noflash">../../../resources/icons/smallschematics/aspects/SPTCO-1969/SL-3-L/rule-289.gif</imagelink>
+      <imagelink type="shaped">../../../resources/icons/smallschematics/aspects/SPTCO-1969/SL-3-L/rule-289.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Home Signal Red</aspectname>
+      <show>red</show>
+      <show>red</show>
+      <show>dark</show>
+      <reference>Page 87 (F)</reference>
+      <imagelink type="noflash">../../../resources/icons/smallschematics/aspects/SPTCO-1969/SL-3-L/rule-290.gif</imagelink>
+      <imagelink type="shaped">../../../resources/icons/smallschematics/aspects/SPTCO-1969/SL-3-L/rule-290.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Unlit</aspectname>
+      <show>dark</show>
+      <show>dark</show>
+      <show>dark</show>
+      <reference>-</reference>
+      <imagelink type="noflash">../../../resources/icons/smallschematics/aspects/SPTCO-1969/SL-3-L/unlit.gif</imagelink>
+      <imagelink type="shaped">../../../resources/icons/smallschematics/aspects/SPTCO-1969/SL-3-L/unlit.gif</imagelink>
+    </appearance>
+  </appearances>
+  <specificappearances>
+    <!-- Start of Specific Appearances list -->
+    <danger>
+      <aspect>Home Signal Red</aspect>
+    </danger>
+    <permissive>
+      <aspect>Restricting</aspect>
+    </permissive>
+    <held>
+      <aspect>Home Signal Red</aspect>
+    </held>
+    <dark>
+      <aspect>Unlit</aspect>
+    </dark>
+  </specificappearances>
+  <aspectMappings>
+    <!-- Start of Aspect Mapping -->
+    <aspectMapping>
+      <advancedAspect>Block Signal Green</advancedAspect>
+      <ourAspect>Block Signal Green</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+      <ourAspect>Block Signal Green for Diverging Route</ourAspect>
+      <ourAspect>Home Signal Red over Lunar</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Block Signal Green for Diverging Route</advancedAspect>
+      <ourAspect>Block Signal Yellow over Green</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+      <ourAspect>Block Signal Green for Diverging Route</ourAspect>
+      <ourAspect>Home Signal Red over Lunar</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Block Signal Yellow over Green</advancedAspect>
+      <ourAspect>Approach Medium - Flashing Yellow</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+      <ourAspect>Block Signal Green for Diverging Route</ourAspect>
+      <ourAspect>Home Signal Red over Lunar</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach Signal Yellow</advancedAspect>
+      <ourAspect>Approach Medium - Flashing Yellow</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+      <ourAspect>Block Signal Green for Diverging Route</ourAspect>
+      <ourAspect>Home Signal Red over Lunar</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach Medium - Flashing Yellow</advancedAspect>
+      <ourAspect>Block Signal Green</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+      <ourAspect>Block Signal Green for Diverging Route</ourAspect>
+      <ourAspect>Home Signal Red over Lunar</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Restricting</advancedAspect>
+      <ourAspect>Approach Signal Yellow</ourAspect>
+      <ourAspect>Home Signal Yellow for Diverging Route</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Home Signal Yellow for Diverging Route</advancedAspect>
+      <ourAspect>Block Signal Yellow over Green</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+      <ourAspect>Block Signal Green for Diverging Route</ourAspect>
+      <ourAspect>Home Signal Red over Lunar</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Home Signal Red over Lunar</advancedAspect>
+      <ourAspect>Block Signal Yellow over Green</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+      <ourAspect>Home Signal Yellow for Diverging Route</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Home Signal Red</advancedAspect>
+      <ourAspect>Approach Signal Yellow</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+      <ourAspect>Home Signal Yellow for Diverging Route</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Stop and Proceed</advancedAspect>
+      <ourAspect>Approach Signal Yellow</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+      <ourAspect>Home Signal Yellow for Diverging Route</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Unlit</advancedAspect>
+      <ourAspect>Approach Signal Yellow</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+      <ourAspect>Home Signal Yellow for Diverging Route</ourAspect>
+    </aspectMapping>
+  </aspectMappings>
+</appearancetable>

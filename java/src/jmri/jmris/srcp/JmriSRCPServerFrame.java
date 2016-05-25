@@ -1,20 +1,25 @@
 // JmriSRCPServerFrame.java
-
 package jmri.jmris.srcp;
 
 //import java.awt.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.awt.event.*;
-import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
+import javax.swing.JToggleButton;
 
 /**
  * Frame displaying start/stop buttons for the JMRI server.
  *
- * @author			Paul Bender  Copyright (C) 2009
- * @version			$Revision$
+ * @author	Paul Bender Copyright (C) 2009
+ * @version	$Revision$
  */
 public class JmriSRCPServerFrame extends jmri.util.JmriJFrame {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = -7304361652689711790L;
 
     public JmriSRCPServerFrame() {
         this("Jmri SRCP Server Starter");
@@ -22,8 +27,8 @@ public class JmriSRCPServerFrame extends jmri.util.JmriJFrame {
 
     public JmriSRCPServerFrame(String FrameName) {
         super(FrameName);
-        getContentPane().setLayout(new BoxLayout(getContentPane(), 
-				   BoxLayout.Y_AXIS));
+        getContentPane().setLayout(new BoxLayout(getContentPane(),
+                BoxLayout.Y_AXIS));
 
         JPanel pane0 = new JPanel();
         pane0.add(startButton);
@@ -35,28 +40,28 @@ public class JmriSRCPServerFrame extends jmri.util.JmriJFrame {
         pack();
 
         // install start button handler
-        startButton.addActionListener( new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-			startSRCPServer();
-                }
+        startButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent a) {
+                startSRCPServer();
             }
+        }
         );
 
         // install stop button handler
-        stopButton.addActionListener( new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-			stopSRCPServer();
-                }
+        stopButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent a) {
+                stopSRCPServer();
             }
+        }
         );
 
         // install close button handler
-        closeButton.addActionListener( new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                	setVisible(false);
-        		dispose();
-                }
+        closeButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent a) {
+                setVisible(false);
+                dispose();
             }
+        }
         );
 
     }
@@ -77,13 +82,11 @@ public class JmriSRCPServerFrame extends jmri.util.JmriJFrame {
     }
 
     public void startSRCPServer() {
-	JmriSRCPServer.instance().start();
+        JmriSRCPServer.instance().start();
     }
 
     public void stopSRCPServer() {
-	JmriSRCPServer.instance().stop();
+        JmriSRCPServer.instance().stop();
     }
-
-    static Logger log = LoggerFactory.getLogger(JmriSRCPServerFrame.class.getName());
 
 }

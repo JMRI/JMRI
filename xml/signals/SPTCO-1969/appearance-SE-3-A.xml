@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
+<appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year>
+    <year>2015</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Dick</firstname>
+        <surname>Bronson</surname>
+      </personname>
+      <email>dick@rr-cirkits.com</email>
+    </author>
+    <author>
+      <personname>
+        <firstname>Bob</firstname>
+        <surname>Jacobsen</surname>
+      </personname>
+      <email>jake@physics.berkeley.edu</email>
+    </author>
+    <author>
+      <personname>
+        <firstname>Suzie</firstname>
+        <surname>Tall</surname>
+      </personname>
+      <email>suzie_tall@yahoo.co.uk</email>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2015-05-20</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Initial version</revremark>
+    </revision>
+  </revhistory>
+  <aspecttable>SPTCO-1969</aspecttable>
+  <name>Triple arm semaphore absolute signal</name>
+  <reference>As described in the 1969 Rulebook.</reference>
+  <description>Appearances for a triple arm semaphore signal without other badging</description>
+  <appearances>
+    <appearance>
+      <aspectname>Block Signal Green</aspectname>
+      <show>green</show>
+      <show>green</show>
+      <show>red</show>
+      <reference>Page 80 B</reference>
+      <imagelink type="noflash">../../../resources/icons/smallschematics/aspects/SPTCO-1969/SE-3-A/rule-282.gif</imagelink>
+      <imagelink type="shaped">../../../resources/icons/smallschematics/aspects/SPTCO-1969/SE-3-A/rule-282.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Block Signal Green for Diverging Route</aspectname>
+      <show>red</show>
+      <show>red</show>
+      <show>green</show>
+      <reference>Page 81 B</reference>
+      <imagelink type="noflash">../../../resources/icons/smallschematics/aspects/SPTCO-1969/SE-3-A/rule-283.gif</imagelink>
+      <imagelink type="shaped">../../../resources/icons/smallschematics/aspects/SPTCO-1969/SE-3-A/rule-283.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Approach Signal Yellow</aspectname>
+      <show>green</show>
+      <show>yellow</show>
+      <show>red</show>
+      <reference>Page 82 B</reference>
+      <imagelink type="noflash">../../../resources/icons/smallschematics/aspects/SPTCO-1969/SE-3-A/rule-285.gif</imagelink>
+      <imagelink type="shaped">../../../resources/icons/smallschematics/aspects/SPTCO-1969/SE-3-A/rule-285.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Home Signal Red</aspectname>
+      <show>red</show>
+      <show>yellow</show>
+      <show>red</show>
+      <reference>Page 87 D</reference>
+      <imagelink type="noflash">../../../resources/icons/smallschematics/aspects/SPTCO-1969/SE-3-A/rule-290.gif</imagelink>
+      <imagelink type="shaped">../../../resources/icons/smallschematics/aspects/SPTCO-1969/SE-3-A/rule-290.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Unlit</aspectname>
+      <show>dark</show>
+      <show>dark</show>
+      <show>dark</show>
+      <reference>-</reference>
+      <imagelink type="noflash">../../../resources/icons/smallschematics/aspects/SPTCO-1969/SE-3-A/unlit.gif</imagelink>
+      <imagelink type="shaped">../../../resources/icons/smallschematics/aspects/SPTCO-1969/SE-3-A/unlit.gif</imagelink>
+    </appearance>
+  </appearances>
+  <specificappearances>
+    <!-- Start of Specific Appearances list -->
+    <danger>
+      <aspect>Home Signal Red</aspect>
+    </danger>
+    <held>
+      <aspect>Home Signal Red</aspect>
+    </held>
+    <dark>
+      <aspect>Unlit</aspect>
+    </dark>
+  </specificappearances>
+  <aspectMappings>
+    <!-- Start of Aspect Mapping -->
+    <aspectMapping>
+      <advancedAspect>Block Signal Green</advancedAspect>
+      <ourAspect>Block Signal Green</ourAspect>
+      <ourAspect>Block Signal Green for Diverging Route</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Block Signal Green for Diverging Route</advancedAspect>
+      <ourAspect>Approach Signal Yellow</ourAspect>
+      <ourAspect>Block Signal Green for Diverging Route</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Block Signal Yellow over Green</advancedAspect>
+      <ourAspect>Block Signal Green</ourAspect>
+      <ourAspect>Block Signal Green for Diverging Route</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach Signal Yellow</advancedAspect>
+      <ourAspect>Block Signal Green</ourAspect>
+      <ourAspect>Block Signal Green for Diverging Route</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach Medium - Flashing Yellow</advancedAspect>
+      <ourAspect>Block Signal Green</ourAspect>
+      <ourAspect>Block Signal Green for Diverging Route</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Restricting</advancedAspect>
+      <ourAspect>Approach Signal Yellow</ourAspect>
+      <ourAspect>Block Signal Green for Diverging Route</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Home Signal Yellow for Diverging Route</advancedAspect>
+      <ourAspect>Approach Signal Yellow</ourAspect>
+      <ourAspect>Block Signal Green for Diverging Route</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Home Signal Red over Lunar</advancedAspect>
+      <ourAspect>Approach Signal Yellow</ourAspect>
+      <ourAspect>Block Signal Green for Diverging Route</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Home Signal Red</advancedAspect>
+      <ourAspect>Approach Signal Yellow</ourAspect>
+      <ourAspect>Block Signal Green for Diverging Route</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Stop and Proceed</advancedAspect>
+      <ourAspect>Approach Signal Yellow</ourAspect>
+      <ourAspect>Block Signal Green for Diverging Route</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Unlit</advancedAspect>
+      <ourAspect>Approach Signal Yellow</ourAspect>
+      <ourAspect>Block Signal Green for Diverging Route</ourAspect>
+    </aspectMapping>
+  </aspectMappings>
+</appearancetable>

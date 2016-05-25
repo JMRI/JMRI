@@ -1,10 +1,10 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
 <!-- version 1.1 15 Aug 11 JES
                  - added Dim function output 10-12
 -->
-<pane name="Function Output">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <column>
     <row>
       <column>
@@ -13,41 +13,43 @@
             <display item="Pulse Chain Generation"/>
           </column>
           <column>
-            <label label="    ">
-              <label>    </label>
+            <label>
+              <text>    </text>
             </label>
           </column>
           <column>
-            <label label="Generates Pulse chain commands   ">
-              <label>Generates Pulse chain commands   </label>
+            <label>
+              <text>Generates Pulse chain commands   </text>
+              <text xml:lang="it">Genera comandi e treno impulsi</text>
             </label>
-            <label label="for LGB sound modules on FO 1">
-              <label>for LGB sound modules on FO 1</label>
+            <label>
+              <text>for LGB sound modules on FO 1</text>
+              <text xml:lang="it">per moduli sonori LBG con F1</text>
             </label>
           </column>
         </row>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <row>
           <column>
             <display item="SUSI"/>
           </column>
           <column>
-            <label label="   ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
           </column>
           <column>
             <display item="Special Output Configuration"/>
           </column>
         </row>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="Function Output 4 as virtual Cam or Smoke Fan"/>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
       </column>
     </row>
@@ -73,22 +75,22 @@
         <row>
           <column>
             <display item="Output Level"/>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
           </column>
           <column>
             <display item="Output Level" format="hslider" label="">
               <label/>
             </display>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
-            <label label=" ">
-              <label> </label>
+            <label>
+              <text> </text>
             </label>
           </column>
         </row>
@@ -112,47 +114,50 @@
             <display item="F7 inverted" format="checkbox"/>
           </column>
           <column>
-            <label label="          ">
-              <label>          </label>
+            <label>
+              <text>          </text>
             </label>
           </column>
         </row>
       </column>
       <separator/>
       <column>
-        <label label="        ">
-          <label>        </label>
+        <label>
+          <text>        </text>
         </label>
       </column>
       <column>
         <row>
           <column>
-            <label label="     ">
-              <label>     </label>
+            <label>
+              <text>     </text>
             </label>
           </column>
           <column>
             <display item="Flash Rate"/>
           </column>
           <column>
-            <label label="    ">
-              <label>    </label>
+            <label>
+              <text>    </text>
             </label>
           </column>
           <column>
-            <label label="Tens digit = on time">
-              <label>Tens digit = on time</label>
-            </label>
-            <label label="Ones digit = Off time">
-              <label>Ones digit = Off time</label>
-            </label>
-            <label label="(0 = 100ms, 9 = 1s)">
-              <label>(0 = 100ms, 9 = 1s)</label>
-            </label>
+            <label>
+                <text>Tens digit = on time</text>
+                <text xml:lang="it">Numero decine= tempo On</text>
+              </label>
+              <label>
+                <text>Ones digit = Off time</text>
+                <text xml:lang="it">Numero unità= tempo Off</text>
+              </label>
+              <label>
+                <text>(0 = 100ms, 9 = 1s)</text>
+                <text xml:lang="it">(0 = 100ms, 9 = 1s)</text>
+              </label>
           </column>
         </row>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="Flash front light" format="checkbox"/>
         <display item="Flash rear light" format="checkbox"/>
@@ -164,56 +169,61 @@
         <display item="Inverse Flash Output 4" format="checkbox"/>
         <display item="Flash Rate Off Time"/>
         <display item="Flash Rate On Time"/>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
       </column>
     </row>
     <separator/>
-    <label label="                                         Lighting Effects Adjustments (Mars, Gyralight etc)">
-      <label>                                         Lighting Effects Adjustments (Mars, Gyralight etc)</label>
+    <label>
+      <text>                                         Lighting Effects Adjustments (Mars, Gyralight etc)</text>
+      <text xml:lang="it">                                        Regolazioni Effetti luminosi  (Mars, Gyralight etc)</text>
     </label>
     <row>
       <column>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="Minimum Dimming Value"/>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="Light Effects Modifications"/>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
         <display item="Ditch Light Off Time"/>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
       </column>
       <column>
-        <label label="   ">
-          <label>   </label>
+        <label>
+          <text>   </text>
         </label>
       </column>
       <column>
-        <label label=" ">
-          <label> </label>
+        <label>
+          <text> </text>
         </label>
-        <label label="Tens digit sets cycle time(0-9), or start up time for soft start (0-9 = 0 - 0.9s)">
-          <label>Tens digit sets cycle time(0-9), or start up time for soft start (0-9 = 0 - 0.9s)</label>
-        </label>
-        <label label="Ones digit extends Off time(0-9)">
-          <label>Ones digit extends Off time(0-9)</label>
-        </label>
-        <label label="Auto Turn Off delay time (0-255 = 0 - 25.5 sec)">
-          <label>Auto Turn Off delay time (0-255 = 0 - 25.5 sec)</label>
-        </label>
-        <label label=" ">
-          <label> </label>
+        <label>
+            <text>Tens digit sets cycle time(0-9), or start up time for soft start (0-9 = 0 - 0.9s)</text>
+            <text xml:lang="it">Decine= tempo di ciclo(0-9), o tempo per partenza graduale(0-0.9s)</text>
+          </label>
+          <label>
+            <text>Ones digit extends Off time(0-9)</text>
+            <text xml:lang="it">Unità= Estende tempo Off(0-9)</text>
+          </label>
+          <label>
+            <text>Auto Turn Off delay time (0-255 = 0 - 25.5 sec)</text>
+            <text xml:lang="it">Ritardo Off-Automatico (0-255 = 0 - 25.5 sec)</text>
+          </label>
+        <label>
+          <text> </text>
         </label>
       </column>
     </row>
   </column>
   <name>Function Output</name>
+  <name xml:lang="it">Funzione Uscita</name>
 </pane>

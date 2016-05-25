@@ -18,19 +18,18 @@ package jmri.jmrit.vsdecoder;
  * @author			Mark Underwood Copyright (C) 2011
  * @version			$Revision$
  */
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.event.ActionEvent;
+import java.io.File;
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
-import java.io.File;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Create a new VSDecoder Pane.
  *
- * @author			Mark Underwood
- * @version     $Revision$
+ * @author	Mark Underwood
+ * @version $Revision$
  */
 @SuppressWarnings("serial")
 public class VSDecoderCreationAction extends AbstractAction {
@@ -40,11 +39,12 @@ public class VSDecoderCreationAction extends AbstractAction {
 
     /**
      * Constructor
+     *
      * @param s Name for the action.
      */
     public VSDecoderCreationAction(String s, Boolean ng) {
         super(s);
-	_useNewGUI = ng;
+        _useNewGUI = ng;
     }
 
     public VSDecoderCreationAction() {
@@ -54,24 +54,26 @@ public class VSDecoderCreationAction extends AbstractAction {
 
     /**
      * The action is performed. Create a new ThrottleFrame.
+     *
      * @param e The event causing the action.
      */
     public void actionPerformed(ActionEvent e) {
-	String fp = null, fn = null;
-	JFrame tf = null;
-	if (_useNewGUI == true)
-	    tf = VSDecoderManager.instance().provideManagerFrame();
-	else
-	    tf = new VSDecoderFrame();
-	if (VSDecoderManager.instance().getVSDecoderPreferences().isAutoLoadingDefaultVSDFile()) {
-	    // Force load of a VSD file
-	    fp = VSDecoderManager.instance().getVSDecoderPreferences().getDefaultVSDFilePath();
-	    fn = VSDecoderManager.instance().getVSDecoderPreferences().getDefaultVSDFileName();
-	    log.debug("Loading VSD File: " + fp + File.separator + fn);
-	    LoadVSDFileAction.loadVSDFile(fp + File.separator + fn);
-	}
-	tf.toFront();
+        String fp = null, fn = null;
+        JFrame tf = null;
+        if (_useNewGUI == true) {
+            tf = VSDecoderManager.instance().provideManagerFrame();
+        } else {
+            tf = new VSDecoderFrame();
+        }
+        if (VSDecoderManager.instance().getVSDecoderPreferences().isAutoLoadingDefaultVSDFile()) {
+            // Force load of a VSD file
+            fp = VSDecoderManager.instance().getVSDecoderPreferences().getDefaultVSDFilePath();
+            fn = VSDecoderManager.instance().getVSDecoderPreferences().getDefaultVSDFileName();
+            log.debug("Loading VSD File: " + fp + File.separator + fn);
+            LoadVSDFileAction.loadVSDFile(fp + File.separator + fn);
+        }
+        tf.toFront();
     }
 
-    static Logger log = LoggerFactory.getLogger(VSDecoderCreationAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(VSDecoderCreationAction.class.getName());
 }

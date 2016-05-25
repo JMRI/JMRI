@@ -1,7 +1,7 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id: cv29direction.xml 22377 2013-01-12 06:28:11Z jacobsen $ -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -32,28 +32,31 @@
       <authorinitials>PB</authorinitials>
       <revremark>Added German, French</revremark>
     </revision>
-	<revision>
+    <revision>
       <revnumber>1</revnumber>
       <date>2013-01-22</date>
       <authorinitials>MM</authorinitials>
       <revremark>Initial release</revremark>
     </revision>
   </revhistory>
-  <variable label="Use Speed Table" CV="29" mask="XXXVXXXX" item="Speed Table Definition" default="0">
+  <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition" default="0">
     <enumVal>
-      <enumChoice choice="Use Start Voltage (Vstart)">
-        <choice>Use Start Voltage (Vstart)</choice>
-		<choice xml:lang="fr">Utiliser V démarrage (Vstart)</choice>
-		<choice xml:lang="de">Anfahrspannung (Vstart) nutzen</choice>
+      <enumChoice choice="Don't use Speed Table, use Start Voltage (Vstart)">
+        <choice>Don't use Speed Table, use Start Voltage (Vstart and Vmax)</choice>
+        <choice xml:lang="it">Non usare Tabella, usa Tensione Iniziale (Vstart e Vmax)</choice>
+        <choice xml:lang="fr">Utiliser V démarrage (Vstart-Vmax)</choice>
+        <choice xml:lang="de">Anfahrspannung (Vstart-Vmax) nutzen</choice>
       </enumChoice>
       <enumChoice choice="Use Speed Table">
         <choice>Use Speed Table</choice>
-		<choice xml:lang="fr">Utiliser tableau de vitesse</choice>
-		<choice xml:lang="de">Geschw.-kennlinie nutzen</choice>
+        <choice xml:lang="it">Usa Tabella Velocità</choice>
+        <choice xml:lang="fr">Utiliser tableau de vitesse</choice>
+        <choice xml:lang="de">Geschw.-kennlinie nutzen</choice>
       </enumChoice>
     </enumVal>
     <label>Use Speed Table</label>
-	<label xml:lang="fr">Tableau de vitesse</label>
-	<label xml:lang="de">Geschwindigkeitskennlinie nutzen</label>
+    <label xml:lang="fr">Tableau de vitesse</label>
+    <label xml:lang="de">Geschwindigkeitskennlinie nutzen</label>
+    <label xml:lang="it">Uso Tabella Velocità</label>
   </variable>
 </variables>

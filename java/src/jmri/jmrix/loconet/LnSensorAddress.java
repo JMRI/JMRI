@@ -1,5 +1,4 @@
 // LnSensorAddress.java
-
 package jmri.jmrix.loconet;
 
 import org.slf4j.Logger;
@@ -10,26 +9,26 @@ import org.slf4j.LoggerFactory;
  * <P>
  * There are three addressing spaces for LocoNet sensors:
  * <UL>
- * <LI>The space used for DS54 inputs, where the least-significant-bit in the address
- * refers to the "Aux" and "Switch" inputs. These are represented by
- * system names of the form LSnnnA and LSnnnS respectively. nnn is
- * then the turnout number of the DS54 channel.
- * <LI>The space used for BDL16 inputs, where the card and section
- * numbers are part of the address.  These are represented by names of
- * the form LScccA1 through LScccA4, LScccB1 through LScccB4, and
- * on through LScccD4.  ccc is the BDL16 card number.
- * <LI>A straight-forward numeric space, represented by LSmmm. Note
- * that this is a 1-4096 scheme, not a 0-4095.
+ * <LI>The space used for DS54 inputs, where the least-significant-bit in the
+ * address refers to the "Aux" and "Switch" inputs. These are represented by
+ * system names of the form LSnnnA and LSnnnS respectively. nnn is then the
+ * turnout number of the DS54 channel.
+ * <LI>The space used for BDL16 inputs, where the card and section numbers are
+ * part of the address. These are represented by names of the form LScccA1
+ * through LScccA4, LScccB1 through LScccB4, and on through LScccD4. ccc is the
+ * BDL16 card number.
+ * <LI>A straight-forward numeric space, represented by LSmmm. Note that this is
+ * a 1-4096 scheme, not a 0-4095.
  * </UL>
  * <P>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
- * and used with permission as part of the JMRI project.  That permission
- * does not extend to uses in other software products.  If you wish to
- * use this code, algorithm or these message formats outside of JMRI, please
- * contact Digitrax Inc for separate permission.
+ * and used with permission as part of the JMRI project. That permission does
+ * not extend to uses in other software products. If you wish to use this code,
+ * algorithm or these message formats outside of JMRI, please contact Digitrax
+ * Inc for separate permission.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version     $Revision$
+ * @version $Revision$
  */
 public class LnSensorAddress {
 
@@ -37,82 +36,92 @@ public class LnSensorAddress {
     int _high;
     int _as;
     String prefix;
-    
+
     boolean _valid;
 
     public LnSensorAddress(int sw1, int sw2, String prefix) {
-        _as = sw2&0x20;		// should be a LocoNet constant?
-        _high = sw2&0x0F;
-        _low = sw1&0x7F;
+        _as = sw2 & 0x20;		// should be a LocoNet constant?
+        _high = sw2 & 0x0F;
+        _low = sw1 & 0x7F;
         _valid = true;
         this.prefix = prefix;
     }
 
     /**
-     * Old style ctor for e.g. CATS migration.
-     * Cannot handle multiple system connections.
+     * Old style ctor for e.g. CATS migration. Cannot handle multiple system
+     * connections.
+     *
      * @deprecated 2.9.4
      */
     @Deprecated
     public LnSensorAddress(int sw1, int sw2) {
         this(sw1, sw2, "L");
     }
-    
+
     /**
-     * Old style ctor for e.g. CATS migration.
-     * Cannot handle multiple system connections.
+     * Old style ctor for e.g. CATS migration. Cannot handle multiple system
+     * connections.
+     *
      * @deprecated 2.9.4
      */
     @Deprecated
     public LnSensorAddress(String s) {
         this(s, "L");  // assume one connection
     }
-    
+
     public LnSensorAddress(String s, String prefix) {
         _valid = false;
         this.prefix = prefix;
-        
+
         // check valid
-        if (s.startsWith(prefix+"S")) {
+        if (s.startsWith(prefix + "S")) {
             // parse out and decode the name
-            if (s.charAt(s.length()-1)=='A') {
+            if (s.charAt(s.length() - 1) == 'A') {
                 // DS54 addressing, Aux input
                 _as = 0x20;
-                int n = Integer.parseInt(s.substring(prefix.length()+1, s.length()-1));
-                _high = n/128;
-                _low = n&0x7F;
+                int n = Integer.parseInt(s.substring(prefix.length() + 1, s.length() - 1));
+                _high = n / 128;
+                _low = n & 0x7F;
                 _valid = true;
-            } else if (s.charAt(s.length()-1)=='S') {
+            } else if (s.charAt(s.length() - 1) == 'S') {
                 // DS54 addressing, Switch input
                 _as = 0x00;
-                int n = Integer.parseInt(s.substring(prefix.length()+1, s.length()-1));
-                _high = n/128;
-                _low = n&0x7F;
+                int n = Integer.parseInt(s.substring(prefix.length() + 1, s.length() - 1));
+                _high = n / 128;
+                _low = n & 0x7F;
                 _valid = true;
             } else {
                 // BDL16?
-                char c = s.charAt(s.length()-2);
-                if (c>='A' && c<='D') {
+                char c = s.charAt(s.length() - 2);
+                if (c >= 'A' && c <= 'D') {
                     // BDL16 addressing
-                    int d=0;
+                    int d = 0;
                     switch (c) {
-                        case 'A': d = 0; break;
-                        case 'B': d = 1; break;
-                        case 'C': d = 2; break;
-                        case 'D': d = 3; break;
+                        case 'A':
+                            d = 0;
+                            break;
+                        case 'B':
+                            d = 1;
+                            break;
+                        case 'C':
+                            d = 2;
+                            break;
+                        case 'D':
+                            d = 3;
+                            break;
                     }
-                    int n = Integer.parseInt(s.substring(prefix.length()+1, s.length()-2))*16+d*4
-                            +Integer.parseInt(s.substring(s.length()-1, s.length()));
-                    _high = n/128;
-                    _low = (n&0x7F)/2;
-                    _as = (n&0x01)*0x20;
+                    int n = Integer.parseInt(s.substring(prefix.length() + 1, s.length() - 2)) * 16 + d * 4
+                            + Integer.parseInt(s.substring(s.length() - 1, s.length()));
+                    _high = n / 128;
+                    _low = (n & 0x7F) / 2;
+                    _as = (n & 0x01) * 0x20;
                     _valid = true;
                 } else {
                     // assume that its LSnnn style
-                    int n = Integer.parseInt(s.substring(prefix.length()+1, s.length()))-1;
-                    _high = n/256;
-                    _low = (n&0xFE)/2;
-                    _as = (n&0x01)*0x20;
+                    int n = Integer.parseInt(s.substring(prefix.length() + 1, s.length())) - 1;
+                    _high = n / 256;
+                    _low = (n & 0xFE) / 2;
+                    _as = (n & 0x01) * 0x20;
                     _valid = true;
                 }
             }
@@ -123,11 +132,12 @@ public class LnSensorAddress {
     }
 
     void reportParseError(String s) {
-        log.error("Can't parse sensor address string: "+s);
+        log.error("Can't parse sensor address string: " + s);
     }
 
     /**
      * Update a LocoNet message to have this address.
+     *
      * @param m
      */
     public void insertAddress(LocoNetMessage m) {
@@ -137,9 +147,15 @@ public class LnSensorAddress {
 
     // convenient calculations
     public boolean matchAddress(int a1, int a2) { // a1 is byte 1 of ln msg, a2 is byte 2
-        if (getHighBits() != (a2&0x0f)) return false;
-        if (getLowBits() != (a1&0x7f)) return false;
-        if (getASBit() != (a2&0x20)) return false;
+        if (getHighBits() != (a2 & 0x0f)) {
+            return false;
+        }
+        if (getLowBits() != (a1 & 0x7f)) {
+            return false;
+        }
+        if (getASBit() != (a2 & 0x20)) {
+            return false;
+        }
         return true;
     }
 
@@ -147,72 +163,107 @@ public class LnSensorAddress {
      * @return integer value of this address in 0-4095 space
      */
     protected int asInt() {
-        return _high*256+_low*2+(_as!=0 ? 1 : 0);
+        return _high * 256 + _low * 2 + (_as != 0 ? 1 : 0);
     }
 
     // accessors for parsed data
-    public int getLowBits() 	{ return _low; }
-    public int getHighBits() 	{ return _high; }
+    public int getLowBits() {
+        return _low;
+    }
+
+    public int getHighBits() {
+        return _high;
+    }
+
     /**
      * The bit representing the Aux or Sensor input
+     *
      * @return 0x20 for aux input, 0x00 for switch input
      */
-    public int getASBit() 		{ return _as; }
+    public int getASBit() {
+        return _as;
+    }
 
-    public boolean isValid()    { return _valid; }
+    public boolean isValid() {
+        return _valid;
+    }
 
     public String toString() {
-        return getNumericAddress()+":"
-                +getDS54Address()+":"
-                +getBDL16Address();
+        return getNumericAddress() + ":"
+                + getDS54Address() + ":"
+                + getBDL16Address();
     }
 
     /**
      * Name in the 1-4096 space
+     *
      * @return LSnnn
      */
     public String getNumericAddress() {
-        return prefix+"S"+(asInt()+1);
+        return prefix + "S" + (asInt() + 1);
     }
 
     /**
      * Name in the DS54 space
+     *
      * @return LSnnnA or LSnnnS, depending on Aux or Switch input
      */
     public String getDS54Address() {
-        if (_as != 0 )
-            return prefix+"S"+(_high*128+_low)+"A";
-        else
-            return prefix+"S"+(_high*128+_low)+"S";
+        if (_as != 0) {
+            return prefix + "S" + (_high * 128 + _low) + "A";
+        } else {
+            return prefix + "S" + (_high * 128 + _low) + "S";
+        }
     }
 
     /**
      * Name in the BDL16 space
-     * @return e.g. LSnnnA3, with nnn the BDL16 number,
-     *              A the section number, and 3 the channel number
+     *
+     * @return e.g. LSnnnA3, with nnn the BDL16 number, A the section number,
+     *         and 3 the channel number
      */
     public String getBDL16Address() {
         String letter = null;
         String digit = null;
 
-        switch (asInt()&0x03) {
-            case 0: digit = "0"; break;
-            case 1: digit = "1"; break;
-            case 2: digit = "2"; break;
-            case 3: digit = "3"; break;
-            default: digit = "X"; log.error("Unexpected digit value: "+asInt());
+        switch (asInt() & 0x03) {
+            case 0:
+                digit = "0";
+                break;
+            case 1:
+                digit = "1";
+                break;
+            case 2:
+                digit = "2";
+                break;
+            case 3:
+                digit = "3";
+                break;
+            default:
+                digit = "X";
+                log.error("Unexpected digit value: " + asInt());
         }
-        switch ( (asInt()&0x0C)/4 ) {
-            case 0: letter = "A"; break;
-            case 1: letter = "B"; break;
-            case 2: letter = "C"; break;
-            case 3: letter = "D"; break;
-            default: letter = "X"; log.error("Unexpected letter value: "+asInt());
+        switch ((asInt() & 0x0C) / 4) {
+            case 0:
+                letter = "A";
+                break;
+            case 1:
+                letter = "B";
+                break;
+            case 2:
+                letter = "C";
+                break;
+            case 3:
+                letter = "D";
+                break;
+            default:
+                letter = "X";
+                log.error("Unexpected letter value: " + asInt());
         }
-        return prefix+"S"+(asInt()/16)+letter+digit;
+        return prefix + "S" + (asInt() / 16) + letter + digit;
     }
 
-    static Logger log = LoggerFactory.getLogger(LnSensorAddress.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnSensorAddress.class.getName());
 
 }
 

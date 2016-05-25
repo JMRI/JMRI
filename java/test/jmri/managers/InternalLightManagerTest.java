@@ -1,23 +1,25 @@
 package jmri.managers;
 
-import org.apache.log4j.Logger;
 import jmri.Light;
 import jmri.LightManager;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- Tests for the jmri.managers.InternalTurnoutManager class.
+ * Tests for the jmri.managers.InternalTurnoutManager class.
+ *
  * @author	Bob Jacobsen Copyright 2009
  */
-public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest  {
+public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest {
 
     public String getSystemName(int i) {
-        return "IL"+i;
+        return "IL" + i;
     }
 
-    public void testAsAbstractFactory () {
+    public void testAsAbstractFactory() {
         // create and register the manager object
         InternalLightManager alm = new InternalLightManager();
         jmri.InstanceManager.setLightManager(alm);
@@ -27,13 +29,18 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
 
         Light tl = lm.newLight("IL21", "my name");
 
-
-        if (log.isDebugEnabled()) log.debug("received light value "+tl);
-        Assert.assertTrue( null != tl);
+        if (log.isDebugEnabled()) {
+            log.debug("received light value " + tl);
+        }
+        Assert.assertTrue(null != tl);
 
         // make sure loaded into tables
-        if (log.isDebugEnabled()) log.debug("by system name: "+lm.getBySystemName("IL21"));
-        if (log.isDebugEnabled()) log.debug("by user name:   "+lm.getByUserName("my name"));
+        if (log.isDebugEnabled()) {
+            log.debug("by system name: " + lm.getBySystemName("IL21"));
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("by user name:   " + lm.getByUserName("my name"));
+        }
 
         Assert.assertTrue(null != lm.getBySystemName("IL21"));
         Assert.assertTrue(null != lm.getByUserName("my name"));
@@ -50,11 +57,9 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
 
         Assert.assertTrue(lm.newLight("IL21", "my name").isIntensityVariable());
 
-        
     }
 
     // from here down is testing infrastructure
-
     public InternalLightManagerTest(String s) {
         super(s);
     }
@@ -72,15 +77,18 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
     }
 
     // The minimal setup for log4J
-    protected void setUp() { 
-        apps.tests.Log4JFixture.setUp(); 
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
         // create and register the manager object
         l = new InternalLightManager();
         jmri.InstanceManager.setLightManager(l);
     }
-    @Override
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
-    static Logger log = Logger.getLogger(InternalLightManagerTest.class.getName());
+    @Override
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(InternalLightManagerTest.class.getName());
 
 }

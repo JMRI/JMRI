@@ -2,6 +2,8 @@
 # This is noticed when we see the blocks at the end 
 # of the main & sidings go OCCUPIED
 
+import java
+
 class ReleaseFromSidings(java.beans.PropertyChangeListener):
   # to1, to2 are turnout objects; block1, block2 are corresponding
   # blocks behind them; state1, state2 are TO states (CLOSED, THROWN)

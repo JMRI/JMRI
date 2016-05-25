@@ -1,15 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
+<!-- Copyright ($Author$) 2016 -->
 <title>JMRI: ???Page Title</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
 <link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
@@ -18,7 +17,8 @@
 <!--#include virtual="/Header" -->
 
 <!--#include virtual="Sidebar" -->
-<div id="mainContent">
+<!-- Sidebar inserts div #mBody-->
+ <div id="mainContent">
 
 <h1> 
 JMRI: Page Title???
@@ -26,9 +26,11 @@ JMRI: Page Title???
 
 Content????
 
-This file shows the top and bottom matter for a page with a side 
-menu bar, which comes from the "Sidebar" file in the same directory.
+This file shows the top and bottom matter for a page <strong>with a side 
+menu bar</strong> (on the web), which comes from the "Sidebar" file in the same directory.
     
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
 </body>
 </html>

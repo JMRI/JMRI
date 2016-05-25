@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<!-- Translated by Herv&#233; Blorec 2013-09-20 -->
+<html lang="fr">
+<head>
+  <TITLE>
+ 	JMRI: Entry Exit (NX) Documentation
+  </TITLE>
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+
+  <META content="Kevin Dickerson" name=Author>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+  <meta name="keywords"
+        content="hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<H2>JMRI: Documentation Routage Entr&#233;e Sortie (NX) </H2>
+
+<h3>Qu'est ce qu'un Routage Entr&#233;e/Sortie (NX)?</h3>
+
+<p>Le Routage NX Routing, construit un chemin dynamique d'acc&#232;s valide entre deux emplacements sur un &#201;diteur de R&#233;seau
+tels que les capteurs ou les M&#226;ts de Signalisation. Le chemin peut traverser un certain nombre d'aiguillages
+et des cantons diff&#233;rents. L'entr&#233;e et le points de sortie sur l'&#201;diteur de R&#233;seau sont
+d&#233;fini par l'emplacement des capteurs dans diff&#233;rents cantons fronti&#232;res. Quand deux capteurs
+sont activ&#233;s et une voie libre et valide se trouve entre eux, alors les aiguillages
+dans l'itin&#233;raire seront automatiquement r&#233;gl&#233;s en cons&#233;quence.
+<p>
+S'il ya plusieurs chemins entre deux emplacements, le syst&#232;me utilisera le
+chemin avec le plus petit co&#249;t ou nombres de cantons diff&#233;rents plusieurs blocs. Si l'un des cantons sur l'
+voie est d&#233;j&#224; occup&#233;, et qu'il ya un chemin alternatif valide, celui-ci sera pris.
+<p>
+<h3> Comment configurer un Routage pour entr&#233;e et sortie :</h3>
+
+D'abord, vous aurez besoin d'avoir construit une repr&#233;sentation de votre r&#233;seau dans l'
+&#233;diteur de r&#233;seau, les cantons devront &#233;galement &#234;tre d&#233;finis de telle sorte que les capteurs peuvent &#234;tre
+attribu&#233; &#224; la limite.
+
+<h3> Pla&#231;ement des Capteurs</h3>
+Les capteurs peuvent &#234;tre plac&#233;s par les aiguillages, les points d'ancrage et des croisements,
+mais seulement l&#224; o&#249; il ya une fronti&#232;re entre deux cantons de r&#233;seau diff&#233;rents. <br>
+Pour ajouter un capteur clic droit sur le point de l'aiguillage, croisement ou point d'ancrage
+et si une limite de canton existe, vous aurez la possibilit&#233; de "Set capteurs ..."
+Vous pouvez &#233;galement d&#233;finir des capteurs au pare-chocs d'extr&#233;mit&#233; ou butoirs.
+<p>
+Il Vous sera alors pr&#233;sent&#233; avec une nouvelle fen&#234;tre qui vous permet de s&#233;lectionner
+le capteur qui sera utilis&#233; soit pour «prot&#233;ger» ou &#234;tre &#224; la limite du bloc x et y. <br>
+La fronti&#232;re ou le canton de protection choisi d&#233;finiront la direction dans laquelle le
+capteurs est actif. 
+<p>
+<img src="images/EntryExitExample1.png" height="560" width="628">
+<p>
+Dans l'exemple ci-dessus, le capteur de protection du canton 51 sera utilis&#233;
+pour les itin&#233;raires allant vers l'est. Alors que le capteur
+de protection du canton 50, sera utilis&#233; pour les itin&#233;raires allant en direction de l'ouest. <p>
+
+Pour les aiguillages et les croisements, vous pouvez seulement ajouter un capteurs pour la fronti&#232;re
+entrer dans l'aiguillage  ou ou le croisement, il n'est pas possible d'ajouter un capteur
+pour la limite allant &#224; l'est&#233;rieur de l'aiguillage ou du croisement. <br>
+Par exemple, si le bloc A est la section de la voie reli&#233;e &#224; l'aiguillage et que l'
+aiguillage est dans le canton  B, vous pouvez seulement ajouter un capteur qui fait face dans le bloc A
+qui prot&#232;ge le canton B, vous ne pouvez pas ajouter un capteur qui fait face dans le canton B pour
+prot&#233;gercanton A.
+
+<p>
+<img src="images/EntryExitLayout.png" height="232" width="725">
+<p>
+
+<h3> G&#233;n&#233;ration paires d'Entr&#233;e-Sortie</h3>
+
+Vous pouvez demander au syst&#232;me de g&#233;n&#233;rer automatiquement les paires de base d'Entr&#233;e-Sortie et il est &#233;galement possible
+d'ajouter manuellement des paires dans le syst&#232;me, avec l'ajout de ce qui serait normalement consid&#233;r&#233; comme une configuration invalide.
+
+Pour acc&#233;der au panneau d'Entr&#233;e-Sortie, s&#233;lectionnez "Entr&#233;e-Sortie" dans le menu des outils de l'&#233;diteur de r&#233;seau.
+Vous verrez alors appara&#238;tre l'&#233;cran suivant ...
+<p>
+<img src="images/AddEntryExit.png" height="302" width="633">
+<p>
+Si vous appuyez sur <b>G&#233;n&#233;rer Auto paires Entr&#233;e-Sortie</b> vous d&#233;couvrirez alors toutes les paires d'Entr&#233;e-Sortie valides sur le r&#233;seau. <br>
+Utiliser les listes d&#233;roulantes, il est &#233;galement possible d'ajouter manuellement  des paires d'Entr&#233;e-Sortie suppl&#233;mentaires. <br>
+Dans tous les cas o&#249; Le d&#233;tecteur <b> De</b> est r&#233;gl&#233; actif suivi par le capteur <b>Vers</b>, l'
+itin&#233;raire sera &#233;tabli entre ces deux points et les deux capteurs seront de retour &#224; l'&#233;tat inactif.
+Si l'option <b> deux Voies </b> est coch&#233;e, alors il est possible d'activer la voie dans les deux sens,
+par exemple vous pouvez s&#233;lectionner le capteur Vers avant le capteur De et le m&#234;me itin&#233;raire sera d&#233;fini.
+<p>
+<h3> Limitation</h3>
+L'Entr&#233;e-Sortie actuellement ne traite que des d&#233;viations d'aiguillages entre deux itin&#233;raires, il ne
+fournit pas encore une m&#233;thode pour mettre en place une logique pour M&#226;t de Signalisation ou plein de verrouillage. Cela est pr&#233;vu pour &#234;tre d&#233;velopp&#233; au cours de 2012.
+    
+<!--#include virtual="/Footer" -->
+</body>
+</html>

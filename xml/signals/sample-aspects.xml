@@ -40,13 +40,22 @@
     <aspect>
       <name></name>
       <title></title>
+      <rule></rule>
       <indication></indication>
       <description></description>
       <reference></reference>
       <comment></comment>
+      <speed></speed>
+      <speed2></speed2>
     </aspect>
 
   </aspects>
+  
+  <imagetypes>
+    <imagetype type="large" />
+    <imagetype type="small" />
+  </imagetypes>
+  
   <appearancefiles>
     <appearancefile href="sample-appearance-file.xml"/>
   </appearancefiles>

@@ -8,9 +8,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.SignalHead;
 import jmri.jmris.AbstractSignalHeadServer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.eclipse.jetty.websocket.WebSocket.Connection;
+import jmri.jmris.JmriConnection;
 
 /**
  * Simple Server interface between the JMRI Sensor manager and a network
@@ -22,14 +20,12 @@ import org.eclipse.jetty.websocket.WebSocket.Connection;
 public class SimpleSignalHeadServer extends AbstractSignalHeadServer {
 
     private DataOutputStream output;
-    private Connection connection;
-    static Logger log = LoggerFactory.getLogger(SimpleSignalHeadServer.class.getName());
-
-    public SimpleSignalHeadServer(Connection connection) {
-    	super();
-    	this.connection = connection;
+    private JmriConnection connection;
+    public SimpleSignalHeadServer(JmriConnection connection) {
+        super();
+        this.connection = connection;
     }
-    
+
     public SimpleSignalHeadServer(DataInputStream inStream, DataOutputStream outStream) {
         super();
         output = outStream;
@@ -61,10 +57,10 @@ public class SimpleSignalHeadServer extends AbstractSignalHeadServer {
     }
 
     private void sendMessage(String message) throws IOException {
-    	if (this.output != null) {
-    		this.output.writeBytes(message);
-    	} else {
-    		this.connection.sendMessage(message);
-    	}
+        if (this.output != null) {
+            this.output.writeBytes(message);
+        } else {
+            this.connection.sendMessage(message);
+        }
     }
 }

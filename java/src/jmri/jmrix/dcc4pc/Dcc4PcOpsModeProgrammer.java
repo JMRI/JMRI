@@ -1,44 +1,46 @@
 /* Dcc4PcOpsModeProgrammer.java */
-
 package jmri.jmrix.dcc4pc;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.beans.PropertyChangeListener;
+import java.util.List;
+import jmri.AddressedProgrammer;
 import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammerException;
-import java.beans.PropertyChangeListener;
+import jmri.ProgrammingMode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Provides an Ops mode proxy programing interface for a RailCom Reader.
- * This forwards the read request to the command station to forward on and 
- * handles sending back the CV reading results from the Rail Com message
+ * Provides an Ops mode proxy programing interface for a RailCom Reader. This
+ * forwards the read request to the command station to forward on and handles
+ * sending back the CV reading results from the Rail Com message
  *
- * @see            jmri.Programmer
- * @author         Kevin Dickerson Copyright (C) 2012
- * @version        $Revision: 17977 $
-*/
+ * @see jmri.Programmer
+ * @author Kevin Dickerson Copyright (C) 2012
+ * @version $Revision: 17977 $
+ */
+public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implements PropertyChangeListener, AddressedProgrammer {
 
-public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implements PropertyChangeListener
-{
-
-    int pAddress=0;
-    int progState=0;
+    int pAddress = 0;
+    boolean pLongAddress;
+    int progState = 0;
     jmri.RailCom rcTag;
     int value;
     int cv;
     jmri.ProgListener progListener = null;
 
     static protected final int Dcc4PCProgrammerTimeout = 2000;
-    
+
     jmri.ProgrammerManager defaultManager;
     Programmer defaultProgrammer;
-    
-    public Dcc4PcOpsModeProgrammer(boolean pLongAddress, int pAddress, jmri.ProgrammerManager dp){
+
+    public Dcc4PcOpsModeProgrammer(boolean pLongAddress, int pAddress, jmri.ProgrammerManager dp) {
         defaultManager = dp;
         defaultProgrammer = defaultManager.getAddressedProgrammer(pLongAddress, pAddress);
-        this.pAddress=pAddress;
-        rcTag = jmri.InstanceManager.getDefault(jmri.RailComManager.class).provideIdTag(""+pAddress);
+        this.pAddress = pAddress;
+        this.pLongAddress = pLongAddress;
+        rcTag = jmri.InstanceManager.getDefault(jmri.RailComManager.class).provideIdTag("" + pAddress);
     }
 
     /**
@@ -51,7 +53,7 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
     }
 
     synchronized public void readCV(int cv, ProgListener p) throws ProgrammerException {
-        
+
         rcTag.addPropertyChangeListener(this);
         rcTag.setExpectedCv(cv);
         progListener = p;
@@ -60,14 +62,17 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
         defaultProgrammer.readCV(cv, new ProxyProgList());
         progListener.programmingOpReply(cv, jmri.ProgListener.OK);
     }
-    
-    static class ProxyProgList implements jmri.ProgListener{
-        ProxyProgList(){}
-        public void programmingOpReply(int value, int status){
+
+    static class ProxyProgList implements jmri.ProgListener {
+
+        ProxyProgList() {
+        }
+
+        public void programmingOpReply(int value, int status) {
             /*if(status!=NotImplemented){
-                progListener.programmingOpReply(0, status);
-            }
-            log.debug("Actual Command station returned " + status + " " + value);*/
+             progListener.programmingOpReply(0, status);
+             }
+             log.debug("Actual Command station returned " + status + " " + value);*/
         }
     }
 
@@ -75,42 +80,38 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
         rcTag.addPropertyChangeListener(this);
         rcTag.setExpectedCv(cv);
         synchronized (this) {
-             progListener = p;
+            progListener = p;
         }
         this.cv = cv;
         defaultProgrammer.confirmCV(cv, val, new ProxyProgList());
     }
 
-    public void setMode(int mode) {
-        defaultProgrammer.setMode(mode);
+    /**
+     * Types implemented here.
+     */
+    @Override
+    public List<ProgrammingMode> getSupportedModes() {
+        return defaultProgrammer.getSupportedModes();
     }
 
-    public int  getMode() {
-        return defaultProgrammer.getMode();
-    }
-
-    public boolean hasMode(int mode) {
-        return defaultProgrammer.hasMode(mode);
-    }
-
-    synchronized protected void timeout(){
+    synchronized protected void timeout() {
         rcTag.removePropertyChangeListener(this);
         rcTag.setExpectedCv(-1);
         progListener.programmingOpReply(0, jmri.ProgListener.FailedTimeout);
     }
-    
+
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if(e.getSource()!=rcTag){
+        if (e.getSource() != rcTag) {
             log.error("Unexpected source");
         }
-        if(e.getPropertyName().equals("cvvalue")){
-            int repliedCv = (Integer)e.getOldValue();
+        if (e.getPropertyName().equals("cvvalue")) {
+            int repliedCv = (Integer) e.getOldValue();
             log.info(e.getOldValue() + " " + e.getNewValue());
-            if(repliedCv==cv){
+            if (repliedCv == cv) {
                 int value = (Integer) e.getNewValue();
                 stopTimer();
                 rcTag.removePropertyChangeListener(this);
-                synchronized(this){
+                synchronized (this) {
                     progListener.programmingOpReply(value, ProgListener.OK);
                 }
             } else {
@@ -119,10 +120,20 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
         }
     }
 
+    public boolean getLongAddress() {
+        return pLongAddress;
+    }
 
+    public int getAddressNumber() {
+        return pAddress;
+    }
+
+    public String getAddress() {
+        return "" + getAddressNumber() + " " + getLongAddress();
+    }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(Dcc4PcOpsModeProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Dcc4PcOpsModeProgrammer.class.getName());
 
 }
 

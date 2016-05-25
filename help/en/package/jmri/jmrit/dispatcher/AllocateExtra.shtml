@@ -1,16 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
  <TITLE>
       JMRI: Allocate Extra Window Help
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Dave Duchamp" name=Author>
+    <META content="Dave Duchamp" name="Author">
     <META name="keywords" content="JMRI help Dispatcher New Train">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -39,7 +37,7 @@ needed.</p>
 window to select the Active Train and the Section to be allocated. Once allocated, 
 extra Sections will show in the <b>Allocated Sections</b> table in the 
 <b><a href="Dispatcher.shtml">Dispatcher</a></b> window.  The <b>Release</b> button 
-in the Allocated Sections table should be used to release the extra Sections when 
+in the Allocated Section Table should be used to release the extra Sections when 
 they are no longer required. The <b>Auto Release</b> option does not release extra 
 Sections; extra Sections must be released manually.</p>
 
@@ -80,5 +78,7 @@ another manner will automatically cancel the operation in this window, and this
 window will disappear.
 
 <!--#include virtual="/Footer" -->
-</body>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
 </html>

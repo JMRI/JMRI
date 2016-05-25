@@ -1,64 +1,42 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2008 -->
-<!-- $Id$ -->
-<title>JMRI: OpenLCB Support</title>
+<title>JMRI Hardware Support - OpenLCB</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1> 
-JMRI: OpenLCB Support
-</h1>
+<h1>Hardware Support: OpenLCB</h1>
 
 <em>The support on this page is rapidly evolving; the
 actual code might be ahead or behind the documentation
 on any given day.</em><p>
+<ul class="snav"><!-- TOC -->
+	<li><a href="#connecting">Connecting</a></li>
+	<li><a href="#tools">JMRI OpenLCB Tools</a></li>
+	<li><a href="#documentation">Documentation</a></li>
+</ul>
 
+<a name="connecting"></a><h2>Connecting</h2>
 JMRI provides support for general JMRI
 <a href="../../tools/Sensors.shtml">Sensors</a>
 and
 <a href="../../tools/Turnouts.shtml">Turnouts</a>
 in terms of OpenLCB "events". 
 
+<h3>Settings</h3>
 <p>
-You can directly operate the OpenLCB network
-via the 
-<a href="../../../package/jmri/jmrix/openlcb/swing/send/OpenLcbCanSendFrame.shtml">send frame tool</a>.
-For browsing and setting configuration, see the 
-<a href="../../../package/jmri/jmrix/openlcb/swing/networktree/NetworkTreePane.shtml">node configuration browser tool</a>.
-<a href="../../../package/jmri/jmrix/openlcb/swing/networktree/NodeWithID.png">
-    <img src="../../../package/jmri/jmrix/openlcb/swing/networktree/NodeWithID.png"
-         width="128" height="149" align="right"
-         alt="Configuration Tool window"></a>
-
-<p>
-See also the 
-<a href="../index.shtml">main help page</a> for JMRI CAN support,
-including links to various general tools, and the
-page on the 
-<a href="Details.shtml">technical details</a>
-of JMRI's OpenLCB support. There's
-also a page on 
-how to 
-<a href="Connections.shtml">connect JMRI to an OpenLCB installation</a>.
-
-<h2>Naming</h2>
-
 The <a href="../../../html/doc/Technical/Names.shtml">system letter</a> 
 for OpenLCB connections is "M". OpenLCB 
 event and object names are 
@@ -66,51 +44,87 @@ introduced below, with additional details and formats on a
 <a href="Names.shtml">separate page</a>.
 
 <p>
-JMRI associates OpenLCB events with individual
-JMRI objects (Sensors, Turnouts, etc) via the 
-JMRI system names.  A system name like
+JMRI associates OpenLCB Events with individual
+JMRI objects (Sensors, Turnouts, etc.) via the 
+JMRI System Names.  A System Name like
 "<code>MS1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9</code>"
 defines a Sensor that follows the "1.2.3.4.5.6.7.8"
-and "1.2.3.4.5.6.7.9" OpenLCB events
+and "1.2.3.4.5.6.7.9" OpenLCB Events
 to change state. 
 <p>
-Another format for event IDs is a
+Another format for Event ID's is a
 continuous hexadecimal string, such as
-"x0102030405060709".
+"<code>x0102030405060709</code>".
 <p>
-These system names can get very long, in which
-case the "user names" become much more useful. 
+These System Names can get very long, in which
+case the "User Names" become much more useful. 
 
-<h2>Sensors</h2>
-
-OpenLCB messages coming into JMRI applications can be accessed 
-via JMRI Sensor objects.  The Sensor's 
-<a href="Names.shtml">system name</a>
-determines which OpenLCB events it corresponds to.
-
-<p>
-A sensor is defined by two events: The one that sets it ACTIVE, and
-the one that sets it INACTIVE. The event numbers are essentially 
-arbitrary, and are defined by the OpenLCB nodes that send them.
-Because events are not intrinsically associated with specific hardware
-objects, and because people can use event IDs in many ways, 
-the specific event IDs for a sensor must be supplied.  
+<h4>Sensors</h4>
+<p>OpenLCB messages coming into JMRI applications can be accessed 
+via JMRI Sensor objects. The Sensor's 
+<a href="Names.shtml">System Name</a>
+determines which OpenLCB Events it corresponds to.<br>
+A Sensor is defined by two Events: The one that sets it ACTIVE, and
+the one that sets it INACTIVE.<br>
+The Event numbers are essentially 
+arbitrary, and are defined by the OpenLCB Nodes that send them.
+Because Events are not intrinsically associated with specific hardware
+objects, and because people can use Event ID's in many ways, 
+the specific Event ID's for a Sensor must be supplied.<br> 
 You create Sensors using the 
-<a href="../../../../package/jmri/jmrit/beantable/SensorAddEdit.shtml">Add...</a>
+<a href="../../../package/jmri/jmrit/beantable/SensorAddEdit.shtml">Add...</a>
 button on the
-<a href="../../../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensor Table</a>.
-If you supply two event IDs, the first will set the sensor ACTIVE and 
+<a href="../../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensor Table</a>.
+If you supply two event ID's, the first will set the Sensor ACTIVE and 
 the second will set it INACTIVE.  If you provide just one, it
-will set the sensor ACTIVE, and it will automatically reset itself to INACTIVE
-shortly after.  This can be used for events that indicate momentary things on
+will set the Sensor ACTIVE, and it will automatically reset itself to INACTIVE
+shortly after. This can be used for events that indicate momentary things on
 the layout like "it's noon".
 
-<h2>Turnouts</h2>
-
-The scheme for Turnouts is similar to Sensors above, 
+<h4>Turnouts</h4>
+<p>The scheme for Turnouts is similar to Sensors above, 
 except JMRI is emitting the OpenLCB frames instead of receiving them, and
 the type letter is "T" instead of "S", e.g. "<code>MT1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9</code>".
 
+<h3>Wiring</h3>
+<p>OpenLCB connection options are <a href="Connections.shtml">on a separate page</a>.
+
+<a name="tools"></a><h2>JMRI OpenLCB Tools</h2>
+<img src="images/OpenLCBmenu.png" width="172" height="126" align="right" alt="Menu">
+<p>When JMRI is connected to a layout via this system, an <b>OpenLCB</b> menu is shown:</p>
+<ul>   
+	<li>Traffic Monitor<br>
+	<a href="images/OpenLCBMonitor.png">
+	<img src="images/OpenLCBMonitor.png" alt="Monitor Pane" width="488" height="88"></a></li>
+	<li>You can directly operate the OpenLCB network via the 
+	<a href="../../../package/jmri/jmrix/openlcb/swing/send/OpenLcbCanSendFrame.shtml">Send Frame</a> tool<br>
+	<a href="images/OpenLCBSendFrame.png">
+	<img src="images/OpenLCBSendFrame.png" alt="Send Frame Pane" width="456" height="349"></a></li>
+	<li>Browse and set Configuration with the 
+	<a href="../../../package/jmri/jmrix/openlcb/swing/networktree/NetworkTreePane.shtml">Configure Nodes</a> tool<br>
+	<a href="../../../package/jmri/jmrix/openlcb/swing/networktree/NodeWithID.png">
+	    <img src="../../../package/jmri/jmrix/openlcb/swing/networktree/NodeWithID.png"
+	    width="128" height="149" alt="Configuration Tool pane"></a>
+	<li>Start Hub<br>
+	<a href="images/OpenLCBHubControl.png">
+	<img src="images/OpenLCBHubControl.png" alt="Hub Control Pane" width="114" height="28"></a></li>
+	<li>The <a href="../../../package/jmri/jmrix/openlcb/swing/downloader/LoaderFrame.shtml">Firmware Update</a> tool
+	can load new firmware into compatible OpenLCB Nodes<br>
+	<a href="images/OpenLCBFWDownloader.png">
+	<img src="images/OpenLCBFWDownloader.png" alt="HW Downloader Pane" width="145" height="171"></a></li>
+</ul>
+
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>JMRI Help</h3>
+<ul>
+<li>How to <a href="Connections.shtml">Connect JMRI to an OpenLCB installation</a></li>
+<li>The Help page on <a href="Details.shtml">OpenLCB Technical Details</a></li>
+<li>The <a href="../can/index.shtml">main Help page</a> for JMRI CAN support,
+including links to various general tools</li>
+</ul>
+
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

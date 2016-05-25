@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="../../XSLT/aspecttable.xsl" type="text/xsl"?>
+<?xml-stylesheet href="/xml/XSLT/aspecttable.xsl" type="text/xsl"?>
 
 <aspecttable
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
@@ -22,6 +22,10 @@
         <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
         <email>jake@physics.berkeley.edu</email>
     </author>
+    <author>
+        <personname><firstname>Oscar</firstname><surname>Moutinho</surname></personname>
+        <email>oscar.moutinho@gmail.com</email>
+    </author>    
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -36,13 +40,19 @@
         <date>2010-01-17</date>
         <authorinitials>RGJ</authorinitials>
         <revremark>Simpler namespace indicators. New imagetype tag</revremark>
-    </revision>    
+    </revision>
     <revision>
         <revnumber>3</revnumber>
         <date>2010-01-19</date>
         <authorinitials>JCV</authorinitials>
         <revremark>Added small and medium size icons more suitable for panels</revremark>
-    </revision>    
+    </revision>
+    <revision>
+        <revnumber>4</revnumber>
+        <date>2015-03-03</date>
+        <authorinitials>OM</authorinitials>
+        <revremark>Add Speed and Route to Aspects. Add Aspect Mapping and Specific Aspects</revremark>
+    </revision>
   </revhistory>
 
   <aspects>
@@ -52,6 +62,8 @@
 	  <description>One red light</description>
 	  <description>Previously one red light had the meaning of "Stop for train movements" (shunting movements were allowed). To actually stop shunting two horizontal red lights were neccessary. Since 1959 one red light is enough to stop all movements.</description>
 	  <comment>Halt</comment>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
     </aspect>
 
     <aspect>
@@ -60,6 +72,8 @@
 	  <description>Two horizontal red lights</description>
 	  <description>Previously one red light had the meaning of "Stop for train movements" (shunting movements were allowed). To actually stop shunting two horizontal red lights were neccessary. This is the reason why this signal has two red lights. Since 1959 one red light is enough to stop all movements, but old signals still have two lights to avoid rewiring.</description>
 	  <comment>Halt für alle Fahrten</comment>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
     </aspect>
 
     <aspect>
@@ -67,6 +81,8 @@
       <indication>Stop for trains, shunting allowed</indication>
 	  <description>One red light and two small white lights arranged diagonally</description>
 	  <comment>Halt für Zugfahrten / Fahrt für Rangierfahrten</comment>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
     </aspect>
 
     <aspect>
@@ -74,6 +90,9 @@
       <indication>Proceed, line clear (with timetable speed)</indication>
 	  <description>One green light</description>
 	  <comment>Fahrt</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
     </aspect>
 
     <aspect>
@@ -81,6 +100,9 @@
       <indication>Proceed slowly, line clear with slow speed (40 km/h if not indicated otherwise)</indication>
 	  <description>One green light over one yellow light</description>
 	  <comment>Langsamfahrt</comment>
+      <speed>Limited</speed>
+      <speed2>Limited</speed2>
+      <route>Diverging</route>
     </aspect>
 
     <aspect>
@@ -88,6 +110,8 @@
       <indication>Expect stop, prepare to stop at next main signal</indication>
 	  <description>Two yellow lights arranged diagonally</description>
 	  <comment>Halt erwarten</comment>
+      <speed>Limited</speed>
+      <speed2>Limited</speed2>
     </aspect>
 
     <aspect>
@@ -95,6 +119,8 @@
       <indication>Expect proceed, prepare to proceed at next main signal</indication>
 	  <description>Two green lights arranged diagonally</description>
 	  <comment>Fahrt erwarten</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
     </aspect>
 
     <aspect>
@@ -102,6 +128,8 @@
       <indication>Expect slow, prepare to proceed slowly at next main signal</indication>
 	  <description>One green light over one yellow light, arranged diagonally</description>
 	  <comment>Langsamfahrt erwarten</comment>
+      <speed>Limited</speed>
+      <speed2>Limited</speed2>
     </aspect>
 
     <aspect>
@@ -109,6 +137,9 @@
       <indication>Proceed preparing to stop at next main signal</indication>
 	  <description>One green light + Two yellow lights arranged diagonally</description>
 	  <comment>Fahrt + Halt erwarten</comment>
+      <speed>Limited</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
     </aspect>
 
     <aspect>
@@ -116,6 +147,9 @@
       <indication>Proceed preparing to proceed at next main signal</indication>
 	  <description>One green light + Two green lights arranged diagonally</description>
 	  <comment>Fahrt + Fahrt erwarten</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
     </aspect>
 
     <aspect>
@@ -123,6 +157,9 @@
       <indication>Proceed preparing to proceed slowly at next main signal</indication>
 	  <description>One green light + One green light over one yellow light, arranged diagonally</description>
 	  <comment>Fahrt + Langsamfahrt erwarten</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
     </aspect>
 
     <aspect>
@@ -130,6 +167,9 @@
       <indication>Proceed slowly (40 km/h if not indicated otherwise) preparing to stop at next main signal</indication>
 	  <description>One green light over one yellow light + Two yellow lights arranged diagonally</description>
 	  <comment>Langsamfahrt + Halt erwarten</comment>
+      <speed>Limited</speed>
+      <speed2>Limited</speed2>
+      <route>Diverging</route>
     </aspect>
 
     <aspect>
@@ -137,6 +177,9 @@
       <indication>Proceed slowly (40 km/h if not indicated otherwise) preparing to proceed at next main signal</indication>
 	  <description>One green light over one yellow light + Two green lights arranged diagonally</description>
 	  <comment>Langsamfahrt + Fahrt erwarten</comment>
+      <speed>Limited</speed>
+      <speed2>Limited</speed2>
+      <route>Diverging</route>
     </aspect>
 
     <aspect>
@@ -144,6 +187,9 @@
       <indication>Proceed slowly (40 km/h if not indicated otherwise) preparing to proceed slowly at next main signal</indication>
 	  <description>One green light over one yellow light + One green light over one yellow light, arranged diagonally</description>
 	  <comment>Langsamfahrt + Langsamfahrt erwarten</comment>
+      <speed>Limited</speed>
+      <speed2>Limited</speed2>
+      <route>Diverging</route>
     </aspect>
 
     <aspect>
@@ -152,6 +198,8 @@
 	  <description>Two horizontal small red lights</description>
 	  <description>Equivalent to Hp0 and Hp00</description>
 	  <comment>Halt für alle Fahrten</comment>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
     </aspect>
 
     <aspect>
@@ -160,6 +208,8 @@
 	  <description>Two small white lights arranged diagonally</description>
 	  <description>Equivalent to Hp0/Sh1</description>
 	  <comment>Rangierfahrt frei</comment>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
     </aspect>
   </aspects>
 

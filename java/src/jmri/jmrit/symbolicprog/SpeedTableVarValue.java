@@ -1,26 +1,20 @@
-// SpeedTableVarValue.java
-
 package jmri.jmrit.symbolicprog;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.beans.PropertyChangeListener;
-
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Vector;
 import java.util.ResourceBundle;
-
 import javax.swing.BoundedRangeModel;
 import javax.swing.DefaultBoundedRangeModel;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JCheckBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
@@ -28,58 +22,65 @@ import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgPane;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Represent an entire speed table as a single Variable.
  * <P>
- * This presents as a set of vertically oriented sliders, with numeric values above them.
- * That it turn is done using VarSlider and DecVariableValue objects respectively.
- * VarSlider is an interior class to color a JSlider by state. The respective VarSlider
- * and DecVariableValue communicate through their underlying CV objects. Changes to
- * CV Values are listened to by this class, which updates the model objects for the
- * VarSliders; the DecVariableValues listen directly.
- *<P>
- * Color (hence state) of individual sliders (hence CVs) are directly coupled to the
- * state of those CVs.
- *<P> The state of the entire variable has to be a composite of all the sliders, hence CVs.
- * The mapping is (in order):
- *<UL>
- *<LI>If any CVs are UNKNOWN, its UNKNOWN..
- *<LI>If not, and any are EDITED, its EDITED.
- *<LI>If not, and any are FROMFILE, its FROMFILE.
- *<LI>If not, and any are READ, its READ.
- *<LI>If not, and any are STORED, its STORED.
- *<LI>And if we get to here, something awful has happened.
- *</UL><P>
- * A similar pattern is used for a read or write request.  Write writes them all;
- * Read reads any that aren't READ or WRITTEN.
- *<P>
- * Speed tables can have different numbers of entries; 28 is the default, and also the maximum.
+ * This presents as a set of vertically oriented sliders, with numeric values
+ * above them. That it turn is done using VarSlider and DecVariableValue objects
+ * respectively. VarSlider is an interior class to color a JSlider by state. The
+ * respective VarSlider and DecVariableValue communicate through their
+ * underlying CV objects. Changes to CV Values are listened to by this class,
+ * which updates the model objects for the VarSliders; the DecVariableValues
+ * listen directly.
  * <P>
- * The NMRA specification says that speed table entries cannot be non-monotonic (e.g. cannot
- * decrease when moving from lower to higher CV numbers). In earlier versions of the code,
- * this was enforced any time a value was changed (for any reason).  This caused a problem
- * when CVs were read that were non-monotonic:  That value was read, causing lower CVs to be made
- * consistent, a change in their value which changed their state, so they were read again.  To
- * avoid this, the class now only enforces non-monotonicity when the slider is adjusted.
- *<P>
- * _value is a holdover from the LongAddrVariableValue, which this was copied from; it should
- * be removed.
- *<P>
- * @author	Bob Jacobsen, Alex Shepherd   Copyright (C) 2001, 2004
- * @author  Dave Heap           Copyright (C) 2012 Added support for Marklin mfx style speed table
- * @author  Dave Heap           Copyright (C) 2013 Changes to fix mfx speed table issue (Vstart & Vhigh not written)
- * @author  Dave Heap                              - generate cvList array to incorporate Vstart & Vhigh
- * @version	$Revision$
+ * Color (hence state) of individual sliders (hence CVs) are directly coupled to
+ * the state of those CVs.
+ * <P>
+ * The state of the entire variable has to be a composite of all the sliders,
+ * hence CVs. The mapping is (in order):
+ * <UL>
+ * <LI>If any CVs are UNKNOWN, its UNKNOWN..
+ * <LI>If not, and any are EDITED, its EDITED.
+ * <LI>If not, and any are FROMFILE, its FROMFILE.
+ * <LI>If not, and any are READ, its READ.
+ * <LI>If not, and any are STORED, its STORED.
+ * <LI>And if we get to here, something awful has happened.
+ * </UL><P>
+ * A similar pattern is used for a read or write request. Write writes them all;
+ * Read reads any that aren't READ or WRITTEN.
+ * <P>
+ * Speed tables can have different numbers of entries; 28 is the default, and
+ * also the maximum.
+ * <P>
+ * The NMRA specification says that speed table entries cannot be non-monotonic
+ * (e.g. cannot decrease when moving from lower to higher CV numbers). In
+ * earlier versions of the code, this was enforced any time a value was changed
+ * (for any reason). This caused a problem when CVs were read that were
+ * non-monotonic: That value was read, causing lower CVs to be made consistent,
+ * a change in their value which changed their state, so they were read again.
+ * To avoid this, the class now only enforces non-monotonicity when the slider
+ * is adjusted.
+ * <P>
+ * _value is a holdover from the LongAddrVariableValue, which this was copied
+ * from; it should be removed.
+ * <P>
+ * @author	Bob Jacobsen, Alex Shepherd Copyright (C) 2001, 2004, 2013
+ * @author Dave Heap Copyright (C) 2012 Added support for Marklin mfx style
+ * speed table
+ * @author Dave Heap Copyright (C) 2013 Changes to fix mfx speed table issue
+ * (Vstart {@literal &} Vhigh not written)
+ * @author Dave Heap - generate cvList array to incorporate Vstart {@literal &}
+ * Vhigh
  *
  */
 public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {
 
-    static final int VSTART_CV = 2;
-    static final int VHIGH_CV = 5;
-
     int nValues;
     int numCvs;
-    int[] cvList;
+    String[] cvList;
     BoundedRangeModel[] models;
     int _min;
     int _max;
@@ -87,40 +88,33 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
     boolean mfx;
 
     List<JCheckBox> stepCheckBoxes;
-    
+
     /**
      * Create the object with a "standard format ctor".
      */
     public SpeedTableVarValue(String name, String comment, String cvName,
-                              boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
-                              int cvNum, String mask, int minVal, int maxVal,
-                              Vector<CvValue> v, JLabel status, String stdname, int entries, boolean mfxFlag) {
+            boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
+            String cvNum, String mask, int minVal, int maxVal,
+            HashMap<String, CvValue> v, JLabel status, String stdname, int entries, boolean mfxFlag) {
         super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
 
         nValues = entries;
         _min = minVal;
         _max = maxVal;
-        _range = maxVal-minVal;
+        _range = maxVal - minVal;
         mfx = mfxFlag;
 
-		if (mfx) {
-			numCvs = nValues + 2;
-			cvList = new int[numCvs];
-			cvList[nValues] = VSTART_CV;
- 			cvList[nValues + 1] = VHIGH_CV;
-		} else {
-			numCvs = nValues;
-			cvList = new int[numCvs];
-		}
+        numCvs = nValues;
+        cvList = new String[numCvs];
 
         models = new BoundedRangeModel[nValues];
-        
+
         // create the set of models
-        for (int i=0; i<nValues; i++) {
+        for (int i = 0; i < nValues; i++) {
             // populate cvList
-            cvList[i] = getCvNum()+i;
+            cvList[i] = Integer.toString(Integer.parseInt(getCvNum()) + i);
             // create each model
-            DefaultBoundedRangeModel j = new DefaultBoundedRangeModel(_range*i/(nValues-1)+_min, 0, _min, _max);
+            DefaultBoundedRangeModel j = new DefaultBoundedRangeModel(_range * i / (nValues - 1) + _min, 0, _min, _max);
             models[i] = j;
             // connect each model to CV for notification
             // the connection is to cvNum through cvNum+nValues (28 values total typically)
@@ -128,8 +122,8 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             // Note that the default values in the CVs are zero, but are the ramp
             // values here.  We leave that as work item 177, and move on to set the
             // CV states to "FromFile"
-            CvValue c = _cvVector.elementAt(cvList[i]);
-            c.setValue(_range*i/(nValues-1)+_min);
+            CvValue c = _cvMap.get(cvList[i]);
+            c.setValue(_range * i / (nValues - 1) + _min);
             c.addPropertyChangeListener(this);
             c.setState(CvValue.FROMFILE);
         }
@@ -138,9 +132,11 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
     }
 
     /**
-     * Create a null object.  Normally only used for tests and to pre-load classes.
+     * Create a null object. Normally only used for tests and to pre-load
+     * classes.
      */
-    public SpeedTableVarValue() {}
+    public SpeedTableVarValue() {
+    }
 
     public Object rangeVal() {
         log.warn("rangeVal doesn't make sense for a speed table");
@@ -150,8 +146,9 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
     public CvValue[] usesCVs() {
         CvValue[] retval = new CvValue[numCvs];
         int i;
-        for (i=0; i<numCvs; i++)
-            retval[i] = _cvVector.elementAt(cvList[i]);
+        for (i = 0; i < numCvs; i++) {
+            retval[i] = _cvMap.get(cvList[i]);
+        }
         return retval;
     }
 
@@ -159,6 +156,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
      * Called for new values of a slider.
      * <P>
      * Sets the CV(s) as needed.
+     *
      * @param e
      */
     public void stateChanged(ChangeEvent e) {
@@ -166,7 +164,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         JSlider j = (JSlider) e.getSource();
         BoundedRangeModel r = j.getModel();
 
-        for (int i=0; i<nValues; i++) {
+        for (int i = 0; i < nValues; i++) {
             if (r == models[i]) {
                 // found it, and i is useful!
                 setModel(i, r.getValue());
@@ -178,44 +176,51 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
     }
 
     void setModel(int i, int value) {  // value is _min to _max
-        if (i < nValues && models[i].getValue() != value)
+        if (value < _min || (mfx && (i == 0))) {
+            value = _min;
+        }
+        if (value > _max || (mfx && (i == nValues - 1))) {
+            value = _max;
+        }
+        if (i < nValues && models[i].getValue() != value) {
             models[i].setValue(value);
+        }
         // update the CV
-        _cvVector.elementAt(cvList[i]).setValue(value);
+        _cvMap.get(cvList[i]).setValue(value);
         // if programming, that's it
-        if (isReading || isWriting) return;
-        else if (i < nValues && !(mfx && (i == 0 || i == (nValues-1)))) {
+        if (isReading || isWriting) {
+            return;
+        } else if (i < nValues && !(mfx && (i == 0 || i == (nValues - 1)))) {
             forceMonotonic(i, value);
             matchPoints(i);
         }
     }
 
     /**
-     * Check entries on either side to see if they are set monotonically.
-     * If not, adjust.
+     * Check entries on either side to see if they are set monotonically. If
+     * not, adjust.
      *
      * @param modifiedStepIndex number (index) of the entry
-     * @param value  new value
+     * @param value             new value
      */
     void forceMonotonic(int modifiedStepIndex, int value) {
         // check the neighbors, and force them if needed
         if (modifiedStepIndex > 0) {
             // left neighbour
-            if (models[modifiedStepIndex-1].getValue() > value)  {
-                setModel(modifiedStepIndex-1, value);
+            if (models[modifiedStepIndex - 1].getValue() > value) {
+                setModel(modifiedStepIndex - 1, value);
             }
         }
-        if (modifiedStepIndex < nValues-1) {
+        if (modifiedStepIndex < nValues - 1) {
             // right neighbour
-            if (value > models[modifiedStepIndex+1].getValue()) {
-                setModel(modifiedStepIndex+1, value);
+            if (value > models[modifiedStepIndex + 1].getValue()) {
+                setModel(modifiedStepIndex + 1, value);
             }
         }
     }
 
     /**
-     * If there are fixed points specified, set linear 
-     * step settings to them.
+     * If there are fixed points specified, set linear step settings to them.
      *
      */
     void matchPoints(int modifiedStepIndex) {
@@ -224,95 +229,102 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             // no need to use the matchPoints algorithm
             return;
         }
-        if (modifiedStepIndex<0)
-            log.error("matchPoints called with index too small: "+modifiedStepIndex);
-        if (modifiedStepIndex >= stepCheckBoxes.size())
-            log.error("matchPoints called with index too large: "+modifiedStepIndex
-                        +" >= "+stepCheckBoxes.size());
-        if (stepCheckBoxes.get(modifiedStepIndex) == null)
-            log.error("matchPoints found null checkbox "+modifiedStepIndex);
-            
+        if (modifiedStepIndex < 0) {
+            log.error("matchPoints called with index too small: " + modifiedStepIndex);
+        }
+        if (modifiedStepIndex >= stepCheckBoxes.size()) {
+            log.error("matchPoints called with index too large: " + modifiedStepIndex
+                    + " >= " + stepCheckBoxes.size());
+        }
+        if (stepCheckBoxes.get(modifiedStepIndex) == null) {
+            log.error("matchPoints found null checkbox " + modifiedStepIndex);
+        }
+
         // don't do the match if this step isn't checked,
         // which is necessary to keep from an infinite 
         // recursion
-        if (!stepCheckBoxes.get(modifiedStepIndex).isSelected()) return;
+        if (!stepCheckBoxes.get(modifiedStepIndex).isSelected()) {
+            return;
+        }
         matchPointsLeft(modifiedStepIndex);
         matchPointsRight(modifiedStepIndex);
     }
-    
+
     void matchPointsLeft(int modifiedStepIndex) {
         // search for checkbox if any
-        for (int i = modifiedStepIndex-1; i >= 0 ; i--) {
+        for (int i = modifiedStepIndex - 1; i >= 0; i--) {
             if (stepCheckBoxes.get(i).isSelected()) {
                 // now have two ends to adjust
-                int leftval = _cvVector.elementAt(cvList[i]).getValue();
-                int rightval = _cvVector.elementAt(cvList[modifiedStepIndex]).getValue();
-                int steps = modifiedStepIndex-i;
-                log.debug("left found "+leftval+" "+rightval+" "+steps);
+                int leftval = _cvMap.get(cvList[i]).getValue();
+                int rightval = _cvMap.get(cvList[modifiedStepIndex]).getValue();
+                int steps = modifiedStepIndex - i;
+                log.debug("left found " + leftval + " " + rightval + " " + steps);
                 // loop to set values
-                for (int j = i+1; j < modifiedStepIndex; j++) {
-                    int newValue = leftval + (rightval-leftval)*(j-i)/steps;
-                    log.debug("left set "+j+" to "+newValue);
-                    if (_cvVector.elementAt(cvList[j]).getValue() != newValue)
-                        _cvVector.elementAt(cvList[j]).setValue(newValue);
+                for (int j = i + 1; j < modifiedStepIndex; j++) {
+                    int newValue = leftval + (rightval - leftval) * (j - i) / steps;
+                    log.debug("left set " + j + " to " + newValue);
+                    if (_cvMap.get(cvList[j]).getValue() != newValue) {
+                        _cvMap.get(cvList[j]).setValue(newValue);
+                    }
                 }
                 return;
             }
         }
         // no match, so don't adjust
         return;
-    }
-    
-    void matchPointsRight(int modifiedStepIndex) {
-        // search for checkbox if any
-        for (int i = modifiedStepIndex+1; i < nValues ; i++) { // need at least one intervening point
-            if (stepCheckBoxes.get(i).isSelected()) {
-                // now have two ends to adjust
-                int rightval = _cvVector.elementAt(cvList[i]).getValue();
-                int leftval = _cvVector.elementAt(cvList[modifiedStepIndex]).getValue();
-                int steps = i-modifiedStepIndex;
-                log.debug("right found "+leftval+" "+rightval+" "+steps);
-                // loop to set values
-                for (int j = modifiedStepIndex+1; j < i; j++) {
-                    int newValue = leftval + (rightval-leftval)*(j-modifiedStepIndex)/steps;
-                    log.debug("right set "+j+" to "+newValue);
-                    if (_cvVector.elementAt(cvList[j]).getValue() != newValue)
-                        _cvVector.elementAt(cvList[j]).setValue(newValue);
-                }
-                return;
-            }
-        }
-        // no match, so don't adjust
-        return;
-    }
-    
-    /**
-     * Enforce mfx bounds conditions. 
-     *
-     */
-    void enforceEndPointsMfx() {
-        if (mfx) {
-            if (_cvVector.elementAt(cvList[0]).getValue() != _min) {
-                _cvVector.elementAt(cvList[0]).setValue(_min);
-            }
-            if (_cvVector.elementAt(cvList[nValues-1]).getValue() != _max) {
-                _cvVector.elementAt(cvList[nValues-1]).setValue(_max);
-            }
-        }
     }
 
-    public int getState()  {
+    void matchPointsRight(int modifiedStepIndex) {
+        // search for checkbox if any
+        for (int i = modifiedStepIndex + 1; i < nValues; i++) { // need at least one intervening point
+            if (stepCheckBoxes.get(i).isSelected()) {
+                // now have two ends to adjust
+                int rightval = _cvMap.get(cvList[i]).getValue();
+                int leftval = _cvMap.get(cvList[modifiedStepIndex]).getValue();
+                int steps = i - modifiedStepIndex;
+                log.debug("right found " + leftval + " " + rightval + " " + steps);
+                // loop to set values
+                for (int j = modifiedStepIndex + 1; j < i; j++) {
+                    int newValue = leftval + (rightval - leftval) * (j - modifiedStepIndex) / steps;
+                    log.debug("right set " + j + " to " + newValue);
+                    if (_cvMap.get(cvList[j]).getValue() != newValue) {
+                        _cvMap.get(cvList[j]).setValue(newValue);
+                    }
+                }
+                return;
+            }
+        }
+        // no match, so don't adjust
+        return;
+    }
+
+    public int getState() {
         int i;
-        for (i=0; i<numCvs; i++)
-            if (_cvVector.elementAt(cvList[i]).getState() == UNKNOWN ) return UNKNOWN;
-        for (i=0; i<numCvs; i++)
-            if (_cvVector.elementAt(cvList[i]).getState() == EDITED ) return EDITED;
-        for (i=0; i<numCvs; i++)
-            if (_cvVector.elementAt(cvList[i]).getState() == FROMFILE ) return FROMFILE;
-        for (i=0; i<numCvs; i++)
-            if (_cvVector.elementAt(cvList[i]).getState() == READ ) return READ;
-        for (i=0; i<numCvs; i++)
-            if (_cvVector.elementAt(cvList[i]).getState() == STORED ) return STORED;
+        for (i = 0; i < numCvs; i++) {
+            if (_cvMap.get(cvList[i]).getState() == UNKNOWN) {
+                return UNKNOWN;
+            }
+        }
+        for (i = 0; i < numCvs; i++) {
+            if (_cvMap.get(cvList[i]).getState() == EDITED) {
+                return EDITED;
+            }
+        }
+        for (i = 0; i < numCvs; i++) {
+            if (_cvMap.get(cvList[i]).getState() == FROMFILE) {
+                return FROMFILE;
+            }
+        }
+        for (i = 0; i < numCvs; i++) {
+            if (_cvMap.get(cvList[i]).getState() == READ) {
+                return READ;
+            }
+        }
+        for (i = 0; i < numCvs; i++) {
+            if (_cvMap.get(cvList[i]).getState() == STORED) {
+                return STORED;
+            }
+        }
         log.error("getState did not decode a possible state");
         return UNKNOWN;
     }
@@ -321,14 +333,17 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
     // and to read/write/hear parameter changes.
     public String getValueString() {
         StringBuffer buf = new StringBuffer();
-        for (int i=0; i< models.length; i++) {
-            if (i!=0) buf.append(",");
+        for (int i = 0; i < models.length; i++) {
+            if (i != 0) {
+                buf.append(",");
+            }
             buf.append(Integer.toString(models[i].getValue()));
         }
         return buf.toString();
     }
+
     public void setIntValue(int i) {
-        log.warn("setIntValue doesn't make sense for a speed table: "+i);
+        log.warn("setIntValue doesn't make sense for a speed table: " + i);
     }
 
     public int getIntValue() {
@@ -340,22 +355,23 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         return null;
     }
 
-    public Component getCommonRep()  {
+    public Component getCommonRep() {
         log.warn("getValue not implemented yet");
         return new JLabel("speed table");
     }
 
     public void setValue(int value) {
-        log.warn("setValue doesn't make sense for a speed table: "+value);
+        log.warn("setValue doesn't make sense for a speed table: " + value);
     }
-    
+
     Color _defaultColor;
+
     // implement an abstract member to set colors
     void setColor(Color c) {
         // prop.firePropertyChange("Value", null, null);
     }
 
-    public Component getNewRep(String format)  {
+    public Component getNewRep(String format) {
         final int GRID_Y_BUTTONS = 3;
         // put together a new panel in scroll pane
         JPanel j = new JPanel();
@@ -366,41 +382,43 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 
         initStepCheckBoxes();
 
-        for (int i=0; i<nValues; i++) {
+        for (int i = 0; i < nValues; i++) {
             cs.gridy = 0;
             cs.gridx = i;
 
-            CvValue cv = _cvVector.elementAt(cvList[i]);
-            JSlider s = new VarSlider(models[i], cv, i+1);
+            CvValue cv = _cvMap.get(cvList[i]);
+            JSlider s = new VarSlider(models[i], cv, i + 1);
             s.setOrientation(JSlider.VERTICAL);
             s.addChangeListener(this);
 
             int currentState = cv.getState();
             int currentValue = cv.getValue();
 
-            DecVariableValue decVal = new DecVariableValue("val"+i,"","", false, false, false, false,
-                                                           cvList[i], "VVVVVVVV", _min, _max,
-                                                           _cvVector, _status, "");
+            DecVariableValue decVal = new DecVariableValue("val" + i, "", "", false, false, false, false,
+                    cvList[i], "VVVVVVVV", _min, _max,
+                    _cvMap, _status, "");
             decVal.setValue(currentValue);
             decVal.setState(currentState);
 
             Component v = decVal.getCommonRep();
             String start = ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("TextStep")
-                            +" "+(i+1);
-            ((JTextField)v).setToolTipText(PaneProgPane.addCvDescription(start,"CV "+cvList[i],null));
-            ((JComponent)v).setBorder(null);  // pack tighter
-            
-            if (mfx && (i == 0 || i == (nValues-1))) {
-                ((JTextField)v).setEditable(false); // disable field editing
+                    + " " + (i + 1);
+            ((JTextField) v).setToolTipText(PaneProgPane.addCvDescription(start, "CV " + cvList[i], null));
+            ((JComponent) v).setBorder(null);  // pack tighter
+
+            if (mfx && (i == 0 || i == (nValues - 1))) {
+                ((JTextField) v).setEditable(false); // disable field editing
                 s.setEnabled(false);    // disable slider adjustment
             }
-            
+
             g.setConstraints(v, cs);
 
-            if (i==0 && log.isDebugEnabled()) log.debug("Font size "+v.getFont().getSize());
+            if (i == 0 && log.isDebugEnabled()) {
+                log.debug("Font size " + v.getFont().getSize());
+            }
             float newSize = v.getFont().getSize() * 0.8f;
-            v.setFont(jmri.util.FontUtil.deriveFont(v.getFont(),newSize));
-            j.add ( v );
+            v.setFont(jmri.util.FontUtil.deriveFont(v.getFont(), newSize));
+            j.add(v);
 
             cs.gridy++;
             g.setConstraints(s, cs);
@@ -412,8 +430,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 
             g.setConstraints(b, cs);
             j.add(b, cs);
-            
-            enforceEndPointsMfx();
+
         }
 
         // add control buttons
@@ -422,114 +439,61 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         k.add(b = new JButton(ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("ButtonForceStraight")));
         b.setToolTipText(ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("TooltipForceStraight"));
         b.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    doForceStraight(e);
-                }
-            });
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                doForceStraight(e);
+            }
+        });
         k.add(b = new JButton(ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("ButtonMatchEnds")));
         b.setToolTipText(ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("TooltipMatchEnds"));
         b.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    doMatchEnds(e);
-                }
-            });
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                doMatchEnds(e);
+            }
+        });
         k.add(b = new JButton(ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("ButtonConstantRatio")));
         b.setToolTipText(ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("TooltipConstantRatio"));
         b.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    doRatioCurve(e);
-                }
-            });
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                doRatioCurve(e);
+            }
+        });
         k.add(b = new JButton(ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("ButtonLogCurve")));
         b.setToolTipText(ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("TooltipLogCurve"));
         b.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    doLogCurve(e);
-                }
-            });
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                doLogCurve(e);
+            }
+        });
         k.add(b = new JButton(ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("ButtonShiftLeft")));
         b.setToolTipText(ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("TooltipShiftLeft"));
         b.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    doShiftLeft(e);
-                }
-            });
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                doShiftLeft(e);
+            }
+        });
         k.add(b = new JButton(ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("ButtonShiftRight")));
         b.setToolTipText(ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("TooltipShiftRight"));
         b.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    doShiftRight(e);
-                }
-            });
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                doShiftRight(e);
+            }
+        });
 
         cs.gridy = GRID_Y_BUTTONS;
         cs.gridx = 0;
         cs.gridwidth = GridBagConstraints.RELATIVE;
         g.setConstraints(k, cs);
 
-		// add Vstart & Vhigh if applicable
-		JPanel l = new JPanel();
-
-		int ThisCV;
-		CvValue cv;
-		Component v;
-		int currentState;
-		int currentValue;
-		DecVariableValue decVal;
-		JLabel label;
-		String padding = "                                                    ";
-
-		if (mfx) {
-			ThisCV = VSTART_CV;
-			cv = _cvVector.elementAt(ThisCV);
-			currentState = cv.getState();
-			currentValue = cv.getValue();
-            cv.addPropertyChangeListener(this);
-			decVal = new DecVariableValue("CV"+ThisCV,"","", false, false, false, false,
-														   ThisCV, "VVVVVVVV", _min, _max,
-														   _cvVector, _status, "");
-			decVal.setValue(currentValue);
-			decVal.setState(currentState);
-			v = decVal.getCommonRep();
-			((JTextField)v).setToolTipText(PaneProgPane.addCvDescription("Sets the starting voltage at throttle speed step 1","CV"+ThisCV,null));
-			l.add ( v );
-			
-			label = new JLabel("Vstart");
-			l.add ( label );
-			
-			// because DGH hasn't yet mastered GridBagLayout 
-			label = new JLabel(padding);
-			l.add ( label );
-			label = new JLabel(padding);
-			l.add ( label );
-			label = new JLabel(padding);
-			l.add ( label );
-			
-			label = new JLabel("Vhigh");
-			l.add ( label );
-						
-			ThisCV = VHIGH_CV;
-			cv = _cvVector.elementAt(ThisCV);
-			currentState = cv.getState();
-			currentValue = cv.getValue();
-            cv.addPropertyChangeListener(this);
-			decVal = new DecVariableValue("CV"+ThisCV,"","", false, false, false, false,
-														   ThisCV, "VVVVVVVV", _min, _max,
-														   _cvVector, _status, "");
-			decVal.setValue(currentValue);
-			decVal.setState(currentState);
-			v = decVal.getCommonRep();
-			((JTextField)v).setToolTipText(PaneProgPane.addCvDescription("Sets the maximum voltage at full throttle","CV"+ThisCV,null));
-			l.add ( v );
-		}
-			
-
+        // add Vstart & Vhigh if applicable
+        JPanel l = new JPanel();
 
         JPanel val = new JPanel();
         val.setLayout(new BorderLayout());
         val.add(j, BorderLayout.NORTH);
         val.add(k, BorderLayout.CENTER);
-        if (mfx) {val.add(l, BorderLayout.SOUTH);}
+        if (mfx) {
+            val.add(l, BorderLayout.SOUTH);
+        }
 
         updateRepresentation(val);
         return val;
@@ -538,112 +502,118 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 
     void initStepCheckBoxes() {
         stepCheckBoxes = new ArrayList<JCheckBox>();
-        for (int i=0; i<nValues; i++) {
+        for (int i = 0; i < nValues; i++) {
             JCheckBox b = new JCheckBox();
             b.setToolTipText(ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("TooltipCheckToFix"));
-            stepCheckBoxes.add(b);            
+            stepCheckBoxes.add(b);
         }
     }
-    
+
     /**
      * Set the values to a straight line from _min to _max
      */
     void doForceStraight(java.awt.event.ActionEvent e) {
-        _cvVector.elementAt(cvList[0]).setValue(_min);
-        _cvVector.elementAt(cvList[nValues-1]).setValue(_max);
+        _cvMap.get(cvList[0]).setValue(_min);
+        _cvMap.get(cvList[nValues - 1]).setValue(_max);
         doMatchEnds(e);
     }
+
     /**
      * Set the values to a straight line from existing ends
      */
     void doMatchEnds(java.awt.event.ActionEvent e) {
-        int first = _cvVector.elementAt(cvList[0]).getValue();
-        int last = _cvVector.elementAt(cvList[nValues-1]).getValue();
-        log.debug(" first="+first+" last="+last);
+        int first = _cvMap.get(cvList[0]).getValue();
+        int last = _cvMap.get(cvList[nValues - 1]).getValue();
+        log.debug(" first=" + first + " last=" + last);
         // to avoid repeatedly bumping up later values, push the first one
         // all the way up now
-        _cvVector.elementAt(cvList[0]).setValue(last);
+        _cvMap.get(cvList[0]).setValue(last);
         // and push each one down
-        for (int i = 0; i<nValues; i++) {
-            int value = first+i*(last-first)/(nValues-1);
-            _cvVector.elementAt(cvList[i]).setValue(value);
+        for (int i = 0; i < nValues; i++) {
+            int value = first + i * (last - first) / (nValues - 1);
+            _cvMap.get(cvList[i]).setValue(value);
         }
-        enforceEndPointsMfx();
+//         enforceEndPointsMfx();
     }
 
     /**
      * Set a constant ratio curve
      */
     void doRatioCurve(java.awt.event.ActionEvent e) {
-        double first = _cvVector.elementAt(cvList[0]).getValue();
-        if (first<1.) first=1.;
-        double last = _cvVector.elementAt(cvList[nValues-1]).getValue();
-        if (last<first+1) last = first+1.;
-        double step = Math.log(last/first)/(nValues-1);
-        log.debug("log ratio step is "+step);
+        double first = _cvMap.get(cvList[0]).getValue();
+        if (first < 1.) {
+            first = 1.;
+        }
+        double last = _cvMap.get(cvList[nValues - 1]).getValue();
+        if (last < first + 1) {
+            last = first + 1.;
+        }
+        double step = Math.log(last / first) / (nValues - 1);
+        log.debug("log ratio step is " + step);
         // to avoid repeatedly bumping up later values, push the first one
         // all the way up now
-        _cvVector.elementAt(cvList[0]).setValue((int)Math.round(last));
+        _cvMap.get(cvList[0]).setValue((int) Math.round(last));
         // and push each one down
-        for (int i = 0; i<nValues; i++) {
-            int value = (int)(Math.floor(first*Math.exp(step*i)));
-            _cvVector.elementAt(cvList[i]).setValue(value);
+        for (int i = 0; i < nValues; i++) {
+            int value = (int) (Math.floor(first * Math.exp(step * i)));
+            _cvMap.get(cvList[i]).setValue(value);
         }
-        enforceEndPointsMfx();
+//         enforceEndPointsMfx();
     }
 
     /**
      * Set a log curve
      */
     void doLogCurve(java.awt.event.ActionEvent e) {
-        double first = _cvVector.elementAt(cvList[0]).getValue();
-        double last = _cvVector.elementAt(cvList[nValues-1]).getValue();
-        if (last<first+1.) last = first+1.;
-        double factor = 1./10.;
+        double first = _cvMap.get(cvList[0]).getValue();
+        double last = _cvMap.get(cvList[nValues - 1]).getValue();
+        if (last < first + 1.) {
+            last = first + 1.;
+        }
+        double factor = 1. / 10.;
         // to avoid repeatedly bumping up later values, push the second one
         // all the way up now
-        _cvVector.elementAt(cvList[1]).setValue((int)Math.round(last));
+        _cvMap.get(cvList[1]).setValue((int) Math.round(last));
         // and push each one down (except the first, left as it was)
-        double previous = first;
-        double ratio = Math.pow(1.-factor, nValues-1.);
-        double limit = last+(last-first)*ratio;
-        for (int i = 1; i<nValues; i++) {
-            previous = limit-(limit-first)*ratio/Math.pow(1.-factor, nValues-1.-i);
-            int value = (int)(Math.floor(previous));
-            _cvVector.elementAt(cvList[i]).setValue(value);
+        double ratio = Math.pow(1. - factor, nValues - 1.);
+        double limit = last + (last - first) * ratio;
+        for (int i = 1; i < nValues; i++) {
+            double previous = limit - (limit - first) * ratio / Math.pow(1. - factor, nValues - 1. - i);
+            int value = (int) (Math.floor(previous));
+            _cvMap.get(cvList[i]).setValue(value);
         }
-        enforceEndPointsMfx();
+//         enforceEndPointsMfx();
     }
 
     /**
-     * Shift the curve one CV to left.  The last entry is left unchanged.
+     * Shift the curve one CV to left. The last entry is left unchanged.
      */
     void doShiftLeft(java.awt.event.ActionEvent e) {
-        for (int i = 0; i<nValues-1; i++) {
-            int value = _cvVector.elementAt(cvList[i]+1).getValue();
-            _cvVector.elementAt(cvList[i]).setValue(value);
+        for (int i = 0; i < nValues - 1; i++) {
+            int value = _cvMap.get(cvList[i + 1]).getValue();
+            _cvMap.get(cvList[i]).setValue(value);
         }
-        enforceEndPointsMfx();
+//         enforceEndPointsMfx();
     }
 
     /**
-     * Shift the curve one CV to right.  The first entry is left unchanged.
+     * Shift the curve one CV to right. The first entry is left unchanged.
      */
     void doShiftRight(java.awt.event.ActionEvent e) {
-        for (int i = nValues-1; i>0; i--) {
-            int value = _cvVector.elementAt(cvList[i]-1).getValue();
-            _cvVector.elementAt(cvList[i]).setValue(value);
+        for (int i = nValues - 1; i > 0; i--) {
+            int value = _cvMap.get(cvList[i - 1]).getValue();
+            _cvMap.get(cvList[i]).setValue(value);
         }
-        enforceEndPointsMfx();
+//         enforceEndPointsMfx();
     }
 
     /**
-     * IDLE if a read/write operation is not in progress.  During an operation, it
-     * indicates the index of the CV to handle when the current programming operation
-     * finishes.
+     * IDLE if a read/write operation is not in progress. During an operation,
+     * it indicates the index of the CV to handle when the current programming
+     * operation finishes.
      */
     private int _progState = IDLE;
-    
+
     private static final int IDLE = -1;
     boolean isReading;
     boolean isWriting;
@@ -652,25 +622,27 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
      * Count number of retries done
      */
     private int retries = 0;
-    
+
     /**
-     * Define maximum number of retries of read/write operations before moving on
+     * Define maximum number of retries of read/write operations before moving
+     * on
      */
     private static final int RETRY_MAX = 2;
-    
+
     boolean onlyChanges = false;
 
     /**
      * Notify the connected CVs of a state change from above
+     *
      * @param state
      */
     public void setCvState(int state) {
-        _cvVector.elementAt(cvList[0]).setState(state);
+        _cvMap.get(cvList[0]).setState(state);
     }
 
     public boolean isChanged() {
-        for (int i=0; i<numCvs; i++) {
-            if (considerChanged(_cvVector.elementAt(cvList[i])) ) {
+        for (int i = 0; i < numCvs; i++) {
+            if (considerChanged(_cvMap.get(cvList[i]))) {
                 // this one is changed, return true
                 return true;
             }
@@ -679,74 +651,105 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
     }
 
     public void readChanges() {
-        if (log.isDebugEnabled()) log.debug("readChanges() invoked");
-        if (!isChanged()) return;
+        if (log.isDebugEnabled()) {
+            log.debug("readChanges() invoked");
+        }
+        if (!isChanged()) {
+            return;
+        }
         onlyChanges = true;
         setBusy(true);  // will be reset when value changes
-        if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in read()");
+        if (_progState != IDLE) {
+            log.warn("Programming state " + _progState + ", not IDLE, in read()");
+        }
         isReading = true;
         isWriting = false;
         _progState = -1;
         retries = 0;
-        if (log.isDebugEnabled()) log.debug("start series of read operations");
+        if (log.isDebugEnabled()) {
+            log.debug("start series of read operations");
+        }
         readNext();
     }
 
     public void writeChanges() {
-        if (log.isDebugEnabled()) log.debug("writeChanges() invoked");
-        if (!isChanged()) return;
+        if (log.isDebugEnabled()) {
+            log.debug("writeChanges() invoked");
+        }
+        if (!isChanged()) {
+            return;
+        }
         onlyChanges = true;
-        if (getReadOnly()) log.error("unexpected write operation when readOnly is set");
+        if (getReadOnly()) {
+            log.error("unexpected write operation when readOnly is set");
+        }
         setBusy(true);  // will be reset when value changes
         super.setState(STORED);
-        if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in write()");
+        if (_progState != IDLE) {
+            log.warn("Programming state " + _progState + ", not IDLE, in write()");
+        }
         isReading = false;
         isWriting = true;
         _progState = -1;
         retries = 0;
-        if (log.isDebugEnabled()) log.debug("start series of write operations");
+        if (log.isDebugEnabled()) {
+            log.debug("start series of write operations");
+        }
         writeNext();
     }
 
-
     public void readAll() {
-        if (log.isDebugEnabled()) log.debug("readAll() invoked");
+        if (log.isDebugEnabled()) {
+            log.debug("readAll() invoked");
+        }
         onlyChanges = false;
         setToRead(false);
         setBusy(true);  // will be reset when value changes
-        if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in read()");
+        if (_progState != IDLE) {
+            log.warn("Programming state " + _progState + ", not IDLE, in read()");
+        }
         isReading = true;
         isWriting = false;
         _progState = -1;
         retries = 0;
-        if (log.isDebugEnabled()) log.debug("start series of read operations");
+        if (log.isDebugEnabled()) {
+            log.debug("start series of read operations");
+        }
         readNext();
     }
 
     public void writeAll() {
-        if (log.isDebugEnabled()) log.debug("writeAll() invoked");
+        if (log.isDebugEnabled()) {
+            log.debug("writeAll() invoked");
+        }
         onlyChanges = false;
-        if (getReadOnly()) log.error("unexpected write operation when readOnly is set");
+        if (getReadOnly()) {
+            log.error("unexpected write operation when readOnly is set");
+        }
         setToWrite(false);
         setBusy(true);  // will be reset when value changes
         super.setState(STORED);
-        if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in write()");
+        if (_progState != IDLE) {
+            log.warn("Programming state " + _progState + ", not IDLE, in write()");
+        }
         isReading = false;
         isWriting = true;
         _progState = -1;
         retries = 0;
-        if (log.isDebugEnabled()) log.debug("start series of write operations");
+        if (log.isDebugEnabled()) {
+            log.debug("start series of write operations");
+        }
         writeNext();
     }
 
     void readNext() {
         // read operation start/continue
         // check for retry if needed
-        if ( (_progState>=0) && (retries < RETRY_MAX) 
-                && (_cvVector.elementAt(cvList[_progState]).getState() != CvValue.READ) ) {
+        if ((_progState >= 0) && (retries < RETRY_MAX)
+                && (_cvMap.get(cvList[_progState]).getState() != CvValue.READ)) {
             // need to retry an error; leave progState (CV number) as it was
             retries++;
-        } else {    
+        } else {
             // normal read operation of next CV
             retries = 0;
             _progState++;  // progState is the index of the CV to handle now
@@ -761,21 +764,26 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             return;
         }
         // not done, proceed to do the next
-        CvValue cv = _cvVector.elementAt(cvList[_progState]);
+        CvValue cv = _cvMap.get(cvList[_progState]);
         int state = cv.getState();
-        if (log.isDebugEnabled()) log.debug("invoke CV read index "+_progState+" cv state "+state);
-        if (!onlyChanges || considerChanged(cv) ) cv.read(_status);
-        else readNext(); // repeat until end
+        if (log.isDebugEnabled()) {
+            log.debug("invoke CV read index " + _progState + " cv state " + state);
+        }
+        if (!onlyChanges || considerChanged(cv)) {
+            cv.read(_status);
+        } else {
+            readNext(); // repeat until end
+        }
     }
 
     void writeNext() {
         // write operation start/continue
         // check for retry if needed
-        if ( (_progState>=0) && (retries < RETRY_MAX) 
-                && (_cvVector.elementAt(cvList[_progState]).getState() != CvValue.STORED) ) {
+        if ((_progState >= 0) && (retries < RETRY_MAX)
+                && (_cvMap.get(cvList[_progState]).getState() != CvValue.STORED)) {
             // need to retry an error; leave progState (CV number) as it was
             retries++;
-        } else {    
+        } else {
             // normal read operation of next CV
             retries = 0;
             _progState++;  // progState is the index of the CV to handle now
@@ -788,45 +796,56 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             setBusy(false);
             return;
         }
-        CvValue cv = _cvVector.elementAt(cvList[_progState]);
+        CvValue cv = _cvMap.get(cvList[_progState]);
         int state = cv.getState();
-        if (log.isDebugEnabled()) log.debug("invoke CV write index "+_progState+" cv state "+state);
-        if (!onlyChanges || considerChanged(cv) ) cv.write(_status);
-        else writeNext();
+        if (log.isDebugEnabled()) {
+            log.debug("invoke CV write index " + _progState + " cv state " + state);
+        }
+        if (!onlyChanges || considerChanged(cv)) {
+            cv.write(_status);
+        } else {
+            writeNext();
+        }
     }
 
     // handle incoming parameter notification
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (log.isDebugEnabled()) log.debug("property changed event - name: "
-                                            +e.getPropertyName());
+        if (log.isDebugEnabled()) {
+            log.debug("property changed event - name: "
+                    + e.getPropertyName());
+        }
         // notification from CV; check for Value being changed
-        if (e.getPropertyName().equals("Busy") && ((Boolean)e.getNewValue()).equals(Boolean.FALSE)) {
+        if (e.getPropertyName().equals("Busy") && ((Boolean) e.getNewValue()).equals(Boolean.FALSE)) {
             // busy transitions drive an ongoing programming operation
             // see if actually done
 
-            if (isReading) readNext();
-            else if (isWriting) writeNext();
-            else return;
-        }
-        else if (e.getPropertyName().equals("State")) {
-            CvValue cv = _cvVector.elementAt(cvList[0]);
-            if (log.isDebugEnabled()) log.debug("CV State changed to "+cv.getState());
+            if (isReading) {
+                readNext();
+            } else if (isWriting) {
+                writeNext();
+            } else {
+                return;
+            }
+        } else if (e.getPropertyName().equals("State")) {
+            CvValue cv = _cvMap.get(cvList[0]);
+            if (log.isDebugEnabled()) {
+                log.debug("CV State changed to " + cv.getState());
+            }
             setState(cv.getState());
-        }
-        else if (e.getPropertyName().equals("Value")) {
+        } else if (e.getPropertyName().equals("Value")) {
             // find the CV that sent this
             CvValue cv = (CvValue) e.getSource();
             int value = cv.getValue();
             // find the index of that CV
-            for (int i=0; i<numCvs; i++) {
-                if (_cvVector.elementAt(cvList[i]) == cv) {
+            for (int i = 0; i < numCvs; i++) {
+                if (_cvMap.get(cvList[i]) == cv) {
                     // this is the one, so use this i
                     setModel(i, value);
                     break;
                 }
             }
-        enforceEndPointsMfx();
-       }
+//         enforceEndPointsMfx();
+        }
     }
 
     /* Internal class extends a JSlider so that its color is consistent with
@@ -842,30 +861,47 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
      */
     public class VarSlider extends JSlider {
 
+        /**
+         *
+         */
+        private static final long serialVersionUID = 7077272684236102449L;
+
         VarSlider(BoundedRangeModel m, CvValue var, int step) {
             super(m);
             _var = var;
             // get the original color right
             setBackground(_var.getColor());
+            if (_var.getColor() == _var.getDefaultColor()) {
+                setOpaque(false);
+            } else {
+                setOpaque(true);
+            }
             // tooltip label
             String start = ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("TextStep")
-                            +" "+step;
-            setToolTipText(PaneProgPane.addCvDescription(start,"CV "+var.number(),null));
+                    + " " + step;
+            setToolTipText(PaneProgPane.addCvDescription(start, "CV " + var.number(), null));
             // listen for changes to original state
             _var.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-                    public void propertyChange(java.beans.PropertyChangeEvent e) {
-                        originalPropertyChanged(e);
-                    }
-                });
+                public void propertyChange(java.beans.PropertyChangeEvent e) {
+                    originalPropertyChanged(e);
+                }
+            });
         }
 
         CvValue _var;
 
         void originalPropertyChanged(java.beans.PropertyChangeEvent e) {
-            if (log.isDebugEnabled()) log.debug("VarSlider saw property change: "+e);
+            if (log.isDebugEnabled()) {
+                log.debug("VarSlider saw property change: " + e);
+            }
             // update this color from original state
             if (e.getPropertyName().equals("State")) {
                 setBackground(_var.getColor());
+                if (_var.getColor() == _var.getDefaultColor()) {
+                    setOpaque(false);
+                } else {
+                    setOpaque(true);
+                }
             }
         }
 
@@ -873,16 +909,18 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 
     // clean up connections when done
     public void dispose() {
-        if (log.isDebugEnabled()) log.debug("dispose");
+        if (log.isDebugEnabled()) {
+            log.debug("dispose");
+        }
         // the connection is to cvNum through cvNum+numCvs (28 values typical)
-        for (int i=0; i<numCvs; i++) {
-            _cvVector.elementAt(cvList[i]).removePropertyChangeListener(this);
+        for (int i = 0; i < numCvs; i++) {
+            _cvMap.get(cvList[i]).removePropertyChangeListener(this);
         }
 
         // do something about the VarSlider objects
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(SpeedTableVarValue.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SpeedTableVarValue.class.getName());
 
 }

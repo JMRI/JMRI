@@ -7,6 +7,7 @@
  </TITLE>
     <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Andrew Crosland" name=Author>
+    <META content="Dennis Miller" name="Author">
     <META name="keywords" content="JMRI help Route Add Edit">
 
 <!-- Style -->
@@ -28,48 +29,163 @@
 - awaiting image -<br>
 <p>
 Set up the loco to be measured on a running stand with the reader unit appropriate
-to the track gauge, connected to the MTS-DCC which is conneted, in turn, to the PC.
+to the track gauge, connected to the MTS-DCC which is connected, in turn, to the PC.
 </p>
 <p>
 Connect the track on which the running stand is installed to your DCC system.
 </p>
 <p>
 Add both the DCC system and the reader interface as layout connections in the
-JMRI preferences. Open the Speedo console from the Bachrus menu. 
+JMRI preferences. Open the Speedo console from the Speedo menu on the main screen
+of DecoderPro or PanelPro. 
 </p>
+<p>
+    The left side of the window is used for setup and to display the current
+    speed:
+</p>
+<p>
 <a href="../../../../html/hardware/bachrus/images/dial.jpg">
     <img src="../../../../html/hardware/bachrus/images/dial.jpg"
-         width="306" height="238"
+         width="336" height="373"
          alt="Send Frame Tool" ></a>
+</p>
 <p>
-The reader type will be detected when the loco is driven and speed data is received
-from the reader.
+<b>Select Scale:</b> The reader type will be detected when the loco is driven and speed data is received
+from the reader. Use the Scale drop-down to select the appropriate locomotive scale
+in order to get the correct speed values.
+</p>
 <p>
-The radio buttons to the left of the dial allow the primary (black) speed digits
+<b>Select Mode:</b> If you have a DCC system that can run locomotives on the programming track
+(such as the SPROG) then select "Run profile on programming track" as this will allow reading the 
+locomotive address, etc. without moving between the programming track and a running track.
+If you can't run locomotives on your programming track, then select
+"Run profile on the main track".
+</p>
+<p>
+<b>Measured Speed:</b> The radio buttons to the right of the dial allow the primary (black) speed digits
 to display the scale speed in either Miles-per-Hour (MPH) or Kilometers-per-Hour
 (KPH) units. The secondary (green) digits display will show the other units. The
-speed is displayed digitally in the promary units in the small window at the
-bottom of the dial.
+speed is displayed digitally in the primary units in the small window at the
+bottom of the dial.  The units on the speed profile graph also change to match. If
+the measured speed exceeds the maximum value on the dial, it will automatically 
+re-scale itself to match.  This can be reset using the "Reset Graph" button under
+the speed profile chart.
+</p>
+<p>
+Selecting the Numeric radio button will change the dial to just a box with the
+speed numerically displayed.
 </p>
 <p>
 At this stage you can use a throttle (either part of your DCC hardware or a JMRI
 throttle) to drive the loco and observe the scale speed.
 </p>
 <p>
-To measure the loco speed profile select the "profile" tab.
+The right side of the window is used to measure the loco speed profile:
 </p>
+<p>
 <a href="../../../../html/hardware/bachrus/images/profile.jpg">
     <img src="../../../../html/hardware/bachrus/images/profile.jpg"
-         width="306" height="238"
+         width="543" height="373"
          alt="Send Frame Tool" ></a>
-				 
+</p>				 
 <p>
-You can enter the locos DCC adress manually or, if the DCC hardware supports
-service mode programming, read it from the loco.
+<b>Loco Selection:</b> There are several ways to select the locomotive to profile:
 </p>
+<ul>
+    <li>
+        You can enter the loco's DCC address manually by entering it
+        in the text box, selecting whether it is a long or short address in the drop-down,
+        and pressing the "Set Loco Address" button. 
+    </li>
+    <li>
+        If the loco is already in your roster, you can select it from the roster
+        drop-down and its address will be selected automatically.
+    </li>
+    <li>
+        If the DCC hardware supports service mode programming and you have 
+        selected "Run profile on programming track" in the "Select Mode" section, 
+        you can press the "Read" button to read the address directly from the loco.
+    </li>
+</ul>
+
+<p>
+    <b>Speed Profile Chart:</b> The radio buttons to the right of the chart allow
+    you to select whether you want a profile for the locomotive running forward, 
+    or backwards, or both.  The grid lines on the chart can be toggled off and
+    on as well.
+</p>
+<p>
+    Underneath the chart area are several buttons that control the creation of a 
+    speed profile:
+</p>
+<ul>
+    <li>
+        Power Up/Power Down: This button allows you to manually turn track power
+        on or off.  It is also automatically invoked when a speed profile run is 
+        invoked.
+    </li>
+    <li>
+        Start: This will start the running of a speed profile based on the other
+        settings on the screen.
+    </li>
+    <li>
+        Stop:  This can be used to stop a profile run before it is finished. When 
+        a profile is finished the locomotive is automatically stopped and the
+        track power is turned off.
+    </li>
+    <li>
+        Export:  This will allow you to export the results of the speed profile to
+        a comma separated variables (CSV) file.  This is a plain text file that 
+        can be opened by many other programs, including spreadsheets.
+    </li>
+    <li>
+        Print:  Use this to print a copy of the speed profile chart
+    </li>
+    <li>
+        Reset Graph: This button will reset both the speed profile chart and  
+        speedometer dial scales to their default values if they have done an automatic
+        re-scale because the speeds exceeded their limits. It also will erase any 
+        speed profiles being displayed.
+    </li>
+    <li>
+        Load Ref:  This button allows you to import a prior speed profile as a 
+        reference to make it easier to do speed matching.  The profile can be one
+        from another locomotive, or one that you create yourself with your desired
+        speed values.  The file to be loaded needs
+        to match the format used for the Export function - there must be no less than
+        31 lines in the file with the following format:
+        <ul>
+            <li>
+                First line is a text header than can be any text.
+            </li>
+            <li>
+                Second line holds the column headers - the main requirement is that
+                the units used in the profile appear as "MPH" or "KPH" somewhere on
+                the line.  This is used for appropriate unit conversions when the profile
+                is loaded.
+            </li>
+            <li>
+                The next 29 lines hold the speed information, one line per speed 
+                step. The line must have the speed step number followed by a comma,
+                and then the value for the speed.  There can be more speed values 
+                on the line (for example if the file is an export of a forward/reverse
+                speed profile) but the rest of the line is ignored.  Note that the
+                speed step number isn't actually used - the loading function simply
+                assigns the 29 speed values in sequence, but something must be 
+                there since the second value on the line is used as the speed value.
+            </li>
+            <li>
+                The easiest way to create an appropriate file is to Export a profile
+                and then modify the speed values in the exported file (if needed).
+            </li>
+        </ul>
+    </li>
+</ul>
+<p>
 For best results the momentum CVs should be set to zero so that speed commands
 take immediate effect.
-</p>				 
+</p>
+<br>
 
 <!--#include virtual="/Footer" -->
 </body>

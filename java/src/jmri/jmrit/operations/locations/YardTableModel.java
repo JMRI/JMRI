@@ -1,69 +1,82 @@
 // YardTableModel.java
-
 package jmri.jmrit.operations.locations;
 
+import java.beans.PropertyChangeEvent;
+import javax.swing.JTable;
+import javax.swing.SwingUtilities;
+import jmri.jmrit.operations.setup.Control;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.beans.*;
-import javax.swing.*;
-import jmri.jmrit.operations.setup.Control;
 
 /**
  * Table Model for edit of yards used by operations
- * 
+ *
  * @author Daniel Boudreau Copyright (C) 2008
  * @version $Revision$
  */
 public class YardTableModel extends TrackTableModel {
 
-	public YardTableModel() {
-		super();
-	}
+    /**
+     *
+     */
+    private static final long serialVersionUID = -7919234279596604386L;
 
-	public void initTable(JTable table, Location location) {
-		super.initTable(table, location, Track.YARD);
-	}
+    public YardTableModel() {
+        super();
+    }
 
-	public String getColumnName(int col) {
-		switch (col) {
-		case NAME_COLUMN:
-			return Bundle.getMessage("YardName");
-		}
-		return super.getColumnName(col);
-	}
+    public void initTable(JTable table, Location location) {
+        super.initTable(table, location, Track.YARD);
+    }
 
-	protected void editTrack(int row) {
-		log.debug("Edit yard");
-		if (tef != null) {
-			tef.dispose();
-		}
-		tef = new YardEditFrame();
-		String yardId = tracksList.get(row);
-		Track yard = _location.getTrackById(yardId);
-		tef.initComponents(_location, yard);
-		tef.setTitle(Bundle.getMessage("EditYard"));
-		focusEditFrame = true;
-	}
+    @Override
+    public String getColumnName(int col) {
+        switch (col) {
+            case NAME_COLUMN:
+                return Bundle.getMessage("YardName");
+        }
+        return super.getColumnName(col);
+    }
 
-	// this table listens for changes to a location and it's yards
-	public void propertyChange(PropertyChangeEvent e) {
-		if (Control.showProperty && log.isDebugEnabled())
-			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue()
-					+ " new: " + e.getNewValue()); // NOI18N
-		super.propertyChange(e);
-		if (e.getSource().getClass().equals(Track.class)) {
-			String type = ((Track) e.getSource()).getTrackType();
-			if (type.equals(Track.YARD)) {
-				String yardId = ((Track) e.getSource()).getId();
-				int row = tracksList.indexOf(yardId);
-				if (Control.showProperty && log.isDebugEnabled())
-					log.debug("Update yard table row: " + row + " id: " + yardId);
-				if (row >= 0)
-					fireTableRowsUpdated(row, row);
-			}
-		}
-	}
+    @Override
+    protected void editTrack(int row) {
+        log.debug("Edit yard");
+        if (tef != null) {
+            tef.dispose();
+        }
+        // use invokeLater so new window appears on top
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                tef = new YardEditFrame();
+                Track yard = tracksList.get(row);
+                tef.initComponents(_location, yard);
+                tef.setTitle(Bundle.getMessage("EditYard"));
+            }
+        });
+    }
 
-	static Logger log = LoggerFactory.getLogger(YardTableModel.class
-			.getName());
+    // this table listens for changes to a location and it's yards
+    @Override
+    public void propertyChange(PropertyChangeEvent e) {
+        if (Control.SHOW_PROPERTY) {
+            log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
+                    .getNewValue());
+        }
+        super.propertyChange(e);
+        if (e.getSource().getClass().equals(Track.class)) {
+            Track track = ((Track) e.getSource());
+            if (track.getTrackType().equals(Track.YARD)) {
+                int row = tracksList.indexOf(track);
+                if (Control.SHOW_PROPERTY) {
+                    log.debug("Update yard table row: {} track: ({})", row, track.getName());
+                }
+                if (row >= 0) {
+                    fireTableRowsUpdated(row, row);
+                }
+            }
+        }
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(YardTableModel.class.getName());
 }

@@ -1,5 +1,3 @@
-// PackageTest.java
-
 package jmri.jmrix.openlcb.swing.tie;
 
 import junit.framework.Test;
@@ -8,16 +6,15 @@ import junit.framework.TestSuite;
 
 /**
  * Tests for the jmri.jmrix.openlcb package.
- * @author      Bob Jacobsen  Copyright 2009, 2012
- * @version   $Revision$
+ *
+ * @author Bob Jacobsen Copyright 2009, 2012
  */
 public class PackageTest extends TestCase {
 
     public void testDefinitions() {
     }
-    
-    // from here down is testing infrastructure
 
+    // from here down is testing infrastructure
     public PackageTest(String s) {
         super(s);
     }
@@ -34,11 +31,16 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrix.openlcb.tie.PackageTest");
 
         suite.addTest(TieToolFrameTest.suite());
-        
+
         return suite;
     }
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 }

@@ -1,7 +1,6 @@
 /**
  * QSIMenu.java
  */
-
 package jmri.jmrix.qsi;
 
 import javax.swing.JMenu;
@@ -9,15 +8,21 @@ import javax.swing.JMenu;
 /**
  * Create a "Systems" menu containing the Jmri QSI-specific tools
  *
- * @author	Bob Jacobsen   Copyright 2007
- * @version     $Revision$
+ * @author	Bob Jacobsen Copyright 2007
+ * @version $Revision$
  */
 public class QSIMenu extends JMenu {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = -4546652147704212565L;
+
     public QSIMenu(String name) {
         this();
         setText(name);
     }
-    
+
     public QSIMenu(QsiSystemConnectionMemo memo) {
         this();
         setText(memo.getUserName());
@@ -37,5 +42,3 @@ public class QSIMenu extends JMenu {
     }
 
 }
-
-

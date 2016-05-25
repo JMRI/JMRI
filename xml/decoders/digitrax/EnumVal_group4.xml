@@ -1,7 +1,7 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id: motorDriveFreq.xml 22090 2012-12-29 02:30:04Z jacobsen $ -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -12,13 +12,13 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-       <enumVal>
-          <enumChoice choice="Don't send a message">
-            <choice>Don't send a message</choice>
-            <choice xml:lang="it">Non Inviare Messaggio</choice>
-          </enumChoice>
-          <enumChoice choice="Send output message">
-            <choice>Send output message</choice>
-            <choice xml:lang="it">Invia Messaggio uscita</choice>
-          </enumChoice>
-        </enumVal>
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <enumChoice choice="Don't send a message">
+    <choice>Don't send a message</choice>
+    <choice xml:lang="it">Non Inviare Messaggio</choice>
+  </enumChoice>
+  <enumChoice choice="Send output message">
+    <choice>Send output message</choice>
+    <choice xml:lang="it">Invia Messaggio uscita</choice>
+  </enumChoice>
+</enumVal>

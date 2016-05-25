@@ -1,66 +1,41 @@
-// SchemaTest.java
-
 package jmri.jmrit.decoderdefn;
 
-import org.apache.log4j.Logger;
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
 //import jmri.InstanceManager;
-
 /**
  * Checks of JMRI XML Schema for decoder definition files.
- * 
+ *
  * @author Bob Jacobsen Copyright 2010
  * @since 2.9.3
- * @version $Revision$
  */
-public class SchemaTest extends jmri.configurexml.LoadFileTestBase {
+public class SchemaTest extends jmri.configurexml.SchemaTestBase {
 
-    public void testValidateQsiV7() {
-        validate(new java.io.File("java/test/jmri/jmrit/decoderdefn/QSI_Diesel_Ver7.xml"));
-    }
-
-    public void testDigitraxPart() {
-        validate(new java.io.File("xml/decoders/digitrax/consistAddrDirection.xml"));
-    }
-
-    public void testLenzPart() {
-        validate(new java.io.File("xml/decoders/lenz/functionmap.xml"));
-        validate(new java.io.File("xml/decoders/lenz/braking_cv51.xml"));
-        validate(new java.io.File("xml/decoders/lenz/abc_cv51.xml"));
-        validate(new java.io.File("xml/decoders/Lenz_Plus_2010.xml"));
-    }
-
-    public void testValidateQualifier() {
-        validate(new java.io.File("java/test/jmri/jmrit/decoderdefn/DecoderWithQualifier.xml"));
-    }
-
-    public void testRealFiles() {
-        java.io.File dir = new java.io.File("xml/decoders/");
-        java.io.File[] files = dir.listFiles();
-        for (int i=0; i<files.length; i++) {
-            if (files[i].getName().endsWith("xml")) {
-                validate(files[i]);
-            }
-        }
-    }
     // from here down is testing infrastructure
-
     public SchemaTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-		String[] testCaseName = {"-noloading", SchemaTest.class.getName()};
-		junit.swingui.TestRunner.main(testCaseName);
+        String[] testCaseName = {"-noloading", SchemaTest.class.getName()};
+        junit.swingui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite(SchemaTest.class);
+        TestSuite suite = new TestSuite("jmri.jmrit.decoderdefn.SchemaTest"); // no tests in this class itself
+
+        // check that the schema passes useful constructs
+        validateDirectory(suite, "java/test/jmri/jmrit/decoderdefn/pass");
+        
+        // check that the schema detects errors
+        validateDirectoryFail(suite, "java/test/jmri/jmrit/decoderdefn/fail");
+
+        validateSubdirectories(suite, "xml/decoders/");
+        validateDirectory(suite, "xml/decoders/");
+        
         return suite;
     }
-
-    static Logger log = Logger.getLogger(SchemaTest.class.getName());
 }

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2014 All rights reserved                            -->
+<!-- $Id$             -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-05-10</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Initial version as separate file from Uhlenbrock_73400.xml v2</revremark>
+    </revision>
+  <!-- Uhlenbrock Decoder Configuration CV 54 - motor regulation parameters -->
+  </revhistory>
+  <variable item="EMF Enable" CV="54" mask="VVVVVVXX" default="33">
+    <!-- Bit 7 always 1 -->
+    <enumVal>
+      <enumChoice choice="Fixed repetition rate" value="32">
+        <choice>Fixed</choice>
+        <choice xml:lang="de">konstante</choice>
+        <choice xml:lang="it">Costante</choice>	
+      </enumChoice>
+      <enumChoice choice="Speed dependent repetition rate" value="33">
+        <choice>Speed dependent</choice>
+        <choice xml:lang="de">mit Fahrstufe ändern</choice>
+        <choice xml:lang="it">Dipende da velocità</choice>				
+      </enumChoice>
+    </enumVal>
+    <label>Fixed or variable repetition rate</label>
+    <label xml:lang="de">konstante/veränderliche Wiederholrate</label>
+    <label xml:lang="it">Costante o variabile</label>	
+    <tooltip>128=fixed or 132=speed dependent</tooltip>
+    <tooltip xml:lang="de">128=konstant oder 132=mit Fahrstufe ändern</tooltip>
+    <tooltip xml:lang="it">128=costante o 132=dipendente da Velocità</tooltip>	
+  </variable>
+</variables>

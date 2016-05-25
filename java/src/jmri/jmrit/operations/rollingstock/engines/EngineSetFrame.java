@@ -1,85 +1,89 @@
 // EngineSetFrame.java
-
 package jmri.jmrit.operations.rollingstock.engines;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
-
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStockSetFrame;
 
 /**
  * Frame for user to place engine on the layout
- * 
+ *
  * @author Dan Boudreau Copyright (C) 2008, 2010
  * @version $Revision$
  */
-
 public class EngineSetFrame extends RollingStockSetFrame implements
-		java.beans.PropertyChangeListener {
+        java.beans.PropertyChangeListener {
 
-	protected static final ResourceBundle rb = ResourceBundle
-			.getBundle("jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle");
+    /**
+     *
+     */
+    private static final long serialVersionUID = -7608591085014836578L;
 
-	EngineManager manager = EngineManager.instance();
-	EngineManagerXml managerXml = EngineManagerXml.instance();
+    protected static final ResourceBundle rb = ResourceBundle
+            .getBundle("jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle");
 
-	Engine _engine;
+    EngineManager manager = EngineManager.instance();
+    EngineManagerXml managerXml = EngineManagerXml.instance();
 
-	public EngineSetFrame() {
-		super(Bundle.getMessage("TitleEngineSet"));
-	}
+    Engine _engine;
 
-	public void initComponents() {
-		super.initComponents();
+    public EngineSetFrame() {
+        super(Bundle.getMessage("TitleEngineSet"));
+    }
 
-		// build menu
-		addHelpMenu("package.jmri.jmrit.operations.Operations_LocomotivesSet", true); // NOI18N
+    @Override
+    public void initComponents() {
+        super.initComponents();
 
-		// disable location unknown, return when empty, final destination fields
-		locationUnknownCheckBox.setVisible(false);
-		pOptional.setVisible(false);
-		pFinalDestination.setVisible(false);
-		autoTrainCheckBox.setVisible(false);
+        // build menu
+        addHelpMenu("package.jmri.jmrit.operations.Operations_LocomotivesSet", true); // NOI18N
 
-		// tool tips
-		outOfServiceCheckBox.setToolTipText(getRb().getString("TipLocoOutOfService"));
+        // disable location unknown, return when empty, final destination fields
+        locationUnknownCheckBox.setVisible(false);
+        paneOptional.setVisible(false);
+        pFinalDestination.setVisible(false);
+        autoTrainCheckBox.setVisible(false);
 
-		packFrame();
-	}
+        // tool tips
+        outOfServiceCheckBox.setToolTipText(getRb().getString("TipLocoOutOfService"));
 
-	public void loadEngine(Engine engine) {
-		_engine = engine;
-		load(engine);
-	}
+        packFrame();
+    }
 
-	protected ResourceBundle getRb() {
-		return rb;
-	}
+    public void loadEngine(Engine engine) {
+        _engine = engine;
+        load(engine);
+    }
 
-	protected boolean save() {
-		if (!super.save())
-			return false;
-		// check for train change
-		checkTrain(_engine);
-		// is this engine part of a consist?
-		if (_engine.getConsist() != null) {
-			if (JOptionPane.showConfirmDialog(this, Bundle.getMessage("engineInConsist"),
-					Bundle.getMessage("enginePartConsist"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-				// convert cars list to rolling stock list
-				List<RollingStock> list = _engine.getConsist().getGroup();
-				if (!updateGroup(list))
-					return false;
-			}
-		}
-		OperationsXml.save();
-		return true;
-	}
+    @Override
+    protected ResourceBundle getRb() {
+        return rb;
+    }
 
-	static Logger log = LoggerFactory.getLogger(EngineSetFrame.class
-			.getName());
+    @Override
+    protected boolean save() {
+        if (!super.save()) {
+            return false;
+        }
+        // check for train change
+        checkTrain(_engine);
+        // is this engine part of a consist?
+        if (_engine.getConsist() != null) {
+            if (JOptionPane.showConfirmDialog(this, Bundle.getMessage("engineInConsist"),
+                    Bundle.getMessage("enginePartConsist"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                // convert cars list to rolling stock list
+                List<RollingStock> list = _engine.getConsist().getGroup();
+                if (!updateGroup(list)) {
+                    return false;
+                }
+            }
+        }
+        OperationsXml.save();
+        return true;
+    }
+
+//    private final static Logger log = LoggerFactory.getLogger(EngineSetFrame.class.getName());
 }

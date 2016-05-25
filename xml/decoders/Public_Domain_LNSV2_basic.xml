@@ -1,0 +1,804 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2004, 2007 All rights reserved -->
+<!-- $Id: 0NMRA_registers.xml 27260 2014-09-21 00:21:27Z jacobsen $ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Bob Jacobsen" version="1" lastUpdated="20150812"/>
+  <!-- version 1 - test only -->
+  <decoder>
+    <family name="LNSV2-using boards" mfg="Public-domain and DIY">
+      <model model="Basic definition"/>
+    </family>
+    <programming direct="no" paged="no" register="no" ops="no">
+        <mode>LOCONETSV2MODE</mode>
+    </programming>
+    <variables>
+
+     <!-- Is the following actually accessible via the SV protocol? -->
+      <variable CV="999" comment="Board SV address" item="Short Address" default="03">
+        <decVal/>
+        <label>Board Address</label>
+      </variable>
+
+      <variable CV="1" comment="Size of memory in bytes" readOnly="yes"  item="Advanced Group 1 Option 1">
+        <enumVal>
+          <enumChoice>
+            <choice>256 bytes</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>512 bytes</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>1024 bytes</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>2048 bytes</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>4096 bytes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>EEPROM Size</label>
+      </variable>
+      <variable CV="2" item="Decoder Version" >
+        <decVal/>
+        <label>Manufacturer Version No.</label>
+      </variable>
+
+      <variable CV="8" readOnly="yes" item="Manufacturer">
+        <decVal/>
+        <label>Manufacturer ID: </label>
+      </variable>
+
+      <variable item="Dummy 10" CV="10">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 11" CV="11">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 12" CV="12">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 13" CV="13">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 14" CV="14">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 15" CV="15">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 16" CV="16">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 17" CV="17">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 18" CV="18">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 19" CV="19">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 20" CV="20">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 21" CV="21">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 22" CV="22">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 23" CV="23">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 24" CV="24">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 25" CV="25">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 26" CV="26">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 27" CV="27">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 28" CV="28">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 29" CV="29">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 30" CV="30">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 31" CV="31">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 32" CV="32">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 33" CV="33">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 34" CV="34">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 35" CV="35">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 36" CV="36">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 37" CV="37">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 38" CV="38">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 39" CV="39">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 40" CV="40">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 41" CV="41">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 42" CV="42">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 43" CV="43">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 44" CV="44">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 45" CV="45">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 46" CV="46">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 47" CV="47">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 48" CV="48">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 49" CV="49">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 50" CV="50">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 51" CV="51">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 52" CV="52">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 53" CV="53">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 54" CV="54">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 55" CV="55">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 56" CV="56">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 57" CV="57">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 58" CV="58">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 59" CV="59">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 60" CV="60">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 61" CV="61">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 62" CV="62">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 63" CV="63">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 64" CV="64">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 65" CV="65">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 66" CV="66">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 67" CV="67">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 68" CV="68">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 69" CV="69">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 70" CV="70">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 71" CV="71">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 72" CV="72">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 73" CV="73">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 74" CV="74">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 75" CV="75">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 76" CV="76">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 77" CV="77">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 78" CV="78">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 79" CV="79">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 80" CV="80">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 81" CV="81">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 82" CV="82">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 83" CV="83">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 84" CV="84">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 85" CV="85">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 86" CV="86">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 87" CV="87">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 88" CV="88">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 89" CV="89">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 90" CV="90">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 91" CV="91">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 92" CV="92">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 93" CV="93">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 94" CV="94">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 95" CV="95">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 96" CV="96">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 97" CV="97">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 98" CV="98">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 99" CV="99">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 100" CV="100">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 101" CV="101">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 102" CV="102">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 103" CV="103">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 104" CV="104">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 105" CV="105">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 106" CV="106">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 107" CV="107">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 108" CV="108">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 109" CV="109">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 110" CV="110">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 111" CV="111">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 112" CV="112">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 113" CV="113">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 114" CV="114">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 115" CV="115">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 116" CV="116">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 117" CV="117">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 118" CV="118">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 119" CV="119">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 120" CV="120">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 121" CV="121">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 122" CV="122">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 123" CV="123">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 124" CV="124">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 125" CV="125">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 126" CV="126">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 127" CV="127">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 128" CV="128">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 129" CV="129">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 130" CV="130">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 131" CV="131">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 132" CV="132">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 133" CV="133">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 134" CV="134">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 135" CV="135">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 136" CV="136">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 137" CV="137">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 138" CV="138">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 139" CV="139">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 140" CV="140">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 141" CV="141">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 142" CV="142">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 143" CV="143">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 144" CV="144">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 145" CV="145">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 146" CV="146">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 147" CV="147">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 148" CV="148">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 149" CV="149">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 150" CV="150">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 151" CV="151">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 152" CV="152">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 153" CV="153">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 154" CV="154">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 155" CV="155">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 156" CV="156">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 157" CV="157">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 158" CV="158">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 159" CV="159">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 160" CV="160">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 161" CV="161">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 162" CV="162">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 163" CV="163">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 164" CV="164">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 165" CV="165">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 166" CV="166">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 167" CV="167">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 168" CV="168">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 169" CV="169">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 170" CV="170">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 171" CV="171">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 172" CV="172">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 173" CV="173">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 174" CV="174">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 175" CV="175">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 176" CV="176">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 177" CV="177">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 178" CV="178">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 179" CV="179">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 180" CV="180">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 181" CV="181">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 182" CV="182">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 183" CV="183">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 184" CV="184">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 185" CV="185">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 186" CV="186">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 187" CV="187">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 188" CV="188">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 189" CV="189">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 190" CV="190">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 191" CV="191">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 192" CV="192">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 193" CV="193">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 194" CV="194">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 195" CV="195">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 196" CV="196">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 197" CV="197">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 198" CV="198">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 199" CV="199">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 200" CV="200">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 201" CV="201">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 202" CV="202">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 203" CV="203">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 204" CV="204">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 205" CV="205">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 206" CV="206">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 207" CV="207">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 208" CV="208">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 209" CV="209">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 210" CV="210">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 211" CV="211">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 212" CV="212">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 213" CV="213">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 214" CV="214">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 215" CV="215">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 216" CV="216">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 217" CV="217">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 218" CV="218">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 219" CV="219">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 220" CV="220">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 221" CV="221">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 222" CV="222">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 223" CV="223">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 224" CV="224">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 225" CV="225">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 226" CV="226">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 227" CV="227">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 228" CV="228">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 229" CV="229">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 230" CV="230">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 231" CV="231">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 232" CV="232">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 233" CV="233">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 234" CV="234">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 235" CV="235">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 236" CV="236">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 237" CV="237">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 238" CV="238">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 239" CV="239">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 240" CV="240">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 241" CV="241">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 242" CV="242">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 243" CV="243">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 244" CV="244">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 245" CV="245">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 246" CV="246">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 247" CV="247">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 248" CV="248">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 249" CV="249">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 250" CV="250">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 251" CV="251">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 252" CV="252">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 253" CV="253">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 254" CV="254">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 255" CV="255">
+        <decVal/>
+      </variable>
+
+    </variables>
+  </decoder>
+</decoder-config>

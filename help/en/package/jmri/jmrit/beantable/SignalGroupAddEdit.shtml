@@ -1,123 +1,59 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
-<title>JMRI: Signal Group Table</title>
-
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+<title>JMRI: Adding Signal Groups</title>
+<meta name="author" content="Bob Jacobsen, Egbert Broerse">
+<meta name="Date.Modified" content="20160412">
+<!--#include virtual="/Style" -->
 </head>
 
 <body>
 <!--#include virtual="/Header" -->
-
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
-
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+    
 <h1> 
-JMRI: Signal Group Table
+Adding/Editing a Signal Group
 </h1>
-Signal Groups.
 
-Signal groups are used to define a number of signal heads, where only one signal head can be illuminated at any given time, depending upon the status of the associated signal mast and a set of conditions.<br>
-
-Signal groups would be used where additional indicators are used to support the main signal mast, such as Junction, Route or Speed displays.  These indicators provide additional information to the driver that is not given by the main signal mast.  Such indicators are frequently seen in European and UK signalling.<br>
-
-<h2>Junction Indicators</h2>
-A Junction indicator can be configured to display anything from 1 to 6 diverging routes.  A single indicator will frequently be found where a branch line diverges off from a main line.  Multiple indicators will be found in more complex areas such as the approach to stations and good yards, where multiple routes can be taken.  The junction indicator informs the driver that he is about to take a different route and should therefore adjust his speed according to the signage.<br>
-
-The Junction indicators themselves will be set according to a given set of turnouts on for that junction.<br>
-
-<h2>Route Indicators</h2>
-A route indicator as used in the UK, will display a number or letter, they are predominately found attached to signals on the approach to a Station.  They display which platform the train has been routed into, given the complexity of some station throats, there may be a number of different physical routes that could be take from the signal to the destination. Thus a junction indicator could not be used when tided in with turnout positions.  In addition the junction indicator can only deal with 6 different routes, and some stations have more than 6 platforms.<br>
-
-Therefore, the route indicator can only display one destination at time.  The displaying of a route doesn't necessarily indicate that the driver will take the same route to get to the destination platform.<br>
-
-<a href="SignalGroup.png">
-   <img src="SignalGroup.png" 
-        height="274" width="306">
+	<p>After clicking on the "Add..." button below the <a href="../beantable/SignalGroupTable.shtml">Signal Group Table</a>, the following panel appears:</p>
+		
+<a href="SignalGroupAdd.png">
+   <img src="SignalGroupAdd.png" 
+        width="310" height="269" >
 </a>
-
-<h2>Each signal group comprises of the following</h2>
-
-A Signal Mast - to which this group is attached.<br>
-A list of appearances that can be valid for the signal group to become active.<br>
-	eg. The Signal Mast, must be set for Proceed or Caution, but not Danger.<br>
-
-<p>The signal heads that make up each indication of the group.
-Signal heads within the group are made up from signal heads created using the single output type, from the signal head table.<br>
+	<h3>Enter Signal Group elements</h3>
+	<p>Signal Groups are built from one or more Signal Heads and comprise the following:
+<ul>
+	<li>A parent Signal Mast (by System Name) to which this Signal Group is attached.</li>
+    <li>A list of Aspects that cause the Signal Group to become active eg. the parent Signal Mast must be set for Proceed or Caution, but not Danger.</li>
+	<li>A list of Signal Heads that make up each indication of the Signal Group.<br>
+Signal Heads included in a Signal Group are picked from the Signal Head Table, but only Signal Heads that were created using the <em>Single Output</em> connection type (pictured to the right) show up in the list.
 <a href="SingleSignalHead.png">
    <img src="SingleSignalHead.png" 
-        height="159" width="121">
-</a>
-<p>Each Signal head then has a set of criteria that have to be met before that signal head is illuminated.  This is made up from Turnouts and/Or Sensor states.<br>
-
-<h2>Example - Junction Indicator</h2>
-Consider the following track diagram, here you have 6 possible junctions of off the main running line.<br>
-
-<a href="SignalGroupTrackDiagram.png">
-   <img src="SignalGroupTrackDiagram.png" 
-        height="90" width="233">
-</a>
-
-<p>The signal facing this junction will have a junction indicator attached, with each possible route having it own indication.  When the route is set for straight through, then no indicator is shown.  If the route is set for position 1, then the position 1 indicator will be shown.<br>
-<a href="SignalGroupTrackDiagram1.png">
-   <img src="SignalGroupTrackDiagram1.png" 
-        height="90" width="262">
-</a>
-
-<p>With this configuration, you would create a single turnout signal head for each position, configured with a Dark and Lunar appearances.  You can use any two combinations of colours you like, however Dark and Lunar are more suitable for this situation.
-
-<p> Within the SignalGroup, you would then select each of the Signalheads that are used to create the junction indicator.  The logic for each signalhead is then configured as follows.
-<table>
-  <td width=200 valign=top>
-  <p>Position 1 - Set Turnouts</p>
-  <p>IT1 set Thrown,</p>
-  <p>IT2 set Thrown.</p>
-  </td>
-  <td width=200>
-  <p>Position 2 - Set Turnouts</p>
-  <p>IT1 set Thrown,</p>
-  <p>IT2 set Closed,</p>
-  <p>IT3 set Thrown.</p>
-  </td>
- </tr>
-  <td width=200>
-  <p>Position 3 - Set Turnouts</p>
-  <p>IT1 set Thrown,</p>
-  <p>IT2 set Closed,</p>
-  <p>IT3 set Closed.</p>
-  </td>
-  <td width=200>
-  <p>Position 4 - Set Turnouts</p>
-  <p>IT1 set Closed</p>
-  <p>IT4 set Thrown</p>
-  <p>IT5 set Thrown</p>
-  </td>
- </tr>
-  <td width=200>
-  <p>Position 5 - Set Turnouts</p>
-  <p>IT1 set Closed</p>
-  <p>IT4 set Thrown</p>
-  <p>IT5 set Closed</p>
-  <p>IT6 set Thrown</p>
-  </td>
-  <td width=200>
-  <p>Position 6 - Set Turnouts</p>
-  <p>IT1 set Closed</p>
-  <p>IT4 set Thrown</p>
-  <p>IT5 set Closed</p>
-  <p>IT6 set Closed</p>
-  </td>
- </tr>
-</table>
-
+    height="186" width="129" align="right">
+		</a></li>
+	</ul>
+	<p>In the Add/Edit Signal Group window, after entering a User Name for the new Signal Group and the (existing) System Name of the parent Signal Mast, check <b>Include</b>behind one or more Mast Aspects.<br>
+		Next select one or more Signal Heads by checking their <b>Include</b> check boxes in the second list.<br>
+		Click the <b>Apply</b> button at the bottom of the pane. Reopen the Signal Group pane bij clicking on its <b>Edit</b> button in the Signal Group Table to have JMRI repopulate the correct values into the lists and Appearances. If necessary, check the correct boxes in both lists.</p>
+	
+	<h3>Define Signal Group Conditions</h3>
+	<p>Each Signal Head within the Signal Group has a set of criteria that have to be met before that Signal Head is illuminated. These criteria are made up from Turnout and/or Sensor states and can be changed by clicking on the corresponding <b>Edit</b> button in the last column of the Add/Edit Signal Group pane. A new pane like the one shown to the right will open, letting you define a specific Signal Head that is part of your Indicator.</p>
+	<a href="SignalGroupAddEditHead.png">
+   <img src="SignalGroupAddEditHead.png" 
+    height="233" width="417" align="right">
+		</a>
+	<p>	Choose two <i>different</i> values in the pop up menus at the top of the pane to define the states of the Indicator Signal Head.<br>
+		To complete the definition of a Signal Group Indicator Head, mark the appropriate <b>Include</b> check boxes for both Turnouts and Sensors, and specify their state in the last column of each list.<br>
+	In between both lists there is a final logical OR/AND option to choose from.</p>
+<p>You will need to do some deep thinking to prepare for this last step, as this is the place where you control how your Indicator will behave. The signal hardware on your layout may rule out some options, so build it up in small steps and test often.</p>
+		
+<p>Back to the <a href="SignalGroupTable.shtml">Signal Group Table help page</a>.
+	
 <!--#include virtual="/Footer" -->
+
+      </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
 </body>
 </html>

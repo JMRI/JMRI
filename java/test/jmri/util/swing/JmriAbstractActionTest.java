@@ -1,32 +1,37 @@
-// JmriAbstractActionTest.java
-
 package jmri.util.swing;
 
-import junit.framework.*;
+import junit.framework.Assert;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  *
- * @author	    Bob Jacobsen  Copyright 2010
- * @version         $Revision$
+ * @author	Bob Jacobsen Copyright 2010
  */
 public class JmriAbstractActionTest extends TestCase {
-    
+
     public void testAccess() {
-        JmriAbstractAction a = new JmriAbstractAction("foo", new jmri.util.swing.sdi.JmriJFrameInterface()){
-            public jmri.util.swing.JmriPanel makePanel(){ return null; }
+        JmriAbstractAction a = new JmriAbstractAction("foo", new jmri.util.swing.sdi.JmriJFrameInterface()) {
+
+            public jmri.util.swing.JmriPanel makePanel() {
+                return null;
+            }
         };
-        
-        Assert.assertEquals("foo",a.getValue(javax.swing.Action.NAME));
+
+        Assert.assertEquals("foo", a.getValue(javax.swing.Action.NAME));
 
         javax.swing.Icon i = new javax.swing.ImageIcon("resources/icons/throttles/PowerRed24.png");
-        a = new JmriAbstractAction("foo", i, null){
-            public jmri.util.swing.JmriPanel makePanel(){ return null; }
+        a = new JmriAbstractAction("foo", i, null) {
+            public jmri.util.swing.JmriPanel makePanel() {
+                return null;
+            }
         };
-        
-        Assert.assertEquals("foo",a.getValue(javax.swing.Action.NAME));
-        Assert.assertEquals(i,a.getValue(javax.swing.Action.SMALL_ICON));
+
+        Assert.assertEquals("foo", a.getValue(javax.swing.Action.NAME));
+        Assert.assertEquals(i, a.getValue(javax.swing.Action.SMALL_ICON));
     }
-    
+
     // from here down is testing infrastructure
     public JmriAbstractActionTest(String s) {
         super(s);
@@ -40,13 +45,18 @@ public class JmriAbstractActionTest extends TestCase {
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite(JmriAbstractActionTest.class); 
-       
+        TestSuite suite = new TestSuite(JmriAbstractActionTest.class);
+
         return suite;
     }
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 
 }

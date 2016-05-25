@@ -1,8 +1,5 @@
-// DefaultIdTagManagerTest.java
-
 package jmri.managers;
 
-import org.apache.log4j.Logger;
 import jmri.IdTag;
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -10,9 +7,9 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- Tests for the jmri.managers.DefaultIdTagManager class.
- * @author	Matthew Harris  Copyright (C) 2011
- * @version     $Revision$
+ * Tests for the jmri.managers.DefaultIdTagManager class.
+ *
+ * @author	Matthew Harris Copyright (C) 2011
  */
 public class DefaultIdTagManagerTest extends TestCase {
 
@@ -22,20 +19,20 @@ public class DefaultIdTagManagerTest extends TestCase {
 
         Assert.assertNotNull("IdTag is not null", t);
     }
-    
+
     public void testIdTagNames() {
         DefaultIdTagManager m = getManager();
         IdTag t = m.createNewIdTag("ID0413276BC1", "Test Tag");
-        
+
         Assert.assertEquals("IdTag system name is 'ID0413276BC1'", "ID0413276BC1", t.getSystemName());
         Assert.assertEquals("IdTag user name is 'Test Tag'", "Test Tag", t.getUserName());
         Assert.assertEquals("IdTag tag id is '0413276BC1'", "0413276BC1", t.getTagID());
     }
-    
+
     public void testIdTagSingleRetrieval() {
         DefaultIdTagManager m = getManager();
         IdTag t = m.newIdTag("ID0413276BC1", "Test Tag");
-        
+
         Assert.assertNotNull("Returned IdTag is not null", t);
 
         Assert.assertNotNull("Get by system name is not null", m.getBySystemName("ID0413276BC1"));
@@ -54,13 +51,13 @@ public class DefaultIdTagManagerTest extends TestCase {
         Assert.assertNull("Null Object returned from manager by user name", m.getBySystemName("This doesn't exist"));
         Assert.assertNull("Null Object returned from manager by tagID", m.getBySystemName("XXXXXXXXXX"));
     }
-    
+
     public void testIdTagMultiRetrieval() {
         DefaultIdTagManager m = getManager();
         IdTag t1 = m.newIdTag("ID0413276BC1", "Test Tag 1");
         IdTag t2 = m.newIdTag("ID0413275FCA", "Test Tag 2");
-        
-        Assert.assertFalse("Created IdTags are different",t1.equals(t2));
+
+        Assert.assertFalse("Created IdTags are different", t1.equals(t2));
 
         Assert.assertTrue("Matching IdTag returned from manager by system name", t1.equals(m.getBySystemName("ID0413276BC1")));
         Assert.assertTrue("Matching IdTag returned from manager by user name", t1.equals(m.getByUserName("Test Tag 1")));
@@ -78,11 +75,11 @@ public class DefaultIdTagManagerTest extends TestCase {
         Assert.assertFalse("Non-matching IdTag returned from manager via getRfidTag using user name", t2.equals(m.getIdTag("Test Tag 1")));
         Assert.assertFalse("Non-matching IdTag returned from manager via getRfidTag using tag id", t2.equals(m.getIdTag("0413276BC1")));
     }
-    
+
     public void testIdTagProviderCreate() {
         DefaultIdTagManager m = getManager();
         IdTag t = m.provideIdTag("0413276BC1");
-        
+
         Assert.assertNotNull("IdTag is not null", t);
         Assert.assertEquals("IdTag System Name is 'ID0413276BC1'", "ID0413276BC1", t.getSystemName());
         Assert.assertEquals("IdTag display name is system name", "ID0413276BC1", t.getDisplayName());
@@ -100,19 +97,18 @@ public class DefaultIdTagManagerTest extends TestCase {
         IdTag t1 = m.newIdTag("ID0413276BC1", "Test Tag 1");
         IdTag t2 = m.newIdTag("ID0413275FCA", "Test Tag 2");
 
-        Assert.assertFalse("Created IdTags are different",t1.equals(t2));
+        Assert.assertFalse("Created IdTags are different", t1.equals(t2));
 
         Assert.assertTrue("Matching IdTag returned via provideTag by system name", t1.equals(m.provideIdTag("ID0413276BC1")));
         Assert.assertTrue("Matching IdTag returned via provideTag by user name", t1.equals(m.provideIdTag("Test Tag 1")));
         Assert.assertTrue("Matching IdTag returned via provideTag by tag ID", t1.equals(m.provideIdTag("0413276BC1")));
-        
+
         Assert.assertFalse("Non-matching IdTag returned via provideTag by system name", t1.equals(m.provideIdTag("ID0413275FCA")));
         Assert.assertFalse("Non-matching IdTag returned via provideTag by user name", t1.equals(m.provideIdTag("Test Tag 2")));
         Assert.assertFalse("Non-matching IdTag returned via provideTag by tag ID", t1.equals(m.provideIdTag("0413275FCA")));
     }
 
     // from here down is testing infrastructure
-
     public DefaultIdTagManagerTest(String s) {
         super(s);
     }
@@ -153,10 +149,9 @@ public class DefaultIdTagManagerTest extends TestCase {
     private DefaultIdTagManager getManager() {
         return new DefaultIdTagManager() {
             @Override
-            public void init() {}
+            public void init() {
+            }
         };
     }
-
-    static Logger log = Logger.getLogger(DefaultIdTagManagerTest.class.getName());
 
 }

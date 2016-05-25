@@ -1,38 +1,40 @@
 package jmri.jmrit.withrottle;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.ThrottleListener;
 import jmri.jmrit.roster.RosterEntry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
- *	@author Brett Hoffman   Copyright (C) 2010, 2011
- *	@version $Revision$
+ * @author Brett Hoffman Copyright (C) 2010, 2011
+ * @version $Revision$
  */
-public class ConsistFunctionController implements ThrottleListener{
+public class ConsistFunctionController implements ThrottleListener {
 
     private DccThrottle throttle;
     private RosterEntry rosterLoco = null;
     private ThrottleController throttleController;
 
-    public ConsistFunctionController(ThrottleController tc){
+    public ConsistFunctionController(ThrottleController tc) {
         throttleController = tc;
     }
 
-    public ConsistFunctionController(ThrottleController tc, RosterEntry re){
+    public ConsistFunctionController(ThrottleController tc, RosterEntry re) {
         throttleController = tc;
         rosterLoco = re;
     }
-    
+
     public void notifyThrottleFound(DccThrottle t) {
-        if (log.isDebugEnabled()) log.debug("Lead Loco throttle found: " + t +
-                                            ", for consist: " + throttleController.getCurrentAddressString());
+        if (log.isDebugEnabled()) {
+            log.debug("Lead Loco throttle found: " + t
+                    + ", for consist: " + throttleController.getCurrentAddressString());
+        }
         throttle = t;
 
-        if (rosterLoco == null){
+        if (rosterLoco == null) {
             rosterLoco = throttleController.findRosterEntry(throttle);
         }
 
@@ -42,15 +44,15 @@ public class ConsistFunctionController implements ThrottleListener{
         throttleController.sendAllFunctionStates(throttle);
     }
 
-    public void notifyFailedThrottleRequest(DccLocoAddress address, String reason){
+    public void notifyFailedThrottleRequest(DccLocoAddress address, String reason) {
+        log.error("Throttle request failed for " + address + " because " + reason);
     }
 
-    
-    public void dispose(){
+    public void dispose() {
         jmri.InstanceManager.throttleManagerInstance().releaseThrottle(throttle, this);
     }
 
-    public DccThrottle getThrottle(){
+    public DccThrottle getThrottle() {
         return throttle;
     }
 
@@ -58,6 +60,6 @@ public class ConsistFunctionController implements ThrottleListener{
         return jmri.InstanceManager.throttleManagerInstance().requestThrottle(loco.getNumber(), loco.isLongAddress(), this);
     }
 
-    static Logger log = LoggerFactory.getLogger(ConsistFunctionController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConsistFunctionController.class.getName());
 
 }

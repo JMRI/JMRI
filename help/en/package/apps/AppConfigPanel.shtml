@@ -1,16 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
-      JMRI: Preferences Window
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help preferences">
+ <title>
+      JMRI: Older Preferences Pane
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="JMRI help preferences">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -23,32 +21,29 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>JMRI: Preferences Window</H1>
+<h1>JMRI: Older Preferences Pane</h1>
 
-The preferences window is where you 
-configure the basic operation of your JMRI application.
-There's a top part that contains the basics, and 
-a separate section for advanced preferences.
-
+<p class="important">
+This page describes an older Preferences pane that was replaced by 
+<a href="TabbedPreferences.shtml">a new layout</a> in 
+<a href="http://jmri.org/releasenotes/jmri2.9.4.shtml">JMRI 2.9.4</a>.  Information on the new version is on
+<a href="TabbedPreferences.shtml">this page</a>.</p>
 <p>
-This page describes an older preferences pane that was replaced by 
-<a href="TabbedPreferences.shtml">another one</a> in 
-<a href="http://jmri.org/releasenotes/jmri2.9.4.shtml">JMRI 2.9.4</a>.  Information on the new one is on
-<a href="TabbedPreferences.shtml">another page</a>.
+The Preferences pane is where you 
+configure the basic operation of your JMRI application.</p>
 
-<p>
 <a name="basic">
 <h2>Basic Preferences</h2></a>
 <p>
-When the window first opens, it displays the basic preferences.
+When the panel first opens, it displays the basic Preferences.
 <p>
-<a href="../../manual/images/Preferences.png">
-<img src="../../manual/images/Preferences.png" height="156" width="256" align="right"></a>
+<a href="../../manual/DecoderPro/images/Preferences.png">
+<img src="../../manual/DecoderPro/images/Preferences.png" height="144" width="252" align="right"></a>
 <dl>
 <dt>Layout Connection
-<dd>You can select any of the various JMRI layout connections here.
+<dd>You can select any of the various JMRI layout Connections here.
 For more information on how to configure this for your particular hardware,
-see the <a href="../../html/hardware/index.shtml">hardware pages</a>.
+see the <a href="../../html/hardware/index.shtml">Hardware help pages</a>.
 <dt>GUI Style
 <dd>These radio boxes allow you to select how the program looks.
 The available choices depend on what kind of computer you have, and not 
@@ -66,7 +61,7 @@ all of the following may be available:
 <dd>The DecoderPro programmer allows you to select how much or how little
 to display of the decoder content using configurable "Programmers". You 
 can select one at the same time you 
-<a href="../../manual/Basic_Programming.shtml">select your locomotive decoder</a>,
+<a href="../../manual/DecoderPro/Basic_Start.shtml">select your locomotive decoder</a>,
 but this provides a convenient place to set a default so you don't
 have to select it each time you open a decoder.
 </dl>
@@ -85,8 +80,8 @@ get your initial connection to the layout up and running, and it is
 recommended that you leave them alone until the connection to your
 command station is operational. To set the advanced preferences, check
 the "Show Advanced Preferences" box.<br><p>
-<a href="../../manual/images/Preferences2.png">
-<img src="../../manual/images/Preferences2.png" height="150" width="256" align="right"></a>
+<a href="../../manual/DecoderPro/images/Preferences2.png">
+<img src="../../manual/DecoderPro/images/Preferences2.png" height="144" width="252" align="right"></a>
 
 <dl>
 	<dt>Auxiliary layout connections
@@ -170,11 +165,11 @@ desired file.  If you later want to stop executing a particular script at startu
 click the "Remove" button next to the filename.
 
 <a id="roster">
-<dt>Set the location of the roster
+<dt>Set the location of the Roster
 <dd>
-Normally, the roster is stored in a standard location
+Normally, the Roster is stored in a standard location
 as part of the
-<a href="../../html/apps/DecoderPro/Files.shtml">preferences directory</a>.
+<a href="../../html/apps/DecoderPro/Files.shtml">Preferences directory</a>.
 This option lets you move that somewhere else.
 <p>
 To configure it, click the "Set..." button and follow the directions.
@@ -192,6 +187,7 @@ existing entries, even if changed.
 </dl>
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
-

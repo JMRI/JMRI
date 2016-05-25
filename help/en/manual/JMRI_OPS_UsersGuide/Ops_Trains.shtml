@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<title>Operations-Trains window</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<h1>Using JMRI&reg; to Operate Trains</h1>
+<h2>Operations Trains Window</h2>
+
+<div align="right">
+<p><a href="Ops_Routes.shtml">Previous | </a><a href="Ops_TripThruOperations.shtml">Next</a></p>
+<p><a href="index.shtml#Operations">Back to Index</a></p>
+</div>
+
+<hr>
+<p>The <strong>Trains</strong> window opens which allows you to build
+trains to run on your layout using the assets that you have defined in
+this program and save to the various rosters.. This window is selected
+from the
+DecoderPro&reg; or PanelPro&trade; main page from <strong>Tools --&gt; Operations --&gt; Trains</strong> menu or if enabled <strong>Operations --&gt; Trains</strong> menu.</p>
+
+<p><img style="width: 800px; height: 236px;" alt="trains" src="images/Ops_Trains.png"></p>
+
+<h3><a href="Ops_Trains_Menu.shtml">Menu Bar</a></h3>
+<span style="font-weight: bold;">The main body</span><br>
+Lists of all the trains that have been built. Each train has a Preview, Move and Edit button associated with it.
+<p>
+  <img style="width: 900px; height: 142px;" alt="train body" src="images/Ops_Trains_train.png"><br>
+<strong>Time or Id </strong>(depends upon <span style="font-weight: bold;">Show</span> option at bottom of window)&nbsp; column shows the departure time of the train<br>
+<strong>Build</strong> column is checked to include in current build<br>
+<strong>Function</strong> column,&nbsp;Click on the Build button and  Preview button is displayed in Function, click on Preview function button and it 
+  opens the <strong><a href="Ops_ManifestPreview.shtml">Print Preview</a></strong> window showing the trains Manifest. If <span style="font-weight: bold;">Build</span> button is displayed, then it will build the train and display a <span style="font-weight: bold;">Preview</span> button.<br>
+  <strong>Name</strong> column shows train name<br>
+  <strong>Description</strong> column describes the trains routing<br>
+  <strong>Route</strong> column shows actual train route<br>
+  <strong>Departs</strong> column shows location of departure<br>
+  <strong>Terminates</strong> column shows the terminal location<br>
+  <strong>Current</strong> column shows current location<br>
+  <strong>Status</strong> column shows status of train<br>
+  <strong>Action</strong> column shows <span style="font-weight: bold;">Move</span> button 
+
+  Each time pressed advances one location on the trains route until it will be finally terminated.<br>
+  <strong>Edit</strong> column contains the <span style="font-weight: bold;">Edit</span> button which 
+opens the <strong><a href="Ops_EditTrain.shtml">Edit Train</a></strong> window </p>
+<p>At the bottom of the Trains window:</p>
+<p><img src="images/Ops_TrainsButtons.png" alt="bottom" height="144" width="898"><br>
+<strong>Show </strong>selects if time or Id is shown in first column.<br>
+(click on a column header for sort by sequence)</p>
+<p><br>
+  <strong>Options </strong>(selects the options desired for the train list)<strong><br>
+  <input name="checkbox" id="checkbox" checked="checked" type="checkbox">
+  Show All
+<input name="checkbox2" id="checkbox2" checked="checked" type="checkbox">
+  Messages
+<input name="checkbox3" id="checkbox3" type="checkbox">
+  Build Reports
+<input name="checkbox4" id="checkbox4" checked="checked" type="checkbox">
+  Preview Manifests </strong></p>
+<p><strong>Action<br>
+    <input name="radio7" id="radio7" value="radio7" checked="checked" type="radio">
+Move
+<input name="radio" id="radio" value="radio" type="radio">
+Conductor
+<input name="radio8" id="radio8" value="radio8" type="radio">
+Terminate
+<input name="radio9" id="radio9" value="radio9" type="radio">
+Reset </strong></p>
+<p>
+  <input name="button8" id="button8" value="Add" type="button">
+   opens the <strong><a href="Ops_AddTrain.shtml">Add Train </a></strong>window.<br>
+  <a name="buildbtn"></a>
+  <input name="button9" id="button9" value="Build" type="button">
+  the selected train is<strong><a href="Ops_TrainsBuild.shtml"> built</a></strong> and the <strong>Function</strong> column button changes to <strong> Preview</strong> when completed, messages may be displayed if the Build can not be completed.<br>
+  <input name="button10" id="button10" value="Preview" type="button">
+  shows the manifest in <strong><a href="Ops_ManifestPreview.shtml">Preview </a></strong>window.<br>
+  <a name="switch"></a>
+  <input name="button11" id="button11" value="Switch Lists" type="button">
+  opens the <strong><a href="Ops_TrainsBuild.shtml">Switch Lists by Location </a></strong>window.</p>
+<p><br>
+  <input name="button12" id="button12" value="Terminate" type="button">
+  terminates all trains that have a build.<br>
+  <input name="button13" id="button13" value="Save Builds" type="button"> 
+  saves the builds to disk.</p>
+
+<div align="right">
+  <p><a href="Ops_Routes.shtml">Previous | </a><a href="Ops_TripThruOperations.shtml">Next</a></p>
+<p><a href="index.shtml#Operations">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</div>
+</div>
+</body>
+</html>

@@ -1,58 +1,62 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author: zoo $) 2008 -->
-<!-- $Id: index.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
-<title>JMRI: TAMs Master Control Support</title>
+<title>JMRI Hardware Support - TAMs MasterControl</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1> 
-JMRI: TAMs Support
-</h1>
-JMRI can connect to a TAMS MasterControl command station using the built in USB and/or serial interface.<br>
-The USB interface comes with drivers to emulate a serial port.<br>
-The USB port works under Linux and Windows - both have been tested.<br>
-Both USB and serial interface can be used at the same time.<br>
-<p>
-The TAMS MC uses the (Uhlenbrock/Märklin) P50X protocol.
-<p>
-<b>This interface is still under development if you find any issues then please raise a issue on the yahoo group</b>
-<p>
-To configure the connection:
-<ul>
-<li>Open the JMRI "Preferences" under the "Edit" menu,
-<li>Select "TAMS" as the manufacuturer, then connection type,
-<li>Select the appropriate serial interface.
-<li>The baud rate configured in the MC on the USB port is fixed at 57600 bps (8n1: 8bit, no parity, 1 stop bit).
-<li>On the serial port the default speed is set at 2400 bps. This can be changed on the MC in the usual steps between 1200 and 57600 bps
-<li>Click "Save".
-</ul>
+<h1>Hardware Support: TAMs MasterControl</h1>
 
 <p>
-Turnout, Programming, Throttle and power support is available for 
-a JMRI-connected TAMs unit.
-<p>
-
-Consisting, Sensors and RailCom are not yet support.
+Turnout, Programming, Throttle and power support is available for a JMRI-connected TAMs unit.
 <p>
 Support for TAMS MC was first available in 
-<a href="http://jmri.sf.net/releasenotes/jmri2.99.7.shtml">JMRI 2.99.7</a>.
+<a href="http://jmri.org/releasenotes/jmri2.99.7.shtml">JMRI 2.99.7</a>.
+
+<a name="limitations"></a><h2>Limitations</h2>
+<p>
+Consisting, Sensors and RailCom are not yet support.
+<p>
+<b>This interface is still under development if you find any issues then please raise a issue on the JMRI users Yahoo group.</b>
+
+<a name="connecting"></a><h2>Connecting</h2>
+<h3>Wiring</h3>
+<p>JMRI can connect to a TAMS MasterControl (MC) Command Station using the built in USB and/or serial interface.<br>
+Both USB and serial interface can be used at the same time.</p>
+<p>The USB interface comes with drivers to emulate a serial port.<br>
+The USB port works under Linux and Windows - both have been tested.
+
+<h3>Settings</h3>
+<p>The TAMS MC uses the (Uhlenbrock/M&auml;rklin) P50X protocol.
+
+<p>To configure the connection:
+<ul>
+	<li>Open the JMRI "Preferences" under the "Edit" menu
+	<li>Select "TAMS" as the Manufacturer
+	<li>Select the appropriate serial interface as the Connection type
+	<li>The baud rate configured in the MC on the USB port is fixed at 57600 bps (8n1: 8bit, no parity, 1 stop bit)
+	<li>On the serial port the default speed is set at 2400 bps. This can be changed on the MC in the usual steps between 1200 and 57600 bps
+	<li>Click "Save" and restart JMRI.
+</ul>
+
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>Third Party info</h3>
+<p>The <a href="http://tams-online.de/MasterControl">TAMs.de manufacturer's website</a>
     
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

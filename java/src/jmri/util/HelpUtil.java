@@ -1,29 +1,24 @@
-// HelpUtil.java
-
 package jmri.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import apps.AboutAction;
+import java.awt.event.ActionEvent;
+import java.net.URL;
+import java.util.EventObject;
+import java.util.Locale;
 import javax.help.HelpBroker;
 import javax.help.HelpSet;
-
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Icon;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-
-import java.awt.event.ActionEvent;
-import java.util.Locale;
-
-import java.net.URL;
-import java.util.EventObject;
-import javax.swing.*;
+import javax.swing.UIManager;
 import jmri.plaf.macosx.AboutHandler;
 import jmri.plaf.macosx.Application;
 import jmri.swing.AboutDialog;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Common utility methods for working with Java Help.
@@ -32,15 +27,13 @@ import jmri.swing.AboutDialog;
  * <P>
  * It assumes that Java Help 1.1.8 is in use
  *
- * @author Bob Jacobsen  Copyright 2007
- * @version $Revision$
+ * @author Bob Jacobsen Copyright 2007
  */
-
 public class HelpUtil {
 
     /**
-     * @param direct true if this call should complete the help menu
-     * by adding the general help
+     * @param direct true if this call should complete the help menu by adding
+     *               the general help
      * @return new Help menu, in case user wants to add more items
      */
     static public JMenu helpMenu(JMenuBar menuBar, String ref, boolean direct) {
@@ -48,7 +41,7 @@ public class HelpUtil {
         menuBar.add(helpMenu);
         return helpMenu;
     }
-    
+
     static public JMenu makeHelpMenu(String ref, boolean direct) {
         if (!initOK()) {
             log.warn("help initialization not completed");
@@ -57,16 +50,16 @@ public class HelpUtil {
         JMenu helpMenu = new JMenu(Bundle.getMessage("HELP"));
         JMenuItem item = makeHelpMenuItem(ref);
         if (item == null) {
-            log.error("Can't make help menu item for "+ref);
+            log.error("Can't make help menu item for " + ref);
             return null;
         }
         helpMenu.add(item);
-        
+
         if (direct) {
             item = new JMenuItem(Bundle.getMessage("MenuItemHelp"));
             globalHelpBroker.enableHelpOnButton(item, "index", null);
             helpMenu.add(item);
-            
+
             // add standard items
             JMenuItem license = new JMenuItem(Bundle.getMessage("MenuItemLicense"));
             helpMenu.add(license);
@@ -75,7 +68,11 @@ public class HelpUtil {
             JMenuItem directories = new JMenuItem(Bundle.getMessage("MenuItemLocations"));
             helpMenu.add(directories);
             directories.addActionListener(new jmri.jmrit.XmlFileLocationAction());
-    
+
+            JMenuItem updates = new JMenuItem(Bundle.getMessage("MenuItemCheckUpdates"));
+            helpMenu.add(updates);
+            updates.addActionListener(new apps.CheckForUpdateAction());
+
             JMenuItem context = new JMenuItem(Bundle.getMessage("MenuItemContext"));
             helpMenu.add(context);
             context.addActionListener(new apps.ReportContextAction());
@@ -110,95 +107,101 @@ public class HelpUtil {
         }
         return helpMenu;
     }
-    
+
     static public JMenuItem makeHelpMenuItem(String ref) {
-        if (!initOK()) return null;  // initialization failed
-        
+        if (!initOK()) {
+            return null;  // initialization failed
+        }
         JMenuItem menuItem = new JMenuItem(Bundle.getMessage("MenuItemWindowHelp"));
         globalHelpBroker.enableHelpOnButton(menuItem, ref, null);
 
         // start help to see what happend
-        log.debug("help: "+globalHelpSet.getHomeID()+":"+globalHelpSet.getTitle()
-                           +":"+globalHelpSet.getHelpSetURL());
+        log.debug("help: {}:{}:{}", globalHelpSet.getHomeID(), globalHelpSet.getTitle(), globalHelpSet.getHelpSetURL());
 
         return menuItem;
     }
 
     static public void addHelpToComponent(java.awt.Component component, String ref) {
-        if (globalHelpBroker!=null)
+        if (globalHelpBroker != null) {
             globalHelpBroker.enableHelpOnButton(component, ref, null);
+        }
     }
-    
+
     static public void displayHelpRef(String ref) {
         if (globalHelpBroker == null) {
-            log.debug("can't display "+ref+" help page because help system reference is null");
+            log.debug("can't display {} help page because help system reference is null", ref);
             return;
         }
         try {
             globalHelpBroker.setCurrentID(ref);
             globalHelpBroker.setDisplayed(true);
         } catch (javax.help.BadIDException e) {
-            log.error("unable to show help page "+ref+" due to "+e);
+            log.error("unable to show help page {} due to:", ref, e);
         }
     }
-    
+
     static boolean init = false;
     static boolean failed = true;
-        
+
     static public boolean initOK() {
         if (!init) {
             init = true;
             try {
                 Locale locale = Locale.getDefault();
                 String language = locale.getLanguage();
-                String helpsetName = "help/"+language+"/JmriHelp_"+language+".hs";
+                String helpsetName = "help/" + language + "/JmriHelp_" + language + ".hs";
                 URL hsURL = FileUtil.findURL(helpsetName);
                 if (hsURL != null) {
-                    log.debug("JavaHelp using "+helpsetName);
+                    log.debug("JavaHelp using {}", helpsetName);
                 } else {
-                    log.warn("JavaHelp: File "+helpsetName+" not found, dropping to default");
+                    log.warn("JavaHelp: File " + helpsetName + " not found, dropping to default");
                     language = "en";
-                    helpsetName = "help/"+language+"/JmriHelp_"+language+".hs";
+                    helpsetName = "help/" + language + "/JmriHelp_" + language + ".hs";
                     hsURL = FileUtil.findURL(helpsetName);
                 }
                 try {
                     globalHelpSet = new HelpSet(null, hsURL);
                 } catch (java.lang.NoClassDefFoundError ee) {
-                    log.debug("classpath="+System.getProperty("java.class.path","<unknown>"));
-                    log.debug("classversion="+System.getProperty("java.class.version","<unknown>"));
+                    log.debug("classpath={}", System.getProperty("java.class.path", "<unknown>"));
+                    log.debug("classversion={}", System.getProperty("java.class.version", "<unknown>"));
                     log.error("Help classes not found, help system omitted");
                     return false;
                 } catch (java.lang.Exception e2) {
-                    log.error("HelpSet "+helpsetName+" not found, help system omitted");
+                    log.error("HelpSet " + helpsetName + " not found, help system omitted");
                     return false;
                 }
                 globalHelpBroker = globalHelpSet.createHelpBroker();
 
             } catch (java.lang.NoSuchMethodError e2) {
-                log.error("Is jh.jar available? Error starting help system: "+e2);
+                log.error("Is jh.jar available? Error starting help system: " + e2);
             }
             failed = false;
         }
         return !failed;
     }
-    
+
     static public HelpBroker getGlobalHelpBroker() {
+        if (globalHelpBroker == null) {
+            HelpUtil.initOK();
+        }
         return globalHelpBroker;
     }
 
     static public Action getHelpAction(final String name, final Icon icon, final String id) {
         return new AbstractAction(name, icon) {
+
             String helpID = id;
+
             public void actionPerformed(ActionEvent event) {
                 globalHelpBroker.setCurrentID(helpID);
                 globalHelpBroker.setDisplayed(true);
             }
         };
     }
-    
+
     static HelpSet globalHelpSet;
     static HelpBroker globalHelpBroker;
-    
+
     // initialize logging
     static private Logger log = LoggerFactory.getLogger(HelpUtil.class.getName());
 }

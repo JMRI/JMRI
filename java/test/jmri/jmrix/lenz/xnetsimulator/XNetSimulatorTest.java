@@ -1,22 +1,17 @@
-// XNetSimulatorTest.java
-
-
 package jmri.jmrix.lenz.xnetsimulator;
 
-import org.apache.log4j.Logger;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
  * Tests for the jmri.jmrix.lenz.xnetsimulator package
- * @author                      Paul Bender  
- * @version                     $Revision$
+ *
+ * @author Paul Bender
  */
 public class XNetSimulatorTest extends TestCase {
 
     // from here down is testing infrastructure
-
     public XNetSimulatorTest(String s) {
         super(s);
     }
@@ -34,7 +29,4 @@ public class XNetSimulatorTest extends TestCase {
         return suite;
     }
 
-    static Logger log = Logger.getLogger(XNetSimulatorTest.class.getName());
-
 }
-

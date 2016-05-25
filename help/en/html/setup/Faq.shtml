@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<title>JMRI Setup - FAQ</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+
+<!-- FAQ-Head -->
+  <script type="text/javascript">/*<![CDATA[*/document.documentElement.className="hasJS";/*]]>*/</script>
+  <link rel="stylesheet" type="text/css" href="/web/css/faq.css" media="screen">
+<!-- /FAQ-Head -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<!-- Page Body -->
+<h1> 
+JMRI Setup: Frequently Asked Questions
+</h1>
+
+<!-- From JMRI users Yahoo group forum -->
+<hr>
+<p>Here are some tips from fellow JMRI Users:</p>
+
+	<dl class="faq">
+
+	<dt id="install" class="on">Is JMRI fun?</dt>
+	<dd>Yes</dd>
+	
+	<dt id="install">Is it complicated to set up?</dt>
+	<dd>Sometimes</dd>
+
+	</dl>
+
+<hr>
+  
+<!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+
+<!-- FAQ-Tail -->
+<script type="text/javascript" src="/web/js/faq.js"></script>
+<!-- /FAQ-Tail -->
+
+</body>
+</html>

@@ -1,32 +1,27 @@
-// SystemConsoleConfigPanelXml.java
-
 package apps.configurexml;
 
+import apps.SystemConsoleConfigPanel;
+import apps.systemconsole.SystemConsolePreferencesManager;
+import jmri.InstanceManager;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import apps.SystemConsole;
-import apps.SystemConsoleConfigPanel;
-import jmri.util.swing.FontComboUtil;
-import org.jdom.Element;
 
 /**
  * Handle XML persistence of SystemConsoleConfigPanel objects.
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author Matthew Harris  copyright (c) 2010
- * @version $Revision$
+ * @author Matthew Harris copyright (c) 2010
  * @see apps.SystemConsoleConfigPanel
  */
 public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAdapter {
@@ -36,6 +31,7 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
 
     /**
      * Arrange for console settings to be stored
+     *
      * @param o Object to store, of type SystemConsole
      * @return Element containing the complete info
      */
@@ -44,17 +40,19 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
 
         Element e = new Element("console");
         e.setAttribute("class", this.getClass().getName());
-        e.setAttribute("scheme", ""+SystemConsole.getInstance().getScheme());
-        e.setAttribute("fontfamily", ""+SystemConsole.getInstance().getFontFamily());
-        e.setAttribute("fontsize", ""+SystemConsole.getInstance().getFontSize());
-        e.setAttribute("fontstyle", ""+SystemConsole.getInstance().getFontStyle());
-        e.setAttribute("wrapstyle", ""+SystemConsole.getInstance().getWrapStyle());
+        SystemConsolePreferencesManager manager = InstanceManager.getDefault(SystemConsolePreferencesManager.class);
+        e.setAttribute("scheme", "" + manager.getScheme());
+        e.setAttribute("fontfamily", "" + manager.getFontFamily());
+        e.setAttribute("fontsize", "" + manager.getFontSize());
+        e.setAttribute("fontstyle", "" + manager.getFontStyle());
+        e.setAttribute("wrapstyle", "" + manager.getWrapStyle());
 
         return e;
     }
 
     /**
      * Object should be loaded after basic GUI constructed
+     *
      * @return true to defer loading
      * @see jmri.configurexml.AbstractXmlAdapter#loadDeferred()
      * @see jmri.configurexml.XmlAdapter#loadDeferred()
@@ -64,49 +62,35 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
         return true;
     }
 
-    /**
-     * Update static data from XML file
-     * @param e Top level Element to unpack.
-     * @return true if successful
-      */
     @Override
-    public boolean load(Element e) {
+    public boolean load(Element shared, Element perNode) throws Exception {
         boolean result = true;
         String value;
+        SystemConsolePreferencesManager manager = InstanceManager.getDefault(SystemConsolePreferencesManager.class);
 
         try {
-            if ((value = e.getAttributeValue("scheme"))!=null) {
-                SystemConsole.getInstance().setScheme(Integer.parseInt(value));
+            if ((value = shared.getAttributeValue("scheme")) != null) {
+                manager.setScheme(Integer.parseInt(value));
             }
 
-            if ((value = e.getAttributeValue("fontfamily"))!=null) {
-                
-                // Check if stored font family exists
-                if (!FontComboUtil.getFonts(FontComboUtil.MONOSPACED).contains(value)) {
-
-                    // No - reset to default
-                    log.warn("Stored console font is not compatible (" + value + ") - reset to default (Monospaced)");
-                    value = "Monospaced";
-                }
-
-                // Finally, set the font family
-                SystemConsole.getInstance().setFontFamily(value);
+            if ((value = shared.getAttributeValue("fontfamily")) != null) {
+                manager.setFontFamily(value);
             }
 
-            if ((value = e.getAttributeValue("fontsize"))!=null) {
-                SystemConsole.getInstance().setFontSize(Integer.parseInt(value));
+            if ((value = shared.getAttributeValue("fontsize")) != null) {
+                manager.setFontSize(Integer.parseInt(value));
             }
 
-            if ((value = e.getAttributeValue("fontstyle"))!=null) {
-                SystemConsole.getInstance().setFontStyle(Integer.parseInt(value));
+            if ((value = shared.getAttributeValue("fontstyle")) != null) {
+                manager.setFontStyle(Integer.parseInt(value));
             }
 
-            if ((value = e.getAttributeValue("wrapstyle"))!=null) {
-                SystemConsole.getInstance().setWrapStyle(Integer.parseInt(value));
+            if ((value = shared.getAttributeValue("wrapstyle")) != null) {
+                manager.setWrapStyle(Integer.parseInt(value));
             }
 
         } catch (NumberFormatException ex) {
-            log.error("NumberFormatException while setting System Console parameters: "+ex);
+            log.error("NumberFormatException while setting System Console parameters: " + ex);
             result = false;
         }
 
@@ -119,8 +103,9 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
 
     /**
      * Update static data from XML file
+     *
      * @param element Top level Element to unpack.
-     * @param o  ignored
+     * @param o       ignored
      */
     @Override
     public void load(Element element, Object o) {

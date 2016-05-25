@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
+<appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Suzie</firstname>
+        <surname>Tall</surname>
+      </personname>
+      <email>suzie_tall@yahoo.co.uk</email>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-10-11</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Initial version</revremark>
+    </revision>
+  </revhistory>
+  <aspecttable>CFL-2014</aspecttable>
+  <name>Restricting block signal</name>
+  <reference>Observations of CFL signals in Luxemburg</reference>
+  <description>Appearances for a combined stop and distant block signal with a full set of lamps</description>
+  <appearances>
+    <appearance>
+      <aspectname>Clear</aspectname>
+      <show>green</show>
+      <show>lunar</show>
+      <show>green</show>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/CFL-2014/BlockR-G-G.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/CFL-2014/BlockR-G-G.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Diverging Clear</aspectname>
+      <show>yellow</show>
+      <show>lunar</show>
+      <show>green</show>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/CFL-2014/BlockR-YY-G.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/CFL-2014/BlockR-YY-G.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Approach</aspectname>
+      <show>green</show>
+      <show>lunar</show>
+      <show>red</show>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/CFL-2014/BlockR-G-Y.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/CFL-2014/BlockR-G-Y.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Diverging Approach</aspectname>
+      <show>yellow</show>
+      <show>lunar</show>
+      <show>red</show>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/CFL-2014/BlockR-YY-Y.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/CFL-2014/BlockR-YY-Y.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Approach Diverging</aspectname>
+      <show>green</show>
+      <show>lunar</show>
+      <show>yellow</show>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/CFL-2014/BlockR-G-YY.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/CFL-2014/BlockR-G-YY.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Diverging Approach Diverging</aspectname>
+      <show>yellow</show>
+      <show>lunar</show>
+      <show>yellow</show>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/CFL-2014/BlockR-YY-YY.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/CFL-2014/BlockR-YY-YY.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Restricting</aspectname>
+      <show>red</show>
+      <show>lunar</show>
+      <show>red</show>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/CFL-2014/BlockR-W-Y.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/CFL-2014/BlockR-W-Y.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Stop</aspectname>
+      <show>red</show>
+      <show>red</show>
+      <show>red</show>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/CFL-2014/BlockR-R-Y.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/CFL-2014/BlockR-R-Y.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Not Lit</aspectname>
+      <show>dark</show>
+      <show>dark</show>
+      <show>dark</show>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/CFL-2014/BlockR-D.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/CFL-2014/BlockR-D.gif</imagelink>
+    </appearance>
+  </appearances>
+  <specificappearances>
+    <danger>
+      <aspect>Stop</aspect>
+    </danger>
+    <permissive>
+      <aspect>Restricting</aspect>
+    </permissive>
+    <held>
+      <aspect>Stop</aspect>
+    </held>
+    <dark>
+      <aspect>Not Lit</aspect>
+    </dark>
+  </specificappearances>
+  <aspectMappings>
+    <aspectMapping>
+      <advancedAspect>Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Clear</advancedAspect>
+      <ourAspect>Approach Diverging</ourAspect>
+      <ourAspect>Diverging Approach Diverging</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Approach</advancedAspect>
+      <ourAspect>Approach Diverging</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach Diverging</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Approach Diverging</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Restricting</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Diverging Approach</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Stop</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Diverging Approach</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Not Lit</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Diverging Approach</ourAspect>
+    </aspectMapping>
+  </aspectMappings>
+</appearancetable>

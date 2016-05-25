@@ -1,0 +1,1870 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+	<version author="Michael Mosher" version="1" lastUpdated="20141024"/>
+	<version author="Michael Mosher" version="2" lastUpdated="20150105"/>
+	<!-- add user preset reset types -->
+	<version author="Michael Mosher" version="3" lastUpdated="20150412"/>
+	<version author="Michael Mosher" version="4" lastUpdated="20150504"/>
+	<!-- remove BEMF control and dither -->
+	<version author="Michael Mosher" version="5" lastUpdated="20150814"/>
+	<!-- Add 501 model -->
+	<decoder>
+		<family name="WOW Sound Set 3" mfg="Train Control Systems" comment="TCS FW Starting Jan 2012">
+			<model model="WOW Sound 101" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="9pin"
+				lowVersionID="3" highVersionID="3" productID="130">
+				<output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
+				<output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
+				<output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
+				<output name="4" label="Purple" connection="solder" maxcurrent="100 mA"/>
+				<output name="5" label="Brown" connection="solder" maxcurrent="100 mA"/>
+				<output name="6" label="Pink" connection="solder" maxcurrent="100 mA"/>
+				<output name="Dim"/>
+				<output name="Ditch"/>
+				<output name="Motor"/>
+				<output name="Brake"/>
+				<size length="1.35" width="0.66" height="0.22" units="inches"/>
+			</model>
+			<model model="WOW Sound 121" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="21pin"
+				lowVersionID="3" highVersionID="3" productID="131">
+				<output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
+				<output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
+				<output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
+				<output name="4" label="Purple" connection="solder" maxcurrent="100 mA"/>
+				<output name="5" label="Brown" connection="solder" maxcurrent="100 mA"/>
+				<output name="6" label="Pink" connection="solder" maxcurrent="100 mA"/>
+				<output name="Dim"/>
+				<output name="Ditch"/>
+				<output name="Motor"/>
+				<output name="Brake"/>
+				<size length="1.28" width="0.69" height="0.22" units="inches"/>
+			</model>
+			<model model="WOW Sound 501" numOuts="6" numFns="14" maxMotorCurrent="5A" formFactor="screw"
+				lowVersionID="3" highVersionID="3" productID="132">
+				<output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
+				<output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
+				<output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
+				<output name="4" label="Purple" connection="solder" maxcurrent="100 mA"/>
+				<output name="5" label="Brown" connection="solder" maxcurrent="100 mA"/>
+				<output name="6" label="Pink" connection="solder" maxcurrent="100 mA"/>
+				<output name="Dim"/>
+				<output name="Ditch"/>
+				<output name="Motor"/>
+				<output name="Brake"/>
+				<size length="3.00" width="1.45" units="inches"/>
+			</model>
+			<functionlabels>
+				<functionlabel num="0" lockable="true">Headlight</functionlabel>
+				<functionlabel num="1" lockable="true">Bell</functionlabel>
+				<functionlabel num="2" lockable="false">Whistle long</functionlabel>
+				<functionlabel num="3" lockable="false">Whistle short</functionlabel>
+				<functionlabel num="4" lockable="false">Whistle quill</functionlabel>
+				<functionlabel num="5" lockable="true">Cylinder cocks</functionlabel>
+				<functionlabel num="6" lockable="true">Brake release</functionlabel>
+				<functionlabel num="7" lockable="true">Brake</functionlabel>
+				<functionlabel num="8" lockable="true">Mute</functionlabel>
+				<functionlabel num="9" lockable="true">Whistle rotate</functionlabel>
+				<functionlabel num="10" lockable="true">Coupler</functionlabel>
+				<functionlabel num="11" lockable="true">Coupler</functionlabel>
+				<functionlabel num="12" lockable="true">Injector</functionlabel>
+				<functionlabel num="13" lockable="true">Air pump</functionlabel>
+				<functionlabel num="14" lockable="true">Blower</functionlabel>
+				<functionlabel num="15" lockable="true">Idling</functionlabel>
+				<functionlabel num="16" lockable="true">Horn</functionlabel>
+				<functionlabel num="17" lockable="true">Shovelling</functionlabel>
+				<functionlabel num="18" lockable="true">Blow down</functionlabel>
+				<functionlabel num="19" lockable="true">Ash dump</functionlabel>
+				<functionlabel num="20" lockable="true">Water fill</functionlabel>
+			</functionlabels>
+		</family>
+		<programming direct="yes" paged="yes" register="yes" ops="yes">
+		<capability>
+			<name>TCS 4 CV access</name>
+		</capability>
+		</programming>
+		<variables>
+
+			<xi:include href="http://jmri.org/xml/decoders/tcs/CV1_CV99_wow.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/tcs/CV100_CV187_wow.xml"/>
+			<variable item="Sound Option 4" CV="248" default="3" readOnly="yes">
+				<decVal/>
+				<label>Sound Set</label>
+			</variable>
+			<xi:include href="http://jmri.org/xml/decoders/tcs/CV249_CV252_FW86.xml" />
+			<!-- Sound function mapping -->
+			<variable item="Function 0 Sound" CV="T2CV.1.0" default="169" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumSoundV3.xml"/>  
+			</variable>
+			<variable item="Function 1 Sound" CV="T2CV.1.1" default="0" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumSoundV3.xml"/>
+			</variable>
+			<variable item="Function 2 Sound" CV="T2CV.1.2" default="18" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumSoundV3.xml"/>
+			</variable>
+			<variable item="Function 3 Sound" CV="T2CV.1.3" default="17" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumSoundV3.xml"/>
+			</variable>
+			<variable item="Function 4 Sound" CV="T2CV.1.4" default="19" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumSoundV3.xml"/>
+			</variable>
+			<variable item="Function 5 Sound" CV="T2CV.1.5" default="160" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumSoundV3.xml"/>
+			</variable>
+			<variable item="Function 6 Sound" CV="T2CV.1.6" default="315" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumSoundV3.xml"/>
+			</variable>
+			<variable item="Function 7 Sound" CV="T2CV.1.7" default="306" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumSoundV3.xml"/>
+			</variable>
+			<variable item="Function 8 Sound" CV="T2CV.1.8" default="525" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumSoundV3.xml"/>
+			</variable>
+			<variable item="Function 9 Sound" CV="T2CV.1.9" default="527" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumSoundV3.xml"/>
+			</variable>
+			<variable item="Function 10 Sound" CV="T2CV.1.10" default="153" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumSoundV3.xml"/>
+			</variable>
+			<variable item="Function 11 Sound" CV="T2CV.1.11" default="154" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumSoundV3.xml"/>
+			</variable>
+			<variable item="Function 12 Sound" CV="T2CV.1.12" default="172" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumSoundV3.xml"/>
+			</variable>
+			<variable item="Function 13 Sound" CV="T2CV.1.13" default="174" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumSoundV3.xml"/>
+			</variable>
+			<variable item="Function 14 Sound" CV="T2CV.1.14" default="151" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumSoundV3.xml"/>
+			</variable>
+			<variable item="Function 15 Sound" CV="T2CV.1.15" default="568" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumSoundV3.xml"/>
+			</variable>
+			<variable item="Function 16 Sound" CV="T2CV.1.16" default="141" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumSoundV3.xml"/>
+			</variable>
+			<variable item="Function 17 Sound" CV="T2CV.1.17" default="182" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumSoundV3.xml"/>
+			</variable>
+			<variable item="Function 18 Sound" CV="T2CV.1.18" default="148" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumSoundV3.xml"/>
+			</variable>
+			<variable item="Function 19 Sound" CV="T2CV.1.19" default="569" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumSoundV3.xml"/>
+			</variable>
+			<variable item="Function 20 Sound" CV="T2CV.1.20" default="570" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumSoundV3.xml"/>
+			</variable>
+			<variable item="Function 21 Sound" CV="T2CV.1.21" default="669" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumSoundV3.xml"/>
+			</variable>
+			<variable item="Function 22 Sound" CV="T2CV.1.22" default="669" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumSoundV3.xml"/>
+			</variable>
+			<variable item="Function 23 Sound" CV="T2CV.1.23" default="669" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumSoundV3.xml"/>
+			</variable>
+			<variable item="Function 24 Sound" CV="T2CV.1.24" default="669" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumSoundV3.xml"/>
+			</variable>
+			<variable item="Function 25 Sound" CV="T2CV.1.25" default="669" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumSoundV3.xml"/>
+			</variable>
+			<variable item="Function 26 Sound" CV="T2CV.1.26" default="669" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumSoundV3.xml"/>
+			</variable>
+			<variable item="Function 27 Sound" CV="T2CV.1.27" default="669" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumSoundV3.xml"/>
+			</variable>
+			<variable item="Function 28 Sound" CV="T2CV.1.28" default="669" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumSoundV3.xml"/>
+			</variable>
+			<variable item="Random 1 Sound" CV="T2CV.1.29" default="175" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumSoundV3.xml"/>
+			</variable>
+			<variable item="Random 2 Sound" CV="T2CV.1.30" default="181" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumSoundV3.xml"/>
+			</variable>
+			<variable item="Random 3 Sound" CV="T2CV.1.31" default="171" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumSoundV3.xml"/>
+			</variable>
+			<variable item="Random 4 Sound" CV="T2CV.1.32" default="179" mask="VVVVVVVVVVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/tcs/enumSoundV3.xml"/>
+			</variable>
+			
+			<!-- Individual volume -->
+			<variable item="Volume 0-0" CV="T3CV.2.0.0" default="40">
+				<decVal max="100"/>
+				<label>Bell Strasburg #475 Hand Powered </label>
+			</variable>
+			<variable item="Volume 0-1" CV="T3CV.2.0.1" default="40">
+				<decVal max="100"/>
+				<label>Bell Strasburg #475 Air Powered </label>
+			</variable>
+			<variable item="Volume 0-2" CV="T3CV.2.0.2" default="40">
+				<decVal max="100"/>
+				<label>Bell Strasburg #89 Air Powered </label>
+			</variable>
+			<variable item="Volume 0-3" CV="T3CV.2.0.3" default="40">
+				<decVal max="100"/>
+				<label>Bell Virginia Truckee Railroad 2-6-0 Hand Powered </label>
+			</variable>
+			<variable item="Volume 0-4" CV="T3CV.2.0.4" default="40">
+				<decVal max="100"/>
+				<label>Bell PRR 4-4-2 #7002 Hand Powered </label>
+			</variable>
+			<variable item="Volume 0-5" CV="T3CV.2.0.5" default="40">
+				<decVal max="100"/>
+				<label>Bell PRR #1223 American 4-4-0 D16SB Hand Powered </label>
+			</variable>
+			<variable item="Volume 0-6" CV="T3CV.2.0.6" default="40">
+				<decVal max="100"/>
+				<label>Bell Conrail #2233 GP30 Air Powered </label>
+			</variable>
+			<variable item="Volume 0-7" CV="T3CV.2.0.7" default="40">
+				<decVal max="100"/>
+				<label>Bell PRR GG1 </label>
+			</variable>
+			<variable item="Volume 0-8" CV="T3CV.2.0.8" default="40">
+				<decVal max="100"/>
+				<label>Bell John Bull Replica Hand Powered </label>
+			</variable>
+			<variable item="Volume 0-9" CV="T3CV.2.0.9" default="40">
+				<decVal max="100"/>
+				<label>Bell PRR 2-8-0 H3 1187 Hand Powered </label>
+			</variable>
+			<variable item="Volume 0-10" CV="T3CV.2.0.10" default="40">
+				<decVal max="100"/>
+				<label>Bell PRR 2-8-0 H3 2846 Air Powered </label>
+			</variable>
+			<variable item="Volume 0-11" CV="T3CV.2.0.11" default="40">
+				<decVal max="100"/>
+				<label>Bell Heisler Class 53833 #4 Hand Powered </label>
+			</variable>
+			<variable item="Volume 0-12" CV="T3CV.2.0.12" default="40">
+				<decVal max="100"/>
+				<label>Bell Leetonia Railroad Shay #1 </label>
+			</variable>
+			<variable item="Volume 0-13" CV="T3CV.2.0.13" default="40">
+				<decVal max="100"/>
+				<label>Bell Unknown  from Strasburg museum floor</label>
+			</variable>
+			<variable item="Volume 0-14" CV="T3CV.2.0.14" default="40">
+				<decVal max="100"/>
+				<label>Bell Williams Grove PRR #643 0-6-0 </label>
+			</variable>
+			<variable item="Volume 0-15" CV="T3CV.2.0.15" default="40">
+				<decVal max="100"/>
+				<label>Bell Strasburg #90 Hand Powered </label>
+			</variable>
+			<variable item="Volume 0-16" CV="T3CV.2.0.16" default="40">
+				<decVal max="100"/>
+				<label>Bell Strasburg #90 Hand Powered (Variation)</label>
+			</variable>
+			<variable item="Volume 0-17" CV="T3CV.2.0.17" default="100">
+				<decVal max="100"/>
+				<label>Whistle Alamo Michigan Plant Short</label>
+			</variable>
+			<variable item="Volume 0-18" CV="T3CV.2.0.18" default="100">
+				<decVal max="100"/>
+				<label>Whistle Alamo Michigan Plant Long</label>
+			</variable>
+			<variable item="Volume 0-19" CV="T3CV.2.0.19" default="100">
+				<decVal max="100"/>
+				<label>Whistle Alamo Michigian Plant Quill</label>
+			</variable>
+			<variable item="Volume 0-20" CV="T3CV.2.0.20" default="100">
+				<decVal max="100"/>
+				<label>Whistle Atchison, Topeka, and Santa Fe 6 Chime Original Short</label>
+			</variable>
+			<variable item="Volume 0-21" CV="T3CV.2.0.21" default="100">
+				<decVal max="100"/>
+				<label>Whistle Atchison, Topeka, and Santa Fe 6 Chime Original Long</label>
+			</variable>
+			<variable item="Volume 0-22" CV="T3CV.2.0.22" default="100">
+				<decVal max="100"/>
+				<label>Whistle Atchison, Topeka, and Santa Fe 6 Chime Original Quill</label>
+			</variable>
+			<variable item="Volume 0-23" CV="T3CV.2.0.23" default="100">
+				<decVal max="100"/>
+				<label>Whistle Atchison, Topeka, and Santa Fe 6 Chime Replica Short</label>
+			</variable>
+			<variable item="Volume 0-24" CV="T3CV.2.0.24" default="100">
+				<decVal max="100"/>
+				<label>Whistle Atchison, Topeka, and Santa Fe 6 Chime Replica Long</label>
+			</variable>
+			<variable item="Volume 0-25" CV="T3CV.2.0.25" default="100">
+				<decVal max="100"/>
+				<label>Whistle Atchison, Topeka, and Santa Fe 6 Chime Replica Quill</label>
+			</variable>
+			<variable item="Volume 0-26" CV="T3CV.2.0.26" default="100">
+				<decVal max="100"/>
+				<label>Whistle B &amp; O 3 Chime Short</label>
+			</variable>
+			<variable item="Volume 0-27" CV="T3CV.2.0.27" default="100">
+				<decVal max="100"/>
+				<label>Whistle B &amp; O 3 Chime Long</label>
+			</variable>
+			<variable item="Volume 0-28" CV="T3CV.2.0.28" default="100">
+				<decVal max="100"/>
+				<label>Whistle B &amp; O 3 Chime Quill</label>
+			</variable>
+			<variable item="Volume 0-29" CV="T3CV.2.0.29" default="100">
+				<decVal max="100"/>
+				<label>Whistle B &amp; M 6 Chime Short</label>
+			</variable>
+			<variable item="Volume 0-30" CV="T3CV.2.0.30" default="100">
+				<decVal max="100"/>
+				<label>Whistle B &amp; M 6 Chime Long</label>
+			</variable>
+			<variable item="Volume 0-31" CV="T3CV.2.0.31" default="100">
+				<decVal max="100"/>
+				<label>Whistle B &amp; M 6 Chime Quill</label>
+			</variable>
+			<variable item="Volume 0-32" CV="T3CV.2.0.32" default="100">
+				<decVal max="100"/>
+				<label>Whistle CNJ 3 Chime Short</label>
+			</variable>
+			<variable item="Volume 0-33" CV="T3CV.2.0.33" default="100">
+				<decVal max="100"/>
+				<label>Whistle CNJ 3 Chime Long</label>
+			</variable>
+			<variable item="Volume 0-34" CV="T3CV.2.0.34" default="100">
+				<decVal max="100"/>
+				<label>Whistle CNJ 3 Chime Quill</label>
+			</variable>
+			<variable item="Volume 0-35" CV="T3CV.2.0.35" default="100">
+				<decVal max="100"/>
+				<label>Whistle CB &amp; Q 3 Chime Short</label>
+			</variable>
+			<variable item="Volume 0-36" CV="T3CV.2.0.36" default="100">
+				<decVal max="100"/>
+				<label>Whistle CB &amp; Q 3 Chime Long</label>
+			</variable>
+			<variable item="Volume 0-37" CV="T3CV.2.0.37" default="100">
+				<decVal max="100"/>
+				<label>Whistle CB &amp; Q 3 Chime Quill</label>
+			</variable>
+			<variable item="Volume 0-38" CV="T3CV.2.0.38" default="100">
+				<decVal max="100"/>
+				<label>Whistle Great Northern 5 Chime Short</label>
+			</variable>
+			<variable item="Volume 0-39" CV="T3CV.2.0.39" default="100">
+				<decVal max="100"/>
+				<label>Whistle Great Northern 5 Chime Long</label>
+			</variable>
+			<variable item="Volume 0-40" CV="T3CV.2.0.40" default="100">
+				<decVal max="100"/>
+				<label>Whistle Great Northern 5 Chime Quill</label>
+			</variable>
+			<variable item="Volume 0-41" CV="T3CV.2.0.41" default="100">
+				<decVal max="100"/>
+				<label>Whistle Hancock 3 Chime Short Bell Short</label>
+			</variable>
+			<variable item="Volume 0-42" CV="T3CV.2.0.42" default="100">
+				<decVal max="100"/>
+				<label>Whistle Hancock 3 Chime Short Bell Long</label>
+			</variable>
+			<variable item="Volume 0-43" CV="T3CV.2.0.43" default="100">
+				<decVal max="100"/>
+				<label>Whistle Hancock 3 Chime Short Bell Quill</label>
+			</variable>
+			<variable item="Volume 0-44" CV="T3CV.2.0.44" default="100">
+				<decVal max="100"/>
+				<label>Whistle Kingsly 4 Chime Short</label>
+			</variable>
+			<variable item="Volume 0-45" CV="T3CV.2.0.45" default="100">
+				<decVal max="100"/>
+				<label>Whistle Kingsly 4 Chime Long</label>
+			</variable>
+			<variable item="Volume 0-46" CV="T3CV.2.0.46" default="100">
+				<decVal max="100"/>
+				<label>Whistle Kingsly 4 Chime Quill</label>
+			</variable>
+			<variable item="Volume 0-47" CV="T3CV.2.0.47" default="100">
+				<decVal max="100"/>
+				<label>Whistle LV Crosby 3 Chime Short</label>
+			</variable>
+			<variable item="Volume 0-48" CV="T3CV.2.0.48" default="100">
+				<decVal max="100"/>
+				<label>Whistle LV Crosby 3 Chime Long</label>
+			</variable>
+			<variable item="Volume 0-49" CV="T3CV.2.0.49" default="100">
+				<decVal max="100"/>
+				<label>Whistle LV Crosby 3 Chime Quill</label>
+			</variable>
+			<variable item="Volume 0-50" CV="T3CV.2.0.50" default="100">
+				<decVal max="100"/>
+				<label>Whistle Lunkenheimer Single Chime Short</label>
+			</variable>
+			<variable item="Volume 0-51" CV="T3CV.2.0.51" default="100">
+				<decVal max="100"/>
+				<label>Whistle Lunkenheimer Single Chime Long</label>
+			</variable>
+			<variable item="Volume 0-52" CV="T3CV.2.0.52" default="100">
+				<decVal max="100"/>
+				<label>Whistle Lunkenheimer Single Chime Quill</label>
+			</variable>
+			<variable item="Volume 0-53" CV="T3CV.2.0.53" default="100">
+				<decVal max="100"/>
+				<label>Whistle Lunkenheimer 3 Chime Short</label>
+			</variable>
+			<variable item="Volume 0-54" CV="T3CV.2.0.54" default="100">
+				<decVal max="100"/>
+				<label>Whistle Lunkenheimer 3 Chime Long</label>
+			</variable>
+			<variable item="Volume 0-55" CV="T3CV.2.0.55" default="100">
+				<decVal max="100"/>
+				<label>Whistle Lunkenheimer 3 Chime Quill</label>
+			</variable>
+			<variable item="Volume 0-56" CV="T3CV.2.0.56" default="100">
+				<decVal max="100"/>
+				<label>Whistle Nathan 5 Chime Short</label>
+			</variable>
+			<variable item="Volume 0-57" CV="T3CV.2.0.57" default="100">
+				<decVal max="100"/>
+				<label>Whistle Nathan 5 Chime Long</label>
+			</variable>
+			<variable item="Volume 0-58" CV="T3CV.2.0.58" default="100">
+				<decVal max="100"/>
+				<label>Whistle Nathan 5 Chime Quill</label>
+			</variable>
+			<variable item="Volume 0-59" CV="T3CV.2.0.59" default="100">
+				<decVal max="100"/>
+				<label>Whistle NPR 765 Short</label>
+			</variable>
+			<variable item="Volume 0-60" CV="T3CV.2.0.60" default="100">
+				<decVal max="100"/>
+				<label>Whistle NPR 765 Long</label>
+			</variable>
+			<variable item="Volume 0-61" CV="T3CV.2.0.61" default="100">
+				<decVal max="100"/>
+				<label>Whistle NPR 765 Quill</label>
+			</variable>
+			<variable item="Volume 0-62" CV="T3CV.2.0.62" default="100">
+				<decVal max="100"/>
+				<label>Whistle NW Single Chime Long Bell Short</label>
+			</variable>
+			<variable item="Volume 0-63" CV="T3CV.2.0.63" default="100">
+				<decVal max="100"/>
+				<label>Whistle NW Single Chime Long Bell Long</label>
+			</variable>
+			<variable item="Volume 0-64" CV="T3CV.2.0.64" default="100">
+				<decVal max="100"/>
+				<label>Whistle NW Single Chime Long Bell Quill</label>
+			</variable>
+			<variable item="Volume 0-65" CV="T3CV.2.0.65" default="100">
+				<decVal max="100"/>
+				<label>Whistle NW Single Chime Short Bell Short</label>
+			</variable>
+			<variable item="Volume 0-66" CV="T3CV.2.0.66" default="100">
+				<decVal max="100"/>
+				<label>Whistle NW Single Chime Short Bell Long</label>
+			</variable>
+			<variable item="Volume 0-67" CV="T3CV.2.0.67" default="100">
+				<decVal max="100"/>
+				<label>Whistle NW Single Chime Short Bell Quill</label>
+			</variable>
+			<variable item="Volume 0-68" CV="T3CV.2.0.68" default="100">
+				<decVal max="100"/>
+				<label>Whistle NW Nathan 3 Chime Short</label>
+			</variable>
+			<variable item="Volume 0-69" CV="T3CV.2.0.69" default="100">
+				<decVal max="100"/>
+				<label>Whistle NW Nathan 3 Chime Long</label>
+			</variable>
+			<variable item="Volume 0-70" CV="T3CV.2.0.70" default="100">
+				<decVal max="100"/>
+				<label>Whistle NW Nathan 3 Chime Quill</label>
+			</variable>
+			<variable item="Volume 0-71" CV="T3CV.2.0.71" default="100">
+				<decVal max="100"/>
+				<label>Whistle PRR Banshee Short</label>
+			</variable>
+			<variable item="Volume 0-72" CV="T3CV.2.0.72" default="100">
+				<decVal max="100"/>
+				<label>Whistle PRR Banshee Long</label>
+			</variable>
+			<variable item="Volume 0-73" CV="T3CV.2.0.73" default="100">
+				<decVal max="100"/>
+				<label>Whistle PRR Banshee Quill</label>
+			</variable>
+			<variable item="Volume 0-74" CV="T3CV.2.0.74" default="100">
+				<decVal max="100"/>
+				<label>Whistle PRR 3 Chime Short</label>
+			</variable>
+			<variable item="Volume 0-75" CV="T3CV.2.0.75" default="100">
+				<decVal max="100"/>
+				<label>Whistle PRR 3 Chime Long</label>
+			</variable>
+			<variable item="Volume 0-76" CV="T3CV.2.0.76" default="100">
+				<decVal max="100"/>
+				<label>Whistle PRR 3 Chime Quill</label>
+			</variable>
+			<variable item="Volume 0-77" CV="T3CV.2.0.77" default="100">
+				<decVal max="100"/>
+				<label>Whistle PRR 3 Chime Short</label>
+			</variable>
+			<variable item="Volume 0-78" CV="T3CV.2.0.78" default="100">
+				<decVal max="100"/>
+				<label>Whistle PRR 3 Chime Long</label>
+			</variable>
+			<variable item="Volume 0-79" CV="T3CV.2.0.79" default="100">
+				<decVal max="100"/>
+				<label>Whistle PRR 3 Chime Quill</label>
+			</variable>
+			<variable item="Volume 0-80" CV="T3CV.2.0.80" default="100">
+				<decVal max="100"/>
+				<label>Whistle Pennsy K4 Short</label>
+			</variable>
+			<variable item="Volume 0-81" CV="T3CV.2.0.81" default="100">
+				<decVal max="100"/>
+				<label>Whistle Pennsy K4 Long</label>
+			</variable>
+			<variable item="Volume 0-82" CV="T3CV.2.0.82" default="100">
+				<decVal max="100"/>
+				<label>Whistle Pennsy K4 Quill</label>
+			</variable>
+			<variable item="Volume 0-83" CV="T3CV.2.0.83" default="100">
+				<decVal max="100"/>
+				<label>Whistle Reading Hooter Short</label>
+			</variable>
+			<variable item="Volume 0-84" CV="T3CV.2.0.84" default="100">
+				<decVal max="100"/>
+				<label>Whistle Reading Hooter Long</label>
+			</variable>
+			<variable item="Volume 0-85" CV="T3CV.2.0.85" default="100">
+				<decVal max="100"/>
+				<label>Whistle Reading Hooter Quill</label>
+			</variable>
+			<variable item="Volume 0-86" CV="T3CV.2.0.86" default="100">
+				<decVal max="100"/>
+				<label>Whistle Reading #179 G2 6 Chime Short</label>
+			</variable>
+			<variable item="Volume 0-87" CV="T3CV.2.0.87" default="100">
+				<decVal max="100"/>
+				<label>Whistle Reading #179 G2 6 Chime Long</label>
+			</variable>
+			<variable item="Volume 0-88" CV="T3CV.2.0.88" default="100">
+				<decVal max="100"/>
+				<label>Whistle Reading #179 G2 6 Chime Quill</label>
+			</variable>
+			<variable item="Volume 0-89" CV="T3CV.2.0.89" default="100">
+				<decVal max="100"/>
+				<label>Whistle Reading Pacific G2 Short</label>
+			</variable>
+			<variable item="Volume 0-90" CV="T3CV.2.0.90" default="100">
+				<decVal max="100"/>
+				<label>Whistle Reading Pacific G2 Long</label>
+			</variable>
+			<variable item="Volume 0-91" CV="T3CV.2.0.91" default="100">
+				<decVal max="100"/>
+				<label>Whistle Reading Pacific G2 Quill</label>
+			</variable>
+			<variable item="Volume 0-92" CV="T3CV.2.0.92" default="100">
+				<decVal max="100"/>
+				<label>Whistle Reading 6 Chime 1 Short</label>
+			</variable>
+			<variable item="Volume 0-93" CV="T3CV.2.0.93" default="100">
+				<decVal max="100"/>
+				<label>Whistle Reading 6 Chime 1 Long</label>
+			</variable>
+			<variable item="Volume 0-94" CV="T3CV.2.0.94" default="100">
+				<decVal max="100"/>
+				<label>Whistle Reading 6 Chime 1 Quill</label>
+			</variable>
+			<variable item="Volume 0-95" CV="T3CV.2.0.95" default="100">
+				<decVal max="100"/>
+				<label>Whistle Reading 6 Chime Short</label>
+			</variable>
+			<variable item="Volume 0-96" CV="T3CV.2.0.96" default="100">
+				<decVal max="100"/>
+				<label>Whistle Reading 6 Chime Long</label>
+			</variable>
+			<variable item="Volume 0-97" CV="T3CV.2.0.97" default="100">
+				<decVal max="100"/>
+				<label>Whistle Reading 6 Chime Quill</label>
+			</variable>
+			<variable item="Volume 0-98" CV="T3CV.2.0.98" default="100">
+				<decVal max="100"/>
+				<label>Whistle Southern Pacific 5 Chime Short</label>
+			</variable>
+			<variable item="Volume 0-99" CV="T3CV.2.0.99" default="100">
+				<decVal max="100"/>
+				<label>Whistle Southern Pacific 5 Chime Long</label>
+			</variable>
+			<variable item="Volume 0-100" CV="T3CV.2.0.100" default="100">
+				<decVal max="100"/>
+				<label>Whistle Southern Pacific 5 Chime Quill</label>
+			</variable>
+			<variable item="Volume 0-101" CV="T3CV.2.0.101" default="100">
+				<decVal max="100"/>
+				<label>Whistle Southern Single Chime Short</label>
+			</variable>
+			<variable item="Volume 0-102" CV="T3CV.2.0.102" default="100">
+				<decVal max="100"/>
+				<label>Whistle Southern Single Chime Long</label>
+			</variable>
+			<variable item="Volume 0-103" CV="T3CV.2.0.103" default="100">
+				<decVal max="100"/>
+				<label>Whistle Southern Single Chime Quill</label>
+			</variable>
+			<variable item="Volume 0-104" CV="T3CV.2.0.104" default="100">
+				<decVal max="100"/>
+				<label>Whistle Southern 3 Chime Short</label>
+			</variable>
+			<variable item="Volume 0-105" CV="T3CV.2.0.105" default="100">
+				<decVal max="100"/>
+				<label>Whistle Southern 3 Chime Long</label>
+			</variable>
+			<variable item="Volume 0-106" CV="T3CV.2.0.106" default="100">
+				<decVal max="100"/>
+				<label>Whistle Southern 3 Chime Quill</label>
+			</variable>
+			<variable item="Volume 0-107" CV="T3CV.2.0.107" default="100">
+				<decVal max="100"/>
+				<label>Whistle Southern 6 Chime Short</label>
+			</variable>
+			<variable item="Volume 0-108" CV="T3CV.2.0.108" default="100">
+				<decVal max="100"/>
+				<label>Whistle Southern 6 Chime Long</label>
+			</variable>
+			<variable item="Volume 0-109" CV="T3CV.2.0.109" default="100">
+				<decVal max="100"/>
+				<label>Whistle Southern 6 Chime Quill</label>
+			</variable>
+			<variable item="Volume 0-110" CV="T3CV.2.0.110" default="100">
+				<decVal max="100"/>
+				<label>Whistle 32 Short</label>
+			</variable>
+			<variable item="Volume 0-111" CV="T3CV.2.0.111" default="100">
+				<decVal max="100"/>
+				<label>Whistle 32 Long</label>
+			</variable>
+			<variable item="Volume 0-112" CV="T3CV.2.0.112" default="100">
+				<decVal max="100"/>
+				<label>Whistle 32 Quill</label>
+			</variable>
+			<variable item="Volume 0-113" CV="T3CV.2.0.113" default="100">
+				<decVal max="100"/>
+				<label>Whistle 33 Short</label>
+			</variable>
+			<variable item="Volume 0-114" CV="T3CV.2.0.114" default="100">
+				<decVal max="100"/>
+				<label>Whistle 33 Long</label>
+			</variable>
+			<variable item="Volume 0-115" CV="T3CV.2.0.115" default="100">
+				<decVal max="100"/>
+				<label>Whistle 33 Quill</label>
+			</variable>
+			<variable item="Volume 0-116" CV="T3CV.2.0.116" default="100">
+				<decVal max="100"/>
+				<label>Whistle 34 Short</label>
+			</variable>
+			<variable item="Volume 0-117" CV="T3CV.2.0.117" default="100">
+				<decVal max="100"/>
+				<label>Whistle 34 Long</label>
+			</variable>
+			<variable item="Volume 0-118" CV="T3CV.2.0.118" default="100">
+				<decVal max="100"/>
+				<label>Whistle 34 Quill</label>
+			</variable>
+			<variable item="Volume 0-119" CV="T3CV.2.0.119" default="100">
+				<decVal max="100"/>
+				<label>Whistle Unknown Circa 19th Century Short</label>
+			</variable>
+			<variable item="Volume 0-120" CV="T3CV.2.0.120" default="100">
+				<decVal max="100"/>
+				<label>Whistle Unknown Circa 19th Century Long</label>
+			</variable>
+			<variable item="Volume 0-121" CV="T3CV.2.0.121" default="100">
+				<decVal max="100"/>
+				<label>Whistle Unknown Circa 19th Century Quill</label>
+			</variable>
+			<variable item="Volume 0-122" CV="T3CV.2.0.122" default="100">
+				<decVal max="100"/>
+				<label>Whistle Hancock 3 Chime Short</label>
+			</variable>
+			<variable item="Volume 0-123" CV="T3CV.2.0.123" default="100">
+				<decVal max="100"/>
+				<label>Whistle Hancock 3 Chime Long</label>
+			</variable>
+			<variable item="Volume 0-124" CV="T3CV.2.0.124" default="100">
+				<decVal max="100"/>
+				<label>Whistle Hancock 3 Chime Quill</label>
+			</variable>
+			<variable item="Volume 0-125" CV="T3CV.2.0.125" default="100">
+				<decVal max="100"/>
+				<label>Whistle Union Pacific 3 Chime Long Bell Short</label>
+			</variable>
+			<variable item="Volume 0-126" CV="T3CV.2.0.126" default="100">
+				<decVal max="100"/>
+				<label>Whistle Union Pacific 3 Chime Long Bell Long</label>
+			</variable>
+			<variable item="Volume 0-127" CV="T3CV.2.0.127" default="100">
+				<decVal max="100"/>
+				<label>Whistle Union Pacific 3 Chime Long Bell Quill</label>
+			</variable>
+			<variable item="Volume 0-128" CV="T3CV.2.0.128" default="100">
+				<decVal max="100"/>
+				<label>Whistle Wabash 3 Chime Short</label>
+			</variable>
+			<variable item="Volume 0-129" CV="T3CV.2.0.129" default="100">
+				<decVal max="100"/>
+				<label>Whistle Wabash 3 Chime Long</label>
+			</variable>
+			<variable item="Volume 0-130" CV="T3CV.2.0.130" default="100">
+				<decVal max="100"/>
+				<label>Whistle Wabash 3 Chime Quill</label>
+			</variable>
+			<variable item="Volume 0-131" CV="T3CV.2.0.131" default="100">
+				<decVal max="100"/>
+				<label>Whistle Wabash 6 Chime Short</label>
+			</variable>
+			<variable item="Volume 0-132" CV="T3CV.2.0.132" default="100">
+				<decVal max="100"/>
+				<label>Whistle Wabash 6 Chime Long</label>
+			</variable>
+			<variable item="Volume 0-133" CV="T3CV.2.0.133" default="100">
+				<decVal max="100"/>
+				<label>Whistle Wabash 6 Chime Quill</label>
+			</variable>
+			<variable item="Volume 0-134" CV="T3CV.2.0.134" default="100">
+				<decVal max="100"/>
+				<label>Whistle World War II era 3 Chime Short</label>
+			</variable>
+			<variable item="Volume 0-135" CV="T3CV.2.0.135" default="100">
+				<decVal max="100"/>
+				<label>Whistle World War II era 3 Chime Long</label>
+			</variable>
+			<variable item="Volume 0-136" CV="T3CV.2.0.136" default="100">
+				<decVal max="100"/>
+				<label>Whistle World War II era 3 Chime Quill</label>
+			</variable>
+			<variable item="Volume 0-137" CV="T3CV.2.0.137" default="100">
+				<decVal max="100"/>
+				<label>Whistle Nathan K5LA Horn Short</label>
+			</variable>
+			<variable item="Volume 0-138" CV="T3CV.2.0.138" default="100">
+				<decVal max="100"/>
+				<label>Whistle Nathan K5LA Horn Long</label>
+			</variable>
+			<variable item="Volume 0-139" CV="T3CV.2.0.139" default="100">
+				<decVal max="100"/>
+				<label>Whistle Nathan K5LA Horn Quill</label>
+			</variable>
+			<variable item="Volume 0-140" CV="T3CV.2.0.140" default="100">
+				<decVal max="100"/>
+				<label>Horn Nathan K5LA short</label>
+			</variable>
+			<variable item="Volume 0-141" CV="T3CV.2.0.141" default="100">
+				<decVal max="100"/>
+				<label>Horn Nathan K5LA long</label>
+			</variable>
+			<variable item="Volume 0-142" CV="T3CV.2.0.142" default="100">
+				<decVal max="100"/>
+				<label>Horn Nathan K5LA quill</label>
+			</variable>
+			<variable item="Volume 0-143" CV="T3CV.2.0.143" default="15">
+				<decVal max="100"/>
+				<label>Rod Clank 1</label>
+			</variable>
+			<variable item="Volume 0-144" CV="T3CV.2.0.144" default="15">
+				<decVal max="100"/>
+				<label>Rod Clank 2</label>
+			</variable>
+			<variable item="Volume 0-145" CV="T3CV.2.0.145" default="15">
+				<decVal max="100"/>
+				<label>Rod Clank 3</label>
+			</variable>
+			<variable item="Volume 0-146" CV="T3CV.2.0.146" default="15">
+				<decVal max="100"/>
+				<label>Rod Clank 4</label>
+			</variable>
+			<variable item="Volume 0-147" CV="T3CV.2.0.147" default="40">
+				<decVal max="100"/>
+				<label>Direction Change 1</label>
+			</variable>
+			<variable item="Volume 0-148" CV="T3CV.2.0.148" default="100">
+				<decVal max="100"/>
+				<label>Blow Down 1</label>
+			</variable>
+			<variable item="Volume 0-149" CV="T3CV.2.0.149" default="100">
+				<decVal max="100"/>
+				<label>Blow Down 2</label>
+			</variable>
+			<variable item="Volume 0-150" CV="T3CV.2.0.150" default="100">
+				<decVal max="100"/>
+				<label>Blow Down 3</label>
+			</variable>
+			<variable item="Volume 0-151" CV="T3CV.2.0.151" default="20">
+				<decVal max="100"/>
+				<label>Blower 1</label>
+			</variable>
+			<variable item="Volume 0-152" CV="T3CV.2.0.152" default="20">
+				<decVal max="100"/>
+				<label>Blower 2</label>
+			</variable>
+			<variable item="Volume 0-153" CV="T3CV.2.0.153" default="40">
+				<decVal max="100"/>
+				<label>Coupler Clank 1</label>
+			</variable>
+			<variable item="Volume 0-154" CV="T3CV.2.0.154" default="40">
+				<decVal max="100"/>
+				<label>Coupler Clank 2</label>
+			</variable>
+			<variable item="Volume 0-155" CV="T3CV.2.0.155" default="40">
+				<decVal max="100"/>
+				<label>Cylinder Cocks 1</label>
+			</variable>
+			<variable item="Volume 0-156" CV="T3CV.2.0.156" default="40">
+				<decVal max="100"/>
+				<label>Cylinder Cocks 2</label>
+			</variable>
+			<variable item="Volume 0-157" CV="T3CV.2.0.157" default="40">
+				<decVal max="100"/>
+				<label>Cylinder Cocks 3</label>
+			</variable>
+			<variable item="Volume 0-158" CV="T3CV.2.0.158" default="40">
+				<decVal max="100"/>
+				<label>Cylinder Cocks 4</label>
+			</variable>
+			<variable item="Volume 0-159" CV="T3CV.2.0.159" default="40">
+				<decVal max="100"/>
+				<label>Cylinder Cocks 5</label>
+			</variable>
+			<variable item="Volume 0-160" CV="T3CV.2.0.160" default="40">
+				<decVal max="100"/>
+				<label>Cylinder Cocks 6</label>
+			</variable>
+			<variable item="Volume 0-161" CV="T3CV.2.0.161" default="40">
+				<decVal max="100"/>
+				<label>Cylinder Cocks 7</label>
+			</variable>
+			<variable item="Volume 0-162" CV="T3CV.2.0.162" default="40">
+				<decVal max="100"/>
+				<label>Cylinder Cocks 8</label>
+			</variable>
+			<variable item="Volume 0-163" CV="T3CV.2.0.163" default="40">
+				<decVal max="100"/>
+				<label>Cylinder Cocks 9</label>
+			</variable>
+			<variable item="Volume 0-164" CV="T3CV.2.0.164" default="40">
+				<decVal max="100"/>
+				<label>Cylinder Cocks 10</label>
+			</variable>
+			<variable item="Volume 0-165" CV="T3CV.2.0.165" default="40">
+				<decVal max="100"/>
+				<label>Cylinder Cocks 11</label>
+			</variable>
+			<variable item="Volume 0-166" CV="T3CV.2.0.166" default="40">
+				<decVal max="100"/>
+				<label>Cylinder Cocks 12</label>
+			</variable>
+			<variable item="Volume 0-167" CV="T3CV.2.0.167" default="40">
+				<decVal max="100"/>
+				<label>Cylinder Cocks 13</label>
+			</variable>
+			<variable item="Volume 0-168" CV="T3CV.2.0.168" default="40">
+				<decVal max="100"/>
+				<label>Cylinder Cocks 14</label>
+			</variable>
+			<variable item="Volume 0-169" CV="T3CV.2.0.169" default="20">
+				<decVal max="100"/>
+				<label>Generator 1</label>
+			</variable>
+			<variable item="Volume 0-170" CV="T3CV.2.0.170" default="20">
+				<decVal max="100"/>
+				<label>Generator 2</label>
+			</variable>
+			<variable item="Volume 0-171" CV="T3CV.2.0.171" default="20">
+				<decVal max="100"/>
+				<label>Injector 1</label>
+			</variable>
+			<variable item="Volume 0-172" CV="T3CV.2.0.172" default="20">
+				<decVal max="100"/>
+				<label>Injector 2</label>
+			</variable>
+			<variable item="Volume 0-173" CV="T3CV.2.0.173" default="20">
+				<decVal max="100"/>
+				<label>Injector 3</label>
+			</variable>
+			<variable item="Volume 0-174" CV="T3CV.2.0.174" default="45">
+				<decVal max="100"/>
+				<label>Air Pump 1</label>
+			</variable>
+			<variable item="Volume 0-175" CV="T3CV.2.0.175" default="45">
+				<decVal max="100"/>
+				<label>Air Pump 2</label>
+			</variable>
+			<variable item="Volume 0-176" CV="T3CV.2.0.176" default="45">
+				<decVal max="100"/>
+				<label>Air Pump 3</label>
+			</variable>
+			<variable item="Volume 0-177" CV="T3CV.2.0.177" default="45">
+				<decVal max="100"/>
+				<label>Air Pump 4</label>
+			</variable>
+			<variable item="Volume 0-178" CV="T3CV.2.0.178" default="45">
+				<decVal max="100"/>
+				<label>Air Pump 5</label>
+			</variable>
+			<variable item="Volume 0-179" CV="T3CV.2.0.179" default="100">
+				<decVal max="100"/>
+				<label>Safety 1</label>
+			</variable>
+			<variable item="Volume 0-180" CV="T3CV.2.0.180" default="100">
+				<decVal max="100"/>
+				<label>Safety 2</label>
+			</variable>
+			<variable item="Volume 0-181" CV="T3CV.2.0.181" default="35">
+				<decVal max="100"/>
+				<label>Shovelling 1</label>
+			</variable>
+			<variable item="Volume 0-182" CV="T3CV.2.0.182" default="35">
+				<decVal max="100"/>
+				<label>Shovelling 2</label>
+			</variable>
+			<variable item="Volume 0-183" CV="T3CV.2.0.183" default="100">
+				<decVal max="100"/>
+				<label>Whistle Alamo Michigan Plant Forward</label>
+			</variable>
+			<variable item="Volume 0-184" CV="T3CV.2.0.184" default="100">
+				<decVal max="100"/>
+				<label>Whistle Atchison, Topeka, and Santa Fe 6 Chime Original Forward</label>
+			</variable>
+			<variable item="Volume 0-185" CV="T3CV.2.0.185" default="100">
+				<decVal max="100"/>
+				<label>Whistle Atchison, Topeka, and Santa Fe 6 Chime Replica Forward</label>
+			</variable>
+			<variable item="Volume 0-186" CV="T3CV.2.0.186" default="100">
+				<decVal max="100"/>
+				<label>Whistle B &amp; O 3 Chime Forward Whistle</label>
+			</variable>
+			<variable item="Volume 0-187" CV="T3CV.2.0.187" default="100">
+				<decVal max="100"/>
+				<label>Whistle B &amp; M 6 Chime Lykens Forward</label>
+			</variable>
+			<variable item="Volume 0-188" CV="T3CV.2.0.188" default="100">
+				<decVal max="100"/>
+				<label>Whistle CNJ 3 Chime Forward</label>
+			</variable>
+			<variable item="Volume 0-189" CV="T3CV.2.0.189" default="100">
+				<decVal max="100"/>
+				<label>Whistle CB &amp; Q 3 Chime Lykens Forward</label>
+			</variable>
+			<variable item="Volume 0-190" CV="T3CV.2.0.190" default="100">
+				<decVal max="100"/>
+				<label>Whistle Great Northern 5 Chime Forward</label>
+			</variable>
+			<variable item="Volume 0-191" CV="T3CV.2.0.191" default="100">
+				<decVal max="100"/>
+				<label>Whistle Hancock 3 Chime Short Bell Forward</label>
+			</variable>
+			<variable item="Volume 0-192" CV="T3CV.2.0.192" default="100">
+				<decVal max="100"/>
+				<label>Whistle Kingsly 4 Chime Forward</label>
+			</variable>
+			<variable item="Volume 0-193" CV="T3CV.2.0.193" default="100">
+				<decVal max="100"/>
+				<label>Whistle LV Crosby 3 Chime Forward</label>
+			</variable>
+			<variable item="Volume 0-194" CV="T3CV.2.0.194" default="100">
+				<decVal max="100"/>
+				<label>Whistle Lunkenheimer Single Note Forward</label>
+			</variable>
+			<variable item="Volume 0-195" CV="T3CV.2.0.195" default="100">
+				<decVal max="100"/>
+				<label>Whistle Lunkenheimer 3 Chime Forward</label>
+			</variable>
+			<variable item="Volume 0-196" CV="T3CV.2.0.196" default="100">
+				<decVal max="100"/>
+				<label>Whistle Nathan 5 Chime Forward</label>
+			</variable>
+			<variable item="Volume 0-197" CV="T3CV.2.0.197" default="100">
+				<decVal max="100"/>
+				<label>Whistle NPR 765 Forward</label>
+			</variable>
+			<variable item="Volume 0-198" CV="T3CV.2.0.198" default="100">
+				<decVal max="100"/>
+				<label>Whistle NW Single Chime Long Bell Forward</label>
+			</variable>
+			<variable item="Volume 0-199" CV="T3CV.2.0.199" default="100">
+				<decVal max="100"/>
+				<label>Whistle NW Single Chime Short Bell Forward</label>
+			</variable>
+			<variable item="Volume 0-200" CV="T3CV.2.0.200" default="100">
+				<decVal max="100"/>
+				<label>Whistle NW Nathan 3 Chime Forward</label>
+			</variable>
+			<variable item="Volume 0-201" CV="T3CV.2.0.201" default="100">
+				<decVal max="100"/>
+				<label>Whistle PRR Banshee Forward</label>
+			</variable>
+			<variable item="Volume 0-202" CV="T3CV.2.0.202" default="100">
+				<decVal max="100"/>
+				<label>Whistle PRR 3 Chime Forward</label>
+			</variable>
+			<variable item="Volume 0-203" CV="T3CV.2.0.203" default="100">
+				<decVal max="100"/>
+				<label>Whistle PRR 3 Chime Forward</label>
+			</variable>
+			<variable item="Volume 0-204" CV="T3CV.2.0.204" default="100">
+				<decVal max="100"/>
+				<label>Whistle Pennsy K4 Forward</label>
+			</variable>
+			<variable item="Volume 0-205" CV="T3CV.2.0.205" default="100">
+				<decVal max="100"/>
+				<label>Whistle Reading Hooter Forward</label>
+			</variable>
+			<variable item="Volume 0-206" CV="T3CV.2.0.206" default="100">
+				<decVal max="100"/>
+				<label>Whistle Reading #179 G2 6 Chime Forward</label>
+			</variable>
+			<variable item="Volume 0-207" CV="T3CV.2.0.207" default="100">
+				<decVal max="100"/>
+				<label>Whistle Reading Pacific G2 Forward</label>
+			</variable>
+			<variable item="Volume 0-208" CV="T3CV.2.0.208" default="100">
+				<decVal max="100"/>
+				<label>Whistle Reading 6 Chime 2 Forward</label>
+			</variable>
+			<variable item="Volume 0-209" CV="T3CV.2.0.209" default="100">
+				<decVal max="100"/>
+				<label>Whistle Reading 6 Chime Forward</label>
+			</variable>
+			<variable item="Volume 0-210" CV="T3CV.2.0.210" default="100">
+				<decVal max="100"/>
+				<label>Whistle Southern Pacific 5 Chime Forward</label>
+			</variable>
+			<variable item="Volume 0-211" CV="T3CV.2.0.211" default="100">
+				<decVal max="100"/>
+				<label>Whistle Southern Single Chime Forward</label>
+			</variable>
+			<variable item="Volume 0-212" CV="T3CV.2.0.212" default="100">
+				<decVal max="100"/>
+				<label>Whistle Southern 3 Chime Forward</label>
+			</variable>
+			<variable item="Volume 0-213" CV="T3CV.2.0.213" default="100">
+				<decVal max="100"/>
+				<label>Whistle Southern 6 Chime Forward</label>
+			</variable>
+			<variable item="Volume 0-214" CV="T3CV.2.0.214" default="100">
+				<decVal max="100"/>
+				<label>Whistle Unknown 1 Forward</label>
+			</variable>
+			<variable item="Volume 0-215" CV="T3CV.2.0.215" default="100">
+				<decVal max="100"/>
+				<label>Whistle Unknown 3 Forward</label>
+			</variable>
+			<variable item="Volume 0-216" CV="T3CV.2.0.216" default="100">
+				<decVal max="100"/>
+				<label>Whistle Proceed Forward 34</label>
+			</variable>
+			<variable item="Volume 0-217" CV="T3CV.2.0.217" default="100">
+				<decVal max="100"/>
+				<label>Whistle Unknown Circa 19th Century Forward</label>
+			</variable>
+			<variable item="Volume 0-218" CV="T3CV.2.0.218" default="100">
+				<decVal max="100"/>
+				<label>Whistle Hancock 3 Chime Forward</label>
+			</variable>
+			<variable item="Volume 0-219" CV="T3CV.2.0.219" default="100">
+				<decVal max="100"/>
+				<label>Whistle Union Pacific 3 Chime Forward</label>
+			</variable>
+			<variable item="Volume 0-220" CV="T3CV.2.0.220" default="100">
+				<decVal max="100"/>
+				<label>Whistle Wabash 3 Chime Forward</label>
+			</variable>
+			<variable item="Volume 0-221" CV="T3CV.2.0.221" default="100">
+				<decVal max="100"/>
+				<label>Whistle Wabash 6 Chime Forward</label>
+			</variable>
+			<variable item="Volume 0-222" CV="T3CV.2.0.222" default="100">
+				<decVal max="100"/>
+				<label>Whistle World War II era 3 Chime Forward</label>
+			</variable>
+			<variable item="Volume 0-223" CV="T3CV.2.0.223" default="100">
+				<decVal max="100"/>
+				<label>Whistle Nathan K5LA Horn Forward</label>
+			</variable>
+			<variable item="Volume 0-224" CV="T3CV.2.0.224" default="100">
+				<decVal max="100"/>
+				<label>Whistle Alamo Michigan Plant Reverse</label>
+			</variable>
+			<variable item="Volume 0-225" CV="T3CV.2.0.225" default="100">
+				<decVal max="100"/>
+				<label>Whistle Atchison, Topeka, and Santa Fe 6 Chime Original Reverse</label>
+			</variable>
+			<variable item="Volume 0-226" CV="T3CV.2.0.226" default="100">
+				<decVal max="100"/>
+				<label>Whistle Atchison, Topeka, and Santa Fe 6 Chime Replica Reverse</label>
+			</variable>
+			<variable item="Volume 0-227" CV="T3CV.2.0.227" default="100">
+				<decVal max="100"/>
+				<label>Whistle B &amp; O 3 Chime Reverse</label>
+			</variable>
+			<variable item="Volume 0-228" CV="T3CV.2.0.228" default="100">
+				<decVal max="100"/>
+				<label>Whistle B &amp; M 6 Chime Reverse</label>
+			</variable>
+			<variable item="Volume 0-229" CV="T3CV.2.0.229" default="100">
+				<decVal max="100"/>
+				<label>Whistle CNJ 3 Chime Reverse</label>
+			</variable>
+			<variable item="Volume 0-230" CV="T3CV.2.0.230" default="100">
+				<decVal max="100"/>
+				<label>Whistle CB &amp; Q 3 Chime Reverse</label>
+			</variable>
+			<variable item="Volume 0-231" CV="T3CV.2.0.231" default="100">
+				<decVal max="100"/>
+				<label>Whistle Great Northern 5 Chime Reverse</label>
+			</variable>
+			<variable item="Volume 0-232" CV="T3CV.2.0.232" default="100">
+				<decVal max="100"/>
+				<label>Whistle Hancock 3 Chime Short Bell Reverse</label>
+			</variable>
+			<variable item="Volume 0-233" CV="T3CV.2.0.233" default="100">
+				<decVal max="100"/>
+				<label>Whistle Kingsly 4 Chime Reverse</label>
+			</variable>
+			<variable item="Volume 0-234" CV="T3CV.2.0.234" default="100">
+				<decVal max="100"/>
+				<label>Whistle Lehigh Valley Crosby 3 Chime Reverse</label>
+			</variable>
+			<variable item="Volume 0-235" CV="T3CV.2.0.235" default="100">
+				<decVal max="100"/>
+				<label>Whistle Lunkenheimer Single Chime Reverse</label>
+			</variable>
+			<variable item="Volume 0-236" CV="T3CV.2.0.236" default="100">
+				<decVal max="100"/>
+				<label>Whistle Lunkenheimer 3 Chime Reverse</label>
+			</variable>
+			<variable item="Volume 0-237" CV="T3CV.2.0.237" default="100">
+				<decVal max="100"/>
+				<label>Whistle Nathan 5 Chime Reverse</label>
+			</variable>
+			<variable item="Volume 0-238" CV="T3CV.2.0.238" default="100">
+				<decVal max="100"/>
+				<label>Whistle NPR 765 Reverse</label>
+			</variable>
+			<variable item="Volume 0-239" CV="T3CV.2.0.239" default="100">
+				<decVal max="100"/>
+				<label>Whistle NW Single Chime Long Bell Reverse</label>
+			</variable>
+			<variable item="Volume 0-240" CV="T3CV.2.0.240" default="100">
+				<decVal max="100"/>
+				<label>Whistle NW Single Chime Short Bell Reverse</label>
+			</variable>
+			<variable item="Volume 0-241" CV="T3CV.2.0.241" default="100">
+				<decVal max="100"/>
+				<label>Whistle NW Nathan 3 Chime Reverse</label>
+			</variable>
+			<variable item="Volume 0-242" CV="T3CV.2.0.242" default="100">
+				<decVal max="100"/>
+				<label>Whistle PRR Banshee Reverse</label>
+			</variable>
+			<variable item="Volume 0-243" CV="T3CV.2.0.243" default="100">
+				<decVal max="100"/>
+				<label>Whistle PRR 3 Chime Reverse</label>
+			</variable>
+			<variable item="Volume 0-244" CV="T3CV.2.0.244" default="100">
+				<decVal max="100"/>
+				<label>Whistle PRR 3 Chime Reverse</label>
+			</variable>
+			<variable item="Volume 0-245" CV="T3CV.2.0.245" default="100">
+				<decVal max="100"/>
+				<label>Whistle Pennsy K4 Reverse Whistle</label>
+			</variable>
+			<variable item="Volume 0-246" CV="T3CV.2.0.246" default="100">
+				<decVal max="100"/>
+				<label>Whistle Reading Hooter Reverse</label>
+			</variable>
+			<variable item="Volume 0-247" CV="T3CV.2.0.247" default="100">
+				<decVal max="100"/>
+				<label>Whistle Reading #179 G2 6 Chime Reverse</label>
+			</variable>
+			<variable item="Volume 0-248" CV="T3CV.2.0.248" default="100">
+				<decVal max="100"/>
+				<label>Whistle Reading Pacific G2 Reverse</label>
+			</variable>
+			<variable item="Volume 0-249" CV="T3CV.2.0.249" default="100">
+				<decVal max="100"/>
+				<label>Whistle Reading 6 Chime 2 Reverse</label>
+			</variable>
+			<variable item="Volume 0-250" CV="T3CV.2.0.250" default="100">
+				<decVal max="100"/>
+				<label>Whistle Reading 6 Chime Reverse</label>
+			</variable>
+			<variable item="Volume 0-251" CV="T3CV.2.0.251" default="100">
+				<decVal max="100"/>
+				<label>Whistle Southern Pacific 5 Chime Reverse</label>
+			</variable>
+			<variable item="Volume 0-252" CV="T3CV.2.0.252" default="100">
+				<decVal max="100"/>
+				<label>Whistle Southern Single Chime Reverse</label>
+			</variable>
+			<variable item="Volume 0-253" CV="T3CV.2.0.253" default="100">
+				<decVal max="100"/>
+				<label>Whistle Southern 3 Chime Reverse</label>
+			</variable>
+			<variable item="Volume 0-254" CV="T3CV.2.0.254" default="100">
+				<decVal max="100"/>
+				<label>Whistle Southern 6 Chime Reverse Whistle</label>
+			</variable>
+			<variable item="Volume 0-255" CV="T3CV.2.0.255" default="100">
+				<decVal max="100"/>
+				<label>Whistle Unknown 1 Reverse</label>
+			</variable>
+			<variable item="Volume 1-0" CV="T3CV.2.1.0" default="100">
+				<decVal max="100"/>
+				<label>Whistle Unknown 3 Reverse</label>
+			</variable>
+			<variable item="Volume 1-1" CV="T3CV.2.1.1" default="100">
+				<decVal max="100"/>
+				<label>Whistle Hamburg 1 Reverse</label>
+			</variable>
+			<variable item="Volume 1-2" CV="T3CV.2.1.2" default="100">
+				<decVal max="100"/>
+				<label>Whistle Unknown Circa 19th Century Reverse</label>
+			</variable>
+			<variable item="Volume 1-3" CV="T3CV.2.1.3" default="100">
+				<decVal max="100"/>
+				<label>Whistle Hancock 3 Chime Reverse</label>
+			</variable>
+			<variable item="Volume 1-4" CV="T3CV.2.1.4" default="100">
+				<decVal max="100"/>
+				<label>Whistle Union Pacific 3 Chime Long Bell Reverse</label>
+			</variable>
+			<variable item="Volume 1-5" CV="T3CV.2.1.5" default="100">
+				<decVal max="100"/>
+				<label>Whistle Wabash 3 Chime Reverse</label>
+			</variable>
+			<variable item="Volume 1-6" CV="T3CV.2.1.6" default="100">
+				<decVal max="100"/>
+				<label>Whistle Wabash 6 Chime Reverse</label>
+			</variable>
+			<variable item="Volume 1-7" CV="T3CV.2.1.7" default="100">
+				<decVal max="100"/>
+				<label>Whistle World War II era 3 Chime Reverse</label>
+			</variable>
+			<variable item="Volume 1-8" CV="T3CV.2.1.8" default="100">
+				<decVal max="100"/>
+				<label>Whistle Nathan K5LA Horn Reverse</label>
+			</variable>
+			<variable item="Volume 1-9" CV="T3CV.2.1.9" default="100">
+				<decVal max="100"/>
+				<label>Whistle Alamo Michigan Plant Stop</label>
+			</variable>
+			<variable item="Volume 1-10" CV="T3CV.2.1.10" default="100">
+				<decVal max="100"/>
+				<label>Whistle Atchison, Topeka, and Santa Fe 6 Chime Original Stop</label>
+			</variable>
+			<variable item="Volume 1-11" CV="T3CV.2.1.11" default="100">
+				<decVal max="100"/>
+				<label>Whistle Atchison, Topeka, and Santa Fe 6 Chime Replica Stop</label>
+			</variable>
+			<variable item="Volume 1-12" CV="T3CV.2.1.12" default="100">
+				<decVal max="100"/>
+				<label>Whistle B &amp; O 3 Chime Stop</label>
+			</variable>
+			<variable item="Volume 1-13" CV="T3CV.2.1.13" default="100">
+				<decVal max="100"/>
+				<label>Whistle B &amp; M 6 Chime Stop</label>
+			</variable>
+			<variable item="Volume 1-14" CV="T3CV.2.1.14" default="100">
+				<decVal max="100"/>
+				<label>Whistle CNJ 3 Chime Stop</label>
+			</variable>
+			<variable item="Volume 1-15" CV="T3CV.2.1.15" default="100">
+				<decVal max="100"/>
+				<label>Whistle CB &amp; Q 3 Chime Stop</label>
+			</variable>
+			<variable item="Volume 1-16" CV="T3CV.2.1.16" default="100">
+				<decVal max="100"/>
+				<label>Whistle Great Northern 5 Chime Stop</label>
+			</variable>
+			<variable item="Volume 1-17" CV="T3CV.2.1.17" default="100">
+				<decVal max="100"/>
+				<label>Whistle Hancock 3 Chime Short Bell Stop</label>
+			</variable>
+			<variable item="Volume 1-18" CV="T3CV.2.1.18" default="100">
+				<decVal max="100"/>
+				<label>Whistle Kingsly 4 Chime Stop</label>
+			</variable>
+			<variable item="Volume 1-19" CV="T3CV.2.1.19" default="100">
+				<decVal max="100"/>
+				<label>Whistle LV Crosby 3 Chime Stop</label>
+			</variable>
+			<variable item="Volume 1-20" CV="T3CV.2.1.20" default="100">
+				<decVal max="100"/>
+				<label>Whistle Lunkenheimer Single Chime Stop</label>
+			</variable>
+			<variable item="Volume 1-21" CV="T3CV.2.1.21" default="100">
+				<decVal max="100"/>
+				<label>Whistle Lunkenheimer 3 Chime Stop</label>
+			</variable>
+			<variable item="Volume 1-22" CV="T3CV.2.1.22" default="100">
+				<decVal max="100"/>
+				<label>Whistle Nathan 5 Chime Stop</label>
+			</variable>
+			<variable item="Volume 1-23" CV="T3CV.2.1.23" default="100">
+				<decVal max="100"/>
+				<label>Whistle NPR 765 Stop</label>
+			</variable>
+			<variable item="Volume 1-24" CV="T3CV.2.1.24" default="100">
+				<decVal max="100"/>
+				<label>Whistle NW Single Chime Long Bell Stop</label>
+			</variable>
+			<variable item="Volume 1-25" CV="T3CV.2.1.25" default="100">
+				<decVal max="100"/>
+				<label>Whistle NW Single Chime Short Bell Stop</label>
+			</variable>
+			<variable item="Volume 1-26" CV="T3CV.2.1.26" default="100">
+				<decVal max="100"/>
+				<label>Whistle NW Nathan 3 Chime Stop</label>
+			</variable>
+			<variable item="Volume 1-27" CV="T3CV.2.1.27" default="100">
+				<decVal max="100"/>
+				<label>Whistle PRR Banshee Stop</label>
+			</variable>
+			<variable item="Volume 1-28" CV="T3CV.2.1.28" default="100">
+				<decVal max="100"/>
+				<label>Whistle PRR 3 Chime Stop</label>
+			</variable>
+			<variable item="Volume 1-29" CV="T3CV.2.1.29" default="100">
+				<decVal max="100"/>
+				<label>Whistle PRR 3 Chime Stop</label>
+			</variable>
+			<variable item="Volume 1-30" CV="T3CV.2.1.30" default="100">
+				<decVal max="100"/>
+				<label>Whistle Pennsy K4 Stop</label>
+			</variable>
+			<variable item="Volume 1-31" CV="T3CV.2.1.31" default="100">
+				<decVal max="100"/>
+				<label>Whistle Reading Hooter Stop</label>
+			</variable>
+			<variable item="Volume 1-32" CV="T3CV.2.1.32" default="100">
+				<decVal max="100"/>
+				<label>Whistle Reading #179 G2 6 Chime Stop</label>
+			</variable>
+			<variable item="Volume 1-33" CV="T3CV.2.1.33" default="100">
+				<decVal max="100"/>
+				<label>Whistle Reading Pacific G2 Stop</label>
+			</variable>
+			<variable item="Volume 1-34" CV="T3CV.2.1.34" default="100">
+				<decVal max="100"/>
+				<label>Whistle Reading 6 Chime 1 Stop</label>
+			</variable>
+			<variable item="Volume 1-35" CV="T3CV.2.1.35" default="100">
+				<decVal max="100"/>
+				<label>Whistle Reading 6 Chime Stop</label>
+			</variable>
+			<variable item="Volume 1-36" CV="T3CV.2.1.36" default="100">
+				<decVal max="100"/>
+				<label>Whistle Southern Pacific 5 Chime Stop</label>
+			</variable>
+			<variable item="Volume 1-37" CV="T3CV.2.1.37" default="100">
+				<decVal max="100"/>
+				<label>Whistle Southern Single Chime Stop</label>
+			</variable>
+			<variable item="Volume 1-38" CV="T3CV.2.1.38" default="100">
+				<decVal max="100"/>
+				<label>Whistle Southern 3 Chime Stop</label>
+			</variable>
+			<variable item="Volume 1-39" CV="T3CV.2.1.39" default="100">
+				<decVal max="100"/>
+				<label>Whistle Southern 6 Chime Stop</label>
+			</variable>
+			<variable item="Volume 1-40" CV="T3CV.2.1.40" default="100">
+				<decVal max="100"/>
+				<label>Whistle Unknown 1 Stop</label>
+			</variable>
+			<variable item="Volume 1-41" CV="T3CV.2.1.41" default="100">
+				<decVal max="100"/>
+				<label>Whistle Unknown 3 Stop</label>
+			</variable>
+			<variable item="Volume 1-42" CV="T3CV.2.1.42" default="100">
+				<decVal max="100"/>
+				<label>Whistle Hamburg 1 Stop</label>
+			</variable>
+			<variable item="Volume 1-43" CV="T3CV.2.1.43" default="100">
+				<decVal max="100"/>
+				<label>Whistle Unknown Circa 19th Century Stop</label>
+			</variable>
+			<variable item="Volume 1-44" CV="T3CV.2.1.44" default="100">
+				<decVal max="100"/>
+				<label>Whistle Hancock 3 Chime Stop</label>
+			</variable>
+			<variable item="Volume 1-45" CV="T3CV.2.1.45" default="100">
+				<decVal max="100"/>
+				<label>Whistle Union Pacific 3 Chime Long Bell Stop</label>
+			</variable>
+			<variable item="Volume 1-46" CV="T3CV.2.1.46" default="100">
+				<decVal max="100"/>
+				<label>Whistle Wabash 3 Chime Stop</label>
+			</variable>
+			<variable item="Volume 1-47" CV="T3CV.2.1.47" default="100">
+				<decVal max="100"/>
+				<label>Whistle Wabash 6 Chime Stop</label>
+			</variable>
+			<variable item="Volume 1-48" CV="T3CV.2.1.48" default="100">
+				<decVal max="100"/>
+				<label>Whistle World War II era 3 Chime Stop</label>
+			</variable>
+			<variable item="Volume 1-49" CV="T3CV.2.1.49" default="100">
+				<decVal max="100"/>
+				<label>Whistle Nathan K5LA Horn Stop</label>
+			</variable>
+			<variable item="Volume 1-50" CV="T3CV.2.1.50" default="50">
+				<decVal max="100"/>
+				<label>Brake Squeal 1</label>
+			</variable>
+			<variable item="Volume 1-51" CV="T3CV.2.1.51" default="50">
+				<decVal max="100"/>
+				<label>Brake Squeal 2</label>
+			</variable>
+			<variable item="Volume 1-52" CV="T3CV.2.1.52" default="50">
+				<decVal max="100"/>
+				<label>Brake Squeal 3</label>
+			</variable>
+			<variable item="Volume 1-53" CV="T3CV.2.1.53" default="50">
+				<decVal max="100"/>
+				<label>Brake Squeal 4</label>
+			</variable>
+			<variable item="Volume 1-54" CV="T3CV.2.1.54" default="50">
+				<decVal max="100"/>
+				<label>Brake Squeal 5</label>
+			</variable>
+			<variable item="Volume 1-55" CV="T3CV.2.1.55" default="50">
+				<decVal max="100"/>
+				<label>Brake Squeal 6</label>
+			</variable>
+			<variable item="Volume 1-56" CV="T3CV.2.1.56" default="50">
+				<decVal max="100"/>
+				<label>Brake Squeal 7</label>
+			</variable>
+			<variable item="Volume 1-57" CV="T3CV.2.1.57" default="50">
+				<decVal max="100"/>
+				<label>Brake Squeal 8</label>
+			</variable>
+			<variable item="Volume 1-58" CV="T3CV.2.1.58" default="50">
+				<decVal max="100"/>
+				<label>Brake Squeal 9</label>
+			</variable>
+			<variable item="Volume 1-59" CV="T3CV.2.1.59" default="40">
+				<decVal max="100"/>
+				<label>Brake Release 1</label>
+			</variable>
+			<variable item="Volume 1-60" CV="T3CV.2.1.60" default="40">
+				<decVal max="100"/>
+				<label>Brake Release 2</label>
+			</variable>
+			<variable item="Volume 2-13" CV="T3CV.2.2.13" default="60">
+				<decVal max="100"/>
+				<label>Silence</label>
+			</variable>
+			<variable item="Volume 2-14" CV="T3CV.2.2.14" default="60">
+				<decVal max="100"/>
+				<label>Mute</label>
+			</variable>
+			<variable item="Volume 2-15" CV="T3CV.2.2.15" default="80">
+				<decVal max="100"/>
+				<label>Whistle Rotate Alamo Michigian Plant </label>
+			</variable>
+			<variable item="Volume 2-16" CV="T3CV.2.2.16" default="80">
+				<decVal max="100"/>
+				<label>Whistle Rotate ATSF Original 6 Chime</label>
+			</variable>
+			<variable item="Volume 2-17" CV="T3CV.2.2.17" default="80">
+				<decVal max="100"/>
+				<label>Whistle Rotate ATSF Reproduction 6 Chime</label>
+			</variable>
+			<variable item="Volume 2-18" CV="T3CV.2.2.18" default="80">
+				<decVal max="100"/>
+				<label>Whistle Rotate Baltimore &amp; Ohio 3 Chime </label>
+			</variable>
+			<variable item="Volume 2-19" CV="T3CV.2.2.19" default="80">
+				<decVal max="100"/>
+				<label>Whistle Rotate Boston and Maine 6 Chime</label>
+			</variable>
+			<variable item="Volume 2-20" CV="T3CV.2.2.20" default="80">
+				<decVal max="100"/>
+				<label>Whistle Rotate CNJ 3 Chime</label>
+			</variable>
+			<variable item="Volume 2-21" CV="T3CV.2.2.21" default="80">
+				<decVal max="100"/>
+				<label>Whistle Rotate Chicago Burlington and Quincy 3 Chime</label>
+			</variable>
+			<variable item="Volume 2-22" CV="T3CV.2.2.22" default="80">
+				<decVal max="100"/>
+				<label>Whistle Rotate Great Northern 5 Chime</label>
+			</variable>
+			<variable item="Volume 2-23" CV="T3CV.2.2.23" default="80">
+				<decVal max="100"/>
+				<label>Whistle Rotate Hancock Short Bell 3 Chime</label>
+			</variable>
+			<variable item="Volume 2-24" CV="T3CV.2.2.24" default="80">
+				<decVal max="100"/>
+				<label>Whistle Rotate Kingsly 4 Chime </label>
+			</variable>
+			<variable item="Volume 2-25" CV="T3CV.2.2.25" default="80">
+				<decVal max="100"/>
+				<label>Whistle Rotate Lehigh Valley 3 Chime</label>
+			</variable>
+			<variable item="Volume 2-26" CV="T3CV.2.2.26" default="80">
+				<decVal max="100"/>
+				<label>Whistle Rotate Lunkenheimer Single Chime </label>
+			</variable>
+			<variable item="Volume 2-27" CV="T3CV.2.2.27" default="80">
+				<decVal max="100"/>
+				<label>Whistle Rotate Lunkenheimer 3 Chime </label>
+			</variable>
+			<variable item="Volume 2-28" CV="T3CV.2.2.28" default="80">
+				<decVal max="100"/>
+				<label>Whistle Rotate Nathan 5 Chime Horn</label>
+			</variable>
+			<variable item="Volume 2-29" CV="T3CV.2.2.29" default="80">
+				<decVal max="100"/>
+				<label>Whistle Rotate Nickel Plate Road 765's </label>
+			</variable>
+			<variable item="Volume 2-30" CV="T3CV.2.2.30" default="80">
+				<decVal max="100"/>
+				<label>Whistle Rotate Norfolk &amp; Western Single Chime Long Bell </label>
+			</variable>
+			<variable item="Volume 2-31" CV="T3CV.2.2.31" default="80">
+				<decVal max="100"/>
+				<label>Whistle Rotate Norfolk &amp; Western Single Chime Short Bell</label>
+			</variable>
+			<variable item="Volume 2-32" CV="T3CV.2.2.32" default="80">
+				<decVal max="100"/>
+				<label>Whistle Rotate N &amp; W Nathan 3 Chime</label>
+			</variable>
+			<variable item="Volume 2-33" CV="T3CV.2.2.33" default="80">
+				<decVal max="100"/>
+				<label>Whistle Rotate Pennsylvania Banshee</label>
+			</variable>
+			<variable item="Volume 2-34" CV="T3CV.2.2.34" default="80">
+				<decVal max="100"/>
+				<label>Whistle Rotate Pennsylvania 3 Chime</label>
+			</variable>
+			<variable item="Volume 2-36" CV="T3CV.2.2.36" default="80">
+				<decVal max="100"/>
+				<label>Whistle Rotate Pennsylvania Railroad K4 </label>
+			</variable>
+			<variable item="Volume 2-37" CV="T3CV.2.2.37" default="80">
+				<decVal max="100"/>
+				<label>Whistle Rotate Reading Hooter Single Chime</label>
+			</variable>
+			<variable item="Volume 2-38" CV="T3CV.2.2.38" default="80">
+				<decVal max="100"/>
+				<label>Whistle Rotate Reading Railroad G2 Pacific 6 Chime</label>
+			</variable>
+			<variable item="Volume 2-39" CV="T3CV.2.2.39" default="80">
+				<decVal max="100"/>
+				<label>Whistle Rotate Reading Pacific G2 </label>
+			</variable>
+			<variable item="Volume 2-40" CV="T3CV.2.2.40" default="80">
+				<decVal max="100"/>
+				<label>Whistle Rotate Reading 6 Chime </label>
+			</variable>
+			<variable item="Volume 2-41" CV="T3CV.2.2.41" default="80">
+				<decVal max="100"/>
+				<label>Whistle Rotate Reading 6 Chime </label>
+			</variable>
+			<variable item="Volume 2-42" CV="T3CV.2.2.42" default="80">
+				<decVal max="100"/>
+				<label>Whistle Rotate Southern Pacific 5 Chime</label>
+			</variable>
+			<variable item="Volume 2-43" CV="T3CV.2.2.43" default="80">
+				<decVal max="100"/>
+				<label>Whistle Rotate Southern Single Chime</label>
+			</variable>
+			<variable item="Volume 2-44" CV="T3CV.2.2.44" default="80">
+				<decVal max="100"/>
+				<label>Whistle Rotate Southern 3 Chime</label>
+			</variable>
+			<variable item="Volume 2-45" CV="T3CV.2.2.45" default="80">
+				<decVal max="100"/>
+				<label>Whistle Rotate Southern 6 Chime</label>
+			</variable>
+			<variable item="Volume 2-46" CV="T3CV.2.2.46" default="80">
+				<decVal max="100"/>
+				<label>Whistle Rotate Unknown 1</label>
+			</variable>
+			<variable item="Volume 2-47" CV="T3CV.2.2.47" default="80">
+				<decVal max="100"/>
+				<label>Whistle Rotate Unknown 2</label>
+			</variable>
+			<variable item="Volume 2-48" CV="T3CV.2.2.48" default="80">
+				<decVal max="100"/>
+				<label>Whistle Rotate Unknown 3</label>
+			</variable>
+			<variable item="Volume 2-49" CV="T3CV.2.2.49" default="80">
+				<decVal max="100"/>
+				<label>Whistle Rotate Unknown Circa 19th Century Single Chime</label>
+			</variable>
+			<variable item="Volume 2-50" CV="T3CV.2.2.50" default="80">
+				<decVal max="100"/>
+				<label>Whistle Rotate Hancock 3 Chime</label>
+			</variable>
+			<variable item="Volume 2-51" CV="T3CV.2.2.51" default="80">
+				<decVal max="100"/>
+				<label>Whistle Rotate Union Pacific 3 Chime</label>
+			</variable>
+			<variable item="Volume 2-52" CV="T3CV.2.2.52" default="80">
+				<decVal max="100"/>
+				<label>Whistle Rotate Wabash 3 Chime </label>
+			</variable>
+			<variable item="Volume 2-53" CV="T3CV.2.2.53" default="80">
+				<decVal max="100"/>
+				<label>Whistle Rotate Wabash 6 Chime</label>
+			</variable>
+			<variable item="Volume 2-54" CV="T3CV.2.2.54" default="80">
+				<decVal max="100"/>
+				<label>Whistle Rotate World War II era 3 Chime</label>
+			</variable>
+			<variable item="Volume 2-55" CV="T3CV.2.2.55" default="80">
+				<decVal max="100"/>
+				<label>Whistle Rotate Nathan K5LA Horn</label>
+			</variable>
+			<variable item="Volume 2-56" CV="T3CV.2.2.56" default="15">
+				<decVal max="100"/>
+				<label>Idling Sounds 1</label>
+			</variable>
+			<variable item="Volume 2-57" CV="T3CV.2.2.57" default="100">
+				<decVal max="100"/>
+				<label>Ash Dump 1</label>
+			</variable>
+			<variable item="Volume 2-58" CV="T3CV.2.2.58" default="100">
+				<decVal max="100"/>
+				<label>Waterfill 1</label>
+			</variable>
+			<!-- sound CVs -->
+			<variable item="Sound Option 1" CV="T2CV.4.8" default="0">
+				<enumVal>
+					<enumChoice choice="Whistle Alamo Michigan Plant"/>
+					<enumChoice choice="Whistle Atchison, Topeka, and Santa Fe 6 Chime Original" />
+					<enumChoice choice="Whistle Atchison, Topeka, and Santa Fe 6 Chime Replica" />
+					<enumChoice choice="Whistle B &amp; O 3 Chime" />
+					<enumChoice choice="Whistle B &amp; M 6 Chime Lykens" />
+					<enumChoice choice="Whistle CNJ 3 Chime" />
+					<enumChoice choice="Whistle CB &amp; Q 3 Chime Lykens" />
+					<enumChoice choice="Whistle Great Northern 5 Chime" />
+					<enumChoice choice="Whistle Hancock 3 Chime Short Bell" />
+					<enumChoice choice="Whistle Kingsly 4 Chime" />
+					<enumChoice choice="Whistle LV Crosby 3 Chime" />
+					<enumChoice choice="Whistle Lunkenheimer Single Note" />
+					<enumChoice choice="Whistle Lunkenheimer 3 Chime" />
+					<enumChoice choice="Whistle Nathan 5 Chime" />
+					<enumChoice choice="Whistle NPR 765" />
+					<enumChoice choice="Whistle NW Single Chime Long Bell" />
+					<enumChoice choice="Whistle NW Single Chime Short Bell" />
+					<enumChoice choice="Whistle NW Nathan 3 Chime" />
+					<enumChoice choice="Whistle PRR Banshee" />
+					<enumChoice choice="Whistle PRR 3 Chime" />
+					<enumChoice choice="Whistle PRR 3 Chime" />
+					<enumChoice choice="Whistle Pennsy K4" />
+					<enumChoice choice="Whistle Reading Hooter" />
+					<enumChoice choice="Whistle Reading #179 G2 6 Chime" />
+					<enumChoice choice="Whistle Reading Pacific G2" />
+					<enumChoice choice="Whistle Reading 6 Chime 2" />
+					<enumChoice choice="Whistle Reading 6 Chime" />
+					<enumChoice choice="Whistle Southern Pacific 5 Chime" />
+					<enumChoice choice="Whistle Southern Single Chime" />
+					<enumChoice choice="Whistle Southern 3 Chime" />
+					<enumChoice choice="Whistle Southern 6 Chime" />
+					<enumChoice choice="Whistle Unknown 1" />
+					<enumChoice choice="Whistle Unknown 3" />
+					<enumChoice choice="Whistle 34 -" />
+					<enumChoice choice="Whistle Unknown Circa 19th Century" />
+					<enumChoice choice="Whistle Hancock 3 Chime" />
+					<enumChoice choice="Whistle Union Pacific 3 Chime" />
+					<enumChoice choice="Whistle Wabash 3 Chime" />
+					<enumChoice choice="Whistle Wabash 6 Chime" />
+					<enumChoice choice="Whistle World War II era 3 Chime" />
+					<enumChoice choice="Horn Nathan K5LA" />
+				</enumVal>
+				<label>Default Whistle Set</label>
+			</variable>
+			<variable item="Sound Setting 1" CV="T2CV.4.10" default="100" >
+				<decVal max="100"/>
+				<label>Global volume</label>
+			</variable>
+			<variable item="Sound Option 2" CV="T2CV.4.11" default="1" mask="VVVVVVVVVVVVVVVV">
+				<enumVal>
+					<enumChoice choice="Heavy Steam"/>
+					<enumChoice choice="Medium Steam"/>
+					<enumChoice choice="Light Steam"/>
+					<enumChoice choice="R&amp;N #425"/>
+				</enumVal>
+				<label>Steam locomotive type</label>
+			</variable>
+			<variable item="Sound Option 3" CV="T2CV.4.19" default="0" mask="XXXXXXXXXXXXXXVX" >
+				<enumVal>
+					<enumChoice choice="Non Articulated"/>
+					<enumChoice choice="Articulated"/>
+					</enumVal>
+				<label>Articulation type</label>
+			</variable>
+			<variable item="Sound Group 7 Checkbox 8" CV="T2CV.4.19" default="1" mask="XXXXXXXXVXXXXXXX">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+				<label>Function 2 toggle in Audio Assist</label>
+			</variable>
+			<variable item="Sound Setting 12" CV="T2CV.4.23" default="256" mask="VVVVVVVVVVVVVVVV">
+				<decVal max="65535"/>
+				<label>Minimum Chuff Volume</label>
+			</variable>
+			<variable item="Volume Group 1" CV="T3CV.6.0.1" default="40">
+				<decVal max="100"/>
+				<label>Bell</label>
+			</variable>
+			<variable item="Volume Group 2" CV="T3CV.6.0.2" default="100">
+				<decVal max="100"/>
+				<label>Whistle</label>
+			</variable>
+			<variable item="Volume Group 3" CV="T3CV.6.0.3" default="100">
+				<decVal max="100"/>
+				<label>Horn</label>
+			</variable>
+			<variable item="Volume Group 4" CV="T3CV.6.0.4" default="15">
+				<decVal max="100"/>
+				<label>Rod clank</label>
+			</variable>
+			<variable item="Volume Group 5" CV="T3CV.6.0.5" default="40">
+				<decVal max="100"/>
+				<label>Direction change</label>
+			</variable>
+			<variable item="Volume Group 6" CV="T3CV.6.0.6" default="100">
+				<decVal max="100"/>
+				<label>Blow Down</label>
+			</variable>
+			<variable item="Volume Group 7" CV="T3CV.6.0.7" default="20">
+				<decVal max="100"/>
+				<label>Blower</label>
+			</variable>
+			<variable item="Volume Group 8" CV="T3CV.6.0.8" default="40">
+				<decVal max="100"/>
+				<label>Coupler clank</label>
+			</variable>
+			<variable item="Volume Group 9" CV="T3CV.6.0.9" default="40">
+				<decVal max="100"/>
+				<label>Cylinder cox</label>
+			</variable>
+			<variable item="Volume Group 10" CV="T3CV.6.0.10" default="20">
+				<decVal max="100"/>
+				<label>Generator</label>
+			</variable>
+			<variable item="Volume Group 11" CV="T3CV.6.0.11" default="20">
+				<decVal max="100"/>
+				<label>Injector</label>
+			</variable>
+			<variable item="Volume Group 12" CV="T3CV.6.0.12" default="45">
+				<decVal max="100"/>
+				<label>Air Pump</label>
+			</variable>
+			<variable item="Volume Group 13" CV="T3CV.6.0.13" default="100">
+				<decVal max="100"/>
+				<label>Safety</label>
+			</variable>
+			<variable item="Volume Group 14" CV="T3CV.6.0.14" default="35">
+				<decVal max="100"/>
+				<label>Shovelling</label>
+			</variable>
+			<variable item="Volume Group 15" CV="T3CV.6.0.15" default="40">
+				<decVal max="100"/>
+				<label>Stoker</label>
+			</variable>
+			<variable item="Volume Group 16" CV="T3CV.6.0.16" default="100">
+				<decVal max="100"/>
+				<label>Forward</label>
+			</variable>
+			<variable item="Volume Group 17" CV="T3CV.6.0.17" default="100">
+				<decVal max="100"/>
+				<label>Reverse</label>
+			</variable>
+			<variable item="Volume Group 18" CV="T3CV.6.0.18" default="100">
+				<decVal max="100"/>
+				<label>Stop</label>
+			</variable>
+			<variable item="Volume Group 19" CV="T3CV.6.0.19" default="100">
+				<decVal max="100"/>
+				<label>Quillable whistle up</label>
+			</variable>
+			<variable item="Volume Group 20" CV="T3CV.6.0.20" default="100">
+				<decVal max="100"/>
+				<label>Quillable whistle down</label>
+			</variable>
+			<variable item="Volume Group 21" CV="T3CV.6.0.21" default="40">
+				<decVal max="100"/>
+				<label>Water pump</label>
+			</variable>
+			<variable item="Volume Group 22" CV="T3CV.6.0.22" default="50">
+				<decVal max="100"/>
+				<label>Brake squeal</label>
+			</variable>
+			<variable item="Volume Group 23" CV="T3CV.6.0.23" default="40">
+				<decVal max="100"/>
+				<label>Brake release</label>
+			</variable>
+			<variable item="Volume Group 24" CV="T3CV.6.0.24" default="20">
+				<decVal max="100"/>
+				<label>Chuff</label>
+			</variable>
+			<variable item="Volume Group 25" CV="T3CV.6.0.25" default="10">
+				<decVal max="100"/>
+				<label>Prime mover</label>
+			</variable>
+			<variable item="Volume Group 27" CV="T3CV.6.0.27" default="80">
+				<decVal max="100"/>
+				<label>Rotate whistle</label>
+			</variable>
+			<variable item="Volume Group 28" CV="T3CV.6.0.28" default="15">
+				<decVal max="100"/>
+				<label>Idling</label>
+			</variable>
+			<variable item="Volume Group 29" CV="T3CV.6.0.29" default="100">
+				<decVal max="100"/>
+				<label>Ash dump</label>
+			</variable>
+			<variable item="Volume Group 30" CV="T3CV.6.0.30" default="100">
+				<decVal max="100"/>
+				<label>Water fill</label>
+			</variable>
+			<xi:include href="http://jmri.org/xml/decoders/tcs/wowSteamCV.xml"/>
+		</variables>
+		<resets>
+			<factReset label="Entire decoder (All motor, light, and sound settings)" CV="T2CV.5.0" default="2"/>
+			<factReset label="All sound settings" CV="T2CV.5.0" default="3"/>
+			<factReset label="Sound Function mappings" CV="T2CV.5.0" default="4"/>
+			<factReset label="Chuff timing" CV="T2CV.5.0" default="5"/>
+			<factReset label="Sound CV's" CV="T2CV.5.0" default="6"/>
+			<factReset label="Sound type volumes" CV="T2CV.5.0" default="7"/>
+			<factReset label="User Preset 1" CV="T2CV.5.0" default="8"/>
+			<factReset label="User Preset 2" CV="T2CV.5.0" default="9"/>
+			<factReset label="User Preset 3" CV="T2CV.5.0" default="10"/>
+		</resets>
+	</decoder>
+	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_Momentum.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_Brake.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_TCS.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_snd.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_chuff.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_vol_grp.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_vol0.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_vol1.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_vol2.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_4cv.xml"/>
+</decoder-config>

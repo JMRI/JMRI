@@ -1,35 +1,41 @@
 // AutoSpeedAction.java
-
 package jmri.jmrit.symbolicprog.autospeed;
 
+import java.awt.event.ActionEvent;
+import java.io.File;
+import javax.swing.AbstractAction;
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenuBar;
+import javax.swing.JPanel;
+import jmri.InstanceManager;
+import jmri.Programmer;
+import jmri.jmrit.decoderdefn.DecoderFile;
+import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.symbolicprog.KnownLocoSelPane;
+import jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.awt.event.*;
-import java.io.*;
-
-import javax.swing.*;
-
-import jmri.Programmer;
-import jmri.InstanceManager;
-import jmri.jmrit.decoderdefn.*;
-import jmri.jmrit.roster.*;
-import jmri.jmrit.symbolicprog.*;
-import jmri.jmrit.symbolicprog.tabbedframe.*;
 
 /**
- * Action to start the an "Auto Speed Configurer" by
- * creating a frame to select loco, etc.
+ * Action to start the an "Auto Speed Configurer" by creating a frame to select
+ * loco, etc.
  * <P>
- * The resulting JFrame
- * is constructed on the fly here, and has no specific type.
+ * The resulting JFrame is constructed on the fly here, and has no specific
+ * type.
  *
- * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
+ * @see jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
- * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision$
+ * @author	Bob Jacobsen Copyright (C) 2001
+ * @version	$Revision$
  */
-public class AutoSpeedAction 			extends AbstractAction {
+public class AutoSpeedAction extends AbstractAction {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = 9045736525279746469L;
     Object o1, o2, o3, o4;
     JLabel statusLabel;
 
@@ -39,8 +45,8 @@ public class AutoSpeedAction 			extends AbstractAction {
         statusLabel = new JLabel("idle");
 
         // disable ourself if ops programming is not possible
-        if (jmri.InstanceManager.programmerManagerInstance()==null ||
-            !jmri.InstanceManager.programmerManagerInstance().isAddressedModePossible()) {
+        if (jmri.InstanceManager.programmerManagerInstance() == null
+                || !jmri.InstanceManager.programmerManagerInstance().isAddressedModePossible()) {
             setEnabled(false);
         }
 
@@ -48,7 +54,9 @@ public class AutoSpeedAction 			extends AbstractAction {
 
     public void actionPerformed(ActionEvent e) {
 
-        if (log.isInfoEnabled()) log.debug("auto speed tool requested");
+        if (log.isInfoEnabled()) {
+            log.debug("auto speed tool requested");
+        }
 
         // create the initial frame that steers
         final JFrame f = new JFrame("Auto-speed Tool Setup");
@@ -61,21 +69,28 @@ public class AutoSpeedAction 			extends AbstractAction {
         f.setJMenuBar(menuBar);
 
         // known loco on main track
-        JPanel pane1 = new KnownLocoSelPane(false){  // no ident in ops mode yet
+        JPanel pane1 = new KnownLocoSelPane(false) {  // no ident in ops mode yet
+
+            /**
+             *
+             */
+            private static final long serialVersionUID = -4507849769156281853L;
 
             protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
-                                                String filename) {
-                String title = "Set speed info for "+re.getId()+" on main track";
+                    String filename) {
+                String title = "Set speed info for " + re.getId() + " on main track";
                 // find the ops-mode programmer
                 int address = Integer.parseInt(re.getDccAddress());
                 boolean longAddr = true;
-                if (address<100) longAddr = false;
+                if (address < 100) {
+                    longAddr = false;
+                }
                 Programmer programmer = InstanceManager.programmerManagerInstance()
-                                            .getAddressedProgrammer(longAddr, address);
+                        .getAddressedProgrammer(longAddr, address);
                 // and created the frame
                 JFrame p = new PaneOpsProgFrame(decoderFile, re,
-                                                 title, "programmers"+File.separator+filename+".xml",
-                                                 programmer);
+                        title, "programmers" + File.separator + filename + ".xml",
+                        programmer);
                 p.pack();
                 p.setVisible(true);
                 f.setVisible(false);
@@ -88,11 +103,13 @@ public class AutoSpeedAction 			extends AbstractAction {
         f.getContentPane().add(pane1);
 
         f.pack();
-        if (log.isInfoEnabled()) log.debug("setup created");
+        if (log.isInfoEnabled()) {
+            log.debug("setup created");
+        }
         f.setVisible(true);
     }
 
-    static Logger log = LoggerFactory.getLogger(AutoSpeedAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AutoSpeedAction.class.getName());
 
 }
 

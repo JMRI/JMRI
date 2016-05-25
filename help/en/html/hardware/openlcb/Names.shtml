@@ -1,46 +1,36 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2008 -->
-<!-- $Id$ -->
-<title>JMRI: OpenLCB Naming</title>
+<title>JMRI Hardware Support - OpenLCB - Naming</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1> 
-JMRI: OpenLCB Naming
-</h1>
+<h1>Hardware Support: OpenLCB - Naming</h1>
 
-This page discusses how JMRI uses system names
+This page discusses how JMRI uses System Names
 to access OpenLCB-attached resources.
-
-<p>
-For more on JMRI's OpenLCB support, see the
-<a href="index.shtml">main OpenLCB page</a>.
 
 <h2>JMRI's Use of Names</h2>
 JMRI provides an interface to the real layout via 
-internal objects such as Turnouts, Sensors, etc that
+internal objects such as Turnouts, Sensors, etc. that
 are closely mapped to corresponding physical devices.
 This mapping is done via "System Names", which both 
-identify the how to access a particular device, and
+identify how to access a particular device, and
 are the key to looking up the corresponding object in JMRI.
 
-<h2>OpenLCB Events</h2>
+<a name="openlcbevents"></a><h2>OpenLCB Events</h2>
 
 <a href="http://openlcb.org">OpenLCB</a>
 communicates events via messages with a fixed format: eight bytes of
@@ -54,7 +44,22 @@ JMRI will
 insert them automatically in names. For example, "00.01.02.03.04.05.06.07" can be 
 typed as "0.1.2.3.4.5.6.7".
 
-    
+<h2>OpenLCB Configuration Memory</h2>
+
+DecoderPro accesses decoder memory via "CVs".  For that purpose, the JMRI
+OpenLCB provides a CV syntax that can be used to access OpenLCB node configuration
+memory:
+<ul>
+	<li>CV12345 - A single byte at address 12345 in the default configuration address space
+	<li>CV(252)12345 - A single byte at address 12345 in the 252 address space
+	<li>CV12345:4 - Four bytes starting at address 12345 in the default configuration address space.
+	<li>CV(252)12345:4 - Four bytes starting at address 12345 in the 252 address space.
+</ul>
+
+<p>Back to the <a href="index.shtml">main OpenLCB Help page</a></p>
+     
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

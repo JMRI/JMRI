@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head><title>Decoder definition Submission</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<a name="Top"></a>
+<h1>Decoder Definition</h1>
+<h2>Submitting to JMRI</h2>
+
+<div align="right">
+<p><a href="Dcode_Testing.shtml">Previous</a></p>
+<p><a href="index.shtml#DecoderDefinition">Back to Index</a><a href="index.shtml#Main"></a></p>
+</div>
+
+<hr>
+<h4>Submitting to JMRI</h4>
+<p><strong>How do I go about getting these approved and into the next release?</strong></p>
+
+<p>If you're happy with them, you can contribute them to the next release by creating a "Patch" for the project.</p>
+<p>Save your DecoderDefinition.xml in a .zip file to process.</p>
+<p><strong>To do this:</strong></p>
+<ol>
+  <li> If you have a SourceForge account (they're free!), log on.<br> 
+  If &nbsp;not, don't worry about it. Go to the <a target="_blank" href="http://sourceforge.net/tracker/?group_id=26788&amp;atid=388315">patch web site</a> on SourceForge:
+  <img style="width: 900px; height: 339px;" alt="Patch page" src="images/Dcode07.png"><br>
+  </li>
+  <li>Select Patches from Ticket menu.<br>
+    <img style="width: 779px; height: 438px;" alt="Ticket" src="images/Dcode09.png"></li><li>On the left side of the Ticket page select Create Ticket to open the submission form.</li></ol><div style="margin-left: 40px;"><img style="width: 799px; height: 713px;" alt="ticket" src="images/Dcode10.png"></div><ol>
+  <li>On the new page that comes up (shown above), enter something in the following fields:<br>
+    <ol type="a">
+      <li><span style="font-weight: bold;">Status</span>:drop down list select <span style="font-weight: bold;">open</span>.</li><li><span style="font-weight: bold;">Owner</span> leave blank unless you are on the drop down list.</li><li>Select the <strong>Type: </strong>XML from drop down list
+      </li>
+      <li><strong>Text Box:</strong> type in a description of the file</li>
+      
+      <li>Upload a file attachment <strong>File:</strong>
+        <input name="textfield" id="textfield" type="text">
+        <input name="button" id="button" value="Browse" type="submit">
+      locate the file on your computer and select it.</li>
+      <li>Now the form is completed, click on <span style="font-weight: bold;">Save </span>button
+         Your file is submitted for inclusion in a release.<br>
+        <br>
+      </li>
+    </ol>
+  </li>
+</ol>
+
+<hr>
+
+<div align="right">
+<p><a href="Dcode_Testing.shtml">Previous</a></p>
+<p><a href="index.shtml#DecoderDefinition">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+</body>
+</html>

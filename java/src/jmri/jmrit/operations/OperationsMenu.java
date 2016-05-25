@@ -1,40 +1,42 @@
 /**
  * OperationsMenu.java
  */
-
 package jmri.jmrit.operations;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import javax.swing.*;
+import javax.swing.JMenu;
 
 /**
  * Create a "Operations" menu
- * 
+ *
  * @author Bob Jacobsen Copyright 2003
  * @author Daniel Boudreau Copyright 2008
  * @version $Revision$
  */
 public class OperationsMenu extends JMenu {
-	
-	public OperationsMenu(String name) {
-		this();
-		setText(name);
-	}
 
-	public OperationsMenu() {
-		super();
+    /**
+     *
+     */
+    private static final long serialVersionUID = 701227477994394798L;
 
-		setText(Bundle.getMessage("MenuOperations"));
+    public OperationsMenu(String name) {
+        this();
+        setText(name);
+    }
 
-		add(new jmri.jmrit.operations.setup.OperationsSetupAction());
-		add(new jmri.jmrit.operations.locations.LocationsTableAction());
-		add(new jmri.jmrit.operations.rollingstock.cars.CarsTableAction());
-		add(new jmri.jmrit.operations.rollingstock.engines.EnginesTableAction());
-		add(new jmri.jmrit.operations.routes.RoutesTableAction());
-		add(new jmri.jmrit.operations.trains.TrainsTableAction());
+    public OperationsMenu() {
+        super();
 
-	}
+        setText(Bundle.getMessage("MenuOperations"));
 
-	static Logger log = LoggerFactory.getLogger(OperationsMenu.class.getName());
+        add(new jmri.jmrit.operations.setup.OperationsSetupAction());
+        add(new jmri.jmrit.operations.locations.LocationsTableAction());
+        add(new jmri.jmrit.operations.rollingstock.cars.CarsTableAction());
+        add(new jmri.jmrit.operations.rollingstock.engines.EnginesTableAction());
+        add(new jmri.jmrit.operations.routes.RoutesTableAction());
+        add(new jmri.jmrit.operations.trains.TrainsTableAction());
+
+    }
+
+//    private final static Logger log = LoggerFactory.getLogger(OperationsMenu.class.getName());
 }

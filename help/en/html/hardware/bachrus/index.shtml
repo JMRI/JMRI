@@ -1,50 +1,43 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
-      JMRI Hardware Guide: Bachrus
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Andrew Crosland" name=Author>
-    <META name="keywords" content="Bachrus java model railroad JMRI install windows">
+ <title>JMRI Hardware Support - Bachrus</title>
+    <meta content="Andrew Crosland" name="Author">
+    <meta name="keywords" content="Bachrus java model railroad JMRI install windows">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-      <H2> 
-      JMRI Hardware Guide: Bachrus
-      </H2>
-
-	<H3>Supported Hardware</H3>
-
+<h1>Hardware Support: Bachrus</h1>
+<p>
     JMRI supports the Bachrus MTS-DCC Model train Speedometer, which is an input 
 		only device, to capture speed information from a reader module on a Bachrus
-		"Saddle" running stand. For more information on the Bachrus products see the 
-    <a href="http://www.bachrus.com">Bachrus website</a>.<br>
+		"Saddle" running stand.
 		<p>		
-		When the Bachrus MTS-DCC is set as a layout connection preference, the
-		speedo utility can be used to display scale running speed for any scale from
+
+<a name="hardware"></a><h2>Supported Hardware</h2>
+<h3>Bachrus MTS-DCC Model train Speedometer</h3>
+	  <p>When the Bachrus MTS-DCC is set as a JMRI Layout Connection Preference, the
+		Speedo Console tool can be used to display scale running speed for any scale from
 		Z to O and beyond.
 		</p>
 		<a href="images/dial.jpg">
     <img src="images/dial.jpg"
-         width="306" height="238"
-         alt="Speedometer dial display" ></a>
+         width="336" height="373"
+         alt="Speedometer dial display" ></a><br>
+         Left hand side of Speedo panel
 		<p>
 		When the Bachrus MTS-DCC is set as a layout connection alongside a DCC
 		hardware system the speedo utility allows automated measurement of a DCC
@@ -52,10 +45,17 @@
 		</p>
 		<a href="images/profile.jpg">
     <img src="images/profile.jpg"
-         width="306" height="238"
-         alt="Speedometer speed profile graph" ></a>
-   
+         width="543" height="373"
+         alt="Speedometer speed profile graph" ></a><br>
+         Right hand side of Speedo panel
+
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>Third Party info</h3>
+<p>More information on the Bachrus Speedometer products on the 
+<a href="http://www.bachrus.com/speedometer.php">Bachrus website</a>.   
+      
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
 </body>
 </html>
-

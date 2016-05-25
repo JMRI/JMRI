@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2004, 2007 All rights reserved -->
-<!-- $Id: 0NMRA_registers.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -22,82 +22,26 @@
     <programming direct="no" paged="no" register="yes" ops="no"/>
     <variables>
       <!-- Register 1 -->
-      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
-        <shortAddressVal/>
-        <label xml:lang="it">Indirizzo Primario</label>
-        <comment xml:lang="it">Indirizzo Corto</comment>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAddressOnly.xml"/>
       <!-- Register 2 -->
-      <variable label="Vstart" CV="2" comment="A value of 255 corresponds to 100%">
+      <variable item="Vstart" CV="2" comment="A value of 255 corresponds to 100%">
         <decVal/>
-        <label xml:lang="it">Vstart:</label>
-        <comment xml:lang="it"> un valore di 255 corrisponde al 100%</comment>
+        <comment xml:lang="it"> Un valore di 255 corrisponde al 100%</comment>
+        <comment xml:lang="de">Der Wert 255 entspricht 100%</comment>
+        <label>Vstart</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V dÃ©marr.</label>
+        <label xml:lang="de">Anfahrspannung</label>
       </variable>
-      <!-- Register 3 -->
-      <variable label="Acceleration Rate" CV="3" item="Accel">
-        <decVal max="31"/>
-        <label xml:lang="it">Grado Accellerazione</label>
-      </variable>
-      <!-- Register 4 -->
-      <variable label="Deceleration Rate" CV="4" item="Decel">
-        <decVal max="31"/>
-        <label xml:lang="it">Grado Decellarazione</label>
-      </variable>
+      <!-- CV 3-4 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_255.xml"/>
       <!-- Register 5 -->
-      <variable label="Locomotive Direction" CV="29" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice xml:lang="it">normale</choice>
-          </enumChoice>
-          <enumChoice choice="reversed">
-            <choice xml:lang="it">invertita</choice>
-          </enumChoice>
-        </enumVal>
-        <label xml:lang="it">Direzione Locomotiva</label>
-      </variable>
-      <variable label="FL Location" CV="29" mask="XXXXXXVX" item="Speed Step Mode">
-        <enumVal>
-          <enumChoice choice="14 speed step format">
-            <choice xml:lang="it">Formato 14 step</choice>
-          </enumChoice>
-          <enumChoice choice="28 speed step format">
-            <choice xml:lang="it">Formato 28 step</choice>
-          </enumChoice>
-        </enumVal>
-        <label xml:lang="it">Località FL</label>
-      </variable>
-      <variable label="Power Source Conversion" CV="29" mask="XXXXXVXX" item="Analog (DC) Operation">
-        <enumVal>
-          <enumChoice choice="NMRA Digital only">
-            <choice xml:lang="it">Solo NMRA Digitale</choice>
-          </enumChoice>
-          <enumChoice choice="DC conversion enabled">
-            <choice xml:lang="it">Conversione CC abilitata</choice>
-          </enumChoice>
-        </enumVal>
-        <label xml:lang="it">Conversione Sorgente Alimentazione</label>
-      </variable>
-      <variable label="Advanced Decoder Acknowledgement" CV="29" mask="XXXXVXXX" item="Advanced Ack">
-        <enumVal>
-          <enumChoice choice="disabled">
-            <choice xml:lang="it">disabilitato</choice>
-          </enumChoice>
-          <enumChoice choice="enabled">
-            <choice xml:lang="it">abilitato</choice>
-          </enumChoice>
-        </enumVal>
-        <label xml:lang="it">Riconoscimento Avanzato Decoder</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29AdvAck.xml"/>
       <!-- Register 7 -->
-      <variable label="Manufacturer Version No: " CV="7" readOnly="yes" item="Decoder Version">
-        <decVal/>
-        <label xml:lang="it">Numero Versione Costruttore: </label>
-      </variable>
-      <!-- Register 8 -->
-      <variable label="Manufacturer ID: " CV="8" readOnly="yes" item="Manufacturer">
-        <decVal/>
-        <label xml:lang="it">ID Costruttore: </label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
     </variables>
   </decoder>
 </decoder-config>

@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2010 All rights reserved -->
 <!--                                                                        -->
@@ -12,29 +12,37 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <!-- version 1 - new include file for SoundTraxx Tsunami -->
-<enumVal>
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="Flat (off)">
     <choice>Flat (off)</choice>
+    <choice xml:lang="it">Piatto (off)</choice>
   </enumChoice>
   <enumChoice choice="Tiny Speaker (under 1 inch)">
     <choice>Tiny Speaker (under 1 inch)</choice>
+    <choice xml:lang="it">Altop.Piccolissimo (meno di 2,5 cm)</choice>
   </enumChoice>
   <enumChoice choice="Small Speaker (1-2 inches)">
     <choice>Small Speaker (1-2 inches)</choice>
+    <choice xml:lang="it">Altop.Piccolo (2-5 cm)</choice>
   </enumChoice>
   <enumChoice choice="Medium Speaker (2-4 inches)">
     <choice>Medium Speaker (2-4 inches)</choice>
+    <choice xml:lang="it">Altop.medio (5-10 cm)</choice>
   </enumChoice>
   <enumChoice choice="Large Speaker (over 4 inches)">
     <choice>Large Speaker (over 4 inches)</choice>
+    <choice xml:lang="it">Altop.grande (oltre 10 cm)</choice>
   </enumChoice>
   <enumChoice choice="Edgeport Speaker">
     <choice>Edgeport Speaker</choice>
+    <choice xml:lang="it">Altop.Edgeport</choice>
   </enumChoice>
   <enumChoice choice="Boom Box">
     <choice>Boom Box</choice>
+    <choice xml:lang="it">Altop.Boom Boxato</choice>
   </enumChoice>
   <enumChoice choice="User Adjustable">
     <choice>User Adjustable</choice>
+    <choice xml:lang="it">Altop.configurabile</choice>
   </enumChoice>
 </enumVal>

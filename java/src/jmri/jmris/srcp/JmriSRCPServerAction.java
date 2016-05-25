@@ -1,34 +1,36 @@
 // JmriSRCPServerAction.java
-
 package jmri.jmris.srcp;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
 
 /**
- * Swing action to create and register a
- * JmriSRCPServerControlFrame object
+ * Swing action to create and register a JmriSRCPServerControlFrame object
  *
- * @author              Paul Bender Copyright (C) 2009
- * @version             $Revision$
+ * @author Paul Bender Copyright (C) 2009
+ * @version $Revision$
  */
- public class JmriSRCPServerAction extends AbstractAction {
+public class JmriSRCPServerAction extends AbstractAction {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = 3322670049459400936L;
 
     public JmriSRCPServerAction(String s) {
-	super(s);
-        }
+        super(s);
+    }
 
-    public JmriSRCPServerAction() { this("Start SRCP Jmri Server");}
+    public JmriSRCPServerAction() {
+        this("Start SRCP Jmri Server");
+    }
 
     public void actionPerformed(ActionEvent e) {
 
-		//JmriSRCPServerFrame f = new JmriSRCPServerFrame();
-		//f.setVisible(true);
-                JmriSRCPServer.instance().start();
-	}
-   static Logger log = LoggerFactory.getLogger(JmriSRCPServerAction.class.getName());
+        //JmriSRCPServerFrame f = new JmriSRCPServerFrame();
+        //f.setVisible(true);
+        JmriSRCPServerManager.getInstance().getServer().start();
+    }
 }
 
 

@@ -1,69 +1,82 @@
 // StagingTableModel.java
-
 package jmri.jmrit.operations.locations;
 
+import java.beans.PropertyChangeEvent;
+import javax.swing.JTable;
+import javax.swing.SwingUtilities;
+import jmri.jmrit.operations.setup.Control;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.beans.*;
-import javax.swing.*;
-import jmri.jmrit.operations.setup.Control;
 
 /**
  * Table Model for edit of staging tracks used by operations
- * 
+ *
  * @author Daniel Boudreau Copyright (C) 2008
  * @version $Revision$
  */
 public class StagingTableModel extends TrackTableModel {
 
-	public StagingTableModel() {
-		super();
-	}
+    /**
+     *
+     */
+    private static final long serialVersionUID = 406205617566439045L;
 
-	public void initTable(JTable table, Location location) {
-		super.initTable(table, location, Track.STAGING);
-	}
+    public StagingTableModel() {
+        super();
+    }
 
-	public String getColumnName(int col) {
-		switch (col) {
-		case NAME_COLUMN:
-			return Bundle.getMessage("StagingName");
-		}
-		return super.getColumnName(col);
-	}
+    public void initTable(JTable table, Location location) {
+        super.initTable(table, location, Track.STAGING);
+    }
 
-	protected void editTrack(int row) {
-		log.debug("Edit staging");
-		if (tef != null) {
-			tef.dispose();
-		}
-		tef = new StagingEditFrame();
-		String stagingId = tracksList.get(row);
-		Track staging = _location.getTrackById(stagingId);
-		tef.initComponents(_location, staging);
-		tef.setTitle(Bundle.getMessage("EditStaging"));
-		focusEditFrame = true;
-	}
+    @Override
+    public String getColumnName(int col) {
+        switch (col) {
+            case NAME_COLUMN:
+                return Bundle.getMessage("StagingName");
+        }
+        return super.getColumnName(col);
+    }
 
-	// this table listens for changes to a location and it's staging tracks
-	public void propertyChange(PropertyChangeEvent e) {
-		if (Control.showProperty && log.isDebugEnabled())
-			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue()
-					+ " new: " + e.getNewValue());	// NOI18N
-		super.propertyChange(e);
-		if (e.getSource().getClass().equals(Track.class)) {
-			String type = ((Track) e.getSource()).getTrackType();
-			if (type.equals(Track.STAGING)) {
-				String stagingId = ((Track) e.getSource()).getId();
-				int row = tracksList.indexOf(stagingId);
-				if (Control.showProperty && log.isDebugEnabled())
-					log.debug("Update staging table row: " + row + " id: " + stagingId);
-				if (row >= 0)
-					fireTableRowsUpdated(row, row);
-			}
-		}
-	}
+    @Override
+    protected void editTrack(int row) {
+        log.debug("Edit staging");
+        if (tef != null) {
+            tef.dispose();
+        }
+        // use invokeLater so new window appears on top
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                tef = new StagingEditFrame();
+                Track staging = tracksList.get(row);
+                tef.initComponents(_location, staging);
+                tef.setTitle(Bundle.getMessage("EditStaging"));
+            }
+        });
+    }
 
-	static Logger log = LoggerFactory.getLogger(StagingTableModel.class
-			.getName());
+    // this table listens for changes to a location and it's staging tracks
+    @Override
+    public void propertyChange(PropertyChangeEvent e) {
+        if (Control.SHOW_PROPERTY) {
+            log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
+                    .getNewValue());
+        }
+        super.propertyChange(e);
+        if (e.getSource().getClass().equals(Track.class)) {
+            Track track = ((Track) e.getSource());
+            if (track.getTrackType().equals(Track.STAGING)) {
+                int row = tracksList.indexOf(track);
+                if (Control.SHOW_PROPERTY) {
+                    log.debug("Update staging table row: {} track: {}", row, track.getName());
+                }
+                if (row >= 0) {
+                    fireTableRowsUpdated(row, row);
+                }
+            }
+        }
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(StagingTableModel.class.getName());
 }

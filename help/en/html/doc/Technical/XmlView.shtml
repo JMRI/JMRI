@@ -8,13 +8,7 @@
     <META content="Bob Jacobsen" name=Author>
     <meta name="keywords" content="JMRI technical code xml usage">
 
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+    <!--#include virtual="/Style" -->
 </head>
 
 <!--#include virtual="/Header" -->
@@ -34,7 +28,7 @@ files can be displayed in a web browser.  A technique called
 "XSLT stylesheets"
 is used to format them within the web browser.  
 For an example of how this looks, please see the 
-<a href="http://jmri.sourceforge.net/xml/samples/NicksClinic.xml">sample panel XML file</a> on the main JMRI
+<a href="http://jmri.org/xml/samples/NicksClinic.xml">sample panel XML file</a> on the main JMRI
 web site. (May take a few seconds to load)
 
 <p>

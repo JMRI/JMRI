@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
-<title>JMRI: Roster File Details</title>
+<title>JMRI: DecoderPro - Roster File Details</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -21,26 +20,30 @@
 <div id="mainContent">
 
 
-<H1>DecoderPro User Guide - Roster File Details</H1>
+<h1>JMRI: DecoderPro User Guide</h1>
+<h2>Roster File Details</h2>
 
-<p>The roster information presented in the selection box, and used for
-automatic selection of a locomotive, is stored in the roster.xml file
-in the "prefs" directory.  You can open this file and look at it to see
-the format.  You should use the Roster menu to manipulate it to ensure
+<p>The Roster information presented in the selection box, and used for
+automatic selection of a Locomotive, is stored in the roster.xml file
+in the JMRI Preferences directory. You can find your 
+Preferences directory location by choosing "Locations" from the main JMRI Help menu. Click the "Open Roster Location" button to open the directory in Finder/Explorer.
+More information is available on the
+<a href="Files.shtml#location">"Configuration Files" Help page</a>. You may open your Roster file and look at it to see
+the format.  You should only use the Roster menu to manipulate the Roster file, to ensure
 that it stays self-consistent.</p>
 
-<P>
-To move the entire roster to another computer, first find the 
-preferences directory using the information on
-<A HREF="Files.shtml#location">the "Configuration Files" page</a>. 
+<p>
+To move the entire Roster to another computer, choose "Export Roster" from the Roster menu, select a location to save the file and then move that set of files to the other computer before you choose "Import Roster" from the menu to import it there. 
 
-<P>
-In the preferences directory there will be a file called "roster.xml", and 
+<p>
+To do this manually at the file level, in the Preferences directory there will be a file called "roster.xml", and 
 a directory called "roster".  You need to move the "roster.xml" file, the 
 "roster" directory, and all it's contents.
 
-    
-<!--#include virtual="/Footer" -->
-</div>
+Read more about the <a href="../../setup/Files.shtml">JMRI Configuration Files</a>.
+
+  <!--#include virtual="/Footer" -->
+  </div> <!-- close #mainContent -->
+</div> <!-- close #mBody -->    
 </body>
 </html>

@@ -3,10 +3,10 @@
 #
 # Author: Bob Jacobsen, copyright 2005
 # Part of the JMRI distribution
-#
-# The next line is maintained by CVS, please don't change it
-# $Revision$
-#
+
+import jmri
+import java
+
 # The sensor number used to indicate the power status is hardcoded
 # below as "100". Change this if you want to use some other sensor.
 #

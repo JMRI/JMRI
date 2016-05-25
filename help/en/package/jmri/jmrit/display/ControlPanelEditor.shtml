@@ -1,97 +1,122 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<HTML LANG="en">
-<HEAD>
-<TITLE>JMRI: Control Panel Editor Help</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<META CONTENT="Pete Cressman" NAME="Author">
-<META NAME="keywords" CONTENT="JMRI help Panel Editor">
+<html lang="en">
+<head>
+<title>JMRI: Control Panel Editor Help</title>
+<meta name="author" content="Pete Cressman">
+<meta name="keywords" content="JMRI help Panel Editor">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>The Control Panel Editor</H1>
+<h1>The Control Panel Editor</h1>
 
-<b>Control Panel Editor</b> is simply an alternative view and controller with exactly the
-same content data as <b>Panel Editor</b>.  You may change the view and control of your 
-panel whenever and as often as you please.  Storage and loading can be done from either
+<h2>Quick Reference Guide for Mouse</h2>
+
+When in edit mode, the following keystroke patterns are available:
+	<ul>
+	<li>Click(left) - Select and Drag top item</li>
+	<li>Shift-Click(left) - Select and Drag item under top item, i.e. 2nd item</li>
+	<li>Control-Click(left) - Select and Drag bottom item</li>
+	<li>Control-Shift-Click(left) - Show list of all selected items, for superimposed item stacks</li>
+	<li>Click(right) - Select and Popup item property changes</li>
+	<li>Shift-Click(right) - Select and Popup item property changes for 2nd item</li>
+	<li>Control-Click(right) - Select and Popup item property changes for bottom item</li>
+	<li>Control-Shift-Click(right) - Select and Popup item property changes of selected item from stack</li>
+	</ul>
+Note: For Control-Shift-Click, keep holding the Control and Shift keys down through the entire process of selecting
+the item and the subsequent drag or popup on that item.
+
+<p>
+<b>Control Panel Editor</b> (CPE) is simply an alternative view and controller with exactly the
+same content data as <b>Panel Editor</b> (PE).  You may change the view and control of your 
+Panel whenever and as often as you please.  Storage and loading can be done from either
 editor.  The editor used to store the panel will be the editor used at the next load.
 
-<H2>Changing the View between Editors</H2>
+<h2>Changing the View between Editors</h2>
 
-In either editor when in edit mode the last item in the <b>File</b> menu is <b>Change 
-view to "..."</b>. ("..."
+In either editor, when in edit mode, the last item in the <b>File</b> menu is <b>Change 
+view to "..."</b> ("..."
 being the other editor).  Selecting this item switches the view from one editor mode to 
 the other editor mode.
 
-<H2>Differences in the View between Editors</H2>
+<h2>Differences in the View between Editors</h2>
 
 Panel Editor has a separate window for its editing functions. Control Panel Editor
 does not.  In Panel Editor the <b>Edit</b> menu opens an edit window.  In Control Panel Editor 
 the <b>Edit</b> menu adds three additional menus to the panel: <b>File</b>, <b>Options</b>, 
-<b>Zoom</b>, <b>AddItems</b>.
+<b>Zoom</b>, <b>AddItems</b>, <b>Circuit Builder</b> and <b>Draw Shapes</b>.
 </p>
 
-<H2>Control Panel Editor Menus</H2>
-<H3>File Menu</H3>
+<h2>Control Panel Editor Menus</h2>
+
+When in Edit mode, the following menus are displayed.
+
+<h3>File Menu</h3>
 The <b>File</b> menu changes it items between edit mode and operating mode.  In
 edit mode the items are the same as the items in the File menu of the
 Panel Editor's edit window with a few additional items.  They are:</p>
-<ul>
-        <li> <b>New Panel</b> .</li>
-        <li> <b>Store Panels...</b> .</li>
-        <li> <b>Store Image Index</b> .</li>
-        <li> <b>Rename Panel</b> .</li>
-        <li> <b>Create/Edit Image Index</b> .</li>
-        <li> <b>Change View to Panel Editor</b> .</li>
-        <li> <b>Delete This Panel...</b> .</li>
-        <li> <b>Close Editor</b> .</li>
-</ul>
+	<ul>
+	<li> <b>New Panel</b></li>
+	<li> <b>Store Panels...</b></li>
+	<li> <b>Store Image Index</b></li>
+	<li> <b>Rename Panel</b></li>
+	<li> <b>Create/Edit Image Index</b></li>
+	<li> <b>Change View to Panel Editor</b></li>
+	<li> <b>Delete This Panel...</b></li>
+	<li> <b>Close Editor</b></li>
+	</ul>
 <p>
-In operating mode Control Panel Editor's File menu has only one item, <b>Open Editor</b>.
+In operating mode Control Panel Editor's File menu has only one item: <b>Open Editor</b>.
 </p>
 
-<H3>Edit Menu</H3>
-This menu supports Cut, Copy and Paste with the system clipboard.  Cut and Copy will 
+<h3>Edit Menu</h3>
+<p>This menu supports <b>Cut</b>, <b>Copy</b> and <b>Paste</b> with the system clipboard.  Cut and Copy will 
 place a copy of a selection item or group into the clipboard.  This feature allows 
-copying selections from one panel to different panel.
-<p>It also has a menu item to Select All panel items.
-
+copying selections from one panel to different Control Editor panel.
+<p>It also has a menu items.
+	<ul>
+	<li><b>Select type...</b> - Select all items of a given type, e.g. Sensors, etc</li>
+	<li><b>Select Level...</b> - Select all items of a given display level.</li>
+	<li><b>Select All</b> - Select all items.</li>
+	</ul>
 </p>
-<H3>Options Menu</H3>
+
+<h3>Options Menu</h3>
 The items in this menu are similar to the checkboxes in Panel Editor's edit window with
 a few additional items and features. As with PE, CPE can globally set repositioning and 
-control attributes. Hwever CPE will preserve the individual repositioning and controlling 
-attributes of items when global overriding is removed.
-<p>The <b>Override individual Position & Control settings</b> item enables or disables, 
-the next two menu items 
-(<b>All panel items can be repositioned</b> and <b>All panel items control layout</b>).  
-When <b>Override individual Position & Control settings</b> is unchecked, locking or unlocking
-individual icon positions is done as it is in Panel Editor - likewise for enabling or disabling an item's control
-of layout devices.  When <b>Override individual Position & Control settings</b> is checked, the
+control attributes. However CPE preserves the individual repositioning and controlling 
+attributes of items and will restore them when global overriding is removed.
+<ul>
+<li>The <b>Override individual Position &amp; Control settings</b> item enables or disables, 
+the next two menu items</li> 
+<li><b>All panel items can be repositioned</b> - globally /lock/unlock all items.</li>
+<li><b>All panel items control layout</b - globally enable/disable all controlling items.</li>
+</ul>
+When <b>Override individual Position &amp; Control settings</b> is unchecked, locking or unlocking
+individual icon positions is done - likewise for enabling or disabling an item's control
+of layout devices.  When <b>Override individual Position &amp; Control settings</b> is checked, the
 next two menu items perform as they do in Panel Editor - changing these attributes for all panel items.  
 However, in control Panel Editor the individual locking and 
 control settings for each item are remembered. 
-<p>Unchecking the <b>Override individual Position & Control settings</b> item will 
+<p>Unchecking the <b>Override individual Position &amp; Control settings</b> item will 
 return the individual item settings to their previous settings.  
 In Panel Editor, checking <b>All panel items can be repositioned</b> and <b>All panel items 
-control layout</b> will permanently set all panel items.</p>
-<p>Setting scroll bar preferences is also found in this menu.</p>
+control layout</b> will permanently set all panel items and restoration cannot be done.</p>
 
-<H3>Zoom Menu</H3>
+<p>The menu also has items for setting <b>Panel Scrollbars</b> and to <b>Show Tooltips</b>.</p>
+
+<h3>Zoom Menu</h3>
 The <b>Zoom(percentage)...</b> item will enlarge or reduce the panel size.
 <p>The <b>Zoom to Fit</b> item will enlarge or reduce the display of all panel items 
 in the panel to fit
@@ -102,8 +127,8 @@ display to fit the panel window.  Conversely, it will expand the display to fit 
 panel window.  If you resize the panel window, then you should repeat "Zoom to Fit"
 to resize the display to fit the new panel window dimensions.</p> 
 
-<H3>AddItems Menu</H3>
-The <b>Item Palette</b> menu item opens a tabbed window which allows you to add items to 
+<h3>AddItems Menu</h3>
+The <b>Item Palette</b> menu item opens a tabbed window which allows you to add item icons to 
 the panel.  Each item type has a tab in the window.  Adding items 
 is done by drag and drop.  Iconic items may have multiple sets of icons to choose from.
 Icon sets may be customized and added or deleted to suit the user.
@@ -113,33 +138,63 @@ can also be opened with the accelerator key, Control P.</p>
 The Palette in Control Panel Editor does not support the <b>Slip/3-Way/Scissor</b> turnout icons that
 are available from Panel Editor.</p> 
 <p>
+The <b>Occupancy Table</b> menu item opens a window where occupancy block (also called track circuits),
+<i>OBlocks</i> can be defined , along with <i>Portals</i> that join OBlocks and paths <i>OPath</i>
+that are trackage routes which traverse the OBlock.  More information may be found at 
+<a href="..\logix\OBlockTable.shtml">The Occupancy Block Tables</a>.</p>
+<p>
 The <b>Item Table List</b> menu item opens the device table list.  The menu item can also
 be invoked with the accelerator key, Control T.</p>
 
-<H3>Warrants</H3>
+<h3>Warrants</h3>
 The items under this menu are help files for defining Occupancy Blocks and using the them to
 define Warrants.  When two or more Occupancy Blocks are defined additional menu items for defining 
-Warrants will appear.</p>
-<p>
+Warrants will appear. These menu items are described in <a href="..\logix\Warrant.shtml">Warrants</a>.
+.</p><p>
 
-<H3>Circuit Builder</H3>
+<h3>Circuit Builder</h3>
+When two or more Occupancy Blocks are defined this menu appears.
 The items under this menu provide a graphic user interface (GUI) for defining Occupancy Blocks,
-Portals and Paths.  Each item has the help file for such track circuit building.</p>
+Portals and Paths, that is, a track circuit. Descriptions of the menu items are found in
+<a href="Circuitbuilder.shtml">Circuit Builder</a>.</p>
 <p>
 
-<H2>Mouse operation in Control Panel Editor</H2>
+<h3>Draw Shapes</h3>
+This menu allows drawing of various geometric shapes.
+<ul>
+	<li> <b>Draw Rectangle</b> .</li>
+	<li> <b>Draw Round Rectangle</b> .</li>
+	<li> <b>Draw Polygon</b> .</li>
+	<li> <b>Draw Circle</b> .</li>
+	<li> <b>Draw Ellipse</b> .</li>
+	<li> <b>Disable Selecting Shapes</b> .</li>
+</ul>
+With the exception of Draw Polygon, each of the draw items is make with a mouse click and drag.
+Polygon shapes are made with a sequence of mouse clicks and the polygon terminated with a
+double click or pressing the 'Done' button.
+<p>
+When a shape is created or edited a window is displayed to set shape attributes.
+Colors can be chosen for both the outline and the fill.  Also the line thickness of the outline
+and the transparency of the fill can be set.  Precise dimensions can be set with the text fields
+at the bottom.
+<p>Shapes can be controlled with a sensor, by entering a Sensor name in the <b>Visibility/Level Control</b>
+text field.  Activating the sensor may then be used to hide or change the level of the shape
+when in operating (not editing) mode.  This feature can be used to mask and unmask help information
+to your panel or to highlight items.
+<p>
+
+<h2>Mouse operation in Control Panel Editor</h2>
 Control Panel Editor does not implement the rollover highlighting found in Panel Editor.
 
-<H3>Selection</H3>
-<p>In Control Panel Editor selection is done with a simple click. Also selections are dragged with 
- a simple click held down.</p>
+<h3>Selection</h3>
+In Control Panel Editor selection is done with a simple click. Items are deselected with Control click</p>
  
- <p>When items are stacked, Shift-click will select the second-most item in the layer.  Control-click
- will select the bottom-most item in the stack.  If the items are stacked over a background item,
- Control-click will select the bottom-most item above the background.  Control-click over only the background
- will select the background icon.  
+<p>When items are stacked, Shift-click will select the second-most item in the layer.  Control-click
+will select the bottom-most item in the stack.  If the items are stacked over a background item,
+Control-click will select the bottom-most item above the background.  Control-click over only the background
+will select the background icon.  
 
-<H3>Multiple Selection</H3>
+<h3>Multiple Selection</h3>
 As with Panel Editor, a selection group can be made using the "selection fence" -
 a dotted red rectangle that will select all the items completely <b><i>within</i></b> the fence.  If
 the <b>Shift</b> key is held down while creating a selection fence, then all items that
@@ -148,29 +203,29 @@ located at the top and left borders of the panel.
 <p>Add or delete items from a selection group by
 holding the <b>Control</b> key down when selecting the item.</p>  
  
-<H3>Dragging selections</H3>
+<h3>Dragging selections</h3>
 Drag selection or selection group with the mouse button held down on any item in the group.
 <p>A background icon (i.e. an icon at level 1) can be moved by dragging it with the control
 key held down.</p>
 
-<H2>Duplicating Selections Within Control Panel Editor</H2>
+<h2>Duplicating Selections Within Control Panel Editor</h2>
 Copying an item or selection group is done by bringing up the popup for one of the
-selected items.  When the <b>Copy</b> popup menu item is clicked, a Copy of the 
-selection group is made on top of the original selections.  Drag this copy to whereever
+selected items.  When the <b>Duplicate</b> popup menu item is clicked, a Copy of the 
+selection group is made on top of the original selections.  Drag this copy to wherever
 you wish to place the copy.  The original selection is now deselected and remains
 at its original postion.  The copy procedure can be repeated on the newly positioned
 copy to continue to make more copies.
 
-<H2>Item Popups in Control Panel Editor</H2>
+<h2>Item Popups in Control Panel Editor</h2>
 Right click (meta-click 
 on Mac or Linux) brings up the popup menu for the item.
 <p>Hold the <b>Control</b> key down to open  the popup menu for a background item.
 
-<H3>Edit Text Attributes</H3>
+<h3>Edit Text Attributes</h3>
 The <b>Edit Text Attributes</b> popup item opens a dialog to set any of the 
 item's text attributes.
 
-<H3>Multiple Selection Editing</H3>
+<h3>Multiple Selection Editing</h3>
 When a popup menu item is invoked from an item that is a member of a selection
 group, all of the edited values that were made in the popup are applied to all
 members of the selection group if that value is relevant to the member.  For 
@@ -179,5 +234,7 @@ group then the font size is changed in all items in the group.  If say, a fast c
 were included in this group, then no change would be made to the clock.
 
 <!--#include virtual="/Footer" -->
-</BODY>
-</HTML>
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ </body>
+</html>

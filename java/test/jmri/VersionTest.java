@@ -43,7 +43,6 @@ public class VersionTest extends TestCase {
      */
     public void testCompareCanonicalVersions() {
 
-
         assertTrue(Version.compareCanonicalVersions("1.2.3", "1.2.3") == 0);
         assertTrue(Version.compareCanonicalVersions("1.2.1", "1.2.3") < 0);
         assertTrue(Version.compareCanonicalVersions("1.2.4", "1.2.3") > 0);
@@ -56,5 +55,11 @@ public class VersionTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite(VersionTest.class);
         return suite;
+    }
+
+    // Main entry point
+    static public void main(String[] args) {
+        String[] testCaseName = {"-noloading", VersionTest.class.getName()};
+        junit.swingui.TestRunner.main(testCaseName);
     }
 }

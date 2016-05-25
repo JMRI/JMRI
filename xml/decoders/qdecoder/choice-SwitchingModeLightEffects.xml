@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
+<!-- $Id$	-->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<enumChoiceGroup xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-08-30</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Initial creation</revremark>
+    </revision>
+  </revhistory>
+  <!-- Specific for Qdecoder accessory decoder -->
+	<!-- Switching modes for + (plus) decoders   -->
+	<!-- lichteffekt-modi / light effect modes	 -->
+  <enumChoice choice="[61]" value="61">
+    <choice>[61] Luminescent tube (LED)</choice>
+    <choice xml:lang="de">[61] Leuchtstoffröhre (LED)</choice>
+  </enumChoice>
+  <enumChoice choice="[62]" value="62">
+    <choice>[62] Defective lumin. tube (LED)</choice>
+    <choice xml:lang="de">[62] defekte Leucht-röhre (LED)</choice>
+  </enumChoice>
+  <enumChoice choice="[63]" value="63">
+    <choice>[63] Candle (LED)</choice>
+    <choice xml:lang="de">[63] Kerze (LED)</choice>
+  </enumChoice>
+  <enumChoice choice="[64]" value="64">
+    <choice>[64] Candle (bulb)</choice>
+    <choice xml:lang="de">[64] Kerze (Lampe)</choice>
+  </enumChoice>
+  <enumChoice choice="[65]" value="65">
+    <choice>[65] Gas lantern (LED)</choice>
+    <choice xml:lang="de">[65] Gaslaterne (LED)</choice>
+  </enumChoice>
+  <enumChoice choice="[66]" value="66">
+    <choice>[66] Gas lantern (bulb)</choice>
+    <choice xml:lang="de">[66] Gaslaterne (Lampe)</choice>
+  </enumChoice>
+  <enumChoice choice="[67]" value="67">
+    <choice>[67] TV set (LED)</choice>
+    <choice xml:lang="de">[67] Fernseher (LED)</choice>
+  </enumChoice>
+  <enumChoice choice="[68]" value="68">
+    <choice>[68] TV set (bulb)</choice>
+    <choice xml:lang="de">[68] Fernseher (Lampe)</choice>
+  </enumChoice>
+  <enumChoice choice="[69]" value="69">
+    <choice>[69] Fire (LED)</choice>
+    <choice xml:lang="de">[69] Feuer (LED)</choice>
+  </enumChoice>
+  <enumChoice choice="[70]" value="70">
+    <choice>[70] Fire (bulb)</choice>
+    <choice xml:lang="de">[70] Feuer (Lampe)</choice>
+  </enumChoice>
+  <enumChoice choice="[73]" value="73">
+    <choice>[73] Welding light (LED)</choice>
+    <choice xml:lang="de">[73] Schweißlicht (LED)</choice>
+  </enumChoice>
+  <enumChoice choice="[75]" value="75">
+    <choice>[75] Vapor lamp (bulb)</choice>
+    <choice xml:lang="de">[75] Dampflampe (Lampe)</choice>
+  </enumChoice>
+  <enumChoice choice="[76]" value="76">
+    <choice>[76] Slower gyra light (LED)</choice>
+    <choice xml:lang="de">[76] Drehleuchte (LED)</choice>
+  </enumChoice>
+</enumChoiceGroup>
+
+
+
+
+
+

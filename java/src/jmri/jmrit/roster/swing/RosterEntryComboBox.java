@@ -1,8 +1,5 @@
-// RosterEntryComboBox.java
 package jmri.jmrit.roster.swing;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -13,20 +10,24 @@ import javax.swing.JComboBox;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterEntrySelector;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * A JComboBox containing roster entries
+ * A JComboBox containing roster entries or a string indicating that no roster
+ * entry is selected.
+ * <p>
+ * This is a JComboBox&lt;Object&gt; so that it can represent both.
  * <p>
  * This class has a self contained data model, and will automatically update the
  * display if a RosterEntry is added, removed, or changes.
  *
  * @author Randall Wood Copyright (C) 2011
- * @version $Revision: $
  * @see jmri.jmrit.roster.Roster
  * @see jmri.jmrit.roster.RosterEntry
  * @see javax.swing.JComboBox
  */
-public class RosterEntryComboBox extends JComboBox implements RosterEntrySelector {
+public class RosterEntryComboBox extends JComboBox<Object> implements RosterEntrySelector {
 
     protected Roster _roster;
     protected String _group;
@@ -40,7 +41,7 @@ public class RosterEntryComboBox extends JComboBox implements RosterEntrySelecto
     protected String _nonSelectedItem = "Select Loco";
     protected RosterEntry[] _currentSelection = null;
 
-    static Logger log = LoggerFactory.getLogger(RosterEntryComboBox.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RosterEntryComboBox.class.getName());
 
     /**
      * Create a combo box with the default Roster and all entries in the active
@@ -61,8 +62,8 @@ public class RosterEntryComboBox extends JComboBox implements RosterEntrySelecto
     }
 
     /**
-     * Create a combo box with the default Roster and all entries in an arbitrary
-     * roster group.
+     * Create a combo box with the default Roster and all entries in an
+     * arbitrary roster group.
      *
      * @param rosterGroup
      */
@@ -71,8 +72,8 @@ public class RosterEntryComboBox extends JComboBox implements RosterEntrySelecto
     }
 
     /**
-     * Create a combo box with an arbitrary Roster and all entries in an arbitrary
-     * roster group.
+     * Create a combo box with an arbitrary Roster and all entries in an
+     * arbitrary roster group.
      *
      * @param roster
      * @param rosterGroup
@@ -82,9 +83,9 @@ public class RosterEntryComboBox extends JComboBox implements RosterEntrySelecto
     }
 
     /**
-     * Create a combo box with the default Roster and entries in the active roster
-     * group matching the specified attributes. Attributes with a null value will
-     * not be considered when filtering the roster entries.
+     * Create a combo box with the default Roster and entries in the active
+     * roster group matching the specified attributes. Attributes with a null
+     * value will not be considered when filtering the roster entries.
      *
      * @param roadName
      * @param roadNumber
@@ -113,9 +114,9 @@ public class RosterEntryComboBox extends JComboBox implements RosterEntrySelecto
     }
 
     /**
-     * Create a combo box with an arbitrary Roster and entries in the active roster
-     * group matching the specified attributes. Attributes with a null value will
-     * not be considered when filtering the roster entries.
+     * Create a combo box with an arbitrary Roster and entries in the active
+     * roster group matching the specified attributes. Attributes with a null
+     * value will not be considered when filtering the roster entries.
      *
      * @param roster
      * @param roadName
@@ -147,9 +148,9 @@ public class RosterEntryComboBox extends JComboBox implements RosterEntrySelecto
     }
 
     /**
-     * Create a combo box with the default Roster and entries in an arbitrary roster
-     * group matching the specified attributes. Attributes with a null value will
-     * not be considered when filtering the roster entries.
+     * Create a combo box with the default Roster and entries in an arbitrary
+     * roster group matching the specified attributes. Attributes with a null
+     * value will not be considered when filtering the roster entries.
      *
      * @param rosterGroup
      * @param roadName
@@ -180,14 +181,16 @@ public class RosterEntryComboBox extends JComboBox implements RosterEntrySelecto
     }
 
     /**
-     * Create a combo box with an arbitrary Roster and entries in an arbitrary roster
-     * group matching the specified attributes. Attributes with a null value will
-     * not be considered when filtering the roster entries.
+     * Create a combo box with an arbitrary Roster and entries in an arbitrary
+     * roster group matching the specified attributes. Attributes with a null
+     * value will not be considered when filtering the roster entries.
      * <p>
      * All attributes used to filter roster entries are retained and reused when
-     * updating the combo box unless new attributes are specified when calling update.
+     * updating the combo box unless new attributes are specified when calling
+     * update.
      * <p>
-     * All other constructors call this constructor with various default parameters.
+     * All other constructors call this constructor with various default
+     * parameters.
      *
      * @param roster
      * @param rosterGroup
@@ -220,7 +223,7 @@ public class RosterEntryComboBox extends JComboBox implements RosterEntrySelecto
                 decoderMfgID,
                 decoderVersionID,
                 id);
-        
+
         _roster.addPropertyChangeListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent pce) {
                 if (pce.getPropertyName().equals("add")
@@ -244,9 +247,9 @@ public class RosterEntryComboBox extends JComboBox implements RosterEntrySelecto
     }
 
     /**
-     * Update the combo box with the currently selected roster group, using the same roster
-     * entry attributes specified in a prior call to update or when creating the
-     * combo box.
+     * Update the combo box with the currently selected roster group, using the
+     * same roster entry attributes specified in a prior call to update or when
+     * creating the combo box.
      */
     public void update() {
         update(this._group,
@@ -260,9 +263,9 @@ public class RosterEntryComboBox extends JComboBox implements RosterEntrySelecto
     }
 
     /**
-     * Update the combo box with an arbitrary roster group, using the same roster
-     * entry attributes specified in a prior call to update or when creating the
-     * combo box.
+     * Update the combo box with an arbitrary roster group, using the same
+     * roster entry attributes specified in a prior call to update or when
+     * creating the combo box.
      *
      * @param rosterGroup
      */
@@ -278,8 +281,8 @@ public class RosterEntryComboBox extends JComboBox implements RosterEntrySelecto
     }
 
     /**
-     * Update the combo box with the currently selected roster group, using new roster
-     * entry attributes.
+     * Update the combo box with the currently selected roster group, using new
+     * roster entry attributes.
      *
      * @param roadName
      * @param roadNumber
@@ -354,8 +357,8 @@ public class RosterEntryComboBox extends JComboBox implements RosterEntrySelecto
         _id = id;
         removeAllItems();
         if (_nonSelectedItem != null) {
-            this.insertItemAt(_nonSelectedItem, 0);
-            this.setSelectedItem(_nonSelectedItem);
+            insertItemAt(_nonSelectedItem, 0);
+            setSelectedItem(_nonSelectedItem);
         }
         for (RosterEntry r : l) {
             if (rosterGroup != null && !rosterGroup.equals(Roster.ALLENTRIES)) {
@@ -387,8 +390,8 @@ public class RosterEntryComboBox extends JComboBox implements RosterEntrySelecto
     }
 
     /**
-     * Set the text of the item that visually indicates that no roster entry
-     * is selected in the comboBox.
+     * Set the text of the item that visually indicates that no roster entry is
+     * selected in the comboBox.
      *
      * @param itemText
      */
@@ -398,12 +401,12 @@ public class RosterEntryComboBox extends JComboBox implements RosterEntrySelecto
     }
 
     /**
-     * Get the text of the item that visually indicates that no roster entry
-     * is selected in the comboBox.
+     * Get the text of the item that visually indicates that no roster entry is
+     * selected in the comboBox.
      *
      * If this returns null, it indicates that the comboBox has no special item
      * to indicate an empty selection.
-     * 
+     *
      * @return The text or null
      */
     public String getNonSelectedItem() {

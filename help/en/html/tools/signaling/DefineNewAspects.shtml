@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <title>JMRI: Defining Your Own Signaling System</title>
 
 <!-- Style -->
@@ -21,7 +20,7 @@
 <div id="mainContent">
 
 
-<H1>JMRI: Defining Your Own Signaling System</H1>
+<h1>JMRI: Defining Your Own Signaling System</h1>
 
 This page describes how to define a new signaling system
 to JMRI.  
@@ -29,34 +28,41 @@ to JMRI.
 We go through creating one from scratch, but 
 it's often easier to copy and modify one of the existing 
 ones in the 
-<a href="http://jmri.org/xml/signals">xml/signals</a>
+<a href="http://jmri.org/xml/signals/">xml/signals</a>
 directory.
 
 <h2>Creating a New Signaling System</h2>
 
-For now, you need to manually create a new directory the JMRI 
+First, you need to manually create a new directory in the JMRI 
 system file directory under the "xml/signals" or in the user 
-preferences directory "resources/signals" (from 2.13.5) these 
-will then hold your new signal definition.
+preferences directory "resources/signals" which
+will hold your new signal definition.
 By convention, the name of this directory (e.g. "basic" or
 "AAR-1946") provides the system name for your signal definition.
+Any Signal Masts you create that
+use your new signal system definition will include the
+signaling system's system name in their own (mast's) system
+name, so it's inconvenient to change the system name of the signal system.
 Think ahead a little bit:  Will there be variants of this
 definition for different eras or different divisions?  If
-so, include a year or location in the name, to make it easy
-to create modified versions.
-
+so, include a year or location in the name, to make it easier
+to create modified versions.<br>
+Note: do not use any special characters like ampersands (&amp;) or spaces in names for files and 
+directories. JMRI runs on lots of computers, and filenames with spaces or special characters can 
+cause problems for other people if you ever contribute your files back to JMRI for distribution.
 <p>
 Then, provide these files:
-<ul>
-<li>index.shtml - Free-form description of the signal system
-<li>aspects.xml - Define the complete set of available aspects
-<li>appearance-*.xml - One file for each type of SignalMast, defining
-        how to display each aspect.
-</ul>
+	<ul>
+	<li>index.shtml - Free-form description of the signal system
+	<li>aspects.xml - Define the complete set of available aspects
+	<li>appearance-*.xml - One file for each type of SignalMast, defining
+	how to display each aspect. Take a look at some existing signal systems to 
+	see typical naming conventions.
+	</ul>
 
 <h3>Create a new index.shtml file</h3>
 
-This is only a description, but it's important to do it first
+This file provides only a description, but it's important to do it first
 so that you record the details of what you've done.
 <p>
 If you're capturing a prototypical system, 
@@ -69,15 +75,15 @@ remember what you had in mind.
 
 <h3>Create a new aspects.xml file</h3>
 
-The "name" element at the top of this file provides the user name for your
+The <code>&lt;name&gt;</code> element at the top of this file provides the user name for your
 signaling system, which features prominently in the user interface.
 It can be a little more verbose than the directory name, but should
-be similar enough that the user can associate them if needed.
+be similar enough so that the user can associate them if needed.
 
 <p>
-This "aspects" element in this file 
+The <code>&lt;aspects&gt;</code> element in this file 
 lists <em>all</em> the aspects that can appear in
-this signaling system.  (Most model railroads only model one
+this signaling system (most model railroads only model one
 railroad, so there's only one system present, but it is possible
 to use more than one).  You can come back and add more later
 if needed, but it's better to enter them all at the beginning
@@ -85,113 +91,143 @@ because the names will be more consistent, etc.
 
 <p>
 Most of the file is blocks that look like this:
-<PRE>
-    &lt;aspect&gt;
-      &lt;name&gt;&lt;/name&gt;
-      &lt;title&gt;&lt;/title&gt;
-      &lt;indication&gt;&lt;/indication&gt;
-      &lt;description&gt;&lt;/description&gt;
-      &lt;reference&gt;&lt;/reference&gt;
-      &lt;comment&gt;&lt;/comment&gt;
-      &lt;imagelink&gt;&lt;/imagelink&gt;
-      &lt;speed&gt;&lt;/speed&gt;
-      &lt;speed2&gt;&lt;/speed2&gt;
-      &lt;route&gt;&lt;/route&gt;
-      &lt;dccAspect&gt;&lt;/dccAspect&gt;
-    &lt;/aspect&gt;
-</PRE>
+<pre>
+  &lt;aspect&gt;
+    &lt;name&gt;&lt;/name&gt;
+    &lt;title&gt;&lt;/title&gt;
+    &lt;indication&gt;&lt;/indication&gt;
+    &lt;description&gt;&lt;/description&gt;
+    &lt;reference&gt;&lt;/reference&gt;
+    &lt;comment&gt;&lt;/comment&gt;
+    &lt;imagelink&gt;&lt;/imagelink&gt;
+    &lt;speed&gt;&lt;/speed&gt;
+    &lt;speed2&gt;&lt;/speed2&gt;
+    &lt;route&gt;&lt;/route&gt;
+    &lt;dccAspect&gt;&lt;/dccAspect&gt;
+  &lt;/aspect&gt;
+</pre>
 
-You have to fill in the name element, but the others are optional.
-The title and indication elements can only be included once.
-The description, reference and comment elements can be included
+You have to fill in the <code>&lt;name&gt;</code> element. The others are optional, but the order of all elements is mandatory to successfully pass the XML validation.
+The <code>&lt;title&gt;</code> and <code>&lt;indication&gt;</code> elements may only be included once.
+The <code>&lt;description&gt;</code>, <code>&lt;reference&gt;</code> and <code>&lt;comment&gt;</code> elements can be included
 as many times as you'd like.  
 <p>
-The imagelink element, if present, should point to
-a image file (.gif, .png or .jpg) showing what the family of
-appearances looks like.  If you provide individual images
-in the appearance files (see below), they'll also be displayed
+The <code>&lt;imagelink&gt;</code> element, if present, should point to
+an image file (.gif, .png or .jpg) showing what the family of
+Appearances looks like.  If you provide individual images
+in the <a href="#appearances">appearance files</a>, they'll also be displayed
 here.  Individual images is a better solution, but it's also 
 more work.
 <p>
-The speed element, if present, should either be a numerical value or a string
-value that has been defined in the signalSpeeds.xml file.  The speed element 
-relates to the maximum speed a train can pass the aspect at.  The signalmast logic 
+The <code>&lt;speed&gt;</code> element, if present, should either be a numerical value or a string
+value that has been defined in the signalSpeeds.xml file.  The <code>&lt;speed&gt;</code> element 
+relates to the maximum speed a train can pass the mast displaying this Aspect at.  The Signal Mast Logic 
 uses this speed to help determine which aspect should be displayed where there
-are multiple possible aspects.
+are multiple possible aspects.<br>
+An optional <code>&lt;speed2&gt;</code> element contains the speed (value) the train should - or may - reach upon 
+arriving at the next signal. For a Clear aspect it would be identical to <code>&lt;speed&gt;</code>, but in the Approach Diverging aspect it will typically be less.<br>
+Both of the speed entries refer to the protected block as it was when the train first arrived at 
+the signal, because of course it will have changed to 'stop' once the train has 
+entered the next block (more on speeds <a href="https://sourceforge.net/p/jmri/mailman/jmri-developers/?viewmonth=201106&viewday=22">in the JMRI Developers list</a>).
 <p>
-The route element, if present, should simple be entered in as 'Diverging', 'Normal'
+The <code>&lt;route&gt;</code> element, if present, should simply be entered as 'Diverging', 'Normal'
 or 'Either'.  If the element is omitted or left blank then it is taken as being 'Normal'.
-The route element indicates that this specific aspect is used when a 
-turnout has been thrown in the path ahead.  The signalmast logic uses this element
+The <code>&lt;route&gt;</code> element indicates that this specific Aspect is used when a 
+turnout has been thrown in the path ahead.  The Signal Mast Logic logic uses this element
 to help determine which aspect should be displayed where there are multiple 
-possible aspects.
+possible Aspects.
 <p>
-The dccAspect element, if present, is the default DCC signal accessory decoder id for that aspect, 
-these values are then used to populate the aspect ids when a DCC or LNCP signal driver are used. 
-The values can be over-written by the user when creating or editing the signalmast.
+The <code>&lt;dccAspect&gt;</code> element, if present, is the default DCC signal accessory decoder ID for that aspect. 
+These values are then used to populate the aspect IDs when a DCC or LNCP signal driver is used. 
+The values can be over-written by the user when creating or editing a particular Signal Mast.
 <p>
-The delay element, if present, allows a delay to be configured between changing the 
+The <code>&lt;delay&gt;</code> element, if present, allows a delay to be configured between changing the 
 aspects on each signal head where multiple heads are configured on a mast.<br>
-This is ideally used where in the prototype a manually operated signal (eg semaphore) 
+This is ideally used where in the prototype a manually operated signal (eg. semaphore) 
 would have to be set by the signalman, therefore only one signal head (or Arm) would 
 be set at any one time.
 <p>
-Below the aspect blocks, there's a block that names all the valid
+Below the <code>&lt;aspect&gt;</code> blocks, there's a block that names all the valid
 appearance files, e.g.:
-<PRE>
+<pre>
   &lt;appearancefiles&gt;
     &lt;appearancefile href="appearance-SL-1-high-abs.xml"/&gt;
     &lt;appearancefile href="appearance-SL-1-high-pbs.xml"/&gt;
     &lt;appearancefile href="appearance-SL-1-low.xml"/&gt;
   &lt;/appearancefiles&gt;
-</PRE>
+</pre>
 
-Create this part as you create the appearance files (see below),
-to the program can locate all of them and display them to the user.
+Create this part as you create the appearance files (see next section),
+so the program can locate all of them and display them to the user.
 
-<h3>Create appearance-*.xml files</h3>
+<a name="appearances"><h3>Create appearance-*.xml files</h3></a>
 
-For each kind of signal on the layout (one searchlight,
-two searchlight, dwarf, semaphore, etc), you need to
-create an appearance file.
-
-<p>
-Not every aspect needs to be defined in every file, as
-not every type of signal can show every aspect.
+For each kind of signal on the layout (single head searchlight,
+double searchlight, dwarf, semaphore, etc.) you need to
+create a dedicated appearance file.
 
 <p>
-Each aspect that the signal can show needs to be 
+Take a look at some existing signal systems to 
+see typical naming conventions.
+Note: do not use any special characters like ampersands (&amp;) or spaces in names for files and 
+directories. JMRI runs on lots of computers, and filenames with spaces or special characters can 
+cause problems for other people if you ever contribute your files back to JMRI for distribution.
+
+<p>
+The top of the file is some boiler-plate that you can 
+copy from an existing system, then modify with your
+own author and revision history information.
+
+<p>
+The value of the <code>&lt;aspecttable&gt;</code> element should be the user name for 
+the overall system, as defined in the aspects.xml file's <code>&lt;name&gt;</code> element.
+
+<p>
+The <code>&lt;name&gt;</code> element is the user name for this particular type of signal mast.
+If should be pretty descriptive of the mast, and related in some obvious way to
+the filename.
+Use the <code>&lt;reference&gt;</code> and <code>&lt;description&gt;</code> elements to provide information to 
+future users of this signal system. You can see how this is displayed
+in a <a href="http://jmri.org/xml/signals/AAR-1946/appearance-SL-1-high-pbs.xml">sample file</a>.
+
+<p>
+Next is the <code>&lt;appearances&gt;</code> element, which contains a series of <code>&lt;appearance&gt;</code>
+elements that define how the individual Aspects appear on this type of signal mast.
+Not every Aspect needs to be defined in every file, as
+not every type of signal mast can show every Aspect.
+
+<p>
+Each Aspect that the signal can show needs to be 
 described with a block like this:
 
+<pre>
+  &lt;appearance&gt;
+    &lt;aspectname&gt;Clear&lt;/aspectname&gt;
+    &lt;show&gt;green&lt;/show&gt;
+    &lt;show&gt;red&lt;/show&gt;
+    &lt;reference&gt;&lt;/reference&gt;
+    &lt;delay&gt;&lt;/delay&gt;
+    &lt;imagelink&gt;&lt;/imagelink&gt;
+  &lt;/appearance&gt;
+</pre>
 
-<PRE>
-    &lt;appearance&gt;<br>
-      &lt;aspectname&gt;Clear&lt;/aspectname&gt;
-      &lt;show&gt;green&lt;/show&gt;
-      &lt;show&gt;red&lt;/show&gt;
-      &lt;reference&gt;&lt;/reference&gt;
-      &lt;delay&gt;&lt;/delay&gt;
-      &lt;imagelink&gt;&lt;/imagelink&gt;
-    &lt;/appearance&gt;<br>
-</PRE>
-
-The "aspectname" needs to be at the start, followed by zero or more
-"show" elements. 
+The <code>&lt;aspectname&gt;</code> needs to be at the start, followed by zero or more
+<code>&lt;show&gt;</code> elements. 
 
 <p>
-The show element(s) will be used to set the signalheads that
-make up the signal properly to display this aspect. There can be zero or more
+The show element(s) will be used to set the Signal Heads that
+make up the signal properly to display this Aspect. There can be zero or more
 of these, containing "red", "flashred", "yellow", "flashyellow", "green", "flashgreen", "lunar", "flashlunar" or "dark".
 
 <p>
-You can have as many "reference" elements as you'd like, they're
+You can have as many <code>&lt;reference&gt;</code> elements as you'd like, they're
 for user-readable documentation.
 
 <p>
 The imagelink element, if present, should point to
-a image file (.gif, .png or .jpg) showing what this appearance looks like.<br>
+an image file (of type .gif, .png or .jpg) showing what this Appearance looks like.<br>
 If you are creating or using custom images then these should be placed in a 
-sub-directory within the user preference area, the image link should then 
+sub-directory within the user preference area, and the image link should then 
 be prefixed with "preference:" followed by the remainder of the path.
 As long as you work locally, use preference:resources/etc paths. 
 If all aspects of your new signal definition are working on your panel/layout 
@@ -202,83 +238,83 @@ people viewing them on the JMRI web site.
 
 <h4>Specific Appearances</h4>
 There are four specific appearances that JMRI will and can refer to, as the appearance names
-are all user defined and can be in any language all are optional and dependant upon the signalmast<br>
+are all user defined and can be in any language all are optional and dependent upon the Signal Mast:<br>
 <b>danger</b> This is the most restrictive aspect that the signal mast can show. 
 When the path ahead is not set or clear the signal mast logic will set the signal mast to this appearance.<br>
 <b>permissive</b> (Call-On) this appearance is displayed if the block ahead is occupied, 
 but another train is allowed to enter it.<br>
-<b>held</b> is used to provide an alternative image on the panel to indicate that
-the signal has been held at Danger.<br>
+<b>held</b> provides (via the imagelink element) an alternative panel image to indicate that
+the "held" condition on the signal has been set. Higher-level logic can (optionally)
+use the aspect element to determine what to set the signal to when held has been set.<br>
 <b>dark</b> is used to provide an alternative image on the panel to indicate that
 the signal is not lit.<br>
 Each specific aspect can be given an alternative image to use other than that given
 in the main appearance definition.<br>
-This information can be entered at after the appearance information in the following form.
-<PRE>
+This information can be entered after the appearance information in the following form:
+<pre>
   &lt;specificappearances&gt;
     &lt;danger&gt;
-        &lt;aspect&gt;Danger&lt;/aspect&gt;
+      &lt;aspect&gt;Danger&lt;/aspect&gt;
     &lt;/danger&gt;
     &lt;permissive&gt;
-        &lt;aspect&gt;Off&lt;/aspect&gt;
+      &lt;aspect&gt;Off&lt;/aspect&gt;
     &lt;/permissive&gt;
     &lt;held&gt;
-        &lt;aspect&gt;Danger&lt;/aspect&gt;
-        &lt;imagelink&gt;held.gif&lt;/imagelink&lt;
+      &lt;aspect&gt;Danger&lt;/aspect&gt;
+      &lt;imagelink&gt;held.gif&lt;/imagelink&lt;
     &lt;/held&gt;
     &lt;dark&gt;
-        &lt;aspect&gt;Not Lit&lt;/aspect&gt;
-        &lt;imagelink&gt;notlit.gif&lt;/imagelink&lt;
+      &lt;aspect&gt;Not Lit&lt;/aspect&gt;
+      &lt;imagelink&gt;notlit.gif&lt;/imagelink&lt;
     &lt;/dark&gt;
   &lt;/specificappearances&gt;
-</PRE>
+</pre>
 Only one aspect can be defined for each specific appearance.
-For each specific appearance entered, the corresponding <aspect> entry
-must be a valid <aspectname> that occurs in the appearance definitions
-for the mast
+For each specific appearance entered, the corresponding <code>&lt;aspect&gt;</code> entry
+must be a valid <code>&lt;aspectname&gt;</code> that occurs in the appearance definitions
+for the mast.
+
 <h4>Aspect Mapping</h4>
-The aspect mapping is used to help determine the progression of signalling appearances.  
-The purpose of the map is to define which potential appearances are valid depending upon
- what appearance is being displayed on the signal mast that is ahead of us.  
+The Aspect Mapping is used to help determine the progression of signaling Aspects.  
+The purpose of the map is to define which potential Aspects are valid depending upon
+ what Aspect is being displayed on the signal mast that is ahead of us.  
  This mapping can be a simple one-to-one, E.g. Advanced signal mast is showing Approach, we should show Clear.
- Or a more complex one-to-many map where there could be multiple appearances that we could display, 
+ Or a more complex one-to-many map where there could be multiple Aspects that we could display, 
  E.g. Advanced signal is showing Stop, but we could display either a 
  Approach or Diverging Approach depending upon other conditions.
  <p>
- The value of the Advanced Aspect can be any that is defined in the Aspect table
- for that signalling system.<br>
- The value of Our Aspect, must be one that is defined and supported by the 
- defined in the appearance file.
+ The value of the <code>&lt;advancedAspect&gt;</code> can be any that is defined in the Aspect table
+ of our signaling system's aspects.xml file.<br>
+ The value of <code>&lt;ourAspect&gt;</code> must be one that is defined and supported by this appearance file (so it can be displayed on this signal mast type).
 <p>
-All of the mappings, are contained within the &lt;aspectMappings&gt; tags, within their own &lt;aspectMapping&gt; tag
-<PRE>
-&lt;aspectMappings&gt;
+All of the mappings are contained within the <code>&lt;aspectMappings&gt;</code> tags, each in their own <code>&lt;aspectMapping&gt;</code> tag e.g.
+<pre>
+  &lt;aspectMappings&gt;
     &lt;aspectMapping&gt;
-        &lt;advancedAspect&gt;Approach&lt;/advancedAspect&gt;
-        &lt;ourAspect&gt;Clear&lt;/ourAspect&gt;
+      &lt;advancedAspect&gt;Approach&lt;/advancedAspect&gt;
+      &lt;ourAspect&gt;Clear&lt;/ourAspect&gt;
     &lt;/aspectMapping&gt;
     &lt;aspectMapping&gt;
-        &lt;advancedAspect&gt;Stop&lt;/advancedAspect&gt;
-        &lt;ourAspect&gt;Approach&lt;/ourAspect&gt;
-        &lt;ourAspect&gt;Diverging Approach&lt;/ourAspect&gt;
+      &lt;advancedAspect&gt;Stop&lt;/advancedAspect&gt;
+      &lt;ourAspect&gt;Approach&lt;/ourAspect&gt;
+      &lt;ourAspect&gt;Diverging Approach&lt;/ourAspect&gt;
     &lt;/aspectMapping&gt;
-&lt;/aspectMappings&gt;
-</PRE>
+  &lt;/aspectMappings&gt;
+</pre>
 
 <h3>Check Your Work</h3>
-
-You can use the "Check XML File" and "Validate XML File"
+<p>
+You can use the "Validate XML File"
 tools under the JMRI "Debug" window to check your files.
 (Note that you have to be connected to the internet to do this, 
 as the files refer to some checking resources that live on the JMRI web site.)
-The first checks the basic format: Are all the &lt; and &gt; 
-characters in the right place? Etc.  The second makes sure that 
-the right elements are in the right places, and is a little more
-intensive.
+First, it checks the basic format: Are all the &lt; and &gt; 
+characters in the right place? Etc.  Then it makes sure that 
+the right elements are in the right places, checks some of the contents, etc.
 
-<h3>Amendments to an Existing Signaling System</h3>
+<h3>Amendments to an existing Signaling System</h3>
 
-There are a number of signalling definitions already provided within JMRI which are 
+There are a number of signaling definitions already provided within JMRI which are 
 located in the "xml/signals" directory, some of these may generally meet your existing 
 requirements however some might require changes to suit the hardware that you use, 
 or there are local variation in operations, or simply that you do not have the facility to 
@@ -289,13 +325,14 @@ over-ride the JMRI provided ones. You will need to first create a sub-directory 
 the resource directory located in the user preference area called "signals", you will 
 then need to create a sub-directory in there which has exactly the same name as the 
 JMRI provided one. From there any appearance files you create or copy into will either
-be added to the mast list for that signalling system or overwrite the predefined JMRI 
-signal mast.
+be added to the mast list for that signaling system or overwrite the predefined JMRI 
+Signal Mast.
 <p>
-The advantage of placing new and amended signal mast appearance files here is that when 
+The advantage of placing new and amended signal mast Appearance files here is that when 
 JMRI is updated, then these files will not get overwritten and lost!
-</div>
+
 <!--#include virtual="/Footer" -->
+  </div> 
+ </div>
 </body>
 </html>
-

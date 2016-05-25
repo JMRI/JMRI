@@ -1,5 +1,3 @@
-// AudioCommand.java
-
 package jmri.jmrit.audio;
 
 import jmri.Audio;
@@ -11,33 +9,30 @@ import jmri.Audio;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author Matthew Harris  copyright (c) 2009
- * @version $Revision$
+ * @author Matthew Harris copyright (c) 2009
  */
 public class AudioCommand {
 
     /**
      * Private variables containing command parameters
      */
-    private Audio audio;
+    private final Audio audio;
 
-    private int command;
+    private final int command;
 
     /**
      * Constructor to process a command on an Audio object
-     * 
-     * @param audio Audio object to process
+     *
+     * @param audio   Audio object to process
      * @param command Action to perform
      */
     public AudioCommand(Audio audio, int command) {
@@ -47,7 +42,7 @@ public class AudioCommand {
 
     /**
      * Return the Audio object that this command refers to
-     * 
+     *
      * @return Audio object to process
      */
     public synchronized Audio getAudio() {
@@ -56,6 +51,7 @@ public class AudioCommand {
 
     /**
      * Return the action to perform
+     *
      * @return Action
      */
     public synchronized int getCommand() {
@@ -73,6 +69,7 @@ public class AudioCommand {
 
     /**
      * Returns a string representation of the assigned command
+     *
      * @return a string representation
      */
     private String commandString() {
@@ -111,7 +108,4 @@ public class AudioCommand {
     }
 
     //private static final Logger log = LoggerFactory.getLogger(AudioCommand.class.getName());
-
 }
-
-/* @(#)AudioCommand.java */

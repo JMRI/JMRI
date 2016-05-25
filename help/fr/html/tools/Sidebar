@@ -1,57 +1,51 @@
 <!-- Sidebar -->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<!-- Translated by Blorec Hervé le 2012-01-22-->
+<!-- Translated by Blorec Herv&#233; le 2012-01-22; Egbert Broerse (markup); le 2015-10-18 -->
 <html lang="fr">
 	  <hr class="hide">
 	  <div id="mBody">
 	  <div id="side"> <!-- Block of text on left side of page -->
 	    <div style="text-align: center">JMRI est...</div>
-	    <dl>
+<dl>
 
-
-
-<dt> <h3> <a href="index.shtml">Outils Généraux </a> </h3> </dt>
+<dt><h3><a href="index.shtml">Outils G&#233;n&#233;raux</a></h3></dt>
 <dd> JMRI fournit de puissants outils pour travailler avec votre
 réseau. 
-<UL>
-    <LI><dfn><a href="../Sensors.shtml">Capteurs</a></dfn>
-		    <LI><dfn><a href="../Turnouts.shtml"Aiguillage</a></dfn>
-		    <LI><dfn><a href="../throttle/ThrottleMain.shtml">Régulateurs</a></dfn>
-		    <LI><dfn><a href="../consisttool/ConsistTool.shtml">couplage</a></dfn>
-		    
-		    <LI><dfn><a href="../speedometer/index.shtml">Tachymètre</a></dfn>
-<LI> <dfn> <a Href="scripting/index.shtml"> Script </a> </dfn>
-<LI> <dfn> <a Href="Audio.shtml"> audio </a> </dfn>
-<LI> <dfn> <a Href="IdTags.shtml"> ID étiquettes  </a> </dfn>
-</UL>
-</Dd>
+<ul>
+    <li><dfn><a href="../Sensors.shtml">Capteurs</a></dfn>
+		    <li><dfn><a href="../Turnouts.shtml"Aiguillage</a></dfn>
+		    <li><dfn><a href="../throttle/ThrottleMain.shtml">R&#233;gulateurs</a></dfn>
+		    <li><dfn><a href="../consisttool/ConsistTool.shtml">couplage</a></dfn>
+		    <li><dfn><a href="../speedometer/index.shtml">Tachym&#232;tre</a></dfn>
+<li> <dfn> <a href="scripting/index.shtml">Script</a></dfn>
+<li> <dfn> <a href="Audio.shtml">audio</a></dfn>
+<li> <dfn> <a href="IdTags.shtml">ID &#233;tiquettes</a></dfn>
+</ul>
+</dd>
 
-<dt> <h3> <a href="../apps/LocoTools/index.shtml"> Outils LocoNet  </a> </h3> </dt>
-<dd> Un ensemble d'outils spécifiques LocoNet Digitrax
-<UL>
-<LI> <dfn> Moniteur LocoNet </dfn>
-<LI> <dfn> Moniteur Slots </dfn>
-<LI> <dfn> Source de Packet  </dfn>
-<LI> <dfn> Programmateur PM4  </dfn>
-<LI> <dfn> ProgrammateurBDL16  </dfn>
-<LI> <dfn> ProgrammateurLocoIO </dfn>
-</UL>
-</Dd>
+<dt><h3><a href="../apps/LocoTools/index.shtml">Outils LocoNet</a></h3></dt>
+<dd>Un ensemble d'outils sp&#233;cifiques LocoNet Digitrax
+<ul>
+<li> <dfn> Moniteur LocoNet</dfn>
+<li> <dfn> Moniteur Slots</dfn>
+<li> <dfn> Source de Packet</dfn>
+<li> <dfn> Programmateur PM4</dfn>
+<li> <dfn> ProgrammateurBDL16</dfn>
+</ul>
+</dd>
 
-<dt> <h3> <a href="automation"> Automatisation Réseau </a> </h3> </dt>
-<dd> JMRI peut être utilisé pour automatiser certaines parties
-de votre réseau, du simple contrôle d'une commande de  barrière
-à faire circuler des trains en toile de fond.
-<UL>
-<LI><dfn><a href="../Signals.shtml">Signaux</a></dfn>		  
-<LI><dfn><a href="../Routes.shtml">Itinéraires</a></dfn>		    		    
-<LI><dfn><a href="../fastclock/index.shtml">Horloges Rapides</a></dfn>
-<LI><dfn><a href="scripting/index.shtml">Script</a></dfn>
-</UL>
-</Dd>
+<dt><h3> <a href="automation">Automatisation R&#233;seau</a></h3></dt>
+<dd>JMRI peut &#234;tre utilis&#233; pour automatiser certaines parties
+de votre r&#233;seau, du simple contr&ocirc;le d'une commande de  barri&#232;re
+&#224; faire circuler des trains en toile de fond.
+<ul>
+<li><dfn><a href="../Signals.shtml">Signaux</a></dfn>		  
+<li><dfn><a href="../Routes.shtml">Itin&#233;raires</a></dfn>		    		    
+<li><dfn><a href="../fastclock/index.shtml">Horloges Rapides</a></dfn>
+<li><dfn><a href="scripting/index.shtml">Script</a></dfn>
+</ul>
+</dd>
 
-</Dl>
-	
+</dl>
 
 	</div> <!-- closes #side -->
 

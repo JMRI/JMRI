@@ -1,29 +1,24 @@
-// JoalAudioFactory.java
-
 package jmri.jmrit.audio;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.jogamp.openal.AL;
+import com.jogamp.openal.ALC;
+import com.jogamp.openal.ALCdevice;
+import com.jogamp.openal.ALConstants;
+import com.jogamp.openal.ALException;
+import com.jogamp.openal.ALFactory;
+import com.jogamp.openal.util.ALut;
 import java.util.List;
-
 import jmri.Audio;
 import jmri.AudioManager;
 import jmri.InstanceManager;
-
-import net.java.games.joal.AL;
-import net.java.games.joal.ALC;
-//import net.java.games.joal.ALCcontext;
-import net.java.games.joal.ALCdevice;
-import net.java.games.joal.ALConstants;
-import net.java.games.joal.ALException;
-import net.java.games.joal.ALFactory;
-import net.java.games.joal.util.ALut;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This is the JOAL audio system specific AudioFactory.
  * <p>
- * The JOAL sound system supports, where available, full surround-sound with
- * 3D positioning capabilities.
+ * The JOAL sound system supports, where available, full surround-sound with 3D
+ * positioning capabilities.
  * <p>
  * When only stereo capable hardware is available, it will automatically create
  * an approximation of the desired sound-scape.
@@ -31,58 +26,58 @@ import net.java.games.joal.util.ALut;
  * This factory initialises JOAL, provides new Joal-specific Audio objects and
  * deals with clean-up operations.
  * <br><br><hr><br><b>
- *    This software is based on or using the JOAL Library available from
- *    <a href="http://joal.dev.java.net/">http://joal.dev.java.net/</a>
+ * This software is based on or using the JOAL Library available from
+ * <a href="http://jogamp.org/joal/www/">http://jogamp.org/joal/www/</a>
  * </b><br><br>
- *    JOAL License:
+ * JOAL is released under the BSD license. The full license terms follow:
  * <br><i>
- * Copyright (c) 2003 Sun Microsystems, Inc. All  Rights Reserved.
+ * Copyright (c) 2003-2006 Sun Microsystems, Inc. All Rights Reserved.
  * <br>
  * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * modification, are permitted provided that the following conditions are
+ * met:
  * <br>
- * -Redistribution of source code must retain the above copyright notice,
- * this list of conditions and the following disclaimer.
+ * - Redistribution of source code must retain the above copyright
+ *   notice, this list of conditions and the following disclaimer.
  * <br>
- * -Redistribution in binary form must reproduce the above copyright notice,
- * this list of conditions and the following disclaimer in the documentation
- * and/or other materials provided with the distribution.
+ * - Redistribution in binary form must reproduce the above copyright
+ *   notice, this list of conditions and the following disclaimer in the
+ *   documentation and/or other materials provided with the distribution.
  * <br>
- * Neither the name of Sun Microsystems, Inc. or the names of contributors may
- * be used to endorse or promote products derived from this software without
- * specific prior written permission.
+ * Neither the name of Sun Microsystems, Inc. or the names of
+ * contributors may be used to endorse or promote products derived from
+ * this software without specific prior written permission.
  * <br>
- * This software is provided "AS IS," without a warranty of any kind.
- * ALL EXPRESS OR IMPLIED CONDITIONS, REPRESENTATIONS AND WARRANTIES, INCLUDING
- * ANY IMPLIED WARRANTY OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR
- * NON-INFRINGEMENT, ARE HEREBY EXCLUDED. SUN MIDROSYSTEMS, INC. ("SUN") AND ITS
- * LICENSORS SHALL NOT BE LIABLE FOR ANY DAMAGES SUFFERED BY LICENSEE AS A
- * RESULT OF USING, MODIFYING OR DISTRIBUTING THIS SOFTWARE OR ITS DERIVATIVES.
- * IN NO EVENT WILL SUN OR ITS LICENSORS BE LIABLE FOR ANY LOST REVENUE, PROFIT
- * OR DATA, OR FOR DIRECT, INDIRECT, SPECIAL, CONSEQUENTIAL, INCIDENTAL OR
- * PUNITIVE DAMAGES, HOWEVER CAUSED AND REGARDLESS OF THE THEORY OF LIABILITY,
- * ARISING OUT OF THE USE OF OR INABILITY TO USE THIS SOFTWARE, EVEN IF SUN HAS
- * BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+ * This software is provided "AS IS," without a warranty of any kind. ALL
+ * EXPRESS OR IMPLIED CONDITIONS, REPRESENTATIONS AND WARRANTIES,
+ * INCLUDING ANY IMPLIED WARRANTY OF MERCHANTABILITY, FITNESS FOR A
+ * PARTICULAR PURPOSE OR NON-INFRINGEMENT, ARE HEREBY EXCLUDED. SUN
+ * MICROSYSTEMS, INC. ("SUN") AND ITS LICENSORS SHALL NOT BE LIABLE FOR
+ * ANY DAMAGES SUFFERED BY LICENSEE AS A RESULT OF USING, MODIFYING OR
+ * DISTRIBUTING THIS SOFTWARE OR ITS DERIVATIVES. IN NO EVENT WILL SUN OR
+ * ITS LICENSORS BE LIABLE FOR ANY LOST REVENUE, PROFIT OR DATA, OR FOR
+ * DIRECT, INDIRECT, SPECIAL, CONSEQUENTIAL, INCIDENTAL OR PUNITIVE
+ * DAMAGES, HOWEVER CAUSED AND REGARDLESS OF THE THEORY OF LIABILITY,
+ * ARISING OUT OF THE USE OF OR INABILITY TO USE THIS SOFTWARE, EVEN IF
+ * SUN HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
  * <br>
- * You acknowledge that this software is not designed or intended for use in the
- * design, construction, operation or maintenance of any nuclear facility.
+ * You acknowledge that this software is not designed or intended for use
+ * in the design, construction, operation or maintenance of any nuclear
+ * facility.
  * <br><br><br></i>
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author Matthew Harris  copyright (c) 2009
- * @version $Revision$
+ * @author Matthew Harris copyright (c) 2009
  */
 public class JoalAudioFactory extends AbstractAudioFactory {
 
@@ -93,8 +88,7 @@ public class JoalAudioFactory extends AbstractAudioFactory {
     private static ALCdevice alcDevice;
 
     //private static ALCcontext alcContext;
-
-    private static boolean _initialised = false;
+    private static boolean initialised = false;
 
     private JoalAudioListener activeAudioListener;
 
@@ -106,7 +100,7 @@ public class JoalAudioFactory extends AbstractAudioFactory {
      * <p>
      * Initially set format to unknown.
      */
-    static int AL_FORMAT_QUAD8   = AudioBuffer.FORMAT_UNKNOWN;
+    static int AL_FORMAT_QUAD8 = AudioBuffer.FORMAT_UNKNOWN;
 
     /**
      * Definition of 16-bit quad multi-channel audio format.
@@ -116,7 +110,7 @@ public class JoalAudioFactory extends AbstractAudioFactory {
      * <p>
      * Initially set format to unknown.
      */
-    static int AL_FORMAT_QUAD16  = AudioBuffer.FORMAT_UNKNOWN;
+    static int AL_FORMAT_QUAD16 = AudioBuffer.FORMAT_UNKNOWN;
 
     /**
      * Definition of 8-bit 5.1 multi-channel audio format.
@@ -126,7 +120,7 @@ public class JoalAudioFactory extends AbstractAudioFactory {
      * <p>
      * Initially set format to unknown.
      */
-    static int AL_FORMAT_51CHN8  = AudioBuffer.FORMAT_UNKNOWN;
+    static int AL_FORMAT_51CHN8 = AudioBuffer.FORMAT_UNKNOWN;
 
     /**
      * Definition of 16-bit 5.1 multi-channel audio format.
@@ -146,7 +140,7 @@ public class JoalAudioFactory extends AbstractAudioFactory {
      * <p>
      * Initially set format to unknown.
      */
-    static int AL_FORMAT_61CHN8  = AudioBuffer.FORMAT_UNKNOWN;
+    static int AL_FORMAT_61CHN8 = AudioBuffer.FORMAT_UNKNOWN;
 
     /**
      * Definition of 16-bit 6.1 multi-channel audio format.
@@ -166,7 +160,7 @@ public class JoalAudioFactory extends AbstractAudioFactory {
      * <p>
      * Initially set format to unknown.
      */
-    static int AL_FORMAT_71CHN8  = AudioBuffer.FORMAT_UNKNOWN;
+    static int AL_FORMAT_71CHN8 = AudioBuffer.FORMAT_UNKNOWN;
 
     /**
      * Definition of 16-bit 7.1 multi-channel audio format.
@@ -189,11 +183,11 @@ public class JoalAudioFactory extends AbstractAudioFactory {
      * <p>
      * This is done by making alGetEnumValue calls to request the value of the
      * Buffer Format Tag Enum (that will be passed to an alBufferData call).
-     * Enum Values are retrieved by string names.
-     * The following names are defined for multi-channel wave formats ...
+     * Enum Values are retrieved by string names. The following names are
+     * defined for multi-channel wave formats ...
      * <ul>
-     * <li>"AL_FORMAT_QUAD8"	: 4 Channel,   8 bit data
-     * <li>"AL_FORMAT_QUAD16"	: 4 Channel,   16 bit data
+     * <li>"AL_FORMAT_QUAD8"	: 4 Channel, 8 bit data
+     * <li>"AL_FORMAT_QUAD16"	: 4 Channel, 16 bit data
      * <li>"AL_FORMAT_51CHN8"	: 5.1 Channel, 8 bit data
      * <li>"AL_FORMAT_51CHN16"	: 5.1 Channel, 16 bit data
      * <li>"AL_FORMAT_61CHN8"	: 6.1 Channel, 8 bit data
@@ -205,10 +199,10 @@ public class JoalAudioFactory extends AbstractAudioFactory {
      * @return true, if initialisation successful
      */
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
-    // OK to write to static variables as we only do so if not initialised
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+            justification = "OK to write to static variables as we only do so if not initialised")
     public boolean init() {
-        if(_initialised) {
+        if (initialised) {
             return true;
         }
 
@@ -222,15 +216,20 @@ public class JoalAudioFactory extends AbstractAudioFactory {
             ALut.alutInit();
             al = ALFactory.getAL();
             al.alGetError();
-            if (log.isInfoEnabled())
+            if (log.isInfoEnabled()) {
                 log.info("Initialised JOAL using OpenAL:"
-                          + " vendor - " + al.alGetString(AL.AL_VENDOR)
-                          + " version - " + al.alGetString(AL.AL_VERSION));
+                        + " vendor - " + al.alGetString(AL.AL_VENDOR)
+                        + " version - " + al.alGetString(AL.AL_VERSION));
+            }
         } catch (ALException e) {
-            if (log.isDebugEnabled()) log.debug("Error initialising JOAL: " + e);
-        return false;
+            if (log.isDebugEnabled()) {
+                log.debug("Error initialising JOAL: " + e);
+            }
+            return false;
         } catch (RuntimeException e) {
-            if (log.isDebugEnabled()) log.debug("Error initialising OpenAL: " + e);
+            if (log.isDebugEnabled()) {
+                log.debug("Error initialising OpenAL: " + e);
+            }
             return false;
         }
 
@@ -239,72 +238,72 @@ public class JoalAudioFactory extends AbstractAudioFactory {
 
         checkMultiChannel = al.alGetEnumValue("AL_FORMAT_QUAD8");
         checkALError();
-        if (checkMultiChannel!=ALConstants.AL_FALSE) {
+        if (checkMultiChannel != ALConstants.AL_FALSE) {
             AL_FORMAT_QUAD8 = checkMultiChannel;
         }
         checkMultiChannel = al.alGetEnumValue("AL_FORMAT_QUAD16");
         checkALError();
-        if (checkMultiChannel!=ALConstants.AL_FALSE) {
+        if (checkMultiChannel != ALConstants.AL_FALSE) {
             AL_FORMAT_QUAD16 = checkMultiChannel;
         }
         checkMultiChannel = al.alGetEnumValue("AL_FORMAT_51CHN8");
         checkALError();
-        if (checkMultiChannel!=ALConstants.AL_FALSE) {
+        if (checkMultiChannel != ALConstants.AL_FALSE) {
             AL_FORMAT_51CHN8 = checkMultiChannel;
         }
         checkMultiChannel = al.alGetEnumValue("AL_FORMAT_51CHN16");
         checkALError();
-        if (checkMultiChannel!=ALConstants.AL_FALSE) {
+        if (checkMultiChannel != ALConstants.AL_FALSE) {
             AL_FORMAT_51CHN16 = checkMultiChannel;
         }
         checkMultiChannel = al.alGetEnumValue("AL_FORMAT_61CHN8");
         checkALError();
-        if (checkMultiChannel!=ALConstants.AL_FALSE) {
+        if (checkMultiChannel != ALConstants.AL_FALSE) {
             AL_FORMAT_61CHN8 = checkMultiChannel;
         }
         checkMultiChannel = al.alGetEnumValue("AL_FORMAT_61CHN16");
         checkALError();
-        if (checkMultiChannel!=ALConstants.AL_FALSE) {
+        if (checkMultiChannel != ALConstants.AL_FALSE) {
             AL_FORMAT_61CHN16 = checkMultiChannel;
         }
         checkMultiChannel = al.alGetEnumValue("AL_FORMAT_71CHN8");
         checkALError();
-        if (checkMultiChannel!=ALConstants.AL_FALSE) {
+        if (checkMultiChannel != ALConstants.AL_FALSE) {
             AL_FORMAT_71CHN8 = checkMultiChannel;
         }
         checkMultiChannel = al.alGetEnumValue("AL_FORMAT_71CHN16");
         checkALError();
-        if (checkMultiChannel!=ALConstants.AL_FALSE) {
+        if (checkMultiChannel != ALConstants.AL_FALSE) {
             AL_FORMAT_71CHN16 = checkMultiChannel;
         }
         log.debug("8-bit quadrophonic supported? "
-                + (AL_FORMAT_QUAD8==AudioBuffer.FORMAT_UNKNOWN ? "No" : "Yes"));
+                + (AL_FORMAT_QUAD8 == AudioBuffer.FORMAT_UNKNOWN ? "No" : "Yes"));
         log.debug("16-bit quadrophonic supported? "
-                + (AL_FORMAT_QUAD16==AudioBuffer.FORMAT_UNKNOWN ? "No" : "Yes"));
+                + (AL_FORMAT_QUAD16 == AudioBuffer.FORMAT_UNKNOWN ? "No" : "Yes"));
         log.debug("8-bit 5.1 surround supported? "
-                + (AL_FORMAT_51CHN8==AudioBuffer.FORMAT_UNKNOWN ? "No" : "Yes"));
+                + (AL_FORMAT_51CHN8 == AudioBuffer.FORMAT_UNKNOWN ? "No" : "Yes"));
         log.debug("16-bit 5.1 surround supported? "
-                + (AL_FORMAT_51CHN16==AudioBuffer.FORMAT_UNKNOWN ? "No" : "Yes"));
+                + (AL_FORMAT_51CHN16 == AudioBuffer.FORMAT_UNKNOWN ? "No" : "Yes"));
         log.debug("8-bit 6.1 surround supported? "
-                + (AL_FORMAT_61CHN8==AudioBuffer.FORMAT_UNKNOWN ? "No" : "Yes"));
+                + (AL_FORMAT_61CHN8 == AudioBuffer.FORMAT_UNKNOWN ? "No" : "Yes"));
         log.debug("16-bit 6.1 surround supported? "
-                + (AL_FORMAT_61CHN16==AudioBuffer.FORMAT_UNKNOWN ? "No" : "Yes"));
+                + (AL_FORMAT_61CHN16 == AudioBuffer.FORMAT_UNKNOWN ? "No" : "Yes"));
         log.debug("8 bit 7.1 surround supported? "
-                + (AL_FORMAT_71CHN8==AudioBuffer.FORMAT_UNKNOWN ? "No" : "Yes"));
+                + (AL_FORMAT_71CHN8 == AudioBuffer.FORMAT_UNKNOWN ? "No" : "Yes"));
         log.debug("16 bit 7.1 surround supported? "
-                + (AL_FORMAT_71CHN16==AudioBuffer.FORMAT_UNKNOWN ? "No" : "Yes"));
+                + (AL_FORMAT_71CHN16 == AudioBuffer.FORMAT_UNKNOWN ? "No" : "Yes"));
 
         // Check context
         alc = ALFactory.getALC();
         alcDevice = alc.alcGetContextsDevice(alc.alcGetCurrentContext());
         if (!checkALCError(alcDevice)) {
             int[] size = new int[1];
-            alc.alcGetIntegerv(alcDevice, ALC.ALC_ATTRIBUTES_SIZE, size.length , size, 0);
+            alc.alcGetIntegerv(alcDevice, ALC.ALC_ATTRIBUTES_SIZE, size.length, size, 0);
             log.debug("Size of ALC_ATTRIBUTES: " + size[0]);
-            if (!checkALCError(alcDevice) && size[0]>0) {
+            if (!checkALCError(alcDevice) && size[0] > 0) {
                 int[] attributes = new int[size[0]];
                 alc.alcGetIntegerv(alcDevice, ALC.ALC_ALL_ATTRIBUTES, attributes.length, attributes, 0);
-                for (int i=0;i<attributes.length;i++) {
+                for (int i = 0; i < attributes.length; i++) {
                     if (i % 2 != 0) {
                         continue;
                     }
@@ -313,34 +312,39 @@ public class JoalAudioFactory extends AbstractAudioFactory {
                             log.debug("Invalid");
                             break;
                         case ALC.ALC_MONO_SOURCES:
-                            log.debug("Number of mono sources: " + attributes[i+1]);
+                            log.debug("Number of mono sources: " + attributes[i + 1]);
                             break;
                         case ALC.ALC_STEREO_SOURCES:
-                            log.debug("Number of stereo sources: " + attributes[i+1]);
+                            log.debug("Number of stereo sources: " + attributes[i + 1]);
                             break;
                         case ALC.ALC_FREQUENCY:
-                            log.debug("Frequency: " + attributes[i+1]);
+                            log.debug("Frequency: " + attributes[i + 1]);
                             break;
                         case ALC.ALC_REFRESH:
-                            log.debug("Refresh: " + attributes[i+1]);
+                            log.debug("Refresh: " + attributes[i + 1]);
                             break;
                         default:
-                        log.debug("Attribute " + i + ": " + attributes[i]);
+                            log.debug("Attribute " + i + ": " + attributes[i]);
                     }
                 }
             }
         }
 
         super.init();
-        _initialised = true;
+        initialised = true;
         return true;
     }
 
     @Override
-    public String toString(){
-        return "JoalAudioFactory, using OpenAL:"
-                + " vendor - " + al.alGetString(AL.AL_VENDOR)
-                + " version - " + al.alGetString(AL.AL_VERSION);
+    public String toString() {
+        try {
+            return "JoalAudioFactory, using OpenAL:"
+                    + " vendor - " + al.alGetString(AL.AL_VENDOR)
+                    + " version - " + al.alGetString(AL.AL_VERSION);
+        } catch (NullPointerException e) {
+            log.error("NPE from JoalAudioFactory: {}",e);
+            return "JoalAudioFactory, using Null";
+        }
     }
 
     @Override
@@ -353,10 +357,12 @@ public class JoalAudioFactory extends AbstractAudioFactory {
 
         // Retrieve list of Audio Objects and remove the sources
         List<String> audios = am.getSystemNameList();
-        for (String audioName: audios) {
+        for (String audioName : audios) {
             Audio audio = am.getAudio(audioName);
-            if (audio.getSubType()==Audio.SOURCE) {
-                if (log.isDebugEnabled()) log.debug("Removing JoalAudioSource: "+ audioName);
+            if (audio.getSubType() == Audio.SOURCE) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Removing JoalAudioSource: " + audioName);
+                }
                 // Cast to JoalAudioSource and cleanup
                 ((JoalAudioSource) audio).cleanUp();
             }
@@ -364,10 +370,12 @@ public class JoalAudioFactory extends AbstractAudioFactory {
 
         // Now, re-retrieve list of Audio objects and remove the buffers
         audios = am.getSystemNameList();
-        for (String audioName: audios) {
+        for (String audioName : audios) {
             Audio audio = am.getAudio(audioName);
-            if (audio.getSubType()==Audio.BUFFER) {
-                if (log.isDebugEnabled()) log.debug("Removing JoalAudioBuffer: "+ audioName);
+            if (audio.getSubType() == Audio.BUFFER) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Removing JoalAudioBuffer: " + audioName);
+                }
                 // Cast to JoalAudioBuffer and cleanup
                 ((JoalAudioBuffer) audio).cleanUp();
             }
@@ -375,10 +383,12 @@ public class JoalAudioFactory extends AbstractAudioFactory {
 
         // Lastly, re-retrieve list and remove listener.
         audios = am.getSystemNameList();
-        for (String audioName: audios) {
+        for (String audioName : audios) {
             Audio audio = am.getAudio(audioName);
-            if (audio.getSubType()==Audio.LISTENER) {
-                if (log.isDebugEnabled()) log.debug("Removing JoalAudioListener: "+ audioName);
+            if (audio.getSubType() == Audio.LISTENER) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Removing JoalAudioListener: " + audioName);
+                }
                 // Cast to JoalAudioListener and cleanup
                 ((JoalAudioListener) audio).cleanUp();
             }
@@ -421,8 +431,7 @@ public class JoalAudioFactory extends AbstractAudioFactory {
     }
 
     /**
-     * Return a reference to the active AL object for use by other
-     * Joal objects
+     * Return a reference to the active AL object for use by other Joal objects
      *
      * @return active AL object
      */
@@ -433,8 +442,8 @@ public class JoalAudioFactory extends AbstractAudioFactory {
     /**
      * Method to check if any error has occurred in the OpenAL sub-system.
      * <p>
-     * If an error has occurred, log the error as a warning message and
-     * return True.
+     * If an error has occurred, log the error as a warning message and return
+     * True.
      * <p>
      * If no error has occurred, return False.
      *
@@ -453,18 +462,17 @@ public class JoalAudioFactory extends AbstractAudioFactory {
      * If no error has occurred, return False.
      *
      * @param msg additional message prepended to the log
-     * @return True if an error has occured
+     * @return True if an error has occurred
      */
     public static boolean checkALError(String msg) {
         // Trim any whitespace then append a space if required
         msg = msg.trim();
-        if (msg.length()>0) {
+        if (msg.length() > 0) {
             msg = msg + " ";
         }
 
         // Check for error
-        switch (al.alGetError())
-        {
+        switch (al.alGetError()) {
             case AL.AL_NO_ERROR:
                 return false;
             case AL.AL_INVALID_NAME:
@@ -491,16 +499,16 @@ public class JoalAudioFactory extends AbstractAudioFactory {
     /**
      * Method to check if any error has occurred in the OpenAL sub-system.
      * <p>
-     * If an error has occurred, log the error as a warning message and
-     * return True.
+     * If an error has occurred, log the error as a warning message and return
+     * True.
      * <p>
      * If no error has occurred, return False.
      *
      * @param alcDevice OpenAL context device to check
-     * @return True if an error has occured
+     * @return True if an error has occurred
      */
     public static boolean checkALCError(ALCdevice alcDevice) {
-        return checkALCError(alcDevice,"");
+        return checkALCError(alcDevice, "");
     }
 
     /**
@@ -513,13 +521,13 @@ public class JoalAudioFactory extends AbstractAudioFactory {
      * If no error has occurred, return False.
      *
      * @param alcDevice OpenAL context device to check
-     * @param msg additional message prepended to the log
-     * @return True if an error has occured
+     * @param msg       additional message prepended to the log
+     * @return True if an error has occurred
      */
     public static boolean checkALCError(ALCdevice alcDevice, String msg) {
         // Trim any whitespace then append a space if required
         msg = msg.trim();
-        if (msg.length()>0) {
+        if (msg.length() > 0) {
             msg = msg + " ";
         }
 
@@ -551,5 +559,3 @@ public class JoalAudioFactory extends AbstractAudioFactory {
     private static final Logger log = LoggerFactory.getLogger(JoalAudioFactory.class.getName());
 
 }
-
-/* $(#)JoalAudioFactory.java */

@@ -1,17 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SPROG.shtml,v 1.4 2010/01/31 19:13:15 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-20-06-->
+<!-- $Id$ -->
+<!-- UpDated  by Blorec Herv&#233; 2013-09-19-->
 <html lang="fr">
 <head>
  <TITLE>
       JMRI Hardware Guide: SPROG
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="SPROG java model railroad JMRI install windows">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -28,90 +28,97 @@
     <div id="mainContent">
 
       <H2> 
-      JMRI  Guide Matériel: SPROG
+      JMRI  Guide Mat&#233;riel: SPROG
       </H2>
 
-	<H3>Matériel Supporté</H3>
+	<H3>Mat&#233;riel Support&#233;</H3>
 
-    JMRI supporte le Sprog à la fois en tant que programmateur décodeur, et
-aussi comme une mini-centrale de commande. Pour plus d'informations sur ses
-capacités, voir le
-<a href="http://www.sprog-dcc.co.uk/downloads/SprogIIUserGuide.pdf"> manuel Sprog </a>
+    JMRI supporte le Sprog &#224; la fois en tant que programmateur d&#233;codeur, et
+aussi comme une mini-centrale. Pour plus d'informations sur ses
+capacit&#233;s, voir le
+<a href="http://www.sprog-dcc.co.uk/downloads/SprogIIUserGuide.pdf">manuel Sprog</a>
 sur le
 <a href="http://www.sprog-dcc.co.uk/"> site web Sprog </a>.
 <p> Remarquez qu'il existe plusieurs versions 
-du matériel Sprog, et encore plus de versions  plus du
-logiciel Sprog . Si vous essayez d'utiliser un Sprog
-qui est resté dans un tiroir pendant un moment, vous
-devrez probablement mettre à jour son logiciel avec une version actuelle (voir ci-dessous).</P>
+du mat&#233;riel Sprog, et encore plus de versions du
+logiciel Sprog .</P>
 
 	<H3>Installation</H3>
 
 	  <ol>
-	  <li> Les SPROGs originales étaient connectées via un câble série à 9 broches. Les SPROGs actuelles
-           sont disponibles en USB uniquement. Connectez votre Sprog en utilisant le câble approprié
+	  <li> Les SPROGs originales &#233;taient connect&#233;es via un c&#226;ble s&#233;rie &#224; 9 broches. Les SPROGs actuelles
+           sont disponibles en USB uniquement. Connectez votre Sprog en utilisant le c&#226;ble appropri&#233;
            et le mettre en place.
+<li> La connexion USB SPROGs sous Windows peut avoir besoin un
+           pilote install&#233;. Pour plus d'informations &#224; ce sujet, voir le
+           <a href="http://www.sprog-dcc.co.uk/downloads/SprogIIUserGuide.pdf"> manuel SPROG</a>
+           sur le
+           <a href="http://www.sprog-dcc.co.uk/"> site web SPROG </a>.
+          Les utilisateurs de Windows 7 peuvent &#233;galement &#234;tre int&#233;ress&#233;s par
+           <a href="http://www.youtube.com/watch?v=JUG7dsXi2cI"> cette vid&#233;o</a>.
 
-<li> Assurez vous d'avoir la dernière version de JMRI, puis allez dans le Panneau des préférences
-           d'un programme basé sur JMRI. Celui-ci
-s'ouvre automatiquement la première fois qu'un programme est exécuté, ou vous pouvez le sélectionner
-c'est à partir du menu "Édition"
+<li> Assurez vous d'avoir la derni&#232;re version de JMRI, puis allez dans le Panneau des pr&#233;f&#233;rences
+           d'un programme bas&#233; sur JMRI. Celui-ci
+s'ouvre automatiquement la premi&#232;re fois qu'un programme est ex&#233;cut&#233;, ou vous pouvez le s&#233;lectionner
+c'est &#224; partir du menu "&#233;dition"
 
-       <li> Sprog peut être soit un programmateur décodeur autonome, ou il
-         peut être réglé pour agir comme un mini-centrale de commande pour les trains.
-         Vous devez sélectionner le mode à utiliser dans les préférences, et
-         puis JMRI configure les options nécessaires à la Sprog.
+       <li> Sprog peut &#234;tre soit un programmateur d&#233;codeur autonome, ou il
+         peut &#234;tre r&#233;gl&#233; pour agir comme un mini-centrale pour les trains.
+         Vous devez s&#233;lectionner le mode &#224; utiliser dans les pr&#233;f&#233;rences, et
+         puis JMRI configure les options n&#233;cessaires &#224; la Sprog.
        <ul>
-<li> Pour les opérations de programmation DCC, sélectionnez "Sprog" dans la  boîte de sélection supérieure
+<li> Pour les op&#233;rations de programmation DCC, s&#233;lectionnez "Sprog" dans la  bo&#238;te de s&#233;lection sup&#233;rieure
           
 
- <li>Pour l'exploitation de la centrale de commande, sélectionnez "centrale de commande Sprog" dans la boîte 
-            de sélection en haut.
+ <li>Pour l'exploitation de la centrale, s&#233;lectionnez "centrale de commande Sprog" dans la bo&#238;te 
+            de s&#233;lection en haut.
       </ul>
       
-      <li>Vous pouvez ensuite sélectionner le bon port série dans la seconde boîte de sélection .
-       Notez que les pilotes USB Sprog apparaîtront comme un port série.
+      <li>Vous pouvez ensuite s&#233;lectionner le bon port s&#233;rie dans la seconde bo&#238;te de s&#233;lection .
+       Notez que les pilotes USB Sprog appara&#238;tront comme un port s&#233;rie.
 
-<li> La série de boutons radio étiquetés «style graphique" vous permet de
-Sélectionnez l'aspect dont le programme va apparaitre. "Metal" est l'apparence native de Java
+<li> La s&#233;rie de boutons radio &#233;tiquet&#233;s "style graphique" vous permet de
+S&#233;lectionnez l'aspect dont le programme va apparaitre. "Metal" est l'apparence native de Java
 disponible sur tous les types. D'autres choix peuvent varier avec le type de votre ordinateur.
 "Motif", "Windows", "MacOS" et "MacOS Adaptive" apparence native sous Linux,
 Windows, MacOS "Classic" et Mac OS X, respectivement.
 
-<li> Dans la boîte de sélection en bas, vous pouvez choisir le format programmateur par défaut
-. Vous pouvez le remplacer à chaque fois que vous ouvrez le programmeur, donc c'est ici juste par commodité.
+<li> Dans la bo&#238;te de s&#233;lection en bas, vous pouvez choisir le format programmateur par d&#233;faut
+. Vous pouvez le remplacer &#224; chaque fois que vous ouvrez le programmeur, donc c'est ici juste par commodit&#233;.
 
-<li> Cliquez sur "Enregistrer". Il vous sera demandé si c'est vous voulez quitter le programme , cliquez sur "Oui". </li>
-<li> Redémarrez le programme. Vous devriez être opérationnel.
+<li> Cliquez sur "Enregistrer". Il vous sera demand&#233; si c'est vous voulez quitter le programme , cliquez sur "Oui". </li>
+<li> Red&#233;marrez le programme. Vous devriez &#234;tre op&#233;rationnel.
 
 
 	  </ol>
 
 	<H3>Configuration de SPROG</H3>
-          <p>Sprog utilise un " mode mot" pour régler un certain nombre de modes de fonctionnement en option </p>
+          <p>Sprog utilise un " Mode Mot" pour r&#233;gler un certain nombre de modes de fonctionnement en option </p>
 
-           <p> Dans toutes les SPROGs récentes, la valeur par défaut, le mode mot, est correcte pour
-           deux modes de programmation et la centrale de commande. Pour les anciennes SPROGs vous pouvez
-           vérifier ou modifier le mot de mode comme suit </p>
+           <p> Dans toutes les SPROGs r&#233;centes, la valeur par d&#233;faut, le Mode Mot, est correcte pour
+         le modes de programmation et et le mode centrale. Pour les anciennes SPROGs vous pouvez
+           v&#233;rifier ou modifier le mot de mode comme suit </p>
 
-           <p> Ouvrez le Moniteur de commande et la Fenêtres Envoyer commande dans le menu Sprog
-           et envoyer une commande «M» . Vous devriez voir une réponse dans la fenêtre du moniteur de commande
+           <p> Ouvrez le Moniteur de commande et la Fen&#234;tres Envoyer commande dans le menu Sprog
+           et envoyer une commande "M" . Vous devriez voir une r&#233;ponse dans la fen&#234;tre du moniteur de commande
            quelque chose comme: <br>
 <ul>
 <tt>
-P&gt; M = H800 <br>
+P&gt; M = h800 <br>
 </tt>
 </ul> </p>
 
-           <p> Le préfixe h indique une valeur hexadécimale. Si la valeur que vous voyez est
-           différente, alors elle devrait être changé en envoyant la commande "M H800".
-           Suivez ceci avec la commande "W" pour enregistrer le changement de SPROGs dans la mémoire EEPROM
-            afin qu'elle soit enregistrée pour les fois suivantes à chaque fois que vous allumerez le Sprog.
-           Sinon, la nouvelle valeur sera perdue lorsque vous éteignez la Sprog.
-           S'il vous plaît ne soyez pas tentés d'expérimenter avec d'autres valeurs comme  mode mot 
-           cela pourrait entraîner un fonctionnement erratique de votre Sprog<p>
- Ouvrez le Moniteur de commande et sa fenêtre Envoyer commande dans le menu Sprog
-          et envoyer une commande "?" . Vous devriez voir une réponse dans la fenêtre du moniteur de commande
+           <p> Le pr&#233;fixe h indique une valeur hexad&#233;cimale. Si la valeur que vous voyez est
+           diff&#233;rente, alors elle devrait &#234;tre chang&#233; en envoyant la commande "M h800".
+           Suivez ceci avec la commande "W" pour enregistrer le changement de SPROGs dans la m&#233;moire EEPROM
+            afin qu'elle soit enregistr&#233;e pour les fois suivantes &#224; chaque fois que vous allumerez le Sprog.
+           Sinon, la nouvelle valeur sera perdue lorsque vous &#233;teignez la Sprog.
+           S'il vous pla&#238;t ne soyez pas tent&#233;s d'exp&#233;rimenter avec d'autres valeurs dans le  mode mot 
+           cela pourrait entra&#238;ner un fonctionnement erratique de votre Sprog<p>
+
+<H3>Identifcation de la version du Firmware SPROG</H3>
+ Ouvrez le Moniteur de commande et sa fen&#234;tre Envoyer commande depuis le menu Sprog
+          et envoyer une commande "?" . Vous devriez voir une r&#233;ponse dans la fen&#234;tre du moniteur de commande
           quelque chose comme: <br>
 <ul>
 <tt>
@@ -119,28 +126,28 @@ Sprog II USB Ver 2.3 <br>
 P&gt; <br>
 </Tt>
 </Ul>
-</p>
 
 
-	<H3>Mises à jour du firmware </H3>
+
+	<H3>Mises &#224; jour du firmware </H3>
         <p>  Sprog comprend un "chargeur de boot" qui permet au firmware (le
-          logiciel interne qui gère le Sprog) d'être mis à jour par l'utilisateur. </p>
+          logiciel interne qui g&#232;re le Sprog) d'&#234;tre mis &#224; jour par l'utilisateur. </p>
           <p> Le bootloader est fonctionnel dans la version USB Sprog II 2.2 et plus tard </p>
-          <p> Dans certaines versions antérieures le bootloader n'est pas complètement fonctionnel et
-          les outils de mise à jour du firmware de JMRI ne devraient pas être utilisés sans d'abord vérifier
-          la version actuelle du firmware (voir ci-dessus) et en communiquant avec Sprog DCC de vérifier
-          si cette version peut être mise à jour par l'utilisateur. </p>
+          <p> Dans certaines versions ant&#233;rieures le bootloader n'est pas compl&#232;tement fonctionnel et
+          les outils de mise &#224; jour du firmware de JMRI ne devraient PAS &#234;tre utilis&#233;s sans d'abord v&#233;rifier
+          la version actuelle du firmware (voir ci-dessus) et en communiquant avec Sprog DCC de v&#233;rifier
+          si cette version peut &#234;tre mise &#224; jour par l'utilisateur. </p>
           <p>vous ne devez en aucun cas 
-          expérimenter avec l'outil de mise à jour si vous n'avez pas un fichier valide mis à jour 
-          disponible. Cela pourrait entraîner votre Sprog à ne plus devenir récepteur. Elle devra
-           ensuite être retournée au fabricant (ou son représentant local)
-          pour le déverrouillage.</p>
-	<H3>Débogage </H3>
+          exp&#233;rimenter avec l'outil de mise &#224; jour si vous n'avez pas un fichier valide mis &#224; jour 
+          disponible. Cela pourrait entra&#238;ner votre Sprog &#224; ne plus devenir r&#233;cepteur. Elle devra
+           ensuite &#234;tre retourn&#233;e au fabricant (ou son repr&#233;sentant local)
+          pour le d&#233;verrouillage.</p>
+	<H3>D&#233;bogage </H3>
 
-<p> Pour plus d'informations sur le Sprog, s'il vous plaît voir <a
+<p> Pour plus d'informations sur le Sprog, s'il vous pla&#238;t voir <a
 href= "http://www.sprog-dcc.co.uk/"> les pages web Sprog
  </a>. </p>
- <p>Il y en a une utile <a
+ <p>Il y en a une <a
 href= "http://www.sprog-dcc.co.uk/faq.html"> page FAQ
 </a>. </p>
 <p> Il existe un <a

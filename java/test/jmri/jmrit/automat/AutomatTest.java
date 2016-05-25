@@ -1,32 +1,34 @@
-// AutomatTest.java
-
 package jmri.jmrit.automat;
 
-import org.apache.log4j.Logger;
-import junit.framework.*;
+import junit.framework.Assert;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * Tests for classes in the jmri.jmrit.automat package
- * @author	Bob Jacobsen  Copyright 2008
+ *
+ * @author	Bob Jacobsen Copyright 2008
  * @version	$Revision$
  */
 public class AutomatTest extends TestCase {
 
     boolean initDone;
     boolean handleDone;
-    
+
     public void testCreate() {
-        new AbstractAutomaton(){
+        new AbstractAutomaton() {
         };
     }
 
     public void testRun() throws InterruptedException {
         initDone = false;
         handleDone = false;
-        AbstractAutomaton a = new AbstractAutomaton(){
+        AbstractAutomaton a = new AbstractAutomaton() {
             public void init() {
                 initDone = true;
             }
+
             public boolean handle() {
                 handleDone = true;
                 return false;
@@ -34,25 +36,25 @@ public class AutomatTest extends TestCase {
         };
         Assert.assertTrue("!initDone at first", !initDone);
         Assert.assertTrue("!handleDone at first", !handleDone);
-        
+
         // now run it
         a.start();
-        
-        // wait so thread can exec
-        synchronized (this) { wait(100); }
-        
+
+        // wait for thread to exec, failing if not
+        jmri.util.JUnitUtil.waitFor(()->{return initDone;},"initDone after run");
+
         // and check
-        Assert.assertTrue("initDone after run", initDone);
         Assert.assertTrue("handleDone after run", handleDone);
     }
 
     public void testRestart() throws InterruptedException {
         initDone = false;
         handleDone = false;
-        AbstractAutomaton a = new AbstractAutomaton(){
+        AbstractAutomaton a = new AbstractAutomaton() {
             public void init() {
                 initDone = true;
             }
+
             public boolean handle() {
                 handleDone = true;
                 return false;
@@ -60,15 +62,14 @@ public class AutomatTest extends TestCase {
         };
         Assert.assertTrue("!initDone at first", !initDone);
         Assert.assertTrue("!handleDone at first", !handleDone);
-        
+
         // now run it
         a.start();
-        
-        // wait so thread can exec
-        synchronized (this) { wait(100); }
-        
+
+        // wait for thread to exec, failing if not
+        jmri.util.JUnitUtil.waitFor(()->{return initDone;},"initDone after run");
+
         // and check
-        Assert.assertTrue("initDone after run", initDone);
         Assert.assertTrue("handleDone after run", handleDone);
 
         // restart
@@ -76,27 +77,25 @@ public class AutomatTest extends TestCase {
         handleDone = false;
         Assert.assertTrue("!initDone at second", !initDone);
         Assert.assertTrue("!handleDone at second", !handleDone);
-        
+
         // now run it again
         a.start();
-        
-        // wait so thread can exec
-        synchronized (this) { wait(100); }
-        
+
+        // wait for thread to exec, failing if not
+        jmri.util.JUnitUtil.waitFor(()->{return initDone;},"initDone after 2nd run");
+
         // and check
-        Assert.assertTrue("initDone after 2nd run", initDone);
         Assert.assertTrue("handleDone after 2nd run", handleDone);
     }
 
     // from here down is testing infrastructure
-
     public AutomatTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {AutomatTest.class.getName()};
+        String[] testCaseName = {"-noloading", AutomatTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
@@ -106,11 +105,14 @@ public class AutomatTest extends TestCase {
         // suite.addTest(RouteTableActionTest.suite());
         return suite;
     }
-    
+
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
-    
-    static Logger log = Logger.getLogger(AutomatTest.class.getName());
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 
 }

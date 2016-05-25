@@ -1,17 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: EditLayoutBlock.shtml,v 1.5 2010/01/04 20:58:57 djduchamp Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-12-04--> 
+<!-- $Id$ -->
+<!-- UpDated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-22--> 
 <html lang="fr">
 <head>
  <TITLE>
       JMRI: Edit Block Help
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="JMRI help Layout Editor Block">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -24,100 +24,120 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1> Créer/Modifier UnCanton </H1>
+<H1>Cr&#233;er/Modifier Un Canton</H1>
 
-Les cantons sont des tronçons de voie dont l'occupation peut être suivie individuellement.
-Diviser la voie en cantons est facultative. Les cantons mis en place dans un schéma de voies
-correspondent normalement à des cantons physiques sur un réseau. L'occupation du canton est indiqué
-par l'état d'un <i>capteur d'occupation</i>. Lorsque le tracé d'un réseau est divisé
-en cantons, toutes les voie ne doivent pas appartenir à un même canton. Par exemple la voie de triage,
-n'est normalement pas dans un canton, alors que la voie principale sera toujours divisée
+Les cantons sont des tron&#231;ons de voie dont l'occupation peut &#234;tre suivie individuellement.
+Diviser la voie en cantons est facultative. Les cantons mis en place dans un sch&#233;ma de voies
+correspondent normalement &#224; des cantons physiques sur un r&#233;seau. L'occupation du canton est indiqu&#233;
+par l'&#233;tat d'un <i>capteur d'occupation</i>. Lorsque le trac&#233; d'un r&#233;seau est divis&#233;
+en cantons, toutes les voie ne doivent pas appartenir &#224; un m&#234;me canton. Par exemple la voie de triage,
+n'est normalement pas dans un canton, alors que la voie principale sera toujours divis&#233;e
 en cantons. La principale utilisation des cantons est de faciliter la signalisation, mais les cantons peuvent
-être utilisés pour contrôler sur le réseau d'autres fonctions d'animations.</p>
+&#234;tre utilis&#233;s pour contr&#244;ler sur le r&#233;seau d'autres fonctions d'animations.</p>
 <p>
-Si un nom de canton est entré dans le champ <b>Canton: Nom</b> de la barre d'outil avant
-l'ajout d'un aiguillage, d'un croisement, ou un segment de voie, l'élément ajouté est attribué
-à ce canton, si un nom de capteur (le nom  système ou nom utilisateur) a été entré dans le
-<b> Capteur d'Occupation</b> sur le terrain, ce capteur sera attribué au canton d'entré.
-Un aiguillage, passage à niveau, ou un segment de voie  peuvent également être affectés
-à un canton en entrant le nom de ce canton dans le dialogue d'édition accessible en
-sélectionnant <b> Modifier ...</b> dans les éléments du menu contextuel. Dans les deux cas, si un canton
-avec le nom entré n'existe pas, il est créé.</p>
+Si un nom de canton est entr&#233; dans le champ <b>Canton: Nom</b> de la barre d'outil avant
+l'ajout d'un aiguillage, d'un croisement, ou un segment de voie, l'&#233;l&#233;ment ajout&#233; est attribu&#233;
+&#224; ce canton, si un nom de capteur (le nom  syst&#232;me ou nom utilisateur) a &#233;t&#233; entr&#233; dans le
+<b> Capteur d'Occupation</b> sur le terrain, ce capteur sera attribu&#233; au canton entr&#233;.
+Un aiguillage, passage &#224; niveau, ou un segment de voie  peuvent &#233;galement &#234;tre affect&#233;s
+&#224; un canton en entrant le nom de ce canton dans le dialogue d'&#233;dition accessible en
+s&#233;lectionnant <b>Modifier ...</b> dans les &#233;l&#233;ments du menu contextuel. Dans les deux cas, si un canton
+avec le nom entr&#233; n'existe pas, il est cr&#233;&#233;.</p>
 <p>
-Un nom de canton peut être n'importe quelle série de caractères alphabétiques ou numériques qui décrivent
-le canton, par exemple, "Red Main 2", "Lake Siding", ou "Moose Block». Une fois qu'un
-canton est créé, son nom ne peut être changé; tenter de changer un nom de canton 
- va créer un nouveau canton ayant le nouveau nom. Après tous les éléments affectés à
-l'ancien canton sont modifiés pour le nouveau canton, le canton avec l'ancien nom sera
- automatiquement supprimé (voir ci-dessous).</p>
+Un nom de canton peut &#234;tre n'importe quelle s&#233;rie de caract&#232;res alphab&#233;tiques ou num&#233;riques qui d&#233;crivent
+le canton, par exemple, "Red Main 2", "Lake Siding", ou "Moose Block". Une fois qu'un
+canton est cr&#233;&#233;, son nom ne peut &#234;tre chang&#233;; tenter de changer un nom de canton 
+ va cr&#233;er un nouveau canton ayant le nouveau nom. Apr&#232;s tous les &#233;l&#233;ments affect&#233;s &#224;
+l'ancien canton sont modifi&#233;s pour le nouveau canton, le canton avec l'ancien nom sera
+ automatiquement supprim&#233; (voir ci-dessous).</p>
 <p>
-Les cantons peuvent être consultés dans la <b>table canton </b>, qui peuvent être accessibles en utilisant le menu
-<b> Outils</b>. Les information des cantons  pour un Editeur de tracé sont conservée dans deux
-endroits, qui sont toujours reliés entre eux automatiquement. Pour chaque canton, les information spécifiques de l'Éditeur de Tracés sont enregistrées et gérées dans une partie spécifique de l'Éditeur de Tracé et la partie de l'information du canton est enregistrée dans JMRI Block 
-Quand un canton est créé avec l'Editeur de Tracé , un canton JMRI correspondant 
-est automatiquement créé. Le Canton créé automatiquement aura un nom système
-<i> IBnnn</i> (où <i>nnn</i> est un nombre), et un nom d'utilisateur le même que le
-nom du canton mentionné ci-dessus. Ce sont les Cantons génériques qui sont affichés dans la Table
-Canton. Évitez de changer le nom utilisateur dans la Table Canton, parce que cela
-va rompre le lien entre les deux parties d'informations du canton .</p>
+Les cantons peuvent &#234;tre consult&#233;s dans le <b>tableau canton</b>, qui peuvent &#234;tre accessibles en utilisant le menu
+<b>Outils</b>. L'information du canton pour un panneau &#201;diteur de R&#233;seau est conserv&#233;e dans deux
+endroits, qui sont toujours reli&#233;s entre eux automatiquement. Pour chaque canton, les information sp&#233;cifiques de l'&#201;diteur de R&#233;seau sont enregistr&#233;es et g&#233;r&#233;es dans une partie sp&#233;cifique de l'&#201;diteur de r&#233;seau et la partie g&#233;n&#233;rique de l'information du canton est enregistr&#233;e dans un Canton JMRI.
+Quand un canton est cr&#233;&#233; avec l'Editeur de R&#233;seau, un canton JMRI correspondant 
+est automatiquement cr&#233;&#233;. Le Canton cr&#233;&#233; automatiquement aura un nom syst&#232;me
+<i> IBnnn</i> (o&#249; <i>nnn</i> est un nombre), et un nom utilisateur le m&#234;me que le
+nom du canton mentionn&#233; ci-dessus. Ce sont les Cantons g&#233;n&#233;riques qui sont affich&#233;s dans le Tableau
+Canton. &#201;vitez de changer le nom utilisateur dans le Tableau Canton, parce que cela
+va rompre le lien entre les deux parties d'informations du canton.</p>
 <p>
-La partie intéressante dans la Table Cantons est la colonne "Valeur". La «valeur» peut être utilisée pour
-identifier les trains qui se déplacent autour du tracé. Si un train est garé dans
-un Canton, et le texte d'identification du train est entré manuellement dans l'entrée "valeur" 
-pour ce Canton, le texte sera propagé de Canton en Canton en suivant le parcours du train sur le réseau
+La partie int&#233;ressante dans le Tableau Cantons est la colonne "Valeur". La "valeur" peut &#234;tre utilis&#233;e pour
+identifier les trains qui se d&#233;placent autour du r&#233;seau. Si un train est gar&#233; dans
+un Canton, et le texte d'identification du train est entr&#233; manuellement dans l'entr&#233;e "valeur" 
+pour ce Canton, le texte sera propag&#233; de Canton en Canton en suivant le parcours du train sur le r&#233;seau
 . Lorsque le train entre dans un Canton, le texte "Valeur" du canton depuis lequel vient le train est 
-copié dans la "valeur" du Canton dans lequel le train pénètre, quand le train quitte un Canton, la
-"Valeur" du canton maintenant vide sera effacée Si une variable en mémoire est assignée
-au canton (voir ci-dessous), la «valeur» de la variable en mémoire sera mise à la
-"Valeur" du canton. Ainsi en plaçant une icône de la mémoire près du canton, l'identité
-du train dans le canton peut être affichée dans le panneau de l'Éditeur de Circuit. <b> Attention: Le
-suivi des trains utilisant cette méthode nécessite d'être bien rodé dans les circuits de détection de canton
-.</b> De faux contacts ou une  détection de canton aléatoire peut perturber le système.</p>
+copi&#233; dans la "valeur" du Canton dans lequel le train p&#233;n&#232;tre, quand le train quitte un Canton, la
+"Valeur" du canton maintenant vide sera effac&#233;e Si une variable en m&#233;moire est assign&#233;e
+au canton (voir ci-dessous), la "valeur" de la variable en m&#233;moire sera mise &#224; la
+"Valeur" du canton. Ainsi en pla&#231;ant une ic&#244;ne m&#233;moire pr&#232;s du canton, l'identit&#233;
+du train dans le canton peut &#234;tre affich&#233;e dans le panneau de l'&#201;diteur de Circuit. <b> Attention: Le
+suivi des trains utilisant cette m&#233;thode n&#233;cessite d'&#234;tre bien rod&#233; dans les circuits de d&#233;tection de canton
+.</b> De faux contacts ou une  d&#233;tection de canton al&#233;atoire peut perturber le syst&#232;me.</p>
 <p>
-Les aiguillages, les croisements, et les segment de voies éditent des dialogues qui permettent d'accéder au dialogue
-Créer/Modifier un canton où les informations spécifiques à un canton peuvent être inscrites
-ou modifiées. Le champs <b>Capteur d'Occupation :</b> dans le dialogue Créer/Modifier du canton 
-indique le nom du capteur d'occupation actuellement affecté au canton, s'il y a
- un. Pour entrer ou changer le capteur d'occupation, entrez le nom (nom système ou
-nom utilisateur) d'un capteur dans la Table Capteur dans le champ <b>Capteur d'Occupation:</b>.
-Un capteur peut être affecté en tant que capteur d'occupation pour un seul canton; tenter
-de faire autrement se traduira par un message d'erreur. Normalement, l'état d'un
-capteur d'occupation est "actif" quand un canton est occupé, ainsi "Actif" pour l'occupation
- est la valeur par défaut automatique. Elle peut être modifiée en sélectionnant «Inactif» dans la boîte de sélection
+Les aiguillages, les croisements, et les segment de voies &#233;ditent des dialogues qui permettent d'acc&#233;der au dialogue
+Cr&#233;er/Modifier un canton o&#249; les informations sp&#233;cifiques &#224; un canton peuvent &#234;tre inscrites
+ou modifi&#233;es. Le champs <b>Capteur d'Occupation :</b> dans le dialogue Cr&#233;er/Modifier du canton 
+indique le nom du capteur d'occupation actuellement affect&#233; au canton, s'il y en a
+ un. Pour entrer ou changer le capteur d'occupation, entrez le nom (nom syst&#232;me ou
+nom utilisateur) d'un capteur dans le Tableau Capteur dans le champ <b>Capteur d'Occupation:</b>.
+Un capteur peut &#234;tre affect&#233; en tant que capteur d'occupation pour un seul canton; tenter
+de faire autrement se traduira par un message d'erreur. Normalement, l'&#233;tat d'un
+capteur d'occupation est "actif" quand un canton est occup&#233;, ainsi "Actif" pour l'occupation
+ est la valeur par d&#233;faut automatique. Elle peut &#234;tre modifi&#233;e en s&#233;lectionnant "Inactif" dans la bo&#238;te de s&#233;lection
 <b>Valeur occupation:.</b> </p>
 <p>
-Les couleurs de voie des cantons sont utilisées au lieu de la couleur de la voie par défaut si une section de
-voie est dans un canton. Les éléments de voies dans un canton sont dessinés avec différentes
- couleurs pour les états occupés et inoccupés, permettant à la voie dans un canton de
-changer de couleur quand un train entre et sort de ce canton. Pour définir les couleurs de voie,
-sélectionner la couleur de la voie inoccupée dans la boîte de sélection <b>Couleur de Voie:</b> ,
-et sélectionnez la couleur de voie occupée dans la boîte de sélection <b>Couleur de Voie Occupée :</b>
-. Une autre couleur de la voie inoccupée est prévue pour des utilisations particulières.
-Par exemple, le Dispatcheur a une option pour utiliser la couleur de voie alternative inoccupées
-pour les cantons qui sont alloués, mais inoccupée. Réglez la couleur de la voie alternative inoccupée
- en utilisant la boîte de sélection <b>Couleur de Voie  Alternative:</b>. Quand la couleur voie est
-déterminée l'Éditeur de Circuit utilise la couleur de la voie occupée si un canton est occupé, puis
-s'il n'est pas occupé, va utiliser la couleur de voie alternative inoccupée si elle a été
-demandé, sinon il utilise la couleur de voie inoccupée.</p>
+Les couleurs de voie des cantons sont utilis&#233;es au lieu de la couleur de la voie par d&#233;faut si une section de
+voie est dans un canton. Les &#233;l&#233;ments de voies dans un canton sont dessin&#233;s avec diff&#233;rentes
+ couleurs pour les &#233;tats occup&#233;s et inoccup&#233;s, permettant &#224; la voie dans un canton de
+changer de couleur quand un train entre et sort de ce canton. Pour d&#233;finir les couleurs de voie,
+s&#233;lectionner la couleur de la voie inoccup&#233;e dans la bo&#238;te de s&#233;lection <b>Couleur de Voie:</b> ,
+et s&#233;lectionnez la couleur de voie occup&#233;e dans la bo&#238;te de s&#233;lection <b>Couleur de Voie Occup&#233;e :</b>
+. Une autre couleur de la voie inoccup&#233;e est pr&#233;vue pour des utilisations particuli&#232;res.
+Par exemple, le Dispatcheur a une option pour utiliser la couleur de voie alternative inoccup&#233;es
+pour les cantons qui sont allou&#233;s, mais inoccup&#233;s. R&#233;glez la couleur de la voie alternative inoccup&#233;e
+ en utilisant la bo&#238;te de s&#233;lection <b>Couleur de Voie  Alternative:</b>. Quand la couleur voie est
+d&#233;termin&#233;e l'&#201;diteur de Circuit utilise la couleur de la voie occup&#233;e si un canton est occup&#233;, puis
+s'il n'est pas occup&#233;, va utiliser la couleur de voie alternative inoccup&#233;e si elle a &#233;t&#233;
+demand&#233;, sinon il utilise la couleur de voie inoccup&#233;e.</p>
 <p>
-Le champs <b>Nom Variable Mémoire:</b> dans la boîte de dialogue du canton Créer/Modifier
-indique le nom de la variable mémoire actuellement affectée au canton, s'il y a
-est un. Pour saisir ou modifier la variable  mémoire, entrez le nom (nom système ou
-nom utilisateur) d'une variable mémoire dans la table mémoire dans le champs <b>Nom de Variable Mémoire 
-:</b>. L'affectation d'une variable en mémoire est facultative. Une variable mémoire attribuée
- contiendra comme «valeur» la «valeur» du Canton, et est utile
-dans l'identification des trains quand ils sont suivis sur le réseau (voir ci-dessus).
+Le champs <b>Nom Variable M&#233;moire:</b> dans la bo&#238;te de dialogue du canton Cr&#233;er/Modifier
+indique le nom de la variable m&#233;moire actuellement affect&#233;e au canton, s'il y a
+est un. Pour saisir ou modifier la variable m&#233;moire, entrez le nom (nom syst&#232;me ou
+nom utilisateur) d'une variable m&#233;moire dans le Tableau m&#233;moire dans le champs <b>Nom de Variable M&#233;moire 
+:</b>. L'affectation d'une variable en m&#233;moire est facultative. Une variable m&#233;moire attribu&#233;e
+ contiendra comme "valeur" la "valeur" du Canton, et est utile
+dans l'identification des trains quand ils sont suivis sur le r&#233;seau (voir ci-dessus).
 <p>
-Puisque que les cantons sont des éléments du circuit physique, le même canton peuvent être utilisé dans
-plus d'un panneau. Par conséquent, l'information canton est sauvegardé dans la 
-partie non spécifique de l'information mise en page du panneau, lorsque les panneaux sont enregistrés dans un
+La case &#224; cocher<b>Permission d'Entr&#233;e Autoris&#233;e </b> permet au canton d'&#234;tre r&#233;gl&#233; de sorte que s'il est
+d&#233;j&#224; occup&#233;, puis un autre train est autoris&#233; &#224; entrer dans ce bloc. Cette fonction est
+principalement utilis&#233;e dans la logique M&#226;t Signal.
+Si le bloc disposition de routage a &#233;t&#233; activ&#233; pour une utilisation avec le Signalmast Logic suppl&#233;mentaire
+domaines seront pr&#233;sent&#233;s. <p>
+Le <b> Canton M&#233;trique</b> assigne un co&#251;t pour un bloc perticulier il est donc possible
+de d&#233;terminer si la logique signal doit utiliser ce bloc sur un autre bloc s'il y
+a des chemins multiples. Plus le m&#233;trique est bas plus il est pr&#233;f&#233;r&#233;. Par d&#233;faut les cantons Ligne Principale ont une valeur de 50,
+ tandis qu'un canton de voie d'&#233;vitement a une valeur de 200 <p>
+Le champ<b>Canton Attach&#233;</b> repr&#233;sente chaque bloc qui est connect&#233; &#224; celui-ci,
+ici vous pouvez d&#233;terminer si un itin&#233;raire vers un canton suivant peut &#234;tre utilis&#233; dans les deux sens ou dans une seule
+direction dans l'&#233;laboration de la logique de signalisation. Les options sont.<br>
+<b>Bi-Directionnel</b> le trafic peut circuler librement entre chaque bloc.<br>
+<b>Envoyer uniquement</b> Ce Canton ne peut &#234;tre utilis&#233; que pour envoyer du trafic vers les cantons voisins
+, le canton voisin ne peut pas envoyer le trafic vers lui. <br>
+<b>Recevoir seulement </b>, ce canton peut uniquement recevoir le trafic du canton adjacent nous ne pouvons pas
+envoyer du trafic vers lui. <br>
+Ainsi par exemple, vous pourriez avoir une boucle passant sur ​​une seule section de la ligne, vous pouvez utiliser celle-ci de sorte que les trains utilisent toujours la voie de gauche.
+<p>
+<p>
+Puisque que les cantons sont des &#233;l&#233;ments du r&#233;seau physique, le m&#234;me canton peutt &#234;tre utilis&#233; dans
+plus d'un panneau. Par cons&#233;quent, l'information canton est sauvegard&#233; dans la 
+partie non sp&#233;cifique de l'information r&#233;seau, lorsque les panneaux sont enregistr&#233;s dans un
 fichier sur le disque.</p>
 <p>
-Les cantons sont automatiquement supprimés quand ils ne sont plus utilisés. L'Éditeur de tracé
-garde la trace du nombre d'éléments de voie (aiguillages, des segments de voie,
-et des bretelles) qui sont affectés à un canton. Ce nombre est affiché dans
-le dialogue Créer/Modifier Canton comme <b>Compteur Utilisation Courante:</b>. Lorsque les panneaux sont enregistrés sur le
-disque, seuls les cantons dont le compteur d'utilisation est supérieur à 0 sont sauvés.</p>
+Les cantons sont automatiquement supprim&#233;s quand ils ne sont plus utilis&#233;s. L'&#201;diteur de r&#233;seau
+garde la trace du nombre d'&#233;l&#233;ments de voie (aiguillages, des segments de voie,
+et des bretelles) qui sont affect&#233;s &#224; un canton. Ce nombre est affich&#233; dans
+le dialogue Cr&#233;er/Modifier Canton comme <b>Compteur Utilisation Courante:</b>. Lorsque les panneaux sont enregistr&#233;s sur le
+disque, seuls les cantons dont le compteur d'utilisation est sup&#233;rieur &#224; 0 sont sauv&#233;s.</p>
 
 <!--#include virtual="/Footer" -->
 </body>

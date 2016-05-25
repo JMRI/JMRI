@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  */
 
 // This is generated code.  DO NOT ATTEMPT TO FIX ANY FINDBUGS WARNINGS
-@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NM_METHOD_NAMING_CONVENTION")
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings({"NM_METHOD_NAMING_CONVENTION","RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE"})
 
 public class SRCPParser {
   
@@ -34,34 +34,37 @@ public class SRCPParser {
 PARSER_END(SRCPParser)
 
 // The Tokenizer specification begins here:
-<IN_DESCRIPTION>
+/*<IN_DESCRIPTION>
 MORE :
 {
   <DESCRIPT: ~[]>
-}
+}*/
 
-<IN_TIME>
-TOKEN:
-{
-    < JULDATE: (["1"-"9"]){2,4}["0"-"3"]["0"-"9"]["0"-"9"]>
-  | < MINSEC: ["0"-"5"]["0"-"9"]>
-  | < HOUR: (["0"-"2"])?["0"-"9"]>
-}
+//<IN_TIME>
+//TOKEN:
+//{
+//    < JULDATE: (["0"-"9"])+ >
+//  | < MINSEC: ["0"-"5"]["0"-"9"]>
+//  | < HOUR: (["0"-"2"])?["0"-"9"]>
+//}
 
-<DEFAULT,IN_DESCRIPTION,IN_TIME>
+//<DEFAULT,IN_DESCRIPTION,IN_TIME>
+<DEFAULT,IN_TIME>
 TOKEN :
 {
-  < EOL :(["\n","\r"]){2} >:DEFAULT
+  //< EOL :(["\n","\r"]){1,2} >:DEFAULT
+  < EOL : "\n" >:DEFAULT
 }
 
 <DEFAULT>
 SKIP:
 {
-     <RETURN: "\r">
-   | <NEWLINE: "\n">
+    <RETURN: "\r">
+   | <CONTINUE: "\\\n">
+   | <TAB: "\t">
    | <SPACE: " ">
 }
- 
+
 <DEFAULT>
 TOKEN :
 {
@@ -75,6 +78,7 @@ TOKEN :
 | < #OFF: <O>(<F>){2} >
 | < PROTOCOL: (<A>|<F>|<L>|<P>|<S>|<N>|<M>|<Z>) >
 | < DRIVEMODE: ("="|"0"|"1"|"2") >
+| < FUNCTIONMODE: ("="|"0"|"1") >
 | < DELAY: ("-")?(["0"-"9"])+>
 | < NMRA: (<N><M><R><A>) >
 
@@ -85,10 +89,11 @@ TOKEN :
 | < GM: <G><M> >
 | < SM: <S><M> >
 | < LOCK: <L><O><C><K> >
-| < TIME: <T><I><M><E>>:IN_TIME
+| < TIME: <T><I><M><E>>
 | < POWER: <P><O><W><E><R>>
 | < SESSION: <S><E><S><S><I><O><N>>
-| < DESCRIPTION: <D><E><S><C><R><I><P><T><I><O><N> >:IN_DESCRIPTION
+//| < DESCRIPTION: <D><E><S><C><R><I><P><T><I><O><N> >:IN_DESCRIPTION
+| < DESCRIPTION: <D><E><S><C><R><I><P><T><I><O><N> >
 | < SERVER: <S><E><R><V><E><R>>
 
 // Constants and commands used for handshake mode only.
@@ -113,8 +118,8 @@ TOKEN :
 | < INIT: <I><N><I><T> >
 | < TERM: <T><E><R><M> >
 | < WAIT: <W><A><I><T> >
-| < VERIFY: <V><E><R><I><F><Y>>
-| < RESET: <R><E><S><E><T>>
+| < VERIFY: <V><E><R><I><F><Y> >
+| < RESET: <R><E><S><E><T> >
 
 | <#A:["a","A"]>
 | <#B:["b","B"]>
@@ -125,19 +130,24 @@ TOKEN :
 | <#G:["g","G"]>
 | <#H:["h","H"]>
 | <#I:["i","I"]>
+| <#J:["j","J"]>
 | <#K:["k","K"]>
-| <#L:["L","L"]>
+| <#L:["l","L"]>
 | <#M:["m","M"]>
 | <#N:["n","N"]>
 | <#O:["o","O"]>
 | <#P:["p","P"]>
+| <#Q:["q","Q"]>
 | <#R:["r","R"]>
 | <#S:["s","S"]>
 | <#T:["t","T"]>
-| <#W:["w","W"]>
+| <#U:["u","U"]>
 | <#V:["v","V"]>
+| <#W:["w","W"]>
+| <#X:["x","X"]>
 | <#Y:["y","Y"]>
 | <#Z:["z","Z"]>
+| <BADTOKEN:~[" "]>
 }
 
 // Lexical specifications begin here
@@ -146,7 +156,7 @@ SimpleNode handshakecommand():{}
 {
   // This is a simple list of the possible commands.  
   // They are broken down further below.
-  ( LOOKAHEAD(4) go() | set() ) <EOL>
+  ( LOOKAHEAD(2) go() | handshake_set() ) <EOL>
   {
     log.debug("Handshake Command Production");
     return jjtThis;
@@ -158,27 +168,29 @@ SimpleNode command():{}
   // This is a simple list of the possible commands.  
   // They are broken down further below.
   ( LOOKAHEAD(4) get() | set() | check() | wait_cmd() | init() |
-                 term() | reset() | verify()) <EOL>
+                 term() | reset() | verify() )  <EOL> 
   {
     log.debug("Command Production");
     return jjtThis;
   }
 }
 
-SimpleNode serviceversion():{}
+SimpleNode serviceversion():{Token t;}
 {
-  ( <SRCP> (<VERSION>) )
+  ( <SRCP> (t=<VERSION>) )
   {
     log.debug("Service Version Production");
+    jjtThis.jjtSetValue(t.image);
     return jjtThis;
   }
 }
 
-SimpleNode connectionmode():{}
+SimpleNode connectionmode():{Token t;}
 {
-  ( <COMMAND> | <INFO> )
+  ( t=<COMMAND> | t=<INFO> )
   {
     log.debug("Connection Mode Production");
+    jjtThis.jjtSetValue(t.image);
     return jjtThis;
   }
 }
@@ -256,12 +268,13 @@ SimpleNode port():{SimpleNode s;}
   }
 }
 
-SimpleNode devicegroup():{}
+SimpleNode devicegroup():{Token t;}
 {
-  ( <FB> | <GA> | <GL> | <SM> | <TIME> | <SESSION> | <SERVER> | 
-    <LOCK> | <DESCRIPTION> )
+  ( t=<FB> | t=<GA> | t=<GL> | t=<SM> | t=<TIME> | t=<SESSION> |t=<SERVER> | 
+    t=<LOCK> | t=<DESCRIPTION> | t=<POWER> )
   {
     log.debug("DeviceGroup Production");
+    jjtThis.jjtSetValue(t.image);
     return jjtThis;
   }
 }
@@ -285,9 +298,9 @@ SimpleNode get():{}
                 time() | 
                 power() | 
                 server() | 
-                session () | 
-                lock() devicegroup() address() | 
-                description() [ devicegroup() address() ] )
+                session() address() | 
+                lock() | 
+                description() ) 
 
   {
      log.debug("GET Production");
@@ -295,17 +308,42 @@ SimpleNode get():{}
   }
 }
 
+SimpleNode handshake_set():{}
+{
+	<SET> ( protocollitteral() serviceversion() | 
+	        connectionlitteral() <SRCP> connectionmode() ) 
+  {
+    log.debug("Handshake Mode SET Production");
+    return jjtThis;
+  }
+}
+
+SimpleNode protocollitteral():{}
+{
+   <PROTOCOLLITTERAL> 
+   {
+       log.debug("Protocol Litteral production");
+       return jjtThis;
+   }
+}
+
+SimpleNode connectionlitteral():{}
+{
+   <CONNECTIONMODELITTERAL> 
+   {
+       log.debug("Connection Litteral production");
+       return jjtThis;
+   }
+}
 SimpleNode set():{}
 {
-  <SET> ( ( bus() ( gl() | 
+  <SET> ( bus() ( gl() address() drivemode() address() address() (functionmode())* | 
                 sm() address() progmode() cvno() value() | 
                 ga() address() port() zeroone() (delay()|timeout()) | 
                 fb() address() zeroone()| 
-                time() | 
+                time() address() address() address() address() | 
                 power() onoff() | 
-                lock() ) ) |
-	<PROTOCOLLITTERAL> serviceversion() | 
-	<CONNECTIONMODELITTERAL> connectionmode() ) 
+                lock() ) )
   {
     log.debug("SET Production");
     return jjtThis;
@@ -314,7 +352,14 @@ SimpleNode set():{}
 
 SimpleNode term():{}
 {
-  <TERM> bus()  ( fb() | gl() | sm() | power() | server() | lock() )
+  <TERM> bus()  ( fb() | 
+                  gl() address() | 
+                  sm() | 
+                  power() | 
+                  server() | 
+                  lock() | 
+                  time() | 
+                  session() [ address() ] )
   {return jjtThis;}
 }
 
@@ -340,7 +385,8 @@ SimpleNode check():{}
 
 SimpleNode wait_cmd():{}
 {
-  <WAIT> bus() ( fb() address() zeroone() timeout() )
+  <WAIT> bus() ( fb() address() zeroone() timeout() |
+         time() address() address() address() address())
 
   {
      log.debug("WAIT Production");
@@ -352,7 +398,7 @@ SimpleNode init():{}
 {
   <INIT> bus() ( fb() | 
                  ga() address() protocol() | 
-                 gl() address() protocol() |  
+                 gl() address() protocol() | 
                  sm() <NMRA> | 
                  time() nonzeroaddress() nonzeroaddress() | 
                  power() )
@@ -364,7 +410,7 @@ SimpleNode init():{}
 
 SimpleNode reset():{}
 {
-  <RESET> bus() <SERVER>
+  <RESET> bus() server() 
   {
      log.debug("RESET Production");
      return jjtThis;
@@ -373,17 +419,20 @@ SimpleNode reset():{}
 
 SimpleNode verify():{}
 {
-  <VERIFY> bus() sm()
+  <VERIFY> bus() sm() address() progmode() cvno() (value())+
   {
      log.debug("RESET Production");
      return jjtThis;
   }
 }
 
-SimpleNode gl():{}
+SimpleNode gl():{Token t;}
 {
-  <GL>
-  {return jjtThis;}
+  t=<GL>
+  {
+     jjtThis.jjtSetValue(t.image);
+     return jjtThis;
+  }
 }
 
 SimpleNode sm():{Token t;}
@@ -451,16 +500,16 @@ SimpleNode session():{Token t;}
 
 SimpleNode lock():{Token t;}
 {
-  t=<LOCK> 
+  ( t=<LOCK> devicegroup() address() [address()] ) 
   {
     jjtThis.jjtSetValue(t.image);
     return jjtThis;
   }
 }
 
-SimpleNode description():{Token t;}
+SimpleNode description():{Token t; SimpleNode s; SimpleNode r;}
 {
-  t=<DESCRIPTION> 
+  ( t=<DESCRIPTION> [ devicegroup() [address()] ] )
   {
     jjtThis.jjtSetValue(t.image);
     return jjtThis;
@@ -546,7 +595,7 @@ SimpleNode reg():{}
 
 SimpleNode protocol():{Token t;}
 { 
-  t=<PROTOCOL>
+  t=<PROTOCOL> (address())*
   {
     log.debug("Protocol Production "+ t.image);
     jjtThis.jjtSetValue(t.image);
@@ -554,3 +603,26 @@ SimpleNode protocol():{Token t;}
 
   }
 }
+
+SimpleNode drivemode():{Token t;}
+{  
+   ( t=<DRIVEMODE> | t=<ZEROADDR> | t=<NONZEROADDR> )
+   {
+    log.debug("Drivemode Production "+ t.image);
+    jjtThis.jjtSetValue(t.image);
+    return jjtThis;
+  }
+}
+
+SimpleNode functionmode():{Token t;}
+{  
+   ( t=<FUNCTIONMODE> | t=<ZEROADDR> | t=<NONZEROADDR> | t=<DRIVEMODE> )
+   {
+    log.debug("Functionmode Production "+ t.image);
+    jjtThis.jjtSetValue(t.image);
+    return jjtThis;
+  }
+}
+
+
+

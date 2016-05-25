@@ -1,90 +1,111 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../../XSLT/aspecttable.xsl" type="text/xsl"?>
-
-<aspecttable
-    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
->
-
+<aspecttable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/aspecttable.xsd">
   <name>Basic Model Signals</name>
   <reference>Basic signals known by many modelers</reference>
-
   <copyright xmlns="http://docbook.org/ns/docbook">
-    <year>2009</year><year>2010</year><holder>JMRI</holder>
+    <year>2009</year>
+    <year>2010</year>
+    <holder>JMRI</holder>
   </copyright>
-
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
-        <personname><firstname>Dick</firstname><surname>Bronson</surname></personname>
-    </author>    
+      <personname>
+        <firstname>Dick</firstname>
+        <surname>Bronson</surname>
+      </personname>
+    </author>
     <author>
-        <personname><firstname>Pete</firstname><surname>Cressman</surname></personname>
-    </author>    
+      <personname>
+        <firstname>Pete</firstname>
+        <surname>Cressman</surname>
+      </personname>
+    </author>
     <author>
-        <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
-        <email>jake@physics.berkeley.edu</email>
+      <personname>
+        <firstname>Bob</firstname>
+        <surname>Jacobsen</surname>
+      </personname>
+      <email>jake@physics.berkeley.edu</email>
     </author>
   </authorgroup>
-
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
-        <revnumber>1</revnumber>
-        <date>2009-12-28</date>
-        <authorinitials>RGJ</authorinitials>
-        <revremark>Initial version</revremark>
-    </revision>    
-    <revision>
-        <revnumber>2</revnumber>
-        <date>2010-3-25</date>
-        <authorinitials>PWC</authorinitials>
-        <revremark>Add speed element</revremark>
+      <revnumber>1</revnumber>
+      <date>2009-12-28</date>
+      <authorinitials>RGJ</authorinitials>
+      <revremark>Initial version</revremark>
     </revision>
     <revision>
-        <revnumber>2.1</revnumber>
-        <date>2011-06-13</date>
-        <authorinitials>KWD</authorinitials>
-        <revremark>Add Diverging flag</revremark>
+      <revnumber>2</revnumber>
+      <date>2010-3-25</date>
+      <authorinitials>PWC</authorinitials>
+      <revremark>Add speed element</revremark>
+    </revision>
+    <revision>
+      <revnumber>2.1</revnumber>
+      <date>2011-06-13</date>
+      <authorinitials>KWD</authorinitials>
+      <revremark>Add Diverging flag</revremark>
+    </revision>
+    <revision>
+      <revnumber>2.2</revnumber>
+      <date>2016-04-01</date>
+      <authorinitials>MST</authorinitials>
+      <revremark>Add low appearances</revremark>
+    </revision>
+    <revision>
+      <revnumber>2.3</revnumber>
+      <date>2016-05-05</date>
+      <authorinitials>MST</authorinitials>
+      <revremark>Add Held and Dark specific appearances</revremark>
     </revision>
   </revhistory>
-
   <aspects>
     <aspect>
       <name>Clear</name>
       <indication>Proceed</indication>
       <speed>Normal</speed>
+      <speed2>Normal</speed2>
     </aspect>
-
     <aspect>
       <name>Approach</name>
       <indication>Proceed preparing to stop at next signal</indication>
       <speed>Medium</speed>
+      <speed2>Medium</speed2>
     </aspect>
-
     <aspect>
       <name>Stop</name>
       <indication>Stop</indication>
       <speed>Stop</speed>
+      <speed2>Stop</speed2>
     </aspect>
-
     <aspect>
       <name>Diverging Clear</name>
       <indication>Proceed through diverging route</indication>
       <speed>Medium</speed>
+      <speed2>Medium</speed2>
       <route>Diverging</route>
     </aspect>
-
     <aspect>
       <name>Diverging Approach</name>
       <indication>Proceed through diverging route preparing to stop at next signal</indication>
       <speed>Limited</speed>
+      <speed2>Limited</speed2>
       <route>Diverging</route>
     </aspect>
-
+    <aspect>
+      <name>Unlit</name>
+      <indication>Unlit</indication>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+    </aspect>
+    
   </aspects>
   <appearancefiles>
-    <appearancefile href="appearance-one-searchlight.xml"/>
-    <appearancefile href="appearance-two-searchlight.xml"/>
+    <appearancefile href="appearance-one-searchlight.xml" />
+    <appearancefile href="appearance-two-searchlight.xml" />
+    <appearancefile href="appearance-one-low.xml" />
+    <appearancefile href="appearance-two-low.xml" />
   </appearancefiles>
-
 </aspecttable>
-  

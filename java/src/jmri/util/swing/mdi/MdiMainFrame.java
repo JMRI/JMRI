@@ -1,22 +1,30 @@
-// MdiMainFrame.java
-
 package jmri.util.swing.mdi;
 
-import java.awt.*;
-
-import javax.swing.*;
-import javax.swing.tree.*;
-
-import jmri.util.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import javax.swing.AbstractAction;
+import javax.swing.BorderFactory;
+import javax.swing.JDesktopPane;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
+import javax.swing.JToolBar;
+import javax.swing.JTree;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeNode;
+import javax.swing.tree.TreeSelectionModel;
+import jmri.util.swing.JMenuUtil;
+import jmri.util.swing.JToolBarUtil;
+import jmri.util.swing.JTreeUtil;
 
 /**
  * Core JMRI JInternalPane GUI window.
  *
- * @author Bob Jacobsen  Copyright 2010
+ * @author Bob Jacobsen Copyright 2010
  * @since 2.9.4
- * @version $Revision$
  */
-
 public class MdiMainFrame extends jmri.util.JmriJFrame {
 
     /**
@@ -29,85 +37,84 @@ public class MdiMainFrame extends jmri.util.JmriJFrame {
         addMainToolBar(toolbarFile);
         pack();
     }
-    
+
     JSplitPane leftRightSplitPane;
 
-    JDesktopPane    desktop;
+    JDesktopPane desktop;
 
     JmriJInternalFrameInterface rightWI;
-    
+
     protected void configureFrame(String treeFile) {
-        desktop = new JDesktopPane();                
+        desktop = new JDesktopPane();
         desktop.setBorder(BorderFactory.createLineBorder(Color.black));
-        
+
         leftRightSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, makeLeftTree(treeFile), desktop);
         leftRightSplitPane.setOneTouchExpandable(true);
         leftRightSplitPane.setResizeWeight(0.0);  // emphasize right part
-        
+
         add(leftRightSplitPane, BorderLayout.CENTER);
     }
-        
+
     protected JScrollPane makeLeftTree(String treeFile) {
         final JTree tree;
         TreeNode topNode;
-        
+
         rightWI = new JmriJInternalFrameInterface(this, desktop);
-        
+
         topNode = JTreeUtil.loadTree(treeFile, rightWI, null);  // no context object
-        
+
         tree = new JTree(topNode);
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         tree.setRootVisible(false);  // allow multiple roots
-        
+
         // install listener
         tree.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
             public void valueChanged(javax.swing.event.TreeSelectionEvent e) {
-                DefaultMutableTreeNode node = (DefaultMutableTreeNode)
-                       tree.getLastSelectedPathComponent();
-                if (node == null)
+                DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
+                if (node == null) {
                     return; //Nothing is selected.	
-
-                if (node.getUserObject() == null)
+                }
+                if (node.getUserObject() == null) {
                     return; // Not an interesting node
-                    
+                }
                 if (node.getUserObject() instanceof AbstractAction) {
-                    AbstractAction action = (AbstractAction)node.getUserObject();
+                    AbstractAction action = (AbstractAction) node.getUserObject();
                     action.actionPerformed(null);
                 }
             }
         });
         // install in scroll area
         JScrollPane treeView = new JScrollPane(tree);
-        treeView.setMinimumSize(new Dimension(0,0));
-        treeView.setPreferredSize(new Dimension(150,600));
+        treeView.setMinimumSize(new Dimension(0, 0));
+        treeView.setPreferredSize(new Dimension(150, 600));
         return treeView;
     }
-        
+
     protected void addMainMenuBar(String menuFile) {
         JMenuBar menuBar = new JMenuBar();
-        
+
         JMenu[] menus = JMenuUtil.loadMenu(menuFile, rightWI, null); // no central context
-        for (JMenu j : menus) 
+        for (JMenu j : menus) {
             menuBar.add(j);
+        }
 
         setJMenuBar(menuBar);
     }
 
     protected void addMainToolBar(String toolBarFile) {
-          
+
         JToolBar toolBar = JToolBarUtil.loadToolBar(toolBarFile, rightWI, null);  // no context
 
         // this takes up space at the top until pulled to floating
         add(toolBar, BorderLayout.NORTH);
     }
-    
+
     /**
-     * Only close frame, etc, dispose() disposes of all 
-     * cached panes
+     * Only close frame, etc, dispose() disposes of all cached panes
      */
     public void dispose() {
         rightWI.dispose();
         super.dispose();
     }
-    
+
 }

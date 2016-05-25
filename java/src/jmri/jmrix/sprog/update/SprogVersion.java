@@ -1,5 +1,4 @@
 //SprogVersion.java
-
 package jmri.jmrix.sprog.update;
 
 import org.slf4j.Logger;
@@ -8,42 +7,47 @@ import org.slf4j.LoggerFactory;
 /**
  * Class to hold SPROG type and firmware version
  *
- * @author			Andrew crosland    Copyright (C) 2012
- * @version			$Revision:  $
+ * @author	Andrew crosland Copyright (C) 2012
+ * @version	$Revision: $
  */
-
-public class SprogVersion  {
+public class SprogVersion {
 
     public SprogType sprogType = null;
     public String sprogVersion = "";
-    
+
     /**
      * Construct a new SPROG version object from a SPROG type
-     * 
+     *
      * @param t SprogType the type of SPROG
      */
     public SprogVersion(SprogType t) {
-        if (log.isDebugEnabled()) { log.debug("SprogVersion(SprogType) ctor: " + t.toString()); }
+        if (log.isDebugEnabled()) {
+            log.debug("SprogVersion(SprogType) ctor: " + t.toString());
+        }
         sprogType = t;
         sprogVersion = "";
     }
 
     /**
      * Construct a new SPROG version object from a SPROG type and version
-     * 
+     *
      * @param t SprogType the type of SPROG
      * @param s String version in "major.minor" format, e.g. "3.1"
      */
     public SprogVersion(SprogType t, String s) {
-        if (log.isDebugEnabled()) { log.debug("SprogVersion(SprogType, String) ctor: " + t.toString() + s); }
-        if (log.isDebugEnabled()) { log.debug("sprogType: " + t.sprogType); }
+        if (log.isDebugEnabled()) {
+            log.debug("SprogVersion(SprogType, String) ctor: " + t.toString() + "v" + s);
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("sprogType: " + t.sprogType);
+        }
         sprogType = t;
         sprogVersion = s;
     }
 
     /**
      * Return major version number for a known SPROG
-     * 
+     *
      * @return major version
      */
     public int getMajorVersion() {
@@ -61,7 +65,7 @@ public class SprogVersion  {
 
     /**
      * Return minor version number for a known SPROG
-     * 
+     *
      * @return minor version
      */
     public int getMinorVersion() {
@@ -79,24 +83,30 @@ public class SprogVersion  {
 
     /**
      * Check if the SPROG has various extra features that were not present in
-     * the original firmware. This means later SPROG II versions or
-     * any type equal or higher than SPROG 3
+     * the original firmware. This means later SPROG II versions or any type
+     * equal or higher than SPROG 3
      *
      * @return boolean if the current SPROG has extra features
      */
     public boolean hasExtraFeatures() {
         int major = this.getMajorVersion();
         int minor = this.getMinorVersion();
-        if (log.isDebugEnabled()) { log.debug("Major: "+major+" Minor: "+minor); }
+        if (log.isDebugEnabled()) {
+            log.debug("Major: " + major + " Minor: " + minor);
+        }
         if (this.sprogType.isSprogII() && (((major == 1) && (minor >= 6))
-                                    || ((major == 2) && (minor >= 1))
-                                    || (major >= 3))
-            || ((this.sprogType.sprogType >= SprogType.SPROGIIv3)
+                || ((major == 2) && (minor >= 1))
+                || (major >= 3))
+                || ((this.sprogType.sprogType >= SprogType.SPROGIIv3)
                 && (this.sprogType.sprogType < SprogType.NANO))) {
-            if (log.isDebugEnabled()) { log.debug("This version has extra features"); }
+            if (log.isDebugEnabled()) {
+                log.debug("This version has extra features");
+            }
             return true;
         }
-        if (log.isDebugEnabled()) { log.debug("This version does not have extra features"); }
+        if (log.isDebugEnabled()) {
+            log.debug("This version does not have extra features");
+        }
         return false;
     }
 
@@ -131,9 +141,8 @@ public class SprogVersion  {
         return (this.sprogType.sprogType < SprogType.NANO);
     }
 
-
     /**
-     * 
+     *
      * @return String representation of SPROG version
      */
     public String toString() {
@@ -141,15 +150,17 @@ public class SprogVersion  {
     }
 
     /**
-     * 
+     *
      * @return String representation of SPROG version
      */
     public String toString(SprogVersion s) {
-        if (log.isDebugEnabled()) { log.debug("sprogType: " + s.sprogType.sprogType); }
-        return (s.sprogType.toString() + sprogVersion);
+        if (log.isDebugEnabled()) {
+            log.debug("sprogType: " + s.sprogType.sprogType);
+        }
+        return (s.sprogType.toString() +" v"+ sprogVersion);
     }
 
-    static Logger log = LoggerFactory.getLogger(SprogVersion.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogVersion.class.getName());
 }
 
 /* @(#)SprogVersion.java */

@@ -1,27 +1,39 @@
 // NodeConfigFrame.java
-
 package jmri.jmrix.acela.nodeconfig;
 
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.FlowLayout;
+import java.util.ResourceBundle;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.border.Border;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+import jmri.jmrix.acela.AcelaNode;
+import jmri.jmrix.acela.AcelaTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.awt.*;
-import java.util.ResourceBundle;
-
-import javax.swing.*;
-import javax.swing.table.*;
-import javax.swing.border.Border;
-
-import jmri.jmrix.acela.AcelaTrafficController;
-import jmri.jmrix.acela.AcelaNode;
 
 /**
  * Frame for user configuration of Acela nodes
- * @author	Bob Jacobsen   Copyright (C) 2004, 2007, 2008
- * @author	Dave Duchamp   Copyright (C) 2004, 2006
+ *
+ * @author	Bob Jacobsen Copyright (C) 2004, 2007, 2008
+ * @author	Dave Duchamp Copyright (C) 2004, 2006
  * @version	$Revision$
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = -446990477956157630L;
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.acela.nodeconfig.NodeConfigBundle");
     protected Container contentPane;
     protected NodeConfigModel d8outputConfigModel;
@@ -36,23 +48,23 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     protected javax.swing.JLabel thenodesStaticH = new javax.swing.JLabel("  00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19");
     protected javax.swing.JLabel thenodesStaticC = new javax.swing.JLabel("");
     protected javax.swing.JLabel thenodesStaticP = new javax.swing.JLabel("              Hardware Polling Double Check Not Supported Yet");
-    
+
     protected javax.swing.JTextField nodeAddrField = new javax.swing.JTextField(3);
     protected javax.swing.JLabel nodeAddrStatic = new javax.swing.JLabel("000");
     protected javax.swing.JLabel nodeTypeStatic = new javax.swing.JLabel("Acela");
-    protected javax.swing.JComboBox nodeAddrBox; 
-    protected javax.swing.JComboBox nodeTypeBox; 
-    
+    protected javax.swing.JComboBox<String> nodeAddrBox;
+    protected javax.swing.JComboBox<String> nodeTypeBox;
+
     protected javax.swing.JButton addButton = new javax.swing.JButton(rb.getString("ButtonAdd"));
     protected javax.swing.JButton editButton = new javax.swing.JButton(rb.getString("ButtonEdit"));
     protected javax.swing.JButton deleteButton = new javax.swing.JButton(rb.getString("ButtonDelete"));
     protected javax.swing.JButton doneButton = new javax.swing.JButton(rb.getString("ButtonDone"));
     protected javax.swing.JButton updateButton = new javax.swing.JButton(rb.getString("ButtonUpdate"));
     protected javax.swing.JButton cancelButton = new javax.swing.JButton(rb.getString("ButtonCancel"));
-		
+
     protected javax.swing.JLabel statusText1 = new javax.swing.JLabel();
     protected javax.swing.JLabel statusText2 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusText3 = new javax.swing.JLabel();		
+    protected javax.swing.JLabel statusText3 = new javax.swing.JLabel();
 
     protected javax.swing.JLabel statusTextAcela1 = new javax.swing.JLabel();
     protected javax.swing.JLabel statusTextAcela2 = new javax.swing.JLabel();
@@ -87,8 +99,6 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     protected javax.swing.JLabel statusTextSentry2 = new javax.swing.JLabel();
     protected javax.swing.JLabel statusTextSentry3 = new javax.swing.JLabel();
 
-    
-    
     protected javax.swing.JPanel panelAcela = new JPanel();
     protected javax.swing.JPanel panelTBrain = new JPanel();
     protected javax.swing.JPanel panelDash8 = new JPanel();
@@ -97,10 +107,10 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     protected javax.swing.JPanel panelSwitchman = new JPanel();
     protected javax.swing.JPanel panelYardMaster = new JPanel();
     protected javax.swing.JPanel panelSentry = new JPanel();
-    
+
     protected boolean changedNode = false;  // true if a node was changed, deleted, or added
     protected boolean editMode = false;     // true if in edit mode
-    
+
     protected AcelaNode curNode = null;    // Acela Node being editted
     protected int nodeAddress = 0;          // Node address
     protected int nodeType = AcelaNode.UN; // Node type
@@ -155,38 +165,36 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      * Constructor method
      */
     public NodeConfigFrame() {
-    	super();
+        super();
     }
 
-    /** 
-     *  Initialize the config window
+    /**
+     * Initialize the config window
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     public void initComponents() {
         setTitle(rb.getString("WindowTitle"));
-			
+
 //        Container contentPane = getContentPane();
         contentPane = getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
-        
         // Set up node address and node type
         JPanel panel1 = new JPanel();
         panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
 
         // Copy and pasted from the info button
-        String nodesstring = ""; 
+        String nodesstring = "";
         int tempnumnodes = AcelaTrafficController.instance().getNumNodes();
-        for (int i=0;i<tempnumnodes;i++) {
+        for (int i = 0; i < tempnumnodes; i++) {
             AcelaNode tempnode;
             tempnode = (AcelaNode) AcelaTrafficController.instance().getNodeFromAddress(i);
             nodesstring = nodesstring + " " + tempnode.getNodeTypeString();
         }
         thenodesStaticC.setText(nodesstring);
-        
-        
+
         // panelthenodes displays the current node configuration and polling result
         JPanel panelthenodes = new JPanel();
         panelthenodes.setLayout(new BoxLayout(panelthenodes, BoxLayout.Y_AXIS));
@@ -196,7 +204,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         panelthenodes1.add(new JLabel("    The nodes: "));
         panelthenodes1.add(thenodesStaticH);
         panelthenodes.add(panelthenodes1);
-        
+
         JPanel panelthenodes2 = new JPanel();
         panelthenodes2.setLayout(new FlowLayout());
         panelthenodes2.add(new JLabel("As Configured: "));
@@ -211,25 +219,22 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
         Border panelthenodesBorder = BorderFactory.createEtchedBorder();
         Border panelthenodesTitled = BorderFactory.createTitledBorder(panelthenodesBorder,
-                                                rb.getString("BoxLabelNodes"));
-        panelthenodes.setBorder(panelthenodesTitled);                
-        
+                rb.getString("BoxLabelNodes"));
+        panelthenodes.setBorder(panelthenodesTitled);
+
         contentPane.add(panelthenodes);
 
-        
         // panel11 is the node address
         JPanel panel11 = new JPanel();
         panel11.setLayout(new FlowLayout());
-        
-        panel11.add(new JLabel(rb.getString("LabelNodeAddress")+" "));
-        nodeAddrBox = new JComboBox(AcelaNode.getNodeNames());
-        nodeAddrBox.addActionListener(new java.awt.event.ActionListener() 
-            {
-                public void actionPerformed(java.awt.event.ActionEvent event)
-                {
-                    infoButtonActionPerformed();
-                }
-            });
+
+        panel11.add(new JLabel(rb.getString("LabelNodeAddress") + " "));
+        nodeAddrBox = new JComboBox<String>(AcelaNode.getNodeNames());
+        nodeAddrBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent event) {
+                infoButtonActionPerformed();
+            }
+        });
         panel11.add(nodeAddrBox);
         panel11.add(nodeAddrField);
 //        nodeAddrField.setToolTipText(rb.getString("TipNodeAddress"));
@@ -242,106 +247,96 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         // panelNodeInfo is the node type
         JPanel panelNodeInfo = new JPanel();
 
-        panelNodeInfo.add(new JLabel("   "+rb.getString("LabelNodeType")+" "));
-        nodeTypeBox = new JComboBox(AcelaNode.getModuleNames());
-        nodeTypeBox.addActionListener(new java.awt.event.ActionListener() 
-            {
-                public void actionPerformed(java.awt.event.ActionEvent event)
-                {
-                    String s = (String)nodeTypeBox.getSelectedItem();
-                    if (s.equals("Acela")) {
-                        panelAcela.setVisible(true);
-                        panelTBrain.setVisible(false);
-                        panelDash8.setVisible(false);
-                        panelWatchman.setVisible(false);
-                        panelSignalman.setVisible(false);
-                        panelSwitchman.setVisible(false);
-                        panelYardMaster.setVisible(false);
-                        panelSentry.setVisible(false);
-                    }
-                    else if (s.equals("TrainBrain")) {
-                        panelAcela.setVisible(false);
-                        panelTBrain.setVisible(true);
-                        panelDash8.setVisible(false);
-                        panelWatchman.setVisible(false);
-                        panelSignalman.setVisible(false);
-                        panelSwitchman.setVisible(false);
-                        panelYardMaster.setVisible(false);
-                        panelSentry.setVisible(false);
-                    }
-                    else if (s.equals("Dash-8")) {
-                        panelAcela.setVisible(false);
-                        panelTBrain.setVisible(false);
-                        panelDash8.setVisible(true);
-                        panelWatchman.setVisible(false);
-                        panelSignalman.setVisible(false);
-                        panelSwitchman.setVisible(false);
-                        panelYardMaster.setVisible(false);
-                        panelSentry.setVisible(false);
-                    }
-                    else if (s.equals("Watchman")) {
-                        panelAcela.setVisible(false);
-                        panelTBrain.setVisible(false);
-                        panelDash8.setVisible(false);
-                        panelWatchman.setVisible(true);
-                        panelSignalman.setVisible(false);
-                        panelSwitchman.setVisible(false);
-                        panelYardMaster.setVisible(false);
-                        panelSentry.setVisible(false);
-                    }
-                    else if (s.equals("SignalMan")) {
-                        panelAcela.setVisible(false);
-                        panelTBrain.setVisible(false);
-                        panelDash8.setVisible(false);
-                        panelWatchman.setVisible(false);
-                        panelSignalman.setVisible(true);
-                        panelSwitchman.setVisible(false);
-                        panelYardMaster.setVisible(false);
-                        panelSentry.setVisible(false);
-                    }
-                    else if (s.equals("SwitchMan")) {
-                        panelAcela.setVisible(false);
-                        panelTBrain.setVisible(false);
-                        panelDash8.setVisible(false);
-                        panelWatchman.setVisible(false);
-                        panelSignalman.setVisible(false);
-                        panelSwitchman.setVisible(true);
-                        panelYardMaster.setVisible(false);
-                        panelSentry.setVisible(false);
-                    }
-                    else if (s.equals("YardMaster")) {
-                        panelAcela.setVisible(false);
-                        panelTBrain.setVisible(false);
-                        panelDash8.setVisible(false);
-                        panelWatchman.setVisible(false);
-                        panelSignalman.setVisible(false);
-                        panelSwitchman.setVisible(false);
-                        panelYardMaster.setVisible(true);
-                        panelSentry.setVisible(false);
-                    }
-                    else if (s.equals("Sentry")) {
-                        panelAcela.setVisible(false);
-                        panelTBrain.setVisible(false);
-                        panelDash8.setVisible(false);
-                        panelWatchman.setVisible(false);
-                        panelSignalman.setVisible(false);
-                        panelSwitchman.setVisible(false);
-                        panelYardMaster.setVisible(false);
-                        panelSentry.setVisible(true);
-                    }
-                    // Add code here for other types of nodes
-                    else {
-                        panelAcela.setVisible(false);
-                        panelTBrain.setVisible(false);
-                        panelDash8.setVisible(false);
-                        panelWatchman.setVisible(false);
-                        panelSignalman.setVisible(false);
-                        panelSwitchman.setVisible(false);
-                        panelYardMaster.setVisible(false);
-                        panelSentry.setVisible(false);
-                    }
+        panelNodeInfo.add(new JLabel("   " + rb.getString("LabelNodeType") + " "));
+        nodeTypeBox = new JComboBox<String>(AcelaNode.getModuleNames());
+        nodeTypeBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent event) {
+                String s = (String) nodeTypeBox.getSelectedItem();
+                if (s.equals("Acela")) {
+                    panelAcela.setVisible(true);
+                    panelTBrain.setVisible(false);
+                    panelDash8.setVisible(false);
+                    panelWatchman.setVisible(false);
+                    panelSignalman.setVisible(false);
+                    panelSwitchman.setVisible(false);
+                    panelYardMaster.setVisible(false);
+                    panelSentry.setVisible(false);
+                } else if (s.equals("TrainBrain")) {
+                    panelAcela.setVisible(false);
+                    panelTBrain.setVisible(true);
+                    panelDash8.setVisible(false);
+                    panelWatchman.setVisible(false);
+                    panelSignalman.setVisible(false);
+                    panelSwitchman.setVisible(false);
+                    panelYardMaster.setVisible(false);
+                    panelSentry.setVisible(false);
+                } else if (s.equals("Dash-8")) {
+                    panelAcela.setVisible(false);
+                    panelTBrain.setVisible(false);
+                    panelDash8.setVisible(true);
+                    panelWatchman.setVisible(false);
+                    panelSignalman.setVisible(false);
+                    panelSwitchman.setVisible(false);
+                    panelYardMaster.setVisible(false);
+                    panelSentry.setVisible(false);
+                } else if (s.equals("Watchman")) {
+                    panelAcela.setVisible(false);
+                    panelTBrain.setVisible(false);
+                    panelDash8.setVisible(false);
+                    panelWatchman.setVisible(true);
+                    panelSignalman.setVisible(false);
+                    panelSwitchman.setVisible(false);
+                    panelYardMaster.setVisible(false);
+                    panelSentry.setVisible(false);
+                } else if (s.equals("SignalMan")) {
+                    panelAcela.setVisible(false);
+                    panelTBrain.setVisible(false);
+                    panelDash8.setVisible(false);
+                    panelWatchman.setVisible(false);
+                    panelSignalman.setVisible(true);
+                    panelSwitchman.setVisible(false);
+                    panelYardMaster.setVisible(false);
+                    panelSentry.setVisible(false);
+                } else if (s.equals("SwitchMan")) {
+                    panelAcela.setVisible(false);
+                    panelTBrain.setVisible(false);
+                    panelDash8.setVisible(false);
+                    panelWatchman.setVisible(false);
+                    panelSignalman.setVisible(false);
+                    panelSwitchman.setVisible(true);
+                    panelYardMaster.setVisible(false);
+                    panelSentry.setVisible(false);
+                } else if (s.equals("YardMaster")) {
+                    panelAcela.setVisible(false);
+                    panelTBrain.setVisible(false);
+                    panelDash8.setVisible(false);
+                    panelWatchman.setVisible(false);
+                    panelSignalman.setVisible(false);
+                    panelSwitchman.setVisible(false);
+                    panelYardMaster.setVisible(true);
+                    panelSentry.setVisible(false);
+                } else if (s.equals("Sentry")) {
+                    panelAcela.setVisible(false);
+                    panelTBrain.setVisible(false);
+                    panelDash8.setVisible(false);
+                    panelWatchman.setVisible(false);
+                    panelSignalman.setVisible(false);
+                    panelSwitchman.setVisible(false);
+                    panelYardMaster.setVisible(false);
+                    panelSentry.setVisible(true);
+                } // Add code here for other types of nodes
+                else {
+                    panelAcela.setVisible(false);
+                    panelTBrain.setVisible(false);
+                    panelDash8.setVisible(false);
+                    panelWatchman.setVisible(false);
+                    panelSignalman.setVisible(false);
+                    panelSwitchman.setVisible(false);
+                    panelYardMaster.setVisible(false);
+                    panelSentry.setVisible(false);
                 }
-            });
+            }
+        });
         panelNodeInfo.add(nodeTypeBox);
         nodeTypeBox.setToolTipText(rb.getString("TipNodeType"));
         panelNodeInfo.add(nodeTypeStatic);
@@ -420,9 +415,9 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
         Border panelAcelaBorder = BorderFactory.createEtchedBorder();
         Border panelAcelaTitled = BorderFactory.createTitledBorder(panelAcelaBorder,
-                                                rb.getString("BoxLabelNodeSpecific"));
-        panelAcela.setBorder(panelAcelaTitled);                
-        
+                rb.getString("BoxLabelNodeSpecific"));
+        panelAcela.setBorder(panelAcelaTitled);
+
         contentPane.add(panelAcela);
 
         // Set up the Dash8 nodes
@@ -454,23 +449,23 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         d8outputConfigModel.setEditMode(false);
         JTable d8outputConfigTable = new JTable(d8outputConfigModel);
         d8outputConfigTable.setRowSelectionAllowed(false);
-        d8outputConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(180,125));
-			
-        JComboBox d8outputWiredCombo = new JComboBox();
+        d8outputConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(180, 125));
+
+        JComboBox<String> d8outputWiredCombo = new JComboBox<String>();
         d8outputWiredCombo.addItem(rb.getString("OutputWiredNC"));
         d8outputWiredCombo.addItem(rb.getString("OutputWiredNO"));
-			
-        JComboBox d8initialStateCombo = new JComboBox();
+
+        JComboBox<String> d8initialStateCombo = new JComboBox<String>();
         d8initialStateCombo.addItem(rb.getString("InitialStateOn"));
         d8initialStateCombo.addItem(rb.getString("InitialStateOff"));
-			
-        JComboBox d8outputTypeCombo = new JComboBox();
+
+        JComboBox<String> d8outputTypeCombo = new JComboBox<String>();
         d8outputTypeCombo.addItem(rb.getString("OutputTypeONOFF"));
         d8outputTypeCombo.addItem(rb.getString("OutputTypePULSE"));
         d8outputTypeCombo.addItem(rb.getString("OutputTypeBLINK"));
-			
-        JComboBox d8outputLengthCombo = new JComboBox();
-        for (int t=0;t<255;t++) {
+
+        JComboBox<String> d8outputLengthCombo = new JComboBox<String>();
+        for (int t = 0; t < 255; t++) {
             d8outputLengthCombo.addItem(String.valueOf(t));
         }
 
@@ -507,19 +502,18 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
         JPanel panelDash8Table = new JPanel();
         panelDash8Table.setLayout(new BoxLayout(panelDash8Table, BoxLayout.Y_AXIS));
-        
-        panelDash8Table.add(d8outputScrollPane,BorderLayout.CENTER);
-        panelDash8.add(panelDash8Table,BoxLayout.Y_AXIS);
+
+        panelDash8Table.add(d8outputScrollPane, BorderLayout.CENTER);
+        panelDash8.add(panelDash8Table, BoxLayout.Y_AXIS);
 
         Border panelDash8Border = BorderFactory.createEtchedBorder();
         Border panelDash8Titled = BorderFactory.createTitledBorder(panelDash8Border,
-                                                rb.getString("BoxLabelNodeSpecific"));
-        panelDash8.setBorder(panelDash8Titled);                
-        
+                rb.getString("BoxLabelNodeSpecific"));
+        panelDash8.setBorder(panelDash8Titled);
+
         panelDash8.setVisible(false);
         contentPane.add(panelDash8);
 
-        
         // Set up the TBrain nodes
         panelTBrain.setLayout(new BoxLayout(panelTBrain, BoxLayout.Y_AXIS));
         JPanel panelTBrain1 = new JPanel();
@@ -545,23 +539,23 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         TBoutputConfigModel.setEditMode(false);
         JTable TBoutputConfigTable = new JTable(TBoutputConfigModel);
         TBoutputConfigTable.setRowSelectionAllowed(false);
-        TBoutputConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(180,62));
-			
-        JComboBox TBoutputWiredCombo = new JComboBox();
+        TBoutputConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(180, 62));
+
+        JComboBox<String> TBoutputWiredCombo = new JComboBox<String>();
         TBoutputWiredCombo.addItem(rb.getString("OutputWiredNC"));
         TBoutputWiredCombo.addItem(rb.getString("OutputWiredNO"));
-			
-        JComboBox TBoutputTypeCombo = new JComboBox();
+
+        JComboBox<String> TBoutputTypeCombo = new JComboBox<String>();
         TBoutputTypeCombo.addItem(rb.getString("OutputTypeONOFF"));
         TBoutputTypeCombo.addItem(rb.getString("OutputTypePULSE"));
         TBoutputTypeCombo.addItem(rb.getString("OutputTypeBLINK"));
-			
-        JComboBox TBinitialStateCombo = new JComboBox();
+
+        JComboBox<String> TBinitialStateCombo = new JComboBox<String>();
         TBinitialStateCombo.addItem(rb.getString("InitialStateOn"));
         TBinitialStateCombo.addItem(rb.getString("InitialStateOff"));
 
-        JComboBox TBoutputLengthCombo = new JComboBox();
-        for (int t=0;t<255;t++) {
+        JComboBox<String> TBoutputLengthCombo = new JComboBox<String>();
+        for (int t = 0; t < 255; t++) {
             TBoutputLengthCombo.addItem(String.valueOf(t));
         }
 
@@ -597,30 +591,30 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
         JPanel panelTrainBrainTable = new JPanel();
         panelTrainBrainTable.setLayout(new BoxLayout(panelTrainBrainTable, BoxLayout.Y_AXIS));
-        
-        panelTrainBrainTable.add(TBoutputScrollPane,BorderLayout.CENTER);
-        panelTBrain.add(panelTrainBrainTable,BoxLayout.Y_AXIS);
-        
+
+        panelTrainBrainTable.add(TBoutputScrollPane, BorderLayout.CENTER);
+        panelTBrain.add(panelTrainBrainTable, BoxLayout.Y_AXIS);
+
         TBsensorConfigModel = new SensorConfigModel();
         TBsensorConfigModel.setNumRows(4);
         TBsensorConfigModel.setEditMode(false);
 
         JTable TBsensorConfigTable = new JTable(TBsensorConfigModel);
         TBsensorConfigTable.setRowSelectionAllowed(false);
-        TBsensorConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(180,62));
-			
-        JComboBox TBfilterTypeCombo = new JComboBox();
+        TBsensorConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(180, 62));
+
+        JComboBox<String> TBfilterTypeCombo = new JComboBox<String>();
         TBfilterTypeCombo.addItem(rb.getString("FilterTypeNoise"));
         TBfilterTypeCombo.addItem(rb.getString("FilterTypeDebounce"));
         TBfilterTypeCombo.addItem(rb.getString("FilterTypeCarGap"));
         TBfilterTypeCombo.addItem(rb.getString("FilterTypeDirtyTrack"));
-			
-        JComboBox TBfilterPolarityCombo = new JComboBox();
+
+        JComboBox<String> TBfilterPolarityCombo = new JComboBox<String>();
         TBfilterPolarityCombo.addItem(rb.getString("FilterNormalPolarity"));
         TBfilterPolarityCombo.addItem(rb.getString("FilterInversePolarity"));
-			
-        JComboBox TBfilterThresholdCombo = new JComboBox();
-        for (int t=0;t<32;t++) {
+
+        JComboBox<String> TBfilterThresholdCombo = new JComboBox<String>();
+        for (int t = 0; t < 32; t++) {
             TBfilterThresholdCombo.addItem(String.valueOf(t));
         }
 
@@ -646,25 +640,24 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         TableColumn TBsensorAddressColumn = TBtypeColumnModel.getColumn(SensorConfigModel.SENSORADDRESS_COLUMN);
         TBsensorAddressColumn.setMinWidth(110);
         TBsensorAddressColumn.setMaxWidth(1200);
-			
+
         JScrollPane TBsensorScrollPane = new JScrollPane(TBsensorConfigTable);
 
         JPanel panelTBsensortable = new JPanel();
         panelTBsensortable.setLayout(new BoxLayout(panelTBsensortable, BoxLayout.Y_AXIS));
-        
-        panelTBsensortable.add(TBsensorScrollPane,BorderLayout.CENTER);
-        panelTBrain.add(panelTBsensortable,BoxLayout.Y_AXIS);
+
+        panelTBsensortable.add(TBsensorScrollPane, BorderLayout.CENTER);
+        panelTBrain.add(panelTBsensortable, BoxLayout.Y_AXIS);
 
         // Finish Set up the TrainBrain nodes
         Border panelTBrainBorder = BorderFactory.createEtchedBorder();
         Border panelTBrainTitled = BorderFactory.createTitledBorder(panelTBrainBorder,
-                                                rb.getString("BoxLabelNodeSpecific"));
-        panelTBrain.setBorder(panelTBrainTitled);                
-        
+                rb.getString("BoxLabelNodeSpecific"));
+        panelTBrain.setBorder(panelTBrainTitled);
+
         contentPane.add(panelTBrain);
         panelTBrain.setVisible(false);
 
-        
         // Set up the Watchman nodes
         panelWatchman.setLayout(new BoxLayout(panelWatchman, BoxLayout.Y_AXIS));
         JPanel panelWatchman1 = new JPanel();
@@ -687,27 +680,27 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         statusTextWatchman3.setVisible(true);
         panelWatchman3.add(statusTextWatchman3);
         panelWatchman.add(panelWatchman3);
-        
+
         wmsensorConfigModel = new SensorConfigModel();
         wmsensorConfigModel.setNumRows(8);
         wmsensorConfigModel.setEditMode(false);
 
         JTable wmsensorConfigTable = new JTable(wmsensorConfigModel);
         wmsensorConfigTable.setRowSelectionAllowed(false);
-        wmsensorConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(180,125));
-			
-        JComboBox wmfilterTypeCombo = new JComboBox();
+        wmsensorConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(180, 125));
+
+        JComboBox<String> wmfilterTypeCombo = new JComboBox<String>();
         wmfilterTypeCombo.addItem(rb.getString("FilterTypeNoise"));
         wmfilterTypeCombo.addItem(rb.getString("FilterTypeDebounce"));
         wmfilterTypeCombo.addItem(rb.getString("FilterTypeCarGap"));
         wmfilterTypeCombo.addItem(rb.getString("FilterTypeDirtyTrack"));
-			
-        JComboBox wmfilterPolarityCombo = new JComboBox();
+
+        JComboBox<String> wmfilterPolarityCombo = new JComboBox<String>();
         wmfilterPolarityCombo.addItem(rb.getString("FilterNormalPolarity"));
         wmfilterPolarityCombo.addItem(rb.getString("FilterInversePolarity"));
-			
-        JComboBox wmfilterThresholdCombo = new JComboBox();
-        for (int t=0;t<32;t++) {
+
+        JComboBox<String> wmfilterThresholdCombo = new JComboBox<String>();
+        for (int t = 0; t < 32; t++) {
             wmfilterThresholdCombo.addItem(String.valueOf(t));
         }
         TableColumnModel wmtypeColumnModel = wmsensorConfigTable.getColumnModel();
@@ -738,19 +731,18 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
         JPanel panelWatchmantable = new JPanel();
         panelWatchmantable.setLayout(new BoxLayout(panelWatchmantable, BoxLayout.Y_AXIS));
-        
-        panelWatchmantable.add(wmsensorScrollPane,BorderLayout.CENTER);
-        panelWatchman.add(panelWatchmantable,BoxLayout.Y_AXIS);
+
+        panelWatchmantable.add(wmsensorScrollPane, BorderLayout.CENTER);
+        panelWatchman.add(panelWatchmantable, BoxLayout.Y_AXIS);
 
         Border panelWatchmanBorder = BorderFactory.createEtchedBorder();
         Border panelWatchmanTitled = BorderFactory.createTitledBorder(panelWatchmanBorder,
-                                                rb.getString("BoxLabelNodeSpecific"));
-        panelWatchman.setBorder(panelWatchmanTitled);                
-        
+                rb.getString("BoxLabelNodeSpecific"));
+        panelWatchman.setBorder(panelWatchmanTitled);
+
         contentPane.add(panelWatchman);
         panelWatchman.setVisible(false);
 
-        
         // Set up the Signalman nodes
         panelSignalman.setLayout(new BoxLayout(panelSignalman, BoxLayout.Y_AXIS));
         JPanel panelSignalman1 = new JPanel();
@@ -780,23 +772,23 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         smoutputConfigModel.setEditMode(false);
         JTable smoutputConfigTable = new JTable(smoutputConfigModel);
         smoutputConfigTable.setRowSelectionAllowed(false);
-        smoutputConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(180,125));
-			
-        JComboBox smoutputWiredCombo = new JComboBox();
+        smoutputConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(180, 125));
+
+        JComboBox<String> smoutputWiredCombo = new JComboBox<String>();
         smoutputWiredCombo.addItem(rb.getString("OutputWiredNC"));
         smoutputWiredCombo.addItem(rb.getString("OutputWiredNO"));
-			
-        JComboBox sminitialStateCombo = new JComboBox();
+
+        JComboBox<String> sminitialStateCombo = new JComboBox<String>();
         sminitialStateCombo.addItem(rb.getString("InitialStateOn"));
         sminitialStateCombo.addItem(rb.getString("InitialStateOff"));
-			
-        JComboBox smoutputTypeCombo = new JComboBox();
+
+        JComboBox<String> smoutputTypeCombo = new JComboBox<String>();
         smoutputTypeCombo.addItem(rb.getString("OutputTypeONOFF"));
         smoutputTypeCombo.addItem(rb.getString("OutputTypePULSE"));
         smoutputTypeCombo.addItem(rb.getString("OutputTypeBLINK"));
-			
-        JComboBox smoutputLengthCombo = new JComboBox();
-        for (int t=0;t<255;t++) {
+
+        JComboBox<String> smoutputLengthCombo = new JComboBox<String>();
+        for (int t = 0; t < 255; t++) {
             smoutputLengthCombo.addItem(String.valueOf(t));
         }
 
@@ -833,19 +825,18 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
         JPanel panelSignalmanTable = new JPanel();
         panelSignalmanTable.setLayout(new BoxLayout(panelSignalmanTable, BoxLayout.Y_AXIS));
-        
-        panelSignalmanTable.add(smoutputScrollPane,BorderLayout.CENTER);
-        panelSignalman.add(panelSignalmanTable,BoxLayout.Y_AXIS);
+
+        panelSignalmanTable.add(smoutputScrollPane, BorderLayout.CENTER);
+        panelSignalman.add(panelSignalmanTable, BoxLayout.Y_AXIS);
 
         Border panelSignalmanBorder = BorderFactory.createEtchedBorder();
         Border panelSignalmanTitled = BorderFactory.createTitledBorder(panelSignalmanBorder,
-                                                rb.getString("BoxLabelNodeSpecific"));
-        panelSignalman.setBorder(panelSignalmanTitled);                
-        
+                rb.getString("BoxLabelNodeSpecific"));
+        panelSignalman.setBorder(panelSignalmanTitled);
+
         panelSignalman.setVisible(false);
         contentPane.add(panelSignalman);
 
-        
         // Set up the YardMaster nodes
         panelYardMaster.setLayout(new BoxLayout(panelYardMaster, BoxLayout.Y_AXIS));
         JPanel panelYardMaster1 = new JPanel();
@@ -875,23 +866,23 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         ymoutputConfigModel.setEditMode(false);
         JTable ymoutputConfigTable = new JTable(ymoutputConfigModel);
         ymoutputConfigTable.setRowSelectionAllowed(false);
-        ymoutputConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(180,125));
-			
-        JComboBox ymoutputWiredCombo = new JComboBox();
+        ymoutputConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(180, 125));
+
+        JComboBox<String> ymoutputWiredCombo = new JComboBox<String>();
         ymoutputWiredCombo.addItem(rb.getString("OutputWiredNC"));
         ymoutputWiredCombo.addItem(rb.getString("OutputWiredNO"));
-			
-        JComboBox yminitialStateCombo = new JComboBox();
+
+        JComboBox<String> yminitialStateCombo = new JComboBox<String>();
         yminitialStateCombo.addItem(rb.getString("InitialStateOn"));
         yminitialStateCombo.addItem(rb.getString("InitialStateOff"));
-			
-        JComboBox ymoutputTypeCombo = new JComboBox();
+
+        JComboBox<String> ymoutputTypeCombo = new JComboBox<String>();
         ymoutputTypeCombo.addItem(rb.getString("OutputTypeONOFF"));
         ymoutputTypeCombo.addItem(rb.getString("OutputTypePULSE"));
         ymoutputTypeCombo.addItem(rb.getString("OutputTypeBLINK"));
-			
-        JComboBox ymoutputLengthCombo = new JComboBox();
-        for (int t=0;t<255;t++) {
+
+        JComboBox<String> ymoutputLengthCombo = new JComboBox<String>();
+        for (int t = 0; t < 255; t++) {
             ymoutputLengthCombo.addItem(String.valueOf(t));
         }
 
@@ -928,19 +919,18 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
         JPanel panelYardMasterTable = new JPanel();
         panelYardMasterTable.setLayout(new BoxLayout(panelYardMasterTable, BoxLayout.Y_AXIS));
-        
-        panelYardMasterTable.add(ymoutputScrollPane,BorderLayout.CENTER);
-        panelYardMaster.add(panelYardMasterTable,BoxLayout.Y_AXIS);
+
+        panelYardMasterTable.add(ymoutputScrollPane, BorderLayout.CENTER);
+        panelYardMaster.add(panelYardMasterTable, BoxLayout.Y_AXIS);
 
         Border panelYardMasterBorder = BorderFactory.createEtchedBorder();
         Border panelYardMasterTitled = BorderFactory.createTitledBorder(panelYardMasterBorder,
-                                                rb.getString("BoxLabelNodeSpecific"));
-        panelYardMaster.setBorder(panelYardMasterTitled);                
-        
+                rb.getString("BoxLabelNodeSpecific"));
+        panelYardMaster.setBorder(panelYardMasterTitled);
+
         panelYardMaster.setVisible(false);
         contentPane.add(panelYardMaster);
 
-        
         // Set up the SwitchMan nodes
         panelSwitchman.setLayout(new BoxLayout(panelSwitchman, BoxLayout.Y_AXIS));
         JPanel panelSwitchman1 = new JPanel();
@@ -970,23 +960,23 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         swoutputConfigModel.setEditMode(false);
         JTable swoutputConfigTable = new JTable(swoutputConfigModel);
         swoutputConfigTable.setRowSelectionAllowed(false);
-        swoutputConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(180,125));
-			
-        JComboBox swoutputWiredCombo = new JComboBox();
+        swoutputConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(180, 125));
+
+        JComboBox<String> swoutputWiredCombo = new JComboBox<String>();
         swoutputWiredCombo.addItem(rb.getString("OutputWiredNC"));
         swoutputWiredCombo.addItem(rb.getString("OutputWiredNO"));
-			
-        JComboBox swinitialStateCombo = new JComboBox();
+
+        JComboBox<String> swinitialStateCombo = new JComboBox<String>();
         swinitialStateCombo.addItem(rb.getString("InitialStateOn"));
         swinitialStateCombo.addItem(rb.getString("InitialStateOff"));
-			
-        JComboBox swoutputTypeCombo = new JComboBox();
+
+        JComboBox<String> swoutputTypeCombo = new JComboBox<String>();
         swoutputTypeCombo.addItem(rb.getString("OutputTypeONOFF"));
         swoutputTypeCombo.addItem(rb.getString("OutputTypePULSE"));
         swoutputTypeCombo.addItem(rb.getString("OutputTypeBLINK"));
-			
-        JComboBox swoutputLengthCombo = new JComboBox();
-        for (int t=0;t<255;t++) {
+
+        JComboBox<String> swoutputLengthCombo = new JComboBox<String>();
+        for (int t = 0; t < 255; t++) {
             swoutputLengthCombo.addItem(String.valueOf(t));
         }
 
@@ -1023,19 +1013,18 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
         JPanel panelSwitchmanTable = new JPanel();
         panelSwitchmanTable.setLayout(new BoxLayout(panelSwitchmanTable, BoxLayout.Y_AXIS));
-        
-        panelSwitchmanTable.add(swoutputScrollPane,BorderLayout.CENTER);
-        panelSwitchman.add(panelSwitchmanTable,BoxLayout.Y_AXIS);
+
+        panelSwitchmanTable.add(swoutputScrollPane, BorderLayout.CENTER);
+        panelSwitchman.add(panelSwitchmanTable, BoxLayout.Y_AXIS);
 
         Border panelSwitchmanBorder = BorderFactory.createEtchedBorder();
         Border panelSwitchmanTitled = BorderFactory.createTitledBorder(panelSwitchmanBorder,
-                                                rb.getString("BoxLabelNodeSpecific"));
-        panelSwitchman.setBorder(panelSwitchmanTitled);                
-        
+                rb.getString("BoxLabelNodeSpecific"));
+        panelSwitchman.setBorder(panelSwitchmanTitled);
+
         panelSwitchman.setVisible(false);
         contentPane.add(panelSwitchman);
 
-        
         // Set up the Sentry nodes
         panelSentry.setLayout(new BoxLayout(panelSentry, BoxLayout.Y_AXIS));
         JPanel panelSentry1 = new JPanel();
@@ -1058,27 +1047,27 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         statusTextSentry3.setVisible(true);
         panelSentry3.add(statusTextSentry3);
         panelSentry.add(panelSentry3);
-        
+
         sysensorConfigModel = new SensorConfigModel();
         sysensorConfigModel.setNumRows(16);
         sysensorConfigModel.setEditMode(false);
 
         JTable sysensorConfigTable = new JTable(sysensorConfigModel);
         sysensorConfigTable.setRowSelectionAllowed(false);
-        sysensorConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(180,125));
-			
-        JComboBox syfilterTypeCombo = new JComboBox();
+        sysensorConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(180, 125));
+
+        JComboBox<String> syfilterTypeCombo = new JComboBox<String>();
         syfilterTypeCombo.addItem(rb.getString("FilterTypeNoise"));
         syfilterTypeCombo.addItem(rb.getString("FilterTypeDebounce"));
         syfilterTypeCombo.addItem(rb.getString("FilterTypeCarGap"));
         syfilterTypeCombo.addItem(rb.getString("FilterTypeDirtyTrack"));
-			
-        JComboBox syfilterPolarityCombo = new JComboBox();
+
+        JComboBox<String> syfilterPolarityCombo = new JComboBox<String>();
         syfilterPolarityCombo.addItem(rb.getString("FilterNormalPolarity"));
         syfilterPolarityCombo.addItem(rb.getString("FilterInversePolarity"));
-			
-        JComboBox syfilterThresholdCombo = new JComboBox();
-        for (int t=0;t<32;t++) {
+
+        JComboBox<String> syfilterThresholdCombo = new JComboBox<String>();
+        for (int t = 0; t < 32; t++) {
             syfilterThresholdCombo.addItem(String.valueOf(t));
         }
         TableColumnModel sytypeColumnModel = sysensorConfigTable.getColumnModel();
@@ -1109,18 +1098,17 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
         JPanel panelSentrytable = new JPanel();
         panelSentrytable.setLayout(new BoxLayout(panelSentrytable, BoxLayout.Y_AXIS));
-        
-        panelSentrytable.add(sysensorScrollPane,BorderLayout.CENTER);
-        panelSentry.add(panelSentrytable,BoxLayout.Y_AXIS);
+
+        panelSentrytable.add(sysensorScrollPane, BorderLayout.CENTER);
+        panelSentry.add(panelSentrytable, BoxLayout.Y_AXIS);
 
         Border panelSentryBorder = BorderFactory.createEtchedBorder();
         Border panelSentryTitled = BorderFactory.createTitledBorder(panelSentryBorder,
-                                                rb.getString("BoxLabelNodeSpecific"));
-        panelSentry.setBorder(panelSentryTitled);                
-        
+                rb.getString("BoxLabelNodeSpecific"));
+        panelSentry.setBorder(panelSentryTitled);
+
         contentPane.add(panelSentry);
         panelSentry.setVisible(false);
-
 
         // Set up the notes panel
         JPanel panel3 = new JPanel();
@@ -1145,10 +1133,10 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         panel3.add(panel33);
         Border panel3Border = BorderFactory.createEtchedBorder();
         Border panel3Titled = BorderFactory.createTitledBorder(panel3Border,
-                                                rb.getString("BoxLabelNotes"));
-        panel3.setBorder(panel3Titled);                
+                rb.getString("BoxLabelNotes"));
+        panel3.setBorder(panel3Titled);
         contentPane.add(panel3);
-        
+
         // Set up buttons
         JPanel panel4 = new JPanel();
         panel4.setLayout(new FlowLayout());
@@ -1156,105 +1144,107 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         addButton.setVisible(true);
         addButton.setToolTipText(rb.getString("TipAddButton"));
         addButton.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    addButtonActionPerformed();
-                }
-            });
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                addButtonActionPerformed();
+            }
+        });
         panel4.add(addButton);
         editButton.setText(rb.getString("ButtonEdit"));
         editButton.setVisible(true);
         editButton.setToolTipText(rb.getString("TipEditButton"));
         panel4.add(editButton);
         editButton.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    editButtonActionPerformed();
-                }
-            });
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                editButtonActionPerformed();
+            }
+        });
         panel4.add(deleteButton);
         deleteButton.setText(rb.getString("ButtonDelete"));
         deleteButton.setVisible(true);
         deleteButton.setToolTipText(rb.getString("TipDeleteButton"));
         panel4.add(deleteButton);
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    deleteButtonActionPerformed();
-                }
-            });
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                deleteButtonActionPerformed();
+            }
+        });
         panel4.add(doneButton);
         doneButton.setText(rb.getString("ButtonDone"));
         doneButton.setVisible(true);
         doneButton.setToolTipText(rb.getString("TipDoneButton"));
         panel4.add(doneButton);
         doneButton.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    doneButtonActionPerformed();
-                }
-            });
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                doneButtonActionPerformed();
+            }
+        });
         panel4.add(updateButton);
         updateButton.setText(rb.getString("ButtonUpdate"));
         updateButton.setVisible(true);
         updateButton.setToolTipText(rb.getString("TipUpdateButton"));
         panel4.add(updateButton);
         updateButton.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    updateButtonActionPerformed();
-                }
-            });
-        updateButton.setVisible(false);			
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                updateButtonActionPerformed();
+            }
+        });
+        updateButton.setVisible(false);
         panel4.add(cancelButton);
         cancelButton.setText(rb.getString("ButtonCancel"));
         cancelButton.setVisible(true);
         cancelButton.setToolTipText(rb.getString("TipCancelButton"));
         panel4.add(cancelButton);
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    cancelButtonActionPerformed();
-                }
-            });
-        cancelButton.setVisible(false);			
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                cancelButtonActionPerformed();
+            }
+        });
+        cancelButton.setVisible(false);
 
         contentPane.add(panel4);
 
         // add help menu to window
-    	addHelpMenu("package.jmri.jmrix.acela.nodeconfig.NodeConfigFrame", true);
+        addHelpMenu("package.jmri.jmrix.acela.nodeconfig.NodeConfigFrame", true);
 
         // pack for display
         pack();
     }
 
     /**
-     * Method to handle add button 
-     */        
+     * Method to handle add button
+     */
     public void addButtonActionPerformed() {
-       javax.swing.JOptionPane.showMessageDialog(this,
-           rb.getString("NotSupported1")+"\n"+rb.getString("NotSupported2"),
-                        rb.getString("NotSupportedTitle"),
-                        javax.swing.JOptionPane.INFORMATION_MESSAGE);
-       resetNotes();
-       return;
+        javax.swing.JOptionPane.showMessageDialog(this,
+                rb.getString("NotSupported1") + "\n" + rb.getString("NotSupported2"),
+                rb.getString("NotSupportedTitle"),
+                javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        resetNotes();
+        return;
     }
 
     /**
-     * Method to handle info state 
-     */        
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+     * Method to handle info state
+     */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     public void infoButtonActionPerformed() {
 
         // lookup the nodes
-        String nodesstring = ""; 
+        String nodesstring = "";
         int tempnumnodes = AcelaTrafficController.instance().getNumNodes();
-        for (int i=0;i<tempnumnodes;i++) {
+        for (int i = 0; i < tempnumnodes; i++) {
             AcelaNode tempnode;
             tempnode = (AcelaNode) AcelaTrafficController.instance().getNodeFromAddress(i);
             nodesstring = nodesstring + " " + tempnode.getNodeTypeString();
         }
         thenodesStaticC.setText(nodesstring);
-        
+
         // Find Acela Node address
         nodeAddress = readNodeAddress();
-        if (nodeAddress < 0) return;
+        if (nodeAddress < 0) {
+            return;
+        }
         // get the AcelaNode corresponding to this node address
         curNode = (AcelaNode) AcelaTrafficController.instance().getNodeFromAddress(nodeAddress);
         if (curNode == null) {
@@ -1268,29 +1258,27 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         nodeAddrStatic.setText(Integer.toString(nodeAddress));
         nodeAddrBox.setVisible(true);
         nodeAddrField.setVisible(false);
-        nodeAddrStatic.setVisible(false);     
+        nodeAddrStatic.setVisible(false);
         // get information for this node and set up combo box
         nodeType = curNode.getNodeType();
         nodeTypeBox.setSelectedIndex(nodeType);
         nodeTypeBox.setVisible(false);
         nodeTypeStatic.setText(AcelaNode.getModuleNames()[nodeType]);
-        nodeTypeStatic.setVisible(true);     
+        nodeTypeStatic.setVisible(true);
 
         // get information for this node if it is an output node
         int numoutputbits = curNode.getNumOutputBitsPerCard();
         if (numoutputbits > 0) {
             // set up output types
-            for (int o=0;o<numoutputbits;o++) {
+            for (int o = 0; o < numoutputbits; o++) {
                 if (curNode.getOutputInit(o) == 0) {
                     initialState[o] = rb.getString("InitialStateOff");
-                }
-                else { // if (curNode.getOutputInit(o) == 1) {
+                } else { // if (curNode.getOutputInit(o) == 1) {
                     initialState[o] = rb.getString("InitialStateOn");
                 }
                 if (curNode.getOutputWired(o) == 0) {
                     outputWired[o] = rb.getString("OutputWiredNO");
-                }
-                else { // if (curNode.getOutputWired(o) == 1) {
+                } else { // if (curNode.getOutputWired(o) == 1) {
                     outputWired[o] = rb.getString("OutputWiredNC");
                 }
 
@@ -1303,40 +1291,36 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
                         outputType[o] = rb.getString("OutputTypeBLINK");
                     }
                 }
-                
+
                 outputLength[o] = String.valueOf(curNode.getOutputLength(o));
             }
         }
-        
+
         // get information for this node if it is a sensor node
         int numsensorbits = curNode.getNumSensorBitsPerCard();
         if (numsensorbits > 0) {
             // set up sensor types
-            for (int i=0;i<numsensorbits;i++) {
+            for (int i = 0; i < numsensorbits; i++) {
                 if (curNode.getSensorType(i) == 0) {
                     filterType[i] = rb.getString("FilterTypeNoise");
-                }
-                else if (curNode.getSensorType(i) == 1) {
+                } else if (curNode.getSensorType(i) == 1) {
                     filterType[i] = rb.getString("FilterTypeDebounce");
-                }
-                else if (curNode.getSensorType(i) == 2) {
+                } else if (curNode.getSensorType(i) == 2) {
                     filterType[i] = rb.getString("FilterTypeCarGap");
-                }
-                else {
+                } else {
                     filterType[i] = rb.getString("FilterTypeDirtyTrack");
                 }
 
                 if (curNode.getSensorPolarity(i) == 0) {
                     filterPolarity[i] = rb.getString("FilterNormalPolarity");
-                }
-                else {
+                } else {
                     filterPolarity[i] = rb.getString("FilterInversePolarity");
                 }
 
                 filterThreshold[i] = String.valueOf(curNode.getSensorThreshold(i));
             }
         }
-        
+
         // Switch buttons
         editMode = false;
         addButton.setVisible(true);
@@ -1344,12 +1328,12 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         deleteButton.setVisible(true);
         doneButton.setVisible(true);
         updateButton.setVisible(false);
-        cancelButton.setVisible(false); 
+        cancelButton.setVisible(false);
         // Switch to edit notes
         statusText1.setText(infoStatus1);
         statusText2.setText(infoStatus2);
         statusText3.setText(infoStatus3);
-        
+
         d8outputConfigModel.setEditMode(false);
         swoutputConfigModel.setEditMode(false);
         ymoutputConfigModel.setEditMode(false);
@@ -1362,12 +1346,14 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to handle edit button 
-     */        
+     * Method to handle edit button
+     */
     public void editButtonActionPerformed() {
         // Find Acela Node address
         nodeAddress = readNodeAddress();
-        if (nodeAddress < 0) return;
+        if (nodeAddress < 0) {
+            return;
+        }
         // get the AcelaNode corresponding to this node address
         curNode = (AcelaNode) AcelaTrafficController.instance().getNodeFromAddress(nodeAddress);
         if (curNode == null) {
@@ -1381,29 +1367,27 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         nodeAddrStatic.setText(Integer.toString(nodeAddress));
         nodeAddrBox.setVisible(false);
         nodeAddrField.setVisible(false);
-        nodeAddrStatic.setVisible(true);     
+        nodeAddrStatic.setVisible(true);
         // get information for this node and set up combo box
         nodeType = curNode.getNodeType();
         nodeTypeBox.setSelectedIndex(nodeType);
         nodeTypeBox.setVisible(true);
         nodeTypeStatic.setText(AcelaNode.getModuleNames()[nodeType]);
-        nodeTypeStatic.setVisible(false);     
+        nodeTypeStatic.setVisible(false);
 
         // get information for this node if it is an output node
         int numoutputbits = curNode.getNumOutputBitsPerCard();
         if (numoutputbits > 0) {
             // set up output types
-            for (int o=0;o<numoutputbits;o++) {
+            for (int o = 0; o < numoutputbits; o++) {
                 if (curNode.getOutputInit(o) == 0) {
                     initialState[o] = rb.getString("InitialStateOff");
-                }
-                else { // if (curNode.getOutputInit(o) == 1) {
+                } else { // if (curNode.getOutputInit(o) == 1) {
                     initialState[o] = rb.getString("InitialStateOn");
                 }
                 if (curNode.getOutputWired(o) == 0) {
                     outputWired[o] = rb.getString("OutputWiredNO");
-                }
-                else { // if (curNode.getOutputWired(o) == 1) {
+                } else { // if (curNode.getOutputWired(o) == 1) {
                     outputWired[o] = rb.getString("OutputWiredNC");
                 }
 
@@ -1416,40 +1400,36 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
                         outputType[o] = rb.getString("OutputTypeBLINK");
                     }
                 }
-                
+
                 outputLength[o] = String.valueOf(curNode.getOutputLength(o));
             }
         }
-        
+
         // get information for this node if it is a sensor node
         int numsensorbits = curNode.getNumSensorBitsPerCard();
         if (numsensorbits > 0) {
             // set up sensor types
-            for (int i=0;i<numsensorbits;i++) {
+            for (int i = 0; i < numsensorbits; i++) {
                 if (curNode.getSensorType(i) == 0) {
                     filterType[i] = rb.getString("FilterTypeNoise");
-                }
-                else if (curNode.getSensorType(i) == 1) {
+                } else if (curNode.getSensorType(i) == 1) {
                     filterType[i] = rb.getString("FilterTypeDebounce");
-                }
-                else if (curNode.getSensorType(i) == 2) {
+                } else if (curNode.getSensorType(i) == 2) {
                     filterType[i] = rb.getString("FilterTypeCarGap");
-                }
-                else {
+                } else {
                     filterType[i] = rb.getString("FilterTypeDirtyTrack");
                 }
 
                 if (curNode.getSensorPolarity(i) == 0) {
                     filterPolarity[i] = rb.getString("FilterNormalPolarity");
-                }
-                else {
+                } else {
                     filterPolarity[i] = rb.getString("FilterInversePolarity");
                 }
 
                 filterThreshold[i] = String.valueOf(curNode.getSensorThreshold(i));
             }
         }
-        
+
         // Switch buttons
         editMode = true;
         addButton.setVisible(false);
@@ -1457,7 +1437,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         deleteButton.setVisible(false);
         doneButton.setVisible(false);
         updateButton.setVisible(true);
-        cancelButton.setVisible(true); 
+        cancelButton.setVisible(true);
         // Switch to edit notes
         statusText1.setText(editStatus1);
         statusText2.setText(editStatus2);
@@ -1476,21 +1456,21 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to handle delete button 
-     */        
+     * Method to handle delete button
+     */
     public void deleteButtonActionPerformed() {
 
-       javax.swing.JOptionPane.showMessageDialog(this,
-           rb.getString("NotSupported1")+"\n"+rb.getString("NotSupported2"),
-                        rb.getString("NotSupportedTitle"),
-                        javax.swing.JOptionPane.INFORMATION_MESSAGE);
-       resetNotes();
-       return;
+        javax.swing.JOptionPane.showMessageDialog(this,
+                rb.getString("NotSupported1") + "\n" + rb.getString("NotSupported2"),
+                rb.getString("NotSupportedTitle"),
+                javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        resetNotes();
+        return;
     }
 
     /**
-     * Method to handle done button 
-     */        
+     * Method to handle done button
+     */
     public void doneButtonActionPerformed() {
         if (editMode) {
             // Reset 
@@ -1505,28 +1485,28 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             cancelButton.setVisible(false);
             nodeAddrBox.setVisible(true);
 //            nodeAddrField.setVisible(true);
-            nodeAddrStatic.setVisible(false);     
-            nodeTypeStatic.setVisible(true);     
-            nodeTypeBox.setVisible(false);     
+            nodeAddrStatic.setVisible(false);
+            nodeTypeStatic.setVisible(true);
+            nodeTypeBox.setVisible(false);
         }
         if (changedNode) {
             // Remind user to Save new configuration
             javax.swing.JOptionPane.showMessageDialog(this,
-                    rb.getString("Reminder1")+"\n"+rb.getString("Reminder2"),
-                        rb.getString("ReminderTitle"),
-                            javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                    rb.getString("Reminder1") + "\n" + rb.getString("Reminder2"),
+                    rb.getString("ReminderTitle"),
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
         }
         setVisible(false);
         dispose();
     }
 
     /**
-     * Method to handle update button 
-     */        
+     * Method to handle update button
+     */
     public void updateButtonActionPerformed() {
         // update node information
         nodeType = nodeTypeBox.getSelectedIndex();
-        log.debug("update performed: was "+curNode.getNodeType()+" request "+nodeType);
+        log.debug("update performed: was " + curNode.getNodeType() + " request " + nodeType);
         if (curNode.getNodeType() != nodeType) {
             // node type has changed
             curNode.setNodeType(nodeType);
@@ -1546,15 +1526,15 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         // make node address editable again	
         nodeAddrBox.setVisible(true);
 //        nodeAddrField.setVisible(true);
-        nodeAddrStatic.setVisible(false);             
+        nodeAddrStatic.setVisible(false);
         nodeTypeBox.setVisible(false);
-        nodeTypeStatic.setVisible(true);             
+        nodeTypeStatic.setVisible(true);
         // refresh notes panel
         statusText2.setText(stdStatus2);
         statusText3.setText(stdStatus3);
         // provide user feedback
-        statusText1.setText(rb.getString("FeedBackUpdate")+" "+
-                                    Integer.toString(nodeAddress));
+        statusText1.setText(rb.getString("FeedBackUpdate") + " "
+                + Integer.toString(nodeAddress));
         errorInStatus1 = true;
 
         d8outputConfigModel.setEditMode(false);
@@ -1571,9 +1551,9 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to handle cancel button 
-     */        
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+     * Method to handle cancel button
+     */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     public void cancelButtonActionPerformed() {
@@ -1582,18 +1562,20 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         curNode = null;
 
         // lookup the nodes
-        String nodesstring = ""; 
+        String nodesstring = "";
         int tempnumnodes = AcelaTrafficController.instance().getNumNodes();
-        for (int i=0;i<tempnumnodes;i++) {
+        for (int i = 0; i < tempnumnodes; i++) {
             AcelaNode tempnode;
             tempnode = (AcelaNode) AcelaTrafficController.instance().getNodeFromAddress(i);
             nodesstring = nodesstring + " " + tempnode.getNodeTypeString();
         }
         thenodesStaticC.setText(nodesstring);
-        
+
         // Find Acela Node address
         nodeAddress = readNodeAddress();
-        if (nodeAddress < 0) return;
+        if (nodeAddress < 0) {
+            return;
+        }
         // get the AcelaNode corresponding to this node address
         curNode = (AcelaNode) AcelaTrafficController.instance().getNodeFromAddress(nodeAddress);
         if (curNode == null) {
@@ -1607,29 +1589,27 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         nodeAddrStatic.setText(Integer.toString(nodeAddress));
         nodeAddrBox.setVisible(true);
         nodeAddrField.setVisible(false);
-        nodeAddrStatic.setVisible(false);     
+        nodeAddrStatic.setVisible(false);
         // get information for this node and set up combo box
         nodeType = curNode.getNodeType();
         nodeTypeBox.setSelectedIndex(nodeType);
         nodeTypeBox.setVisible(false);
         nodeTypeStatic.setText(AcelaNode.getModuleNames()[nodeType]);
-        nodeTypeStatic.setVisible(true);     
+        nodeTypeStatic.setVisible(true);
 
         // get information for this node if it is an output node
         int numoutputbits = curNode.getNumOutputBitsPerCard();
         if (numoutputbits > 0) {
             // set up output types
-            for (int o=0;o<numoutputbits;o++) {
+            for (int o = 0; o < numoutputbits; o++) {
                 if (curNode.getOutputInit(o) == 0) {
                     initialState[o] = rb.getString("InitialStateOff");
-                }
-                else { // if (curNode.getOutputInit(o) == 1) {
+                } else { // if (curNode.getOutputInit(o) == 1) {
                     initialState[o] = rb.getString("InitialStateOn");
                 }
                 if (curNode.getOutputWired(o) == 0) {
                     outputWired[o] = rb.getString("OutputWiredNO");
-                }
-                else { // if (curNode.getOutputWired(o) == 1) {
+                } else { // if (curNode.getOutputWired(o) == 1) {
                     outputWired[o] = rb.getString("OutputWiredNC");
                 }
 
@@ -1642,40 +1622,36 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
                         outputType[o] = rb.getString("OutputTypeBLINK");
                     }
                 }
-                
+
                 outputLength[o] = String.valueOf(curNode.getOutputLength(o));
             }
         }
-        
+
         // get information for this node if it is a sensor node
         int numsensorbits = curNode.getNumSensorBitsPerCard();
         if (numsensorbits > 0) {
             // set up sensor types
-            for (int i=0;i<numsensorbits;i++) {
+            for (int i = 0; i < numsensorbits; i++) {
                 if (curNode.getSensorType(i) == 0) {
                     filterType[i] = rb.getString("FilterTypeNoise");
-                }
-                else if (curNode.getSensorType(i) == 1) {
+                } else if (curNode.getSensorType(i) == 1) {
                     filterType[i] = rb.getString("FilterTypeDebounce");
-                }
-                else if (curNode.getSensorType(i) == 2) {
+                } else if (curNode.getSensorType(i) == 2) {
                     filterType[i] = rb.getString("FilterTypeCarGap");
-                }
-                else {
+                } else {
                     filterType[i] = rb.getString("FilterTypeDirtyTrack");
                 }
 
                 if (curNode.getSensorPolarity(i) == 0) {
                     filterPolarity[i] = rb.getString("FilterNormalPolarity");
-                }
-                else {
+                } else {
                     filterPolarity[i] = rb.getString("FilterInversePolarity");
                 }
 
                 filterThreshold[i] = String.valueOf(curNode.getSensorThreshold(i));
             }
         }
-        
+
         // Switch buttons
         editMode = false;
         addButton.setVisible(true);
@@ -1683,12 +1659,12 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         deleteButton.setVisible(true);
         doneButton.setVisible(true);
         updateButton.setVisible(false);
-        cancelButton.setVisible(false); 
+        cancelButton.setVisible(false);
         // Switch to edit notes
         statusText1.setText(infoStatus1);
         statusText2.setText(infoStatus2);
         statusText3.setText(infoStatus3);
-        
+
         d8outputConfigModel.setEditMode(false);
         swoutputConfigModel.setEditMode(false);
         ymoutputConfigModel.setEditMode(false);
@@ -1706,12 +1682,11 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      */
     public void windowClosing(java.awt.event.WindowEvent e) {
         doneButtonActionPerformed();
-    }    
+    }
 
     /**
-     * Method to set node parameters
-     *    The node must exist, and be in 'curNode'
-     *    Also, the node type must be set and in 'nodeType'
+     * Method to set node parameters The node must exist, and be in 'curNode'
+     * Also, the node type must be set and in 'nodeType'
      */
     void setNodeParameters() {
         // set curNode type
@@ -1721,18 +1696,16 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         int numoutputbits = curNode.getNumOutputBitsPerCard();
         if (numoutputbits > 0) {
             // set up output types
-            for (int o=0;o<numoutputbits;o++) {
+            for (int o = 0; o < numoutputbits; o++) {
                 if (initialState[o].contentEquals(rb.getString("InitialStateOff"))) {
                     curNode.setOutputInit(o, 0);
-                }
-                else { // if (initialState[o].contentEquals(rb.getString("InitialStateOn"))) {
+                } else { // if (initialState[o].contentEquals(rb.getString("InitialStateOn"))) {
                     curNode.setOutputInit(o, 1);
                 }
 
                 if (outputWired[o].contentEquals(rb.getString("OutputWiredNO"))) {
                     curNode.setOutputWired(o, 0);
-                }
-                else { // if (outputWired[o].contentEquals(rb.getString("OutputWiredNC"))) {
+                } else { // if (outputWired[o].contentEquals(rb.getString("OutputWiredNC"))) {
                     curNode.setOutputWired(o, 1);
                 }
 
@@ -1749,43 +1722,37 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
                 curNode.setOutputLength(o, Integer.parseInt(outputLength[o]));
             }
         }
-        
+
         // get information for this node if it is a sensor node
         int numsensorbits = curNode.getNumSensorBitsPerCard();
         if (numsensorbits > 0) {
-        
-        // set up sensor types
-            for (int i=0;i<numsensorbits;i++) {
+
+            // set up sensor types
+            for (int i = 0; i < numsensorbits; i++) {
                 if (filterType[i].contentEquals(rb.getString("FilterTypeNoise"))) {
                     curNode.setSensorType(i, 0);
-                }
-                else if (filterType[i].contentEquals(rb.getString("FilterTypeDebounce"))) {
+                } else if (filterType[i].contentEquals(rb.getString("FilterTypeDebounce"))) {
                     curNode.setSensorType(i, 1);
-                }
-                else if (filterType[i].contentEquals(rb.getString("FilterTypeCarGap"))) {
+                } else if (filterType[i].contentEquals(rb.getString("FilterTypeCarGap"))) {
                     curNode.setSensorType(i, 2);
-                }
-                else { // filterType[i].contentEquals(rb.getString("FilterTypeDirtyTrack"))
+                } else { // filterType[i].contentEquals(rb.getString("FilterTypeDirtyTrack"))
                     curNode.setSensorType(i, 3);
                 }
 
                 if (filterPolarity[i].contentEquals(rb.getString("FilterNormalPolarity"))) {
                     curNode.setSensorPolarity(i, 0);
-                }
-                else { // filterPolarity[i].contentEquals(rb.getString("FilterInversePolarity"))
+                } else { // filterPolarity[i].contentEquals(rb.getString("FilterInversePolarity"))
                     curNode.setSensorPolarity(i, 1);
                 }
 
                 curNode.setSensorThreshold(i, Integer.parseInt(filterThreshold[i]));
             }
         }
-        
-        
-        
+
         // Cause reinitialization of this Node to reflect these parameters
         AcelaTrafficController.instance().initializeAcelaNode(curNode);
     }
-    
+
     /**
      * Method to reset the notes error after error display
      */
@@ -1793,14 +1760,14 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         if (errorInStatus1) {
             if (editMode) {
                 statusText1.setText(editStatus1);
-            }
-            else {
+            } else {
                 statusText1.setText(stdStatus1);
             }
             errorInStatus1 = false;
         }
         resetNotes2();
     }
+
     /**
      * Reset the second line of Notes area
      */
@@ -1808,36 +1775,31 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         if (errorInStatus2) {
             if (editMode) {
                 statusText1.setText(editStatus2);
-            }
-            else {
+            } else {
                 statusText2.setText(stdStatus2);
             }
             errorInStatus2 = false;
         }
     }
-    
+
     /**
-     * Read node address and check for legal range
-     *     If successful, a node address in the range 0-255 is returned.
-     *     If not successful, -1 is returned and an appropriate error
-     *          message is placed in statusText1.
+     * Read node address and check for legal range If successful, a node address
+     * in the range 0-255 is returned. If not successful, -1 is returned and an
+     * appropriate error message is placed in statusText1.
      */
     private int readNodeAddress() {
         int addr = -1;
-        try 
-        {
+        try {
             addr = nodeAddrBox.getSelectedIndex();
 //            addr = Integer.parseInt(nodeAddrField.getText());
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             statusText1.setText(rb.getString("Error5"));
             statusText1.setVisible(true);
             errorInStatus1 = true;
             resetNotes2();
             return -1;
         }
-        if ( (addr < 0) || (addr > 255) ) {
+        if ((addr < 0) || (addr > 255)) {
             statusText1.setText(rb.getString("Error6"));
             statusText1.setVisible(true);
             errorInStatus1 = true;
@@ -1848,41 +1810,60 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Set up table for selecting sensor default parameters for Sentry or TBrain nodes
+     * Set up table for selecting sensor default parameters for Sentry or TBrain
+     * nodes
      */
 //    public class SensorConfigModel extends AbstractTableModel
-    public class SensorConfigModel extends NodeConfigModel
-    {
-        public String getColumnName(int c) {return sensorConfigColumnNames[c];}
-        public Class<?> getColumnClass(int c) {return String.class;}
-        public int getColumnCount () {return 5;}
-        public int getRowCount () {return numrows;}
+    public class SensorConfigModel extends NodeConfigModel {
+
+        /**
+         *
+         */
+        private static final long serialVersionUID = 8903322968361854433L;
+
+        public String getColumnName(int c) {
+            return sensorConfigColumnNames[c];
+        }
+
+        public Class<?> getColumnClass(int c) {
+            return String.class;
+        }
+
+        public int getColumnCount() {
+            return 5;
+        }
+
+        public int getRowCount() {
+            return numrows;
+        }
+
         public void setNumRows(int r) {
             numrows = r;
         }
+
         public void setEditMode(boolean b) {
             editmode = b;
         }
+
         public boolean getEditMode() {
             return editmode;
         }
-        public Object getValueAt (int r,int c) {
-            if (c==0) {
+
+        public Object getValueAt(int r, int c) {
+            if (c == 0) {
                 return Integer.toString(r);
-            }
-            else if (c==1) {
+            } else if (c == 1) {
                 return filterType[r];
-            }
-            else if (c==2) {
+            } else if (c == 2) {
                 return filterPolarity[r];
-            }
-            else if (c==3) {
+            } else if (c == 3) {
                 return filterThreshold[r];
-            }
-            else if (c==4) {
+            } else if (c == 4) {
                 // Find Acela Node address
                 nodeAddress = readNodeAddress();
-                if (nodeAddress < 0) return Integer.toString(0);
+                if (nodeAddress < 0) {
+                    return Integer.toString(0);
+                }
                 // get the AcelaNode corresponding to this node address
                 curNode = (AcelaNode) AcelaTrafficController.instance().getNodeFromAddress(nodeAddress);
                 if (curNode == null) {
@@ -1892,34 +1873,36 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
                     resetNotes2();
                     return Integer.toString(0);
                 }
-                return Integer.toString(curNode.getStartingSensorAddress()+r);
+                return Integer.toString(curNode.getStartingSensorAddress() + r);
             }
             return "";
         }
-        public void setValueAt(Object type,int r,int c) {
-            if (c==1) {
-                filterType[r] = (String)type;
+
+        public void setValueAt(Object type, int r, int c) {
+            if (c == 1) {
+                filterType[r] = (String) type;
             }
-            if (c==2) {
-                filterPolarity[r] = (String)type;
+            if (c == 2) {
+                filterPolarity[r] = (String) type;
             }
-            if (c==3) {
-                filterThreshold[r] = (String)type;
+            if (c == 3) {
+                filterThreshold[r] = (String) type;
             }
         }
-        public boolean isCellEditable(int r,int c) {
-            if ((c==1) && editmode) {
+
+        public boolean isCellEditable(int r, int c) {
+            if ((c == 1) && editmode) {
                 return (true);
             }
-            if ((c==2) && editmode) {
+            if ((c == 2) && editmode) {
                 return (true);
             }
-            if ((c==3) && editmode) {
+            if ((c == 3) && editmode) {
                 return (true);
             }
             return (false);
         }
-		
+
         public static final int SENSORCIRCUITADDRESS_COLUMN = 0;
         public static final int TYPE_COLUMN = 1;
         public static final int POLARITY_COLUMN = 2;
@@ -1927,54 +1910,70 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         public static final int SENSORADDRESS_COLUMN = 0;
     }
     private String[] sensorConfigColumnNames = {rb.getString("HeadingSensorCircuitAddress"),
-                                        rb.getString("HeadingFilterType"),
-                                        rb.getString("HeadingFilterPolarity"),
-                                        rb.getString("HeadingFilterThreshold"),
-                                        rb.getString("HeadingSensorAddress")};
+        rb.getString("HeadingFilterType"),
+        rb.getString("HeadingFilterPolarity"),
+        rb.getString("HeadingFilterThreshold"),
+        rb.getString("HeadingSensorAddress")};
     private String[] filterType = new String[16];
     private String[] filterPolarity = new String[16];
     private String[] filterThreshold = new String[16];
 
-    
-
     /**
-     * Set up table for selecting output default parameters for Dash-8 or TBrain nodes
+     * Set up table for selecting output default parameters for Dash-8 or TBrain
+     * nodes
      */
-    public class OutputConfigModel extends NodeConfigModel
-    {
-        public String getColumnName(int c) {return outputConfigColumnNames[c];}
-        public Class<?> getColumnClass(int c) {return String.class;}
-        public int getColumnCount () {return 6;}
-        public int getRowCount () {return numrows;}
+    public class OutputConfigModel extends NodeConfigModel {
+
+        /**
+         *
+         */
+        private static final long serialVersionUID = -6592677373811166261L;
+
+        public String getColumnName(int c) {
+            return outputConfigColumnNames[c];
+        }
+
+        public Class<?> getColumnClass(int c) {
+            return String.class;
+        }
+
+        public int getColumnCount() {
+            return 6;
+        }
+
+        public int getRowCount() {
+            return numrows;
+        }
+
         public void setNumRows(int r) {
             numrows = r;
         }
+
         public void setEditMode(boolean b) {
             editmode = b;
         }
+
         public boolean getEditMode() {
             return editmode;
         }
-        public Object getValueAt (int r,int c) {
-            if (c==0) {
+
+        public Object getValueAt(int r, int c) {
+            if (c == 0) {
                 return Integer.toString(r);
-            }
-            else if (c==1) {
+            } else if (c == 1) {
                 return outputWired[r];
-            }
-            else if (c==2) {
+            } else if (c == 2) {
                 return initialState[r];
-            }
-            else if (c==3) {
+            } else if (c == 3) {
                 return outputType[r];
-            }
-            else if (c==4) {
+            } else if (c == 4) {
                 return outputLength[r];
-            }
-            else if (c==5) {
+            } else if (c == 5) {
                 // Find Acela Node address
                 nodeAddress = readNodeAddress();
-                if (nodeAddress < 0) return Integer.toString(0);
+                if (nodeAddress < 0) {
+                    return Integer.toString(0);
+                }
                 // get the AcelaNode corresponding to this node address
                 curNode = (AcelaNode) AcelaTrafficController.instance().getNodeFromAddress(nodeAddress);
                 if (curNode == null) {
@@ -1984,40 +1983,42 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
                     resetNotes2();
                     return Integer.toString(0);
                 }
-                return Integer.toString(curNode.getStartingOutputAddress()+r);
+                return Integer.toString(curNode.getStartingOutputAddress() + r);
             }
             return "";
         }
-        public void setValueAt(Object type,int r,int c) {
-            if (c==1) {
-                outputWired[r] = (String)type;
+
+        public void setValueAt(Object type, int r, int c) {
+            if (c == 1) {
+                outputWired[r] = (String) type;
             }
-            if (c==2) {
-                initialState[r] = (String)type;
+            if (c == 2) {
+                initialState[r] = (String) type;
             }
-            if (c==3) {
-                outputType[r] = (String)type;
+            if (c == 3) {
+                outputType[r] = (String) type;
             }
-            if (c==4) {
-                outputLength[r] = (String)type;
+            if (c == 4) {
+                outputLength[r] = (String) type;
             }
         }
-        public boolean isCellEditable(int r,int c) {
-            if ((c==1) && editmode) {
+
+        public boolean isCellEditable(int r, int c) {
+            if ((c == 1) && editmode) {
                 return (true);
             }
-            if ((c==2) && editmode) {
+            if ((c == 2) && editmode) {
                 return (true);
             }
-            if ((c==3) && editmode) {
+            if ((c == 3) && editmode) {
                 return (true);
             }
-            if ((c==4) && editmode) {
+            if ((c == 4) && editmode) {
                 return (true);
             }
             return (false);
         }
-		
+
         public static final int OUTPUTCIRCUITADDRESS_COLUMN = 0;
         public static final int OUTPUTWIRED_COLUMN = 1;
         public static final int INITIALSTATE_COLUMN = 2;
@@ -2026,15 +2027,15 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         public static final int OUTPUTADDRESS_COLUMN = 5;
     }
     private String[] outputConfigColumnNames = {rb.getString("HeadingOutputCircuitAddress"),
-                                        rb.getString("HeadingOutputWired"),
-                                        rb.getString("HeadingInitialState"),
-                                        rb.getString("HeadingOutputType"),
-                                        rb.getString("HeadingOutputLength"),
-                                        rb.getString("HeadingOutputAddress")};
+        rb.getString("HeadingOutputWired"),
+        rb.getString("HeadingInitialState"),
+        rb.getString("HeadingOutputType"),
+        rb.getString("HeadingOutputLength"),
+        rb.getString("HeadingOutputAddress")};
     private String[] outputWired = new String[16];
     private String[] initialState = new String[16];
     private String[] outputType = new String[16];
     private String[] outputLength = new String[16];
-  
-    static Logger log = LoggerFactory.getLogger(NodeConfigFrame.class.getName());
+
+    private final static Logger log = LoggerFactory.getLogger(NodeConfigFrame.class.getName());
 }

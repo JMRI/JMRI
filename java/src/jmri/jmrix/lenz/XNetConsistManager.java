@@ -9,11 +9,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Consist Manager for use with the XNetConsist class for the consists it builds
- *
  * @author Paul Bender Copyright (C) 2004-2010
- * @version $Revision$
+ * @navassoc 1 - * jmri.jmrix.lenz.XNetConsist
  */
-public final class XNetConsistManager extends AbstractConsistManager {
+public class XNetConsistManager extends AbstractConsistManager {
 
     private Thread initThread = null;
     protected XNetTrafficController tc = null;
@@ -270,7 +269,7 @@ public final class XNetConsistManager extends AbstractConsistManager {
                             CurrentState = DHADDRESS2INFO;
                             XNetMessage msg = XNetMessage
                                     .getLocomotiveInfoRequestMsg(
-                                    _lastMemberAddress);
+                                            _lastMemberAddress);
                             tc.sendXNetMessage(msg, this);
                         } else {
                             // This consist already exists
@@ -311,5 +310,5 @@ public final class XNetConsistManager extends AbstractConsistManager {
             }
         }
     }
-    static Logger log = LoggerFactory.getLogger(XNetConsistManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetConsistManager.class.getName());
 }

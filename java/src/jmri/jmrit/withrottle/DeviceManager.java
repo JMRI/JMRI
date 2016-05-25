@@ -11,5 +11,5 @@ import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
  * @author rhwood
  */
 public interface DeviceManager extends RosterGroupSelector {
-    
+
 }

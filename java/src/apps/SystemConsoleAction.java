@@ -1,5 +1,3 @@
-// SystemConsoleAction.java
-
 package apps;
 
 import java.awt.event.ActionEvent;
@@ -12,28 +10,25 @@ import jmri.util.swing.WindowInterface;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author Matthew Harris  copyright (c) 2010
- * @version $Revision$
+ * @author Matthew Harris copyright (c) 2010
  */
 public class SystemConsoleAction extends jmri.util.swing.JmriAbstractAction {
 
     public SystemConsoleAction(String s, WindowInterface wi) {
-    	super(s, wi);
+        super(s, wi);
     }
-     
- 	public SystemConsoleAction(String s, Icon i, WindowInterface wi) {
-    	super(s, i, wi);
+
+    public SystemConsoleAction(String s, Icon i, WindowInterface wi) {
+        super(s, i, wi);
     }
 
     public SystemConsoleAction() {
@@ -45,7 +40,7 @@ public class SystemConsoleAction extends jmri.util.swing.JmriAbstractAction {
         // Show system console
         SystemConsole.getConsole().setVisible(true);
     }
-    
+
     // never invoked, because we overrode actionPerformed above
     @Override
     public JmriPanel makePanel() {
@@ -53,5 +48,3 @@ public class SystemConsoleAction extends jmri.util.swing.JmriAbstractAction {
     }
 
 }
-
-/* @(#)SystemConsoleAction.java */

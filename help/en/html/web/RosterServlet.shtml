@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright 2012 -->
-<!-- $Id: RosterServlet.shtml 20353 2012-04-15 11:48:26Z mstevetodd $ -->
+<!-- Copyright 2015 -->
+<!-- $Id$ -->
 <title>JMRI: Roster Servlet</title>
 
 <!-- Style -->
@@ -26,16 +26,17 @@ JMRI: Roster Servlet
 
 The JMRI Roster Servlet provides web access to information about JMRI roster entries.
 
-This servlet responds to the following URL patterns: <ul>
+This servlet responds to the following URL patterns:
+  <ul>
     <li>/roster/</li> <li>/roster/list</li>
-    <li>/roster/list?filter=filter[&filter=filter]</li> 
-    
+    <li>/roster/list?filter=filter[&amp;filter=filter]</li> 
     <li>/roster/&lt;ID&gt;</li> <li>/roster/entry/&lt;ID&gt;</li>
-     <li>/roster/&lt;ID&gt;/image</li> <li>/roster/&lt;ID&gt;/icon</li>
-     
-     </ul>
-</div>
+    <li>/roster/&lt;ID&gt;/image</li> <li>/roster/&lt;ID&gt;/icon</li>
+  </ul>
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+
 </body>
 </html>

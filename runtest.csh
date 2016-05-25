@@ -9,6 +9,13 @@
 # If you need to add any additional Java options or defines,
 # include them in the JMRI_OPTIONS environment variable
 #
+#  jmri.demo             Keep some test windows open after tests run
+#  jmri.headlesstest     Tests won't attempt to use screen
+#  jmri.skipschematests  Skip tests of XML schema if true
+#
+# E.g.: 
+# setenv JMRI_OPTIONS -Djmri.skipschematests=true
+#
 # If your serial ports are not shown in the initial list, you 
 # can include them in the environment variable JMRI_SERIAL_PORTS
 # separated by commas:
@@ -28,7 +35,7 @@
 # xprop -root -remove _MOTIF_DEFAULT_BINDINGS
 #
 # For more information, please see
-# http://jmri.sourceforge.net/install/ShellScripts.shtml
+# http://jmri.org/install/ShellScripts.shtml
 #
 # $Revision$ (CVS maintains this line, do not edit please)
 
@@ -134,7 +141,7 @@ OPTIONS="${OPTIONS} -Djava.library.path=.:lib:$SYSLIBPATH"
 OPTIONS="${OPTIONS} -Dsun.java2d.noddraw"
 # memory start and max limits
 OPTIONS="${OPTIONS} -Xms30m"
-OPTIONS="${OPTIONS} -Xmx200m"
+OPTIONS="${OPTIONS} -Xmx640m"
 
 # RXTX options (only works in some versions)
 OPTIONS="${OPTIONS} -Dgnu.io.rxtx.NoVersionOutput=true"

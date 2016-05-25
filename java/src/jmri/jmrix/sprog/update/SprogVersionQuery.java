@@ -1,41 +1,49 @@
 // SprogVersionQuery.java
-
 package jmri.jmrix.sprog.update;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.util.Vector;
-import jmri.jmrix.sprog.SprogTrafficController;
 import jmri.jmrix.sprog.SprogListener;
 import jmri.jmrix.sprog.SprogMessage;
 import jmri.jmrix.sprog.SprogReply;
+import jmri.jmrix.sprog.SprogTrafficController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Get the firmware version of the attached SPROG
- * 
- * @author			Andrew Crosland   Copyright (C) 2012
- * @version			$Revision:  $
+ *
+ * Updated April 2016 by Andrew Crosland look for the correct replies, which may 
+ * not be the very next message after a query is sent, due to slot manager
+ * traffic. Add Pi-SPROG version decoding.
+ *
+ * @author	Andrew Crosland Copyright (C) 2012, 2016
+ * @version	$Revision: $
  */
 public class SprogVersionQuery implements SprogListener {
-    
+
     String replyString;
     static SprogTrafficController tc;
     static SprogVersion ver;
-    
+
     // enum for version query states
-    enum QueryState {IDLE,
-                     CRSENT,     // awaiting reply to " "
-                     QUERYSENT,  // awaiting reply to "?"
-                     DONE}       // Version has been found
+    enum QueryState {
+
+        IDLE,
+        CRSENT, // awaiting reply to " "
+        QUERYSENT, // awaiting reply to "?"
+        DONE
+    }       // Version has been found
     static QueryState state = QueryState.IDLE;
 
     static final protected int LONG_TIMEOUT = 2000;
     static javax.swing.Timer timer = null;
-    
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     // Ignore FindBugs warnings as there can only be one instance at present
     public SprogVersionQuery() {
-        if (log.isDebugEnabled()) { log.debug("setting instance: " + this); }
+        if (log.isDebugEnabled()) {
+            log.debug("setting instance: " + this);
+        }
         self = this;
         tc = SprogTrafficController.instance();
         state = QueryState.IDLE;
@@ -66,13 +74,15 @@ public class SprogVersionQuery implements SprogListener {
 
     /**
      * static function returning the SprogVersionQuery instance to use.
-     * 
-     * @return The registered SprogVersionQuery instance for general use,
-     *         if need be creating one.
+     *
+     * @return The registered SprogVersionQuery instance for general use, if
+     *         need be creating one.
      */
     static public SprogVersionQuery instance() {
         if (self == null) {
-            if (log.isDebugEnabled()) { log.debug("creating a new SprogVersionQuery object"); }
+            if (log.isDebugEnabled()) {
+                log.debug("creating a new SprogVersionQuery object");
+            }
             self = new SprogVersionQuery();
         }
         return self;
@@ -81,7 +91,9 @@ public class SprogVersionQuery implements SprogListener {
 
     static synchronized public void requestVersion(SprogVersionListener l) {
         SprogMessage m;
-        if (log.isDebugEnabled()) { log.debug("SprogVersion requested by "+l.toString()); }
+        if (log.isDebugEnabled()) {
+            log.debug("SprogVersion requested by " + l.toString());
+        }
         if (state == QueryState.DONE) {
             // Reply immediately
             l.notifyVersion(ver);
@@ -119,101 +131,137 @@ public class SprogVersionQuery implements SprogListener {
 
     /**
      * SprogListener notify Message not used
+     *
      * @param m
      */
-    public void notifyMessage(SprogMessage m) {}   // Ignore
+    @Override
+    public void notifyMessage(SprogMessage m) {
+    }   // Ignore
 
     /**
      * SprogListener notify Reply listens to replies and looks for version reply
+     *
      * @param m
      */
+    @Override
     synchronized public void notifyReply(SprogReply m) {
         SprogMessage msg;
         SprogVersion v;
         replyString = m.toString();
-            switch(state) {
-                case IDLE: {
-                    if (log.isDebugEnabled()) { log.debug("reply in IDLE state"); }
-                    break;
+        switch (state) {
+            case IDLE: {
+                if (log.isDebugEnabled()) {
+                    log.debug("reply in IDLE state");
                 }
-                
-                case CRSENT: {
-                    stopTimer();
-                    if (log.isDebugEnabled()) { log.debug("reply in CRSENT state"+replyString); }
-                    if ((replyString.indexOf("P>")) >= 0) {
-                        msg = new SprogMessage(1);
-                        msg.setOpCode('?');
-                        tc.sendSprogMessage(msg, this);
-                        state = QueryState.QUERYSENT;
-                        // Start a timeout in case ther is other traffic on the interface
-                        startLongTimer();
-                    }
-                    break;
-                }
+                break;
+            }
 
-                case QUERYSENT: {
-                    if (log.isDebugEnabled()) { log.debug("reply in QUERYSENT state"+replyString); }
-                    // see if reply is from a SPROG
+            case CRSENT: {
+                log.debug("reply in CRSENT state" + replyString);
+                if ((replyString.indexOf("P>")) >= 0) {
+                    stopTimer();
+                    msg = new SprogMessage(1);
+                    msg.setOpCode('?');
+                    tc.sendSprogMessage(msg, this);
+                    state = QueryState.QUERYSENT;
+                    startLongTimer();
+                }
+                break;
+            }
+
+            case QUERYSENT: {
+                log.debug("reply in QUERYSENT state" + replyString);
+                if (replyString.contains("SPROG")) {
+                    stopTimer();
                     String[] splits = replyString.split("\n");
                     splits = splits[1].split(" ");
                     int index = 1;
-                    if (log.isDebugEnabled()) { log.debug("Elements in version reply: " + splits.length); }
-                    if (log.isDebugEnabled()) { log.debug("First element: <"+splits[0]+">"); }
-                    if (splits[0].contains("SPROG")) {
-                        if (log.isDebugEnabled()) { log.debug("Found a SPROG "+splits[index]); }
-                        if (splits[index].equals("3")) {
-                            index += 2;
-                            v = new SprogVersion(new SprogType(SprogType.SPROG3), splits[index]);
-                        } else if (splits[index].equals("IV")) {
-                            index += 2;
-                            v = new SprogVersion(new SprogType(SprogType.SPROGIV), splits[index]);
-                        } else if (splits[index].equals("5")) {
-                            index += 2;
-                            v = new SprogVersion(new SprogType(SprogType.SPROG5), splits[index]);
-                        } else if (splits[index].equals("Nano")) {
-                            index += 2;
-                            v = new SprogVersion(new SprogType(SprogType.NANO), splits[index]);
-                        } else if (splits[index].equals("Sniffer")) {
-                            index += 2;
-                            v = new SprogVersion(new SprogType(SprogType.SNIFFER), splits[index]);
-                        } else if (splits[index].equals("II")) {
-                            index++;
-                            if (splits[index].equals("USB")) {
+                    log.debug("Elements in version reply: " + splits.length);
+                    log.debug("First element: <" + splits[0] + ">");
+                    if (splits[0].contains("Pi-SPROG")) {
+                        log.debug("Found a Pi-SPROG " + splits[index]);
+                        switch (splits[1]) {
+                            case "Nano":
+                                v = new SprogVersion(new SprogType(SprogType.PISPROGNANO), splits[2].substring(1));
+                                break;
+                            case "One":
+                                v = new SprogVersion(new SprogType(SprogType.PISPROGONE), splits[2].substring(1));
+                                break;
+                            default:
+                                if (log.isDebugEnabled()) {
+                                    log.debug("Unrecognised Pi-SPROG " + splits[1]);
+                                }
+                                v = new SprogVersion(new SprogType(SprogType.NOT_RECOGNISED));
+                                break;
+                        }                
+                    } else if (splits[0].contains("SPROG")) {
+                        log.debug("Found a SPROG " + splits[index]);
+                        switch (splits[index]) {
+                            case "3":
                                 index += 2;
-                                v = new SprogVersion(new SprogType(SprogType.SPROGIIUSB), splits[index]);
-                            } else {
+                                v = new SprogVersion(new SprogType(SprogType.SPROG3), splits[index]);
+                                break;
+                            case "IV":
+                                index += 2;
+                                v = new SprogVersion(new SprogType(SprogType.SPROGIV), splits[index]);
+                                break;
+                            case "5":
+                                index += 2;
+                                v = new SprogVersion(new SprogType(SprogType.SPROG5), splits[index]);
+                                break;
+                            case "Nano":
+                                index += 2;
+                                v = new SprogVersion(new SprogType(SprogType.NANO), splits[index]);
+                                break;
+                            case "Sniffer":
+                                index += 2;
+                                v = new SprogVersion(new SprogType(SprogType.SNIFFER), splits[index]);
+                                break;
+                            case "II":
                                 index++;
-                                v = new SprogVersion(new SprogType(SprogType.SPROGII), splits[index]);
-                            }
-                        } else if (splits[index].equals("Ver")) {
-                            index += 1;
-                            v = new SprogVersion(new SprogType(SprogType.SPROGV4), splits[index]);
-                        } else {
-                            if (log.isDebugEnabled()) { log.debug("Unrecognised SPROG"+splits[index]); }
-                            v = new SprogVersion(new SprogType(SprogType.NOT_RECOGNISED));
+                                if (splits[index].equals("USB")) {
+                                    index += 2;
+                                    v = new SprogVersion(new SprogType(SprogType.SPROGIIUSB), splits[index]);
+                                } else {
+                                    index++;
+                                    v = new SprogVersion(new SprogType(SprogType.SPROGII), splits[index]);
+                                }   break;
+                            case "Ver":
+                                index += 1;
+                                v = new SprogVersion(new SprogType(SprogType.SPROGV4), splits[index]);
+                                break;
+                            default:
+                                if (log.isDebugEnabled()) {
+                                    log.debug("Unrecognised SPROG" + splits[index]);
+                                }
+                                v = new SprogVersion(new SprogType(SprogType.NOT_RECOGNISED));
+                                break;
                         }
                     } else {
-                        // Wait for timeout
-                        break;
+                        // Reply contained "SPROG" but couldn't be parsed
+                        log.warn("Found an unknown SPROG " + splits[index]);
+                        v = new SprogVersion(new SprogType(SprogType.NOT_RECOGNISED));
                     }
 
                     if ((v.sprogType.sprogType == SprogType.SPROGII) && (v.getMajorVersion() >= 3)) {
                         // Correct for SPROG IIv3 which is different hardware
                         v = new SprogVersion(new SprogType(SprogType.SPROGIIv3), v.sprogVersion);
                     }
-                    if (log.isDebugEnabled()) { log.debug("Found: " + v.toString()); }
-                    stopTimer();
+                    log.debug("Found: " + v.toString());
                     notifyVersion(v);
                     state = QueryState.DONE;
                     break;
                 }
-
-                case DONE: break;
-                
-                default: {
-                    log.error("Unknown case");
-                }
+                break;
             }
+
+            case DONE:
+                break;
+
+            default: {
+                log.error("Unknown case");
+            }
+        }
     }
 
     /**
@@ -221,27 +269,24 @@ public class SprogVersionQuery implements SprogListener {
      */
     synchronized static protected void timeout() {
         SprogVersion v;
-        switch(state) {
-            case CRSENT: 
-                if (log.isDebugEnabled()) { log.debug("Timeout no SPROG prompt"); }
+        switch (state) {
+            case CRSENT:
+                log.debug("Timeout no SPROG prompt");
                 state = QueryState.IDLE;
                 v = new SprogVersion(new SprogType(SprogType.TIMEOUT));
                 notifyVersion(v);
                 break;
             case QUERYSENT:
-                if (log.isDebugEnabled()) { log.debug("Timeout no SPROG found"); }
+                log.debug("Timeout no SPROG found");
                 state = QueryState.IDLE;
                 v = new SprogVersion(new SprogType(SprogType.NOT_A_SPROG));
                 notifyVersion(v);
                 break;
             case DONE:
             case IDLE:
-                log.error("Timeout in unexpected state: "+state);
+                log.error("Timeout in unexpected state: " + state);
                 break;
         }
-
-        // *** check state and set ver to timeout, no prompt or not a sprog
-
     }
 
     /**
@@ -261,12 +306,15 @@ public class SprogVersionQuery implements SprogListener {
     }
 
     /**
-     * Internal routine to handle timer starts & restarts
+     * Internal routine to handle timer starts {@literal &} restarts
+     * 
+     * @param delay timer delay
      */
     static protected void restartTimer(int delay) {
         if (timer == null) {
             timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
 
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     timeout();
                 }
@@ -277,6 +325,6 @@ public class SprogVersionQuery implements SprogListener {
         timer.setRepeats(false);
         timer.start();
     }
-    
-    static Logger log = LoggerFactory.getLogger(SprogVersionQuery.class.getName());
+
+    private final static Logger log = LoggerFactory.getLogger(SprogVersionQuery.class.getName());
 }

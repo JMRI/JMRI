@@ -49,7 +49,10 @@
 #
 # following an idea by Dave Heine 
 #
-#
+
+import jmri
+import java
+
 # Define the listener class to play a sound when a  throttle function changes
 class ThrottleListener(java.beans.PropertyChangeListener):
 

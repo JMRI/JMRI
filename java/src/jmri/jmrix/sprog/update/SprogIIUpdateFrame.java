@@ -1,53 +1,54 @@
-// SprogIIUpdateFrame.java
-
 package jmri.jmrix.sprog.update;
 
+import javax.swing.JOptionPane;
+import jmri.jmrix.sprog.SprogConstants.SprogState;
+import jmri.jmrix.sprog.SprogMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.sprog.SprogMessage;
-import jmri.jmrix.sprog.SprogConstants.SprogState;
-
-import javax.swing.*;
 
 /**
  * Frame for SPROG firmware update utility.
  *
- * Extended to cover SPROG 3 which uses the same bootloader protocol
- * Refactored
- * 
- * @author			Andrew Crosland   Copyright (C) 2004
- * @version			$Revision$
+ * Extended to cover SPROG 3 which uses the same bootloader protocol Refactored
+ *
+ * @author	Andrew Crosland Copyright (C) 2004
  */
 public class SprogIIUpdateFrame
-    extends SprogUpdateFrame
-    implements SprogVersionListener {
+        extends SprogUpdateFrame
+        implements SprogVersionListener {
 
-  public SprogIIUpdateFrame() {
-    super();
-  }
+    /**
+     *
+     */
+    private static final long serialVersionUID = 4424302689786420208L;
+
+    public SprogIIUpdateFrame() {
+        super();
+    }
 
     /**
      * Set the help item
      */
     public void initComponents() throws Exception {
-      super.initComponents();
+        super.initComponents();
 
+        // add help menu to window
+        addHelpMenu("package.jmri.jmrix.sprog.update.SprogIIUpdateFrame", true);
 
-      // add help menu to window
-      addHelpMenu("package.jmri.jmrix.sprog.update.SprogIIUpdateFrame", true);
-
-      // Get the SPROG version
-      SprogVersionQuery.requestVersion(this);
+        // Get the SPROG version
+        SprogVersionQuery.requestVersion(this);
     }
 
     int bootVer = 0;
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SWL_SLEEP_WITH_LOCK_HELD")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SWL_SLEEP_WITH_LOCK_HELD")
     synchronized public void notifyVersion(SprogVersion v) {
         sv = v;
         if (sv.sprogType.isSprog() == false) {
             // Didn't recognize a SPROG so check if it is in boot mode already
-            if (log.isDebugEnabled()) { log.debug("SPROG not found - looking for bootloader"); }
+            if (log.isDebugEnabled()) {
+                log.debug("SPROG not found - looking for bootloader");
+            }
             statusBar.setText("SPROG not found - looking for bootloader");
             blockLen = -1;
             requestBoot();
@@ -57,7 +58,9 @@ public class SprogIIUpdateFrame
                 statusBar.setText("Found " + sv.toString());
                 blockLen = sv.sprogType.getBlockLen();
                 // Put SPROG in boot mode
-                if (log.isDebugEnabled()) { log.debug("Putting SPROG in boot mode"); }
+                if (log.isDebugEnabled()) {
+                    log.debug("Putting SPROG in boot mode");
+                }
                 msg = new SprogMessage("b 1 1 1");
                 tc.sendSprogMessage(msg, this);
                 // SPROG II and 3 will not reply to this so just wait a while
@@ -99,11 +102,15 @@ public class SprogIIUpdateFrame
 
     synchronized protected void stateBootVerReqSent() {
         stopTimer();
-        if (log.isDebugEnabled()) { log.debug("reply in VERREQSENT state"); }
+        if (log.isDebugEnabled()) {
+            log.debug("reply in VERREQSENT state");
+        }
         // see if reply is the version
         if ((reply.getOpCode() == SprogMessage.RD_VER) && (reply.getElement(1) == 2)) {
             bootVer = reply.getElement(2);
-            if (log.isDebugEnabled()) { log.debug("Found bootloader version " + bootVer); }
+            if (log.isDebugEnabled()) {
+                log.debug("Found bootloader version " + bootVer);
+            }
             statusBar.setText("Connected to bootloader version " + bootVer);
             // Enable the file chooser button
             setSprogModeButton.setEnabled(true);
@@ -140,7 +147,9 @@ public class SprogIIUpdateFrame
 
     synchronized protected void stateWriteSent() {
         stopTimer();
-        if (log.isDebugEnabled()) { log.debug("reply in WRITESENT state"); }
+        if (log.isDebugEnabled()) {
+            log.debug("reply in WRITESENT state");
+        }
         // Check for correct response to type of write that was sent
         if ((reply.getOpCode() == msg.getElement(2)) && (reply.getNumDataElements() == 1)
                 || (reply.getElement(reply.getNumDataElements() - 1) == '.')) {
@@ -164,7 +173,9 @@ public class SprogIIUpdateFrame
 
     synchronized protected void stateEraseSent() {
         stopTimer();
-        if (log.isDebugEnabled()) { log.debug("reply in ERASESENT state"); }
+        if (log.isDebugEnabled()) {
+            log.debug("reply in ERASESENT state");
+        }
         // Check for correct response to erase that was sent
         if ((reply.getOpCode() == msg.getElement(2)) && (reply.getNumDataElements() == 1)) {
             // Don't erase ICD debug executive if in use
@@ -173,12 +184,16 @@ public class SprogIIUpdateFrame
                 // More data to erase
                 sendErase();
             } else {
-                if (log.isDebugEnabled()) { log.debug("Finished erasing"); }
+                if (log.isDebugEnabled()) {
+                    log.debug("Finished erasing");
+                }
                 statusBar.setText("Erase Complete");
                 // Read first line from hexfile
                 if (hexFile.read() > 0) {
                     // Program line and wait for reply
-                    if (log.isDebugEnabled()) { log.debug("First write " + hexFile.getLen() + " " + hexFile.getAddress()); }
+                    if (log.isDebugEnabled()) {
+                        log.debug("First write " + hexFile.getLen() + " " + hexFile.getAddress());
+                    }
                     sendWrite();
                 } else {
                     doneWriting();
@@ -202,7 +217,9 @@ public class SprogIIUpdateFrame
         }
         // Check for correct response to type of write that was sent
         if ((reply.getOpCode() == msg.getElement(2)) && (reply.getNumDataElements() == 1)) {
-            if (log.isDebugEnabled()) { log.debug("Reset SPROG"); }
+            if (log.isDebugEnabled()) {
+                log.debug("Reset SPROG");
+            }
             msg = SprogMessage.getReset();
             bootState = BootState.RESETSENT;
             tc.sendSprogMessage(msg, this);
@@ -220,7 +237,9 @@ public class SprogIIUpdateFrame
 
     synchronized protected void stateResetSent() {
         stopTimer();
-        if (log.isDebugEnabled()) { log.debug("reply in RESETSENT state"); }
+        if (log.isDebugEnabled()) {
+            log.debug("reply in RESETSENT state");
+        }
         // Check for correct response to type of write that was sent
 
         statusBar.setText("Ready");
@@ -231,7 +250,9 @@ public class SprogIIUpdateFrame
 
     synchronized protected void requestBoot() {
         // Look for SPROG in boot mode by requesting bootloader version.
-        if (log.isDebugEnabled()) { log.debug("Request bootloader version"); }
+        if (log.isDebugEnabled()) {
+            log.debug("Request bootloader version");
+        }
         // allow parsing of bootloader replies
         tc.setSprogState(SprogState.SIIBOOTMODE);
         bootState = BootState.VERREQSENT;
@@ -241,29 +262,41 @@ public class SprogIIUpdateFrame
     }
 
     synchronized protected void sendWrite() {
-        if (hexFile.getAddressU() >= 0xF0) {
+        if ((hexFile.getAddressU()&0xFF) >= 0xF0) {
             // Write to EEPROM
-            if (log.isDebugEnabled()) { log.debug("Send write EE " + hexFile.getAddress()); }
+            if (log.isDebugEnabled()) {
+                log.debug("Send write EE " + hexFile.getAddress());
+            }
             msg = SprogMessage.getWriteEE(hexFile.getAddress(), hexFile.getData());
-        } else if (hexFile.getAddressU() >= 0x20) {
+        } else if ((hexFile.getAddressU()&0xFF) >= 0x20) {
             // Write to user data or config data not supported
-            if (log.isDebugEnabled()) { log.debug("null write " + hexFile.getAddress()); }
+            if (log.isDebugEnabled()) {
+                log.debug("null write " + hexFile.getAddress());
+            }
             msg = null;
         } else if (sv.sprogType.isValidFlashAddress(hexFile.getAddress())) {
             // Program code address is above bootloader range and below debug executive
-            if (log.isDebugEnabled()) { log.debug("Send write Flash " + hexFile.getAddress()); }
+            if (log.isDebugEnabled()) {
+                log.debug("Send write Flash " + hexFile.getAddress());
+            }
             msg = SprogMessage.getWriteFlash(hexFile.getAddress(), hexFile.getData(), blockLen);
-            if (log.isDebugEnabled()) { log.debug(msg.toString()); }
+            if (log.isDebugEnabled()) {
+                log.debug(msg.toString());
+            }
         } else {
             // Do nothing
-            if (log.isDebugEnabled()) { log.debug("null write " + hexFile.getAddress()); }
+            if (log.isDebugEnabled()) {
+                log.debug("null write " + hexFile.getAddress());
+            }
             msg = null;
         }
         if (msg != null) {
             bootState = BootState.WRITESENT;
             statusBar.setText("Write " + hexFile.getAddress());
             tc.sendSprogMessage(msg, this);
-            if (log.isDebugEnabled()) { log.debug("Sent write command to address " + hexFile.getAddress()); }
+            if (log.isDebugEnabled()) {
+                log.debug("Sent write command to address " + hexFile.getAddress());
+            }
             startLongTimer();
         } else {
             // use timeout to kick off the next write
@@ -272,51 +305,60 @@ public class SprogIIUpdateFrame
         }
     }
 
-  synchronized private void sendErase() {
-    if (log.isDebugEnabled()) { log.debug("Erase Flash " + eraseAddress); }
-    int rows = 8; // 512 bytes
-    msg = SprogMessage.getEraseFlash(eraseAddress, rows);
-    bootState = BootState.ERASESENT;
-    statusBar.setText("Erase " + eraseAddress);
-    tc.sendSprogMessage(msg, this);
-    if (log.isDebugEnabled()) { log.debug("Sent erase command to address " + eraseAddress); }
-    eraseAddress += (rows * 64);
-    startLongTimer();
-  }
+    synchronized private void sendErase() {
+        if (log.isDebugEnabled()) {
+            log.debug("Erase Flash " + eraseAddress);
+        }
+        int rows = 8; // 512 bytes
+        msg = SprogMessage.getEraseFlash(eraseAddress, rows);
+        bootState = BootState.ERASESENT;
+        statusBar.setText("Erase " + eraseAddress);
+        tc.sendSprogMessage(msg, this);
+        if (log.isDebugEnabled()) {
+            log.debug("Sent erase command to address " + eraseAddress);
+        }
+        eraseAddress += (rows * 64);
+        startLongTimer();
+    }
 
-  synchronized protected void doneWriting() {
-    // Finished
-    if (log.isDebugEnabled()) { log.debug("Done writing"); }
-    statusBar.setText("Write Complete");
-    openFileChooserButton.setEnabled(false);
-    programButton.setEnabled(false);
+    synchronized protected void doneWriting() {
+        // Finished
+        if (log.isDebugEnabled()) {
+            log.debug("Done writing");
+        }
+        statusBar.setText("Write Complete");
+        openFileChooserButton.setEnabled(false);
+        programButton.setEnabled(false);
 
-    setSprogModeButton.setEnabled(true);
-    bootState = BootState.IDLE;
-  }
+        setSprogModeButton.setEnabled(true);
+        bootState = BootState.IDLE;
+    }
 
-   synchronized public void programButtonActionPerformed(java.awt.event.ActionEvent e) {
+    synchronized public void programButtonActionPerformed(java.awt.event.ActionEvent e) {
         if (hexFile != null) {
             openFileChooserButton.setEnabled(false);
             programButton.setEnabled(false);
             setSprogModeButton.setEnabled(false);
             eraseAddress = sv.sprogType.getEraseStart();
             if (eraseAddress > 0) {
-                if (log.isDebugEnabled()) { log.debug("Start erasing @" + eraseAddress); }
+                if (log.isDebugEnabled()) {
+                    log.debug("Start erasing @" + eraseAddress);
+                }
                 sendErase();
             }
         }
     }
 
-  synchronized public void setSprogModeButtonActionPerformed(java.awt.event.
-                                                ActionEvent e) {
-    if (log.isDebugEnabled()) { log.debug("Set SPROG mode"); }
-    msg = SprogMessage.getWriteEE(0xff, new int[] {0});
-    bootState = BootState.SPROGMODESENT;
-    tc.sendSprogMessage(msg, this);
-    startLongTimer();
-  }
+    synchronized public void setSprogModeButtonActionPerformed(java.awt.event.ActionEvent e) {
+        if (log.isDebugEnabled()) {
+            log.debug("Set SPROG mode");
+        }
+        msg = SprogMessage.getWriteEE(0xff, new int[]{0});
+        bootState = BootState.SPROGMODESENT;
+        tc.sendSprogMessage(msg, this);
+        startLongTimer();
+    }
 
-  static Logger log = LoggerFactory
-  .getLogger(SprogIIUpdateFrame.class.getName());
+    private final static Logger log = LoggerFactory
+            .getLogger(SprogIIUpdateFrame.class.getName());
 }

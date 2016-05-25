@@ -1,21 +1,24 @@
 // LogOutputWindowAction.java
-
 package jmri.jmrit.log;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.awt.event.*;
-import javax.swing.*;
+import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
+import javax.swing.JFrame;
 
 /**
  * Open a window to recieve Log4J output
  *
- * @author	Bob Jacobsen   Copyright (C) 2009
+ * @author	Bob Jacobsen Copyright (C) 2009
  * @version	$Revision$
- * @see         jmri.util.JLogoutputFrame
- * @see         jmri.util.JTextPaneAppender
+ * @see jmri.util.JLogoutputFrame
+ * @see jmri.util.JTextPaneAppender
  */
 public class LogOutputWindowAction extends AbstractAction {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = 3272363386014713812L;
 
     public LogOutputWindowAction(String s) {
         super(s);
@@ -25,7 +28,4 @@ public class LogOutputWindowAction extends AbstractAction {
         JFrame f = jmri.util.JLogoutputFrame.getInstance().getMainFrame();
         f.setVisible(true);
     }
-
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(LogOutputWindowAction.class.getName());
 }

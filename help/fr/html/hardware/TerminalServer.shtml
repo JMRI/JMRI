@@ -1,13 +1,13 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TerminalServer.shtml,v 1.2 2010/08/02 01:51:11 zoo Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-10-01-->
+<!--  $Id$ -->
+<!-- Updated  by Blorec Herv&#233;  2013-09-09-->
 <html lang="fr">
 <head>
  <TITLE>
  JMRI: Terminal Server Connection
  
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="David D Zuhn" name=Author>
     <META content="John Plocher" name=Author>
     <META name="keywords" content="EasyDCC Lantronics terminal server java model railroad JMRI install">
@@ -33,47 +33,47 @@
      Guide Installation JMRI: Connexion Serveur Terminal 
       </H2>
 
-Un serveur Terminal est une boîte qui connecte un ou plusieurs ports série
- à un réseau afin qu'ils puissent être accessibles à partir d'un ordinateur distant.
-JMRI s'exécutant sur un ordinateur avec une connexion réseau peut
-se connecter à une centrale de commande ou EasyDCC NCE par l'une de celle-ci. Cela vous permet
-vous de mettre l'ordinateur et la centrale commande aussi éloigné que vous le souhaitez.
+Un serveur Terminal est une bo&#238;te qui connecte un ou plusieurs ports s&#233;rie
+ &#224; un r&#233;seau afin qu'ils puissent &#234;tre accessibles &#224; partir d'un ordinateur distant.
+JMRI s'ex&#233;cutant sur un ordinateur avec une connexion r&#233;seau peut
+se connecter &#224; une centrale de commande ou EasyDCC NCE par l'une de celle-ci. Cela vous permet
+vous de mettre l'ordinateur et la centrale commande aussi &#233;loign&#233; que vous le souhaitez.
 <P>
 Pour faire ce travail,
-vous devez configurer à la fois JMRI et le serveur terminal, et de faire
-les connexions appropriées.
+vous devez configurer &#224; la fois JMRI et le serveur terminal, et de faire
+les connexions appropri&#233;es.
 <P>
-Cette utilisation a été initialement créée par Zuhn David, qui
+Cette utilisation a &#233;t&#233; initialement cr&#233;&#233;e par Zuhn David, qui
 a une
 <A href="http://stpaulterminal.org/software/jmri/lantronix.html"> page web </a>
-décrivant en détail comment il l'a mis en place pour EasyDCC.
-Ce qui suit est juste un aperçu
-de la présente. Le processus des NCE est similaire.
+d&#233;crivant en d&#233;tail comment il l'a mis en place pour EasyDCC.
+Ce qui suit est juste un aper&#231;u
+de la pr&#233;sente. Le processus des NCE est similaire.
 
 <UL>
 <LI>
 Pour configurer JMRI:
 <UL>
-<LI> Sélectionnez "Préférences "dans le menu "Édition"
-<LI> Sélectionnez l'option protocole  "EasyDCC sur le serveur terminal "
-<LI> Entrez l'adresse IP et le numéro de port de connexion
-correspondant au port série sur le serveur terminal
+<LI> S&#233;lectionnez "Pr&#233;f&#233;rences "dans le menu "&#233;dition"
+<LI> S&#233;lectionnez l'option protocole  "EasyDCC sur le serveur terminal "
+<LI> Entrez l'adresse IP et le num&#233;ro de port de connexion
+correspondant au port s&#233;rie sur le serveur terminal
 <LI> Cliquez sur enregistrer, puis quittez le programme
 </ UL>
 <LI>
-Configurer le serveur Terminal  pour se connecter à la station de commande:
- 9600 bauds, sans parité, 8 bits.
+Configurer le serveur Terminal  pour se connecter &#224; la station de commande:
+ 9600 bauds, sans parit&#233;, 8 bits.
 <LI>
-Connectez un câble série à partir du serveur terminal à la centrale de commande.
+Connectez un c&#226;ble s&#233;rie &#224; partir du serveur terminal &#224; la centrale de commande.
 Selon le type de serveur terminal, cela pourrait exiger que vous fassiez les
 fils  sur mesure pour obtenir les bonnes connexions. Notez que vous voulez que le fil
-"émette des données"  à une extrémité pour se connecter à la "réception de données» sur l'autre.
-Faites de même pour les deux directions, et il comprend également un fil de terre.
+"&#233;mette des donn&#233;es"  &#224; une extr&#233;mit&#233; pour se connecter &#224; la "r&#233;ception de donn&#233;es" sur l'autre.
+Faites de m&#234;me pour les deux directions, et il comprend &#233;galement un fil de terre.
 <LI>
-Faire les connexions de réseau nécessaires.
+Faire les connexions de r&#233;seau n&#233;cessaires.
 <LI>
-Démarrez le programme en place. Si tout est OK, JMRI va démarrer et vous montrer
-qu'il est correctement connecté</UL>
+D&#233;marrez le programme en place. Si tout est OK, JMRI va d&#233;marrer et vous montrer
+qu'il est correctement connect&#233;</UL>
 
 <!--#include virtual="/Footer" -->
 </body>

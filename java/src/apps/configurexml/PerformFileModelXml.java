@@ -1,21 +1,21 @@
 package apps.configurexml;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import apps.PerformFileModel;
-
+import apps.StartupActionsManager;
+import java.io.File;
 import jmri.InstanceManager;
 import jmri.JmriException;
-import java.io.File;
-
-import org.jdom.Element;
+import jmri.util.FileUtil;
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistance of PerformFileModel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision$
- * @see apps.PerformFilePanel
+ * @author Ken Cameron Copyright: 2014(c)
+ * @see apps.startup.PerformFileModelFactory
  */
 public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
 
@@ -24,6 +24,7 @@ public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
 
     /**
      * Default implementation for storing the model contents
+     *
      * @param o Object to store, of type PerformActonModel
      * @return Element containing the complete info
      */
@@ -31,7 +32,7 @@ public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
         Element e = new Element("perform");
         PerformFileModel g = (PerformFileModel) o;
 
-        e.setAttribute("name", g.getFileName());
+        e.setAttribute("name", FileUtil.getPortableFilename(g.getFileName()));
         e.setAttribute("type", "XmlFile");
         e.setAttribute("class", this.getClass().getName());
         return e;
@@ -39,6 +40,7 @@ public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
 
     /**
      * Object should be loaded after basic GUI constructed
+     *
      * @return true to defer loading
      * @see jmri.configurexml.AbstractXmlAdapter#loadDeferred()
      * @see jmri.configurexml.XmlAdapter#loadDeferred()
@@ -48,15 +50,11 @@ public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
         return true;
     }
 
-    /**
-     * Create object from XML file
-     * @param e Top level Element to unpack.
-     * @return true if successful
-      */
-    public boolean load(Element e) throws JmriException {
-    	boolean result = true;
-        String fileName = e.getAttribute("name").getValue();
-        log.debug("Load file "+fileName);
+    @Override
+    public boolean load(Element shared, Element perNode) throws JmriException {
+        boolean result = true;
+        String fileName = FileUtil.getAbsoluteFilename(shared.getAttribute("name").getValue());
+        log.info("Load file " + fileName);
 
         // load the file
         File file = new File(fileName);
@@ -65,20 +63,20 @@ public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
         // leave an updated object around
         PerformFileModel m = new PerformFileModel();
         m.setFileName(fileName);
-        PerformFileModel.rememberObject(m);
-        jmri.InstanceManager.configureManagerInstance().registerPref(new apps.PerformFilePanel());
+        InstanceManager.getDefault(StartupActionsManager.class).addAction(m);
         return result;
     }
 
     /**
      * Update static data from XML file
+     *
      * @param element Top level Element to unpack.
-     * @param o  ignored
+     * @param o       ignored
      */
     public void load(Element element, Object o) {
         log.error("Unexpected call of load(Element, Object)");
     }
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(PerformFileModelXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PerformFileModelXml.class.getName());
 
 }

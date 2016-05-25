@@ -1,90 +1,88 @@
 // NceBinaryCommand.java
-
 package jmri.jmrix.nce;
 
+import jmri.NmraPacket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /*
  
-  From NCE System notes for version March 1, 2007
+ From NCE System notes for version March 1, 2007
  
-  New 0xAD command sends accessory or signal packets.
-  This command can also issue NCE macros
-  Command Format: 0xAD <addr_h> <addr_l> <op_1> <data_1>
-  Addr_h and Addr_l are the accessory/signal address as a
-  normal binary number (NOT in DCC format).
-  Ex: Accessory Address 1 = 0x00 0x01 (hi byte first)
-  Ex: Accessory Address 2 = 0x00 0x02 (hi byte first)
-  Ex: Accessory Address 513 = 0x02 0x01 (hi byte first)
-  NOTE: accy/signal address 0 is not a valid address
+ New 0xAD command sends accessory or signal packets.
+ This command can also issue NCE macros
+ Command Format: 0xAD <addr_h> <addr_l> <op_1> <data_1>
+ Addr_h and Addr_l are the accessory/signal address as a
+ normal binary number (NOT in DCC format).
+ Ex: Accessory Address 1 = 0x00 0x01 (hi byte first)
+ Ex: Accessory Address 2 = 0x00 0x02 (hi byte first)
+ Ex: Accessory Address 513 = 0x02 0x01 (hi byte first)
+ NOTE: accy/signal address 0 is not a valid address
  
-  Op_1 Data_1 		Operation description
- 	01 	0-255 		NCE macro number 0-255
- 	02 	0-255 		Duplicate of Op_1 command 01
- 	03 	0 			Accessory Normal direction (ON)
- 	04 	0 			Accessory Reverse direction (OFF)
- 	05 	0-1f 		Signal Aspect 0-31
- 	06-7f 			reserved reserved
+ Op_1 Data_1 		Operation description
+ 01 	0-255 		NCE macro number 0-255
+ 02 	0-255 		Duplicate of Op_1 command 01
+ 03 	0 			Accessory Normal direction (ON)
+ 04 	0 			Accessory Reverse direction (OFF)
+ 05 	0-1f 		Signal Aspect 0-31
+ 06-7f 			reserved reserved
  
- 	Returns: ! = success
- 	1 = bad accy/signal address
+ Returns: ! = success
+ 1 = bad accy/signal address
  
-  0xA2 sends speed or function packets to a locomotive.
+ 0xA2 sends speed or function packets to a locomotive.
  
-  Command Format: 0xA2 <addr_h> <addr_l> <op_1> <data_1>
-  Addr_h and Addr_l are the loco address in DCC format.
-  If a long address is in use, bits 6 and 7 of the high byte are set.
-  Example: Long address 3 = 0xc0 0x03
-  Short address 3 = 0x00 0x03
+ Command Format: 0xA2 <addr_h> <addr_l> <op_1> <data_1>
+ Addr_h and Addr_l are the loco address in DCC format.
+ If a long address is in use, bits 6 and 7 of the high byte are set.
+ Example: Long address 3 = 0xc0 0x03
+ Short address 3 = 0x00 0x03
   
-  op_1 data_1 		Operation description
-   01  0-7f 		Reverse 28 speed command
-   02  0-7f 		Forward 28 speed command
-   03  0-7f 		Reverse 128 speed command
-   04  0-7f 		Forward 128 speed command
-   05  0 			Estop reverse command
-   06  0 			Estop forward command
-   07  0-1f 		Function group 1 (same format as DCC packet for FG1
-   08  0-0f 		Function group 2 (same format as DCC packet for FG2
-   09  0-0f 		Function group 3 (same format as DCC packet for FG3
-   0a  0-7f 		Set reverse consist address for lead loco
-   0b  0-7f 		Set forward consist address for lead loco
-   0c  0-7f 		Set reverse consist address for rear loco
-   0d  0-7f 		Set forward consist address for rear loco
-   0e  0-7f 		Set reverse consist address for additional loco
-   0f  0-7f 		Set forward consist address for additional loco
-   10  0 			Del loco from consist
-   11  0 			Kill consist
-   12  0-9 		Set momentum
-   13  0-7f 		No action, always returns success
-   14  0-7f 		No action, always returns success
-   15  0-ff 		Functions 13-20 control (bit 0=F13, bit 7=F20)
-   16  0-ff 		Functions 21-28 control (bit 0=F21, bit 7=F28)
-   17  0-3f 		Assign this loco to cab number in data_1
-   18-7f 			reserved reserved
+ op_1 data_1 		Operation description
+ 01  0-7f 		Reverse 28 speed command
+ 02  0-7f 		Forward 28 speed command
+ 03  0-7f 		Reverse 128 speed command
+ 04  0-7f 		Forward 128 speed command
+ 05  0 			Estop reverse command
+ 06  0 			Estop forward command
+ 07  0-1f 		Function group 1 (same format as DCC packet for FG1
+ 08  0-0f 		Function group 2 (same format as DCC packet for FG2
+ 09  0-0f 		Function group 3 (same format as DCC packet for FG3
+ 0a  0-7f 		Set reverse consist address for lead loco
+ 0b  0-7f 		Set forward consist address for lead loco
+ 0c  0-7f 		Set reverse consist address for rear loco
+ 0d  0-7f 		Set forward consist address for rear loco
+ 0e  0-7f 		Set reverse consist address for additional loco
+ 0f  0-7f 		Set forward consist address for additional loco
+ 10  0 			Del loco from consist
+ 11  0 			Kill consist
+ 12  0-9 		Set momentum
+ 13  0-7f 		No action, always returns success
+ 14  0-7f 		No action, always returns success
+ 15  0-ff 		Functions 13-20 control (bit 0=F13, bit 7=F20)
+ 16  0-ff 		Functions 21-28 control (bit 0=F21, bit 7=F28)
+ 17  0-3f 		Assign this loco to cab number in data_1
+ 18-7f 			reserved reserved
   
-   Returns: ! = success
-   1 = bad loco address
+ Returns: ! = success
+ 1 = bad loco address
    
  */
-
- /**
-  * NCE Binary Commands
-  * 
-  * Also see NceMessage.java for additional commands
-  * 
-  * @author Daniel Boudreau (C) 2007, 2010
-  * @author ken cameron (C) 2013
-  * @version     $Revision$
-  */
-
+/**
+ * NCE Binary Commands
+ *
+ * Also see NceMessage.java for additional commands
+ *
+ * @author Daniel Boudreau (C) 2007, 2010
+ * @author ken cameron (C) 2013
+ * @version $Revision$
+ */
 public class NceBinaryCommand {
-    
-	public static final int NOOP_CMD = 0x80;		// NCE No Op Command, NCE-USB yes
-	public static final int ASSIGN_CAB_CMD = 0x81;	// NCE Assign loco to cab command, NCE-USB no
-	public static final int READ_CLOCK_CMD = 0x82;	//NCE read clock command, NCE-USB no
-	public static final int STOP_CLOCK_CMD = 0x83;	//NCE stop clock command, NCE-USB no
+
+    public static final int NOOP_CMD = 0x80;		// NCE No Op Command, NCE-USB yes
+    public static final int ASSIGN_CAB_CMD = 0x81;	// NCE Assign loco to cab command, NCE-USB no
+    public static final int READ_CLOCK_CMD = 0x82;	//NCE read clock command, NCE-USB no
+    public static final int STOP_CLOCK_CMD = 0x83;	//NCE stop clock command, NCE-USB no
     public static final int START_CLOCK_CMD = 0x84;	//NCE start clock command, NCE-USB no
     public static final int SET_CLOCK_CMD = 0x85;	//NCE set clock command, NCE-USB no
     public static final int CLOCK_1224_CMD = 0x86;	//NCE change clock 12/24 command, NCE-USB no
@@ -136,343 +134,344 @@ public class NceBinaryCommand {
     public static final int USB_MEM_READ_CMD = 0xB5;	//NCE read memory, NCE-USB >= 1.65
 
     public static byte[] accDecoder(int number, boolean closed) {
-        
-        if (number < 1 || number > 2044) {
-            log.error("invalid NCE accessory address "+number);
+
+        if (number < NmraPacket.accIdLowLimit || number > NmraPacket.accIdAltHighLimit) {
+            log.error("invalid NCE accessory address " + number);
             return null;
         }
-        
+
         /* Moved to NceMessageCheck
-        // USB connected to PowerCab or SB3 can only access addresses up to 250
-		if (number > 250
-				&& ((NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_POWERCAB) || 
-						(NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_SB3))) {
-			log.error("invalid NCE accessory address for USB " + number);
-			return null;
-		}
-		*/
-        
+         // USB connected to PowerCab or SB3 can only access addresses up to 250
+         if (number > 250
+         && ((NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_POWERCAB) || 
+         (NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_SB3))) {
+         log.error("invalid NCE accessory address for USB " + number);
+         return null;
+         }
+         */
         byte op_1;
-        if (closed) op_1 = 0x03; else op_1 = 0x04;
-        
-        int addr_h = number/256;
+        if (closed) {
+            op_1 = 0x03;
+        } else {
+            op_1 = 0x04;
+        }
+
+        int addr_h = number / 256;
         int addr_l = number & 0xFF;
-        
-        byte [] retVal = new byte[5];
+
+        byte[] retVal = new byte[5];
         retVal[0] = (byte) (ACC_CMD); 	//NCE accessory command
         retVal[1] = (byte) (addr_h);	//high address
         retVal[2] = (byte) (addr_l);	//low address
         retVal[3] = op_1;				//command
         retVal[4] = (byte) 0; 			//zero out last byte for acc
-        
+
         return retVal;
     }
-    
-    public static byte[] accMemoryRead(int address){
-        
-        int addr_h = address/256;
+
+    public static byte[] accMemoryRead(int address) {
+
+        int addr_h = address / 256;
         int addr_l = address & 0xFF;
-        
-        byte []retVal = new byte [3];
+
+        byte[] retVal = new byte[3];
         retVal[0] = (byte) (READ16_CMD);//read 16 bytes command
         retVal[1] = (byte) (addr_h);	//high address
         retVal[2] = (byte) (addr_l);	//low address
-        
+
         return retVal;
-        
+
     }
-   
+
     /**
      * Read one byte from NCE command station memory
+     *
      * @param address
      * @return binary command to read one byte
      */
     public static byte[] accMemoryRead1(int address) {
 
-    	int addr_h = address/256;
-    	int addr_l = address & 0xFF;
+        int addr_h = address / 256;
+        int addr_l = address & 0xFF;
 
-    	byte []retVal = new byte [3];
-    	retVal[0] = (byte) (READ1_CMD);	//read 1 byte command
-    	retVal[1] = (byte) (addr_h);	//high address
-    	retVal[2] = (byte) (addr_l);	//low address
+        byte[] retVal = new byte[3];
+        retVal[0] = (byte) (READ1_CMD);	//read 1 byte command
+        retVal[1] = (byte) (addr_h);	//high address
+        retVal[2] = (byte) (addr_l);	//low address
 
-    	return retVal;
+        return retVal;
 
     }
 
     public static byte[] accMemoryWriteN(int address, int num) {
 
-    	int addr_h = address / 256;
-    	int addr_l = address & 0xFF;
+        int addr_h = address / 256;
+        int addr_l = address & 0xFF;
 
-    	byte[] retVal = new byte[4+16];
-    	retVal[0] = (byte) (WRITEn_CMD);// write n bytes command
-    	retVal[1] = (byte) (addr_h); 	// high address
-    	retVal[2] = (byte) (addr_l); 	// low address
-    	retVal[3] = (byte) num;			// number of bytes to write
+        byte[] retVal = new byte[4 + 16];
+        retVal[0] = (byte) (WRITEn_CMD);// write n bytes command
+        retVal[1] = (byte) (addr_h); 	// high address
+        retVal[2] = (byte) (addr_l); 	// low address
+        retVal[3] = (byte) num;			// number of bytes to write
 
-    	return retVal;
+        return retVal;
 
     }
 
     public static byte[] accMemoryWrite8(int address) {
 
-    	int addr_h = address / 256;
-    	int addr_l = address & 0xFF;
+        int addr_h = address / 256;
+        int addr_l = address & 0xFF;
 
-    	byte[] retVal = new byte[3+8];
-    	retVal[0] = (byte) (WRITE8_CMD);// write 8 bytes command
-    	retVal[1] = (byte) (addr_h); 	// high address
-    	retVal[2] = (byte) (addr_l); 	// low address
+        byte[] retVal = new byte[3 + 8];
+        retVal[0] = (byte) (WRITE8_CMD);// write 8 bytes command
+        retVal[1] = (byte) (addr_h); 	// high address
+        retVal[2] = (byte) (addr_l); 	// low address
 
-    	return retVal;
+        return retVal;
 
     }
 
     public static byte[] accMemoryWrite4(int address) {
 
-		int addr_h = address / 256;
-		int addr_l = address & 0xFF;
+        int addr_h = address / 256;
+        int addr_l = address & 0xFF;
 
-		byte[] retVal = new byte[3+4];
-		retVal[0] = (byte) (WRITE4_CMD);// write 4 bytes command
-		retVal[1] = (byte) (addr_h); 	// high address
-		retVal[2] = (byte) (addr_l); 	// low address
+        byte[] retVal = new byte[3 + 4];
+        retVal[0] = (byte) (WRITE4_CMD);// write 4 bytes command
+        retVal[1] = (byte) (addr_h); 	// high address
+        retVal[2] = (byte) (addr_l); 	// low address
 
-		return retVal;
-	}
+        return retVal;
+    }
 
     public static byte[] accMemoryWrite2(int address) {
 
-		int addr_h = address / 256;
-		int addr_l = address & 0xFF;
+        int addr_h = address / 256;
+        int addr_l = address & 0xFF;
 
-		byte[] retVal = new byte[3+2];
-		retVal[0] = (byte) (WRITE2_CMD);// write 4 bytes command
-		retVal[1] = (byte) (addr_h); 	// high address
-		retVal[2] = (byte) (addr_l); 	// low address
+        byte[] retVal = new byte[3 + 2];
+        retVal[0] = (byte) (WRITE2_CMD);// write 4 bytes command
+        retVal[1] = (byte) (addr_h); 	// high address
+        retVal[2] = (byte) (addr_l); 	// low address
 
-		return retVal;
-	}
-    
+        return retVal;
+    }
+
     public static byte[] accMemoryWrite1(int address) {
 
-		int addr_h = address / 256;
-		int addr_l = address & 0xFF;
+        int addr_h = address / 256;
+        int addr_l = address & 0xFF;
 
-		byte[] retVal = new byte[3+1];
-		retVal[0] = (byte) (WRITE1_CMD);// write 4 bytes command
-		retVal[1] = (byte) (addr_h); 	// high address
-		retVal[2] = (byte) (addr_l); 	// low address
+        byte[] retVal = new byte[3 + 1];
+        retVal[0] = (byte) (WRITE1_CMD);// write 4 bytes command
+        retVal[1] = (byte) (addr_h); 	// high address
+        retVal[2] = (byte) (addr_l); 	// low address
 
-		return retVal;
-	}
+        return retVal;
+    }
 
     public static byte[] accAiu2Read(int cabId) {
 
-		byte[] retVal = new byte[1+1];
-		retVal[0] = (byte) (READ_AUI2_CMD);// write 4 bytes command
-		retVal[1] = (byte) (cabId); 	// cab address
+        byte[] retVal = new byte[1 + 1];
+        retVal[0] = (byte) (READ_AUI2_CMD);// write 4 bytes command
+        retVal[1] = (byte) (cabId); 	// cab address
 
-		return retVal;
-	}
+        return retVal;
+    }
 
     public static byte[] usbSetCabId(int cab) {
 
-		byte[] retVal = new byte[2];
-		retVal[0] = (byte) (USB_SET_CAB_CMD);// read N bytes command
-		retVal[1] = (byte) (cab); 	//  cab number
+        byte[] retVal = new byte[2];
+        retVal[0] = (byte) (USB_SET_CAB_CMD);// read N bytes command
+        retVal[1] = (byte) (cab); 	//  cab number
 
-		return retVal;
-	}
+        return retVal;
+    }
 
     public static byte[] usbMemoryWrite1(byte data) {
 
-		byte[] retVal = new byte[2];
-		retVal[0] = (byte) (USB_MEM_WRITE_CMD);// write 2 bytes command
-		retVal[1] = (data); 	//  data
+        byte[] retVal = new byte[2];
+        retVal[0] = (byte) (USB_MEM_WRITE_CMD);// write 2 bytes command
+        retVal[1] = (data); 	//  data
 
-		return retVal;
-	}
+        return retVal;
+    }
 
     public static byte[] usbMemoryRead(int num) {
 
-		byte[] retVal = new byte[2];
-		retVal[0] = (byte) (USB_MEM_READ_CMD);// read N bytes command
-		retVal[1] = (byte) (num); 	//  byte count
+        byte[] retVal = new byte[2];
+        retVal[0] = (byte) (USB_MEM_READ_CMD);// read N bytes command
+        retVal[1] = (byte) (num); 	//  byte count
 
-		return retVal;
-	}
+        return retVal;
+    }
 
     public static byte[] usbMemoryPointer(int cab, int loc) {
 
-		byte[] retVal = new byte[3];
-		retVal[0] = (byte) (USB_MEM_POINTER_CMD);// read N bytes command
-		retVal[1] = (byte) (cab); 	//  cab number
-		retVal[2] = (byte) (loc);	// memory offset
+        byte[] retVal = new byte[3];
+        retVal[0] = (byte) (USB_MEM_POINTER_CMD);// read N bytes command
+        retVal[1] = (byte) (cab); 	//  cab number
+        retVal[2] = (byte) (loc);	// memory offset
 
-		return retVal;
-	}
+        return retVal;
+    }
 
-	public static byte[] accStopClock() {
+    public static byte[] accStopClock() {
 
-		byte[] retVal = new byte[1];
-		retVal[0] = (byte) (STOP_CLOCK_CMD);// stop clock command
+        byte[] retVal = new byte[1];
+        retVal[0] = (byte) (STOP_CLOCK_CMD);// stop clock command
 
-		return retVal;
-	}
+        return retVal;
+    }
 
-	public static byte[] accStartClock() {
+    public static byte[] accStartClock() {
 
-		byte[] retVal = new byte[1];
-		retVal[0] = (byte) (START_CLOCK_CMD);// start clock command
+        byte[] retVal = new byte[1];
+        retVal[0] = (byte) (START_CLOCK_CMD);// start clock command
 
-		return retVal;
-	}
+        return retVal;
+    }
 
-	public static byte[] accSetClock(int hours, int minutes) {
+    public static byte[] accSetClock(int hours, int minutes) {
 
-		byte[] retVal = new byte[3];
-		retVal[0] = (byte) (SET_CLOCK_CMD);// set clock command
-		retVal[1] = (byte) (hours); 	// hours
-		retVal[2] = (byte) (minutes);	// minutes
+        byte[] retVal = new byte[3];
+        retVal[0] = (byte) (SET_CLOCK_CMD);// set clock command
+        retVal[1] = (byte) (hours); 	// hours
+        retVal[2] = (byte) (minutes);	// minutes
 
-		return retVal;
-	}
+        return retVal;
+    }
 
-	public static byte[] accSetClock1224(boolean flag) {
+    public static byte[] accSetClock1224(boolean flag) {
 
-		int bit = 0;
-		if (flag) {
-			bit = 1;
-		} else {
-			bit = 0;
-		}
-		byte[] retVal = new byte[2];
-		retVal[0] = (byte) (CLOCK_1224_CMD);	// set clock 12/24 command
-		retVal[1] = (byte) (bit);			// 12 - 0, 24 - 1
+        int bit = 0;
+        if (flag) {
+            bit = 1;
+        } else {
+            bit = 0;
+        }
+        byte[] retVal = new byte[2];
+        retVal[0] = (byte) (CLOCK_1224_CMD);	// set clock 12/24 command
+        retVal[1] = (byte) (bit);			// 12 - 0, 24 - 1
 
-		return retVal;
-	}
+        return retVal;
+    }
 
-	public static byte[] accSetClockRatio(int ratio) {
+    public static byte[] accSetClockRatio(int ratio) {
 
-		byte[] retVal = new byte[2];
-		retVal[0] = (byte) (CLOCK_RATIO_CMD);// set clock command
-		retVal[1] = (byte) (ratio); 	// fast clock ratio
+        byte[] retVal = new byte[2];
+        retVal[0] = (byte) (CLOCK_RATIO_CMD);// set clock command
+        retVal[1] = (byte) (ratio); 	// fast clock ratio
 
-		return retVal;
-	}
-	
-	// NCE Command 0xA2 sends speed or function packets to a locomotive
-	// 0xA2 sub commands speed and functions
-	public static final byte LOCO_CMD_REV_28SPEED = 0x01;			//set loco speed 28 steps reverse
-	public static final byte LOCO_CMD_FWD_28SPEED = 0x02;			//set loco speed 28 steps forward
-	public static final byte LOCO_CMD_REV_128SPEED = 0x03;			//set loco speed 128 steps reverse
-	public static final byte LOCO_CMD_FWD_128SPEED = 0x04;			//set loco speed 128 steps forward
-	public static final byte LOCO_CMD_REV_ESTOP = 0x05;				//emergency stop reverse
-	public static final byte LOCO_CMD_FWD_ESTOP = 0x06;				//emergency stop forward
-	public static final byte LOCO_CMD_FG1 = 0x07;					//function group 1
-	public static final byte LOCO_CMD_FG2 = 0x08;					//function group 2
-	public static final byte LOCO_CMD_FG3 = 0x09;					//function group 3
-	public static final byte LOCO_CMD_FG4 = 0x15;					//function group 4
-	public static final byte LOCO_CMD_FG5 = 0x16;					//function group 5
-	
-	// OxA2 sub commands consist
-	public static final byte LOCO_CMD_REV_CONSIST_LEAD = 0x0A;		//reverse consist address for lead loco
-	public static final byte LOCO_CMD_FWD_CONSIST_LEAD = 0x0B;		//forward consist address for lead loco 
-	public static final byte LOCO_CMD_REV_CONSIST_REAR = 0x0C;		//reverse consist address for rear loco 
-	public static final byte LOCO_CMD_FWD_CONSIST_REAR = 0x0D;		//forward consist address for rear loco
-	public static final byte LOCO_CMD_REV_CONSIST_MID = 0x0E;		//reverse consist address for additional loco 
-	public static final byte LOCO_CMD_FWD_CONSIST_MID = 0x0F;		//forward consist address for additional loco 
-	public static final byte LOCO_CMD_DELETE_LOCO_CONSIST = 0x10;	//Delete loco from consist
-	public static final byte LOCO_CMD_KILL_CONSIST = 0x11;			//Kill consist
-	
-	public static byte[] nceLocoCmd (int locoAddr, byte locoSubCmd, byte locoData){
+        return retVal;
+    }
+
+    // NCE Command 0xA2 sends speed or function packets to a locomotive
+    // 0xA2 sub commands speed and functions
+    public static final byte LOCO_CMD_REV_28SPEED = 0x01;			//set loco speed 28 steps reverse
+    public static final byte LOCO_CMD_FWD_28SPEED = 0x02;			//set loco speed 28 steps forward
+    public static final byte LOCO_CMD_REV_128SPEED = 0x03;			//set loco speed 128 steps reverse
+    public static final byte LOCO_CMD_FWD_128SPEED = 0x04;			//set loco speed 128 steps forward
+    public static final byte LOCO_CMD_REV_ESTOP = 0x05;				//emergency stop reverse
+    public static final byte LOCO_CMD_FWD_ESTOP = 0x06;				//emergency stop forward
+    public static final byte LOCO_CMD_FG1 = 0x07;					//function group 1
+    public static final byte LOCO_CMD_FG2 = 0x08;					//function group 2
+    public static final byte LOCO_CMD_FG3 = 0x09;					//function group 3
+    public static final byte LOCO_CMD_FG4 = 0x15;					//function group 4
+    public static final byte LOCO_CMD_FG5 = 0x16;					//function group 5
+
+    // OxA2 sub commands consist
+    public static final byte LOCO_CMD_REV_CONSIST_LEAD = 0x0A;		//reverse consist address for lead loco
+    public static final byte LOCO_CMD_FWD_CONSIST_LEAD = 0x0B;		//forward consist address for lead loco 
+    public static final byte LOCO_CMD_REV_CONSIST_REAR = 0x0C;		//reverse consist address for rear loco 
+    public static final byte LOCO_CMD_FWD_CONSIST_REAR = 0x0D;		//forward consist address for rear loco
+    public static final byte LOCO_CMD_REV_CONSIST_MID = 0x0E;		//reverse consist address for additional loco 
+    public static final byte LOCO_CMD_FWD_CONSIST_MID = 0x0F;		//forward consist address for additional loco 
+    public static final byte LOCO_CMD_DELETE_LOCO_CONSIST = 0x10;	//Delete loco from consist
+    public static final byte LOCO_CMD_KILL_CONSIST = 0x11;			//Kill consist
+
+    public static byte[] nceLocoCmd(int locoAddr, byte locoSubCmd, byte locoData) {
         if (locoSubCmd < 1 || locoSubCmd > 0x17) {
-            log.error("invalid NCE loco command "+locoSubCmd);
+            log.error("invalid NCE loco command " + locoSubCmd);
             return null;
         }
-		
-		int locoAddr_h = locoAddr/256;
+
+        int locoAddr_h = locoAddr / 256;
         int locoAddr_l = locoAddr & 0xFF;
-		
-		byte[] retVal = new byte[5];
+
+        byte[] retVal = new byte[5];
         retVal[0] = (byte) (LOCO_CMD); 		//NCE Loco command
         retVal[1] = (byte) (locoAddr_h);	//loco high address
         retVal[2] = (byte) (locoAddr_l);	//loco low address
         retVal[3] = locoSubCmd;				//sub command
         retVal[4] = locoData; 				//sub data
-		
-		return retVal;
-	}
-	
-	/**
-	 * create NCE EPROM revision message, Reply Format: VV.MM.mm
-	 * 
-	 */
-	public static byte[] getNceEpromRev() {
-		byte[] retVal = new byte[1];
-		retVal[0] = (byte) (SW_REV_CMD);
-		return retVal;
-	}
-	
-	/**
-	 * create an NCE USB compatible ops mode loco message
-	 * 
-	 * @param locoAddr
-	 * @param cvAddr
-	 * @param cvData
-	 * @return byte[] containing message
-	 */
-	public static byte[] usbOpsModeLoco(NceTrafficController tc, int locoAddr, int cvAddr, int cvData) {
 
-		byte[] retVal = new byte[6];
-		int locoAddr_h = locoAddr / 256;
-		int locoAddr_l = locoAddr & 0xFF;
-		int cvAddr_h = cvAddr / 256;
-		int cvAddr_l = cvAddr & 0xFF;
+        return retVal;
+    }
 
-		retVal[0] = (byte) (OPS_PROG_LOCO_CMD); // NCE ops mode loco command
-		retVal[1] = (byte) (locoAddr_h); // loco high address
-		retVal[2] = (byte) (locoAddr_l); // loco low address
-		retVal[3] = (byte) (cvAddr_h); // CV high address
-		retVal[4] = (byte) (cvAddr_l); // CV low address
-		retVal[5] = (byte) (cvData); // CV data
+    /**
+     * create NCE EPROM revision message, Reply Format: VV.MM.mm
+     *
+     */
+    public static byte[] getNceEpromRev() {
+        byte[] retVal = new byte[1];
+        retVal[0] = (byte) (SW_REV_CMD);
+        return retVal;
+    }
 
-		return retVal;
-	}
+    /**
+     * create an NCE USB compatible ops mode loco message
+     *
+     * @param locoAddr
+     * @param cvAddr
+     * @param cvData
+     * @return byte[] containing message
+     */
+    public static byte[] usbOpsModeLoco(NceTrafficController tc, int locoAddr, int cvAddr, int cvData) {
 
-	/**
-	 * create an NCE USB compatible ops mode accy message
-	 * 
-	 * @param accyAddr
-	 * @param cvAddr
-	 * @param cvData
-	 * @return byte[] containing message
-	 */
-	public static byte[] usbOpsModeAccy(int accyAddr, int cvAddr, int cvData) {
+        byte[] retVal = new byte[6];
+        int locoAddr_h = locoAddr / 256;
+        int locoAddr_l = locoAddr & 0xFF;
+        int cvAddr_h = cvAddr / 256;
+        int cvAddr_l = cvAddr & 0xFF;
 
-		byte[] retVal = new byte[6];
-		int accyAddr_h = accyAddr / 256;
-		int accyAddr_l = accyAddr & 0xFF;
-		int cvAddr_h = cvAddr / 256;
-		int cvAddr_l = cvAddr & 0xFF;
+        retVal[0] = (byte) (OPS_PROG_LOCO_CMD); // NCE ops mode loco command
+        retVal[1] = (byte) (locoAddr_h); // loco high address
+        retVal[2] = (byte) (locoAddr_l); // loco low address
+        retVal[3] = (byte) (cvAddr_h); // CV high address
+        retVal[4] = (byte) (cvAddr_l); // CV low address
+        retVal[5] = (byte) (cvData); // CV data
 
-		retVal[0] = (byte) (OPS_PROG_ACCY_CMD); // NCE ops mode accy command
-		retVal[1] = (byte) (accyAddr_h); // accy high address
-		retVal[2] = (byte) (accyAddr_l); // accy low address
-		retVal[3] = (byte) (cvAddr_h); // CV high address
-		retVal[4] = (byte) (cvAddr_l); // CV low address
-		retVal[5] = (byte) (cvData); // CV data
+        return retVal;
+    }
 
-		return retVal;
-	}
-	
-	
-    static Logger log = LoggerFactory.getLogger(NceBinaryCommand.class.getName());
+    /**
+     * create an NCE USB compatible ops mode accy message
+     *
+     * @param accyAddr
+     * @param cvAddr
+     * @param cvData
+     * @return byte[] containing message
+     */
+    public static byte[] usbOpsModeAccy(int accyAddr, int cvAddr, int cvData) {
+
+        byte[] retVal = new byte[6];
+        int accyAddr_h = accyAddr / 256;
+        int accyAddr_l = accyAddr & 0xFF;
+        int cvAddr_h = cvAddr / 256;
+        int cvAddr_l = cvAddr & 0xFF;
+
+        retVal[0] = (byte) (OPS_PROG_ACCY_CMD); // NCE ops mode accy command
+        retVal[1] = (byte) (accyAddr_h); // accy high address
+        retVal[2] = (byte) (accyAddr_l); // accy low address
+        retVal[3] = (byte) (cvAddr_h); // CV high address
+        retVal[4] = (byte) (cvAddr_l); // CV low address
+        retVal[5] = (byte) (cvData); // CV data
+
+        return retVal;
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(NceBinaryCommand.class.getName());
 }
 /* @(#)NceBinaryCommand.java */
-
-

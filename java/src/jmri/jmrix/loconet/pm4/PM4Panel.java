@@ -1,37 +1,44 @@
 // PM4Panel.java
-
 package jmri.jmrix.loconet.pm4;
 
+import java.awt.FlowLayout;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.awt.FlowLayout;
-
-import javax.swing.*;
 
 /**
  * Frame displaying and programming a PM4 configuration.
  * <P>
- * The read and write require a sequence of operations, which
- * we handle with a state variable.
+ * The read and write require a sequence of operations, which we handle with a
+ * state variable.
  * <P>
- * Programming of the PM4 is done via configuration messages, so
- * the PM4 should not be put into programming mode via the
- * built-in pushbutton while this tool is in use.
+ * Programming of the PM4 is done via configuration messages, so the PM4 should
+ * not be put into programming mode via the built-in pushbutton while this tool
+ * is in use.
  * <P>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
- * and used with permission as part of the JMRI project.  That permission
- * does not extend to uses in other software products.  If you wish to
- * use this code, algorithm or these message formats outside of JMRI, please
- * contact Digitrax Inc for separate permission.
+ * and used with permission as part of the JMRI project. That permission does
+ * not extend to uses in other software products. If you wish to use this code,
+ * algorithm or these message formats outside of JMRI, please contact Digitrax
+ * Inc for separate permission.
  *
- * @author			Bob Jacobsen   Copyright (C) 2002, 2004, 2007, 2010
- * @version			$Revision$
+ * @author	Bob Jacobsen Copyright (C) 2002, 2004, 2007, 2010
+ * @version	$Revision$
  */
 public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1373713395993058042L;
 
     public PM4Panel() {
         this(1);
     }
+
     public PM4Panel(int boardNum) {
         super(boardNum);
 
@@ -39,41 +46,41 @@ public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 
         JPanel panec = new JPanel();
         panec.setLayout(new FlowLayout());
-            panec.add(new JLabel("Current limit: "));
-            panec.add(current);
-            current.setSelectedIndex(1);
+        panec.add(new JLabel("Current limit: "));
+        panec.add(current);
+        current.setSelectedIndex(1);
         appendLine(panec);
 
         JPanel pane1 = new JPanel();
         pane1.setLayout(new FlowLayout());
-            pane1.add(new JLabel("Section 1:  Speed "));
-            pane1.add(slow1);
-            pane1.add(new JLabel(" Autoreversing "));
-            pane1.add(rev1);
+        pane1.add(new JLabel("Section 1:  Speed "));
+        pane1.add(slow1);
+        pane1.add(new JLabel(" Autoreversing "));
+        pane1.add(rev1);
         appendLine(pane1);
 
         JPanel pane2 = new JPanel();
         pane2.setLayout(new FlowLayout());
-            pane2.add(new JLabel("Section 2:  Speed "));
-            pane2.add(slow2);
-            pane2.add(new JLabel(" Autoreversing "));
-            pane2.add(rev2);
+        pane2.add(new JLabel("Section 2:  Speed "));
+        pane2.add(slow2);
+        pane2.add(new JLabel(" Autoreversing "));
+        pane2.add(rev2);
         appendLine(pane2);
 
         JPanel pane3 = new JPanel();
         pane3.setLayout(new FlowLayout());
-            pane3.add(new JLabel("Section 3:  Speed "));
-            pane3.add(slow3);
-            pane3.add(new JLabel(" Autoreversing "));
-            pane3.add(rev3);
+        pane3.add(new JLabel("Section 3:  Speed "));
+        pane3.add(slow3);
+        pane3.add(new JLabel(" Autoreversing "));
+        pane3.add(rev3);
         appendLine(pane3);
 
         JPanel pane4 = new JPanel();
         pane4.setLayout(new FlowLayout());
-            pane4.add(new JLabel("Section 4:  Speed "));
-            pane4.add(slow4);
-            pane4.add(new JLabel(" Autoreversing "));
-            pane4.add(rev4);
+        pane4.add(new JLabel("Section 4:  Speed "));
+        pane4.add(slow4);
+        pane4.add(new JLabel(" Autoreversing "));
+        pane4.add(rev4);
         appendLine(pane4);
 
         appendLine(provideStatusLine());
@@ -86,40 +93,43 @@ public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
         // add status
         appendLine(provideStatusLine());
         setStatus("The PM4x should be in normal mode. (Don't push the buttons on the PM4x)");
-        
+
         setTypeWord(0x70);  // configure PM4 message type
-       
+
     }
 
-    public String getHelpTarget() { return "package.jmri.jmrix.loconet.pm4.PM4Frame"; }
-    public String getTitle() { 
-        return getTitle(jmri.jmrix.loconet.LocoNetBundle.bundle().getString("MenuItemPM4Programmer")); 
+    public String getHelpTarget() {
+        return "package.jmri.jmrix.loconet.pm4.PM4Frame";
     }
 
-    void setSpeedFromDisplay(int offset, JComboBox box) {
+    public String getTitle() {
+        return getTitle(jmri.jmrix.loconet.LocoNetBundle.bundle().getString("MenuItemPM4Programmer"));
+    }
+
+    void setSpeedFromDisplay(int offset, JComboBox<String> box) {
         switch (box.getSelectedIndex()) {
-        case 0:
-            opsw[offset] = false;
-            opsw[offset+2] = true;      // true is closed
-            return;
-        default:
-        case 1:
-            opsw[offset] = false;
-            opsw[offset+2] = false;
-            return;
-        case 2:
-            opsw[offset] = true;
-            opsw[offset+2] = true;
-            return;
-        case 3:
-            opsw[offset] = true;
-            opsw[offset+2] = false;
-            return;
+            case 0:
+                opsw[offset] = false;
+                opsw[offset + 2] = true;      // true is closed
+                return;
+            default:
+            case 1:
+                opsw[offset] = false;
+                opsw[offset + 2] = false;
+                return;
+            case 2:
+                opsw[offset] = true;
+                opsw[offset + 2] = true;
+                return;
+            case 3:
+                opsw[offset] = true;
+                opsw[offset + 2] = false;
+                return;
         }
     }
 
     /**
-     * Copy from the GUI to the opsw array. 
+     * Copy from the GUI to the opsw array.
      * <p>
      * Used before write operations start
      */
@@ -138,16 +148,20 @@ public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
         // bit 1 is the middle bit, closed is a 1
         // bit 2 is the MSB, closed is a 1
         int index = current.getSelectedIndex();
-        opsw[2] = ((index&0x04)!=0) ? true : false;
-        opsw[1] = ((index&0x02)!=0) ? true : false;
-        opsw[9] = ((index&0x01)!=0) ? false : true;
+        opsw[2] = ((index & 0x04) != 0) ? true : false;
+        opsw[1] = ((index & 0x02) != 0) ? true : false;
+        opsw[9] = ((index & 0x01) != 0) ? false : true;
 
     }
 
-    void setDisplaySpeed(int offset, JComboBox box) {
+    void setDisplaySpeed(int offset, JComboBox<String> box) {
         int index = 0;
-        if (!opsw[offset+2]) index++;
-        if (opsw[offset]) index+=2;
+        if (!opsw[offset + 2]) {
+            index++;
+        }
+        if (opsw[offset]) {
+            index += 2;
+        }
         box.setSelectedIndex(index);
     }
 
@@ -165,51 +179,72 @@ public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
         // bit 1 is the middle bit, closed is a 1
         // bit 2 is the MSB, closed is a 1
         int index = 0;
-        if (opsw[2]) index += 4;
-        if (opsw[1]) index += 2;
-        if (!opsw[9]) index += 1;
+        if (opsw[2]) {
+            index += 4;
+        }
+        if (opsw[1]) {
+            index += 2;
+        }
+        if (!opsw[9]) {
+            index += 1;
+        }
         current.setSelectedIndex(index);
     }
 
     protected int nextState(int state) {
         switch (state) {
-            case 1: return 2;
-            case 2: return 3;
-            case 3: return 5;
-            case 5: return 6;
-            case 6: return 9;
-            case 9: return 11;
-            case 11: return 13;
-            case 13: return 14;
-            case 14: return 19;
-            case 19: return 21;
-            case 21: return 22;
-            case 22: return 27;
-            case 27: return 29;
-            case 29: return 30;
-            case 30: return 0;   // done!
+            case 1:
+                return 2;
+            case 2:
+                return 3;
+            case 3:
+                return 5;
+            case 5:
+                return 6;
+            case 6:
+                return 9;
+            case 9:
+                return 11;
+            case 11:
+                return 13;
+            case 13:
+                return 14;
+            case 14:
+                return 19;
+            case 19:
+                return 21;
+            case 21:
+                return 22;
+            case 22:
+                return 27;
+            case 27:
+                return 29;
+            case 29:
+                return 30;
+            case 30:
+                return 0;   // done!
             default:
-                log.error("unexpected state "+state);
+                log.error("unexpected state " + state);
                 return 0;
         }
     }
 
-    JComboBox current = new JComboBox(new String[]{ "1.5 amps", "3 amps", "4.5 amps", "6 amps",
-                				"7.5 amps", "9 amps", "10.5 amps", "12 amps"});
+    JComboBox<String> current = new JComboBox<String>(new String[]{"1.5 amps", "3 amps", "4.5 amps", "6 amps",
+        "7.5 amps", "9 amps", "10.5 amps", "12 amps"});
 
-    JComboBox slow1 = new JComboBox(new String[]{ "Slow", "Standard",
-                                            "Faster (PM42 only)", "Fastest (PM42 only)"});
-    JCheckBox rev1  = new JCheckBox();
-    JComboBox slow2 = new JComboBox(new String[]{ "Slow", "Standard",
-                                            "Faster (PM42 only)", "Fastest (PM42 only)"});
-    JCheckBox rev2  = new JCheckBox();
-    JComboBox slow3 = new JComboBox(new String[]{ "Slow", "Standard",
-                                            "Faster (PM42 only)", "Fastest (PM42 only)"});
-    JCheckBox rev3  = new JCheckBox();
-    JComboBox slow4 = new JComboBox(new String[]{ "Slow", "Standard",
-                                            "Faster (PM42 only)", "Fastest (PM42 only)"});
-    JCheckBox rev4  = new JCheckBox();
+    JComboBox<String> slow1 = new JComboBox<String>(new String[]{"Slow", "Standard",
+        "Faster (PM42 only)", "Fastest (PM42 only)"});
+    JCheckBox rev1 = new JCheckBox();
+    JComboBox<String> slow2 = new JComboBox<String>(new String[]{"Slow", "Standard",
+        "Faster (PM42 only)", "Fastest (PM42 only)"});
+    JCheckBox rev2 = new JCheckBox();
+    JComboBox<String> slow3 = new JComboBox<String>(new String[]{"Slow", "Standard",
+        "Faster (PM42 only)", "Fastest (PM42 only)"});
+    JCheckBox rev3 = new JCheckBox();
+    JComboBox<String> slow4 = new JComboBox<String>(new String[]{"Slow", "Standard",
+        "Faster (PM42 only)", "Fastest (PM42 only)"});
+    JCheckBox rev4 = new JCheckBox();
 
-    static Logger log = LoggerFactory.getLogger(PM4Panel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PM4Panel.class.getName());
 
 }

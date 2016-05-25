@@ -1,6 +1,6 @@
 <!-- Sidebar -->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<!-- Translated by Blorec Hervé le 2012-01-19-->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- UpDated by Blorec Herv&#233; le 2013-09-27-->
 <html lang="fr"> 
 	  <hr class="hide">
 	  <div id="mBody">
@@ -9,13 +9,13 @@
 	    <dl>
 
 		<dt><h3><a href="index.shtml">Script</a></h3></dt>
-		<dd>Information sur l'écriture des scripts pour contrôler JMRI plus en détail:
+		<dd>Information sur l'&#233;criture des scripts pour contr&#244;ler JMRI plus en d&#233;tail:
 		    <UL>
 		    <LI><dfn><a href="Start.shtml">Introduction</a></dfn>
 		    <LI><dfn><A HREF="Python.shtml">Le langage </a></dfn>
 		    <LI><dfn><a href="Examples.shtml">Exemples</a></dfn>
-		    <LI><dfn><a href="FAQ.shtml">Questions Fréquemment Posées(FAQs)</a></dfn>
-		    <LI><dfn><a href="ex_set_turnouts.shtml">Exemple: Réglage Aiguillages</a></dfn>
+		    <LI><dfn><a href="FAQ.shtml">Questions Fr&#233;quemment Pos&#233;es(FAQs)</a></dfn>
+		    <LI><dfn><a href="ex_set_turnouts.shtml">Exemple: R&#233;glage Aiguillages</a></dfn>
 		    <LI><dfn><a href="Jynstruments.shtml">Jynstruments pour modifier l'Interface Graphique Utilisateur</a></dfn>
 		    </UL>
 		</dd>
@@ -29,19 +29,19 @@
 		    </UL>
 		</dd>
 
-		<dt><h3><a href="../index.shtml">Outils Généraux</a></h3></dt>
-		<dd>Les Objets généraux disponibles pour commander votre réseau.
+		<dt><h3><a href="../index.shtml">Outils G&#233;n&#233;raux</a></h3></dt>
+		<dd>Les Objets g&#233;n&#233;raux disponibles pour commander votre r&#233;seau.
 		    <UL>
 		    <LI><dfn><a href="../Sensors.shtml">Capteurs</a></dfn>
 		    <LI><dfn><a href="../Turnouts.shtml"</a>Aiguillage</dfn>
-		    <LI><dfn><a href="../throttle/ThrottleMain.shtml">Régulateurs</a></dfn>
+		    <LI><dfn><a href="../throttle/ThrottleMain.shtml">R&#233;gulateurs</a></dfn>
 		    <LI><dfn><a href="../consisttool/ConsistTool.shtml">couplage</a></dfn>
 		    <LI><dfn><a href="../Signals.shtml">Signaux</a></dfn>
-		    <LI><dfn><a href="../Lights.shtml">Lumières</a></dfn>
-		    <LI><dfn><a href="../Routes.shtml">Itinéraires</a></dfn>
+		    <LI><dfn><a href="../Lights.shtml">Lumi&#232;res</a></dfn>
+		    <LI><dfn><a href="../Routes.shtml">Itin&#233;raires</a></dfn>
 		    <LI><dfn><a href="../Logix.shtml">Logix</a></dfn>
 		    <LI><dfn><a href="../fastclock/index.shtml">Horloges Rapides</a></dfn>
-		    <LI><dfn><a href="../speedometer/index.shtml">Tachymètre</a></dfn>
+		    <LI><dfn><a href="../speedometer/index.shtml">Tachym&#232;tre</a></dfn>
 		    </UL>
 		</dd>
 

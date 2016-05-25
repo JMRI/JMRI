@@ -15,12 +15,12 @@ import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.roster.Roster;
 import jmri.util.FileUtil;
-import org.jdom.Attribute;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.ProcessingInstruction;
-import org.jdom.filter.ElementFilter;
+import org.jdom2.Attribute;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.ProcessingInstruction;
+import org.jdom2.filter.ElementFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,7 +37,7 @@ public class ConsistFile extends XmlFile {
 
     public ConsistFile() {
         super();
-        consistMan = InstanceManager.consistManagerInstance();
+        consistMan = InstanceManager.getDefault(jmri.ConsistManager.class);
         // set the location to a subdirectory of the defined roster
         // directory
         setFileLocation(Roster.getFileLocation() + "roster" + File.separator + "consist");
@@ -237,7 +237,7 @@ public class ConsistFile extends XmlFile {
                 do {
                     consist = consistIterator.next();
                     consistFromXml(consist);
-                } while (consist != null);
+                } while ( consistIterator.hasNext() );
             } catch (NoSuchElementException nde) {
                 log.debug("end of consist list");
             }
@@ -261,7 +261,7 @@ public class ConsistFile extends XmlFile {
      * Write all consists to a file.
      *
      * @param consistList an ArrayList of consists to write
-     * @param fileName - with location and file type
+     * @param fileName    - with location and file type
      * @throws IOException
      */
     public void writeFile(ArrayList<DccLocoAddress> consistList, String fileName) throws IOException {
@@ -328,5 +328,5 @@ public class ConsistFile extends XmlFile {
         return getFileLocation() + "consist.xml";
     }
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(ConsistFile.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConsistFile.class.getName());
 }

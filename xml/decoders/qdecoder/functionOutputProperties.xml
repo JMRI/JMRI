@@ -1,0 +1,1511 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
+<!-- $Id$				-->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- no need to translate the following, as it generally only appears -->
+<!-- in the function map selection pane -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-08-30</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Initial creation</revremark>
+    </revision>
+  </revhistory>
+  <!-- Specific for Qdecoder accessory decoder -->
+	<!-- 	CVs for output A0											 -->
+  <variable item="Dimming Off A0" CV="111" mask="XVVVVVVV" default="0" minOut="1">
+    <decVal max="100"/>
+    <label>Dimming Off A0</label>
+    <label xml:lang="de">Dimmung Aus A0</label>
+    <tooltip>(in %) in the “off” phase while flashing</tooltip>
+    <tooltip xml:lang="de">(in %) in der "Aus"-Phase des Blinkens</tooltip>
+  </variable>
+  <variable item="Dimming Off inactive A0" CV="111" mask="VXXXXXXX" default="0" minOut="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Dimming Off inactive A0</label>
+    <label xml:lang="de">Dimmung Aus augeschaltet A0</label>
+    <tooltip>&lt;html&gt;0: An inactive output is “really” switched off &lt;br&gt;1: the dimming factor for the “off” phase is applied while “inactive”&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: Ein ausgeschalteter Ausgang ist "wirklich" ausgeschaltet &lt;br&gt;1: Der "Aus"-Phasen-Dimmfaktor wird auch bein ausgeschaltetem Ausgang verwendet&lt;/html&gt;</tooltip>
+	</variable>
+	<variable item="Dimming On A0" CV="112" mask="VVVVVVVV" default="100" minOut="1">
+    <decVal max="100"/>
+    <label>Dimming On A0</label>
+    <label xml:lang="de">Dimmung Ein A0</label>
+    <tooltip>(in %) for active output</tooltip>
+    <tooltip xml:lang="de">(in %) bei eingeschaltetem Ausgang</tooltip>
+  </variable>
+  <variable item="Switching On delay A0" CV="113" mask="XVVVVVVV" default="0" minOut="1">
+    <decVal max="255"/>
+    <label>Switching On delay A0</label>
+    <label xml:lang="de">Schaltverzögerung Ein A0</label>
+    <tooltip>Switching delay time</tooltip>
+    <tooltip xml:lang="de">Verzögerungzeit beim Schalten</tooltip>
+  </variable>
+  <variable item="Switching delay A0" CV="113" mask="VXXXXXXX" default="0" minOut="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Switching delay A0</label>
+    <label xml:lang="de">Schaltverzögerung A0</label>
+    <tooltip>&lt;html&gt;0: Switching on delay &lt;br&gt;1: Switching off delay&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: Einschalten verzögert &lt;br&gt;1: Ausschalten verzögert&lt;/html&gt;</tooltip>
+  </variable>
+  <variable item="Fading in A0" CV="114" mask="XVVVVVVV" default="25" minOut="1">
+    <decVal max="127"/>
+    <label>Fading in A0</label>
+    <label xml:lang="de">Aufblendzeit A0</label>
+    <tooltip>Fading in time</tooltip>
+    <tooltip xml:lang="de">Aufblendzeit</tooltip>
+  </variable>
+  <variable item="Fading in unit A0" CV="114" mask="VXXXXXXX" default="0" minOut="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Fading in unit A0</label>
+    <label xml:lang="de">Aufblendzeit einheit A0</label>
+    <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
+  </variable>
+  <variable item="Fading out A0" CV="115" mask="XVVVVVVV" default="25" minOut="1">
+    <decVal max="127"/>
+    <label>Fading out A0</label>
+    <label xml:lang="de">Abblendzeit A0</label>
+    <tooltip>Fading out time</tooltip>
+    <tooltip xml:lang="de">Abblendzeit</tooltip>
+  </variable>
+  <variable item="Fading out unit A0" CV="115" mask="VXXXXXXX" default="0" minOut="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Fading out unit A0</label>
+    <label xml:lang="de">Abblendzeit einheit A0</label>
+    <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
+  </variable>
+	<variable item="On Time A0" CV="117" mask="VVVVVVVV" default="0" minOut="1">
+		<splitVal highCV="116" upperMask="VVVVVVVV"/>
+    <label>On Time A0</label>
+    <label xml:lang="de">An-zeit A0</label>
+    <tooltip>in 1/100 seconds</tooltip>
+    <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
+  </variable>
+	<variable item="Off Time A0" CV="119" mask="VVVVVVVV" default="0" minOut="1">
+		<splitVal highCV="118" upperMask="VVVVVVVV"/>
+    <label>Off Time A0</label>
+    <label xml:lang="de">Ab-zeit A0</label>
+    <tooltip>in 1/100 seconds</tooltip>
+    <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
+  </variable>
+	  <variable item="Number Pulses A0" CV="120" mask="XVVVVVVV" default="0" minOut="1">
+    <decVal max="127"/>
+    <label>Number Pulses A0</label>
+    <label xml:lang="de">Anzahl der Pulse A0</label>
+    <tooltip>Number of pulses</tooltip>
+    <tooltip xml:lang="de">Anzahl der Pulse</tooltip>
+  </variable>
+  <variable item="Pulse type A0" CV="120" mask="VXXXXXXX" default="0" minOut="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Pulse type A0</label>
+    <label xml:lang="de">Pulsetyp A0</label>
+    <tooltip>&lt;html&gt;0: normal flashing &lt;br&gt;1: inverted flashing&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: normales Blinken &lt;br&gt;1: wechselblinken (erst aus, dann ein);/html&gt;</tooltip>
+  </variable>
+	<!-- 	CVs for output A1											 -->
+  <variable item="Dimming Off A1" CV="121" mask="XVVVVVVV" default="0" minOut="2">
+    <decVal max="100"/>
+    <label>Dimming Off A1</label>
+    <label xml:lang="de">Dimmung Aus A1</label>
+    <tooltip>(in %) in the “off” phase while flashing</tooltip>
+    <tooltip xml:lang="de">(in %) in der "Aus"-Phase des Blinkens</tooltip>
+  </variable>
+  <variable item="Dimming Off inactive A1" CV="121" mask="VXXXXXXX" default="0" minOut="2">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Dimming Off inactive A1</label>
+    <label xml:lang="de">Dimmung Aus augeschaltet A1</label>
+    <tooltip>&lt;html&gt;0: An inactive output is “really” switched off &lt;br&gt;1: the dimming factor for the “off” phase is applied while “inactive”&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: Ein ausgeschalteter Ausgang ist "wirklich" ausgeschaltet &lt;br&gt;1: Der "Aus"-Phasen-Dimmfaktor wird auch bein ausgeschaltetem Ausgang verwendet&lt;/html&gt;</tooltip>
+  </variable>
+	<variable item="Dimming On A1" CV="122" mask="VVVVVVVV" default="100" minOut="2">
+    <decVal max="100"/>
+    <label>Dimming On A1</label>
+    <label xml:lang="de">Dimmung Ein A1</label>
+    <tooltip>(in %) for active output</tooltip>
+    <tooltip xml:lang="de">(in %) bei eingeschaltetem Ausgang</tooltip>
+  </variable>
+  <variable item="Switching On delay A1" CV="123" mask="XVVVVVVV" default="0" minOut="2">
+    <decVal max="255"/>
+    <label>Switching On delay A1</label>
+    <label xml:lang="de">Schaltverzögerung Ein A1</label>
+    <tooltip>Switching delay time</tooltip>
+    <tooltip xml:lang="de">Verzögerungzeit beim Schalten</tooltip>
+  </variable>
+  <variable item="Switching delay A1" CV="123" mask="VXXXXXXX" default="0" minOut="2">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Switching delay A1</label>
+    <label xml:lang="de">Schaltverzögerung A1</label>
+    <tooltip>&lt;html&gt;0: Switching on delay &lt;br&gt;1: Switching off delay&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: Einschalten verzögert &lt;br&gt;1: Ausschalten verzögert&lt;/html&gt;</tooltip>
+  </variable>
+  <variable item="Fading in A1" CV="124" mask="XVVVVVVV" default="25" minOut="2">
+    <decVal max="127"/>
+    <label>Fading in A1</label>
+    <label xml:lang="de">Aufblendzeit A1</label>
+    <tooltip>Fading in time</tooltip>
+    <tooltip xml:lang="de">Aufblendzeit</tooltip>
+  </variable>
+  <variable item="Fading in unit A1" CV="124" mask="VXXXXXXX" default="0" minOut="2">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Fading in unit A1</label>
+    <label xml:lang="de">Aufblendzeit einheit A1</label>
+    <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
+  </variable>
+  <variable item="Fading out A1" CV="125" mask="XVVVVVVV" default="25" minOut="2">
+    <decVal max="127"/>
+    <label>Fading out A1</label>
+    <label xml:lang="de">Abblendzeit A1</label>
+    <tooltip>Fading out time</tooltip>
+    <tooltip xml:lang="de">Abblendzeit</tooltip>
+  </variable>
+  <variable item="Fading out unit A1" CV="125" mask="VXXXXXXX" default="0" minOut="2">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Fading out unit A1</label>
+    <label xml:lang="de">Abblendzeit einheit A1</label>
+    <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
+  </variable>
+	<variable item="On Time A1" CV="127" mask="VVVVVVVV" default="0" minOut="2">
+		<splitVal highCV="126" upperMask="VVVVVVVV"/>
+    <label>On Time A1</label>
+    <label xml:lang="de">An-zeit A1</label>
+    <tooltip>in 1/100 seconds</tooltip>
+    <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
+  </variable>
+	<variable item="Off Time A1" CV="129" mask="VVVVVVVV" default="0" minOut="2">
+		<splitVal highCV="128" upperMask="VVVVVVVV"/>
+    <label>Off Time A1</label>
+    <label xml:lang="de">Ab-zeit A1</label>
+    <tooltip>in 1/100 seconds</tooltip>
+    <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
+  </variable>
+	  <variable item="Number Pulses A1" CV="130" mask="XVVVVVVV" default="0" minOut="2">
+    <decVal max="127"/>
+    <label>Number Pulses A1</label>
+    <label xml:lang="de">Anzahl der Pulse A1</label>
+    <tooltip>Number of pulses</tooltip>
+    <tooltip xml:lang="de">Anzahl der Pulse</tooltip>
+  </variable>
+  <variable item="Pulse type A1" CV="130" mask="VXXXXXXX" default="0" minOut="2">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Pulse type A1</label>
+    <label xml:lang="de">Pulsetyp A1</label>
+    <tooltip>&lt;html&gt;0: normal flashing &lt;br&gt;1: inverted flashing&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: normales Blinken &lt;br&gt;1: wechselblinken (erst aus, dann ein);/html&gt;</tooltip>
+  </variable>
+	<!-- 	CVs for output A2											 -->
+  <variable item="Dimming Off A2" CV="131" mask="XVVVVVVV" default="0" minOut="3">
+    <decVal max="100"/>
+    <label>Dimming Off A2</label>
+    <label xml:lang="de">Dimmung Aus A2</label>
+    <tooltip>(in %) in the “off” phase while flashing</tooltip>
+    <tooltip xml:lang="de">(in %) in der "Aus"-Phase des Blinkens</tooltip>
+  </variable>
+  <variable item="Dimming Off inactive A2" CV="131" mask="VXXXXXXX" default="0" minOut="3">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Dimming Off inactive A2</label>
+    <label xml:lang="de">Dimmung Aus augeschaltet A2</label>
+    <tooltip>&lt;html&gt;0: An inactive output is “really” switched off &lt;br&gt;1: the dimming factor for the “off” phase is applied while “inactive”&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: Ein ausgeschalteter Ausgang ist "wirklich" ausgeschaltet &lt;br&gt;1: Der "Aus"-Phasen-Dimmfaktor wird auch bein ausgeschaltetem Ausgang verwendet&lt;/html&gt;</tooltip>
+  </variable>
+	<variable item="Dimming On A2" CV="132" mask="VVVVVVVV" default="100" minOut="3">
+    <decVal max="100"/>
+    <label>Dimming On A2</label>
+    <label xml:lang="de">Dimmung Ein A2</label>
+    <tooltip>(in %) for active output</tooltip>
+    <tooltip xml:lang="de">(in %) bei eingeschaltetem Ausgang</tooltip>
+  </variable>
+  <variable item="Switching On delay A2" CV="133" mask="XVVVVVVV" default="0" minOut="3">
+    <decVal max="255"/>
+    <label>Switching On delay A2</label>
+    <label xml:lang="de">Schaltverzögerung Ein A2</label>
+    <tooltip>Switching delay time</tooltip>
+    <tooltip xml:lang="de">Verzögerungzeit beim Schalten</tooltip>
+  </variable>
+  <variable item="Switching delay A2" CV="133" mask="VXXXXXXX" default="0" minOut="3">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Switching delay A2</label>
+    <label xml:lang="de">Schaltverzögerung A2</label>
+    <tooltip>&lt;html&gt;0: Switching on delay &lt;br&gt;1: Switching off delay&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: Einschalten verzögert &lt;br&gt;1: Ausschalten verzögert&lt;/html&gt;</tooltip>
+  </variable>
+  <variable item="Fading in A2" CV="134" mask="XVVVVVVV" default="25" minOut="3">
+    <decVal max="127"/>
+    <label>Fading in A2</label>
+    <label xml:lang="de">Aufblendzeit A2</label>
+    <tooltip>Fading in time</tooltip>
+    <tooltip xml:lang="de">Aufblendzeit</tooltip>
+  </variable>
+  <variable item="Fading in unit A2" CV="134" mask="VXXXXXXX" default="0" minOut="3">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Fading in unit A2</label>
+    <label xml:lang="de">Aufblendzeit einheit A2</label>
+    <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
+  </variable>
+  <variable item="Fading out A2" CV="135" mask="XVVVVVVV" default="25" minOut="3">
+    <decVal max="127"/>
+    <label>Fading out A2</label>
+    <label xml:lang="de">Abblendzeit A2</label>
+    <tooltip>Fading out time</tooltip>
+    <tooltip xml:lang="de">Abblendzeit</tooltip>
+  </variable>
+  <variable item="Fading out unit A2" CV="135" mask="VXXXXXXX" default="0" minOut="3">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Fading out unit A2</label>
+    <label xml:lang="de">Abblendzeit einheit A2</label>
+    <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
+  </variable>
+	<variable item="On Time A2" CV="137" mask="VVVVVVVV" default="0" minOut="3">
+		<splitVal highCV="136" upperMask="VVVVVVVV"/>
+    <label>On Time A2</label>
+    <label xml:lang="de">An-zeit A2</label>
+    <tooltip>in 1/100 seconds</tooltip>
+    <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
+  </variable>
+	<variable item="Off Time A2" CV="139" mask="VVVVVVVV" default="0" minOut="3">
+		<splitVal highCV="138" upperMask="VVVVVVVV"/>
+    <label>Off Time A2</label>
+    <label xml:lang="de">Ab-zeit A2</label>
+    <tooltip>in 1/100 seconds</tooltip>
+    <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
+  </variable>
+	  <variable item="Number Pulses A2" CV="140" mask="XVVVVVVV" default="0" minOut="3">
+    <decVal max="127"/>
+    <label>Number Pulses A2</label>
+    <label xml:lang="de">Anzahl der Pulse A2</label>
+    <tooltip>Number of pulses</tooltip>
+    <tooltip xml:lang="de">Anzahl der Pulse</tooltip>
+  </variable>
+  <variable item="Pulse type A2" CV="140" mask="VXXXXXXX" default="0" minOut="3">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Pulse type A2</label>
+    <label xml:lang="de">Pulsetyp A2</label>
+    <tooltip>&lt;html&gt;0: normal flashing &lt;br&gt;1: inverted flashing&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: normales Blinken &lt;br&gt;1: wechselblinken (erst aus, dann ein);/html&gt;</tooltip>
+  </variable>
+	<!-- 	CVs for output A3											 -->
+  <variable item="Dimming Off A3" CV="141" mask="XVVVVVVV" default="0" minOut="4">
+    <decVal max="100"/>
+    <label>Dimming Off A3</label>
+    <label xml:lang="de">Dimmung Aus A3</label>
+    <tooltip>(in %) in the “off” phase while flashing</tooltip>
+    <tooltip xml:lang="de">(in %) in der "Aus"-Phase des Blinkens</tooltip>
+  </variable>
+  <variable item="Dimming Off inactive A3" CV="141" mask="VXXXXXXX" default="0" minOut="4">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Dimming Off inactive A3</label>
+    <label xml:lang="de">Dimmung Aus augeschaltet A3</label>
+    <tooltip>&lt;html&gt;0: An inactive output is “really” switched off &lt;br&gt;1: the dimming factor for the “off” phase is applied while “inactive”&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: Ein ausgeschalteter Ausgang ist "wirklich" ausgeschaltet &lt;br&gt;1: Der "Aus"-Phasen-Dimmfaktor wird auch bein ausgeschaltetem Ausgang verwendet&lt;/html&gt;</tooltip>
+  </variable>
+	<variable item="Dimming On A3" CV="142" mask="VVVVVVVV" default="100" minOut="4">
+    <decVal max="100"/>
+    <label>Dimming On A3</label>
+    <label xml:lang="de">Dimmung Ein A3</label>
+    <tooltip>(in %) for active output</tooltip>
+    <tooltip xml:lang="de">(in %) bei eingeschaltetem Ausgang</tooltip>
+  </variable>
+  <variable item="Switching On delay A3" CV="143" mask="XVVVVVVV" default="0" minOut="4">
+    <decVal max="255"/>
+    <label>Switching On delay A3</label>
+    <label xml:lang="de">Schaltverzögerung Ein A3</label>
+    <tooltip>Switching delay time</tooltip>
+    <tooltip xml:lang="de">Verzögerungzeit beim Schalten</tooltip>
+  </variable>
+  <variable item="Switching delay A3" CV="143" mask="VXXXXXXX" default="0" minOut="4">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Switching delay A3</label>
+    <label xml:lang="de">Schaltverzögerung A3</label>
+    <tooltip>&lt;html&gt;0: Switching on delay &lt;br&gt;1: Switching off delay&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: Einschalten verzögert &lt;br&gt;1: Ausschalten verzögert&lt;/html&gt;</tooltip>
+  </variable>
+  <variable item="Fading in A3" CV="144" mask="XVVVVVVV" default="25" minOut="4">
+    <decVal max="127"/>
+    <label>Fading in A3</label>
+    <label xml:lang="de">Aufblendzeit A3</label>
+    <tooltip>Fading in time</tooltip>
+    <tooltip xml:lang="de">Aufblendzeit</tooltip>
+  </variable>
+  <variable item="Fading in unit A3" CV="144" mask="VXXXXXXX" default="0" minOut="4">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Fading in unit A3</label>
+    <label xml:lang="de">Aufblendzeit einheit A3</label>
+    <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
+  </variable>
+  <variable item="Fading out A3" CV="145" mask="XVVVVVVV" default="25" minOut="4">
+    <decVal max="127"/>
+    <label>Fading out A3</label>
+    <label xml:lang="de">Abblendzeit A3</label>
+    <tooltip>Fading out time</tooltip>
+    <tooltip xml:lang="de">Abblendzeit</tooltip>
+  </variable>
+  <variable item="Fading out unit A3" CV="145" mask="VXXXXXXX" default="0" minOut="4">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Fading out unit A3</label>
+    <label xml:lang="de">Abblendzeit einheit A3</label>
+    <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
+  </variable>
+	<variable item="On Time A3" CV="147" mask="VVVVVVVV" default="0" minOut="4">
+		<splitVal highCV="146" upperMask="VVVVVVVV"/>
+    <label>On Time A3</label>
+    <label xml:lang="de">An-zeit A3</label>
+    <tooltip>in 1/100 seconds</tooltip>
+    <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
+  </variable>
+	<variable item="Off Time A3" CV="149" mask="VVVVVVVV" default="0" minOut="4">
+		<splitVal highCV="148" upperMask="VVVVVVVV"/>
+    <label>Off Time A3</label>
+    <label xml:lang="de">Ab-zeit A3</label>
+    <tooltip>in 1/100 seconds</tooltip>
+    <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
+  </variable>
+	  <variable item="Number Pulses A3" CV="150" mask="XVVVVVVV" default="0" minOut="4">
+    <decVal max="127"/>
+    <label>Number Pulses A3</label>
+    <label xml:lang="de">Anzahl der Pulse A3</label>
+    <tooltip>Number of pulses</tooltip>
+    <tooltip xml:lang="de">Anzahl der Pulse</tooltip>
+  </variable>
+  <variable item="Pulse type A3" CV="150" mask="VXXXXXXX" default="0" minOut="4">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Pulse type A3</label>
+    <label xml:lang="de">Pulsetyp A3</label>
+    <tooltip>&lt;html&gt;0: normal flashing &lt;br&gt;1: inverted flashing&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: normales Blinken &lt;br&gt;1: wechselblinken (erst aus, dann ein);/html&gt;</tooltip>
+  </variable>
+	<!-- 	CVs for output A4											 -->
+  <variable item="Dimming Off A4" CV="151" mask="XVVVVVVV" default="0" minOut="5">
+    <decVal max="100"/>
+    <label>Dimming Off A4</label>
+    <label xml:lang="de">Dimmung Aus A4</label>
+    <tooltip>(in %) in the “off” phase while flashing</tooltip>
+    <tooltip xml:lang="de">(in %) in der "Aus"-Phase des Blinkens</tooltip>
+  </variable>
+  <variable item="Dimming Off inactive A4" CV="151" mask="VXXXXXXX" default="0" minOut="5">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Dimming Off inactive A4</label>
+    <label xml:lang="de">Dimmung Aus augeschaltet A4</label>
+    <tooltip>&lt;html&gt;0: An inactive output is “really” switched off &lt;br&gt;1: the dimming factor for the “off” phase is applied while “inactive”&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: Ein ausgeschalteter Ausgang ist "wirklich" ausgeschaltet &lt;br&gt;1: Der "Aus"-Phasen-Dimmfaktor wird auch bein ausgeschaltetem Ausgang verwendet&lt;/html&gt;</tooltip>
+  </variable>
+	<variable item="Dimming On A4" CV="152" mask="VVVVVVVV" default="100" minOut="5">
+    <decVal max="100"/>
+    <label>Dimming On A4</label>
+    <label xml:lang="de">Dimmung Ein A4</label>
+    <tooltip>(in %) for active output</tooltip>
+    <tooltip xml:lang="de">(in %) bei eingeschaltetem Ausgang</tooltip>
+  </variable>
+  <variable item="Switching On delay A4" CV="153" mask="XVVVVVVV" default="0" minOut="5">
+    <decVal max="255"/>
+    <label>Switching On delay A4</label>
+    <label xml:lang="de">Schaltverzögerung Ein A4</label>
+    <tooltip>Switching delay time</tooltip>
+    <tooltip xml:lang="de">Verzögerungzeit beim Schalten</tooltip>
+  </variable>
+  <variable item="Switching delay A4" CV="153" mask="VXXXXXXX" default="0" minOut="5">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Switching delay A4</label>
+    <label xml:lang="de">Schaltverzögerung A4</label>
+    <tooltip>&lt;html&gt;0: Switching on delay &lt;br&gt;1: Switching off delay&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: Einschalten verzögert &lt;br&gt;1: Ausschalten verzögert&lt;/html&gt;</tooltip>
+  </variable>
+  <variable item="Fading in A4" CV="154" mask="XVVVVVVV" default="25" minOut="5">
+    <decVal max="127"/>
+    <label>Fading in A4</label>
+    <label xml:lang="de">Aufblendzeit A4</label>
+    <tooltip>Fading in time</tooltip>
+    <tooltip xml:lang="de">Aufblendzeit</tooltip>
+  </variable>
+  <variable item="Fading in unit A4" CV="154" mask="VXXXXXXX" default="0" minOut="5">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Fading in unit A4</label>
+    <label xml:lang="de">Aufblendzeit einheit A4</label>
+    <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
+  </variable>
+  <variable item="Fading out A4" CV="155" mask="XVVVVVVV" default="25" minOut="5">
+    <decVal max="127"/>
+    <label>Fading out A4</label>
+    <label xml:lang="de">Abblendzeit A4</label>
+    <tooltip>Fading out time</tooltip>
+    <tooltip xml:lang="de">Abblendzeit</tooltip>
+  </variable>
+  <variable item="Fading out unit A4" CV="155" mask="VXXXXXXX" default="0" minOut="5">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Fading out unit A4</label>
+    <label xml:lang="de">Abblendzeit einheit A4</label>
+    <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
+  </variable>
+	<variable item="On Time A4" CV="157" mask="VVVVVVVV" default="0" minOut="5">
+		<splitVal highCV="156" upperMask="VVVVVVVV"/>
+    <label>On Time A4</label>
+    <label xml:lang="de">An-zeit A4</label>
+    <tooltip>in 1/100 seconds</tooltip>
+    <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
+  </variable>
+	<variable item="Off Time A4" CV="159" mask="VVVVVVVV" default="0" minOut="5">
+		<splitVal highCV="158" upperMask="VVVVVVVV"/>
+    <label>Off Time A4</label>
+    <label xml:lang="de">Ab-zeit A4</label>
+    <tooltip>in 1/100 seconds</tooltip>
+    <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
+  </variable>
+	  <variable item="Number Pulses A4" CV="160" mask="XVVVVVVV" default="0" minOut="5">
+    <decVal max="127"/>
+    <label>Number Pulses A4</label>
+    <label xml:lang="de">Anzahl der Pulse A4</label>
+    <tooltip>Number of pulses</tooltip>
+    <tooltip xml:lang="de">Anzahl der Pulse</tooltip>
+  </variable>
+  <variable item="Pulse type A4" CV="160" mask="VXXXXXXX" default="0" minOut="5">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Pulse type A4</label>
+    <label xml:lang="de">Pulsetyp A4</label>
+    <tooltip>&lt;html&gt;0: normal flashing &lt;br&gt;1: inverted flashing&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: normales Blinken &lt;br&gt;1: wechselblinken (erst aus, dann ein);/html&gt;</tooltip>
+  </variable>
+	<!-- 	CVs for output A5											 -->
+  <variable item="Dimming Off A5" CV="161" mask="XVVVVVVV" default="0" minOut="6">
+    <decVal max="100"/>
+    <label>Dimming Off A5</label>
+    <label xml:lang="de">Dimmung Aus A5</label>
+    <tooltip>(in %) in the “off” phase while flashing</tooltip>
+    <tooltip xml:lang="de">(in %) in der "Aus"-Phase des Blinkens</tooltip>
+  </variable>
+  <variable item="Dimming Off inactive A5" CV="161" mask="VXXXXXXX" default="0" minOut="6">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Dimming Off inactive A5</label>
+    <label xml:lang="de">Dimmung Aus augeschaltet A5</label>
+    <tooltip>&lt;html&gt;0: An inactive output is “really” switched off &lt;br&gt;1: the dimming factor for the “off” phase is applied while “inactive”&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: Ein ausgeschalteter Ausgang ist "wirklich" ausgeschaltet &lt;br&gt;1: Der "Aus"-Phasen-Dimmfaktor wird auch bein ausgeschaltetem Ausgang verwendet&lt;/html&gt;</tooltip>
+  </variable>
+	<variable item="Dimming On A5" CV="162" mask="VVVVVVVV" default="100" minOut="6">
+    <decVal max="100"/>
+    <label>Dimming On A5</label>
+    <label xml:lang="de">Dimmung Ein A5</label>
+    <tooltip>(in %) for active output</tooltip>
+    <tooltip xml:lang="de">(in %) bei eingeschaltetem Ausgang</tooltip>
+  </variable>
+  <variable item="Switching On delay A5" CV="163" mask="XVVVVVVV" default="0" minOut="6">
+    <decVal max="255"/>
+    <label>Switching On delay A5</label>
+    <label xml:lang="de">Schaltverzögerung Ein A5</label>
+    <tooltip>Switching delay time</tooltip>
+    <tooltip xml:lang="de">Verzögerungzeit beim Schalten</tooltip>
+  </variable>
+  <variable item="Switching delay A5" CV="163" mask="VXXXXXXX" default="0" minOut="6">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Switching delay A5</label>
+    <label xml:lang="de">Schaltverzögerung A5</label>
+    <tooltip>&lt;html&gt;0: Switching on delay &lt;br&gt;1: Switching off delay&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: Einschalten verzögert &lt;br&gt;1: Ausschalten verzögert&lt;/html&gt;</tooltip>
+  </variable>
+  <variable item="Fading in A5" CV="164" mask="XVVVVVVV" default="25" minOut="6">
+    <decVal max="127"/>
+    <label>Fading in A5</label>
+    <label xml:lang="de">Aufblendzeit A5</label>
+    <tooltip>Fading in time</tooltip>
+    <tooltip xml:lang="de">Aufblendzeit</tooltip>
+  </variable>
+  <variable item="Fading in unit A5" CV="164" mask="VXXXXXXX" default="0" minOut="6">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Fading in unit A5</label>
+    <label xml:lang="de">Aufblendzeit einheit A5</label>
+    <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
+  </variable>
+  <variable item="Fading out A5" CV="165" mask="XVVVVVVV" default="25" minOut="6">
+    <decVal max="127"/>
+    <label>Fading out A5</label>
+    <label xml:lang="de">Abblendzeit A5</label>
+    <tooltip>Fading out time</tooltip>
+    <tooltip xml:lang="de">Abblendzeit</tooltip>
+  </variable>
+  <variable item="Fading out unit A5" CV="165" mask="VXXXXXXX" default="0" minOut="6">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Fading out unit A5</label>
+    <label xml:lang="de">Abblendzeit einheit A5</label>
+    <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
+  </variable>
+	<variable item="On Time A5" CV="167" mask="VVVVVVVV" default="0" minOut="6">
+		<splitVal highCV="166" upperMask="VVVVVVVV"/>
+    <label>On Time A5</label>
+    <label xml:lang="de">An-zeit A5</label>
+    <tooltip>in 1/100 seconds</tooltip>
+    <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
+  </variable>
+	<variable item="Off Time A5" CV="169" mask="VVVVVVVV" default="0" minOut="6">
+		<splitVal highCV="168" upperMask="VVVVVVVV"/>
+    <label>Off Time A5</label>
+    <label xml:lang="de">Ab-zeit A5</label>
+    <tooltip>in 1/100 seconds</tooltip>
+    <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
+  </variable>
+	  <variable item="Number Pulses A5" CV="170" mask="XVVVVVVV" default="0" minOut="6">
+    <decVal max="127"/>
+    <label>Number Pulses A5</label>
+    <label xml:lang="de">Anzahl der Pulse A5</label>
+    <tooltip>Number of pulses</tooltip>
+    <tooltip xml:lang="de">Anzahl der Pulse</tooltip>
+  </variable>
+  <variable item="Pulse type A5" CV="170" mask="VXXXXXXX" default="0" minOut="6">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Pulse type A5</label>
+    <label xml:lang="de">Pulsetyp A5</label>
+    <tooltip>&lt;html&gt;0: normal flashing &lt;br&gt;1: inverted flashing&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: normales Blinken &lt;br&gt;1: wechselblinken (erst aus, dann ein);/html&gt;</tooltip>
+  </variable>
+	<!-- 	CVs for output A6											 -->
+  <variable item="Dimming Off A6" CV="171" mask="XVVVVVVV" default="0" minOut="7">
+    <decVal max="100"/>
+    <label>Dimming Off A6</label>
+    <label xml:lang="de">Dimmung Aus A6</label>
+    <tooltip>(in %) in the “off” phase while flashing</tooltip>
+    <tooltip xml:lang="de">(in %) in der "Aus"-Phase des Blinkens</tooltip>
+  </variable>
+  <variable item="Dimming Off inactive A6" CV="171" mask="VXXXXXXX" default="0" minOut="7">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Dimming Off inactive A6</label>
+    <label xml:lang="de">Dimmung Aus augeschaltet A6</label>
+    <tooltip>&lt;html&gt;0: An inactive output is “really” switched off &lt;br&gt;1: the dimming factor for the “off” phase is applied while “inactive”&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: Ein ausgeschalteter Ausgang ist "wirklich" ausgeschaltet &lt;br&gt;1: Der "Aus"-Phasen-Dimmfaktor wird auch bein ausgeschaltetem Ausgang verwendet&lt;/html&gt;</tooltip>
+  </variable>
+	<variable item="Dimming On A6" CV="172" mask="VVVVVVVV" default="100" minOut="7">
+    <decVal max="100"/>
+    <label>Dimming On A6</label>
+    <label xml:lang="de">Dimmung Ein A6</label>
+    <tooltip>(in %) for active output</tooltip>
+    <tooltip xml:lang="de">(in %) bei eingeschaltetem Ausgang</tooltip>
+  </variable>
+  <variable item="Switching On delay A6" CV="173" mask="XVVVVVVV" default="0" minOut="7">
+    <decVal max="255"/>
+    <label>Switching On delay A6</label>
+    <label xml:lang="de">Schaltverzögerung Ein A6</label>
+    <tooltip>Switching delay time</tooltip>
+    <tooltip xml:lang="de">Verzögerungzeit beim Schalten</tooltip>
+  </variable>
+  <variable item="Switching delay A6" CV="173" mask="VXXXXXXX" default="0" minOut="7">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Switching delay A6</label>
+    <label xml:lang="de">Schaltverzögerung A6</label>
+    <tooltip>&lt;html&gt;0: Switching on delay &lt;br&gt;1: Switching off delay&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: Einschalten verzögert &lt;br&gt;1: Ausschalten verzögert&lt;/html&gt;</tooltip>
+  </variable>
+  <variable item="Fading in A6" CV="174" mask="XVVVVVVV" default="25" minOut="7">
+    <decVal max="127"/>
+    <label>Fading in A6</label>
+    <label xml:lang="de">Aufblendzeit A6</label>
+    <tooltip>Fading in time</tooltip>
+    <tooltip xml:lang="de">Aufblendzeit</tooltip>
+  </variable>
+  <variable item="Fading in unit A6" CV="174" mask="VXXXXXXX" default="0" minOut="7">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Fading in unit A6</label>
+    <label xml:lang="de">Aufblendzeit einheit A6</label>
+    <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
+  </variable>
+  <variable item="Fading out A6" CV="175" mask="XVVVVVVV" default="25" minOut="7">
+    <decVal max="127"/>
+    <label>Fading out A6</label>
+    <label xml:lang="de">Abblendzeit A6</label>
+    <tooltip>Fading out time</tooltip>
+    <tooltip xml:lang="de">Abblendzeit</tooltip>
+  </variable>
+  <variable item="Fading out unit A6" CV="175" mask="VXXXXXXX" default="0" minOut="7">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Fading out unit A6</label>
+    <label xml:lang="de">Abblendzeit einheit A6</label>
+    <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
+  </variable>
+	<variable item="On Time A6" CV="177" mask="VVVVVVVV" default="0" minOut="7">
+		<splitVal highCV="176" upperMask="VVVVVVVV"/>
+    <label>On Time A6</label>
+    <label xml:lang="de">An-zeit A6</label>
+    <tooltip>in 1/100 seconds</tooltip>
+    <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
+  </variable>
+	<variable item="Off Time A6" CV="179" mask="VVVVVVVV" default="0" minOut="7">
+		<splitVal highCV="178" upperMask="VVVVVVVV"/>
+    <label>Off Time A6</label>
+    <label xml:lang="de">Ab-zeit A6</label>
+    <tooltip>in 1/100 seconds</tooltip>
+    <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
+  </variable>
+	  <variable item="Number Pulses A6" CV="180" mask="XVVVVVVV" default="0" minOut="7">
+    <decVal max="127"/>
+    <label>Number Pulses A6</label>
+    <label xml:lang="de">Anzahl der Pulse A6</label>
+    <tooltip>Number of pulses</tooltip>
+    <tooltip xml:lang="de">Anzahl der Pulse</tooltip>
+  </variable>
+  <variable item="Pulse type A6" CV="180" mask="VXXXXXXX" default="0" minOut="7">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Pulse type A6</label>
+    <label xml:lang="de">Pulsetyp A6</label>
+    <tooltip>&lt;html&gt;0: normal flashing &lt;br&gt;1: inverted flashing&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: normales Blinken &lt;br&gt;1: wechselblinken (erst aus, dann ein);/html&gt;</tooltip>
+  </variable>
+	<!-- 	CVs for output A7											 -->
+  <variable item="Dimming Off A7" CV="181" mask="XVVVVVVV" default="0" minOut="8">
+    <decVal max="100"/>
+    <label>Dimming Off A7</label>
+    <label xml:lang="de">Dimmung Aus A7</label>
+    <tooltip>(in %) in the “off” phase while flashing</tooltip>
+    <tooltip xml:lang="de">(in %) in der "Aus"-Phase des Blinkens</tooltip>
+  </variable>
+  <variable item="Dimming Off inactive A7" CV="181" mask="VXXXXXXX" default="0" minOut="8">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Dimming Off inactive A7</label>
+    <label xml:lang="de">Dimmung Aus augeschaltet A7</label>
+    <tooltip>&lt;html&gt;0: An inactive output is “really” switched off &lt;br&gt;1: the dimming factor for the “off” phase is applied while “inactive”&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: Ein ausgeschalteter Ausgang ist "wirklich" ausgeschaltet &lt;br&gt;1: Der "Aus"-Phasen-Dimmfaktor wird auch bein ausgeschaltetem Ausgang verwendet&lt;/html&gt;</tooltip>
+  </variable>
+	<variable item="Dimming On A7" CV="182" mask="VVVVVVVV" default="100" minOut="8">
+    <decVal max="100"/>
+    <label>Dimming On A7</label>
+    <label xml:lang="de">Dimmung Ein A7</label>
+    <tooltip>(in %) for active output</tooltip>
+    <tooltip xml:lang="de">(in %) bei eingeschaltetem Ausgang</tooltip>
+  </variable>
+  <variable item="Switching On delay A7" CV="183" mask="XVVVVVVV" default="0" minOut="8">
+    <decVal max="255"/>
+    <label>Switching On delay A7</label>
+    <label xml:lang="de">Schaltverzögerung Ein A7</label>
+    <tooltip>Switching delay time</tooltip>
+    <tooltip xml:lang="de">Verzögerungzeit beim Schalten</tooltip>
+  </variable>
+  <variable item="Switching delay A7" CV="183" mask="VXXXXXXX" default="0" minOut="8">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Switching delay A7</label>
+    <label xml:lang="de">Schaltverzögerung A7</label>
+    <tooltip>&lt;html&gt;0: Switching on delay &lt;br&gt;1: Switching off delay&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: Einschalten verzögert &lt;br&gt;1: Ausschalten verzögert&lt;/html&gt;</tooltip>
+  </variable>
+  <variable item="Fading in A7" CV="184" mask="XVVVVVVV" default="25" minOut="8">
+    <decVal max="127"/>
+    <label>Fading in A7</label>
+    <label xml:lang="de">Aufblendzeit A7</label>
+    <tooltip>Fading in time</tooltip>
+    <tooltip xml:lang="de">Aufblendzeit</tooltip>
+  </variable>
+  <variable item="Fading in unit A7" CV="184" mask="VXXXXXXX" default="0" minOut="8">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Fading in unit A7</label>
+    <label xml:lang="de">Aufblendzeit einheit A7</label>
+    <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
+  </variable>
+  <variable item="Fading out A7" CV="185" mask="XVVVVVVV" default="25" minOut="8">
+    <decVal max="127"/>
+    <label>Fading out A7</label>
+    <label xml:lang="de">Abblendzeit A7</label>
+    <tooltip>Fading out time</tooltip>
+    <tooltip xml:lang="de">Abblendzeit</tooltip>
+  </variable>
+  <variable item="Fading out unit A7" CV="185" mask="VXXXXXXX" default="0" minOut="8">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Fading out unit A7</label>
+    <label xml:lang="de">Abblendzeit einheit A7</label>
+    <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
+  </variable>
+	<variable item="On Time A7" CV="187" mask="VVVVVVVV" default="0" minOut="8">
+		<splitVal highCV="186" upperMask="VVVVVVVV"/>
+    <label>On Time A7</label>
+    <label xml:lang="de">An-zeit A7</label>
+    <tooltip>in 1/100 seconds</tooltip>
+    <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
+  </variable>
+	<variable item="Off Time A7" CV="189" mask="VVVVVVVV" default="0" minOut="8">
+		<splitVal highCV="188" upperMask="VVVVVVVV"/>
+    <label>Off Time A7</label>
+    <label xml:lang="de">Ab-zeit A7</label>
+    <tooltip>in 1/100 seconds</tooltip>
+    <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
+  </variable>
+	  <variable item="Number Pulses A7" CV="190" mask="XVVVVVVV" default="0" minOut="8">
+    <decVal max="127"/>
+    <label>Number Pulses A7</label>
+    <label xml:lang="de">Anzahl der Pulse A7</label>
+    <tooltip>Number of pulses</tooltip>
+    <tooltip xml:lang="de">Anzahl der Pulse</tooltip>
+  </variable>
+  <variable item="Pulse type A7" CV="190" mask="VXXXXXXX" default="0" minOut="8">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Pulse type A7</label>
+    <label xml:lang="de">Pulsetyp A7</label>
+    <tooltip>&lt;html&gt;0: normal flashing &lt;br&gt;1: inverted flashing&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: normales Blinken &lt;br&gt;1: wechselblinken (erst aus, dann ein);/html&gt;</tooltip>
+  </variable>
+	<!-- 	CVs for output A8											 -->
+  <variable item="Dimming Off A8" CV="191" mask="XVVVVVVV" default="0" minOut="9">
+    <decVal max="100"/>
+    <label>Dimming Off A8</label>
+    <label xml:lang="de">Dimmung Aus A8</label>
+    <tooltip>(in %) in the “off” phase while flashing</tooltip>
+    <tooltip xml:lang="de">(in %) in der "Aus"-Phase des Blinkens</tooltip>
+  </variable>
+  <variable item="Dimming Off inactive A8" CV="191" mask="VXXXXXXX" default="0" minOut="9">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Dimming Off inactive A8</label>
+    <label xml:lang="de">Dimmung Aus augeschaltet A8</label>
+    <tooltip>&lt;html&gt;0: An inactive output is “really” switched off &lt;br&gt;1: the dimming factor for the “off” phase is applied while “inactive”&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: Ein ausgeschalteter Ausgang ist "wirklich" ausgeschaltet &lt;br&gt;1: Der "Aus"-Phasen-Dimmfaktor wird auch bein ausgeschaltetem Ausgang verwendet&lt;/html&gt;</tooltip>
+  </variable>
+	<variable item="Dimming On A8" CV="192" mask="VVVVVVVV" default="100" minOut="9">
+    <decVal max="100"/>
+    <label>Dimming On A8</label>
+    <label xml:lang="de">Dimmung Ein A8</label>
+    <tooltip>(in %) for active output</tooltip>
+    <tooltip xml:lang="de">(in %) bei eingeschaltetem Ausgang</tooltip>
+  </variable>
+  <variable item="Switching On delay A8" CV="193" mask="XVVVVVVV" default="0" minOut="9">
+    <decVal max="255"/>
+    <label>Switching On delay A8</label>
+    <label xml:lang="de">Schaltverzögerung Ein A8</label>
+    <tooltip>Switching delay time</tooltip>
+    <tooltip xml:lang="de">Verzögerungzeit beim Schalten</tooltip>
+  </variable>
+  <variable item="Switching delay A8" CV="193" mask="VXXXXXXX" default="0" minOut="9">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Switching delay A8</label>
+    <label xml:lang="de">Schaltverzögerung A8</label>
+    <tooltip>&lt;html&gt;0: Switching on delay &lt;br&gt;1: Switching off delay&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: Einschalten verzögert &lt;br&gt;1: Ausschalten verzögert&lt;/html&gt;</tooltip>
+  </variable>
+  <variable item="Fading in A8" CV="194" mask="XVVVVVVV" default="25" minOut="9">
+    <decVal max="127"/>
+    <label>Fading in A8</label>
+    <label xml:lang="de">Aufblendzeit A8</label>
+    <tooltip>Fading in time</tooltip>
+    <tooltip xml:lang="de">Aufblendzeit</tooltip>
+  </variable>
+  <variable item="Fading in unit A8" CV="194" mask="VXXXXXXX" default="0" minOut="9">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Fading in unit A8</label>
+    <label xml:lang="de">Aufblendzeit einheit A8</label>
+    <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
+  </variable>
+  <variable item="Fading out A8" CV="195" mask="XVVVVVVV" default="25" minOut="9">
+    <decVal max="127"/>
+    <label>Fading out A8</label>
+    <label xml:lang="de">Abblendzeit A8</label>
+    <tooltip>Fading out time</tooltip>
+    <tooltip xml:lang="de">Abblendzeit</tooltip>
+  </variable>
+  <variable item="Fading out unit A8" CV="195" mask="VXXXXXXX" default="0" minOut="9">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Fading out unit A8</label>
+    <label xml:lang="de">Abblendzeit einheit A8</label>
+    <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
+  </variable>
+	<variable item="On Time A8" CV="197" mask="VVVVVVVV" default="0" minOut="9">
+		<splitVal highCV="196" upperMask="VVVVVVVV"/>
+    <label>On Time A8</label>
+    <label xml:lang="de">An-zeit A8</label>
+    <tooltip>in 1/100 seconds</tooltip>
+    <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
+  </variable>
+	<variable item="Off Time A8" CV="199" mask="VVVVVVVV" default="0" minOut="9">
+		<splitVal highCV="198" upperMask="VVVVVVVV"/>
+    <label>Off Time A8</label>
+    <label xml:lang="de">Ab-zeit A8</label>
+    <tooltip>in 1/100 seconds</tooltip>
+    <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
+  </variable>
+	  <variable item="Number Pulses A8" CV="200" mask="XVVVVVVV" default="0" minOut="9">
+    <decVal max="127"/>
+    <label>Number Pulses A8</label>
+    <label xml:lang="de">Anzahl der Pulse A8</label>
+    <tooltip>Number of pulses</tooltip>
+    <tooltip xml:lang="de">Anzahl der Pulse</tooltip>
+  </variable>
+  <variable item="Pulse type A8" CV="200" mask="VXXXXXXX" default="0" minOut="9">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Pulse type A8</label>
+    <label xml:lang="de">Pulsetyp A8</label>
+    <tooltip>&lt;html&gt;0: normal flashing &lt;br&gt;1: inverted flashing&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: normales Blinken &lt;br&gt;1: wechselblinken (erst aus, dann ein);/html&gt;</tooltip>
+  </variable>
+	<!-- 	CVs for output A9											 -->
+  <variable item="Dimming Off A9" CV="201" mask="XVVVVVVV" default="0" minOut="10">
+    <decVal max="100"/>
+    <label>Dimming Off A9</label>
+    <label xml:lang="de">Dimmung Aus A9</label>
+    <tooltip>(in %) in the “off” phase while flashing</tooltip>
+    <tooltip xml:lang="de">(in %) in der "Aus"-Phase des Blinkens</tooltip>
+  </variable>
+  <variable item="Dimming Off inactive A9" CV="201" mask="VXXXXXXX" default="0" minOut="10">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Dimming Off inactive A9</label>
+    <label xml:lang="de">Dimmung Aus augeschaltet A9</label>
+    <tooltip>&lt;html&gt;0: An inactive output is “really” switched off &lt;br&gt;1: the dimming factor for the “off” phase is applied while “inactive”&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: Ein ausgeschalteter Ausgang ist "wirklich" ausgeschaltet &lt;br&gt;1: Der "Aus"-Phasen-Dimmfaktor wird auch bein ausgeschaltetem Ausgang verwendet&lt;/html&gt;</tooltip>
+  </variable>
+	<variable item="Dimming On A9" CV="202" mask="VVVVVVVV" default="100" minOut="10">
+    <decVal max="100"/>
+    <label>Dimming On A9</label>
+    <label xml:lang="de">Dimmung Ein A9</label>
+    <tooltip>(in %) for active output</tooltip>
+    <tooltip xml:lang="de">(in %) bei eingeschaltetem Ausgang</tooltip>
+  </variable>
+  <variable item="Switching On delay A9" CV="203" mask="XVVVVVVV" default="0" minOut="10">
+    <decVal max="255"/>
+    <label>Switching On delay A9</label>
+    <label xml:lang="de">Schaltverzögerung Ein A9</label>
+    <tooltip>Switching delay time</tooltip>
+    <tooltip xml:lang="de">Verzögerungzeit beim Schalten</tooltip>
+  </variable>
+  <variable item="Switching delay A9" CV="203" mask="VXXXXXXX" default="0" minOut="10">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Switching delay A9</label>
+    <label xml:lang="de">Schaltverzögerung A9</label>
+    <tooltip>&lt;html&gt;0: Switching on delay &lt;br&gt;1: Switching off delay&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: Einschalten verzögert &lt;br&gt;1: Ausschalten verzögert&lt;/html&gt;</tooltip>
+  </variable>
+  <variable item="Fading in A9" CV="204" mask="XVVVVVVV" default="25" minOut="10">
+    <decVal max="127"/>
+    <label>Fading in A9</label>
+    <label xml:lang="de">Aufblendzeit A9</label>
+    <tooltip>Fading in time</tooltip>
+    <tooltip xml:lang="de">Aufblendzeit</tooltip>
+  </variable>
+  <variable item="Fading in unit A9" CV="204" mask="VXXXXXXX" default="0" minOut="10">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Fading in unit A9</label>
+    <label xml:lang="de">Aufblendzeit einheit A9</label>
+    <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
+  </variable>
+  <variable item="Fading out A9" CV="205" mask="XVVVVVVV" default="25" minOut="10">
+    <decVal max="127"/>
+    <label>Fading out A9</label>
+    <label xml:lang="de">Abblendzeit A9</label>
+    <tooltip>Fading out time</tooltip>
+    <tooltip xml:lang="de">Abblendzeit</tooltip>
+  </variable>
+  <variable item="Fading out unit A9" CV="205" mask="VXXXXXXX" default="0" minOut="10">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Fading out unit A9</label>
+    <label xml:lang="de">Abblendzeit einheit A9</label>
+    <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
+  </variable>
+	<variable item="On Time A9" CV="207" mask="VVVVVVVV" default="0" minOut="10">
+		<splitVal highCV="206" upperMask="VVVVVVVV"/>
+    <label>On Time A9</label>
+    <label xml:lang="de">An-zeit A9</label>
+    <tooltip>in 1/100 seconds</tooltip>
+    <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
+  </variable>
+	<variable item="Off Time A9" CV="209" mask="VVVVVVVV" default="0" minOut="10">
+		<splitVal highCV="208" upperMask="VVVVVVVV"/>
+    <label>Off Time A9</label>
+    <label xml:lang="de">Ab-zeit A9</label>
+    <tooltip>in 1/100 seconds</tooltip>
+    <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
+  </variable>
+	  <variable item="Number Pulses A9" CV="210" mask="XVVVVVVV" default="0" minOut="10">
+    <decVal max="127"/>
+    <label>Number Pulses A9</label>
+    <label xml:lang="de">Anzahl der Pulse A9</label>
+    <tooltip>Number of pulses</tooltip>
+    <tooltip xml:lang="de">Anzahl der Pulse</tooltip>
+  </variable>
+  <variable item="Pulse type A9" CV="210" mask="VXXXXXXX" default="0" minOut="10">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Pulse type A9</label>
+    <label xml:lang="de">Pulsetyp A9</label>
+    <tooltip>&lt;html&gt;0: normal flashing &lt;br&gt;1: inverted flashing&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: normales Blinken &lt;br&gt;1: wechselblinken (erst aus, dann ein);/html&gt;</tooltip>
+  </variable>
+	<!-- 	CVs for output A10											 -->
+  <variable item="Dimming Off A10" CV="211" mask="XVVVVVVV" default="0" minOut="11">
+    <decVal max="100"/>
+    <label>Dimming Off A10</label>
+    <label xml:lang="de">Dimmung Aus A10</label>
+    <tooltip>(in %) in the “off” phase while flashing</tooltip>
+    <tooltip xml:lang="de">(in %) in der "Aus"-Phase des Blinkens</tooltip>
+  </variable>
+  <variable item="Dimming Off inactive A10" CV="211" mask="VXXXXXXX" default="0" minOut="11">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Dimming Off inactive A10</label>
+    <label xml:lang="de">Dimmung Aus augeschaltet A10</label>
+    <tooltip>&lt;html&gt;0: An inactive output is “really” switched off &lt;br&gt;1: the dimming factor for the “off” phase is applied while “inactive”&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: Ein ausgeschalteter Ausgang ist "wirklich" ausgeschaltet &lt;br&gt;1: Der "Aus"-Phasen-Dimmfaktor wird auch bein ausgeschaltetem Ausgang verwendet&lt;/html&gt;</tooltip>
+  </variable>
+	<variable item="Dimming On A10" CV="212" mask="VVVVVVVV" default="100" minOut="11">
+    <decVal max="100"/>
+    <label>Dimming On A10</label>
+    <label xml:lang="de">Dimmung Ein A10</label>
+    <tooltip>(in %) for active output</tooltip>
+    <tooltip xml:lang="de">(in %) bei eingeschaltetem Ausgang</tooltip>
+  </variable>
+  <variable item="Switching On delay A10" CV="213" mask="XVVVVVVV" default="0" minOut="11">
+    <decVal max="255"/>
+    <label>Switching On delay A10</label>
+    <label xml:lang="de">Schaltverzögerung Ein A10</label>
+    <tooltip>Switching delay time</tooltip>
+    <tooltip xml:lang="de">Verzögerungzeit beim Schalten</tooltip>
+  </variable>
+  <variable item="Switching delay A10" CV="213" mask="VXXXXXXX" default="0" minOut="11">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Switching delay A10</label>
+    <label xml:lang="de">Schaltverzögerung A10</label>
+    <tooltip>&lt;html&gt;0: Switching on delay &lt;br&gt;1: Switching off delay&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: Einschalten verzögert &lt;br&gt;1: Ausschalten verzögert&lt;/html&gt;</tooltip>
+  </variable>
+  <variable item="Fading in A10" CV="214" mask="XVVVVVVV" default="25" minOut="11">
+    <decVal max="127"/>
+    <label>Fading in A10</label>
+    <label xml:lang="de">Aufblendzeit A10</label>
+    <tooltip>Fading in time</tooltip>
+    <tooltip xml:lang="de">Aufblendzeit</tooltip>
+  </variable>
+  <variable item="Fading in unit A10" CV="214" mask="VXXXXXXX" default="0" minOut="11">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Fading in unit A10</label>
+    <label xml:lang="de">Aufblendzeit einheit A10</label>
+    <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
+  </variable>
+  <variable item="Fading out A10" CV="215" mask="XVVVVVVV" default="25" minOut="11">
+    <decVal max="127"/>
+    <label>Fading out A10</label>
+    <label xml:lang="de">Abblendzeit A10</label>
+    <tooltip>Fading out time</tooltip>
+    <tooltip xml:lang="de">Abblendzeit</tooltip>
+  </variable>
+  <variable item="Fading out unit A10" CV="215" mask="VXXXXXXX" default="0" minOut="11">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Fading out unit A10</label>
+    <label xml:lang="de">Abblendzeit einheit A10</label>
+    <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
+  </variable>
+	<variable item="On Time A10" CV="217" mask="VVVVVVVV" default="0" minOut="11">
+		<splitVal highCV="216" upperMask="VVVVVVVV"/>
+    <label>On Time A10</label>
+    <label xml:lang="de">An-zeit A10</label>
+    <tooltip>in 1/100 seconds</tooltip>
+    <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
+  </variable>
+	<variable item="Off Time A10" CV="219" mask="VVVVVVVV" default="0" minOut="11">
+		<splitVal highCV="218" upperMask="VVVVVVVV"/>
+    <label>Off Time A10</label>
+    <label xml:lang="de">Ab-zeit A10</label>
+    <tooltip>in 1/100 seconds</tooltip>
+    <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
+  </variable>
+	  <variable item="Number Pulses A10" CV="220" mask="XVVVVVVV" default="0" minOut="11">
+    <decVal max="127"/>
+    <label>Number Pulses A10</label>
+    <label xml:lang="de">Anzahl der Pulse A10</label>
+    <tooltip>Number of pulses</tooltip>
+    <tooltip xml:lang="de">Anzahl der Pulse</tooltip>
+  </variable>
+  <variable item="Pulse type A10" CV="220" mask="VXXXXXXX" default="0" minOut="11">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Pulse type A10</label>
+    <label xml:lang="de">Pulsetyp A10</label>
+    <tooltip>&lt;html&gt;0: normal flashing &lt;br&gt;1: inverted flashing&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: normales Blinken &lt;br&gt;1: wechselblinken (erst aus, dann ein);/html&gt;</tooltip>
+  </variable>
+	<!-- 	CVs for output A11											 -->
+  <variable item="Dimming Off A11" CV="221" mask="XVVVVVVV" default="0" minOut="12">
+    <decVal max="100"/>
+    <label>Dimming Off A11</label>
+    <label xml:lang="de">Dimmung Aus A11</label>
+    <tooltip>(in %) in the “off” phase while flashing</tooltip>
+    <tooltip xml:lang="de">(in %) in der "Aus"-Phase des Blinkens</tooltip>
+  </variable>
+  <variable item="Dimming Off inactive A11" CV="221" mask="VXXXXXXX" default="0" minOut="12">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Dimming Off inactive A11</label>
+    <label xml:lang="de">Dimmung Aus augeschaltet A11</label>
+    <tooltip>&lt;html&gt;0: An inactive output is “really” switched off &lt;br&gt;1: the dimming factor for the “off” phase is applied while “inactive”&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: Ein ausgeschalteter Ausgang ist "wirklich" ausgeschaltet &lt;br&gt;1: Der "Aus"-Phasen-Dimmfaktor wird auch bein ausgeschaltetem Ausgang verwendet&lt;/html&gt;</tooltip>
+  </variable>
+	<variable item="Dimming On A11" CV="222" mask="VVVVVVVV" default="100" minOut="12">
+    <decVal max="100"/>
+    <label>Dimming On A11</label>
+    <label xml:lang="de">Dimmung Ein A11</label>
+    <tooltip>(in %) for active output</tooltip>
+    <tooltip xml:lang="de">(in %) bei eingeschaltetem Ausgang</tooltip>
+  </variable>
+  <variable item="Switching On delay A11" CV="223" mask="XVVVVVVV" default="0" minOut="12">
+    <decVal max="255"/>
+    <label>Switching On delay A11</label>
+    <label xml:lang="de">Schaltverzögerung Ein A11</label>
+    <tooltip>Switching delay time</tooltip>
+    <tooltip xml:lang="de">Verzögerungzeit beim Schalten</tooltip>
+  </variable>
+  <variable item="Switching delay A11" CV="223" mask="VXXXXXXX" default="0" minOut="12">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Switching delay A11</label>
+    <label xml:lang="de">Schaltverzögerung A11</label>
+    <tooltip>&lt;html&gt;0: Switching on delay &lt;br&gt;1: Switching off delay&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: Einschalten verzögert &lt;br&gt;1: Ausschalten verzögert&lt;/html&gt;</tooltip>
+  </variable>
+  <variable item="Fading in A11" CV="224" mask="XVVVVVVV" default="25" minOut="12">
+    <decVal max="127"/>
+    <label>Fading in A11</label>
+    <label xml:lang="de">Aufblendzeit A11</label>
+    <tooltip>Fading in time</tooltip>
+    <tooltip xml:lang="de">Aufblendzeit</tooltip>
+  </variable>
+  <variable item="Fading in unit A11" CV="224" mask="VXXXXXXX" default="0" minOut="12">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Fading in unit A11</label>
+    <label xml:lang="de">Aufblendzeit einheit A11</label>
+    <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
+  </variable>
+  <variable item="Fading out A11" CV="225" mask="XVVVVVVV" default="25" minOut="12">
+    <decVal max="127"/>
+    <label>Fading out A11</label>
+    <label xml:lang="de">Abblendzeit A11</label>
+    <tooltip>Fading out time</tooltip>
+    <tooltip xml:lang="de">Abblendzeit</tooltip>
+  </variable>
+  <variable item="Fading out unit A11" CV="225" mask="VXXXXXXX" default="0" minOut="12">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Fading out unit A11</label>
+    <label xml:lang="de">Abblendzeit einheit A11</label>
+    <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
+  </variable>
+	<variable item="On Time A11" CV="227" mask="VVVVVVVV" default="0" minOut="12">
+		<splitVal highCV="226" upperMask="VVVVVVVV"/>
+    <label>On Time A11</label>
+    <label xml:lang="de">An-zeit A11</label>
+    <tooltip>in 1/100 seconds</tooltip>
+    <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
+  </variable>
+	<variable item="Off Time A11" CV="229" mask="VVVVVVVV" default="0" minOut="12">
+		<splitVal highCV="228" upperMask="VVVVVVVV"/>
+    <label>Off Time A11</label>
+    <label xml:lang="de">Ab-zeit A11</label>
+    <tooltip>in 1/100 seconds</tooltip>
+    <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
+  </variable>
+	  <variable item="Number Pulses A11" CV="230" mask="XVVVVVVV" default="0" minOut="12">
+    <decVal max="127"/>
+    <label>Number Pulses A11</label>
+    <label xml:lang="de">Anzahl der Pulse A11</label>
+    <tooltip>Number of pulses</tooltip>
+    <tooltip xml:lang="de">Anzahl der Pulse</tooltip>
+  </variable>
+  <variable item="Pulse type A11" CV="230" mask="VXXXXXXX" default="0" minOut="12">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Pulse type A11</label>
+    <label xml:lang="de">Pulsetyp A11</label>
+    <tooltip>&lt;html&gt;0: normal flashing &lt;br&gt;1: inverted flashing&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: normales Blinken &lt;br&gt;1: wechselblinken (erst aus, dann ein);/html&gt;</tooltip>
+  </variable>
+	<!-- 	CVs for output A12											 -->
+  <variable item="Dimming Off A12" CV="231" mask="XVVVVVVV" default="0" minOut="13">
+    <decVal max="100"/>
+    <label>Dimming Off A12</label>
+    <label xml:lang="de">Dimmung Aus A12</label>
+    <tooltip>(in %) in the “off” phase while flashing</tooltip>
+    <tooltip xml:lang="de">(in %) in der "Aus"-Phase des Blinkens</tooltip>
+  </variable>
+  <variable item="Dimming Off inactive A12" CV="231" mask="VXXXXXXX" default="0" minOut="13">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Dimming Off inactive A12</label>
+    <label xml:lang="de">Dimmung Aus augeschaltet A12</label>
+    <tooltip>&lt;html&gt;0: An inactive output is “really” switched off &lt;br&gt;1: the dimming factor for the “off” phase is applied while “inactive”&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: Ein ausgeschalteter Ausgang ist "wirklich" ausgeschaltet &lt;br&gt;1: Der "Aus"-Phasen-Dimmfaktor wird auch bein ausgeschaltetem Ausgang verwendet&lt;/html&gt;</tooltip>
+  </variable>
+	<variable item="Dimming On A12" CV="232" mask="VVVVVVVV" default="100" minOut="13">
+    <decVal max="100"/>
+    <label>Dimming On A12</label>
+    <label xml:lang="de">Dimmung Ein A12</label>
+    <tooltip>(in %) for active output</tooltip>
+    <tooltip xml:lang="de">(in %) bei eingeschaltetem Ausgang</tooltip>
+  </variable>
+  <variable item="Switching On delay A12" CV="233" mask="XVVVVVVV" default="0" minOut="13">
+    <decVal max="255"/>
+    <label>Switching On delay A12</label>
+    <label xml:lang="de">Schaltverzögerung Ein A12</label>
+    <tooltip>Switching delay time</tooltip>
+    <tooltip xml:lang="de">Verzögerungzeit beim Schalten</tooltip>
+  </variable>
+  <variable item="Switching delay A12" CV="233" mask="VXXXXXXX" default="0" minOut="13">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Switching delay A12</label>
+    <label xml:lang="de">Schaltverzögerung A12</label>
+    <tooltip>&lt;html&gt;0: Switching on delay &lt;br&gt;1: Switching off delay&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: Einschalten verzögert &lt;br&gt;1: Ausschalten verzögert&lt;/html&gt;</tooltip>
+  </variable>
+  <variable item="Fading in A12" CV="234" mask="XVVVVVVV" default="25" minOut="13">
+    <decVal max="127"/>
+    <label>Fading in A12</label>
+    <label xml:lang="de">Aufblendzeit A12</label>
+    <tooltip>Fading in time</tooltip>
+    <tooltip xml:lang="de">Aufblendzeit</tooltip>
+  </variable>
+  <variable item="Fading in unit A12" CV="234" mask="VXXXXXXX" default="0" minOut="13">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Fading in unit A12</label>
+    <label xml:lang="de">Aufblendzeit einheit A12</label>
+    <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
+  </variable>
+  <variable item="Fading out A12" CV="235" mask="XVVVVVVV" default="25" minOut="13">
+    <decVal max="127"/>
+    <label>Fading out A12</label>
+    <label xml:lang="de">Abblendzeit A12</label>
+    <tooltip>Fading out time</tooltip>
+    <tooltip xml:lang="de">Abblendzeit</tooltip>
+  </variable>
+  <variable item="Fading out unit A12" CV="235" mask="VXXXXXXX" default="0" minOut="13">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Fading out unit A12</label>
+    <label xml:lang="de">Abblendzeit einheit A12</label>
+    <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
+  </variable>
+	<variable item="On Time A12" CV="237" mask="VVVVVVVV" default="0" minOut="13">
+		<splitVal highCV="236" upperMask="VVVVVVVV"/>
+    <label>On Time A12</label>
+    <label xml:lang="de">An-zeit A12</label>
+    <tooltip>in 1/100 seconds</tooltip>
+    <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
+  </variable>
+	<variable item="Off Time A12" CV="239" mask="VVVVVVVV" default="0" minOut="13">
+		<splitVal highCV="238" upperMask="VVVVVVVV"/>
+    <label>Off Time A12</label>
+    <label xml:lang="de">Ab-zeit A12</label>
+    <tooltip>in 1/100 seconds</tooltip>
+    <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
+  </variable>
+	  <variable item="Number Pulses A12" CV="240" mask="XVVVVVVV" default="0" minOut="13">
+    <decVal max="127"/>
+    <label>Number Pulses A12</label>
+    <label xml:lang="de">Anzahl der Pulse A12</label>
+    <tooltip>Number of pulses</tooltip>
+    <tooltip xml:lang="de">Anzahl der Pulse</tooltip>
+  </variable>
+  <variable item="Pulse type A12" CV="240" mask="VXXXXXXX" default="0" minOut="13">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Pulse type A12</label>
+    <label xml:lang="de">Pulsetyp A12</label>
+    <tooltip>&lt;html&gt;0: normal flashing &lt;br&gt;1: inverted flashing&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: normales Blinken &lt;br&gt;1: wechselblinken (erst aus, dann ein);/html&gt;</tooltip>
+  </variable>
+	<!-- 	CVs for output A13											 -->
+  <variable item="Dimming Off A13" CV="241" mask="XVVVVVVV" default="0" minOut="14">
+    <decVal max="100"/>
+    <label>Dimming Off A13</label>
+    <label xml:lang="de">Dimmung Aus A13</label>
+    <tooltip>(in %) in the “off” phase while flashing</tooltip>
+    <tooltip xml:lang="de">(in %) in der "Aus"-Phase des Blinkens</tooltip>
+  </variable>
+  <variable item="Dimming Off inactive A13" CV="241" mask="VXXXXXXX" default="0" minOut="14">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Dimming Off inactive A13</label>
+    <label xml:lang="de">Dimmung Aus augeschaltet A13</label>
+    <tooltip>&lt;html&gt;0: An inactive output is “really” switched off &lt;br&gt;1: the dimming factor for the “off” phase is applied while “inactive”&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: Ein ausgeschalteter Ausgang ist "wirklich" ausgeschaltet &lt;br&gt;1: Der "Aus"-Phasen-Dimmfaktor wird auch bein ausgeschaltetem Ausgang verwendet&lt;/html&gt;</tooltip>
+  </variable>
+	<variable item="Dimming On A13" CV="242" mask="VVVVVVVV" default="100" minOut="14">
+    <decVal max="100"/>
+    <label>Dimming On A13</label>
+    <label xml:lang="de">Dimmung Ein A13</label>
+    <tooltip>(in %) for active output</tooltip>
+    <tooltip xml:lang="de">(in %) bei eingeschaltetem Ausgang</tooltip>
+  </variable>
+  <variable item="Switching On delay A13" CV="243" mask="XVVVVVVV" default="0" minOut="14">
+    <decVal max="255"/>
+    <label>Switching On delay A13</label>
+    <label xml:lang="de">Schaltverzögerung Ein A13</label>
+    <tooltip>Switching delay time</tooltip>
+    <tooltip xml:lang="de">Verzögerungzeit beim Schalten</tooltip>
+  </variable>
+  <variable item="Switching delay A13" CV="243" mask="VXXXXXXX" default="0" minOut="14">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Switching delay A13</label>
+    <label xml:lang="de">Schaltverzögerung A13</label>
+    <tooltip>&lt;html&gt;0: Switching on delay &lt;br&gt;1: Switching off delay&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: Einschalten verzögert &lt;br&gt;1: Ausschalten verzögert&lt;/html&gt;</tooltip>
+  </variable>
+  <variable item="Fading in A13" CV="244" mask="XVVVVVVV" default="25" minOut="14">
+    <decVal max="127"/>
+    <label>Fading in A13</label>
+    <label xml:lang="de">Aufblendzeit A13</label>
+    <tooltip>Fading in time</tooltip>
+    <tooltip xml:lang="de">Aufblendzeit</tooltip>
+  </variable>
+  <variable item="Fading in unit A13" CV="244" mask="VXXXXXXX" default="0" minOut="14">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Fading in unit A13</label>
+    <label xml:lang="de">Aufblendzeit einheit A13</label>
+    <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
+  </variable>
+  <variable item="Fading out A13" CV="245" mask="XVVVVVVV" default="25" minOut="14">
+    <decVal max="127"/>
+    <label>Fading out A13</label>
+    <label xml:lang="de">Abblendzeit A13</label>
+    <tooltip>Fading out time</tooltip>
+    <tooltip xml:lang="de">Abblendzeit</tooltip>
+  </variable>
+  <variable item="Fading out unit A13" CV="245" mask="VXXXXXXX" default="0" minOut="14">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Fading out unit A13</label>
+    <label xml:lang="de">Abblendzeit einheit A13</label>
+    <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
+  </variable>
+	<variable item="On Time A13" CV="247" mask="VVVVVVVV" default="0" minOut="14">
+		<splitVal highCV="246" upperMask="VVVVVVVV"/>
+    <label>On Time A13</label>
+    <label xml:lang="de">An-zeit A13</label>
+    <tooltip>in 1/100 seconds</tooltip>
+    <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
+  </variable>
+	<variable item="Off Time A13" CV="249" mask="VVVVVVVV" default="0" minOut="14">
+		<splitVal highCV="248" upperMask="VVVVVVVV"/>
+    <label>Off Time A13</label>
+    <label xml:lang="de">Ab-zeit A13</label>
+    <tooltip>in 1/100 seconds</tooltip>
+    <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
+  </variable>
+	  <variable item="Number Pulses A13" CV="250" mask="XVVVVVVV" default="0" minOut="14">
+    <decVal max="127"/>
+    <label>Number Pulses A13</label>
+    <label xml:lang="de">Anzahl der Pulse A13</label>
+    <tooltip>Number of pulses</tooltip>
+    <tooltip xml:lang="de">Anzahl der Pulse</tooltip>
+  </variable>
+  <variable item="Pulse type A13" CV="250" mask="VXXXXXXX" default="0" minOut="14">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Pulse type A13</label>
+    <label xml:lang="de">Pulsetyp A13</label>
+    <tooltip>&lt;html&gt;0: normal flashing &lt;br&gt;1: inverted flashing&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: normales Blinken &lt;br&gt;1: wechselblinken (erst aus, dann ein);/html&gt;</tooltip>
+  </variable>
+	<!-- 	CVs for output A14											 -->
+  <variable item="Dimming Off A14" CV="251" mask="XVVVVVVV" default="0" minOut="15">
+    <decVal max="100"/>
+    <label>Dimming Off A14</label>
+    <label xml:lang="de">Dimmung Aus A14</label>
+    <tooltip>(in %) in the “off” phase while flashing</tooltip>
+    <tooltip xml:lang="de">(in %) in der "Aus"-Phase des Blinkens</tooltip>
+  </variable>
+  <variable item="Dimming Off inactive A14" CV="251" mask="VXXXXXXX" default="0" minOut="15">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Dimming Off inactive A14</label>
+    <label xml:lang="de">Dimmung Aus augeschaltet A14</label>
+    <tooltip>&lt;html&gt;0: An inactive output is “really” switched off &lt;br&gt;1: the dimming factor for the “off” phase is applied while “inactive”&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: Ein ausgeschalteter Ausgang ist "wirklich" ausgeschaltet &lt;br&gt;1: Der "Aus"-Phasen-Dimmfaktor wird auch bein ausgeschaltetem Ausgang verwendet&lt;/html&gt;</tooltip>
+  </variable>
+	<variable item="Dimming On A14" CV="252" mask="VVVVVVVV" default="100" minOut="15">
+    <decVal max="100"/>
+    <label>Dimming On A14</label>
+    <label xml:lang="de">Dimmung Ein A14</label>
+    <tooltip>(in %) for active output</tooltip>
+    <tooltip xml:lang="de">(in %) bei eingeschaltetem Ausgang</tooltip>
+  </variable>
+  <variable item="Switching On delay A14" CV="253" mask="XVVVVVVV" default="0" minOut="15">
+    <decVal max="255"/>
+    <label>Switching On delay A14</label>
+    <label xml:lang="de">Schaltverzögerung Ein A14</label>
+    <tooltip>Switching delay time</tooltip>
+    <tooltip xml:lang="de">Verzögerungzeit beim Schalten</tooltip>
+  </variable>
+  <variable item="Switching delay A14" CV="253" mask="VXXXXXXX" default="0" minOut="15">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Switching delay A14</label>
+    <label xml:lang="de">Schaltverzögerung A14</label>
+    <tooltip>&lt;html&gt;0: Switching on delay &lt;br&gt;1: Switching off delay&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: Einschalten verzögert &lt;br&gt;1: Ausschalten verzögert&lt;/html&gt;</tooltip>
+  </variable>
+  <variable item="Fading in A14" CV="254" mask="XVVVVVVV" default="25" minOut="15">
+    <decVal max="127"/>
+    <label>Fading in A14</label>
+    <label xml:lang="de">Aufblendzeit A14</label>
+    <tooltip>Fading in time</tooltip>
+    <tooltip xml:lang="de">Aufblendzeit</tooltip>
+  </variable>
+  <variable item="Fading in unit A14" CV="254" mask="VXXXXXXX" default="0" minOut="15">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Fading in unit A14</label>
+    <label xml:lang="de">Aufblendzeit einheit A14</label>
+    <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
+  </variable>
+  <variable item="Fading out A14" CV="255" mask="XVVVVVVV" default="25" minOut="15">
+    <decVal max="127"/>
+    <label>Fading out A14</label>
+    <label xml:lang="de">Abblendzeit A14</label>
+    <tooltip>Fading out time</tooltip>
+    <tooltip xml:lang="de">Abblendzeit</tooltip>
+  </variable>
+  <variable item="Fading out unit A14" CV="255" mask="VXXXXXXX" default="0" minOut="15">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Fading out unit A14</label>
+    <label xml:lang="de">Abblendzeit einheit A14</label>
+    <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
+  </variable>
+	<variable item="On Time A14" CV="257" mask="VVVVVVVV" default="0" minOut="15">
+		<splitVal highCV="256" upperMask="VVVVVVVV"/>
+    <label>On Time A14</label>
+    <label xml:lang="de">An-zeit A14</label>
+    <tooltip>in 1/100 seconds</tooltip>
+    <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
+  </variable>
+	<variable item="Off Time A14" CV="259" mask="VVVVVVVV" default="0" minOut="15">
+		<splitVal highCV="258" upperMask="VVVVVVVV"/>
+    <label>Off Time A14</label>
+    <label xml:lang="de">Ab-zeit A14</label>
+    <tooltip>in 1/100 seconds</tooltip>
+    <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
+  </variable>
+	  <variable item="Number Pulses A14" CV="260" mask="XVVVVVVV" default="0" minOut="15">
+    <decVal max="127"/>
+    <label>Number Pulses A14</label>
+    <label xml:lang="de">Anzahl der Pulse A14</label>
+    <tooltip>Number of pulses</tooltip>
+    <tooltip xml:lang="de">Anzahl der Pulse</tooltip>
+  </variable>
+  <variable item="Pulse type A14" CV="260" mask="VXXXXXXX" default="0" minOut="15">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Pulse type A14</label>
+    <label xml:lang="de">Pulsetyp A14</label>
+    <tooltip>&lt;html&gt;0: normal flashing &lt;br&gt;1: inverted flashing&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: normales Blinken &lt;br&gt;1: wechselblinken (erst aus, dann ein);/html&gt;</tooltip>
+  </variable>
+	<!-- 	CVs for output A15											 -->
+  <variable item="Dimming Off A15" CV="261" mask="XVVVVVVV" default="0" minOut="16">
+    <decVal max="100"/>
+    <label>Dimming Off A15</label>
+    <label xml:lang="de">Dimmung Aus A15</label>
+    <tooltip>(in %) in the “off” phase while flashing</tooltip>
+    <tooltip xml:lang="de">(in %) in der "Aus"-Phase des Blinkens</tooltip>
+  </variable>
+  <variable item="Dimming Off inactive A15" CV="261" mask="VXXXXXXX" default="0" minOut="16">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Dimming Off inactive A15</label>
+    <label xml:lang="de">Dimmung Aus augeschaltet A15</label>
+    <tooltip>&lt;html&gt;0: An inactive output is “really” switched off &lt;br&gt;1: the dimming factor for the “off” phase is applied while “inactive”&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: Ein ausgeschalteter Ausgang ist "wirklich" ausgeschaltet &lt;br&gt;1: Der "Aus"-Phasen-Dimmfaktor wird auch bein ausgeschaltetem Ausgang verwendet&lt;/html&gt;</tooltip>
+  </variable>
+	<variable item="Dimming On A15" CV="262" mask="VVVVVVVV" default="100" minOut="16">
+    <decVal max="100"/>
+    <label>Dimming On A15</label>
+    <label xml:lang="de">Dimmung Ein A15</label>
+    <tooltip>(in %) for active output</tooltip>
+    <tooltip xml:lang="de">(in %) bei eingeschaltetem Ausgang</tooltip>
+  </variable>
+  <variable item="Switching On delay A15" CV="263" mask="XVVVVVVV" default="0" minOut="16">
+    <decVal max="255"/>
+    <label>Switching On delay A15</label>
+    <label xml:lang="de">Schaltverzögerung Ein A15</label>
+    <tooltip>Switching delay time</tooltip>
+    <tooltip xml:lang="de">Verzögerungzeit beim Schalten</tooltip>
+  </variable>
+  <variable item="Switching delay A15" CV="263" mask="VXXXXXXX" default="0" minOut="16">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Switching delay A15</label>
+    <label xml:lang="de">Schaltverzögerung A15</label>
+    <tooltip>&lt;html&gt;0: Switching on delay &lt;br&gt;1: Switching off delay&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: Einschalten verzögert &lt;br&gt;1: Ausschalten verzögert&lt;/html&gt;</tooltip>
+  </variable>
+  <variable item="Fading in A15" CV="264" mask="XVVVVVVV" default="25" minOut="16">
+    <decVal max="127"/>
+    <label>Fading in A15</label>
+    <label xml:lang="de">Aufblendzeit A15</label>
+    <tooltip>Fading in time</tooltip>
+    <tooltip xml:lang="de">Aufblendzeit</tooltip>
+  </variable>
+  <variable item="Fading in unit A15" CV="264" mask="VXXXXXXX" default="0" minOut="16">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Fading in unit A15</label>
+    <label xml:lang="de">Aufblendzeit einheit A15</label>
+    <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
+  </variable>
+  <variable item="Fading out A15" CV="265" mask="XVVVVVVV" default="25" minOut="16">
+    <decVal max="127"/>
+    <label>Fading out A15</label>
+    <label xml:lang="de">Abblendzeit A15</label>
+    <tooltip>Fading out time</tooltip>
+    <tooltip xml:lang="de">Abblendzeit</tooltip>
+  </variable>
+  <variable item="Fading out unit A15" CV="265" mask="VXXXXXXX" default="0" minOut="16">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Fading out unit A15</label>
+    <label xml:lang="de">Abblendzeit einheit A15</label>
+    <tooltip>&lt;html&gt;0: in 1/100 seconds &lt;br&gt;1: in seconds&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: in 1/100 Sekunden &lt;br&gt;1: in Sekunden&lt;/html&gt;</tooltip>
+  </variable>
+	<variable item="On Time A15" CV="267" mask="VVVVVVVV" default="0" minOut="16">
+		<splitVal highCV="266" upperMask="VVVVVVVV"/>
+    <label>On Time A15</label>
+    <label xml:lang="de">An-zeit A15</label>
+    <tooltip>in 1/100 seconds</tooltip>
+    <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
+  </variable>
+	<variable item="Off Time A15" CV="269" mask="VVVVVVVV" default="0" minOut="16">
+		<splitVal highCV="268" upperMask="VVVVVVVV"/>
+    <label>Off Time A15</label>
+    <label xml:lang="de">Ab-zeit A15</label>
+    <tooltip>in 1/100 seconds</tooltip>
+    <tooltip xml:lang="de">in 1/100 Sekunden</tooltip>
+  </variable>
+	  <variable item="Number Pulses A15" CV="270" mask="XVVVVVVV" default="0" minOut="16">
+    <decVal max="127"/>
+    <label>Number Pulses A15</label>
+    <label xml:lang="de">Anzahl der Pulse A15</label>
+    <tooltip>Number of pulses</tooltip>
+    <tooltip xml:lang="de">Anzahl der Pulse</tooltip>
+  </variable>
+  <variable item="Pulse type A15" CV="270" mask="VXXXXXXX" default="0" minOut="16">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Pulse type A15</label>
+    <label xml:lang="de">Pulsetyp A15</label>
+    <tooltip>&lt;html&gt;0: normal flashing &lt;br&gt;1: inverted flashing&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;0: normales Blinken &lt;br&gt;1: wechselblinken (erst aus, dann ein);/html&gt;</tooltip>
+  </variable>
+</variables>

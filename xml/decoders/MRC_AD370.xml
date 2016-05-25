@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2004 All rights reserved -->
-<!-- $Id: MRC_AD370.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -31,137 +31,61 @@
     </family>
     <programming direct="no" paged="yes" register="no" ops="yes"/>
     <variables>
-      <!-- Register 1 -->
-      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
-        <shortAddressVal/>
-        <label>Primary Address</label>
-        <comment>Short address</comment>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <!-- Register 2 -->
-      <variable label="Start Volts" CV="2" item="Vstart" comment="A value of 32 corresponds to 100%">
+      <variable CV="2" item="Vstart" comment="A value of 32 corresponds to 100%">
         <decVal max="32"/>
         <label>Start Volts</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Startspannung</label>
         <comment>A value of 32 corresponds to 100%</comment>
       </variable>
-      <variable label="Max Volts" CV="5" item="Vhigh" comment="A value of 32 corresponds to 100%">
+      <variable CV="5" item="Vhigh" comment="A value of 32 corresponds to 100%">
         <decVal max="32"/>
         <label>Max Volts</label>
+        <label xml:lang="it">Volt Massimi (0-32):</label>
+        <label xml:lang="de">Höchstgeschwindigkeit</label>
         <comment>A value of 32 corresponds to 100%</comment>
       </variable>
-      <!-- Register 3 -->
-      <variable label="Acceleration Rate" CV="3" item="Accel">
-        <decVal max="31"/>
-        <label>Acceleration Rate</label>
-      </variable>
-      <!-- Register 4 -->
-      <variable label="Deceleration Rate" CV="4" item="Decel">
-        <decVal max="31"/>
-        <label>Deceleration Rate</label>
-      </variable>
+      <!-- CV 3-4 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
       <!-- Register 5 -->
-      <variable label="Locomotive Direction" CV="29" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="reversed">
-            <choice>reversed</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Locomotive Direction</label>
-      </variable>
-      <variable label="FL Location" CV="29" mask="XXXXXXVX" item="Speed Step Mode">
-        <enumVal>
-          <enumChoice choice="14 speed step format">
-            <choice>14 speed step format</choice>
-          </enumChoice>
-          <enumChoice choice="28/128 speed step format">
-            <choice>28/128 speed step format</choice>
-          </enumChoice>
-        </enumVal>
-        <label>FL Location</label>
-      </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format">
-        <enumVal>
-          <enumChoice choice="2 digit addressing">
-            <choice>2 digit addressing</choice>
-          </enumChoice>
-          <enumChoice choice="4 digit addressing">
-            <choice>4 digit addressing</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Addressing Mode</label>
-      </variable>
-      <!-- Register 7 -->
-      <variable label="Manufacturer Version No" CV="7" readOnly="yes" item="Decoder Version">
-        <decVal/>
-        <label>Manufacturer Version No</label>
-      </variable>
-      <!-- Register 8 -->
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer">
-        <decVal/>
-        <label>Manufacturer ID</label>
-      </variable>
-      <variable label="Extended Address" CV="17" item="Long Address" comment="Long Address (range 0001-9999)">
-        <longAddressVal/>
-        <label>Extended Address</label>
-        <comment>Long Address (range 0001-9999)</comment>
-      </variable>
-      <variable label="Advanced Consist address" CV="19" item="Consist Address" mask="XVVVVVVV" default="0">
-        <decVal max="127"/>
-        <label>Advanced Consist address</label>
-      </variable>
-      <variable label="Advanced Consist direction" CV="19" item="Consist Direction" mask="VXXXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="forward">
-            <choice>forward</choice>
-          </enumChoice>
-          <enumChoice choice="reverse">
-            <choice>reverse</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Advanced Consist direction</label>
-      </variable>
-      <variable label="Max Volts" CV="5" item="Vhigh">
-        <decVal max="255"/>
-        <label>Max Volts</label>
-      </variable>
-      <variable label="Light Effect Setting" CV="64" item="Output 1 effect generated" mask="XXXXXXXV" default="0">
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <!-- CV 7-8 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+     <!-- CV=19 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <variable CV="64" item="Output 1 effect generated" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="Special Effect">
             <choice>Special Effect</choice>
+            <choice xml:lang="it">Effetto Speciale</choice>
           </enumChoice>
           <enumChoice choice="Normal Effect">
             <choice>Normal Effect</choice>
+            <choice xml:lang="it">Effetto Normale</choice>
           </enumChoice>
         </enumVal>
         <label>Light Effect Setting</label>
+        <label xml:lang="it">Effetti Luci</label>
       </variable>
-      <variable label="User Private ID #1" CV="105" item="User Id #1">
-        <decVal/>
-        <label>User Private ID #1</label>
-      </variable>
-      <variable label="User Private ID #2" CV="106" item="User Id #2">
-        <decVal/>
-        <label>User Private ID #2</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <!--  They have to be here somewhere...
-
 		<variable label="AirHorn Volume" CV="60" mask="XXXXVVVV"
 				item="Sound Setting 3" default="8" >
 				<decVal max="15"/>
 			</variable>
-
 		<variable label="Bell Volume" CV="60" mask="VVVVXXXX"
 				item="Sound Setting 4" default="6">
 				<decVal max="15"/>
 			</variable>
-
 		<variable label="Exhaust Volume" CV="61" mask="XXXXVVVV"
 				item="Sound Setting 5" default="6">
 				<decVal max="15"/>
 			</variable>
-	
 		<variable label="Dynamic Brake Volume" CV="61" mask="VVVVXXXX"
 				item="Sound Setting 6" default="7">
 				<decVal max="15"/>

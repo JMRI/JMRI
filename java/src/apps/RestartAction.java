@@ -1,53 +1,51 @@
-// RestartAction.java
 package apps;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
 import javax.swing.Icon;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WindowInterface;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Simple AbstractAction class that can be invoked to restart JMRI
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision$
+ * @author Matthew Harris Copyright (C) 2011
  */
 public class RestartAction extends JmriAbstractAction {
-    
+
     public RestartAction(String s, WindowInterface wi) {
         super(s, wi);
     }
-    
+
     public RestartAction(String s, Icon i, WindowInterface wi) {
         super(s, i, wi);
     }
-    
+
     public RestartAction() {
         super(ResourceBundle.getBundle("apps.ActionListBundle").getString("apps.RestartAction"));
     }
-    
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        
-        if (log.isDebugEnabled()) log.debug("Source: " + e.getSource().toString() + "; class: " + e.getSource().getClass().getName());
-        
+
+        if (log.isDebugEnabled()) {
+            log.debug("Source: " + e.getSource().toString() + "; class: " + e.getSource().getClass().getName());
+        }
+
         // Don't actually do this if launched as a start-up action
         // as we'll be in an endless loop
         if (!e.getSource().toString().equals("prefs")) {
@@ -62,7 +60,7 @@ public class RestartAction extends JmriAbstractAction {
     public JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }
-    
+
     private static final Logger log = LoggerFactory.getLogger(RestartAction.class.getName());
-    
+
 }

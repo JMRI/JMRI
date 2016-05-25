@@ -1,13 +1,13 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Translated by Blorec Hervé le 2012-01-22-->
+<!--UIpdated by Blorec Herv&#233; le 2013-09-24-->
 <html lang="fr">
 <head>
 <!-- Copyright Me 2008 -->
-<!-- $Id: Memories.shtml,v 1.2 2008/05/18 06:12:17 jacobsen Exp $ -->
+<!-- $Id$ -->
 <title>JMRI: Memories</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -25,72 +25,64 @@
 
  
 
-
-<BODY>
-<!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
-
-
 <h2> 
-JMRI: Mémoires
+JMRI: M&#233;moires
 </H2>
-Une variable de mémoire JMRI peut contenir n'importe quel type d'objet. C'est vraiment le
-code utilisateur  qu'il faut mettre dedans et comment le manipuler.
+Une variable de m&#233;moire JMRI peut contenir n'importe quel type d'objet. C'est vraiment le
+code utilisateur qu'il faut mettre dedans et comment les manipuler.
 
-<h3> La Table de Mémoire </h3>
+<h3> La Table de M&#233;moire </h3>
 Le
-Tableau mémoire <a href="../../package/jmri/jmrit/beantable/MemoryTable.shtml"> </a>
-vous permet de voir quelles mémoires ont été définies, et quelle valeur
-elles contiennent actuellement. Le tableau demandera au contenu de la mémoire
-s'afficher, de sorte qu'une image ou une icône s'affiche comme une image dans le tableau; 
-la plupart des autres choses se montreront en que tant que chaîne. Vous pouvez taper une nouvelle valeur de chaîne
-dans une mémoire, ou
-<a href="../../package/jmri/jmrit/beantable/MemoryAddEdit.shtml">  créer une nouvelle variable mémoire </a>.
+Tableau m&#233;moire <a href="../../package/jmri/jmrit/beantable/MemoryTable.shtml"> </a>
+vous permet de voir quelles m&#233;moires ont &#233;t&#233; d&#233;finies, et quelle valeur
+elles contiennent actuellement. Le tableau demandera au contenu de la m&#233;moire de
+s'afficher, de sorte qu'une image ou une ic&#244;ne s'affiche comme une image dans le tableau; 
+la plupart des autres choses se montreront en que tant que cha&#238;ne. Vous pouvez taper une nouvelle valeur de cha&#238;ne
+dans une m&#233;moire, ou pour
+<a href="../../package/jmri/jmrit/beantable/MemoryAddEdit.shtml"> cr&#233;er une nouvelle variable m&#233;moire </a>.
 
 
-<h3>Utiliser Mémoires avec Logix </h3>
-Un Logix peut tester une mémoire pour le contenu particulier, et  définir les contenus d'une
- mémoire sous forme de chaine est nécessaire. Cela vous permet d'utiliser une mémoire comme un indicateur de l'état,
-compteurr ou n'importe quoi d'autre que vous pouvez imaginer. En raison de leur utilisateur
-interface, Logix généralement met seulement les valeurs de chaîne dans les variables de la mémoire.
+<h3>Utilisation des M&#233;moires avec Logix </h3>
+Un Logix peut tester une m&#233;moire pour des contenus particuliers, et  d&#233;finir les contenus d'une
+ m&#233;moire sous forme de chaine est n&#233;cessaire. Cela vous permet d'utiliser une m&#233;moire comme un indicateur d''&#233;tat,
+compteur ou n'importe quoi d'autre que vous pouvez imaginer. En raison de leur interface utilisateur, Logix g&#233;n&#233;ralement met seulement les valeurs de cha&#238;ne dans les variables de la m&#233;moire.
 
 
-<h3> Affichage d'une Mémoire sur un Panneau </h3>
-Le contenu d'une mémoire peut être affichée sur un
-<a href="../../package/jmri/jmrit/display/PanelEditor.shtml"> Panneau </a>. Habituellement, la mémoire va essayer d'afficher son
-contenu directement. Si le contenu est une icône, une image ou une chaîne, le contenu
-sera affiché directement. Comme un cas particulier, si le contenu de la mémoire est
-"nulle" (la mémoire ne contient pas d'objet), une icône X rouge  est affichée.
-Cela vous permet de voir et de la position de la mémoire sur le panneau. Si
-la mémoire contient la chaîne de longueur nulle "", ceci est un objet, et il sera
- affiché sous forme d'espace vide.
+<h3> Affichage d'une M&#233;moire sur un Panneau </h3>
+Le contenu d'une m&#233;moire peut &#234;tre affich&#233;e sur un
+<a href="../../package/jmri/jmrit/display/PanelEditor.shtml"> Panneau </a>. Habituellement, la m&#233;moire va essayer d'afficher son
+contenu directement. Si le contenu est une ic&#244;ne, une image ou une cha&#238;ne, le contenu
+sera affich&#233; directement. Comme un cas particulier, si le contenu de la m&#233;moire est
+"nulle" (la m&#233;moire ne contient pas d'objet), une ic&#244;ne X rouge  est affich&#233;e.
+Cela vous permet de voir et de positionner la m&#233;moire sur le panneau. Si
+la m&#233;moire contient la cha&#238;ne de longueur nulle " ", ceci est un objet, et il sera
+ affich&#233; sous forme d'espace vide.
 <p>
-Vous pouvez personnaliser l'apparence du texte dans l'icône via son menu contextuel.
+Vous pouvez personnaliser l'apparence du texte dans l'ic&#244;ne via son menu contextuel.
 <p>
-Vous pouvez également définir une série d'icônes à afficher à la place 
-du contenu propre de la mémoire, si vous le souhaitez. Pour un exemple savoir comment cela est
-fait, s'il vous plaît voir l'
-<a href="http://jmri.sourceforge.net/xml/samples/MemoryIconExample.xml"> échantillon fichier XML </a>.
-Utilisez la commande de votre navigateur pour "voir la source", ou télécharger ce fichier pour voir comment c'est fait.
-Fondamentalement, le navigateur de fichiers XML a un élément "memoryicon"  qui transporte des informations diverses
-pour savoir où placer l'icône, si elle peut être choisie, etc
-Dans cet élément, vous pouvez définir des éléments "memorystate" qui
-définissent ce que l'icône a à afficher lorsque la mémoire a une valeur spécifique:
+Vous pouvez &#233;galement d&#233;finir une s&#233;rie d'ic&#244;nes &#224; afficher &#224; la place 
+du contenu propre de la m&#233;moire, si vous le souhaitez. Pour un exemple pour savoir comment cela est
+fait, s'il vous pla&#238;t voir le
+<a href="http://jmri.org/xml/samples/MemoryIconExample.xml"> fichier &#233;chantillon XML </a>.
+Utilisez la commande de votre navigateur "voir la source", ou t&#233;l&#233;charger ce fichier pour voir comment c'est fait.
+Fondamentalement, le navigateur de fichiers XML a un &#233;l&#233;ment "memoryicon"  qui transporte des informations diverses
+pour savoir o&#249; placer l'ic&#244;ne, si elle peut &#234;tre choisie, etc
+Dans cet &#233;l&#233;ment, vous pouvez d&#233;finir des &#233;l&#233;ments "memorystate" qui
+d&#233;finissent ce que l'ic&#244;ne a &#224; afficher lorsque la m&#233;moire a une valeur sp&#233;cifique:
 <code> <pre>
     <memoryicon memory="IM20" defaulticon="resources/icons/misc/Question-black.gif">
       <memorystate value="9" icon="resource:resources/icons/misc/Nixie/M9B.gif" />
       <memorystate value="8" icon="resource:resources/icons/misc/Nixie/M8B.gif" />
     </Memoryicon>
 </Pre> </code>
-(Cet exemple a été simplifié en omettant quelques trucs de l'élément memoryicon)
-Dans l'exemple, les deux éléments memorystate assurer que si la
-mémoire contient "9" ou "8", certaines images seront affichées, sinon
- une question noire par défaut marquant l'icône sera affichée.
+(Cet exemple a &#233;t&#233; simplifi&#233; en omettant quelques trucs de l'&#233;l&#233;ment memoryicon)
+Dans l'exemple, les deux &#233;l&#233;ments memorystate assurent que si la
+m&#233;moire contient "9" ou "8", certaines images seront affich&#233;es, sinon
+ une question noire par d&#233;faut marquant l'ic&#244;ne sera affich&#233;e.
 <p>
-Malheureusement, JMRI n'a pas un bon outil graphique pour la définition des
-icônes affichées lors de l'utilisation d'une icône de la mémoire de cette façon. Vous devez éditer le fichier XML
-à la main, en suivant l'un des exemples.
+Malheureusement, JMRI n'a pas un bon outil graphique pour la d&#233;finition des
+ic&#244;nes affich&#233;es lors de l'utilisation d'une ic&#244;ne de la m&#233;moire de cette fa&#231;on. Vous devez &#233;diter le fichier XML
+&#224; la main, en suivant l'un des exemples.
 
 <!--#include virtual="/Footer" -->
 </body>

@@ -1,41 +1,48 @@
 // AlmBrowserFrame.java
-
 package jmri.jmrix.loconet.almbrowser;
 
-import java.awt.*;
-
-import javax.swing.*;
-
-import jmri.jmrix.loconet.*;
+import java.awt.FlowLayout;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import jmri.jmrix.loconet.LnTrafficController;
+import jmri.jmrix.loconet.LocoNetListener;
+import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.util.StringUtil;
 
 /**
  * User interface for browsing ALM contents
  * <P>
  * This GUI works in the throttle editor space, so that values presented in the
- * GUI are 1 more than the values in the ALM messages.  This includes
- * both the address and data values.
+ * GUI are 1 more than the values in the ALM messages. This includes both the
+ * address and data values.
  * <P>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
- * and used with permission as part of the JMRI project.  That permission
- * does not extend to uses in other software products.  If you wish to
- * use this code, algorithm or these message formats outside of JMRI, please
- * contact Digitrax Inc for separate permission.
+ * and used with permission as part of the JMRI project. That permission does
+ * not extend to uses in other software products. If you wish to use this code,
+ * algorithm or these message formats outside of JMRI, please contact Digitrax
+ * Inc for separate permission.
  *
- * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision$
- * @deprecated 2.13.5, Does not work with the multi-connection correctly, believe not 
- * to work correctly before hand and that the feature is not used.
+ * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @version	$Revision$
+ * @deprecated 2.13.5, Does not work with the multi-connection correctly,
+ * believe not to work correctly before hand and that the feature is not used.
  */
 @Deprecated
 public class AlmBrowserFrame extends jmri.util.JmriJFrame implements LocoNetListener {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = -7808858367861671176L;
 
     public AlmBrowserFrame() {
         super("Configuration Browser");
     }
 
     // internal members to hold widgets
-
     JButton readButton = new JButton("Read");
     JButton writeButton = new JButton("Write");
 
@@ -46,7 +53,7 @@ public class AlmBrowserFrame extends jmri.util.JmriJFrame implements LocoNetList
 
     JLabel blkl = new JLabel("    ");
     JLabel blkh = new JLabel("    ");
-    
+
     JTextField values[] = new JTextField[4];
 
     public void initComponents() {
@@ -128,16 +135,16 @@ public class AlmBrowserFrame extends jmri.util.JmriJFrame implements LocoNetList
         // format and send request
         reading = true;
         LocoNetMessage l = new LocoNetMessage(16);
-        l.setElement( 0, 0xEE);
-        l.setElement( 1, 0x10);
-        l.setElement( 2, Integer.parseInt(almNumber.getText()));
-        l.setElement( 3, 2);    // read
-        l.setElement( 4, block()&0x7F);    // blockl
-        l.setElement( 5, block()/128);    // blockh
-        l.setElement( 6, 0x03);
-        l.setElement( 7, 0x02);
-        l.setElement( 8, 0x08);
-        l.setElement( 9, 0x7F);
+        l.setElement(0, 0xEE);
+        l.setElement(1, 0x10);
+        l.setElement(2, Integer.parseInt(almNumber.getText()));
+        l.setElement(3, 2);    // read
+        l.setElement(4, block() & 0x7F);    // blockl
+        l.setElement(5, block() / 128);    // blockh
+        l.setElement(6, 0x03);
+        l.setElement(7, 0x02);
+        l.setElement(8, 0x08);
+        l.setElement(9, 0x7F);
         l.setElement(10, 0x00);
         l.setElement(11, 0x00);
         l.setElement(12, 0x00);
@@ -146,70 +153,81 @@ public class AlmBrowserFrame extends jmri.util.JmriJFrame implements LocoNetList
         l.setElement(15, 0x00);
         LnTrafficController.instance().sendLocoNetMessage(l);
 
-        blkl.setText("0x"+StringUtil.twoHexFromInt(block()&0x7F));
-        blkh.setText("0x"+StringUtil.twoHexFromInt(block()/128));
+        blkl.setText("0x" + StringUtil.twoHexFromInt(block() & 0x7F));
+        blkh.setText("0x" + StringUtil.twoHexFromInt(block() / 128));
     }
 
     int block() {
-        int element = Integer.parseInt(elementNumber.getText())-1;
+        int element = Integer.parseInt(elementNumber.getText()) - 1;
         int size = Integer.parseInt(itemSize.getText());
-        int item = Integer.parseInt(itemNumber.getText())-1;
-        return size*item+element;
+        int item = Integer.parseInt(itemNumber.getText()) - 1;
+        return size * item + element;
     }
 
     public void writeButtonActionPerformed(java.awt.event.ActionEvent e) {
-        int arg1 = Integer.parseInt(values[0].getText())-1;
-        int arg2 = Integer.parseInt(values[1].getText())-1;
-        int arg3 = Integer.parseInt(values[2].getText())-1;
-        int arg4 = Integer.parseInt(values[3].getText())-1;
+        int arg1 = Integer.parseInt(values[0].getText()) - 1;
+        int arg2 = Integer.parseInt(values[1].getText()) - 1;
+        int arg3 = Integer.parseInt(values[2].getText()) - 1;
+        int arg4 = Integer.parseInt(values[3].getText()) - 1;
 
         // format message and send
         LocoNetMessage l = new LocoNetMessage(16);
-        l.setElement( 0, 0xEE);
-        l.setElement( 1, 0x10);
-        l.setElement( 2, Integer.parseInt(almNumber.getText()));
-        l.setElement( 3, 3);    // write
-        l.setElement( 4, block()&0x7F);  // blockl
-        l.setElement( 5, block()/128);  // blockh
-        l.setElement( 6, 0x03);
-        l.setElement( 7, arg1&0x7F);
-        l.setElement( 8, arg1/128);
-        l.setElement( 9, arg2&0x7F);
-        l.setElement(10, arg2/128);
-        l.setElement(11, arg3&0x7F);
-        l.setElement(12, arg3/128);
-        l.setElement(13, arg4&0x7F);
-        l.setElement(14, arg4/128);
+        l.setElement(0, 0xEE);
+        l.setElement(1, 0x10);
+        l.setElement(2, Integer.parseInt(almNumber.getText()));
+        l.setElement(3, 3);    // write
+        l.setElement(4, block() & 0x7F);  // blockl
+        l.setElement(5, block() / 128);  // blockh
+        l.setElement(6, 0x03);
+        l.setElement(7, arg1 & 0x7F);
+        l.setElement(8, arg1 / 128);
+        l.setElement(9, arg2 & 0x7F);
+        l.setElement(10, arg2 / 128);
+        l.setElement(11, arg3 & 0x7F);
+        l.setElement(12, arg3 / 128);
+        l.setElement(13, arg4 & 0x7F);
+        l.setElement(14, arg4 / 128);
         l.setElement(15, 0x00);
         LnTrafficController.instance().sendLocoNetMessage(l);
 
-        blkl.setText("0x"+StringUtil.twoHexFromInt(block()&0x7F));
-        blkh.setText("0x"+StringUtil.twoHexFromInt(block()/128));
+        blkl.setText("0x" + StringUtil.twoHexFromInt(block() & 0x7F));
+        blkh.setText("0x" + StringUtil.twoHexFromInt(block() / 128));
 
         return;
     }
 
     boolean reading;
+
     /**
-     * Process the incoming message to look for the response
-     * to a read request
+     * Process the incoming message to look for the response to a read request
+     *
      * @param msg
      */
     public void message(LocoNetMessage msg) {
-        if (!reading) return;
-        if (msg.getOpCode()!=0xE6 ) return;
-        if (msg.getElement(2)!=Integer.parseInt(almNumber.getText())) return;
-        if (msg.getElement(3)!=2) return;  // check for read
-        if (block() != msg.getElement(5)*128+msg.getElement(4)) return;
+        if (!reading) {
+            return;
+        }
+        if (msg.getOpCode() != 0xE6) {
+            return;
+        }
+        if (msg.getElement(2) != Integer.parseInt(almNumber.getText())) {
+            return;
+        }
+        if (msg.getElement(3) != 2) {
+            return;  // check for read
+        }
+        if (block() != msg.getElement(5) * 128 + msg.getElement(4)) {
+            return;
+        }
         // here OK, update
-        values[0].setText(""+(msg.getElement(7)+msg.getElement(8)*128+1));
-        values[1].setText(""+(msg.getElement(9)+msg.getElement(10)*128+1));
-        values[2].setText(""+(msg.getElement(11)+msg.getElement(12)*128+1));
-        values[3].setText(""+(msg.getElement(13)+msg.getElement(14)*128+1));
+        values[0].setText("" + (msg.getElement(7) + msg.getElement(8) * 128 + 1));
+        values[1].setText("" + (msg.getElement(9) + msg.getElement(10) * 128 + 1));
+        values[2].setText("" + (msg.getElement(11) + msg.getElement(12) * 128 + 1));
+        values[3].setText("" + (msg.getElement(13) + msg.getElement(14) * 128 + 1));
     }
 
     public void dispose() {
-	    // disconnect from LnTrafficController
+        // disconnect from LnTrafficController
         tc.removeLocoNetListener(~0, this);
         tc = null;
         super.dispose();
@@ -220,7 +238,6 @@ public class AlmBrowserFrame extends jmri.util.JmriJFrame implements LocoNetList
         tc = t;
         tc.addLocoNetListener(~0, this);
     }
-
 
     // private data
     private LnTrafficController tc = null;

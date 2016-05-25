@@ -1,17 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: OakTree.shtml,v 1.2 2008/05/31 05:02:14 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-09-22-->
+<!--  $Id$ -->
+<!-- UpDated  by Blorec Herv&#233; le 2013-09-18-->
 <html lang="fr">
 <head>
  <TITLE>
       JMRI Hardware Guide: Oak Tree Systems Railroad Control Interface (RCI)
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="Oak Tree Systems Railroad Control Interface RCI java model railroad JMRI install windows">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -28,10 +28,10 @@
     <div id="mainContent">
 
       <H1> 
-      Guide Matériel JMRI: Oak Tree Systems Railroad Control Interface (RCI)
+      Guide Mat&#233;riel JMRI: Oak Tree Systems Railroad Control Interface (RCI)
       </H1>
       
-	<H3> Matériel Supporté</H3>
+	<H3> Mat&#233;riel Support&#233;</H3>
 
 	<UL>
 	<li>IO-24
@@ -41,88 +41,86 @@
 
 	<H3>Limites</H3>
 
-	<p>Les bibliothèques JMRI ont un support intégré pour les systèmes matériels série 'Oak Tree 
-utilisant le protocole "RSC" bus.
-Les entrées peuvent être utilisées comme capteurs, et les sorties peuvent être conduites comme des
+	<p>Les biblioth&#232;ques JMRI ont un support int&#233;gr&#233; pour les syst&#232;mes mat&#233;riels s&#233;rie 'Oak Tree 
+utilisant le protocole bus "RSC" .
+Les entr&#233;es peuvent &#234;tre utilis&#233;es comme capteurs, et les sorties peuvent &#234;tre conduites comme des
 aiguillages. <p>
 
-<p> A cette époque (2008), le protocole de bus série RSI pour le régulateur HH-2 n'est pas
+<p> A cette &#233;poque (2008), le protocole de bus s&#233;rie RSI pour le r&#233;gulateur HH-2 n'est pas
 encore pris en charge</p>
 
 	<dl>
 	<dt class=left>Configuration</dt>
 	<dd class=top>
 	    <ol>
-		<li> Démarrez le programme JMRIdemo
-<li> Dans le menu Edition, sélectionnez Préférences et configurer:
+		<li> D&#233;marrez le programme (habituellement PanelPro
+<li> Dans le menu Edition, s&#233;lectionnez Pr&#233;f&#233;rences et configurer:
 <ul>
-<li>Protocole comme «Systèmes Oak Tree"
-<li> pour le port série, sélectionnez celui où votre matériel est connecté.
-<li> Sélectionnez la vitesse de transmission configurée dans vos cartes
-<li> Cliquez sur le bouton "Configurer les nœuds" . Sur le
+<li>Protocole comme "Syst&#232;mes Oak Tree"
+<li> pour le port s&#233;rie, s&#233;lectionnez celui o&#244; votre mat&#233;riel est connect&#233;.
+<li> S&#233;lectionnez la vitesse de transmission configur&#233;e dans vos cartes
+<li> Cliquez sur le bouton "Configurer les noeuds" . Sur le
 nouveau panneau qui s'ouvre:
 <UL>
-<LI> Entrez une adresse de nœud (0 est généralement utilisé pour la première carte)
-     <li> Sélectionnez le type de cartes à partir de la boîte d'initialisation
-     <li> Cliquez sur "Ajouter Nœud"
-     <LI> Cliquez sur "Terminé"
+<LI> Entrez une adresse de noeud (0 est g&#233;n&#233;ralement utilis&#233; pour la premi&#232;re carte)
+     <li> S&#233;lectionnez le type de carte &#224; partir de la bo&#238;te d'initialisation
+     <li> Cliquez sur "Ajouter Noeud"
+     <LI> Cliquez sur "Termin&#233;"
      </ul>
-<li> Retour sur le panneau "Préférences ...", cliquez sur "Enregistrer", et dire oui quand il vous demande si vous voulez Quitter.
+<li> Retour sur le panneau "Pr&#233;f&#233;rences ...", cliquez sur "Enregistrer", et dire oui quand il vous demande si vous voulez Quitter.
 	        </ul>
-		<li>Redémarrez le programme. Vos
+		<li>Red&#233;marrez le programme. Vos
 LEDs sur la carte devrait maintenant clignoter, indiquant que l'ordinateur et la carte
 dialogue.
-<li> Pour vérifier que tout fonctionne, sélectionnez "
-Configuration Aiguillage "dans le menu Outils. Cela va ouvrir une petite fenêtre dans
-laquelle vous pouvez sélectionner un numéro d'aiguillage (voir <a href="#numbers">voir 
-ci-dessous </a>), puis cliquez direct/dévié pour changer l'état de
+<li> Pour v&#233;rifier que tout fonctionne, s&#233;lectionnez "Configuration Aiguillage" dans le menu Outils. Cela va ouvrir une petite fen&#234;tre dans laquelle vous pouvez s&#233;lectionner un num&#233;ro d'aiguillage (voir <a href="#numbers">voir 
+ci-dessous </a>), puis cliquez droit/d&#233;vi&#233; pour changer l'&#233;tat de
 cette sortie.
 </ol>
 </dd>
 
 <dt class=left> Utiliser avec plusieurs cartes </dt>
 <dd>
-<p> Si vous avez plusieurs cartes reliées au bus série du systèmes d'Oak Tree
-, simplement revenir à la fenêtre "configurer les nœuds"
-et de les saisir individuellement. Ne pas oublier d'enregistrer les préférences
-et redémarrer le programme.
+<p> Si vous avez plusieurs cartes reli&#233;es au bus s&#233;rie du syst&#232;mes d'Oak Tree
+, simplement revenir &#224; la fen&#234;tre "Configurer les Noeuds"
+et de les saisir individuellement. Ne pas oublier d'enregistrer les pr&#233;f&#233;rences
+et red&#233;marrer le programme.
 </dd>
  
-<dt class=left> <a name=numbers> Numérotation </a> </dt>
+<dt class=left> <a name=numbers> Num&#233;rotation </a> </dt>
 
 	<dd>
-<p>Les noms système Oak Tree  démarrent avec "O". Par exemple, "OS24" est un
-"S" Ensor (Capteur), la ligne d'entrée 24ème sur la carte du système Oak Tree  avec adresse zéro . </P>
+<p>Les noms syst&#232;me Oak Tree  d&#233;marrent avec "O". Par exemple, "OS24" est un
+"S"Ensor (Capteur), la ligne d'entr&#233;e :la 24&#232;me sur la carte du syst&#232;me Oak Tree  avec adresse z&#233;ro . </P>
 
- <p>Les entrées et sorties sont numérotées séquentiellement à partir de 1, sans
+ <p>Les entr&#233;es et sorties sont num&#233;rot&#233;es s&#233;quentiellement &#224; partir de 1, sans
 se soucier des types de cartes, etc </p>
 
-<p> Chaque carte est appelée un «nœud».les Capteurs et aiguillages
-sur le premier nœud sont numérotés de 1 à 999; les capteurs et les aiguillages sur le
-le second nœud sont numérotés de 1001 à 1999; etc </p>
+<p> Chaque carte est appel&#233;e un "noeud». Les capteurs et aiguillages
+sur le premier noeud sont num&#233;rot&#233;s de 1 &#224; 999; les capteurs et les aiguillages sur le
+le second noeud sont num&#233;rot&#233;s de 1001 &#224; 1999; etc </p>
 
 <P> Par exemple:
 <UL>
-<LI> Disons que vous avez une IO-48 avec son adresse interrupteurs réglé sur "2". Tous les
-entrées et sorties sur ce nœud seront numérotées à partir de 2001.
+<LI> Disons que vous avez une IO-48 avec son adresse interrupteurs r&#233;gl&#233; sur "2". Toutes les
+entr&#233;es et sorties sur ce noeud seront num&#233;rot&#233;es &#224; partir de 2001.
 <UL>
-<LI> CT2001 est la  première broche de sortie
-<LI> CT2048 est la dernière broche de sortie
-<LI> CS2001 est la  première broche d'entrée
-<LI> CS2012 est la dernière broche d'entrée 
+<LI> CT2001 est la  premi&#232;re broche de sortie
+<LI> CT2048 est la derni&#232;re broche de sortie
+<LI> CS2001 est la  premi&#232;re broche d'entr&#233;e
+<LI> CS2012 est la derni&#232;re broche d'entr&#233;e 
 </UL>
 
 
-  <P> Pour résumer, les entrées et sorties sont étiquetées de manière séquentielle
-     au sein de chaque nœud. Les chiffres montent par 1000 de noeud à
-     noeud. Les Numéros de nœuds peuvent aller aussi haut que le matériel le permet.
+  <P> Pour r&#233;sumer, les entr&#233;es et sorties sont &#233;tiquet&#233;es de mani&#232;re s&#233;quentielle
+     au sein de chaque noeud. Les chiffres montent par 1000 de noeud &#224;
+     noeud. Les Num&#233;ros de noeuds peuvent aller aussi haut que le mat&#233;riel le permet.
 </dd>
 		   
 
       	</dl>
 
 	<H3> Plus d'infos </H3>
-    	<p>Pour plus d'informations sur le matériel Oak Tree Systems, voir leur	<a HREF="http://www.oaktreesystems.com"> site web </a>.
+    	<p>Pour plus d'informations sur le mat&#233;riel Oak Tree Systems, voir leur	<a HREF="http://www.oaktreesystems.com"> site web </a>.
 	</p>
 
 <!--#include virtual="/Footer" -->

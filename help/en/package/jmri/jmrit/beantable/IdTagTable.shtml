@@ -1,21 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
  <title>
-      JMRI: Id Tag Table Help
+      JMRI: ID Tag Table Help
  </title>
     <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <meta content="Matthew Harris" name=Author>
-    <meta name="keywords" content="JMRI help Id Tag Table">
+    <meta content="Matthew Harris" name="Author">
+    <meta name="keywords" content="JMRI help ID Tag Table">
 
-<!-- Style -->
-  <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+<!--#include virtual="/Style" -->
 </head>
 
 <body>
@@ -23,22 +16,29 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>The Id Tag Table</h1>
+<h1>The ID Tag Table</h1>
     
-You can use the Id Tag Table to look at the contents of JMRI IdTag objects.
+You can use the ID Tag Table to look at the contents of JMRI IdTag objects.
 <p>
-Note that you can sort the table by each of the columns, just click on the
-column heading.
+Note that you can sort the table by each of the columns; just click on a
+column heading.</p>
+
+<h2>ID Tag Table Controls</h2>
 <p>
-To create a new Id tag, click on the
-"<a href="IdTagAddEdit.shtml">Add...</a>" button at the bottom of the window.
+To create a new ID Tag, click on the
+"<a href="IdTagAddEdit.shtml">Add...</a>" button at the bottom left of the pane.
+<p>Next to it, two check boxes let you activate:
+	<ul>
+	<li>Save when and where last seen</li>
+	<li>Use Fast Clock Time</li>
+	</ul>
 
 <p>
-For more information on Id tags, see the
-<a href="../../../../html/tools/IdTags.shtml">Id Tag help page</a>.
-<br>
+For more information on ID Tags, see the
+<a href="../../../../html/tools/IdTags.shtml">ID Tag help page</a>.
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
-

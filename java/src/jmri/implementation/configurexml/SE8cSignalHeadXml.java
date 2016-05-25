@@ -1,16 +1,14 @@
 package jmri.implementation.configurexml;
 
+import java.util.List;
+import jmri.InstanceManager;
+import jmri.NamedBeanHandle;
+import jmri.SignalHead;
+import jmri.Turnout;
+import jmri.implementation.SE8cSignalHead;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.InstanceManager;
-import jmri.SignalHead;
-import jmri.implementation.SE8cSignalHead;
-import jmri.Turnout;
-import jmri.NamedBeanHandle;
-
-import java.util.List;
-
-import org.jdom.Element;
 
 /**
  * Handle XML configuration for SE8cSignalHead objects.
@@ -20,16 +18,17 @@ import org.jdom.Element;
  */
 public class SE8cSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
-    public SE8cSignalHeadXml() {}
+    public SE8cSignalHeadXml() {
+    }
 
     /**
-     * Default implementation for storing the contents of a
-     * SE8cSignalHead
+     * Default implementation for storing the contents of a SE8cSignalHead
+     *
      * @param o Object to store, of type TripleTurnoutSignalHead
      * @return Element containing the complete info
      */
     public Element store(Object o) {
-        SE8cSignalHead p = (SE8cSignalHead)o;
+        SE8cSignalHead p = (SE8cSignalHead) o;
 
         Element element = new Element("signalhead");
         element.setAttribute("class", this.getClass().getName());
@@ -39,7 +38,7 @@ public class SE8cSignalHeadXml extends jmri.managers.configurexml.AbstractNamedB
         element.setAttribute("systemName", p.getSystemName());
 
         storeCommon(p, element);
-        
+
         element.addContent(addTurnoutElement(p.getLow(), "low"));
         element.addContent(addTurnoutElement(p.getHigh(), "high"));
 
@@ -52,56 +51,56 @@ public class SE8cSignalHeadXml extends jmri.managers.configurexml.AbstractNamedB
         el.addContent(to.getName());
         return el;
     }
+
     Element addTurnoutElement(Turnout to) {
         String user = to.getUserName();
         String sys = to.getSystemName();
 
         Element el = new Element("turnout");
         el.setAttribute("systemName", sys);
-        if (user!=null) el.setAttribute("userName", user);
+        if (user != null) {
+            el.setAttribute("userName", user);
+        }
 
         return el;
     }
 
-    /**
-     * Create a SE8cSignalHead
-     * @param element Top level Element to unpack.
-     * @return true if successful
-     */
-    @SuppressWarnings("unchecked")
-	public boolean load(Element element) {
-        List<Element> l = element.getChildren("turnoutname");
-        if (l.size() == 0) l = element.getChildren("turnout");  // older form
+    @Override
+    public boolean load(Element shared, Element perNode) {
+        List<Element> l = shared.getChildren("turnoutname");
+        if (l.size() == 0) {
+            l = shared.getChildren("turnout");  // older form
+        }
         NamedBeanHandle<Turnout> low = loadTurnout(l.get(0));
         NamedBeanHandle<Turnout> high = loadTurnout(l.get(1));
         // put it together
-        String sys = getSystemName(element);
-        String uname = getUserName(element);
+        String sys = getSystemName(shared);
+        String uname = getUserName(shared);
         SignalHead h;
-        if (uname == null)
+        if (uname == null) {
             h = new SE8cSignalHead(sys, low, high);
-        else
+        } else {
             h = new SE8cSignalHead(sys, low, high, uname);
+        }
 
-        loadCommon(h, element);
-        
+        loadCommon(h, shared);
+
         InstanceManager.signalHeadManagerInstance().register(h);
         return true;
     }
 
     /**
-     * Needs to handle two types of element:
-     *    turnoutname is new form
-     *    turnout is old form
+     * Needs to handle two types of element: turnoutname is new form turnout is
+     * old form
      */
     NamedBeanHandle<Turnout> loadTurnout(Object o) {
-        Element e = (Element)o;
-        
+        Element e = (Element) o;
+
         if (e.getName().equals("turnout")) {
             String name = e.getAttribute("systemName").getValue();
             Turnout t;
-            if (e.getAttribute("userName")!=null && 
-                    !e.getAttribute("userName").getValue().equals("")) {
+            if (e.getAttribute("userName") != null
+                    && !e.getAttribute("userName").getValue().equals("")) {
                 name = e.getAttribute("userName").getValue();
                 t = InstanceManager.turnoutManagerInstance().getTurnout(name);
             } else {
@@ -119,5 +118,5 @@ public class SE8cSignalHeadXml extends jmri.managers.configurexml.AbstractNamedB
         log.error("Invalid method called");
     }
 
-    static Logger log = LoggerFactory.getLogger(SE8cSignalHeadXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SE8cSignalHeadXml.class.getName());
 }

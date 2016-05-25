@@ -1,14 +1,13 @@
-// SoundTest.java
-
 package jmri.jmrit.sound;
 
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * Invokes complete set of tests in the jmri.jmrit.sound tree
  *
- * @author	    Bob Jacobsen  Copyright 2001, 2003
- * @version         $Revision$
+ * @author	Bob Jacobsen Copyright 2001, 2003
  */
 public class SoundTest extends TestCase {
 
@@ -32,7 +31,12 @@ public class SoundTest extends TestCase {
     }
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 
 }

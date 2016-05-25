@@ -1,5 +1,4 @@
 // AcelaInterface.java
-
 package jmri.jmrix.acela;
 
 /**
@@ -8,14 +7,14 @@ package jmri.jmrix.acela;
  * @author	Bob Jacobsen Copyright (C) 2001
  * @version	$Revision$
  *
- * @author	Bob Coleman Copyright (C) 2007, 2008
- *              Based on CMRI serial example, modified to establish Acela support. 
+ * @author	Bob Coleman Copyright (C) 2007, 2008 Based on CMRI serial example,
+ * modified to establish Acela support.
  */
-
 public interface AcelaInterface {
 
-    public void addAcelaListener( AcelaListener l);
-    public void removeAcelaListener( AcelaListener l);
+    public void addAcelaListener(AcelaListener l);
+
+    public void removeAcelaListener(AcelaListener l);
 
     boolean status();   // true if the implementation is operational
 

@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<?xml-stylesheet type="text/xsl" href="http://jmri.sourceforge.net/xml/XSLT/decoder.xsl"?>
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="http://jmri.org/xml/XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2004 All rights reserved -->
-<!-- $Id: HornbyDigital.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -29,54 +29,35 @@
     </family>
     <programming direct="no" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
-        <shortAddressVal/>
-        <label>Primary Address</label>
-        <comment>Short address</comment>
-      </variable>
-      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03" writeOnly="yes">
-        <shortAddressVal/>
-        <label>Primary Address</label>
-        <comment>Short address</comment>
-      </variable>
-      <variable label="Acceleration momentum" CV="3" default="5" item="Accel">
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAddressOnly.xml"/>
+      <variable CV="3" default="5" item="Accel">
         <decVal max="255"/>
         <label>Acceleration momentum</label>
+        <label xml:lang="it">Accellerazione (0-255)</label>
+        <label xml:lang="fr">Accelération (0-255)</label>
+        <label xml:lang="de">Anfahrverzögerung (0-255)</label>
       </variable>
-      <variable label="Deceleration momentum" CV="4" default="5" item="Decel">
+      <variable CV="4" default="5" item="Decel">
         <decVal max="255"/>
         <label>Deceleration momentum</label>
+        <label xml:lang="it">Decellerazione (1-255)</label>
+        <label xml:lang="fr">Décélération (1-255)</label>
+        <label xml:lang="de">Bremszeit (1-255)</label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" infoOnly="yes" item="Manufacturer" default="48">
+      <variable CV="8" infoOnly="yes" item="Manufacturer" default="48">
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
-      <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" default="0" item="Locomotive Direction" writeOnly="yes">
-        <enumVal>
-          <enumChoice choice="Forward">
-            <choice>Forward</choice>
-          </enumChoice>
-          <enumChoice choice="Reverse">
-            <choice>Reverse</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Normal direction of motion</label>
-      </variable>
-      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1" writeOnly="yes">
-        <enumVal>
-          <enumChoice choice="14">
-            <choice>14</choice>
-          </enumChoice>
-          <enumChoice choice="28/128 (recommended)">
-            <choice>28/128 (recommended)</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed Steps</label>
-      </variable>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
       <!-- Hornby don't support changing this, but it should be written as 1 for consistency -->
-      <variable label="Analog Mode" CV="29" mask="XXXXXVXX" item="Analog Mode" default="1" writeOnly="yes">
+      <variable CV="29" mask="XXXXXVXX" item="Analog Mode" default="1" writeOnly="yes">
         <decVal min="1" max="1"/>
         <label>Analog Mode</label>
+        <label xml:lang="it">Conversione Analogica Abilitata (DCC+Analogico)</label>
+        <label xml:lang="fr">Mode analogique activé</label>
+        <label xml:lang="de">Analogbetrieb Aktiviert</label>
       </variable>
     </variables>
   </decoder>

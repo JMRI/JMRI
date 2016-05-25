@@ -25,6 +25,10 @@ import org.slf4j.LoggerFactory;
  */
 public class ConsistDataModel extends AbstractTableModel {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = 2830664682896481975L;
     final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.consisttool.ConsistTool");
     static private final int ADDRCOLUMN = 0;    // Locomotive address
     static private final int ROSTERCOLUMN = 1;  // Roster Entry, this exists
@@ -38,7 +42,7 @@ public class ConsistDataModel extends AbstractTableModel {
 
     // Construct a new instance
     ConsistDataModel(int row, int column) {
-        ConsistMan = InstanceManager.consistManagerInstance();
+        ConsistMan = InstanceManager.getDefault(jmri.ConsistManager.class);
     }
 
     void initTable(JTable ConsistTable) {
@@ -169,5 +173,5 @@ public class ConsistDataModel extends AbstractTableModel {
                 log.error("Unknown Consist Operation");
         }
     }
-    static Logger log = LoggerFactory.getLogger(ConsistDataModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConsistDataModel.class.getName());
 }

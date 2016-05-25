@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<title>JMRI OperationsPro - Locations window</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+<a name="Top"></a>
+
+<h1>Using JMRI&reg; to Operate Trains</h1>
+<h2>OperationsPro: Locations window</h2>
+
+<div align="right">
+<p><a href="Ops_Locations.shtml">Back</a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+
+<hr>
+<p>The Locations window as shown lists all of the  Locations
+on your railroad that your Trains may visit to pick up or drop off Cars and Locomotives
+ (engines). Locations can be cities, towns, or just places where trains
+need to work cars.</p>
+<p style="text-align: center;"><img style="width: 808px; height: 251px;" alt="locations list" src="images/Ops_locations_list.png"></p>
+
+<h4>Locations list columns</h4>
+<p><span style="font-weight: bold;">Id</span> -- Identification number assigned to the Location.</p>
+<p><span style="font-weight: bold;">Name</span> -- Name of the Location, city, locale, or industry assigned by you.</p>
+<p><span style="font-weight: bold;">Track</span> -- Identifies the Track at a Location; a Location may have more than one Track.</p>
+<p><span style="font-weight: bold;">Length</span> -- Total length of all Tracks in scale feet that determines the number of Cars that can be set out.</p>
+<p><span style="font-weight: bold;">Used</span> -- Indicates the scale feet of Track at this Location that is in use according to your OperationsPro Roster.</p>
+<p><span style="font-weight: bold;">Rolling Stock</span> -- Number of Cars, etc. set out at Location.</p>
+<p><span style="font-weight: bold;">Pick ups</span> -- Total number of pickups that have been executed since a reset.</p>
+<p><span style="font-weight: bold;">Set outs</span> -- Total number of set outs that have been executed since a reset.</p>
+<p><span style="font-weight: bold;">Action </span>-- The <span style="font-weight: bold;">Yardmaster</span> button opens a <span style="font-weight: bold;"><a href="Ops_Locations_SwitchList.shtml">Yardmaster (Switch List)</a></span> window that allows you  see the scheduled pick ups and set outs at a Location, grouped by Train.
+Only Trains that have work for the Location are available.</p>
+<p><span style="font-weight: bold;">Edit</span> -- The <span style="font-weight: bold;">Edit</span> button opens the <span style="font-weight: bold;"><a href="Ops_EditLocation.shtml">Edit Location</a></span><a href="Ops_EditLocation.shtml"></a> window.</p>
+          
+<div align="right"><p><a href="Ops_Locations.shtml">Back<br></a><a href="Ops_Cars.shtml"></a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</div>
+</div>
+</body>
+</html>

@@ -1,15 +1,20 @@
 // JsonUtil.java
 package jmri.jmris.json;
 
+import static jmri.jmris.json.JSON.*;
+import static jmri.jmrit.operations.trains.TrainCommon.splitString;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.io.File;
+import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Locale;
 import jmri.Consist;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
@@ -25,7 +30,6 @@ import jmri.SensorManager;
 import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.Turnout;
-import static jmri.jmris.json.JSON.*;
 import jmri.jmrit.consisttool.ConsistFile;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
@@ -33,6 +37,8 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
@@ -42,9 +48,16 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.roster.rostergroup.RosterGroup;
+import jmri.jmrix.ConnectionConfig;
+import jmri.jmrix.ConnectionConfigManager;
+import jmri.jmrix.SystemConnectionMemo;
+import jmri.profile.ProfileManager;
+import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
+import jmri.util.node.NodeIdentity;
 import jmri.util.zeroconf.ZeroConfService;
-import jmri.web.server.WebServerManager;
+import jmri.web.server.WebServerPreferences;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,33 +69,20 @@ import org.slf4j.LoggerFactory;
  */
 public class JsonUtil {
 
-    private static ObjectMapper mapper = new ObjectMapper();
-    private static Logger log = LoggerFactory.getLogger(JsonUtil.class);
+    private static final ObjectMapper mapper = new ObjectMapper();
+    private static final Logger log = LoggerFactory.getLogger(JsonUtil.class);
 
-    static public JsonNode getCar(String id) {
+    static public JsonNode getCar(Locale locale, String id) {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, CAR);
-        ObjectNode data = root.putObject(DATA);
-        Car car = CarManager.instance().getById(id);
-        data.put(ID, car.getId());
-        data.put(ROAD, car.getRoadName());
-        data.put(NUMBER, car.getNumber());
-        data.put(LOAD, car.getLoadName());
-        data.put(LOCATION, car.getRouteLocationId());
-        data.put(LOCATION_TRACK, car.getTrackName());
-        data.put(DESTINATION, car.getRouteDestinationId());
-        data.put(DESTINATION_TRACK, car.getDestinationTrackName());
-        data.put(TYPE, car.getTypeName());
-        data.put(LENGTH, car.getLength());
-        data.put(COLOR, car.getColor());
-        data.put(COMMENT, car.getComment());
+        root.put(DATA, JsonUtil.getCar(CarManager.instance().getById(id)));
         return root;
     }
 
-    static public JsonNode getCars() {
+    static public JsonNode getCars(Locale locale) {
         ArrayNode root = mapper.createArrayNode();
-        for (String id : CarManager.instance().getByIdList()) {
-            root.add(getCar(id));
+        for (RollingStock rs : CarManager.instance().getByIdList()) {
+            root.add(JsonUtil.getCar(locale, rs.getId()));
         }
         return root;
     }
@@ -90,15 +90,20 @@ public class JsonUtil {
     /**
      * Delete the consist at the given address.
      *
+     * @param locale  The locale to format exceptions in
      * @param address The address of the consist to delete.
      * @throws JsonException This exception has code 404 if the consist does not
-     * exist.
+     *                       exist.
      */
-    static public void delConsist(DccLocoAddress address) throws JsonException {
-        if (InstanceManager.consistManagerInstance().getConsistList().contains(address)) {
-            InstanceManager.consistManagerInstance().delConsist(address);
-        } else {
-            throw new JsonException(404, Bundle.getMessage("ErrorObject", CONSIST, address.toString()));
+    static public void delConsist(Locale locale, DccLocoAddress address) throws JsonException {
+        try {
+            if (InstanceManager.getDefault(jmri.ConsistManager.class).getConsistList().contains(address)) {
+                InstanceManager.getDefault(jmri.ConsistManager.class).delConsist(address);
+            } else {
+                throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", CONSIST, address.toString()));
+            }
+        } catch (NullPointerException ex) {
+            throw new JsonException(503, Bundle.getMessage(locale, "ErrorNoConsistManager")); // NOI18N
         }
     }
 
@@ -124,34 +129,39 @@ public class JsonUtil {
      * </ul>
      * </ul>
      *
+     * @param locale  The locale to throw exceptions in.
      * @param address The address of the consist to get.
      * @return The JSON representation of the consist.
      * @throws JsonException This exception has code 404 if the consist does not
-     * exist.
+     *                       exist.
      */
-    static public JsonNode getConsist(DccLocoAddress address) throws JsonException {
-        if (InstanceManager.consistManagerInstance().getConsistList().contains(address)) {
-            ObjectNode root = mapper.createObjectNode();
-            root.put(TYPE, CONSIST);
-            ObjectNode data = root.putObject(DATA);
-            Consist consist = InstanceManager.consistManagerInstance().getConsist(address);
-            data.put(ADDRESS, consist.getConsistAddress().getNumber());
-            data.put(IS_LONG_ADDRESS, consist.getConsistAddress().isLongAddress());
-            data.put(TYPE, consist.getConsistType());
-            ArrayNode engines = data.putArray(ENGINES);
-            for (DccLocoAddress l : consist.getConsistList()) {
-                ObjectNode engine = mapper.createObjectNode();
-                engine.put(ADDRESS, l.getNumber());
-                engine.put(IS_LONG_ADDRESS, l.isLongAddress());
-                engine.put(FORWARD, consist.getLocoDirection(l));
-                engine.put(POSITION, consist.getPosition(l));
-                engines.add(engine);
+    static public JsonNode getConsist(Locale locale, DccLocoAddress address) throws JsonException {
+        try {
+            if (InstanceManager.getDefault(jmri.ConsistManager.class).getConsistList().contains(address)) {
+                ObjectNode root = mapper.createObjectNode();
+                root.put(TYPE, CONSIST);
+                ObjectNode data = root.putObject(DATA);
+                Consist consist = InstanceManager.getDefault(jmri.ConsistManager.class).getConsist(address);
+                data.put(ADDRESS, consist.getConsistAddress().getNumber());
+                data.put(IS_LONG_ADDRESS, consist.getConsistAddress().isLongAddress());
+                data.put(TYPE, consist.getConsistType());
+                ArrayNode engines = data.putArray(ENGINES);
+                for (DccLocoAddress l : consist.getConsistList()) {
+                    ObjectNode engine = mapper.createObjectNode();
+                    engine.put(ADDRESS, l.getNumber());
+                    engine.put(IS_LONG_ADDRESS, l.isLongAddress());
+                    engine.put(FORWARD, consist.getLocoDirection(l));
+                    engine.put(POSITION, consist.getPosition(l));
+                    engines.add(engine);
+                }
+                data.put(ID, consist.getConsistID());
+                data.put(SIZE_LIMIT, consist.sizeLimit());
+                return root;
+            } else {
+                throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", CONSIST, address.toString()));
             }
-            data.put(ID, consist.getConsistID());
-            data.put(SIZE_LIMIT, consist.sizeLimit());
-            return root;
-        } else {
-            throw new JsonException(404, Bundle.getMessage("ErrorObject", CONSIST, address.toString()));
+        } catch (NullPointerException ex) {
+            throw new JsonException(503, Bundle.getMessage(locale, "ErrorNoConsistManager")); // NOI18N
         }
     }
 
@@ -160,38 +170,49 @@ public class JsonUtil {
      *
      * Adds a consist, populating it with information from data.
      *
+     * @param locale  The locale to throw exceptions in.
      * @param address The address of the new consist.
-     * @param data The JSON representation of the consist. See
-     * {@link #getConsist(jmri.DccLocoAddress)} for the JSON structure.
+     * @param data    The JSON representation of the consist. See
+     * {@link #getConsist(Locale, jmri.DccLocoAddress) } for the
+     *                JSON structure.
      * @throws JsonException
      */
-    static public void putConsist(DccLocoAddress address, JsonNode data) throws JsonException {
-        if (!InstanceManager.consistManagerInstance().getConsistList().contains(address)) {
-            InstanceManager.consistManagerInstance().getConsist(address);
-            setConsist(address, data);
+    static public void putConsist(Locale locale, DccLocoAddress address, JsonNode data) throws JsonException {
+        try {
+            if (!InstanceManager.getDefault(jmri.ConsistManager.class).getConsistList().contains(address)) {
+                InstanceManager.getDefault(jmri.ConsistManager.class).getConsist(address);
+                setConsist(locale, address, data);
+            }
+        } catch (NullPointerException ex) {
+            throw new JsonException(503, Bundle.getMessage(locale, "ErrorNoConsistManager")); // NOI18N
         }
     }
 
     /**
      * Get a list of consists.
      *
+     * @param locale The locale to throw exceptions in.
      * @return JSON array of consists as in the structure returned by
-     * {@link #getConsist(jmri.DccLocoAddress)}
+     * {@link #getConsist(Locale, jmri.DccLocoAddress) }
      * @throws JsonException
      */
-    static public JsonNode getConsists() throws JsonException {
-        ArrayNode root = mapper.createArrayNode();
-        for (DccLocoAddress address : InstanceManager.consistManagerInstance().getConsistList()) {
-            root.add(getConsist(address));
+    static public JsonNode getConsists(Locale locale) throws JsonException {
+        try {
+            ArrayNode root = mapper.createArrayNode();
+            for (DccLocoAddress address : InstanceManager.getDefault(jmri.ConsistManager.class).getConsistList()) {
+                root.add(getConsist(locale, address));
+            }
+            return root;
+        } catch (NullPointerException ex) {
+            throw new JsonException(503, Bundle.getMessage(locale, "ErrorNoConsistManager")); // NOI18N
         }
-        return root;
     }
 
     /**
      * Change the properties and locomotives of a consist.
      *
      * This method takes as input the JSON representation of a consist as
-     * provided by {@link #getConsist(jmri.DccLocoAddress) }.
+     * provided by {@link #getConsist(Locale, jmri.DccLocoAddress) }.
      *
      * If present in the JSON, this method sets the following consist
      * properties:
@@ -205,73 +226,67 @@ public class JsonUtil {
      * node.</li>
      * </ul>
      *
-     * @param address - the consist address
-     * @param data - the consist as a JsonObject
+     * @param locale  the locale to throw exceptions in
+     * @param address the consist address
+     * @param data    the consist as a JsonObject
      * @throws JsonException
      */
-    static public void setConsist(DccLocoAddress address, JsonNode data) throws JsonException {
-        if (InstanceManager.consistManagerInstance().getConsistList().contains(address)) {
-            Consist consist = InstanceManager.consistManagerInstance().getConsist(address);
-            if (data.path(ID).isTextual()) {
-                consist.setConsistID(data.path(ID).asText());
-            }
-            if (data.path(TYPE).isInt()) {
-                consist.setConsistType(data.path(TYPE).asInt());
-            }
-            if (data.path(ENGINES).isArray()) {
-                ArrayList<DccLocoAddress> engines = new ArrayList<DccLocoAddress>();
-                // add every engine in
-                for (JsonNode engine : data.path(ENGINES)) {
-                    DccLocoAddress engineAddress = new DccLocoAddress(engine.path(ADDRESS).asInt(), engine.path(IS_LONG_ADDRESS).asBoolean());
-                    if (!consist.contains(engineAddress)) {
-                        consist.add(engineAddress, engine.path(FORWARD).asBoolean());
-                    }
-                    consist.setPosition(engineAddress, engine.path(POSITION).asInt());
-                    engines.add(engineAddress);
+    static public void setConsist(Locale locale, DccLocoAddress address, JsonNode data) throws JsonException {
+        try {
+            if (InstanceManager.getDefault(jmri.ConsistManager.class).getConsistList().contains(address)) {
+                Consist consist = InstanceManager.getDefault(jmri.ConsistManager.class).getConsist(address);
+                if (data.path(ID).isTextual()) {
+                    consist.setConsistID(data.path(ID).asText());
                 }
-                @SuppressWarnings("unchecked")
-                ArrayList<DccLocoAddress> consistEngines = (ArrayList<DccLocoAddress>) consist.getConsistList().clone();
-                for (DccLocoAddress engineAddress : consistEngines) {
-                    if (!engines.contains(engineAddress)) {
-                        consist.remove(engineAddress);
+                if (data.path(TYPE).isInt()) {
+                    consist.setConsistType(data.path(TYPE).asInt());
+                }
+                if (data.path(ENGINES).isArray()) {
+                    ArrayList<DccLocoAddress> engines = new ArrayList<DccLocoAddress>();
+                    // add every engine in
+                    for (JsonNode engine : data.path(ENGINES)) {
+                        DccLocoAddress engineAddress = new DccLocoAddress(engine.path(ADDRESS).asInt(), engine.path(IS_LONG_ADDRESS).asBoolean());
+                        if (!consist.contains(engineAddress)) {
+                            consist.add(engineAddress, engine.path(FORWARD).asBoolean());
+                        }
+                        consist.setPosition(engineAddress, engine.path(POSITION).asInt());
+                        engines.add(engineAddress);
+                    }
+                    @SuppressWarnings("unchecked")
+                    ArrayList<DccLocoAddress> consistEngines = (ArrayList<DccLocoAddress>) consist.getConsistList().clone();
+                    for (DccLocoAddress engineAddress : consistEngines) {
+                        if (!engines.contains(engineAddress)) {
+                            consist.remove(engineAddress);
+                        }
                     }
                 }
+                try {
+                    (new ConsistFile()).writeFile(InstanceManager.getDefault(jmri.ConsistManager.class).getConsistList());
+                } catch (IOException ex) {
+                    throw new JsonException(500, ex.getLocalizedMessage());
+                }
             }
-            try {
-                (new ConsistFile()).writeFile(InstanceManager.consistManagerInstance().getConsistList());
-            } catch (IOException ex) {
-                throw new JsonException(500, ex.getLocalizedMessage());
-            }
+        } catch (NullPointerException ex) {
+            throw new JsonException(503, Bundle.getMessage(locale, "ErrorNoConsistManager")); // NOI18N
         }
     }
 
-    static public JsonNode getEngine(String id) {
+    static public JsonNode getEngine(Locale locale, String id) {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, ENGINE);
-        ObjectNode data = root.putObject(DATA);
-        Engine engine = EngineManager.instance().getById(id);
-        data.put(ID, engine.getId());
-        data.put(ROAD, engine.getRoadName());
-        data.put(NUMBER, engine.getNumber());
-        data.put(LOCATION, engine.getRouteLocationId());
-        data.put(LOCATION_TRACK, engine.getTrackName());
-        data.put(DESTINATION, engine.getRouteDestinationId());
-        data.put(DESTINATION_TRACK, engine.getDestinationTrackName());
-        data.put(MODEL, engine.getModel());
-        data.put(LENGTH, engine.getLength());
-        data.put(COMMENT, engine.getComment());
+        root.put(DATA, JsonUtil.getEngine(EngineManager.instance().getById(id)));
         return root;
     }
 
-    static public JsonNode getEngines() {
+    static public JsonNode getEngines(Locale locale) {
         ArrayNode root = mapper.createArrayNode();
-        for (String id : EngineManager.instance().getByIdList()) {
-            root.add(getEngine(id));
+        for (RollingStock rs : EngineManager.instance().getByIdList()) {
+            root.add(getEngine(locale, rs.getId()));
         }
         return root;
     }
 
-    static public JsonNode getLight(String name) throws JsonException {
+    static public JsonNode getLight(Locale locale, String name) throws JsonException {
         try {
             ObjectNode root = mapper.createObjectNode();
             root.put(TYPE, LIGHT);
@@ -294,28 +309,28 @@ public class JsonUtil {
             return root;
         } catch (NullPointerException e) {
             log.error("Unable to get light [{}].", name);
-            throw new JsonException(404, Bundle.getMessage("ErrorObject", LIGHT, name));
+            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", LIGHT, name));
         }
     }
 
-    static public JsonNode getLights() throws JsonException {
+    static public JsonNode getLights(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
         for (String name : InstanceManager.lightManagerInstance().getSystemNameList()) {
-            root.add(getLight(name));
+            root.add(getLight(locale, name));
         }
         return root;
     }
 
-    static public void putLight(String name, JsonNode data) throws JsonException {
+    static public void putLight(Locale locale, String name, JsonNode data) throws JsonException {
         try {
             InstanceManager.lightManagerInstance().provideLight(name);
         } catch (Exception ex) {
-            throw new JsonException(500, Bundle.getMessage("ErrorCreatingObject", LIGHT, name));
+            throw new JsonException(500, Bundle.getMessage(locale, "ErrorCreatingObject", LIGHT, name));
         }
-        setLight(name, data);
+        setLight(locale, name, data);
     }
 
-    static public void setLight(String name, JsonNode data) throws JsonException {
+    static public void setLight(Locale locale, String name, JsonNode data) throws JsonException {
         try {
             Light light = InstanceManager.lightManagerInstance().getBySystemName(name);
             if (data.path(USERNAME).isTextual()) {
@@ -336,15 +351,15 @@ public class JsonUtil {
                     // silently ignore
                     break;
                 default:
-                    throw new JsonException(400, Bundle.getMessage("ErrorUnknownState", LIGHT, state));
+                    throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", LIGHT, state));
             }
         } catch (NullPointerException e) {
             log.error("Unable to get light [{}].", name);
-            throw new JsonException(404, Bundle.getMessage("ErrorObject", LIGHT, name));
+            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", LIGHT, name));
         }
     }
 
-    static public JsonNode getLocation(String id) throws JsonException {
+    static public JsonNode getLocation(Locale locale, String id) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, LOCATION);
         ObjectNode data = root.putObject(DATA);
@@ -356,28 +371,28 @@ public class JsonUtil {
             data.put(COMMENT, location.getComment());
         } catch (NullPointerException e) {
             log.error("Unable to get location id [{}].", id);
-            throw new JsonException(404, Bundle.getMessage("ErrorObject", LOCATION, id));
+            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", LOCATION, id));
         }
         return root;
     }
 
-    static public JsonNode getLocations() throws JsonException {
+    static public JsonNode getLocations(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
-        for (String locationID : LocationManager.instance().getLocationsByIdList()) {
-            root.add(getLocation(locationID));
+        for (Location location : LocationManager.instance().getLocationsByIdList()) {
+            root.add(getLocation(locale, location.getId()));
         }
         return root;
     }
 
-    static public JsonNode getMemories() throws JsonException {
+    static public JsonNode getMemories(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
         for (String name : InstanceManager.memoryManagerInstance().getSystemNameList()) {
-            root.add(getMemory(name));
+            root.add(getMemory(locale, name));
         }
         return root;
     }
 
-    static public JsonNode getMemory(String name) throws JsonException {
+    static public JsonNode getMemory(Locale locale, String name) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, MEMORY);
         ObjectNode data = root.putObject(DATA);
@@ -393,21 +408,21 @@ public class JsonUtil {
             }
         } catch (NullPointerException e) {
             log.error("Unable to get memory [{}].", name);
-            throw new JsonException(404, Bundle.getMessage("ErrorObject", MEMORY, name));
+            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", MEMORY, name));
         }
         return root;
     }
 
-    static public void putMemory(String name, JsonNode data) throws JsonException {
+    static public void putMemory(Locale locale, String name, JsonNode data) throws JsonException {
         try {
             InstanceManager.memoryManagerInstance().provideMemory(name);
         } catch (Exception ex) {
-            throw new JsonException(500, Bundle.getMessage("ErrorCreatingObject", MEMORY, name));
+            throw new JsonException(500, Bundle.getMessage(locale, "ErrorCreatingObject", MEMORY, name));
         }
-        setMemory(name, data);
+        setMemory(locale, name, data);
     }
 
-    static public void setMemory(String name, JsonNode data) throws JsonException {
+    static public void setMemory(Locale locale, String name, JsonNode data) throws JsonException {
         try {
             Memory memory = InstanceManager.memoryManagerInstance().getMemory(name);
             if (data.path(USERNAME).isTextual()) {
@@ -425,11 +440,11 @@ public class JsonUtil {
             }
         } catch (NullPointerException ex) {
             log.error("Unable to get memory [{}].", name);
-            throw new JsonException(404, Bundle.getMessage("ErrorObject", MEMORY, name));
+            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", MEMORY, name));
         }
     }
 
-    static public JsonNode getMetadata(String name) throws JsonException {
+    static public JsonNode getMetadata(Locale locale, String name) throws JsonException {
         String metadata = Metadata.getBySystemName(name);
         ObjectNode root;
         if (metadata != null) {
@@ -440,76 +455,74 @@ public class JsonUtil {
             data.put(VALUE, Metadata.getBySystemName(name));
         } else {
             log.error("Unable to get metadata [{}].", name);
-            throw new JsonException(404, Bundle.getMessage("ErrorObject", METADATA, name));
+            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", METADATA, name));
         }
         return root;
     }
 
-    static public JsonNode getMetadata() throws JsonException {
+    static public JsonNode getMetadata(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
         List<String> names = Metadata.getSystemNameList();
         for (String name : names) {
-            root.add(getMetadata(name));
+            root.add(getMetadata(locale, name));
         }
         return root;
     }
 
-    static public JsonNode getPanels(String format) {
-        List<String> disallowedFrames = WebServerManager.getWebServerPreferences().getDisallowedFrames();
+    static public ObjectNode getPanel(Locale locale, Editor editor, String format) {
+        if (editor.getAllowInFrameServlet()) {
+            String title = ((JmriJFrame) editor.getTargetPanel().getTopLevelAncestor()).getTitle();
+            if (!title.isEmpty() && !WebServerPreferences.getDefault().getDisallowedFrames().contains(title)) {
+                String type = PANEL;
+                String name = "Panel";
+                if (editor instanceof ControlPanelEditor) {
+                    type = CONTROL_PANEL;
+                    name = "ControlPanel";
+                } else if (editor instanceof LayoutEditor) {
+                    type = LAYOUT_PANEL;
+                    name = "Layout";
+                }
+                ObjectNode root = mapper.createObjectNode();
+                root.put(TYPE, PANEL);
+                ObjectNode data = root.putObject(DATA);
+                data.put(NAME, name + "/" + title.replaceAll(" ", "%20").replaceAll("#", "%23")); // NOI18N
+                data.put(URL, "/panel/" + data.path(NAME).asText() + "?format=" + format); // NOI18N
+                data.put(USERNAME, title);
+                data.put(TYPE, type);
+                return root;
+            }
+        }
+        return null;
+    }
+
+    static public JsonNode getPanels(Locale locale, String format) {
         ArrayNode root = mapper.createArrayNode();
         // list loaded Panels (ControlPanelEditor, PanelEditor, LayoutEditor)
-        List<JmriJFrame> frames = JmriJFrame.getFrameList(ControlPanelEditor.class);
-        for (JmriJFrame frame : frames) {
-            if (frame.getAllowInFrameServlet()) {
-                String title = ((JmriJFrame) ((Editor) frame).getTargetPanel().getTopLevelAncestor()).getTitle();
-                if (!title.equals("") && !disallowedFrames.contains(title)) {
-                    ObjectNode panel = mapper.createObjectNode();
-                    panel.put(TYPE, PANEL);
-                    ObjectNode data = panel.putObject(DATA);
-                    data.put(NAME, "ControlPanel/" + title.replaceAll(" ", "%20").replaceAll("#", "%23")); // NOI18N
-                    data.put(URL, "/panel/" + data.path(NAME).asText() + "?format=" + format); // NOI18N
-                    data.put(USERNAME, title);
-                    data.put(TYPE, CONTROL_PANEL);
-                    root.add(data);
+        for (Editor editor : Editor.getEditors(ControlPanelEditor.class)) {
+            ObjectNode panel = JsonUtil.getPanel(locale, editor, format);
+            if (panel != null) {
+                root.add(panel);
+            }
+        }
+        for (Editor editor : Editor.getEditors(PanelEditor.class)) {
+            if (!(LayoutEditor.class.isInstance(editor))) {  //skip LayoutEditor panels, as they will be added later
+                ObjectNode panel = JsonUtil.getPanel(locale, editor, format);
+                if (panel != null) {
+                    root.add(panel);
                 }
             }
         }
-        frames = JmriJFrame.getFrameList(PanelEditor.class);
-        for (JmriJFrame frame : frames) {
-            if (frame.getAllowInFrameServlet() && !(LayoutEditor.class.isInstance(frame))) {  //skip LayoutEditor panels, as they will be added next
-                String title = ((JmriJFrame) ((Editor) frame).getTargetPanel().getTopLevelAncestor()).getTitle();
-                if (!title.equals("") && !disallowedFrames.contains(title)) {
-                    ObjectNode panel = mapper.createObjectNode();
-                    panel.put(TYPE, PANEL);
-                    ObjectNode data = panel.putObject(DATA);
-                    data.put(NAME, "Panel/" + title.replaceAll(" ", "%20").replaceAll("#", "%23")); // NOI18N
-                    data.put(URL, "/panel/" + data.path(NAME).asText() + "?format=" + format); // NOI18N
-                    data.put(USERNAME, title);
-                    data.put(TYPE, PANEL_PANEL);
-                    root.add(data);
-                }
-            }
-        }
-        frames = JmriJFrame.getFrameList(LayoutEditor.class);
-        for (JmriJFrame frame : frames) {
-            if (frame.getAllowInFrameServlet()) {
-                String title = ((JmriJFrame) ((Editor) frame).getTargetPanel().getTopLevelAncestor()).getTitle();
-                if (!title.equals("") && !disallowedFrames.contains(title)) {
-                    ObjectNode panel = mapper.createObjectNode();
-                    panel.put(TYPE, PANEL);
-                    ObjectNode data = panel.putObject(DATA);
-                    data.put(NAME, "Layout/" + title.replaceAll(" ", "%20").replaceAll("#", "%23")); // NOI18N
-                    data.put(URL, "/panel/" + data.path(NAME).asText() + "?format=" + format); // NOI18N
-                    data.put(USERNAME, title);
-                    data.put(TYPE, LAYOUT_PANEL);
-                    root.add(data);
-                }
+        for (Editor editor : Editor.getEditors(LayoutEditor.class)) {
+            ObjectNode panel = JsonUtil.getPanel(locale, editor, format);
+            if (panel != null) {
+                root.add(panel);
             }
         }
         return root;
     }
 
-    static public JsonNode getPower() throws JsonException {
+    @Deprecated
+    static public JsonNode getPower(Locale locale) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, POWER);
         ObjectNode data = root.putObject(DATA);
@@ -527,12 +540,16 @@ public class JsonUtil {
             }
         } catch (JmriException e) {
             log.error("Unable to get Power state.", e);
-            throw new JsonException(500, Bundle.getMessage("ErrorPower"));
+            throw new JsonException(500, Bundle.getMessage(locale, "ErrorPower"));
+        } catch (NullPointerException e) {
+            // No PowerManager is defined; just report it as UNKNOWN
+            data.put(STATE, UNKNOWN);
         }
         return root;
     }
 
-    static public void setPower(JsonNode data) throws JsonException {
+    @Deprecated
+    static public void setPower(Locale locale, JsonNode data) throws JsonException {
         int state = data.path(STATE).asInt(UNKNOWN);
         try {
             switch (state) {
@@ -546,22 +563,22 @@ public class JsonUtil {
                     // quietly ignore
                     break;
                 default:
-                    throw new JsonException(400, Bundle.getMessage("ErrorUnknownState", POWER, state));
+                    throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", POWER, state));
             }
         } catch (JmriException ex) {
             throw new JsonException(500, ex);
         }
     }
 
-    static public JsonNode getRailroad() {
+    static public JsonNode getRailroad(Locale locale) {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, RAILROAD);
         ObjectNode data = root.putObject(DATA);
-        data.put(NAME, WebServerManager.getWebServerPreferences().getRailRoadName());
+        data.put(NAME, WebServerPreferences.getDefault().getRailRoadName());
         return root;
     }
 
-    static public JsonNode getReporter(String name) {
+    static public JsonNode getReporter(Locale locale, String name) {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, REPORTER);
         ObjectNode data = root.putObject(DATA);
@@ -575,24 +592,24 @@ public class JsonUtil {
         return root;
     }
 
-    static public JsonNode getReporters() {
+    static public JsonNode getReporters(Locale locale) {
         ArrayNode root = mapper.createArrayNode();
         for (String name : InstanceManager.reporterManagerInstance().getSystemNameList()) {
-            root.add(getReporter(name));
+            root.add(getReporter(locale, name));
         }
         return root;
     }
 
-    static public void putReporter(String name, JsonNode data) throws JsonException {
+    static public void putReporter(Locale locale, String name, JsonNode data) throws JsonException {
         try {
             InstanceManager.reporterManagerInstance().provideReporter(name);
         } catch (Exception ex) {
-            throw new JsonException(500, Bundle.getMessage("ErrorCreatingObject", REPORTER, name));
+            throw new JsonException(500, Bundle.getMessage(locale, "ErrorCreatingObject", REPORTER, name));
         }
-        setReporter(name, data);
+        setReporter(locale, name, data);
     }
 
-    static public void setReporter(String name, JsonNode data) throws JsonException {
+    static public void setReporter(Locale locale, String name, JsonNode data) throws JsonException {
         try {
             Reporter reporter = InstanceManager.reporterManagerInstance().getBySystemName(name);
             if (data.path(USERNAME).isTextual()) {
@@ -607,48 +624,137 @@ public class JsonUtil {
                 InstanceManager.reporterManagerInstance().getReporter(name).setReport(data.path(REPORT).asText());
             }
         } catch (NullPointerException ex) {
-            throw new JsonException(404, Bundle.getMessage("ErrorObject", REPORTER, name));
+            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", REPORTER, name));
         }
     }
 
-    static public JsonNode getRosterEntry(String id) {
+    /**
+     * Returns the JSON representation of a roster entry.
+     *
+     * Note that this returns, for images and icons, a URL relative to the root
+     * folder of the JMRI server. It is expected that clients will fill in the
+     * server IP address and port as they know it to be.
+     *
+     * @param locale
+     * @param id     The id of an entry in the roster.
+     * @return a roster entry in JSON notation
+     * @deprecated since 4.3.5
+     */
+    @Deprecated
+    static public JsonNode getRosterEntry(Locale locale, String id) {
+        return JsonUtil.getRosterEntry(locale, Roster.instance().getEntryForId(id));
+    }
+
+    /**
+     * Returns the JSON representation of a roster entry.
+     *
+     * Note that this returns, for images and icons, a URL relative to the root
+     * folder of the JMRI server. It is expected that clients will fill in the
+     * server IP address and port as they know it to be.
+     *
+     * @param locale
+     * @param re     A RosterEntry that may or may not be in the roster.
+     * @return a roster entry in JSON notation
+     * @deprecated since 4.3.5
+     */
+    @Deprecated
+    static public JsonNode getRosterEntry(Locale locale, RosterEntry re) {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, ROSTER_ENTRY);
         ObjectNode entry = root.putObject(DATA);
-        RosterEntry re = Roster.instance().getEntryForId(id);
         entry.put(NAME, re.getId());
         entry.put(ADDRESS, re.getDccAddress());
         entry.put(IS_LONG_ADDRESS, re.isLongAddress());
         entry.put(ROAD, re.getRoadName());
         entry.put(NUMBER, re.getRoadNumber());
         entry.put(MFG, re.getMfg());
+        entry.put(DECODER_MODEL, re.getDecoderModel());
+        entry.put(DECODER_FAMILY, re.getDecoderFamily());
         entry.put(MODEL, re.getModel());
         entry.put(COMMENT, re.getComment());
-        entry.put(MAX_SPD_PCT, Integer.valueOf(re.getMaxSpeedPCT()).toString());
-        File file = new File(re.getImagePath());
-        entry.put(IMAGE_FILE_NAME, file.getName());
-        file = new File(re.getIconPath());
-        entry.put(IMAGE_ICON_NAME, file.getName());
+        entry.put(MAX_SPD_PCT, Integer.toString(re.getMaxSpeedPCT()));
+        entry.put(IMAGE, (re.getImagePath() != null) ? "/" + ROSTER + "/" + re.getId() + "/" + IMAGE : (String) null);
+        entry.put(ICON, (re.getIconPath() != null) ? "/" + ROSTER + "/" + re.getId() + "/" + ICON : (String) null);
+        entry.put(SHUNTING_FUNCTION, re.getShuntingFunction());
         ArrayNode labels = entry.putArray(FUNCTION_KEYS);
-        for (int i = 0; i < re.getMAXFNNUM(); i++) {
+        for (int i = 0; i <= re.getMAXFNNUM(); i++) {
             ObjectNode label = mapper.createObjectNode();
             label.put(NAME, F + i);
-            label.put(LABEL, (re.getFunctionLabel(i) != null) ? re.getFunctionLabel(i) : F + i);
+            label.put(LABEL, re.getFunctionLabel(i));
             label.put(LOCKABLE, re.getFunctionLockable(i));
+            label.put(ICON, (re.getFunctionImage(i) != null) ? "/" + ROSTER + "/" + re.getId() + "/" + F + i + "/" + ICON : (String) null);
+            label.put(SELECTED_ICON, (re.getFunctionSelectedImage(i) != null) ? "/" + ROSTER + "/" + re.getId() + "/" + F + i + "/" + SELECTED_ICON : (String) null);
             labels.add(label);
         }
-        return root;
-    }
-
-    static public JsonNode getRoster() {
-        ArrayNode root = mapper.createArrayNode();
-        for (RosterEntry re : Roster.instance().matchingList(null, null, null, null, null, null, null)) {
-            root.add(getRosterEntry(re.getId()));
+        ArrayNode rga = entry.putArray(ROSTER_GROUPS);
+        for (RosterGroup group : re.getGroups()) {
+            rga.add(group.getName());
         }
         return root;
     }
 
-    static public JsonNode getRoute(String name) throws JsonException {
+    /**
+     *
+     * @param locale The locale of the requesting client
+     * @param data   A JsonNode optionally containing a group name in the
+     *               "group" node
+     * @return the Roster as a Json Array
+     * @deprecated since 4.3.5
+     */
+    @Deprecated
+    static public JsonNode getRoster(Locale locale, JsonNode data) {
+        String group = (!data.path(GROUP).isMissingNode()) ? data.path(GROUP).asText() : null;
+        if (Roster.ALLENTRIES.equals(group)) {
+            group = null;
+        }
+        String roadName = (!data.path(ROAD).isMissingNode()) ? data.path(ROAD).asText() : null;
+        String roadNumber = (!data.path(NUMBER).isMissingNode()) ? data.path(NUMBER).asText() : null;
+        String dccAddress = (!data.path(ADDRESS).isMissingNode()) ? data.path(ADDRESS).asText() : null;
+        String mfg = (!data.path(MFG).isMissingNode()) ? data.path(MFG).asText() : null;
+        String decoderModel = (!data.path(DECODER_MODEL).isMissingNode()) ? data.path(DECODER_MODEL).asText() : null;
+        String decoderFamily = (!data.path(DECODER_FAMILY).isMissingNode()) ? data.path(DECODER_FAMILY).asText() : null;
+        String id = (!data.path(NAME).isMissingNode()) ? data.path(NAME).asText() : null;
+        ArrayNode root = mapper.createArrayNode();
+        for (RosterEntry re : Roster.instance().getEntriesMatchingCriteria(roadName, roadNumber, dccAddress, mfg, decoderModel, decoderFamily, id, group)) {
+            root.add(getRosterEntry(locale, re.getId()));
+        }
+        return root;
+    }
+
+    /**
+     * 
+     * @param locale The locale of the requesting client
+     * @return the list of Roster groups
+     * @deprecated since 4.3.5
+     */
+    @Deprecated
+    static public JsonNode getRosterGroups(Locale locale) {
+        ArrayNode root = mapper.createArrayNode();
+        root.add(getRosterGroup(locale, Roster.ALLENTRIES));
+        for (String name : Roster.instance().getRosterGroupList()) {
+            root.add(getRosterGroup(locale, name));
+        }
+        return root;
+    }
+
+    /**
+     * 
+     * @param locale The locale of the requesting client
+     * @param name The name of the group
+     * @return A description of the group including its name and size
+     * @deprecated since 4.3.5
+     */
+    @Deprecated
+    static public JsonNode getRosterGroup(Locale locale, String name) {
+        ObjectNode root = mapper.createObjectNode();
+        root.put(TYPE, ROSTER_GROUP);
+        ObjectNode data = root.putObject(DATA);
+        data.put(NAME, name);
+        data.put(LENGTH, Roster.instance().getEntriesInGroup(name).size());
+        return root;
+    }
+
+    static public JsonNode getRoute(Locale locale, String name) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, ROUTE);
         ObjectNode data = root.putObject(DATA);
@@ -680,15 +786,15 @@ public class JsonUtil {
             }
         } catch (NullPointerException e) {
             log.error("Unable to get route [{}].", name);
-            throw new JsonException(404, Bundle.getMessage("ErrorObject", ROUTE, name));
+            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", ROUTE, name));
         }
         return root;
     }
 
-    static public JsonNode getRoutes() throws JsonException {
+    static public JsonNode getRoutes(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
         for (String name : InstanceManager.routeManagerInstance().getSystemNameList()) {
-            root.add(getRoute(name));
+            root.add(getRoute(locale, name));
         }
         return root;
     }
@@ -697,12 +803,13 @@ public class JsonUtil {
      * Routes can be set by passing a JsonNode with the node <em>state</em>
      * equal to <em>8</em> (the aspect of {@link jmri.Route#TOGGLE}).
      *
-     * @param name The name of the route
-     * @param data A JsonNode containing route attributes to set
+     * @param locale The locale to throw exceptions in
+     * @param name   The name of the route
+     * @param data   A JsonNode containing route attributes to set
      * @throws JsonException
      * @see jmri.Route#TOGGLE
      */
-    static public void setRoute(String name, JsonNode data) throws JsonException {
+    static public void setRoute(Locale locale, String name, JsonNode data) throws JsonException {
         try {
             Route route = InstanceManager.routeManagerInstance().getRoute(name);
             if (data.path(USERNAME).isTextual()) {
@@ -722,15 +829,15 @@ public class JsonUtil {
                     // silently ignore
                     break;
                 default:
-                    throw new JsonException(400, Bundle.getMessage("ErrorUnknownState", ROUTE, state));
+                    throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", ROUTE, state));
             }
         } catch (NullPointerException ex) {
             log.error("Unable to get route [{}].", name);
-            throw new JsonException(404, Bundle.getMessage("ErrorObject", ROUTE, name));
+            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", ROUTE, name));
         }
     }
 
-    static public JsonNode getSensor(String name) throws JsonException {
+    static public JsonNode getSensor(Locale locale, String name) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, SENSOR);
         ObjectNode data = root.putObject(DATA);
@@ -757,29 +864,29 @@ public class JsonUtil {
             }
         } catch (NullPointerException e) {
             log.error("Unable to get sensor [{}].", name);
-            throw new JsonException(404, Bundle.getMessage("ErrorObject", SENSOR, name));
+            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", SENSOR, name));
         }
         return root;
     }
 
-    static public JsonNode getSensors() throws JsonException {
+    static public JsonNode getSensors(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
         for (String name : InstanceManager.sensorManagerInstance().getSystemNameList()) {
-            root.add(getSensor(name));
+            root.add(getSensor(locale, name));
         }
         return root;
     }
 
-    static public void putSensor(String name, JsonNode data) throws JsonException {
+    static public void putSensor(Locale locale, String name, JsonNode data) throws JsonException {
         try {
             InstanceManager.sensorManagerInstance().provideSensor(name);
         } catch (Exception ex) {
-            throw new JsonException(500, Bundle.getMessage("ErrorCreatingObject", TURNOUT, name));
+            throw new JsonException(500, Bundle.getMessage(locale, "ErrorCreatingObject", TURNOUT, name));
         }
-        setTurnout(name, data);
+        setSensor(locale, name, data);
     }
 
-    static public void setSensor(String name, JsonNode data) throws JsonException {
+    static public void setSensor(Locale locale, String name, JsonNode data) throws JsonException {
         try {
             Sensor sensor = InstanceManager.sensorManagerInstance().getSensor(name);
             if (data.path(USERNAME).isTextual()) {
@@ -803,17 +910,17 @@ public class JsonUtil {
                     // silently ignore
                     break;
                 default:
-                    throw new JsonException(400, Bundle.getMessage("ErrorUnknownState", SENSOR, state));
+                    throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", SENSOR, state));
             }
         } catch (NullPointerException e) {
             log.error("Unable to get sensor [{}].", name);
-            throw new JsonException(404, Bundle.getMessage("ErrorObject", SENSOR, name));
+            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", SENSOR, name));
         } catch (JmriException ex) {
             throw new JsonException(500, ex);
         }
     }
 
-    static public JsonNode getSignalHead(String name) throws JsonException {
+    static public JsonNode getSignalHead(Locale locale, String name) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, SIGNAL_HEAD);
         ObjectNode data = root.putObject(DATA);
@@ -834,20 +941,20 @@ public class JsonUtil {
             data.put(APPEARANCE_NAME, signalHead.getAppearanceName());
         } catch (NullPointerException e) {
             log.error("Unable to get signalHead [{}].", name);
-            throw new JsonException(404, Bundle.getMessage("ErrorObject", SIGNAL_HEAD, name));
+            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", SIGNAL_HEAD, name));
         }
         return root;
     }
 
-    static public JsonNode getSignalHeads() throws JsonException {
+    static public JsonNode getSignalHeads(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
         for (String name : InstanceManager.signalHeadManagerInstance().getSystemNameList()) {
-            root.add(getSignalHead(name));
+            root.add(getSignalHead(locale, name));
         }
         return root;
     }
 
-    static public void setSignalHead(String name, JsonNode data) throws JsonException {
+    static public void setSignalHead(Locale locale, String name, JsonNode data) throws JsonException {
         try {
             SignalHead signalHead = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
             if (data.path(USERNAME).isTextual()) {
@@ -868,15 +975,15 @@ public class JsonUtil {
                 // TODO: completely insulate JSON state from SignalHead state
                 signalHead.setAppearance(state);
             } else {
-                throw new JsonException(400, Bundle.getMessage("ErrorUnknownState", SIGNAL_HEAD, state));
+                throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", SIGNAL_HEAD, state));
             }
         } catch (NullPointerException e) {
             log.error("Unable to get signal head [{}].", name);
-            throw new JsonException(404, Bundle.getMessage("ErrorObject", SIGNAL_HEAD, name));
+            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", SIGNAL_HEAD, name));
         }
     }
 
-    static public JsonNode getSignalMast(String name) throws JsonException {
+    static public JsonNode getSignalMast(Locale locale, String name) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, SIGNAL_MAST);
         ObjectNode data = root.putObject(DATA);
@@ -897,28 +1004,28 @@ public class JsonUtil {
             //state is appearance, plus flags for held and dark statii
             if ((signalMast.getHeld()) && (signalMast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD) != null)) {
                 data.put(STATE, ASPECT_HELD);
-            } else if ((signalMast.getLit()) && (signalMast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DARK) != null)) {
+            } else if ((!signalMast.getLit()) && (signalMast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DARK) != null)) {
                 data.put(STATE, ASPECT_DARK);
             } else {
                 data.put(STATE, aspect);
             }
         } catch (NullPointerException e) {
             log.error("Unable to get signalMast [{}].", name);
-            throw new JsonException(404, Bundle.getMessage("ErrorObject", SIGNAL_MAST, name));
+            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", SIGNAL_MAST, name));
         }
         return root;
     }
 
-    static public JsonNode getSignalMasts() throws JsonException {
+    static public JsonNode getSignalMasts(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
         for (String name : InstanceManager.signalMastManagerInstance().getSystemNameList()) {
-            root.add(getSignalMast(name));
+            root.add(getSignalMast(locale, name));
         }
         return root;
     }
 
     // TODO: test for HELD and DARK aspects
-    static public void setSignalMast(String name, JsonNode data) throws JsonException {
+    static public void setSignalMast(Locale locale, String name, JsonNode data) throws JsonException {
         try {
             SignalMast signalMast = InstanceManager.signalMastManagerInstance().getSignalMast(name);
             if (data.path(USERNAME).isTextual()) {
@@ -931,30 +1038,101 @@ public class JsonUtil {
             if (signalMast.getValidAspects().contains(aspect)) {
                 signalMast.setAspect(aspect);
             } else {
-                throw new JsonException(400, Bundle.getMessage("ErrorUnknownState", SIGNAL_MAST, aspect));
+                throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", SIGNAL_MAST, aspect));
             }
         } catch (NullPointerException e) {
             log.error("Unable to get signal mast [{}].", name);
-            throw new JsonException(404, Bundle.getMessage("ErrorObject", SIGNAL_MAST, name));
+            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", SIGNAL_MAST, name));
         }
     }
 
-    static public JsonNode getTrain(String id) throws JsonException {
+    static public JsonNode getSystemConnections(Locale locale) {
+        ArrayNode root = mapper.createArrayNode();
+        ArrayList<String> prefixes = new ArrayList<String>();
+        for (ConnectionConfig config : InstanceManager.getDefault(ConnectionConfigManager.class)) {
+            if (!config.getDisabled()) {
+                ObjectNode connection = mapper.createObjectNode().put(TYPE, SYSTEM_CONNECTION);
+                ObjectNode data = connection.putObject(DATA);
+                data.put(NAME, config.getConnectionName());
+                data.put(MFG, config.getManufacturer());
+                data.put(PREFIX, config.getAdapter().getSystemConnectionMemo().getSystemPrefix());
+                prefixes.add(config.getAdapter().getSystemConnectionMemo().getSystemPrefix());
+                root.add(connection);
+            }
+        }
+        for (Object instance : InstanceManager.getList(SystemConnectionMemo.class)) {
+            SystemConnectionMemo memo = (SystemConnectionMemo) instance;
+            if (!memo.getDisabled() && !prefixes.contains(memo.getSystemPrefix())) {
+                ObjectNode connection = mapper.createObjectNode().put(TYPE, SYSTEM_CONNECTION);
+                ObjectNode data = connection.putObject(DATA);
+                data.put(NAME, memo.getUserName());
+                data.put(PREFIX, memo.getSystemPrefix());
+                data.putNull(MFG);
+                prefixes.add(memo.getSystemPrefix());
+                root.add(connection);
+            }
+        }
+        // Following is required because despite there being a SystemConnectionMemo
+        // for the default internal connection, it is not used for the default internal
+        // connection. This allows a client to map the server's internal objects.
+        String prefix = "I";
+        if (!prefixes.contains(prefix)) {
+            ObjectNode connection = mapper.createObjectNode().put(TYPE, SYSTEM_CONNECTION);
+            ObjectNode data = connection.putObject(DATA);
+            data.put(NAME, ConnectionNameFromSystemName.getConnectionName(prefix));
+            data.put(PREFIX, prefix);
+            data.putNull(MFG);
+            root.add(connection);
+        }
+        return root;
+    }
+
+    @Deprecated
+    static public JsonNode getTime(Locale locale) throws JsonException {
+        ObjectNode root = mapper.createObjectNode();
+        root.put(TYPE, TIME);
+        ObjectNode data = root.putObject(DATA);
+        data.put(TIME, new ISO8601DateFormat().format(InstanceManager.timebaseInstance().getTime()));
+        data.put(RATE, InstanceManager.timebaseInstance().getRate());
+        data.put(STATE, InstanceManager.timebaseInstance().getRun() ? ON : OFF);
+        return root;
+    }
+
+    @Deprecated
+    static public void setTime(Locale locale, JsonNode data) throws JsonException {
+        try {
+            if (data.path(TIME).isTextual()) {
+                InstanceManager.timebaseInstance().setTime(new ISO8601DateFormat().parse(data.path(TIME).asText()));
+            }
+            if (data.path(RATE).isDouble()) {
+                InstanceManager.clockControlInstance().setRate(data.path(RATE).asDouble());
+            }
+            if (data.path(STATE).isInt()) {
+                InstanceManager.timebaseInstance().setRun(data.path(STATE).asInt() == ON);
+            }
+        } catch (ParseException ex) {
+            log.error("Time \"{}\" not in ISO 8601 date format", data.path(TIME).asText());
+            throw new JsonException(400, Bundle.getMessage(locale, "ErrorTimeFormat"));
+        }
+    }
+
+    static public JsonNode getTrain(Locale locale, String id) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, TRAIN);
         ObjectNode data = root.putObject(DATA);
         try {
             Train train = TrainManager.instance().getTrainById(id);
             data.put(NAME, train.getName());
+            data.put(ICON_NAME, train.getIconName());
             data.put(ID, train.getId());
             data.put(DEPARTURE_TIME, train.getFormatedDepartureTime());
             data.put(DESCRIPTION, train.getDescription());
             data.put(COMMENT, train.getComment());
             data.put(ROUTE, train.getRoute().getName());
             data.put(ROUTE_ID, train.getRoute().getId());
-            data.put(LOCATIONS, getRouteLocationsForTrain(train));
-            data.put(ENGINES, getEnginesForTrain(train));
-            data.put(CARS, getCarsForTrain(train));
+            data.put(LOCATIONS, getRouteLocationsForTrain(locale, train));
+            data.put(ENGINES, getEnginesForTrain(locale, train));
+            data.put(CARS, getCarsForTrain(locale, train));
             if (train.getTrainDepartsName() != null) {
                 data.put(DEPARTURE_LOCATION, train.getTrainDepartsName());
             }
@@ -962,10 +1140,11 @@ public class JsonUtil {
                 data.put(TERMINATES_LOCATION, train.getTrainTerminatesName());
             }
             data.put(LOCATION, train.getCurrentLocationName());
-            if (train.getCurrentLocation()  != null) {
-            	data.put(LOCATION_ID, train.getCurrentLocation().getId());
+            if (train.getCurrentLocation() != null) {
+                data.put(LOCATION_ID, train.getCurrentLocation().getId());
             }
-            data.put(STATUS, train.getStatus());
+            data.put(STATUS, train.getStatus(locale));
+            data.put(STATUS_CODE, train.getStatusCode());
             data.put(LENGTH, train.getTrainLength());
             data.put(WEIGHT, train.getTrainWeight());
             if (train.getLeadEngine() != null) {
@@ -977,25 +1156,46 @@ public class JsonUtil {
 
         } catch (NullPointerException e) {
             log.error("Unable to get train id [{}].", id);
-            throw new JsonException(404, Bundle.getMessage("ErrorObject", TRAIN, id));
+            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", TRAIN, id));
         }
         return root;
     }
 
-    static public JsonNode getTrains() throws JsonException {
+    static public JsonNode getTrains(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
-        for (String trainID : TrainManager.instance().getTrainsByNameList()) {
-            root.add(getTrain(trainID));
+        for (Train train : TrainManager.instance().getTrainsByNameList()) {
+            root.add(getTrain(locale, train.getId()));
         }
         return root;
     }
 
-    static public void setTrain(String id, JsonNode data) {
+    /**
+     * Sets the properties in the data parameter for the train with the given
+     * id.
+     *
+     * Currently only moves the train to the location given with the key
+     * {@value jmri.jmris.json.JSON#LOCATION}. If the move cannot be completed,
+     * throws error code 428.
+     *
+     * @param locale The locale to throw exceptions in.
+     * @param id     The id of the train.
+     * @param data   Train data to change.
+     * @throws JsonException
+     */
+    static public void setTrain(Locale locale, String id, JsonNode data) throws JsonException {
         Train train = TrainManager.instance().getTrainById(id);
-        train.move(data.path(id).asText());
+        if (!data.path(LOCATION).isMissingNode()) {
+            String location = data.path(LOCATION).asText();
+            if (location.equals(NULL)) {
+                train.terminate();
+            } else if (!train.move(location)) {
+                throw new JsonException(428, Bundle.getMessage(locale, "ErrorTrainMovement", id, location));
+            }
+        }
     }
 
-    static public JsonNode getTurnout(String name) throws JsonException {
+    @Deprecated
+    static public JsonNode getTurnout(Locale locale, String name) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, TURNOUT);
         ObjectNode data = root.putObject(DATA);
@@ -1022,29 +1222,32 @@ public class JsonUtil {
             }
         } catch (NullPointerException e) {
             log.error("Unable to get turnout [{}].", name);
-            throw new JsonException(404, Bundle.getMessage("ErrorObject", TURNOUT, name));
+            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", TURNOUT, name));
         }
         return root;
     }
 
-    static public JsonNode getTurnouts() throws JsonException {
+    @Deprecated
+    static public JsonNode getTurnouts(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
         for (String name : InstanceManager.turnoutManagerInstance().getSystemNameList()) {
-            root.add(getTurnout(name));
+            root.add(getTurnout(locale, name));
         }
         return root;
     }
 
-    static public void putTurnout(String name, JsonNode data) throws JsonException {
+    @Deprecated
+    static public void putTurnout(Locale locale, String name, JsonNode data) throws JsonException {
         try {
             InstanceManager.turnoutManagerInstance().provideTurnout(name);
         } catch (Exception ex) {
-            throw new JsonException(500, Bundle.getMessage("ErrorCreatingObject", TURNOUT, name));
+            throw new JsonException(500, Bundle.getMessage(locale, "ErrorCreatingObject", TURNOUT, name));
         }
-        setTurnout(name, data);
+        setTurnout(locale, name, data);
     }
 
-    static public void setTurnout(String name, JsonNode data) throws JsonException {
+    @Deprecated
+    static public void setTurnout(Locale locale, String name, JsonNode data) throws JsonException {
         try {
             Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(name);
             if (data.path(USERNAME).isTextual()) {
@@ -1068,44 +1271,44 @@ public class JsonUtil {
                     // leave state alone in this case
                     break;
                 default:
-                    throw new JsonException(400, Bundle.getMessage("ErrorUnknownState", TURNOUT, state));
+                    throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", TURNOUT, state));
             }
         } catch (NullPointerException ex) {
             log.error("Unable to get turnout [{}].", name);
-            throw new JsonException(404, Bundle.getMessage("ErrorObject", TURNOUT, name));
+            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", TURNOUT, name));
         }
     }
 
-    static public JsonNode getUnknown(String type) {
-        return handleError(404, Bundle.getMessage("ErrorUnknownType", type));
+    static public JsonNode getUnknown(Locale locale, String type) {
+        return handleError(404, Bundle.getMessage(locale, "ErrorUnknownType", type));
     }
 
-    static private ArrayNode getCarsForTrain(Train train) {
+    static private ArrayNode getCarsForTrain(Locale locale, Train train) {
         ArrayNode clan = mapper.createArrayNode();
         CarManager carManager = CarManager.instance();
-        List<String> carList = carManager.getByTrainDestinationList(train);
-        for (int k = 0; k < carList.size(); k++) {
-            clan.add(getCar(carList.get(k)).get(DATA)); //add each car's data to the carList array
+        List<Car> carList = carManager.getByTrainDestinationList(train);
+        for (Car car : carList) {
+            clan.add(getCar(locale, car.getId()).get(DATA)); //add each car's data to the carList array
         }
         return clan;  //return array of car data
     }
 
-    static private ArrayNode getEnginesForTrain(Train train) {
+    static private ArrayNode getEnginesForTrain(Locale locale, Train train) {
         ArrayNode elan = mapper.createArrayNode();
         EngineManager engineManager = EngineManager.instance();
-        List<String> engineList = engineManager.getByTrainList(train);
-        for (int k = 0; k < engineList.size(); k++) {
-            elan.add(getEngine(engineList.get(k)).get(DATA)); //add each engine's data to the engineList array
+        List<Engine> engineList = engineManager.getByTrainBlockingList(train);
+        for (Engine engine : engineList) {
+            elan.add(getEngine(locale, engine.getId()).get(DATA)); //add each engine's data to the engineList array
         }
         return elan;  //return array of engine data
     }
 
-    static private ArrayNode getRouteLocationsForTrain(Train train) throws JsonException {
+    static private ArrayNode getRouteLocationsForTrain(Locale locale, Train train) throws JsonException {
         ArrayNode rlan = mapper.createArrayNode();
-        List<String> routeList = train.getRoute().getLocationsBySequenceList();
-        for (int r = 0; r < routeList.size(); r++) {
+        List<RouteLocation> routeList = train.getRoute().getLocationsBySequenceList();
+        for (RouteLocation route : routeList) {
             ObjectNode rln = mapper.createObjectNode();
-            RouteLocation rl = train.getRoute().getLocationById(routeList.get(r));
+            RouteLocation rl = route;
             rln.put(ID, rl.getId());
             rln.put(NAME, rl.getName());
             rln.put(DIRECTION, rl.getTrainDirectionString());
@@ -1113,41 +1316,67 @@ public class JsonUtil {
             rln.put(SEQUENCE, rl.getSequenceId());
             rln.put(EXPECTED_ARRIVAL, train.getExpectedArrivalTime(rl));
             rln.put(EXPECTED_DEPARTURE, train.getExpectedDepartureTime(rl));
-            rln.put(LOCATION, getLocation(rl.getLocation().getId()).get(DATA));
+            rln.put(LOCATION, getLocation(locale, rl.getLocation().getId()).get(DATA));
             rlan.add(rln); //add this routeLocation to the routeLocation array
         }
         return rlan;  //return array of routeLocations
     }
 
-    static public JsonNode getHello(int heartbeat) {
+    static public JsonNode getHello(Locale locale, int heartbeat) {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, HELLO);
         ObjectNode data = root.putObject(DATA);
         data.put(JMRI, jmri.Version.name());
         data.put(JSON, JSON_PROTOCOL_VERSION);
         data.put(HEARTBEAT, Math.round(heartbeat * 0.9f));
-        data.put(RAILROAD, WebServerManager.getWebServerPreferences().getRailRoadName());
+        data.put(RAILROAD, WebServerPreferences.getDefault().getRailRoadName());
+        data.put(NODE, NodeIdentity.identity());
+        data.put(ACTIVE_PROFILE, ProfileManager.getDefault().getActiveProfile().getName());
         return root;
     }
 
-    static public JsonNode getNetworkServices() {
+    static public JsonNode getNetworkServices(Locale locale) {
         ArrayNode root = mapper.createArrayNode();
         for (ZeroConfService service : ZeroConfService.allServices()) {
-            ObjectNode ns = mapper.createObjectNode();
-            ns.put(NAME, service.name());
-            ns.put(PORT, service.serviceInfo().getPort());
-            ns.put(TYPE, service.type());
+            ObjectNode ns = mapper.createObjectNode().put(TYPE, NETWORK_SERVICE);
+            ObjectNode data = ns.putObject(DATA);
+            data.put(NAME, service.name());
+            data.put(PORT, service.serviceInfo().getPort());
+            data.put(TYPE, service.type());
             Enumeration<String> pe = service.serviceInfo().getPropertyNames();
             while (pe.hasMoreElements()) {
                 String pn = pe.nextElement();
-                ns.put(pn, service.serviceInfo().getPropertyString(pn));
+                data.put(pn, service.serviceInfo().getPropertyString(pn));
             }
             root.add(ns);
         }
         return root;
     }
 
-    static protected ObjectNode handleError(int code, String message) {
+    public static JsonNode getNode(Locale locale) {
+        ObjectNode root = mapper.createObjectNode();
+        root.put(TYPE, NODE);
+        ObjectNode data = root.putObject(DATA);
+        data.put(NODE, NodeIdentity.identity());
+        ArrayNode nodes = mapper.createArrayNode();
+        for (String node : NodeIdentity.formerIdentities()) {
+            nodes.add(node);
+        }
+        data.put(FORMER_NODES, nodes);
+        return root;
+    }
+
+    /**
+     * JSON errors should be handled by throwing a
+     * {@link jmri.server.json.JsonException}.
+     *
+     * @param code
+     * @param message
+     * @return
+     * @deprecated
+     */
+    @Deprecated
+    static public ObjectNode handleError(int code, String message) {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, ERROR);
         ObjectNode data = root.putObject(DATA);
@@ -1158,13 +1387,10 @@ public class JsonUtil {
 
     /**
      * Gets the {@link jmri.DccLocoAddress} for a String in the form
-     * <code>number(type)</code> or
-     * <code>number</code>.
+     * <code>number(type)</code> or <code>number</code>.
      *
-     * Type may be
-     * <code>L</code> for long or
-     * <code>S</code> for short. If the type is not specified, type is assumed
-     * to be short.
+     * Type may be <code>L</code> for long or <code>S</code> for short. If the
+     * type is not specified, type is assumed to be short.
      *
      * @param address
      * @return The DccLocoAddress for address.
@@ -1178,4 +1404,81 @@ public class JsonUtil {
         }
         return new DccLocoAddress(number, isLong);
     }
+
+    static public ObjectNode getCar(Car car) {
+        ObjectNode node = JsonUtil.getRollingStock(car);
+        node.put(LOAD, car.getLoadName()); // NOI18N
+        node.put(HAZARDOUS, car.isHazardous());
+        node.put(REMOVE_COMMENT, car.getDropComment());
+        node.put(ADD_COMMENT, car.getPickupComment());
+        node.put(KERNEL, car.getKernelName());
+        node.put(UTILITY, car.isUtility());
+        if (car.getFinalDestinationTrack() != null) {
+            node.put(FINAL_DESTINATION, JsonUtil.getLocationAndTrack(car.getFinalDestinationTrack(), null));
+        } else if (car.getFinalDestination() != null) {
+            node.put(FINAL_DESTINATION, JsonUtil.getLocation(car.getFinalDestination(), null));
+        }
+        if (car.getReturnWhenEmptyDestTrack() != null) {
+            node.put(RETURN_WHEN_EMPTY, JsonUtil.getLocationAndTrack(car.getReturnWhenEmptyDestTrack(), null));
+        } else if (car.getReturnWhenEmptyDestination() != null) {
+            node.put(RETURN_WHEN_EMPTY, JsonUtil.getLocation(car.getReturnWhenEmptyDestination(), null));
+        }
+        return node;
+    }
+
+    static public ObjectNode getEngine(Engine engine) {
+        ObjectNode node = JsonUtil.getRollingStock(engine);
+        node.put(MODEL, engine.getModel());
+        node.put(CONSIST, engine.getConsistName());
+        return node;
+    }
+
+    static private ObjectNode getRollingStock(RollingStock rs) {
+        ObjectNode node = mapper.createObjectNode();
+        node.put(ID, rs.getId());
+        node.put(NUMBER, splitString(rs.getNumber()));
+        node.put(ROAD, rs.getRoadName());
+        String[] type = rs.getTypeName().split("-"); // second half of string
+        // can be anything
+        node.put(TYPE, type[0]);
+        node.put(LENGTH, rs.getLength());
+        node.put(COLOR, rs.getColor());
+        node.put(OWNER, rs.getOwner());
+        node.put(COMMENT, rs.getComment());
+        if (rs.getTrack() != null) {
+            node.put(LOCATION, JsonUtil.getLocationAndTrack(rs.getTrack(), rs.getRouteLocation()));
+        } else if (rs.getLocation() != null) {
+            node.put(LOCATION, JsonUtil.getLocation(rs.getLocation(), rs.getRouteLocation()));
+        }
+        if (rs.getDestinationTrack() != null) {
+            node.put(DESTINATION, JsonUtil.getLocationAndTrack(rs.getDestinationTrack(), rs.getRouteDestination()));
+        } else if (rs.getDestination() != null) {
+            node.put(DESTINATION, JsonUtil.getLocation(rs.getDestination(), rs.getRouteDestination()));
+        }
+        return node;
+    }
+
+    static private ObjectNode getLocation(Location location, RouteLocation routeLocation) {
+        ObjectNode node = mapper.createObjectNode();
+        node.put(NAME, location.getName());
+        node.put(ID, location.getId());
+        if (routeLocation != null) {
+            node.put(ROUTE, routeLocation.getId());
+        }
+        return node;
+    }
+
+    static private ObjectNode getLocationAndTrack(Track track, RouteLocation routeLocation) {
+        ObjectNode node = JsonUtil.getLocation(track.getLocation(), routeLocation);
+        node.put(TRACK, JsonUtil.getTrack(track));
+        return node;
+    }
+
+    static private ObjectNode getTrack(Track track) {
+        ObjectNode node = mapper.createObjectNode();
+        node.put(NAME, track.getName());
+        node.put(ID, track.getId());
+        return node;
+    }
+
 }

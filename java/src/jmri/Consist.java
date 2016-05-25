@@ -1,4 +1,3 @@
-// Consist.java
 package jmri;
 
 import java.util.ArrayList;
@@ -20,7 +19,6 @@ import java.util.ArrayList;
  * <P>
  *
  * @author Paul Bender Copyright (C) 2003-2008
- * @version $Revision$
  */
 public interface Consist {
 
@@ -68,8 +66,8 @@ public interface Consist {
      * Is there a size limit for this type of consist?
      *
      * @return -1 if no limit; 0 if the Consist Type is not supported; or the
-     * total number of usable spaces if the consist has a limit (do not subtract
-     * used spaces).
+     *         total number of usable spaces if the consist has a limit (do not
+     *         subtract used spaces).
      */
     public int sizeLimit();
 
@@ -92,9 +90,9 @@ public interface Consist {
     /**
      * Add a Locomotive to a Consist
      *
-     * @param address is the Locomotive address to add to the locomotive
+     * @param address         is the Locomotive address to add to the locomotive
      * @param directionNormal is True if the locomotive is traveling the same
-     * direction as the consist, or false otherwise.
+     *                        direction as the consist, or false otherwise.
      */
     public void add(DccLocoAddress address, boolean directionNormal);
 
@@ -103,9 +101,9 @@ public interface Consist {
      * station. This is used for restoring the consist from a file or adding a
      * consist read from the command station.
      *
-     * @param address is the Locomotive address to add to the consist
+     * @param address         is the Locomotive address to add to the consist
      * @param directionNormal is True if the locomotive is traveling the same
-     * direction as the consist, or false otherwise.
+     *                        direction as the consist, or false otherwise.
      */
     public void restore(DccLocoAddress address, boolean directionNormal);
 
@@ -119,9 +117,9 @@ public interface Consist {
     /**
      * Set the position of a locomotive within the consist
      *
-     * @param address is the Locomotive address
+     * @param address  is the Locomotive address
      * @param position is a constant representing the position within the
-     * consist.
+     *                 consist.
      */
     public void setPosition(DccLocoAddress address, int position);
 
@@ -130,9 +128,9 @@ public interface Consist {
      *
      * @param address is the Locomotive address of interest
      * @return integer equal to jmri.Consist.POSITION_LEAD for the designated
-     * lead locomotive. equal to jmri.Consist.POSITION_TRAIL for the designated
-     * trailing locomotive. between 1 and 254 for other locomotives in the
-     * consist
+     *         lead locomotive. equal to jmri.Consist.POSITION_TRAIL for the
+     *         designated trailing locomotive. between 1 and 254 for other
+     *         locomotives in the consist
      */
     public int getPosition(DccLocoAddress address);
 
@@ -161,7 +159,7 @@ public interface Consist {
      * Get the text ID associated with the consist
      *
      * @return String identifier for the consist default value is the string
-     * Identifier for the consist address.
+     *         Identifier for the consist address.
      */
     public String getConsistID();
 
@@ -170,4 +168,10 @@ public interface Consist {
      * traveling
      */
     public void reverse();
+
+    /**
+     * restore the consist to the command station.
+     */
+    public void restore();
+
 }

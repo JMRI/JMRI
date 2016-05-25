@@ -1,182 +1,180 @@
 package jmri.jmrit.throttle;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 
 /**
- * A very specific dialog for editing the properties of a FunctionButton
- * object.
+ * A very specific dialog for editing the properties of a FunctionButton object.
  *
  * @author Paul Bender Copyright (C) 2005
- * @version $Revision$
  */
-public class ControlPanelPropertyEditor extends JDialog
-{
-	private ControlPanel control;
+public class ControlPanelPropertyEditor extends JDialog {
 
-	private JRadioButton displaySlider; // display slider from 0 to 100
-	private JRadioButton displaySliderContinuous; // display slider from -100 to 0 to 100
-	private JRadioButton displaySteps;
-	private JCheckBox trackBox;
-	private JTextField functionSwitchSlider;
+    private ControlPanel control;
 
-	private int _displaySlider;
+    private JRadioButton displaySlider; // display slider from 0 to 100
+    private JRadioButton displaySliderContinuous; // display slider from -100 to 0 to 100
+    private JRadioButton displaySteps;
+    private JCheckBox trackBox;
+    private JTextField functionSwitchSlider;
 
-	/**
-	 * Constructor. Create it and pack it.
-	 */
-	public ControlPanelPropertyEditor(ControlPanel panel)
-	{
-		control=panel;
-		initGUI();
-		pack();
-	}
+    private int _displaySlider;
 
-	/**
-	 * Create, initilize, and place the GUI objects.
-	 */
-	private void initGUI()
-	{
-		this.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
-		this.setTitle(Bundle.getMessage("TitleEditSpeedControlPanel"));
-		JPanel mainPanel = new JPanel();
-		this.setContentPane(mainPanel);
-		mainPanel.setLayout(new BorderLayout());
+    /**
+     * Constructor. Create it and pack it.
+     */
+    public ControlPanelPropertyEditor(ControlPanel panel) {
+        control = panel;
+        initGUI();
+        pack();
+    }
 
-		JPanel propertyPanel = new JPanel();
-		propertyPanel.setLayout(new GridBagLayout());
-		GridBagConstraints constraints = new GridBagConstraints();
-		constraints.anchor = GridBagConstraints.WEST;
-		constraints.fill = GridBagConstraints.HORIZONTAL;
-		constraints.gridheight = 1;
-		constraints.gridwidth = 1;
-		constraints.ipadx = 0;
-		constraints.ipady = 0;
-		Insets insets = new Insets(2, 2, 2, 2);
-		constraints.insets = insets;
-		constraints.weightx = 1;
-		constraints.weighty = 1;
-		constraints.gridx = 0;
-		constraints.gridy = 0;
+    /**
+     * Create, initilize, and place the GUI objects.
+     */
+    private void initGUI() {
+        this.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
+        this.setTitle(Bundle.getMessage("TitleEditSpeedControlPanel"));
+        JPanel mainPanel = new JPanel();
+        this.setContentPane(mainPanel);
+        mainPanel.setLayout(new BorderLayout());
 
-		ButtonGroup modeSelectionButtons = new ButtonGroup();
+        JPanel propertyPanel = new JPanel();
+        propertyPanel.setLayout(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.WEST;
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.gridheight = 1;
+        constraints.gridwidth = 1;
+        constraints.ipadx = 0;
+        constraints.ipady = 0;
+        Insets insets = new Insets(2, 2, 2, 2);
+        constraints.insets = insets;
+        constraints.weightx = 1;
+        constraints.weighty = 1;
+        constraints.gridx = 0;
+        constraints.gridy = 0;
 
-		displaySlider=new JRadioButton(Bundle.getMessage("ButtonDisplaySpeedSlider"));
-		displaySliderContinuous=new JRadioButton(Bundle.getMessage("ButtonDisplaySpeedSliderContinuous"));
-		displaySteps=new JRadioButton(Bundle.getMessage("ButtonDisplaySpeedSteps"));
+        ButtonGroup modeSelectionButtons = new ButtonGroup();
 
-		modeSelectionButtons.add(displaySlider);
-		modeSelectionButtons.add(displaySteps);
-		modeSelectionButtons.add(displaySliderContinuous);
-		
-		_displaySlider = control.getDisplaySlider();
+        displaySlider = new JRadioButton(Bundle.getMessage("ButtonDisplaySpeedSlider"));
+        displaySliderContinuous = new JRadioButton(Bundle.getMessage("ButtonDisplaySpeedSliderContinuous"));
+        displaySteps = new JRadioButton(Bundle.getMessage("ButtonDisplaySpeedSteps"));
 
-		constraints.anchor = GridBagConstraints.CENTER;
-		constraints.gridy = 1;
-		propertyPanel.add(displaySlider, constraints);
+        modeSelectionButtons.add(displaySlider);
+        modeSelectionButtons.add(displaySteps);
+        modeSelectionButtons.add(displaySliderContinuous);
 
-		constraints.gridy = 2;
-		propertyPanel.add(displaySteps, constraints);
+        _displaySlider = control.getDisplaySlider();
 
-		constraints.gridy = 3;
-		propertyPanel.add(displaySliderContinuous, constraints);
+        constraints.anchor = GridBagConstraints.CENTER;
+        constraints.gridy = 1;
+        propertyPanel.add(displaySlider, constraints);
 
-		trackBox = new JCheckBox(Bundle.getMessage("CheckBoxTrackSliderInRealTime"));
-		constraints.gridy = 4;
-		trackBox.setSelected( control.getTrackSlider() );
-		propertyPanel.add(trackBox, constraints);
-		
-		JLabel functionSwitchLabel = new JLabel(Bundle.getMessage("SwitchSliderOnFunction"));
-		functionSwitchSlider = new JTextField(4);
-		functionSwitchSlider.setText(control.getSwitchSliderFunction());
-		constraints.gridy = 5;
-		constraints.gridx = 0;
-		propertyPanel.add(functionSwitchLabel, constraints);
-		constraints.gridx = 1;
-		propertyPanel.add(functionSwitchSlider, constraints);
+        constraints.gridy = 2;
+        propertyPanel.add(displaySteps, constraints);
 
-		displaySlider.setSelected(_displaySlider==ControlPanel.SLIDERDISPLAY);
-		displaySteps.setSelected(_displaySlider==ControlPanel.STEPDISPLAY);
-		displaySliderContinuous.setSelected(_displaySlider==ControlPanel.SLIDERDISPLAYCONTINUOUS);
-		
-		displaySlider.addActionListener(
-				new ActionListener()
-				{
-					public void actionPerformed(ActionEvent e)
-					{
-						displaySlider.setSelected(true);
-						displaySteps.setSelected(false);
-						displaySliderContinuous.setSelected(false);
-						_displaySlider=ControlPanel.SLIDERDISPLAY;
-					}
-				});
+        constraints.gridy = 3;
+        propertyPanel.add(displaySliderContinuous, constraints);
 
-		displaySteps.addActionListener(
-				new ActionListener()
-				{
-					public void actionPerformed(ActionEvent e)
-					{
-						displaySlider.setSelected(false);
-						displaySteps.setSelected(true);
-						displaySliderContinuous.setSelected(false);
-						_displaySlider=ControlPanel.STEPDISPLAY;
-					}
-				});
-		
-		displaySliderContinuous.addActionListener(
-				new ActionListener()
-				{
-					public void actionPerformed(ActionEvent e)
-					{
-						displaySlider.setSelected(false);
-						displaySteps.setSelected(false);
-						displaySliderContinuous.setSelected(true);
-						_displaySlider=ControlPanel.SLIDERDISPLAYCONTINUOUS;
-					}
-				});
+        trackBox = new JCheckBox(Bundle.getMessage("CheckBoxTrackSliderInRealTime"));
+        constraints.gridy = 4;
+        trackBox.setSelected(control.getTrackSlider());
+        propertyPanel.add(trackBox, constraints);
 
-		// disable the speed controls if the control panel says they 
-		// aren't possible
-		displaySlider.setEnabled(control.
-				isSpeedControllerAvailable(ControlPanel.SLIDERDISPLAY));
-		displaySteps.setEnabled(control.
-				isSpeedControllerAvailable(ControlPanel.STEPDISPLAY));
-		displaySliderContinuous.setEnabled(control.
-				isSpeedControllerAvailable(ControlPanel.SLIDERDISPLAYCONTINUOUS));
-				
-		JPanel buttonPanel = new JPanel();
-		buttonPanel.setLayout(new GridLayout(1, 2, 4, 4));
+        JLabel functionSwitchLabel = new JLabel(Bundle.getMessage("SwitchSliderOnFunction"));
+        functionSwitchSlider = new JTextField(4);
+        functionSwitchSlider.setText(control.getSwitchSliderFunction());
+        constraints.gridy = 5;
+        constraints.gridx = 0;
+        propertyPanel.add(functionSwitchLabel, constraints);
+        constraints.gridx = 1;
+        propertyPanel.add(functionSwitchSlider, constraints);
 
-		JButton saveButton = new JButton(Bundle.getMessage("ButtonOk"));
-		saveButton.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				saveProperties();
-			}
-		});
+        displaySlider.setSelected(_displaySlider == ControlPanel.SLIDERDISPLAY);
+        displaySteps.setSelected(_displaySlider == ControlPanel.STEPDISPLAY);
+        displaySliderContinuous.setSelected(_displaySlider == ControlPanel.SLIDERDISPLAYCONTINUOUS);
 
-		JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
-		cancelButton.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				finishEdit();
-			}
-		});
+        displaySlider.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        displaySlider.setSelected(true);
+                        displaySteps.setSelected(false);
+                        displaySliderContinuous.setSelected(false);
+                        _displaySlider = ControlPanel.SLIDERDISPLAY;
+                    }
+                });
 
-		buttonPanel.add(saveButton);
-		buttonPanel.add(cancelButton);
+        displaySteps.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        displaySlider.setSelected(false);
+                        displaySteps.setSelected(true);
+                        displaySliderContinuous.setSelected(false);
+                        _displaySlider = ControlPanel.STEPDISPLAY;
+                    }
+                });
 
-		mainPanel.add(propertyPanel, BorderLayout.CENTER);
-		mainPanel.add(buttonPanel, BorderLayout.SOUTH);
+        displaySliderContinuous.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        displaySlider.setSelected(false);
+                        displaySteps.setSelected(false);
+                        displaySliderContinuous.setSelected(true);
+                        _displaySlider = ControlPanel.SLIDERDISPLAYCONTINUOUS;
+                    }
+                });
 
-	}
+        // disable the speed controls if the control panel says they 
+        // aren't possible
+        displaySlider.setEnabled(control.
+                isSpeedControllerAvailable(ControlPanel.SLIDERDISPLAY));
+        displaySteps.setEnabled(control.
+                isSpeedControllerAvailable(ControlPanel.STEPDISPLAY));
+        displaySliderContinuous.setEnabled(control.
+                isSpeedControllerAvailable(ControlPanel.SLIDERDISPLAYCONTINUOUS));
 
-	/**
-	 * Save the user-modified properties back to the FunctionButton.
-	 */
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(1, 2, 4, 4));
+
+        JButton saveButton = new JButton(Bundle.getMessage("ButtonOk"));
+        saveButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                saveProperties();
+            }
+        });
+
+        JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
+        cancelButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                finishEdit();
+            }
+        });
+
+        buttonPanel.add(saveButton);
+        buttonPanel.add(cancelButton);
+
+        mainPanel.add(propertyPanel, BorderLayout.CENTER);
+        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
+
+    }
+
+    /**
+     * Save the user-modified properties back to the FunctionButton.
+     */
     private void saveProperties() {
         if (isDataValid()) {
             control.setTrackSlider(trackBox.isSelected());
@@ -186,21 +184,19 @@ public class ControlPanelPropertyEditor extends JDialog
         }
     }
 
-	/**
-	 * Finish the editing process. Hide the dialog.
-	 */
-	private void finishEdit()
-	{
-		this.setVisible(false);
-	}
+    /**
+     * Finish the editing process. Hide the dialog.
+     */
+    private void finishEdit() {
+        this.setVisible(false);
+    }
 
-	/**
-	 * Verify the data on the dialog. If invalid, notify user of errors.
-	 * This only needs to do something if we add something other than 
-	 * speed control selection to this panel.
-	 */
-	private boolean isDataValid()
-	{
-		return true;
-	}
+    /**
+     * Verify the data on the dialog. If invalid, notify user of errors. This
+     * only needs to do something if we add something other than speed control
+     * selection to this panel.
+     */
+    private boolean isDataValid() {
+        return true;
+    }
 }

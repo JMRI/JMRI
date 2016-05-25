@@ -2,12 +2,12 @@
 <html lang="fr">
 <head>
 <!-- Copyright 2008 -->
-<!-- $Id: SprogConsoleFrame.shtml,v 1.1 2008/04/20 15:34:45 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-10-27--> 
+<!-- $Id$ -->
+<!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-14--> 
 <title>JMRI: SPROG Console</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -29,10 +29,10 @@
 JMRI: Console SPROG
 </h2>
 
-La fenêtre console SPROG fournit une manière de voir et de contrôler les opérations Sprog depuis un seul endroit.
+La fen&#234;tre console SPROG fournit une mani&#232;re de voir et de contr&#244;ler les op&#233;rations Sprog depuis un seul endroit.
 
 <p>
-C"est le package/jmri/jmrix/sprog/console/SprogConsoleFrame page.
+C"est la page d'aide package/jmri/jmrix/sprog/console/SprogConsoleFrame.
 
     
 <!--#include virtual="/Footer" -->

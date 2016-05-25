@@ -1,7 +1,7 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
-<!-- $Id: Lenz_Plus_2010.xml 22121 2012-12-30 02:57:59Z jacobsen $ -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -13,14 +13,15 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Carasso (Alain355) acarasso_fr@yahoo.fr" version="5.1" lastUpdated="20160429"/>
+  <version author="Alain Carasso (Alain355) acarasso_fr@yahoo.fr" version="5" lastUpdated="20160414"/>
+  <version author="Bernd Wisotzki (Ba), wsb56" version="4" lastUpdated="20140730"/>
+  <version author="Bernd Wisotzki (Ba), wsb56" version="3" lastUpdated="20140524"/>
   <version author="Jeff Schmaltz escopetas@comcast.net" version="2" lastUpdated="20130825"/>
   <version author="John A. Stewart alex.stewart@crc.ca" version="1" lastUpdated="20100427"/>
   <!-- 
-
 Decoder definitions; have recieved decoders with pamphlets dated March 2010. There are 
 many changes over older decoder definitions, thus the start on a new file.
-
-
 
 Gold+ Silent-Back EMF DCC Decoder
     Lenz pamphlet 10433-01  March 2010 
@@ -40,346 +41,173 @@ Silver direct+ Silent-Back EMF DCC Decoder
     2) Modified function mapping based on http://www.digital-plus.de/pdf/GOLD_SILVER_plus_manual.pdf,
        dated "4. Auflage / 4rd Edition / 4. Edition 06 11, B.10.112"
     3) Family low/high version came from p. 67 of http://www.digital-plus.de/pdf/b_90008_d.pdf, dated "Ausgabe 11 10"
-       
--->
+    
+		Comments for version 3
+	
+	1) Complete refactoring and added German
+
+	Comments for version 4
+	
+	1) Added mechanism to present to the user only the CV he can change with his concrete model. 
+	2) Updated decoder with the new silver+ Next16 and the new gold maxi
+	3) Used models list from http://www.digital-plus.de/e/digitalplus-decoder-uebersicht.php as of July 2014
+	4) Updated some information due to new revisions of the manuals/decoders
+
+	Comments for version 5
+
+	1) Added the Lenz standard plus V2 decoder (RailCom, 4 outputs with F1(f) and F1(r))
+	2) Added versionID check for those Plus Serie decoder when known
+
+	-->
   <!--
 nmraWarrant="yes" nmraWarrantStart="200604"
 -->
   <decoder>
-    <family name="Lenz Plus decoders released March 2010" mfg="Lenz" highVersionID="99" lowVersionID="90" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive">
-      <model model="Standard+ NEM652 10231-01" numOuts="3" numFns="30" maxMotorCurrent="1.0A)" formFactor="HO">
-        <output name="1" label="A"/>
-        <output name="2" label="B"/>
-        <output name="3" label="C"/>
-      </model>
-      <model model="Silver+ mini wired 10310-01" numOuts="2" numFns="30"  maxMotorCurrent="0.5A" formFactor="N">
-        <output name="1" label="A - White"/>
-        <output name="2" label="B - Yellow"/>
-      </model>
-      <model model="Silver+ mini NEM651 10311-01" numOuts="2" numFns="30"  maxMotorCurrent="0.5A" formFactor="N">
-        <output name="1" label="A"/>
-        <output name="2" label="B"/>
-      </model>
-      <model model="Silver+ NEM652 10331-01" numOuts="5" numFns="30" maxMotorCurrent="1.0A)" formFactor="HO">
-        <output name="1" label="A"/>
-        <output name="2" label="B"/>
-        <output name="3" label="C"/>
-        <output name="4" label="D"/>
-        <output name="5" label="E"/>
-      </model>
-      <model model="Silver+ PluX12 10312-01" numOuts="5" numFns="30" maxMotorCurrent="1.0A)" formFactor="HO">
-        <output name="1" label="A"/>
-        <output name="2" label="B"/>
-        <output name="3" label="C"/>
-        <output name="4" label="D"/>
-        <output name="5" label="E"/>
-      </model>
-      <model model="Silver+ 21 10321-01" numOuts="5" numFns="30" maxMotorCurrent="1.0A)" formFactor="HO">
-        <output name="1" label="A"/>
-        <output name="2" label="B"/>
-        <output name="3" label="C"/>
-        <output name="4" label="D"/>
-        <output name="5" label="E"/>
-      </model>
-      <model model="Silver+ direct 10330-01" numOuts="5" numFns="30" maxMotorCurrent="1.0A)" formFactor="HO">
-        <output name="1" label="A"/>
-        <output name="2" label="B"/>
-        <output name="3" label="C"/>
-        <output name="4" label="D"/>
-        <output name="5" label="E"/>
-      </model>
-      <model model="Gold+ mini wired 10410-01" numOuts="2" numFns="30"  maxMotorCurrent="0.5A" formFactor="N">
-        <output name="1" label="A - White"/>
-        <output name="2" label="B - Yellow"/>
-      </model>
-      <model model="Gold+ mini NEM651 10411-01" numOuts="2" numFns="30"  maxMotorCurrent="0.5A" formFactor="N">
-        <output name="1" label="A"/>
-        <output name="2" label="B"/>
-      </model>
-      <model model="Gold+ NEM652 10433-01" numOuts="5" numFns="30" maxMotorCurrent="1.0A)" formFactor="HO">
-        <output name="1" label="A"/>
-        <output name="2" label="B"/>
-        <output name="3" label="C"/>
-        <output name="4" label="D"/>
-        <output name="5" label="E"/>
-      </model>
+    <family name="Lenz Plus decoders released March 2010, updated April 2016" mfg="Lenz" highVersionID="99" lowVersionID="72" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive">
+    	<model model="Standard+ NEM652 10231-01" numOuts="3" numFns="31" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A">
+		<versionCV highVersionID="93" lowVersionID="93"/>
+    		<output name="1" label="A" maxcurrent="0.3A"/>
+    		<output name="2" label="B" maxcurrent="0.3A"/>
+    		<output name="3" label="C" maxcurrent="0.3A"/>
+    	</model>
+    	<model model="Standard+ V2 NEM652 10231-02" numOuts="4" numFns="31" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A">
+			<versionCV highVersionID="77" lowVersionID="77"/>
+    		<output name="1" label="A" maxcurrent="0.3A"/>
+    		<output name="2" label="B" maxcurrent="0.3A"/>
+    		<output name="3" label="C" maxcurrent="0.3A"/>
+    		<output name="4" label="D" maxcurrent="0.3A"/>
+    	</model>
+    	<model model="Silver+ mini wired 10310-01" numOuts="2" numFns="31" maxMotorCurrent="0.5A" formFactor="N" maxTotalCurrent="0.5A">
+    		<output name="1" label="A - White" maxcurrent="0.3A"/>
+    		<output name="2" label="B - Yellow" maxcurrent="0.3A"/>
+    	</model>
+    	<model model="Silver+ mini NEM651 10311-01" numOuts="2" numFns="31" maxMotorCurrent="0.5A" formFactor="N" maxTotalCurrent="0.5A">
+    		<output name="1" label="A" maxcurrent="0.3A"/>
+    		<output name="2" label="B" maxcurrent="0.3A"/>
+    	</model>
+    	<model model="Silver+ mini wired 10310-02" numOuts="2" numFns="31" maxMotorCurrent="0.5A" formFactor="N" maxTotalCurrent="0.5A">
+    		<versionCV highVersionID="96" lowVersionID="96"/>
+    		<output name="1" label="A - White" maxcurrent="0.3A"/>
+    		<output name="2" label="B - Yellow" maxcurrent="0.3A"/>
+    	</model>
+    	<model model="Silver+ mini NEM651 10311-02" numOuts="2" numFns="31" maxMotorCurrent="0.5A" formFactor="N" maxTotalCurrent="0.5A">
+    		<versionCV highVersionID="96" lowVersionID="96"/>
+    		<output name="1" label="A" maxcurrent="0.3A"/>
+    		<output name="2" label="B" maxcurrent="0.3A"/>
+    	</model>
+    	<model model="Silver+ NEM652 10331-01" numOuts="5" numFns="31" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A">
+    		<versionCV highVersionID="95" lowVersionID="95"/>
+    		<output name="1" label="A" maxcurrent="0.5A"/>
+    		<output name="2" label="B" maxcurrent="0.5A"/>
+    		<output name="3" label="C" maxcurrent="0.5A"/>
+    		<output name="4" label="D" maxcurrent="0.5A"/>
+    		<output name="5" label="E" maxcurrent="0.5A"/>
+    	</model>
+    	<model model="Silver+ PluX12 10312-01" numOuts="5" numFns="31" maxMotorCurrent="0.75A" formFactor="TT" maxTotalCurrent="0.75A">
+      		<versionCV highVersionID="97" lowVersionID="97"/>
+    		<output name="1" label="A" maxcurrent="0.5A"/>
+    		<output name="2" label="B" maxcurrent="0.5A"/>
+    		<output name="3" label="C" maxcurrent="0.5A"/>
+    		<output name="4" label="D" maxcurrent="0.5A"/>
+    		<output name="5" label="E" maxcurrent="0.5A"/>
+    	</model>
+    	<model model="Silver+ Next18 10312-01" numOuts="5" numFns="31" maxMotorCurrent="0.75A" formFactor="TT" maxTotalCurrent="0.75A" comment="New in 2014">
+    		<versionCV highVersionID="94" lowVersionID="94"/>
+    		<output name="1" label="A" maxcurrent="0.5A"/>
+    		<output name="2" label="B" maxcurrent="0.5A"/>
+    		<output name="3" label="C" maxcurrent="0.5A"/>
+    		<output name="4" label="D" maxcurrent="0.5A"/>
+    		<output name="5" label="E" maxcurrent="0.5A"/>
+    	</model>
+    	<model model="Silver+ 21 10321-01" numOuts="5" numFns="31" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A">
+    		<versionCV highVersionID="99" lowVersionID="99"/>
+    		<output name="1" label="A" maxcurrent="0.5A"/>
+    		<output name="2" label="B" maxcurrent="0.5A"/>
+    		<output name="3" label="C" maxcurrent="0.5A"/>
+    		<output name="4" label="D" maxcurrent="0.5A"/>
+    		<output name="5" label="E" maxcurrent="0.5A"/>
+    	</model>
+    	<model model="Silver+ direct 10330-01" numOuts="5" numFns="31" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A">
+    		<versionCV highVersionID="98" lowVersionID="98"/>
+    		<output name="1" label="A" maxcurrent="0.5A"/>
+    		<output name="2" label="B" maxcurrent="0.5A"/>
+    		<output name="3" label="C" maxcurrent="0.5A"/>
+    		<output name="4" label="D" maxcurrent="0.5A"/>
+    		<output name="5" label="E" maxcurrent="0.5A"/>
+    	</model>
+    	<model model="Gold+ mini wired 10410-01" numOuts="2" numFns="31" maxMotorCurrent="0.5A" formFactor="N" maxTotalCurrent="0.5A">
+    		<output name="1" label="A - White" maxcurrent="0.3A"/>
+    		<output name="2" label="B - Yellow" maxcurrent="0.3A"/>
+    	</model>
+    	<model model="Gold+ mini NEM651 10411-01" numOuts="2" numFns="31" maxMotorCurrent="0.5A" formFactor="N" maxTotalCurrent="0.5A">
+    		<output name="1" label="A" maxcurrent="0.3A"/>
+    		<output name="2" label="B" maxcurrent="0.3A"/>
+    	</model>
+    	<model model="Gold+ NEM652 10433-01" numOuts="5" numFns="31" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A">
+    		<versionCV highVersionID="91" lowVersionID="91"/>
+    		<output name="1" label="A" maxcurrent="0.5A"/>
+    		<output name="2" label="B" maxcurrent="0.5A"/>
+    		<output name="3" label="C" maxcurrent="0.5A"/>
+    		<output name="4" label="D" maxcurrent="0.5A"/>
+    		<output name="5" label="E" maxcurrent="0.5A"/>
+    	</model>
+    	<model model="Gold maxi 10440" numOuts="8" numFns="31" maxMotorCurrent="3.0A" formFactor="0" maxTotalCurrent="3.0A" comment="New in 2014" connector="SUSI">
+    		<versionCV highVersionID="72" lowVersionID="72"/>
+    		<output name="1" label="A" maxcurrent="1.0A"/>
+    		<output name="2" label="B" maxcurrent="1.0A"/>
+    		<output name="3" label="C" maxcurrent="1.0A"/>
+    		<output name="4" label="D" maxcurrent="1.0A"/>
+    		<output name="5" label="E" maxcurrent="1.0A"/>
+    		<output name="6" label="F" maxcurrent="1.0A"/>
+    		<output name="7" label="G" maxcurrent="1.0A"/>
+    		<output name="8" label="H" maxcurrent="1.0A"/>
+    	</model>
+
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <xi:include href="http://jmri.org/xml/decoders/lenz/shortAndLongAddress.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/vStartHighMid.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/accelDecel.xml"/>
-      <variable label="Version Number (CV7, read only)" CV="7" readOnly="yes" item="Decoder Version">
-        <decVal/>
-      </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer" default="99">
-        <decVal/>
-      </variable>
-      <variable label="Manufacturer ID - Reset" CV="8" item="Reset" comment="Writing a value of 8 or 33 will reset decoder to factory defaults">
-        <decVal/>
-      </variable>
-      <variable label="Back EMF Repetition Rate (0-63)" CV="9" item="Total PWM Period" default="15" comment="Range 0-63">
-        <decVal min="0" max="63"/>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/lenz/mfgVersionId_cv7_8.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/lenz/bemfRep_cv9.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
-
       <!-- this were moved earlier to fix a Xerces XInclude bug that would not -->
       <!-- allow you to next inclusion of parts/enum-disabledEnabled.xml if it -->
       <!-- had been included first directly from the top level of the XML file -->
       <xi:include href="http://jmri.org/xml/decoders/lenz/braking_cv51.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/abc_cv51.xml"/>
-
       <xi:include href="http://jmri.org/xml/decoders/lenz/railcom_cv28_29.xml"/>
-
-      <variable label="Locomotive Direction in Forward" CV="29" mask="XXXXXXXV" item="Locomotive Direction" default="0">
-        <enumVal>
-          <enumChoice choice="Normal"/>
-          <enumChoice choice="Reversed"/>
-        </enumVal>
-      </variable>
-      <variable label="Speed Steps (Headlight Mode)" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
-        <enumVal>
-          <enumChoice choice="14"/>
-          <enumChoice choice="28/128"/>
-        </enumVal>
-      </variable>
-      <variable label="Loco can operate on conventional DC" CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-      </variable>
-      <variable label="Speed Table Selection" CV="29" mask="XXXVXXXX" item="Speed Table Definition">
-        <enumVal>
-          <enumChoice choice="Use Vstart, Vmid, Vhigh"/>
-          <enumChoice choice="Use the Speed Table"/>
-        </enumVal>
-      </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format">
-        <enumVal>
-          <enumChoice choice="2 digit addressing"/>
-          <enumChoice choice="4 digit addressing"/>
-        </enumVal>
-      </variable>
-
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/protection_cv30.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/functionmap_plus.xml"/>
-
-      <variable label="Motor Type(0-5)" CV="50" mask="XXXXVVVV" item="Motor type" default="0" comment="Range 0-5">
-        <enumVal>
-          <enumChoice choice="0 "/>
-          <enumChoice choice="1 "/>
-          <enumChoice choice="2 "/>
-          <enumChoice choice="3 "/>
-          <enumChoice choice="4 "/>
-          <enumChoice choice="5 "/>
-        </enumVal>
-      </variable>
-      <variable label="EMF Switch" CV="50" mask="XXVXXXXX" item="EMF Switch" default="0">
-        <enumVal>
-          <enumChoice choice="Inactive"/>
-          <enumChoice choice="Active"/>
-        </enumVal>
-      </variable>
-      <variable label="BEMF Control" CV="50" mask="XVXXXXXX" item="BEMF Control" default="0">
-        <enumVal>
-          <enumChoice choice="On "/>
-          <enumChoice choice="Off"/>
-        </enumVal>
-      </variable>
-      <variable label="Motor Drive Frequency" CV="50" mask="VXXXXXXX" item="Motor Frequency" default="0">
-        <enumVal>
-          <enumChoice choice="High "/>
-          <enumChoice choice="Low "/>
-        </enumVal>
-      </variable>
-
-      <variable label="Constant braking distance with speed step 0" CV="51" mask="VXXXXXXX" item="Constant braking" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-      </variable>
-
-      <variable label="Dimming Intensity, Output A (0-255)" CV="55" item="Global lighting option 1" default="255" tooltip="Sets intensity of output A (larger number = brighter light)">
-        <decVal min="0" max="255"/>
-      </variable>
-      <variable label="Dimming Intensity, Output B (0-255)" CV="56" item="Global lighting option 2" default="255" tooltip="Sets intensity of output B (larger number = brighter light)">
-        <decVal min="0" max="255"/>
-      </variable>
-
+      <xi:include href="http://jmri.org/xml/decoders/lenz/motorControl_cv50.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/lenz/lightingOptions2_cv55_56_116_118.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/fn_ctrl_57_59.xml"/>
-
       <xi:include href="http://jmri.org/xml/decoders/lenz/lighting_cv60_cv64.xml"/>
-
-      <variable label="Speed Table" CV="67">
-	     <speedTableVal/>
-	  </variable>
-
+      <xi:include href="http://jmri.org/xml/decoders/lenz/speedTable_cv67.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
-
-      <variable label="Motor timeout on loss of DCC (Gold only)" CV="112" tooltip="Duration of motor timeout t = value * 16 ms" item="Motor Timeout" default="16" comment="Range 0-255">
-        <decVal min="0" max="255"/>
-      </variable>
-      <variable label="Minimum PWM (Types 4, 5 only)" CV="113" item="Minimum PWM Value" default="40" comment="Range 0-255">
-        <decVal min="0" max="255"/>
-      </variable>
-      <variable label="Duty Cycle (Types 4, 5 only)" CV="114" item="Motor Duty Cycle" default="10" comment="Range 0-255">
-        <decVal min="0" max="255"/>
-      </variable>
-<!-- CV115 not listed in Plus manual -->
-      <variable label="Dimming Intensity, Output C (0-255)" CV="116" item="Global lighting option 3" default="255" minOut="3" tooltip="Sets intensity of output C (larger number = brighter light)">
-        <decVal min="0" max="255"/>
-      </variable>
-      <variable label="Dimming Intensity, Output D (0-255)" CV="117" item="Global lighting option 4" default="255" minOut="4" tooltip="Sets intensity of output D (larger number = brighter light)">
-        <decVal min="0" max="255"/>
-      </variable>
-      <variable label="Dimming Intensity, Output E (0-255)" CV="118" item="Global lighting option 5" default="255" minOut="5" tooltip="Sets intensity of output E (larger number = brighter light)">
-        <decVal min="0" max="255"/>
-      </variable>
-      <variable label="CV indicator for SUSI, offset 800 (Certain models only)" CV="126" item="SUSI Indicator" default="102" comment="Range 0-255">
-        <decVal min="0" max="255"/>
-        <label>CV indicator for SUSI, offset 800</label>
-        <label xml:lang="it">Indicatore Cv per SUSI, offset 800</label>
-        <comment>Range 0-255</comment>
-        <comment xml:lang="it">Valori da 0 a 255</comment>
-      </variable>
-      <variable label="CV transport device for SUSI (read fails if no SUSI device attached) (Certain models only)" CV="127" item="SUSI transport" default="0" comment="Range 0-255">
-        <decVal min="0" max="255"/>
-        <label>CV transport device for SUSI</label>
-        <label xml:lang="it">Dispositivo trasferimento SUSI</label>
-        <comment>Range 0-255</comment>
-        <comment xml:lang="it">Valori da 0 a 255</comment>
-      </variable>
-      <variable label="Service Number (CV128, read only)" CV="128" readOnly="yes" item="Product Number">
-        <decVal/>
-      </variable>
-
-<variable label="Enable forward coupling with F1" CV="145" mask="XXXXXXXV">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>      </variable>
-<variable label="Enable forward coupling with F2" CV="145" mask="XXXXXXVX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>      </variable>
-<variable label="Enable forward coupling with F3" CV="145" mask="XXXXXVXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>      </variable>
-<variable label="Enable forward coupling with F4" CV="145" mask="XXXXVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>      </variable>
-<variable label="Enable forward coupling with F5" CV="145" mask="XXXVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>      </variable>
-<variable label="Enable forward coupling with F6" CV="145" mask="XXVXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>      </variable>
-<variable label="Enable forward coupling with F7" CV="145" mask="XVXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>      </variable>
-<variable label="Enable forward coupling with F8" CV="145" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>      </variable>
-
-<variable label="Enable backward coupling with F1" CV="146" mask="XXXXXXXV">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>      </variable>
-<variable label="Enable backward coupling with F2" CV="146" mask="XXXXXXVX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>      </variable>
-<variable label="Enable backward coupling with F3" CV="146" mask="XXXXXVXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>      </variable>
-<variable label="Enable backward coupling with F4" CV="146" mask="XXXXVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>      </variable>
-<variable label="Enable backward coupling with F5" CV="146" mask="XXXVXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>      </variable>
-<variable label="Enable backward coupling with F6" CV="146" mask="XXVXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>      </variable>
-<variable label="Enable backward coupling with F7" CV="146" mask="XVXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>      </variable>
-<variable label="Enable backward coupling with F8" CV="146" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>      </variable>
-
-      <variable label="    Coupler kick duration" CV="147" item="CKICK" default="30" tooltip="Range 0-255">
-        <decVal min="0" max="255"/>
-      </variable>
-      <variable label="    Decoupling movement" CV="148" item="CMOVE" default="80" tooltip="Range 0-255">
-        <decVal min="0" max="255"/>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/lenz/motorControl2_cv112_114.xml"/>
+      <!-- CV115 not listed in Plus manual -->
+      <variables include="Gold maxi 10440,Gold+ NEM652 10433-01,Silver+ Next18 10312-01,Silver+ PluX12 10312-01,Silver+ mini wired 10310-02,Silver+ mini NEM651 10311-02,Silver+ mini wired 10310-01,Silver+ mini NEM651 10311-01,Standard+ V2 NEM652 10231-02">
+      	<xi:include href="http://jmri.org/xml/decoders/lenz/susi_cv126_127.xml"/>
+      </variables>
+    	
+      <xi:include href="http://jmri.org/xml/decoders/lenz/serviceNo_cv128.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/lenz/extendedCoupling_cv145_148.xml"/>
     </variables>
     <resets>
-      <factReset label="Reset All CVs" CV="8" default="33"/>
+      <factReset label="Reset All CVs" CV="8" default="33">
+         <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
     </resets>
   </decoder>
-
-<pane name="Lenz Extended Mapping">
-    <column>
-      <label label="F1 Forward/backward mapping.               "/>
-      <label label=" "/>
-      <row>
-        <column>
-          <row><label label="Output"/></row>
-          <row><label label="Function 1 forward"/></row>
-          <row><label label="Function 1 backward"/></row>
-        </column>
-        <column>
-          <row><label label="A"/></row>
-          <row><display item="F1f controls output 1" format="checkbox" label=""/></row>
-          <row><display item="F1r controls output 1" format="checkbox" label=""/></row>
-        </column>
-        <column>
-          <row><label label="B"/></row>
-          <row><display item="F1f controls output 2" format="checkbox" label=""/></row>
-          <row><display item="F1r controls output 2" format="checkbox" label=""/></row>
-        </column>
-        <column>
-          <row><label label="C"/></row>
-          <row><display item="F1f controls output 3" format="checkbox" label=""/></row>
-          <row><display item="F1r controls output 3" format="checkbox" label=""/></row>
-        </column>
-        <column>
-          <row><label label="D"/></row>
-          <row><display item="F1f controls output 4" format="checkbox" label=""/></row>
-          <row><display item="F1r controls output 4" format="checkbox" label=""/></row>
-        </column>
-        <column>
-          <row><label label="E"/></row>
-          <row><display item="F1f controls output 5" format="checkbox" label=""/></row>
-          <row><display item="F1r controls output 5" format="checkbox" label=""/></row>
-        </column>
-        <column>
-          <row><label label="F"/></row>
-          <row><display item="F1f controls output 6" format="checkbox" label=""/></row>
-          <row><display item="F1r controls output 6" format="checkbox" label=""/></row>
-        </column>
-        <column>
-          <row><label label="G"/></row>
-          <row><display item="F1f controls output 7" format="checkbox" label=""/></row>
-          <row><display item="F1r controls output 7" format="checkbox" label=""/></row>
-        </column>
-        <column>
-          <row><label label="H"/></row>
-          <row><display item="F1f controls output 8" format="checkbox" label=""/></row>
-          <row><display item="F1r controls output 8" format="checkbox" label=""/></row>
-        </column>
-      </row>
-    </column>
-    <column>
-      <label label="Select which function"/>
-      <label label="which enables coupling control forward:"/>
-      <label label=" "/>
-      <display item="Enable forward coupling with F1" format="checkbox"/>
-      <display item="Enable forward coupling with F2" format="checkbox"/>
-      <display item="Enable forward coupling with F3" format="checkbox"/>
-      <display item="Enable forward coupling with F4" format="checkbox"/>
-      <display item="Enable forward coupling with F5" format="checkbox"/>
-      <display item="Enable forward coupling with F6" format="checkbox"/>
-      <display item="Enable forward coupling with F7" format="checkbox"/>
-      <display item="Enable forward coupling with F8" format="checkbox"/>
-      <label label=" "/>
-      <display item="CKICK"/>
-    </column>
-    <column>
-      <label label="Select which function"/>
-      <label label="which enables coupling control backward:"/>
-      <label label=" "/>
-      <display item="Enable backward coupling with F1" format="checkbox"/>
-      <display item="Enable backward coupling with F2" format="checkbox"/>
-      <display item="Enable backward coupling with F3" format="checkbox"/>
-      <display item="Enable backward coupling with F4" format="checkbox"/>
-      <display item="Enable backward coupling with F5" format="checkbox"/>
-      <display item="Enable backward coupling with F6" format="checkbox"/>
-      <display item="Enable backward coupling with F7" format="checkbox"/>
-      <display item="Enable backward coupling with F8" format="checkbox"/>
-      <label label=" "/>
-      <display item="CMOVE"/>
-    </column>
-</pane>
-
   <xi:include href="http://jmri.org/xml/decoders/lenz/paneFunctionMap.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/lenz/paneLenz.xml"/>  <xi:include href="http://jmri.org/xml/decoders/lenz/paneLighting.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/lenz/paneLenz.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/lenz/paneLighting.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/lenz/paneSUSI.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/lenz/paneExtendedCoupling.xml"/>
 </decoder-config>

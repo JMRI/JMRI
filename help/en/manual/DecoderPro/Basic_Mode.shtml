@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<title>
+DecoderPro&reg; Programming Modes
+</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<a name="Top"></a>
+
+<h1>Programming Modes</h1>
+<div align="right">
+<p><a href="Basic_Start.shtml#ProgramModes">Back</a></p>
+</div>
+
+<hr>
+<p align="center"><img src="images/SetProgramMode.png" width="262" height="135" alt="program mode"></p>
+
+<p>Some brief comments on Programming Modes </p>
+<p><strong>Paged Mode </strong>is an expansion of Register mode that gives  full access to all decoder CVs. </p>
+<p><strong>Register Mode</strong> is an expanded form of 
+Address Mode, and is still used by some older and/or  lower end decoders, particularly some from MRC and Wangrow. It is inherently limited in its  ability to access all CVs in a decoder. </p>
+<p><strong>Direct Byte</strong> is another method, not yet  supported by all decoders, that allows full access.&nbsp;&nbsp; There  are two ways of implementing Direct Mode. The  Direct Byte method(s) your command station supports  will be activated. </p>
+<p><strong>Address Mode</strong> is an outdated programming method that is  included here for the sake of <br>
+  full compliance with the NMRA DCC standard.</p>
+<p>  If you experience difficulty programming a decoder in  Paged Mode, try Direct Byte, then <br>
+  Register Mode, and finally Address Mode. The EasyDCC AD4  Accessory Decoder can only be <br>
+programmed in Direct Byte.</p>
+<hr>
+
+<div align="right">
+<p><a href="Basic_Start.shtml#ProgramModes">Back</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
+</html>

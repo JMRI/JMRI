@@ -1,0 +1,174 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<title>JMRI OperationsPro: Set Preferences</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+<h1>Using JMRI&reg; to Operate Trains</h1>
+<h2>OperationsPro: Setting your Preferences</h2>
+
+<div align="right">
+<p><a href="Start_DecoderPro.shtml">Previous</a>
+<p><a href="index.shtml#startOps">Back to Index</a> </div>
+
+<hr>
+<p class="important">The current JMRI Preferences Help is <a href="../../html/setup/index.shtml#setprefs">here</a>.</p>
+
+<p>In either PanelPro or DecoderPro, in the main menu bar click on the Edit menu -&gt; Preferences... (Windows) or click on Preferences... in the PanelPro application menu (OS X). This opens the <strong>Preferences</strong> panel (The panel may open automatically the first time you run JMRI&reg;).</p>
+<p>The <strong>Preferences</strong> panel is split into two panes: on the left side is a list of Preference groups that may be set. Clicking on one of the Tabs opens that set of Preference options in the right side pane where options may be checked or changed.<br>Note: <strong>Remember to click  
+  <input type="button" name="button9" id="button9" value="Save">
+   to finalize your settings and then re-start JMRI to have them take effect.</strong></p>
+   
+<p>To a first time user the most important part to start with is the <strong>Connections</strong> Tab, where you describe how your computer will talk to the DCC Command Station. You may leave most of the other Tabs at their initial or &ldquo;default&rdquo; settings until you find a need to change things to suit your fancy.</p>
+<p>The <strong>Preferences -&gt; Connections</strong> pane provides access to the basic configuration information to connect your computer to your DCC system. You may either set up JMRI OperationsPro to work as a digital Switch List generator using a "Simulator" Connection Type, or take advantage of the full JMRI Suite by connecting JMRI&reg; OperationsPro to your DCC layout to actually build and operate trains equipped with DCC decoders and follow them on your computer screen.</p>
+
+<p>In the following example, the Connections Tab was selected:</p>
+<img src="images/Preferences.png" width="755" height="432" alt="JMRI Preferences - Connections tab">
+
+<h3><a name="Connections"></a>Connections Pane</h3>
+<p>Select the Connections Tab at left to display the Connection options on the right hand side (Tabs are configured to the system your selected).</p>
+
+<p>Let's  set up JMRI Preferences for the Connection with your Command Station. 
+<span style="align: center;color:grey;">In this example we are using a Digitrax DCS100 Super Chief Command Station, (radio) interfaced to the computer via LocoNet, PR3 (in MS100 mode) and USB port. We keep our JMRI master roster on the System Drive.</span></p>
+
+
+<table width="80%" border="1" align="center" cellpadding="2" cellspacing="1">
+  <tr>
+    <td width="21%">System manufacturer:</td>
+    <td colspan="2">Drop-down list with all the supported DCC manufacturers, select the manufacturer of your DCC system.</td>
+  </tr>
+  <tr>
+    <td>System connection:</td>
+    <td colspan="2">Drop-down list with all of the supported DCC system interfaces supported by the manufacturer that you selected, select the interface that you are using.</td>
+  </tr>
+  <tr>
+    <td rowspan="5">Settings:</td>
+    <td width="22%">Serial Port:</td>
+    <td width="57%">Drop-down list to select the serial port to which your DCC interface is connected. If you do not know, check your system hardware configuration manual. A second drop-down list may include a selection if there are   more than one possibility. possibilityDrop-down list to select the serial port to which your DCC interface is connected. If you do not know, check your system hardware  configuration manual. A second drop-down list may include a selection if there  are more than one possibility</td>
+  </tr>
+  <tr>
+    <td>Command station type:</td>
+    <td>Drop-down list to select the command station type that JMRI will be using to send your DCC commands.</td>
+  </tr>
+  <tr>
+    <td>Connection Prefix</td>
+    <td>Include the prefix for your connection, in the case shown the "L" is default</td>
+  </tr>
+  <tr>
+    <td>Connection Name</td>
+    <td>Should default to the connection used</td>
+  </tr>
+  <tr>
+    <td><input type="checkbox" name="checkbox" id="checkbox"> Additional Connection Settings<br>
+    if checked:</td>
+    <td><p><input type="submit" name="button2" id="button2" value="Disable  Connection">
+will disable all the connection settings.</p>
+<p><input type="submit" name="button" id="button" value="Delete Connection">
+will delete all the connection settings. </p></td>
+  </tr>
+</table>
+<p><img src="images/Preferences3.png" width="755" height="463"></p>
+
+<h3><a name="Defaults"></a>Defaults Pane</h3>
+<p>Shows the default settings which will depend upon the system(s) used. Select one of your Connections as the default connection for i.e. Throttles and Service Programmers. With only one Connection (on the Connections Tab), that will automatically be the Default and this pane not relevant.</p>
+<p><img src="images/JMRI_PrefsDefaults.png" width="838" height="444"></p>
+
+<h3><a name="FileLocations"></a>File Locations Pane</h3>
+<p><img src="images/Preferences5.png" width="755" height="302"></p>
+<table border="0" cellpadding="2" cellspacing="1" width="50%">
+  <tbody>
+    <tr>
+      <td align="left" valign="top" width="200"><strong>User File Locations</strong></td>
+      <td align="left">Select the location for your user files on your system</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top"><strong>Jython Script Location</strong></td>
+      <td align="left">Set the location of Jython Script files on your system</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3><a name="StartUp"></a>Other Preference panes</h3>
+<p>All the Preference panes are described in detail in the JMRI PanelPro&reg; and DecoderPro&reg; online <a href="../index.shtml">Manuals</a>.</p>
+<div leftmargin="40">
+<table border="0" cellpadding="1" cellspacing="1" width="80%">
+  <tbody>
+    <tr>
+      <td align="left" valign="top" width="200"><strong><a href="../DecoderPro3/Start_Preferences.shtml#Connections">Connections</a></strong></td>
+      <td align="left" valign="top">Allows you to select the System Connection that you are using for controlling DCC and the connection to your computer.</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top"><strong><a href="../DecoderPro3/Start_Preferences.shtml#Defaults">Defaults</a></strong></td>
+      <td align="left" valign="top">Shows system default settings</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top"><strong><a href="../DecoderPro3/Start_Preferences.shtml#FileLocations">File Locations</a></strong></td>
+      <td align="left" valign="top">Set default location for saving User files and Script Files</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top"><strong><a href="../DecoderPro3/Start_Preferences.shtml#StartUp">Start Up</a></strong></td>
+      <td align="left" valign="top">Allows you to set Actions, Buttons, Files and Scripts that run at Start Up</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top"><strong><a href="../DecoderPro3/Start_Preferences.shtml#Display">Display</a></strong></td>
+      <td align="left" valign="top">Allows you to select your computer display mode</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top"><strong><a href="../DecoderPro3/Start_Preferences.shtml#Messages">Messages</a></strong></td>
+      <td align="left" valign="top">Set default actions for system message when displayed</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top"><strong><a href="../DecoderPro3/Start_Preferences.shtml#Roster">Roster</a></strong></td>
+      <td align="left" valign="top">Allows you to set your default Programmer and Roster location</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top"><strong><a href="../DecoderPro3/Start_Preferences.shtml#Throttle">Throttle</a></strong></td>
+      <td align="left" valign="top">Allows you to set up you Throttle preferences</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top"><strong><a href="../DecoderPro3/Start_Preferences.shtml#WiThrottle">WiThrottle</a></strong></td>
+      <td align="left" valign="top">Allows you to set up a WiThrottle settings</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top"><a href="../DecoderPro3/Start_Preferences.shtml#JOSN"><strong>JSON Server</strong></a></td>
+      <td align="left" valign="top">Opens JSON Server Preference settings pane</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top"><strong><a href="../DecoderPro3/Start_Preferences.shtml#MiniServer">Web Server</a></strong></td>
+      <td align="left" valign="top">Sets up the DecoderPro&reg; Web Server</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Save your Preferences</h3>
+<div style="align: center;color:red;"><p>Before you exit the <strong>Preferences</strong> panel, click the          
+  <input type="submit" name="button8" id="button8" value="Save">
+button in the bottom left hand corner to save all your settings.<br>
+You must restart DecoderPro/PanelPro for your new Preferences to take effect</p>
+</div>
+
+<hr>
+<div align="right">
+<p><a href="Start_DecoderPro.shtml">Previous</a>
+<p><a href="index.shtml#startOps">Back to Index</a>
+</div>
+
+<!--#include virtual="/Footer" -->
+</div>
+</div>
+</body>
+</html>

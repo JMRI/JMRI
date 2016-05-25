@@ -2,70 +2,73 @@ package jmri.jmrit.operations.rollingstock.cars;
 
 /**
  * Represents a car load, includes pickup and drop comments.
- * 
+ *
  * @author Daniel Boudreau (C) 2010
- * 
+ *
  */
 public class CarLoad {
 
-	public static final String PRIORITY_LOW = Bundle.getMessage("PriorityLow");
-	public static final String PRIORITY_HIGH = Bundle.getMessage("PriorityHigh");
+    public static final String NONE = "";
 
-	public static final String LOAD_TYPE_EMPTY = Bundle.getMessage("EmptyTypeName");
-	public static final String LOAD_TYPE_LOAD = Bundle.getMessage("LoadTypeName");
+    public static final String PRIORITY_LOW = Bundle.getMessage("PriorityLow");
+    public static final String PRIORITY_HIGH = Bundle.getMessage("PriorityHigh");
 
-	public static final String SPLIT_CHAR = " & "; // used to combine car type and load in tracks and trains
+    public static final String LOAD_TYPE_EMPTY = Bundle.getMessage("EmptyTypeName");
+    public static final String LOAD_TYPE_LOAD = Bundle.getMessage("LoadTypeName");
 
-	String _name;
-	String _priority = PRIORITY_LOW;
-	String _pickupComment = "";
-	String _dropComment = "";
-	String _loadType = LOAD_TYPE_LOAD;
+    public static final String SPLIT_CHAR = " & "; // used to combine car type and load in tracks and trains
 
-	public CarLoad(String name) {
-		setName(name);
-	}
+    String _name;
+    String _priority = PRIORITY_LOW;
+    String _pickupComment = NONE;
+    String _dropComment = NONE;
+    String _loadType = LOAD_TYPE_LOAD;
 
-	public String getName() {
-		return _name;
-	}
+    public CarLoad(String name) {
+        setName(name);
+    }
 
-	public void setName(String name) {
-		_name = name;
-		if (name.equals(CarLoads.instance().getDefaultEmptyName()))
-			setLoadType(LOAD_TYPE_EMPTY);
-	}
+    public String getName() {
+        return _name;
+    }
 
-	public String getPriority() {
-		return _priority;
-	}
+    public void setName(String name) {
+        _name = name;
+        if (name.equals(CarLoads.instance().getDefaultEmptyName())) {
+            setLoadType(LOAD_TYPE_EMPTY);
+        }
+    }
 
-	public void setPriority(String priority) {
-		_priority = priority;
-	}
+    public String getPriority() {
+        return _priority;
+    }
 
-	public String getPickupComment() {
-		return _pickupComment;
-	}
+    public void setPriority(String priority) {
+        _priority = priority;
+    }
 
-	public void setPickupComment(String comment) {
-		_pickupComment = comment;
-	}
+    public String getPickupComment() {
+        return _pickupComment;
+    }
 
-	public String getDropComment() {
-		return _dropComment;
-	}
+    public void setPickupComment(String comment) {
+        _pickupComment = comment;
+    }
 
-	public void setDropComment(String comment) {
-		_dropComment = comment;
-	}
+    public String getDropComment() {
+        return _dropComment;
+    }
 
-	public String getLoadType() {
-		return _loadType;
-	}
+    public void setDropComment(String comment) {
+        _dropComment = comment;
+    }
 
-	public void setLoadType(String type) {
-		_loadType = type;
-	}
+    public String getLoadType() {
+        return _loadType;
+    }
+
+    public void setLoadType(String type) {
+        _loadType = type;
+    }
 
 }

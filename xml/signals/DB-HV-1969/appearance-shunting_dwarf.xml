@@ -18,9 +18,13 @@
     <author>
         <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
         <email>jake@physics.berkeley.edu</email>
-    </author>    
+    </author>
+    <author>
+        <personname><firstname>Oscar</firstname><surname>Moutinho</surname></personname>
+        <email>oscar.moutinho@gmail.com</email>
+    </author>
   </authorgroup>
-    
+
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
         <revnumber>1</revnumber>
@@ -39,8 +43,14 @@
         <date>2010-01-19</date>
         <authorinitials>JCV</authorinitials>
         <revremark>Added small and medium size icons more suitable for panels</revremark>
-    </revision>    
-  </revhistory>
+    </revision>
+    <revision>
+        <revnumber>4</revnumber>
+        <date>2015-03-03</date>
+        <authorinitials>OM</authorinitials>
+        <revremark>Add Speed and Route to Aspects. Add Aspect Mapping and Specific Aspects</revremark>
+    </revision>
+	</revhistory>
 
   <aspecttable>DB-HV-1969</aspecttable>
   <name>Shunting signal, dwarf-type</name>
@@ -55,18 +65,28 @@
     <appearance>
       <aspectname>Sh0</aspectname>
       <show>red</show>
-      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/DB-HV-1969/shunting_dwarf/sh0.gif</imagelink>
-      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/DB-HV-1969/shunting_dwarf/sh0.gif</imagelink>
-      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/DB-HV-1969/shunting_dwarf/sh0.gif</imagelink>
+      <imagelink type="prototype">/resources/icons/largeschematics/aspects/DB-HV-1969/shunting_dwarf/sh0.gif</imagelink>
+      <imagelink type="medium panel">/resources/icons/mediumschematics/aspects/DB-HV-1969/shunting_dwarf/sh0.gif</imagelink>
+      <imagelink type="small panel">/resources/icons/smallschematics/aspects/DB-HV-1969/shunting_dwarf/sh0.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Sh1</aspectname>
       <show>flashgreen</show>
-      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/DB-HV-1969/shunting_dwarf/sh1.gif</imagelink>
-      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/DB-HV-1969/shunting_dwarf/sh1.gif</imagelink>
-      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/DB-HV-1969/shunting_dwarf/sh1.gif</imagelink>
+      <imagelink type="prototype">/resources/icons/largeschematics/aspects/DB-HV-1969/shunting_dwarf/sh1.gif</imagelink>
+      <imagelink type="medium panel">/resources/icons/mediumschematics/aspects/DB-HV-1969/shunting_dwarf/sh1.gif</imagelink>
+      <imagelink type="small panel">/resources/icons/smallschematics/aspects/DB-HV-1969/shunting_dwarf/sh1.gif</imagelink>
     </appearance>
 
   </appearances>
+
+  <specificappearances><!-- Start of Specific Appearances list -->
+    <danger>
+      <aspect>Sh0</aspect>
+    </danger>
+    <held>
+      <aspect>Sh0</aspect>
+    </held>
+  </specificappearances><!-- End of Specific Appearances list -->
+
 </appearancetable>  

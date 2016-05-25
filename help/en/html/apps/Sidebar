@@ -1,109 +1,121 @@
 <!-- Sidebar -->
-<!-- This is the common sidebar definition for main (root) pages -->
+<!-- This is the common sidebar definition for html/apps pages -->
 
 	  <hr class="hide">
 	  <div id="mBody">
 	  <div id="side"> <!-- Block of text on left side of page -->
 	    <div style="text-align: center">JMRI&reg; is...</div>
-	    <dl>
-		<dt><h3><a href="DecoderPro/index.shtml">DecoderPro&reg;</a></h3></dt>
+	    <dl class="toc">
+		<dt><h3>Applications</h3></dt>
 		<dd>
-		    A better tool for programming decoders.
-		    DecoderPro simplifies the job of configuring complicated DCC decoders
-		    by providing screens on which you can select the various options and
-		    values you want.
-		</dd>
+			<ul>
+			<li><a href="DecoderPro/index.shtml">DecoderPro&reg;</a></li>
+			<li><a href="PanelPro/PanelPro.shtml">PanelPro&trade;</a></li>
+			<li><a href="DispatcherPro/index.shtml">DispatcherPro&trade;</a></li>
+	    <li><a href="../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></li>
+			<li><a href="SoundPro/SoundPro.shtml">SoundPro</a></li>
+			</ul>
+    </dd>
 
-		<dt><h3><a href="PanelPro/PanelPro.shtml">PanelPro&trade;</a></h3></dt>
-		<dd>
-		    Designing and Operating CRT based CTC control panels that reflect the real-time
-		    state of your railroad <em>and</em> let you control it - almost like
-		    a Prototype dispatcher!
-		</dd>
-
-		<dt><h3><a href="../tools/index.shtml">General Tools</a></h3></dt>
+		<dt><h3><a href="../tools/index.shtml">Tools</a></h3></dt>
 		<dd>JMRI provides powerful tools for working with your
-		layout.
-		    <UL>
-		    <LI><dfn><a href="../tools/throttle/ThrottleMain.shtml">Throttles</a></dfn>
-		    <LI><dfn><a href="../tools/consisttool/ConsistTool.shtml">Consisting</a></dfn>
-		    <LI><dfn><a href="../tools/Lights.shtml">Lights</a></dfn>
-		    <LI><dfn><a href="../tools/Routes.shtml">Routes</a></dfn>
-		    <LI><dfn><a href="../tools/Logix.shtml">Logix</a></dfn>
-		    <LI><dfn><a href="../tools/fastclock/index.shtml">Fast Clocks</a>
-		    <LI><dfn><a href="../tools/speedometer/index.shtml">Speedometer</a> &amp;<BR>
-		    <a href="../tools/speedometer/SpeedMatch.shtml">Engine Speed Matching</a></dfn>
-		    <LI><dfn><a href="../tools/scripting/index.shtml">Scripting</a></dfn>
-		    <LI><dfn><a href="../hardware/PDA.shtml">PDA access</a></dfn>
-		    <LI><dfn><a href="LocoTools/index.shtml">LocoNet tools</a></dfn>
-		    </UL>
+		layout:
+		  <ul>
+	    <li><dfn><a href="../tools/Turnouts.shtml">Turnouts</a></dfn>
+	    <li><dfn><a href="../tools/Lights.shtml">Lights</a></dfn>
+	    <li><dfn><a href="../tools/Sensors.shtml">Sensors</a></dfn>
+			<li><dfn><a href="../tools/throttle/ThrottleMain.shtml">Throttles</a></dfn>
+	    <li><dfn><a href="../tools/consisttool/ConsistTool.shtml">Consisting</a></dfn>
+			<li><dfn><a href="../tools/Blocks.shtml">Blocks</a></dfn>
+			<li><dfn><a href="../tools/Reporters.shtml">Reporters</a></dfn>
+			<li><dfn><a href="../tools/Memories.shtml">Memory Variables</a></dfn>
+	    <li><dfn><a href="../tools/Routes.shtml">Routes</a></dfn>
+	    <li><dfn><a href="../tools/LRoutes.shtml">LRoutes</a></dfn>
+      <li><dfn><a href="../tools/Sections.shtml">Sections</a></dfn>
+	    <li><dfn><a href="../tools/Logix.shtml">Logix</a></dfn>
+	    <li><dfn><a href="../tools/fastclock/index.shtml">Fast Clocks</a></dfn>
+	    <li><dfn><a href="../tools/speedometer/index.shtml">Speedometer</a></dfn>
+	    <li><dfn><a href="../tools/Audio.shtml">Audio</a></dfn>
+	    <li><dfn><a href="../tools/IdTags.shtml">ID Tags</a></dfn>
+      <li><dfn><a href="../tools/index.shtml#systemSpecificTools">System-specific...</a></dfn>
+      </ul>
 		</dd>
 
-		<dt><h3><a href="../tools/automation">Layout Automation</a></h3></dt>
-		<dd>JMRI can be used to automate parts 
+		<dt><h3 style="padding-left: 1em;"><a href="../tools/automation/">Layout Automation</a></h3></dt>
+		<dd>
+		JMRI can be used to automate parts 
 		of your layout, from simply controlling a crossing gate
 		to running trains in the background.
-		    <UL>
-		    <LI><dfn><a href="../tools/signaling/index.shtml">Signaling</a></dfn>
-		    <LI><dfn><a href="../tools/scripting/index.shtml">Scripting</a></dfn>
-		    </UL>
+		    <ul>
+		    <li><dfn><a href="../tools/signaling/index.shtml">Signaling</a></dfn>
+		    <li><dfn><a href="../tools/EntryExit.shtml">Entry Exit (NX)</a></dfn>
+		    <li><dfn><a href="../tools/Routes.shtml">Routes</a></dfn>
+		    <li><dfn><a href="../tools/fastclock/index.shtml">Fast Clocks</a></dfn>
+		    <li><dfn><a href="../tools/scripting/index.shtml">Scripting</a></dfn>
+		    </ul>
 		</dd>
 		
-		<dt><h3><a href="../../package/jmri/jmrit/operations/Operations.shtml">Operations</a></h3></dt>
-		<dd>JMRI's operations program can generate train manifests and car switch lists for your model railroad.
+<div style="clear: both"></div>
+		<dt><h3 style="padding-left: 1em;"><a href="../hardware/index.shtml">Supported Hardware</a></h3></dt>
+		<dd> 
+		    <ul>
+				<!-- copy this list from /root sidebar, compare with /help/en/html/index.shtml, checked 12/2015 -->
+				<li><a href="../hardware/XPressNet/index.shtml">Atlas Commander</a>
+				<li><a href="../hardware/bachrus/index.shtml">Bachrus</a>
+				<li><a href="../hardware/cmri/CMRI.shtml">C/MRI</a>
+				<li><a href="../hardware/acela/index.shtml">CTI Electronics</a>
+				<li><a href="../hardware/easydcc/EasyDCC.shtml">CVP EasyDCC</a>
+				<li><a href="../hardware/dccpp/index.shtml">DCC++</a>
+				<li><a href="../hardware/misc/DccSpecialties.shtml">DCC Specialities</a>
+				<li><a href="../hardware/XBee/index.shtml">Digi XBee</a>
+				<li><a href="../hardware/loconet/Digitrax.shtml">Digitrax</a>
+				<li><a href="../hardware/ecos/index.shtml">ESU ECoS</a>
+				<li><a href="../hardware/loconet/Fleischmann.shtml">Fleischmann</a>
+				<li><a href="../hardware/XPressNet/index.shtml">Hornby</a>
+				<li><a href="../hardware/XPressNet/index.shtml">Lenz</a>
+				<li><a href="../hardware/tmcc/index.shtml">Lionel TMCC</a>
+				<li><a href="../hardware/loconet/Digitrax.shtml">LocoNet</a>
+				<li><a href="../hardware/maple/index.shtml">Maple Systems</a>
+				<li><a href="../hardware/marklin/index.shtml">M&auml;rklin CS2</a>
+				<li><a href="../hardware/modbus/index.shtml">Modbus</a>
+				<li><a href="../hardware/can/cbus/index.shtml">MERG CBUS</a>
+				<li><a href="../hardware/mrc/index.shtml">MRC</a>
+				<li><a href="../hardware/rps/index.shtml">NAC Services RPS</a>
+				<li><a href="../hardware/nce/NCE.shtml">NCE</a>
+				<li><a href="../hardware/oaktree/OakTree.shtml">Oak Tree Systems</a>
+				<li><a href="../hardware/openlcb/index.shtml">OpenLCB</a>
+				<li><a href="../hardware/grapevine/index.shtml">Protrak Grapevine</a>
+				<li><a href="../hardware/qsi/index.shtml">QSI Quantum Programmer</a>
+				<li><a href="../hardware/raildriver/index.shtml">Pi Engineering RailDriver</a>
+				<li><a href="../hardware/pi/index.shtml">Raspberry Pi</a>
+				<li><a href="../hardware/XPressNet/index.shtml">Roco</a>
+				<li><a href="../hardware/sprog/SPROG.shtml">SPROG</a>
+				<li><a href="../hardware/SRCP/index.shtml">SRCP server</a>
+				<li><a href="../hardware/tams/index.shtml">TAMS Master Control</a>
+				<li><a href="../hardware/loconet/Digitrax.shtml">Uhlenbrock Intellibox</a>
+				<li><a href="../hardware/XPressNet/index.shtml">Viessmann Commander</a>
+				<li><a href="../hardware/nce/Wangrow.shtml">Wangrow System One</a>
+				<li><a href="../hardware/powerline/index.shtml">X10</a>
+				<li><a href="../hardware/zimo/Zimo.shtml">Zimo MX-1</a>
+				<li><a href="../hardware/XPressNet/index.shtml">ZTC</a>
+		    </ul>
 		</dd>
 
 		<div style="clear: both"></div>
-		<dt><h3><a href="../hardware/index.shtml">Supported Hardware</a></h3></dt>
+		<dt><h3 style="padding-left: 1em;">Supported Computers</h3></dt>
 		<dd> 
-		<ul>
-		    <li> <A HREF="../hardware/XPressNet/index.shtml">Atlas Commander</a>
-		    <li> <A HREF="../hardware/cmri/CMRI.shtml">C/MRI</a>
-		    <li> <A HREF="../hardware/acela/index.shtml">CTI Acela</a>
-		    <li> <A HREF="../hardware/easydcc/EasyDCC.shtml">CVP EasyDcc</a>
-		    <li> <A HREF="../hardware/misc/DccSpecialties.shtml">DCC Specialities</a>
-		    <li> <A HREF="../hardware/loconet/Digitrax.shtml">Digitrax</a>
-		    <li> <A HREF="../hardware/ecos/index.shtml">ESU ECoS</a>
-		    <li> <A HREF="../hardware/loconet/Fleischmann.shtml">Fleischmann</a>
-		    <li> <A HREF="../hardware/XPressNet/index.shtml">Hornby</a>
-		    <li> <A HREF="../hardware/XPressNet/index.shtml">Lenz</a>
-		    <li> <A HREF="../hardware/tmcc/index.shtml">Lionel TMCC</a>
-		    <li> <A HREF="../hardware/loconet/Digitrax.shtml">LocoNet</a>
-		    <li> <A HREF="../hardware/maple/index.shtml">Maple Systems</a>
-		    <li> <A HREF="../hardware/can/cbus/index.shtml">MERG CBUS</a>
-		    <li> <A HREF="../hardware/rps/index.shtml">NAC Services RPS</a>
-		    <li> <A HREF="../hardware/nce/NCE.shtml">NCE</a>
-		    <li> <A HREF="../hardware/oaktree/OakTree.shtml">Oak Tree Systems</a>
-		    <li> <A HREF="../hardware/grapevine/index.shtml">Protrak Grapevine</a>
-		    <li> <A HREF="../hardware/qsi/index.shtml">QSI Quantum Programmer</a>
-		    <li> <A HREF="../hardware/XPressNet/index.shtml">Roco</a>
-		    <li> <A HREF="../hardware/sprog/SPROG.shtml">SPROG</a>
-		    <li> <A HREF="../hardware/SRCP/index.shtml">SRCP</a>
-		    <li> <A HREF="../hardware/loconet/Digitrax.shtml">Uhlenbrock Intellibox</a>
-	        <li> <A HREF="../hardware/nce/Wangrow.shtml">Wangrow</a>
-	        <li> <A HREF="../hardware/powerline/index.shtml">X10, Insteon</a>
-		    <li> <A HREF="../hardware/zimo/Zimo.shtml">Zimo MX-1</a>
-		    <li> <A HREF="../hardware/XPressNet/index.shtml">ZTC</a>
-		</ul>
+		    <ul>
+        <li><a href="http://jmri.org/install/WindowsNew.shtml">Windows</a>
+        <li><a href="http://jmri.org/install/MacOSX.shtml">Mac OS X</a>
+        <li><a href="http://jmri.org/install/Linux.shtml">Linux</a>
+        <li><a href="../setup/index.shtml">JMRI Setup</a></li>
+   		  </ul>
 		</dd>
-
-		<div style="clear: both"></div>
-		<dt><h3>Supported Computers</h3></dt>
-		<dd> 
-		<ul>
-            <LI><A href="http://jmri.sourceforge.net/install/WindowsNew.shtml">Windows</a>
-            <LI><A href="http://jmri.sourceforge.net/install/MacOSX.html">Mac OS X</a>
-            <LI><A href="http://jmri.sourceforge.net/install/Linux.html">Linux</a>
-            <LI><A href="http://jmri.sourceforge.net/install/Debug.shtml">Debugging an installation</a>
-		</ul>
-		</dd>
-
-	    </dl>
+</dl>
 
 <a href="/donations.shtml">
- <img src="http://images.sourceforge.net/images/project-support.jpg" width="88" height="32" border="0" ALIGN="RIGHT" alt="Donate to JMRI" />
+ <img src="http://sourceforge.net/images/project-support.jpg" width="88" height="32" border="0" ALIGN="RIGHT" alt="Donate to JMRI" />
 </a> 
 
 	</div> <!-- closes #side -->
-
 <!-- /Sidebar -->

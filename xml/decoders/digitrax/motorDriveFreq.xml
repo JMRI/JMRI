@@ -1,7 +1,7 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id: motorDriveFreq.xml 22090 2012-12-29 02:30:04Z jacobsen $ -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -39,7 +39,7 @@
       <revremark>Revision in original Digitrax_01x3.xml file</revremark>
     </revision>
   </revhistory>
-  <variable label="Motor Drive Frequency" CV="9" item="Total PWM Period" default="0" comment="00 is fastest, 255 is slowest">
+  <variable CV="9" item="Total PWM Period" default="0" comment="00 is fastest, 255 is slowest">
     <decVal/>
     <label>Motor Drive Frequency</label>
     <label xml:lang="it">Frequenza pilotaggio Motore</label>

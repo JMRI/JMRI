@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="../../XSLT/aspecttable.xsl" type="text/xsl"?>
-
 <aspecttable
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
@@ -12,50 +11,63 @@
   <reference>See http://www.sphts.org/resources/rulebook/</reference>
 
   <copyright xmlns="http://docbook.org/ns/docbook">
-    <year>2009</year><year>2010</year><holder>JMRI</holder>
+    <year>2009</year>
+    <year>2010</year>
+    <holder>JMRI</holder>
   </copyright>
 
   <authorgroup xmlns="http://docbook.org/ns/docbook">
-     <author>
-        <personname><firstname>Dick</firstname><surname>Bronson</surname></personname>
-        <email>dick@rr-cirkits.com</email>
-     </author>    
-     <author>
-        <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
-        <email>jake@physics.berkeley.edu</email>
-    </author>    
+    <author>
+      <personname>
+        <firstname>Dick</firstname>
+        <surname>Bronson</surname>
+      </personname>
+      <email>dick@rr-cirkits.com</email>
+    </author>
+    <author>
+      <personname>
+        <firstname>Bob</firstname>
+        <surname>Jacobsen</surname>
+      </personname>
+      <email>jake@physics.berkeley.edu</email>
+    </author>
   </authorgroup>
-
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
-        <revnumber>1</revnumber>
-        <date>2009-12-29</date>
-        <authorinitials>RGJ</authorinitials>
-        <revremark>Initial version</revremark>
-    </revision>    
-    <revision>
-         <revnumber>1.1</revnumber>
-        <date>2010-01-11</date>
-        <authorinitials>DB</authorinitials>
-        <revremark>Added References</revremark>
+      <revnumber>1</revnumber>
+      <date>2009-12-29</date>
+      <authorinitials>RGJ</authorinitials>
+      <revremark>Initial version</revremark>
     </revision>
     <revision>
-         <revnumber>1.2</revnumber>
-        <date>2010-01-23</date>
-        <authorinitials>DB</authorinitials>
-        <revremark>Consistancy</revremark>
+      <revnumber>1.1</revnumber>
+      <date>2010-01-11</date>
+      <authorinitials>DB</authorinitials>
+      <revremark>Added References</revremark>
     </revision>
     <revision>
-         <revnumber>1.21</revnumber>
-        <date>2010-01-26</date>
-        <authorinitials>DB</authorinitials>
-        <revremark>Consistancy</revremark>
+      <revnumber>1.2</revnumber>
+      <date>2010-01-23</date>
+      <authorinitials>DB</authorinitials>
+      <revremark>Consistancy</revremark>
     </revision>
     <revision>
-         <revnumber>1.22</revnumber>
-        <date>2010-01-27</date>
-        <authorinitials>DB</authorinitials>
-        <revremark>New apearances</revremark>
+      <revnumber>1.21</revnumber>
+      <date>2010-01-26</date>
+      <authorinitials>DB</authorinitials>
+      <revremark>Consistancy</revremark>
+    </revision>
+    <revision>
+      <revnumber>1.22</revnumber>
+      <date>2010-01-27</date>
+      <authorinitials>DB</authorinitials>
+      <revremark>New apearances</revremark>
+    </revision>
+    <revision>
+      <revnumber>1.30</revnumber>
+      <date>2015-05-12</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Added routing and default aspect numbers</revremark>
     </revision>
   </revhistory>
 
@@ -65,87 +77,143 @@
       <rule>Rule 281</rule>
       <indication>Proceed</indication>
       <reference>Page 90</reference>
+      <speed>Clear</speed>
+      <speed2>Clear</speed2>
+      <route>Either</route>
+      <dccAspect>20</dccAspect>
     </aspect>
     <aspect>
       <name>Block Signal Green for Main Route</name>
       <rule>Rule 282</rule>
       <indication>Proceed except on diverging route</indication>
       <reference>Page 91</reference>
+      <speed>Clear</speed>
+      <speed2>Clear</speed2>
+      <route>Normal</route>
+      <dccAspect>20</dccAspect>
     </aspect>
     <aspect>
       <name>Block Signal Green for Diverging Route</name>
       <rule>Rule 283</rule>
       <indication>Proceed on diverging route</indication>
       <reference>Page 92</reference>
+      <speed>Clear</speed>
+      <speed2>Clear</speed2>
+      <route>Diverging</route>
+      <dccAspect>12</dccAspect>
     </aspect>
     <aspect>
       <name>Block Signal Yellow over Green</name>
       <rule>Rule 284</rule>
       <indication>Reduce to medium speed and proceed. Next signal indicates "Proceed on diverging route"</indication>
       <reference>Page 93</reference>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
+      <route>Either</route>
+      <dccAspect>14</dccAspect>
     </aspect>
     <aspect>
       <name>Approach Signal Yellow</name>
       <rule>Rule 285</rule>
       <indication>Proceed not exceeding medium speed, prepared to stop short of next home signal.</indication>
       <reference>Page 94</reference>
+      <speed>Medium</speed>
+      <speed2>Approach</speed2>
+      <route>Either</route>
+      <dccAspect>8</dccAspect>
     </aspect>
     <aspect>
       <name>Approach Medium - Flashing Yellow</name>
       <rule>Rule 285-A</rule>
       <indication>Proceed prepared to pass next signal at not exceeding medium speed.</indication>
       <reference>Page 95</reference>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
+      <route>Either</route>
+      <dccAspect>21</dccAspect>
     </aspect>
     <aspect>
       <name>Distant Signal Yellow</name>
       <rule>Rule 286</rule>
       <indication>Proceed not exceeding medium speed, prepared to stop short of next home signal.</indication>
       <reference>Page 96</reference>
+      <speed>Medium</speed>
+      <speed2>Approach</speed2>
+      <route>Either</route>
+      <dccAspect>8</dccAspect>
     </aspect>
     <aspect>
       <name>Grade Signal Red</name>
       <rule>Rule 287</rule>
       <indication>Reduce to restricted speed and proceed.</indication>
       <reference>Page 97</reference>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+      <route>Either</route>
+      <dccAspect>0</dccAspect>
     </aspect>
     <aspect>
       <name>Home Signal Yellow for Diverging Route</name>
       <rule>Rule 288</rule>
       <indication>Proceed on diverging route at restricted speed.</indication>
       <reference>Page 98</reference>
+      <speed>Approach</speed>
+      <speed2>Approach</speed2>
+      <route>Diverging</route>
+      <dccAspect>6</dccAspect>
     </aspect>
     <aspect>
       <name>Home Signal Red over Lunar</name>
       <rule>Rule 289</rule>
       <indication>Proceed without stopping at restricted speed on other than main track.</indication>
       <reference>Page 99</reference>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+      <route>Diverging</route>
+      <dccAspect>2</dccAspect>
     </aspect>
     <aspect>
       <name>Home Signal Red</name>
       <rule>Rule 290</rule>
       <indication>Stop.</indication>
       <reference>Page 100</reference>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>0</dccAspect>
     </aspect>
     <aspect>
       <name>Flashing Yellow</name>
       <rule>Rule 291</rule>
       <indication>Stop. Then proceed at restricted speed without calling dispatcher or signal operator.</indication>
       <reference>Page 101</reference>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+      <route>Either</route>
+      <dccAspect>4</dccAspect>
     </aspect>
     <aspect>
       <name>Flashing White</name>
       <rule>Rule 292</rule>
       <indication>Stop. When flashing white displayed be governed by special instructions.</indication>
       <reference>Page 102</reference>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+      <route>Either</route>
+      <dccAspect>4</dccAspect>
     </aspect>
     <aspect>
       <name>Home Signal Red, with Triangular Plate</name>
       <rule>Rule 293</rule>
       <indication>Stop. Inspect train, track or structure as provided in special instrutions, and proceed through remainder of block in accordance with provisions of Rule 507, 509, 510, 663, 744, or 776, as the case may be.</indication>
       <reference>Page 103</reference>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+      <route>Either</route>
+      <dccAspect>0</dccAspect>
     </aspect>
   </aspects>
-  
+
   <appearancefiles>
     <appearancefile href="appearance-SL-3-high-pbs.xml"/>
     <appearancefile href="appearance-SL-2-high-abs.xml"/>
@@ -157,6 +225,4 @@
     <appearancefile href="appearance-SL-1-low-D.xml"/>
     <appearancefile href="appearance-SL-1-low-P.xml"/>
   </appearancefiles>
-
 </aspecttable>
-  

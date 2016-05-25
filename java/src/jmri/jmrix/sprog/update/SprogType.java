@@ -1,18 +1,17 @@
 //SprogType.java
-
 package jmri.jmrix.sprog.update;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Class to hold SPROG type 
+ * Class to hold SPROG type
  *
- * @author			Andrew crosland    Copyright (C) 2012
- * @version			$Revision:  $
+ * @author	Andrew crosland Copyright (C) 2012
+ * @version	$Revision: $
  */
+public class SprogType {
 
-public class SprogType  {
     // NOTE the numerical order of thes constants is used in the bootloader
     // to test for various SPROG types
     public static final int UNKNOWN = 0;
@@ -27,42 +26,71 @@ public class SprogType  {
     public static final int SPROG3 = 30;
     public static final int SPROGIV = 40;
     public static final int SPROG5 = 50;
+    public static final int PISPROGONE = 60;
     public static final int NANO = 1000;
+    public static final int PISPROGNANO = 1001;
     public static final int SNIFFER = 2000;
     public int sprogType = UNKNOWN;
 
     /**
      * Construct a new SPROG type of a given type
-     * 
+     *
      * @param type int, one of SprogType.xxx constants
      */
     public SprogType(int type) {
-        if (log.isDebugEnabled()) { log.debug("SprogType(int) ctor, type: " + type); }
+        if (log.isDebugEnabled()) {
+            log.debug("SprogType(int) ctor, type: " + type);
+        }
         sprogType = type;
     }
 
     /**
      * Check for any SPROG type
-     * 
+     *
      * @return true if this object holds a SPROG type
      */
     public boolean isSprog() {
-        if (sprogType < SPROGV4) { return false; }
+        if (sprogType < SPROGV4) {
+            return false;
+        }
         return true;
     }
 
     /**
      * Check for a SPROG II type
-     * 
+     *
      * @return true if this object holds a SPROG II type
      */
     public boolean isSprogII() {
-        if ((sprogType >= SPROGII) && (sprogType <= SPROGIIv3)) { return true; }
+        if ((sprogType >= SPROGII) && (sprogType <= SPROGIIv3)) {
+            return true;
+        }
         return false;
+    }
+
+/**
+ * Return the multiplier for scaling the current limit from hardware units
+ * to physical units (mA).
+ * 
+ * @return the multiplier for the current limit
+ */
+    public double getCurrentMultiplier() {
+        switch (sprogType) {
+            case PISPROGONE:
+                // Value returned is number of ADC steps 0f 3.22mV across 0.47
+                // ohms, or equivalent
+                return 3220.0/470;
+                
+            default:
+                // Value returned is number of ADC steps 0f 4.88mV across 0.47
+                // ohms, or equivalent
+                return 4880.0/470;
+        }
     }
     
     /**
      * Get the Flash memory block Length for bootloader
+     *
      * @return blocklen
      */
     public int getBlockLen() {
@@ -71,18 +99,23 @@ public class SprogType  {
             case NOT_A_SPROG:
             case NOT_RECOGNISED:
             case TIMEOUT:
-            default: return -1;
-            
-            case SPROGV4:            
+            default:
+                return -1;
+
+            case SPROGV4:
             case SPROGIIUSB:
-            case SPROGII: return 8;
-            
+            case SPROGII:
+                return 8;
+
             case SPROGIIv3:
             case SPROG3:
             case SPROGIV:
             case SPROG5:
+            case PISPROGONE:
             case NANO:
-            case SNIFFER: return 16;
+            case PISPROGNANO:
+            case SNIFFER:
+                return 16;
         }
     }
 
@@ -105,24 +138,24 @@ public class SprogType  {
     }
 
     /**
-     * Check if an address is one which should be reprogrammed during bootloader operation.
-     * Checks if address is above the bootloader's address space and below the debug
-     * executive's address space.
+     * Check if an address is one which should be reprogrammed during bootloader
+     * operation. Checks if address is above the bootloader's address space and
+     * below the debug executive's address space.
      *
      * @param addr int
      * @return true or false
      */
     public Boolean isValidFlashAddress(int addr) {
-        switch(sprogType) {
+        switch (sprogType) {
             case SPROGV4:
-                
+
             case SPROGIIUSB:
             case SPROGII:
                 if (addr >= 0x200) {
                     return true;
                 }
                 break;
-                
+
             case SPROGIIv3:
             case SPROG3:
             case SPROGIV:
@@ -134,17 +167,30 @@ public class SprogType  {
                 }
                 break;
 
-            default: return false;
+            case PISPROGNANO:
+                if ((addr >= 0x0C00) && (addr < 0x1FF0)) {
+                    return true;
+                }
+                break;
+                
+            case PISPROGONE:
+                if ((addr >= 0x1000) && (addr < 0x3F00)) {
+                    return true;
+                }
+                break;
+
+            default:
+                return false;
         }
         return false;
     }
 
     public int getEraseStart() {
-        switch(sprogType) {
+        switch (sprogType) {
             case SPROGIIUSB:
             case SPROGII:
                 return 0x200;
-                
+
             case SPROGIIv3:
             case SPROG3:
             case SPROGIV:
@@ -152,7 +198,13 @@ public class SprogType  {
             case NANO:
             case SNIFFER:
                 return 0x2200;
-                
+
+            case PISPROGNANO:
+                return 0x0C00;
+
+            case PISPROGONE:
+                return 0x1000;
+
             default:
                 break;
         }
@@ -161,7 +213,7 @@ public class SprogType  {
     }
 
     /**
-     * 
+     *
      * @return String representation of a SPROG type
      */
     public String toString() {
@@ -169,30 +221,48 @@ public class SprogType  {
     }
 
     /**
-     * 
+     *
      * @return String representation of a SPROG type
      */
     public String toString(int t) {
         //if (log.isDebugEnabled()) { log.debug("Integer " + t); }
-        switch(t) {
-            case NO_PROMPT_FOUND: return "No SPROG prompt found";
-            case NOT_A_SPROG: return "Not connected to a SPROG";
-            case NOT_RECOGNISED: return "Unrecognised SPROG";
-            case TIMEOUT: return "Timeout talking to SPROG";
-            case SPROGV4: return "SPROG ";
-            case SPROGIIUSB: return "SPROG II USB ";
-            case SPROGII: return "SPROG II ";
-            case SPROGIIv3: return "SPROG IIv3 ";
-            case SPROG3: return "SPROG 3 ";
-            case SPROGIV: return "SPROG IV ";
-            case SPROG5: return "SPROG 5 ";
-            case NANO: return "SPROG Nano ";
-            case SNIFFER: return "SPROG Sniffer ";
-            default: return "Unknown Hardware";
+        switch (t) {
+            case NO_PROMPT_FOUND:
+                return "No SPROG prompt found";
+            case NOT_A_SPROG:
+                return "Not connected to a SPROG";
+            case NOT_RECOGNISED:
+                return "Unrecognised SPROG";
+            case TIMEOUT:
+                return "Timeout talking to SPROG";
+            case SPROGV4:
+                return "SPROG ";
+            case SPROGIIUSB:
+                return "SPROG II USB ";
+            case SPROGII:
+                return "SPROG II ";
+            case SPROGIIv3:
+                return "SPROG IIv3 ";
+            case SPROG3:
+                return "SPROG 3 ";
+            case SPROGIV:
+                return "SPROG IV ";
+            case SPROG5:
+                return "SPROG 5 ";
+            case PISPROGONE:
+                return "Pi-SPROG One";
+            case NANO:
+                return "SPROG Nano ";
+            case PISPROGNANO:
+                return "Pi-SPROG Nano ";
+            case SNIFFER:
+                return "SPROG Sniffer ";
+            default:
+                return "Unknown Hardware";
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(SprogType.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogType.class.getName());
 }
 
 /* @(#)SprogType.java */

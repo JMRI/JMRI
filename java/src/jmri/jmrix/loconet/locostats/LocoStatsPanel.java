@@ -1,56 +1,68 @@
 // LocoStatsFrame.java
-
 package jmri.jmrix.loconet.locostats;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ResourceBundle;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import jmri.jmrix.loconet.LnConstants;
+import jmri.jmrix.loconet.LocoNetBundle;
+import jmri.jmrix.loconet.LocoNetListener;
+import jmri.jmrix.loconet.LocoNetMessage;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
+import jmri.jmrix.loconet.swing.LnPanel;
+import jmri.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.loconet.*;
-import jmri.jmrix.loconet.swing.*;
-import jmri.util.StringUtil;
-
-import java.util.ResourceBundle;
-import java.awt.event.*;
-
-import javax.swing.*;
 
 /**
  * Panel displaying LocoNet interface status information.
  * <P>
  * The LocoBuffer family from RR-CirKits and the PRn family from Digitrax use
- * different formats for the status message.  This class detects this
- * from the reply contents, and displays different panes depending on which
- * message was received. If the format is not recognised, a raw display
- * format is used.
+ * different formats for the status message. This class detects this from the
+ * reply contents, and displays different panes depending on which message was
+ * received. If the format is not recognised, a raw display format is used.
  * <p>
  * Moved from loconet.locobuffer.LocoBufferStatsFrame
  * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
- * and used with permission as part of the JMRI project.  That permission
- * does not extend to uses in other software products.  If you wish to
- * use this code, algorithm or these message formats outside of JMRI, please
- * contact Digitrax Inc for separate permission.
+ * and used with permission as part of the JMRI project. That permission does
+ * not extend to uses in other software products. If you wish to use this code,
+ * algorithm or these message formats outside of JMRI, please contact Digitrax
+ * Inc for separate permission.
  *
- * @author			Alex Shepherd   Copyright (C) 2003
- * @author			Bob Jacobsen   Copyright (C) 2008, 2010
- * @version			$Revision$
+ * @author	Alex Shepherd Copyright (C) 2003
+ * @author	Bob Jacobsen Copyright (C) 2008, 2010
+ * @version	$Revision$
  * @since 2.1.5
  */
 public class LocoStatsPanel extends LnPanel implements LocoNetListener {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = -5940710123873302443L;
     JPanel lb2Panel;
     JPanel rawPanel;
     JPanel pr2Panel;
     JPanel ms100Panel;
 
-    public String getHelpTarget() { return "package.jmri.jmrix.loconet.locostats.LocoStatsFrame"; }
-    public String getTitle() { 
-        return getTitle(jmri.jmrix.loconet.LocoNetBundle.bundle().getString("MenuItemLocoStats")); 
+    public String getHelpTarget() {
+        return "package.jmri.jmrix.loconet.locostats.LocoStatsFrame";
+    }
+
+    public String getTitle() {
+        return getTitle(jmri.jmrix.loconet.LocoNetBundle.bundle().getString("MenuItemLocoStats"));
     }
 
     public LocoStatsPanel() {
         super();
     }
-    
+
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.loconet.locostats.LocoStatsBundle");
 
     public void initComponents() {
@@ -101,7 +113,7 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
         ms100Panel.add(badMsgCnt);
         ms100Panel.add(new JLabel(rb.getString("LabelMS100Status")));
         ms100Panel.add(ms100status);
-        
+
         add(rawPanel);
         add(lb2Panel);
         add(pr2Panel);
@@ -113,11 +125,11 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
         add(panel);
 
         // install "update" button handler
-        updateButton.addActionListener( new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    requestUpdate();
-                }
+        updateButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent a) {
+                requestUpdate();
             }
+        }
         );
 
         // and prep for display
@@ -134,34 +146,35 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
         super.initComponents(memo);
 
         // listen for LocoNet messages
-        if (memo.getLnTrafficController() != null)
+        if (memo.getLnTrafficController() != null) {
             memo.getLnTrafficController().addLocoNetListener(~0, this);
-        else
+        } else {
             report("No LocoNet connection available, can't function");
+        }
 
         // request data
         requestUpdate();
-    }   
-    
+    }
+
     void report(String msg) {
         log.error(msg);
     }
 
-    public void message(LocoNetMessage msg){
-      if( updatePending &&
-          ( msg.getOpCode() == LnConstants.OPC_PEER_XFER ) &&
-          ( msg.getElement( 1 ) == 0x10 ) &&
-          ( msg.getElement( 2 ) == 0x50 ) &&
-          ( msg.getElement( 3 ) == 0x50 ) &&
-          ( msg.getElement( 4 ) == 0x01 ) &&
-          ( ( msg.getElement( 5 ) & 0xF0 ) == 0x0 ) &&
-          ( ( msg.getElement( 10 ) & 0xF0 ) == 0x0 ) ) {
+    public void message(LocoNetMessage msg) {
+        if (updatePending
+                && (msg.getOpCode() == LnConstants.OPC_PEER_XFER)
+                && (msg.getElement(1) == 0x10)
+                && (msg.getElement(2) == 0x50)
+                && (msg.getElement(3) == 0x50)
+                && (msg.getElement(4) == 0x01)
+                && ((msg.getElement(5) & 0xF0) == 0x0)
+                && ((msg.getElement(10) & 0xF0) == 0x0)) {
             // LocoBuffer II form
-            int[] data = msg.getPeerXfrData() ;
+            int[] data = msg.getPeerXfrData();
 
-            version.setText( StringUtil.twoHexFromInt( data[0]) + StringUtil.twoHexFromInt(data[4] ) );
-            breaks.setText( Integer.toString( (data[5] << 16) + (data[6] << 8) + data[7] ) );
-            errors.setText( Integer.toString( (data[1] << 16) + (data[2] << 8) + data[3] ) );
+            version.setText(StringUtil.twoHexFromInt(data[0]) + StringUtil.twoHexFromInt(data[4]));
+            breaks.setText(Integer.toString((data[5] << 16) + (data[6] << 8) + data[7]));
+            errors.setText(Integer.toString((data[1] << 16) + (data[2] << 8) + data[3]));
 
             lb2Panel.setVisible(true);
             rawPanel.setVisible(false);
@@ -169,31 +182,30 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
             ms100Panel.setVisible(false);
             revalidate();
 
-            updatePending = false ;
+            updatePending = false;
 
-        } else if (updatePending &&
-              ( msg.getOpCode() == LnConstants.OPC_PEER_XFER ) &&
-              ( msg.getElement( 1 ) == 0x10 ) &&
-              ( msg.getElement( 2 ) == 0x22 ) &&
-              ( msg.getElement( 3 ) == 0x22 ) &&
-              ( msg.getElement( 4 ) == 0x01 ) )
-            {  // Digitrax form, check PR2/PR3 or MS100/PR3 mode
-            
-            if ((msg.getElement(8)&0x20) == 0) {
+        } else if (updatePending
+                && (msg.getOpCode() == LnConstants.OPC_PEER_XFER)
+                && (msg.getElement(1) == 0x10)
+                && (msg.getElement(2) == 0x22)
+                && (msg.getElement(3) == 0x22)
+                && (msg.getElement(4) == 0x01)) {  // Digitrax form, check PR2/PR3 or MS100/PR3 mode
+
+            if ((msg.getElement(8) & 0x20) == 0) {
                 // PR2 format
-                int[] data = msg.getPeerXfrData() ;
-                serial.setText(Integer.toString(data[1]*256+data[0]));
+                int[] data = msg.getPeerXfrData();
+                serial.setText(Integer.toString(data[1] * 256 + data[0]));
                 status.setText(StringUtil.twoHexFromInt(data[2]));
-                current.setText(Integer.toString( data[3]) );
-                hardware.setText(Integer.toString( data[4]) );
-                software.setText(Integer.toString( data[5]) );
-                
+                current.setText(Integer.toString(data[3]));
+                hardware.setText(Integer.toString(data[4]));
+                software.setText(Integer.toString(data[5]));
+
                 pr2Panel.setVisible(true);
             } else {
                 // MS100 format
                 int[] data = msg.getPeerXfrData();
-                goodMsgCnt.setText(Integer.toString(data[1]*256+data[0]));
-                badMsgCnt.setText(Integer.toString(data[5]*256+data[4]));
+                goodMsgCnt.setText(Integer.toString(data[1] * 256 + data[0]));
+                badMsgCnt.setText(Integer.toString(data[5] * 256 + data[4]));
                 ms100status.setText(StringUtil.twoHexFromInt(data[2]));
 
                 ms100Panel.setVisible(true);
@@ -202,12 +214,12 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
             rawPanel.setVisible(false);
 
             revalidate();
-            updatePending = false ;
+            updatePending = false;
 
-        } else if (updatePending &&
-              ( msg.getOpCode() == LnConstants.OPC_PEER_XFER ) ) {
+        } else if (updatePending
+                && (msg.getOpCode() == LnConstants.OPC_PEER_XFER)) {
             try {
-                int[] data = msg.getPeerXfrData() ;
+                int[] data = msg.getPeerXfrData();
                 r1.setText(StringUtil.twoHexFromInt(data[0]));
                 r2.setText(StringUtil.twoHexFromInt(data[1]));
                 r3.setText(StringUtil.twoHexFromInt(data[2]));
@@ -223,9 +235,9 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
                 ms100Panel.setVisible(false);
                 revalidate();
 
-                updatePending = false ;
-            } catch ( Exception e ) {
-                log.error("Error parsing update: "+msg);
+                updatePending = false;
+            } catch (Exception e) {
+                log.error("Error parsing update: " + msg);
             }
         } else if (!updatePending && (msg.getOpCode() == LnConstants.OPC_GPBUSY)) {
             updatePending = true;
@@ -233,15 +245,15 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
     }
 
     public void requestUpdate() {
-        LocoNetMessage msg = new LocoNetMessage( 2 ) ;
-        msg.setOpCode( LnConstants.OPC_GPBUSY );
-        updatePending = true ;
+        LocoNetMessage msg = new LocoNetMessage(2);
+        msg.setOpCode(LnConstants.OPC_GPBUSY);
+        updatePending = true;
         memo.getLnTrafficController().sendLocoNetMessage(msg);
     }
 
     public void dispose() {
         // disconnect from the LnTrafficController
-        memo.getLnTrafficController().removeLocoNetListener(~0,this);
+        memo.getLnTrafficController().removeLocoNetListener(~0, this);
 
         // take apart the JFrame
         super.dispose();
@@ -265,12 +277,12 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
     JTextField goodMsgCnt = new JTextField(5);
     JTextField badMsgCnt = new JTextField(5);
     JTextField ms100status = new JTextField(6);
-    
+
     JTextField version = new JTextField(8);
     JTextField breaks = new JTextField(6);
     JTextField errors = new JTextField(6);
-    
-    boolean updatePending = false ;
+
+    boolean updatePending = false;
 
     JButton updateButton = new JButton("Update");
 
@@ -278,13 +290,19 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
+
+        /**
+         *
+         */
+        private static final long serialVersionUID = -5534308120479708337L;
+
         public Default() {
-            super(LocoNetBundle.bundle().getString("MenuItemLocoStats"), 
-                new jmri.util.swing.sdi.JmriJFrameInterface(), 
-                LocoStatsPanel.class.getName(), 
-                jmri.InstanceManager.getDefault(LocoNetSystemConnectionMemo.class));
+            super(LocoNetBundle.bundle().getString("MenuItemLocoStats"),
+                    new jmri.util.swing.sdi.JmriJFrameInterface(),
+                    LocoStatsPanel.class.getName(),
+                    jmri.InstanceManager.getDefault(LocoNetSystemConnectionMemo.class));
         }
     }
-    
-    static Logger log = LoggerFactory.getLogger(LocoStatsPanel.class.getName());
+
+    private final static Logger log = LoggerFactory.getLogger(LocoStatsPanel.class.getName());
 }

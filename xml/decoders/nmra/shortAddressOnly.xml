@@ -1,7 +1,7 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id: shortAddressOnly.xml 22377 2013-01-12 06:28:11Z jacobsen $ -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -32,7 +32,7 @@
       <authorinitials>PB</authorinitials>
       <revremark>Added German</revremark>
     </revision>
-	<revision>
+    <revision>
       <revnumber>6</revnumber>
       <date>2010-03-12</date>
       <authorinitials>BJ</authorinitials>
@@ -45,13 +45,14 @@
       <revremark>Revision in original 0NMRA.xml file</revremark>
     </revision>
   </revhistory>
-  <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
+  <variable CV="1" comment="Short address" item="Short Address" default="03">
     <shortAddressVal/>
     <label xml:lang="it">Indirizzo Primario</label>
-	<comment xml:lang="it">Indirizzo Primario</comment>
-    <label xml:lang="fr">Adresse courte</label>
-	<comment xml:lang="fr">Adresse de base</comment>
+    <label xml:lang="fr">Adresse décodeur</label>
     <label xml:lang="de">Basisadresse</label>
-	<comment xml:lang="de">Kurze Adresse</comment>
+    <comment xml:lang="it">Indirizzo Corto</comment>
+    <comment xml:lang="fr">Adresse courte</comment>
+    <comment xml:lang="de">Kurze Adresse</comment>
+    <label>Primary Address</label>
   </variable>
 </variables>

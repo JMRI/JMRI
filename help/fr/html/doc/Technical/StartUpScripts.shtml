@@ -2,11 +2,12 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: StartUpScripts.shtml,v 1.14 2011/03/13 23:16:40 matthewharris Exp $ -->
-<!-- Translated by Blorec Hervé le 2011-07-06--><title>JMRI: Startup Scripts</title>
+<!-- $Id$ -->
+<!-- UpDated by Blorec Herv&#233; le 2013-09-08-->
+<title>JMRI: Startup Scripts</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -21,77 +22,75 @@
 <!--#include virtual="Sidebar" -->
     <div id="mainContent">
 
-<H1>JMRI Scripts de Démarrage</H1>
+<H1>JMRI Scripts de D&#233;marrage</H1>
 
-Bien que JMRI lui-même soit construit pour "fonctionner partout»,
-démarrer une application JMRI nécessite des commandes qui sont
-spécifiques au type particulier d'ordinateur utilisé.
+Bien que JMRI lui-m&#234;me soit construit pour "fonctionner partout",
+d&#233;marrer une application JMRI n&#233;cessite des commandes qui sont
+sp&#233;cifiques au type particulier d'ordinateur utilis&#233;.
 Avec chaque distribution JMRI, nous fournissons les
 scripts, des kits d'applications ou de fichiers batch pour
-s'occuper des détails à votre place.
-Bien sûr, vous pouvez les modifier ou créer les vôtres.
+s'occuper des d&#233;tails &#224; votre place.
+Bien s&#251;r, vous pouvez les modifier ou cr&#233;er les v&#244;tres.
 <p>
 Cette page fournit des informations sur les outils fournis avec les
 Distributions JMRI sur:
 <ul>
-<li> <a href="#linux"> Linux </a>
-<li> <a href="#macosx"> Mac OS X </a>
-<li> <a href="#windows"> Windows </a>
+<li> <a href="#linux"> Linux</a>
+<li> <a href="#macosx"> Mac OS X</a>
+<li> <a href="#windows"> Windows</a>
 </ul>
 
-Si vous mettez à jour toutes ces choses, s'il vous plaît envisager soit de
+Si vous mettez &#224; jour toutes ces choses, s'il vous pla&#238;t envisager soit de
 faire votre changement sur les autres machines (et de le tester!)
 soit au moins mettre un commentaire dans les autres pour
-décrire comment ils diffèrent maintenant.
+d&#233;crire comment ils diff&#232;rent maintenant.
 
 <a name="linux">
 <h2>Linux</h2></a>
 
 La distributions JMRI  pour Linux contient les shell (bash) scripts
 pour chacune des applications principales: DecoderPro, PanelPro, etc
-Ils sont toutes structurés de la même façon.
+Ils sont tous structur&#233;s de la m&#234;me fa&#231;on.
 
-<h3>Détails</h3>
+<h3>D&#233;tails</h3>
 
-Dans cette section, nous décrivons brièvement ce que fait chaque section du script.
+Dans cette section, nous d&#233;crivons bri&#232;vement ce que fait chaque section du script.
 <dl>
 <dt> CLASSNAME
-<dd> Pour rendre le script plus facile à maintenir, le nom de la principale
-classe est défini au début.
+<dd> Pour rendre le script plus facile &#224; maintenir, le nom de la principale
+classe est d&#233;fini au d&#233;but.
 
 <dt> Debug setting 
 <dd>
-Si le symbole DEBUG est réglé sur Tout, le script va produire des
-sortie de débogage après chaque section.
+Si le symbole DEBUG est r&#233;gl&#233; sur Tout, le script va produire des
+sortie de d&#233;bogage apr&#232;s chaque section.
 
 <dt> Directory
 <dd>
-Pour s'exécuter, JMRI doit être en mesure de trouver des choses dans le répertoire courant.
-Cette étape vise à définir ce répertoire automatiquement.
+Pour s'ex&#233;cuter, JMRI doit &#234;tre en mesure de trouver des choses dans le r&#233;pertoire courant.
+Cette &#233;tape vise &#224; d&#233;finir ce r&#233;pertoire automatiquement.
 <p>
-Si la variable d'environnement JMRI_HOME est définie 
-et pointe vers un répertoire qui contient un fichier jmri.jar,
-changer le répertoire courant là-bas.
+Si la variable d'environnement JMRI_HOME est d&#233;finie 
+et pointe vers un r&#233;pertoire qui contient un fichier jmri.jar,
+changez le r&#233;pertoire courant pour l&#224;.
 <p>
-Sinon, changer le répertoire courant à l'endroit où le fichier de script
-est situé.<p>
+Sinon, changez le r&#233;pertoire courant &#224; l'endroit o&#249; le fichier de script
+est situ&#233;.<p>
 .
 
 <dt> Library Files
 <dd>
-La bibliothèque Série RXTX nécessite certaines bibliothèques natives spécifiques des plate - formes
-afin d'interfacer les pilotes de ports série. Les applications JMRI ont besoin
-d'utiliser la version de la bibliothèque native qui est correct pour le système d'exploitation
-et l'outil script de développement
-de l'architecture du processeur.
+La biblioth&#232;que S&#233;rie RXTX n&#233;cessite certaines biblioth&#232;ques natives sp&#233;cifiques des plate-formes
+afin d'interfacer les pilotes des ports s&#233;rie. Les applications JMRI ont besoin
+d'utiliser la version de la biblioth&#232;que native qui est correct pour le syst&#232;me d'exploitation
+et l'outil script de d&#233;veloppement de l'architecture du processeur.
 <p>
-Le deux architectures les plus courantes à cette époque sont <tt> i386 </tt> et <tt> x86_64 </tt>,
-respectivement le 32 bits et 64 bits Intel AMD/Intel systèmes.
+Le deux architectures les plus courantes &#224; cette &#233;poque sont <tt>i386</tt> et <tt>x86_64</tt>,
+respectivement le 32 bits d'Intel et 64 bits Intel AMD/Intel syst&#232;mes.
 <p>
-script outil de développement
-Les scripts de démarrage utilisent certaines applications courantes (<tt> arc </tt>, uname <tt> </tt>)
-pour déterminer le système d'exploitation actuel et son architecture, puis mettre en place le
-chemin de bibliothèque correcte pour Java pour trouver le bon fichier de bibliothèques partagées Library Files
+Les scripts de d&#233;marrage utilisent certaines applications courantes (<tt>arc</tt>, <tt>uname</tt>)
+pour d&#233;terminer le syst&#232;me d'exploitation actuel et son architecture, puis mettre en place le
+chemin de biblioth&#232;que correcte pour Java pour trouver le bon fichier de biblioth&#232;ques partag&#233;es Library Files
 <dd>
 
 <dt>Classpath
@@ -99,224 +98,219 @@ chemin de bibliothèque correcte pour Java pour trouver le bon fichier de biblio
 Le script construit le chemin de classe Java automatiquement pour contenir,
 dans l'ordre:
 <ul>
-<li> fichiers de classe dans le répertoire courant
-<li> fichiers de classe dans le sous-répertoire classe du répertoire courant
-<li> fichiers de classe dans le /sous-répertoire classe java  du répertoire courant
-<li> tous les fichiers jar dans le répertoire courant, sauf jmri.jar
-<li>jmri.jar  dans le répertoire courant
-<li> tous les fichiers jar dans le répertoire lib du répertoire courant
+<li> fichiers de classe dans le r&#233;pertoire courant
+<li> fichiers de classe dans le sous-r&#233;pertoire classe du r&#233;pertoire courant
+<li> fichiers de classe dans le /sous-r&#233;pertoire classe java  du r&#233;pertoire courant
+<li> tous les fichiers jar dans le r&#233;pertoire courant, sauf jmri.jar
+<li>jmri.jar  dans le r&#233;pertoire courant
+<li> tous les fichiers jar dans le r&#233;pertoire lib du r&#233;pertoire courant
 </ul>
 <p>
-Cela vous permet de déposer des fichiers jar dans le
- répertoire d'installation JMRI pour le
-<a href="plugins.shtml"> mécanisme plug-in JMRI </a>.
+Cela vous permet de d&#233;poser des fichiers jar dans le
+ r&#233;pertoire d'installation JMRI pour le
+<a href="plugins.shtml"> m&#233;canisme plug-in JMRI</a>.
 
 <dt>Fichier de configuration
 <dd>
-S'il y a un argument pour le script, il sera utilisé comme nom du fichier préférences
-utilisé pour configurer le programme au démarrage. Si l'utilisateur enregistre les préférences
+S'il y a un argument pour le script, il sera utilis&#233; comme nom du fichier pr&#233;f&#233;rence pour configurer le programme au d&#233;marrage. Si l'utilisateur enregistre les pr&#233;f&#233;rences
 du programme, elles iront aussi dans ce dossier.
 <p>
   Si aucun argument n'est fourni, le nom du fichier de configuration est fait
-à partir du nom du script, suivi de "Config2.xml". Par exemple,
-le script utilise DecoderPro DecoderProConfig2.xml comme fichier de préférences.
-Si une copie de ce script est nommé MyJmriApp, il utilisera un fichier de préférences.
- nommé MyJmriAppConfig2.xml.
+&#224; partir du nom du script, suivi de "Config2.xml". Par exemple,
+le script utilise DecoderPro DecoderProConfig2.xml comme fichier de pr&#233;f&#233;rences.
+Si une copie de ce script est nomm&#233; MyJmriApp, il utilisera un fichier de pr&#233;f&#233;rences nomm&#233; MyJmriAppConfig2.xml.
 <p>
-Cela vous permet de créer autant de configurations spécialisées que vous souhaitez simplement en
-la copiant et le renommant un script de démarrage.
+Cela vous permet de cr&#233;er autant de configurations sp&#233;cialis&#233;es que vous souhaitez simplement en
+la copiant et en renommant un script de d&#233;marrage.
  
 <dt> options Java
 <dd>
-Le programme définit un certain nombre d'options pour le JVM. Cela comprend
-les paramètres nécessaires au programme, fixant des limites de la mémoire, et divers
-symboles pour contrôler le fonctionnement
+Le programme d&#233;finit un certain nombre d'options pour le JVM. Cela comprend
+les param&#232;tres n&#233;cessaires au programme, fixant des limites de la m&#233;moire, et divers
+symboles pour contr&#244;ler le fonctionnement
 
 <dt>Autres noms de port
 <dd>
-RXTX ne connaît pas les noms de certains des ports série connectés
+RXTX ne conna&#238;t pas les noms de certains des ports s&#233;rie connect&#233;s
 via USB. Cette section cherche quelques noms connus et les ajoute
-au programme si elle est présente. Si vous avez un nom de fichier de périphérique que
-JMRI ne trouve pas, vous pouvez définir la variable d'environnement <tt> JMRI_SERIAL_PORTS </tt>
-pour être une liste de noms séparé par des virgules.
+au programme si elle est pr&#233;sente. Si vous avez un nom de fichier de p&#233;riph&#233;rique que
+JMRI ne trouve pas, vous pouvez d&#233;finir la variable d'environnement <tt> JMRI_SERIAL_PORTS</tt>
+pour &#234;tre une liste de noms s&#233;par&#233; par des virgules.
 
 <dt> Java commande
-<dd> Enfin, le script met tout cela ensemble dans une commande java, qui l'exécute.
+<dd> Enfin, le script met tout cela ensemble dans une commande java, qui l'ex&#233;cute.
 
 </ dl>
 
 <a name="macosx"> 
-<h2> Mac OS X </h2> </a>
-Distributions JMRI pour Mac OS X contenant des kits d'applications
+<h2> Mac OS X</h2></a>
+Les Distributions JMRI pour Mac OS X contiennentt des kits d'applications
 pour chacune des applications princpales: DecoderPro, PanelPro, etc
-Ceux-ci fournissent des icônes d'application familières pour l'utilisateur.
+Ceux-ci fournissent des ic&#244;nes d'application famili&#232;res pour l'utilisateur.
 
 <p>
-Pour enregistrer les kits avec Mac OS X, ils doivent être copiés
-depuis l'image disque distribuée sur disque par l'utilisateur.
+Pour enregistrer les kits avec Mac OS X, ils doivent &#234;tre copi&#233;s
+depuis l'image disque distribu&#233;e sur disque par l'utilisateur.
 <dd>
 <p>
-Si le symbole DEBUG est réglé sur Tout, le script produira une sortie débogage après chaque section
+Si le symbole DEBUG est r&#233;gl&#233; sur Tout, le script produira une sortie d&#233;bogage apr&#232;s chaque section
 
-<h3>Détails sur le Pack (Bundle)</h3>
+<h3>D&#233;tails sur le Pack (Bundle)</h3>
 
-JMRI a enregistré cinq signatures d'applications: 
+JMRI a enregistr&#233; cinq signatures d'applications: 
 <dl>
 <dt>JMRD<dd>DecoderPro
 <dt>JMRP<dd>PanelPro
 <dt>JMRI<dd>JmriDemo
-<dt>JMRL<dd>LocoTools (n'est plus utilisé)
+<dt>JMRL<dd>LocoTools (n'est plus utilis&#233;)
 <dt>JMRC<dd>Cornwall demo
 </dl>
 
 <h3>Details des Scripts</h3>
 
-Chaque Pack (bundle) a un shell de démarrage (Bash) dans le script dans le répertoire Contents/Mac OS X  
-qui fait le démarrage actuellement.
-Dans cette section, nous décrivons brièvement ce que chaque section de ce script fait:
-Chaque Pack  des noms(bundle) a un shell de démarrage (Bash) dans le script dans le répertoire ContentsMac OS X  
-qui fait le démarrage actuellement.
+Chaque Pack (bundle) a un shell de d&#233;marrage (Bash) dans le script dans le r&#233;pertoire Contents/Mac OS X  
+qui fait le d&#233;marrage actuellement.
+Dans cette section, nous d&#233;crivons bri&#232;vement ce que chaque section de ce script fait:
+Chaque Pack  des noms(bundle) a un shell de d&#233;marrage (Bash) dans le script dans le r&#233;pertoire ContentsMac OS X  
+qui fait le d&#233;marrage actuellement.
 <dl>
 <dt>CLASSNAME DecoderProConfig2.xml
-<dd>Pour rendre le script plus facile à maintenir, le nom de la classe  principale
- est définie au début.
-Decode
-<dt>Réglage Débogage<dd>
-Si le symbole DEBUG est réglé sur Tout, le script va produire des
-sortie de débogage après chaque section.
+<dd>Pour rendre le script plus facile &#224; maintenir, le nom de la classe  principale
+ est d&#233;finie au d&#233;but.
 
-<dt>Répertoire
+<dt>R&#233;glage D&#233;bogage<dd>
+Si le symbole DEBUG est r&#233;gl&#233; sur Tout, le script va produire des
+sortie de d&#233;bogage apr&#232;s chaque section.
+
+<dt>R&#233;pertoire
 <dd>
-Pour exécuter, JMRI doit être en mesure de trouver des choses dans le répertoire courant.
-Cette étape vise à définir ce répertoire automatiquement.
+Pour ex&#233;cuter, JMRI doit &#234;tre en mesure de trouver des choses dans le r&#233;pertoire courant.
+Cette &#233;tape vise &#224; d&#233;finir ce r&#233;pertoire automatiquement.
 <p> des noms DecoderProConfig2.xml
-Si la variable d'environnement JMRI_HOME est définie 
-et pointe vers un répertoire qui contient un fichier jmri.jar,
-changer le répertoire courant pour celui-là.
+Si la variable d'environnement JMRI_HOME est d&#233;finie 
+et pointe vers un r&#233;pertoire qui contient un fichier jmri.jar,
+changer le r&#233;pertoire courant pour celui-l&#224;.
 <p>
-Sinon, changer le répertoire courant à l'endroit où l'ensemble de l'application
-est situé.
+Sinon, changer le r&#233;pertoire courant &#224; l'endroit o&#249; l'ensemble de l'application
+est situ&#233;.
 
 <dt>Classpath
-<dd>DecodeDecodeDecodeDecodeDecodeDecode
+<dd>
 Le script construit le chemin de la classe Java automatiquement pour contenir,
-dans l'ordre:commande
-<ul> des noms DecoderProConfig2.xml
-<li>le fichiers de classe dans le répertoire courant
-<li>les fichiers de classe dans le sous-répertoire classes du répertoire courant
-<li>les fichiers de classe dans le sous-répertoire java/classes du répertoire courant
-<li> tous les fichiers jar dans le répertoire courant, sauf jmri.jar
-<li> jmri.jar dans le répertoire courant
-<li> tous les fichiers jar dans le r des nomsépertoire lib du répertoire courant
+dans l'ordre:
+<ul> 
+<li>le fichiers de classe dans le r&#233;pertoire courant
+<li>les fichiers de classe dans le sous-r&#233;pertoire classes du r&#233;pertoire courant
+<li>les fichiers de classe dans le sous-r&#233;pertoire java/classes du r&#233;pertoire courant
+<li> tous les fichiers jar dans le r&#233;pertoire courant, sauf jmri.jar
+<li> jmri.jar dans le r&#233;pertoire courant
+<li> tous les fichiers jar dans le r des noms&#233;pertoire lib du r&#233;pertoire courant
 </ul>
 <p>
- des noms des noms de des nomss noms des nomsCeci vous permet de déposer des fichiers jar dans le
-répertoire JMRI d'installation pour le
-<a href="plugins.shtml"> mécanisme plug-in JMRI </a>.commande
+ Ceci vous permet de d&#233;poser des fichiers jar dans le
+r&#233;pertoire JMRI d'installation pour le
+<a href="plugins.shtml"> m&#233;canisme plug-in JMRI</a>.
 
 <dt>Fichier de Configuration
-<dd> DecoderProConfig2.xml DecoderProConfig2.xml DecoderProConfig2.xml DecoderProConfig2.xml DecoderProConfig2.xml DecoderProConfig2.xml DecoderProConfig2.xml
+<dd> 
 Le nom du fichier de configuration est fait
 du nom de l'ensemble de l'application, suivi de "Config2.xml". Par exemple,
-l'application utilise DecoderPro DecoderProConfig2.xml comme un fichier de préférencescommande.
-Si une copie de cette application est nommé MyJmriApp, il utilisera un fichier préférences
- nommé MyJmriAppConfig2.xml.
+l'application utilise DecoderPro DecoderProConfig2.xml comme un fichier de pr&#233;f&#233;rencescommande.
+Si une copie de cette application est nomm&#233; MyJmriApp, il utilisera un fichier pr&#233;f&#233;rences
+ nomm&#233; MyJmriAppConfig2.xml.
 <p>
-Cela vous permet de créer autant de configurations spécialisées que vous souhaitez simplement en
+Cela vous permet de cr&#233;er autant de configurations sp&#233;cialis&#233;es que vous souhaitez simplement en
 copiant et renommant une application.
 
 <dt> options Java
 <dd>
-Le programme définit un certain nombre d'options pour le JVM. Cela comprend
-les paramètres nécessaires aux noms des programmes, fixant des limites de la mémoire, divers
- symboles pour contrôler le fonctionnement, et quelques options spécifiques à Mac OS X.
+Le programme d&#233;finit un certain nombre d'options pour le JVM. Cela comprend
+les param&#232;tres n&#233;cessaires aux noms des programmes, fixant des limites de la m&#233;moire, divers
+ symboles pour contr&#244;ler le fonctionnement, et quelques options sp&#233;cifiques &#224; Mac OS X.
 
 <dt>  commande Java 
-<dd> Enfin, le script met tout cela ensemble dans une commande java, qui l'exécute.
+<dd> Enfin, le script met tout cela ensemble dans une commande java, qui l'ex&#233;cute.
 </dl>
 
 
 <a name="windows">
 <h2>Windows</h2></a>
 
-Jusqu'à et y compris la version JMRI 2.3.2 , le fichiers Windows.bat a juste créer une commande java défini et l'a exécutée.
+Jusqu'&#224; et y compris la version JMRI 2.3.2 , le fichiers Windows.bat a juste cr&#233;er une commande java d&#233;fini et l'a ex&#233;cut&#233;e.
 <p> Depuis la version  JMRI 2.3.3, le fichier individuel Windows.bat appelle maintenant un petit lanceur application, LaunchJMRI.exe..
 
-<h3>Détails de la Ligne de Commande</h3>
+<h3>D&#233;tails de la Ligne de Commande</h3>
 
-Dans cette section, nous décrivons brièvement le lanceur application des options de ligne de commande et les paramètres.
+Dans cette section, nous d&#233;crivons bri&#232;vement les options de la ligne de commande et les param&#232;trese dulanceur d'application.
 <dl>
 <dt> /debug (facultatif - de JMRI 2.5.1)
-<dd> Si cette option est définie sur la ligne de commande, une fenêtre s'ouvre qui affiche diverses informations utiles pour des fins de débogage.
-<dt> /bruit (facultatif - de JMRI 2.5.1)
-<dd> Si cette option est définie sur la ligne de commande, le lanceur ne cherche pas à minimiser la fenêtre de la console Java- à partir de JMRI 2.5.1, le comportement par défaut est de minimiser la fenêtre de la console Java.
-<br> à partir du JMRI 2.11.1, le comportement de cette option a changé - ceci  détermine maintenant si la fenêtre de la console Java est activée ou non. Les messages systèmes sont maintenant disponibles via l'option "Aide de la console Système ... » du menu dans la fenêtre principale JMRI. 
-<dt>Paramètre Classe 
-<dd> Le premier paramètre de LaunchJMRI.exe, après l'une des options ci-dessus, est le nom de la classe principale à exécuter.
-<dd> Un exemple de lancer DecoderPro serait "apps.DecoderPro.DecoderPro"
+<dd> Si cette option est d&#233;finie sur la ligne de commande, une fen&#234;tre s'ouvre qui affiche diverses informations utiles &#224; des fins de d&#233;bogage.
+<dt> /noisy (facultatif - de JMRI 2.5.1)
+<dd> Si cette option est d&#233;finie sur la ligne de commande, le lanceur ne cherche pas &#224; minimiser la fen&#234;tre de la console Java- &#224; partir de JMRI 2.5.1, le comportement par d&#233;faut est de minimiser la fen&#234;tre de la console Java.
+<br> &#224; partir du JMRI 2.11.1, le comportement de cette option a chang&#233;-celle-ci  d&#233;termine maintenant si la fen&#234;tre de la console Java est activ&#233;e ou non. Les messages syst&#232;mes sont maintenant disponibles via l'option "Help > System Console ... " du menu dans la fen&#234;tre principale JMRI. 
+<dt>Param&#232;tre Classe 
+<dd> Le premier param&#232;tre de LaunchJMRI.exe, apr&#232;s l'une des options ci-dessus, est le nom de la classe principale &#224; ex&#233;cuter.
+<dd> Un exemple pour lancer DecoderPro serait "apps.DecoderPro.DecoderPro"
 
-Le lanceur est appelée par 'LaunchJMRI.exe apps.DecoderPro.DecoderPro MyJmriAppConfig2.xml », il utilise un fichier de préférences nommé MyJmriAppConfig2.xml.
-<br>
-Cela vous permet de créer autant de configurations spécialisées que vous le souhaitez en créant un nouveau menu Démarrer et/ou un raccourci de bureau dans le fichier 'LaunchJMRI.exe » et en ajoutant le fichier de préférences en paramètre.
 
-<dt> Paramètre du fichier de configuration (optionnel)
+<dt> Param&#232;tre du fichier de configuration (optionnel)
 <dd>
-S'il y a un second argument au lanceur, il sera utilisé comme le nom du fichier de préférences utilisé pour configurer le programme au démarrage. Si l'utilisateur enregistre les préférences du programme, elles iront aussi dans ce dossier.
+S'il y a un second argument au lanceur, il sera utilis&#233; comme le nom du fichier de pr&#233;f&#233;rences utilis&#233; pour configurer le programme au d&#233;marrage. Si l'utilisateur enregistre les pr&#233;f&#233;rences du programme, elles iront aussi dans ce dossier.
 <br>
-Si aucun argument n'est fourni, le nom du fichier de configuration est par défaut dans l'application. Par exemple, l'application utilise DecoderPro DecoderProConfig2.xml comme un fichier de préférences. Si le lanceur est appelée par 'MyJmriAppConfig2.xml LaunchJMRI.exe apps.DecoderPro.DecoderPro », il va utiliser un fichier de préférences nommé MyJmriAppConfig2.xml.
+Si aucun argument n'est fourni, le nom du fichier de configuration est par d&#233;faut dans l'application. Par exemple, l'application utilise DecoderPro DecoderProConfig2.xml comme un fichier de pr&#233;f&#233;rences. Si le lanceur est appel&#233;e par 'MyJmriAppConfig2.xml LaunchJMRI.exe apps.DecoderPro.DecoderPro ", il va utiliser un fichier de pr&#233;f&#233;rences nomm&#233; MyJmriAppConfig2.xml.
 <br>
-Cela vous permet de créer autant de configurations spécialisées que vous souhaitez en créant un nouveau menu de démarrage et/ou un raccourci de bureau pour le fichier 'LaunchJMRI.exe » et en ajoutant le fichier de préférences en tant que paramètre.
+Cela vous permet de cr&#233;er autant de configurations sp&#233;cialis&#233;es que vous souhaitez en cr&#233;ant un nouveau menu de d&#233;marrage et/ou un raccourci de bureau pour le fichier 'LaunchJMRI.exe " et en ajoutant le fichier de pr&#233;f&#233;rences en tant que param&#232;tre.
 </dl>
 
 <h3>Environment variables</h3>
 
-<dt>Comme depuis la version JMRI 2.11.4, il est possible  d'influencer les paramètres utilisés pour lancer JMRI via l'utilisation de variables d'environnement.
+<dt>Comme depuis la version JMRI 2.11.4, il est possible  d'influencer les param&#232;tres utilis&#233;s pour lancer JMRI via l'utilisation de variables d'environnement.
 
-Les Variables d'Environnement utilisées sont:
+Les Variables d'Environnement utilis&#233;es sont:
 
 <dl>
 <dt>JMRI_HOME
-<dd>Ceci détermine l'emplacement du programme
+<dd>Ceci d&#233;termine l'emplacement du programme
 <dt>JMRI_OPTIONS
-<dd>Ceci spécifie des options JVM additionnelles 
+<dd>Ceci sp&#233;cifie des options JVM additionnelles 
 <dt>JMRI_PREFSDIRA
-<dd>Ceci spécifie l'emplacement d'un répertoire de préférences alternatif
+<dd>Ceci sp&#233;cifie l'emplacement d'un r&#233;pertoire de pr&#233;f&#233;rences alternatif
 <dt>JMRI_USERHOME
-<dd>Ceci spécifie l'emplacement d'un répertoire home utilisateur alternatif
+<dd>Ceci sp&#233;cifie l'emplacement d'un r&#233;pertoire home utilisateur alternatif
 </dl>
-Si les deux JMRI_PREFSDIR et JMRI_UA sont défini, l'emplacement défini par JMRI_PREFSDIR aura préséance sur l'emplacement défini par JMRI_USERHOME pour déterminer l'emplacement du fichier de préférences. 
+Si les deux JMRI_PREFSDIR et JMRI_UA sont d&#233;fini, l'emplacement d&#233;fini par JMRI_PREFSDIR aura pr&#233;s&#233;ance sur l'emplacement d&#233;fini par JMRI_USERHOME pour d&#233;terminer l'emplacement du fichier de pr&#233;f&#233;rences. 
  
-<h3>Détails du Lanceur (Launcher)</h3>
+<h3>D&#233;tails du Lanceur (Launcher)</h3>
 
-Dans cette section, nous décrivons brièvement ce que fait le lanceur d'application.
+Dans cette section, nous d&#233;crivons bri&#232;vement ce que fait le lanceur d'application.
 <dl>
 <dt>Directory
-<dd>Pour s'exécuter, JMRI doit être en mesure de trouver des choses dans le répertoire courant. Cette étape change le répertoire courant à l'endroit où le lanceur se trouve.
+<dd>Pour s'ex&#233;cuter, JMRI doit &#234;tre en mesure de trouver des choses dans le r&#233;pertoire courant. Cette &#233;tape change le r&#233;pertoire courant &#224; l'endroit o&#249; le lanceur se trouve.
 
 <dt> Java options
 <dd>
-Le lanceur fixe un certain nombre d'options pour la JVM. Ceci inclut les paramètres nécessaires au programme, fixant des limites de la mémoire, et divers symboles pour contrôler le fonctionnement.
+Le lanceur fixe un certain nombre d'options pour la JVM. Ceci inclut les param&#232;tres n&#233;cessaires au programme, fixant des limites de la m&#233;moire, et divers symboles pour contr&#244;ler le fonctionnement.
 
 <dt> Classpath
 <dd>
 Le script construit le chemin de classe Java automatiquement pour contenir, dans l'ordre:
 <ul>
-<li> fichiers de classe dans le répertoire courant
-<li> fichiers de classe dans le sous-répertoire classes du répertoire courant
-<li> tous les fichiers jar dans le répertoire courant, sauf jmri.jar
-<li> jmri.jar <li> dans le répertoire courant
-<li> tous les fichiers jar dans le répertoire lib du répertoire courant
-</ ul>
-Ceci vous permet de déposer des fichiers jar dans le répertoire d'installation pour le JMRI <a href="plugins.shtml"> mécanisme plug-in JMRI</a>.
+<li> fichiers de classe dans le r&#233;pertoire courant
+<li> fichiers de classe dans le sous-r&#233;pertoire classes du r&#233;pertoire courant
+<li> tous les fichiers jar dans le r&#233;pertoire courant, sauf jmri.jar
+<li> jmri.jar <li> dans le r&#233;pertoire courant
+<li> tous les fichiers jar dans le r&#233;pertoire lib du r&#233;pertoire courant
+</ul>
+Ceci vous permet de d&#233;poser des fichiers jar dans le r&#233;pertoire d'installation pour le JMRI <a href="plugins.shtml"> m&#233;canisme plug-in JMRI</a>.
 
 <dt> Java Command
-<dd> Enfin, le lanceur met tout cela ensemble dans une commande java, qui l'exécute
+<dd> Enfin, le lanceur met tout cela ensemble dans une commande java, qui l'ex&#233;cute
 
 </dl>
-<h3> Raccourcis du Menu Démarrer et les Icônes du Bureau </h3>
-Dans une installation de JMRI par défaut, un certain nombre de raccourcis sont créés dans le menu Démarrer, avec les icônes du Bureau pour DecoderPro et PanelPro.
-<h4> Raccourcis du Menu Démarrer </h4>
-Tous les raccourcis du menu Démarrer JMRI sont placés dans le dossier menu démarrer (ou sous-dossiers) "JMRI" dans la structure suivante:
+<h3> Raccourcis du Menu D&#233;marrer et les Ic&#244;nes du Bureau</h3>
+Dans une installation de JMRI par d&#233;faut, un certain nombre de raccourcis sont cr&#233;&#233;s dans le menu D&#233;marrer, avec les ic&#244;nes du Bureau pour DecoderPro et PanelPro.
+<h4> Raccourcis du Menu D&#233;marrer</h4>
+Tous les raccourcis du menu D&#233;marrer JMRI sont plac&#233;s dans le dossier menu d&#233;marrer (ou sous-dossiers) "JMRI" dans la structure suivante:
 <ul>
  <!-- id="side"> <!-- use sidebar css style -->
  <li>JMRI
@@ -324,17 +318,17 @@ Tous les raccourcis du menu Démarrer JMRI sont placés dans le dossier menu dé
   <li>DecoderPro - lanceur de l'application DecoderPro
   <li>PanelPro -  lanceur de l'application PanelPro 
   <li>SoundPro - lanceur de l'application application
-  <li>Uninstall - Supprime la suite complète de JMRI
-  <li>Outils et Démos
+  <li>Uninstall - Supprime la suite compl&#232;te de JMRI
+  <li>Outils et D&#233;mos
   <ul>
    <li>InstallTest - lanceur de l'applicationl InstallTest
-   <li>Preferences - ouvre le dossier préférences utilisateurr
-  </ul>
+   <li>Preferences - ouvre le dossier pr&#233;f&#233;rences utilisateurr
  </ul>
 </ul>
-Des icônes supplémentaires peuvent être placées dans cette structure en fonction des options choisies lors de l'installation et de la version de JMRI  installée..
+</ul>
+Des ic&#244;nes suppl&#233;mentaires peuvent &#234;tre plac&#233;es dans cette structure en fonction des options choisies lors de l'installation et de la version de JMRI  install&#233;e..
 <p>
-Lancer par exemple des raccourcis de menus pour DecoderPro (en supposant JMRI est installé dans l'emplacement par défaut "C: \ Program Files \ JMRI»):
+Lancer par exemple des raccourcis de menus pour DecoderPro (en supposant JMRI est install&#233; dans l'emplacement par d&#233;faut "C: \Program Files\JMRI"):
 <dl>
  <dt>Nom du raccourci
  <dd>'Tous les utilisateurs' sur Windows 2000 et XP - C:\Documents and Settings\All Users\Start Menu\Programs\JMRI\DecoderPro.lnk
@@ -343,45 +337,45 @@ Lancer par exemple des raccourcis de menus pour DecoderPro (en supposant JMRI es
  <dd>'Utilisateur actuel' sur Windows Vista et 7 - C:\Users\[username]\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\JMRI\DecoderPro.lnk
  <dt>Cible
  <dd>"C:\Program Files\JMRI\LaunchJMRI.exe" apps.DecoderPro.DecoderPro
- <dt>Démarrer dans
+ <dt>D&#233;marrer dans
  <dd>"C:\Program Files\JMRI"
  <dt>Touche Raccourcie
- <dd>Terminé
- <dt>Exécuter
- <dd>Fenêtre normale
+ <dd>Termin&#233;
+ <dt>Ex&#233;cuter
+ <dd>Fen&#234;tre normale
  <dt>Commentaire
- <dd>Démarrer Decoder Pro
- <dt>Icône
+ <dd>D&#233;marrer Decoder Pro
+ <dt>Ic&#244;ne
  <dd>"C:\Program Files\JMRI\decpro5.ico"
 </dl>
-<h4>Les Icônes du Bureau</h4>
-Les Icônes de bureau pour DecoderPro et PanelPro sont créées dans l'installation par défaut - au moment de l'installation une icône peut également être créée sur le bureau en option pour l'application SoundPro.
+<h4>Les Ic&#244;nes du Bureau</h4>
+Les Ic&#244;nes de bureau pour DecoderPro et PanelPro sont cr&#233;&#233;es dans l'installation par d&#233;faut - au moment de l'installation une ic&#244;ne peut &#233;galement &#234;tre cr&#233;&#233;e sur le bureau en option pour l'application SoundPro.
 <p>
-La structure de création des Icônes du bureau est semblable à celle  des raccourcis du menu Démarrer ci-dessus - les exemples des Icônes du Bureau pour DecoderPro (en supposant encore que JMRI est installé dans l'emplacement par défaut "C:\Program Files\JMRI"):
+La structure de cr&#233;ation des Ic&#244;nes du bureau est semblable &#224; celle  des raccourcis du menu D&#233;marrer ci-dessus - les exemples des Ic&#244;nes du Bureau pour DecoderPro (en supposant encore que JMRI est install&#233; dans l'emplacement par d&#233;faut "C:\Program Files\JMRI"):
 <dl>
- <dt>Nom du raccourci
+ <dt> Shortcut name
  <dd>'Tous les utilisateurs' sur Windows 2000 et XP - C:\Documents and Settings\All Users\Desktop\DecoderPro.lnk
  <dd>'Tous les utilisateurs' sur Windows Vista et 7 - C:\Users\Public\Desktop\DecoderPro.lnk
  <dd>'Utilisateur courant' sur Windows 2000 et XP - C:\Documents and Settings\[username]\Desktop\DecoderPro.lnk
  <dd>'Utilisateur courant' sur Windows Vista et 7 - C:\Users\[username]\Desktop\DecoderPro.lnk
- <dt>Cible
+  <dt>Target
  <dd>"C:\Program Files\JMRI\LaunchJMRI.exe" apps.DecoderPro.DecoderPro
- <dt>Démarrage dans
+ <dt>Start In
  <dd>"C:\Program Files\JMRI"
- <dt>Touche de raccourci
- <dd>Terminé
- <dt>Exécute
- <dd>Fenêtre Normale 
- <dt>Commentaire
- <dd>Démarrer Decoder Pro
- <dt>Icône
+ <dt>Shortcut Key
+ <dd>None
+ <dt>Run
+ <dd>Normal window
+ <dt>Comment
+ <dd>Start Decoder Pro
+ <dt>Icon
  <dd>"C:\Program Files\JMRI\decpro5.ico"
 </dl>
 <!-- <p>
 
 <p>
-(Cet article a besoin d'informations sur la façon dont les icônes et les raccourcis travaillent.
-Le programme d'installation InstallerVISE fait quelque chose pour associer une icône
+(Cet article a besoin d'informations sur la fa&#231;on dont les ic&#244;nes et les raccourcis travaillent.
+Le programme d'installation InstallerVISE fait quelque chose pour associer une ic&#244;ne
 et de mettre deux raccourcis sur le bureau)-->
 
 

@@ -1,22 +1,18 @@
-// PackageTest.java
-
-
 package jmri.jmrix.ieee802154.serialdriver;
 
-import org.apache.log4j.Logger;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
  * Tests for the jmri.jmrix.ieee802154.serialdriver package
- * @author			Paul Bender
- * @version			$Revision$
+ *
+ * @author	Paul Bender
+ * @version	$Revision$
  */
 public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure
-
     public PackageTest(String s) {
         super(s);
     }
@@ -35,7 +31,5 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(SerialNodeTest.class));
         return suite;
     }
-
-    static Logger log = Logger.getLogger(PackageTest.class.getName());
 
 }

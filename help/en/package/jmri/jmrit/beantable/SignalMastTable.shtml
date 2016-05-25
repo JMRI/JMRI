@@ -1,21 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI: Signal Mast Table Help
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help Signal Mast Table">
+ </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
+    <meta name="Date.Modified" content="20140420"/>
+    <meta name="keywords" content="JMRI help Signal Mast Table">
 
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+<!--#include virtual="/Style" -->
 </head>
 
 <body>
@@ -23,34 +17,56 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>The Signal Mast Table
-</H1>
+<h1>The Signal Mast Table</h1>
 
-<a href="SignalMastTable.png">
-   <img src="SignalMastTable.png" 
-        height="86" width="338" align="right">
+<a href="SignalMasts-num.png">
+   <img src="SignalMasts-num.png" 
+        width="619" height="166" align="right">
 </a>
+		<p>JMRI Signals Masts are managed in the Signal Mast Table. You access this tool from the <b>Tools > Tables > Signal Masts</b> menu.</p>
+		<p>There are nine columns in the Signal Head Table:</p>
+			<ol>
+			<li>System Name, most often set automatically based on the Signal Mast connection type and other settings
+			<li>User Name, double click to enter your own description or number for this Signal Mast
+			<li>Aspect, this column shows the current Aspect of a Signal Mast. You can change it manually by selecting a value from the pop up list
+			<li>Comment, double click this field to enter text about the location of the Signal Mast or other notes
+			<li>Delete, click on this button to delete a Signal Mast. Use with care!
+			<li>Edit, clicking on one of these buttons opens a panel where you can disable some of the available Aspects and the Lit status for this Signal Mast. Note: The System Name, Signal Mast type and driver cannot be changed once a Signal Mast has been created.
+			<a href="SignalMastEdit.png">
+			<img src="SignalMastEdit.png" 
+			width="231" height="207" align="right">
+			</a>
+			<li>Edit Logic, this button opens the Signaling Pairs panel showing the lines for this Signal Mast, from which you can access the <a href="../../../../html/tools/signaling/SignalMastLogic.shtml">Signal Mast Logic</a>
+			<li>Lit, shows whether this Signal Mast is Lit, which can be changed by clicking on the checkbox, via Signal Mast Logic or by Logix
+			<li>Held, if this property is checked the Signal Mast will not follow the Signal Mast Logic e.g. to hold a train at this location waiting for orders.
+			</ol>
+		
+<p>To define a new Signal Mast, click on the 
+"<a href="SignalMastAddEdit.shtml">Add..</a>" button below the Signal Mast Table.
+	  The window that opens next will prompt you for whatever setup information is needed.</p>
 
-<p>
-For more information on Signal Masts and aspect signaling, 
-see the 
-<a href="../../../../html/tools/signaling/AspectSignaling.shtml">introductory page</a>.
-
-<P>To define a new signal mast, click on the 
-"<A HREF="SignalMastAddEdit.shtml">Add.." button</a>.
-It will
-prompt you whatever setup information is needed.
-
-<P> Use the Store item in the File menu to save signal information to disk. 
+	<a href="SignalingPairs.png">
+ <img src="SignalingPairs.png" align="right" width="303" height="122" hspace="0" vspace="0" alt="Signaling Pairs window">
+</a>
+		<p>After you clicked on one of the "Edit Logic" buttons in the Signal Mast Table, the Signaling Pairs window appears. Choose one of the displayed lines and click the "Edit" button to open the Edit window.</p>
+		
+		<p> Use the <b>Store</b> item in the File menu to save signal information to disk. 
 This information is saved with the configuration in an XML file, along
-with control panel setup and similar stuff.  To store your panels in the same 
-file (recommended), select <b>File>Store>Store Configuration and Panels To 
-File...</b> or select <b>Panels>Store panels...</b> in the main JMRI window.
-<P>For more information on creating and displaying panels, including how to 
+with control panel setup and similar stuff. To store your panels in the same 
+file (recommended), select <b>File > Store > Store Configuration and Panels To 
+File...</b> or select <b>Panels > Store panels...</b> in the main JMRI window.
+
+			<p>For more information on creating and displaying panels, including how to 
 show signals on your panels, please see the 
-<A HREF="../../../../html/apps/PanelPro/Panels.shtml">Panels pages</a>.
+<a href="../../../../html/apps/PanelPro/Panels.shtml">Panels pages</a>.
+				<br/>
+				For more information on Aspect Signaling, 
+	see the <a href="../../../../html/tools/signaling/AspectSignaling.shtml">Aspect Signaling introduction</a>.
+	<p>Back to the <a href="../../../../html/tools/signaling/SignalMasts.shtml">Signal Mast help page</a>.</p>
 
 <!--#include virtual="/Footer" -->
+
+      </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
 </body>
 </html>
-

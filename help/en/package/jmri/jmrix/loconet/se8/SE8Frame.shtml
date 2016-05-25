@@ -2,15 +2,14 @@
 <!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI: Configure Digitrax SE8c
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help configure loconet DS64">
+ </title>
+    <meta content="Bob Jacobsen" name="Author">
+    <meta name="keywords" content="JMRI help configure loconet SE8C">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -23,7 +22,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Configure Digitrax SE8c</H1>
+<h1>Configure Digitrax SE8c</h1>
         <a href="SE8cConfigTool.png">
             <img src="SE8cConfigTool.png" 
                  alt="SE8c Configuration Tool Screen Capture">
@@ -31,13 +30,13 @@
     
 <p>
 The JMRI SE8c programming tool lets you configure 
-the internal options of a SE8c directly from your computer.
+the internal options of a Digitrax SE8c Signaling Decoder Board directly from your computer.
 <p>
-To open this tool from the JMRI start page select the Loconet tab 
+To open this tool from the JMRI start page select the Loconet tab and 
 then find the tool on the drop down list.
 <p>
 To use it, you put the address of an SE8c board in the text field
-and click "Read from SE8c".  The tool will read back the current
+and click "Read from SE8c". The tool will read back the current
 state of the various options, and set the check boxes to correspond to 
 their current values.
 <p>
@@ -46,25 +45,25 @@ to make your changes permanent.
 
 <h2>Limitations</h2>
 
-    <UL>
-        <LI>Because of the way the SE8c board works, this tool can't change
-            the basic address of the unit.</LI>
-        <LI>The SE8c can be configured to send Sensor status on the Loconet in 
+    <ul>
+        <li>Because of the way the SE8c board works, this tool can't change
+            the basic address of the unit.</li>
+        <li>The SE8c can be configured to send Sensor status on the Loconet in 
             response to a "track power on" command. The SE8c does not send 
-            Turnout status in response to a "track power on" command.</LI>
-        <LI>This tool is able to access SE8c boards with addresses between 1 and 
-            36.  Users are advised to avoid using the factory default board 
+            Turnout status in response to a "track power on" command.</li>
+        <li>This tool is able to access SE8c boards with addresses between 1 and 
+            36. Users are advised to avoid using the factory default board 
             address (board address 1) as it will be difficult to program new boards
             with unique data if any in-service board is using the factory default 
-            board address.</LI>
-    </UL>
+            board address.</li>
+    </ul>
 <h2>See Also</h2>
 <p>Documentation for the SE8c can be found at the 
-    <a href="http://www.digitrax.com">Digitrax Web Site.</a></p>
-    </div>
-  </div>
+    <a href="http://www.digitrax.com/tsd/product/SE8C/">Digitrax Web Site</a>.</p>
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
 

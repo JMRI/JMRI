@@ -1,0 +1,5 @@
+RewriteEngine on
+
+# Provide redirects for removed pages
+
+RewriteRule "getcode.shtml" "/help/en/html/doc/Technical/getgitcode.shtml" [R=302,L]

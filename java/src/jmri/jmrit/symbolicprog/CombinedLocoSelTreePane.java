@@ -1,63 +1,62 @@
-// CombinedLocoSelTreePane.java
 package jmri.jmrit.symbolicprog;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrit.decoderdefn.DecoderFile;
-import jmri.jmrit.decoderdefn.DecoderIndexFile;
-import jmri.jmrit.roster.Roster;
-import jmri.jmrit.roster.RosterEntry;
-import java.util.Enumeration;
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
-
+import java.util.List;
+import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.TreeNode;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultTreeSelectionModel;
+import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JRadioButton;
-import javax.swing.ButtonGroup;
-
-import java.util.List;
+import jmri.jmrit.decoderdefn.DecoderFile;
+import jmri.jmrit.decoderdefn.DecoderIndexFile;
+import jmri.jmrit.progsupport.ProgModeSelector;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.symbolicprog.tabbedframe.PaneProgPane;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Provide GUI controls to select a known loco and/or new decoder. <P> This is
- * an extension of the CombinedLocoSelPane class to use a JTree instead of a
- * JComboBox for the decoder selection. The loco selection (Roster manipulation)
- * parts are unchanged. <P> The JComboBox implementation always had to have
- * selected entries, so we added dummy "select from .." items at the top & used
- * those to indicate that there was no selection in that box. Here, the lack of
- * a selection indicates there's no selection.
+ * Provide GUI controls to select a known loco and/or new decoder.
+ * <P>
+ * This is an extension of the CombinedLocoSelPane class to use a JTree instead
+ * of a JComboBox for the decoder selection. The loco selection (Roster
+ * manipulation) parts are unchanged.
+ * <P>
+ * The JComboBox implementation always had to have selected entries, so we added
+ * dummy "select from .." items at the top {@literal &} used those to indicate
+ * that there was no selection in that box. Here, the lack of a selection
+ * indicates there's no selection.
  *
  * Internally, the "filter" is used to only show identified models (leaf nodes).
- * This is implemented in internal InvisibleTreeModel and DecoderTreeNode classes.
- * 
+ * This is implemented in internal InvisibleTreeModel and DecoderTreeNode
+ * classes.
+ *
  * The decoder definition "Showable" attribute also interacts with those.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2013
- * @version	$Revision$
  */
 public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
 
-    public CombinedLocoSelTreePane(JLabel s) {
-        super(s);
+    public CombinedLocoSelTreePane(JLabel s, ProgModeSelector selector) {
+        super(s, selector);
     }
 
-    public CombinedLocoSelTreePane() {
-        super();
-    }
     protected JTree dTree;
     InvisibleTreeModel dModel;
     DecoderTreeNode dRoot;
@@ -102,7 +101,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
         dTree.addTreeSelectionListener(dListener = new TreeSelectionListener() {
 
             public void valueChanged(TreeSelectionEvent e) {
-                log.debug("selection changed "+dTree.isSelectionEmpty()+" "+dTree.getSelectionPath());
+                log.debug("selection changed " + dTree.isSelectionEmpty() + " " + dTree.getSelectionPath());
                 if (!dTree.isSelectionEmpty() && dTree.getSelectionPath() != null
                         && // can't be just a mfg, has to be at least a family
                         dTree.getSelectionPath().getPathCount() > 2
@@ -151,7 +150,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
         showAll = new JRadioButton(Bundle.getMessage("LabelAll"));
         showAll.setSelected(true);
         showMatched = new JRadioButton(Bundle.getMessage("LabelMatched"));
-        
+
         if (jmri.InstanceManager.programmerManagerInstance() != null
                 && jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()) {
             ButtonGroup group = new ButtonGroup();
@@ -159,8 +158,6 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
             group.add(showMatched);
             viewButtons.add(showAll);
             viewButtons.add(showMatched);
-
-
 
             pane1a.add(viewButtons, BorderLayout.SOUTH);
             showAll.addActionListener(new ActionListener() {
@@ -184,7 +181,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
                         dModel.activateFilter(true);
                         dModel.reload();
                         for (TreePath path : selectedPath) {
-                            log.debug("action selects path: "+path);
+                            log.debug("action selects path: " + path);
                             dTree.expandPath(path);
                             dTree.addSelectionPath(path);
                             dTree.scrollPathToVisible(path);
@@ -198,8 +195,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
     }
 
     /**
-     * Reads the available decoders and loads them into
-     * the dModel tree model.
+     * Reads the available decoders and loads them into the dModel tree model.
      */
     void createDecoderTypeContents() {
         List<DecoderFile> decoders = DecoderIndexFile.instance().matchingDecoderList(null, null, null, null, null, null);
@@ -216,7 +212,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
                     + " on nodes "
                     + (mfgElement == null ? "<null>" : mfgElement.toString() + "(" + mfgElement.getChildCount() + ")") + "/"
                     + (familyElement == null ? "<null>" : familyElement.toString() + "(" + familyElement.getChildCount() + ")"));
-            
+
             // build elements
             if (mfgElement == null || !mfg.equals(mfgElement.toString())) {
                 // need new mfg node
@@ -228,18 +224,6 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
             }
             String famComment = decoders.get(i).getFamilyComment();
             String verString = decoders.get(i).getVersionsAsString();
-            String hoverText = "";
-            if (famComment == "" || famComment == null) {
-                if (verString != "") {
-                    hoverText = "CV7=" + verString;
-                }
-            } else {
-                if (verString == "") {
-                    hoverText = famComment;
-                } else {
-                    hoverText = famComment + "  CV7=" + verString;
-                }
-            }
             if (familyElement == null || (!family.equals(familyElement.toString()) && !familyNameNode.containsKey(family))) {
                 // need new family node - is there only one model? Expect the
                 // family element, plus the model element, so check i+2
@@ -251,7 +235,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
                     // normal here; insert the new family element & exit
                     log.debug("normal family update case: " + family);
                     familyElement = new DecoderTreeNode(family,
-                            hoverText,
+                            getHoverText(verString, famComment),
                             decoders.get(i).titleString());
                     dModel.insertNodeInto(familyElement, mfgElement, mfgElement.getChildCount());
                     familyNameNode.put(family, familyElement);
@@ -265,7 +249,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
                     }
                     family = decoders.get(i + 1).getModel();
                     familyElement = new DecoderTreeNode(family,
-                            hoverText,
+                            getHoverText(verString, famComment),
                             decoders.get(i).titleString());
                     dModel.insertNodeInto(familyElement, mfgElement, mfgElement.getChildCount());
                     familyNameNode.put(family, familyElement);
@@ -278,8 +262,9 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
                 if (familyNameNode.containsKey(family)) {
                     familyElement = familyNameNode.get(family);
                 }
+                String modelComment = decoders.get(i).getModelComment();
                 DecoderTreeNode decoderNameNode = new DecoderTreeNode(model,
-                        hoverText,
+                        getHoverText(verString, modelComment),
                         decoders.get(i).titleString());
                 decoderNameNode.setShowable(decoder.getShowable());
                 dModel.insertNodeInto(decoderNameNode, familyElement, familyElement.getChildCount());
@@ -287,7 +272,29 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
         }  // end of loop over decoders       
     }
 
-    @SuppressWarnings("unchecked")
+    /**
+     * Provide tooltip text: Decoder comment, with CV version info, formatted as
+     * best we can
+     *
+     * @param verString version string, typically from
+     *                  (decoder).getVersionsAsString()
+     */
+    String getHoverText(String verString, String comment) {
+        if (comment == null || comment.equals("")) {
+            if (!verString.equals("")) {
+                return "CV7=" + verString;
+            } else {
+                return "";
+            }
+        } else {
+            if (verString.equals("")) {
+                return comment;
+            } else {
+                return PaneProgPane.addTextHTMLaware(comment, " (CV7=" + verString + ")");
+            }
+        }
+    }
+
     public void resetSelections() {
         Enumeration<DecoderTreeNode> e = dRoot.breadthFirstEnumeration();
         while (e.hasMoreElements()) {
@@ -309,7 +316,6 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
     /**
      * Decoder identify has matched one or more specific types
      */
-    @SuppressWarnings("unchecked")
     void updateForDecoderTypeID(List<DecoderFile> pList) {
         // find and select the first item
         if (log.isDebugEnabled()) {
@@ -332,29 +338,31 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
         } else {
             dTree.getSelectionModel().setSelectionMode(DefaultTreeSelectionModel.SINGLE_TREE_SELECTION);
         }
-    
+
         // set everybody not identified 
         Enumeration<DecoderTreeNode> e = dRoot.breadthFirstEnumeration();
         while (e.hasMoreElements()) { // loop over the tree
             DecoderTreeNode node = e.nextElement();
             node.setIdentified(false);
         }
-                    
+
         selectedPath = new ArrayList<TreePath>();
 
         // Find decoder nodes in tree and set selected
         for (int i = 0; i < pList.size(); i++) { // loop over selected decoders
+            e = dRoot.breadthFirstEnumeration();
 
             DecoderFile f = pList.get(i);
             String findMfg = f.getMfg();
             String findFamily = f.getFamily();
             String findModel = f.getModel();
 
-            e = dRoot.breadthFirstEnumeration();
             while (e.hasMoreElements()) { // loop over the tree & find node
                 DecoderTreeNode node = e.nextElement();
                 // never match show=NO nodes
-                if (node.getShowable() == DecoderFile.Showable.NO) continue;
+                if (node.getShowable() == DecoderFile.Showable.NO) {
+                    continue;
+                }
                 // convert path to comparison string
                 TreeNode[] list = node.getPath();
                 if (list.length == 3) {
@@ -364,8 +372,8 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
                         log.debug("match length 3");
                         node.setIdentified(true);
                         dModel.reload();
-                        ((DecoderTreeNode)list[1]).setIdentified(true);
-                        ((DecoderTreeNode)list[2]).setIdentified(true);
+                        ((DecoderTreeNode) list[1]).setIdentified(true);
+                        ((DecoderTreeNode) list[2]).setIdentified(true);
                         TreePath path = new TreePath(node.getPath());
                         selectedPath.add(path);
                         break;
@@ -378,9 +386,9 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
                         log.debug("match length 4");
                         node.setIdentified(true);
                         dModel.reload();
-                        ((DecoderTreeNode)list[1]).setIdentified(true);
-                        ((DecoderTreeNode)list[2]).setIdentified(true);
-                        ((DecoderTreeNode)list[3]).setIdentified(true);
+                        ((DecoderTreeNode) list[1]).setIdentified(true);
+                        ((DecoderTreeNode) list[2]).setIdentified(true);
+                        ((DecoderTreeNode) list[3]).setIdentified(true);
                         TreePath path = new TreePath(node.getPath());
                         selectedPath.add(path);
                         break;
@@ -389,7 +397,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
             }
         }
         // now select and show paths in tree
-        for (TreePath path : selectedPath ) {
+        for (TreePath path : selectedPath) {
             dTree.addSelectionPath(path);
             dTree.expandPath(path);
             dTree.scrollPathToVisible(path);
@@ -400,19 +408,20 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
      * Decoder identify has not matched specific types, but did find
      * manufacturer match
      *
-     * @param pMfg Manufacturer name. This is passed to save time, as it has
-     * already been determined once.
-     * @param pMfgID Manufacturer ID number (CV8)
+     * @param pMfg     Manufacturer name. This is passed to save time, as it has
+     *                 already been determined once.
+     * @param pMfgID   Manufacturer ID number (CV8)
      * @param pModelID Model ID number (CV7)
      */
-    @SuppressWarnings("unchecked")
     void updateForDecoderMfgID(String pMfg, int pMfgID, int pModelID) {
         String msg = "Found mfg " + pMfgID + " (" + pMfg + ") version " + pModelID + "; no such decoder defined";
         log.warn(msg);
         _statusLabel.setText(msg);
         // find this mfg to select it
         dTree.clearSelection();
+
         Enumeration<DecoderTreeNode> e = dRoot.breadthFirstEnumeration();
+
         ArrayList<DecoderTreeNode> selected = new ArrayList<DecoderTreeNode>();
         selectedPath = new ArrayList<TreePath>();
         while (e.hasMoreElements()) {
@@ -433,7 +442,9 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
         }
         for (DecoderTreeNode node : selected) {
             node.setIdentified(true);
-            Enumeration<DecoderTreeNode> es = node.breadthFirstEnumeration();
+
+            Enumeration<DecoderTreeNode> es = dRoot.breadthFirstEnumeration();
+
             while (es.hasMoreElements()) {
                 es.nextElement().setIdentified(true);
             }
@@ -456,11 +467,11 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
     }
 
     /**
-     * Set the decoder selection to a specific decoder from a selected Loco. <P>
+     * Set the decoder selection to a specific decoder from a selected Loco.
+     * <P>
      * This must not trigger an update event from the Tree selection, so we
      * remove and replace the listener.
      */
-    @SuppressWarnings("unchecked")
     void setDecoderSelectionFromLoco(String loco) {
         // if there's a valid loco entry...
         RosterEntry locoEntry = Roster.instance().entryFromTitle(loco);
@@ -472,16 +483,12 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
         // get the decoder type, it has to be there (assumption!),
         String modelString = locoEntry.getDecoderModel();
         String familyString = locoEntry.getDecoderFamily();
-        String titleString = DecoderFile.titleString(modelString, familyString);
-
-        // find the decoder mfg
-        DecoderIndexFile.instance().fileFromTitle(titleString).getMfg();
 
         // close the entire GUI (not currently done, users want left open)
         //collapseAll();
-
         // find this one to select it
         Enumeration<DecoderTreeNode> e = dRoot.breadthFirstEnumeration();
+
         while (e.hasMoreElements()) {
             DecoderTreeNode node = e.nextElement();
             DecoderTreeNode parentNode = (DecoderTreeNode) node.getParent();
@@ -522,151 +529,160 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
     boolean isDecoderSelected() {
         return !dTree.isSelectionEmpty();
     }
-    static Logger log = LoggerFactory.getLogger(CombinedLocoSelTreePane.class.getName());
-}
+    private final static Logger log = LoggerFactory.getLogger(CombinedLocoSelTreePane.class.getName());
 
-/**
- * The following has been taken from an example given in..
- * http://www.java2s.com/Code/Java/Swing-Components/DecoderTreeNodeTreeExample.htm
- * with extracts from http://www.codeguru.com/java/articles/143.shtml
- * 
-*/
-class InvisibleTreeModel extends DefaultTreeModel {
+    /**
+     * The following has been taken from an example given in..
+     * http://www.java2s.com/Code/Java/Swing-Components/DecoderTreeNodeTreeExample.htm
+     * with extracts from http://www.codeguru.com/java/articles/143.shtml
+     *
+     */
+    static class InvisibleTreeModel extends DefaultTreeModel {
 
-    protected boolean filterIsActive;
+        protected boolean filterIsActive;
 
-    public InvisibleTreeModel(TreeNode root) {
-        this(root, false);
-    }
-
-    public InvisibleTreeModel(TreeNode root, boolean asksAllowsChildren) {
-        this(root, false, false);
-    }
-
-    public InvisibleTreeModel(TreeNode root, boolean asksAllowsChildren,
-            boolean filterIsActive) {
-        super(root, asksAllowsChildren);
-        this.filterIsActive = filterIsActive;
-    }
-
-    public void activateFilter(boolean newValue) {
-        filterIsActive = newValue;
-    }
-
-    public boolean isActivatedFilter() {
-        return filterIsActive;
-    }
-
-    public Object getChild(Object parent, int index) {
-        if (parent instanceof DecoderTreeNode) {
-            return ((DecoderTreeNode) parent).getChildAt(index,
-                    filterIsActive);
-        }
-        return ((TreeNode) parent).getChildAt(index);
-    }
-
-    public int getChildCount(Object parent) {
-        if (parent instanceof DecoderTreeNode) {
-            return ((DecoderTreeNode) parent).getChildCount(filterIsActive);
-        }
-        return ((TreeNode) parent).getChildCount();
-    }
-}
-
-class DecoderTreeNode extends DefaultMutableTreeNode {
-
-    protected boolean isIdentified;
-    private String toolTipText;
-    private String title;
-    DecoderFile.Showable showable = DecoderFile.Showable.YES;  // default
-
-    public DecoderTreeNode(String str, String toolTipText, String title) {
-        this(str);
-        this.toolTipText = toolTipText;
-        this.title = title;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getToolTipText() {
-        return toolTipText;
-    }
-
-    public DecoderTreeNode(Object userObject) {
-        this(userObject, true, false, DecoderFile.Showable.YES);
-    }
-
-    public DecoderTreeNode(Object userObject, boolean allowsChildren,
-            boolean isIdentified, DecoderFile.Showable showable) {
-        super(userObject, allowsChildren);
-        this.isIdentified = isIdentified;
-        this.showable = showable;
-    }
-
-    public TreeNode getChildAt(int index, boolean filterIsActive) {
-        if (children == null) {
-            throw new ArrayIndexOutOfBoundsException("node has no children");
+        public InvisibleTreeModel(TreeNode root) {
+            this(root, false);
         }
 
-        int realIndex = -1;
-        int visibleIndex = -1;
-        Enumeration<?> e = children.elements();
-        while (e.hasMoreElements()) {
-            DecoderTreeNode node = (DecoderTreeNode) e.nextElement();
-            if (node.isVisible(filterIsActive)) {
-                visibleIndex++;
+        public InvisibleTreeModel(TreeNode root, boolean asksAllowsChildren) {
+            this(root, false, false);
+        }
+
+        public InvisibleTreeModel(TreeNode root, boolean asksAllowsChildren,
+                boolean filterIsActive) {
+            super(root, asksAllowsChildren);
+            this.filterIsActive = filterIsActive;
+        }
+
+        public void activateFilter(boolean newValue) {
+            filterIsActive = newValue;
+        }
+
+        public boolean isActivatedFilter() {
+            return filterIsActive;
+        }
+
+        public Object getChild(Object parent, int index) {
+            if (parent instanceof DecoderTreeNode) {
+                return ((DecoderTreeNode) parent).getChildAt(index,
+                        filterIsActive);
             }
-            realIndex++;
-            if (visibleIndex == index) {
-                return (TreeNode) children.elementAt(realIndex);
+            return ((TreeNode) parent).getChildAt(index);
+        }
+
+        public int getChildCount(Object parent) {
+            if (parent instanceof DecoderTreeNode) {
+                return ((DecoderTreeNode) parent).getChildCount(filterIsActive);
             }
+            return ((TreeNode) parent).getChildCount();
         }
-
-        throw new ArrayIndexOutOfBoundsException("index unmatched");
-        //return (TreeNode)children.elementAt(index);
     }
 
-    public int getChildCount(boolean filterIsActive) {
-        if (children == null) {
-            return 0;
+    static class DecoderTreeNode extends DefaultMutableTreeNode {
+
+        protected boolean isIdentified;
+        private String toolTipText;
+        private String title;
+        DecoderFile.Showable showable = DecoderFile.Showable.YES;  // default
+
+        public DecoderTreeNode(String str, String toolTipText, String title) {
+            this(str);
+            this.toolTipText = toolTipText;
+            this.title = title;
         }
 
-        int count = 0;
-        Enumeration<?> e = children.elements();
-        while (e.hasMoreElements()) {
-            DecoderTreeNode node = (DecoderTreeNode) e.nextElement();
-            if (node.isVisible(filterIsActive)) {
-                count++;
+        @Override
+        @SuppressWarnings("unchecked") // required because super.breadthFirstEnumeration not fully typed
+        public Enumeration<DecoderTreeNode> breadthFirstEnumeration() {
+            return super.breadthFirstEnumeration();
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public String getToolTipText() {
+            return toolTipText;
+        }
+
+        public DecoderTreeNode(Object userObject) {
+            this(userObject, true, false, DecoderFile.Showable.YES);
+        }
+
+        public DecoderTreeNode(Object userObject, boolean allowsChildren,
+                boolean isIdentified, DecoderFile.Showable showable) {
+            super(userObject, allowsChildren);
+            this.isIdentified = isIdentified;
+            this.showable = showable;
+        }
+
+        public TreeNode getChildAt(int index, boolean filterIsActive) {
+            if (children == null) {
+                throw new ArrayIndexOutOfBoundsException("node has no children");
             }
-        }
 
-        return count;
-    }
-
-    public void setIdentified(boolean isIdentified) {
-        this.isIdentified = isIdentified;
-    }
-
-    public void setShowable(DecoderFile.Showable showable) {
-        this.showable = showable;
-    }
-    public DecoderFile.Showable getShowable() {
-        return this.showable;
-    }
-
-    private boolean isVisible(boolean filterIsActive) {
-        // if there are children, are any visible?
-        if (children != null) {
+            int realIndex = -1;
+            int visibleIndex = -1;
             Enumeration<?> e = children.elements();
             while (e.hasMoreElements()) {
                 DecoderTreeNode node = (DecoderTreeNode) e.nextElement();
-                if (node.isVisible(filterIsActive)) return true;
+                if (node.isVisible(filterIsActive)) {
+                    visibleIndex++;
+                }
+                realIndex++;
+                if (visibleIndex == index) {
+                    return (TreeNode) children.elementAt(realIndex);
+                }
             }
-            return false;
+
+            throw new ArrayIndexOutOfBoundsException("index unmatched");
+            //return (TreeNode)children.elementAt(index);
         }
-        // no children
-        return isIdentified || (!filterIsActive && (showable == DecoderFile.Showable.YES));
+
+        public int getChildCount(boolean filterIsActive) {
+            if (children == null) {
+                return 0;
+            }
+
+            int count = 0;
+            Enumeration<?> e = children.elements();
+            while (e.hasMoreElements()) {
+                DecoderTreeNode node = (DecoderTreeNode) e.nextElement();
+                if (node.isVisible(filterIsActive)) {
+                    count++;
+                }
+            }
+
+            return count;
+        }
+
+        public void setIdentified(boolean isIdentified) {
+            this.isIdentified = isIdentified;
+        }
+
+        public void setShowable(DecoderFile.Showable showable) {
+            this.showable = showable;
+        }
+
+        public DecoderFile.Showable getShowable() {
+            return this.showable;
+        }
+
+        private boolean isVisible(boolean filterIsActive) {
+            // if there are children, are any visible?
+            if (children != null) {
+                Enumeration<?> e = children.elements();
+                while (e.hasMoreElements()) {
+                    DecoderTreeNode node = (DecoderTreeNode) e.nextElement();
+                    if (node.isVisible(filterIsActive)) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            // no children
+            return isIdentified || (!filterIsActive && (showable == DecoderFile.Showable.YES));
+        }
     }
 }

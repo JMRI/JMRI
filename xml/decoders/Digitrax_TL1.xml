@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003, 2004, 2005, 2007 All rights reserved -->
-<!-- $Id: Digitrax_TL1.xml 22115 2012-12-30 02:15:20Z jacobsen $ -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -21,18 +21,22 @@
     </family>
     <programming direct="byteOnly" paged="yes" register="yes" ops="no"/>
     <variables>
-      <xi:include href="http://jmri.org/xml/decoders/digitrax/shortAndLongAddress.xml"/>
-      <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version" default="250">
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable CV="7" readOnly="yes" item="Decoder Version" default="250">
         <decVal/>
         <label>Version ID</label>
-       <label xml:lang="it">ID Versione</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer" default="129">
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="129">
         <decVal/>
         <label>Manufacturer ID</label>
-       <label xml:lang="it">ID Costruttore</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
       </variable>
-      <variable label="Effect Generated" CV="49" mask="XXXXXVVV" item="Effect Generated">
+      <variable CV="49" mask="XXXXXVVV" item="Effect Generated">
         <enumVal>
           <enumChoice choice="Normal on off">
             <choice>Normal on off</choice>
@@ -68,19 +72,19 @@
           </enumChoice>
         </enumVal>
         <label>Effect Generated</label>
-      <label xml:lang="it">Effetti generati</label>
+        <label xml:lang="it">Effetti generati</label>
       </variable>
-      <variable label="Use F0 for function control" CV="61" mask="XXXXXXXV" item="F0 use">
+      <variable CV="61" mask="XXXXXXXV" item="F0 use">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Use F0 for function control</label>
-      <label xml:lang="it">Usa F0 per controllo funzioni</label>
+        <label xml:lang="it">Usa F0 per controllo funzioni</label>
       </variable>
-      <variable label="Digitrax Transponding" CV="61" mask="XXXXXXVX" item="Transpond" default="1">
+      <variable CV="61" mask="XXXXXXVX" item="Transpond" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Digitrax Transponding</label>
-       <label xml:lang="it">Tranponding Digitrax</label>
+        <label xml:lang="it">Tranponding Digitrax</label>
       </variable>
-      <variable label="Effect Rate" CV="62" mask="XXXXXVVV" item="Effect Rate" tooltip="0 is slowest- max 7">
+      <variable CV="62" mask="XXXXXVVV" item="Effect Rate" tooltip="0 is slowest- max 7">
         <enumVal>
           <enumChoice choice="0 slowest">
             <choice>0 slowest</choice>
@@ -111,7 +115,7 @@
         </enumVal>
         <label>Effect Rate</label>
       </variable>
-      <variable label="Function controlling output" CV="64" mask="XXXXXXXV" item="ControlFn">
+      <variable CV="64" mask="XXXXXXXV" item="ControlFn">
         <enumVal>
           <enumChoice choice="F0 or F1">
             <choice>F0 or F1</choice>
@@ -128,21 +132,21 @@
           </enumChoice>
         </enumVal>
         <label>Function controlling output</label>
-       <label xml:lang="it">Funzioni per controllare uscita</label>
+        <label xml:lang="it">Funzioni per controllare uscita</label>
       </variable>
     </variables>
-   <resets>
+    <resets>
       <factReset label="Reset All CVs" CV="8" default="8">
-                 <label>Reset All CVs</label>
-                 <label xml:lang="it">Ripristino di tutte le CV</label>
+        <label>Reset All CVs</label>
+        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
       </factReset>
       <factReset label="Reset All CVs except speed table" CV="8" default="9">
-                 <label>Reset All CVs except speed table</label>
-                 <label xml:lang="it">Ripristino di tutte le CV eccetto Tabella velocit�</label>
+        <label>Reset All CVs except speed table</label>
+        <label xml:lang="it">Reset delle CV salvo Tabella Velocità ai valori di fabbrica</label>
       </factReset>
     </resets>
   </decoder>
-  <pane name="Function Output">
+  <pane>
     <column>
       <display item="Transpond"/>
       <display item="ControlFn"/>

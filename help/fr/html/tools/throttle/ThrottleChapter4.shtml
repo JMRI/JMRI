@@ -1,22 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ThrottleChapter4.shtml,v 1.4 2009/12/08 19:42:17 hebbos Exp $ -->
-<!-- Translated by Blorec Hervé le 2011-18-07-->
-
+<!-- Translated by Blorec Herv&eegu; le 2011-18-07-->
 <html lang="fr">
 <head>
   <title>Throttle: Opening/Saving a Throttle Layout </title>
   <meta name="keywords" content="JMRI decoderpro dcc nmra throttlepro">
   <meta name="Description" content="Throttle documentation for JMRI project">
-  <meta name="Keywords" content="JMRI">
   <meta name="Author" content="Paul Fraker (paul@frakers.com)">
   <meta name="Language" content="fr">
   <meta name="Robots" content="Index, Follow">
   <meta name="Revisit-After" content="7 Days">
-  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-  <!-- are an arbitrary design pattern used by the update.pl script to -->
-  <!-- easily replace the common header/footer code for all the web pages -->
-  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-  <!-- or change them to reflect your alternative logo -->
+
   <!-- Style -->
   <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
@@ -30,54 +23,54 @@
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 
-<div id="mainContent">dossier (sous-répertoire)
-<h1 style="color:#ff0000">Mise à jour Version documentation du Régulateur
+<div id="mainContent">dossier (sous-r&eacute;pertoire)
+<h1 style="color:#ff0000">Mise &aacute; jour Version documentation du R&eacute;gulateur
 </span></h1>
 
-<p>S'il vous plaît noter que cette documentation a été mise à jour, reportez-vous aux liens ci-dessous:</p>
+<p>S'il vous pla&icirc;t noter que cette documentation a &eacute;t&eacute; mise &aacute; jour, reportez-vous aux liens ci-dessous:</p>
 <ul>
-  <li>Le <a href="ToolsMenuThrottleEntry.shtml">menu Régulateur dans JMRI</a></li>
-  <li>La <a href="BasicThrottleWindow.shtml">Fenêtre Régulateur elle-même</a></li>
-  <li>Les <a href="ThrottleWindowMenus.shtml">menus Fenêtre Régulateur</a></li>
-  <li>La <a href="ThrottleToolBar.shtml">barre d'outils Fenêtre Régulateur</a></li>
-  <li>La <a href="AdvancedThrottleControl.shtml">Fenêtre contrôles Régulateur</a></li>
-  <li>La <a href="ThrottlesListWindow.shtml">Liste des Fenêtres Régulateurs</a></li>
-    <li>Le <a href="ThrottlesPreferencesPane.shtml">volet préférences Régulateurs</a></li></ul>
+  <li>Le <a href="ToolsMenuThrottleEntry.shtml">menu R&eacute;gulateur dans JMRI</a></li>
+  <li>La <a href="BasicThrottleWindow.shtml">Fen&ecirc;tre R&eacute;gulateur elle-m&ecirc;me</a></li>
+  <li>Les <a href="ThrottleWindowMenus.shtml">menus Fen&ecirc;tre R&eacute;gulateur</a></li>
+  <li>La <a href="ThrottleToolBar.shtml">barre d'outils Fen&ecirc;tre R&eacute;gulateur</a></li>
+  <li>La <a href="AdvancedThrottleControl.shtml">Fen&ecirc;tre contr&ocirc;les R&eacute;gulateur</a></li>
+  <li>La <a href="ThrottlesListWindow.shtml">Liste des Fen&ecirc;tres R&eacute;gulateurs</a></li>
+  <li>Le <a href="ThrottlesPreferencesPane.shtml">volet pr&eacute;f&eacute;rences R&eacute;gulateurs</a></li>
+  </ul>
 
-<h1>Enregistrement d'une Présentation de Régulateur </h1>
+<h2>Enregistrement d'une Configuration de R&eacute;gulateur</h2>
 
-<p> Une nouvelle fenêtre régulateur  peut être démarrée et une adresse DCC créée pour faire circuler
- un train sur , puis fermer la fenêtre régulateur lorsque c'est terminé avec
-elle. Bien sûr, cela perd la Mise en page que vous avez établie au cours de cette
-session régulateur. Et cela est très bien si vous exécutez un test de toutes sortes sur une loco
-que vous n'avez pas l'intention de faire circuler à l'aide d'un de ces régulateurs informatiques .
-Par conséquent, la fermeture de la fenêtre du régulateur pour l'éliminer suffirait. </P>
+<p> Une nouvelle Fen&ecirc;tre r&eacute;gulateur  peut &ecirc;tre d&eacute;marr&eacute;e et une adresse DCC cr&eacute;&eacute;e pour faire circuler
+ un train sur , puis fermer la Fen&ecirc;tre r&eacute;gulateur lorsque c'est termin&eacute; avec
+elle. Bien s&ucirc;r, cela perd la configuration que vous avez &eacute;tablie au cours de cette
+session r&eacute;gulateur. Et cela est tr&eacute;s bien si vous ex&eacute;cutez un test de toutes sortes sur une loco
+que vous n'avez pas l'intention de faire circuler &aacute; l'aide d'un de ces r&eacute;gulateurs informatiques .
+Par cons&eacute;quent, la fermeture de la Fen&ecirc;tre du r&eacute;gulateur pour l'&eacute;liminer suffirait. </P>
 
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
    <tbody>
      <tr>
        <td align="left" valign="top"> <p> Mais que faire si vous ne voulez pas garder
-         établit une fenêtre de Régulateur à chaque fois pour une ou plusieurs dossier (sous-répertoire)
+         &eacute;tablit une Fen&ecirc;tre de R&eacute;gulateur &aacute; chaque fois pour une ou plusieurs dossier (sous-r&eacute;pertoire)
          locomotives que vous comptez piloter depuis votre ordinateur? </p>
 
-         <p> Si vous suiviez  <a href= "ThrottleChapter2.shtml"> chapitres précédents </a> avec la constitution d'une nouvelle
-         mise en page de régulateur et  obtenu que votre train bouge, alors la question 
+         <p> Si vous suiviez  <a href= "ThrottleChapter2.shtml"> chapitres pr&eacute;c&eacute;dents </a> avec la constitution d'une nouvelle
+         mise en page de r&eacute;gulateur et  obtenu que votre train bouge, alors la question 
          qui vient probablement de votre esprit est la suivante: "comment puis-je le sauvegarder?"</p>
 
         <p> suivant les instructions fournies dans le <a
          href= " ThrottleChapter1.shtml "> Chapitre 1 </a> pour localiser le
-         Menu Régulateur, localisez l'option qui dit "<strong> Enregistrer
-         Mise en page Régulateur </strong> »(voir Figure 4-1 à droite). Cliquer sur cette option de menu
-         permet d'afficher une boîte de dialogue "<b> Enregistrer sous </b>" voir la figure 4-2
+         Menu R&eacute;gulateur, localisez l'option qui dit "<strong>Enregistrer
+         Mise en page R&eacute;gulateur</strong>" (voir Figure 4-1 &aacute; droite). Cliquer sur cette option de menu
+         permet d'afficher une bo&icirc;te de dialogue "<b>Enregistrer sous</b>" voir la figure 4-2
          ci-dessous). </p>
        </td>
        <td> <img width="20" height="20" src="images/spacer.gif"> </td>
        <td align="center" valign="top"><br>
 
-
           <p style ="text-align: center; font-size: xx-small"><img width = "163"
         height="82" src="images/jmri006.jpg" title="Save Throttle Layout"><br>
-         Figure 4-1: Enregistrer la Mise en page Régulateur </p>
+         Figure 4-1: Enregistrer la Mise en page R&eacute;gulateur </p>
        </td>
      </tr>
    </tbody>
@@ -85,257 +78,236 @@ Par conséquent, la fermeture de la fenêtre du régulateur pour l'éliminer suffira
 
 <p style="text-align: center; font-size: xx-small"><img width="327"
 height="272" src="images/jmri040.jpg" title="Save As Dialog"><br>
-Figure 4-2: Boîte de dialogue Enregistrer 
+Figure 4-2: Bo&icirc;te de dialogue Enregistrer 
 
-<p> Par défaut, il doit montrer le répertoire où votre liste de fichier se trouve.
-Vous pouvez l'enregistrer dans ce répertoire si vous le souhaitez, ou vous pouvez l'enregistrer à un autre
-emplacement de votre choix. Par exemple, la figure de droite montre un dossier (sous-répertoire)
-"Régulateurs" où tous les fichiers de Mise en page régulateurs sont
+<p> Par d&eacute;faut, il doit montrer le r&eacute;pertoire o&uacute; votre liste de fichier se trouve.
+Vous pouvez l'enregistrer dans ce r&eacute;pertoire si vous le souhaitez, ou vous pouvez l'enregistrer &aacute; un autre
+emplacement de votre choix. Par exemple, la figure de droite montre un dossier (sous-r&eacute;pertoire)
+"R&eacute;gulateurs" o&uacute; tous les fichiers de Mise en page r&eacute;gulateurs sont
 sauvegarder. </p>
 
-<p> Après avoir entré un nom de fichier de votre choix (et l'emplacement en option) qui
-supporte le mieux votre environnement de chemin de fer, l'agencement des régulateurs en cours sera
-sauvegardé avec toutes les préférences, notamment la taille des fenêtres et l'emplacement. </p>
+<p> Apr&egrave;s avoir entr&eacute; un nom de fichier de votre choix (et l'emplacement en option) qui
+supporte le mieux votre environnement de chemin de fer, l'agencement des r&eacute;gulateurs en cours sera
+sauvegard&eacute; avec toutes les pr&eacute;f&eacute;rences, notamment la taille des Fen&ecirc;tres et l'emplacement. </p>
 
-<p> Après que la sauvegarde soit réussie, vous pouvez fermer la fenêtre régulateurs. </p>
+<p> Apr&egrave;s que la sauvegarde soit r&eacute;ussie, vous pouvez fermer la Fen&ecirc;tre r&eacute;gulateurs. </p>
 
-<p class="important"> <b>Remarque : </b> l'option "Enregistrer" permettra d'enregistre <u> toutes </u> les fenêtres régulateurs ouvertes--Elles ne sont pas sauvegarder comme des régulateurs individuels. Ceci est expliqué plus en détail ci-dessous.</P>
-<br>
-<br>
-<br>
+<p class="important"> <b>Remarque: </b> l'option "Enregistrer" permettra d'enregistrer <u>toutes</u> les Fen&ecirc;tres r&eacute;gulateurs ouvertes. Elles ne sont pas sauvegarder comme des r&eacute;gulateurs individuels. Ceci est expliqu&eacute; plus en d&eacute;tail ci-dessous.</p>
+
 <a name="SaveMultiple"> </a>
-
-<h2> Sauvegarde de multiples Fenêtres Régulateurs </h2> 
+<h2>Sauvegarde de multiples Fen&ecirc;tres R&eacute;gulateurs</h2> 
 
 <dir>
    <p> Les instructions ci-dessus sont assez simples quand on travaille avec une seule
-  fenêtre régulateur.</p>
+  Fen&ecirc;tre r&eacute;gulateur.</p>
 
- <p></p>
+  <p> Mais ce qui arrive quand vous avez deux ou plusieurs Fen&ecirc;tres r&eacute;gulateurs ouvertes 
+  en m&ecirc;me temps? Lorsque vous utilisez l'option de sauvegarde, <u> toutes </u> les Fen&ecirc;tres r&eacute;gulateurs
+  seront sauvegard&eacute;es dans le m&ecirc;me fichier. Lorsque ce fichier est r&eacute;-ouvert, toutes les 
+Fen&ecirc;tres r&eacute;gulateurs identifi&eacute;es dans ce fichier seront ouvertes.</p>
 
-  <p> Mais ce qui arrive quand vous avez deux ou plusieurs fenêtres régulateurs ouvertes 
-  en même temps? Lorsque vous utilisez l'option de sauvegarde, <u> toutes </u> les fenêtres régulateurs
-  seront sauvegardées dans le même fichier. Lorsque ce fichier est ré-ouvert, toutes les 
-fenêtres régulateurs identifiées dans ce fichier seront ouvertes.</p>
-
-  <p> Ceci est important à comprendre. En particulier lorsque l'on travaille 
-  avec <a href="#Merging"> plusieurs régulateurs fusionnés </a>.</p>
+  <p> Ceci est important &aacute; comprendre. En particulier lorsque l'on travaille 
+  avec <a href="#Merging">plusieurs r&eacute;gulateurs fusionn&eacute;s</a>.</p>
 
   <table border="0" width="100%" cellpadding="0" cellspacing="0">
     <tbody>
       <tr>
-        <td valign="top"><p><p> Dans le chapitre précédent, une fenêtre régulateur simple
-          a été initiée. Et un simple «sauver» aurait certainement sauvé juste
-          la fenêtre régulateur unique dans un fichier de Mise en page unique. Lorsque le fichier
-          est de nouveau ouvert, seule la fenêtre régulateur simple apparait.</p>
+        <td valign="top"><p><p> Dans le chapitre pr&eacute;c&eacute;dent, une Fen&ecirc;tre r&eacute;gulateur simple
+          a &eacute;t&eacute; initi&eacute;e. Et un simple "sauver" aurait certainement sauv&eacute; juste
+          la Fen&ecirc;tre r&eacute;gulateur unique dans un fichier de Mise en page unique. Lorsque le fichier
+          est de nouveau ouvert, seule la Fen&ecirc;tre r&eacute;gulateur simple apparait.</p>
         </Td>
         <td> <img width="20" height="20" src="images/spacer.gif"> </td>
         <td align="center" valign="top"> <p
           style = "text-align: center; font-size: xx-small">  <img width = "309"
           height = "187" src = "images/jmri036.jpg"
-          title= "Exemple de deux fenêtres actives d'accélérateur"> <br>
-          Figure 4-3: Deux fenêtres Régulateurs actives  </p>
+          title= "Exemple de deux Fen&ecirc;tres actives d'acc&eacute;l&eacute;rateur"> <br>
+          Figure 4-3: Deux Fen&ecirc;tres R&eacute;gulateurs actives  </p>
         </Td>
       </Tr> 
       <tr>
         <td colspan="3" align="left" valign="top"><p>  Mais que faire si nous avions ouvert
-          et configuré une seconde fenêtre de régulateurs, alors que la première
-          fenêtre était toujours active à l'écran? Il y aurait alors deux 
-          fenêtres de régulateur actives qui seraient «sauvées» dans le même fichier de Configuratio (voir dossier (sous-répertoire)
-          figure 4-3). Non seulement la Mise en page du régulateur  est
-          sauvée, mais aussi les dimensionnement exactes de  l'écran et l'emplacement des deux
-          régulateurs.</p>
-                  <p> Lorsque le fichier de Configuration (layout) est réouvert, les deux fenêtres régulateur
-           ouvertes et positionnées sur l'écran d'ordinateur à l'endroit exact où elles
-           étaient quand le fichier a été enregistré. </p>
+          et configur&eacute; une seconde Fen&ecirc;tre de r&eacute;gulateurs, alors que la premi&eacute;re
+          Fen&ecirc;tre &eacute;tait toujours active &aacute; l'&eacute;cran? Il y aurait alors deux 
+          Fen&ecirc;tres de r&eacute;gulateur actives qui seraient "sauv&eacute;es" dans le m&ecirc;me fichier de Configuration (voir dossier (sous-r&eacute;pertoire)
+          figure 4-3). Non seulement la Mise en page du r&eacute;gulateur  est
+          sauv&eacute;e, mais aussi les dimensionnement exactes de  l'&eacute;cran et l'emplacement des deux
+          r&eacute;gulateurs.</p>
+                  <p> Lorsque le fichier de Configuration (layout) est r&eacute;ouvert, les deux Fen&ecirc;tres r&eacute;gulateur
+           ouvertes et positionn&eacute;es sur l'&eacute;cran d'ordinateur &aacute; l'endroit exact o&uacute; elles
+           &eacute;taient quand le fichier a &eacute;t&eacute; enregistr&eacute;. </p>
         </td>
       </tr>
     </tbody>
   </table>
 </dir>
-<br>
-<br>
-<br>
+
 <a name="LoadLayout"></a> 
 
-<h1>Ouvrir/Charger une Configuration Régulateur</h1>
+<h2>Ouvrir/Charger une Configuration R&eacute;gulateur</h2>
 
-<p> Après avoir enregistré une  configuration de régulateur , vous aurez envie d'ouvrir à
-nouveau le fichier. C'est une procédure très simple. Toutefois, l'ouverture d'un 
-fichier d'une configuration de régulateur quand une ou plusieurs fenêtres de régulateur sont déjà actives quelque part sur
-l'écran, nécessite une étape supplémentaire. Avant de discuter de cette étape supplémentaire, nous allons
-d'abord ouvrir un fichier de configuration d'un régulateur simple. </p>
+<p> Apr&egrave;s avoir enregistr&eacute; une  configuration de r&eacute;gulateur , vous aurez envie d'ouvrir &aacute;
+nouveau le fichier. C'est une proc&eacute;dure tr&eacute;s simple. Toutefois, l'ouverture d'un 
+fichier d'une configuration de r&eacute;gulateur quand une ou plusieurs Fen&ecirc;tres de r&eacute;gulateur sont d&eacute;j&agrave; actives quelque part sur
+l'&eacute;cran, n&eacute;cessite une &eacute;tape suppl&eacute;mentaire. Avant de discuter de cette &eacute;tape suppl&eacute;mentaire, nous allons
+d'abord ouvrir un fichier de configuration d'un r&eacute;gulateur simple.</p>
 
 <p> Si vous suiviez les directives ci-dessus pour l'enregistrement d'un 
-fichier de configuration de régulateur, vous devriez maintenant avoir créé votre premier fichier de régulateur. Si vous
-ne l'avez pas fait, fermez la fenêtre régulateur que vous avez créé dans le
-chapitre précédent (assurez-vous que vous l'avez enregistré d'abord pour la suite des instructions  ci-dessus). </p>
+fichier de configuration de r&eacute;gulateur, vous devriez maintenant avoir cr&eacute;&eacute; votre premier fichier de r&eacute;gulateur. Si vous
+ne l'avez pas fait, fermez la Fen&ecirc;tre r&eacute;gulateur que vous avez cr&eacute;&eacute; dans le
+chapitre pr&eacute;c&eacute;dent (assurez-vous que vous l'avez enregistr&eacute; d'abord pour la suite des instructions  ci-dessus). </p>
 
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
   <tbody>
     <tr>
-      <td align="left" valign="top"> <p> Vous ne devriez avoir aucune fenêtre de régulateur 
-        ouverte sur votre écran en ce moment. En suivant les instructions fournies dans
+      <td align="left" valign="top"> <p> Vous ne devriez avoir aucune Fen&ecirc;tre de r&eacute;gulateur 
+        ouverte sur votre &eacute;cran en ce moment. En suivant les instructions fournies dans
        <a  href="ThrottleChapter1.shtml#MainMenu"> Chapitre 1 </a> pour localiser 
-        le menu régulateur, localisez l'option qui dit  "<strong> Charger Régulateur 
-        </strong>" (voir Figure 4-4 à droite). Cliquer sur cette  option de menu
-        permet d'afficher une boîte de dialogue "<b> Ouvrir </b>". Localisez le 
-        fichier d'une configuration de régulateur que vous venez précédemment de sauvegarder et ouvrez-le. </p>
+        le menu r&eacute;gulateur, localisez l'option qui dit  "<strong> Charger R&eacute;gulateur 
+        </strong>" (voir Figure 4-4 &aacute; droite). Cliquer sur cette  option de menu
+        permet d'afficher une bo&eacute;te de dialogue "<b> Ouvrir </b>". Localisez le 
+        fichier d'une configuration de r&eacute;gulateur que vous venez pr&eacute;c&eacute;demment de sauvegarder et ouvrez-le. </p>
       </Td>
       <td> <img width="20" height="20" src="images/spacer.gif"> </td>
       <td align="center" valign="top"> <p
         style = "text-align: center; font-size: xx-small">  <img width = "163"
         height = "82" src = "images/jmri007.jpg" title= "Load throttle layout"> <br>
-        Figure 4-4: Chargement d'une configuration de Régulateur  </p>
+        Figure 4-4: Chargement d'une configuration de R&eacute;gulateur  </p>
       </Td>
     </Tr>
   </Tbody>
 </Table>
 
-<p> La fenêtre de régulateur que vous venez de créer devrait s'ouvrir dans le même lieu
-où vous l'avez fermé. Dans le même temps que la fenêtre s'ouvre, il en est de même pour
-l'initialisation de l'adresse du décodeur à la centrale de commande (un peu comme lorsque l'
-Adresse a d'abord été "Défini"). Le régulateur tente de déterminer la direction actuelle
+<p> La Fen&ecirc;tre de r&eacute;gulateur que vous venez de cr&eacute;er devrait s'ouvrir dans le m&ecirc;me lieu
+o&ugrave; vous l'avez ferm&eacute;. Dans le m&ecirc;me temps que la Fen&ecirc;tre s'ouvre, il en est de m&ecirc;me pour
+l'initialisation de l'adresse du d&eacute;codeur &aacute; la centrale de commande (un peu comme lorsque l'
+Adresse a d'abord &eacute;t&eacute; "D&eacute;fini"). Le r&eacute;gulateur tente de d&eacute;terminer la direction actuelle
  de la locomotive, ainsi que d'identifier les fonctions qui sont dans l'
-état "On". </P>
+&eacute;tat "On". </P>
 
-<p class="important"><b>Note: </b> Parce que les régulateurs sont toujours en 
-mode JMRI «bêta» de développement, il y a encore quelques bizarreries qui ont besoin d'être
-aplanies. Un exemple de ceci est lors de l'ouverture d'une configuration de régulateur et que l'adresse DCC
- est déjà «utilisée» par un autre régulateur. Certains systèmes (c'est à dire Digitrax)
-réagissent différemment quand cela se produit. <br>
+<p class="important"><b>Note: </b> Parce que les r&eacute;gulateurs sont toujours en 
+mode JMRI 'b&ecirc;ta' de d&eacute;veloppement, il y a encore quelques bizarreries qui ont besoin d'&ecirc;tre
+aplanies. Un exemple de ceci est lors de l'ouverture d'une configuration de r&eacute;gulateur et que l'adresse DCC
+ est d&eacute;j&agrave; 'utilis&eacute;e' par un autre r&eacute;gulateur. Certains syst&egrave;mes (c'est &aacute; dire Digitrax)
+r&eacute;agissent diff&eacute;remment quand cela se produit. <br>
 <br>
-Des <b>Demandes d'amélioration  </b> sont déjà sur la liste pour les régulateurs 
-«intelligent» pour déterminer quand un autre régulateur a déjà cette adresse. Mais jusqu'à
-ce que ces régulateurs soientt pleinement appliquables, méfiez-vous il peut y avoir bizarreries 
-avec votre système DCC en particulier avec cette fonction. Il est donc suggéré
-qu'<u>avant </u> d'ouvrir un fichier de configuration de régulateur sauvegardeé, l'adresse DCC
-soit vérifiée comme n'étant pas utilisée par un autre régulateur quelque part. </p>
+Des <b>Demandes d'am&eacute;lioration  </b> sont d&eacute;j&agrave; sur la liste pour les r&eacute;gulateurs 
+'intelligent' pour d&eacute;terminer quand un autre r&eacute;gulateur a d&eacute;j&agrave; cette adresse. Mais jusqu'&eacute;
+ce que ces r&eacute;gulateurs soient pleinement applicables, m&eacute;fiez-vous il peut y avoir bizarreries 
+avec votre syst&egrave;me DCC en particulier avec cette fonction. Il est donc sugg&eacute;r&eacute;
+qu'<u>avant </u> d'ouvrir un fichier de configuration de r&eacute;gulateur sauvegard&eacute;e, l'adresse DCC
+soit v&eacute;rifi&eacute;e comme n'&eacute;tant pas utilis&eacute;e par un autre r&eacute;gulateur quelque part. </p>
 <br>
 <br>
 <br>
 <a name="Merging"></a> 
 
-<h2>Fusion Fenêtres de Régulateurs </h2>
+<h2>Fusion Fen&ecirc;tres de R&eacute;gulateurs </h2>
 <dir>
-   <p> Les fichiers de mise en page de Régulateurs  peuvent consister en une fenêtre de régulateur unique (pour contrôler
+   <p> Les fichiers de mise en page de R&eacute;gulateurs  peuvent consister en une Fen&ecirc;tre de r&eacute;gulateur unique (pour contr&ocirc;ler
    une seule locomotive ou une adresse de couplage), ou elle peut contenir de multiples
-   fenêtres de régulateurs (voir figure 4-3). Dans les deux cas, à chaque ouverture d'un fichier de configuration de régulateur
-    le programme va vérifier pour voir si des fenêtres actives de régulateurs  existants 
-   sont déjà ouvertes. Si aucune n'est trouvée, le fichier est ouvert, tout comme une
-   ouverture de configuration simple (expliqué ci-dessus). </p>
+   Fen&ecirc;tres de r&eacute;gulateurs (voir figure 4-3). Dans les deux cas, &aacute; chaque ouverture d'un fichier de configuration de r&eacute;gulateur
+    le programme va v&eacute;rifier pour voir si des Fen&ecirc;tres actives de r&eacute;gulateurs  existants 
+   sont d&eacute;j&agrave; ouvertes. Si aucune n'est trouv&eacute;e, le fichier est ouvert, tout comme une
+   ouverture de configuration simple (expliqu&eacute; ci-dessus).</p>
 
    <p style="text-align: center; font-size: xx-small"> <img width= "354"
    height = "125" src = "images/jmri035.jpg" title= "Merge Dialog Box"> <br>
-   Figure 4-5: Boîte de dialogue Fusionner </p>
+   Figure 4-5: Bo&icirc;te de dialogue Fusionner </p>
 
-   <p> Cependant, quand une ou plusieurs fenêtres de régulateurs sont déjà ouvertes sur
-   l'écran, le programme va ouvrir une boîte de dialogue comme le montre la figure 4-5 sur
+   <p> Cependant, quand une ou plusieurs Fen&ecirc;tres de r&eacute;gulateurs sont d&eacute;j&agrave; ouvertes sur
+   l'&eacute;cran, le programme va ouvrir une bo&icirc;te de dialogue comme le montre la figure 4-5 sur
    la droite. </p>
 </dir>
 <ul>
-   <li> <strong> Fusion </strong>? Quitte les fenêtres régulateur actives ouvertes
-      en place et ouvre le régulateur (s) contenu dans le fichier de configuration en
+   <li> <strong> Fusion </strong>? Quitte les Fen&ecirc;tres r&eacute;gulateur actives ouvertes
+      en place et ouvre le r&eacute;gulateur (s) contenu dans le fichier de configuration en
      cours d'ouverture.<br>
      <br>
    </li>
-   <li> <strong> Remplacez </strong>?Referme la fenêtre (s) régulateur active ouverte
-      et ouvre la fenêtre de régulateur (s) établit dans le
-     fichier de configuration sauvegardé. <br>
+   <li> <strong> Remplacez </strong>?Referme la Fen&ecirc;tre (s) r&eacute;gulateur active ouverte
+      et ouvre la Fen&ecirc;tre de r&eacute;gulateur (s) &eacute;tablit dans le
+     fichier de configuration sauvegard&eacute;. <br>
      <br>
    </li>
-   <li> <strong> Annuler </strong>? Annule la demande d'«ouverture»  et ferme cette
-     fenêtre de dialogue. </li>
+   <li> <strong> Annuler </strong>? Annule la demande d'"ouverture"  et ferme cette
+     Fen&ecirc;tre de dialogue. </li>
 </ul>
 <br>
 <br>
 
 
 <p class="important"><b>Remarque: Ne confondez pas l'action qui se produit ici
-avec toute tentative d'écraser votre configuration des fichiers de régulateurs sauvegardés. Les actions ci-dessus
- n'ont aucun effet sur la réelle mise configuration des fichiers de régulateurs sauvegardés eux-mêmes.
-La seule "fusion" et «remplacement» qui se produit se passe tout simplement sur votre écran. </b>
+avec toute tentative d'&eacute;craser votre configuration des fichiers de r&eacute;gulateurs sauvegard&eacute;s. Les actions ci-dessus
+ n'ont aucun effet sur la r&eacute;elle mise configuration des fichiers de r&eacute;gulateurs sauvegard&eacute;s eux-m&ecirc;mes.
+La seule "fusion" et "remplacement" qui se produit se passe tout simplement sur votre &eacute;cran. </b>
 </p>
 <br>
 <br>
-
 
 <table border="2" width="100%" cellpadding="4" cellspacing="2">
    <tbody>
      <tr>
       <td valign="top"> <strong>ASTUCE! </strong>
 
-         <p>Lors de la création des fichiers mise en page de régulateur, vous pouvez enregistrer la même Adresse de décodeur
-        dans de multiples fichiers de mise en page de régulateur. Un bon exemple de pourquoi ça, vous
-         voudrez peut-être créée une mise en page de plusieurs 
-         fichiers régulateurs, chacun constitué d'une fenêtre de régulateur simple contrôlant une
+         <p>Lors de la cr&eacute;ation des fichiers mise en page de r&eacute;gulateur, vous pouvez enregistrer la m&ecirc;me Adresse de d&eacute;codeur
+        dans de multiples fichiers de mise en page de r&eacute;gulateur. Un bon exemple de pourquoi &ccedil;a, vous
+         voudrez peut-&ecirc;tre cr&eacute;&eacute;e une mise en page de plusieurs 
+         fichiers r&eacute;gulateurs, chacun constitu&eacute; d'une Fen&ecirc;tre de r&eacute;gulateur simple contr&ocirc;lant une
          seule locomotive, pour chaque loco dans votre liste. Il peut y avoir
-         des moments où vous voulez simplement faire circuler une seule locomotive et il vous suffit d'ouvrir
-         le dossier d'aménagement associé. Simple! Mais que faire si vous trouvez
-         l'ouverture du même régulateur de locomotive systématiquement sur chaque session.
-         Ça va devenir lourd d'ouvrir (et de «fusionner»), ces régulateurs
-         un à la fois. Par conséquent, vous pouvez créer un autre fichier de mise en page qui
-         contient toutes les fenêtres de régulateur que vous souhaitez, puis ouvrez simplement
-         le fichier de mise en page et vous aurez toutes les fenêtres de régulateurs qui sont
-         définies. </p>
+         des moments o&ugrave; vous voulez simplement faire circuler une seule locomotive et il vous suffit d'ouvrir
+         le dossier d'am&eacute;nagement associ&eacute;. Simple! Mais que faire si vous trouvez
+         l'ouverture du m&ecirc;me r&eacute;gulateur de locomotive syst&eacute;matiquement sur chaque session.
+         &ccedil;a va devenir lourd d'ouvrir (et de "fusionner"), ces r&eacute;gulateurs
+         un &aacute; la fois. Par cons&eacute;quent, vous pouvez cr&eacute;er un autre fichier de mise en page qui
+         contient toutes les Fen&ecirc;tres de r&eacute;gulateur que vous souhaitez, puis ouvrez simplement
+         le fichier de mise en page et vous aurez toutes les Fen&ecirc;tres de r&eacute;gulateurs qui sont
+         d&eacute;finies. </p>
 
          <p> Rappelez-vous, lorsque vous faites un changement de la Mise en page d'une
-         fenêtre de régulateur, elle est seulement changée dans le fichier de mise en page que vous avez enregistré
-         ? il n'y a <u> pas </u> de changement global dans chaque fichier où cette locomotive
-         est utilisée. </p>
+         Fen&ecirc;tre de r&eacute;gulateur, elle est seulement chang&eacute;e dans le fichier de mise en page que vous avez enregistr&eacute;
+         ? il n'y a <u>pas</u> de changement global dans chaque fichier o&ugrave; cette locomotive
+         est utilis&eacute;e. </p>
 	  </td>
     </tr>
   </tbody>
 </table>
 <br>
-<br>
 
-<br>
-<br>
+<a name="SaveThrottlePreferences"></a>
 
-<a name="SaveThrottlePreferences"></a> 
+<h2>Enregistrer les pr&eacute;f&eacute;rences R&eacute;gulateurs</h2>
 
-<br>
+<p> "Enregistrer les pr&eacute;f&eacute;rences R&eacute;gulateurs" vous permet de personnaliser la fa&ccedil;on dont de nouveaux
+r&eacute;gulateurs appara&icirc;tront. Charger ou cr&eacute;er un r&eacute;gulateur que vous voulez comme  votre r&eacute;gulateur par
+d&eacute;faut. Le programme vous avertira si il existe de multiples r&eacute;gulateurs . Ensuite, utilisez l'option
+"Enregistrer les pr&eacute;f&eacute;rences R&eacute;gulateurs" dans le menu "Outils--&gt; R&eacute;gulateurs" pour enregistrer les
+r&eacute;gulateurs. Lorsque vous cr&eacute;ez un nouveau r&eacute;gulateur, les valeurs par d&eacute;faut que vous d&eacute;finissez doivent
+apparaitre. Aussi lorsque vous utilisez la fonction du programme "Sauvegarder les Pr&eacute;f&eacute;rences R&eacute;gulateurs" , elle va cr&eacute;er un nouveau r&eacute;pertoire nomm&eacute; "r&eacute;gulateurs" dans le r&eacute;pertoire JMRI. Un fichier appel&eacute; <code>JMRI_ThrottlePreferences.xml</code> contient les valeurs xml par d&eacute;faut pour vos
+r&eacute;gulateurs. Si vous souhaitez restaurer les param&egrave;tres de r&eacute;gulateur &aacute; l'original
+par d&eacute;faut, il suffit de supprimer ce fichier. </p>
 
-<h1>Enregistrer les préférences Régulateurs </h1>
-
-<br>
-
-<p> "Enregistrer les préférences Régulateurs" vous permet de personnaliser la façon dont de nouveaux
-régulateurs apparaîtront. Charger ou créer un régulateur que vous voulez comme  votre régulateur par
-défaut. Le programme vous avertira si il existe de multiples régulateurs . Ensuite, utilisez l'option
-"Enregistrer les préférences Régulateurs" dans le menu "Outils--&gt; Régulateurs" pour enregistrer les
-régulateurs. Lorsque vous créez un nouveau régulateur, les valeurs par défaut que vous définissez doivent
-apparaitre. Aussi lorsque vous utilisez la fonction du programme "Sauvegarder les Préférences Régulateurs" , elle va créer un nouveau répertoire nommé "régulateurs" dans le répertoire JMRI. Un fichier appelé «JMRI_ThrottlePreferences.xml» contient les valeurs  xml par défaut pour vos
-régulateurs. Si vous souhaitez restaurer les paramètres de régulateur à l'original
-par défaut, il suffit de supprimer ce fichier. </p>
-
-<p> Pour vous aider à mieux organiser vos régulateurs, le programme fera également référence
-au répertoire "régulateurs" lors de la sauvegarde ou le chargement de mises en page régulateur. </p>
+<p> Pour vous aider &aacute; mieux organiser vos r&eacute;gulateurs, le programme fera &eacute;galement r&eacute;f&eacute;rence
+au r&eacute;pertoire "r&eacute;gulateurs" lors de la sauvegarde ou le chargement de mises en page r&eacute;gulateur. </p>
 <a name="CloseThrottle"> </a>
 
-<h1> Fermeture d'une Fenêtre Régulateur </h1>
+<h2>Fermeture d'une Fen&ecirc;tre R&eacute;gulateur</h2>
 
-<p> Quand c'est fait avec une fenêtre régulateur, ce pourrait être une bonne idée si vous entriez dans
-la pratique  "libérer" ou "dispatcher" la locomotive avant de
-complètement fermer la fenêtre régulateur. </p>
+<p> Quand c'est fait avec une Fen&ecirc;tre r&eacute;gulateur, ce pourrait &ecirc;tre une bonne id&eacute;e si vous entriez dans
+la pratique  "lib&eacute;rer" ou "dispatcher" la locomotive avant de
+compl&egrave;tement fermer la Fen&ecirc;tre r&eacute;gulateur. </p>
 
-<p> Si vous avez fait des changements de Mise en page dans la fenêtre du régulateur, et que vous
-voulez les sauvegarder, vous devrez suivre les étapes décrites ci-dessus. </p>
+<p> Si vous avez fait des changements de Mise en page dans la Fen&ecirc;tre du r&eacute;gulateur, et que vous
+voulez les sauvegarder, vous devrez suivre les &eacute;tapes d&eacute;crites ci-dessus. </p>
 
-<p class="important"> <b> Remarque: </b> Si vous «sauver» tous les changements que vous avez
-fait lors d'une session, pour revenir à un fichier de mise en page de régulateur existant, méfiez-vous que
-<u> TOUTES </u> les Fenêtres Régulateur actuellement ouvertes soient également enregistrées dans le même
+<p class="important"> <b>Remarque:</b> Si vous "sauver" tous les changements que vous avez
+fait lors d'une session, pour revenir &aacute; un fichier de mise en page de r&eacute;gulateur existant, m&eacute;fiez-vous que
+<u>TOUTES</u> les Fen&ecirc;tres R&eacute;gulateur actuellement ouvertes soient &eacute;galement enregistr&eacute;es dans le m&ecirc;me
 fichier. </p>
 
-<p> Lorsque vous êtes prêt, il suffit de fermer la fenêtre régulateur comme vous le feriez  d'habitude
- sur n'importe quel système informatique que vous utilisez. Par exemple, pour Microsoft Windows,
-il suffit de cliquer sur le " <big>X </largeur big>" dans le coin supérieur droit de la fenêtre régulateur. </p>
-<br>
-<br>
-<br>
-<br>
-
+<p> Lorsque vous &ecirc;tes pr&eacute;t, il suffit de fermer la Fen&ecirc;tre r&eacute;gulateur comme vous le feriez  d'habitude
+ sur n'importe quel syst&egrave;me informatique que vous utilisez. Par exemple, pour Microsoft Windows,
+il suffit de cliquer sur le " <big>X</big>" dans le coin sup&eacute;rieur droit de la Fen&ecirc;tre r&eacute;gulateur. </p>
 
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
   <tbody>
@@ -350,14 +322,13 @@ il suffit de cliquer sur le " <big>X </largeur big>" dans le coin supérieur droi
       <td align="center"><b><a href="ThrottleTOC.shtml"
         title="Jump to the Table Of Contents page">TOC</a></b> </td>
       <td><img src="images/spacer.gif" width="30" height="10"> </td>
-      <td align="left">  </td>
+      <td align="left">&nbsp;</td>
     </tr>
   </tbody>
 </table>
 <br>
-<br>
-<br>
-<br>
-<!--#include virtual="/Footer" --> </div>
+
+<!--#include virtual="/Footer" -->
+</div>
 </body>
 </html>

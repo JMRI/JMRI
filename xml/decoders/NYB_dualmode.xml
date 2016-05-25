@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003, 2005 All rights reserved -->
-<!-- $Id: NYB_dualmode.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -21,113 +21,64 @@
     <family name="NYB Dual Mode Decoder" mfg="New York Byano Limited" type="locomotive">
       <model model="NYB Dual Mode Decoder" numOuts="2" numFns="0" lowVersionID="46" nmraWarrant="yes" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no"/>
     </family>
-    <programming direct="yes" paged="yes" register="yes" ops="yes" transpRead="no" bidirRead="no"/>
+    <programming direct="yes" paged="yes" register="yes" ops="yes" transpRead="no"/>
     <variables>
-      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03" mask="VVVVVVVV" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">
-        <shortAddressVal/>
-        <label>Primary Address</label>
-        <comment>Short address</comment>
-      </variable>
-      <variable label="Start Volts" CV="2" item="Vstart" default="10" comment="Range 0-31" mask="VVVVVVVV" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable CV="2" item="Vstart" default="10" comment="Range 0-31" mask="VVVVVVVV" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">
         <decVal min="0" max="255"/>
         <label>Start Volts</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Startspannung</label>
         <comment>Range 0-31</comment>
       </variable>
-      <variable label="Accel" CV="3" default="1" comment="Range 0-31" mask="VVVVVVVV" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">
+      <variable item="Accel" CV="3" default="1" comment="Range 0-31" mask="VVVVVVVV" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">
         <decVal max="31" min="0"/>
         <label>Accel</label>
         <comment>Range 0-31</comment>
       </variable>
-      <variable label="Decel" CV="4" default="1" comment="Range 0-31" mask="VVVVVVVV" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">
+      <variable item="Decel" CV="4" default="1" comment="Range 0-31" mask="VVVVVVVV" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">
         <decVal max="31" min="0"/>
         <label>Decel</label>
         <comment>Range 0-31</comment>
       </variable>
-      <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version" default="46" mask="VVVVVVVV" infoOnly="no" opsOnly="no" writeOnly="no">
+      <variable CV="7" readOnly="yes" item="Decoder Version" default="46" mask="VVVVVVVV" infoOnly="no" opsOnly="no" writeOnly="no">
         <decVal min="0" max="255"/>
         <label>Version ID</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
       </variable>
-      <variable label="Manufacturer ID: " CV="8" readOnly="yes" item="Manufacturer" default="71" mask="VVVVVVVV" infoOnly="no" opsOnly="no" writeOnly="no">
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="71" mask="VVVVVVVV" infoOnly="no" opsOnly="no" writeOnly="no">
         <decVal min="0" max="255"/>
         <label>Manufacturer ID: </label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
       </variable>
-      <variable label="Long Address" CV="17" item="Extended Address" comment="4 digit address (Range 0001-9999)" mask="VVVVVVVV" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">
-        <longAddressVal/>
-        <label>Long Address</label>
-        <comment>4 digit address (Range 0001-9999)</comment>
-      </variable>
-      <variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">
-        <decVal min="0" max="255"/>
-        <label>Consist Address</label>
-      </variable>
-      <variable label="Consist Direction" CV="19" mask="VXXXXXXX" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-          </enumChoice>
-          <enumChoice choice="Reversed">
-            <choice>Reversed</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Direction</label>
-      </variable>
-      <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="reversed">
-            <choice>reversed</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Normal direction of motion</label>
-      </variable>
-      <variable label="Speed steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">
-        <enumVal>
-          <enumChoice choice="NMRA Digital only">
-            <choice>NMRA Digital only</choice>
-          </enumChoice>
-          <enumChoice choice="DC conversion enabled">
-            <choice>DC conversion enabled</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed steps</label>
-      </variable>
-      <variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">
-        <enumVal>
-          <enumChoice choice="disabled">
-            <choice>disabled</choice>
-          </enumChoice>
-          <enumChoice choice="enabled">
-            <choice>enabled</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Analog conversion mode</label>
-      </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">
-        <enumVal>
-          <enumChoice choice="One byte (short) address">
-            <choice>One byte (short) address</choice>
-          </enumChoice>
-          <enumChoice choice="Two byte (extended) address">
-            <choice>Two byte (extended) address</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Addressing Mode</label>
-      </variable>
-      <variable label="Brake Momentum on DC" CV="50" item="DC Brake Momentum" mask="XXXXXVXX" comment="Governs how loco acts in DC track block" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">
+      <!-- CV=19 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <variable CV="50" item="DC Brake Momentum" mask="XXXXXVXX" comment="Governs how loco acts in DC track block" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">
         <enumVal>
           <enumChoice choice="Loco runs under DC analog voltage control">
             <choice>Loco runs under DC analog voltage control</choice>
+             <choice xml:lang="it">Loco va in Analogico</choice>
           </enumChoice>
           <enumChoice choice="Loco brakes to a stop using momentum set in CV4">
             <choice>Loco brakes to a stop using momentum set in CV4</choice>
+            <choice xml:lang="it">Loco frena fino a fermarsi usando inerzia in CV4</choice>
           </enumChoice>
         </enumVal>
         <label>Brake Momentum on DC</label>
+        <label xml:lang="it">Inerzia frenata in Analogico</label>
         <comment>Governs how loco acts in DC track block</comment>
+        <comment xml:lang="it">Comportamento Loco in blocco analogico</comment>
       </variable>
-      <variable label="Headlight Dimmed By" CV="51" mask="VVVVVVVV" item="Function F0F options" comment="Controls which function dims headlight (CV 52 controls amount)" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">
+      <variable CV="51" mask="VVVVVVVV" item="Function F0F options" comment="Controls which function dims headlight (CV 52 controls amount)" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">
         <enumVal>
           <enumChoice choice="Always Dim" value="00000000">
             <choice>Always Dim</choice>
@@ -160,16 +111,16 @@
         <label>Headlight Dimmed By</label>
         <comment>Controls which function dims headlight (CV 52 controls amount)</comment>
       </variable>
-      <variable label="Headlight Dimming intensity" CV="52" default="255" comment="Controls how much headlights dim (0-dark to 255-max bright)" item="Function F0F behavior" mask="VVVVVVVV" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">
+      <variable CV="52" default="255" comment="Controls how much headlights dim (0-dark to 255-max bright)" item="Function F0F behavior" mask="VVVVVVVV" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">
         <decVal min="0" max="255"/>
         <label>Headlight Dimming intensity</label>
         <comment>Controls how much headlights dim (0-dark to 255-max bright)</comment>
       </variable>
-      <variable label="User Id #1" CV="105" mask="VVVVVVVV" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">
+      <variable item="User Id #1" CV="105" mask="VVVVVVVV" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">
         <decVal min="0" max="255"/>
         <label>User Id #1</label>
       </variable>
-      <variable label="User Id #2" CV="106" mask="VVVVVVVV" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">
+      <variable item="User Id #2" CV="106" mask="VVVVVVVV" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">
         <decVal min="0" max="255"/>
         <label>User Id #2</label>
       </variable>
@@ -177,7 +128,9 @@
       <constant item="FL(r) controls output 2" minOut="2" default="1"/>
     </variables>
     <resets>
-      <factReset label="Reset All CVs" CV="8" default="33"/>
+      <factReset label="Reset All CVs" CV="8" default="33">
+         <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
     </resets>
   </decoder>
 </decoder-config>

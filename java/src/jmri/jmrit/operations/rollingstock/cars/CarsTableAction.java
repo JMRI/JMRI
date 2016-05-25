@@ -1,5 +1,4 @@
 // CarsTableAction.java
-
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.awt.event.ActionEvent;
@@ -7,25 +6,31 @@ import javax.swing.AbstractAction;
 
 /**
  * Swing action to create and register a CarsTableFrame object.
- * 
+ *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
  * @version $Revision$
  */
 public class CarsTableAction extends AbstractAction {
 
-	public CarsTableAction(String s) {
-		super(s);
-	}
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1165041540465869264L;
 
-	public CarsTableAction() {
-		this(Bundle.getMessage("MenuCars"));
-	}
+    public CarsTableAction(String s) {
+        super(s);
+    }
 
-	public void actionPerformed(ActionEvent e) {
-		// create a car table frame
-		new CarsTableFrame(true, null, null);
-	}
+    public CarsTableAction() {
+        this(Bundle.getMessage("MenuCars")); // NOI18N
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // create a car table frame
+        new CarsTableFrame(true, null, null);
+    }
 }
 
 /* @(#)CarsTableAction.java */

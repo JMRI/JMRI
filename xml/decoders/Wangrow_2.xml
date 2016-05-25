@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id: Wangrow_2.xml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -40,56 +40,25 @@
     </family>
     <programming direct="no" paged="yes" register="yes" ops="no"/>
     <variables>
-      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
-        <shortAddressVal/>
-        <label>Primary Address</label>
-        <comment>Short address</comment>
-      </variable>
-      <variable label="Vstart" CV="2" comment="A value of 255 corresponds to 100%">
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable item="Vstart" CV="2" comment="A value of 255 corresponds to 100%">
         <decVal/>
         <label>Vstart</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Anfahrspannung</label>
         <comment>A value of 255 corresponds to 100%</comment>
       </variable>
-      <variable label="Acceleration Rate" CV="3" item="Accel">
-        <decVal max="31"/>
-        <label>Acceleration Rate</label>
-      </variable>
-      <variable label="Deceleration Rate" CV="4" item="Decel">
-        <decVal max="31"/>
-        <label>Deceleration Rate</label>
-      </variable>
-      <variable label="Manufacturer Version No: " CV="7" readOnly="yes" item="Decoder Version">
-        <decVal/>
-        <label>Manufacturer Version No: </label>
-      </variable>
-      <variable label="Manufacturer ID: " CV="8" readOnly="yes" item="Manufacturer">
-        <decVal/>
-        <label>Manufacturer ID: </label>
-      </variable>
-      <variable label="Extended Address" CV="17" item="Long Address">
-        <longAddressVal/>
-        <label>Extended Address</label>
-      </variable>
-      <variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
-        <decVal/>
-        <label>Consist Address</label>
-      </variable>
-      <variable label="Consist Direction" CV="19" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-          </enumChoice>
-          <enumChoice choice="Reversed">
-            <choice>Reversed</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Direction</label>
-      </variable>
-      <variable label="Consist Acceleration Adjustment" CV="23" mask="XVVVVVVV">
+      <!-- CV 3-4 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_255.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+      <!-- CV=19 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <variable item="Consist Acceleration Adjustment" CV="23" mask="XVVVVVVV">
         <decVal max="127"/>
         <label>Consist Acceleration Adjustment</label>
       </variable>
-      <variable label="Consist Acceleration Adjustment Sign" CV="23" mask="VXXXXXXX">
+      <variable item="Consist Acceleration Adjustment Sign" CV="23" mask="VXXXXXXX">
         <enumVal>
           <enumChoice choice="Adjustment Added">
             <choice>Adjustment Added</choice>
@@ -100,11 +69,11 @@
         </enumVal>
         <label>Consist Acceleration Adjustment Sign</label>
       </variable>
-      <variable label="Consist Deceleration Adjustment" CV="24" mask="XVVVVVVV">
+      <variable item="Consist Deceleration Adjustment" CV="24" mask="XVVVVVVV">
         <decVal max="127"/>
         <label>Consist Deceleration Adjustment</label>
       </variable>
-      <variable label="Consist Deceleration Adjustment Sign" CV="24" mask="VXXXXXXX">
+      <variable item="Consist Deceleration Adjustment Sign" CV="24" mask="VXXXXXXX">
         <enumVal>
           <enumChoice choice="Adjustment Added">
             <choice>Adjustment Added</choice>
@@ -115,77 +84,17 @@
         </enumVal>
         <label>Consist Deceleration Adjustment Sign</label>
       </variable>
-      <variable label="Locomotive Direction" CV="29" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="reversed">
-            <choice>reversed</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Locomotive Direction</label>
-      </variable>
-      <variable label="FL Location" CV="29" mask="XXXXXXVX" item="Speed Step Mode">
-        <enumVal>
-          <enumChoice choice="14 speed step format">
-            <choice>14 speed step format</choice>
-          </enumChoice>
-          <enumChoice choice="28 speed step format">
-            <choice>28 speed step format</choice>
-          </enumChoice>
-        </enumVal>
-        <label>FL Location</label>
-      </variable>
-      <variable label="Power Source Conversion" CV="29" mask="XXXXXVXX" item="Analog (DC) Operation">
-        <enumVal>
-          <enumChoice choice="NMRA Digital only">
-            <choice>NMRA Digital only</choice>
-          </enumChoice>
-          <enumChoice choice="DC conversion enabled">
-            <choice>DC conversion enabled</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Power Source Conversion</label>
-      </variable>
-      <variable label="Advanced Decoder Acknowledgement" CV="29" mask="XXXXVXXX" item="Advanced Ack">
-        <enumVal>
-          <enumChoice choice="disabled">
-            <choice>disabled</choice>
-          </enumChoice>
-          <enumChoice choice="enabled">
-            <choice>enabled</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Advanced Decoder Acknowledgement</label>
-      </variable>
-      <variable label="Speed Table Definition" CV="29" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="Use Vstart, Vmid, Vhigh">
-            <choice>Use Vstart, Vmid, Vhigh</choice>
-          </enumChoice>
-          <enumChoice choice="Use table in CVs 66 through 95">
-            <choice>Use table in CVs 66 through 95</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed Table Definition</label>
-      </variable>
-      <variable label="Address Format" CV="29" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="One byte (short) address">
-            <choice>One byte (short) address</choice>
-          </enumChoice>
-          <enumChoice choice="Two byte (extended) address">
-            <choice>Two byte (extended) address</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Address Format</label>
-      </variable>
-      <variable label="Speed Table" CV="67">
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29AdvAck.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
+      <variable item="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
-      <variable label="Reverse Trim" CV="95" default="84">
+      <variable item="Reverse Trim" CV="95" default="84">
         <decVal/>
         <label>Reverse Trim</label>
       </variable>

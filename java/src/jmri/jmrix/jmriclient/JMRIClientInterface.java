@@ -1,20 +1,21 @@
 // JMRIClientInterface.java
-
 package jmri.jmrix.jmriclient;
 
 /**
  * Layout interface, similar to command station
- * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision$
+ *
+ * @author	Bob Jacobsen Copyright (C) 2001
+ * @version	$Revision$
  */
 public interface JMRIClientInterface {
 
-	public void addJMRIClientListener( JMRIClientListener l);
-	public void removeJMRIClientListener( JMRIClientListener l);
+    public void addJMRIClientListener(JMRIClientListener l);
 
-	boolean status();   // true if the implementation is operational
+    public void removeJMRIClientListener(JMRIClientListener l);
 
-	void sendJMRIClientMessage(JMRIClientMessage m, JMRIClientListener l);  // 2nd arg gets the reply
+    boolean status();   // true if the implementation is operational
+
+    void sendJMRIClientMessage(JMRIClientMessage m, JMRIClientListener l);  // 2nd arg gets the reply
 }
 
 

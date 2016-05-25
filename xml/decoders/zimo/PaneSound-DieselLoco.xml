@@ -1,59 +1,124 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
 <!-- version 1.1 2 Aug 11 JES
                  - added turbocharger CVs 366-371
+	 Version 1.2  23Jan 2015, Nigel Cliffe   Numerous extensions from v34 firmware
 -->
-<pane name="Sound - Diesel Loco">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <column>
-    <label label="Diesel Mechanical">
-      <label>Diesel Mechanical</label>
+    <label>
+      <text>Diesel Mechanical</text>
+      <text xml:lang="it">Dettagli Meccanici Diesel</text>
     </label>
     <separator/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <display item="Engine Speed Fallback when changing gear">
       <label>Engine Speed Fallback when changing gear</label>
+      <label xml:lang="it">Decremento Velocità  prima del cambio di marcia</label>
     </display>
     <display item="Maximum speed before upshifting">
       <label>Maximum speed before upshifting</label>
+      <label xml:lang="it">Velocità Max. prima del passaggio alla marcia superiore</label>
     </display>
   </column>
   <column>
-    <label label=" "/>
+    <label>
+      <text> </text>
+    </label>
+	
+
+	<display item="Influence of Acceleration on Diesel Sound Steps">
+		<label>Influence of Acceleration on Diesel Sound Steps</label>
+		</display>
+	<display item="Influence of Deceleration on Diesel Sound Steps">
+		<label>Influence of Deceleration on Diesel Sound Steps</label>
+		</display>
+	<display item="Limitation of Acceleration on Diesel Sound Steps">
+		<label>Limitation of Acceleration on Diesel Sound Steps</label>
+		</display>
+	
+	<label>	
+	<text> </text>	
+	</label>
+	
+	<display item="Fn key driving solo">
+		<label>Fn key driving solo</label>
+		</display>
+	<display item="Solo unhindered rpm">
+		<label>Solo unhindered rpm</label>
+		</display>
+	<display item="Solo change momentum">
+		<label>Solo change momentum</label>
+		</display>
+	<display item="Solo change idle only">
+		<label>Solo change idle only</label>
+		</display>
+		
+		
+	<display item="Momentum reduction when driving solo">
+		<label>Momentum reduction when driving solo</label>
+		</display>
+	<display item="Driving idle sound speed step threshold">
+		<label>Driving idle sound speed step threshold</label>
+		</display>
+		
+	<label>
+	<text> </text>
+	</label>
+	
     <display item="Function Key for Coasting"/>
     <display item="Sound Slot during Coasting"/>
+
+	<label>
+	<text> </text>
+	</label>
+
+	<display item="Automatic Coasting Speed Steps">
+		<label>Speed change for automatic coasting</label>
+		</display>
+	
   </column>
   <column>
-    <label label="Turbocharger">
-      <label>Turbocharger</label>
+    <label>
+      <text>Turbocharger</text>
+      <text xml:lang="it">Turbocompressore</text>
     </label>
     <separator/>
-    <label label=" ">
-      <label> </label>
+    <label>
+      <text> </text>
     </label>
     <display item="Maximum volume of Turbocharger">
       <label>Maximum volume of Turbocharger</label>
+      <label xml:lang="it">Volume Max. Turbocompressore</label>
     </display>
     <display item="Turbocharger dependence on speed">
       <label>Turbocharger dependence on speed</label>
+      <label xml:lang="it">Turbocompressore in funzione della Velocità</label>
     </display>
     <display item="Turbocharger dependence on acceleration">
       <label>Turbocharger dependence on acceleration</label>
+      <label xml:lang="it">Turbocompressore in funzione della accellerazione</label>
     </display>
     <display item="Minimum load on the Turbocharger">
       <label>Minimum load on the Turbocharger</label>
+      <label xml:lang="it">Carico Min. Turbocompressore</label>
     </display>
     <display item="Increase in frequency of the Turbocharger">
       <label>Increase in frequency of the Turbocharger</label>
+      <label xml:lang="it">Incremento frequenza Turbocompressore</label>
     </display>
     <display item="Decrease in frequency of the Turbocharger">
       <label>Decrease in frequency of the Turbocharger</label>
+      <label xml:lang="it">Decremento frequenza Turbocompressore</label>
     </display>
     <display item="Drop one speed step to lower turbocharger">
       <label>Drop one speed step to lower turbocharger</label>
+      <label xml:lang="it">Diminiusci di uno step di velocità per diminuire il Turbocompressore</label>
     </display>
   </column>
   <name>Sound - Diesel Loco</name>
+  <name xml:lang="it">Suoni - Diesel</name>
 </pane>

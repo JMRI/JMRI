@@ -25,6 +25,8 @@
 #     If both rDirection and rColor are specified along with reserve/release rAction values, rColor will be used to set the BlockExtraColor value
 
 from java.awt import Color
+import jmri
+import java
 
 debug = False
 

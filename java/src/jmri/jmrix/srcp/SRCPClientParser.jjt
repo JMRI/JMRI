@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  */
 
 // This is generated code.  DO NOT ATTEMPT TO FIX ANY FINDBUGS WARNINGS
-@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NM_METHOD_NAMING_CONVENTION")
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings({"NM_METHOD_NAMING_CONVENTION","RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE"})
 
 public class SRCPClientParser {
   
@@ -60,18 +60,15 @@ TOKEN :
 {
   < ZEROADDR: ("0")( ["0"-"9"] )* >
 | < NONZEROADDR: ["1"-"9"](["0"-"9"])* >
-| < JMRITURNOUT: ["a"-"z","A"-"Z"] "T" (["0"-"9"])+ >
-| < JMRISENSOR: ["a"-"z","A"-"Z"] "S" (["0"-"9"])+ >
-| < JMRILIGHT: ["a"-"z","A"-"Z"] "L" (["0"-"9"])+ >
-| < ONOFF: (<ON>|<OFF>) >
-| < #ON: <O><N>> 
-| < #OFF: <O>(<F>){2} >
-| < PROTOCOL: (<A>|<F>|<L>|<P>|<S>|<N>|<M>|<Z>) >
 | < DRIVEMODE: ("="|"0"|"1"|"2") >
-| < JULDATE: (["1"-"9"]){2,4}["0"-"3"]["0"-"9"]["0"-"9"]>
 | < HOUR: (["0"-"2"])?["0"-"9"]>
 | < MINSEC: ["0"-"5"]["0"-"9"]>
 | < DELAY: ("-")?(["0"-"9"])+>
+| < TIMESTAMP: (["0"-"9"])+((".")(["0"-"9"])+)? >
+| < ONOFF: (<ON>|<OFF>) >:IN_REASON
+| < #ON: <O><N>> 
+| < #OFF: <O>(<F>){2} >
+| < PROTOCOL: (<A>|<F>|<L>|<P>|<S>|<N>|<M>|<Z>) >
 
 // Device types
 | < FB: <F><B> >
@@ -84,7 +81,7 @@ TOKEN :
 | < POWER: <P><O><W><E><R>>
 | < SESSION: <S><E><S><S><I><O><N>>
 | < DESCRIPTION: <D><E><S><C><R><I><P><T><I><O><N> >
-| < SERVER: <S><E><R><V><E><R>>
+| < SERVER: <S><E><R><V><E><R>>:IN_REASON
 
 // Constants and commands used for handshake mode only.
 | < SRCP: <S><R><C><P>>
@@ -93,21 +90,10 @@ TOKEN :
 | <PROTOCOLLITTERAL: <P><R><O><T><O><C><O><L>>
 | <CONNECTIONMODELITTERAL: <C><O><N><N><E><C><T><I><O><N><M><O><D><E>>
 
-// commands 
-| < GET: <G><E><T> >
-| < SET: <S><E><T> >
-| < CHECK: <C><H><E><C><K> >
-| < INIT: <I><N><I><T> >
-| < TERM: <T><E><R><M> >
-| < WAIT: <W><A><I><T> >
-| < VERIFY: <V><E><R><I><F><Y>>
-| < RESET: <R><E><S><E><T>>
-
 // Client return codes
-| < INFO: <I><N><F><O>>:IN_REASON
+| < INFO: <I><N><F><O>>
 | < OK: <O><K>>:IN_REASON
 | < ERROR: <E><R><R><O><R>>:IN_REASON
-| < ERRORCODE: (["1"-"5"])(["0"-"9"])(["0"-"9"])>
 
 | < COMMAND: <C><O><M><M><A><N><D>>
 
@@ -125,40 +111,32 @@ TOKEN :
 | <#G:["g","G"]>
 | <#H:["h","H"]>
 | <#I:["i","I"]>
+| <#J:["j","J"]>
 | <#K:["k","K"]>
-| <#L:["L","L"]>
+| <#L:["l","L"]>
 | <#M:["m","M"]>
 | <#N:["n","N"]>
 | <#O:["o","O"]>
 | <#P:["p","P"]>
+| <#Q:["q","Q"]>
 | <#R:["r","R"]>
 | <#S:["s","S"]>
 | <#T:["t","T"]>
-| <#W:["w","W"]>
+| <#U:["u","U"]>
 | <#V:["v","V"]>
+| <#W:["w","W"]>
+| <#X:["x","X"]>
 | <#Y:["y","Y"]>
 | <#Z:["z","Z"]>
 }
 
 // Lexical specifications begin here
 
-SimpleNode command():{}
+SimpleNode handshakeresponse():{SimpleNode t; SimpleNode s;}
 {
-  // This is a simple list of the possible commands.  
-  // They are broken down further below.
-  ( LOOKAHEAD(4) go() | get() | set() | check() | wait_cmd() | init() |
-                 term() | reset() | verify()) <EOL>
-  {
-    log.debug("Command Production");
-    //jjtThis.jjtSetValue(t.image);
-    return jjtThis;
-  }
-}
-
-SimpleNode handshakeresponse():{SimpleNode s;}
-{
-  // this should match any valid response to the client
-  ( s=serviceversion() <EOL> | s=connectionmode() <EOL> | s=inforesponse() )
+  // this should match any valid response to the client in handshake
+  // mode.
+  t=timestamp() ( s=serviceversion() | s=connectionmode() | s=inforesponse() )
   {
     jjtThis.jjtSetValue(s.jjtGetValue());
     log.debug("Handshake Response Production: "+jjtThis.jjtGetValue());
@@ -166,9 +144,19 @@ SimpleNode handshakeresponse():{SimpleNode s;}
   }
 }
 
+SimpleNode timestamp():{ Token t;}
+{
+   (t=<TIMESTAMP> | t=<NONZEROADDR> | t=<ZEROADDR> )
+  {
+    jjtThis.jjtSetValue(t.image);
+    log.debug("Timestamp Production: "+jjtThis.jjtGetValue());
+    return jjtThis;
+  }
+}
+
 SimpleNode serviceversion():{Token t; Token s;}
 {
-  ( t=<SRCP> (s=<VERSION>) )
+  ( t=<SRCP> (s=<VERSION>) <EOL> )
   {
     log.debug("Service Version Production");
     jjtThis.jjtSetValue(t.image +" " + s.image);
@@ -178,7 +166,7 @@ SimpleNode serviceversion():{Token t; Token s;}
 
 SimpleNode connectionmode():{Token t;}
 {
-  ( t=<COMMAND> | t=<INFO> )
+  (( t=<COMMAND> | t=<INFO> ) <EOL> )
   {
     log.debug("Connection Mode Production");
     jjtThis.jjtSetValue(t.image);
@@ -186,26 +174,58 @@ SimpleNode connectionmode():{Token t;}
   }
 }
 
-SimpleNode inforesponse():{SimpleNode t; Token s; Token r;}
+SimpleNode inforesponse() :{SimpleNode t; SimpleNode s;}
 {
-  t=address() (s=<INFO> | s=<OK> | s=<ERROR>) r=<EOL>
+  //t=address() (s=info() | s=ok() | s=error() )
+  address() (s=info() | s=ok() | s=error() )
   {
-    jjtThis.jjtSetValue(t.jjtGetValue() + " " +s.image + r.image);
+    jjtThis.jjtSetValue("");
     log.debug("Information Response Production: " + jjtThis.jjtGetValue() );
     return jjtThis;
   }
 }
 
-SimpleNode commandresponse():{SimpleNode s;}
+SimpleNode info():{Token t;SimpleNode s; SimpleNode r;}
 {
-  // this should match any valid response to the client
-  /*((<ADDR> | <ERRORCODE>) bus() ( ga() address() port() zeroone() |
-				 power() onoff() )) <EOL>*/
-  s=inforesponse() bus() ( ga() address() port() zeroone() |
-                         power() onoff() ) <EOL>
+   ( t=<INFO> bus() ( fb() <EOL> | ga() <EOL> | gl() <EOL> | sm() | time() | power() |session() | server() | description() | lock() ))
+  {
+    jjtThis.jjtSetValue(t.image );
+    log.debug("Information Response Production: " + jjtThis.jjtGetValue() );
+    return jjtThis;
+  }
+}
+
+SimpleNode error():{Token t;Token r;}
+{
+   ( t=<ERROR> r=<EOL> )
+  {
+    jjtThis.jjtSetValue(t.image + r.image);
+    //jjtThis.jjtSetValue(r.image);
+    log.debug("Error Response Production: " + jjtThis.jjtGetValue() );
+    return jjtThis;
+  }
+}
+
+SimpleNode ok():{Token t;Token r;}
+{
+  ( t=<OK> r=<EOL> )
+  {
+    jjtThis.jjtSetValue(t.image + " " + r.image);
+    log.debug("OK Response Production: " + jjtThis.jjtGetValue() );
+    return jjtThis;
+  }
+}
+
+
+SimpleNode commandresponse():{SimpleNode t; SimpleNode s; }
+{
+  // this should match any valid response to the client in 
+  // either command mode or info mode.
+  t=timestamp() ( s=inforesponse() ) 
   {
     log.debug("Command Mode Response Production");
-    jjtThis.jjtSetValue(s.jjtGetValue());
+    jjtThis.jjtSetValue(s.jjtGetValue() );
+
     return jjtThis;
   }
 }
@@ -231,15 +251,27 @@ SimpleNode bus():{SimpleNode s;}
   }
 }
 
-SimpleNode address():{SimpleNode s;}
+SimpleNode power():{Token t; SimpleNode r;}
+{
+  ( t=<POWER> ( r=onoff() | <EOL> ))
+  {
+    log.debug("POWER Production "+ t.image);
+    //jjtThis.jjtSetValue(t.image + " " + r.jjtGetValue() );
+    jjtThis.jjtSetValue(t.image );
+    return jjtThis;
+  }
+}
+
+void address() #void:{SimpleNode s;}
 {
   (s=zeroaddress() | s=nonzeroaddress())
   {
     log.debug("Address Production "+ s.jjtGetValue());
-    jjtThis.jjtSetValue(s.jjtGetValue());
-    return jjtThis;
+    //jjtThis.jjtSetValue(s.jjtGetValue());
+    //return jjtThis;
   }
 }
+
 SimpleNode zeroaddress():{Token t;}
 {
   t=<ZEROADDR>
@@ -276,11 +308,11 @@ SimpleNode port():{SimpleNode s;}
 
 SimpleNode devicegroup():{Token t;}
 {
-  ( <FB> | <GA> | <GL> | <SM> | <TIME> | <SESSION> | <SERVER> | 
-    <LOCK> | <DESCRIPTION> )
+  ( t=<FB> | t=<GA> | t=<GL> | t=<SM> | t=<TIME> | t=<SESSION> | t=<SERVER> | 
+    t=<LOCK> | t=<POWER>| t=<DESCRIPTION> )
   {
     log.debug("DeviceGroup Production");
-    //jjtThis.jjtSetValue(t.image);
+    jjtThis.jjtSetValue(t.image);
     return jjtThis;
   }
 }
@@ -296,108 +328,9 @@ SimpleNode go():{Token t;}
   }
 }
 
-SimpleNode get():{Token t;}
-{
-  t=<GET> bus() ( fb() address() | 
-                ga() address() port() | 
-                gl() address() | 
-                sm() address() | 
-                time() | 
-                power() | 
-                server() | 
-                session () | 
-                lock() devicegroup() address() | 
-                description() [ devicegroup() address() ] )
-
-  {
-     log.debug("GET Production");
-    jjtThis.jjtSetValue(t.image);
-     return jjtThis;
-  }
-}
-
-SimpleNode set():{Token t;}
-{
-  t=<SET> ( ( bus() ( gl() | 
-                sm() | 
-                ga() address() port() zeroone() delay() | 
-                fb() address() port() | 
-                time() | 
-                power() onoff() | 
-                lock() ) ) |
-	<PROTOCOLLITTERAL> serviceversion() | 
-	<CONNECTIONMODELITTERAL> connectionmode() ) 
-  {
-    log.debug("SET Production");
-    jjtThis.jjtSetValue(t.image);
-    return jjtThis;
-  }
-}
-
-SimpleNode term():{Token t;}
-{
-  t=<TERM> bus()  ( fb() | gl() | sm() | power() | server() | lock() )
-  {
-    jjtThis.jjtSetValue(t.image);
-   return jjtThis;
-  }
-}
-
-SimpleNode check():{Token t;}
-{
-  t=<CHECK> bus() ( gl() | sm() | ga() address() port() zeroone() (delay()|timeout()) | 
-                 fb() | time() | power() onoff() | lock() )
-  {
-    log.debug("Check Production");
-    jjtThis.jjtSetValue(t.image);
-    return jjtThis;
-  }
-}
-
-SimpleNode wait_cmd():{Token t;}
-{
-  t=<WAIT> bus() ( fb() address() port() (delay()|timeout())|time() )
-
-  {
-     log.debug("WAIT Production");
-    jjtThis.jjtSetValue(t.image);
-     return jjtThis;
-  }
-}
-
-SimpleNode init():{Token t;}
-{
-  t=<INIT> bus() ( fb() | ga() | gl() | sm() | time() | power() )
-  {
-     log.debug("INIT Production");
-    jjtThis.jjtSetValue(t.image);
-     return jjtThis;
-  }
-}
-
-SimpleNode reset():{Token t;}
-{
-  t=<RESET> bus() <SERVER>
-  {
-     log.debug("RESET Production");
-    jjtThis.jjtSetValue(t.image);
-     return jjtThis;
-  }
-}
-
-SimpleNode verify():{Token t;}
-{
-  t=<VERIFY> bus() sm()
-  {
-     log.debug("RESET Production");
-    jjtThis.jjtSetValue(t.image);
-     return jjtThis;
-  }
-}
-
 SimpleNode gl():{Token t;}
 {
-  t=<GL>
+  t=<GL> address() ( (<DRIVEMODE>|address()) (address())+ | <PROTOCOL> (address() address())? )? 
   {
     jjtThis.jjtSetValue(t.image);
     return jjtThis;}
@@ -413,7 +346,7 @@ SimpleNode sm():{Token t;}
 
 SimpleNode ga():{Token t;}
 {
-  t=<GA>
+  t=<GA> address() ( ( <PROTOCOL> ) | (port() zeroone()) )?
   { 
     jjtThis.jjtSetValue(t.image);
     return jjtThis;
@@ -422,7 +355,7 @@ SimpleNode ga():{Token t;}
 
 SimpleNode fb():{Token t;}
 {
-  t=<FB>
+  t=<FB> ( address() zeroone() )?
   {
     jjtThis.jjtSetValue(t.image);
     return jjtThis;}
@@ -437,27 +370,18 @@ SimpleNode time():{Token t;}
   }
 }
 
-SimpleNode power():{Token t;}
+SimpleNode server():{Token t;Token r;}
 {
-  t=<POWER> 
+  t=<SERVER> r=<EOL> 
   {
-    jjtThis.jjtSetValue(t.image);
-    return jjtThis;
-  }
-}
-
-SimpleNode server():{Token t;}
-{
-  t=<SERVER> 
-  {
-    jjtThis.jjtSetValue(t.image);
+    jjtThis.jjtSetValue(t.image + " " + r.image);
     return jjtThis;
   }
 }
 
 SimpleNode session():{Token t;}
 {
-  t=<SESSION> 
+  t=<SESSION> address() <EOL>
   {
     jjtThis.jjtSetValue(t.image);
     return jjtThis;
@@ -466,7 +390,7 @@ SimpleNode session():{Token t;}
 
 SimpleNode lock():{Token t;}
 {
-  t=<LOCK> 
+  t=<LOCK> devicegroup() ( address() )+ <EOL> 
   {
     jjtThis.jjtSetValue(t.image);
     return jjtThis;
@@ -475,35 +399,29 @@ SimpleNode lock():{Token t;}
 
 SimpleNode description():{Token t;}
 {
-  t=<DESCRIPTION> 
+ t=<DESCRIPTION> ( LOOKAHEAD(3) ( (devicegroup())+ <EOL> ) |  ( fb() <EOL> | ga() <EOL> | gl() <EOL> | sm() | time() | power() |session() | server() | lock() )) 
   {
     jjtThis.jjtSetValue(t.image);
     return jjtThis;
   }
 }
 
-SimpleNode comment():{}
+SimpleNode onoff():{Token t; Token r;}
 {
-  //<COMMENT>
-  {return jjtThis;}
-}
-
-SimpleNode onoff():{Token t;}
-{
-  t=<ONOFF>
+  t=<ONOFF> r=<EOL>
   {
-     log.debug("OnOff Production " +t.image);
+     log.debug("OnOff Production " +t.image + " " + r.image);
      jjtThis.jjtSetValue(t.image);
      return jjtThis;
   }
 }
 
-SimpleNode zeroone():{Token t;}
+void zeroone() #void:{SimpleNode s;}
 {
-  (zeroaddress() | nonzeroaddress())
+  (s=zeroaddress() | s=nonzeroaddress())
   {
      log.debug("ZeroOne Production ");
-     return jjtThis;
+     //return jjtThis;
   }
 }
 

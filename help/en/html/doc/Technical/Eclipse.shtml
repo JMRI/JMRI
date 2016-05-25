@@ -1,269 +1,322 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
-    <TITLE>
- 	JMRI: Building with Eclipse
-    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
-    <meta name="keywords" content="JMRI technical code Eclipse">
+<title>JMRI: Building with Eclipse</title>
+<meta content="Bob Jacobsen" name="Author">
+<meta name="keywords" content="JMRI technical code Eclipse">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for Stu req letter grade Psych 199. Letter from instructor in favor; confirmed with instructor. Approved.Stu req letter grade Psych 199. Letter from instructor in favor; confirmed with instructor. Approved.Stu req letter grade Psych 199. Letter from instructor in favor; confirmed with instructor. Approved. the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
-
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+<!--#include virtual="/Style" -->
 </head>
-
 
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 
-	<div id="mainContent">
-	    <!-- -------- -->
-	    <!--  Teaser  --> <!-- Optional -->
-	    <!-- -------- -->
+<div id="mainContent">
+	<!-- -------- -->
+	<!--  Teaser  -->
+	<!-- Optional -->
+	<!-- -------- -->
 
 
-<H1>JMRI: Building with Eclipse</H1>
+	<h1>JMRI: Building with Eclipse</h1>
 
-<p>Eclipse (available at <a href="http://www.eclipse.org">www.eclipse.org</a>)
-makes a great platform for working with JMRI.</p>
+	<p>
+		Eclipse (available at <a href="http://www.eclipse.org">www.eclipse.org</a>)
+		makes a great platform for working with JMRI.
+	</p>
 
-<p>Eclipse is a complex environment to work with. If you're already
-familiar with IDEs like Microsoft Visual Studio it won't be too hard to
-get used to, but it is definitely worth buying a textbook (e.g. <a
-	href="http://www.amazon.com/exec/obidos/tg/detail/-/0321305027/qid=1124158635">
-The Java Developer's Guide to Eclipse</a>).</p>
+	<p>
+		Eclipse is a complex environment to work with. If you're already
+		familiar with IDEs like Microsoft Visual Studio it won't be too hard
+		to get used to, but it is definitely worth buying a textbook (e.g. <a
+			href="http://www.amazon.com/exec/obidos/tg/detail/-/0321305027/qid=1124158635">
+			The Java Developer's Guide to Eclipse</a>).
+	</p>
 
-<P>JMRI developers use subversion (SVN) for source control as of
-July 2011. Previously we used CVS for source control, and using CVS is
-no longer supported. If you were already using Eclipse and CVS it is
-strongly recommended that you start fresh and download the latest
-version of Eclipse and create a new workspace before using SVN to get
-the latest files.</P>
+	<p>
+		JMRI developers use Git for source control. Source control using Git
+		is including as part of the Eclipse "Luna" download. For more
+		information or an alternate method for getting the JMRI source, see <a
+			href="getgitcode.shtml">JMRI: Getting the Code</a>.
+	</p>
 
-<P>These instructions were developed and tested using "Eclipse IDE for Java Developers" version "Indigo Release".
-<P>Also note that at the time of writing this help document that JMRI required JAVA version 6.  You must confirm
-that JRE 6 is the default Java Runtime Environment.
+	<p>These instructions were developed and tested using "Eclipse IDE
+		for Java Developers" version "Luna Service Release 1a (4.4.1)".</p>
+	<p>Also note that at the time of writing this help document that
+		JMRI requires JAVA version 8. You must confirm that JRE 8 is the
+		default Java Runtime Environment. Eclipse recommends installing
+		release Luna for Java 8, but there are workarounds described online.</p>
 
-<h2>Setting up Eclipse for building JMRI using Subversion</h2>
+	<a name="getwgit"></a>
+	<h2>Getting the JMRI Source using Git</h2>
 
-The standard Eclipse download doesn't have the subversion plugin
-enabled. To install subversion do the following:
+	To get the source code from GitHub using Git you need to do the
+	following:
 
- <OL>
-  <LI>Open Eclipse.</LI>
-  <LI>From the main menu bar select "Help" then "Install New Software..."</LI>
-  <LI>Now click on the "Available Software Sites" link.</LI>
-  <LI>Select "http://download.eclipse.org/technology/subversive/0.7/update-site/" and then
-   press the "Enable" button followed by "OK". This should return you to the Install window.</LI>
-    <LI>If the above link didn't appear in the available software sites, you can manually enter the 
-    entire site address into the "Work with" text window.
-  <LI>Now select "http://download.eclipse.org/technology/subversive/0.7/update-site/" in the
-   "Work with:" selection menu, and then select all of the checkboxes, followed by pressing the
-   "Next" button, and complete the SVN installation as prompted by the program.</LI>
-  <LI>You will be asked to restart the program, do so, and then complete the subversion
-   installation by selecting a connector or connectors, and again you will be asked to restart the
-   program when the install of the connectors is complete.</LI>
- </OL>
+	<ol>
+		<li>Go to <a href="https://github.com/">GitHub.com</a> and create
+			an account.
+		<li>Then open Eclipse.</li>
+		<li>From the main menu bar select "File" then "Import..."</li>
+		<li>Click on "Git" then "Project from Git" then the "Next"
+			button.</li>
+		<li>Now select the repository source by clicking on "Clone URI".
+			The Source Git Repository screen should appear.</li>
+	</ol>
 
- <h2>Getting the JMRI Source using Subversion</h2>
+	<a href="images/EclipseSourceGitRepository.png">
+	<img src="images/EclipseSourceGitRepository.png" width="350" height="312" alt="Eclipse Git pane"></a>
 
-To get the source code from SourceForge using Subversion you need to do
-the following:
+	<ol>
 
- <OL>
-  <LI>Open Eclipse.</LI>
-  <LI>From the main menu bar select "File" then "Import..."</LI>
-  <LI>Click on "SVN" then "Project from SVN" then "Next"</LI>
-  <LI>Now create a new repository location and enter this URL for read only access:
-   "svn://svn.code.sf.net/p/jmri/code/trunk/jmri".</LI>
-  <P>If you have a SourceForge id and password enter the following URL with your user id in the
-   path name: "https://user_id@svn.code.sf.net/p/jmri/code/trunk/jmri". Then when requested submit
-   your id and password.</P>
-  <LI>Click "Next" then "Finish"</LI>
-  <LI>You should now see a window called "Check Out As", click ""Finish"</LI>
-  <LI>If all is well, the check out should begin. It might take a while to download all of the
-   JMRI files.</LI>
- </OL>
+		<li>Enter the URI "https://github.com/JMRI/JMRI".</li>
+		<li>Enter your GitHub username and password in the authentication
+			fields.</li>
+		<li>Click the "Next" button and the Branch Selection screen
+			should appear.</li>
 
- <P>After the download is complete the Eclipse Package Explorer
-should look like this:</P>
-<img src="images/EclipsePackageExplorer.png">
-<P>After the download is complete, Eclipse will be reporting an
-error: Project 'jmri' is missing required source folder: 'java/tmp'.
-This will be fixed by running the ant build as described below.
+	</ol>
 
-<h2>Building and running JMRI using Ant</h2>
+	<a href="images/EclipseGitBranchSelection.png">
+	<img src="images/EclipseGitBranchSelection.png" width="350" height="312" alt="Eclipse Branch pane"></a>
 
-We recommend that before you try and build and run one of the
-applications within Eclipse that you run the ant build.xml within Eclipse. This will
-create the necessary directories, load some resource icons, and create needed Java files using
-JavaCC. To run the ant build.xml you need to do the following: 
+	<ol>
 
-<OL>
-<li>Ant needs a JDK (Java Development Kit) in order to run the supplied "build.xml" file. The Eclipse
-download doesn't include a JDK, so you must download and install a JDK, and then configure ant to
-use the JDK.
-<li>Here's a link to the Oracle site that can provide you with a JDK: 
-<P><a href= "http://www.oracle.com/technetwork/java/javase/downloads/index.html">http://www.oracle.com/technetwork/java/javase/downloads/index.html</a></P></li>
-<li>Select the build.xml file using the Package Explorer, then right click, and a menu should
-appear.</li>
-<li>Now select "Run As" then "2 Ant Build".</li>
-<Li>Confirm that under the menu tab JRE that you've selected a JDK.</Li>
-<!-- <LI>Select "Targets", and then select "copy resource files", leave the other targets selected.</LI> -->
-<LI>Now press the "Run" button, this should start the ant build.
-</OL>
+		<li>Select the branches you want to install. If you're not sure
+			which branches you need, select just the "master" branch. This branch
+			contains the latest code for JMRI.</li>
+		<li>Click the "Next" button and the Local Destination screen
+			should appear.</li>
+		<li>Press the "Next" button if the local destination is
+			acceptable to you.</li>
+	</ol>
 
-<P>If the ant build fails, most likely it is because you need a JDK (Java
-Development Kit) rather than a JRE (Java Runtime Environment) which is
-the default. To change the JRE, select "Run As" "2 Ant Build" and a new
-window should appear. Select the "JRE" tab. The change the JRE, select
-the "Separate JRE:" radio button, and then press the "Installed JREs"
-button. If you don't see a JDK, you need to add one.</P>
+	<p>After the download is complete the Eclipse Package Explorer
+		should look like this:</p>
+	<a href="images/EclipsePackageExplorer.png">
+	<img src="images/EclipsePackageExplorer.png" width="350" height="312" alt="Eclipse Package Explorer pane"></a>
+	<p>After the download is complete, Eclipse will be reporting an
+		error: Project 'jmri' is missing required source folder: 'java/tmp'.
+		This will be fixed by running the ant build as described below.
+	<h2>Building and running JMRI using Ant</h2>
 
-<P>If the ant build succeeds, you can now launch any of the JMRI applications from ant, and create a jmri.jar file
-if you wish.  Use the "2 Ant Build" and in the window select the "Targets" tab, and
-use the appropriate checkbox to generate what you want.</P>
+	We recommend that before you try and build and run one of the
+	applications within Eclipse that you run the ant build.xml within
+	Eclipse. This will create the necessary directories, load some resource
+	icons, and create needed Java files using JavaCC. To run the ant
+	build.xml you need to do the following:
 
-<h2>Building and running JMRI using Eclipse</h2>
+	<ol>
+		<li>Ant needs a JDK (Java Development Kit) in order to run the
+			supplied "build.xml" file. The Eclipse download doesn't include a
+			JDK, so you must download and install a JDK, and then configure ant
+			to use the JDK.
+		<li>Here's a link to the Oracle site that can provide you with a
+			JDK:
+			<p>
+				<a
+					href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">http://www.oracle.com/technetwork/java/javase/downloads/index.html</a>
+			</p>
+		</li>
+		<li>Select the build.xml file using the Package Explorer, then
+			right click, and a menu should appear.</li>
+		<li>Now select "Run As" then "2 Ant Build".</li>
+		<li>Confirm that under the menu tab JRE that you've selected a
+			JDK, not a JRE.</li>
+		<li>Now press the "Run" button, this should start the ant build.</li>
 
- <P>After completing the ant build as described above, you need to refresh the jmri directory.
-  Right click on the jmri directory name and select "Refresh". The refresh operation should trigger
-  a build of the workspace and the build should complete without error.
- 
- <P>As of early 2012, the JMRI build path has a library reference to "jre6" which is Java version
-  6. When installing your JRE be sure and name it "jre6" or you will get an error message stating
-  that the reference to jre6 could not be found.
-  
- <P>To run an application do the following:</P>
- 
-<ol>
+	</ol>
 
-  <LI>You need to configure the complier compliance level to java 1.6. select under the main
-   control bar "Window-&gt;Preferences", then select "Java-&gt;Complier" Adjust the complier
-   compliance level to 1.6.
- 
-  <LI>Next you need to configure the Java complier to not scrub the output folders, otherwise
-   some of the resources files that are loaded by the ant build will disappear. To stop the scrub,
-   select "Java-&gt;Complier-&gt;Building". In the building window deselect "Scrub output folders
-   when cleaning projects", then "OK".</LI>
+	<p>If the ant build fails, most likely it is because you need a JDK
+		(Java Development Kit) rather than a JRE (Java Runtime Environment)
+		which is the default. To change the JRE, select "Run As" "2 Ant Build"
+		and a new window should appear. Select the "JRE" tab. The change the
+		JRE, select the "Separate JRE:" radio button, and then press the
+		"Installed JREs" button. If you don't see a JDK, you need to add one
+		(from site above).</p>
 
-  <LI>Then run the ant build again to load the output folders.</LI>
+	<p>If the ant build succeeds, you can now launch any of the JMRI
+		applications from ant, and create a jmri.jar file if you wish. Use the
+		"2 Ant Build" and in the window select the "Targets" tab, and use the
+		appropriate checkbox to generate what you want.</p>
 
-  <LI>From the "Run" menu, select "Run Configurations..." We'll use the window that opens to
-   configure which program(s) to run. (If the Run menu does not have a "Run Configurations..."
-   entry, be sure you selected the java directory in the navigation pane above - Eclipse menus are
-   context sensitive)</LI>
+	<a name="build"></a>
+	<h2>Building and running JMRI using Eclipse</h2>
 
-  <LI>On the left side, highlight "Java Application", then press the "New" icon above it. The
-   icon looks like a document with a plus sign on the upper-right.</LI>
+	<p>After completing the ant build as described above, you need to
+		refresh the jmri directory. Right click on the jmri directory name and
+		select "Refresh". The refresh operation should trigger a build of the
+		workspace and the build should complete without error.
+	<p>To run an application do the following:</p>
 
-  <LI>You should now have a new "Main" tab highlighted. Above that, replace "New_configuration"
-   with "DecoderPro". Below it, enter "jmri" (lower case important) for "Project:" and
-   "apps.DecoderPro.DecoderPro" for "Main class:".</LI>
+	<ol>
 
-  <LI>Select the "Arguments" tab, and under VM argments enter (You should probably cut and
-   paste): <BR> <PRE>
+		<li>You need to verify the compiler compliance level is set to
+			java 1.8. Select under the main control bar "Window-&gt;Preferences",
+			then select "Java-&gt;Compiler".
+		<li>From the "Run" menu, select "Run Configurations..." We'll use
+			the window that opens to configure which program(s) to run. (If the
+			Run menu does not have a "Run Configurations..." entry, be sure you
+			selected the java directory in the navigation pane above - Eclipse
+			menus are context sensitive)</li>
+
+		<li>On the left side, highlight "Java Application", then press
+			the "New" icon above it. The icon looks like a document with a plus
+			sign on the upper-right.</li>
+
+		<li>You should now have a new "Main" tab highlighted. Above that,
+			replace "New_configuration" with "DecoderPro". Below it, enter "jmri"
+			(lower case important) for "Project:" and
+			"apps.DecoderPro.DecoderPro" for "Main class:".</li>
+
+		<li>Select the "Arguments" tab, and under VM arguments enter (You
+			should probably cut and paste): <br> <pre>
 -Xms10m
 -Xmx300m
 -Djava.security.policy=lib/security.policy 
 -Dapple.laf.useScreenMenuBar=true
-</PRE> If you're using a 32 bit windows system add the library path: <PRE>
+</pre> If you're using a 32 bit windows system add the library path: <pre>
 -Djava.library.path=.;lib;lib/windows/x86 
-</PRE> Note if you're using a 64 bit windows system change the library path to: <PRE>
+</pre> Note if you're using a 64 bit windows system change the library path
+			to: <pre>
 -Djava.library.path=.;lib;lib/windows/x64
-</PRE>
-  </LI>
+</pre>
+		</li>
 
-  <LI>Optional, select the "Common" tab, the section on "Display in favorites menu",
-        check the boxes next to "Run" and "Debug"</LI>
-    
-    <LI>If you'd like to create targets to make it easy to 
-        run PanelPro and AllTests, repeat the above steps
-        to create a new "Java Application"
-        except specifying "apps.PanelPro.PanelPro" and
-        "apps.tests.AllTest" respectively.</LI>  
-        
-    <LI>Click "Apply", then "Close"  (You could click "Run" at this point, but
-        we've got a little more to do)</LI>
-        
-    <LI>You should now be back to the usual Eclipse navigator view, 
-        where most development work is done. To see some particular
-        java file, expand the "java" folder at the left, then
-        the "src" folder, navigating down to the file you want. 
-        
-    <LI>To run DecoderPro, select it under "Run History" from the "Run"
-        menu.  Once you've done that once, you can just click the "Run"
-        icon on the toolbar to rerun the last program.
-        
-    </ol>
-    
-    <H2>JavaCC</H2>
+		<li>Optional, select the "Common" tab, the section on "Display in
+			favorites menu", check the boxes next to "Run" and "Debug"</li>
 
-In March of 2010 JMRI developers started using JavaCC (Java Compiler
-Compiler) to generate code. Currently the compiler places the output
-files in the "tmp" directory under "java". The easiest way to create and
-populate the "tmp" directory is to use the ant build.
+		<li>If you'd like to create targets to make it easy to run
+			PanelPro and AllTests, repeat the above steps to create a new "Java
+			Application" except specifying "apps.PanelPro.PanelPro" and
+			"apps.tests.AllTest" respectively.</li>
 
-<H2>Installing JavaCC</H2>
+		<li>Click "Apply", then "Close" (You could click "Run" at this
+			point, but we've got a little more to do)</li>
 
-Instead of using the ant build to populate the "tmp" directory, you can install the
-JavaCC plug-in.  Here's the steps:
-<P>
-1) Download the Eclipse JavaCC plugin following the instructions found here:
-<A HREF="http://eclipse-javacc.sourceforge.net">http://eclipse-javacc.sourceforge.net</A>
-<p>
-2) After restarting Eclipse, right click on the java directory in the Project Explorer or Navigator and select
-   JavaCC Options.  
-<p>
-3) On the JavaCC Options tab, enter the output directory to be
-   java/tmp/jmri/jmris/srcp/parser
-<p>
-4) On the JJTree options page, enter the output directory to be
-   java/tmp/jmri/jmris/srcp/parser
-<p>
-5) Confirm that the "Java Build Path" includes the tmp directory (see Project Properties).
+		<li>You should now be back to the usual Eclipse navigator view,
+			where most development work is done. To see some particular java
+			file, expand the "java" folder at the left, then the "src" folder,
+			navigating down to the file you want.
+		<li>To run DecoderPro, select it under "Run History" from the
+			"Run" menu. Once you've done that once, you can just click the "Run"
+			icon on the toolbar to rerun the last program.
+	</ol>
 
-<H2>Complier Errors and Warnings</H2>
+	<a name="javacc"></a>
+	<h2>Installing JavaCC Plugin (alternative to Run As Ant Build
+		method above)</h2>
 
-The default Eclipse complier configuration produces many unnecessary warnings.  You can adjust the warnings to match the screen shots as
-shown below by going to Window-&gt;Preferences and selecting "Java-&gt;Complier-&gt;Errors/Warnings"
+	Instead of using the ant build to populate the "tmp" directory, you can
+	install the JavaCC plugin. Here's the steps:
+	<ol>
+		<li>Download the Eclipse JavaCC plugin following the instructions
+			found here: <a href="http://eclipse-javacc.sourceforge.net">http://eclipse-javacc.sourceforge.net</a>
+		<li>After restarting Eclipse, right click on the java directory
+			in the Project Explorer or Navigator and select JavaCC Options.
+		<li>On the JavaCC Options tab, enter the output directory to be
+			java/tmp/jmri/jmris/srcp/parser
+		<li>On the JJTree options page, enter the output directory to be
+			java/tmp/jmri/jmris/srcp/parser
+		<li>Confirm that the "Java Build Path" includes the tmp directory
+			(see Project Properties).
+	</ol>
 
-<P>
-<img src="images/ErrorsWarningsCodeStyle.png">
-</P>
-<P>
-<img src="images/ErrorsWarningsPotential.png">
-</P>
-<P>
-<img src="images/ErrorsWarningsName.png">
-</P>
-<P>
-<img src="images/ErrorsWarningsUnnecessary.png">
-</P>
-<P>
-<img src="images/ErrorsWarningsAnnotations.png">
-</P>
+	<a name="push"></a>
+	<h2>Pushing changes to your GitHub branch</h2>
 
-<!--#include virtual="/Footer" -->
+	The standard practice for getting your changes included in main JMRI
+	code repository is to commit them to your local repository
+	periodically, then when ready to publish "push" an entire set of
+	changes to a repository belonging to you on GitHub, and then finally
+	making a request for somebody to "pull" your changes into the main JMRI
+	repository. See
+	<a href="GitFAQ.shtml">JMRI: Git FAQ</a> "Setting up a Git environment
+	for JMRI Developers" for more information.
 
-      </div>
-      <!-- closes #mainContent-->
-    <!-- closes #mBody-->
+	<p>It is also good practice to "pull" all of the recent changes
+		from the main JMRI repository before performing your commits. After a
+		"pull" your workspace and eventually your remote GitHub repository
+		will be in synch with the main JMRI repository. To perform a "pull"
+		select your project, then "Team" then "Pull" from the menu.</p>
 
+	<p>If you want to see which files are going to be modified before
+		the "Pull", you can use the "Team Synchronizing" feature. To do so,
+		right click on your project, the "Team" then "Synchronize Workspace"</p>
+
+	<p>Pushing to your GitHub branch:
+	<ul>
+		<li>First, commit your changes to the local repository on your
+			computer
+			<p>To commit a set of changes, right click on the project that
+				you want to commit, and select "Team" followed by "Commit". Enter a
+				commit message and select the files you wish to commit.</p>
+		<li>Next, "push" a set of changes from your local repository to
+			your repository on GitHub. (You do this so others can access it and
+			pick it up for inclusion into JMRI)
+			<p>
+				Before you can push your changes to GitHub for the first time,
+				you'll have to <a href="gitdeveloper.shtml#repo">create your own
+					GitHub repository</a> (which you may have done above) and "fork" the
+				JMRI repository. Log on to your account at <a
+					href="https://github.com/">GitHub.com</a> and then navigate to the
+				JMRI repository <a href="https://github.com/JMRI/JMRI">https://github.com/JMRI/JMRI</a>
+				In the upper right hand corner of the page you will find a button
+				labeled "Fork". Press the "Fork" button to create your own
+				repository of the JMRI source.
+			</p>
+			<p>To push to your GitHub repository, again select "Team" then
+				"Remote" then "Configure Push to Upstream". In the "Configure Push"
+				window, click on the "Push URIs" and then the "Add" button. In the
+				"New URI" window enter the URL of your
+				GitHub repository along with your username and password. After
+				pressing "Finish" the "Configure Push" window should look like the
+				image below:</p>
+				<a href="images/EclipseConfigurePush.png">
+				<img src="images/EclipseConfigurePush.png" width="350" height="322" alt="Eclipse Error pane"></a>
+			<p>Press either the "Save and Push" or the "Save" button. Later
+				when you want to push new changes to your repository on GitHub, you
+				can simply commit them as described above, and then use the
+				"Push" icon in the Synchronize window.</p>
+		<li>Finally, submit a "Pull Request" to the main JMRI code repository on
+			the GitHub website.
+			<p>
+				To do this, start by signing on to the <a href="http://github.com">GitHub
+					web site</a>, selecting your repository and clicking the <a
+					href="gitdeveloper.shtml#pull">Pull Request button</a>. For more
+				info, see the <a href="gitdeveloper.shtml#pull">developer
+					instructions,</a>
+			</p>
+	</ul>
+
+	<a name="errors"></a>
+	<h2>Compiler Errors and Warnings</h2>
+
+	The default Eclipse compiler configuration produces many unnecessary
+	warnings. You can adjust the warnings to match the screen shots as
+	shown below by going to Window -&gt; Preferences and selecting
+	"Java -&gt; Compiler -&gt; Errors/Warnings".
+
+	<p>
+		<a href="images/ErrorsWarningsCodeStyle.png"><img src="images/ErrorsWarningsCodeStyle.png" width="413" height="342" alt="Eclipse Error pane"></a>
+	</p>
+	<p>
+		<a href="images/ErrorsWarningsPotential.png"><img src="images/ErrorsWarningsPotential.png" width="424" height="500" alt="Eclipse Error pane"></a>
+	</p>
+	<p>
+		<a href="images/ErrorsWarningsName.png"><img src="images/ErrorsWarningsName.png" width="413" height="360" alt="Eclipse Error pane"></a>
+	</p>
+	<p>
+		<a href="images/ErrorsWarningsUnnecessary.png"><img src="images/ErrorsWarningsUnnecessary.png" width="413" height="502" alt="Eclipse Error pane"></a>
+	</p>
+	<p>
+		<a href="images/ErrorsWarningsAnnotations.png"><img src="images/ErrorsWarningsAnnotations.png" width="423" height="500" alt="Eclipse Error pane"></a>
+	</p>
+
+  <!-- not used images/EclipseCvsModules 2015/12, delete omg ? -->	
+  <!--#include virtual="/Footer" -->
+
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
-
-</body>
-
 </html>

@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head><title>DecoderPro Throttle</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<a name="Top"></a>
+<h1>DecoderPro&reg; Main Window</h1>
+<h2>Throttle Window</h2>
+
+<div align="right">
+<p><a href="Main_Tool.shtml">Previous </a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+
+<hr>
+<p>The JMRI&reg; Throttle may be used on your computer screen to replace
+the vendor throttle that is furnished with your DCC system. One or
+several throttles may be in use at one time. The Throttle opens as a
+floating window that may be positioned anywhere on your desktop. Note
+the Title Bar contains the locomotive Roster ID&nbsp; information or
+the Locomotive address.</p><p><img style="width: 512px; height: 538px;" alt="Throttle" src="images/Main_Throttle01.png"></p><p>(color shading added to show functional areas of throttle panels)</p>
+    <p>The Throttle Window contains <a href="Main_Throttle_menubar.shtml"><strong>Menu Bar</strong></a>, <a href="Main_Throttle_toolbar.shtml"><strong>Toolbar</strong></a>
+and three panels which may be enabled or disabled via check box in the
+View menu. Each panel has a title bar with windows controls to
+minimize, maximize and exit: :&nbsp;&nbsp; </p>
+    <p style="color: red;"><strong>Warning!!! </strong>Be careful with the left hand (minimize)
+buttons.&nbsp;In Windows, if the little guy is clicked it will minimize
+the panel, which means it is no longer visible but the restore button
+is lost behind the rest of the panels.&nbsp; The way to easily get it
+back, is to go into the view menu, uncheck it there, then go back again
+and re-check it.&nbsp; You may also drag the panels out of the way to
+uncover the Maximize icon for a minimized panel.</p>
+<p><a href="Main_Throttle_addressPanel.shtml"><strong>Address Panel </strong></a>(green shading) facilitates setting the address of the locomotive you wish to control with the throttle.</p>
+    <p><a href="Main_Throttle_controlPanel.shtml"><strong>Control Panel</strong></a> (blue shading) contains the controls for applying power to the locomotive that is addressed and controlling speed</p>
+    <p><a href="Main_Throttle_functionPanel.shtml"><strong>Function Panel</strong></a>(yellow
+shading) contains all the function buttons used to control the
+addressed locomotives functions. If function names are assigned to the
+functions and stored in the roster, they will be displayed.</p><span style="font-weight: bold;">The descriptions shown  above are only a small part of what the </span><strong style="font-weight: bold;">Throttle</strong><span style="font-weight: bold;"> Window can do. The author(s)  of the </span><strong style="font-weight: bold;">Throttle</strong><span style="font-weight: bold;">
+Window have created an extensive set of Help files to help you
+customize Throttle Windows to your way of operating.&nbsp; To access
+Help, just open a New </span><strong style="font-weight: bold;">Throttle</strong><span style="font-weight: bold;">. Then,  click on </span><strong style="font-weight: bold;">Help</strong><span style="font-weight: bold;"> and select </span><strong style="font-weight: bold;">Window Help</strong><span style="font-weight: bold;"> from the dropdown box.&nbsp; There&#8217;s lots of good stuff in there</span>.<br><hr>
+
+<div align="right">
+<p><a href="Main_Tool.shtml">Previous </a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+</body>
+</html>

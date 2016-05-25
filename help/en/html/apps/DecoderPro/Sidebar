@@ -1,1 +1,86 @@
-<!-- Sidebar --><hr class="hide"><div id="mBody"><div id="side"> <!-- Block of text on left side of page --><dl class=toc><h3>User Guide</h3></dt><DD><UL><LI><a href="./Tour.shtml">Quick tour</A><LI><a href="./MoreInfo.shtml">Details</A><LI><a HREF="./Files.shtml">Configuration files</a><LI><a HREF="./Roster.shtml">Working with the roster</a><LI><a HREF="./FAQ.shtml">Frequently asked questions</a><LI><a HREF="./Install.shtml">Downloading and installing DecoderPro</a></UL><dt><h3>More advanced information</h3></dt><DD><UL><LI><a HREF="./IntroXML.shtml">Intro to XML files</a><LI><a href="./CreateDecoder.shtml">Create your own decoder definition</a><LI><a href="./Programmer.shtml">Create a custom programmer definition</a><LI><a HREF="./RosterFile.shtml">How the roster is stored; updating it by hand</a><LI><a HREF="./LocoFile.shtml">Locomotive (roster) files</a><LI><a HREF="./Debug.shtml">Debugging</a><LI><a HREF="./NetworkFiles.shtml">Sharing Rosters Among Computers</a><LI><a HREF="./FileUpdate.shtml">Updating Decoder Definitions</a></UL></dl></div> <!-- End of block of text on left side of page -->
+<!-- Sidebar -->
+<!-- This is the common sidebar definition for apps/DecoderPro pages -->
+<hr class="hide">
+<div id="mBody">
+<div id="side"> <!-- Block of text on left side of page -->
+
+<dl class="toc">
+
+<dt><h3>DecoderPro&reg;</h3></dt>
+<dd>
+	<ul>
+	<li><a href="./Tour.shtml">Quick Tour</a>
+	<li><a href="./MoreInfo.shtml">Some Details</a>
+	<li><a href="./Files.shtml">Configuration Files</a>
+	<li><a href="./Roster.shtml">Working with the Roster</a>
+	<li><a href="./FAQ.shtml">FAQ</a>
+  <li><a href="../../setup/index.shtml">JMRI Setup</a></li>
+	</ul>
+
+<dt><h3>Advanced</h3></dt>
+<dd>
+	<ul>
+	<li><a href="./IntroXML.shtml">Intro to XML files</a>
+	<li><a href="./CreateDecoder.shtml">Create your own decoder definition</a>
+	<li><a href="./Programmer.shtml">Create a custom programmer definition</a>
+	<li><a href="./RosterFile.shtml">Store/update a Roster</a>
+	<li><a href="./LocoFile.shtml">Locomotive (Roster) files</a>
+	<li><a href="./Debug.shtml">Debugging</a>
+	<li><a href="./NetworkFiles.shtml">Sharing Rosters among computers</a>
+	<li><a href="./FileUpdate.shtml">Updating decoder definitions</a>
+	</ul>
+</dd>
+
+<dt><h3>Other Apps</h3></dt>
+<dd>
+		<ul>
+		<!-- <li><a href="../DecoderPro/index.shtml">DecoderPro&reg;</a></li> -->
+		<li><a href="../PanelPro/PanelPro.shtml">PanelPro&trade;</a></li>
+		<li><a href="../DispatcherPro/index.shtml">DispatcherPro&trade;</a></li>
+    <li><a href="../../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></li>
+		<li><a href="../SoundPro/SoundPro.shtml">SoundPro</a></li>
+		</ul>
+</dd>
+
+<dt><h3><a href="../../tools/index.shtml">Tools</a></h3></dt>
+<dd>JMRI provides powerful tools for working with your
+layout.
+	<ul>
+		<li><dfn><a href="../../tools/Turnouts.shtml">Turnouts</a></dfn>
+		<li><dfn><a href="../../tools/Lights.shtml">Lights</a></dfn>
+		<li><dfn><a href="../../tools/Sensors.shtml">Sensors</a></dfn>
+		<li><dfn><a href="../../tools/throttle/ThrottleMain.shtml">Throttles</a></dfn>
+		<li><dfn><a href="../../tools/consisttool/ConsistTool.shtml">Consisting</a></dfn>
+		<li><dfn><a href="../../tools/Blocks.shtml">Blocks</a></dfn>
+		<li><dfn><a href="../../tools/Reporters.shtml">Reporters</a></dfn>
+		<li><dfn><a href="../../tools/Memories.shtml">Memory Variables</a></dfn>
+		<li><dfn><a href="../../tools/Routes.shtml">Routes</a></dfn>
+		<li><dfn><a href="../../tools/LRoutes.shtml">LRoutes</a></dfn>
+    <li><dfn><a href="../../tools/Sections.shtml">Sections</a></dfn>
+		<li><dfn><a href="../../tools/Logix.shtml">Logix</a></dfn>
+		<li><dfn><a href="../../tools/fastclock/index.shtml">Fast Clocks</a></dfn>
+		<li><dfn><a href="../../tools/speedometer/index.shtml">Speedometer</a></dfn>
+		<li><dfn><a href="../../tools/Audio.shtml">Audio</a></dfn>
+		<li><dfn><a href="../../tools/IdTags.shtml">ID Tags</a></dfn>
+		
+		<li><dfn><a href="../../tools/index.shtml#systemSpecificTools">System-specific...</a></dfn>
+	</ul>
+</dd>
+
+<dt><h3><a href="automation">Layout Automation</a></h3></dt>
+<dd>JMRI can be used to automate parts 
+of your layout, from simply controlling a crossing gate
+to running trains in the background.
+    <ul>
+    <li><dfn><a href="../../tools/signaling/index.shtml">Signaling</a></dfn>
+    <li><dfn><a href="../../tools/EntryExit.shtml">Entry Exit (NX)</a></dfn>
+    <li><dfn><a href="../../tools/Routes.shtml">Routes</a></dfn>
+    <li><dfn><a href="../../tools/fastclock/index.shtml">Fast Clocks</a></dfn>
+    <li><dfn><a href="../../tools/scripting/index.shtml">Scripting</a></dfn>
+    </ul>
+</dd>
+		
+</dl>
+</div> <!-- close #side -->
+<!-- /Sidebar -->
+

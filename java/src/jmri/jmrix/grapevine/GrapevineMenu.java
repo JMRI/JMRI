@@ -1,18 +1,22 @@
 // GrapevineMenu.java
-
 package jmri.jmrix.grapevine;
 
 import java.util.ResourceBundle;
-
 import javax.swing.JMenu;
 
 /**
  * Create a "Systems" menu containing the Jmri Grapevine-specific tools
  *
- * @author	Bob Jacobsen   Copyright 2003, 2006, 2007
- * @version     $Revision$
+ * @author	Bob Jacobsen Copyright 2003, 2006, 2007
+ * @version $Revision$
  */
 public class GrapevineMenu extends JMenu {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = 4017450895998949082L;
+
     public GrapevineMenu(String name) {
         this();
         setText(name);
@@ -34,5 +38,3 @@ public class GrapevineMenu extends JMenu {
     }
 
 }
-
-

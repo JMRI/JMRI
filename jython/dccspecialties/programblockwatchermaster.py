@@ -2,8 +2,8 @@
 # http://www.dccspecialties.com
 #
 # Script by Brett Scott
-# Version 1.10 08/11/2007
-# info@mgbrr.org www.mgbrr.org
+# Version 1.50 07/27/2014
+# mgbrrclub@gmail.com or info@mgbrr.org and www.mgbrr.org
 #
 # Many Thanks to Bob Jacobsen and Everyone who Contributes to JMRI.
 # 
@@ -77,7 +77,7 @@ class setStartup(jmri.jmrit.automat.AbstractAutomaton) :
     # This CV sets the average value of the block current when it is unoccupied. 
     # The J4 turn on threshold is 3 + CV54 + CV55. The turn off threshold is 3 + CV54. 
     # The scaling value is 0.534 mA per bit. The default is 0, which will result in
-    # a trip current of about 2 mA. The maximum value is 254 – CV55 – 3. 
+    # a trip current of about 2 mA. The maximum value is 254 ï¿½ CV55 ï¿½ 3. 
     # This sets the maximum trip current to about 130 mA. 
     # (With J3 on pins 2-3 this value is set each time power is applied to the detector.)
     # programmers.getAddressedProgrammer(True, 9983).writeCV(54, 0, None)	

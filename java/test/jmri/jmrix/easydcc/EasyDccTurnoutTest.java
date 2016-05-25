@@ -1,65 +1,64 @@
 /**
  * EasyDccTurnoutTest.java
  *
- * Description:	    tests for the jmri.jmrix.nce.EasyDccTurnout class
- * @author			Bob Jacobsen
+ * Description:	tests for the jmri.jmrix.nce.EasyDccTurnout class
+ *
+ * @author	Bob Jacobsen
  * @version
  */
-
 package jmri.jmrix.easydcc;
 
-import org.apache.log4j.Logger;
+import jmri.implementation.AbstractTurnoutTest;
+import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import junit.framework.Assert;
-
-import jmri.implementation.AbstractTurnoutTest;
 
 public class EasyDccTurnoutTest extends AbstractTurnoutTest {
 
-	private EasyDccTrafficControlScaffold tcis = null;
+    private EasyDccTrafficControlScaffold tcis = null;
 
-	public void setUp() {
-	    apps.tests.Log4JFixture.setUp(); 
-		// prepare an interface
-		tcis = new EasyDccTrafficControlScaffold();
+    public void setUp() {
+        apps.tests.Log4JFixture.setUp();
+        // prepare an interface
+        tcis = new EasyDccTrafficControlScaffold();
 
-		t = new EasyDccTurnout(4);
-	}
+        t = new EasyDccTurnout(4);
+    }
 
-	public int numListeners() { return tcis.numListeners(); }
+    public int numListeners() {
+        return tcis.numListeners();
+    }
 
-	public void checkThrownMsgSent() {
-		Assert.assertTrue("message sent", tcis.outbound.size()>0);
-		Assert.assertEquals("content", "S 02 81 FE 7F", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // THROWN message
-	}
+    public void checkThrownMsgSent() {
+        Assert.assertTrue("message sent", tcis.outbound.size() > 0);
+        Assert.assertEquals("content", "S 02 81 FE 7F", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // THROWN message
+    }
 
-	public void checkClosedMsgSent() {
-		Assert.assertTrue("message sent", tcis.outbound.size()>0);
-		Assert.assertEquals("content", "S 02 81 FF 7E", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // CLOSED message
-	}
+    public void checkClosedMsgSent() {
+        Assert.assertTrue("message sent", tcis.outbound.size() > 0);
+        Assert.assertEquals("content", "S 02 81 FF 7E", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // CLOSED message
+    }
 
-	// from here down is testing infrastructure
+    // from here down is testing infrastructure
+    public EasyDccTurnoutTest(String s) {
+        super(s);
+    }
 
-	public EasyDccTurnoutTest(String s) {
-		super(s);
-	}
+    // Main entry point
+    static public void main(String[] args) {
+        String[] testCaseName = {"-noloading", EasyDccTurnoutTest.class.getName()};
+        junit.swingui.TestRunner.main(testCaseName);
+    }
 
-	// Main entry point
-	static public void main(String[] args) {
-		String[] testCaseName = {EasyDccTurnoutTest.class.getName()};
-		junit.swingui.TestRunner.main(testCaseName);
-	}
-
-	// test suite from all defined tests
-	public static Test suite() {
-		TestSuite suite = new TestSuite(EasyDccTurnoutTest.class);
-		return suite;
-	}
+    // test suite from all defined tests
+    public static Test suite() {
+        TestSuite suite = new TestSuite(EasyDccTurnoutTest.class);
+        return suite;
+    }
 
     // The minimal setup for log4J
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
- 	
- 	static Logger log = Logger.getLogger(EasyDccTurnoutTest.class.getName());
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 
 }

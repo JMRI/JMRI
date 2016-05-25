@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
-<title>JMRI: DecoderPro In Depth</title>
+<title>JMRI: DecoderPro - The Details</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -20,112 +19,115 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
+<h1>JMRI: DecoderPro User Guide</h1>
+<h2>The Details</h2>
 
-<H1>DecoderPro - Details</H1>
-
-<p>This page provides information on how the DecoderPro Symbolic
-Programmer works.  For details on JMRI internals, please see the technical
-pages, which are still being developed.</p>
+<p>This page provides information on how DecoderPro (Symbolic
+Programmer) works.<br>
+For details on the JMRI internals, please see the <a href="../../doc/Technical/IntroStructure.shtml">Technical
+Doc pages</a>.</p>
 
 <dl>
-<dt class=left>Configuration files</dt>
-<dd class=first>
-<p>
-There are two types of configuration files:
-<ul>
-<li> Decoder configuration files - These carry the description of a specific type of decoder, and control how the programmer displays the variable information.
-<li> Locomotive configuration files - These carry the specific information on a single locomotive.
-</ul>
-</p>
-
-<p>The programmer can read either type of file. If you select a decoder
-file after clicking Read File, the programmer will be set up with the
-variables, options, etc for that type. The values will be blank, as the
-programmer doesn't know anything about what's been programmed into a
-specific decoder unit.</p>
-
-<p>If you select a locomotive file after clicking Read File, information on
-both the decoder configuration and the specific settings in this locomotive
-will be displayed. This shows you how the locomotive is already configured,
-allowing you to make small changes with less chance of confusion.</p>
-
-<p>You can also write locomotive files with the Write File button. This
-will store the known contents of the decoder, allowing you to come back to
-it later. </p>
-
-<p> The configuration files are stored in XML format. This is a standard
-form for structured data. XML is being widely used to standardize the
-exchange of data between different manufacturers in many fields; perhaps
-someday DCC decoder manufacturers will provide an XML description of each
-decoder they make. In the meantime, the configuration files are being
-created by volunteers. If one doesn't exist for a specific decoder you've
-got, you can
-<a href="CreateDecoder.shtml">create your own</a>.
-You can also modify a file if you'd prefer
-different names, a different grouping of options, or you just never want to
-see that certain options that you don't use. A simple text editor can
-create these files easily, as the format doesn't have fixed length fields,
-special characters, etc. There are also powerful public-domain XML tools
-that make it really easy to manage a large number of decoder files.</p>
-</dd>
-
-<dt class=left>Variables</dt>
-<dd>
-<p>A "variable" defines the value that will be loaded into all or part of a
-CV. For example, a variable can be defined that sets the value of the three
-most-significant bits of CV 47. If there are several options configured in
-a single CV, these would normally be handled by separate variables.
-Currently, there are several types of variables:
-<ul>
-<LI> Decimal - numbers entered in the usual decimal notation. These are
-useful for short address, starting voltages, etc.
-<LI> Enum (enumerated) - choose from a set of options. These can be used
-for simple on/off, yes/no choices, or more complicated sets like the FX
-lighting example above. The configuration contains a name for each
-possibility.
-<LI> Long address - like a decimal value, except the constraints on a valid
-long address are taken into account.
-<LI> Hex - This is not so much needed, since the multiple options in a
-single CV can be handled by multiple variables. But if its needed for some
-reason, the capability is present.
-<LI> Speed table - not yet really working well, this type of variable is
-intended to provide a graphic speed table chart that you can drag around to
-configure as you wish.
-</ul></p>
-</dd>
-
-<dt class=left>Programmer communication: states</dt>
-<dd>
-<p>Communication with the command station / programmer, hence reading and
-writing of the decoder, are only done when the "Read" or "Write" buttons
-are pressed. The program keeps track of whether a value has been sent to
-the decoder using four states for variables or CVs:
-<ul>
-<li> Read - The value shown was read from the decoder.
-<LI> Stored - The value shown has been written to the decoder.
-<LI> Editted - The value shown has been changed in the computer, but
-not yet written to the decoder. Push the Write button when you're happy
-with the value.
-<LI> Unknown - A default value, or a read has failed, or for some other
-reason the program has no confidence that the value is what you really
-want. Edit the value or press the Write button.
-</ul></p>
-</dd>
-
-<dt class=left>Printing</dt>
-<dd>
-<p>You can print the current locomotive's information from the programmer
-windows. From the "File..." menu, select "Print...", and fill out the
-dialog box that's presented.</p>
-
-<p>The printout is formatted by the currently-selected programmer format,
-so the information on all of the tabs is printed. You get a shorter
-printout of just the most important values when you print from the "Basic"
-format, and a listing of everything when you use "Comprehensive". </p>
-</dd>
+	<dt class="left">Configuration Files</dt>
+	<dd class="first">
+	<p>
+	There are three types of <a href="Files.shtml">Configuration Files</a>:
+		<ul>
+		<li>Decoder configuration files - These carry the description of a specific type of decoder, and control how the programmer displays the variable information.
+		<li>Locomotive configuration files - These carry the specific information on a single locomotive.
+		<li>Programmer definitions - These define the formats for the various programming sheets.
+		</ul>
+	</p>
+	
+	<p>The programmer can read either type of file. If you select a decoder
+	file after clicking Read File, the programmer will be set up with the
+	variables, options, etc for that type. The values will be blank, as the
+	programmer doesn't know anything about what's been programmed into a
+	specific decoder unit.</p>
+	
+	<p>If you select a locomotive file after clicking Read File, information on
+	both the decoder configuration and the specific settings in this locomotive
+	will be displayed. This shows you how the locomotive is already configured,
+	allowing you to make small changes with less chance of confusion.</p>
+	
+	<p>You can also write locomotive files with the Write File button. This
+	will store the known contents of the decoder, allowing you to come back to
+	it later. </p>
+	
+	<p> The configuration files are stored in XML format. This is a standard
+	form for structured data. XML is being widely used to standardize the
+	exchange of data between different manufacturers in many fields; perhaps
+	someday DCC decoder manufacturers will provide an XML description of each
+	decoder they make. In the meantime, the configuration files are being
+	created by volunteers. If one doesn't exist for a specific decoder you've
+	got, you can
+	<a href="CreateDecoder.shtml">create your own</a>.
+	You can also modify a file if you'd prefer
+	different names, a different grouping of options, or you just never want to
+	see that certain options that you don't use. A simple text editor can
+	create these files easily, as the format doesn't have fixed length fields,
+	special characters, etc. There are also powerful public-domain XML tools
+	that make it really easy to manage a large number of decoder files.</p>
+	</dd>
+	
+	<dt class="left">Variables</dt>
+	<dd>
+	<p>A "variable" defines the value that will be loaded into all or part of a
+	CV. For example, a variable can be defined that sets the value of the three
+	most-significant bits of CV 47. If there are several options configured in
+	a single CV, these would normally be handled by separate variables.
+	Currently, there are several types of variables:</p>
+		<ul>
+		<li> Decimal - numbers entered in the usual decimal notation. These are
+		useful for short address, starting voltages, etc.
+		<li> Enum (enumerated) - choose from a set of options. These can be used
+		for simple on/off, yes/no choices, or more complicated sets like the FX
+		lighting example above. The configuration contains a name for each
+		possibility.
+		<li> Long address - like a decimal value, except the constraints on a valid
+		long address are taken into account.
+		<li> Hex - This is not so much needed, since the multiple options in a
+		single CV can be handled by multiple variables. But if its needed for some
+		reason, the capability is present.
+		<li> Speed table - not yet really working well, this type of variable is
+		intended to provide a graphic speed table chart that you can drag around to
+		configure as you wish.
+		</ul>
+	</dd>
+	
+	<dt class="left">Programmer communication: States</dt>
+	<dd>
+	<p>Communication with the Command Station/programmer, hence reading and
+	writing of the decoder, are only done when the "Read" or "Write" buttons
+	are pressed. DecoderPro keeps track of whether a value has been sent to
+	the decoder using four States for variables or CVs:</p>
+		<ul>
+		<li> Read - The value shown was read from the decoder.
+		<li> Stored - The value shown has been written to the decoder.
+		<li> Edited - The value shown has been changed in the computer, but
+		not yet written to the decoder. Push the Write button when you're happy
+		with the value.
+		<li> Unknown - A default value, or a read has failed, or for some other
+		reason the program has no confidence that the value is what you really
+		want. Edit the value or press the Write button.
+		</ul>
+	</dd>
+	
+	<dt class="left">Printing</dt>
+	<dd>
+	<p>You can print the current locomotive's information from the programmer
+	windows. From the "File..." menu, select "Print...", and fill out the
+	dialog box that's presented.</p>
+	
+	<p>The printout is formatted by the currently-selected programmer format,
+	so the information on all of the tabs is printed. You get a shorter
+	printout of just the most important values when you print from the "Basic"
+	format, and a listing of everything when you use "Comprehensive". </p>
+	</dd>
 </dl>
     
 <!--#include virtual="/Footer" -->
-</div>
+</div> <!-- close #mainContent -->
+</div> <!-- close #mBody -->    
 </body>
 </html>

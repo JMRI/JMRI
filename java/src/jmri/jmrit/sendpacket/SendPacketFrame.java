@@ -1,28 +1,37 @@
 // SendPacketFrame.java
-
 package jmri.jmrit.sendpacket;
 
+import java.awt.GridLayout;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.JTextField;
+import javax.swing.JToggleButton;
+import jmri.CommandStation;
+import jmri.InstanceManager;
+import jmri.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.*;
-import jmri.util.*;
-import java.awt.*;
-
-import javax.swing.*;
 
 /**
  * User interface for sending DCC packets.
  * <P>
- * This was originally made from jmrix.loconet.logogen, but note that
- * the logic is somewhat different here.  The LocoNet version waited for
- * the sent (LocoNet) packet to be echo'd, while this starts the timeout
- * immediately.
+ * This was originally made from jmrix.loconet.logogen, but note that the logic
+ * is somewhat different here. The LocoNet version waited for the sent (LocoNet)
+ * packet to be echo'd, while this starts the timeout immediately.
  * <P>
- * @author			Bob Jacobsen   Copyright (C) 2003
- * @version			$Revision$
+ * @author	Bob Jacobsen Copyright (C) 2003
+ * @version	$Revision$
  */
 public class SendPacketFrame extends jmri.util.JmriJFrame {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1094279262803359342L;
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
@@ -34,10 +43,10 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
 
     // internal members to hold sequence widgets
     static final int MAXSEQUENCE = 4;
-    JTextField mPacketField[]   = new JTextField[MAXSEQUENCE];
-    JCheckBox  mUseField[]      = new JCheckBox[MAXSEQUENCE];
-    JTextField mDelayField[]    = new JTextField[MAXSEQUENCE];
-    JToggleButton    mRunButton = new JToggleButton("Go");
+    JTextField mPacketField[] = new JTextField[MAXSEQUENCE];
+    JCheckBox mUseField[] = new JCheckBox[MAXSEQUENCE];
+    JTextField mDelayField[] = new JTextField[MAXSEQUENCE];
+    JToggleButton mRunButton = new JToggleButton("Go");
 
     public void initComponents() throws Exception {
 
@@ -59,17 +68,16 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
 
             packetTextField.setToolTipText("Enter packet as hex pairs, e.g. 82 7D");
 
-
             pane1.add(jLabel1);
             pane1.add(packetTextField);
             pane1.add(sendButton);
             pane1.add(Box.createVerticalGlue());
 
             sendButton.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent e) {
-                        sendButtonActionPerformed(e);
-                    }
-                });
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    sendButtonActionPerformed(e);
+                }
+            });
 
             getContentPane().add(pane1);
         }
@@ -79,16 +87,16 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
         // Configure the sequence
         getContentPane().add(new JLabel("Send sequence of packets:"));
         JPanel pane2 = new JPanel();
-        pane2.setLayout(new GridLayout(MAXSEQUENCE+2, 4));
+        pane2.setLayout(new GridLayout(MAXSEQUENCE + 2, 4));
         pane2.add(new JLabel(""));
         pane2.add(new JLabel("Send"));
         pane2.add(new JLabel("packet"));
         pane2.add(new JLabel("wait (msec)"));
-        for (int i=0;i<MAXSEQUENCE; i++) {
-            pane2.add(new JLabel(Integer.toString(i+1)));
-            mUseField[i]=new JCheckBox();
-            mPacketField[i]=new JTextField(10);
-            mDelayField[i]=new JTextField(10);
+        for (int i = 0; i < MAXSEQUENCE; i++) {
+            pane2.add(new JLabel(Integer.toString(i + 1)));
+            mUseField[i] = new JCheckBox();
+            mPacketField[i] = new JTextField(10);
+            mDelayField[i] = new JTextField(10);
             pane2.add(mUseField[i]);
             pane2.add(mPacketField[i]);
             pane2.add(mDelayField[i]);
@@ -104,11 +112,13 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
 
         // get the CommandStation reference
         cs = InstanceManager.commandStationInstance();
-        if (cs==null) log.error("No CommandStation object available");
+        if (cs == null) {
+            log.error("No CommandStation object available");
+        }
 
         // add help menu
         addHelpMenu("package.jmri.jmrit.sendpacket.SendPacketFrame", true);
-        
+
         // pack to cause display
         pack();
     }
@@ -123,15 +133,15 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
     javax.swing.Timer timer = null;
 
     /**
-     * Internal routine to handle timer starts & restarts
+     * Internal routine to handle timer starts {@literal &} restarts
      */
     protected void restartTimer(int delay) {
-        if (timer==null) {
+        if (timer == null) {
             timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent e) {
-                        sendNextItem();
-                    }
-                });
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    sendNextItem();
+                }
+            });
         }
         timer.stop();
         timer.setInitialDelay(delay);
@@ -141,14 +151,19 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
 
     /**
      * Run button pressed down, start the sequence operation
+     *
      * @param e
      */
     public void runButtonActionPerformed(java.awt.event.ActionEvent e) {
-        if (!mRunButton.isSelected()) return;
+        if (!mRunButton.isSelected()) {
+            return;
+        }
         // make sure at least one is checked
         boolean ok = false;
-        for (int i=0; i<MAXSEQUENCE; i++) {
-            if (mUseField[i].isSelected()) ok = true;
+        for (int i = 0; i < MAXSEQUENCE; i++) {
+            if (mUseField[i].isSelected()) {
+                ok = true;
+            }
         }
         if (!ok) {
             mRunButton.setSelected(false);
@@ -167,9 +182,10 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
         // working on
         int delay = 500;   // default delay if non specified, or format bad
         try {
-        	delay = Integer.parseInt(mDelayField[mNextSequenceElement].getText());
-        } catch (NumberFormatException e) {}
-        
+            delay = Integer.parseInt(mDelayField[mNextSequenceElement].getText());
+        } catch (NumberFormatException e) {
+        }
+
         // increment to next line at completion
         mNextSequenceElement++;
         // start timer
@@ -177,14 +193,16 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Send next item; may be used for the first item or
-     * when a delay has elapsed.
+     * Send next item; may be used for the first item or when a delay has
+     * elapsed.
      */
     void sendNextItem() {
         // check if still running
-        if (!mRunButton.isSelected()) return;
+        if (!mRunButton.isSelected()) {
+            return;
+        }
         // have we run off the end?
-        if (mNextSequenceElement>=MAXSEQUENCE) {
+        if (mNextSequenceElement >= MAXSEQUENCE) {
             // past the end, go back
             mNextSequenceElement = 0;
         }
@@ -194,12 +212,15 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
             byte[] m = createPacket(mPacketField[mNextSequenceElement].getText());
             // send it
             mNextEcho = m;
-            if (m != null) 
+            if (m != null) {
                 cs.sendPacket(m, 1);
-            else
-                log.warn("Message invalid: "+mPacketField[mNextSequenceElement].getText());
+            } else {
+                log.warn("Message invalid: " + mPacketField[mNextSequenceElement].getText());
+            }
             // and queue the rest of the sequence if we're continuing
-            if (mRunButton.isSelected()) startSequenceDelay();
+            if (mRunButton.isSelected()) {
+                startSequenceDelay();
+            }
         } else {
             // ask for the next one
             mNextSequenceElement++;
@@ -209,28 +230,30 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
 
     /**
      * Create a well-formed DCC packet from a String
+     *
      * @param s
      * @return The packet, with contents filled-in
      */
     byte[] createPacket(String s) {
         // gather bytes in result
         byte b[] = StringUtil.bytesFromHexString(s);
-        if (b.length == 0) return null;  // no such thing as a zero-length message
+        if (b.length == 0) {
+            return null;  // no such thing as a zero-length message
+        }
         return b;
     }
 
     /**
-     * When the window closes, 
-     * stop any sequences running
+     * When the window closes, stop any sequences running
      */
     public void dispose() {
         mRunButton.setSelected(false);
         super.dispose();
     }
-    
+
     // private data
     private CommandStation cs = null;
 
-    static Logger log = LoggerFactory.getLogger(SendPacketAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SendPacketAction.class.getName());
 
 }

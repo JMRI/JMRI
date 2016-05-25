@@ -8,7 +8,7 @@
 #
 # Author: Daniel Boudreau, copyright 2011, 2012
 # The next line is maintained by CVS, please don't change it
-# $Revision: 17977 $
+# $Revision$
 #
 # To use this script you must assign the train that you want the cars waited, 
 # and the wait value.  
@@ -46,8 +46,7 @@ class WaitCars(jmri.jmrit.automat.AbstractAutomaton):
     carList = cm.getByTrainDestinationList(train)
     print "Train (", self.trainName,") has ", carList.size(), " cars assigned to it"
     
-    for carId in carList:
-        car = cm.getById(carId)
+    for car in carList:
         if (car.getNextWait() == 0):
             car.setNextWait(self.wait)
             print "Setting next wait to ", self.wait, " for car ", car.toString()

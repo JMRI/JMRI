@@ -1,22 +1,17 @@
-// ZTC640Test.java
-
-
 package jmri.jmrix.lenz.ztc640;
 
-import org.apache.log4j.Logger;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
  * Tests for the jmri.jmrix.lenz.ztc640 package
- * @author                      Paul Bender  
- * @version                     $Revision$
+ *
+ * @author Paul Bender
  */
 public class ZTC640Test extends TestCase {
 
     // from here down is testing infrastructure
-
     public ZTC640Test(String s) {
         super(s);
     }
@@ -35,7 +30,4 @@ public class ZTC640Test extends TestCase {
         return suite;
     }
 
-    static Logger log = Logger.getLogger(ZTC640Test.class.getName());
-
 }
-

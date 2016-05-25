@@ -4,7 +4,8 @@ package jmri.jmris;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Sensor;
@@ -20,11 +21,11 @@ import org.slf4j.LoggerFactory;
  */
 abstract public class AbstractRouteServer {
 
-    protected ArrayList<String> routes = null;
-    static Logger log = LoggerFactory.getLogger(AbstractRouteServer.class);
+    private final HashMap<String, RouteListener> routes;
+    private final static Logger log = LoggerFactory.getLogger(AbstractRouteServer.class);
 
     public AbstractRouteServer() {
-        routes = new ArrayList<String>();
+        routes = new HashMap<String, RouteListener>();
     }
 
     /*
@@ -37,17 +38,21 @@ abstract public class AbstractRouteServer {
     abstract public void parseStatus(String statusString) throws JmriException, IOException;
 
     synchronized protected void addRouteToList(String routeName) {
-        if (!routes.contains(routeName)) {
-            routes.add(routeName);
+        if (!routes.containsKey(routeName)) {
+            routes.put(routeName, new RouteListener(routeName));
             Sensor tas = InstanceManager.routeManagerInstance().getRoute(routeName).getTurnoutsAlgdSensor();
             if (tas != null) {  //only add listener if there is a turnout-aligned sensor defined
-            	tas.addPropertyChangeListener(new RouteListener(routeName));
+                tas.addPropertyChangeListener(routes.get(routeName));
             }
         }
     }
 
     synchronized protected void removeRouteFromList(String routeName) {
-        if (routes.contains(routeName)) {
+        if (routes.containsKey(routeName)) {
+            Sensor tas = InstanceManager.routeManagerInstance().getRoute(routeName).getTurnoutsAlgdSensor();
+            if (tas != null) {  //only remove listener if there is a turnout-aligned sensor defined
+                tas.removePropertyChangeListener(routes.get(routeName));
+            }
             routes.remove(routeName);
         }
     }
@@ -59,6 +64,16 @@ abstract public class AbstractRouteServer {
         } catch (NullPointerException ex) {
             sendErrorStatus(routeName);
         }
+    }
+
+    public void dispose() {
+        for (Map.Entry<String, RouteListener> route : this.routes.entrySet()) {
+            Sensor tas = InstanceManager.routeManagerInstance().getRoute(route.getKey()).getTurnoutsAlgdSensor();
+            if (tas != null) {  //only remove listener if there is a turnout-aligned sensor defined
+                tas.removePropertyChangeListener(route.getValue());
+            }
+        }
+        this.routes.clear();
     }
 
     class RouteListener implements PropertyChangeListener {

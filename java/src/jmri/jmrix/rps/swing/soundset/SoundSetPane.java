@@ -1,26 +1,38 @@
 // SoundSetPane.java
- 
 package jmri.jmrix.rps.swing.soundset;
 
+import java.awt.FlowLayout;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeListener;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.JTextField;
+import jmri.jmrix.rps.Distributor;
+import jmri.jmrix.rps.Engine;
+import jmri.jmrix.rps.Measurement;
+import jmri.jmrix.rps.MeasurementListener;
+import jmri.jmrix.rps.Reading;
+import jmri.jmrix.rps.ReadingListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.rps.*;
-
-import java.beans.PropertyChangeListener;
-import javax.swing.*;
-import java.awt.event.*;
-import java.awt.*;
 
 /**
  * Frame for control of the sound speed for the RPS system
  *
- * @author	   Bob Jacobsen   Copyright (C) 2008
- * @version   $Revision$
+ * @author	Bob Jacobsen Copyright (C) 2008
+ * @version $Revision$
  */
-
-
 public class SoundSetPane extends JPanel
-            implements ReadingListener, MeasurementListener, PropertyChangeListener {
+        implements ReadingListener, MeasurementListener, PropertyChangeListener {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = -6186717308223634637L;
 
     public SoundSetPane() {
         super();
@@ -41,15 +53,14 @@ public class SoundSetPane extends JPanel
     JTextField speed;
     JCheckBox auto;
     JTextField gain;
-    
+
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if(e.getPropertyName().equals("vSound")) {
+        if (e.getPropertyName().equals("vSound")) {
             // update sound display
             vsound.setText(nf.format(e.getNewValue()));
         }
     }
-    
-    
+
     public void initComponents() {
         // number format
         nf = java.text.NumberFormat.getInstance();
@@ -59,7 +70,7 @@ public class SoundSetPane extends JPanel
 
         // GUI
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        
+
         // current value
         JPanel p = new JPanel();
         p.setLayout(new FlowLayout());
@@ -69,7 +80,7 @@ public class SoundSetPane extends JPanel
         vsound.setText(nf.format(Engine.instance().getVSound()));
         p.add(vsound);
         this.add(p);
-        
+
         this.add(new JSeparator());
 
         // set new value
@@ -79,14 +90,14 @@ public class SoundSetPane extends JPanel
         newval = new JTextField(8);
         p.add(newval);
         JButton b = new JButton("Set");
-        b.addActionListener(new ActionListener(){
+        b.addActionListener(new ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 setPushed();
             }
         });
         p.add(b);
         this.add(p);
-        
+
         this.add(new JSeparator());
 
         // calculate new speed
@@ -115,65 +126,66 @@ public class SoundSetPane extends JPanel
         gain.setText("10.");
         p.add(gain);
         this.add(p);
-        
+
         // start working
         Distributor.instance().addReadingListener(this);
         Distributor.instance().addMeasurementListener(this);
         Engine.instance().addPropertyChangeListener(this);
     }
-    
+
     void setPushed() {
         double val = Double.parseDouble(newval.getText());
         Engine.instance().setVSound(val);
     }
-    
+
     java.text.NumberFormat nf;
-    
+
     public void notify(Reading r) {
         try {
             // right ID?
-            if (!r.getID().equals(id.getText())) return;
-            
+            if (!r.getID().equals(id.getText())) {
+                return;
+            }
+
             // get the right measurement
             int i = Integer.parseInt(rcvr.getText());
-            if (i<1 || i>r.getNValues()) {
+            if (i < 1 || i > r.getNValues()) {
                 log.warn("resetting receiver number");
                 rcvr.setText("");
             }
-            log.debug("Rcvr "+i+" saw "+r.getValue(i));
+            log.debug("Rcvr " + i + " saw " + r.getValue(i));
             double val = r.getValue(i);
-            
+
             // can't use speed too small
-            if (val<100) {
-                log.warn("time too small to use: "+val);
+            if (val < 100) {
+                log.warn("time too small to use: " + val);
                 return;
             }
-            
+
             // calculate speed
-            double newspeed = Double.parseDouble(dist.getText())/val;
+            double newspeed = Double.parseDouble(dist.getText()) / val;
             speed.setText(nf.format(newspeed));
-            
+
             // if auto, do update
             if (auto.isSelected()) {
                 double g = Double.parseDouble(gain.getText());
-                if (g<1) {
-                    log.warn("resetting gain from "+gain.getText());
+                if (g < 1) {
+                    log.warn("resetting gain from " + gain.getText());
                     gain.setText("10.");
                     return;
                 }
-                double updatedspeed = (newspeed+g*Engine.instance().getVSound())/(g+1);
+                double updatedspeed = (newspeed + g * Engine.instance().getVSound()) / (g + 1);
                 Engine.instance().setVSound(updatedspeed);
             }
         } catch (Exception e) {
-            log.debug("Error calculating speed: "+e);
+            log.debug("Error calculating speed: " + e);
             speed.setText("");
         }
     }
 
-    
     public void notify(Measurement m) {
         // don't have to do anything
     }
-    
-    static Logger log = LoggerFactory.getLogger(SoundSetPane.class.getName());
+
+    private final static Logger log = LoggerFactory.getLogger(SoundSetPane.class.getName());
 }

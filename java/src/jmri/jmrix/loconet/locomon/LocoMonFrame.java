@@ -1,19 +1,24 @@
 // LocoMonFrame.java
-
 package jmri.jmrix.loconet.locomon;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrix.loconet.*;
+import jmri.jmrix.loconet.LnTrafficController;
+import jmri.jmrix.loconet.LocoNetListener;
+import jmri.jmrix.loconet.LocoNetMessage;
 
 /**
  * LocoNet Monitor Frame displaying (and logging) LocoNet messages
- * @author	   Bob Jacobsen   Copyright (C) 2001, 2008
- * @version   $Revision$
+ *
+ * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ * @version $Revision$
  * @deprecated 2.9.5
  */
 @Deprecated
 public class LocoMonFrame extends jmri.jmrix.AbstractMonFrame implements LocoNetListener {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1761967273446973451L;
 
     public LocoMonFrame(LnTrafficController tc) {
         super();
@@ -21,12 +26,14 @@ public class LocoMonFrame extends jmri.jmrix.AbstractMonFrame implements LocoNet
     }
 
     LnTrafficController tc;
-    
-    protected String title() { return "LocoNet Traffic"; }
+
+    protected String title() {
+        return "LocoNet Traffic";
+    }
 
     public void dispose() {
         // disconnect from the LnTrafficController
-        tc.removeLocoNetListener(~0,this);
+        tc.removeLocoNetListener(~0, this);
         // and unwind swing
         super.dispose();
     }
@@ -38,21 +45,20 @@ public class LocoMonFrame extends jmri.jmrix.AbstractMonFrame implements LocoNet
 
     // provide customized help
     protected void addHelpMenu() {
-    	addHelpMenu("package.jmri.jmrix.loconet.locomon.LocoMonFrame", true);
+        addHelpMenu("package.jmri.jmrix.loconet.locomon.LocoMonFrame", true);
     }
 
     public synchronized void message(LocoNetMessage l) {  // receive a LocoNet message and log it
         // display the raw data if requested
-        String raw = null ;
-        if( rawCheckBox.isSelected() )
-			raw = l.toString();
+        String raw = null;
+        if (rawCheckBox.isSelected()) {
+            raw = l.toString();
+        }
 
         // display the decoded data
         // we use Llnmon to format, expect it to provide consistent \n after each line
-        nextLine(llnmon.displayMessage(l), raw );
+        nextLine(llnmon.displayMessage(l), raw);
     }
 
     jmri.jmrix.loconet.locomon.Llnmon llnmon = new jmri.jmrix.loconet.locomon.Llnmon();
-
-    static Logger log = LoggerFactory.getLogger(LocoMonFrame.class.getName());
 }

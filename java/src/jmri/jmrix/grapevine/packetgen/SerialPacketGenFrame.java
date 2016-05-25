@@ -1,24 +1,20 @@
-// SerialPacketGenFrame.java
-
 package jmri.jmrix.grapevine.packetgen;
-
-import jmri.util.StringUtil;
-import jmri.jmrix.grapevine.SerialMessage;
-import jmri.jmrix.grapevine.SerialReply;
-import jmri.jmrix.grapevine.SerialTrafficController;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import jmri.jmrix.grapevine.SerialMessage;
+import jmri.jmrix.grapevine.SerialReply;
+import jmri.jmrix.grapevine.SerialTrafficController;
+import jmri.util.StringUtil;
 
 /**
  * Frame for user input of serial messages
- * @author	Bob Jacobsen   Copyright (C) 2002, 2003, 2006, 2007, 2008
- * @version	$Revision$
+ *
+ * @author	Bob Jacobsen Copyright (C) 2002, 2003, 2006, 2007, 2008
  */
 public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.grapevine.SerialListener {
 
@@ -49,10 +45,10 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         packetTextField.setText("");
         packetTextField.setToolTipText("Enter command as hexadecimal bytes separated by a space");
         packetTextField.setMaximumSize(
-                                       new Dimension(packetTextField.getMaximumSize().width,
-                                                     packetTextField.getPreferredSize().height
-                                                     )
-                                       );
+                new Dimension(packetTextField.getMaximumSize().width,
+                        packetTextField.getPreferredSize().height
+                )
+        );
 
         setTitle("Send Grapevine serial command");
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -65,18 +61,17 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         p1.add(sendButton);
         getContentPane().add(p1);
 
-
         sendButton.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    sendButtonActionPerformed(e);
-                }
-            });
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                sendButtonActionPerformed(e);
+            }
+        });
 
         parityButton.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    parityButtonActionPerformed(e);
-                }
-            });
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                parityButtonActionPerformed(e);
+            }
+        });
 
         getContentPane().add(new JSeparator(JSeparator.HORIZONTAL));
 
@@ -91,14 +86,14 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         getContentPane().add(pane3);
 
         pollButton.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    pollButtonActionPerformed(e);
-                }
-            });
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                pollButtonActionPerformed(e);
+            }
+        });
         pollButton.setToolTipText("Send poll request");
 
         // add help menu to window
-    	addHelpMenu("package.jmri.jmrix.grapevine.packetgen.SerialPacketGenFrame", true);
+        addHelpMenu("package.jmri.jmrix.grapevine.packetgen.SerialPacketGenFrame", true);
 
         // pack for display
         pack();
@@ -122,12 +117,19 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
     SerialMessage createPacket(String s) {
         // gather bytes in result
         byte b[] = StringUtil.bytesFromHexString(s);
-        if ( b.length != 4 ) return null;  // no such thing as message with other than 4 bytes
+        if (b.length != 4) {
+            return null;  // no such thing as message with other than 4 bytes
+        }
         SerialMessage m = new SerialMessage();
-        for (int i=0; i<b.length; i++) m.setElement(i, b[i]);
+        for (int i = 0; i < b.length; i++) {
+            m.setElement(i, b[i]);
+        }
         return m;
     }
 
-    public void  message(SerialMessage m) {}  // ignore replies
-    public void  reply(SerialReply r) {} // ignore replies
+    public void message(SerialMessage m) {
+    }  // ignore replies
+
+    public void reply(SerialReply r) {
+    } // ignore replies
 }

@@ -1,15 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: CoordinateEdit.shtml,v 1.5 2010/02/04 21:09:20 pete_cressman Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-11-29--> 
+<!-- $Id$ -->
+<!--  UpDated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-22--> 
 <HTML LANG="fr">
 <HEAD>
 <TITLE>JMRI: Coordinate Edit Help</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <META CONTENT="Dan Boudreau" NAME="Author">
 <META NAME="keywords" CONTENT="JMRI Coordinate Edit Help">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -24,53 +24,53 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1> L'éditeur de Propriétés Étiquette et Icône </H1>
+<H1> L'&#201;diteur de Propri&#233;t&#233;s &#201;tiquette et Ic&#244;ne </H1>
 
-Cet éditeur vous permet de modifier les propriétés des éléments sur votre panneau.
+Cet &#233;diteur vous permet de modifier les propri&#233;t&#233;s des &#233;l&#233;ments sur votre panneau.
 
-<H2>Réglage  Coordonnées X et Y </H2>
-Il y a deux zones de texte où vous pouvez éventuellement saisir les
-coordonnées x et y que vous désirez et en appuyant sur le bouton "Valider" 
-l'icône se déplace à cet emplacement. Si vous souhaitez que l'icône revienne à son
-emplacement d'origine lorsque l'éditeur a été ouvert, appuyez sur le bouton "Annuler"
-et l'éditeur va déplacer l'icône de retour à sa position initiale et
-fermer la fenêtre de l'éditeur.
+<H2>R&#233;glage des Coordonn&#233;es X et Y</H2>
+Il y a deux zones de texte o&#249; vous pouvez &#233;ventuellement saisir les
+coordonn&#233;es x et y que vous d&#233;sirez et en appuyant sur le bouton "Valider" 
+l'ic&#244;ne se d&#233;place &#224; cet emplacement. Si vous souhaitez que l'ic&#244;ne revienne &#224; son
+emplacement d'origine lorsque l'&#233;diteur a &#233;t&#233; ouvert, appuyez sur le bouton "Annuler"
+et l'&#233;diteur va d&#233;placer l'ic&#244;ne de retour &#224; sa position initiale et
+fermer la fen&#234;tre de l'&#233;diteur.
 
-<P> Utilisez le bouton rotatif, si vous voulez déplacer l'icône
-d'un pixel. </p>
+<P> Utilisez la molette, si vous voulez d&#233;placer l'ic&#244;ne
+d'un pixel.</p>
 
 <H2> Changer le niveau d'Affichage </H2>
-Entrez le niveau d'affichage souhaité dans la zone de texte.
-Les niveaux vont de 1 à 10, 10 étant la couche supérieure.
-Utilisez le réglage du niveau pour placer une icône par dessus une autre pour obtenir le point de vue que
+Entrez le niveau d'affichage souhait&#233; dans la zone de texte.
+Les niveaux vont de 1 &#224; 10, 10 &#233;tant la couche sup&#233;rieure.
+Utilisez le r&#233;glage du niveau pour placer une ic&#244;ne par dessus une autre pour obtenir le point de vue que
 vous voulez sur votre panneau. </p>
 
-<H2> Modification du Texte Bulle d'Aide </H2>
-Entrez le texte que vous souhaitez afficher comme une bulle d'aide pour l'élément de panneau. </p>
+<H2> Modification du Texte des Bulles d'Aide </H2>
+Entrez le texte que vous souhaitez afficher comme bulle d'aide pour l'&#233;l&#233;ment de panneau. </p>
 
-<H2> Réglage de la Taille de la Bordure </H2>
+<H2> R&#233;glage de la Taille de la Bordure </H2>
 Entrez la taille en pixels pour la largeur de la bordure. </p>
 
-<H2> Réglage de la Taille de la Marge </H2>
+<H2> R&#233;glage de la Taille de la Marge </H2>
 Entrez la largeur et la hauteur de la marge. </p>
 
-<H2> Réglage de la taille fixe </H2>
-Entrez la largeur et la hauteur d'une région déterminée qui contient l'élément. </p>
+<H2> R&#233;glage de la taille fixe </H2>
+Entrez la largeur et la hauteur d'une r&#233;gion d&#233;termin&#233;e qui contient l'&#233;l&#233;ment. </p>
 
-<H2> Rotation d'une Icône </H2>
-Entrez l'angle de rotation supplémentaire en degrés de l'icône 
-par rapport à sa position actuelle. Pour restaurer l'icône à son angle d'origine,
+<H2> Rotation d'une Ic&#244;ne </H2>
+Entrez l'angle de rotation suppl&#233;mentaire en degr&#233;s de l'ic&#244;ne 
+par rapport &#224; sa position actuelle. Pour restaurer l'ic&#244;ne &#224; son angle d'origine,
 entrez la valeur 0. Pour restaurer l'angle d'origine, la taille et
-position, cliquez sur l'élément Rotation (Orthogonal) . </p>
+position, cliquez sur l'&#233;l&#233;ment Rotation (Orthogonal). </p>
 
-<H2> Mise à l'échelle une icône</H2>
-Entrez le pourcentage d'augmentation ou de diminution de la taille de l'icône d'un
-montant supplémentaire à sa taille actuelle. Pour restaurer l'icône à sa taille d'origine, entrez la valeur 100.
+<H2> Mise &#224; l'&#233;chelle d'une ic&#244;ne</H2>
+Entrez le pourcentage d'augmentation ou de diminution de la taille de l'ic&#244;ne d'un
+montant suppl&#233;mentaire &#224; sa taille actuelle. Pour restaurer l'ic&#244;ne &#224; sa taille d'origine, entrez la valeur 100.
 Pour restaurer l'angle d'origine, la taille et
-position, cliquez sur l'élément Rotation (Orthogonal). </p>
+position, cliquez sur l'&#233;l&#233;ment Rotation (Orthogonal). </p>
 
 <H2> Modification du texte </H2>
-Entrez le texte souhaité dans la zone de texte. </p>
+Entrez le texte souhait&#233; dans la zone de texte. </p>
 
 <!--#include virtual="/Footer" -->
 </BODY>

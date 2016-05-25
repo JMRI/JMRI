@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<title>JMRI Hardware Support - [System]</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1>Hardware Support: [System]</h1>
+<p>A template for new Hardware Help</p>
+<ul><!-- TOC -->
+	<li><a href="#hardware">Hardware</a></li>
+	<li><a href="#limitations">Limitations</a></li>
+	<li><a href="#connecting">Connecting</a></li>
+	<li><a href="#tools">JMRI Tools</a></li>
+	<li><a href="#documentation">Documentation</a></li>
+</ul>
+
+<a name="hardware"></a><h2>Supported Hardware</h2>
+<h3>Command Stations</h3>
+<ul>
+	<li>List</li>
+</ul>
+<h3>Computer Interfaces</h3>
+<ul>
+	<li>List</li>
+</ul>
+
+<a name="limitations"></a><h2>Limitations</h2>
+<p>Text, version</p>
+
+<a name="connecting"></a><h2>Connecting</h2>
+<h3>Wiring</h3>
+<p>Physical setup, colors, connectors, etc.</p>
+
+<h3>Software settings</h3>
+<p>Text</p>
+
+<a name="tools"></a><h2>JMRI [this system] Tools</h2>
+<img src="[System]Menu.png" width="100" height="100" align="right" alt="Menu">
+<h4>Tool 1</h4>
+<p>Steps etc.</p>
+<h4>Tool 2</h4>
+<p>Steps etc.</p>
+
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>JMRI Help</h3>
+<p>link to page 2, 3</p>
+
+<h3>Third Party info</h3>
+<p>Link to external web sites, downloads</p>
+
+<!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+</body>
+</html>

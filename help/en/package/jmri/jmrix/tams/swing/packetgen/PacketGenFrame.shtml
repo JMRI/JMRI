@@ -1,34 +1,33 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: PacketGenFrame.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
-<HTML LANG="en">
-<HEAD>
-<TITLE>JMRI: Command Generator</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<META CONTENT="Kevin Dickerson" NAME="Author">
-<META NAME="keywords" CONTENT="JMRI Help TAMS Command Generator">
+<html lang="en">
+<head>
+<title>JMRI: Command Generator</title>
+
+<meta content="Kevin Dickerson" name="Author">
+<meta name="keywords" content="JMRI Help TAMS Command Generator">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
+
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>TAMs Command Generator</H1>
+<h1>TAMs Command Generator</h1>
 
 The TAMs command generator tool lets you type an message
 for the TAMs command station and then send it.
 
-
-</BODY>
-</HTML>
-
+<!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+</body>
+</html>

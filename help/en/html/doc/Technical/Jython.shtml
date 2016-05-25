@@ -5,7 +5,7 @@
    <title>Jython access to JMRI tools</title>
 
     <META content="Bob Jacobsen" name=Author>
-    <meta name="keywords" content="JMRI technical code CVS FAQ">
+    <meta name="keywords" content="JMRI technical code Python Jython scripting">
 
     <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
     <!-- are an arbitrary design pattern used by the update.pl script to -->
@@ -32,9 +32,15 @@
 
 This page discusses access to the JMRI libraries from Jython, a Java version
 of Python.  The emphasis is on using JMRI capabilities from a 
-command-line Jython interpreter.  See the
+command-line Jython interpreter.  
+<b>This page is not about scripting with Jython inside JMRI.</b>
+See the
 <A HREF="../../tools/scripting/index.shtml">scripting pages</A> if you 
 are more interested in Jython scripting within JMRI.
+
+<p>
+Note that this page is somewhat out of date; version numbers, etc
+may not be current.
 
 <h2>Introduction</h2>
 
@@ -126,7 +132,7 @@ book published by O'Reilly.  The
 Jython support is not (yet) standard in JMRI.  To use this:
 <OL>
 <LI>You must first have a working JMRI installation.  In particular, 
-start the JmriDemo application and configure it to connect to your DCC
+start the JMRI application and configure it to connect to your DCC
 hardware, then save, quit and restart the program.  Make sure that the
 connection is working for the menu-based tools before trying to use Jython.
 <LI>Download and install Jython from
@@ -307,12 +313,12 @@ command from the menu.
 <H2>Using Python for signal logic and automation</h2>
 
 The existing JMRI 
-"<A HREF="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrit/automat/package-summary.html">Automat</a>"
+"<A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/package-summary.html">Automat</a>"
 classes provide hooks for user layout automation, including signaling.
 But they require that you write Java code and compile it into .class files.
 <P>
 The 
-<A HREF="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrit/automat/JythonAutomaton.html">JythonAutomaton</a>
+<A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/JythonAutomaton.html">JythonAutomaton</a>
 class is intended to make it easier to code custom layout automation, as
 it will allow you to invoke a Jython script.  Once it's integrated into
 the configuration process, you'll be able to code your automation in one

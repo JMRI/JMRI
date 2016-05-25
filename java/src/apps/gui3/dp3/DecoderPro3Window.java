@@ -1,4 +1,3 @@
-// DecoderPro3Window.java
 package apps.gui3.dp3;
 
 import jmri.Application;

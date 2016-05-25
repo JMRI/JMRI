@@ -1,0 +1,592 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2013 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - for WoW 100 & 101 -->
+
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+	<variable CV="3" item="Accel" default="32" tooltip="Sets the acceleration rate (delay or momentum), 1(default)" comment="Range 0-255">
+		<decVal max="255"/>
+		<label>Accel 1 Rate</label>
+		<label xml:lang="it">Grado Accell.1</label>
+		<comment xml:lang="it">Valori 0-255</comment>
+		<tooltip xml:lang="it">Progr. grado accellerazione (ritardo o inerzia), valori 0(default)-255</tooltip>
+	</variable>
+	<variable CV="4" item="Decel" default="96" tooltip="Sets the deceleration rate (delay or momentum), 1(default)" comment="Range 0-255">
+		<decVal max="255"/>
+		<label>Decel 1 Rate</label>
+		<label xml:lang="it">Grado Decell.1</label>
+		<comment xml:lang="it">Valori 0-255</comment>
+		<tooltip xml:lang="it">Progr. grado decellerazione (ritardo o inerzia), valori 0-255</tooltip>
+	</variable>
+	<!-- Manual 4 CV programming -->
+	<variable CV="201" item="CV201" default="0">
+		<decVal max="255"/>
+	</variable>
+	<variable CV="202" item="CV202" default="0">
+		<decVal max="255"/>
+	</variable>
+	<variable CV="203" item="CV203" default="0">
+		<decVal max="255"/>
+	</variable>
+	<variable CV="204" item="CV204" default="0">
+		<decVal max="255"/>
+	</variable>
+	<!-- Chuff Rate CV -->
+	<variable item="Step 1 Chuff Rate" CV="T2CV.3.1" default="46592" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 2 Chuff Rate" CV="T2CV.3.2" default="18176" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 3 Chuff Rate" CV="T2CV.3.3" default="11360" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 4 Chuff Rate" CV="T2CV.3.4" default="7680" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 5 Chuff Rate" CV="T2CV.3.5" default="4992" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 6 Chuff Rate" CV="T2CV.3.6" default="3408" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 7 Chuff Rate" CV="T2CV.3.7" default="2816" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 8 Chuff Rate" CV="T2CV.3.8" default="2432" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 9 Chuff Rate" CV="T2CV.3.9" default="2048" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 10 Chuff Rate" CV="T2CV.3.10" default="1792" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 11 Chuff Rate" CV="T2CV.3.11" default="1536" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 12 Chuff Rate" CV="T2CV.3.12" default="1280" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 13 Chuff Rate" CV="T2CV.3.13" default="1152" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 14 Chuff Rate" CV="T2CV.3.14" default="1024" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 15 Chuff Rate" CV="T2CV.3.15" default="952" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 16 Chuff Rate" CV="T2CV.3.16" default="904" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 17 Chuff Rate" CV="T2CV.3.17" default="856" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 18 Chuff Rate" CV="T2CV.3.18" default="808" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 19 Chuff Rate" CV="T2CV.3.19" default="760" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 20 Chuff Rate" CV="T2CV.3.20" default="712" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 21 Chuff Rate" CV="T2CV.3.21" default="672" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 22 Chuff Rate" CV="T2CV.3.22" default="648" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 23 Chuff Rate" CV="T2CV.3.23" default="624" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 24 Chuff Rate" CV="T2CV.3.24" default="600" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 25 Chuff Rate" CV="T2CV.3.25" default="576" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 26 Chuff Rate" CV="T2CV.3.26" default="558" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 27 Chuff Rate" CV="T2CV.3.27" default="540" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 28 Chuff Rate" CV="T2CV.3.28" default="522" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 29 Chuff Rate" CV="T2CV.3.29" default="502" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 30 Chuff Rate" CV="T2CV.3.30" default="486" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 31 Chuff Rate" CV="T2CV.3.31" default="470" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 32 Chuff Rate" CV="T2CV.3.32" default="454" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 33 Chuff Rate" CV="T2CV.3.33" default="438" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 34 Chuff Rate" CV="T2CV.3.34" default="422" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 35 Chuff Rate" CV="T2CV.3.35" default="406" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 36 Chuff Rate" CV="T2CV.3.36" default="396" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 37 Chuff Rate" CV="T2CV.3.37" default="386" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 38 Chuff Rate" CV="T2CV.3.38" default="376" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 39 Chuff Rate" CV="T2CV.3.39" default="366" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 40 Chuff Rate" CV="T2CV.3.40" default="356" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 41 Chuff Rate" CV="T2CV.3.41" default="351" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 42 Chuff Rate" CV="T2CV.3.42" default="346" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 43 Chuff Rate" CV="T2CV.3.43" default="341" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 44 Chuff Rate" CV="T2CV.3.44" default="336" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 45 Chuff Rate" CV="T2CV.3.45" default="331" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 46 Chuff Rate" CV="T2CV.3.46" default="326" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 47 Chuff Rate" CV="T2CV.3.47" default="321" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 48 Chuff Rate" CV="T2CV.3.48" default="316" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 49 Chuff Rate" CV="T2CV.3.49" default="311" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 50 Chuff Rate" CV="T2CV.3.50" default="306" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 51 Chuff Rate" CV="T2CV.3.51" default="301" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 52 Chuff Rate" CV="T2CV.3.52" default="296" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 53 Chuff Rate" CV="T2CV.3.53" default="291" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 54 Chuff Rate" CV="T2CV.3.54" default="286" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 55 Chuff Rate" CV="T2CV.3.55" default="281" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 56 Chuff Rate" CV="T2CV.3.56" default="276" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 57 Chuff Rate" CV="T2CV.3.57" default="271" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 58 Chuff Rate" CV="T2CV.3.58" default="266" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 59 Chuff Rate" CV="T2CV.3.59" default="256" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 60 Chuff Rate" CV="T2CV.3.60" default="251" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 61 Chuff Rate" CV="T2CV.3.61" default="247" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 62 Chuff Rate" CV="T2CV.3.62" default="243" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 63 Chuff Rate" CV="T2CV.3.63" default="239" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 64 Chuff Rate" CV="T2CV.3.64" default="235" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 65 Chuff Rate" CV="T2CV.3.65" default="231" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 66 Chuff Rate" CV="T2CV.3.66" default="228" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 67 Chuff Rate" CV="T2CV.3.67" default="225" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 68 Chuff Rate" CV="T2CV.3.68" default="222" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 69 Chuff Rate" CV="T2CV.3.69" default="219" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 70 Chuff Rate" CV="T2CV.3.70" default="216" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 71 Chuff Rate" CV="T2CV.3.71" default="213" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 72 Chuff Rate" CV="T2CV.3.72" default="210" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 73 Chuff Rate" CV="T2CV.3.73" default="207" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 74 Chuff Rate" CV="T2CV.3.74" default="204" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 75 Chuff Rate" CV="T2CV.3.75" default="201" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 76 Chuff Rate" CV="T2CV.3.76" default="198" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 77 Chuff Rate" CV="T2CV.3.77" default="195" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 78 Chuff Rate" CV="T2CV.3.78" default="192" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 79 Chuff Rate" CV="T2CV.3.79" default="189" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 80 Chuff Rate" CV="T2CV.3.80" default="186" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 81 Chuff Rate" CV="T2CV.3.81" default="184" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 82 Chuff Rate" CV="T2CV.3.82" default="182" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 83 Chuff Rate" CV="T2CV.3.83" default="180" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 84 Chuff Rate" CV="T2CV.3.84" default="178" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 85 Chuff Rate" CV="T2CV.3.85" default="176" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 86 Chuff Rate" CV="T2CV.3.86" default="174" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 87 Chuff Rate" CV="T2CV.3.87" default="172" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 88 Chuff Rate" CV="T2CV.3.88" default="170" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 89 Chuff Rate" CV="T2CV.3.89" default="168" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 90 Chuff Rate" CV="T2CV.3.90" default="166" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 91 Chuff Rate" CV="T2CV.3.91" default="164" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 92 Chuff Rate" CV="T2CV.3.92" default="162" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 93 Chuff Rate" CV="T2CV.3.93" default="160" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 94 Chuff Rate" CV="T2CV.3.94" default="158" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 95 Chuff Rate" CV="T2CV.3.95" default="156" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 96 Chuff Rate" CV="T2CV.3.96" default="154" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 97 Chuff Rate" CV="T2CV.3.97" default="152" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 98 Chuff Rate" CV="T2CV.3.98" default="150" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 99 Chuff Rate" CV="T2CV.3.99" default="148" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 100 Chuff Rate" CV="T2CV.3.100" default="147" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 101 Chuff Rate" CV="T2CV.3.101" default="146" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 102 Chuff Rate" CV="T2CV.3.102" default="145" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 103 Chuff Rate" CV="T2CV.3.103" default="144" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 104 Chuff Rate" CV="T2CV.3.104" default="143" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 105 Chuff Rate" CV="T2CV.3.105" default="142" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 106 Chuff Rate" CV="T2CV.3.106" default="141" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 107 Chuff Rate" CV="T2CV.3.107" default="140" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 108 Chuff Rate" CV="T2CV.3.108" default="139" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 109 Chuff Rate" CV="T2CV.3.109" default="138" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 110 Chuff Rate" CV="T2CV.3.110" default="137" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 111 Chuff Rate" CV="T2CV.3.111" default="136" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 112 Chuff Rate" CV="T2CV.3.112" default="135" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 113 Chuff Rate" CV="T2CV.3.113" default="134" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 114 Chuff Rate" CV="T2CV.3.114" default="133" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 115 Chuff Rate" CV="T2CV.3.115" default="132" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 116 Chuff Rate" CV="T2CV.3.116" default="131" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 117 Chuff Rate" CV="T2CV.3.117" default="130" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 118 Chuff Rate" CV="T2CV.3.118" default="129" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 119 Chuff Rate" CV="T2CV.3.119" default="128" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 120 Chuff Rate" CV="T2CV.3.120" default="127" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 121 Chuff Rate" CV="T2CV.3.121" default="126" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 122 Chuff Rate" CV="T2CV.3.122" default="125" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 123 Chuff Rate" CV="T2CV.3.123" default="124" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 124 Chuff Rate" CV="T2CV.3.124" default="123" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 125 Chuff Rate" CV="T2CV.3.125" default="122" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+	<variable item="Step 126 Chuff Rate" CV="T2CV.3.126" default="121" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+	</variable>
+
+	<!-- Sound config -->
+	<variable item="Sound Setting 33" CV="T2CV.4.1" default="16">
+		<decVal max="126"/>
+		<label>Cylinder cocks shut off speed step</label>
+	</variable>
+	<variable item="Sound Setting 21" CV="T2CV.4.2" default="200" tooltip="higher number = higher frequency and higher loop counts if a looping sound">
+		<decVal max="255"/>
+		<label>Random Sound 1 frequency level</label>
+	</variable>
+	<variable item="Sound Setting 22" CV="T2CV.4.3" default="96" tooltip="higher number = higher frequency and higher loop counts if a looping sound">
+		<decVal max="255"/>
+		<label>Random Sound 2 frequency level</label>
+	</variable>
+	<variable item="Sound Setting 23" CV="T2CV.4.4" default="64" tooltip="higher number = higher frequency and higher loop counts if a looping sound">
+		<decVal max="255"/>
+		<label>Random Sound 3 frequency level</label>
+	</variable>
+	<variable item="Sound Setting 24" CV="T2CV.4.5" default="16" tooltip="higher number = higher frequency and higher loop counts if a looping sound">
+		<decVal max="255"/>
+		<label>Random Sound 4 frequency level</label>
+	</variable>
+	<variable item="Sound Setting 25" CV="T2CV.4.6" default="768" tooltip="2560 is about 1 second between times through random sound routine" mask="VVVVVVVVVVVVVVVV">
+		<decVal max="65535"/>
+		<label>Random Sound Overall Timer</label>
+	</variable>
+	<variable item="Sound Setting 26" CV="T2CV.4.7" default="15" tooltip="The speed at which Random sounds will stop playing (speed of zero stops random sounds from playing)">
+		<decVal max="126"/>
+		<label>Random Sound Cutout Speed Step</label>
+	</variable>
+		<variable item="Sound Setting 34" CV="T2CV.4.9" default="10" >
+			<decVal max="126"/>
+			<label>Proto chuff start speed step</label>
+		</variable>
+		<variable item="Sound Group 5 Checkbox 2" CV="T2CV.4.12" default="1" mask="XXXXXXXXXXXXXXVX">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+			<label>Rod clank enable</label>
+		</variable>
+		<variable item="Sound Group 5 Checkbox 3" CV="T2CV.4.12" default="1" mask="XXXXXXXXXXXXXVXX">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+			<label>Idling sound enable</label>
+		</variable>
+		<variable item="Sound Group 5 Checkbox 5" CV="T2CV.4.12" default="0" mask="XXXXXXXXXXXVXXXX">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+			<label>Forward whistles enable</label>
+		</variable>
+		<variable item="Sound Group 5 Checkbox 6" CV="T2CV.4.12" default="0" mask="XXXXXXXXXXVXXXXX">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+			<label>Reverse whistles enable</label>
+		</variable>
+		<variable item="Sound Group 5 Checkbox 7" CV="T2CV.4.12" default="0" mask="XXXXXXXXXVXXXXXX">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+			<label>Stop whistles enable</label>
+		</variable>
+		<variable item="Sound Group 5 Checkbox 8" CV="T2CV.4.12" default="1" mask="XXXXXXXXVXXXXXXX">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+			<label>Direction change enable</label>
+		</variable>
+		<variable item="Sound Group 6 Checkbox 1" CV="T2CV.4.12" default="1" mask="XXXXXXXVXXXXXXXX">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+			<label>Random Sound 1 enable</label>
+		</variable> 
+		<variable item="Sound Group 6 Checkbox 2" CV="T2CV.4.12" default="1" mask="XXXXXXVXXXXXXXXX">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+			<label>Random Sound 2 enable</label>
+		</variable> 
+		<variable item="Sound Group 6 Checkbox 3" CV="T2CV.4.12" default="1" mask="XXXXXVXXXXXXXXXX">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+			<label>Random Sound 3 enable</label>
+		</variable> 
+		<variable item="Sound Group 6 Checkbox 4" CV="T2CV.4.12" default="1" mask="XXXXVXXXXXXXXXXX">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+			<label>Random Sound 4 enable</label>
+		</variable> 
+		<variable item="Brake grinding noise start speed" CV="T2CV.4.13" default="15" >
+			<decVal max="126"/>
+		</variable>
+		<variable label="Dual function F0F" CV="T2CV.4.14" default="1" mask="XXXXXXXXXXXXXXXV" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		</variable>
+		<variable label="Dual function F0R" CV="T2CV.4.14" default="1" mask="XXXXXXXXXXXXXXVX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		</variable>
+		<variable label="Dual function F1" CV="T2CV.4.14" default="0" mask="XXXXXXXXXXXXXVXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		</variable>
+		<variable label="Dual function F2" CV="T2CV.4.14" default="0" mask="XXXXXXXXXXXXVXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		</variable>
+		<variable label="Dual function F3" CV="T2CV.4.14" default="0" mask="XXXXXXXXXXXVXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		</variable>
+		<variable label="Dual function F4" CV="T2CV.4.14" default="0" mask="XXXXXXXXXXVXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		</variable>
+		<variable label="Dual function F5" CV="T2CV.4.14" default="0" mask="XXXXXXXXXVXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		</variable>
+		<variable label="Dual function F6" CV="T2CV.4.14" default="0" mask="XXXXXXXXVXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		</variable>
+		<variable label="Dual function F7" CV="T2CV.4.14" default="0" mask="XXXXXXXVXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+		</variable>
+		<variable label="Dual function F8" CV="T2CV.4.14" default="1" mask="XXXXXXVXXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+		</variable>
+		<variable label="Dual function F9" CV="T2CV.4.14" default="0" mask="XXXXXVXXXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+		</variable>
+		<variable label="Dual function F10" CV="T2CV.4.14" default="0" mask="XXXXVXXXXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+		</variable>
+		<variable label="Dual function F11" CV="T2CV.4.14" default="0" mask="XXXVXXXXXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+		</variable>
+		<variable label="Dual function F12" CV="T2CV.4.14" default="0" mask="XXVXXXXXXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		</variable>
+		<variable label="Dual function F13" CV="T2CV.4.14" default="0" mask="XVXXXXXXXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		</variable>
+		<variable label="Dual function F14" CV="T2CV.4.14" default="0" mask="VXXXXXXXXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		</variable>
+		<variable item="Sound Setting 11" CV="T2CV.4.15" default="1"  tooltip="Divides the BEMF value by n^2, higher the number the lower the chuff volume/change from loads">
+			<decVal max="8"/>
+			<label>BEMF sensitivity</label>
+		</variable>
+		<variable label="Chuff rate adjustment" CV="T2CV.4.16" default="100" tooltip="Default 100%, Increase value to increase chuff rate, decrease value to decrease chuff rate">
+			<decVal max="200"/>
+		</variable>
+		<variable item="Sound Setting 32" CV="T2CV.4.18" default="256"  mask="VVVVVVVVVVVVVVVV">
+			<decVal max="65535"/>
+		<label>Cylinder cocks auto turn on time</label>
+		</variable>
+		<variable item="Sound Group 7 Checkbox 1" CV="T2CV.4.19" default="0" mask="XXXXXXXXXXXXXXXV">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+			<label>Cam enable</label>
+		</variable>
+		<variable item="Sound Group 7 Checkbox 3" CV="T2CV.4.19" default="0" mask="XXXXXXXXXXXXXVXX">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+			<label>Mute on startup</label>
+		</variable>
+		<variable item="Sound Group 7 Checkbox 4" CV="T2CV.4.19" default="1" mask="XXXXXXXXXXXXVXXX">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+			<label>Articulated chuff slip</label>
+		</variable>
+		<variable item="Sound Group 7 Checkbox 5" CV="T2CV.4.19" default="1" mask="XXXXXXXXXXXVXXXX">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+			<label>Rotate Whistle Audio Feedback</label>
+		</variable>
+		<variable item="Sound Group 7 Checkbox 6" CV="T2CV.4.19" default="1" mask="XXXXXXXXXXVXXXXX">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+			<label>Light Mode/Sound Mode Audio Feedback</label>
+		</variable>
+		<variable item="Sound Group 7 Checkbox 7" CV="T2CV.4.19" default="0" mask="XXXXXXXXXVXXXXXX">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+			<label>Audio Auto Shutoff Timer</label>
+		</variable>
+		<variable item="Sound Setting 36" CV="T2CV.4.20" default="240" mask="VVVVVVVVVVVVVVVV">
+			<decVal max="65535"/>
+			<label>Articulated Chuff Slip Rate</label>
+		</variable>
+		<variable item="Sound Setting 2" CV="T2CV.4.21" default="256" mask="VVVVVVVVVVVVVVVV">
+			<decVal max="65535"/>
+			<label>Audio Auto Shut-off Time</label>
+		</variable>
+</variables>

@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2005, 2007, 2014 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="0" lastUpdated="20140427"/>
+  <version author="Alain Le Marchand" version="1" lastUpdated="20140615"/>
+  <version author="Alain Le Marchand" version="1.1" lastUpdated="20140630"/>
+  <version author="Alain Le Marchand" version="1.2" lastUpdated="20140830"/>
+  <version author="Alain Le Marchand" version="1.3" lastUpdated="20160124"/>
+  <!-- Created from version 36 of the Digitrax_01x3 file -->
+  <!-- Version 0 - New Series 6 non-sound Digitrax decoders (Alain Le Marchand) -->
+  <!--             DH166D, DH166P, DH166PD, DN136D, DN136PS, DN146IP, DN166PS, DZ126, DZ126PS, DS126IN, DZ126T, DZ146, DZ146PS
+                   New definition of CV61 bit0 as per Digitrax manual 2nd edition 01/14     -->
+  <!-- Version 1 - Add N Scale Intermountain Board Replacement DN166I0, DN166I1A, DN166I1B, DN166I1C, DN166I1D, DN166I2 -->
+  <!-- Version 1.1-Add DN126M2, DZ146IN -->
+  <!-- Version 1.2-Add DN166I2B -->
+  <!-- Version 1.3-CV7 checked equal to 51 on DN136D - suspect all versions starting with 51, in full overlap with Series 5 (Alain Le Marchand)    -->
+  <!--             Changed Low Version from 52 to 51                                                -->
+  <!-- WARNING :   High Versions of decoders (CV07) unknown (by me) - to be adjusted after users feed back  -->
+  <decoder>
+    <family name="Series 6 with FX3, silent, improved BEMF" mfg="Digitrax" lowVersionID="51" highVersionID="64">
+      <model model="DH166D" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin" comment="HO-Scale, wired">
+        <output name="1" label="White" connection="wire"/>
+        <output name="2" label="Yellow" connection="wire"/>
+        <output name="3" label="Green" connection="wire"/>
+        <output name="4" label="Violet" connection="wire"/>
+        <output name="5" label="Pad (Brown)" connection="solder"/>
+        <output name="6" label="Pad (White/Yellow)" connection="solder"/>
+        <size length="1.074" width="0.672" height="0.259" units="inches"/>
+      </model>
+      <model model="DH166P" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="NMRAmedium" comment="HO-Scale, with Medium Plug on Long Harness">
+        <output name="1" label="White" connection="plug"/>
+        <output name="2" label="Yellow" connection="plug"/>
+        <output name="3" label="Green" connection="wire"/>
+        <output name="4" label="Violet" connection="wire"/>
+        <output name="5" label="Pad (Brown)" connection="solder"/>
+        <output name="6" label="Pad (White/Yellow)" connection="solder"/>
+        <size length="1.074" width="0.672" height="0.259" units="inches"/>
+      </model>
+      <model model="DH166PS" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="NMRAmedium" comment="HO-Scale, with Medium Plug on Short Harness">
+        <output name="1" label="White" connection="plug"/>
+        <output name="2" label="Yellow" connection="plug"/>
+        <output name="3" label="Green" connection="wire"/>
+        <output name="4" label="Violet" connection="wire"/>
+        <output name="5" label="Pad (Brown)" connection="solder"/>
+        <output name="6" label="Pad (White/Yellow)" connection="solder"/>
+        <size length="1.074" width="0.672" height="0.259" units="inches"/>
+      </model>
+      <model model="DN126M2" numOuts="2" numFns="5" maxMotorCurrent="1.5A (peak=2A)" formFactor="N" connector="other" comment="for MicroTrains Line N-Scale SW1500 units">
+        <output name="1" label="F0(F)" connection="LED"/>
+        <output name="2" label="F0(R)" connection="solder"/>
+        <size length=".621" width="0.418" height="0.107" units="inches"/>
+      </model>
+      <model model="DN136D" numOuts="3" numFns="5" maxMotorCurrent="1.0A (peak=1.5A)" formFactor="N" connector="unspecified" comment="N/HO-Scale, wired">
+        <output name="1" label="White" connection="wire"/>
+        <output name="2" label="Yellow" connection="wire"/>
+        <output name="3" label="Green" connection="wire"/>
+        <size length=".55" width=".404" height=".2" units="inches"/>
+      </model>
+      <model model="DN136PS" numOuts="3" numFns="5" maxMotorCurrent="1.0A (peak=1.5A)" formFactor="N" connector="NMRAmedium" comment="N/HO-Scale, 8-pin Medium Socket on short harness">
+        <output name="1" label="White" connection="plug"/>
+        <output name="2" label="Yellow" connection="plug"/>
+        <output name="3" label="Green" connection="wire"/>
+        <size length=".55" width=".404" height=".2" units="inches"/>
+      </model>
+      <model model="DN146IP" numOuts="4" numFns="10" maxMotorCurrent="1.0A (peak=1.5A)" formFactor="N" connector="NMRAmedium" comment="N/HO-Scale, with integrated medium plug">
+        <output name="1" label="F0(F)" connection="plug"/>
+        <output name="2" label="F0(R)" connection="plug"/>
+        <output name="3" label="Pad (Green)" connection="solder"/>
+        <output name="4" label="Pad (Violet)" connection="solder"/>
+        <size length="1.158" width="0.386" height="0.115" units="inches"/>
+      </model>
+      <model model="DN166I0" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="N" connector="DropIn" comment="for InterMountain N-Scale SD40T-2/SD45T-2 Tunnel Motor">
+        <output name="1" label="LED" connection="LED"/>
+        <output name="2" label="LED" connection="LED"/>
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="3.5" width=".367" height="0.135" units="inches"/>
+      </model>
+      <model model="DN166I1A" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="N" connector="DropIn" comment="for InterMountain N-Scale FT-A Units">
+        <output name="1" label="Pad/LED" connection="solder"/>
+        <output name="2" label="Pad/LED" connection="solder"/>
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="2.165" width="0.472" height="0.098" units="inches"/>
+      </model>
+      <model model="DN166I1B" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="N" connector="DropIn" comment="for InterMountain N-Scale FT-B Units">
+        <output name="1" label="Pad/LED" connection="solder"/>
+        <output name="2" label="Pad/LED" connection="solder"/>
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="2.165" width="0.472" height="0.098" units="inches"/>
+      </model>
+      <model model="DN166I1C" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="N" connector="DropIn" comment="for InterMountain N-Scale F3 &amp; F7 Units">
+        <output name="1" label="Pad/LED" connection="solder"/>
+        <output name="2" label="Pad/LED" connection="solder"/>
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="2.165" width="0.472" height="0.098" units="inches"/>
+      </model>
+      <model model="DN166I1D" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="N" connector="DropIn" comment="for New InterMountain N-Scale F7A/B, FP7 &amp; FP9 Units">
+        <output name="1" label="Pad/LED" connection="solder"/>
+        <output name="2" label="Pad/LED" connection="solder"/>
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="2.165" width="0.472" height="0.098" units="inches"/>
+      </model>
+      <model model="DN166I2" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="N" connector="DropIn" comment="for InterMountain N-Scale FP7 &amp; FP9 Units">
+        <output name="1" label="Pad/LED" connection="solder"/>
+        <output name="2" label="Pad/LED" connection="solder"/>
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="2.165" width="0.472" height="0.098" units="inches"/>
+      </model>
+      <model model="DN166I2B" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="N" connector="DropIn" comment="for InterMountain N-Scale FP7 released 2014">
+        <output name="1" label="Pad/LED" connection="solder"/>
+        <output name="2" label="Pad/LED" connection="solder"/>
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="2.165" width="0.472" height="0.098" units="inches"/>
+      </model>
+      <model model="DN166PS" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=1.5A)" formFactor="N" connector="NMRAmedium" comment="N/HO-Scale, with Medium Plug">
+        <output name="1" label="White" connection="plug"/>
+        <output name="2" label="Yellow" connection="plug"/>
+        <output name="3" label="Green" connection="wire"/>
+        <output name="4" label="Violet" connection="wire"/>
+        <output name="5" label="Brown" connection="wire"/>
+        <output name="6" label="White F4" connection="wire"/>
+        <size length="0.87" width="0.4" height="0.2" units="inches"/>
+      </model>
+      <model model="DZ126" numOuts="2" numFns="5" maxMotorCurrent="1.0A (peak=1.5A)" formFactor="Z" connector="9pin" comment="Z/N/HO-Scale, wired">
+        <output name="1" label="White" connection="wire"/>
+        <output name="2" label="Yellow" connection="wire"/>
+        <size length=".455" width="0.369" height="0.126" units="inches"/>
+      </model>
+      <model model="DZ126PS" numOuts="2" numFns="5" maxMotorCurrent="1.0A (peak=1.5A)" formFactor="Z" connector="NMRAmedium" comment="Z/N/HO-Scale, with Medium Plug on Short Harness">
+        <output name="1" label="White" connection="plug"/>
+        <output name="2" label="Yellow" connection="plug"/>
+        <size length=".455" width="0.369" height="0.126" units="inches"/>
+      </model>
+      <model model="DZ126IN" numOuts="2" numFns="5" maxMotorCurrent="1.0A (peak=1.5A)" formFactor="Z" connector="NMRAsmall" comment="Z/N/HO-Scale, with NEM651 Integrated Plug">
+        <output name="1" label="F0(F)" connection="plug"/>
+        <output name="2" label="F0(R)" connection="plug"/>
+        <size length="0.42" width="0.36" height="0.13" units="inches"/>
+      </model>
+      <model model="DZ126T" numOuts="2" numFns="5" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="Z" connector="9pin" comment="Z/N/HO-Scale, wired, Tiny">
+        <output name="1" label="White" connection="wire"/>
+        <output name="2" label="Yellow" connection="wire"/>
+        <size length=".55" width="0.28" height="0.128" units="inches"/>
+      </model>
+      <model model="DZ146" numOuts="4" numFns="10" maxMotorCurrent="1.0A (peak=1.5A)" formFactor="Z" connector="9pin" comment="Z/N/HO-Scale, wired">
+        <output name="1" label="White" connection="wire"/>
+        <output name="2" label="Yellow" connection="wire"/>
+        <output name="3" label="Green" connection="wire"/>
+        <output name="4" label="Violet" connection="wire"/>
+        <size length="0.55" width="0.4" height="0.148" units="inches"/>
+      </model>
+      <model model="DZ146IN" numOuts="4" numFns="10" maxMotorCurrent="1.0A (peak=1.5A)" formFactor="Z" connector="NMRAsmall" comment="Z/N/HO-Scale, with NEM651 Integrated Plug">
+        <output name="1" label="White" connection="plug"/>
+        <output name="2" label="Yellow" connection="plug"/>
+        <output name="3" label="Green" connection="wire"/>
+        <output name="4" label="Violet" connection="wire"/>
+        <size length="0.559" width="0.386" height="0.137" units="inches"/>
+      </model>
+      <model model="DZ146PS" numOuts="4" numFns="10" maxMotorCurrent="1.0A (peak=1.5A)" formFactor="Z" connector="NMRAmedium" comment="Z/N/HO-Scale, with Medium Plug with short harness">
+        <output name="1" label="White" connection="plug"/>
+        <output name="2" label="Yellow" connection="plug"/>
+        <output name="3" label="Green" connection="wire"/>
+        <output name="4" label="Violet" connection="wire"/>
+        <size length="0.55" width="0.4" height="0.148" units="inches"/>
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes" transpRead="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/vStartHighMid.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_31.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/mfgVersionId.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/motorDriveFreq.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/consistAddrDirection.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv21.22.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv29NDOT.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/functionmap.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/fxCVs.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv54.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/bemf.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv61Series6.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv62.63LightingOptions.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
+      <variable item="Speed Table" CV="67">
+        <speedTableVal/>
+        <label>Speed Table</label>
+        <label xml:lang="it">Tabella Velocità</label>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+    </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="8">
+        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
+      <factReset label="Reset All CVs except speed table" CV="8" default="9">
+        <label xml:lang="it">Reset delle CV salvo Tabella Velocità ai valori di fabbrica</label>
+      </factReset>
+    </resets>
+  </decoder>
+  <xi:include href="http://jmri.org/xml/decoders/digitrax/PaneDigitrax.xml"/>
+</decoder-config>

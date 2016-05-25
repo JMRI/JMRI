@@ -1,4 +1,3 @@
-// DecoderPro3Action.java
 package apps.gui3.dp3;
 
 import java.awt.Dimension;

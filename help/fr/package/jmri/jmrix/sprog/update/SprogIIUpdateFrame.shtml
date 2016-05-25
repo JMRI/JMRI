@@ -2,12 +2,12 @@
 <html lang="fr">
 <head>
 <!-- Copyright 2008 -->
-<!-- $Id: SprogIIUpdateFrame.shtml,v 1.1 2008/04/20 15:34:33 jacobsen Exp $ -->
-<!-- Translated  by Blorec Hervé le 2011-10-27--> 
+<!-- $Id$ -->
+<!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-14--> 
 <title>JMRI: SPROG II Update Tool</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -26,13 +26,13 @@
 
 
 <h2> 
-JMRI: Outil de Mise à Jour SPROG II
+JMRI: Outil de Mise &#224; Jour SPROG II
 </h2>
 
-L'Outil de Mise à Jour SPROG IIvous permets de charger un nouveau logiciel dansSPROG II.
+L'Outil de Mise &#224; Jour SPROG IIvous permets de charger un nouveau logiciel dans SPROG II.
 
 <p>
-This is the package/jmri/jmrix/sprog/update/SprogIIUpdateFrame page.
+ceci est la page d'aide package/jmri/jmrix/sprog/update/SprogIIUpdateFrame
     
 <!--#include virtual="/Footer" -->
 </body>

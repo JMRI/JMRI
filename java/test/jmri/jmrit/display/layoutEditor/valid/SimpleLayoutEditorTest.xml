@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="http://www.jmri.org/xml/XSLT/panelfile.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout.xsd">
+    <turnouts class="jmri.managers.configurexml.InternalTurnoutManagerXml">
+        <operations automate="false">
+            <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+            <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
+            <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+        </operations>
+        <turnout systemName="IT1" userName="TO A" feedback="DIRECT" inverted="false" automate="Default" />
+        <turnout systemName="IT2" userName="TO B" feedback="DIRECT" inverted="false" automate="Default" />
+        <turnout systemName="IT3" userName="TO C" feedback="DIRECT" inverted="false" automate="Default" />
+        <turnout systemName="IT4" userName="TO D" feedback="DIRECT" inverted="false" automate="Default" />
+    </turnouts>
+    <sensors class="jmri.managers.configurexml.InternalSensorManagerXml">
+        <sensor systemName="IS1" inverted="false" userName="Main 1" />
+        <sensor systemName="IS10" inverted="false" userName="Main 10" />
+        <sensor systemName="IS11" inverted="false" userName="TO A" />
+        <sensor systemName="IS12" inverted="false" userName="TO B" />
+        <sensor systemName="IS13" inverted="false" userName="TO C" />
+        <sensor systemName="IS14" inverted="false" userName="TO D" />
+        <sensor systemName="IS15" inverted="false" userName="Siding 3" />
+        <sensor systemName="IS16" inverted="false" userName="Siding 4" />
+        <sensor systemName="IS17" inverted="false" userName="Siding 7" />
+        <sensor systemName="IS18" inverted="false" userName="Siding 8" />
+        <sensor systemName="IS2" inverted="false" userName="Main 2" />
+        <sensor systemName="IS3" inverted="false" userName="Main 3" />
+        <sensor systemName="IS4" inverted="false" userName="Main 4" />
+        <sensor systemName="IS5" inverted="false" userName="Main 5" />
+        <sensor systemName="IS6" inverted="false" userName="Main 6" />
+        <sensor systemName="IS7" inverted="false" userName="Main 7" />
+        <sensor systemName="IS8" inverted="false" userName="Main 8" />
+        <sensor systemName="IS9" inverted="false" userName="Main 9" />
+        <sensor systemName="ISCLOCKRUNNING" inverted="false" />
+    </sensors>
+    <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+        <memory systemName="IMCURRENTTIME" value="7:09 AM" />
+    </memories>
+    <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Wed Jan 27 06:48:42 PST 2010" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" />
+    <layoutblocks class="jmri.jmrit.display.configurexml.LayoutBlockManagerXml">
+        <layoutblock systemName="ILB1" userName="Main 1" occupancysensor="Main 1" occupiedsense="2" trackcolor="black" occupiedcolor="black" extracolor="black" />
+        <layoutblock systemName="ILB2" userName="Main 2" occupancysensor="Main 2" occupiedsense="2" trackcolor="black" occupiedcolor="black" extracolor="black" />
+        <layoutblock systemName="ILB3" userName="TO A" occupancysensor="TO A" occupiedsense="2" trackcolor="black" occupiedcolor="black" extracolor="black" />
+        <layoutblock systemName="ILB4" userName="Main 3" occupancysensor="Main 3" occupiedsense="2" trackcolor="black" occupiedcolor="black" extracolor="black" />
+        <layoutblock systemName="ILB5" userName="Siding 3" occupancysensor="Siding 3" occupiedsense="2" trackcolor="black" occupiedcolor="black" extracolor="black" />
+        <layoutblock systemName="ILB6" userName="Main 4" occupancysensor="Main 4" occupiedsense="2" trackcolor="black" occupiedcolor="black" extracolor="black" />
+        <layoutblock systemName="ILB7" userName="Siding 4" occupancysensor="Siding 4" occupiedsense="2" trackcolor="black" occupiedcolor="black" extracolor="black" />
+        <layoutblock systemName="ILB8" userName="Main 5" occupancysensor="Main 5" occupiedsense="2" trackcolor="black" occupiedcolor="black" extracolor="black" />
+        <layoutblock systemName="ILB9" userName="TO B" occupancysensor="TO B" occupiedsense="2" trackcolor="black" occupiedcolor="black" extracolor="black" />
+    </layoutblocks>
+    <blocks class="jmri.configurexml.BlockManagerXml">
+        <block systemName="IB1" />
+        <block systemName="IB2" />
+        <block systemName="IB3" />
+        <block systemName="IB4" />
+        <block systemName="IB5" />
+        <block systemName="IB6" />
+        <block systemName="IB7" />
+        <block systemName="IB8" />
+        <block systemName="IB9" />
+        <block systemName="IB1" userName="Main 1" length="0.0" curve="0">
+            <sensor systemName="IS1" />
+            <path todir="64" fromdir="128" block="IB2" />
+        </block>
+        <block systemName="IB2" userName="Main 2" length="0.0" curve="0">
+            <sensor systemName="IS2" />
+            <path todir="128" fromdir="64" block="IB1" />
+            <path todir="64" fromdir="128" block="IB3" />
+        </block>
+        <block systemName="IB3" userName="TO A" length="0.0" curve="0">
+            <sensor systemName="IS11" />
+            <path todir="128" fromdir="64" block="IB2" />
+            <path todir="64" fromdir="128" block="IB4">
+                <beansetting setting="2">
+                    <turnout systemName="IT1" />
+                </beansetting>
+            </path>
+            <path todir="64" fromdir="128" block="IB5">
+                <beansetting setting="4">
+                    <turnout systemName="IT1" />
+                </beansetting>
+            </path>
+        </block>
+        <block systemName="IB4" userName="Main 3" length="0.0" curve="0">
+            <sensor systemName="IS3" />
+            <path todir="128" fromdir="64" block="IB3" />
+            <path todir="64" fromdir="128" block="IB6" />
+        </block>
+        <block systemName="IB5" userName="Siding 3" length="0.0" curve="0">
+            <sensor systemName="IS15" />
+            <path todir="128" fromdir="64" block="IB3" />
+            <path todir="64" fromdir="128" block="IB7" />
+        </block>
+        <block systemName="IB6" userName="Main 4" length="0.0" curve="0">
+            <sensor systemName="IS4" />
+            <path todir="128" fromdir="64" block="IB4" />
+            <path todir="64" fromdir="128" block="IB9" />
+        </block>
+        <block systemName="IB7" userName="Siding 4" length="0.0" curve="0">
+            <sensor systemName="IS16" />
+            <path todir="128" fromdir="64" block="IB5" />
+            <path todir="64" fromdir="128" block="IB9" />
+        </block>
+        <block systemName="IB8" userName="Main 5" length="0.0" curve="0">
+            <sensor systemName="IS5" />
+            <path todir="128" fromdir="64" block="IB9" />
+        </block>
+        <block systemName="IB9" userName="TO B" length="0.0" curve="0">
+            <sensor systemName="IS12" />
+            <path todir="128" fromdir="64" block="IB6">
+                <beansetting setting="2">
+                    <turnout systemName="IT2" />
+                </beansetting>
+            </path>
+            <path todir="128" fromdir="64" block="IB7">
+                <beansetting setting="4">
+                    <turnout systemName="IT2" />
+                </beansetting>
+            </path>
+            <path todir="64" fromdir="128" block="IB8" />
+        </block>
+    </blocks>
+    <LayoutEditor class="jmri.jmrit.display.configurexml.LayoutEditorXml" name="My Layout" x="4" y="22" height="780" width="1420" windowheight="821" windowwidth="1436" panelheight="780" panelwidth="1420" sliders="no" scrollable="none" editable="yes" positionable="yes" controlling="yes" animating="yes" showhelpbar="yes" drawgrid="yes" snaponadd="yes" snaponmove="yes" antialiasing="no" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="black" defaulttextcolor="black" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0">
+        <layoutturnout ident="TO1" turnoutname="TO A" blockname="TO A" type="1" connectaname="T2" connectbname="T3" connectcname="T6" continuing="2" disabled="no" disableWhenOccupied="no" xcen="300.0" ycen="200.0" xb="320.0" yb="200.0" xc="320.0" yc="210.0" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+        <layoutturnout ident="TO2" turnoutname="TO B" blockname="TO B" type="2" connectaname="T11" connectbname="T9" connectcname="T10" continuing="2" disabled="no" disableWhenOccupied="no" xcen="500.0" ycen="200.0" xb="480.0" yb="200.0" xc="480.0" yc="209.0" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+        <layoutturnout ident="TO3" type="1" connectaname="T4" connectbname="T5" connectcname="T7" continuing="2" disabled="no" disableWhenOccupied="no" xcen="700.0" ycen="200.0" xb="720.0" yb="200.0" xc="720.0" yc="210.0" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+        <layoutturnout ident="TO4" type="2" connectaname="T14" connectbname="T12" connectcname="T13" continuing="2" disabled="no" disableWhenOccupied="no" xcen="900.0" ycen="200.0" xb="880.0" yb="200.0" xc="880.0" yc="209.0" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+        <tracksegment ident="T1" blockname="Main 1" connect1name="EB1" type1="1" connect2name="A1" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+        <tracksegment ident="T2" blockname="Main 2" connect1name="TO1" type1="2" connect2name="A1" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+        <tracksegment ident="T3" blockname="Main 3" connect1name="TO1" type1="3" connect2name="A2" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+        <tracksegment ident="T4" connect1name="A4" type1="1" connect2name="TO3" type2="2" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+        <tracksegment ident="T5" connect1name="TO3" type1="3" connect2name="A5" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+        <tracksegment ident="T6" blockname="Siding 3" connect1name="TO1" type1="4" connect2name="A3" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+        <tracksegment ident="T7" connect1name="TO3" type1="4" connect2name="A6" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+        <tracksegment ident="T8" connect1name="A7" type1="1" connect2name="EB2" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+        <tracksegment ident="T9" blockname="Main 4" connect1name="A2" type1="1" connect2name="TO2" type2="3" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+        <tracksegment ident="T10" blockname="Siding 4" connect1name="A3" type1="1" connect2name="TO2" type2="4" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+        <tracksegment ident="T11" blockname="Main 5" connect1name="TO2" type1="2" connect2name="A4" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+        <tracksegment ident="T12" connect1name="A5" type1="1" connect2name="TO4" type2="3" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+        <tracksegment ident="T13" connect1name="A6" type1="1" connect2name="TO4" type2="4" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+        <tracksegment ident="T14" connect1name="TO4" type1="2" connect2name="A7" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+        <positionablepoint ident="EB1" type="2" x="100.0" y="200.0" connect1name="T1" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+        <positionablepoint ident="EB2" type="2" x="1100.0" y="200.0" connect1name="T8" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+        <positionablepoint ident="A1" type="1" x="200.0" y="200.0" connect1name="T1" connect2name="T2" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+        <positionablepoint ident="A2" type="1" x="400.0" y="200.0" connect1name="T3" connect2name="T9" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+        <positionablepoint ident="A3" type="1" x="400.0" y="210.0" connect1name="T6" connect2name="T10" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+        <positionablepoint ident="A4" type="1" x="600.0" y="200.0" connect1name="T4" connect2name="T11" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+        <positionablepoint ident="A5" type="1" x="800.0" y="200.0" connect1name="T5" connect2name="T12" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+        <positionablepoint ident="A6" type="1" x="800.0" y="210.0" connect1name="T7" connect2name="T13" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+        <positionablepoint ident="A7" type="1" x="1000.0" y="200.0" connect1name="T8" connect2name="T14" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    </LayoutEditor>
+    <filehistory>
+        <operation>
+            <type>app</type>
+            <date>Wed Jan 27 06:48:42 PST 2010</date>
+            <filename>DecoderPro version 2.9.3 starts under Java 1.5.0_22 at Wed Jan 27 06:48:42 PST 2010</filename>
+        </operation>
+        <operation>
+            <type>Load OK</type>
+            <date>Wed Jan 27 06:48:43 PST 2010</date>
+            <filename>DecoderProConfig2.xml</filename>
+        </operation>
+        <operation>
+            <type>Store</type>
+            <date>Wed Jan 27 07:09:56 PST 2010</date>
+            <filename />
+        </operation>
+    </filehistory>
+    <!--Written by JMRI version 2.9.3 on Wed Jan 27 07:09:56 PST 2010 $Id$-->
+</layout-config>
+

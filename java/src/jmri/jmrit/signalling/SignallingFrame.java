@@ -1,24 +1,28 @@
 // StatusFrame.java
-
 package jmri.jmrit.signalling;
 
+import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import java.util.ResourceBundle;
 
 /**
  * Frame for the Signalling Logic
- * @author	Kevin Dickerson   Copyright (C) 2011
+ *
+ * @author	Kevin Dickerson Copyright (C) 2011
  * @version $Revision$
-*/
+ */
 public class SignallingFrame extends jmri.util.JmriJFrame {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = -3885712015636161664L;
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.SignallingBundle");
 
     public SignallingFrame() {
         super(false, true);
     }
-    
+
     JButton sendButton;
     SignallingPanel sigPanel;
 
@@ -31,10 +35,9 @@ public class SignallingFrame extends jmri.util.JmriJFrame {
 
         getContentPane().add(sigPanel);
 
-		addHelpMenu("package.jmri.jmrit.signalling.AddEditSignallingLogic", true);
+        addHelpMenu("package.jmri.jmrit.signalling.AddEditSignallingLogic", true);
 
         // pack for display
         pack();
     }
 }
-

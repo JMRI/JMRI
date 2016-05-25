@@ -1,22 +1,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <title>JMRI: ECoS User Preferences</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -25,7 +21,7 @@
 JMRI: ECoS User Preferences
 </h1>
 
-The ECoS Preferences, allows you to control the way that the Ecos interacts with JMRI for different features.
+The ECoS Preferences allows you to control the way that the Ecos interacts with JMRI for different features:
 
 <h2>Roster</h2>
 <b>Add Locos to the Ecos</b><br>
@@ -45,11 +41,11 @@ Note: Currently if a loco has been removed from the Ecos when it is not connecte
 
 <h2>Throttle</h2>
 <b>Temporary Locos</b><br>
-The Ecos requires an entry in its database before it is possible to control a loco.  When you select either a roster entry or enter in an address of loco in the addres box of a throttle and that addresses doesn't already exist in the Ecos database, JMRI will automatically create an entry to match with a description of "Created By JMRI".  When JMRI is shutdown, these temporary locos can either be left on the Ecos or removed.  This setting allows you set how this works.
+The Ecos requires an entry in its database before it is possible to control a loco.  When you select either a roster entry or enter in an address of loco in the address box of a throttle and that addresses doesn't already exist in the Ecos database, JMRI will automatically create an entry to match with a description of "Created By JMRI".  When JMRI is shutdown, these temporary locos can either be left on the Ecos or removed.  This setting allows you set how this works.
 <p>
 <b>Loss of Control</b><br>
 If another controller has exclusive control over a loco, then it is not possible for JMRI to take control or operate that loco.  JMRI will make three attempts at trying to gain over the loco, if the third attempt fails, the user will be presented with a prompt on whether to force control over loco.  Here you can set whether to always force a controlled take over, never force a controlled take over or to always prompt.
-<p>
+
 <h2>Turnouts</h2>
 <b>Remove Turnouts from the Ecos</b><br>
 If a turnout is removed from the turnout table in JMRI, this determines whether the turnout should be deleted from the Ecos.
@@ -62,5 +58,7 @@ Note: That this does not prevent JMRI from populating the turnout table when the
 If JMRI receives a notification that a turnout or accessory has been removed from the Ecos, this setting determines how JMRI should react.
     
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

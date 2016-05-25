@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: RosterGroupTable.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- $Id$ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -35,12 +35,21 @@
 <li><b>Roster Entry</b> - Select the loco that the profiling is to be performed on.</li>
 <li><b>Cancel</b> - Cancels the profiling or test run</li>
 <li><b>Profile</b> - Starts the profiling</li>
+<li><b>View</b> - Opens a table of the speed profile</li>
 </ul>
 <p>To profile the loco, fill the above details into the window, place the loco in the starting section facing forwards towards (but not on) the section of track that the timed run will be taken over, then press profile.</p>
 <p>What happens is that the tool will set the loco off running in the forward direction at speed step 1, when it activates the timed section sensor it starts a timer.  Once the finish section sensor is activated the timer is stopped, and the speed is calculated in Millimetres per Second, this is then recorded against the roster.  The tool will then ensure that the loco is clear of the timed section sensor, then repeat the procedure again but in the reverse direction.  Once the loco is back at the initial start section, the whole procedure is repeated again for the next speed step, this occurs until a profile of all speed steps has been completed.</p>
+<p>Profiles can be made with fewer speed steps by choosing the steps to start and end on, and how many steps to increment to the next sampling step.  
+When a starting step is larger than 4 be sure to place the loco in a position that will allow it to achieve full speed before reaching the block sensor. 
+<p>The "Update Profile" radio button (default) merges whatever profiling has been done with the existing speed profile in the Roster.  The "Clear Profile" 
+radio button overwrites any existing speed profile.</p>
 <H3>Testing</H3>
-<p>Having completed the profiling, it is possible to test the profile out.  Place the loco in the starting section again facing forward toward the timed section, ideally some distance away from it.  Enter in a starting speed step number in the box next to the Test Button, then press test.  What will occur is that the tool will set the loco off running at the given speed step, then it will attempt to gradually stop the loco before it reaches the far end.  Results will vary especially at the higher speed steps, where you will more likely experience an over run.</p>
-
+Having completed the profiling, it is possible to test the profile out.  Place the loco in the starting section again facing forward toward the timed section, ideally some distance away from it.  Enter in a starting speed step number in the box next to the Test Button, then press test.  What will occur is that the tool will set the loco off running at the given speed step, then it will attempt to gradually stop the loco before it reaches the far end.  Results will vary especially at the higher speed steps, where you will more likely experience an over run.</p>
+<H3>Viewing</h3>
+ The table displayed by the View button shows the speeds attained by the loco for each throttle step in both directions.  The default speeds are in millimeters per second
+ of the layout track speed.  These values can be converted to scale speeds by selecting either of the "Miles per Hour" or "Kilometers per Hour" radio buttons
+ on the Warrants panel of Preferences.  The Factor column is the ratio of track speed (mm/sec) to throttle setting (0.0 to 1.0).</p>
+ <p>
 
 <!--#include virtual="/Footer" -->
 </body>

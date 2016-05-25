@@ -1,24 +1,27 @@
 // Paned.java
 package apps.gui3.dp3;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.util.FileUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * The JMRI application for developing the DecoderPro 3 GUI <P>
+ * The JMRI application for developing the DecoderPro 3 GUI
+ * <P>
  *
- * <hr> This file is part of JMRI. <P> JMRI is free software; you can
- * redistribute it and/or modify it under the terms of version 2 of the GNU
- * General Public License as published by the Free Software Foundation. See the
- * "COPYING" file for a copy of this license. <P> JMRI is distributed in the
- * hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
- * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See
- * the GNU General Public License for more details.
+ * <hr> This file is part of JMRI.
+ * <P>
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
+ * <P>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author	Bob Jacobsen Copyright 2003, 2004, 2007, 2009, 2010
  * @version $Revision$
@@ -27,12 +30,12 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
 
     private static String menuFile = null;
     private static String toolbarFile = null;
-    private static String applicationName = "DecoderPro 3";
+    private static final String applicationName = "DecoderPro";
 
     public DecoderPro3(String[] args) {
         super(applicationName, "DecoderProConfig3.xml", args);
     }
-    
+
     public synchronized static String getMenuFile() {
         if (menuFile == null) {
             menuFile = "dp3/Gui3Menus.xml";
@@ -82,6 +85,8 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
     /**
      * Force our test size. Superclass method set to max size, filling real
      * window.
+     *
+     * @param d size to use (ignored in this case)
      */
     @Override
     protected void displayMainFrame(java.awt.Dimension d) {
@@ -105,7 +110,7 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
         DecoderPro3 app = new DecoderPro3(args);
         app.start();
     }
-    
+
     static public void preInit(String[] args) {
         apps.gui3.Apps3.preInit(applicationName);
         setConfigFilename("DecoderProConfig3.xml", args);
@@ -121,7 +126,7 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
         if ((!configOK) || (!configDeferredLoadOK)) {
             if (preferenceFileExists) {
                 //if the preference file already exists then we will launch the normal preference window
-                AbstractAction prefsAction = new apps.gui3.TabbedPreferencesAction("Preferences");
+                AbstractAction prefsAction = new apps.gui3.TabbedPreferencesAction(Bundle.getMessage("MenuItemPreferences"));
                 prefsAction.actionPerformed(null);
             }
         }
@@ -140,8 +145,7 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
         };
         Thread thr = new Thread(r, "initialize decoder index");
         thr.start();
-        jmri.InstanceManager.tabbedPreferencesInstance().disablePreferenceItem("STARTUP", "apps.PerformFilePanel");
     }
 
-    static Logger log = LoggerFactory.getLogger(DecoderPro3.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DecoderPro3.class.getName());
 }

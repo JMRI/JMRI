@@ -1,23 +1,25 @@
 package jmri.jmrix.acela;
 
-import org.apache.log4j.Logger;
 import jmri.Light;
 import jmri.LightManager;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- Tests for the jmri.jmrix.acela.AcelaTurnoutManager class.
- * @author			Bob Coleman Copyright 2008
+ * Tests for the jmri.jmrix.acela.AcelaTurnoutManager class.
+ *
+ * @author	Bob Coleman Copyright 2008
  */
-public class AcelaLightManagerTest extends jmri.managers.AbstractLightMgrTest  {
+public class AcelaLightManagerTest extends jmri.managers.AbstractLightMgrTest {
 
     public String getSystemName(int i) {
-        return "AL"+i;
+        return "AL" + i;
     }
 
-    public void testAsAbstractFactory () {
+    public void testAsAbstractFactory() {
         // create and register the manager object
         AcelaLightManager alm = new AcelaLightManager();
         jmri.InstanceManager.setLightManager(alm);
@@ -27,22 +29,25 @@ public class AcelaLightManagerTest extends jmri.managers.AbstractLightMgrTest  {
 
         Light tl = lm.newLight("AL21", "my name");
 
-
-        if (log.isDebugEnabled()) log.debug("received light value "+tl);
-        Assert.assertTrue( null != (AcelaLight)tl);
+        if (log.isDebugEnabled()) {
+            log.debug("received light value " + tl);
+        }
+        Assert.assertTrue(null != (AcelaLight) tl);
 
         // make sure loaded into tables
-        if (log.isDebugEnabled()) log.debug("by system name: "+lm.getBySystemName("AL21"));
-        if (log.isDebugEnabled()) log.debug("by user name:   "+lm.getByUserName("my name"));
+        if (log.isDebugEnabled()) {
+            log.debug("by system name: " + lm.getBySystemName("AL21"));
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("by user name:   " + lm.getByUserName("my name"));
+        }
 
         Assert.assertTrue(null != lm.getBySystemName("AL21"));
         Assert.assertTrue(null != lm.getByUserName("my name"));
 
     }
 
-
     // from here down is testing infrastructure
-
     public AcelaLightManagerTest(String s) {
         super(s);
     }
@@ -60,15 +65,18 @@ public class AcelaLightManagerTest extends jmri.managers.AbstractLightMgrTest  {
     }
 
     // The minimal setup for log4J
-    protected void setUp() { 
-        apps.tests.Log4JFixture.setUp(); 
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
         // create and register the manager object
         l = new AcelaLightManager();
         jmri.InstanceManager.setLightManager(l);
     }
-    @Override
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
-    static Logger log = Logger.getLogger(AcelaLightManagerTest.class.getName());
+    @Override
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(AcelaLightManagerTest.class.getName());
 
 }

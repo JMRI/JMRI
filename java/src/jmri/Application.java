@@ -1,29 +1,23 @@
-// Application.java
-
 package jmri;
 
 /**
- * A lightweight class that provides a methods to retrieve the current
- * JMRI application name and icon.
+ * A lightweight class that provides a methods to retrieve the current JMRI
+ * application name and icon.
  * <P>
- * The current name is set via reflection when a given JMRI application
- * is launched.
+ * The current name is set when a given JMRI application is launched.
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision$
+ * @author Matthew Harris Copyright (C) 2011
  */
 public class Application {
 
@@ -33,7 +27,9 @@ public class Application {
 
     /**
      * Return the current JMRI application name.
-     * @return String containing JMRI application name or "JMRI" if name has not been set.
+     *
+     * @return String containing JMRI application name or "JMRI" if name has not
+     *         been set.
      */
     public static String getApplicationName() {
         if (Application.name == null) {
@@ -44,9 +40,10 @@ public class Application {
 
     /**
      * Set the current JMRI application name.
+     *
      * @param applicationName String containing the JMRI application name
-     * @throws IllegalAccessException
-     * @throws IllegalArgumentException
+     * @throws IllegalAccessException   if attempting to modify once set
+     * @throws IllegalArgumentException if a null name passed
      */
     public static void setApplicationName(String applicationName) throws IllegalAccessException, IllegalArgumentException {
         if (Application.name == null) {
@@ -61,9 +58,10 @@ public class Application {
     }
 
     /**
-     * Return the current JMRI application logo path.
-     * This path is relative to the JMRI application installation path. If the
-     * application does not have its own icon, return the JMRI default icon.
+     * Return the current JMRI application logo path. This path is relative to
+     * the JMRI application installation path. If the application does not have
+     * its own icon, return the JMRI default icon.
+     *
      * @return String containing the application icon path
      */
     public static String getLogo() {
@@ -72,6 +70,7 @@ public class Application {
 
     /**
      * Set the current JMRI application logo path.
+     *
      * @param logo String with the relative path to the JMRI application icon
      */
     public static void setLogo(String logo) {
@@ -92,12 +91,10 @@ public class Application {
      * @param URL the URL to set
      */
     public static void setURL(String URL) {
-        if (URL ==  null) {
+        if (URL == null) {
             URL = "http://jmri.org";
         }
         Application.URL = URL;
     }
 
 }
-
-/* @(#)Application.java */

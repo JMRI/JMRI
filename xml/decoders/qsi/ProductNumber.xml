@@ -1,6 +1,5 @@
-<?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2011 All rights reserved -->
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?><!-- Copyright (C) JMRI 2011 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -12,28 +11,28 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <!-- standard model number definition ivariables-->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <!-- CV 56.254 About Quantum Decoder -->
-  <ivariable label="Product Model High Byte" CVname="56.254.4" CV="56" PI="254" SI="4" readOnly="yes" comment="QSI" item="CV56.254.4">
-    <indexedVal/>
-  </ivariable>
-  <ivariable label="Product Model Low Byte" CVname="56.254.5" CV="56" PI="254" SI="5" readOnly="yes" comment="QSI" item="CV56.254.5">
-    <indexedVal/>
-  </ivariable>
-  <ivariable label="Firmware Build Number" CVname="56.254.8" CV="56" PI="254" SI="8" readOnly="yes" comment="QSI" item="CV56.254.8">
-    <indexedVal/>
-  </ivariable>
-  <ivariable label="Firmware Build Date.Month" CVname="56.254.10" CV="56" PI="254" SI="10" readOnly="yes" comment="QSI" item="CV56.254.10">
-    <indexedVal/>
-  </ivariable>
-  <ivariable label="Firmware Build Date.Day" CVname="56.254.11" CV="56" PI="254" SI="11" readOnly="yes" comment="QSI" item="CV56.254.11">
-    <indexedVal/>
-  </ivariable>
-  <ivariable label="Firmware Build Date.Year" CVname="56.254.12" CV="56" PI="254" SI="12" readOnly="yes" comment="QSI" item="CV56.254.12">
-    <indexedVal/>
-  </ivariable>
+  <variable label="Product Model High Byte" CV="56.254.4" readOnly="yes" comment="QSI" item="CV56.254.4">
+    <decVal/>
+  </variable>
+  <variable label="Product Model Low Byte" CV="56.254.5" readOnly="yes" comment="QSI" item="CV56.254.5">
+    <decVal/>
+  </variable>
+  <variable label="Firmware Build Number" CV="56.254.8" readOnly="yes" comment="QSI" item="CV56.254.8">
+    <decVal/>
+  </variable>
+  <variable label="Firmware Build Date.Month" CV="56.254.10" readOnly="yes" comment="QSI" item="CV56.254.10">
+    <decVal/>
+  </variable>
+  <variable label="Firmware Build Date.Day" CV="56.254.11" readOnly="yes" comment="QSI" item="CV56.254.11">
+    <decVal/>
+  </variable>
+  <variable label="Firmware Build Date.Year" CV="56.254.12" readOnly="yes" comment="QSI" item="CV56.254.12">
+    <decVal/>
+  </variable>
   <!-- QSI Product ID -->
-  <ivariable label="Product Number" CVname="56.254.5" CV="56" PI="254" SI="5" readOnly="yes" item="Product Number">
-    <indexedPairVal highCVname="56.254.4"/>
-  </ivariable>
+  <variable label="Product Number" CV="56.254.5" readOnly="yes" item="Product Number">
+    <splitVal highCV="56.254.4"/>
+  </variable>
 </variables>

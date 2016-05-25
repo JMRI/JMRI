@@ -1,172 +1,179 @@
 // ServerFrame.java
-
 package jmri.jmrix.loconet.loconetovertcp;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  * Frame displaying and programming a LocoNet clock monitor.
  * <P>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
- * and used with permission as part of the JMRI project.  That permission
- * does not extend to uses in other software products.  If you wish to
- * use this code, algorithm or these message formats outside of JMRI, please
- * contact Digitrax Inc for separate permission.
+ * and used with permission as part of the JMRI project. That permission does
+ * not extend to uses in other software products. If you wish to use this code,
+ * algorithm or these message formats outside of JMRI, please contact Digitrax
+ * Inc for separate permission.
  *
- * @author	Bob Jacobsen  Copyright (C) 2003, 2004
- * @author      Alex Shepherd Copyright (C) 2006
+ * @author	Bob Jacobsen Copyright (C) 2003, 2004
+ * @author Alex Shepherd Copyright (C) 2006
  * @version	$Revision$
  */
-
 public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
 
-  private ServerFrame() {
-    super("LocoNetOverTcp Server");
-    
-    getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+    /**
+     *
+     */
+    private static final long serialVersionUID = -3729652398213286613L;
 
-    portNumber = new JSpinner();
-    portNumberModel = new SpinnerNumberModel(65535,1,65535,1);
-    portNumber.setModel(portNumberModel);
+    private ServerFrame() {
+        super("LocoNetOverTcp Server");
 
-    portNumber.setFocusable(false);
-    
-    // add GUI items
-    JPanel panel = new JPanel();
-    panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-    panel.add(autoStartCheckBox);
-    panel.add( portNumberLabel ) ;
-    panel.add(portNumber);
-    getContentPane().add(panel);
+        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
-    panel = new JPanel();
-    panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-    panel.add(startButton);
-    panel.add(stopButton);
-    panel.add(saveButton);
-    getContentPane().add(panel);
+        portNumber = new JSpinner();
+        portNumberModel = new SpinnerNumberModel(65535, 1, 65535, 1);
+        portNumber.setModel(portNumberModel);
 
-    panel = new JPanel();
-    panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-    panel.add(serverStatus);
-    panel.add(clientStatus);
-    getContentPane().add(panel);
+        portNumber.setFocusable(false);
 
-    startButton.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent a) {
-        Server.getInstance().enable();
-      }
-    });
+        // add GUI items
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        panel.add(autoStartCheckBox);
+        panel.add(portNumberLabel);
+        panel.add(portNumber);
+        getContentPane().add(panel);
 
-    stopButton.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent a) {
-        Server.getInstance().disable();
-      }
-    });
+        panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        panel.add(startButton);
+        panel.add(stopButton);
+        panel.add(saveButton);
+        getContentPane().add(panel);
 
-    saveButton.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent a) {
-        Server.getInstance().setAutoStart( autoStartCheckBox.isSelected() );
-        Server.getInstance().setPortNumber( ((Integer)portNumber.getValue()).intValue() );
-        Server.getInstance().saveSettings();
-      }
-    });
+        panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        panel.add(serverStatus);
+        panel.add(clientStatus);
+        getContentPane().add(panel);
 
-    autoStartCheckBox.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent a) {
-        saveButton.setEnabled( true );
-      }
-    });
+        startButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent a) {
+                Server.getInstance().enable();
+            }
+        });
 
-    if(portNumber !=null)
-      portNumber.addChangeListener(new ChangeListener() {
-        public void stateChanged(ChangeEvent e) {
-          saveButton.setEnabled( true );
+        stopButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent a) {
+                Server.getInstance().disable();
+            }
+        });
+
+        saveButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent a) {
+                Server.getInstance().setAutoStart(autoStartCheckBox.isSelected());
+                Server.getInstance().setPortNumber(((Integer) portNumber.getValue()).intValue());
+                Server.getInstance().saveSettings();
+            }
+        });
+
+        autoStartCheckBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent a) {
+                saveButton.setEnabled(true);
+            }
+        });
+
+        if (portNumber != null) {
+            portNumber.addChangeListener(new ChangeListener() {
+                public void stateChanged(ChangeEvent e) {
+                    saveButton.setEnabled(true);
+                }
+            });
         }
-      });
 
-    pack();
-  }
-
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-                    justification="Only used during system initialization")
-  public void windowClosing(java.awt.event.WindowEvent e) {
-    setVisible(false);
-    self = null ;
-    Server.getInstance().setStateListner(null);
-    dispose();
-    super.windowClosing(e);
-  }
-
-  public void dispose() {
-    super.dispose();
-  }
-
-  static public synchronized ServerFrame getInstance(){
-    if( self == null ) {
-      self = new ServerFrame() ;
-      Server server = Server.getInstance() ;
-      server.setStateListner(self);
-      server.updateServerStateListener();
-      server.updateClinetStateListener();
+        pack();
     }
 
-    return self ;
-  }
-
-  private void updateServerStatus(){
-    Server server = Server.getInstance() ;
-    autoStartCheckBox.setSelected( server.getAutoStart() );
-    autoStartCheckBox.setEnabled( !server.isEnabled() );
-    if (portNumber!=null) {
-        portNumber.setValue(Integer.valueOf( server.getPortNumber() ) ) ;
-        portNumber.setEnabled( !server.isEnabled() );
-        portNumberLabel.setEnabled( !server.isEnabled() );
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+            justification = "Only used during system initialization")
+    public void windowClosing(java.awt.event.WindowEvent e) {
+        setVisible(false);
+        self = null;
+        Server.getInstance().setStateListner(null);
+        dispose();
+        super.windowClosing(e);
     }
-    startButton.setEnabled( !server.isEnabled() );
-    stopButton.setEnabled( server.isEnabled() );
-    saveButton.setEnabled( server.isSettingChanged() );
-    serverStatus.setText( "Server Status: " + (server.isEnabled() ? "Enabled" : "Disabled" ) );
-  }
 
+    public void dispose() {
+        super.dispose();
+    }
 
-  private void updateClientStatus(){
-    clientStatus.setText( "   Client Count: " + Integer.toString( Server.getInstance().getClientCount() ) );
-  }
+    static public synchronized ServerFrame getInstance() {
+        if (self == null) {
+            self = new ServerFrame();
+            Server server = Server.getInstance();
+            server.setStateListner(self);
+            server.updateServerStateListener();
+            server.updateClinetStateListener();
+        }
 
-  public void notifyServerStateChanged( Server s ){
-    javax.swing.SwingUtilities.invokeLater( new Runnable() {
-        public void run() {
-          updateServerStatus() ;
-        }}) ;
-  }
+        return self;
+    }
 
-  public void notifyClientStateChanged( Server s ) {
-    javax.swing.SwingUtilities.invokeLater( new Runnable() {
-        public void run() {
-          updateClientStatus() ;
-        }}) ;
-  }
+    private void updateServerStatus() {
+        Server server = Server.getInstance();
+        autoStartCheckBox.setSelected(server.getAutoStart());
+        autoStartCheckBox.setEnabled(!server.isEnabled());
+        if (portNumber != null) {
+            portNumber.setValue(Integer.valueOf(server.getPortNumber()));
+            portNumber.setEnabled(!server.isEnabled());
+            portNumberLabel.setEnabled(!server.isEnabled());
+        }
+        startButton.setEnabled(!server.isEnabled());
+        stopButton.setEnabled(server.isEnabled());
+        saveButton.setEnabled(server.isSettingChanged());
+        serverStatus.setText("Server Status: " + (server.isEnabled() ? "Enabled" : "Disabled"));
+    }
 
-  JSpinner portNumber;
-  SpinnerNumberModel portNumberModel;
-  JLabel portNumberLabel = new JLabel("  Port Number: ");
-  JLabel serverStatus = new JLabel("Server Status:         " );
-  JLabel clientStatus = new JLabel("   Client Count:  " );
+    private void updateClientStatus() {
+        clientStatus.setText("   Client Count: " + Integer.toString(Server.getInstance().getClientCount()));
+    }
 
-  JCheckBox autoStartCheckBox = new JCheckBox(
-    "Start Server at Application Startup");
-  JButton startButton = new JButton("Start Server");
-  JButton stopButton = new JButton("Stop Server");
-  JButton saveButton = new JButton("Save Settings");
+    public void notifyServerStateChanged(Server s) {
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                updateServerStatus();
+            }
+        });
+    }
 
-  static ServerFrame self ;
+    public void notifyClientStateChanged(Server s) {
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                updateClientStatus();
+            }
+        });
+    }
 
-  static Logger log = LoggerFactory.getLogger( ServerFrame.class.getName());
+    JSpinner portNumber;
+    SpinnerNumberModel portNumberModel;
+    JLabel portNumberLabel = new JLabel("  Port Number: ");
+    JLabel serverStatus = new JLabel("Server Status:         ");
+    JLabel clientStatus = new JLabel("   Client Count:  ");
+
+    JCheckBox autoStartCheckBox = new JCheckBox(
+            "Start Server at Application Startup");
+    JButton startButton = new JButton("Start Server");
+    JButton stopButton = new JButton("Stop Server");
+    JButton saveButton = new JButton("Save Settings");
+
+    static ServerFrame self;
 }

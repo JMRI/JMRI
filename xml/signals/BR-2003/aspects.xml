@@ -3,7 +3,7 @@
 
 <aspecttable
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation = "http://localhost/xml/schema/aspecttable.xsd"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
 >
   <name>BR-2003</name>
   <date>2003</date>
@@ -41,6 +41,8 @@
       <description>Green Aspect Showing</description>
       <reference>Section 2.1, 2.2</reference>
       <comment></comment>
+      <speed>Approach</speed>
+      <speed2>Approach</speed2>
     </aspect>
     
     <aspect>
@@ -48,6 +50,8 @@
       <indication>Proceed: be prepared to find the next signal displaying one yellow aspect</indication>
       <description>Double Yellow Aspects Showing</description>
       <comment>4 Aspect Signals Only</comment>
+      <speed>Approach</speed>
+      <speed2>Approach</speed2>
     </aspect>
     
      <aspect>
@@ -56,6 +60,8 @@
       <description>Flashing Double Yellow Aspects Showing</description>
       <reference>Section 2.5</reference>
       <comment>4 Aspect Signals Only with a diverging route.</comment>
+      <speed>Approach</speed>
+      <speed2>Approach</speed2>
     </aspect>
     
     <aspect>
@@ -64,6 +70,8 @@
       <description>Yellow Aspect Showing</description>
       <reference>Section 2.1, 2.2</reference>
       <comment></comment>
+      <speed>Approach</speed>
+      <speed2>Approach</speed2>
     </aspect>
     
     <aspect>
@@ -72,6 +80,8 @@
       <description>Flashing Yellow Aspect Showing</description>
       <reference>Section 2.5, 2.6</reference>
       <comment>3+4 Aspect Signals Only with a diverging route.</comment>
+      <speed>Approach</speed>
+      <speed2>Approach</speed2>
     </aspect>
     
     <aspect>
@@ -81,6 +91,7 @@
       <reference>Section 2.1, 2.2, 2.7</reference>
       <comment></comment>
       <speed>0</speed>
+      <speed2>0</speed2>
     </aspect>
     
     <aspect>
@@ -89,6 +100,8 @@
       <description>If the position-light signal displays two white lights at 45degrees, this authorises the driver to proceed at caution towards the next stop signal or buffer stop and be prepared to stop short of any obstruction.</description>
       <reference>Section 2.7</reference>
       <comment></comment>
+      <speed>0</speed>
+      <speed2>0</speed2>
     </aspect>
     
     <aspect>
@@ -98,6 +111,7 @@
       <reference>Section 2.1, 2.2, 2.7</reference>
       <comment></comment>
       <speed>0</speed>
+      <speed2>0</speed2>
     </aspect>
 
   </aspects>

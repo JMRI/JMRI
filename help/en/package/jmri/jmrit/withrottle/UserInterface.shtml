@@ -25,18 +25,13 @@
 JMRI: WiFi Throttle
 </h1>
 
-<a href="http://withrottle.com">
-  <img src="images/WiT150x250.png" height="250" width="150" align="right">
-</a>
 This window controls the connection between WiFi throttles, 
 e.g. an iPhone, iPod Touch, or Android Phone, and JMRI.  
-
 
 <p>
 It can be set to start automatically with the 
 "<a href="../../../apps/TabbedPreferences.shtml#Startup">Start Up</a>" section in the
-"<a href="../../../apps/TabbedPreferences.shtml">JMRI Preferences</a>"
-section of JMRI Preferences under the heading of "Actions".
+"<a href="../../../apps/TabbedPreferences.shtml">JMRI Preferences</a>".
 
 <p>
 <a href="../../../apps/TabbedPreferences.shtml#WiThrottle">Preferences</a>
@@ -56,21 +51,36 @@ When using a WiFi throttle, if the computer enters sleep mode,
 control will be lost. System preferences may need to be adjusted
 to prevent the computer from putting itself to sleep when it is inactive.
 
+<a href="http://enginedriver.rrclubs.org">
+  <img src="images/EngineDriverScreen.png" height="200" width="120" align="right" 
+      style="margin:20px;" alt="EngineDriver for Android devices" title="EngineDriver for Android devices">
+</a>
+<a href="http://withrottle.com">
+  <img src="images/WiT150x250.png" height="250" width="150" align="right"
+   alt="WiThrottle for Apple devices" title="WiThrottle for Apple devices">
+</a>
+<a href="https://play.google.com/store/apps/details?id=hu.digitools.digitrains">
+  <img src="images/DigiTrainsScreen.png" height="120" width="200" align="right" style="margin:20px;" 
+   alt="DigiTrains for Android devices" title="DigiTrains for Android devices">
+</a>
+
+
 <P>
-To use your iPhone or iPod Touch with JMRI as a throttle, you
+To use your iPhone, iPad or iPod Touch with JMRI as a throttle, you
 run the 
 <a href="http://withrottle.com">WiThrottle</a>
 app on the iPhone or iPod Touch. The basic application is
 available for free download from the iTunes store.  
 
 <P>
-<a href="EngineDriverAndroidThrottle.shtml">
-  <img src="images/EngineDriverScreen.png" height="200" width="120" align="right">
-</a>
-To use your Android phone with JMRI as a throttle, you
+To use your Android device with JMRI as a throttle, you
 run the 
-<a href="EngineDriverAndroidThrottle.shtml">Engine Driver</a>
-program on the Android phone.
+<a href="http://enginedriver.rrclubs.org">Engine Driver</a>
+program or <a href="https://play.google.com/store/apps/details?id=hu.digitools.digitrains">Digitrains</a> 
+on the Android device.  These free apps are available from the 
+<a href="https://play.google.com/store/apps/details?id=jmri.enginedriver">
+Google&nbsp;Play&nbsp;Store</a> or the 
+<a href="http://enginedriver.rrclubs.org">EngineDriver&nbsp;site</a>
 
 <p>
 The protocol is described on a 
@@ -79,35 +89,32 @@ For more on JMRI networking, see the
 <a href="../../../../html/doc/Technical/Networking.shtml">networking technical page</a>.
 
 <p>
+You can also 
+<a href="../webThrottle/webThrottle.shtml">use a web browser</a>
+in your device to 
+<a href="../webThrottle/webThrottle.shtml">run trains</a>
+if for some reason you can't install an app on the device.
+
 <h3>
 Function Labels
 </h3>
-Function labels can be customized for each roster entry through JMRI.
+Function labels can be customized for each roster entry through JMRI,
+using the Labels & Media button.
 These labels will then be displayed in place of the generic F1, F2... on the
 screen of the mobile device.
 The labels can be added when a new roster entry is created,
 or by editing an existing roster entry under the Function Labels tab.
-To enter function labels, the programmer format has to be either "Advanced" or "Custom".
-
-
 <p>
 <h3>
 Routes & Turnouts
 </h3>
-The app can control any turnouts (and routes) that JMRI has control of.
-If they are available in the JMRI turnout (or route) table,
-they are automatically available in WiFi throttles. 
-If there are no turnouts (or routes) on the table(s),
-then the control screen for them does not show in the app.
-It will do all of this by default.
-However, if JMRI cannot control them, WiFi throttles will not be able to either.
-
+The app can control any turnouts (and routes) that JMRI can control. 
+NOTE: EngineDriver only lists turnouts and routes which have User Names. 
 <p>
 Additionally, you can limit what turnouts appear.
 In JMRI, with the WiThrottle window active, there is a menu named WiThrottle.
 It has an item titled "Filter Controls"
 that will let you pick which turnouts to display or hide.
-
 <p>
 <h3>
 Advanced Consisting

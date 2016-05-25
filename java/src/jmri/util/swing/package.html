@@ -1,62 +1,62 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
-<head>
-<!--
+    <head>
+        <!--
+        
+          $Id$
+        
+          Made with permission from the Sun version at
+          http://java.sun.com/j2se/javadoc/writingdoccomments/package-template
+        
+          Copyright 2003
+        
+        -->
+    </head>
+    <body bgcolor="white">
 
-  $Id$
+        Tools and utilities for doing a systematic reworking of the JMRI GUI.  
 
-  Made with permission from the Sun version at
-  http://java.sun.com/j2se/javadoc/writingdoccomments/package-template
+        <p>
+            The goal is to allow various GUI types to be available. Subpackages
+            provide key implementation pieces:
 
-  Copyright 2003
+        <dl>
+            <dt>{@link jmri.util.swing.sdi}<dd>The traditional JMRI "single-document interface", where there are multiple independent windows
+            <dt>{@link jmri.util.swing.mdi}<dd>A "multi-document interface", where a primary window contains multiple independent sub-windows
+            <dt>{@link jmri.util.swing.multipane}<dd>A "multi-pane" or IDE-style interface", where each window is tiled with inter-related panes
+        </dl>
+        Creating new "windows" through a {@link jmri.util.swing.WindowInterface} reference handles the type-specific aspects.
 
--->
-</head>
-<body bgcolor="white">
+        <h2>JMRI Swing Usage Structure</h2>
 
-Tools and utilities for doing a systematic reworking of the JMRI GUI.  
+        JMRI GUI code starts as {@link jmri.util.swing.JmriPanel} classes, which extends the Swing JPanel.
+        Managing the frames (windows) that enclose them is done automatically when they are
+        opened via the 
+        {@link jmri.util.swing.JmriAbstractAction} and
+        {@link jmri.util.swing.JmriNamedPaneAction} action classes.
+        {@link jmri.util.swing.JmriNamedPaneAction} is preferred because it defers loading of the referenced
+        panel class until the action is invoked, which can reduce JMRI startup time signficantly.
 
-<p>
-The goal is to allow various GUI types to be available. Subpackages
-provide key implementation pieces:
-
-<dl>
-<dt>{@link jmri.util.swing.sdi}<dd>The traditional JMRI "single-document interface", where there are multiple independent windows
-<dt>{@link jmri.util.swing.mdi}<dd>A "multi-document interface", where a primary window contains multiple independent sub-windows
-<dt>{@link jmri.util.swing.multipane}<dd>A "multi-pane" or IDE-style interface", where each window is tiled with inter-related panes
-</dl>
-Creating new "windows" through a {@link jmri.util.swing.WindowInterface} reference handles the type-specific aspects.
-
-<h2>JMRI Swing Usage Structure</h2>
-
-JMRI GUI code starts as {@link jmri.util.swing.JmriPanel} classes, which extends the Swing JPanel.
-Managing the frames (windows) that enclose them is done automatically when they are
-opened via the 
-{@link jmri.util.swing.JmriAbstractAction} and
-{@link jmri.util.swing.JmriNamedPaneAction} action classes.
-{@link jmri.util.swing.JmriNamedPaneAction} is preferred because it defers loading of the referenced
-panel class until the action is invoked, which can reduce JMRI startup time signficantly.
-
-<p>
-Generic creation of menus, toolbars and navigation trees from XML definition
-files are provided by the 
-{@link jmri.util.swing.JMenuUtil}, {@link jmri.util.swing.JToolBarUtil}, 
-{@link jmri.util.swing.JTreeUtil} classes
+        <p>
+            Generic creation of menus, toolbars and navigation trees from XML definition
+            files are provided by the 
+            {@link jmri.util.swing.JMenuUtil}, {@link jmri.util.swing.JToolBarUtil}, 
+            {@link jmri.util.swing.JTreeUtil} classes
 
 
-<p>
-This whole package might be moved to the apps tree at some later point.
+        <p>
+            This whole package might be moved to the apps tree at some later point.
 
-<h2>Related Documentation</h2>
+        <h2>Related Documentation</h2>
 
-For overviews, tutorials, examples, guides, and tool documentation, please see:
-<ul>
-  <li>The JMRI <a href="http://jmri.org/help/en/html/doc/Technical/Swing.shtml">Swing usage</a> page.
-  <li>Wikipedia discussion of <a href="http://en.wikipedia.org/wiki/Multiple_document_interface">MDI and IDE interfaces</a>.
-</ul>
+        For overviews, tutorials, examples, guides, and tool documentation, please see:
+        <ul>
+            <li>The JMRI <a href="http://jmri.org/help/en/html/doc/Technical/Swing.shtml">Swing usage</a> page.
+            <li>Wikipedia discussion of <a href="http://en.wikipedia.org/wiki/Multiple_document_interface">MDI and IDE interfaces</a>.
+        </ul>
 
-<!-- Put @see and @since tags down here. -->
-@since 2.9.4
+        <!-- Put @see and @since tags down here. -->
+        @since 2.9.4
 
-</body>
+    </body>
 </html>
