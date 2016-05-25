@@ -7,8 +7,8 @@ import jmri.jmrix.cmri.serial.nodeconfigmanager.NodeConfigManagerAction;  //c2
 //import jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction;
 
 /**
- * Definition of objects to handle configuring a layout connection
- * via an CMRInet Simulator object.
+ * Definition of objects to handle configuring a layout connection via an C/MRI
+ * Simulator object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2008
  * @version	$Revision: 20084 $
@@ -39,7 +39,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSimulatorConnectionCon
 		details.add(p);
 
 		// add another button
-		JButton b = new JButton("Configure CMRInet nodes");
+		JButton b = new JButton("Configure C/MRI nodes");
 
 		details.add(b);
 						

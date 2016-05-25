@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
 /**
- * CMRInet Serial monitor packet filter
+ * CMRI Serial monitor packet filter
  * 
  * @author                      Chuck Catania  2016
  * @version
@@ -16,7 +16,7 @@ public class SerialFilterAction extends AbstractAction {
 	public SerialFilterAction(String s) { super(s);}
 
     public SerialFilterAction() {
-        this("CMRInet Message Filter");
+        this("CMRI Message Filter");
     }
 
     public void actionPerformed(ActionEvent e) {

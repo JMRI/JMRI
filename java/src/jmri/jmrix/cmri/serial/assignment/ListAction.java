@@ -20,7 +20,7 @@ public class ListAction extends AbstractAction {
     public ListAction(String s) { super(s);}
 
     public ListAction() {
-        this("List CMRInet Assignments");
+        this("List C/MRI Assignments");
     }
 
     public void actionPerformed(ActionEvent e) {

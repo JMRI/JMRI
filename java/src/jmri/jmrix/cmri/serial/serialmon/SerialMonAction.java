@@ -21,7 +21,7 @@ public class SerialMonAction extends AbstractAction {
 	public SerialMonAction(String s) { super(s);}
 
     public SerialMonAction() {
-        this("CMRInet monitor");
+        this("CMRI monitor");
     }
 
     public void actionPerformed(ActionEvent e) {

@@ -157,8 +157,8 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 	public int selectNumberOfControlBits() {
 		int iNum = 0;
 		iNum = javax.swing.JOptionPane.showOptionDialog(null,
-				"How many CMRInet output bits should be used to control this turnout?",
-					"CMRInet Turnout Question",javax.swing.JOptionPane.DEFAULT_OPTION,
+				"How many CMRI output bits should be used to control this turnout?",
+					"CMRI Turnout Question",javax.swing.JOptionPane.DEFAULT_OPTION,
 						javax.swing.JOptionPane.QUESTION_MESSAGE,
 						null,new String[] {"Use 1 bit","Use 2 bits"},"Use 1 bit");
 		return iNum;
@@ -173,8 +173,8 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 	public int selectOutputType() {
 		int iType = 0;
 		iType = javax.swing.JOptionPane.showOptionDialog(null,
-				"Should the CMRInet output bit(s) be 'steady state' or 'pulsed'?",
-					"CMRInet Output Bits Question",javax.swing.JOptionPane.DEFAULT_OPTION,
+				"Should the CMRI output bit(s) be 'steady state' or 'pulsed'?",
+					"CMRI Output Bits Question",javax.swing.JOptionPane.DEFAULT_OPTION,
 						javax.swing.JOptionPane.QUESTION_MESSAGE,
 						null,new String[] {"Steady State Output","Pulsed Output"},"Steady State Output");
 		return iType;
@@ -187,7 +187,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 	public void notifySecondBitConflict(String conflict,int bitNum) {
 		javax.swing.JOptionPane.showMessageDialog(null,"The second output bit, "+bitNum+
 			", is currently assigned to "+conflict+". Turnout cannot be created as "+
-					"you specified.","CMRInet Assignment Conflict",
+					"you specified.","CMRI Assignment Conflict",
 							javax.swing.JOptionPane.INFORMATION_MESSAGE,null);
 	}
 

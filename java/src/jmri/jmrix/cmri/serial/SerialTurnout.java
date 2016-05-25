@@ -120,7 +120,7 @@ public class SerialTurnout extends AbstractTurnout {
 				tNode = (SerialNode) SerialAddress.getNodeFromSystemName(tSystemName);
 				if (tNode == null) {
 					// node does not exist, ignore call
-					log.error("Trying to set a CMRInet turnout that doesn't exist: "+tSystemName+" - ignored");
+					log.error("Trying to set a CMRI turnout that doesn't exist: "+tSystemName+" - ignored");
 					return;
 				}
 			}

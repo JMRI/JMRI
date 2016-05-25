@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import javax.swing.border.TitledBorder;
 
 /**
- * Frame for a message filter for CMRInet network packets.
+ * Frame for a message filter for CMRI network packets.
  * @author	 Chuck Catania   Copyright (C) 2016
  * @version	 $Revision: 17977 $
  */
@@ -61,7 +61,7 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
     JButton packetMonitorAll = new JButton(rb.getString("AllButtonText") );
     JButton packetMonitorNone = new JButton(rb.getString("NoneButtonText") );
 
-    // CMRInet packet monitor variables only persistent when running
+    // CMRI packet monitor variables only persistent when running
     //--------------------------------------------------------------
     public static final int monPktInit     =  0; // (I) 0x49 Initialize    
     public static final int monPktPoll     =  1; // (P) 0x50 Poll
@@ -112,7 +112,7 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
     SerialFilterFrame curFrame;   
     
     public SerialFilterFrame() {
-        super("CMRInet Packet Filter");
+        super("CMRI Packet Filter");
         curFrame = this;
 
     }
