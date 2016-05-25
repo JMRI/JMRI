@@ -7,15 +7,13 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Invokes complete set of tests in the jmri.jmrit.jython tree
+ * Invokes Python-language scripts in jython/tests
  *
- * Some of these tests are here, as they're cross-class functions
- *
- * @author	Bob Jacobsen Copyright 2009
+ * @author	Bob Jacobsen Copyright 2016
  */
-public class JythonTest extends TestCase {
+public class SampleScriptTest extends TestCase {
 
-    // Really a check of Jython init, including the defaults file
+    // This is just a placeholder now.
     public void testExec() {
         jmri.util.JUnitAppender.clearBacklog();
         // open output window
@@ -56,27 +54,27 @@ public class JythonTest extends TestCase {
     }
 
     // from here down is testing infrastructure
-    public JythonTest(String s) {
+    public SampleScriptTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", JythonTest.class.getName()};
+        String[] testCaseName = {"-noloading", SampleScriptTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite(JythonTest.class);
+        TestSuite suite = new TestSuite(SampleScriptTest.class);
         return suite;
     }
 
     // The minimal setup for log4J
     protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
-
         super.setUp();
+        
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
     }
