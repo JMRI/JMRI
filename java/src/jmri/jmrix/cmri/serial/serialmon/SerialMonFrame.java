@@ -9,7 +9,7 @@ import jmri.jmrix.cmri.serial.SerialMessage;
 import jmri.jmrix.cmri.serial.SerialNode;
 import jmri.jmrix.cmri.serial.SerialReply;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
-import jmri.jmrix.cmri.serial.cmrinetmetrics.CMRIMetricsData;
+import jmri.jmrix.cmri.serial.cmrinetmetrics.CMRInetMetricsData;
 
 /**
  * Frame displaying (and logging) CMRI serial command messages
