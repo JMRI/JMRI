@@ -2,6 +2,9 @@
 #
 # Default objects for interaction with JMRI from a python script.
 # This file may be needed only if jython.exec=true in python.properties
+#
+# These should be kept consistent with those in jmri.script.JmriScriptEngineManager
+#
 
 # Default imports
 import java
