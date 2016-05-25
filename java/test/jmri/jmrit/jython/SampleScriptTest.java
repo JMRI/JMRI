@@ -1,6 +1,7 @@
 package jmri.jmrit.jython;
 
-import javax.swing.JFrame;
+import java.io.File;
+
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -14,43 +15,9 @@ import junit.framework.TestSuite;
 public class SampleScriptTest extends TestCase {
 
     // This is just a placeholder now.
-    public void testExec() {
-        jmri.util.JUnitAppender.clearBacklog();
-        // open output window
-        JythonWindow outputWindow;  // actually an Action class
-        try {
-            outputWindow = new JythonWindow();
-            outputWindow.actionPerformed(null);
-        } catch (Exception e) {
-            Assert.fail("exception opening output window: " + e);
-        }
-
-        // create input window
-        InputWindow w = new InputWindow();
-
-        // run a null op test
-        try {
-            w.buttonPressed();
-        } catch (Exception e) {
-            Assert.fail("exception during execution: " + e);
-        }
-        
-        // find, close output window
-        JFrame f = jmri.util.JmriJFrame.getFrame("Script Output");
-        Assert.assertTrue("found output frame", f != null);
-        f.dispose();
-
-        // error messages are a fail
-        if (jmri.util.JUnitAppender.clearBacklog() != 0) {
-            Assert.fail("Emitted error messages caused test to fail");
-        }
-    }
-
-    public void testInput() {
-        new InputWindowAction().actionPerformed(null);
-        JFrame f = jmri.util.JmriJFrame.getFrame("Script Entry");
-        Assert.assertTrue("found input frame", f != null);
-        f.dispose();
+    public void testFirstOne() throws javax.script.ScriptException, java.io.IOException {
+        String name = "jmri_bindings_test.py";
+        jmri.script.JmriScriptEngineManager.getDefault().eval(new File("jython/test/"+name));
     }
 
     // from here down is testing infrastructure
