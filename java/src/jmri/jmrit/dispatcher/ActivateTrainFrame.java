@@ -1,4 +1,4 @@
-// ActivateTrainFrame.java
+// ActivateTrainFrame.java 
 package jmri.jmrit.dispatcher;
 
 import java.awt.Container;
