@@ -45,7 +45,6 @@ public class OperationsRoutesGuiTest extends jmri.util.SwingTestCase {
 		Route r5 = rManager.newRoute("Test Route A");
 		r5.setComment("Comment test route A");
 		RoutesTableFrame f = new RoutesTableFrame();
-		f.setVisible(true);
 		
 		// should be 5 rows
 		Assert.assertEquals("number of rows", 5, f.routesModel.getRowCount());

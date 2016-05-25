@@ -8,11 +8,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.beans.PropertyChangeListener;
-
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 /*
@@ -24,7 +21,6 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import jmri.InstanceManager;
 import jmri.DccThrottle;
 import jmri.DccLocoAddress;
-import jmri.Path;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 
@@ -145,7 +141,8 @@ public class WarrantFrame extends WarrantRoute {
             _throttleCommands.add(ts);
         }
         getRoster();
-        if (!setTrainInfo(_warrant.getTrainId(), false)) {
+        String id = _warrant.getTrainId();
+        if (id==null || id.length()==0 || !setTrainInfo(id, false)) {
             jmri.DccLocoAddress address = _warrant.getDccAddress();
             if (address!=null) {
                 _dccNumBox.setText(address.toString());
@@ -776,10 +773,12 @@ public class WarrantFrame extends WarrantRoute {
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
             l.setAlignmentX(JComponent.CENTER_ALIGNMENT);
             textField.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+            panel.add(Box.createVerticalStrut(STRUT_SIZE));
         } else {
             panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
             l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
             textField.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
+            panel.add(Box.createHorizontalStrut(STRUT_SIZE));
         }
         panel.add(l);
         if (!vertical) {
@@ -788,6 +787,11 @@ public class WarrantFrame extends WarrantRoute {
         textField.setMaximumSize(new Dimension(300, textField.getPreferredSize().height));
         textField.setMinimumSize(new Dimension(200, textField.getPreferredSize().height));
         panel.add(textField);
+        if (vertical) {
+            panel.add(Box.createVerticalStrut(STRUT_SIZE));        	
+        } else {
+            panel.add(Box.createHorizontalStrut(STRUT_SIZE));        	
+        }
         return panel;
     }
 
@@ -958,14 +962,14 @@ public class WarrantFrame extends WarrantRoute {
             }
             _startTime = System.currentTimeMillis();
             _warrant.addPropertyChangeListener(this);
-           msg = _warrant.setRunMode(Warrant.MODE_LEARN, _locoAddress, _learnThrottle, 
+            msg = _warrant.setRunMode(Warrant.MODE_LEARN, _locoAddress, _learnThrottle, 
                                           _throttleCommands, _runBlind.isSelected());
         }
         if (msg!=null) {
             stopRunTrain();
-            _statusBox.setText(msg);
            JOptionPane.showMessageDialog(this, msg, Bundle.getMessage("WarningTitle"), 
                                           JOptionPane.WARNING_MESSAGE);
+           _statusBox.setText(msg);
         }
     }
 
@@ -981,7 +985,6 @@ public class WarrantFrame extends WarrantRoute {
             JOptionPane.showMessageDialog(this, msg, 
                           Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             _warrant.deAllocate();
-//            _statusBox.setText(msg);
            return;
         }
     	msg = setupRun();
@@ -1002,10 +1005,10 @@ public class WarrantFrame extends WarrantRoute {
         msg = _warrant.setRunMode(Warrant.MODE_RUN, _locoAddress, null, 
                                       _throttleCommands, _runBlind.isSelected());
         if (msg!=null) {
-            _statusBox.setText(msg);
             stopRunTrain();
             JOptionPane.showMessageDialog(this, msg,
                                 Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            _statusBox.setText(msg);
             return;
         }
     }
@@ -1064,7 +1067,7 @@ public class WarrantFrame extends WarrantRoute {
                                 _warrant.getCurrentBlockOrder().getBlock().getDisplayName());
                     break;
                 case Warrant.MODE_RUN:
-                case Warrant.MODE_MANUAL: 
+                case Warrant.MODE_MANUAL:
                     item = _warrant.getRunningMessage();
                     scrollCommandTable(_warrant.getCurrentCommandIndex());
                     break;
@@ -1099,22 +1102,43 @@ public class WarrantFrame extends WarrantRoute {
 
     private DccLocoAddress getLocoAddress() {
         String addr = _dccNumBox.getText();
+        String msg = null;
         if (addr!= null && addr.length() != 0) {
-            try {
-                char ch = Character.toUpperCase(addr.charAt(addr.length()-1));
-                boolean isLong = true;
-                int n = 0;
-                if (Character.isDigit(ch)){
-                    n = Integer.parseInt(addr);
-                } else {
-                    isLong = (ch == 'L');
-                    n = Integer.parseInt(addr.substring(0, addr.length()-1));
-                }
-                return new DccLocoAddress(n, isLong);
+            boolean isLong = false;
+            int dccNum = 0;
+        	addr = addr.toUpperCase().trim();
+    		Character ch = addr.charAt(addr.length()-1);
+    		try {
+        		if (!Character.isDigit(ch)) {
+        			if (ch!='S' && ch!='L' && ch!=')') {
+        				msg = Bundle.getMessage("BadDccAddress", addr);
+        			}
+        			if (ch==')') {
+                    	dccNum = Integer.parseInt(addr.substring(0, addr.length()-3));
+                    	ch = addr.charAt(addr.length()-2);
+                    	isLong = (ch=='L');
+        			} else {
+                    	dccNum = Integer.parseInt(addr.substring(0, addr.length()-1));        				
+                    	isLong = (ch=='L');
+        			}
+        		} else {
+            		dccNum = Integer.parseInt(addr);
+            		ch = addr.charAt(0);
+                    isLong = (ch=='0' || dccNum>255);  // leading zero means long
+                    addr = addr + (isLong?"L":"S");
+        		}
+        		if (msg==null) {
+                    return new DccLocoAddress(dccNum, isLong);
+        		}
             } catch (NumberFormatException nfe) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("BadDccAddress",addr),
-                                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                msg = Bundle.getMessage("BadDccAddress", addr);
             }
+        } else {
+        	msg = Bundle.getMessage("NoAddress", _warrant.getDisplayName());
+        }
+        if (msg!=null) {
+            JOptionPane.showMessageDialog(this, msg,
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);        	
         }
         return null;
     }
@@ -1133,7 +1157,11 @@ public class WarrantFrame extends WarrantRoute {
         for (int i=0; i<_throttleCommands.size(); i++) {
             _warrant.addThrottleCommand(new ThrottleSetting(_throttleCommands.get(i)));
         }
-        _warrant.setTrainName(_trainNameBox.getText());
+        String name = _trainNameBox.getText();
+        if (name==null ||name.length()==0) {
+        	name = _dccNumBox.getText();
+        }
+        _warrant.setTrainName(name);
         if (_train != null){
             _warrant.setTrainId(_train.getId());
             _warrant.setDccAddress(_train.getDccLocoAddress());
@@ -1151,26 +1179,29 @@ public class WarrantFrame extends WarrantRoute {
         }
     }
 
+    protected void setWarrant(Warrant w) {
+    	_warrant = w;
+        _sysNameBox.setText(w.getSystemName());
+        _userNameBox.setText(w.getUserName());
+    }
     private void copy() {
-        if (JOptionPane.showConfirmDialog(this, Bundle.getMessage("makeCopy", _warrant.getDisplayName()),
-                Bundle.getMessage("QuestionTitle"), JOptionPane.OK_CANCEL_OPTION, 
-                    JOptionPane.QUESTION_MESSAGE) == JOptionPane.OK_OPTION) {
-            String sysName = _warrant.getSystemName();
-            save();
-            _warrant = null;
-            _create = true;
-            int n = 0;
-            while (_warrant==null) {
-                n++;
-                _warrant = InstanceManager.getDefault(WarrantManager.class).createNewWarrant(sysName+n, sysName+n);
-            }
-            _userNameBox.setText("");
-            _sysNameBox.setText(sysName+n);
+        String sysName = _warrant.getSystemName();
+        String userName = _warrant.getUserName();
+        if (userName!=null && userName.length()>0) {
+        	sysName = sysName+"("+userName+")";
         }
+        WarrantTableAction.CreateWarrantFrame f = new WarrantTableAction.CreateWarrantFrame();
+        f.setVisible(true);
+        try {
+            f.initComponents();
+            f.concatenate(_warrant, null);
+        } catch (Exception ex ) { log.error("error making CreateWarrantFrame", ex);}
     }
 
     public void dispose() {
-        WarrantTableAction.closeWarrantFrame(_warrant.getDisplayName());
+    	if (_warrant!=null) {
+            WarrantTableAction.closeWarrantFrame(_warrant.getDisplayName());    		
+    	}
         super.dispose();
     }
 

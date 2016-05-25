@@ -133,7 +133,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
             try {
                 h.getBean().setLit(state);
             }  catch (java.lang.NullPointerException ex){
-                log.error("NPE caused when trying to set Dark due to missing signal head in mast " + getDisplayName());
+                log.error("NPE caused when trying to set Lit due to missing signal head in mast " + getDisplayName());
             }
         }
         super.setLit(state);

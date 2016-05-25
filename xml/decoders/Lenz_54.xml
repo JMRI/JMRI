@@ -382,17 +382,17 @@
         <label>Blinking Rate for Outputs C and D (0-255)</label>
       <label xml:lang="it">Frequenza lampeggio per Uscite C e D (0-255)</label>
       </variable>
-      <variable label="Output C Blinks" CV="53" mask="XXXXXXXV" minOut="3" item="Function 1 options" default="0" tooltip="Output C blinks with the frequency set in CV56">
+      <variable label="Output C Blinks" CV="53" mask="XXXXXXXV" minOut="3" item="Function 1 options" default="0" tooltip="Output C blinks with the frequency set in">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Output C Blinks</label>
       <label xml:lang="it">Uscita C lampeggia</label>
       </variable>
-      <variable label="Output D Blinks" CV="53" mask="XXXXXXVX" minOut="4" item="Function 1 option 2" default="0" tooltip="Output D blinks with the frequency set in CV56">
+      <variable label="Output D Blinks" CV="53" mask="XXXXXXVX" minOut="4" item="Function 1 option 2" default="0" tooltip="Output D blinks with the frequency set in">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Output D Blinks</label>
       <label xml:lang="it">Uscita D lampeggia</label>
       </variable>
-      <variable label="Outputs C and D act as Ditch Lights" CV="53" mask="XXXXXVXX" item="Function 1 option 3" default="0" minOut="3" tooltip="CV55 controls which function turns on both ditch lights and CV54 controls which function activates the alternating blinking">
+      <variable label="Outputs C and D act as Ditch Lights" CV="53" mask="XXXXXVXX" item="Function 1 option 3" default="0" minOut="3" tooltip="controls which function turns on both ditch lights and CV54 controls which function activates the alternating blinking">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Outputs C and D act as Ditch Lights</label>
       <label xml:lang="it">Uscita C  e D funzionano come Ditch Lights</label>

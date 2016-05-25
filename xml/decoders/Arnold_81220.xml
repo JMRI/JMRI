@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      
+  <version author="Bjørn Kvisli bjorn.kvisli@gmail.com"   version="1" lastUpdated="20121012"/>
+    <decoder>
+    <family name="ARNOLD Digital" mfg="Arnold - Rivarossi" highVersionID="1" lowVersionID="255" comment="Arnold loco decoder">
+      <model model="81220"></model>
+    </family>
+    <programming></programming>
+    <variables>
+      <variable label="Primary Address (1-119)" CV="1" item="Short Address" default="03" >
+        <decVal min="0" max="119"/>
+      </variable>
+      <variable label="Minimum Speed (0-255)" CV="2" item="Vstart" default="0" >
+       <decVal min="0" max="255"/>
+      </variable>
+      <variable label="Acceleration Time (0-255)" CV="3" item="Accel" default="2" comment="Range 0-255">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable label="Deceleration Time (0-255)" CV="4" item="Decel" default="4" comment="Range 0-255">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable label="Maximum Speed (0-255):" CV="5" item="Vhigh" default="255" >
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable label="Undocumented" CV="7" >
+	<decVal/>
+      </variable>
+      <variable label="Undocumented" CV="8">
+	<decVal/>
+      </variable>
+      <variable label="Locomotive Direction" CV="29" mask="XXXXXXXV" item="Locomotive Direction" default="0">
+        <enumVal>
+          <enumChoice choice="Normal">
+            <choice>Normal</choice>
+          </enumChoice>
+          <enumChoice choice="Reversed">
+            <choice>Reversed</choice>
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="0">
+        <enumVal>
+          <enumChoice choice="14">
+            <choice>27</choice>
+          </enumChoice>
+          <enumChoice choice="28">
+            <choice>28</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Speed Steps</label>
+      </variable>
+      <variable label="Analog Detection" CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="1">
+        <enumVal>
+	  <enumChoice choice="NMRA Digital only"/>
+	  <enumChoice choice="DC conversion enabled"/>
+        </enumVal>
+       </variable>
+    	<variable label="BEMF On Off" CV="49" mask="XXXXXXXV">
+		<enumVal>
+			<enumChoice choice="On"/>
+			<enumChoice choice="Off"/>
+		</enumVal>
+	</variable>
+	<variable label="Short Circuit Detection" CV="49" mask="XXXXXXVX">
+		<enumVal>
+			<enumChoice choice="Always"/>
+			<enumChoice choice="At Start"/>
+		</enumVal>
+	</variable>
+	<variable label="Data Memory" CV="49" mask="XXXXXVXX">
+		<enumVal>
+			<enumChoice choice="On"/>
+			<enumChoice choice="Off"/>
+		</enumVal>
+	</variable>
+	<variable label="Operation Mode" CV="49" mask="XXXXVXXX" 	default="0" item="Operation Mode"
+	tooltip="DCC or Analog" >
+		<enumVal>
+			<enumChoice choice="DCC On"/>
+			<enumChoice choice="Analog On"/>
+		</enumVal>
+	</variable>
+	<variable label="Motorola Detection" CV="49" mask="XXXVXXXX">
+		<enumVal>
+			<enumChoice choice="On"/>
+			<enumChoice choice="Off"/>
+		</enumVal>
+	</variable>
+	<variable label="Width Of Pulse For Motor (0-25)" CV="50" default="20" item="Pulse Width"
+	    tooltip="Deterimines load compensation. Low number=fast compensation">
+		<decVal max="25"/>		
+	</variable>
+	
+     </variables>
+
+  </decoder>
+	<pane name="Arnold" nameFmt="item">
+		<column>
+			<display item="Motorola Detection"/>
+			<display  item="Short Circuit Detection"/>
+			<display  item="Data Memory"/>
+			<display item="Operation Mode"/>
+			<display item="Pulse Width"/>
+		</column>
+	</pane>
+
+</decoder-config>

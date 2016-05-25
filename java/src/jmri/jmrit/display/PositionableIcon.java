@@ -45,6 +45,7 @@ public class PositionableIcon extends PositionableLabel {
         pos._iconFamily = _iconFamily;
         pos._scale = _scale;
         pos._rotate = _rotate;
+        pos._iconMap = cloneMap(_iconMap, pos);
         return super.finishClone(pos);
     }
 
@@ -146,7 +147,7 @@ public class PositionableIcon extends PositionableLabel {
         updateSize();
     }
 
-    protected HashMap<String, NamedIcon> cloneMap(HashMap<String, NamedIcon> map,
+    public static HashMap<String, NamedIcon> cloneMap(HashMap<String, NamedIcon> map,
                                                              PositionableLabel pos) {
     	HashMap<String, NamedIcon> clone = new HashMap<String, NamedIcon>();
         if (map!=null) {

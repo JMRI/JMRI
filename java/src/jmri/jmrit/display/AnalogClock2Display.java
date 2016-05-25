@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * @author  Howard G. Penny - Copyright (C) 2005
  * @version $Revision$
  */
-public class AnalogClock2Display extends PositionableJComponent {
+public class AnalogClock2Display extends PositionableJComponent implements LinkingObject {
 
     Timebase clock;
     double rate;

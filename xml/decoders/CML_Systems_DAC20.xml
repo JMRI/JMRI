@@ -28,7 +28,7 @@
       <variable label="Base Address" CV="5" default="1" tooltip="Range 1-2048" item="Short Address">
         <splitVal highCV="6" upperMask="XXXXXVVV"/>
       </variable>
-      <variable label="High 3 bytes of Address CV6" CV="6" mask="XXXXXVVV" tooltip="CV6">
+      <variable label="High 3 bytes of Address CV6" CV="6" mask="XXXXXVVV">
         <decVal min="0" max="7"/>
       </variable>
       <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
@@ -39,19 +39,19 @@
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
-      <variable label="Number of outputs" CV="9" default="0" tooltip="CV9" mask="XXXXXXXV">
+      <variable label="Number of outputs" CV="9" default="0" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="8" value="0"/>
           <enumChoice choice="16" value="1"/>
         </enumVal>
       </variable>
-      <variable label="Command Source" CV="10" default="0" tooltip="CV10">
+      <variable label="Command Source" CV="10" default="0">
         <enumVal>
           <enumChoice choice="DCC" value="0"/>
           <enumChoice choice="LocoNet" value="1"/>
         </enumVal>
       </variable>
-      <variable label="Output Cell 1 Type" CV="11" default="3" tooltip="CV11">
+      <variable label="Output Cell 1 Type" CV="11" default="3">
         <enumVal>
           <enumChoice choice="off" value="0"/>
           <enumChoice choice="Point Cell, Solenoid 0.125sec" value="1"/>
@@ -106,7 +106,7 @@
           <enumChoice choice="On/off Cell, Inverted Individual Control, constant" value="50"/>
         </enumVal>
       </variable>
-      <variable label="Output Cell 2 Type" CV="12" default="3" tooltip="CV12">
+      <variable label="Output Cell 2 Type" CV="12" default="3">
         <enumVal>
           <enumChoice choice="off" value="0"/>
           <enumChoice choice="Point Cell, Solenoid 0.125sec" value="1"/>
@@ -161,7 +161,7 @@
           <enumChoice choice="On/off Cell, Inverted Individual Control, constant" value="50"/>
         </enumVal>
       </variable>
-      <variable label="Output Cell 3 Type" CV="13" default="3" tooltip="CV13">
+      <variable label="Output Cell 3 Type" CV="13" default="3">
         <enumVal>
           <enumChoice choice="off" value="0"/>
           <enumChoice choice="Point Cell, Solenoid 0.125sec" value="1"/>
@@ -216,7 +216,7 @@
           <enumChoice choice="On/off Cell, Inverted Individual Control, constant" value="50"/>
         </enumVal>
       </variable>
-      <variable label="Output Cell 4 Type" CV="14" default="3" tooltip="CV14">
+      <variable label="Output Cell 4 Type" CV="14" default="3">
         <enumVal>
           <enumChoice choice="off" value="0"/>
           <enumChoice choice="Point Cell, Solenoid 0.125sec" value="1"/>
@@ -271,7 +271,7 @@
           <enumChoice choice="On/off Cell, Inverted Individual Control, constant" value="50"/>
         </enumVal>
       </variable>
-      <variable label="Output Cell 5 Type" CV="15" default="3" tooltip="CV15">
+      <variable label="Output Cell 5 Type" CV="15" default="3">
         <enumVal>
           <enumChoice choice="off" value="0"/>
           <enumChoice choice="Point Cell, Solenoid 0.125sec" value="1"/>
@@ -326,7 +326,7 @@
           <enumChoice choice="On/off Cell, Inverted Individual Control, constant" value="50"/>
         </enumVal>
       </variable>
-      <variable label="Output Cell 6 Type" CV="16" default="3" tooltip="CV16">
+      <variable label="Output Cell 6 Type" CV="16" default="3">
         <enumVal>
           <enumChoice choice="off" value="0"/>
           <enumChoice choice="Point Cell, Solenoid 0.125sec" value="1"/>
@@ -381,7 +381,7 @@
           <enumChoice choice="On/off Cell, Inverted Individual Control, constant" value="50"/>
         </enumVal>
       </variable>
-      <variable label="Output Cell 7 Type" CV="17" default="3" tooltip="CV17">
+      <variable label="Output Cell 7 Type" CV="17" default="3">
         <enumVal>
           <enumChoice choice="off" value="0"/>
           <enumChoice choice="Point Cell, Solenoid 0.125sec" value="1"/>
@@ -436,7 +436,7 @@
           <enumChoice choice="On/off Cell, Inverted Individual Control, constant" value="50"/>
         </enumVal>
       </variable>
-      <variable label="Output Cell 8 Type" CV="18" default="3" tooltip="CV18">
+      <variable label="Output Cell 8 Type" CV="18" default="3">
         <enumVal>
           <enumChoice choice="off" value="0"/>
           <enumChoice choice="Point Cell, Solenoid 0.125sec" value="1"/>
@@ -491,60 +491,60 @@
           <enumChoice choice="On/off Cell, Inverted Individual Control, constant" value="50"/>
         </enumVal>
       </variable>
-      <variable label="CDU Recharge Time" CV="19" default="8" tooltip="CV19 in 0.1Sec units">
+      <variable label="CDU Recharge Time" CV="19" default="8" tooltip="in 0.1Sec units">
         <decVal min="1" max="31"/>
       </variable>
-      <variable label="Brightness Simulation" CV="20" default="0" tooltip="CV20">
+      <variable label="Brightness Simulation" CV="20" default="0">
 		</variable>
-      <variable label="Output 1 Brightness Simulation" CV="20" mask="XXXXXXXV" tooltip="CV20 bit 0">
+      <variable label="Output 1 Brightness Simulation" CV="20" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off"/>
           <enumChoice choice="on"/>
         </enumVal>
       </variable>
-      <variable label="Output 2 Brightness Simulation" CV="20" mask="XXXXXXVX" tooltip="CV20 bit 1">
+      <variable label="Output 2 Brightness Simulation" CV="20" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="off"/>
           <enumChoice choice="on"/>
         </enumVal>
       </variable>
-      <variable label="Output 3 Brightness Simulation" CV="20" mask="XXXXXVXX" tooltip="CV20 bit 2">
+      <variable label="Output 3 Brightness Simulation" CV="20" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="off"/>
           <enumChoice choice="on"/>
         </enumVal>
       </variable>
-      <variable label="Output 4 Brightness Simulation" CV="20" mask="XXXXVXXX" tooltip="CV20 bit 3">
+      <variable label="Output 4 Brightness Simulation" CV="20" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="off"/>
           <enumChoice choice="on"/>
         </enumVal>
       </variable>
-      <variable label="Output 5 Brightness Simulation" CV="20" mask="XXXVXXXX" tooltip="CV20 bit 4">
+      <variable label="Output 5 Brightness Simulation" CV="20" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="off"/>
           <enumChoice choice="on"/>
         </enumVal>
       </variable>
-      <variable label="Output 6 Brightness Simulation" CV="20" mask="XXVXXXXX" tooltip="CV20 bit 5">
+      <variable label="Output 6 Brightness Simulation" CV="20" mask="XXVXXXXX">
         <enumVal>
           <enumChoice choice="off"/>
           <enumChoice choice="on"/>
         </enumVal>
       </variable>
-      <variable label="Output 7 Brightness Simulation" CV="20" mask="XVXXXXXX" tooltip="CV20 bit 6">
+      <variable label="Output 7 Brightness Simulation" CV="20" mask="XVXXXXXX">
         <enumVal>
           <enumChoice choice="off"/>
           <enumChoice choice="on"/>
         </enumVal>
       </variable>
-      <variable label="Output 8 Brightness Simulation" CV="20" mask="VXXXXXXX" tooltip="CV20 bit 7">
+      <variable label="Output 8 Brightness Simulation" CV="20" mask="VXXXXXXX">
         <enumVal>
           <enumChoice choice="off"/>
           <enumChoice choice="on"/>
         </enumVal>
       </variable>
-      <variable label="Output 1 following" CV="21" default="0" tooltip="CV21">
+      <variable label="Output 1 following" CV="21" default="0">
         <enumVal>
           <enumChoice choice="none"/>
           <enumChoice choice="Output 2" value="2"/>
@@ -556,7 +556,7 @@
           <enumChoice choice="Output 8" value="8"/>
         </enumVal>
       </variable>
-      <variable label="Output 2 following" CV="22" default="0" tooltip="CV22">
+      <variable label="Output 2 following" CV="22" default="0">
         <enumVal>
           <enumChoice choice="none"/>
           <enumChoice choice="Output 1" value="1"/>
@@ -568,7 +568,7 @@
           <enumChoice choice="Output 8" value="8"/>
         </enumVal>
       </variable>
-      <variable label="Output 3 following" CV="23" default="0" tooltip="CV23">
+      <variable label="Output 3 following" CV="23" default="0">
         <enumVal>
           <enumChoice choice="none"/>
           <enumChoice choice="Output 1" value="1"/>
@@ -580,7 +580,7 @@
           <enumChoice choice="Output 8" value="8"/>
         </enumVal>
       </variable>
-      <variable label="Output 4 following" CV="24" default="0" tooltip="CV24">
+      <variable label="Output 4 following" CV="24" default="0">
         <enumVal>
           <enumChoice choice="none"/>
           <enumChoice choice="Output 1" value="1"/>
@@ -592,7 +592,7 @@
           <enumChoice choice="Output 8" value="8"/>
         </enumVal>
       </variable>
-      <variable label="Output 5 following" CV="25" default="0" tooltip="CV25">
+      <variable label="Output 5 following" CV="25" default="0">
         <enumVal>
           <enumChoice choice="none"/>
           <enumChoice choice="Output 1" value="1"/>
@@ -604,7 +604,7 @@
           <enumChoice choice="Output 8" value="8"/>
         </enumVal>
       </variable>
-      <variable label="Output 6 following" CV="26" default="0" tooltip="CV26">
+      <variable label="Output 6 following" CV="26" default="0">
         <enumVal>
           <enumChoice choice="none"/>
           <enumChoice choice="Output 1" value="1"/>
@@ -616,7 +616,7 @@
           <enumChoice choice="Output 8" value="8"/>
         </enumVal>
       </variable>
-      <variable label="Output 7 following" CV="27" default="0" tooltip="CV27">
+      <variable label="Output 7 following" CV="27" default="0">
         <enumVal>
           <enumChoice choice="none"/>
           <enumChoice choice="Output 1" value="1"/>
@@ -628,7 +628,7 @@
           <enumChoice choice="Output 8" value="8"/>
         </enumVal>
       </variable>
-      <variable label="Output 8 following" CV="28" default="0" tooltip="CV28">
+      <variable label="Output 8 following" CV="28" default="0">
         <enumVal>
           <enumChoice choice="none"/>
           <enumChoice choice="Output 1" value="1"/>
@@ -640,10 +640,10 @@
           <enumChoice choice="Output 7" value="7"/>
         </enumVal>
       </variable>
-      <variable label="Output State Memory" CV="30" default="0" tooltip="CV30, range 0-19">
+      <variable label="Output State Memory" CV="30" default="0" tooltip="range 0-19">
         <decVal min="0" max="19"/>
       </variable>
-      <variable label="Output Cell 1 Message" CV="31" default="4" tooltip="CV31">
+      <variable label="Output Cell 1 Message" CV="31" default="4">
         <enumVal>
           <enumChoice choice="none"/>
           <enumChoice choice="Output State"/>
@@ -653,7 +653,7 @@
           <enumChoice choice="Turnout Feedback on interrogation only"/>
         </enumVal>
       </variable>
-      <variable label="Output Cell 2 Message" CV="32" default="4" tooltip="CV32">
+      <variable label="Output Cell 2 Message" CV="32" default="4">
         <enumVal>
           <enumChoice choice="none"/>
           <enumChoice choice="Output State"/>
@@ -663,7 +663,7 @@
           <enumChoice choice="Turnout Feedback on interrogation only"/>
         </enumVal>
       </variable>
-      <variable label="Output Cell 3 Message" CV="33" default="4" tooltip="CV33">
+      <variable label="Output Cell 3 Message" CV="33" default="4">
         <enumVal>
           <enumChoice choice="none"/>
           <enumChoice choice="Output State"/>
@@ -673,7 +673,7 @@
           <enumChoice choice="Turnout Feedback on interrogation only"/>
         </enumVal>
       </variable>
-      <variable label="Output Cell 4 Message" CV="34" default="4" tooltip="CV34">
+      <variable label="Output Cell 4 Message" CV="34" default="4">
         <enumVal>
           <enumChoice choice="none"/>
           <enumChoice choice="Output State"/>
@@ -683,7 +683,7 @@
           <enumChoice choice="Turnout Feedback on interrogation only"/>
         </enumVal>
       </variable>
-      <variable label="Output Cell 5 Message" CV="35" default="4" tooltip="CV35">
+      <variable label="Output Cell 5 Message" CV="35" default="4">
         <enumVal>
           <enumChoice choice="none"/>
           <enumChoice choice="Output State"/>
@@ -693,7 +693,7 @@
           <enumChoice choice="Turnout Feedback on interrogation only"/>
         </enumVal>
       </variable>
-      <variable label="Output Cell 6 Message" CV="36" default="4" tooltip="CV36">
+      <variable label="Output Cell 6 Message" CV="36" default="4">
         <enumVal>
           <enumChoice choice="none"/>
           <enumChoice choice="Output State"/>
@@ -703,7 +703,7 @@
           <enumChoice choice="Turnout Feedback on interrogation only"/>
         </enumVal>
       </variable>
-      <variable label="Output Cell 7 Message" CV="37" default="4" tooltip="CV37">
+      <variable label="Output Cell 7 Message" CV="37" default="4">
         <enumVal>
           <enumChoice choice="none"/>
           <enumChoice choice="Output State"/>
@@ -713,7 +713,7 @@
           <enumChoice choice="Turnout Feedback on interrogation only"/>
         </enumVal>
       </variable>
-      <variable label="Output Cell 8 Message" CV="38" default="4" tooltip="CV38">
+      <variable label="Output Cell 8 Message" CV="38" default="4">
         <enumVal>
           <enumChoice choice="none"/>
           <enumChoice choice="Output State"/>
@@ -723,10 +723,10 @@
           <enumChoice choice="Turnout Feedback on interrogation only"/>
         </enumVal>
       </variable>
-      <variable label="Sensor Board Number" CV="39" default="16" tooltip="CV39">
+      <variable label="Sensor Board Number" CV="39" default="16">
         <decVal/>
       </variable>
-      <variable label="Input Cell 1 Type" CV="41" default="1" tooltip="CV41">
+      <variable label="Input Cell 1 Type" CV="41" default="1">
         <enumVal>
           <enumChoice choice="Cell not used"/>
           <enumChoice choice="Pushbutton cell, does not affect output cell"/>
@@ -736,7 +736,7 @@
           <enumChoice choice="Pushbutton cell, trigger local route"/>
         </enumVal>
       </variable>
-      <variable label="Input Cell 2 Type" CV="42" default="1" tooltip="CV42">
+      <variable label="Input Cell 2 Type" CV="42" default="1">
         <enumVal>
           <enumChoice choice="Cell not used"/>
           <enumChoice choice="Pushbutton cell, does not affect output cell"/>
@@ -746,7 +746,7 @@
           <enumChoice choice="Pushbutton cell, trigger local route"/>
         </enumVal>
       </variable>
-      <variable label="Input Cell 3 Type" CV="43" default="1" tooltip="CV43">
+      <variable label="Input Cell 3 Type" CV="43" default="1">
         <enumVal>
           <enumChoice choice="Cell not used"/>
           <enumChoice choice="Pushbutton cell, does not affect output cell"/>
@@ -756,7 +756,7 @@
           <enumChoice choice="Pushbutton cell, trigger local route"/>
         </enumVal>
       </variable>
-      <variable label="Input Cell 4 Type" CV="44" default="1" tooltip="CV44">
+      <variable label="Input Cell 4 Type" CV="44" default="1">
         <enumVal>
           <enumChoice choice="Cell not used"/>
           <enumChoice choice="Pushbutton cell, does not affect output cell"/>
@@ -766,7 +766,7 @@
           <enumChoice choice="Pushbutton cell, trigger local route"/>
         </enumVal>
       </variable>
-      <variable label="Input Cell 5 Type" CV="45" default="1" tooltip="CV45">
+      <variable label="Input Cell 5 Type" CV="45" default="1">
         <enumVal>
           <enumChoice choice="Cell not used"/>
           <enumChoice choice="Pushbutton cell, does not affect output cell"/>
@@ -776,7 +776,7 @@
           <enumChoice choice="Pushbutton cell, trigger local route"/>
         </enumVal>
       </variable>
-      <variable label="Input Cell 6 Type" CV="46" default="1" tooltip="CV46">
+      <variable label="Input Cell 6 Type" CV="46" default="1">
         <enumVal>
           <enumChoice choice="Cell not used"/>
           <enumChoice choice="Pushbutton cell, does not affect output cell"/>
@@ -786,7 +786,7 @@
           <enumChoice choice="Pushbutton cell, trigger local route"/>
         </enumVal>
       </variable>
-      <variable label="Input Cell 7 Type" CV="47" default="1" tooltip="CV47">
+      <variable label="Input Cell 7 Type" CV="47" default="1">
         <enumVal>
           <enumChoice choice="Cell not used"/>
           <enumChoice choice="Pushbutton cell, does not affect output cell"/>
@@ -796,7 +796,7 @@
           <enumChoice choice="Pushbutton cell, trigger local route"/>
         </enumVal>
       </variable>
-      <variable label="Input Cell 8 Type" CV="48" default="1" tooltip="CV48">
+      <variable label="Input Cell 8 Type" CV="48" default="1">
         <enumVal>
           <enumChoice choice="Cell not used"/>
           <enumChoice choice="Pushbutton cell, does not affect output cell"/>
@@ -806,7 +806,7 @@
           <enumChoice choice="Pushbutton cell, trigger local route"/>
         </enumVal>
       </variable>
-      <variable label="Input Cell A Type" CV="49" default="1" tooltip="CV49">
+      <variable label="Input Cell A Type" CV="49" default="1">
         <enumVal>
           <enumChoice choice="Cell not used"/>
           <enumChoice choice="Pushbutton cell, does not affect output cell"/>
@@ -816,7 +816,7 @@
           <enumChoice choice="Pushbutton cell, trigger local route"/>
         </enumVal>
       </variable>
-      <variable label="Input Cell B Type" CV="50" default="1" tooltip="CV50">
+      <variable label="Input Cell B Type" CV="50" default="1">
         <enumVal>
           <enumChoice choice="Cell not used"/>
           <enumChoice choice="Pushbutton cell, does not affect output cell"/>
@@ -826,7 +826,7 @@
           <enumChoice choice="Pushbutton cell, trigger local route"/>
         </enumVal>
       </variable>
-      <variable label="Input Cell 1 Message" CV="51" default="0" tooltip="CV51">
+      <variable label="Input Cell 1 Message" CV="51" default="0">
         <enumVal>
           <enumChoice choice="none"/>
           <enumChoice choice="Sensor Message"/>
@@ -835,7 +835,7 @@
           <enumChoice choice="Power Off"/>
         </enumVal>
       </variable>
-      <variable label="Input Cell 2 Message" CV="52" default="0" tooltip="CV52">
+      <variable label="Input Cell 2 Message" CV="52" default="0">
         <enumVal>
           <enumChoice choice="none"/>
           <enumChoice choice="Sensor Message"/>
@@ -844,7 +844,7 @@
           <enumChoice choice="Power Off"/>
         </enumVal>
       </variable>
-      <variable label="Input Cell 3 Message" CV="53" default="0" tooltip="CV53">
+      <variable label="Input Cell 3 Message" CV="53" default="0">
         <enumVal>
           <enumChoice choice="none"/>
           <enumChoice choice="Sensor Message"/>
@@ -853,7 +853,7 @@
           <enumChoice choice="Power Off"/>
         </enumVal>
       </variable>
-      <variable label="Input Cell 4 Message" CV="54" default="0" tooltip="CV54">
+      <variable label="Input Cell 4 Message" CV="54" default="0">
         <enumVal>
           <enumChoice choice="none"/>
           <enumChoice choice="Sensor Message"/>
@@ -862,7 +862,7 @@
           <enumChoice choice="Power Off"/>
         </enumVal>
       </variable>
-      <variable label="Input Cell 5 Message" CV="55" default="0" tooltip="CV55">
+      <variable label="Input Cell 5 Message" CV="55" default="0">
         <enumVal>
           <enumChoice choice="none"/>
           <enumChoice choice="Sensor Message"/>
@@ -871,7 +871,7 @@
           <enumChoice choice="Power Off"/>
         </enumVal>
       </variable>
-      <variable label="Input Cell 6 Message" CV="56" default="0" tooltip="CV56">
+      <variable label="Input Cell 6 Message" CV="56" default="0">
         <enumVal>
           <enumChoice choice="none"/>
           <enumChoice choice="Sensor Message"/>
@@ -880,7 +880,7 @@
           <enumChoice choice="Power Off"/>
         </enumVal>
       </variable>
-      <variable label="Input Cell 7 Message" CV="57" default="0" tooltip="CV57">
+      <variable label="Input Cell 7 Message" CV="57" default="0">
         <enumVal>
           <enumChoice choice="none"/>
           <enumChoice choice="Sensor Message"/>
@@ -889,7 +889,7 @@
           <enumChoice choice="Power Off"/>
         </enumVal>
       </variable>
-      <variable label="Input Cell 8 Message" CV="58" default="0" tooltip="CV58">
+      <variable label="Input Cell 8 Message" CV="58" default="0">
         <enumVal>
           <enumChoice choice="none"/>
           <enumChoice choice="Sensor Message"/>
@@ -898,7 +898,7 @@
           <enumChoice choice="Power Off"/>
         </enumVal>
       </variable>
-      <variable label="Input Cell A Message" CV="59" default="1" tooltip="CV59">
+      <variable label="Input Cell A Message" CV="59" default="1">
         <enumVal>
           <enumChoice choice="none"/>
           <enumChoice choice="Sensor Message"/>
@@ -907,7 +907,7 @@
           <enumChoice choice="Power Off"/>
         </enumVal>
       </variable>
-      <variable label="Input Cell B Message" CV="60" default="1" tooltip="CV60">
+      <variable label="Input Cell B Message" CV="60" default="1">
         <enumVal>
           <enumChoice choice="none"/>
           <enumChoice choice="Sensor Message"/>
@@ -919,295 +919,295 @@
       <variable label="Route base address" CV="61" default="232" tooltip="Range 1-2048">
         <splitVal highCV="62" upperMask="XXXXXVVV"/>
       </variable>
-      <variable label="High 3 bytes of Address CV61" CV="62" mask="XXXXXVVV" tooltip="CV62" default="3">
+      <variable label="High 3 bytes of Address CV61" CV="62" mask="XXXXXVVV" default="3">
         <decVal min="0" max="7"/>
       </variable>
-      <variable label="Route 1 element 1" CV="63" default="0" tooltip="CV63">
+      <variable label="Route 1 element 1" CV="63" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 1 element 2" CV="64" default="0" tooltip="CV64">
+      <variable label="Route 1 element 2" CV="64" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 1 element 3" CV="65" default="0" tooltip="CV65">
+      <variable label="Route 1 element 3" CV="65" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 1 element 4" CV="66" default="0" tooltip="CV66">
+      <variable label="Route 1 element 4" CV="66" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 1 element 5" CV="67" default="0" tooltip="CV67">
+      <variable label="Route 1 element 5" CV="67" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 1 element 6" CV="68" default="0" tooltip="CV68">
+      <variable label="Route 1 element 6" CV="68" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 1 element 7" CV="69" default="0" tooltip="CV69">
+      <variable label="Route 1 element 7" CV="69" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 1 element 8" CV="70" default="0" tooltip="CV70">
+      <variable label="Route 1 element 8" CV="70" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 1 element 9" CV="71" default="0" tooltip="CV71">
+      <variable label="Route 1 element 9" CV="71" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 1 element 10" CV="72" default="0" tooltip="CV72">
+      <variable label="Route 1 element 10" CV="72" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 1 element 11" CV="73" default="0" tooltip="CV73">
+      <variable label="Route 1 element 11" CV="73" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 1 element 12" CV="74" default="0" tooltip="CV74">
+      <variable label="Route 1 element 12" CV="74" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 2 element 1" CV="75" default="0" tooltip="CV75">
+      <variable label="Route 2 element 1" CV="75" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 2 element 2" CV="76" default="0" tooltip="CV76">
+      <variable label="Route 2 element 2" CV="76" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 2 element 3" CV="77" default="0" tooltip="CV77">
+      <variable label="Route 2 element 3" CV="77" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 2 element 4" CV="78" default="0" tooltip="CV78">
+      <variable label="Route 2 element 4" CV="78" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 2 element 5" CV="79" default="0" tooltip="CV79">
+      <variable label="Route 2 element 5" CV="79" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 2 element 6" CV="80" default="0" tooltip="CV80">
+      <variable label="Route 2 element 6" CV="80" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 2 element 7" CV="81" default="0" tooltip="CV81">
+      <variable label="Route 2 element 7" CV="81" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 2 element 8" CV="82" default="0" tooltip="CV82">
+      <variable label="Route 2 element 8" CV="82" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 2 element 9" CV="83" default="0" tooltip="CV83">
+      <variable label="Route 2 element 9" CV="83" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 2 element 10" CV="84" default="0" tooltip="CV84">
+      <variable label="Route 2 element 10" CV="84" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 2 element 11" CV="85" default="0" tooltip="CV85">
+      <variable label="Route 2 element 11" CV="85" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 2 element 12" CV="86" default="0" tooltip="CV86">
+      <variable label="Route 2 element 12" CV="86" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 3 element 1" CV="87" default="0" tooltip="CV87">
+      <variable label="Route 3 element 1" CV="87" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 3 element 2" CV="88" default="0" tooltip="CV88">
+      <variable label="Route 3 element 2" CV="88" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 3 element 3" CV="89" default="0" tooltip="CV89">
+      <variable label="Route 3 element 3" CV="89" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 3 element 4" CV="90" default="0" tooltip="CV90">
+      <variable label="Route 3 element 4" CV="90" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 3 element 5" CV="91" default="0" tooltip="CV91">
+      <variable label="Route 3 element 5" CV="91" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 3 element 6" CV="92" default="0" tooltip="CV92">
+      <variable label="Route 3 element 6" CV="92" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 3 element 7" CV="93" default="0" tooltip="CV93">
+      <variable label="Route 3 element 7" CV="93" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 3 element 8" CV="94" default="0" tooltip="CV94">
+      <variable label="Route 3 element 8" CV="94" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 3 element 9" CV="95" default="0" tooltip="CV95">
+      <variable label="Route 3 element 9" CV="95" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 3 element 10" CV="96" default="0" tooltip="CV96">
+      <variable label="Route 3 element 10" CV="96" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 3 element 11" CV="97" default="0" tooltip="CV97">
+      <variable label="Route 3 element 11" CV="97" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 3 element 12" CV="98" default="0" tooltip="CV98">
+      <variable label="Route 3 element 12" CV="98" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 4 element 1" CV="99" default="0" tooltip="CV99">
+      <variable label="Route 4 element 1" CV="99" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 4 element 2" CV="100" default="0" tooltip="CV100">
+      <variable label="Route 4 element 2" CV="100" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 4 element 3" CV="101" default="0" tooltip="CV101">
+      <variable label="Route 4 element 3" CV="101" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 4 element 4" CV="102" default="0" tooltip="CV102">
+      <variable label="Route 4 element 4" CV="102" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 4 element 5" CV="103" default="0" tooltip="CV103">
+      <variable label="Route 4 element 5" CV="103" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 4 element 6" CV="104" default="0" tooltip="CV104">
+      <variable label="Route 4 element 6" CV="104" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 4 element 7" CV="105" default="0" tooltip="CV105">
+      <variable label="Route 4 element 7" CV="105" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 4 element 8" CV="106" default="0" tooltip="CV106">
+      <variable label="Route 4 element 8" CV="106" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 4 element 9" CV="107" default="0" tooltip="CV107">
+      <variable label="Route 4 element 9" CV="107" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 4 element 10" CV="108" default="0" tooltip="CV108">
+      <variable label="Route 4 element 10" CV="108" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 4 element 11" CV="109" default="0" tooltip="CV109">
+      <variable label="Route 4 element 11" CV="109" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 4 element 12" CV="110" default="0" tooltip="CV110">
+      <variable label="Route 4 element 12" CV="110" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 5 element 1" CV="111" default="0" tooltip="CV111">
+      <variable label="Route 5 element 1" CV="111" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 5 element 2" CV="112" default="0" tooltip="CV112">
+      <variable label="Route 5 element 2" CV="112" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 5 element 3" CV="113" default="0" tooltip="CV113">
+      <variable label="Route 5 element 3" CV="113" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 5 element 4" CV="114" default="0" tooltip="CV114">
+      <variable label="Route 5 element 4" CV="114" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 5 element 5" CV="115" default="0" tooltip="CV115">
+      <variable label="Route 5 element 5" CV="115" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 5 element 6" CV="116" default="0" tooltip="CV116">
+      <variable label="Route 5 element 6" CV="116" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 5 element 7" CV="117" default="0" tooltip="CV117">
+      <variable label="Route 5 element 7" CV="117" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 5 element 8" CV="118" default="0" tooltip="CV118">
+      <variable label="Route 5 element 8" CV="118" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 5 element 9" CV="119" default="0" tooltip="CV119">
+      <variable label="Route 5 element 9" CV="119" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 5 element 10" CV="120" default="0" tooltip="CV120">
+      <variable label="Route 5 element 10" CV="120" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 5 element 11" CV="121" default="0" tooltip="CV121">
+      <variable label="Route 5 element 11" CV="121" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 5 element 12" CV="122" default="0" tooltip="CV122">
+      <variable label="Route 5 element 12" CV="122" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 6 element 1" CV="123" default="0" tooltip="CV123">
+      <variable label="Route 6 element 1" CV="123" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 6 element 2" CV="124" default="0" tooltip="CV124">
+      <variable label="Route 6 element 2" CV="124" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 6 element 3" CV="125" default="0" tooltip="CV125">
+      <variable label="Route 6 element 3" CV="125" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 6 element 4" CV="126" default="0" tooltip="CV126">
+      <variable label="Route 6 element 4" CV="126" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 6 element 5" CV="127" default="0" tooltip="CV127">
+      <variable label="Route 6 element 5" CV="127" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 6 element 6" CV="128" default="0" tooltip="CV138">
+      <variable label="Route 6 element 6" CV="128" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 6 element 7" CV="129" default="0" tooltip="CV129">
+      <variable label="Route 6 element 7" CV="129" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 6 element 8" CV="130" default="0" tooltip="CV130">
+      <variable label="Route 6 element 8" CV="130" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 6 element 9" CV="131" default="0" tooltip="CV131">
+      <variable label="Route 6 element 9" CV="131" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 6 element 10" CV="132" default="0" tooltip="CV132">
+      <variable label="Route 6 element 10" CV="132" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 6 element 11" CV="133" default="0" tooltip="CV133">
+      <variable label="Route 6 element 11" CV="133" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 6 element 12" CV="134" default="0" tooltip="CV134">
+      <variable label="Route 6 element 12" CV="134" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 7 element 1" CV="135" default="0" tooltip="CV135">
+      <variable label="Route 7 element 1" CV="135" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 7 element 2" CV="136" default="0" tooltip="CV136">
+      <variable label="Route 7 element 2" CV="136" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 7 element 3" CV="137" default="0" tooltip="CV137">
+      <variable label="Route 7 element 3" CV="137" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 7 element 4" CV="138" default="0" tooltip="CV138">
+      <variable label="Route 7 element 4" CV="138" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 7 element 5" CV="139" default="0" tooltip="CV139">
+      <variable label="Route 7 element 5" CV="139" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 7 element 6" CV="140" default="0" tooltip="CV140">
+      <variable label="Route 7 element 6" CV="140" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 7 element 7" CV="141" default="0" tooltip="CV141">
+      <variable label="Route 7 element 7" CV="141" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 7 element 8" CV="142" default="0" tooltip="CV142">
+      <variable label="Route 7 element 8" CV="142" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 7 element 9" CV="143" default="0" tooltip="CV143">
+      <variable label="Route 7 element 9" CV="143" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 7 element 10" CV="144" default="0" tooltip="CV144">
+      <variable label="Route 7 element 10" CV="144" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 7 element 11" CV="145" default="0" tooltip="CV145">
+      <variable label="Route 7 element 11" CV="145" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 7 element 12" CV="146" default="0" tooltip="CV146">
+      <variable label="Route 7 element 12" CV="146" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 8 element 1" CV="147" default="0" tooltip="CV147">
+      <variable label="Route 8 element 1" CV="147" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 8 element 2" CV="148" default="0" tooltip="CV148">
+      <variable label="Route 8 element 2" CV="148" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 8 element 3" CV="149" default="0" tooltip="CV149">
+      <variable label="Route 8 element 3" CV="149" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 8 element 4" CV="150" default="0" tooltip="CV150">
+      <variable label="Route 8 element 4" CV="150" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 8 element 5" CV="151" default="0" tooltip="CV151">
+      <variable label="Route 8 element 5" CV="151" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 8 element 6" CV="152" default="0" tooltip="CV152">
+      <variable label="Route 8 element 6" CV="152" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 8 element 7" CV="153" default="0" tooltip="CV153">
+      <variable label="Route 8 element 7" CV="153" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 8 element 8" CV="154" default="0" tooltip="CV154">
+      <variable label="Route 8 element 8" CV="154" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 8 element 9" CV="155" default="0" tooltip="CV155">
+      <variable label="Route 8 element 9" CV="155" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 8 element 10" CV="156" default="0" tooltip="CV156">
+      <variable label="Route 8 element 10" CV="156" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 8 element 11" CV="157" default="0" tooltip="CV157">
+      <variable label="Route 8 element 11" CV="157" default="0">
         <decVal/>
       </variable>
-      <variable label="Route 8 element 12" CV="158" default="0" tooltip="CV158">
+      <variable label="Route 8 element 12" CV="158" default="0">
         <decVal/>
       </variable>
       <variable label="Ext Dev 1 X" CV="171" default="0">

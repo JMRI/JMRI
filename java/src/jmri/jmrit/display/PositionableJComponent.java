@@ -60,6 +60,8 @@ public class PositionableJComponent extends JComponent implements Positionable {
     public JComponent getTextComponent() {
     	return this;
     }
+    
+    public void displayState() {}
    
     /***************** Positionable methods **********************/
 

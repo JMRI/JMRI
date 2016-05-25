@@ -16,22 +16,25 @@
  *  		4) browser user clicks on widget? send "set state" command and go to 3)
  *  		5) error? go back to 2) 
  *  
+ *  TODO: finish indicatorXXicon logic, handling occupancy and error states
  *  TODO: "grey-out" screen to indicate loss of server connection
  *  TODO: handle "&" in usernames (see Indicator Demo 00.xml)
  *  TODO: handle drawn ellipse (see LMRC APB)
- *  TODO: research movement of locoicons (will require "promoting" locoicon to system entity)
+ *  TODO: update drawn track on occupancy and state changes (color, width)
+ *  TODO: research movement of locoicons ("promote" locoicon to system entity in JMRI?, add panel-level listeners?)
  *  TODO: finish layoutturntable (draw rays) (see Mtn RR and CnyMod27)
  *  TODO: address color differences between java panel and javascript panel (e.g. lightGray)
- *  TODO: determine proper level (z-index) for canvas layer
  *  TODO: diagnose and correct the small position issues visible with footscray
  *  TODO: diagnose and correct the hover dislocation on rotated images (or turn it off)
  *  TODO: deal with mouseleave, mouseout, touchout, etc. Slide off Stop button on rb1 for example.
  *  TODO: make turnout, levelXing occupancy work like LE panels (more than just checking A)
  *  TODO: draw dashed curves
- *  TODO: finish indicatorXXicon logic, handling occupancy and error states
  *  TODO: handle inputs/selection on various memory widgets
  *  TODO: improve visual of multisensorclick by sending all state changes in one message
  *  TODO: alignment of memoryIcons without fixed width is very different.  Recommended workaround is to use fixed width. 
+ *  TODO: determine proper level (z-index) for canvas layer
+ *  TODO: convert to WebSockets
+ *  TODO: change JMRI to accept HELD state for signalHeads
  *   
  **********************************************************************************************/
 
@@ -120,9 +123,11 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 	//process all widgets in the panel xml, drawing them on screen, and building persistent arrays
 	$panel.contents().each( 
 			function() {
-				//convert attributes to an object array
 				var $widget = new Array();
 				$widget['widgetType'] = this.nodeName;
+				$widget['scale']  =	"1.0"; //default to no scale
+				$widget['degrees']  =	0.00; //default to no rotation
+				//convert attributes to an object array
 				$(this.attributes).each(function() {
 					$widget[this.name] = this.value;
 				});
@@ -133,8 +138,6 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 				//  icons named based on states returned from xmlio server, 
 				$widget['state'] = UNKNOWN; //initial state is unknown
 				$widget['element']  =	""; //default to no xmlio type (avoid undefined)
-				$widget['scale']  =	"1.0"; //default to no scale
-				$widget['degrees']  =	0.00; //default to no rotation
 				$widget['id'] = "spWidget_" + $gUnique();//set id to a unique value (since same element can be in multiple widgets)
 				$widget['widgetFamily'] = $getWidgetFamily($widget);
 				var $jc = "";
@@ -599,8 +602,10 @@ function $drawTrackSegment($widget) {
 	if ($blk != undefined) {
 		if ($blk.occupiedsense == $blk.state) { //set the color based on occupancy state
 			$color = $blk.occupiedcolor;
+			//if (window.console) console.log("set block color to occupiedcolor " + $color);
 		} else {
 			$color = $blk.trackcolor;
+			//if (window.console) console.log("set block color to trackcolor " + $color);
 		}
 	}
 
@@ -1040,6 +1045,15 @@ var $getTextCSSFromObj = function($widget){
     return $retCSS;
 };
 
+//get width of an html element by wrapping a copy in a div, then getting width of div
+function $getElementWidth($e) {
+	o = $e.clone();
+	o.wrap('<div></div>').css({'position': 'absolute', 'float': 'left', 'white-space': 'nowrap', 'visibility': 'hidden'}).appendTo($('body'));
+	w = o.width();
+	o.remove();
+	return w;
+}
+
 //place widget in correct position, rotation, z-index and scale. (pass in dom element, to simplify calling from e.load())
 var $setWidgetPosition = function(e) {
 
@@ -1050,6 +1064,9 @@ var $setWidgetPosition = function(e) {
 
 		var $height = e.height() * $widget.scale;
 		var $width =  e.width()  * $widget.scale;
+		if ($widget.widgetFamily == "text") {  //special handling to get width of free-floating text
+			$width =  $getElementWidth(e)  * $widget.scale;
+		}
 
 		//if image needs rotating or scaling, but is not loaded yet, set callback to do this again when it is loaded
 		if (e.is("img") && ($widget.degrees != 0 || $widget.scale != 1.0) && $(e).get(0).complete == false ) {
@@ -1059,7 +1076,7 @@ var $setWidgetPosition = function(e) {
 			});
 		} else {
 			//calculate x and y adjustment needed to keep upper left of bounding box in the same spot
-			//  adapted to match JMRI's NamedIcon.rotate().  Note: transform-origin set in .html file
+			//  adapted to match JMRI's NamedIcon.rotate().  Note: transform-origin set in .css file
 			var tx = 0.0;
 			var ty = 0.0;
 
@@ -1103,7 +1120,7 @@ var $setElementState = function($element, $name, $newState) {
 		if ($widget.element == $element && $widget.name == $name && $widget.state != $newState) {
 			$setWidgetState($id, $newState);
 		}
-		//if sensor and changed, also check each widget's occupancy sensor and redraw widget's color if matched 
+		//if sensor and it changed, also check each widget's occupancy sensor and redraw widget's color if matched 
 		if ($element == 'sensor' && $widget.occupancysensor == $name && $widget.occupancystate != $newState) {
 			$gBlks[$widget.blockname].state = $newState; //set the block to the newstate first
 			$gWidgets[$widget.id].occupancystate = $newState;
@@ -1288,7 +1305,7 @@ jQuery.fn.xmlClean = function() {
 var $getNextState = function($widget){
 	var $nextState = undefined;
 	if ($widget.widgetType == 'signalheadicon') { //special case for signalheadicons
-        switch ($widget.clickmode * 1) {          //   logic based on SignaHeadIcon.java
+        switch ($widget.clickmode * 1) {          //   logic based on SignalHeadIcon.java
         case 0 :
             switch ($widget.state * 1) {  // (* 1 is to insure numeric comparisons)
             case RED:
@@ -1308,6 +1325,7 @@ var $getNextState = function($widget){
             break;
         case 2 : 
 //            getSignalHead().setHeld(!getSignalHead().getHeld());
+    		$nextState = ($widget.state*1==HELD ? RED : HELD);  //toggle between red and held states
             break;
         case 3: //loop through all iconX and get "next one"
         	var $firstState = undefined;
@@ -1388,8 +1406,12 @@ var $requestPanelXML = function($panelName){
 		success: function($r, $s, $x){
 			$processPanelXML($r, $s, $x); //handle returned data
 		},
+		error:function(){ 
+			alert("Timeout waiting for panel xml from server.  Please press OK to retry.");
+			window.location = window.location.pathname;
+		},
 		async: true,
-		timeout: 5000,  
+		timeout: 15000,  //very long timeout, since this can be a slow process for complicated panels  
 		dataType: 'xml' //<--dataType
 	});
 };

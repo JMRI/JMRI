@@ -30,7 +30,7 @@
         <label>Primary Address</label>
         <comment>Short address</comment>
       </variable>
-      <variable label="Start voltage" CV="2" item="Vstart" tooltip="Superseded by Dither.">
+      <variable label="Start voltage" CV="2" item="Vstart" tooltip="Superseded by Dither">
         <decVal/>
         <label>Start voltage</label>
       </variable>
@@ -376,11 +376,11 @@
         <decVal/>
         <label>Ditch light blink holdover time</label>
       </variable>
-      <variable label="Brightness adjustment when dim/Rule 17" CV="64" default="16" tooltip="1=max; 30 = no dim; 2-6 for LEDs." item="Global lighting option 2">
+      <variable label="Brightness adjustment when dim/Rule 17" CV="64" default="16" tooltip="1=max; 30 = no dim; 2-6 for LEDs" item="Global lighting option 2">
         <decVal max="30"/>
         <label>Brightness adjustment when dim/Rule 17</label>
       </variable>
-      <variable label="Light dimming and button control" CV="61" item="Global lighting option 3" tooltip="Combined CV for dimming and Button Control.">
+      <variable label="Light dimming and button control" CV="61" item="Global lighting option 3" tooltip="Combined CV for dimming and Button Control">
         <enumVal>
           <enumChoice choice="Normal operation for both" value="0">
             <choice>Normal operation for both</choice>

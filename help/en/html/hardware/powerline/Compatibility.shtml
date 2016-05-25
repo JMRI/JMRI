@@ -51,7 +51,7 @@ See also the main page on
 </tr>
 
 <tr>
-  <td><a href="http://www.x10.com">X10.com</td> <!-- Manufacturer -->
+  <td><a href="http://www.x10.com">X10.com</a></td> <!-- Manufacturer -->
   <td nowrap>
     CM11A
     <br />
@@ -63,14 +63,13 @@ See also the main page on
     <br />
     To use this with JMRI, select "Powerline Controller" in the JMRI preferences,
     the proper serial port, and "CM11" for the adapter.
+    <br />This adapter is no longer in production. Only the Insteon 2412S is currently being produced.
   </td>  <!-- Comment -->
   <td>Support is available starting in JMRI 2.1.3</td> <!-- Type -->
-    <br />
-    Last Edited: 4 February 2008
 </tr>
 
 <tr>
-  <td><a href="http://www.x10.com">X10.com</td> <!-- Manufacturer -->
+  <td><a href="http://www.x10.com">X10.com</a></td> <!-- Manufacturer -->
   <td nowrap>
     CP290
   </td> <!-- Model -->
@@ -81,14 +80,14 @@ See also the main page on
     <br />
     To use this with JMRI, select "Powerline Controller" in the JMRI preferences,
     the proper serial port, and "CP290" for the adapter.
+    <br />
+    This adapter is no longer in production. Consider the Insteon 2412S as an alternitive.
   </td>  <!-- Comment -->
   <td>Support is available starting in JMRI 2.1.5</td> <!-- Type -->
-    <br />
-    Last Edited: 10 March 2008
 </tr>
 
 <tr>
-  <td><a href="http://www.x10.com">X10.com</td> <!-- Manufacturer -->
+  <td><a href="http://www.x10.com">X10.com</a></td> <!-- Manufacturer -->
   <td>CM15A</td> <!-- Model -->
   <td><img src="http://graphics.x10.com/images_ahp//cm15a_c.gif" width="125" height="150"/></td> <!-- Image -->
   <td>
@@ -103,7 +102,7 @@ See also the main page on
 </tr>
 
 <tr>
-  <td><a href="http://www.x10.com">X10.com</td> <!-- Manufacturer -->
+  <td><a href="http://www.x10.com">X10.com</a></td> <!-- Manufacturer -->
   <td>CM17A</td> <!-- Model -->
   <td><img src="http://graphics.x10.com/images2/ck17a_detail.jpg" width="125" height="150"/>
     <img src="http://graphics.x10.com/images6/fc_inter.jpg" width="125" height="150" />
@@ -139,20 +138,21 @@ See also the main page on
 </tr>
 
 <tr>
-  <td><a href="http://www.smarthome.com/2412S/PowerLinc-INSTEON-Modem-Serial/p.aspx">Smart Home</td> <!-- Manufacturer -->
+  <td><a href="http://www.smarthome.com/2412S/PowerLinc-INSTEON-Modem-Serial/p.aspx">Smart Home</a></td> <!-- Manufacturer -->
   <td>PowerLinc Modem 2412S</td> <!-- Model -->
   <td><img src="http://cache1.smarthome.com/images/2414s.jpg" width="138" height="138"/></td> <!-- Image -->
   <td>
     This is the serial (not USB) Insteon adapter. 
     It can control both Insteon and X10 devices.
   </td>
-  <td>Support is available starting in JMRI 2.9.1</td> <!-- Type -->
+  <td>Support is available starting in JMRI 2.9.1
     <br />
     Last Edited: 3 Jan 2010
+  </td> <!-- Type -->
 </tr>
 
 <tr>
-  <td><a href="http://www.smarthome.com">Smarthome.com</td> <!-- Manufacturer -->
+  <td><a href="http://www.smarthome.com">Smarthome.com</a></td> <!-- Manufacturer -->
   <td nowrap>
     Power Linc 2414U
   </td> <!-- Model -->
@@ -169,7 +169,8 @@ See also the main page on
 </tr>
 
 </table>
-    
+    </div>
+  </div>
 <!--#include virtual="/Footer" -->
 </body>
 </html>

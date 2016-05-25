@@ -50,6 +50,15 @@ public class LongAddrVariableValue extends VariableValue
             _cvVector.elementAt(getCvNum()+1)};
     }
 
+    /** 
+     * Provide a user-readable description of
+     * the CVs accessed by this variable.
+     */
+     
+     public String getCvDescription() {
+        return "CV"+getCvNum()+" & CV"+(getCvNum()+1);
+     }
+     
     public void setToolTipText(String t) {
         super.setToolTipText(t);   // do default stuff
         _value.setToolTipText(t);  // set our value

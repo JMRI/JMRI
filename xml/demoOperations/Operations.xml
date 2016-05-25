@@ -1,21 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="http://www.jmri.org/xml/XSLT/operations-config.xsl" type="text/xsl"?>
-<!DOCTYPE operations-config SYSTEM "operations-config.dtd">
+<?xml-stylesheet type="text/xsl" href="/xml/XSLT/operations-config.xsl"?>
+<!DOCTYPE operations-config SYSTEM "/xml/DTD/operations-config.dtd">
 
 <operations-config>
-  <!--Written by JMRI version Test build 200912111516(Daniel Boudreau) on Sat Dec 12 01:17:48 EST 2009 $Id$-->
+  <!--Written by JMRI version 20131014-0221-Daniel Boudreau on Wed Oct 16 21:31:48 EDT 2013 $Id$-->
   <operations>
     <railRoad name="JMRI Operations Demo Railroad" />
-    <settings mainMenu="true" trainDirection="3" trainLength="900" maxEngines="3" scale="6" carTypes="Descriptive" switchTime="3" travelTime="4" showCarLength="true" showCarLoad="true" showCarColor="true" showCarDestination="false" addCarComment="false" showRfid="false" />
+    <settings mainMenu="true" closeOnSave="false" autoSave="true" autoBackup="true" trainDirection="3" trainLength="900" maxEngines="3" scale="6" carTypes="Descriptive" switchTime="3" travelTime="4" showValue="false" valueLabel="Value" showRfid="false" rfidLabel="RFID" lengthUnit="Feet" yearModeled="" printLocComments="false" printRouteComments="false" printLoadsEmpties="false" printTimetable="false" use12hrFormat="false" printValid="true" sortByTrack="false" carLogger="false" engineLogger="false" trainLogger="false" />
+    <pickupEngFormat prefix=" [ ] Pick up" setting="Road,Number, ,Model, , ,Location,Comment," />
+    <dropEngFormat prefix=" [ ] Set out" setting="Road,Number, ,Model, , ,Destination,Comment," />
+    <pickupCarFormat prefix=" [ ] Pull" setting="Road,Number,Type,Length,Color,Load,Hazardous,Location,Comment,PickUp Msg," />
+    <dropCarFormat prefix=" [ ] Spot" setting="Road,Number,Type,Length,Color,Load,Hazardous,Destination,Comment,SetOut Msg," />
+    <localFormat prefix=" [ ] Move" setting="Road,Number,Type,Length,Color,Load,Hazardous,Location,Destination,Comment," />
+    <missingCarFormat setting="Road,Number,Type,Length,Color,Comment," />
+    <switchList sameAsManifest="true" realTime="true" allTrains="true" pageMode="false" />
+    <switchListPickupCarFormat prefix=" [ ] Pull" setting="Road,Number,Type,Length,Color,Load,Hazardous,Location,Comment,PickUp Msg," />
+    <switchListDropCarFormat prefix=" [ ] Spot" setting="Road,Number,Type,Length,Color,Load,Hazardous,Destination,Comment,SetOut Msg," />
+    <switchListLocalFormat prefix=" [ ] Move" setting="Road,Number,Type,Length,Color,Load,Hazardous,Location,Destination,Comment," />
     <panel name="Operations Demo Panel" trainIconXY="true" trainIconAppend="true" />
     <fontName name="SansSerif" />
-    <manifestColors dropColor="Red" pickupColor="Blue" />
-    <buildReport level="7" />
+    <fontSize size="10" />
+    <pageOrientation manifest="Portrait" switchList="Portrait" />
+    <manifestColors dropColor="Red" pickupColor="Blue" localColor="Black" />
+    <tab enabled="false" length="12" />
+    <manifest printLocComments="false" printRouteComments="false" printLoadsEmpties="false" printTimetable="false" use12hrFormat="false" printValid="true" sortByTrack="false" truncate="false" useDepartureTime="false" useEditor="false" hazardousMsg="(Hazardous)" />
+    <columnFormat twoColumns="false" />
+    <buildOptions aggressive="false" allowLocalInterchange="false" allowLocalSiding="false" allowLocalYard="false" stagingRestrictionEnabled="true" stagingTrackAvail="false" allowReturnStaging="false" promptStagingEnabled="false" promptToStagingEnabled="false" generateCsvManifest="false" generateCsvSwitchList="false" />
+    <buildReport level="7" routerLevel="3" useEditor="true" indent="true" fontSize="10" />
+    <router carRoutingEnabled="true" carRoutingViaYards="true" carRoutingViaStaging="false" forwardToYard="true" onlyActiveTrains="false" />
+    <logger carLogger="false" engineLogger="false" trainLogger="false" />
     <owner name="DAB" />
     <iconColor north="White" south="Green" east="White" west="Green" local="Blue" terminate="Gray" />
-    <options>
-      <setupFrameOptions x="0" y="0" height="583" width="635" />
-    </options>
+    <comments misplacedCars="The following cars are currently misplaced, please contact the dispatcher if found" />
+    <CATS exactLocationName="true" />
   </operations>
+  <manifestTextStrings />
+  <switchListTextStrings />
+  <control>
+    <backwardCompatibility />
+    <maximumStringLengths>
+      <max_len_string_attibute length="12" />
+      <max_len_string_road_number length="10" />
+      <max_len_string_location_name length="25" />
+      <max_len_string_track_name length="25" />
+      <max_len_string_track_length_name length="5" />
+      <max_len_string_length_name length="4" />
+      <max_len_string_weight_name length="4" />
+      <max_len_string_built_name length="5" />
+      <max_len_string_train_name length="25" />
+      <max_len_string_route_name length="25" />
+    </maximumStringLengths>
+  </control>
 </operations-config>
 

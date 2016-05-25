@@ -20,6 +20,8 @@
   <version author="Michael Mosher" version="5" lastUpdated="20121205"/>
   <version author="Michael Mosher" version="6" lastUpdated="20130220"/>
   <version author="Michael Mosher" version="7" lastUpdated="20130227"/>
+  <version author="Michael Mosher" version="8" lastUpdated="20130703"/>
+  <version author="Michael Mosher" version="9" lastUpdated="20130731"/>
   <!-- This file contains the Tsunami definitions for Genesis OEM diesel locomotives	-->
   <!-- version 1	Based on the "SoundTraxx_Tsu_Diesel.xml" Ver 7 file.						-->
   <!-- version 2	Add Rule 17 bit to CV51 & 52 and add CV 53, 54, 57, 58 and add N scale models -->
@@ -28,10 +30,27 @@
   <!-- version 5	Add DDA40X & N F59PHI -->
   <!-- version 6	make more use of extrenal includes -->
   <!-- version 7	Add GP38-2 -->
+  <!-- version 8	Add ES44AC -->
+  <!-- version 9	Add GP50 -->
   <!-- Decoder Model information follows -->
   <decoder>
     <family name="Tsunami Diesel Genesis OEM" mfg="Throttle-Up (SoundTraxx)" comment="These are OEM for Athearn Genesis Tsunami diesel decoders">
       <model model="DDA40X" numOuts="4" numFns="14" connector="other" productID="DD">
+        <versionCV lowVersionID="64"/>
+        <output name="Air Horn"/>
+        <output name="Bell"/>
+        <output name="3" label="  FX5  "/>
+        <output name="4" label="  FX6  "/>
+        <output name="Dynamics"/>
+        <output name="Short Horn"/>
+        <output name="Fans(+)"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Comp(-)"/>
+        <output name="Brakes"/>
+        <output name="Coupler"/>
+      </model>
+      <model model="ES44AC" numOuts="4" numFns="14" connector="other" productID="ES">
         <versionCV lowVersionID="64"/>
         <output name="Air Horn"/>
         <output name="Bell"/>
@@ -212,6 +231,21 @@
         <output name="Coupler"/>
       </model>
       <model model="GP38-2" numOuts="4" numFns="14" connector="other" productID="GP38">
+        <versionCV lowVersionID="64"/>
+        <output name="Air Horn"/>
+        <output name="Bell"/>
+        <output name="3" label="  FX5  "/>
+        <output name="4" label="  FX6  "/>
+        <output name="Dynamics"/>
+        <output name="Short Horn"/>
+        <output name="Fans(+)"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Comp(-)"/>
+        <output name="Brakes"/>
+        <output name="Coupler"/>
+      </model>
+      <model model="GP50" numOuts="4" numFns="14" connector="other" productID="SD70">
         <versionCV lowVersionID="64"/>
         <output name="Air Horn"/>
         <output name="Bell"/>
@@ -569,7 +603,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-AddSubtract2.xml"/>
         <label>Consist Braking Sign</label>
       </variable>
-      <variable label="Speed Table Selection" CV="25" mask="XXXVVVVV" default="0" tooltip="Select a manufacturers speed curve, or use a curve you define yourself.">
+      <variable label="Speed Table Selection" CV="25" mask="XXXVVVVV" default="0" tooltip="Select a manufacturers speed curve, or use a curve you define yourself">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumCurve.xml"/>
         <label>Speed Table Selection</label>
       </variable>
@@ -810,7 +844,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F5 controls output FX6</label>
       </variable>
-      <variable label="F5 controls output FX6" CV="39" mask="XXXXXVXX" item="F5 controls output 4" minOut="2" default="1" include="GP9,GP38,SD60,SD70">
+      <variable label="F5 controls output FX6" CV="39" mask="XXXXXVXX" item="F5 controls output 4" minOut="2" default="1" include="GP9,GP38,SD60,SD70,ES">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F5 controls output FX6</label>
       </variable>
@@ -838,7 +872,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F6 controls output FX5</label>
       </variable>
-      <variable label="F6 controls output FX6" CV="40" mask="XXXXXVXX" item="F6 controls output 4" minOut="2" default="0" include="GP9,GP38,SD60,N_F45,SD70">
+      <variable label="F6 controls output FX6" CV="40" mask="XXXXXVXX" item="F6 controls output 4" minOut="2" default="0" include="ES,GP9,GP38,SD60,N_F45,SD70">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F6 controls output FX6</label>
       </variable>
@@ -1106,7 +1140,7 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
         <label>FX5 Effect Selection</label>
       </variable>
-      <variable label="FX5 Effect Selection" CV="51" mask="XXXXVVVV" default="9" include="SD60" minOut="3" tooltip="Determines the effect generated from the FX5 light output">
+      <variable label="FX5 Effect Selection" CV="51" mask="XXXXVVVV" default="9" include="ES,SD60" minOut="3" tooltip="Determines the effect generated from the FX5 light output">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
         <label>FX5 Effect Selection</label>
       </variable>
@@ -1118,11 +1152,11 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
         <label>FX5 Phase Selection</label>
       </variable>
-      <variable label="FX5 Grade Crossing Logic" CV="51" mask="XXVXXXXX" minOut="3" default="0" exclude="SD60" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+      <variable label="FX5 Grade Crossing Logic" CV="51" mask="XXVXXXXX" minOut="3" default="0" exclude="ES,SD60" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX5 Grade Crossing Logic</label>
       </variable>
-      <variable label="FX5 Grade Crossing Logic" CV="51" mask="XXVXXXXX" minOut="3" default="1" include="SD60" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+      <variable label="FX5 Grade Crossing Logic" CV="51" mask="XXVXXXXX" minOut="3" default="1" include="ES,SD60" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX5 Grade Crossing Logic</label>
       </variable>
@@ -1154,7 +1188,7 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
         <label>FX6 Effect Selection</label>
       </variable>
-      <variable label="FX6 Effect Selection" CV="52" mask="XXXXVVVV" default="9" include="SD60" minOut="4" tooltip="Determines the effect generated from the FX6 light output">
+      <variable label="FX6 Effect Selection" CV="52" mask="XXXXVVVV" default="9" include="ES,SD60" minOut="4" tooltip="Determines the effect generated from the FX6 light output">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
         <label>FX6 Effect Selection</label>
       </variable>
@@ -1162,19 +1196,19 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
         <label>FX6 Effect Selection</label>
       </variable>
-      <variable label="FX6 Phase Selection" CV="52" mask="XXXVXXXX" minOut="4" default="0" exclude="SD60" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+      <variable label="FX6 Phase Selection" CV="52" mask="XXXVXXXX" minOut="4" default="0" exclude="ES,SD60" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
         <label>FX6 Phase Selection</label>
       </variable>
-      <variable label="FX6 Phase Selection" CV="52" mask="XXXVXXXX" minOut="4" default="1" include="SD60" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+      <variable label="FX6 Phase Selection" CV="52" mask="XXXVXXXX" minOut="4" default="1" include="ES,SD60" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
         <label>FX6 Phase Selection</label>
       </variable>
-      <variable label="FX6 Grade Crossing Logic" CV="52" mask="XXVXXXXX" minOut="4" default="0" exclude="SD60" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+      <variable label="FX6 Grade Crossing Logic" CV="52" mask="XXVXXXXX" minOut="4" default="0" exclude="ES,SD60" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX6 Grade Crossing Logic</label>
       </variable>
-      <variable label="FX6 Grade Crossing Logic" CV="52" mask="XXVXXXXX" minOut="4" default="1" include="SD60" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+      <variable label="FX6 Grade Crossing Logic" CV="52" mask="XXVXXXXX" minOut="4" default="1" include="ES,SD60" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX6 Grade Crossing Logic</label>
       </variable>
@@ -1190,27 +1224,27 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>FX6 Light Type</label>
       </variable>
-      <variable label="FX5 Forward Directional Control" CV="57" mask="XXXXXXXV" default="1" minOut="4" include="GP38" tooltip="Check to enable FX5 function output in Forward direction">
+      <variable label="FX5 Forward Directional Control" CV="57" mask="XXXXXXXV" default="1" minOut="4" include="ES,GP38,SD70" tooltip="Check to enable FX5 function output in Forward direction">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX5 Forward Directional Control</label>
       </variable>
-      <variable label="FX5 Reverse Directional Control" CV="57" mask="XXXXXXVX" default="0" minOut="4" include="GP38" tooltip="Check to enable FX5 function output in Reverse direction">
+      <variable label="FX5 Reverse Directional Control" CV="57" mask="XXXXXXVX" default="0" minOut="4" include="ES,GP38,SD70" tooltip="Check to enable FX5 function output in Reverse direction">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX5 Reverse Directional Control</label>
       </variable>
-      <variable label="FX6 Forward Directional Control" CV="57" mask="XXXVXXXX" default="1" minOut="4" include="GP38" tooltip="Check to enable FX6 function output in Forward direction">
+      <variable label="FX6 Forward Directional Control" CV="57" mask="XXXVXXXX" default="1" minOut="4" include="ES,GP38,SD70" tooltip="Check to enable FX6 function output in Forward direction">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX6 Forward Directional Control</label>
       </variable>
-      <variable label="FX6 Reverse Directional Control" CV="57" mask="XXVXXXXX" default="0" minOut="4" include="GP38" tooltip="Check to enable FX6 function output in Reverse direction">
+      <variable label="FX6 Reverse Directional Control" CV="57" mask="XXVXXXXX" default="0" minOut="4" include="ES,GP38,SD70" tooltip="Check to enable FX6 function output in Reverse direction">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX6 Reverse Directional Control</label>
       </variable>
-      <variable label="FX5 Lighting Overide" CV="58" mask="XXXXXXXV" minOut="4" default="0" include="GP38" tooltip="When enabled, turning on FX5 will turn off all other lighting function outputs">
+      <variable label="FX5 Lighting Overide" CV="58" mask="XXXXXXXV" minOut="4" default="0" include="ES,GP38,SD70" tooltip="When enabled, turning on FX5 will turn off all other lighting function outputs">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumOverideFX5.xml"/>
         <label>FX5 Lighting Overide</label>
       </variable>
-      <variable label="FX6 Lighting Overide" CV="58" mask="XXXXXXVX" minOut="4" default="0" include="GP38" tooltip="When enabled, turning on FX6 will turn off all other lighting function outputs">
+      <variable label="FX6 Lighting Overide" CV="58" mask="XXXXXXVX" minOut="4" default="0" include="ES,GP38,SD70" tooltip="When enabled, turning on FX6 will turn off all other lighting function outputs">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumOverideFX6.xml"/>
         <label>FX6 Lighting Overide</label>
       </variable>
@@ -1219,7 +1253,7 @@
         <label>Hyperlight Flash Rate (0-15)</label>
         <comment>0 is fast, 15 is slow, 4 is recommended for start</comment>
       </variable>
-      <variable label="Hyperlight Flash Rate (0-15)" CV="59" mask="XXXXVVVV" default="4" include="DD,F2,GP9,GP38,MP15,SD70" comment="0 is fast, 15 is slow, 4 is recommended for start" tooltip="Sets the overall flash rate of the Hyperlight effects">
+      <variable label="Hyperlight Flash Rate (0-15)" CV="59" mask="XXXXVVVV" default="4" include="DD,ES,F2,GP9,GP38,MP15,SD70" comment="0 is fast, 15 is slow, 4 is recommended for start" tooltip="Sets the overall flash rate of the Hyperlight effects">
         <decVal max="15"/>
         <label>Hyperlight Flash Rate (0-15)</label>
         <comment>0 is fast, 15 is slow, 4 is recommended for start</comment>
@@ -1316,6 +1350,52 @@
           </enumChoice>
           <enumChoice choice="Leslie RS5T">
             <choice>Leslie RS5T</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Alternate Airhorn Select</label>
+      </variable>
+      <variable label="Airhorn Select" CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" include="ES" tooltip="Selects which airhorn to use">
+        <enumVal>
+          <enumChoice choice="Nathan K5LLA">
+            <choice>Nathan K5LLA</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan K3LA">
+            <choice>Nathan K3LA</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan P3">
+            <choice>Nathan P3</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie RS5T">
+            <choice>Leslie RS5T</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie RS3L">
+            <choice>Leslie RS3L</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie A200">
+            <choice>Leslie A200</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Airhorn Select</label>
+      </variable>
+      <variable label="Alternate Airhorn Select" CV="115" mask="VVVVXXXX" item="Sound Option 10" default="0" include="ES" tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
+        <enumVal>
+          <enumChoice choice="Short Horn">
+            <choice>Short Horn</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan K3LA">
+            <choice>Nathan K3LA</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan P3">
+            <choice>Nathan P3</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie RS5T">
+            <choice>Leslie RS5T</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie RS3L">
+            <choice>Leslie RS3L</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie A200">
+            <choice>Leslie A200</choice>
           </enumChoice>
         </enumVal>
         <label>Alternate Airhorn Select</label>
@@ -1608,8 +1688,8 @@
       </variable>
       <variable label="Airhorn Select" CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" include="SD70" tooltip="Selects which airhorn to use">
         <enumVal>
-          <enumChoice choice="Nathan K5LA">
-            <choice>Nathan K5LA</choice>
+          <enumChoice choice="Nathan K5LLA">
+            <choice>Nathan K5LLA</choice>
           </enumChoice>
           <enumChoice choice="Nathan K3LA">
             <choice>Nathan K3LA</choice>
@@ -1696,7 +1776,7 @@
          <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumNotch.xml"/>
         <label>Engine Notch Rate</label>
       </variable>
-      <variable label="Motor Recovery Speed (0-255)" CV="118" item="Advanced Group 2 Option 6" default="204" include="GP38" tooltip="&lt;html&gt;Adjust the motor response following a momentary power glitch&lt;br&gt;      0 or 128 = Disabled&lt;br&gt;      1-127 = Absolute Limiting (will return to this speed step)&lt;br&gt;      129-255 = Proportional Limiting (a percentage of set speed)&lt;br&gt;      Note: This feature is not available in early decoders&lt;/html&gt;">
+      <variable label="Motor Recovery Speed (0-255)" CV="118" item="Advanced Group 2 Option 6" default="204" include="ES,GP38,SD70" tooltip="&lt;html&gt;Adjust the motor response following a momentary power glitch&lt;br&gt;      0 or 128 = Disabled&lt;br&gt;      1-127 = Absolute Limiting (will return to this speed step)&lt;br&gt;      129-255 = Proportional Limiting (a percentage of set speed)&lt;br&gt;      Note: This feature is not available in early decoders&lt;/html&gt;">
         <decVal/>
         <label>Motor Recovery Speed (0-255)</label>
       </variable>
@@ -1709,7 +1789,7 @@
         <decVal/>
         <label>Master Volume Control</label>
       </variable>
-      <variable label="Master Volume Control" CV="128" mask="VVVVVVVV" item="Sound Setting 1" default="230" include="DD,GP9,GP38,SD70" tooltip="Sets the overall volume of all sound channels">
+      <variable label="Master Volume Control" CV="128" mask="VVVVVVVV" item="Sound Setting 1" default="230" include="DD,ES,GP9,GP38,SD70" tooltip="Sets the overall volume of all sound channels">
         <decVal/>
         <label>Master Volume Control</label>
       </variable>
@@ -1725,7 +1805,7 @@
         <decVal/>
         <label>Airhorn Volume</label>
       </variable>
-      <variable label="Airhorn Volume" CV="129" mask="VVVVVVVV" item="Sound Setting 13" default="255" include="GP9,GP38,SD70" tooltip="Sets the volume of the airhorn">
+      <variable label="Airhorn Volume" CV="129" mask="VVVVVVVV" item="Sound Setting 13" default="255" include="ES,GP9,GP38,SD70" tooltip="Sets the volume of the airhorn">
         <decVal/>
         <label>Airhorn Volume</label>
       </variable>
@@ -1733,7 +1813,7 @@
         <decVal/>
         <label>Bell Volume</label>
       </variable>
-      <variable label="Bell Volume" CV="130" mask="VVVVVVVV" item="Sound Setting 14" default="80" include="DD,GP9,GP38,SD70" tooltip="Sets the volume of the bell">
+      <variable label="Bell Volume" CV="130" mask="VVVVVVVV" item="Sound Setting 14" default="80" include="DD,ES,GP9,GP38,SD70" tooltip="Sets the volume of the bell">
         <decVal/>
         <label>Bell Volume</label>
       </variable>
@@ -1749,7 +1829,7 @@
         <decVal/>
         <label>Engine Exhaust Volume</label>
       </variable>
-      <variable label="Engine Exhaust Volume" CV="131" mask="VVVVVVVV" item="Sound Setting 15" default="150" include="GP9,SD70" tooltip="Sets the volume of the diesel engine exhaust">
+      <variable label="Engine Exhaust Volume" CV="131" mask="VVVVVVVV" item="Sound Setting 15" default="150" include="ES,GP9,SD70" tooltip="Sets the volume of the diesel engine exhaust">
         <decVal/>
         <label>Engine Exhaust Volume</label>
       </variable>
@@ -1793,11 +1873,11 @@
         <decVal/>
         <label>Brake Release Volume</label>
       </variable>
-      <variable label="Air Tank Poppet Valve Volume" CV="143" mask="VVVVVVVV" item="Sound Setting 24" default="80" exclude="DD,GP38,SD70" tooltip="Sets the volume of the air reservoir poppet valve releasing">
+      <variable label="Air Tank Poppet Valve Volume" CV="143" mask="VVVVVVVV" item="Sound Setting 24" default="80" exclude="DD,ES,GP38,SD70" tooltip="Sets the volume of the air reservoir poppet valve releasing">
         <decVal/>
         <label>Air Tank Poppet Valve Volume</label>
       </variable>
-      <variable label="Air Tank Poppet Valve Volume" CV="143" mask="VVVVVVVV" item="Sound Setting 24" default="50" include="DD,GP38,SD70" tooltip="Sets the volume of the air reservoir poppet valve releasing">
+      <variable label="Air Tank Poppet Valve Volume" CV="143" mask="VVVVVVVV" item="Sound Setting 24" default="50" include="DD,ES,GP38,SD70" tooltip="Sets the volume of the air reservoir poppet valve releasing">
         <decVal/>
         <label>Air Tank Poppet Valve Volume</label>
       </variable>
@@ -1805,11 +1885,11 @@
       <!-- names, e.g. in the Comprehensive.xml programmer, so they  -->
       <!-- appear on pane definitions in this file -->
       <!-- Equalizer Controls follow -->
-      <variable label="Equalizer Control" CV="153" mask="XXXXXVVV" default="0" exclude="DD,GP9,GP38,SD70" tooltip="Selects one of six equalizer presets or selects a user adjustable profile">
+      <variable label="Equalizer Control" CV="153" mask="XXXXXVVV" default="0" exclude="DD,ES,GP9,GP38,SD70" tooltip="Selects one of six equalizer presets or selects a user adjustable profile">
          <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEQ.xml"/>
         <label>Equalizer Control</label>
       </variable>
-      <variable label="Equalizer Control" CV="153" mask="XXXXXVVV" default="7" include="DD,GP9.GP38,SD70" tooltip="Selects one of six equalizer presets or selects a user adjustable profile">
+      <variable label="Equalizer Control" CV="153" mask="XXXXXVVV" default="7" include="DD,ES,GP9.GP38,SD70" tooltip="Selects one of six equalizer presets or selects a user adjustable profile">
          <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEQ.xml"/>
         <label>Equalizer Control</label>
       </variable>
@@ -1822,43 +1902,43 @@
         <decVal/>
         <label>125 Hz Cut/Boost</label>
       </variable>
-      <variable label="250 Hz Cut/Boost" CV="156" mask="VVVVVVVV" default="128" exclude="DD,GP9.GP38,SD70" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
+      <variable label="250 Hz Cut/Boost" CV="156" mask="VVVVVVVV" default="128" exclude="DD,ES,GP9.GP38,SD70" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
         <decVal/>
         <label>250 Hz Cut/Boost</label>
       </variable>
-      <variable label="250 Hz Cut/Boost" CV="156" mask="VVVVVVVV" default="165" include="DD,GP9.GP38,SD70" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
+      <variable label="250 Hz Cut/Boost" CV="156" mask="VVVVVVVV" default="165" include="DD,ES,GP9.GP38,SD70" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
         <decVal/>
         <label>250 Hz Cut/Boost</label>
       </variable>
-      <variable label="500 Hz Cut/Boost" CV="157" mask="VVVVVVVV" default="128" exclude="DD,GP9.GP38,SD70" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
+      <variable label="500 Hz Cut/Boost" CV="157" mask="VVVVVVVV" default="128" exclude="DD,ES,GP9.GP38,SD70" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
         <decVal/>
         <label>500 Hz Cut/Boost</label>
       </variable>
-      <variable label="500 Hz Cut/Boost" CV="157" mask="VVVVVVVV" default="140" include="DD,GP9.GP38,SD70" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
+      <variable label="500 Hz Cut/Boost" CV="157" mask="VVVVVVVV" default="140" include="DD,ES,GP9.GP38,SD70" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
         <decVal/>
         <label>500 Hz Cut/Boost</label>
       </variable>
-      <variable label="1K Hz Cut/Boost" CV="158" mask="VVVVVVVV" default="128" exclude="DD,GP9.GP38,SD70" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
+      <variable label="1K Hz Cut/Boost" CV="158" mask="VVVVVVVV" default="128" exclude="DD,ES,GP9.GP38,SD70" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
         <decVal/>
         <label>1K Hz Cut/Boost</label>
       </variable>
-      <variable label="1K Hz Cut/Boost" CV="158" mask="VVVVVVVV" default="160" include="DD,GP9.GP38,SD70" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
+      <variable label="1K Hz Cut/Boost" CV="158" mask="VVVVVVVV" default="160" include="DD,ES,GP9.GP38,SD70" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
         <decVal/>
         <label>1K Hz Cut/Boost</label>
       </variable>
-      <variable label="2K Hz Cut/Boost" CV="159" mask="VVVVVVVV" default="128" exclude="DD,GP9.GP38,SD70" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
+      <variable label="2K Hz Cut/Boost" CV="159" mask="VVVVVVVV" default="128" exclude="DD,ES,GP9.GP38,SD70" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
         <decVal/>
         <label>2K Hz Cut/Boost</label>
       </variable>
-      <variable label="2K Hz Cut/Boost" CV="159" mask="VVVVVVVV" default="145" include="DD,GP9.GP38,SD70" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
+      <variable label="2K Hz Cut/Boost" CV="159" mask="VVVVVVVV" default="145" include="DD,ES,GP9.GP38,SD70" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
         <decVal/>
         <label>2K Hz Cut/Boost</label>
       </variable>
-      <variable label="4K Hz Cut/Boost" CV="160" mask="VVVVVVVV" default="128" exclude="DD,GP9.GP38,SD70" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
+      <variable label="4K Hz Cut/Boost" CV="160" mask="VVVVVVVV" default="128" exclude="DD,ES,GP9.GP38,SD70" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
         <decVal/>
         <label>4K Hz Cut/Boost</label>
       </variable>
-      <variable label="4K Hz Cut/Boost" CV="160" mask="VVVVVVVV" default="200" include="DD,GP9.GP38,SD70" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
+      <variable label="4K Hz Cut/Boost" CV="160" mask="VVVVVVVV" default="200" include="DD,ES,GP9.GP38,SD70" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
         <decVal/>
         <label>4K Hz Cut/Boost</label>
       </variable>
@@ -1872,35 +1952,39 @@
         <label>Reverb Control</label>
       </variable>
       <!-- Individual Reverb Output Level Controls follow -->
-      <variable label="Reverb Output Level" CV="162" mask="VVVVVVVV" default="128" exclude="DD,GP9.GP38,SD70" tooltip="Specifies a percentage of the reverb output that is mixed back into the original audio signal">
+      <variable label="Reverb Output Level" CV="162" mask="VVVVVVVV" default="128" exclude="DD,ES,GP9,GP38,SD70" tooltip="Specifies a percentage of the reverb output that is mixed back into the original audio signal">
         <decVal/>
         <label>Reverb Output Level</label>
       </variable>
-      <variable label="Reverb Output Level" CV="162" mask="VVVVVVVV" default="180" include="DD,GP9.GP38,SD70" tooltip="Specifies a percentage of the reverb output that is mixed back into the original audio signal">
+      <variable label="Reverb Output Level" CV="162" mask="VVVVVVVV" default="180" include="DD,ES,GP9,GP38,SD70" tooltip="Specifies a percentage of the reverb output that is mixed back into the original audio signal">
         <decVal/>
         <label>Reverb Output Level</label>
       </variable>
-      <variable label="Reverb Delay" CV="163" mask="VVVVVVVV" default="255" exclude="DD,GP9.GP38,SD70" tooltip="Specifies the total reverb delay time from 0 to 64mS">
+      <variable label="Reverb Delay" CV="163" mask="VVVVVVVV" default="255" exclude="DD,ES,GP9,GP38,SD70" tooltip="Specifies the total reverb delay time from 0 to 64mS">
         <decVal/>
         <label>Reverb Delay</label>
       </variable>
-      <variable label="Reverb Delay" CV="163" mask="VVVVVVVV" default="32" include="DD,GP9.GP38,SD70" tooltip="Specifies the total reverb delay time from 0 to 64mS">
+      <variable label="Reverb Delay" CV="163" mask="VVVVVVVV" default="32" include="DD,ES,GP9,GP38,SD70" tooltip="Specifies the total reverb delay time from 0 to 64mS">
         <decVal/>
         <label>Reverb Delay</label>
       </variable>
-      <variable label="Reverb Gain" CV="164" mask="VVVVVVVV" default="64" exclude="DD,GP9.GP38,SD70" tooltip="Specifies a percentage of the reverb output that is mixed back into the delay line">
+      <variable label="Reverb Gain" CV="164" mask="VVVVVVVV" default="64" exclude="DD,ES,GP9,GP38,SD70" tooltip="Specifies a percentage of the reverb output that is mixed back into the delay line">
         <decVal/>
         <label>Reverb Gain</label>
       </variable>
-      <variable label="Reverb Gain" CV="164" mask="VVVVVVVV" default="32" include="DD,GP9.GP38,SD70" tooltip="Specifies a percentage of the reverb output that is mixed back into the delay line">
+      <variable label="Reverb Gain" CV="164" mask="VVVVVVVV" default="32" include="DD,ES,GP9,GP38,SD70" tooltip="Specifies a percentage of the reverb output that is mixed back into the delay line">
         <decVal/>
         <label>Reverb Gain</label>
       </variable>
-      <variable label="Horn Reverb Level" CV="169" mask="VVVVVVVV" default="0" exclude="DD,GP9.GP38,SD70" item="Whistle Reverb Level" tooltip="Sets the percentage of the horn signal level to mix into the reverb input">
+      <variable label="Horn Reverb Level" CV="169" mask="VVVVVVVV" default="0" exclude="DD,ES,GP9,GP38,SD70" item="Whistle Reverb Level" tooltip="Sets the percentage of the horn signal level to mix into the reverb input">
         <decVal/>
         <label>Horn Reverb Level</label>
       </variable>
-      <variable label="Horn Reverb Level" CV="169" mask="VVVVVVVV" default="10" include="DD,GP9.GP38,SD70" item="Whistle Reverb Level" tooltip="Sets the percentage of the horn signal level to mix into the reverb input">
+      <variable label="Horn Reverb Level" CV="169" mask="VVVVVVVV" default="10" include="GP38,SD70" item="Whistle Reverb Level" tooltip="Sets the percentage of the horn signal level to mix into the reverb input">
+        <decVal/>
+        <label>Horn Reverb Level</label>
+      </variable>
+      <variable label="Horn Reverb Level" CV="169" mask="VVVVVVVV" default="100" include="DD,ES,GP9" item="Whistle Reverb Level" tooltip="Sets the percentage of the horn signal level to mix into the reverb input">
         <decVal/>
         <label>Horn Reverb Level</label>
       </variable>

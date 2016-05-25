@@ -80,6 +80,11 @@ public final static int CS_REQUEST_RESPONSE = 0x62;
 /* CS_SOFTWARE_VERSION (0x21) is a valid byte 2 command for 0x62 */
 public final static int CS_STATUS_RESPONSE  = 0x22; /* command station status */
 
+/* Deinfed Command Station Type values */
+public final static int CS_TYPE_LZ100 = 0x00;  // Lenz LZ100/LZV100
+public final static int CS_TYPE_LH200 = 0x01;  // Lenz LH200
+public final static int CS_TYPE_COMPACT = 0x02; // Lenz Compact/Atlas Commander
+public final static int CS_TYPE_MULTIMAUS = 0x10; // Roco multiMAUS 
 
 /* Emergency Stop */
 public final static int BC_EMERGENCY_STOP = 0x81;

@@ -1056,7 +1056,7 @@ public class AutoAllocate {
 	private boolean waitingForStartTime (AllocationRequest ar) {
 		if (ar!=null) {
 			ActiveTrain at = ar.getActiveTrain();
-			if ( (!at.getStarted()) && at.getDelayedStart()!=ActiveTrain.NODELAY ) return true;
+			if ( (!at.getStarted()) && at.getDelayedStart()!=ActiveTrain.NODELAY || at.reachedRestartPoint()) return true;
 		}
 		return false;
 	}

@@ -24,7 +24,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         super();
     }
 
-    protected String title() { return "CMRInet Serial Packet Monitor"; }
+    protected String title() { return "CMRI Serial Packet Monitor"; }
 
     protected void init() {
         // connect to TrafficController
@@ -57,7 +57,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         if (l.getNumDataElements() < 2) {
             nextLine("Truncated message of length "+l.getNumDataElements()+"\n",
                             l.toString());
-//            CMRInetMetricsData.incMetricErrValue( CMRInetMetricsData.CMRInetMetricTruncRecv );
+//            CMRIMetricsData.incMetricErrValue( CMRIMetricsData.CMRIMetricTruncRecv );
             return;
         } else if (l.isPoll())
         {
@@ -131,7 +131,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
             }
         } else
         {
-//            CMRInetMetricsData.incMetricErrValue( CMRInetMetricsData.CMRInetMetricUnrecCommand );
+//            CMRIMetricsData.incMetricErrValue( CMRIMetricsData.CMRIMetricUnrecCommand );
             nextLine("unrecognized cmd: \""+l.toString()+"\"\n", "");
         }
     }
@@ -150,7 +150,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         if (l.getNumDataElements() < 2) {
             nextLine("Truncated reply of length "+l.getNumDataElements()+"\n",
                             l.toString());
-//           CMRInetMetricsData.incMetricErrValue( CMRInetMetricsData.CMRInetMetricTruncReply );
+//           CMRIMetricsData.incMetricErrValue( CMRIMetricsData.CMRIMetricTruncReply );
            return;
         } else
             if (l.isRcv())
@@ -182,7 +182,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
             } 
             else
             {
-//                CMRInetMetricsData.incMetricErrValue( CMRInetMetricsData.CMRInetMetricUnrecResponse );
+//                CMRIMetricsData.incMetricErrValue( CMRIMetricsData.CMRIMetricUnrecResponse );
                 nextLine("unrecognized rep: \""+l.toString()+"\"\n", "");
             }
     }

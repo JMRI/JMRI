@@ -5,6 +5,7 @@ package jmri.jmrit.operations.locations;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -139,7 +140,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 
 		setPreferredSize(null);	// we need to resize this frame
 		pack();
-		setSize(getWidth()+30, getHeight());
+		setMinimumSize(new Dimension(Control.smallPanelWidth, Control.minPanelHeight));
 		if (location != null)
 			setTitle(Bundle.getMessage("TitleModifyLocation"));
 		else

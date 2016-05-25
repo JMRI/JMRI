@@ -25,7 +25,7 @@
     </family>
     <programming direct="yes" paged="yes" register="no" ops="no"/>
     <variables>
-      <variable label="Low 7 bytes of Address CV1" CV="1" mask="XVVVVVVV" comment="Decoder address" default="01" tooltip="CV1">
+      <variable label="Low 7 bytes of Address CV1" CV="1" mask="XVVVVVVV" comment="Decoder address" default="01">
         <decVal min="1" max="63"/>
       </variable>
       <variable label="Outputs Active" CV="2" mask="VVVVVVVV" comment="Outputs Active" default="255">
@@ -97,7 +97,7 @@
       <variable label="Manufacturer" CV="8" readOnly="yes" default="165">
         <decVal min="0" max="255"/>
       </variable>
-      <variable label="High 3 bytes of Address CV9" CV="9" mask="XXXXXVVV" tooltip="CV9">
+      <variable label="High 3 bytes of Address CV9" CV="9" mask="XXXXXVVV">
         <decVal min="0" max="7"/>
       </variable>
       <variable label="Turnout Address of Output 1 (1-2041)" CV="1" mask="XXVVVVVV" default="1" item="Short Address" tooltip="Range 1-2041">

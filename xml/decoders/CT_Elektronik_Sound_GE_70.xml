@@ -931,45 +931,45 @@
   </decoder>
   <pane name="Lock/Unlock">
     <column>
-      <display item="Lock/Unlock Decoder from Programming" tooltip="CV 99; 88=locked-99=unlocked"/>
+      <display item="Lock/Unlock Decoder from Programming" tooltip="; 88=locked-99=unlocked"/>
     </column>
     <column>
-      <display item="Analog Vstart" tooltip="CV 60"/>
+      <display item="Analog Vstart"/>
     </column>
     <name>Lock/Unlock</name>
   </pane>
   <pane name="Sound">
     <column>
-      <display item="Decoder Properties/Synchropulses" tooltip="CV 49 Bit 0: Synchropulses OFF/ON"/>
-      <display item="Diesel and E Locosound" tooltip="CV 49 Bit 1:OFF/ON"/>
-      <display item="2 Cylinder Steam" tooltip="CV 49 Bit 2:OFF/ON"/>
-      <display item="3 Cylinder Steam" tooltip="CV 49 Bit 3:OFF/ON"/>
-      <display item="No Steamexhaust Downhill" tooltip="CV 49 Bit 4:OFF/ON"/>
-      <display item="Endless Sound CV 10, F 1" tooltip="CV 49 Bit 5:OFF/ON"/>
+      <display item="Decoder Properties/Synchropulses" tooltip=": Synchropulses OFF/ON"/>
+      <display item="Diesel and E Locosound" tooltip=":OFF/ON"/>
+      <display item="2 Cylinder Steam" tooltip=":OFF/ON"/>
+      <display item="3 Cylinder Steam" tooltip=":OFF/ON"/>
+      <display item="No Steamexhaust Downhill" tooltip=":OFF/ON"/>
+      <display item="Endless Sound CV 10, F 1" tooltip=":OFF/ON"/>
       <separator/>
-      <display item="Steamexhaust per Speedstep" tooltip="CV 50, def.62"/>
-      <display item="Time between 2 Exhaustbeats at SS1 OR Number of  Synchropulses per Exhaustbeat  SS1" tooltip="CV 51, def.0"/>
-      <display item="Time between 2 Exhaustbeats at Full Speed" tooltip="CV 52, def.64"/>
-      <display item="Random-1: Sounds at Stop" tooltip="CV 63, def.255"/>
-      <display item="Random-2: Sounds Cruising" tooltip="CV 64, def.255"/>
-      <display item="High Time Sounds after Accelleration; 0.5sec" tooltip="CV 96, def.8"/>
-      <display item="High Time Sounds after Stop; 0.5sec" tooltip="CV 97, def.8"/>
-      <display item="Minimum Time between 2 Randomsounds; 0.5sec" tooltip="CV 98, def.20"/>
+      <display item="Steamexhaust per Speedstep" tooltip="def.62"/>
+      <display item="Time between 2 Exhaustbeats at SS1 OR Number of  Synchropulses per Exhaustbeat  SS1" tooltip="def.0"/>
+      <display item="Time between 2 Exhaustbeats at Full Speed" tooltip="def.64"/>
+      <display item="Random-1: Sounds at Stop" tooltip="def.255"/>
+      <display item="Random-2: Sounds Cruising" tooltip="def.255"/>
+      <display item="High Time Sounds after Accelleration; 0.5sec" tooltip="def.8"/>
+      <display item="High Time Sounds after Stop; 0.5sec" tooltip="def.8"/>
+      <display item="Minimum Time between 2 Randomsounds; 0.5sec" tooltip="def.20"/>
     </column>
     <name>Sound</name>
   </pane>
   <pane name="Sound Levels">
     <column>
-      <display item="Soundlevel Low Speed (Diesel only)" tooltip="CV 53, def.64"/>
-      <display item="Soundlevel High Speed (Diesel only)" tooltip="CV 5, def.64"/>
-      <display item="Soundlevel Main Sounds" tooltip="CV 55, def.3"/>
-      <display item="Soundlevel Slot 1" tooltip="CV 56, def.3"/>
-      <display item="Soundlevel Slot 2" tooltip="CV 57, def.3"/>
-      <display item="Soundlevel Slot 3" tooltip="CV 58, def.3"/>
-      <display item="Soundlevel Slot 4" tooltip="CV 59, def.3"/>
-      <display item="Soundlevel Slot 5" tooltip="CV 60, def.3"/>
-      <display item="Soundlevel Slot 6" tooltip="CV 61, def.3"/>
-      <display item="Soundlevel Slot 7" tooltip="CV 62, def.3"/>
+      <display item="Soundlevel Low Speed (Diesel only)" tooltip="def.64"/>
+      <display item="Soundlevel High Speed (Diesel only)" tooltip="def.64"/>
+      <display item="Soundlevel Main Sounds" tooltip="def.3"/>
+      <display item="Soundlevel Slot 1" tooltip="def.3"/>
+      <display item="Soundlevel Slot 2" tooltip="def.3"/>
+      <display item="Soundlevel Slot 3" tooltip="def.3"/>
+      <display item="Soundlevel Slot 4" tooltip="def.3"/>
+      <display item="Soundlevel Slot 5" tooltip="def.3"/>
+      <display item="Soundlevel Slot 6" tooltip="def.3"/>
+      <display item="Soundlevel Slot 7" tooltip="def.3"/>
     </column>
     <name>Sound Levels</name>
   </pane>

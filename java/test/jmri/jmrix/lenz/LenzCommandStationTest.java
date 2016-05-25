@@ -70,6 +70,31 @@ public class LenzCommandStationTest extends TestCase {
         Assert.assertEquals(2,c.getCommandStationType());
     }
 
+    public void testSetVersionFloat() {
+        // test setting the command station version from using a numeric
+        // value.
+        LenzCommandStation c = new LenzCommandStation();
+        c.setCommandStationSoftwareVersion(3.6f);
+        Assert.assertEquals(3.6f,c.getCommandStationSoftwareVersion());
+        c.setCommandStationSoftwareVersion(8.13f);
+        Assert.assertEquals(8.13f,c.getCommandStationSoftwareVersion());
+    }
+
+    public void testSetTypeNumeric() {
+        // test setting the command station type from using a numeric
+        // value.
+        LenzCommandStation c = new LenzCommandStation();
+        c.setCommandStationType(XNetConstants.CS_TYPE_LZ100);
+        Assert.assertEquals(XNetConstants.CS_TYPE_LZ100,c.getCommandStationType());
+        c.setCommandStationType(XNetConstants.CS_TYPE_LH200);
+        Assert.assertEquals(XNetConstants.CS_TYPE_LH200,c.getCommandStationType());
+        c.setCommandStationType(XNetConstants.CS_TYPE_COMPACT);
+        Assert.assertEquals(XNetConstants.CS_TYPE_COMPACT,c.getCommandStationType());
+        c.setCommandStationType(XNetConstants.CS_TYPE_MULTIMAUS);
+        Assert.assertEquals(XNetConstants.CS_TYPE_MULTIMAUS,c.getCommandStationType());
+    }
+    
+
 
 	// from here down is testing infrastructure
 

@@ -11,7 +11,7 @@
     <decVal/>
     <label>User Data #2</label>
   </variable>
-  <variable label="Smoke Characteristic" CV="112" tooltip="CV 112 bit 0" mask="XXXXXXXV">
+  <variable label="Smoke Characteristic" CV="112" mask="XXXXXXXV">
     <enumVal>
       <enumChoice choice="Speed dependent">
         <choice>Speed dependent</choice>
@@ -22,7 +22,7 @@
     </enumVal>
     <label>Smoke Characteristic</label>
   </variable>
-  <variable label="ACKnowledgement" item="Advanced Ack" CV="112" tooltip="CV 112 bit 1" mask="XXXXXXVX">
+  <variable label="ACKnowledgement" item="Advanced Ack" CV="112" mask="XXXXXXVX">
     <enumVal>
       <enumChoice choice="Normal">
         <choice>Normal</choice>
@@ -33,7 +33,7 @@
     </enumVal>
     <label>ACKnowledgement</label>
   </variable>
-  <variable label="Loco Number Recognition" CV="112" tooltip="CV 112 bit 2" mask="XXXXXVXX" default="1">
+  <variable label="Loco Number Recognition" CV="112" mask="XXXXXVXX" default="1">
     <enumVal>
       <enumChoice choice="Off">
         <choice>Off</choice>
@@ -44,7 +44,7 @@
     </enumVal>
     <label>Loco Number Recognition</label>
   </variable>
-  <variable label="NMRA" CV="112" tooltip="CV 112 bit 3" mask="XXXXVXXX" default="0">
+  <variable label="NMRA" CV="112" mask="XXXXVXXX" default="0">
     <enumVal>
       <enumChoice choice="NMRA/MAN">
         <choice>NMRA/MAN</choice>
@@ -55,7 +55,7 @@
     </enumVal>
     <label>NMRA</label>
   </variable>
-  <variable label="Pulse Chain Recognition (LGB)" CV="112" tooltip="CV 112 bit 4" mask="XXXVXXXX" default="0">
+  <variable label="Pulse Chain Recognition (LGB)" CV="112" mask="XXXVXXXX" default="0">
     <enumVal>
       <enumChoice choice="Off">
         <choice>Off</choice>
@@ -66,7 +66,7 @@
     </enumVal>
     <label>Pulse Chain Recognition (LGB)</label>
   </variable>
-  <variable label="PWM Frequency" CV="112" item="DC Brake Momentum" tooltip="CV 112 bit 5, Active if CV9=0" mask="XXVXXXXX" default="0">
+  <variable label="PWM Frequency" CV="112" item="DC Brake Momentum" tooltip="Active if CV9=0" mask="XXVXXXXX" default="0">
     <enumVal>
       <enumChoice choice="20kHz">
         <choice>20kHz</choice>
@@ -77,7 +77,7 @@
     </enumVal>
     <label>PWM Frequency</label>
   </variable>
-  <variable label="Non directional DC braking" CV="112" tooltip="CV 112 bit 6" mask="XVXXXXXX" default="0" item="Radio Power Conversion">
+  <variable label="Non directional DC braking" CV="112" mask="XVXXXXXX" default="0" item="Radio Power Conversion">
     <enumVal>
       <enumChoice choice="Off">
         <choice>Off</choice>
@@ -88,7 +88,7 @@
     </enumVal>
     <label>Non directional DC braking</label>
   </variable>
-  <variable label="Pulse Chain Generation" CV="112" tooltip="CV 112 bit 7" mask="VXXXXXXX" default="0">
+  <variable label="Pulse Chain Generation" CV="112" mask="VXXXXXXX" default="0">
     <enumVal>
       <enumChoice choice="Off">
         <choice>Off</choice>
@@ -99,7 +99,7 @@
     </enumVal>
     <label>Pulse Chain Generation</label>
   </variable>
-  <variable label="EMF Feedback Cutoff Intensity" CV="113" default="0" item="EMF Feedback Cutout" tooltip="CV 113, Controls how much Feedback Cutoff">
+  <variable label="EMF Feedback Cutoff Intensity" CV="113" default="0" item="EMF Feedback Cutout" tooltip="Controls how much Feedback Cutoff">
     <decVal min="0" max="255"/>
     <label>EMF Feedback Cutoff Intensity</label>
   </variable>
@@ -191,11 +191,11 @@
     </enumVal>
     <label>Dim function output 6</label>
   </variable>
-  <variable label="Uncoupler" CV="115" default="0" tooltip="CV 115">
+  <variable label="Uncoupler" CV="115" default="0">
     <decVal max="99"/>
     <label>Uncoupler</label>
   </variable>
-  <variable label="Auto Uncouple" CV="116" default="0" tooltip="CV 116">
+  <variable label="Auto Uncouple" CV="116" default="0">
     <decVal max="199"/>
     <label>Auto Uncouple</label>
   </variable>
@@ -504,7 +504,7 @@
     </enumVal>
     <label>Shunt Function Key</label>
   </variable>
-  <variable item="Analog Power Conversion" label="Polarity Dependent DC stopping method" CV="124" mask="XXVXXXXX" default="0" tooltip="CV124 bit 5">
+  <variable item="Analog Power Conversion" label="Polarity Dependent DC stopping method" CV="124" mask="XXVXXXXX" default="0">
     <enumVal>
       <enumChoice choice="Off">
         <choice>Off</choice>
@@ -515,7 +515,7 @@
     </enumVal>
     <label>Polarity Dependent DC stopping method</label>
   </variable>
-  <variable label="SUSI" CV="124" mask="VXXXXXXX" default="0" tooltip="CV 124 bit 7" minOut="6">
+  <variable label="SUSI" CV="124" mask="VXXXXXXX" default="0" minOut="6">
     <!-- value 0 => Susi,  value 1 => normal function outputs -->
     <enumVal>
       <enumChoice choice="SUSI Serial interface for sound board">
@@ -527,7 +527,7 @@
     </enumVal>
     <label>SUSI</label>
   </variable>
-  <variable label="Front light effect generated" CV="125" mask="VVVVVVXX" tooltip="CV 125" item="Output 1 effect generated">
+  <variable label="Front light effect generated" CV="125" mask="VVVVVVXX" item="Output 1 effect generated">
     <enumVal>
       <enumChoice choice="Standard on/off function output">
         <choice>Standard on/off function output</choice>
@@ -592,7 +592,7 @@
     </enumVal>
     <label>Front light effect generated</label>
   </variable>
-  <variable label="Front light behavior" CV="125" mask="XXXXXXVV" tooltip="CV 125" item="Output 1 behavior">
+  <variable label="Front light behavior" CV="125" mask="XXXXXXVV" item="Output 1 behavior">
     <enumVal>
       <enumChoice choice="Both directions">
         <choice>Both directions</choice>
@@ -606,7 +606,7 @@
     </enumVal>
     <label>Front light behavior</label>
   </variable>
-  <variable label="Rear light effect generated" CV="126" mask="VVVVVVXX" tooltip="CV 126" item="Output 2 effect generated">
+  <variable label="Rear light effect generated" CV="126" mask="VVVVVVXX" item="Output 2 effect generated">
     <enumVal>
       <enumChoice choice="Standard on/off function output">
         <choice>Standard on/off function output</choice>
@@ -671,7 +671,7 @@
     </enumVal>
     <label>Rear light effect generated</label>
   </variable>
-  <variable label="Rear light behavior" CV="126" mask="XXXXXXVV" tooltip="CV 126" item="Output 2 behavior">
+  <variable label="Rear light behavior" CV="126" mask="XXXXXXVV" item="Output 2 behavior">
     <enumVal>
       <enumChoice choice="Both directions">
         <choice>Both directions</choice>
@@ -685,7 +685,7 @@
     </enumVal>
     <label>Rear light behavior</label>
   </variable>
-  <variable label="Function output 1 effect generated" CV="127" mask="VVVVVVXX" tooltip="CV 127" item="Output 3 effect generated">
+  <variable label="Function output 1 effect generated" CV="127" mask="VVVVVVXX" item="Output 3 effect generated">
     <enumVal>
       <enumChoice choice="Standard on/off function output">
         <choice>Standard on/off function output</choice>
@@ -750,7 +750,7 @@
     </enumVal>
     <label>Function output 1 effect generated</label>
   </variable>
-  <variable label="Function output 1 behavior" CV="127" mask="XXXXXXVV" tooltip="CV 127" item="Output 3 behavior">
+  <variable label="Function output 1 behavior" CV="127" mask="XXXXXXVV" item="Output 3 behavior">
     <enumVal>
       <enumChoice choice="Both directions">
         <choice>Both directions</choice>
@@ -764,7 +764,7 @@
     </enumVal>
     <label>Function output 1 behavior</label>
   </variable>
-  <variable label="Function output 2 effect generated" CV="128" mask="VVVVVVXX" tooltip="CV 128" item="Output 4 effect generated">
+  <variable label="Function output 2 effect generated" CV="128" mask="VVVVVVXX" item="Output 4 effect generated">
     <enumVal>
       <enumChoice choice="Standard on/off function output">
         <choice>Standard on/off function output</choice>
@@ -829,7 +829,7 @@
     </enumVal>
     <label>Function output 2 effect generated</label>
   </variable>
-  <variable label="Function output 2 behavior" CV="128" mask="XXXXXXVV" tooltip="CV 128" item="Output 4 behavior">
+  <variable label="Function output 2 behavior" CV="128" mask="XXXXXXVV" item="Output 4 behavior">
     <enumVal>
       <enumChoice choice="Both directions">
         <choice>Both directions</choice>
@@ -843,7 +843,7 @@
     </enumVal>
     <label>Function output 2 behavior</label>
   </variable>
-  <variable label="Function output 3 effect generated" CV="129" mask="VVVVVVXX" tooltip="CV 129" item="Output 5 effect generated" minOut="5">
+  <variable label="Function output 3 effect generated" CV="129" mask="VVVVVVXX" item="Output 5 effect generated" minOut="5">
     <enumVal>
       <enumChoice choice="Standard on/off function output">
         <choice>Standard on/off function output</choice>
@@ -908,7 +908,7 @@
     </enumVal>
     <label>Function output 3 effect generated</label>
   </variable>
-  <variable label="Function output 3 behavior" CV="129" mask="XXXXXXVV" tooltip="CV 129" item="Output 5 behavior" minOut="5">
+  <variable label="Function output 3 behavior" CV="129" mask="XXXXXXVV" item="Output 5 behavior" minOut="5">
     <enumVal>
       <enumChoice choice="Both directions">
         <choice>Both directions</choice>
@@ -922,7 +922,7 @@
     </enumVal>
     <label>Function output 3 behavior</label>
   </variable>
-  <variable label="Function output 4 effect generated" CV="130" mask="VVVVVVXX" tooltip="CV 130" item="Output 6 effect generated" minOut="5">
+  <variable label="Function output 4 effect generated" CV="130" mask="VVVVVVXX" item="Output 6 effect generated" minOut="5">
     <enumVal>
       <enumChoice choice="Standard on/off function output">
         <choice>Standard on/off function output</choice>
@@ -987,7 +987,7 @@
     </enumVal>
     <label>Function output 4 effect generated</label>
   </variable>
-  <variable label="Function output 4 behavior" CV="130" mask="XXXXXXVV" tooltip="CV 130" item="Output 6 behavior" minOut="5">
+  <variable label="Function output 4 behavior" CV="130" mask="XXXXXXVV" item="Output 6 behavior" minOut="5">
     <enumVal>
       <enumChoice choice="Both directions">
         <choice>Both directions</choice>
@@ -1001,7 +1001,7 @@
     </enumVal>
     <label>Function output 4 behavior</label>
   </variable>
-  <variable label="Function 0utput 5 effect generated" CV="131" mask="VVVVVVXX" minOut="8" tooltip="CV 131" item="Output 7 effect generated">
+  <variable label="Function 0utput 5 effect generated" CV="131" mask="VVVVVVXX" minOut="8" item="Output 7 effect generated">
     <enumVal>
       <enumChoice choice="Standard on/off function output">
         <choice>Standard on/off function output</choice>
@@ -1066,7 +1066,7 @@
     </enumVal>
     <label>Function output 5 effect generated</label>
   </variable>
-  <variable label="Function output 5 behavior" CV="131" mask="XXXXXXVV" minOut="8" tooltip="CV 131" item="Output 7 behavior">
+  <variable label="Function output 5 behavior" CV="131" mask="XXXXXXVV" minOut="8" item="Output 7 behavior">
     <enumVal>
       <enumChoice choice="Both directions">
         <choice>Both directions</choice>
@@ -1080,7 +1080,7 @@
     </enumVal>
     <label>Function output 5 behavior</label>
   </variable>
-  <variable label="Function output 6 effect generated" CV="132" mask="VVVVVVXX" minOut="8" tooltip="CV 132" item="Output 8 effect generated">
+  <variable label="Function output 6 effect generated" CV="132" mask="VVVVVVXX" minOut="8" item="Output 8 effect generated">
     <enumVal>
       <enumChoice choice="Standard on/off function output">
         <choice>Standard on/off function output</choice>
@@ -1145,7 +1145,7 @@
     </enumVal>
     <label>Functin output 6 effect generated</label>
   </variable>
-  <variable label="Function output 6 behavior" CV="132" mask="XXXXXXVV" minOut="8" tooltip="CV 132" item="Output 8 behavior">
+  <variable label="Function output 6 behavior" CV="132" mask="XXXXXXVV" minOut="8" item="Output 8 behavior">
     <enumVal>
       <enumChoice choice="Both directions">
         <choice>Both directions</choice>
@@ -1315,7 +1315,7 @@
     </enumVal>
     <label>Software Update Locked</label>
   </variable>
-  <variable label="Motor Control Method" CV="145" item="Kick Start" default="0" tooltip="CV145">
+  <variable label="Motor Control Method" CV="145" item="Kick Start" default="0">
     <enumVal>
       <enumChoice choice="Normal (DC and Coreless)" value="0">
         <choice>Normal (DC and Coreless)</choice>
@@ -1338,19 +1338,19 @@
     </enumVal>
     <label>Motor Control Method</label>
   </variable>
-  <variable label="Motor Backlash Control" CV="146" default="0" item="Load Control" tooltip="CV 146, Motor Backlash Control">
+  <variable label="Motor Backlash Control" CV="146" default="0" item="Load Control" tooltip="Motor Backlash Control">
     <decVal min="0" max="255"/>
     <label>Motor Backlash Control</label>
   </variable>
-  <variable label="EMK measure timeout" CV="147" default="0" item="Total PWM Period" tooltip="CV147">
+  <variable label="EMK measure timeout" CV="147" default="0" item="Total PWM Period">
     <decVal min="0" max="255"/>
     <label>EMK measure timeout</label>
   </variable>
-  <variable label="Differential value" CV="148" default="0" item="EMF Control Reference" tooltip="CV148">
+  <variable label="Differential value" CV="148" default="0" item="EMF Control Reference">
     <decVal min="0" max="255"/>
     <label>Differential value</label>
   </variable>
-  <variable label="Adaptive proportional value" CV="149" mask="VVVVVVVX" default="0" item="EMF Enable" tooltip="CV149">
+  <variable label="Adaptive proportional value" CV="149" mask="VVVVVVVX" default="0" item="EMF Enable">
     <enumVal>
       <enumChoice choice="On">
         <choice>On</choice>
@@ -1361,11 +1361,11 @@
     </enumVal>
     <label>Adaptive proportional value</label>
   </variable>
-  <variable label="Regulation at full speed" CV="150" default="0" item="EMF Static Config" tooltip="CV150">
+  <variable label="Regulation at full speed" CV="150" default="0" item="EMF Static Config">
     <decVal min="0" max="255"/>
     <label>Regulation at full speed</label>
   </variable>
-  <variable label="Motor Brake" CV="151" item="Advanced Group 1 Option 1" default="0" tooltip="Motor braked by shorting output. CV151">
+  <variable label="Motor Brake" CV="151" item="Advanced Group 1 Option 1" default="0" tooltip="Motor braked by shorting output">
     <enumVal>
       <enumChoice choice="No Braking">
         <choice>No Braking</choice>

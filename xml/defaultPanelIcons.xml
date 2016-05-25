@@ -277,6 +277,26 @@
         </analog>
       </set>
     </FastClock>
+    
+	<Portal>
+		<Standard>
+          <hidden>
+          	resources/icons/Invisible.gif
+          </hidden>
+          <path>
+          	resources/icons/greenSquare.gif
+          </path>
+          <block>
+          	resources/icons/throttles/RoundRedCircle20.png
+          </block>
+          <fromArrow>
+          	resources/icons/track/fromArrow.gif
+          </fromArrow>
+          <toArrow>
+          	resources/icons/track/toArrow.gif
+          </toArrow>
+        </Standard>
+	</Portal>
       
     <IndicatorTrack>
       <BlockSegment>

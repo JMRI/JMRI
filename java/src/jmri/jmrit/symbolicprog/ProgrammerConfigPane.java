@@ -28,9 +28,11 @@ public class ProgrammerConfigPane extends JPanel {
 
         // also create the advanced panel
         advancedPanel = new JPanel();
-        advancedPanel.setLayout(new BoxLayout(advancedPanel, BoxLayout.X_AXIS));
+        advancedPanel.setLayout(new BoxLayout(advancedPanel, BoxLayout.Y_AXIS));
         advancedPanel.add(showEmptyTabs = new JCheckBox("Show empty tabs"));
         showEmptyTabs.setSelected(jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame.getShowEmptyPanes());
+        advancedPanel.add(ShowCvNums = new JCheckBox("Show CV numbers in tool tips"));
+        ShowCvNums.setSelected(jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame.getShowCvNumbers());
     }
     JComboBox programmerBox;
 
@@ -55,7 +57,9 @@ public class ProgrammerConfigPane extends JPanel {
 
     JPanel advancedPanel;
     JCheckBox showEmptyTabs;
+    JCheckBox ShowCvNums;
 
     public boolean getShowEmptyTabs() { return showEmptyTabs.isSelected(); }
+    public boolean getShowCvNums() { return ShowCvNums.isSelected(); }
 }
 

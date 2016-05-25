@@ -1,18 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en">
-<head>
-<!-- Copyright ($Author: dat7719 $) 2009 -->
-<!-- $Id: index.shtml 18615 2011-09-23 09:13:40Z dat7719 $ -->
-<title>Decoder Pro Manual: Index</title>
+<html lang="en"><head><!-- Copyright ($Author: dat7719 $) 2009 --><!-- $Id: index.shtml 18615 2011-09-23 09:13:40Z dat7719 $ -->
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+
+
+
+<title>Decoder Pro Manual: Index</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
-</head>
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/"><!-- /Style --></head>
 
 <body>
 <!--#include virtual="/Header" -->
@@ -20,47 +17,59 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<a NAME="Top"></a>
-<h1>DecoderPro&reg; v3.2 User's Guide</h1>
+<a name="Top"></a>
+<h1>DecoderPro® v3.2 User's Guide</h1>
 <h1>&nbsp;</h1>
-<h3>In work 1/14/2013</h3>
+
 <p>&nbsp;</p>
-<p><strong>JMRI&reg; is a Java-based cross-platform application for model railroaders. JMRI&reg; contains applications for:</strong></p>
+<p><strong>JMRI® is a Java-based cross-platform application for model railroaders. JMRI® contains applications for:</strong></p>
 <p><strong>The programming of Digital
-  Command Control (DCC) decoders, (DecoderPro&reg;).<br>
-  Programming decoders and using throttle run trains, DecoderPro3&reg;</strong><strong><br>
-    Drawing computer based panels for depicting a  model railroad&nbsp;  layout , and automated operation (PanelPro&reg;
+  Command Control (DCC) decoders, (DecoderPro®).<br>
+  Programming decoders and using throttle run trains, DecoderPro3®</strong><strong><br>
+    Drawing computer based panels for depicting a  model railroad&nbsp;  layout , and automated operation (PanelPro®
     ).<br>
     Controlling the layout , (Layout Editor).<br>
     Creating train manifests for duplicating railroad  operations, Operations<br>
     Controlling the signals on the layout<br>
-    Controlling&nbsp;  lighting and sound in the room, and so forth. (SoundPro&reg;)</strong></p>
-<p>All this capability is contained in one program (JMRI&reg;) which has  several &ldquo;start-up&rdquo; screens for the various applications. </p>
+    Controlling&nbsp;  lighting and sound in the room, and so forth. (SoundPro®)</strong></p>
+<p>All this capability is contained in one program (JMRI®) which has  several &#8220;start-up&#8221; screens for the various applications. </p>
 <p>&nbsp;</p>
 
 <hr>
-&nbsp;JMRI&reg; can  run on any computer system that will run Java 1.6.0 or later, whether it is  Macintosh, Windows, or Linux based. It does require that Java be installed on  the computer. You can get Java as a free (but very large...) download at:
+&nbsp;JMRI® can run on any computer system that will run Java 1.6.0 or
+later, whether it is Macintosh, Windows, or Linux based. It does
+require that Java be installed on the computer. You can get Java as a
+free (but very large...) download at:
 <p><a href="http://java.sun.com/getjava/" target="_blank">http://java.sun.com/getjava/</a>
-<p>If  this is your first visit to our manual we suggest that you take the Decoder Pro&reg; tour at <a href="http://jmri.sourceforge.net/help/en/html/apps/DecoderPro/Tour.shtml">http://jmri.sourceforge.net/help/en/html/apps/DecoderPro/Tour.shtml</a><br>
-  to get an overview of what we&rsquo;re about to cover..
-<p>Note: All screen shots in this manual are from a Windows machine using the   "Metal" User Interface option   . While your screens will probably differ  in some layout details, they will be essentially the same. All   programming examples shown are with Digitrax PR3(MS100 mode) connected   to Digitrax Super Chief Radio Command Station. Most of the decoders in locomotive   samples will be Digitrax, except for sound examples.
-<p>Note: This entire manual has been updated to   correspond to DecoderPro&reg; 3.2, and the HTML verified using HTML4 and   Cascading Style Sheets. If the formatting looks odd, you probably need   to update your browser. </p>
+</p><p>If  this is your first visit to our manual we suggest that you take the Decoder Pro® tour at <a href="http://jmri.sourceforge.net/help/en/html/apps/DecoderPro/Tour.shtml">http://jmri.sourceforge.net/help/en/html/apps/DecoderPro/Tour.shtml</a><br>
+  to get an overview of what we&#8217;re about to cover..
+</p><p>Note: All screen shots in this manual are from a Windows machine
+using the "Metal" User Interface option . While your screens will
+probably differ in some layout details, they will be essentially the
+same. All programming examples shown are with Digitrax PR3(MS100 mode)
+connected to Digitrax Super Chief Radio Command Station. Most of the
+decoders in locomotive samples will be Digitrax, except for sound
+examples.
+</p><p>Note: This entire manual has been updated to correspond to
+DecoderPro® 3.2, and the HTML verified using HTML4 and Cascading Style
+Sheets. If the formatting looks odd, you probably need to update your
+browser. </p>
 <p>
-<h1>Table of Contents</h1>
-<h4><a name="Installing"></a>Installing JMRI&reg;</h4>
+</p><h1>Table of Contents</h1>
+<h4><a name="Installing"></a>Installing JMRI®</h4>
 <ul>
-<li><a href="Installing_JMRI.shtml">Preparing to Install JMRI&reg;</a></li>
-<li><a href="Installing_JMRI.shtml#InstallJMRI">Installing JMRI&reg; Software</a>
-</ul>
+<li><a href="Installing_JMRI.shtml">Preparing to Install JMRI®</a></li>
+<li><a href="Installing_JMRI.shtml#InstallJMRI">Installing JMRI® Software</a>
+</li></ul>
 <h4>
-  <a NAME="GettingStarted" id="GettingStarted"></a>Getting
+  <a name="GettingStarted" id="GettingStarted"></a>Getting
     started</h4>
 <ul>
 <li>
 <a href="Start_DCC.shtml">What is DCC?</a></li>
 
 <li>
-<a href="Start_DCC_Systems.shtml">What DCC systems will DecoderPro&reg;  work with?</a></li>
+<a href="Start_DCC_Systems.shtml">What DCC systems will DecoderPro®  work with?</a></li>
 
 <li>
 <a href="Start_DCC_Hardware.shtml">What hardware do I need?</a></li>
@@ -73,14 +82,14 @@
 </ul>
 
 <h4>
-<a name="Setting up"></a>Using DecoderPro&reg;</h4>
+<a name="Setting up"></a>Using DecoderPro®</h4>
 <ul>
   <li><a href="Programmer_Setup.shtml">How do I set up to program
     a decoder?</a></li>
   <li><a href="Programmer_Start.shtml">What are the Programming
     Modes?</a></li>
 </ul>
-<h4>DecoderPro&reg; Programming Modes</h4>
+<h4>DecoderPro® Programming Modes</h4>
 <ul>
   <li><a href="Programmer_SingleCV.shtml">Single CV Programmer</a></li>
   <li><a href="Programmer_ServiceMode.shtml">Service Mode Programmer</a></li>
@@ -88,7 +97,7 @@
   <li><a href="Programmer_Multi_Decoder.shtml">Multi Decoder Control (Programming)</a></li>
 </ul>
 <h4>
-  <a NAME="Basic Programmer"></a>
+  <a name="Basic Programmer"></a>
 The Basic Programmer</h4>
 <ul>
   <li><a href="Basic_Start.shtml">Entering locomotives in
@@ -103,7 +112,7 @@ The Basic Programmer</h4>
   <li><a href="Basic_BasicPane.shtml#Do%20More">What if I need to do more?</a></li>
 </ul>
 <h4>
-<a NAME="Advanced Programmer"></a>The Comprehensive Programmer</h4>
+<a name="Advanced Programmer"></a>The Comprehensive Programmer</h4>
 <ul>
   <li><a href="Comp_Setup_Roster.shtml">Set-up and Roster Panes</a></li>
   <li><a href="Comp_Basic.shtml">Expanded Basic Pane</a></li>
@@ -141,7 +150,7 @@ The Basic Programmer</h4>
   <li><a href="Comp_ManfSpecific.shtml">Manufacturer-Specific Pane</a></li>
   <li><a href="Comp_PrintData.shtml">Printing the Decoder Data</a></li>
 </ul>
-<h4><a name="Main"></a>DecoderPro&reg; Main Window</h4>
+<h4><a name="Main"></a>DecoderPro® Main Window</h4>
 <ul>
   <li><a href="Main_Main.shtml">Main Window</a></li>
   <li><a href="Main_Menu.shtml">Menu Overview</a></li>
@@ -165,7 +174,7 @@ The Basic Programmer</h4>
   </li>
   <li><a href="Main_Tool.shtml">Tools Menu</a>
     <ul>
-      <li>Programmers <img src="images/arrow.gif" width="20" height="9" alt="arrow">
+      <li>Programmers <img src="images/arrow.gif" alt="arrow" height="9" width="20">
         <ul>
           <li><a href="Programmer_SingleCV.shtml">Single CV Programmer</a></li>
           <li><a href="Programmer_ServiceMode.shtml">Service Mode Programmer</a></li>
@@ -173,8 +182,8 @@ The Basic Programmer</h4>
           <li><a href="Programmer_Multi_Decoder.shtml">Multi-Decoder Control</a></li>
         </ul>
       </li>
-      <li>Tables <img src="images/arrow.gif" width="20" height="9" alt="arrow"> (not yet covered in this manual)</li>
-      <li><a href="Main_Throttle.shtml">Throttles</a><img src="images/arrow.gif" width="20" height="9" alt="arrow">
+      <li>Tables <img src="images/arrow.gif" alt="arrow" height="9" width="20"> (not yet covered in this manual)</li>
+      <li><a href="Main_Throttle.shtml">Throttles</a><img src="images/arrow.gif" alt="arrow" height="9" width="20">
         <ul>
           <li>New Throttle...</li>
           <li>Throttles List Window</li>
@@ -186,7 +195,7 @@ The Basic Programmer</h4>
         </ul>
       </li>
       <li><a href="Main_ConsistControl.shtml">Consisting Tool...</a></li>
-      <li>Clocks <img src="images/arrow.gif" width="20" height="9" alt="arrow">
+      <li>Clocks <img src="images/arrow.gif" alt="arrow" height="9" width="20">
         <ul>
           <li><a href="Main_FastClockSetup.shtml">Set up Fast Clock...</a></li>
           <li>Nixie Clock</li>
@@ -202,8 +211,8 @@ The Basic Programmer</h4>
       <li><a href="Main_lightControl.shtml">Light Control...</a></li>
       <li>Dispatcher... (not covered in this manual)</li>
       <li>Send DCC Packet...(not covered in this manual)</li>
-      <li>USS CTC Tools <img src="images/arrow.gif" width="20" height="9" alt="arrow">(not covered in this manual)</li>
-      <li><a href="Ops_Start.shtml">Operations</a><img src="images/arrow.gif" width="20" height="9" alt="arrow">
+      <li>USS CTC Tools <img src="images/arrow.gif" alt="arrow" height="9" width="20">(not covered in this manual)</li>
+      <li><a href="Ops_Start.shtml">Operations</a><img src="images/arrow.gif" alt="arrow" height="9" width="20">
         <ul>
           <li>Settings </li>
           <li>Locations </li>
@@ -227,7 +236,7 @@ The Basic Programmer</h4>
       <li>Delete Entry...</li>
       <li><a href="Main_Roster.shtml#PrintOutput">Print Summary</a></li>
       <li><a href="Main_Roster.shtml#PrintOutput">Print Preview Summary...</a></li>
-      <li><a href="Main_RosterGroup.shtml">Roster Groups</a><img src="images/arrow.gif" width="20" height="9" alt="arrow">
+      <li><a href="Main_RosterGroup.shtml">Roster Groups</a><img src="images/arrow.gif" alt="arrow" height="9" width="20">
         <ul>
           <li>Create Roster Group</li>
           <li>Delete Roster Group</li>
@@ -241,7 +250,7 @@ The Basic Programmer</h4>
   </li>
   <li><a href="Main_Panels.shtml">Panels Menu</a>
     <ul>
-      <li>New Panel <img src="images/arrow.gif" width="20" height="9" alt="arrow">
+      <li>New Panel <img src="images/arrow.gif" alt="arrow" height="9" width="20">
         <ul>
           <li><a href="Main_Panels.shtml#PanelEditor">Panel Editor</a></li>
           <li><a href="#">Control Panel Editor</a></li>
@@ -251,19 +260,19 @@ The Basic Programmer</h4>
       <li>Open Panels...</li>
       <li>Save Panels...</li>
       <li>Show History</li>
-      <li>Show Panel <img src="images/arrow.gif" width="20" height="9" alt="arrow">
+      <li>Show Panel <img src="images/arrow.gif" alt="arrow" height="9" width="20">
         <ul>
           <li>
-            <input type="checkbox" name="checkbox4" id="checkbox4" value="unchecked">
+            <input name="checkbox4" id="checkbox4" value="unchecked" type="checkbox">
           Panel </li>
           <li>
-            <input type="checkbox" name="checkbox5" id="checkbox5" value="unchecked">
+            <input name="checkbox5" id="checkbox5" value="unchecked" type="checkbox">
           Panel 2</li>
           <li>
-            <input type="checkbox" name="checkbox6" id="checkbox6" value="unchecked">
+            <input name="checkbox6" id="checkbox6" value="unchecked" type="checkbox">
           Control Panel</li>
           <li>
-            <input type="checkbox" name="checkbox7" id="checkbox7" value="unchecked">
+            <input name="checkbox7" id="checkbox7" value="unchecked" type="checkbox">
           My Layout</li>
         </ul>
       </li>
@@ -273,8 +282,8 @@ The Basic Programmer</h4>
       <li>Script Entry</li>
     </ul>
   </li>
-  <li>Operations<img src="images/arrow.gif" width="20" height="9" alt="arrow">
-(now covered in the JMRI&reg; Operations User's Guide)
+  <li>Operations<img src="images/arrow.gif" alt="arrow" height="9" width="20">
+(now covered in the JMRI® Operations User's Guide)
   <ul>
       <li>Settings</li>
       <li>Cars </li>
@@ -318,16 +327,16 @@ The Basic Programmer</h4>
       <li><a href="Main_Debug.shtml#logMessage">Log Message</a></li>
       <li>Display Message Log</li>
       <li>Display Log Categories</li>
-      <li><a href="Main_VSD.shtml">Virtual Sound Decoder</a><img src="images/arrow.gif" width="20" height="9" alt="arrow">
+      <li><a href="Main_VSD.shtml">Virtual Sound Decoder</a><img src="images/arrow.gif" alt="arrow" height="9" width="20">
       <ul>
 	<li><a href="VSD_Manager.shtml">VSDecoder Manager</a></li>
 	<li><a href="VSD_LocationsMgr.shtml">Manage VSD Locations</a></li>
       </ul></li>
       <li>Listed Table Access</li>
       <li>Listed Table Access-Direct to Routes</li>
-      <li>PRICOM <img src="images/arrow.gif" width="20" height="9" alt="arrow">
+      <li>PRICOM <img src="images/arrow.gif" alt="arrow" height="9" width="20">
             <ul>
-              <li><a href="Main_PRICOM.shtml">PRICOM Pocket Tester</a><img src="images/arrow.gif" width="20" height="9" alt="arrow">
+              <li><a href="Main_PRICOM.shtml">PRICOM Pocket Tester</a><img src="images/arrow.gif" alt="arrow" height="9" width="20">
                 <ul>
                   <li>Connect</li>
                 </ul>
@@ -352,10 +361,10 @@ The Basic Programmer</h4>
         <input name="checkbox" id="checkbox" value="checked" type="checkbox">
         DecoderPro</li>
       <li> <strong>
-        <input name="checkbox2" id="checkbox2" type="checkbox" value="unchecked">
+        <input name="checkbox2" id="checkbox2" value="unchecked" type="checkbox">
         </strong>LocoNet Traffic</li>
       <li> <strong>
-        <input name="checkbox3" id="checkbox3" type="checkbox" value="unchecked">
+        <input name="checkbox3" id="checkbox3" value="unchecked" type="checkbox">
       </strong>        Power Control</li>
     </ul>
 </li>
@@ -372,8 +381,8 @@ The Basic Programmer</h4>
     </ul>
 </li>
 </ul>
-<h4><a name="Operations"></a>JMRI&reg; Operations Program</h4>
-<h4><a NAME="DecoderDefinition"></a>Creating a Decoder Definition </h4>
+<h4><a name="Operations"></a>JMRI® Operations Program</h4>
+<h4><a name="DecoderDefinition"></a>Creating a Decoder Definition </h4>
 <ul>
   <li><a href="Dcode_Start.shtml">Getting Started</a></li>
   <li><a href="Dcode_Format.shtml">Format</a></li>
@@ -386,29 +395,29 @@ The Basic Programmer</h4>
 </ul>
 <hr>
 <p>The <a href="http://jmri.org/Download/index.html">JMRI download page</a>
-is hosted by <A href="http://sourceforge.net">
-<img src="images/sflogo.png" width="88" height="31" border="0" alt="SourceForge Logo" align="middle" hspace="10">sourceforge.net</A>.</p>
+is hosted by <a href="http://sourceforge.net">
+<img src="images/sflogo.png" alt="SourceForge Logo" align="middle" border="0" height="31" hspace="10" width="88">sourceforge.net</a>.</p>
 <p>
 To give feedback on this HTML manual, ask questions about things not
 covered, or make suggestions for improvements to the manual or the software,
 join us on the JMRI Users mailing list at <a href="http://groups.yahoo.com/group/jmriusers/">
 http://groups.yahoo.com/group/jmriusers/</a>
 
-<p>
+</p><p>
 Suggestions for revisions
 are best submitted to the
   <a href="http://groups.yahoo.com/group/jmriusers/">JMRI E-mail list</a> in plain text format. This will make it easier to copy into the files, and help prevent "Microsoft Bloat" in the HTML.
-<p>Thanks for reading, and Let's Run Trains!
+</p><p>Thanks for reading, and Let's Run Trains!
 
-<table width="90%" border="1" align="center" cellpadding="2" cellspacing="1">
+</p><table align="center" border="1" cellpadding="2" cellspacing="1" width="90%">
   <caption>
     Revisions
   </caption>
-  <tr>
-    <th width="8%" scope="col">Version</th>
-    <th width="8%" scope="col">Revision Date</th>
-    <th width="13%" scope="col">Editors</th>
-    <th width="71%" scope="col">Major Revisions</th>
+  <tbody><tr>
+    <th scope="col" width="8%">Version</th>
+    <th scope="col" width="8%">Revision Date</th>
+    <th scope="col" width="13%">Editors</th>
+    <th scope="col" width="71%">Major Revisions</th>
   </tr>
   <tr>
     <td align="left" valign="top">original</td>
@@ -471,16 +480,15 @@ are best submitted to the
     <td align="left" valign="top">3.2</td>
     <td align="left" valign="top">1/20/2013</td>
     <td align="left" valign="top">Dale A. Tripp</td>
-    <td align="left" valign="top">Updated from JMRI&reg; 3.0 and separated Operations to separate User's Guide</td>
+    <td align="left" valign="top">Updated from JMRI® 3.0 and separated Operations to separate User's Guide</td>
   </tr>
-</table>
+</tbody></table>
 <p>
-<hr>
+</p><hr>
 </div>
-<div align=right>Go to the
+<div align="right">Go to the
 <a href="http://groups.yahoo.com/group/jmriusers/">
 JMRI Users home page on Yahoo Groups</a></div>
 
 <!--#include virtual="/Footer" -->
-</body>
-</html>
+</body></html>

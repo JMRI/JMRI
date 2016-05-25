@@ -33,6 +33,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.openlcb.swing.PackageTest");
 
+        suite.addTest(jmri.jmrix.openlcb.swing.hub.PackageTest.suite());
         suite.addTest(jmri.jmrix.openlcb.swing.tie.PackageTest.suite());
         suite.addTest(jmri.jmrix.openlcb.swing.monitor.PackageTest.suite());
         

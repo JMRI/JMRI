@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.awt.Color;
+import java.awt.Font;
 
 import jmri.Path;
 import jmri.Sensor;
@@ -79,6 +81,8 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     static final HashMap<String, Integer> _oldstatusMap = new HashMap<String, Integer>();
     static final HashMap<String, Integer> _statusMap = new HashMap<String, Integer>();
     static final HashMap<String, String> _statusNameMap = new HashMap<String, String>();
+    
+    static final Color DEFAULT_FILL_COLOR = new Color(200, 0, 200);
 
     static void loadStatusMap() {
     	_statusMap.put("unoccupied", Integer.valueOf(UNOCCUPIED));
@@ -141,6 +145,9 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     private HashMap<String, List<HashMap<OBlock, List<OPath>>>> _sharedTO = 
     		new HashMap<String, List<HashMap<OBlock, List<OPath>>>>();
     private boolean _occupationPending;	// autoTrain is about to enter this block
+    private Color _markerForeground = Color.WHITE;
+    private Color _markerBackground = DEFAULT_FILL_COLOR;
+    private Font _markerFont;
     
     public OBlock(String systemName) {
         super(systemName);
@@ -371,8 +378,39 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     public float getScaleRatio() {
         return _scaleRatio;
     }
+    public void setMarkerForeground(Color c) { 
+    	_markerForeground =c;
+    }
+    public Color getMarkerForeground() { 
+    	return _markerForeground;
+    }
+    public void setMarkerBackground(Color c) { 
+    	_markerBackground =c;
+    }
+    public Color getMarkerBackground() { 
+    	return _markerBackground;
+    }
+    public void setMarkerFont(Font f) {
+    	_markerFont = f;
+    }
+    public Font getMarkerFont() {
+    	return _markerFont;
+    }
+    
+    
+    /** override
+     * 
+     */
+    public void setValue(Object o) {
+    	super.setValue(o);
+    	if (o==null) {
+        	_markerForeground = Color.WHITE;
+        	_markerBackground = DEFAULT_FILL_COLOR;
+        	_markerFont = null;
+    	}
+    }
 
-    /*
+    /*_
     *  From the universal name for block status, check if it is the current status
     */
     public boolean statusIs(String statusName) {
@@ -471,6 +509,16 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             if (path!=null) {
                 int lockState = Turnout.CABLOCKOUT & Turnout.PUSHBUTTONLOCKOUT; 
                 path.setTurnouts(0, false, lockState, false);
+                Portal portal = path.getFromPortal();
+                try {
+                    if (portal!=null) {
+                    	portal.setState(Portal.UNKNOWN);
+                    }
+                    portal = path.getToPortal();
+                    if (portal!=null) {
+                    	portal.setState(Portal.UNKNOWN);
+                    }                        	
+                } catch (jmri.JmriException ex) {}
             }
         }
         _occupationPending = false;
@@ -598,12 +646,11 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         String pName = path.getName();
         if (log.isDebugEnabled()) log.debug("addPath \""+pName+"\" to OBlock "+getSystemName());
         List <Path> list = getPaths();
-        boolean addPath = true;
-        for (int i=0; i<list.size(); i++) {
-            if (pName.equals(((OPath)list.get(i)).getName())) {
-                if (log.isDebugEnabled()) log.debug("\""+pName+"\" duplicated in OBlock "+getSystemName());
-                addPath = false;
-            }
+         for (int i=0; i<list.size(); i++) {
+//          if (pName.equals(((OPath)list.get(i)).getName())) {
+        	if (((OPath)list.get(i)).equals(path)) {
+        		log.info("\""+pName+"\" duplicated in OBlock "+getSystemName());
+             }
         }
         path.setBlock(this);
         Portal portal = path.getFromPortal();
@@ -621,11 +668,9 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             }
         }
         int oldSize = list.size();
-        if (addPath) {        	
-            super.addPath(path);
-        }
+        super.addPath(path);
         firePropertyChange("pathCount", Integer.valueOf(oldSize), Integer.valueOf(getPaths().size()));
-        return addPath;
+        return true;
     }
 
     public void removePath(Path path) {
@@ -744,6 +789,9 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     public String getDescription() {
         return java.text.MessageFormat.format(
             Bundle.getMessage("BlockDescription"), getDisplayName());
+    }
+    public String toString() {
+    	return getDisplayName();
     }
     
     static Logger log = LoggerFactory.getLogger(OBlock.class.getName());

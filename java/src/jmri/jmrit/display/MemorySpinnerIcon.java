@@ -11,7 +11,6 @@ import java.awt.Dimension;
 import java.beans.PropertyChangeListener;
 
 import javax.swing.AbstractAction;
-import javax.swing.JComponent;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
@@ -61,9 +60,9 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
         pos.setMemory(namedMemory.getName());
         return super.finishClone(pos);
     }
-    public JComponent getTextComponent() {
+/*    public JComponent getTextComponent() {
     	return ((JSpinner.DefaultEditor)spinner.getEditor()).getTextField();
-    }
+    }*/
 
     public Dimension getSize() {
         if (debug) {

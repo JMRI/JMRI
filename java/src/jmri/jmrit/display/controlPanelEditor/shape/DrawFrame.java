@@ -201,6 +201,8 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
         String text = _sensorName.getText().trim();
         if (text.length()>0) {
         	ps.setControlSensor(text);
+        } else {
+        	ps.dispose();
         }
 	}
 
@@ -219,9 +221,6 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
     		_parent.closeDrawFrame(this);
     		_parent.getEditor().resetEditor();
     	}
-//    	if (_pShape!=null) {
-//    		_pShape.setVisible(true);
-//    	}
     	_loc = getLocation(_loc);
     	_dim = getSize(_dim);
     	dispose();

@@ -806,16 +806,16 @@
   </decoder>
   <pane name="ESU">
     <column>
-      <display item="DCC Speedstep Detection" tooltip="CV 64 bit 0"/>
+      <display item="DCC Speedstep Detection"/>
     </column>
     <column>
-      <display item="ZIMO Manual Function" tooltip="CV 64 bit 1"/>
+      <display item="ZIMO Manual Function"/>
     </column>
     <column>
-      <display item="Emergency Stop" tooltip="CV 64 bit 3"/>
+      <display item="Emergency Stop"/>
     </column>
     <column>
-      <display item="Signal Dependent Deceleration" tooltip="CV 57"/>
+      <display item="Signal Dependent Deceleration"/>
     </column>
     <column>
       <display item="Analog Mode"/>

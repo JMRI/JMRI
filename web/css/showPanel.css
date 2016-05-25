@@ -3,7 +3,7 @@
 body {
 	font-family: sans-serif;
 }
-.rotatable {
+.rotatable{
 	-webkit-transform-origin: 0% 0%;
 	-moz-transform-origin: 0% 0%;
 	-ms-transform-origin: 0% 0%;
@@ -24,6 +24,16 @@ body {
 }
 .clickable :link:hover, .clickable :visited:hover {
 	color: inherit;
+}
+.positionablelabel.text {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	cursor: default;
+	white-space: nowrap;
 }
 
 .positionablelabel.text.hidden,

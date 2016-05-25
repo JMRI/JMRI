@@ -63,8 +63,8 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
         if(log.isDebugEnabled()) log.debug("openPort called");
         // open the port in XPressNet mode
         try {
-            bcastAdapter=new BroadCastPortAdapter();
-            commAdapter=new CommunicationPortAdapter();
+            bcastAdapter=new BroadCastPortAdapter(this);
+            commAdapter=new CommunicationPortAdapter(this);
             bcastAdapter.connect();
             commAdapter.connect(); 
             pout=commAdapter.getOutputStream();
@@ -119,54 +119,9 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
             // packets.startThreads();
             adaptermemo.setXNetTrafficController(packets);
  
-            commThread = new Thread(new Runnable () {
-       public void run(){ // start a new thread
-       // this thread has one task.  It repeatedly reads from the two incomming
-       // network connections and writes the resulting messages from the network
-       // ports and writes any data received to the output pipe. 
-       if(log.isDebugEnabled()) log.debug("Communication Adapter Thread Started");
-       XNetReply r;
-       BufferedReader bufferedin = new BufferedReader(new InputStreamReader(commAdapter.getInputStream()));
-       for(;;){
-             try{
-                synchronized(commAdapter) {
-                   r=loadChars(bufferedin);
-                }
-            } catch(java.io.IOException e) {
-              continue;
-            }
-          if(log.isDebugEnabled()) log.debug("Network Adapter Received Reply: " + r.toString() );
-          writeReply(r);
-          }
-        }
-            });
-
-            bcastThread = new Thread(new Runnable() {
-       public void run(){ // start a new thread
-       // this thread has one task.  It repeatedly reads from the two incomming
-       // network connections and writes the resulting messages from the network
-       // ports and writes any data received to the output pipe. 
-       if(log.isDebugEnabled()) log.debug("Broadcast Adapter Thread Started");
-       XNetReply r;
-       BufferedReader bufferedin = new BufferedReader(new InputStreamReader(bcastAdapter.getInputStream()));
-       for(;;){
-             try{
-                synchronized(bcastAdapter) {
-                   r=loadChars(bufferedin);
-                }
-             } catch(java.io.IOException e) {
-               continue;
-             }          
-          if(log.isDebugEnabled()) log.debug("Network Adapter Received Reply: " + r.toString() );
-          r.setUnsolicited(); // Anything coming through the broadcast port
-                              // is an unsolicited message.
-          writeReply(r);
-          }
-        }
-            });
-
-            commThread.start();
-            bcastThread.start();
+            // Start the threads that handle the network communication.
+            startCommThread();
+            startBCastThread();
 
             new XNetInitilizationManager(adaptermemo);
 
@@ -174,6 +129,84 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
 	
        }
 
+       /**
+        * Start the Communication port thread.
+        */
+       private void startCommThread(){
+            commThread = new Thread(new Runnable () {
+               public void run(){ // start a new thread
+               // this thread has one task.  It repeatedly reads from the two 
+               // incomming network connections and writes the resulting 
+               // messages from the network ports and writes any data 
+               // received to the output pipe. 
+                  if(log.isDebugEnabled()) 
+                     log.debug("Communication Adapter Thread Started");
+                  XNetReply r;
+                  BufferedReader bufferedin = 
+                     new BufferedReader(
+                        new InputStreamReader(commAdapter.getInputStream()));
+                  for(;;){
+                     try{
+                        synchronized(commAdapter) {
+                           r=loadChars(bufferedin);
+                        }
+                     } catch(java.io.IOException e) {
+                        // continue;
+                        // start the process of trying to recover from
+                        // a failed connection.
+                        commAdapter.recover();
+                        break; // then exit the for loop.
+                     }
+                     if(log.isDebugEnabled()) 
+                        log.debug("Network Adapter Received Reply: " + 
+                                   r.toString() );
+                     writeReply(r);
+                  }
+               }
+            });
+            commThread.start();
+       }
+
+       /**
+        * Start the Broadcast Port thread.
+        */
+       private void startBCastThread(){
+            bcastThread = new Thread(new Runnable() {
+               public void run(){ // start a new thread
+               // this thread has one task.  It repeatedly reads from the two 
+               // incomming network connections and writes the resulting 
+               // messages from the network ports and writes any data received 
+               // to the output pipe. 
+                  if(log.isDebugEnabled()) 
+                     log.debug("Broadcast Adapter Thread Started");
+                  XNetReply r;
+                  BufferedReader bufferedin = 
+                     new BufferedReader(
+                        new InputStreamReader(bcastAdapter.getInputStream()));
+                  for(;;){
+                     try{
+                        synchronized(bcastAdapter) {
+                           r=loadChars(bufferedin);
+                        }
+                     } catch(java.io.IOException e) {
+                        //continue;
+                        // start the process of trying to recover from
+                        // a failed connection.
+                        bcastAdapter.recover();
+                        break; // then exit the for loop.
+                     }          
+                     if(log.isDebugEnabled()) 
+                        log.debug("Network Adapter Received Reply: " + 
+                                  r.toString() );
+                     r.setUnsolicited(); // Anything coming through the 
+                                         // broadcast port is an 
+                                         // unsolicited message.
+                     writeReply(r);
+                 }
+              }
+            });
+            bcastThread.start();
+        }
 
 	/**
 	 * Local method to do specific configuration
@@ -218,11 +251,35 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
         if (s == null) return null;
         else return new XNetReply(s);
     }
+
+    /**
+     * This is called when a connection is initially lost.
+     * For this connection, it calls the default recovery method
+     * for both of the internal adapters.
+     */
+    @Override
+    public void recover(){
+       bcastAdapter.recover();
+       commAdapter.recover();
+    }
+
+    /**
+     * Customizable method to deal with resetting a system connection after
+     * a sucessful recovery of a connection.
+     */
+    @Override
+    protected void resetupConnection() {
+       adaptermemo.getXNetTrafficController().connectPort(this);
+    }
+
  
         //Internal class for broadcast port connection
         private static class BroadCastPortAdapter extends jmri.jmrix.AbstractNetworkPortController {
-		 public BroadCastPortAdapter(){
+                 private LIUSBServerAdapter parent;
+		 public BroadCastPortAdapter(LIUSBServerAdapter p){
           		super();
+                        parent=p;
+                        allowConnectionRecovery=true;
           		setHostName(DEFAULT_IP_ADDRESS);
           		setPort(BROADCAST_TCP_PORT);
                   }
@@ -231,12 +288,19 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
                   }
                   public String getManufacturer() { return null; }
                   public void setManufacturer(String manu) { }
+                  @Override
+                  protected void resetupConnection() {
+                      parent.startBCastThread();
+                  }
         }
 
         // Internal class for communication port connection
         private static class CommunicationPortAdapter extends jmri.jmrix.AbstractNetworkPortController{
-		 public CommunicationPortAdapter(){
+                 private LIUSBServerAdapter parent;
+		 public CommunicationPortAdapter(LIUSBServerAdapter p){
           		super();
+                        parent=p;
+                        allowConnectionRecovery=true;
           		setHostName(DEFAULT_IP_ADDRESS);
           		setPort(COMMUNICATION_TCP_PORT);
                   }
@@ -246,6 +310,10 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
                   
                   public String getManufacturer() { return null; }
                   public void setManufacturer(String manu) { }
+                  @Override
+                  protected void resetupConnection() {
+                      parent.startCommThread();
+                  }
 
         }
 

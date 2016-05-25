@@ -363,11 +363,11 @@ public class ListFrame extends jmri.util.JmriJFrame {
 		// set up a page title
 		String head;
 		if (inputSelected) {
-			head = "CMRInet "+rb.getString("AssignmentPanelInputName")+" - "+
+			head = "CMRI "+rb.getString("AssignmentPanelInputName")+" - "+
 						rb.getString("NodeBoxLabel")+" "+selNodeID;
 		}
 		else {
-			head = "CMRInet "+rb.getString("AssignmentPanelOutputName")+" - "+
+			head = "CMRI "+rb.getString("AssignmentPanelOutputName")+" - "+
 						rb.getString("NodeBoxLabel")+" "+selNodeID;
 		}
 		// initialize a printer writer

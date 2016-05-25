@@ -333,7 +333,6 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
             else {
                 powerLight.setIcon(powerXIcon);
                 powerLight.setToolTipText(Bundle.getMessage("PowerUnknown"));
-                log.error("Unexpected state value: +"+powerMgr.getPower());
             }
         } catch (JmriException ex) {
             powerLight.setIcon(powerXIcon);

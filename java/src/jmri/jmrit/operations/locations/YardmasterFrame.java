@@ -10,6 +10,7 @@ import java.text.MessageFormat;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -26,6 +27,7 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.trains.TrainManifestText;
 
 /**
  * Yardmaster Frame. Shows work at one location.
@@ -44,6 +46,9 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 	// combo boxes
 	JComboBox trainComboBox = new JComboBox();
 	JComboBox trainVisitComboBox = new JComboBox();
+	
+	// buttons
+	JButton nextButton = new JButton(Bundle.getMessage("Next"));
 
 	// panels
 	JPanel pTrainVisit = new JPanel();
@@ -78,6 +83,8 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 		JPanel pTrainName = new JPanel();
 		pTrainName.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Train")));
 		pTrainName.add(trainComboBox);
+		// add next button for web server
+		pTrainName.add(nextButton);
 
 		// row 6b (train visit)
 		pTrainVisit.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Visit")));
@@ -104,10 +111,10 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 
 		if (_location != null) {
 			textLocationName.setText(_location.getName());
-			textLocationComment.setText(_location.getComment());
+			textLocationComment.setText(lineWrap(_location.getComment()));
 			pLocationComment.setVisible(!_location.getComment().equals("")
 					&& Setup.isPrintLocationCommentsEnabled());
-			textSwitchListComment.setText(_location.getSwitchListComment());
+			textSwitchListComment.setText(lineWrap(_location.getSwitchListComment()));
 			pSwitchListComment.setVisible(!_location.getSwitchListComment().equals(""));
 			updateTrainsComboBox();
 			
@@ -124,12 +131,15 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 				print.setToolTipText(Bundle.getMessage("TipDisabled"));
 				preview.setToolTipText(Bundle.getMessage("TipDisabled"));
 			}
+			setTitle(Bundle.getMessage("Yardmaster") + " (" + _location.getName() + ")");
 		}
 
 		update();
 
 		addComboBoxAction(trainComboBox);
 		addComboBoxAction(trainVisitComboBox);
+		
+		addButtonAction(nextButton);
 
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Locations", true); // NOI18N
 		
@@ -143,10 +153,28 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 
 	// Select, Clear, and Set Buttons
 	public void buttonActionPerformed(ActionEvent ae) {
+		if (ae.getSource() == nextButton)
+			nextButtonAction();
 		super.buttonActionPerformed(ae);
 		update();
 	}
 
+	private void nextButtonAction() {
+		log.debug("next button activated");
+		if (trainComboBox.getItemCount() > 1) {
+			if (pTrainVisit.isVisible()) {
+				int index = trainVisitComboBox.getSelectedIndex()+1;
+				if (index < trainVisitComboBox.getItemCount()) {
+					trainVisitComboBox.setSelectedIndex(index);
+					return;	// done
+				}
+			}
+			int index = trainComboBox.getSelectedIndex()+1;
+			if (index >= trainComboBox.getItemCount())
+				index = 0;
+			trainComboBox.setSelectedIndex(index);
+		}
+	}
 
 	// Select Train and Visit
 	protected void comboBoxActionPerformed(ActionEvent ae) {
@@ -198,12 +226,12 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 			// show train comment box only if there's a comment
 			if (!_train.getComment().equals("")) {
 				pTrainComment.setVisible(true);
-				textTrainComment.setText(_train.getComment());
+				textTrainComment.setText(lineWrap(_train.getComment()));
 			}
 			// show route comment box only if there's a route comment
 			if (!route.getComment().equals("") && Setup.isPrintRouteCommentsEnabled()) {
 				pTrainRouteComment.setVisible(true);
-				textTrainRouteComment.setText(route.getComment());
+				textTrainRouteComment.setText(lineWrap(route.getComment()));
 			}
 			// Does this train have a unique railroad name?
 			if (!_train.getRailroadName().equals(""))
@@ -242,7 +270,7 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 
 				// update comment and location name
 				pTrainRouteLocationComment.setVisible(!rl.getComment().equals(""));
-				textTrainRouteLocationComment.setText(rl.getComment());
+				textTrainRouteLocationComment.setText(lineWrap(rl.getComment()));
 				textLocationName.setText(rl.getLocation().getName()); // show name including hyphen and number
 
 				// check for locos
@@ -252,7 +280,7 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 				blockCars(rl, false);
 
 				if (lastLocation) {
-					textStatus.setText(MessageFormat.format(Bundle.getMessage("TrainTerminatesIn"),
+					textStatus.setText(MessageFormat.format(TrainManifestText.getStringTrainTerminates(),
 							new Object[] { TrainCommon.splitString(_train.getTrainTerminatesName()) }));
 				} else {
 					textStatus.setText(getStatus(rl));

@@ -81,6 +81,7 @@ public class CbusDccOpsModeProgrammer extends CbusDccProgrammer  {
      *
      * @return always false
      */
+    @Override
     public boolean getCanRead() {
         return false;
     }

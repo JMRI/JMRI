@@ -5,7 +5,7 @@
   <column>
     <row>
       <column>
-        <display item="Servo Protocol" format="radiobuttons" tooltip="CV161 bit 0"/>
+        <display item="Servo Protocol" format="radiobuttons"/>
       </column>
       <column>
         <label label="                          ">
@@ -13,10 +13,10 @@
         </label>
       </column>
       <column>
-        <display item="Servo Control Signal" format="radiobuttons" tooltip="CV161 bit 1"/>
+        <display item="Servo Control Signal" format="radiobuttons"/>
       </column>
     </row>
-    <display item="Servo Centering" format="radiobuttons" tooltip="CV161 bit 2"/>
+    <display item="Servo Centering" format="radiobuttons"/>
     <label label=" ">
       <label> </label>
     </label>
@@ -31,7 +31,7 @@
         <label label=" ">
           <label> </label>
         </label>
-        <display item="Servo 1 Function Allocation" label="Function Allocation" tooltip="CV181">
+        <display item="Servo 1 Function Allocation" label="Function Allocation">
           <label>Function Allocation</label>
         </display>
         <label label=" ">
@@ -39,7 +39,7 @@
         </label>
         <row>
           <column>
-            <display item="Servo 1 Rotation Speed" label="Rotation Speed" tooltip="CV165">
+            <display item="Servo 1 Rotation Speed" label="Rotation Speed">
               <label>Rotation Speed</label>
             </display>
           </column>
@@ -52,13 +52,13 @@
         <label label=" ">
           <label> </label>
         </label>
-        <display item="Servo 1 Left Stop" label="Left Stop" tooltip="CV162">
+        <display item="Servo 1 Left Stop" label="Left Stop">
           <label>Left Stop</label>
         </display>
-        <display item="Servo 1 Centre" label="Centre" tooltip="CV164">
+        <display item="Servo 1 Centre" label="Centre">
           <label>Centre</label>
         </display>
-        <display item="Servo 1 Right Stop" label="Right Stop" tooltip="CV163">
+        <display item="Servo 1 Right Stop" label="Right Stop">
           <label>Right Stop</label>
         </display>
         <label label=" ">
@@ -85,7 +85,7 @@
         <label label=" ">
           <label> </label>
         </label>
-        <display item="Servo 2 Function Allocation" label="Function Allocation" tooltip="CV182">
+        <display item="Servo 2 Function Allocation" label="Function Allocation">
           <label>Function Allocation</label>
         </display>
         <label label=" ">
@@ -93,7 +93,7 @@
         </label>
         <row>
           <column>
-            <display item="Servo 2 Rotation Speed" label="Rotation Speed" tooltip="CV169">
+            <display item="Servo 2 Rotation Speed" label="Rotation Speed">
               <label>Rotation Speed</label>
             </display>
           </column>
@@ -106,13 +106,13 @@
         <label label=" ">
           <label> </label>
         </label>
-        <display item="Servo 2 Left Stop" label="Left Stop" tooltip="CV166">
+        <display item="Servo 2 Left Stop" label="Left Stop">
           <label>Left Stop</label>
         </display>
-        <display item="Servo 2 Centre" label="Centre" tooltip="CV168">
+        <display item="Servo 2 Centre" label="Centre">
           <label>Centre</label>
         </display>
-        <display item="Servo 2 Right Stop" label="Right Stop" tooltip="CV167">
+        <display item="Servo 2 Right Stop" label="Right Stop">
           <label>Right Stop</label>
         </display>
         <label label=" ">
@@ -131,7 +131,7 @@
         <label label=" ">
           <label> </label>
         </label>
-        <display item="Servo 3 Function Allocation" label="Function Allocation" tooltip="CV183">
+        <display item="Servo 3 Function Allocation" label="Function Allocation">
           <label>Function Allocation</label>
         </display>
         <label label=" ">
@@ -139,7 +139,7 @@
         </label>
         <row>
           <column>
-            <display item="Servo 3 Rotation Speed" label="Rotation Speed" tooltip="CV173">
+            <display item="Servo 3 Rotation Speed" label="Rotation Speed">
               <label>Rotation Speed</label>
             </display>
           </column>
@@ -152,13 +152,13 @@
         <label label=" ">
           <label> </label>
         </label>
-        <display item="Servo 3 Left Stop" label="Left Stop" tooltip="CV166">
+        <display item="Servo 3 Left Stop" label="Left Stop">
           <label>Left Stop</label>
         </display>
-        <display item="Servo 3 Centre" label="Centre" tooltip="CV168">
+        <display item="Servo 3 Centre" label="Centre">
           <label>Centre</label>
         </display>
-        <display item="Servo 3 Right Stop" label="Right Stop" tooltip="CV167">
+        <display item="Servo 3 Right Stop" label="Right Stop">
           <label>Right Stop</label>
         </display>
         <label label=" ">
@@ -185,7 +185,7 @@
         <label label=" ">
           <label> </label>
         </label>
-        <display item="Servo 4 Function Allocation" label="Function Allocation" tooltip="CV184">
+        <display item="Servo 4 Function Allocation" label="Function Allocation">
           <label>Function Allocation</label>
         </display>
         <label label=" ">
@@ -193,7 +193,7 @@
         </label>
         <row>
           <column>
-            <display item="Servo 4 Rotation Speed" label="Rotation Speed" tooltip="CV177">
+            <display item="Servo 4 Rotation Speed" label="Rotation Speed">
               <label>Rotation Speed</label>
             </display>
           </column>
@@ -206,13 +206,13 @@
         <label label=" ">
           <label> </label>
         </label>
-        <display item="Servo 4 Left Stop" label="Left Stop" tooltip="CV174">
+        <display item="Servo 4 Left Stop" label="Left Stop">
           <label>Left Stop</label>
         </display>
-        <display item="Servo 4 Centre" label="Centre" tooltip="CV176">
+        <display item="Servo 4 Centre" label="Centre">
           <label>Centre</label>
         </display>
-        <display item="Servo 4 Right Stop" label="Right Stop" tooltip="CV175">
+        <display item="Servo 4 Right Stop" label="Right Stop">
           <label>Right Stop</label>
         </display>
         <label label=" ">

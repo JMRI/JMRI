@@ -291,7 +291,9 @@ public class OptionsMenu extends JMenu {
 		supportVSDecoderCheckBox.setSelected(dispatcher.getSupportVSDecoder());
 		scaleMeters.setSelected(dispatcher.getUseScaleMeters());
 		scaleFeet.setSelected(!dispatcher.getUseScaleMeters());
-        openDispatcherWithPanel.setSelected(jmri.jmrit.display.layoutEditor.LayoutEditor.getOpenDispatcherOnLoad());
+        if(dispatcher.getLayoutEditor()!=null){
+            openDispatcherWithPanel.setSelected(dispatcher.getLayoutEditor().getOpenDispatcherOnLoad());
+        }
 		optionsFrame.pack();
 		optionsFrame.setVisible(true);
 	}
@@ -323,7 +325,7 @@ public class OptionsMenu extends JMenu {
 		dispatcher.setSupportVSDecoder(supportVSDecoderCheckBox.isSelected());
 		dispatcher.setScale(layoutScaleBox.getSelectedIndex()+1);
 		dispatcher.setUseScaleMeters(scaleMeters.isSelected());
-        jmri.jmrit.display.layoutEditor.LayoutEditor.setOpenDispatcherOnLoad(openDispatcherWithPanel.isSelected());
+                dispatcher.getLayoutEditor().setOpenDispatcherOnLoad(openDispatcherWithPanel.isSelected());
 		optionsFrame.setVisible(false);	
 		optionsFrame.dispose();  // prevent this window from being listed in the Window menu.
 		optionsFrame = null;

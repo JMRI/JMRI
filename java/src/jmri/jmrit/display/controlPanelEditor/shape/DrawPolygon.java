@@ -6,9 +6,7 @@ import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.PathIterator;
 
@@ -57,6 +55,14 @@ public class DrawPolygon extends DrawFrame{
        		iter.next();
     	}
     	_pShape.drawHandles();
+	}
+	
+	protected void closingEvent() {
+		if (_pShape!=null) {
+			_pShape.editing(false);			
+		}
+		super.closingEvent();
+		repaint();
 	}
 
 	/*
@@ -173,8 +179,6 @@ public class DrawPolygon extends DrawFrame{
     
     protected boolean doHandleMove(int hitIndex, Point pt) {
     	Point p = _vertices.get(hitIndex);
-//    	_curX = p.x + pt.x;
-//    	_curY = p.y + pt.y;
     	p.x += pt.x;
     	p.y += pt.y;
         _pShape.setShape(makePath(getStartPoint()));

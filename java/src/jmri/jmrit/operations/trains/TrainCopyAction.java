@@ -36,7 +36,7 @@ public class TrainCopyAction extends AbstractAction {
     	if (trainName != null)
     		f.setTrainName(trainName);
     	f.setExtendedState(Frame.NORMAL);
-    	f.setVisible(true);
+	   	f.setVisible(true);	// this also brings the frame into focus
     }
 }
 

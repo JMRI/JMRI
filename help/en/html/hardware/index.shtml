@@ -309,11 +309,11 @@
 	    LocoNet connections, or via its own serial port.:
 	    
 	    <p class="dl">Configure: Uhlenbrock Intellibox via
-		<a href="loconet/Digitrax.shtml">MS100 or LocoBuffer LocoNet interfaces</a></p>
+		<a href="loconet/Digitrax.shtml">MS100 or LocoBuffer LocoNet interfaces</a>
 		</p>
 
 	    <p class="dl">Configure: Uhlenbrock Intellibox via
-		<A href="loconet/Uhlenbrock.shtml">built-in serial port</a></p>
+		<A href="loconet/Uhlenbrock.shtml">built-in serial port</a>
 		</p>
 
 	    </dd>
@@ -335,8 +335,8 @@
 	    <dt class="im"><a href="http://www.x10.com">X10</a></dt>
 	    <dt>X10</dt>
 	    <dd>
-		<p>Connection: X10 power-line controllers</p>
-	        <p class="dl">Configure: <a href="powerline/index.shtml">CM11 and compatible controllers</a></p></dd>
+		<p>Connection: X10, Insteon power-line controllers</p>
+	        <p class="dl">Configure: <a href="powerline/index.shtml">CM11, 2412S and compatible controllers</a></p></dd>
 
 	    <dt class="im"><a href="http://w3.zimo.at/">Zimo</a></dt>
 	    <dt>Zimo</dt>
@@ -399,6 +399,8 @@
 
 	</dl>
 
+	</div>
+</div>
 <!--#include virtual="/Footer" -->
 </body>
 </html>

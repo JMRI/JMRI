@@ -587,7 +587,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     protected VariableValue processIndexedPairVal(Element child, int row, boolean readOnly, boolean infoOnly, boolean writeOnly, String name, String comment, String cvName, boolean opsOnly, int cv, String mask, String item) throws NumberFormatException {
         VariableValue iv;
         int minVal = 0;
-        int maxVal = 255;
+        int maxVal = 65535;
         Attribute a;
         if ((a = child.getAttribute("min")) != null) {
             minVal = Integer.valueOf(a.getValue()).intValue();

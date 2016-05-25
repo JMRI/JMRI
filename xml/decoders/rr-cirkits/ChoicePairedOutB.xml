@@ -14,7 +14,7 @@
 <!-- version 1 - new file includes for LNCP files -->
 <!-- mode choices for Output pairing -->
 <enumVal>
-  <enumChoice choice="normal"/>
+  <enumChoice choice="Normal"/>
   <enumChoice choice="N/A . . . "/>
   <enumChoice choice="N/A . . . "/>
   <enumChoice choice="Signal"/>

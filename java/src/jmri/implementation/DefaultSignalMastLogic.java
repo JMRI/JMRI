@@ -69,10 +69,14 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
      */
     public DefaultSignalMastLogic(SignalMast source){
         this.source = source;
-        this.stopAspect = source.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER);
-        this.source.addPropertyChangeListener(propertySourceMastListener);
-        if(source.getAspect()==null)
-            source.setAspect(stopAspect);
+        try {
+            this.stopAspect = source.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER);
+            this.source.addPropertyChangeListener(propertySourceMastListener);
+            if(source.getAspect()==null)
+                source.setAspect(stopAspect);
+        } catch (Exception ex){
+            log.error("Error while creating Signal Logic " + ex.toString());
+        }
     }
     
     public void setFacingBlock(LayoutBlock facing){
@@ -1000,7 +1004,11 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             }
             if ((aspect!=null) && (!aspect.equals(""))){
                 log.debug("set mast aspect called from set appearance");
-                getSourceMast().setAspect(aspect);
+                try {
+                    getSourceMast().setAspect(aspect);
+                } catch (Exception ex){
+                    log.error("Error while setting Signal Logic " + ex.toString());
+                }
                 return;
             }
         }
@@ -1087,14 +1095,24 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         
         DestinationMast(SignalMast destination){
             this.destination=destination;
-            if(destination.getAspect()==null)
-                destination.setAspect(destination.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER));
+            if(destination.getAspect()==null){
+                try {
+                    destination.setAspect(destination.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER));
+                } catch (Exception ex){
+                    log.error("Error while creating Signal Logic " + ex.toString());
+                }
+            }
         }
         
         void updateDestinationMast(SignalMast newMast){
             destination=newMast;
-            if(destination.getAspect()==null)
-                destination.setAspect(destination.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER));
+            if(destination.getAspect()==null){
+                try {
+                    destination.setAspect(destination.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER));
+                } catch (Exception ex){
+                    log.error("Error while creating Signal Logic " + ex.toString());
+                }
+            }
         }
         
         LayoutBlock getProtectingBlock(){
@@ -2224,6 +2242,8 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                             }
                             turnoutSettings.put(turnout, throwlist.get(x));
                             LayoutTurnout lt = turnoutlist.get(x);
+                            if(lt.getSecondTurnout()!=null)
+                                turnoutSettings.put(lt.getSecondTurnout(),throwlist.get(x));
                             /* TODO: We could do with a more inteligent way to deal with double crossovers, other than just looking at the state of the other conflicting blocks
                                such as looking at Signalmasts that protect the other blocks and the settings of any other turnouts along the way.
                             */
@@ -2407,21 +2427,18 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                Turnout key = keys.nextElement();
                if(log.isDebugEnabled())
                     log.debug(destination.getDisplayName() + " turnout " + key.getDisplayName());
-               //if(!turnouts.containsKey(key)){
-                for(NamedBeanSetting nbTurn:userSetTurnouts){
-                    if(!nbTurn.getBean().equals(key)){
-                       if (key.getState()==Turnout.CLOSED){
-                            if (((key.getStraightLimit()<minimumBlockSpeed) || (minimumBlockSpeed==0)) && (key.getStraightLimit()!=-1)){
-                                minimumBlockSpeed = key.getStraightLimit();
-                                if(log.isDebugEnabled())
-                                    log.debug(destination.getDisplayName() + " turnout " + key.getDisplayName() + " set speed to " + minimumBlockSpeed);
-                            }
-                        } else {
-                            if (((key.getDivergingLimit()<minimumBlockSpeed) || (minimumBlockSpeed==0)) && (key.getDivergingLimit()!=-1)){
-                                minimumBlockSpeed = key.getDivergingLimit();
-                                if(log.isDebugEnabled())
-                                    log.debug(destination.getDisplayName() + " turnout " + key.getDisplayName() + " set speed to " + minimumBlockSpeed);
-                            }
+                if(!isTurnoutIncluded(key)){
+                   if (autoTurnouts.get(key)==Turnout.CLOSED){
+                        if (((key.getStraightLimit()<minimumBlockSpeed) || (minimumBlockSpeed==0)) && (key.getStraightLimit()!=-1)){
+                            minimumBlockSpeed = key.getStraightLimit();
+                            if(log.isDebugEnabled())
+                                log.debug(destination.getDisplayName() + " turnout " + key.getDisplayName() + " set speed to " + minimumBlockSpeed);
+                        }
+                    } else {
+                        if (((key.getDivergingLimit()<minimumBlockSpeed) || (minimumBlockSpeed==0)) && (key.getDivergingLimit()!=-1)){
+                            minimumBlockSpeed = key.getDivergingLimit();
+                            if(log.isDebugEnabled())
+                                log.debug(destination.getDisplayName() + " turnout " + key.getDisplayName() + " set speed to " + minimumBlockSpeed);
                         }
                     }
                 }

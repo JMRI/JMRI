@@ -167,33 +167,33 @@
         </enumVal>
     </variable>
     
-    <variable label="Decel 2 Ending Point" CV="125" default="0" tooltip="Sets the Decel 3 end point, range 0(default)-255, CV131" comment="Range 0-255">
+    <variable label="Decel 2 Ending Point" CV="125" default="0" tooltip="Sets the Decel 3 end point, range 0(default)-255" comment="Range 0-255">
         <decVal max="255"/>
     </variable>
-    <variable label="Decel 2 Rate" CV="126" default="0" tooltip="Sets the Decel 3 rate, range 0(default)-255, CV132" comment="Range 0-255">
+    <variable label="Decel 2 Rate" CV="126" default="0" tooltip="Sets the Decel 3 rate, range 0(default)-255" comment="Range 0-255">
         <decVal max="255"/>
     </variable>
-    <variable label="Decel 3 Ending Point" CV="127" default="0" tooltip="Sets the Decel 2 End point, range 0(default)-255, CV129" comment="Range 0-255">
+    <variable label="Decel 3 Ending Point" CV="127" default="0" tooltip="Sets the Decel 2 End point, range 0(default)-255" comment="Range 0-255">
         <decVal max="255"/>
     </variable>
-    <variable label="Decel 3 Rate" CV="128" default="0" tooltip="Sets the Decel 2 rate, range 0(default)-255, CV130" comment="Range 0-255">
+    <variable label="Decel 3 Rate" CV="128" default="0" tooltip="Sets the Decel 2 rate, range 0(default)-255" comment="Range 0-255">
         <decVal max="255"/>
     </variable>
-    <variable label="Accel 2 Starting Point" CV="129" default="0" tooltip="Sets the Accel 2 start point, range 0(default)-255, CV125" comment="Range 0-255">
+    <variable label="Accel 2 Starting Point" CV="129" default="0" tooltip="Sets the Accel 2 start point, range 0(default)-255" comment="Range 0-255">
         <decVal max="255"/>
     </variable>
-    <variable label="Accel 2 Rate" CV="130" default="0" tooltip="Sets the Accel 2 rate, range 0(default)-255, CV126" comment="Range 0-255">
+    <variable label="Accel 2 Rate" CV="130" default="0" tooltip="Sets the Accel 2 rate, range 0(default)-255" comment="Range 0-255">
         <decVal max="255"/>
     </variable>
-    <variable label="Accel 3 Starting Point" CV="131" default="0" tooltip="Sets the Accel 3 start point, range 0(default)-255, CV127" comment="Range 0-255">
+    <variable label="Accel 3 Starting Point" CV="131" default="0" tooltip="Sets the Accel 3 start point, range 0(default)-255" comment="Range 0-255">
         <decVal max="255"/>
     </variable>
-    <variable label="Accel 3 Rate" CV="132" default="0" tooltip="Sets the Accel 3 rate, range 0(default)-255, CV128" comment="Range 0-255">
+    <variable label="Accel 3 Rate" CV="132" default="0" tooltip="Sets the Accel 3 rate, range 0(default)-255" comment="Range 0-255">
         <decVal max="255"/>
     </variable>
     
     
-    <variable label="Power to button controlled motor" CV="133" default="255" item="EMF Droop Config" tooltip="If button control of motor is active, range 0-255, CV133">
+    <variable label="Power to button controlled motor" CV="133" default="255" item="EMF Droop Config" tooltip="If button control of motor is active, range 0-255">
         <decVal/>
     </variable>
     

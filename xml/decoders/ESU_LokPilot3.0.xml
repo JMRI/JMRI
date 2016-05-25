@@ -120,35 +120,35 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <variable label="Short Address" CV="1" default="3" item="Short Address" tooltip="Only if CV29, Bit5=0 CV1">
+      <variable label="Short Address" CV="1" default="3" item="Short Address">
         <shortAddressVal/>
         <label>Short Address</label>
       </variable>
-      <variable label="Starting Voltage" CV="2" default="3" item="Vstart" tooltip="Determines the starting speed (1-75). CV2">
+      <variable label="Starting Voltage" CV="2" default="3" item="Vstart" tooltip="Determines the starting speed (1-75)">
         <decVal min="1" max="75"/>
         <label>Starting Voltage</label>
       </variable>
-      <variable label="Acceleration" CV="3" default="8" item="Accel" tooltip="This value multiplied by 0.869 gives the time from stop to maximum speed (0-64). CV3">
+      <variable label="Acceleration" CV="3" default="8" item="Accel" tooltip="This value multiplied by 0.869 gives the time from stop to maximum speed (0-64)">
         <decVal min="0" max="64"/>
         <label>Acceleration</label>
       </variable>
-      <variable label="Deceleration" CV="4" default="6" item="Decel" tooltip="This value multiplied by 0.869 gives the time from maximum speed to stop (0-64). CV4">
+      <variable label="Deceleration" CV="4" default="6" item="Decel" tooltip="This value multiplied by 0.869 gives the time from maximum speed to stop (0-64)">
         <decVal min="1" max="64"/>
         <label>Deceleration</label>
       </variable>
-      <variable label="Maximum Speed" CV="5" default="64" item="Vhigh" tooltip="Maximum speed of locomotive (0-64). CV5">
+      <variable label="Maximum Speed" CV="5" default="64" item="Vhigh" tooltip="Maximum speed of locomotive (0-64)">
         <decVal min="0" max="64"/>
         <label>Maximum Speed</label>
       </variable>
-      <variable label="Medium speed" CV="6" default="22" item="Vmid" tooltip="Speed of locomotive at medium speed step (0-64). CV6">
+      <variable label="Medium speed" CV="6" default="22" item="Vmid" tooltip="Speed of locomotive at medium speed step (0-64)">
         <decVal min="0" max="64"/>
         <label>Medium speed</label>
       </variable>
-      <variable label="Software Version Number" CV="7" item="Decoder Version" tooltip="The decoder version number (read only) CV7">
+      <variable label="Software Version Number" CV="7" item="Decoder Version" tooltip="The decoder version number (read only)">
         <decVal/>
         <label>Software Version Number</label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" default="151" item="Manufacturer" tooltip="The manufacturer's ID number (read only) CV8">
+      <variable label="Manufacturer ID" CV="8" readOnly="yes" default="151" item="Manufacturer" tooltip="The manufacturer's ID number (read only)">
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
@@ -448,7 +448,7 @@
         </enumVal>
         <label>Allow command confirmation on channel 1</label>
       </variable>
-      <variable label="Direction of Travel" CV="29" mask="XXXXXXXV" default="0" item="Locomotive Direction" tooltip="Sets the relative direction of the loco when told to move forward CV29">
+      <variable label="Direction of Travel" CV="29" mask="XXXXXXXV" default="0" item="Locomotive Direction" tooltip="Sets the relative direction of the loco when told to move forward">
         <enumVal>
           <enumChoice choice="Normal direction of travel">
             <choice>Normal direction of travel</choice>
@@ -459,7 +459,7 @@
         </enumVal>
         <label>Direction of Travel</label>
       </variable>
-      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" default="0" item="Speed Step Mode" tooltip="Sets the speed step mode. 128 speed steps are recognized automatically CV29">
+      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" default="0" item="Speed Step Mode" tooltip="Sets the speed step mode. 128 speed steps are recognized automatically">
         <enumVal>
           <enumChoice choice="14">
             <choice>14</choice>
@@ -470,7 +470,7 @@
         </enumVal>
         <label>Speed Steps</label>
       </variable>
-      <variable label="Analogue mode" CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation" tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion) CV29">
+      <variable label="Analogue mode" CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation" tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion)">
         <enumVal>
           <enumChoice choice="Digital Operation Only">
             <choice>Digital Operation Only</choice>
@@ -492,7 +492,7 @@
         </enumVal>
         <label>Enable RailCom</label>
       </variable>
-      <variable label="Selection of speed curve" CV="29" mask="XXXVXXXX" default="0" item="Speed Table Definition" tooltip="Determines whether loco will use manufacturer's internal or user-defined speed step table CV29">
+      <variable label="Selection of speed curve" CV="29" mask="XXXVXXXX" default="0" item="Speed Table Definition" tooltip="Determines whether loco will use manufacturer's internal or user-defined speed step table">
         <enumVal>
           <enumChoice choice="speed curve through CV 2, 5, 6">
             <choice>speed curve through CV 2, 5, 6</choice>
@@ -503,7 +503,7 @@
         </enumVal>
         <label>Selection of speed curve</label>
       </variable>
-      <variable label="Selection of address" CV="29" mask="XXVXXXXX" default="0" item="Address Format" tooltip="Determines whether loco will use short or long address CV29">
+      <variable label="Selection of address" CV="29" mask="XXVXXXXX" default="0" item="Address Format" tooltip="Determines whether loco will use short or long address">
         <enumVal>
           <enumChoice choice="Short Address (CV1)">
             <choice>Short Address (CV1)</choice>
@@ -514,7 +514,7 @@
         </enumVal>
         <label>Selection of address</label>
       </variable>
-      <variable label="Load control" CV="49" mask="XXXXXXXV" default="1" item="Dither option" tooltip="CV49">
+      <variable label="Load control" CV="49" mask="XXXXXXXV" default="1" item="Dither option">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -525,7 +525,7 @@
         </enumVal>
         <label>Load control</label>
       </variable>
-      <variable label="DC Motor PWM frequency" CV="49" mask="XXXXXXVX" default="1" item="Total PWM Period" tooltip="CV49">
+      <variable label="DC Motor PWM frequency" CV="49" mask="XXXXXXVX" default="1" item="Total PWM Period">
         <enumVal>
           <enumChoice choice="20 kHz Tact frequency on">
             <choice>20 kHz Tact frequency on</choice>
@@ -536,7 +536,7 @@
         </enumVal>
         <label>DC Motor PWM frequency</label>
       </variable>
-      <variable label="Marklin Delta Mode" CV="49" mask="XXXXXVXX" default="0" tooltip="CV49">
+      <variable label="Marklin Delta Mode" CV="49" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -547,7 +547,7 @@
         </enumVal>
         <label>Marklin Delta Mode</label>
       </variable>
-      <variable label="Marklin 2. address" CV="49" mask="XXXXVXXX" default="0" tooltip="CV49">
+      <variable label="Marklin 2. address" CV="49" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -558,7 +558,7 @@
         </enumVal>
         <label>Marklin 2. address</label>
       </variable>
-      <variable label="Automatic speed step detection" CV="49" mask="XXXVXXXX" default="1" item="Advanced Group 1 Option 1" tooltip="CV49">
+      <variable label="Automatic speed step detection" CV="49" mask="XXXVXXXX" default="1" item="Advanced Group 1 Option 1">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -569,7 +569,7 @@
         </enumVal>
         <label>Automatic speed step detection</label>
       </variable>
-      <variable label="LGB Function button mode" CV="49" mask="XXVXXXXX" default="0" tooltip="CV49">
+      <variable label="LGB Function button mode" CV="49" mask="XXVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -580,7 +580,7 @@
         </enumVal>
         <label>LGB Function button mode</label>
       </variable>
-      <variable label="ZIMO Manual function" CV="49" mask="XVXXXXXX" default="0" tooltip="CV49">
+      <variable label="ZIMO Manual function" CV="49" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -591,7 +591,7 @@
         </enumVal>
         <label>ZIMO Manual function</label>
       </variable>
-      <variable label="Function key triggered at each change of function status" CV="49" mask="VXXXXXXX" default="0" tooltip="CV49">
+      <variable label="Function key triggered at each change of function status" CV="49" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -602,7 +602,7 @@
         </enumVal>
         <label>Function key triggered at each change of function status</label>
       </variable>
-      <variable label="AC Analogue mode" CV="50" mask="XXXXXXXV" default="1" item="Trix Power Conversion" tooltip="CV50">
+      <variable label="AC Analogue mode" CV="50" mask="XXXXXXXV" default="1" item="Trix Power Conversion">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -613,7 +613,7 @@
         </enumVal>
         <label>AC Analogue mode</label>
       </variable>
-      <variable label="DC Analogue mode" CV="50" mask="XXXXXXVX" default="1" item="Analog Power Conversion" tooltip="CV50">
+      <variable label="DC Analogue mode" CV="50" mask="XXXXXXVX" default="1" item="Analog Power Conversion">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -624,7 +624,7 @@
         </enumVal>
         <label>DC Analogue mode</label>
       </variable>
-      <variable label="Marklin Brake mode" CV="51" mask="XXXXXXXV" default="1" tooltip="CV51">
+      <variable label="Marklin Brake mode" CV="51" mask="XXXXXXXV" default="1">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -635,7 +635,7 @@
         </enumVal>
         <label>Marklin Brake mode</label>
       </variable>
-      <variable label="ZIMO Brake mode" CV="51" mask="XXXXXXVX" default="1" tooltip="CV51">
+      <variable label="ZIMO Brake mode" CV="51" mask="XXXXXXVX" default="1">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -646,7 +646,7 @@
         </enumVal>
         <label>ZIMO Brake mode</label>
       </variable>
-      <variable label="Lenz DCC Brake mode" CV="51" mask="XXXXVXXX" default="0" tooltip="CV51">
+      <variable label="Lenz DCC Brake mode" CV="51" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -657,23 +657,23 @@
         </enumVal>
         <label>Lenz DCC Brake mode</label>
       </variable>
-      <variable label="Control reference" CV="53" default="56" item="EMF Static Config" tooltip="Determines the back EMF that the motorshould supply at maximum speed (0-80). CV53">
+      <variable label="Control reference" CV="53" default="56" item="EMF Static Config" tooltip="Determines the back EMF that the motorshould supply at maximum speed (0-80)">
         <decVal min="0" max="80"/>
         <label>Control reference</label>
       </variable>
-      <variable label="Load control parameter K" CV="54" default="32" item="EMF Dynamic Config" tooltip="Determines how strongly load control effects (0-80). CV54">
+      <variable label="Load control parameter K" CV="54" default="32" item="EMF Dynamic Config" tooltip="Determines how strongly load control effects (0-80)">
         <decVal min="0" max="80"/>
         <label>Load control parameter K</label>
       </variable>
-      <variable label="Load control parameter I" CV="55" default="24" item="EMF Droop Config" tooltip="Determines the momentum of the motor (0-80). CV55">
+      <variable label="Load control parameter I" CV="55" default="24" item="EMF Droop Config" tooltip="Determines the momentum of the motor (0-80)">
         <decVal min="0" max="80"/>
         <label>Load control parameter I</label>
       </variable>
-      <variable label="Load control influence" CV="56" default="64" item="EMF Feedback Cutout" tooltip="Determines up to how many % of the speed load control is active (0-64). CV56">
+      <variable label="Load control influence" CV="56" default="64" item="EMF Feedback Cutout" tooltip="Determines up to how many % of the speed load control is active (0-64)">
         <decVal min="0" max="64"/>
         <label>Load control influence</label>
       </variable>
-      <variable label="Forward Trim" CV="66" default="0" tooltip="Divided by 128 results in the factor, with which the motor voltage is multiplied in forward mode (0-255). CV66">
+      <variable label="Forward Trim" CV="66" default="0" tooltip="Divided by 128 results in the factor, with which the motor voltage is multiplied in forward mode (0-255)">
         <decVal min="0" max="255"/>
         <label>Forward Trim</label>
       </variable>
@@ -681,20 +681,20 @@
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
-      <variable label="Reverse Trim" CV="95" default="0" tooltip="Divided by 128 results in the factor, with which the motor voltage is multiplied in reverse mode (0-255). CV95">
+      <variable label="Reverse Trim" CV="95" default="0" tooltip="Divided by 128 results in the factor, with which the motor voltage is multiplied in reverse mode (0-255)">
         <decVal min="0" max="255"/>
         <label>Reverse Trim</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
-      <variable label="Blinking frequency" CV="112" default="33" item="Global lighting option 1" tooltip="Frequency of Strobe effects. Always a multiple of 65,536 ms (4-64). CV112">
+      <variable label="Blinking frequency" CV="112" default="33" item="Global lighting option 1" tooltip="Frequency of Strobe effects. Always a multiple of 65,536 ms (4-64).">
         <decVal min="0" max="255"/>
         <label>Blinking frequency</label>
       </variable>
-      <variable label="Brightness Headlights" CV="113" mask="XXXXVVVV" default="15" item="Output 1 effect generated" tooltip="Range 0-15, Brightness: dark-maximum (Pulse: 0.5-8 seconds). CV113">
+      <variable label="Brightness Headlights" CV="113" mask="XXXXVVVV" default="15" item="Output 1 effect generated" tooltip="Range 0-15, Brightness: dark-maximum (Pulse: 0.5-8 seconds)">
         <decVal min="0" max="15"/>
         <label>Brightness Headlights</label>
       </variable>
-      <variable label="Output Configuration Headlights" CV="113" mask="VVVVXXXX" default="0" item="Output 1 behavior" tooltip="CV113">
+      <variable label="Output Configuration Headlights" CV="113" mask="VVVVXXXX" default="0" item="Output 1 behavior">
         <enumVal>
           <enumChoice choice="Continous output (dimmer)">
             <choice>Continous output (dimmer)</choice>
@@ -744,11 +744,11 @@
         </enumVal>
         <label>Output Configuration Headlights</label>
       </variable>
-      <variable label="Brightness Back up lights" CV="114" mask="XXXXVVVV" default="15" item="Output 2 effect generated" tooltip="Range 0-15, Brightness: dark-maximum (Pulse: 0.5-8 seconds). CV114">
+      <variable label="Brightness Back up lights" CV="114" mask="XXXXVVVV" default="15" item="Output 2 effect generated" tooltip="Range 0-15, Brightness: dark-maximum (Pulse: 0.5-8 seconds)">
         <decVal min="0" max="15"/>
         <label>Brightness Back up lights</label>
       </variable>
-      <variable label="Output Configuration Back up lights" CV="114" mask="VVVVXXXX" default="0" item="Output 2 behavior" tooltip="CV114">
+      <variable label="Output Configuration Back up lights" CV="114" mask="VVVVXXXX" default="0" item="Output 2 behavior">
         <enumVal>
           <enumChoice choice="Continous output (dimmer)">
             <choice>Continous output (dimmer)</choice>
@@ -798,11 +798,11 @@
         </enumVal>
         <label>Output Configuration Back up lights</label>
       </variable>
-      <variable label="Brightness AUX1" CV="115" mask="XXXXVVVV" default="15" item="Output 3 effect generated" tooltip="Range 0-15, Brightness: dark-maximum (Pulse: 0.5-8 seconds)(Coupler hold power:none-full track power). CV115">
+      <variable label="Brightness AUX1" CV="115" mask="XXXXVVVV" default="15" item="Output 3 effect generated" tooltip="Range 0-15, Brightness: dark-maximum (Pulse: 0.5-8 seconds)(Coupler hold power:none-full track power)">
         <decVal min="0" max="15"/>
         <label>Brightness AUX1</label>
       </variable>
-      <variable label="Output Configuration AUX1" CV="115" mask="VVVVXXXX" default="0" item="Output 3 behavior" tooltip="CV115">
+      <variable label="Output Configuration AUX1" CV="115" mask="VVVVXXXX" default="0" item="Output 3 behavior">
         <enumVal>
           <enumChoice choice="Continous output (dimmer)">
             <choice>Continous output (dimmer)</choice>
@@ -855,11 +855,11 @@
         </enumVal>
         <label>Output Configuration AUX1</label>
       </variable>
-      <variable label="Brightness AUX2" CV="116" mask="XXXXVVVV" default="15" item="Output 4 effect generated" tooltip="Range 0-15, Brightness: dark-maximum (Pulse: 0.5-8 seconds)(Coupler hold power:none-full track power). CV116">
+      <variable label="Brightness AUX2" CV="116" mask="XXXXVVVV" default="15" item="Output 4 effect generated" tooltip="Range 0-15, Brightness: dark-maximum (Pulse: 0.5-8 seconds)(Coupler hold power:none-full track power)">
         <decVal min="0" max="15"/>
         <label>Brightness AUX2</label>
       </variable>
-      <variable label="Output Configuration AUX2" CV="116" mask="VVVVXXXX" default="0" item="Output 4 behavior" tooltip="CV116">
+      <variable label="Output Configuration AUX2" CV="116" mask="VVVVXXXX" default="0" item="Output 4 behavior">
         <enumVal>
           <enumChoice choice="Continous output (dimmer)">
             <choice>Continous output (dimmer)</choice>
@@ -912,11 +912,11 @@
         </enumVal>
         <label>Output Configuration AUX2</label>
       </variable>
-      <variable label="Brightness AUX3" CV="117" mask="XXXXVVVV" default="15" item="Output 5 effect generated" tooltip="Range 0-15, Brightness: dark-maximum (Pulse: 0.5-8 seconds). CV117">
+      <variable label="Brightness AUX3" CV="117" mask="XXXXVVVV" default="15" item="Output 5 effect generated" tooltip="Range 0-15, Brightness: dark-maximum (Pulse: 0.5-8 seconds)">
         <decVal min="0" max="15"/>
         <label>Brightness AUX3</label>
       </variable>
-      <variable label="Output Configuration AUX3" CV="117" mask="VVVVXXXX" default="0" item="Output 5 behavior" tooltip="CV117">
+      <variable label="Output Configuration AUX3" CV="117" mask="VVVVXXXX" default="0" item="Output 5 behavior">
         <enumVal>
           <enumChoice choice="Continous output (dimmer)">
             <choice>Continous output (dimmer)</choice>
@@ -966,11 +966,11 @@
         </enumVal>
         <label>Output Configuration AUX3</label>
       </variable>
-      <variable label="Brightness AUX4" CV="118" mask="XXXXVVVV" default="15" item="Output 6 effect generated" tooltip="Range 0-15, Brightness: dark-maximum (Pulse: 0.5-8 seconds). CV118">
+      <variable label="Brightness AUX4" CV="118" mask="XXXXVVVV" default="15" item="Output 6 effect generated" tooltip="Range 0-15, Brightness: dark-maximum (Pulse: 0.5-8 seconds)">
         <decVal min="0" max="15"/>
         <label>Brightness AUX4</label>
       </variable>
-      <variable label="Output Configuration AUX4" CV="118" mask="VVVVXXXX" default="0" item="Output 6 behavior" tooltip="CV118">
+      <variable label="Output Configuration AUX4" CV="118" mask="VVVVXXXX" default="0" item="Output 6 behavior">
         <enumVal>
           <enumChoice choice="Continous output (dimmer)">
             <choice>Continous output (dimmer)</choice>
@@ -1020,11 +1020,11 @@
         </enumVal>
         <label>Output Configuration AUX4</label>
       </variable>
-      <variable label="Brightness AUX5" CV="119" mask="XXXXVVVV" default="15" item="Output 7 effect generated" tooltip="Range 0-15, Brightness: dark-maximum (Pulse: 0.5-8 seconds). CV119">
+      <variable label="Brightness AUX5" CV="119" mask="XXXXVVVV" default="15" item="Output 7 effect generated" tooltip="Range 0-15, Brightness: dark-maximum (Pulse: 0.5-8 seconds)">
         <decVal min="0" max="15"/>
         <label>Brightness AUX5</label>
       </variable>
-      <variable label="Output Configuration AUX5" CV="119" mask="VVVVXXXX" default="0" item="Output 7 behavior" tooltip="CV119">
+      <variable label="Output Configuration AUX5" CV="119" mask="VVVVXXXX" default="0" item="Output 7 behavior">
         <enumVal>
           <enumChoice choice="Continous output (dimmer)">
             <choice>Continous output (dimmer)</choice>
@@ -1074,11 +1074,11 @@
         </enumVal>
         <label>Output Configuration AUX5</label>
       </variable>
-      <variable label="Brightness AUX6" CV="120" mask="XXXXVVVV" default="15" item="Output 8 effect generated" tooltip="Range 0-15, Brightness: dark-maximum (Pulse: 0.5-8 seconds). CV120">
+      <variable label="Brightness AUX6" CV="120" mask="XXXXVVVV" default="15" item="Output 8 effect generated" tooltip="Range 0-15, Brightness: dark-maximum (Pulse: 0.5-8 seconds)">
         <decVal min="0" max="15"/>
         <label>Brightness AUX6</label>
       </variable>
-      <variable label="Output Configuration AUX6" CV="120" mask="VVVVXXXX" default="0" item="Output 8 behavior" tooltip="CV120">
+      <variable label="Output Configuration AUX6" CV="120" mask="VVVVXXXX" default="0" item="Output 8 behavior">
         <enumVal>
           <enumChoice choice="Continous output (dimmer)">
             <choice>Continous output (dimmer)</choice>
@@ -1128,7 +1128,7 @@
         </enumVal>
         <label>Output Configuration AUX6</label>
       </variable>
-      <variable label="Bit for incorrect travel (Motorola)" CV="124" mask="XXXXXXXV" default="0" tooltip="Applies to Motorola only. CV124">
+      <variable label="Bit for incorrect travel (Motorola)" CV="124" mask="XXXXXXXV" default="0" tooltip="Applies to Motorola only">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1139,7 +1139,7 @@
         </enumVal>
         <label>Bit for incorrect travel (Motorola)</label>
       </variable>
-      <variable label="Saves the status of function buttons" CV="124" mask="XXXXXXVX" default="1" tooltip="Determines, which data are to be saved and used after an interruption of the power supply. CV124">
+      <variable label="Saves the status of function buttons" CV="124" mask="XXXXXXVX" default="1" tooltip="Determines, which data are to be saved and used after an interruption of the power supply">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1150,7 +1150,7 @@
         </enumVal>
         <label>Saves the status of function buttons</label>
       </variable>
-      <variable label="Saves the current speed setting" CV="124" mask="XXXXXVXX" default="1" tooltip="Determines, which data are to be saved and used after an interruption of the power supply. CV124">
+      <variable label="Saves the current speed setting" CV="124" mask="XXXXXVXX" default="1" tooltip="Determines, which data are to be saved and used after an interruption of the power supply">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1161,7 +1161,7 @@
         </enumVal>
         <label>Saves the current speed setting</label>
       </variable>
-      <variable label="Acceleration based on acceleration time" CV="124" mask="XXXXVXXX" default="0" item="Kick Start" tooltip="CV124">
+      <variable label="Acceleration based on acceleration time" CV="124" mask="XXXXVXXX" default="0" item="Kick Start">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1172,7 +1172,7 @@
         </enumVal>
         <label>Acceleration based on acceleration time</label>
       </variable>
-      <variable label="Emergency stop when changing direction in Motorola mode" CV="124" mask="XXXVXXXX" default="0" tooltip="CV124">
+      <variable label="Emergency stop when changing direction in Motorola mode" CV="124" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1183,7 +1183,7 @@
         </enumVal>
         <label>Emergency stop when changing direction in Motorola mode</label>
       </variable>
-      <variable label="Motor PWM when running in analog mode" CV="124" mask="XVXXXXXX" default="0" tooltip="CV124">
+      <variable label="Motor PWM when running in analog mode" CV="124" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1194,7 +1194,7 @@
         </enumVal>
         <label>Motor PWM when running in analog mode</label>
       </variable>
-      <variable label="PWM for function outputs in analog mode" CV="124" mask="VXXXXXXX" default="0" tooltip="CV124">
+      <variable label="PWM for function outputs in analog mode" CV="124" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1205,19 +1205,19 @@
         </enumVal>
         <label>PWM for function outputs in analog mode</label>
       </variable>
-      <variable label="Analogue DC starting voltage" CV="125" default="15" item="Radio Power Conversion" tooltip="Range 0-127. CV125">
+      <variable label="Analogue DC starting voltage" CV="125" default="15" item="Radio Power Conversion" tooltip="Range 0-127">
         <decVal min="0" max="127"/>
         <label>Analogue DC starting voltage</label>
       </variable>
-      <variable label="Analogue DC maximum speed" CV="126" default="45" item="Zero-1 Power Conversion" tooltip="Range 0-127. CV126">
+      <variable label="Analogue DC maximum speed" CV="126" default="45" item="Zero-1 Power Conversion" tooltip="Range 0-127">
         <decVal min="0" max="127"/>
         <label>Analogue DC maximum speed</label>
       </variable>
-      <variable label="Analogue AC starting voltage" CV="127" default="15" item="CTC/Railcommand Power Conversion" tooltip="Range 0-127. CV127">
+      <variable label="Analogue AC starting voltage" CV="127" default="15" item="CTC/Railcommand Power Conversion" tooltip="Range 0-127">
         <decVal min="0" max="127"/>
         <label>Analogue AC starting voltage</label>
       </variable>
-      <variable label="Analogue AC maximum speed" CV="128" default="45" item="FMZ(Fleischmann)" tooltip="Range 0-127. CV128">
+      <variable label="Analogue AC maximum speed" CV="128" default="45" item="FMZ(Fleischmann)" tooltip="Range 0-127">
         <decVal min="0" max="127"/>
         <label>Analogue AC maximum speed</label>
       </variable>
@@ -5985,11 +5985,11 @@
         <decVal/>
         <label>Auto Uncoupling Remove Time</label>
       </variable>
-      <variable label="Start delay" CV="253" default="0" tooltip="Delays the start (range 0-255). Allows synchronized starting of locos with LokSound decoders (for consist operation). CV253">
+      <variable label="Start delay" CV="253" default="0" tooltip="Delays the start (range 0-255). Allows synchronized starting of locos with LokSound decoders (for consist operation).">
         <decVal min="0" max="255"/>
         <label>Start delay</label>
       </variable>
-      <variable label="Constant brake distance" CV="254" default="0" tooltip="Determines the brake distance which will be maintained regardless of the speed of the train. Range 0-64. CV254">
+      <variable label="Constant brake distance" CV="254" default="0" tooltip="Determines the brake distance which will be maintained regardless of the speed of the train. Range 0-64.">
         <decVal min="0" max="64"/>
         <label>Constant brake distance</label>
       </variable>

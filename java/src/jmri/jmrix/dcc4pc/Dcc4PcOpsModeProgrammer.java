@@ -93,15 +93,6 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
         return defaultProgrammer.hasMode(mode);
     }
 
-    /**
-     * Can this ops-mode programmer read back values?
-     * The RailCom reader allows this kind of feedback
-     * @return true to allow us to trigger an ops mode read
-     */
-    public boolean getCanRead() {
-        return true;
-    }
-    
     synchronized protected void timeout(){
         rcTag.removePropertyChangeListener(this);
         rcTag.setExpectedCv(-1);

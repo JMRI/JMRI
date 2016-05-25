@@ -65,8 +65,6 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
     }
     public int getMode() { return _mode; }
 
-    public boolean getCanRead() { return true; }
-
     // notify property listeners - see AbstractProgrammer for more
 
     @SuppressWarnings("unchecked")

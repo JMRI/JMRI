@@ -57,7 +57,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         String sName = SerialAddress.normalizeSystemName(systemName);
         if (sName.equals("")) {
             // system name is not valid
-            log.error("Invalid CMRInet Sensor system name - "+systemName);
+            log.error("Invalid CMRI Sensor system name - "+systemName);
             return null;
         }
         // does this Sensor already exist

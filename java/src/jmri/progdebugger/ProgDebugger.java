@@ -17,8 +17,10 @@ import jmri.ProgrammerException;
  *<P>
  * Remembers writes, and returns the last written value
  * when a read to the same CV is made.
+ *<p>
+ * Only supports the DCC single-number address space.
  *
- * @author			Bob Jacobsen Copyright (C) 2001, 2007
+ * @author			Bob Jacobsen Copyright (C) 2001, 2007, 2013
  * @version         $Revision$
  */
 public class ProgDebugger implements Programmer  {
@@ -53,6 +55,21 @@ public class ProgDebugger implements Programmer  {
         return -1;
     }
     
+    /** 
+     * See if a CV has been written
+     */
+     public boolean hasBeenWritten(int cv) {
+        Integer saw = (mValues.get(Integer.valueOf(cv)));
+        return (saw!=null);
+     }
+    
+    /** 
+     * Clear written status
+     */
+     public void clearHasBeenWritten(int cv) {
+        mValues.remove(Integer.valueOf(cv));
+     }
+
     // write CV values are remembered for later reads
     Hashtable<Integer,Integer> mValues = new Hashtable<Integer,Integer>();
 
@@ -61,6 +78,10 @@ public class ProgDebugger implements Programmer  {
         return "error "+i;
     }
 
+    public void writeCV(String CV, int val, ProgListener p) throws ProgrammerException {
+        writeCV(Integer.parseInt(CV), val, p);
+    }
+    
     public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException
     {
         final ProgListener m = p;
@@ -90,6 +111,10 @@ public class ProgDebugger implements Programmer  {
     public int lastReadCv() { return _lastReadCv; }
 
     boolean confirmOK;  // cached result of last compare
+
+    public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
+        confirmCV(Integer.parseInt(CV), val, p);
+    }
 
     public void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
         final ProgListener m = p;
@@ -122,6 +147,10 @@ public class ProgDebugger implements Programmer  {
 
     }
 
+    public void readCV(String CV, ProgListener p) throws ProgrammerException {
+        readCV(Integer.parseInt(CV), p);
+    }
+    
     public void readCV(int CV, ProgListener p) throws ProgrammerException {
         final ProgListener m = p;
         _lastReadCv = CV;
@@ -161,7 +190,23 @@ public class ProgDebugger implements Programmer  {
         return true;
     }
 
+    /**
+     * By default, the highest test CV is 256 so that
+     * we can test composite operations
+     */
+    int writeLimit = 256;
+    int readLimit = 256;
+    
+    public void setTestReadLimit(int lim) { readLimit = lim; }
+    public void setTestWriteLimit(int lim) { writeLimit = lim; }
+    
     public boolean getCanRead() { return true; }
+    public boolean getCanRead(String addr) { return Integer.parseInt(addr)<=readLimit; }
+    public boolean getCanRead(int mode, String addr) { return getCanRead(addr); }
+    
+    public boolean getCanWrite()  { return true; }
+    public boolean getCanWrite(String addr) { return Integer.parseInt(addr)<=writeLimit; }
+    public boolean getCanWrite(int mode, String addr)  { return getCanWrite(addr); }
 
     // data members to hold contact with the property listeners
     private Vector<PropertyChangeListener> propListeners = new Vector<PropertyChangeListener>();

@@ -20,7 +20,7 @@ public class NodeConfigAction extends AbstractAction {
 	public NodeConfigAction(String s) { super(s);}
 
     public NodeConfigAction() {
-        this("Configure CMRInet Nodes");
+        this("Configure CMRI Nodes");
     }
 
     public void actionPerformed(ActionEvent e) {

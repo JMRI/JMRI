@@ -203,16 +203,8 @@ abstract public class AbstractCanTrafficController
         if (log.isDebugEnabled()) log.debug("dispatch reply of length "+msg.getNumDataElements()+
                 " contains "+msg.toString()+" state "+mCurrentState);
         
-        // forward the message to the registered recipients,
-        // which includes the communications monitor
-        // return a notification via the Swing event queue to ensure proper thread
-        Runnable r = newRcvNotifier(msg, mLastSender, this);
-        try {
-            javax.swing.SwingUtilities.invokeAndWait(r);
-        } catch (Exception e) {
-            log.error("Unexpected exception in invokeAndWait:" +e);
-            e.printStackTrace();
-        }
+        // actually distribute the reply
+        distributeOneReply(msg, mLastSender);
         
         if (!msg.isUnsolicited()) {
             if (log.isDebugEnabled()) log.debug("switch on state "+mCurrentState);
@@ -286,6 +278,19 @@ abstract public class AbstractCanTrafficController
         }
     }
 
+    public void distributeOneReply(CanReply msg, AbstractMRListener mLastSender) {
+        // forward the message to the registered recipients,
+        // which includes the communications monitor
+        // return a notification via the Swing event queue to ensure proper thread
+        Runnable r = newRcvNotifier(msg, mLastSender, this);
+        try {
+            javax.swing.SwingUtilities.invokeAndWait(r);
+        } catch (Exception e) {
+            log.error("Unexpected exception in invokeAndWait:" +e);
+            e.printStackTrace();
+        }
+    }
+    
     static Logger log = LoggerFactory.getLogger(AbstractCanTrafficController.class.getName());
 
 }

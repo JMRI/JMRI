@@ -37,11 +37,13 @@ public class ProgrammerConfigPaneXml extends jmri.configurexml.AbstractXmlAdapte
      */
     public Element store(Object o) {
         ProgrammerConfigPane p = (ProgrammerConfigPane) o;
-        if (p.getSelectedItem()==null) return null;  // nothing to write!
         Element programmer = new Element("programmer");
-        programmer.setAttribute("defaultFile", p.getSelectedItem());
+        if (p.getSelectedItem() != null) { 
+            programmer.setAttribute("defaultFile", p.getSelectedItem());
+        }
         programmer.setAttribute("verifyBeforeWrite", "no");
         if (!p.getShowEmptyTabs()) programmer.setAttribute("showEmptyPanes", "no");
+        if (p.getShowCvNums()) programmer.setAttribute("showCvNumbers", "yes");
         programmer.setAttribute("class", this.getClass().getName());
         return programmer;
     }
@@ -53,9 +55,12 @@ public class ProgrammerConfigPaneXml extends jmri.configurexml.AbstractXmlAdapte
       */
     public boolean load(Element element) {
     	boolean result = true;
-        if (log.isDebugEnabled()) log.debug("set programmer default file: "+element.getAttribute("defaultFile").getValue());
-        jmri.jmrit.symbolicprog.ProgDefault.setDefaultProgFile(element.getAttribute("defaultFile").getValue());
-
+    	
+    	if (element.getAttribute("defaultFile") != null) {
+            if (log.isDebugEnabled()) log.debug("set programmer default file: "+element.getAttribute("defaultFile").getValue());
+            jmri.jmrit.symbolicprog.ProgDefault.setDefaultProgFile(element.getAttribute("defaultFile").getValue());
+        }
+        
 		// ugly hack to avoid static re-initialization, see comment at
 		// top of file.
 		new  jmri.jmrit.symbolicprog.CombinedLocoSelPane();
@@ -66,6 +71,12 @@ public class ProgrammerConfigPaneXml extends jmri.configurexml.AbstractXmlAdapte
                 PaneProgFrame.setShowEmptyPanes(false);
             else
                 PaneProgFrame.setShowEmptyPanes(true);
+        }
+        if (null != (a = element.getAttribute("showCvNumbers"))){
+            if ( a.getValue().equals("yes"))
+                PaneProgFrame.setShowCvNumbers(true);
+            else
+                PaneProgFrame.setShowCvNumbers(false);
         }
         jmri.InstanceManager.configureManagerInstance().registerPref(new jmri.jmrit.symbolicprog.ProgrammerConfigPane(true));
         return result;

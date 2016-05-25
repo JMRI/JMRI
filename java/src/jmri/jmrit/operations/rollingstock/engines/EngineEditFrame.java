@@ -271,11 +271,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 		manager.addPropertyChangeListener(this);
 
 		pack();
-		if (getWidth() < 450)
-			setSize(450, getHeight());
-		if (getHeight() < 500)
-			setSize(getWidth(), 500);
-		setMinimumSize(new Dimension(450, Control.panelHeight));
+		setMinimumSize(new Dimension(Control.panelWidth, Control.panelHeight));
 		setVisible(true);
 	}
 

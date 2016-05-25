@@ -20,6 +20,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Color;
 import javax.swing.JPanel;
+import javax.swing.JDialog;
 import jmri.jmrit.signalling.entryexit.*;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
@@ -270,7 +271,7 @@ public class EntryExitPairs implements jmri.Manager{
     * This method will generate the point details, given a known source and layout panel.
     * 
     */
-    private PointDetails providePoint(NamedBean source, LayoutEditor panel){
+    public PointDetails providePoint(NamedBean source, LayoutEditor panel){
         PointDetails sourcePoint = getPointDetails(source, panel);
         if(sourcePoint==null){
             LayoutBlock facing = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getFacingBlockByNamedBean(source, panel);
@@ -300,6 +301,9 @@ public class EntryExitPairs implements jmri.Manager{
         return list;
     }
 
+    public Source getSourceForPoint(PointDetails pd){
+        return nxpair.get(pd);
+    }
     public int getNxPairNumbers(LayoutEditor panel){
         int total=0;
         for(Entry<PointDetails, Source> e : nxpair.entrySet()){
@@ -331,7 +335,10 @@ public class EntryExitPairs implements jmri.Manager{
         for(LayoutBlock pro:fromPd.getProtecting()){
             try{
                 jmri.jmrit.display.layoutEditor.LayoutBlockManager lbm = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
-                boolean result = lbm.getLayoutBlockConnectivityTools().checkValidDest(fromPd.getFacing(),pro, toPd.getFacing(), toPd.getProtecting().get(0), LayoutBlockConnectivityTools.SENSORTOSENSOR);
+                LayoutBlock toProt = null;
+                if(!toPd.getProtecting().isEmpty())
+                    toProt = toPd.getProtecting().get(0);
+                boolean result = lbm.getLayoutBlockConnectivityTools().checkValidDest(fromPd.getFacing(),pro, toPd.getFacing(), toProt, LayoutBlockConnectivityTools.SENSORTOSENSOR);
                 if(result){
                     ArrayList<LayoutBlock> blkList = lbm.getLayoutBlockConnectivityTools().getLayoutBlocks(fromPd.getFacing(), toPd.getFacing(), pro, cleardown, LayoutBlockConnectivityTools.NONE);
                     if(!blkList.isEmpty()){
@@ -686,11 +693,22 @@ public class EntryExitPairs implements jmri.Manager{
             return;
         stackList.add(new StackDetails(dp, reverse));
         checkTimer.start();
-        if(stackWindow==null)
-            stackWindow = new StackNXWindow();
-        stackWindow.updateGUI();
-        stackWindow.setVisible(true);
+        if(stackPanel==null)
+            stackPanel = new StackNXPanel();
+        if(stackDialog==null){
+            stackDialog = new JDialog();
+            stackDialog.setTitle(Bundle.getMessage("WindowTitleStackRoutes"));
+            stackDialog.add(stackPanel);
+        }
+        stackPanel.updateGUI();
+        
+        stackDialog.pack();
+        stackDialog.setModal(false);
+        stackDialog.setVisible(true);
     }
+    
+    StackNXPanel stackPanel=null;
+    JDialog stackDialog = null;
     
     public List<DestinationPoints> getStackedInterlocks(){
         List<DestinationPoints> dpList = new ArrayList<DestinationPoints>();
@@ -717,14 +735,12 @@ public class EntryExitPairs implements jmri.Manager{
             if(st.getDestinationPoint()==dp && st.getReverse()==reverse)
                 iter.remove();
         }
-        stackWindow.updateGUI();
+        stackPanel.updateGUI();
         if(stackList.isEmpty()){
-            stackWindow.setVisible(false);
+            stackDialog.setVisible(false);
             checkTimer.stop();
         }
     }
-    
-    StackNXWindow stackWindow;
     
     static class StackDetails{
         DestinationPoints dp;
@@ -764,7 +780,7 @@ public class EntryExitPairs implements jmri.Manager{
         if(!stackList.isEmpty()){
             checkTimer.start();
         } else {
-            stackWindow.setVisible(false);
+            stackDialog.setVisible(false);
         }
     }
     

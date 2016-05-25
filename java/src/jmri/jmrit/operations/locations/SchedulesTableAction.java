@@ -27,7 +27,7 @@ public class SchedulesTableAction extends AbstractAction {
 			f = new SchedulesTableFrame();
 		}
 		f.setExtendedState(Frame.NORMAL);
-		f.setVisible(true);
+	   	f.setVisible(true);	// this also brings the frame into focus
 	}
 }
 

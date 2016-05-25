@@ -3,9 +3,6 @@
 package jmri.progdebugger;
 
 import org.apache.log4j.Logger;
-import jmri.ProgListener;
-import jmri.Programmer;
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -20,35 +17,8 @@ import junit.framework.TestSuite;
  * @version         $Revision$
  */
 public class PackageTest extends TestCase {
-
-    int readValue = -2;
-    boolean replied = false;
-
-    public void testWriteRead() throws jmri.ProgrammerException, InterruptedException {
-        Programmer p = new ProgDebugger();
-        ProgListener l = new ProgListener(){
-                public void programmingOpReply(int value, int status) {
-                    log.debug("callback value="+value+" status="+status);
-                    replied = true;
-                    readValue = value;
-                }
-            };
-        p.writeCV(4, 12, l);
-        waitReply();
-        log.debug("readValue is "+readValue);
-        p.readCV(4, l);
-        waitReply();
-        log.debug("readValue is "+readValue);
-        Assert.assertEquals("read back", 12, readValue);
-    }
     
-    // from here down is testing infrastructure
-
-    synchronized void waitReply() throws InterruptedException {
-        while(!replied)
-            wait(200);
-        replied = false;
-    }
+    public void testCtor() {}
     
     public PackageTest(String s) {
         super(s);
@@ -64,6 +34,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite(PackageTest.class);
+        suite.addTest(jmri.progdebugger.DebugProgrammerTest.suite());
         suite.addTest(jmri.progdebugger.DebugProgrammerManagerTest.suite());
         return suite;
     }

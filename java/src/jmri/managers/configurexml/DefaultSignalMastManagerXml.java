@@ -25,7 +25,7 @@ public class DefaultSignalMastManagerXml
     /**
      * Default implementation for storing the contents of a
      * DefaultSignalMastManager
-     * @param o Object to store, of type TripleTurnoutSignalHead
+     * @param o Object to store
      * @return Element containing the complete info
      */
     public Element store(Object o) {
@@ -47,11 +47,6 @@ public class DefaultSignalMastManagerXml
                     e.printStackTrace();
                 }
                 
-                
-                /*e.setAttribute("systemName", p.getSystemName()); // deprecated for 2.9.* series
-                e.addContent(new Element("systemName").addContent(p.getSystemName()));
-                storeCommon(p, e);
-                element.addContent(e);*/
             }
             List<SignalMastRepeater> repeaterList = m.getRepeaterList();
             if(repeaterList.size()>0){

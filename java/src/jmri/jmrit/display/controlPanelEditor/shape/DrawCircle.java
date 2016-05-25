@@ -6,6 +6,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
 import javax.swing.*;
+
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -98,8 +99,14 @@ public class DrawCircle extends DrawFrame {
      */
     protected void updateFigure(PositionableShape p) {
     	PositionableCircle pos = (PositionableCircle)p;
+    	try {
+    		p._height = p._width = Integer.parseInt(_radiusText.getText());
+    		pos.makeShape();
+    	} catch (NumberFormatException nfe) {
+    		JOptionPane.showMessageDialog(this, nfe,
+    				Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
+    	}
 		setPositionableParams(pos);
-//		pos.makeShape();
     }
 
     static Logger log = LoggerFactory.getLogger(DrawCircle.class.getName());

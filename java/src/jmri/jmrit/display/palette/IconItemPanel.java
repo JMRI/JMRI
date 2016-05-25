@@ -44,7 +44,8 @@ import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrit.display.LinkingLabel;
 
 /**
-*  ItemPanel for for plain icons and backgrounds 
+*  ItemPanel for for plain icons and backgrounds
+*  Does NOT use IconDialog class to add, replace or delete icons. 
 */
 public class IconItemPanel extends ItemPanel implements MouseListener {
 
@@ -60,8 +61,8 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
     /**
     * Constructor for plain icons and backgrounds
     */
-    public IconItemPanel(JmriJFrame parentFrame, String type, String family, Editor editor) {
-        super(parentFrame,  type, family, editor);
+    public IconItemPanel(JmriJFrame parentFrame, String type, Editor editor) {
+        super(parentFrame,  type, editor);
         setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
     }
     public void init() {
@@ -120,10 +121,10 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
             }
             Iterator <String> iter = families.keySet().iterator();
             while (iter.hasNext()) {
-                _family = iter.next();
+                String family = iter.next();
+                _iconMap = families.get(family);
+                addIconsToPanel(_iconMap);
             }
-            _iconMap = families.get(_family);
-            addIconsToPanel(_iconMap);
         } else {
             // make create message todo!!!
             log.error("Item type \""+_itemType+"\" has "+(families==null ? "null" : families.size())+" families.");
@@ -146,6 +147,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
            try {
                JLabel label = new IconDragJLabel(new DataFlavor(Editor.POSITIONABLE_FLAVOR), _level);
                label.setName(borderName);
+        	   label.setToolTipText(icon.getName());
                panel.add(label);
                if (icon.getIconWidth()<1 || icon.getIconHeight()<1) {
                    label.setText(Bundle.getMessage("invisibleIcon"));
@@ -238,7 +240,12 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
     */
     protected void addNewIcon() {
         if (log.isDebugEnabled()) log.debug("addNewIcon Action: iconMap.size()= "+_iconMap.size());
-        String name = Bundle.getMessage("RedX");
+//        String name = Bundle.getMessage("RedX");
+        String name = JOptionPane.showInputDialog(this,
+    			Bundle.getMessage("NoIconName"), null);
+        if ( name==null || name.trim().length()==0) {
+        	return;
+        }
         if (_iconMap.get(name)!=null) {
             JOptionPane.showMessageDialog(this,
                     Bundle.getMessage("DuplicateIconName", name),
@@ -270,6 +277,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
         if (_iconMap.remove(_selectedIcon.getName())!= null) {
             removeIconFamiliesPanel();
             addIconsToPanel(_iconMap);
+            deleteIconButton.setEnabled(false);
             validate();
         }
     }

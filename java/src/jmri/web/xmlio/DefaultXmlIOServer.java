@@ -936,7 +936,13 @@ public class DefaultXmlIOServer implements XmlIOServer {
 
         // check for set element, which means write
         if (item.getAttributeValue(SET) != null) {
-            b.setState(Integer.parseInt(item.getAttributeValue(SET)));
+            int state = Integer.parseInt(item.getAttributeValue(SET));
+            if (state == SignalHead.HELD) {
+            	b.setHeld(true);
+            } else {
+            	b.setState(state);
+            	b.setHeld(false);
+            }
             item.removeAttribute(SET);
         } else {
             Element v = item.getChild(SET);

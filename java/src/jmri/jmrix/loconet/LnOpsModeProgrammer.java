@@ -42,6 +42,16 @@ public class LnOpsModeProgrammer implements Programmer  {
         mSlotMgr.confirmCVOpsMode(CV, val, p, mAddress, mLongAddr);
     }
 
+    public void writeCV(String CV, int val, ProgListener p) throws ProgrammerException {
+        writeCV(Integer.parseInt(CV), val, p);
+    }
+    public void readCV(String CV, ProgListener p) throws ProgrammerException {
+        readCV(Integer.parseInt(CV), p);
+    }
+    public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
+        confirmCV(Integer.parseInt(CV), val, p);
+    }
+
     public void setMode(int mode) {
         if (mode!=Programmer.OPSBYTEMODE) {
             reportBadMode(mode);
@@ -62,11 +72,31 @@ public class LnOpsModeProgrammer implements Programmer  {
 
     /**
      * Can this ops-mode programmer read back values?  Yes,
-     * if transponding hardware is present.  
+     * if transponding hardware is present, but we don't check that here.
      * @return always true
      */
+    @Override
     public boolean getCanRead() {
         return true;
+    }
+    @Override
+    public boolean getCanRead(String addr) { 
+        return getCanRead() && getCanRead(getMode(), addr);
+    }
+    @Override
+    public boolean getCanRead(int mode, String addr) { 
+        return getCanRead() && Integer.parseInt(addr)<=1024;
+    }
+    
+    @Override
+    public boolean getCanWrite()  { return true; }
+    @Override
+    public boolean getCanWrite(String addr) { 
+        return getCanWrite(getMode(), addr);
+    }
+    @Override
+    public boolean getCanWrite(int mode, String addr)  {
+        return getCanWrite() && Integer.parseInt(addr)<=1024;
     }
 
     public void addPropertyChangeListener(PropertyChangeListener p) {

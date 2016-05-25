@@ -19,7 +19,7 @@ public class DiagnosticAction 	extends AbstractAction {
     public DiagnosticAction(String s) { super(s);}
 
     public DiagnosticAction() {
-        this("Run CMRInet Diagnostic");
+        this("Run C/MRI Diagnostic");
     }
 
     public void actionPerformed(ActionEvent e) {

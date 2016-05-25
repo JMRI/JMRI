@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Michael Greene mgreene@cedarlane.com" version="33" lastUpdated="20131201"/>
   <version author="Bob Jacobsen" version="32" lastUpdated="20121226"/>
   <version author="Richard Sauerbrun" version="31" lastUpdated="20111230"/>
   <version author="Peter Ulvestad" version="30" lastUpdated="20091101"/>
@@ -64,6 +65,7 @@
   <!-- Version 29 - Add DN163K1D. Updated 'maxMotorCurrents' on DN163K1A,B,C (Peter Ulvestad) -->
   <!-- Version 30 - Add DZ123MO (Peter Ulvestad) -->
   <!-- Version 32 - Switch to includes for common vars -->
+  <!-- Version 33 - Add DH465 (Michael Greene) -->
   <decoder>
     <family name="Series 3 with FX3, silent, readback" mfg="Digitrax" lowVersionID="49" highVersionID="51">
       <model model="DG383" numOuts="8" numFns="14" maxMotorCurrent="3A (peak=5A)" formFactor="O/G" connector="9pin">
@@ -197,6 +199,15 @@
         <output name="5" label="Pad" connection="solder"/>
         <output name="6" label="Pad" connection="solder"/>
         <size length="2.877" width=".667" height=".173" units="inches"/>
+      </model>
+      <model model="DH465" numOuts="6" numFns="10" maxMotorCurrent="4A (peak=6A)" formFactor="HO">
+        <output name="1" label="White" connection="wire"/>
+        <output name="2" label="Yellow" connection="wire"/>
+        <output name="3" label="Pad (Green)" connection="solder"/>
+        <output name="4" label="Pad (Violet)" connection="solder"/>
+        <output name="5" label="Pad (Brown)" connection="solder"/>
+        <output name="6" label="Pad (Yellow/white)" connection="solder"/>
+        <size length="2.04" width="0.67" height="0.11" units="inches"/>
       </model>
       <model model="DN123K3" numOuts="2" numFns="8" maxMotorCurrent="1.25A (peak=2A)" formFactor="N" connector="9pin">
         <output name="1" label="LED" connection="solder"/>

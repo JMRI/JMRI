@@ -164,7 +164,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 		
 		setTitle(Bundle.getMessage("TitleTimeTableTrains"));
 
-		pack();
+		initMinimumSize();
 
 		scheduleManager.addPropertyChangeListener(this);
 		addPropertyChangeTrainSchedules();

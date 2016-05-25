@@ -95,7 +95,8 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
 			if ((s.getUserName() == null) && (userName != null))
 				s.setUserName(userName);
             else if (userName != null) log.warn("Found sensor via system name ("+systemName
-                                    +") with non-null user name ("+userName+")");
+                                    +") with non-null user name ("+s.getUserName()+"). Sensor \""+
+                                    systemName+"("+userName+")\" cannot be used.");
             return s;
         }
 

@@ -38,12 +38,13 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 //	private static boolean loadAndType = false;
 
 	// Managers
-	LocationManagerXml managerXml = LocationManagerXml.instance();
+//	LocationManagerXml managerXml = LocationManagerXml.instance();
 	TrainManager trainManager = TrainManager.instance();
 	RouteManager routeManager = RouteManager.instance();
 
 	Location _location = null;
 	Track _track = null;
+	String trackName = null;	// track name for tools menu
 	String _type = "";
 	JMenu _toolMenu = null;
 
@@ -54,12 +55,14 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	JScrollPane paneCheckBoxes = new JScrollPane(panelCheckBoxes);
 	JPanel panelTrainDir = new JPanel();
 	JPanel pShipLoadOption = new JPanel();
+	JPanel pDestinationOption = new JPanel();
 	JPanel panelOrder = new JPanel();
 	
 	// labels
 	JLabel loadOption = new JLabel();
 	JLabel shipLoadOption = new JLabel();
 	JLabel roadOption = new JLabel(Bundle.getMessage("AcceptsAllRoads"));
+	JLabel destinationOption = new JLabel();
 
 	// major buttons
 	JButton clearButton = new JButton(Bundle.getMessage("Clear"));
@@ -111,7 +114,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	JTextArea commentTextArea = new JTextArea(2, 60);
 	JScrollPane commentScroller = new JScrollPane(commentTextArea,
 			JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-	Dimension minScrollerDim = new Dimension(500, 42);
+	Dimension minScrollerDim = new Dimension(800,42);
 
 	// combo box
 	JComboBox comboBoxTypes = CarTypes.instance().getComboBox();
@@ -199,13 +202,18 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		pLoadOption.add(loadOption);
 		pShipLoadOption.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("ShipLoadOption")));
 		pShipLoadOption.add(shipLoadOption);
+		pDestinationOption.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Destinations")));
+		pDestinationOption.add(destinationOption);
 		
 		panelRoadAndLoadStatus.add(pRoadOption);
 		panelRoadAndLoadStatus.add(pLoadOption);
 		panelRoadAndLoadStatus.add(pShipLoadOption);
+		panelRoadAndLoadStatus.add(pDestinationOption);
 		
 		// only staging uses the ship load option
 		pShipLoadOption.setVisible(false);
+		// only classification/interchange tracks use the destination option
+		pDestinationOption.setVisible(false);
 
 		// row 10
 		// order panel
@@ -296,9 +304,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		addCheckBoxAction(autoDropCheckBox);
 		addCheckBoxAction(autoPickupCheckBox);
 
-		// track name for tools menu
-		String trackName = null;
-
 		// load fields and enable buttons
 		if (_track != null) {
 			_track.addPropertyChangeListener(this);
@@ -314,9 +319,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
 		_toolMenu = new JMenu(Bundle.getMessage("Tools"));
-		_toolMenu.add(new TrackRoadEditAction(this));
 		_toolMenu.add(new TrackLoadEditAction(this));
-		_toolMenu.add(new ShowCarsByLocationAction(false, location.getName(), trackName));
+		_toolMenu.add(new TrackRoadEditAction(this));	
 		_toolMenu.add(new TrackEditCommentsAction(this));
 		_toolMenu.add(new PoolTrackAction(this));
 		
@@ -333,7 +337,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		updateRoadOption();
 		updateLoadOption();
 		
-		setMinimumSize(new Dimension(750, Control.panelHeight));
+		setMinimumSize(new Dimension(Control.panelWidth, Control.panelHeight));
 	}
 
 	// Save, Delete, Add
@@ -1021,10 +1025,10 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	
 	private void updateRoadOption() {
 		if (_track != null) {
-			if (_track.getRoadOption().equals(Track.INCLUDEROADS))
+			if (_track.getRoadOption().equals(Track.INCLUDE_ROADS))
 				roadOption.setText(Bundle.getMessage("AcceptOnly") + " " + _track.getRoadNames().length + " "
 						+ Bundle.getMessage("Roads"));
-			else if (_track.getRoadOption().equals(Track.EXCLUDEROADS))
+			else if (_track.getRoadOption().equals(Track.EXCLUDE_ROADS))
 				roadOption.setText(Bundle.getMessage("Exclude") + " " + _track.getRoadNames().length + " "
 						+ Bundle.getMessage("Roads"));
 			else
@@ -1034,19 +1038,19 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	
 	private void updateLoadOption() {
 		if (_track != null) {
-			if (_track.getLoadOption().equals(Track.INCLUDELOADS))
+			if (_track.getLoadOption().equals(Track.INCLUDE_LOADS))
 				loadOption.setText(Bundle.getMessage("AcceptOnly") + " " + _track.getLoadNames().length + " "
 						+ Bundle.getMessage("Loads"));
-			else if (_track.getLoadOption().equals(Track.EXCLUDELOADS))
+			else if (_track.getLoadOption().equals(Track.EXCLUDE_LOADS))
 				loadOption.setText(Bundle.getMessage("Exclude") + " " + _track.getLoadNames().length + " "
 						+ Bundle.getMessage("Loads"));
 			else
 				loadOption.setText(Bundle.getMessage("AcceptsAllLoads"));
 			
-			if (_track.getShipLoadOption().equals(Track.INCLUDELOADS))
+			if (_track.getShipLoadOption().equals(Track.INCLUDE_LOADS))
 				shipLoadOption.setText(Bundle.getMessage("ShipOnly") + " " + _track.getShipLoadNames().length + " "
 						+ Bundle.getMessage("Loads"));
-			else if (_track.getShipLoadOption().equals(Track.EXCLUDELOADS))
+			else if (_track.getShipLoadOption().equals(Track.EXCLUDE_LOADS))
 				shipLoadOption.setText(Bundle.getMessage("Exclude") + " " + _track.getShipLoadNames().length + " "
 						+ Bundle.getMessage("Loads"));
 			else

@@ -655,6 +655,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * the known state of that.
      * @return True if reads are possible
      */
+    @Override
     public boolean getCanRead() { return mCanRead; }
 
     /**

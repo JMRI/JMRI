@@ -21,6 +21,7 @@ public class OlcbAddressTest extends TestCase {
     public void testAddressOK() {
         // hex form
         assertTrue(new OlcbAddress("x123456789ABCDEF0").check());
+        assertTrue(new OlcbAddress("X123456789ABCDEF0").check());
         assertTrue(new OlcbAddress("12.34.56.78.00.BC.DE.F0").check());
         assertTrue(new OlcbAddress("1.34.5.0.9A.B.E.0").check());
                 
@@ -83,6 +84,7 @@ public class OlcbAddressTest extends TestCase {
     public void testEqualsOK() {
         assertTrue( (new OlcbAddress("1.34.5.0.9A.B.E.0")).equals(new OlcbAddress("x013405009A0B0E00")));
         assertTrue( (new OlcbAddress("x013405009A0B0E00")).equals(new OlcbAddress("1.34.5.0.9A.B.E.0")));
+        assertTrue( (new OlcbAddress("x013405009A0B0E00")).equals(new OlcbAddress("X013405009A0B0E00")));
     }
     
     public void testSplitCheckOK() {

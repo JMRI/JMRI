@@ -31,7 +31,7 @@
         <label>Primary Address</label>
         <comment>Short address</comment>
       </variable>
-      <variable label="Start voltage" CV="2" item="Vstart" tooltip="Superseded by Dither.">
+      <variable label="Start voltage" CV="2" item="Vstart" tooltip="Superseded by Dither">
         <decVal/>
         <label>Start voltage</label>
       </variable>

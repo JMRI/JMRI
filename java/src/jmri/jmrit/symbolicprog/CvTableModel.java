@@ -73,6 +73,19 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         return mProgrammer;
     }
 
+    public void setProgrammer(Programmer p) { 
+        mProgrammer = p;
+        // tell all variables
+        for (CvValue cv : _cvAllVector) {
+            if (cv!=null) cv.setProgrammer(p);
+        }
+        for (CvValue cv : _cvDisplayVector) {
+            if (cv!=null) cv.setProgrammer(p);
+        }
+        log.debug("Set programmer in "+_cvAllVector.size()+"CVs");
+        
+    }
+
     // basic methods for AbstractTableModel implementation
     public int getRowCount() { return _numRows; }
 
@@ -97,7 +110,7 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
 
     public Class<?> getColumnClass(int col) {
         switch (col) {
-        case NUMCOLUMN: return String.class;
+        case NUMCOLUMN: return Integer.class;
         case VALCOLUMN: return JTextField.class;
         case STATECOLUMN: return String.class;
         case READCOLUMN: return JButton.class;
@@ -139,7 +152,7 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
     public Object getValueAt(int row, int col) {
         switch (col) {
         case NUMCOLUMN:
-            return ""+_cvDisplayVector.elementAt(row).number();
+            return _cvDisplayVector.elementAt(row).number();
         case VALCOLUMN:
             return _cvDisplayVector.elementAt(row).getTableEntry();
         case STATECOLUMN:

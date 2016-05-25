@@ -209,8 +209,8 @@ abstract public class AbstractMRTrafficController {
     /**
      * Messages to be transmitted
      */
-    LinkedList<AbstractMRMessage> msgQueue = new LinkedList<AbstractMRMessage>();
-    LinkedList<AbstractMRListener> listenerQueue = new LinkedList<AbstractMRListener>();
+    protected LinkedList<AbstractMRMessage> msgQueue = new LinkedList<AbstractMRMessage>();
+    protected LinkedList<AbstractMRListener> listenerQueue = new LinkedList<AbstractMRListener>();
     
     /**
      * This is invoked with messages to be forwarded to the port.
@@ -232,7 +232,7 @@ abstract public class AbstractMRTrafficController {
     /**
      * Permanent loop for the transmit thread.
      */
-    private void transmitLoop() {
+    protected void transmitLoop() {
         log.debug("transmitLoop starts");
         
         // loop forever
@@ -602,7 +602,7 @@ abstract public class AbstractMRTrafficController {
         return (ostream != null & istream != null);
     }
     
-    Thread xmtThread = null;
+    protected Thread xmtThread = null;
     protected Runnable xmtRunnable = null;
     Thread rcvThread = null;
     
@@ -988,7 +988,7 @@ abstract public class AbstractMRTrafficController {
         AbstractMRReply mMsg;
         AbstractMRListener mDest;
         AbstractMRTrafficController mTC;
-        RcvNotifier(AbstractMRReply pMsg, AbstractMRListener pDest,
+        public RcvNotifier(AbstractMRReply pMsg, AbstractMRListener pDest,
                     AbstractMRTrafficController pTC) {
             mMsg = pMsg;
             mDest = pDest;

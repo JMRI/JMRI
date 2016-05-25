@@ -388,10 +388,21 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 		focusRef = true;
 	}
 
+	Thread build;
 	private synchronized void buildTrain(int row) {
-		Train train = manager.getTrainById(sysList.get(row));
+		final Train train = manager.getTrainById(sysList.get(row));
 		if (!train.isBuilt()) {
-			train.build();
+			// only one train build at a time
+			if (build != null && build.isAlive())
+				return;
+			// use a thread to allow table updates during build
+			build = new Thread(new Runnable() {
+				public void run() {
+					train.build();
+				}
+			});
+			build.setName("Build Train"); // NOI18N
+			build.start();
 			// print build report, print manifest, run or open file
 		} else {
 			if (manager.isBuildReportEnabled())
@@ -407,6 +418,9 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 
 	// one of four buttons: Report, Move, Conductor or Terminate
 	private synchronized void actionTrain(int row) {
+		// no actions while a train is being built
+		if (build != null && build.isAlive())
+			return;
 		Train train = manager.getTrainById(sysList.get(row));
 		// move button becomes report if failure
 		if (train.getBuildFailed()) {
@@ -466,7 +480,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 		return (Setup.isStagingTrackImmediatelyAvail() 
 				&& !train.isTrainInRoute()
 				&& train.getDepartureTrack() != null
-				&& train.getDepartureTrack().getLocType().equals(Track.STAGING)
+				&& train.getDepartureTrack().getTrackType().equals(Track.STAGING)
 				&& train.getDepartureTrack() != train.getTerminationTrack()
 				&& train.getDepartureTrack().getDropRS() > 0 );
 	}
@@ -483,6 +497,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 			_trainConductorHashTable.put(train.getId(), f);
 		} else {
 			f.setExtendedState(Frame.NORMAL);
+		   	f.setVisible(true);	// this also brings the frame into focus
 		}
 		tcf = f;
 	}

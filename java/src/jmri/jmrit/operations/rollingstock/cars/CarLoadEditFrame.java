@@ -4,6 +4,8 @@ package jmri.jmrit.operations.rollingstock.cars;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
@@ -161,10 +163,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 		addHelpMenu("package.jmri.jmrit.operations.Operations_EditCarLoads", true);	// NOI18N
 
 		pack();
-		if (getWidth() < 300)
-			setSize(300, getHeight());
-		if (getHeight() < 375)
-			setSize(getWidth(), 375);
+		setMinimumSize(new Dimension(Control.smallPanelWidth, 375));
 		setVisible(true);
 	}
 

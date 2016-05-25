@@ -66,7 +66,11 @@ public class PositionablePointXml extends AbstractXmlAdapter {
 		if ( (p.getWestBoundSensorName()!=null) && (p.getWestBoundSensorName().length()>0) ) {
 			element.setAttribute("westboundsensor", p.getWestBoundSensorName());
 		}
-
+        if(p.getType()==PositionablePoint.EDGE_CONNECTOR){
+            element.setAttribute("linkedpanel", p.getLinkEditorName());
+            element.setAttribute("linkpointid", p.getLinkedPointId());
+        }
+        
         element.setAttribute("class", "jmri.jmrit.display.configurexml.PositionablePointXml");
         return element;
     }
@@ -135,6 +139,22 @@ public class PositionablePointXml extends AbstractXmlAdapter {
 		if (a != null) {
 			l.setWestBoundSensor(a.getValue());
 		}
+        
+        if(type == PositionablePoint.EDGE_CONNECTOR && element.getAttribute("linkedpanel")!=null && element.getAttribute("linkpointid")!=null){
+            String linkedEditorName = element.getAttribute("linkedpanel").getValue();
+            LayoutEditor linkedEditor = (LayoutEditor)jmri.jmrit.display.PanelMenu.instance().getEditorByName(linkedEditorName);
+            if(linkedEditor!=null){
+                String linkedPoint = element.getAttribute("linkpointid").getValue();
+                for(PositionablePoint point:linkedEditor.pointList){
+                    if(point.getType()==PositionablePoint.EDGE_CONNECTOR && point.getID().equals(linkedPoint)){
+                        point.setLinkedPoint(l);
+                        l.setLinkedPoint(point);
+                        break;
+                    }
+                }
+            }
+        }
+        
 		p.pointList.add(l);
     }
 

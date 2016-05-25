@@ -89,6 +89,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
     }
     public int getMode() { return _mode; }
 
+    @Override
     public boolean getCanRead() {
         if (jmri.InstanceManager.programmerManagerInstance().isAddressedModePossible())
             return false;

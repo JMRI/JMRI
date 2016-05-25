@@ -5,9 +5,7 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
-import java.awt.Rectangle;
 import java.awt.Shape;
 import javax.swing.JPopupMenu;
 import org.slf4j.LoggerFactory;

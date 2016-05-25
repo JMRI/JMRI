@@ -12,7 +12,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <!-- version 1 - new file panes for QSi V8 files -->
-<pane name="Light Ports">
+<pane name="Light Ports" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <column>
     <row>
       <column>
@@ -70,6 +70,10 @@
     </row>
     <row>
       <column>
+        <display item="CV115.109.0"/>
+        <display item="CV115.113.0"/>
+        <display item="CV115.120.0"/>
+        <display item="CV115.121.0"/>
         <display item="CV115.122.0"/>
         <display item="CV115.122.1"/>
         <label label=" "/>

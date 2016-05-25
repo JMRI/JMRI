@@ -35,22 +35,8 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 	final static int ALL = Track.EAST + Track.WEST + Track.NORTH + Track.SOUTH;
 
 	public void testLocationsTableFrame(){
-		// clear out previous locations
-		LocationManager.instance().dispose();	
-		// create 5 locations
-		LocationManager lManager = LocationManager.instance();		
-		Location l1 = lManager.newLocation("Test Loc E");
-		l1.setLength(1001);
-		Location l2 = lManager.newLocation("Test Loc D");
-		l2.setLength(1002);
-		Location l3 = lManager.newLocation("Test Loc C");
-		l3.setLength(1003);
-		Location l4 = lManager.newLocation("Test Loc B");
-		l4.setLength(1004);
-		Location l5 = lManager.newLocation("Test Loc A");
-		l5.setLength(1005);
+	
 		LocationsTableFrame f = new LocationsTableFrame();
-		f.setVisible(true);
 		
 		// should be 5 rows
 		Assert.assertEquals("number of rows", 5, f.locationsModel.getRowCount());
@@ -69,7 +55,6 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("5th loc length", "1001", f.locationsModel.getValueAt(4, LocationsTableModel.LENGTHCOLUMN));
 		
 		// create add location frame by clicking add button
-		//f.addButton.doClick();
         getHelper().enterClickAndLeave( new MouseEventData( this, f.addButton ) );
 		
         // confirm location add frame creation
@@ -101,29 +86,23 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertNotNull(newLoc);
 		
 		// add a yard track
-		//f.addYardButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.addYardButton ) );
 		
 		// add an interchange track
-		//f.addInterchangeButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.addInterchangeButton ) );
 		
 		// add a staging track
-		//f.addStagingButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.addStagingButton ) );
 		
 		// add a yard track
-		//f.addYardButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.addYardButton ) );
 		
 		f.locationNameTextField.setText("Newer Test Location");
-		//f.saveLocationButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveLocationButton ) );
 		
 		Assert.assertEquals("changed location name", "Newer Test Location", newLoc.getName());
 		
 		// test delete button
-		//f.deleteLocationButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.deleteLocationButton ) );
 		Assert.assertEquals("should be 6 locations", 6, lManager.getLocationsByNameList().size());
 		// confirm delete dialog window should appear
@@ -140,7 +119,11 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		cr.addName("UP");
 		
 		LocationManager lManager = LocationManager.instance();
+		Location l3 = lManager.newLocation("Test Loc C");
+		l3.setLength(1003);
+
 		Location l = lManager.getLocationByName("Test Loc C");
+		Assert.assertNotNull("Test Loc C", l);
 		InterchangeEditFrame f = new InterchangeEditFrame();
 		f.setTitle("Test Interchange Add Frame");
 		f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
@@ -149,28 +132,16 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		// create two interchange tracks
 		f.trackNameTextField.setText("new interchange track");
 		f.trackLengthTextField.setText("321");
-		//Assert.assertTrue("Add button is showing", f.addTrackButton.isShowing());
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTrackButton ) );
 		
 		f.trackNameTextField.setText("2nd interchange track");
 		f.trackLengthTextField.setText("4331");
-		//f.addTrackButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTrackButton ) );
 		
 		// deselect east and south check boxes
-		//f.eastCheckBox.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.eastCheckBox ) );
-		//f.southCheckBox.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.southCheckBox ) );
-		
-//		// accept only UP road
-//		//f.roadNameInclude.doClick();
-//		getHelper().enterClickAndLeave( new MouseEventData( this, f.roadNameInclude ) );
-//		f.comboBoxRoads.setSelectedItem("UP");
-//		//f.addRoadButton.doClick();
-//		getHelper().enterClickAndLeave( new MouseEventData( this, f.addRoadButton ) );
-		
-		//f.saveTrackButton.doClick();
+				
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveTrackButton ) );
 		
 		Track t = l.getTrackByName("new interchange track", Track.INTERCHANGE);	
@@ -178,32 +149,42 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("interchange track length", 321, t.getLength());
 		// check that the defaults are correct
 		Assert.assertEquals("all directions", ALL, t.getTrainDirections());
-		Assert.assertEquals("all roads", Track.ALLROADS, t.getRoadOption());
+		Assert.assertEquals("all roads", Track.ALL_ROADS, t.getRoadOption());
 				
 		t = l.getTrackByName("2nd interchange track", Track.INTERCHANGE);	
 		Assert.assertNotNull("2nd interchange track", t);
 		Assert.assertEquals("2nd interchange track length", 4331, t.getLength());
 		Assert.assertEquals("west and north", Track.NORTH+Track.WEST, t.getTrainDirections());
-//		Assert.assertEquals("include roads", Track.INCLUDEROADS, t.getRoadOption());
-//		Assert.assertTrue("only UP road", t.acceptsRoadName("UP"));
-//		Assert.assertFalse("2nd interchange Road2", t.acceptsRoadName("Road2"));
 		
 		// check track accepts Boxcars
 		Assert.assertTrue("2nd interchange track accepts Boxcars", t.acceptsTypeName("Boxcar"));
 		// test clear car types button
-		//f.clearButton.doClick();
-		getHelper().enterClickAndLeave( new MouseEventData( this, f.clearButton ) );
-		//f.saveTrackButton.doClick();	
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.clearButton ) );	
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveTrackButton ) );
 		Assert.assertFalse("2nd interchange track doesn't accept Boxcars", t.acceptsTypeName("Boxcar"));
 		
-		//f.setButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.setButton ) );
-		//f.saveTrackButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveTrackButton ) );
 		Assert.assertTrue("2nd interchange track accepts Boxcars again", t.acceptsTypeName("Boxcar"));	
 		
 		f.dispose();
+		
+		// now reload
+		
+		Location l2 = lManager.getLocationByName("Test Loc C");		
+		Assert.assertNotNull("Location Test Loc C", l2);
+		
+		LocationEditFrame fl = new LocationEditFrame();
+		fl.setTitle("Test Edit Location Frame");
+		fl.initComponents(l2);
+		
+		// check location name
+		Assert.assertEquals("name", "Test Loc C", fl.locationNameTextField.getText());
+		
+		Assert.assertEquals("number of interchanges", 2, fl.interchangeModel.getRowCount());
+		Assert.assertEquals("number of staging tracks", 0, fl.stagingModel.getRowCount());
+		
+		fl.dispose();
 	}
 	
 	public void testSidingEditFrame(){		
@@ -217,35 +198,21 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		// create three siding tracks
 		f.trackNameTextField.setText("new siding track");
 		f.trackLengthTextField.setText("1223");
-		//f.addTrackButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTrackButton ) );
 		
 		f.trackNameTextField.setText("2nd siding track");
 		f.trackLengthTextField.setText("9999");
-		//f.addTrackButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTrackButton ) );
 		
 		f.trackNameTextField.setText("3rd siding track");
 		f.trackLengthTextField.setText("1010");
-		//f.addTrackButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTrackButton ) );
 		
 		// deselect east, west and north check boxes
-		//f.eastCheckBox.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.eastCheckBox ) );
-		//f.westCheckBox.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.westCheckBox ) );
-		//f.northCheckBox.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.northCheckBox ) );
 		
-		// exclude UP road
-		//f.roadNameExclude.doClick();
-//		getHelper().enterClickAndLeave( new MouseEventData( this, f.roadNameExclude ) );
-//		f.comboBoxRoads.setSelectedItem("UP");
-//		//f.addRoadButton.doClick();
-//		getHelper().enterClickAndLeave( new MouseEventData( this, f.addRoadButton ) );
-		
-		//f.saveTrackButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveTrackButton ) );
 		
 		Track t = l.getTrackByName("new siding track", null);	
@@ -253,26 +220,22 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("siding track length", 1223, t.getLength());
 		// check that the defaults are correct
 		Assert.assertEquals("all directions", ALL, t.getTrainDirections());
-		Assert.assertEquals("all roads", Track.ALLROADS, t.getRoadOption());
+		Assert.assertEquals("all roads", Track.ALL_ROADS, t.getRoadOption());
 				
 		t = l.getTrackByName("2nd siding track", null);	
 		Assert.assertNotNull("2nd siding track", t);
 		Assert.assertEquals("2nd siding track length", 9999, t.getLength());
 		// check that the defaults are correct
 		Assert.assertEquals("all directions", ALL, t.getTrainDirections());
-		Assert.assertEquals("all roads", Track.ALLROADS, t.getRoadOption());
+		Assert.assertEquals("all roads", Track.ALL_ROADS, t.getRoadOption());
 		
 		t = l.getTrackByName("3rd siding track", null);	
 		Assert.assertNotNull("3rd siding track", t);
 		Assert.assertEquals("3rd siding track length", 1010, t.getLength());
 		
 		Assert.assertEquals("only south", Track.SOUTH, t.getTrainDirections());
-//		Assert.assertEquals("exclude roads", Track.EXCLUDEROADS, t.getRoadOption());
-//		Assert.assertFalse("only UP road", t.acceptsRoadName("UP"));
-//		Assert.assertTrue("3rd siding Road2", t.acceptsRoadName("Road2"));
 		
 		// create the schedule edit frame
-		//f.editScheduleButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.editScheduleButton ) );
 		
         // confirm schedule add frame creation
@@ -282,6 +245,23 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
         // kill all frames
 		f.dispose();
 		sef.dispose();
+		
+		// now reload
+		
+		Location l2 = lManager.getLocationByName("Test Loc C");		
+		Assert.assertNotNull("Location Test Loc C", l2);
+		
+		LocationEditFrame fl = new LocationEditFrame();
+		fl.setTitle("Test Edit Location Frame");
+		fl.initComponents(l2);
+		
+		// check location name
+		Assert.assertEquals("name", "Test Loc C", fl.locationNameTextField.getText());
+		
+		Assert.assertEquals("number of sidings", 3, fl.spurModel.getRowCount());
+		Assert.assertEquals("number of staging tracks", 0, fl.stagingModel.getRowCount());
+		
+		fl.dispose();
 	}
 	
 	/**
@@ -290,6 +270,7 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 	public void testStagingEditFrame(){		
 		LocationManager lManager = LocationManager.instance();
 		Location l = lManager.getLocationByName("Test Loc A");
+		Assert.assertNotNull("Test Loc A", l);
 		StagingEditFrame f = new StagingEditFrame();
 		f.setTitle("Test Staging Add Frame");
 		f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
@@ -298,33 +279,25 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		// create four staging tracks
 		f.trackNameTextField.setText("new staging track");
 		f.trackLengthTextField.setText("34");
-		//f.addTrackButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTrackButton ) );
 		
 		f.trackNameTextField.setText("2nd staging track");
 		f.trackLengthTextField.setText("3456");
-		//f.addTrackButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTrackButton ) );
 		
 		f.trackNameTextField.setText("3rd staging track");
 		f.trackLengthTextField.setText("1");
-		//f.addTrackButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTrackButton ) );
 		
 		f.trackNameTextField.setText("4th staging track");
 		f.trackLengthTextField.setText("12");
-		//f.addTrackButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTrackButton ) );
 		
 		// deselect east, west and south check boxes
-		//f.northCheckBox.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.northCheckBox ) );
-		//f.westCheckBox.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.westCheckBox ) );
-		//f.southCheckBox.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.southCheckBox ) );
 		
-		//f.saveTrackButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveTrackButton ) );
 		
 		sleep(1);	// for slow machines
@@ -333,21 +306,21 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("staging track length", 34, t.getLength());
 		// check that the defaults are correct
 		Assert.assertEquals("all directions", ALL, t.getTrainDirections());
-		Assert.assertEquals("all roads", Track.ALLROADS, t.getRoadOption());
+		Assert.assertEquals("all roads", Track.ALL_ROADS, t.getRoadOption());
 				
 		t = l.getTrackByName("2nd staging track", null);	
 		Assert.assertNotNull("2nd staging track", t);
 		Assert.assertEquals("2nd staging track length", 3456, t.getLength());
 		// check that the defaults are correct
 		Assert.assertEquals("all directions", ALL, t.getTrainDirections());
-		Assert.assertEquals("all roads", Track.ALLROADS, t.getRoadOption());
+		Assert.assertEquals("all roads", Track.ALL_ROADS, t.getRoadOption());
 		
 		t = l.getTrackByName("3rd staging track", null);	
 		Assert.assertNotNull("3rd staging track", t);
 		Assert.assertEquals("3rd staging track length", 1, t.getLength());
 		// check that the defaults are correct
 		Assert.assertEquals("all directions", ALL, t.getTrainDirections());
-		Assert.assertEquals("all roads", Track.ALLROADS, t.getRoadOption());
+		Assert.assertEquals("all roads", Track.ALL_ROADS, t.getRoadOption());
 
 		t = l.getTrackByName("4th staging track", null);	
 		Assert.assertNotNull("4th staging track", t);
@@ -355,6 +328,26 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("only east", Track.EAST, t.getTrainDirections());	
 		
 		f.dispose();
+		
+		Location l2 = lManager.getLocationByName("Test Loc A");
+		Assert.assertNotNull("Test Loc A",l2);
+		
+		LocationEditFrame fl = new LocationEditFrame();
+		fl.setTitle("Test Edit Location Frame Staging");
+		fl.initComponents(l2);
+		
+		// check location name
+		Assert.assertEquals("name", "Test Loc A", fl.locationNameTextField.getText());
+		
+		Assert.assertEquals("number of sidings", 0, fl.spurModel.getRowCount());
+		Assert.assertEquals("number of interchanges", 0, fl.interchangeModel.getRowCount());
+		Assert.assertEquals("number of yards", 0, fl.yardModel.getRowCount());
+		Assert.assertEquals("number of staging tracks", 4, fl.stagingModel.getRowCount());
+		
+		// is the staging only button selected?
+		Assert.assertTrue("staging selected", fl.stageRadioButton.isSelected());
+		
+		fl.dispose();
 	}
 	
 	public void testYardEditFrame(){
@@ -367,33 +360,25 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		// create four yard tracks
 		f.trackNameTextField.setText("new yard track");
 		f.trackLengthTextField.setText("43");
-		//f.addTrackButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTrackButton ) );
 		
 		f.trackNameTextField.setText("2nd yard track");
 		f.trackLengthTextField.setText("6543");
-		//f.addTrackButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTrackButton ) );
 		
 		f.trackNameTextField.setText("3rd yard track");
 		f.trackLengthTextField.setText("1");
-		//f.addTrackButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTrackButton ) );
 		
 		f.trackNameTextField.setText("4th yard track");
 		f.trackLengthTextField.setText("21");
-		//f.addTrackButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTrackButton ) );
 		
 		// deselect east, west and south check boxes
-		//f.eastCheckBox.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.eastCheckBox ) );
-		//f.westCheckBox.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.westCheckBox ) );
-		//f.southCheckBox.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.southCheckBox ) );
 		
-		//f.saveTrackButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveTrackButton ) );
 		
 		Track t = l.getTrackByName("new yard track", null);	
@@ -401,21 +386,21 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("yard track length", 43, t.getLength());
 		// check that the defaults are correct
 		Assert.assertEquals("all directions", ALL, t.getTrainDirections());
-		Assert.assertEquals("all roads", Track.ALLROADS, t.getRoadOption());
+		Assert.assertEquals("all roads", Track.ALL_ROADS, t.getRoadOption());
 				
 		t = l.getTrackByName("2nd yard track", null);	
 		Assert.assertNotNull("2nd yard track", t);
 		Assert.assertEquals("2nd yard track length", 6543, t.getLength());
 		// check that the defaults are correct
 		Assert.assertEquals("all directions", ALL, t.getTrainDirections());
-		Assert.assertEquals("all roads", Track.ALLROADS, t.getRoadOption());
+		Assert.assertEquals("all roads", Track.ALL_ROADS, t.getRoadOption());
 		
 		t = l.getTrackByName("3rd yard track", null);	
 		Assert.assertNotNull("3rd yard track", t);
 		Assert.assertEquals("3rd yard track length", 1, t.getLength());
 		// check that the defaults are correct
 		Assert.assertEquals("all directions", ALL, t.getTrainDirections());
-		Assert.assertEquals("all roads", Track.ALLROADS, t.getRoadOption());
+		Assert.assertEquals("all roads", Track.ALL_ROADS, t.getRoadOption());
 
 		t = l.getTrackByName("4th yard track", null);	
 		Assert.assertNotNull("4th yard track", t);
@@ -423,66 +408,39 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("only north", Track.NORTH, t.getTrainDirections());
 		
 		f.dispose();
-	}
-	
-	/**
-	 * This test builds on the previous testInterchangeEditFrame(),
-	 * testSidingEditFrame(), and testYardEditFrame() tests.
-	 */
-	public void testLocationEditFrameRead(){
-		LocationManager lManager = LocationManager.instance();
-		Location l2 = lManager.getLocationByName("Test Loc C");
 		
-		LocationEditFrame f = new LocationEditFrame();
-		f.setTitle("Test Edit Location Frame");
-		f.initComponents(l2);
+		// now reload
+		
+		Location l2 = lManager.getLocationByName("Test Loc C");		
+		Assert.assertNotNull("Location Test Loc C", l2);
+		
+		LocationEditFrame fl = new LocationEditFrame();
+		fl.setTitle("Test Edit Location Frame");
+		fl.initComponents(l2);
 		
 		// check location name
-		Assert.assertEquals("name", "Test Loc C", f.locationNameTextField.getText());
+		Assert.assertEquals("name", "Test Loc C", fl.locationNameTextField.getText());
 		
-		Assert.assertEquals("number of sidings", 3, f.spurModel.getRowCount());
-		Assert.assertEquals("number of interchanges", 2, f.interchangeModel.getRowCount());
-		Assert.assertEquals("number of yards", 4, f.yardModel.getRowCount());
-		Assert.assertEquals("number of staging tracks", 0, f.stagingModel.getRowCount());
+		Assert.assertEquals("number of yards", 4, fl.yardModel.getRowCount());
+		Assert.assertEquals("number of staging tracks", 0, fl.stagingModel.getRowCount());
 		
-		f.dispose();
+		fl.dispose();
 	}
-	
-	public void testLocationEditFrameReadStaging(){
-		LocationManager lManager = LocationManager.instance();
-		Location l2 = lManager.getLocationByName("Test Loc A");
-		
-		LocationEditFrame f = new LocationEditFrame();
-		f.setTitle("Test Edit Location Frame Staging");
-		f.initComponents(l2);
-		
-		// check location name
-		Assert.assertEquals("name", "Test Loc A", f.locationNameTextField.getText());
-		
-		Assert.assertEquals("number of sidings", 0, f.spurModel.getRowCount());
-		Assert.assertEquals("number of interchanges", 0, f.interchangeModel.getRowCount());
-		Assert.assertEquals("number of yards", 0, f.yardModel.getRowCount());
-		Assert.assertEquals("number of staging tracks", 4, f.stagingModel.getRowCount());
-		
-		// is the staging only button selected?
-		Assert.assertTrue("staging selected", f.stageRadioButton.isSelected());
-		
-		f.dispose();
-	}
-	
 
 	public void testScheduleEditFrame(){
 		LocationManager lManager = LocationManager.instance();
+		Location l2 = lManager.newLocation("Test Loc C");
+		l2.setLength(1003);
+
 		Location l = lManager.getLocationByName("Test Loc C");
 		Assert.assertNotNull("Location exists", l);
-		Track t = l.getTrackByName("3rd siding track", null);
+		Track t = l.addTrack("3rd siding track", Track.SPUR);
 		Assert.assertNotNull("Track exists", t);
 		ScheduleEditFrame f = new ScheduleEditFrame();
 		f.setTitle("Test Schedule Frame");
 		f.initComponents(null, l, t);
 		f.scheduleNameTextField.setText("Test Schedule A");
 		f.commentTextField.setText("Test Comment");
-		//f.addScheduleButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.addScheduleButton ) );
 		
 		// was the schedule created?
@@ -492,21 +450,15 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		
 		// now add some car types to the schedule
 		f.typeBox.setSelectedItem("Boxcar");
-		//f.addTypeButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTypeButton ) );
 		f.typeBox.setSelectedItem("Flatcar");
-		//f.addTypeButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTypeButton ) );
 		f.typeBox.setSelectedItem("Coilcar");
-		//f.addTypeButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTypeButton ) );
 		// put Tank Food at start of list
 		f.typeBox.setSelectedItem("Tank Food");
-		//f.addLocAtTop.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.addLocAtTop ) );
-		//f.addTypeButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTypeButton ) );
-		//f.saveScheduleButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveScheduleButton ) );
 		
 		List<String> list = s.getItemsBySequenceList();
@@ -521,7 +473,6 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		si = s.getItemById(list.get(3));		
 		Assert.assertEquals("3rd type", "Coilcar", si.getTypeName());
 		
-		//f.deleteScheduleButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.deleteScheduleButton ) );
 		// Yes to pop up
 		pressDialogButton(f, "Yes");
@@ -594,7 +545,6 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 	
 	public void testScheduleTableFrame(){
 		SchedulesTableFrame f = new SchedulesTableFrame();
-		f.setVisible(true);
 		f.dispose();
 	}
 	
@@ -610,6 +560,22 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
         Assert.assertNotNull("button not found", button);   
         // Click button
         getHelper().enterClickAndLeave( new MouseEventData( this, button ) );		
+	}
+	
+	private void loadLocations() {
+		// create 5 locations
+		LocationManager lManager = LocationManager.instance();		
+		Location l1 = lManager.newLocation("Test Loc E");
+		l1.setLength(1001);
+		Location l2 = lManager.newLocation("Test Loc D");
+		l2.setLength(1002);
+		Location l3 = lManager.newLocation("Test Loc C");
+		l3.setLength(1003);
+		Location l4 = lManager.newLocation("Test Loc B");
+		l4.setLength(1004);
+		Location l5 = lManager.newLocation("Test Loc A");
+		l5.setLength(1005);
+		
 	}
 	
 	// Ensure minimal setup for log4J
@@ -630,6 +596,11 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		LocationManagerXml.instance().setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
 		LocationManagerXml.instance().setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
 		TrainManagerXml.instance().setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
+		
+		// clear out previous locations
+		LocationManager.instance().dispose();
+		
+		loadLocations();
 	}
 
 	public OperationsLocationsGuiTest(String s) {

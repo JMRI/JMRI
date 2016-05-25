@@ -31,7 +31,7 @@ public class ConstantValue extends VariableValue {
         _minVal = minVal;
         _value = new JComboBox();
         for (int i=0; i<=maxVal; i++) {
-            _value.addItem(""+0);
+            _value.addItem(i);
         }
     }
 
@@ -44,6 +44,15 @@ public class ConstantValue extends VariableValue {
         return new CvValue[]{};
     }
 
+    /** 
+     * Provide a user-readable description of
+     * the CVs accessed by this variable.
+     */
+     
+     public String getCvDescription() {
+        return null;
+     }
+     
     // stored value
     JComboBox _value = null;
 
@@ -94,7 +103,7 @@ public class ConstantValue extends VariableValue {
             // this only makes sense if there are exactly two options
             JCheckBox b = new JCheckBox();
             b.setEnabled(false);
-            b.setSelected(true);
+            b.setSelected((getIntValue() == 1));
             comboCBs.add(b);
             updateRepresentation(b);
             return b;

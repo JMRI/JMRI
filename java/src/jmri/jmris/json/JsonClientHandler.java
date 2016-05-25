@@ -105,6 +105,7 @@ public class JsonClientHandler {
                 type = LIST;
             }
             JsonNode data = root.path(DATA);
+            log.debug("Processing {} with {}", type, data);
             if (type.equals(PING)) {
                 this.connection.sendMessage(this.mapper.writeValueAsString(this.mapper.createObjectNode().put(TYPE, PONG)));
             } else if (type.equals(GOODBYE)) {

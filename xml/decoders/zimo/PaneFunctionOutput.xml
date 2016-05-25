@@ -31,7 +31,7 @@
         </label>
         <row>
           <column>
-            <display item="SUSI" tooltip="CV 124 bit 7"/>
+            <display item="SUSI"/>
           </column>
           <column>
             <label label="   ">
@@ -45,7 +45,7 @@
         <label label=" ">
           <label> </label>
         </label>
-        <display item="Function Output 4 as virtual Cam or Smoke Fan" tooltip="CV 133"/>
+        <display item="Function Output 4 as virtual Cam or Smoke Fan"/>
         <label label=" ">
           <label> </label>
         </label>
@@ -54,25 +54,25 @@
     <separator/>
     <row>
       <column>
-        <display item="Dim Front Light" format="checkbox" tooltip="CV 114 bit 0"/>
-        <display item="Dim Rear Light" format="checkbox" tooltip="CV 114 bit 1"/>
-        <display item="Dim function output 1" format="checkbox" tooltip="CV 114 bit 2"/>
-        <display item="Dim function output 2" format="checkbox" tooltip="CV 114 bit 3"/>
-        <display item="Dim function output 3" format="checkbox" tooltip="CV 114 bit 4"/>
-        <display item="Dim function output 4" format="checkbox" tooltip="CV 114 bit 5"/>
-        <display item="Dim function output 5" format="checkbox" tooltip="CV 114 bit 6"/>
-        <display item="Dim function output 6" format="checkbox" tooltip="CV 114 bit 7"/>
-        <display item="Dim function output 7" format="checkbox" tooltip="CV 152 bit 0"/>
-        <display item="Dim function output 8" format="checkbox" tooltip="CV 152 bit 1"/>
-        <display item="Dim function output 9" format="checkbox" tooltip="CV 152 bit 2"/>
-        <display item="Dim function output 10" format="checkbox" tooltip="CV 152 bit 3"/>
-        <display item="Dim function output 11" format="checkbox" tooltip="CV 152 bit 4"/>
-        <display item="Dim function output 12" format="checkbox" tooltip="CV 152 bit 5"/>
+        <display item="Dim Front Light" format="checkbox"/>
+        <display item="Dim Rear Light" format="checkbox"/>
+        <display item="Dim function output 1" format="checkbox"/>
+        <display item="Dim function output 2" format="checkbox"/>
+        <display item="Dim function output 3" format="checkbox"/>
+        <display item="Dim function output 4" format="checkbox"/>
+        <display item="Dim function output 5" format="checkbox"/>
+        <display item="Dim function output 6" format="checkbox"/>
+        <display item="Dim function output 7" format="checkbox"/>
+        <display item="Dim function output 8" format="checkbox"/>
+        <display item="Dim function output 9" format="checkbox"/>
+        <display item="Dim function output 10" format="checkbox"/>
+        <display item="Dim function output 11" format="checkbox"/>
+        <display item="Dim function output 12" format="checkbox"/>
       </column>
       <column>
         <row>
           <column>
-            <display item="Output Level" tooltip="CV 60"/>
+            <display item="Output Level"/>
             <label label=" ">
               <label> </label>
             </label>
@@ -81,7 +81,7 @@
             </label>
           </column>
           <column>
-            <display item="Output Level" format="hslider" tooltip="CV 60" label="">
+            <display item="Output Level" format="hslider" label="">
               <label/>
             </display>
             <label label=" ">
@@ -94,22 +94,22 @@
         </row>
         <row>
           <column>
-            <display item="F6 dims front light" format="checkbox" tooltip="CV 119 bit 0"/>
-            <display item="F6 dims rear light" format="checkbox" tooltip="CV 119 bit 1"/>
-            <display item="F6 dims function output 1" format="checkbox" tooltip="CV 119 bit 2"/>
-            <display item="F6 dims function output 2" format="checkbox" tooltip="CV 119 bit 3"/>
-            <display item="F6 dims function output 3" format="checkbox" tooltip="CV 119 bit 4"/>
-            <display item="F6 dims function output 4" format="checkbox" tooltip="CV 119 bit 5"/>
-            <display item="F6 inverted" format="checkbox" tooltip="CV 119 bit 7"/>
+            <display item="F6 dims front light" format="checkbox"/>
+            <display item="F6 dims rear light" format="checkbox"/>
+            <display item="F6 dims function output 1" format="checkbox"/>
+            <display item="F6 dims function output 2" format="checkbox"/>
+            <display item="F6 dims function output 3" format="checkbox"/>
+            <display item="F6 dims function output 4" format="checkbox"/>
+            <display item="F6 inverted" format="checkbox"/>
           </column>
           <column>
-            <display item="F7 dims front light" format="checkbox" tooltip="CV 120 bit 0"/>
-            <display item="F7 dims rear light" format="checkbox" tooltip="CV 120 bit 1"/>
-            <display item="F7 dims function output 1" format="checkbox" tooltip="CV 120 bit 2"/>
-            <display item="F7 dims function output 2" format="checkbox" tooltip="CV 120 bit 3"/>
-            <display item="F7 dims function output 3" format="checkbox" tooltip="CV 120 bit 4"/>
-            <display item="F7 dims function output 4" format="checkbox" tooltip="CV 120 bit 5"/>
-            <display item="F7 inverted" format="checkbox" tooltip="CV 120 bit 7"/>
+            <display item="F7 dims front light" format="checkbox"/>
+            <display item="F7 dims rear light" format="checkbox"/>
+            <display item="F7 dims function output 1" format="checkbox"/>
+            <display item="F7 dims function output 2" format="checkbox"/>
+            <display item="F7 dims function output 3" format="checkbox"/>
+            <display item="F7 dims function output 4" format="checkbox"/>
+            <display item="F7 inverted" format="checkbox"/>
           </column>
           <column>
             <label label="          ">
@@ -132,7 +132,7 @@
             </label>
           </column>
           <column>
-            <display item="Flash Rate" tooltip="CV 117"/>
+            <display item="Flash Rate"/>
           </column>
           <column>
             <label label="    ">
@@ -154,14 +154,14 @@
         <label label=" ">
           <label> </label>
         </label>
-        <display item="Flash front light" format="checkbox" tooltip="CV 118 bit 0"/>
-        <display item="Flash rear light" format="checkbox" tooltip="CV 118 bit 1"/>
-        <display item="Flash function output 1" format="checkbox" tooltip="CV 118 bit 2"/>
-        <display item="Flash function output 2" format="checkbox" tooltip="CV 118 bit 3"/>
-        <display item="Flash function output 3" format="checkbox" tooltip="CV 118 bit 4"/>
-        <display item="Flash function output 4" format="checkbox" tooltip="CV 118 bit 5"/>
-        <display item="Inverse Flash Output 2" format="checkbox" tooltip="CV 118 bit 6"/>
-        <display item="Inverse Flash Output 4" format="checkbox" tooltip="CV 118 bit 7"/>
+        <display item="Flash front light" format="checkbox"/>
+        <display item="Flash rear light" format="checkbox"/>
+        <display item="Flash function output 1" format="checkbox"/>
+        <display item="Flash function output 2" format="checkbox"/>
+        <display item="Flash function output 3" format="checkbox"/>
+        <display item="Flash function output 4" format="checkbox"/>
+        <display item="Inverse Flash Output 2" format="checkbox"/>
+        <display item="Inverse Flash Output 4" format="checkbox"/>
         <display item="Flash Rate Off Time"/>
         <display item="Flash Rate On Time"/>
         <label label=" ">
@@ -178,15 +178,15 @@
         <label label=" ">
           <label> </label>
         </label>
-        <display item="Minimum Dimming Value" tooltip="CV 62"/>
+        <display item="Minimum Dimming Value"/>
         <label label=" ">
           <label> </label>
         </label>
-        <display item="Light Effects Modifications" tooltip="CV 63"/>
+        <display item="Light Effects Modifications"/>
         <label label=" ">
           <label> </label>
         </label>
-        <display item="Ditch Light Off Time" tooltip="CV 64"/>
+        <display item="Ditch Light Off Time"/>
         <label label=" ">
           <label> </label>
         </label>

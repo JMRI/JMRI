@@ -258,6 +258,7 @@ public class JsonUtil {
         data.put(DESTINATION, engine.getRouteDestinationId());
         data.put(DESTINATION_TRACK, engine.getDestinationTrackName());
         data.put(MODEL, engine.getModel());
+        data.put(LENGTH, engine.getLength());
         data.put(COMMENT, engine.getComment());
         return root;
     }
@@ -606,7 +607,7 @@ public class JsonUtil {
                 InstanceManager.reporterManagerInstance().getReporter(name).setReport(data.path(REPORT).asText());
             }
         } catch (NullPointerException ex) {
-            throw new JsonException(404, Bundle.getMessage("ErrorObject", ROUTE, name));
+            throw new JsonException(404, Bundle.getMessage("ErrorObject", REPORTER, name));
         }
     }
 
@@ -961,6 +962,9 @@ public class JsonUtil {
                 data.put(TERMINATES_LOCATION, train.getTrainTerminatesName());
             }
             data.put(LOCATION, train.getCurrentLocationName());
+            if (train.getCurrentLocation()  != null) {
+            	data.put(LOCATION_ID, train.getCurrentLocation().getId());
+            }
             data.put(STATUS, train.getStatus());
             data.put(LENGTH, train.getTrainLength());
             data.put(WEIGHT, train.getTrainWeight());

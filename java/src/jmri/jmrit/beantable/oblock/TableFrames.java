@@ -41,8 +41,6 @@ import javax.swing.event.InternalFrameListener;
 
 import javax.swing.Action;
 import javax.swing.ActionMap;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -387,14 +385,14 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             int width = _oBlockModel.getPreferredWidth(i);
             blockTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
-        blockTable.sizeColumnsToFit(-1);
+        blockTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         blockTable.setDragEnabled(true);
         //blockTable.setDropMode(DropMode.USE_SELECTION);
         setActionMappings(blockTable);
         ROW_HEIGHT = blockTable.getRowHeight();
-        int tableWidth = blockTable.getPreferredSize().width;
+//        int tableWidth = blockTable.getPreferredSize().width;
+        int tableWidth = _desktop.getPreferredSize().width;
         blockTable.setPreferredScrollableViewportSize( new java.awt.Dimension(tableWidth, ROW_HEIGHT*10));
-//			blockTable.setPreferredScrollableViewportSize( new java.awt.Dimension(875, ROW_HEIGHT*10));
         _blockTablePane = new JScrollPane(blockTable);
 
         JPanel contentPane = new JPanel();
@@ -403,11 +401,6 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         contentPane.add(prompt, BorderLayout.NORTH);
         contentPane.add(_blockTablePane, BorderLayout.CENTER);
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-        panel.add(Box.createVerticalStrut(STRUT_SIZE));
-
-        contentPane.add(panel, BorderLayout.SOUTH);
         frame.setContentPane(contentPane);
         frame.pack();
         return frame;

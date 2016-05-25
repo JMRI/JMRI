@@ -27,12 +27,8 @@ import javax.swing.JLabel;
 import javax.swing.JCheckBox;
 //import javax.swing.JComponent;
 import javax.swing.JTextField;
-import javax.swing.BoxLayout;
-import javax.swing.JDialog;
-import javax.swing.BorderFactory;
 import jmri.util.com.sun.TableSorter;
 import java.awt.event.MouseEvent;
-import java.awt.Component;
 
 public class SignalMastLogicTableAction extends AbstractTableAction{
 

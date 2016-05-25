@@ -40,7 +40,17 @@ public class ProgrammerScaffold implements Programmer  {
     public void readCV(int CV, ProgListener p) throws ProgrammerException {}
 
     public void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {}
-
+    
+    public void writeCV(String CV, int val, ProgListener p) throws ProgrammerException {
+        writeCV(Integer.parseInt(CV), val, p);
+    }
+    public void readCV(String CV, ProgListener p) throws ProgrammerException {
+        readCV(Integer.parseInt(CV), p);
+    }
+    public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
+        confirmCV(Integer.parseInt(CV), val, p);
+    }
+    
     public void setMode(int mode) {
         lastSeenMode = mode;
     }
@@ -51,9 +61,13 @@ public class ProgrammerScaffold implements Programmer  {
         return mode == matchesMode;
     }
 
-    public boolean getCanRead() {
-        return true;
-    }
+    public boolean getCanRead() { return true; }
+    public boolean getCanRead(String addr) { return Integer.parseInt(addr)<=1024; }
+    public boolean getCanRead(int mode, String addr) { return getCanRead(addr); }
+    
+    public boolean getCanWrite()  { return true; }
+    public boolean getCanWrite(String addr) { return Integer.parseInt(addr)<=1024; }
+    public boolean getCanWrite(int mode, String addr)  { return getCanWrite(addr); }
 
     public void addPropertyChangeListener(PropertyChangeListener p) {}
     public void removePropertyChangeListener(PropertyChangeListener p) {}

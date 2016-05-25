@@ -32,6 +32,14 @@ public class DccSignalMastXml
         e.addContent(new Element("systemName").addContent(p.getSystemName()));
 
         storeCommon(p, e);
+        Element unlit = new Element("unlit");
+        if(p.allowUnLit()){
+            unlit.setAttribute("allowed", "yes");
+            unlit.addContent(new Element("aspect").addContent(Integer.toString(p.getUnlitId())));
+        } else {
+            unlit.setAttribute("allowed", "no");
+        }
+        e.addContent(unlit);
         SignalAppearanceMap appMap = p.getAppearanceMap();
         if(appMap!=null){
             java.util.Enumeration<String> aspects = appMap.getAspects();
@@ -76,7 +84,17 @@ public class DccSignalMastXml
     @SuppressWarnings("unchecked")
     protected boolean loadCommonDCCMast(DccSignalMast m, Element element){
         loadCommon(m, element);
-        
+        if(element.getChild("unlit")!=null){
+            Element unlit = element.getChild("unlit");
+            if(unlit.getAttribute("allowed")!=null){
+                if(unlit.getAttribute("allowed").getValue().equals("no")){
+                    m.setAllowUnLit(false);
+                } else {
+                    m.setAllowUnLit(true);
+                    m.setUnlitId(Integer.parseInt(unlit.getChild("aspect").getValue()));
+                }
+            }
+        }
         List<Element> list = element.getChildren("aspect");
         for (int i = 0; i < list.size(); i++) {
             Element e = list.get(i);

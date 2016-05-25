@@ -1531,7 +1531,7 @@
         <label>I adjustment</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable label="PWM Function Outputs" CV="54" default="50" tooltip="CV 54 Dimming Outputs 0 - 100%">
+      <variable label="PWM Function Outputs" CV="54" default="50" tooltip="Dimming Outputs 0 - 100%">
         <decVal min="0" max="100"/>
         <label>PWM Function Outputs</label>
       </variable>
@@ -1544,7 +1544,7 @@
         <decVal/>
         <label>Uncoupler Pulse Time</label>
       </variable>
-      <variable label="Dimming Output FL(f)" CV="57" mask="XXXXXXXV" default="0" tooltip="CV57 Bit0" minOut="2">
+      <variable label="Dimming Output FL(f)" CV="57" mask="XXXXXXXV" default="0" minOut="2">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1555,7 +1555,7 @@
         </enumVal>
         <label>Dimming Output FL(f)</label>
       </variable>
-      <variable label="Dimming Output FL(r)" CV="57" mask="XXXXXXVX" default="0" tooltip="CV57 Bit1" minOut="2">
+      <variable label="Dimming Output FL(r)" CV="57" mask="XXXXXXVX" default="0" minOut="2">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1566,7 +1566,7 @@
         </enumVal>
         <label>Dimming Output FL(r)</label>
       </variable>
-      <variable label="Dimming Output F 1" CV="57" mask="XXXXXVXX" default="0" tooltip="CV57 Bit2" minOut="3">
+      <variable label="Dimming Output F 1" CV="57" mask="XXXXXVXX" default="0" minOut="3">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1577,7 +1577,7 @@
         </enumVal>
         <label>Dimming Output F 1</label>
       </variable>
-      <variable label="Dimming Output F 2" CV="57" mask="XXXXVXXX" default="0" tooltip="CV57 Bit3" minOut="4">
+      <variable label="Dimming Output F 2" CV="57" mask="XXXXVXXX" default="0" minOut="4">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1588,7 +1588,7 @@
         </enumVal>
         <label>Dimming Output F 2</label>
       </variable>
-      <variable label="Dimming Output F 3" CV="57" mask="XXXVXXXX" default="0" tooltip="CV57 Bit4" minOut="5">
+      <variable label="Dimming Output F 3" CV="57" mask="XXXVXXXX" default="0" minOut="5">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1599,7 +1599,7 @@
         </enumVal>
         <label>Dimming Output F 3</label>
       </variable>
-      <variable label="Dimming Output F 4" CV="57" mask="XXVXXXXX" default="0" tooltip="CV57 Bit5" minOut="6">
+      <variable label="Dimming Output F 4" CV="57" mask="XXVXXXXX" default="0" minOut="6">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1610,7 +1610,7 @@
         </enumVal>
         <label>Dimming Output F 4</label>
       </variable>
-      <variable label="Dimming Output F 5" CV="57" mask="XVXXXXXX" default="0" tooltip="CV57 Bit6" minOut="7">
+      <variable label="Dimming Output F 5" CV="57" mask="XVXXXXXX" default="0" minOut="7">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1621,7 +1621,7 @@
         </enumVal>
         <label>Dimming Output F 5</label>
       </variable>
-      <variable label="Dimming Output F 6" CV="57" mask="VXXXXXXX" default="0" tooltip="CV57 Bit7" minOut="8">
+      <variable label="Dimming Output F 6" CV="57" mask="VXXXXXXX" default="0" minOut="8">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1632,7 +1632,7 @@
         </enumVal>
         <label>Dimming Output F 6</label>
       </variable>
-      <variable label="Output Uncoupler FL(f)" CV="58" mask="XXXXXXXV" default="0" tooltip="CV58 Bit0" comment="F1 Output" minOut="2">
+      <variable label="Output Uncoupler FL(f)" CV="58" mask="XXXXXXXV" default="0" comment="F1 Output" minOut="2">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1644,7 +1644,7 @@
         <label>Output Uncoupler FL(f)</label>
         <comment>F1 Output</comment>
       </variable>
-      <variable label="Output Uncoupler FL(r)" CV="58" mask="XXXXXXVX" default="0" tooltip="CV58 Bit1" comment="F2 Output" minOut="2">
+      <variable label="Output Uncoupler FL(r)" CV="58" mask="XXXXXXVX" default="0" comment="F2 Output" minOut="2">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1656,7 +1656,7 @@
         <label>Output Uncoupler FL(r)</label>
         <comment>F2 Output</comment>
       </variable>
-      <variable label="Output Uncoupler F 1" CV="58" mask="XXXXXVXX" default="0" tooltip="CV58 Bit2" comment="F3 Output" minOut="3">
+      <variable label="Output Uncoupler F 1" CV="58" mask="XXXXXVXX" default="0" comment="F3 Output" minOut="3">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1668,7 +1668,7 @@
         <label>Output Uncoupler F 1</label>
         <comment>F3 Output</comment>
       </variable>
-      <variable label="Output Uncoupler F 2" CV="58" mask="XXXXVXXX" default="0" tooltip="CV58 Bit 3" comment="F4 Output" minOut="4">
+      <variable label="Output Uncoupler F 2" CV="58" mask="XXXXVXXX" default="0" comment="F4 Output" minOut="4">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1680,7 +1680,7 @@
         <label>Output Uncoupler F 2</label>
         <comment>F4 Output</comment>
       </variable>
-      <variable label="Output Uncoupler F 3" CV="58" mask="XXXVXXXX" default="0" tooltip="CV58 Bit 4" comment="F5 Output" minOut="5">
+      <variable label="Output Uncoupler F 3" CV="58" mask="XXXVXXXX" default="0" comment="F5 Output" minOut="5">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1692,7 +1692,7 @@
         <label>Output Uncoupler F 3</label>
         <comment>F5 Output</comment>
       </variable>
-      <variable label="Output Uncoupler F 4" CV="58" mask="XXVXXXXX" default="0" tooltip="CV58 Bit 5" comment="F6 Output" minOut="6">
+      <variable label="Output Uncoupler F 4" CV="58" mask="XXVXXXXX" default="0" comment="F6 Output" minOut="6">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1704,7 +1704,7 @@
         <label>Output Uncoupler F 4</label>
         <comment>F6 Output</comment>
       </variable>
-      <variable label="Output Uncoupler F 5" CV="58" mask="XVXXXXXX" default="0" tooltip="CV58 Bit 6" comment="F7 Output" minOut="7">
+      <variable label="Output Uncoupler F 5" CV="58" mask="XVXXXXXX" default="0" comment="F7 Output" minOut="7">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1716,7 +1716,7 @@
         <label>Output Uncoupler F 5</label>
         <comment>F7 Output</comment>
       </variable>
-      <variable label="Output Uncoupler F 6" CV="58" mask="VXXXXXXX" default="0" tooltip="CV58 Bit 7" comment="F8 Output" minOut="8">
+      <variable label="Output Uncoupler F 6" CV="58" mask="VXXXXXXX" default="0" comment="F8 Output" minOut="8">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -1770,15 +1770,15 @@
         </enumVal>
         <label>Select CV Set 1 or 2</label>
       </variable>
-      <variable label="ACK Pulse" CV="111" default="255" tooltip="CV 111 ACK Pulse Intensity">
+      <variable label="ACK Pulse" CV="111" default="255" tooltip="ACK Pulse Intensity">
         <decVal/>
         <label>ACK Pulse</label>
       </variable>
-      <variable label="PWM Light Effects Outputs" CV="114" default="0" tooltip="CV 114 Dimming Light Effects Outputs 0 - 100%">
+      <variable label="PWM Light Effects Outputs" CV="114" default="0" tooltip="Dimming Light Effects Outputs 0 - 100%">
         <decVal min="0" max="100"/>
         <label>PWM Light Effects Outputs</label>
       </variable>
-      <variable label="Time Between Effects" CV="115" default="0" tooltip="CV 115 Time Between Effects">
+      <variable label="Time Between Effects" CV="115" default="0" tooltip="Time Between Effects">
         <decVal/>
         <label>Time Between Effects</label>
       </variable>
@@ -1815,7 +1815,7 @@
         </enumVal>
         <label>Switching 3</label>
       </variable>
-      <variable label="F-Button Used For Dimming" CV="117" default="0" tooltip="CV 117 F-Button Used For Dimming">
+      <variable label="F-Button Used For Dimming" CV="117" default="0" tooltip="F-Button Used For Dimming">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -1947,15 +1947,15 @@
         </enumVal>
         <label>Dim F 6</label>
       </variable>
-      <variable label="PWM Dimming" CV="119" default="0" tooltip="CV 119 PWM Dimming 0 - 100%">
+      <variable label="PWM Dimming" CV="119" default="0" tooltip="PWM Dimming 0 - 100%">
         <decVal min="0" max="100"/>
         <label>PWM Dimming</label>
       </variable>
-      <variable label="Time Effect ON" CV="120" default="0" tooltip="CV 120 Time Effect ON">
+      <variable label="Time Effect ON" CV="120" default="0" tooltip="Time Effect ON">
         <decVal/>
         <label>Time Effect ON</label>
       </variable>
-      <variable label="Function selection 8 or 14/MAN Bit" CV="137" default="0" mask="XXXXXXXV" tooltip="CV137 bit 0">
+      <variable label="Function selection 8 or 14/MAN Bit" CV="137" default="0" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="8/std">
             <choice>8/std</choice>
@@ -1966,7 +1966,7 @@
         </enumVal>
         <label>Function selection 8 or 14/MAN Bit</label>
       </variable>
-      <variable label="Zimo speed control HLU" CV="137" default="0" mask="XXXVXXXX" tooltip="CV137 bit 4">
+      <variable label="Zimo speed control HLU" CV="137" default="0" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1977,7 +1977,7 @@
         </enumVal>
         <label>Zimo speed control HLU</label>
       </variable>
-      <variable label="LGB F4 Impulse" CV="137" default="0" mask="XVXXXXXX" tooltip="CV137 bit 6">
+      <variable label="LGB F4 Impulse" CV="137" default="0" mask="XVXXXXXX">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -1988,7 +1988,7 @@
         </enumVal>
         <label>LGB F4 Impulse</label>
       </variable>
-      <variable label="CV137 Motor frequency" CV="137" item="DC Brake Momentum" default="0" mask="VXXXXXXX" tooltip="CV137 bit 7">
+      <variable label="CV137 Motor frequency" CV="137" item="DC Brake Momentum" default="0" mask="VXXXXXXX">
         <enumVal>
           <enumChoice choice="Std 150Hz/16kHz">
             <choice>Std 150Hz/16kHz</choice>
@@ -2029,23 +2029,23 @@
         <comment>Slow Cut off Motor</comment>
       </variable>
       <!-- Special CVs for automatically uncoupling, available from version 33 -->
-      <variable label="Speed Step Coupling Release" CV="147" default="20" tooltip="CV147">
+      <variable label="Speed Step Coupling Release" CV="147" default="20">
         <decVal max="127"/>
         <label>Speed Step Coupling Release</label>
       </variable>
-      <variable label="Speed Step Uncoupled" CV="148" default="50" tooltip="CV148">
+      <variable label="Speed Step Uncoupled" CV="148" default="50">
         <decVal max="127"/>
         <label>Speed Step Uncoupled</label>
       </variable>
-      <variable label="Time Driving Backwards" CV="149" default="5" tooltip="CV149, Unit 0.1 sec">
+      <variable label="Time Driving Backwards" CV="149" default="5" tooltip="Unit 0.1 sec">
         <decVal/>
         <label>Time Driving Backwards</label>
       </variable>
-      <variable label="Time Driving Forwards" CV="150" default="10" tooltip="CV150, Unit 0.1 sec">
+      <variable label="Time Driving Forwards" CV="150" default="10" tooltip="Unit 0.1 sec">
         <decVal/>
         <label>Time Driving Forwards</label>
       </variable>
-      <variable label="F-Button Used For Auto-Uncoupling" CV="151" default="2" tooltip="CV151, Functions 1 to 12 possible">
+      <variable label="F-Button Used For Auto-Uncoupling" CV="151" default="2" tooltip="Functions 1 to 12 possible">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -2093,11 +2093,11 @@
 	In Version 56 and documentation, the increments in values appear to be 2, 4, etc.. 
 	In Version 66, the increments appear to be 1, 2 (and presumably 3, 4)
 -->
-      <variable label="Engine FWD, Uncoupling BWD" CV="152" default="4" tooltip="CV152, Engine FWD, Uncoupling BWD, bitwise output wire">
+      <variable label="Engine FWD, Uncoupling BWD" CV="152" default="4" tooltip="Engine FWD, Uncoupling BWD, bitwise output wire">
         <decVal/>
         <label>Engine FWD, Uncoupling BWD</label>
       </variable>
-      <variable label="Loco travel FWD, rear coupler" CV="152" tooltip="CV152 select output wire for uncoupler action">
+      <variable label="Loco travel FWD, rear coupler" CV="152" tooltip="select output wire for uncoupler action">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -2120,7 +2120,7 @@
         </enumVal>
         <label>Loco travel FWD, rear coupler</label>
       </variable>
-      <variable label="V66 Loco travel FWD, rear coupler" CV="152" tooltip="CV152 select output wire for uncoupler action">
+      <variable label="V66 Loco travel FWD, rear coupler" CV="152" tooltip="select output wire for uncoupler action">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -2140,11 +2140,11 @@
         </enumVal>
         <label>V66 Loco travel FWD, rear coupler</label>
       </variable>
-      <variable label="Engine BWD, Uncoupling FWD" CV="153" default="8" tooltip="CV153, Engine BWD, Uncoupling FWD, bitwise output wire">
+      <variable label="Engine BWD, Uncoupling FWD" CV="153" default="8" tooltip="Engine BWD, Uncoupling FWD, bitwise output wire">
         <decVal/>
         <label>Engine BWD, Uncoupling FWD</label>
       </variable>
-      <variable label="Loco travel BWD, front coupler" CV="153" tooltip="CV153 select output wire for uncoupler action">
+      <variable label="Loco travel BWD, front coupler" CV="153" tooltip="select output wire for uncoupler action">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -2167,7 +2167,7 @@
         </enumVal>
         <label>Loco travel BWD, front coupler</label>
       </variable>
-      <variable label="V66 Loco travel BWD, front coupler" CV="153" tooltip="CV153 select output wire for uncoupler action">
+      <variable label="V66 Loco travel BWD, front coupler" CV="153" tooltip="select output wire for uncoupler action">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -2188,39 +2188,39 @@
         <label>V66 Loco travel BWD, front coupler</label>
       </variable>
       <!-- Tran Light Effects  -->
-      <variable label="Light Effects FL(f)" CV="154" default="0" tooltip="CV154, Light Effects FL(f), see manual">
+      <variable label="Light Effects FL(f)" CV="154" default="0" tooltip="Light Effects FL(f), see manual">
         <decVal/>
         <label>Light Effects FL(f)</label>
       </variable>
-      <variable label="Light Effects FL(r)" CV="155" default="0" tooltip="CV155, Light Effects FL(r), see manual">
+      <variable label="Light Effects FL(r)" CV="155" default="0" tooltip="Light Effects FL(r), see manual">
         <decVal/>
         <label>Light Effects FL(r)</label>
       </variable>
-      <variable label="Light Effects F 1" CV="156" default="0" tooltip="CV156, Light Effects F 1, see manual">
+      <variable label="Light Effects F 1" CV="156" default="0" tooltip="Light Effects F 1, see manual">
         <decVal/>
         <label>Light Effects F 1</label>
       </variable>
-      <variable label="Light Effects F 2" CV="157" default="0" tooltip="CV157, Light Effects F 2, see manual">
+      <variable label="Light Effects F 2" CV="157" default="0" tooltip="Light Effects F 2, see manual">
         <decVal/>
         <label>Light Effects F 2</label>
       </variable>
-      <variable label="Light Effects F 3" CV="158" default="0" tooltip="CV158, Light Effects F 3, see manual">
+      <variable label="Light Effects F 3" CV="158" default="0" tooltip="Light Effects F 3, see manual">
         <decVal/>
         <label>Light Effects F 3</label>
       </variable>
-      <variable label="Light Effects F 4" CV="159" default="0" tooltip="CV159, Light Effects F 4, see manual">
+      <variable label="Light Effects F 4" CV="159" default="0" tooltip="Light Effects F 4, see manual">
         <decVal/>
         <label>Light Effects F 4</label>
       </variable>
-      <variable label="Light Effects F 5" CV="160" default="0" tooltip="CV160, Light Effects F 5, see manual">
+      <variable label="Light Effects F 5" CV="160" default="0" tooltip="Light Effects F 5, see manual">
         <decVal/>
         <label>Light Effects F 5</label>
       </variable>
-      <variable label="Light Effects F 6" CV="161" default="0" tooltip="CV161, Light Effects F 6, see manual">
+      <variable label="Light Effects F 6" CV="161" default="0" tooltip="Light Effects F 6, see manual">
         <decVal/>
         <label>Light Effects F 6</label>
       </variable>
-      <variable label="Light Effects F0F" CV="154" mask="XXXVVVVV" default="0" tooltip="CV154, Effects on F0F">
+      <variable label="Light Effects F0F" CV="154" mask="XXXVVVVV" default="0" tooltip="Effects on F0F">
         <enumVal>
           <enumChoice choice="No effect">
             <choice>No effect</choice>
@@ -2261,7 +2261,7 @@
         </enumVal>
         <label>Light Effects F0F</label>
       </variable>
-      <variable label="Light Effects Direction F0F" CV="154" mask="VVXXXXXX" tooltip="CV154 bits 6,7">
+      <variable label="Light Effects Direction F0F" CV="154" mask="VVXXXXXX">
         <enumVal>
           <enumChoice choice="Both">
             <choice>Both</choice>
@@ -2275,7 +2275,7 @@
         </enumVal>
         <label>Light Effects Direction F0F</label>
       </variable>
-      <variable label="Light Effects F0R" CV="155" mask="XXXVVVVV" default="0" tooltip="CV155, Effects on F0R">
+      <variable label="Light Effects F0R" CV="155" mask="XXXVVVVV" default="0" tooltip="Effects on F0R">
         <enumVal>
           <enumChoice choice="No effect">
             <choice>No effect</choice>
@@ -2316,7 +2316,7 @@
         </enumVal>
         <label>Light Effects F0R</label>
       </variable>
-      <variable label="Light Effects Direction F0R" CV="155" mask="VVXXXXXX" tooltip="CV155 bits 6,7">
+      <variable label="Light Effects Direction F0R" CV="155" mask="VVXXXXXX">
         <enumVal>
           <enumChoice choice="Both">
             <choice>Both</choice>
@@ -2330,7 +2330,7 @@
         </enumVal>
         <label>Light Effects Direction F0R</label>
       </variable>
-      <variable label="Light Effects F1" CV="156" mask="XXXVVVVV" default="0" tooltip="CV156, Effects on F1" minOut="3">
+      <variable label="Light Effects F1" CV="156" mask="XXXVVVVV" default="0" tooltip="Effects on F1" minOut="3">
         <enumVal>
           <enumChoice choice="No effect">
             <choice>No effect</choice>
@@ -2371,7 +2371,7 @@
         </enumVal>
         <label>Light Effects F1</label>
       </variable>
-      <variable label="Light Effects Direction F1" CV="156" mask="VVXXXXXX" tooltip="CV156 bits 6,7" minOut="3">
+      <variable label="Light Effects Direction F1" CV="156" mask="VVXXXXXX" minOut="3">
         <enumVal>
           <enumChoice choice="Both">
             <choice>Both</choice>
@@ -2385,7 +2385,7 @@
         </enumVal>
         <label>Light Effects Direction F1</label>
       </variable>
-      <variable label="Light Effects F2" CV="157" mask="XXXVVVVV" default="0" minOut="4" tooltip="CV157, Effects on F2">
+      <variable label="Light Effects F2" CV="157" mask="XXXVVVVV" default="0" minOut="4" tooltip="Effects on F2">
         <enumVal>
           <enumChoice choice="No effect">
             <choice>No effect</choice>
@@ -2426,7 +2426,7 @@
         </enumVal>
         <label>Light Effects F2</label>
       </variable>
-      <variable label="Light Effects Direction F2" CV="157" mask="VVXXXXXX" tooltip="CV156 bits 6,7" minOut="4">
+      <variable label="Light Effects Direction F2" CV="157" mask="VVXXXXXX" minOut="4">
         <enumVal>
           <enumChoice choice="Both">
             <choice>Both</choice>
@@ -2442,7 +2442,7 @@
       </variable>
       <!-- Yard mode function keys, part of extended function mapping (incomplete) -->
       <!-- see also CV's 38 through 42 -->
-      <variable label="FL(f) controls output Ra" CV="163" mask="XXXXXXXV" tooltip="CV163 bit 0">
+      <variable label="FL(f) controls output Ra" CV="163" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2453,7 +2453,7 @@
         </enumVal>
         <label>FL(f) controls output Ra</label>
       </variable>
-      <variable label="FL(r) controls output Ra" CV="164" mask="XXXXXXXV" tooltip="CV164 bit 0">
+      <variable label="FL(r) controls output Ra" CV="164" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2464,7 +2464,7 @@
         </enumVal>
         <label>FL(r) controls output Ra</label>
       </variable>
-      <variable label="F1 controls output Ra" CV="165" mask="XXXXXXXV" tooltip="CV165 bit 0">
+      <variable label="F1 controls output Ra" CV="165" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2475,7 +2475,7 @@
         </enumVal>
         <label>F1 controls output Ra</label>
       </variable>
-      <variable label="F2 controls output Ra" CV="166" mask="XXXXXXXV" tooltip="CV166 bit 0">
+      <variable label="F2 controls output Ra" CV="166" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2486,7 +2486,7 @@
         </enumVal>
         <label>F2 controls output Ra</label>
       </variable>
-      <variable label="F3 controls output Ra" CV="167" default="1" mask="XXXXXXXV" tooltip="CV167 bit 0">
+      <variable label="F3 controls output Ra" CV="167" default="1" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="no">
             <choice>no</choice>
@@ -2509,13 +2509,13 @@
         <label>Yard Mode (set function key with function map)</label>
       </label>
       <separator/>
-      <display item="Switching 1" label="Shunting CV3 and CV4 disabled" format="checkbox" tooltip="CV 116, Bit 0">
+      <display item="Switching 1" label="Shunting CV3 and CV4 disabled" format="checkbox">
         <label>Shunting CV3 and CV4 disabled</label>
       </display>
-      <display item="Switching 2" label="Shunting max.half speed forw+rev" format="checkbox" tooltip="CV 116, Bit 1">
+      <display item="Switching 2" label="Shunting max.half speed forw+rev" format="checkbox">
         <label>Shunting max.half speed forw+rev</label>
       </display>
-      <display item="Switching 3" label="Rev.max.speed 65% indep. of Yard mode " format="checkbox" tooltip="CV 116, Bit 2">
+      <display item="Switching 3" label="Rev.max.speed 65% indep. of Yard mode " format="checkbox">
         <label>Rev.max.speed 65% indep. of Yard mode </label>
       </display>
       <label label="  ">
@@ -2547,21 +2547,21 @@
         <label>Function Key</label>
       </label>
       <separator/>
-      <display item="Uncoupler Holding Current" tooltip="CV 55 reduced current or off if 0"/>
-      <display item="Uncoupler Pulse Time" tooltip="CV 56 in 1/20 sec"/>
+      <display item="Uncoupler Holding Current" tooltip="reduced current or off if 0"/>
+      <display item="Uncoupler Pulse Time" tooltip="in 1/20 sec"/>
       <separator/>
-      <display item="Output Uncoupler FL(f)" label="Output FL(f) (white)" format="checkbox" tooltip="CV 58, Bit 0">
+      <display item="Output Uncoupler FL(f)" label="Output FL(f) (white)" format="checkbox">
         <label>Output FL(f) (white)</label>
       </display>
-      <display item="Output Uncoupler FL(r)" label="Output FL(r) (yellow)" format="checkbox" tooltip="CV 58, Bit 1">
+      <display item="Output Uncoupler FL(r)" label="Output FL(r) (yellow)" format="checkbox">
         <label>Output FL(r) (yellow)</label>
       </display>
-      <display item="Output Uncoupler F 1" format="checkbox" tooltip="CV 58, Bit 2"/>
-      <display item="Output Uncoupler F 2" format="checkbox" tooltip="CV 58, Bit 3"/>
-      <display item="Output Uncoupler F 3" format="checkbox" tooltip="CV 58, Bit 4"/>
-      <display item="Output Uncoupler F 4" format="checkbox" tooltip="CV 58, Bit 5"/>
-      <display item="Output Uncoupler F 5" format="checkbox" tooltip="CV 58, Bit 6"/>
-      <display item="Output Uncoupler F 6" format="checkbox" tooltip="CV 58, Bit 7"/>
+      <display item="Output Uncoupler F 1" format="checkbox"/>
+      <display item="Output Uncoupler F 2" format="checkbox"/>
+      <display item="Output Uncoupler F 3" format="checkbox"/>
+      <display item="Output Uncoupler F 4" format="checkbox"/>
+      <display item="Output Uncoupler F 5" format="checkbox"/>
+      <display item="Output Uncoupler F 6" format="checkbox"/>
     </column>
     <column>
       <label label="Automatic Uncoupling Loco Movement">
@@ -2772,9 +2772,9 @@
       <label label="  ">
         <label>  </label>
       </label>
-      <display item="Direct Cut Off Function Outputs" tooltip="CV 139"/>
-      <display item="Fast Cut Off Function Outputs" tooltip="CV 140"/>
-      <display item="Slow Cut Off Function Outputs" tooltip="CV 141"/>
+      <display item="Direct Cut Off Function Outputs"/>
+      <display item="Fast Cut Off Function Outputs"/>
+      <display item="Slow Cut Off Function Outputs"/>
       <label label="  ">
         <label>  </label>
       </label>
@@ -2782,9 +2782,9 @@
       <label label="  ">
         <label>  </label>
       </label>
-      <display item="Direct Cut Off Motor" tooltip="CV 142"/>
-      <display item="Fast Cut Off Motor" tooltip="CV 143"/>
-      <display item="Slow Cut Off Motor" tooltip="CV 144"/>
+      <display item="Direct Cut Off Motor"/>
+      <display item="Fast Cut Off Motor"/>
+      <display item="Slow Cut Off Motor"/>
       <label label="  ">
         <label>  </label>
       </label>
@@ -2796,26 +2796,26 @@
       <label label="Zimo features">
         <label>Zimo features</label>
       </label>
-      <display item="ZIMO Signal Controlled Speed L" tooltip="CV 59"/>
-      <display item="ZIMO Signal Controlled Speed U" tooltip="CV 60"/>
-      <display item="ZIMO Signal Controlled Acc Reaction" tooltip="CV 61"/>
+      <display item="ZIMO Signal Controlled Speed L"/>
+      <display item="ZIMO Signal Controlled Speed U"/>
+      <display item="ZIMO Signal Controlled Acc Reaction"/>
       <label label="  ">
         <label>  </label>
       </label>
-      <display item="Function selection 8 or 14/MAN Bit" tooltip="CV 137 Bit 0"/>
+      <display item="Function selection 8 or 14/MAN Bit"/>
       <!-- NC v1.5 comment - CV137 bit 1 appears incorrect according to CT documentation -->
-      <display item="Zimo address pulse" tooltip="CV 137 Bit 1"/>
-      <display item="Zimo speed control HLU" tooltip="CV 137 Bit 4"/>
-      <display item="ZIMO Brake Time HLU" tooltip="cv 138"/>
+      <display item="Zimo address pulse"/>
+      <display item="Zimo speed control HLU"/>
+      <display item="ZIMO Brake Time HLU"/>
       <label label="  ">
         <label>  </label>
       </label>
       <label label="LGB">
         <label>LGB</label>
       </label>
-      <display item="LGB F4 Impulse" tooltip="cv 137 Bit 6"/>
+      <display item="LGB F4 Impulse"/>
       <!-- NC v1.5 comment - CV108 appears incorrect according to CT documentation -->
-      <display item="LGB Continuous Manual Sound Bitmask" tooltip="CV 108"/>
+      <display item="LGB Continuous Manual Sound Bitmask"/>
     </column>
     <column>
       <label label="Alternate CV Set">
@@ -2824,8 +2824,8 @@
       <display item="Select CV Set 1 or 2" tooltip=" Selects CV Set 1(OFF) or 2(ON)"/>
     </column>
     <column>
-      <display item="ACK Pulse" tooltip="CV 111"/>
-      <display item="Error Diagnosis" tooltip="CV 30"/>
+      <display item="ACK Pulse"/>
+      <display item="Error Diagnosis"/>
     </column>
     <name>Roco LGB Zimo CT</name>
   </pane>

@@ -55,7 +55,7 @@
       <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
         <shortAddressVal/>
       </variable>
-      <variable label="Start voltage" CV="2" item="Vstart" tooltip="Superseded by Dither.">
+      <variable label="Start voltage" CV="2" item="Vstart" tooltip="Superseded by Dither">
         <decVal/>
       </variable>
       <variable label="Acceleration Rate" CV="3" item="Accel">
@@ -274,7 +274,7 @@
       <variable label="Brightness adjustment when dim/Rule 17" CV="64" default="16" item="Global lighting option 1" tooltip="16 = 50%; use 2-6 for LEDs">
         <decVal/>
       </variable>
-      <variable label="Light dimming and button control" CV="61" item="Global lighting option 3" tooltip="Combined CV for dimming and Button Control.">
+      <variable label="Light dimming and button control" CV="61" item="Global lighting option 3" tooltip="Combined CV for dimming and Button Control">
         <enumVal>
           <enumChoice choice="Normal operation for both" value="0"/>
           <enumChoice choice="Headlights dims when stopped" value="16"/>

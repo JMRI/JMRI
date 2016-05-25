@@ -91,16 +91,7 @@ public class PositionablePolygon extends PositionableShape {
             }.init(this));
         return true;
     }
-    /*
-	protected boolean dragTo(int x, int y) {
-		if (_editing) {
-			_curX = x;
-			_curY = y;
-			return true;
-		}
-		return false;
-	}
-*/
+
     protected void editing(boolean edit) {
     	_editing = edit;
     }
@@ -135,6 +126,9 @@ public class PositionablePolygon extends PositionableShape {
     @Override
     public void doMousePressed(MouseEvent event) {
     	_hitIndex=-1;
+    	if (!_editor.isEditable()) {
+    		return;
+    	}
     	if (_editing) {
         	if (_vertexHandles!=null) {   		
          	   	 _lastX = event.getX();
@@ -161,7 +155,7 @@ public class PositionablePolygon extends PositionableShape {
     
     @Override
     protected boolean doHandleMove(MouseEvent event) {
-    	if (_hitIndex>=0) {
+    	if (_hitIndex>=0 && _editor.isEditable()) {
         	if (_editing) {
         		Point pt = new Point(event.getX()-_lastX, event.getY()-_lastY);
 /*        		try {
@@ -174,6 +168,17 @@ public class PositionablePolygon extends PositionableShape {
         		rect.x += pt.x;
         		rect.y += pt.y;
         		if (_editFrame!=null) {
+        			if (event.getX()-getX()<0) {
+        				_editor.moveItem(this, event.getX()-getX(), 0);        					
+        			} else if (isLeftMost(rect.x)) {
+        				_editor.moveItem(this, event.getX()-_lastX, 0);        					    					
+    				}
+    				if (event.getY()-getY()<0) {
+        				_editor.moveItem(this, 0, event.getY()-getY());        					
+    				} else if (isTopMost(rect.y)) {
+        				_editor.moveItem(this, 0, event.getY()-_lastY);        					
+    				}
+    				  				
         			((DrawPolygon)_editFrame).doHandleMove(_hitIndex, pt);
         		}
     	        _lastX = event.getX();
@@ -225,6 +230,25 @@ public class PositionablePolygon extends PositionableShape {
         	return true;
     	}
         return false;
+    }
+    
+    private boolean isLeftMost(int x) {
+    	Iterator<Rectangle> it = _vertexHandles.iterator();
+    	while (it.hasNext()) {
+    		if (it.next().x<x) {
+    			return false;
+    		}
+    	}
+    	return true;
+    }
+    private boolean isTopMost(int y) {
+    	Iterator<Rectangle> it = _vertexHandles.iterator();
+    	while (it.hasNext()) {
+    		if (it.next().y<y) {
+    			return false;
+    		}
+    	}
+    	return true;
     }
     
     private GeneralPath scale(float ratioX, float ratioY) {

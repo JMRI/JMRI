@@ -69,7 +69,7 @@ public class RoutesTableFrame extends OperationsFrame {
 		controlPanel.add(sortById);
 		controlPanel.add(textSep);
 		controlPanel.add(addButton);
-		controlPanel.setMaximumSize(new Dimension(Control.panelWidth, 50));
+		controlPanel.setMaximumSize(new Dimension(Control.widePanelWidth, 50));
 
 		getContentPane().add(controlPanel);
 
@@ -96,8 +96,10 @@ public class RoutesTableFrame extends OperationsFrame {
 		// add help menu to window
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Routes", true); // NOI18N
 
-		pack();
-		setSize(730, getHeight());
+		initMinimumSize();
+		// make panel a bit wider than minimum if the very first time opened
+		if (getWidth() == Control.panelWidth)
+			setSize(730, getHeight());
 
 		// now load the cars and engines
 		CarManagerXml.instance();
@@ -125,7 +127,6 @@ public class RoutesTableFrame extends OperationsFrame {
 			RouteEditFrame f = new RouteEditFrame();
 			f.initComponents(null);
 			f.setTitle(Bundle.getMessage("TitleRouteAdd"));
-			f.setVisible(true);
 		}
 	}
 

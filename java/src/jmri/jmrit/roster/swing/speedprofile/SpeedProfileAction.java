@@ -2,10 +2,12 @@
 
 package jmri.jmrit.roster.swing.speedprofile;
 
-import jmri.util.swing.JmriAbstractAction;
 import java.awt.event.ActionEvent;
-import jmri.util.swing.WindowInterface;
 import javax.swing.Icon;
+import jmri.util.swing.JmriAbstractAction;
+import jmri.util.swing.WindowInterface;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Swing action to create and register the
@@ -39,7 +41,7 @@ public class SpeedProfileAction extends JmriAbstractAction {
 			}
 		f.setVisible(true);	
 	}
-   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpeedProfileAction.class.getName());
+   static Logger log = LoggerFactory.getLogger(SpeedProfileAction.class);
 }
 
 

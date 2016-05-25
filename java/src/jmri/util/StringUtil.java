@@ -191,7 +191,8 @@ public class StringUtil {
         }
     }
 
-    static void bubblesort(String[] values) {
+    // Internal method to do a case-preserving sort of Strings
+    static private void bubblesort(String[] values) {
         // no Java sort, so ugly bubble sort
         for (int i=0; i<=values.length-2; i++) { // stop sort early to save time!
             for (int j=values.length-2; j>=i; j--) {
@@ -207,7 +208,9 @@ public class StringUtil {
         }
     }
 
-    static void bubblesort(Object[] values) {
+    // Internal method to do a case-blind sort of the .toString values
+    // of objects.
+    static private void bubblesort(Object[] values) {
         for (int i=0; i<=values.length-2; i++) { // stop sort early to save time!
             for (int j=values.length-2; j>=i; j--) {
                 // check that the jth value is smaller than j+1th,
@@ -223,7 +226,7 @@ public class StringUtil {
     }
 
     /**
-     * This is a lexagraphic sort; lower case goes to the end.
+     * This is a case-blind sort.
      * Identical entries are retained, so the output length is the same
      * as the input length.
      * @param values

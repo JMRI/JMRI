@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.setup.Control;
 
+import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 
@@ -70,10 +71,7 @@ public class RouteCopyFrame extends OperationsFrame {
 		addHelpMenu("package.jmri.jmrit.operations.Operations_CopyRoute", true); // NOI18N
 
 		pack();
-		if (getWidth() < 400)
-			setSize(400, getHeight());
-		if (getHeight() < 150)
-			setSize(getWidth(), 150);
+		setMinimumSize(new Dimension(Control.mediumPanelWidth, Control.smallPanelHeight));
 
 		// setup buttons
 		addButtonAction(copyButton);

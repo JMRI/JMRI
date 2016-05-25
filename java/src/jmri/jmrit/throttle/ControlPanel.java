@@ -112,12 +112,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     
     private int maxSpeed = 126; //The maximum permissible speed
     
-    // Save the speed step mode to aid in storage of the throttle.
-    private int _speedStepMode = DccThrottle.SpeedStepMode128;
-    
-    // Save the speed step mode from the xml until the throttle is actually available
-    private int _speedStepModeForLater = 0;
-    
     private boolean speedControllerEnable = false;
 
     // Switch to continuous slider on function...
@@ -196,14 +190,11 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     }	
     
     /**
-     *  Set the GUI to match that the loco is set to forward.
-     *
-     * TODO: move to private
-     * @deprecated You should not directly manipulate the UI. Use a throttle object instead.
+     *  Set the GUI to match that the loco is set to forward.    
      *
      * @param  isForward  True if the loco is set to forward, false otherwise.
      */
-    public void setIsForward(boolean isForward)
+    private void setIsForward(boolean isForward)
     {
         forwardButton.setSelected(isForward);
         reverseButton.setSelected(!isForward);
@@ -216,28 +207,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             internalAdjust = false;
         }
     }
-
-    /**
-     *  Get the GUI direction.
-     *
-     * TODO: move to private
-     * @deprecated You should not directly manipulate the UI. Use a throttle object instead.
-     *
-     * @return  True if the loco is set to forward, false otherwise.
-     */
-    public boolean getIsForward() { return forwardButton.isSelected(); }
-    
-    /**
-     * Set forward/reverse direction in both the 
-     * GUI and on the layout
-     *
-     * TODO: move to private
-     * @deprecated You should not directly manipulate the UI. Use a throttle object instead.
-     */
-    public void setForwardDirection(boolean isForward) {
-        if (isForward) forwardButton.doClick();
-        else reverseButton.doClick();
-    }
     
     /**
      *  Set the GUI to match the speed steps of the current address.
@@ -245,15 +214,12 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      *  maximums based on the speed step setting and the max speed for the
      *  particular loco
      *
-     * TODO: move to private
-     * @deprecated You should not directly manipulate the UI. Use a throttle object instead.
-     *
      * @param  speedStepMode Desired speed step mode. One of:
      * DccThrottle.SpeedStepMode128, DccThrottle.SpeedStepMode28,
      * DccThrottle.SpeedStepMode27, DccThrottle.SpeedStepMode14 
      * step mode
      */
-    public void setSpeedStepsMode(int speedStepMode)
+    private void setSpeedStepsMode(int speedStepMode)
     {
         internalAdjust=true;
        	int maxSpeedPCT = 100;
@@ -288,7 +254,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             SpeedStep128Button.setSelected(true);
             intSpeedSteps=126;
         }
-        _speedStepMode=speedStepMode;
         /* Set maximum speed based on the max speed stored in the roster as a percentage of the maximum */
         maxSpeed = (int) ((float) intSpeedSteps*((float)maxSpeedPCT)/100);
         
@@ -429,14 +394,12 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     /**
      *  Set the GUI to match that the loco speed.
      *
-     * TODO: move to private
-     * @deprecated You should not directly manipulate the UI. Use a throttle object instead.
      *
      * @param  speedIncrement  The throttle back end's speed increment 
      *                         value - % increase for each speed step.
      * @param  speed           The speed value of the loco.
      */
-    public void setSpeedValues(float speedIncrement, float speed)
+    private void setSpeedValues(float speedIncrement, float speed)
     {
         //This is an internal speed adjustment
         internalAdjust=true;
@@ -457,13 +420,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         }
         internalAdjust=false;
     }
-
-    /**
-     * Get the speed slider.
-     * TODO: move to private
-     * @deprecated You should not directly manipulate the UI. Use a throttle object instead.
-     */
-    public JSlider getSpeedSlider() { return speedSlider; }
     
     /**
      *  Create, initialize and place GUI components.
@@ -919,10 +875,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     /**
      * Perform an emergency stop.
      *
-     * TODO: move to private
-     * @deprecated You should not directly manipulate the UI. Use a throttle object instead.
      */
-    public void stop()
+    private void stop()
     {
         if(this.throttle==null)
             return;
@@ -961,11 +915,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     }
 
     /* Accelerate of 1
-     * TODO: move to private
-     *
-     * @deprecated You should not directly manipulate the UI. Use a throttle object instead.
+     * 
      */
-    public void accelerate1() {
+    private void accelerate1() {
         if (speedSlider.isEnabled()) {
             if (speedSlider.getValue() != speedSlider.getMaximum()) {
                 speedSlider.setValue(speedSlider.getValue() + 1);
@@ -983,11 +935,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     }
 
     /* Accelerate of 10
-     * TODO: move to private
-     *
-     * @deprecated You should not directly manipulate the UI. Use a throttle object instead.
+     * 
      */
-    public void accelerate10() {
+    private void accelerate10() {
     	if (speedSlider.isEnabled()) {
     		if (speedSlider.getValue() != speedSlider.getMaximum()) {
     			speedSlider.setValue(speedSlider.getValue() + 10);
@@ -1010,11 +960,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     }
 
     /* Decelerate of 1
-     * TODO: move to private
-     *
-     * @deprecated You should not directly manipulate the UI. Use a throttle object instead.
+     * 
      */
-    public void decelerate1() {
+    private void decelerate1() {
         if (speedSlider.isEnabled()) {
             if (speedSlider.getValue() != speedSlider.getMinimum()) {
                 speedSlider.setValue(speedSlider.getValue() - 1);
@@ -1032,11 +980,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     }
 
     /* Decelerate of 10
-     * TODO: move to private
-     *
-     * @deprecated You should not directly manipulate the UI. Use a throttle object instead.
+     * 
      */
-    public void decelerate10() {
+    private void decelerate10() {
     	if (speedSlider.isEnabled()) {
     		if (speedSlider.getValue() != speedSlider.getMinimum()) {
     			speedSlider.setValue(speedSlider.getValue() - 10);
@@ -1264,7 +1210,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     {
         Element me = new Element("ControlPanel");
         me.setAttribute("displaySpeedSlider",String.valueOf(this._displaySlider));		
-        me.setAttribute("speedMode",String.valueOf(this._speedStepMode));
         me.setAttribute("trackSlider", String.valueOf(this.trackSlider));
         me.setAttribute("trackSliderMinInterval", String.valueOf(this.trackSliderMinInterval));
         me.setAttribute("switchSliderOnFunction",switchSliderFunction!=null?switchSliderFunction:"Fxx");
@@ -1296,26 +1241,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             {
                 // in this case, recover by displaying the speed slider.
                 this.setSpeedController(SLIDERDISPLAY);
-            }
-        try {
-            // Set the speed steps in the GUI from the xml
-            setSpeedStepsMode(e.getAttribute("speedMode").getIntValue());
-            // Try to set the throttle speed steps
-            if(throttle!=null) {
-                throttle.setSpeedStepMode(e.getAttribute("speedMode").getIntValue());
-            } else {
-                // save value to do it later
-                _speedStepModeForLater = e.getAttribute("speedMode").getIntValue();
-            }
-        } catch (org.jdom.DataConversionException ex)
-            {
-                log.error("DataConverstionException in setXml: "+ex);
-            } catch (Exception em)
-            {
-                // in this case, recover by defaulting to 128 speed step mode.
-                setSpeedStepsMode(DccThrottle.SpeedStepMode128);
-                if(throttle!=null)
-                    throttle.setSpeedStepMode(DccThrottle.SpeedStepMode128);
             }
         Attribute tsAtt = e.getAttribute("trackSlider");
         if (tsAtt!=null) {
@@ -1370,11 +1295,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         this.setIsForward(throttle.getIsForward());
         this.setSpeedValues(throttle.getSpeedIncrement(),
                             throttle.getSpeedSetting());
-        // Throttle now available so set speed steps from saved xml value
-        if (_speedStepModeForLater != 0) {
-            this.throttle.setSpeedStepMode(_speedStepModeForLater);
-            _speedStepModeForLater = 0;
-        }
 
 
         // Set speed steps

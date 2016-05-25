@@ -463,7 +463,7 @@ public class ConnectivityUtil
 					// end of line
 					tr = null;
 				}
-				else if (((PositionablePoint)cObject).getType() == PositionablePoint.ANCHOR) {
+				else if (((PositionablePoint)cObject).getType() == PositionablePoint.ANCHOR || (((PositionablePoint)cObject).getType() == PositionablePoint.EDGE_CONNECTOR)) {
 					// proceed to next track segment if within the same Block
 					if (((PositionablePoint)cObject).getConnect1() == tr) {
 						tr = ((PositionablePoint)cObject).getConnect2();
@@ -627,7 +627,7 @@ public class ConnectivityUtil
 								// block continues at A, either Double or RH
 								list.add((LayoutTurnout)cObject);
 								companion.add( Integer.valueOf(Turnout.THROWN));
-								tr = (TrackSegment)lt.getConnectA();
+ 								tr = (TrackSegment)lt.getConnectA();
 								prevConnectType = LayoutEditor.TURNOUT_A;
 								prevConnectObject = cObject;
 							}
@@ -2232,8 +2232,12 @@ public class ConnectivityUtil
                                 tr = null;
                             }					
                         }
-                    }
-                    else {
+                    } else if (tType==LayoutTurnout.LH_XOVER){
+                        // entering at continuing track, must exit at throat
+                        prevConnectType = LayoutEditor.TURNOUT_D;				
+                        tr = (TrackSegment)lt.getConnectD();
+                        setting = Turnout.CLOSED;
+                    } else {
                         // entering at diverging track, must exit at throat
                         prevConnectType = LayoutEditor.TURNOUT_A;				
                         tr = (TrackSegment)lt.getConnectA();
@@ -2287,8 +2291,12 @@ public class ConnectivityUtil
                                 tr = null;
                             }					
                         }
-                    }
-                    else {
+                    } else if (tType==LayoutTurnout.RH_XOVER){
+                        // entering at through track of a right-handed crossover, must exit at throat
+                        prevConnectType = LayoutEditor.TURNOUT_C;				
+                        tr = (TrackSegment)lt.getConnectC();
+                        setting = Turnout.CLOSED;
+                    } else {
                     // entering at diverging track of a right-handed crossover, must exit at throat
                         prevConnectType = LayoutEditor.TURNOUT_A;				
                         tr = (TrackSegment)lt.getConnectA();
@@ -2354,7 +2362,7 @@ public class ConnectivityUtil
 						// end of line without reaching 'nlb'
 						curTS = null;					
 					}
-					else if (((PositionablePoint)conObj).getType() == PositionablePoint.ANCHOR) {
+					else if (((PositionablePoint)conObj).getType() == PositionablePoint.ANCHOR || ((PositionablePoint)conObj).getType() == PositionablePoint.EDGE_CONNECTOR ) {
 						// proceed to next track segment if within the same Block
 						if (((PositionablePoint)conObj).getConnect1() == curTS) {
 							curTS = (((PositionablePoint)conObj).getConnect2());

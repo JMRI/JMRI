@@ -5,9 +5,13 @@
           <enumChoice choice="Locomotive Address Only">
             <choice>Locomotive Address Only</choice>
             <choice xml:lang="it">Risponde a Indirizzo Loco</choice>
+			<choice xml:lang="fr">Adresse locomotive seulement</choice>
+			<choice xml:lang="de">Nur Lok Adresse</choice>
           </enumChoice>
           <enumChoice choice="Respond to Consist Address">
             <choice>Respond to Consist Address</choice>
             <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
+			<choice xml:lang="fr">Répondre à l'adresse d'UM</choice>
+			<choice xml:lang="de">Verbund-Befehle akzeptieren</choice>
           </enumChoice>
 </enumVal>

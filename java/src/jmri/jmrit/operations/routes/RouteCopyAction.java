@@ -36,7 +36,7 @@ public class RouteCopyAction extends AbstractAction {
 		if (routeName != null)
 			f.setRouteName(routeName);
 		f.setExtendedState(Frame.NORMAL);
-		f.setVisible(true);
+	   	f.setVisible(true);	// this also brings the frame into focus
 	}
 }
 

@@ -16,14 +16,32 @@
   <version author="Michael Mosher" version="1" lastUpdated="20100605"/>
   <version author="Michael Mosher" version="2" lastUpdated="20100828"/>
   <version author="Michael Mosher" version="3" lastUpdated="20130308"/>
+  <version author="Michael Mosher" version="4" lastUpdated="20130703"/>
   <!-- This file contains the Tsunami definitions for Genesis OEM steam locomotives	-->
   <!-- version 1	Based on the "SoundTraxx_Tsu_Steam.xml" Ver 5 file.						-->
   <!-- version 2	Add Rule 17 bit to CV51 & 52 -->
-  <!-- version 2	Add FEF 4-8-4 and greater use of external includes -->
+  <!-- version 3	Add FEF 4-8-4 and greater use of external includes -->
+  <!-- version 4	Add HO Challenger -->
   <!-- Decoder Model information follows -->
   <decoder>
     <family name="Tsunami Steam Genesis OEM" mfg="Throttle-Up (SoundTraxx)" comment="These are OEM for Athearn Genesis Tsunami steam decoders">
       <model model="Bigboy 4-8-8-4" numOuts="4" numFns="14" connector="other" productID="BB">
+        <versionCV lowVersionID="64"/>
+        <output name="Whistle"/>
+        <output name="Bell"/>
+        <output name="3" label="  FX5  "/>
+        <output name="4" label="  FX6  "/>
+        <output name="Dynamo"/>
+        <output name="Short-Whistle"/>
+        <output name="Steam-Release"/>
+        <output name="Water-Stop"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Injector"/>
+        <output name="Brake-Squeal"/>
+        <output name="Coupler"/>
+      </model>
+      <model model="Challenger 4-6-6-4" numOuts="4" numFns="14" connector="other" productID="chal">
         <versionCV lowVersionID="64"/>
         <output name="Whistle"/>
         <output name="Bell"/>
@@ -115,19 +133,19 @@
         <label>Start Voltage (0-255)</label>
         <comment>A value of 255 corresponds to full voltage available</comment>
       </variable>
-      <variable label="Acceleration Rate (0-255)" CV="3" item="Accel" default="0" exclude="FEF" tooltip="Sets the acceleration rate (delay).  Higher number = slower rate">
+      <variable label="Acceleration Rate (0-255)" CV="3" item="Accel" default="0" exclude="chal,FEF" tooltip="Sets the acceleration rate (delay).  Higher number = slower rate">
         <decVal/>
         <label>Acceleration Rate (0-255)</label>
       </variable>
-      <variable label="Acceleration Rate (0-255)" CV="3" item="Accel" default="25" include="FEF" tooltip="Sets the acceleration rate (delay).  Higher number = slower rate">
+      <variable label="Acceleration Rate (0-255)" CV="3" item="Accel" default="25" include="chal,FEF" tooltip="Sets the acceleration rate (delay).  Higher number = slower rate">
         <decVal/>
         <label>Acceleration Rate (0-255)</label>
       </variable>
-      <variable label="Braking Rate (0-255)" CV="4" item="Decel" default="0" exclude="FEF" tooltip="Sets the deceleration rate (delay).  Higher number = slower rate">
+      <variable label="Braking Rate (0-255)" CV="4" item="Decel" default="0" exclude="chal,FEF" tooltip="Sets the deceleration rate (delay).  Higher number = slower rate">
         <decVal/>
         <label>Braking Rate (0-255)</label>
       </variable>
-      <variable label="Braking Rate (0-255)" CV="4" item="Decel" default="25" include="FEF" tooltip="Sets the deceleration rate (delay).  Higher number = slower rate">
+      <variable label="Braking Rate (0-255)" CV="4" item="Decel" default="25" include="chal,FEF" tooltip="Sets the deceleration rate (delay).  Higher number = slower rate">
         <decVal/>
         <label>Braking Rate (0-255)</label>
       </variable>
@@ -171,7 +189,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Analog Mode Function Status - F5</label>
       </variable>
-      <variable label="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" default="0" include="BB,FEF" tooltip="Check to enable function F6 when the unit is operating in analog power mode">
+      <variable label="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" default="0" include="BB,chal,FEF" tooltip="Check to enable function F6 when the unit is operating in analog power mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Analog Mode Function Status - F6</label>
       </variable>
@@ -308,7 +326,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-AddSubtract2.xml"/>
         <label>Consist Braking Sign</label>
       </variable>
-      <variable label="Speed Table Selection" CV="25" mask="XXXVVVVV" default="0" tooltip="Select a manufacturers speed curve, or use a curve you define yourself.">
+      <variable label="Speed Table Selection" CV="25" mask="XXXVVVVV" default="0" tooltip="Select a manufacturers speed curve, or use a curve you define yourself">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumCurve.xml"/>
         <label>Speed Table Selection</label>
       </variable>
@@ -812,7 +830,7 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>Headlight F0(f) Light Type</label>
       </variable>
-      <variable label="Headlight F0(f) Light Type" CV="49" mask="VXXXXXXX" default="1" include="BB,FEF" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+      <variable label="Headlight F0(f) Light Type" CV="49" mask="VXXXXXXX" default="1" include="BB,chal,FEF" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>Headlight F0(f) Light Type</label>
       </variable>
@@ -836,7 +854,7 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>Backup Light F0(r) Light Type</label>
       </variable>
-      <variable label="Backup Light F0(r) Light Type" CV="50" mask="VXXXXXXX" default="1" include="BB,FEF,N_Chal" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+      <variable label="Backup Light F0(r) Light Type" CV="50" mask="VXXXXXXX" default="1" include="BB,chal,FEF,N_Chal" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>Backup Light F0(r) Light Type</label>
       </variable>
@@ -955,23 +973,27 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumAirPump.xml"/>
         <label>Air Pump 2 Enable</label>
       </variable>
-      <variable label="Air Pump 2 Enable" CV="112" mask="XXXXXXXV" item="Sound Option 1" default="1" include="BB,EFE,N_Chal" tooltip="Choose whether the locomotive has one or two air pumps">
+      <variable label="Air Pump 2 Enable" CV="112" mask="XXXXXXXV" item="Sound Option 1" default="1" include="BB,chal,EFE,N_Chal" tooltip="Choose whether the locomotive has one or two air pumps">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumAirPump.xml"/>
         <label>Air Pump 2 Enable</label>
       </variable>
-      <variable label="Slip Rate Control" CV="112" mask="XXVVXXXX" item="Sound Option 2" default="0" tooltip="&lt;html&gt;Control the variation or timing syncopation when articulated exhaust&lt;br&gt;     is enabled to simulate slipping drive wheels or a double-header.&lt;/html&gt;">
+      <variable label="Slip Rate Control" CV="112" mask="XXVVXXXX" item="Sound Option 2" default="0" exclude="chal" tooltip="&lt;html&gt;Control the variation or timing syncopation when articulated exhaust&lt;br&gt;     is enabled to simulate slipping drive wheels or a double-header.&lt;/html&gt;">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumSlip.xml"/>
         <label>Slip Rate Control</label>
       </variable>
-      <variable label="Articulated Exhaust Control" CV="112" mask="XVXXXXXX" item="Sound Option 3" default="0" include="MT4,FEF" tooltip="Alters the exhaust timing to sound like a simple articulated engine when Auto Exhaust is activated.">
+      <variable label="Slip Rate Control" CV="112" mask="XXVVXXXX" item="Sound Option 2" default="1" include="chal" tooltip="&lt;html&gt;Control the variation or timing syncopation when articulated exhaust&lt;br&gt;     is enabled to simulate slipping drive wheels or a double-header.&lt;/html&gt;">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumSlip.xml"/>
+        <label>Slip Rate Control</label>
+      </variable>
+      <variable label="Articulated Exhaust Control" CV="112" mask="XVXXXXXX" item="Sound Option 3" default="0" include="MT4,FEF" tooltip="Alters the exhaust timing to sound like a simple articulated engine when Auto Exhaust is activated">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumExhaust.xml"/>
         <label>Articulated Exhaust Control</label>
       </variable>
-      <variable label="Articulated Exhaust Control" CV="112" mask="XVXXXXXX" item="Sound Option 3" default="1" include="BB,N_Chal" tooltip="Alters the exhaust timing to sound like a simple articulated engine when Auto Exhaust is activated.">
+      <variable label="Articulated Exhaust Control" CV="112" mask="XVXXXXXX" item="Sound Option 3" default="1" include="BB,chal,N_Chal" tooltip="Alters the exhaust timing to sound like a simple articulated engine when Auto Exhaust is activated">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumExhaust.xml"/>
         <label>Articulated Exhaust Control</label>
       </variable>
-      <variable label="Cam Enable" CV="112" mask="VXXXXXXX" item="Sound Option 4" default="0" tooltip="When used in DCC mode, exhaust chuffs can be controlled automatically, or synced to a cam.">
+      <variable label="Cam Enable" CV="112" mask="VXXXXXXX" item="Sound Option 4" default="0" tooltip="When used in DCC mode, exhaust chuffs can be controlled automatically, or synced to a cam">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumCam.xml"/>
         <label>Cam Enable</label>
       </variable>
@@ -1012,7 +1034,7 @@
         </enumVal>
         <label>Alternate Whistle Select</label>
       </variable>
-      <variable label="Whistle Select" CV="115" mask="XXXXXVVV" item="Sound Option 9" default="0" include="FEF" tooltip="Select the primary whistle to use">
+      <variable label="Whistle Select" CV="115" mask="XXXXXVVV" item="Sound Option 9" default="0" include="chal,FEF" tooltip="Select the primary whistle to use">
         <enumVal>
           <enumChoice choice="Union Pacific #844">
             <choice>Union Pacific #844</choice>
@@ -1041,7 +1063,7 @@
 		</enumVal>
         <label>Whistle Select</label>
       </variable>
-      <variable label="Alternate Whistle Select" CV="115" mask="XXVVVXXX" item="Sound Option 10" default="0" include="FEF" tooltip="Select an alternate whistle to use">
+      <variable label="Alternate Whistle Select" CV="115" mask="XXVVVXXX" item="Sound Option 10" default="0" include="chal,FEF" tooltip="Select an alternate whistle to use">
         <enumVal>
           <enumChoice choice="Union Pacific #844">
             <choice>Union Pacific #844</choice>
@@ -1142,7 +1164,7 @@
         <decVal max="255"/>
         <label>Engine Exhaust Control</label>
       </variable>
-      <variable label="Engine Exhaust Control" CV="116" item="Sound Group 3 Option 3" default="100" include="MT4" tooltip="&lt;html&gt;For Auto-Exhaust synchronization, the chuff rate will be generated in proportion to the&lt;br&gt;     throttle setting.  Higher values = higher chuff rates; use zero to disable exhaust sound.&lt;/html&gt;">
+      <variable label="Engine Exhaust Control" CV="116" item="Sound Group 3 Option 3" default="100" include="chal,MT4" tooltip="&lt;html&gt;For Auto-Exhaust synchronization, the chuff rate will be generated in proportion to the&lt;br&gt;     throttle setting.  Higher values = higher chuff rates; use zero to disable exhaust sound.&lt;/html&gt;">
         <decVal max="255"/>
         <label>Engine Exhaust Control</label>
       </variable>
@@ -1163,11 +1185,15 @@
         <decVal/>
         <label>Master Volume Control</label>
       </variable>
-      <variable label="Master Volume Control" CV="128" mask="VVVVVVVV" item="Sound Setting 1" default="255" include="FEF" tooltip="Sets the overall volume of all sound channels">
+      <variable label="Master Volume Control" CV="128" mask="VVVVVVVV" item="Sound Setting 1" default="255" include="chal,FEF" tooltip="Sets the overall volume of all sound channels">
         <decVal/>
         <label>Master Volume Control</label>
       </variable>
       <variable label="Whistle Volume" CV="129" mask="VVVVVVVV" item="Sound Setting 5" default="150" include="FEF" tooltip="Sets the volume of the whistle">
+        <decVal/>
+        <label>Whistle Volume</label>
+      </variable>
+      <variable label="Whistle Volume" CV="129" mask="VVVVVVVV" item="Sound Setting 5" default="192" include="chal" tooltip="Sets the volume of the whistle">
         <decVal/>
         <label>Whistle Volume</label>
       </variable>
@@ -1179,7 +1205,7 @@
         <decVal/>
         <label>Whistle Volume</label>
       </variable>
-      <variable label="Bell Volume" CV="130" mask="VVVVVVVV" item="Sound Setting 6" default="50" include="FEF" tooltip="Sets the volume of the bell">
+      <variable label="Bell Volume" CV="130" mask="VVVVVVVV" item="Sound Setting 6" default="50" include="chal,FEF" tooltip="Sets the volume of the bell">
         <decVal/>
         <label>Bell Volume</label>
       </variable>
@@ -1199,6 +1225,10 @@
         <decVal/>
         <label>Exhaust Volume</label>
       </variable>
+      <variable label="Exhaust Volume" CV="131" mask="VVVVVVVV" item="Sound Setting 7" default="120" include="chal" tooltip="Sets the volume of the engine exhaust">
+        <decVal/>
+        <label>Exhaust Volume</label>
+      </variable>
       <variable label="Exhaust Volume" CV="131" mask="VVVVVVVV" item="Sound Setting 7" default="180" include="N_Chal" tooltip="Sets the volume of the engine exhaust">
         <decVal/>
         <label>Exhaust Volume</label>
@@ -1207,7 +1237,7 @@
         <decVal/>
         <label>Exhaust Volume</label>
       </variable>
-      <variable label="Air Pump Volume" CV="132" mask="VVVVVVVV" item="Sound Setting 9" default="36" include="FEF" tooltip="Sets the volume of the air pump">
+      <variable label="Air Pump Volume" CV="132" mask="VVVVVVVV" item="Sound Setting 9" default="36" include="chal,FEF" tooltip="Sets the volume of the air pump">
         <decVal/>
         <label>Air Pump Volume</label>
       </variable>
@@ -1218,6 +1248,10 @@
       <variable label="Air Pump Volume" CV="132" mask="VVVVVVVV" item="Sound Setting 9" default="125" include="N_Chal" tooltip="Sets the volume of the air pump">
         <decVal/>
         <label>Air Pump Volume</label>
+      </variable>
+      <variable label="Dynamo Volume" CV="133" mask="VVVVVVVV" item="Sound Setting 10" default="15" include="chal" tooltip="Sets the volume of the dynamo (electric power generator)">
+        <decVal/>
+        <label>Dynamo Volume</label>
       </variable>
       <variable label="Dynamo Volume" CV="133" mask="VVVVVVVV" item="Sound Setting 10" default="38" include="FEF" tooltip="Sets the volume of the dynamo (electric power generator)">
         <decVal/>
@@ -1231,7 +1265,7 @@
         <decVal/>
         <label>Dynamo Volume</label>
       </variable>
-      <variable label="Blower Volume" CV="134" mask="VVVVVVVV" item="Sound Setting 14" default="12" include="FEF" tooltip="Sets the volume of the blower">
+      <variable label="Blower Volume" CV="134" mask="VVVVVVVV" item="Sound Setting 14" default="12" include="chal,FEF" tooltip="Sets the volume of the blower">
         <decVal/>
         <label>Blower Volume</label>
       </variable>
@@ -1243,7 +1277,7 @@
         <decVal/>
         <label>Blower Volume</label>
       </variable>
-      <variable label="Rod Clank Volume" CV="135" mask="VVVVVVVV" item="Sound Setting 8" default="7" include="FEF" tooltip="Sets the volume of the rods clanking">
+      <variable label="Rod Clank Volume" CV="135" mask="VVVVVVVV" item="Sound Setting 8" default="7" include="chal,FEF" tooltip="Sets the volume of the rods clanking">
         <decVal/>
         <label>Rod Clank Volume</label>
       </variable>
@@ -1251,7 +1285,7 @@
         <decVal/>
         <label>Rod Clank Volume</label>
       </variable>
-      <variable label="Steam Release Volume" CV="136" mask="VVVVVVVV" item="Sound Setting 23" default="96" include="FEF" tooltip="Sets the volume of the steam release">
+      <variable label="Steam Release Volume" CV="136" mask="VVVVVVVV" item="Sound Setting 23" default="96" include="chal,FEF" tooltip="Sets the volume of the steam release">
         <decVal/>
         <label>Steam Release Volume</label>
       </variable>
@@ -1259,13 +1293,17 @@
         <decVal/>
         <label>Steam Release Volume</label>
       </variable>
-      <variable label="Coupler Volume" CV="137" mask="VVVVVVVV" item="Sound Setting 18" default="96" include="FEF" tooltip="Sets the volume of the couplers coupling">
+      <variable label="Coupler Volume" CV="137" mask="VVVVVVVV" item="Sound Setting 18" default="96" include="chal,FEF" tooltip="Sets the volume of the couplers coupling">
         <decVal/>
         <label>Coupler Volume</label>
       </variable>
       <variable label="Coupler Volume" CV="137" mask="VVVVVVVV" item="Sound Setting 18" default="128" exclude="FEF" tooltip="Sets the volume of the couplers coupling">
         <decVal/>
         <label>Coupler Volume</label>
+      </variable>
+      <variable label="Brake Squeal Volume" CV="139" mask="VVVVVVVV" item="Sound Setting 16" default="30" include="chal" tooltip="Sets the volume of the brakes squealing">
+        <decVal/>
+        <label>Brake Squeal Volume</label>
       </variable>
       <variable label="Brake Squeal Volume" CV="139" mask="VVVVVVVV" item="Sound Setting 16" default="96" include="FEF" tooltip="Sets the volume of the brakes squealing">
         <decVal/>
@@ -1275,35 +1313,35 @@
         <decVal/>
         <label>Brake Squeal Volume</label>
       </variable>
-      <variable label="Brake Release Volume" CV="140" mask="VVVVVVVV" item="Sound Setting 17" default="48" include="FEF" tooltip="Sets the volume of the brakes releasing">
+      <variable label="Brake Release Volume" CV="140" mask="VVVVVVVV" item="Sound Setting 17" default="48" include="chal,FEF" tooltip="Sets the volume of the brakes releasing">
         <decVal/>
         <label>Brake Release Volume</label>
       </variable>
-      <variable label="Brake Release Volume" CV="140" mask="VVVVVVVV" item="Sound Setting 17" default="64" exclude="FEF" tooltip="Sets the volume of the brakes releasing">
+      <variable label="Brake Release Volume" CV="140" mask="VVVVVVVV" item="Sound Setting 17" default="64" exclude="chal,FEF" tooltip="Sets the volume of the brakes releasing">
         <decVal/>
         <label>Brake Release Volume</label>
       </variable>
-      <variable label="Snifter Valve Volume" CV="141" mask="VVVVVVVV" item="Sound Setting 22" default="48" include="FEF" tooltip="Sets the volume of the snifter valve">
+      <variable label="Snifter Valve Volume" CV="141" mask="VVVVVVVV" item="Sound Setting 22" default="48" include="chal,FEF" tooltip="Sets the volume of the snifter valve">
         <decVal/>
         <label>Snifter Valve Volume</label>
       </variable>
-      <variable label="Snifter Valve Volume" CV="141" mask="VVVVVVVV" item="Sound Setting 22" default="64" exclude="FEF" tooltip="Sets the volume of the snifter valve">
+      <variable label="Snifter Valve Volume" CV="141" mask="VVVVVVVV" item="Sound Setting 22" default="64" exclude="chal,FEF" tooltip="Sets the volume of the snifter valve">
         <decVal/>
         <label>Snifter Valve Volume</label>
       </variable>
-      <variable label="Power Reverse Volume" CV="142" mask="VVVVVVVV" item="Sound Setting 12" default="48" include="FEF" tooltip="Sets the volume of the power reverse operating">
+      <variable label="Power Reverse Volume" CV="142" mask="VVVVVVVV" item="Sound Setting 12" default="48" include="chal,FEF" tooltip="Sets the volume of the power reverse operating">
         <decVal/>
         <label>Power Reverse Volume</label>
       </variable>
-      <variable label="Power Reverse Volume" CV="142" mask="VVVVVVVV" item="Sound Setting 12" default="64" exclude="FEF" tooltip="Sets the volume of the power reverse operating">
+      <variable label="Power Reverse Volume" CV="142" mask="VVVVVVVV" item="Sound Setting 12" default="64" exclude="chal,FEF" tooltip="Sets the volume of the power reverse operating">
         <decVal/>
         <label>Power Reverse Volume</label>
       </variable>
-      <variable label="Pop Valve Volume" CV="143" mask="VVVVVVVV" item="Sound Setting 24" default="96" include="FEF" tooltip="Sets the volume of the pop valve releasing">
+      <variable label="Pop Valve Volume" CV="143" mask="VVVVVVVV" item="Sound Setting 24" default="96" include="chal,FEF" tooltip="Sets the volume of the pop valve releasing">
         <decVal/>
         <label>Pop Valve Volume</label>
       </variable>
-      <variable label="Pop Valve Volume" CV="143" mask="VVVVVVVV" item="Sound Setting 24" default="128" exclude="FEF" tooltip="Sets the volume of the pop valve releasing">
+      <variable label="Pop Valve Volume" CV="143" mask="VVVVVVVV" item="Sound Setting 24" default="128" exclude="chal,FEF" tooltip="Sets the volume of the pop valve releasing">
         <decVal/>
         <label>Pop Valve Volume</label>
       </variable>
@@ -1315,27 +1353,27 @@
         <decVal/>
         <label>Blower Draft Volume</label>
       </variable>
-      <variable label="Water Stop Volume" CV="146" mask="VVVVVVVV" item="Sound Setting 25" default="96" include="FEF" tooltip="Sets the volume of the water stop activity">
+      <variable label="Water Stop Volume" CV="146" mask="VVVVVVVV" item="Sound Setting 25" default="72" include="chal,FEF" tooltip="Sets the volume of the water stop activity">
         <decVal/>
         <label>Water Stop Volume</label>
       </variable>
-      <variable label="Injector Volume" CV="147" mask="VVVVVVVV" item="Sound Setting 13" default="64" include="FEF" tooltip="Sets the volume of the injector operating">
+      <variable label="Injector Volume" CV="147" mask="VVVVVVVV" item="Sound Setting 13" default="48" include="chal,FEF" tooltip="Sets the volume of the injector operating">
         <decVal/>
         <label>Injector Volume</label>
       </variable>
-      <variable label="Fireman Shovel Volume" CV="148" mask="VVVVVVVV" item="Sound Setting 26" default="64" include="FEF" tooltip="Sets the volume of the fireman shoveling">
+      <variable label="Fireman Shovel Volume" CV="148" mask="VVVVVVVV" item="Sound Setting 26" default="48" include="chal,FEF" tooltip="Sets the volume of the fireman shoveling">
         <decVal/>
         <label>Fireman Shovel Volume</label>
       </variable>
-      <variable label="Fireman Wrench Volume" CV="149" mask="VVVVVVVV" item="Sound Setting 27" default="64" include="FEF" tooltip="Sets the volume of the fireman using his wrench">
+      <variable label="Fireman Wrench Volume" CV="149" mask="VVVVVVVV" item="Sound Setting 27" default="48" include="chal,FEF" tooltip="Sets the volume of the fireman using his wrench">
         <decVal/>
         <label>Fireman Wrench Volume</label>
       </variable>
-      <variable label="Fireman Oil Can Volume" CV="150" mask="VVVVVVVV" item="Sound Setting 28" default="64" include="FEF" tooltip="Sets the volume of the fireman using his oil can">
+      <variable label="Fireman Oil Can Volume" CV="150" mask="VVVVVVVV" item="Sound Setting 28" default="48" include="chal,FEF" tooltip="Sets the volume of the fireman using his oil can">
         <decVal/>
         <label>Fireman Oil Can Volume</label>
       </variable>
-      <variable label="Fireman Grease Gun Volume" CV="151" mask="VVVVVVVV" item="Sound Setting 29" default="32" include="FEF" tooltip="Sets the volume of the fireman using his grease gun">
+      <variable label="Fireman Grease Gun Volume" CV="151" mask="VVVVVVVV" item="Sound Setting 29" default="24" include="chal,FEF" tooltip="Sets the volume of the fireman using his grease gun">
         <decVal/>
         <label>Fireman Grease Gun Volume</label>
       </variable>
@@ -1343,36 +1381,36 @@
       <!-- names, e.g. in the Comprehensive.xml programmer, so they  -->
       <!-- appear on pane definitions in this file -->
       <!-- Equalizer Controls follow -->
-      <variable label="Equalizer Control" CV="153" mask="XXXXXVVV" default="0" exclude="FEF" tooltip="Selects one of six equalizer presets or selects a user adjustable profile">
+      <variable label="Equalizer Control" CV="153" mask="XXXXXVVV" default="0" exclude="chal,FEF" tooltip="Selects one of six equalizer presets or selects a user adjustable profile">
          <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEQ.xml"/>
         <label>Equalizer Control</label>
       </variable>
-      <variable label="Equalizer Control" CV="153" mask="XXXXXVVV" default="7" include="FEF" tooltip="Selects one of six equalizer presets or selects a user adjustable profile">
+      <variable label="Equalizer Control" CV="153" mask="XXXXXVVV" default="7" include="chal,FEF" tooltip="Selects one of six equalizer presets or selects a user adjustable profile">
          <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEQ.xml"/>
         <label>Equalizer Control</label>
       </variable>
       <!-- Individual Cut/Boost Controls follow -->
-      <variable label="62 Hz Cut/Boost" CV="154" mask="VVVVVVVV" default="128" exclude="FEF" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
+      <variable label="62 Hz Cut/Boost" CV="154" mask="VVVVVVVV" default="128" exclude="chal,FEF" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
         <decVal/>
         <label>62 Hz Cut/Boost</label>
       </variable>
-      <variable label="62 Hz Cut/Boost" CV="154" mask="VVVVVVVV" default="255" include="FEF" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
+      <variable label="62 Hz Cut/Boost" CV="154" mask="VVVVVVVV" default="255" include="chal,FEF" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
         <decVal/>
         <label>62 Hz Cut/Boost</label>
       </variable>
-      <variable label="125 Hz Cut/Boost" CV="155" mask="VVVVVVVV" default="128" exclude="FEF" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
+      <variable label="125 Hz Cut/Boost" CV="155" mask="VVVVVVVV" default="128" exclude="chal,FEF" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
         <decVal/>
         <label>125 Hz Cut/Boost</label>
       </variable>
-      <variable label="125 Hz Cut/Boost" CV="155" mask="VVVVVVVV" default="255" include="FEF" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
+      <variable label="125 Hz Cut/Boost" CV="155" mask="VVVVVVVV" default="255" include="chal,FEF" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
         <decVal/>
         <label>125 Hz Cut/Boost</label>
       </variable>
-      <variable label="250 Hz Cut/Boost" CV="156" mask="VVVVVVVV" default="128" exclude="FEF" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
+      <variable label="250 Hz Cut/Boost" CV="156" mask="VVVVVVVV" default="128" exclude="chal,FEF" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
         <decVal/>
         <label>250 Hz Cut/Boost</label>
       </variable>
-      <variable label="250 Hz Cut/Boost" CV="156" mask="VVVVVVVV" default="255" include="FEF" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
+      <variable label="250 Hz Cut/Boost" CV="156" mask="VVVVVVVV" default="255" include="chal,FEF" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
         <decVal/>
         <label>250 Hz Cut/Boost</label>
       </variable>
@@ -1451,11 +1489,11 @@
         <decVal/>
         <label>Exhaust Low Volume Limit</label>
       </variable>
-      <variable label="Exhaust High Volume Limit" CV="182" mask="VVVVVVVV" default="128" include="FEF" tooltip="&lt;html&gt;Sets the maximum volume level of the exhaust sound when the&lt;br&gt;     locomotive is under heavy load.  (higher no. = greater volume)&lt;/html&gt;">
+      <variable label="Exhaust High Volume Limit" CV="182" mask="VVVVVVVV" default="128" include="chal,FEF" tooltip="&lt;html&gt;Sets the maximum volume level of the exhaust sound when the&lt;br&gt;     locomotive is under heavy load.  (higher no. = greater volume)&lt;/html&gt;">
         <decVal/>
         <label>Exhaust High Volume Limit</label>
       </variable>
-      <variable label="Exhaust High Volume Limit" CV="182" mask="VVVVVVVV" default="255" exclude="FEF" tooltip="&lt;html&gt;Sets the maximum volume level of the exhaust sound when the&lt;br&gt;     locomotive is under heavy load.  (higher no. = greater volume)&lt;/html&gt;">
+      <variable label="Exhaust High Volume Limit" CV="182" mask="VVVVVVVV" default="255" exclude="chal,FEF" tooltip="&lt;html&gt;Sets the maximum volume level of the exhaust sound when the&lt;br&gt;     locomotive is under heavy load.  (higher no. = greater volume)&lt;/html&gt;">
         <decVal/>
         <label>Exhaust High Volume Limit</label>
       </variable>
@@ -1463,11 +1501,11 @@
         <decVal/>
         <label>Side Rod Clank Low Volume Limit</label>
       </variable>
-      <variable label="Side Rod Clank High Volume Limit" CV="184" mask="VVVVVVVV" default="64" include="FEF" tooltip="&lt;html&gt;Sets the maximum volume level of the side rod clanking sound when&lt;br&gt;     the locomotive is under light load.  (higher no. = greater volume)&lt;/html&gt;">
+      <variable label="Side Rod Clank High Volume Limit" CV="184" mask="VVVVVVVV" default="64" include="chal,FEF" tooltip="&lt;html&gt;Sets the maximum volume level of the side rod clanking sound when&lt;br&gt;     the locomotive is under light load.  (higher no. = greater volume)&lt;/html&gt;">
         <decVal/>
         <label>Side Rod Clank High Volume Limit</label>
       </variable>
-      <variable label="Side Rod Clank High Volume Limit" CV="184" mask="VVVVVVVV" default="255" exclude="FEF" tooltip="&lt;html&gt;Sets the maximum volume level of the side rod clanking sound when&lt;br&gt;     the locomotive is under light load.  (higher no. = greater volume)&lt;/html&gt;">
+      <variable label="Side Rod Clank High Volume Limit" CV="184" mask="VVVVVVVV" default="255" exclude="chal,FEF" tooltip="&lt;html&gt;Sets the maximum volume level of the side rod clanking sound when&lt;br&gt;     the locomotive is under light load.  (higher no. = greater volume)&lt;/html&gt;">
         <decVal/>
         <label>Side Rod Clank High Volume Limit</label>
       </variable>
@@ -1475,15 +1513,15 @@
         <decVal/>
         <label>DDE Filter Initial Frequency</label>
       </variable>
-      <variable label="DDE Filter Control Gain" CV="186" mask="VVVVVVVV" default="64" exclude="FEF" tooltip="&lt;html&gt;Determines the sensitivity of the DDE filter bank to changes&lt;br&gt;     in load and speed.  (higher no. = greater sensitivity)&lt;/html&gt;">
+      <variable label="DDE Filter Control Gain" CV="186" mask="VVVVVVVV" default="64" exclude="chal,FEF" tooltip="&lt;html&gt;Determines the sensitivity of the DDE filter bank to changes&lt;br&gt;     in load and speed.  (higher no. = greater sensitivity)&lt;/html&gt;">
         <decVal max="255"/>
         <label>DDE Filter Control Gain</label>
       </variable>
-      <variable label="DDE Filter Control Gain" CV="186" mask="VVVVVVVV" default="255" include="FEF" tooltip="&lt;html&gt;Determines the sensitivity of the DDE filter bank to changes&lt;br&gt;     in load and speed.  (higher no. = greater sensitivity)&lt;/html&gt;">
+      <variable label="DDE Filter Control Gain" CV="186" mask="VVVVVVVV" default="255" include="chal,FEF" tooltip="&lt;html&gt;Determines the sensitivity of the DDE filter bank to changes&lt;br&gt;     in load and speed.  (higher no. = greater sensitivity)&lt;/html&gt;">
         <decVal max="255"/>
         <label>DDE Filter Control Gain</label>
       </variable>
-      <variable label="DDE Filter Damping" CV="187" mask="VVVVVVVV" default="255" tooltip="Sets the overall damping ratio of the DDE Filter Bank.">
+      <variable label="DDE Filter Damping" CV="187" mask="VVVVVVVV" default="255" tooltip="Sets the overall damping ratio of the DDE Filter Bank">
         <decVal/>
         <label>DDE Filter Damping</label>
       </variable>
@@ -1512,27 +1550,27 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Automatic Grade Crossing Whistle Enable (Analog Mode)</label>
       </variable>
-      <variable label="Automatic Whistle Signal Enable (Analog Mode)" CV="197" mask="XXXXXXVX" default="0" exclude="FEF" tooltip="Enables the Automatic Whistle Signal in Analog Mode">
+      <variable label="Automatic Whistle Signal Enable (Analog Mode)" CV="197" mask="XXXXXXVX" default="0" exclude="chal,FEF" tooltip="Enables the Automatic Whistle Signal in Analog Mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Automatic Whistle Signal Enable (Analog Mode)</label>
       </variable>
-      <variable label="Automatic Whistle Signal Enable (Analog Mode)" CV="197" mask="XXXXXXVX" default="1" include="FEF" tooltip="Enables the Automatic Whistle Signal in Analog Mode">
+      <variable label="Automatic Whistle Signal Enable (Analog Mode)" CV="197" mask="XXXXXXVX" default="1" include="chal,FEF" tooltip="Enables the Automatic Whistle Signal in Analog Mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Automatic Whistle Signal Enable (Analog Mode)</label>
       </variable>
-      <variable label="Automatic Bell Enable (Analog Mode)" CV="197" mask="XXXXXVXX" default="0" exclude="FEF" tooltip="Enables the Automatic Bell in Analog Mode">
+      <variable label="Automatic Bell Enable (Analog Mode)" CV="197" mask="XXXXXVXX" default="0" exclude="chal,FEF" tooltip="Enables the Automatic Bell in Analog Mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Automatic Bell Enable (Analog Mode)</label>
       </variable>
-      <variable label="Automatic Bell Enable (Analog Mode)" CV="197" mask="XXXXXVXX" default="1" include="FEF" tooltip="Enables the Automatic Bell in Analog Mode">
+      <variable label="Automatic Bell Enable (Analog Mode)" CV="197" mask="XXXXXVXX" default="1" include="chal,FEF" tooltip="Enables the Automatic Bell in Analog Mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Automatic Bell Enable (Analog Mode)</label>
       </variable>
-      <variable label="Automatic Brake Squeal Enable (Analog Mode)" CV="197" mask="XXXXVXXX" default="0" exclude="FEF" tooltip="Enables the Automatic Brake Squeal in Analog Mode">
+      <variable label="Automatic Brake Squeal Enable (Analog Mode)" CV="197" mask="XXXXVXXX" default="0" exclude="chal,FEF" tooltip="Enables the Automatic Brake Squeal in Analog Mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Automatic Brake Squeal Enable (Analog Mode)</label>
       </variable>
-      <variable label="Automatic Brake Squeal Enable (Analog Mode)" CV="197" mask="XXXXVXXX" default="1" include="FEF" tooltip="Enables the Automatic Brake Squeal in Analog Mode">
+      <variable label="Automatic Brake Squeal Enable (Analog Mode)" CV="197" mask="XXXXVXXX" default="1" include="chal,FEF" tooltip="Enables the Automatic Brake Squeal in Analog Mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Automatic Brake Squeal Enable (Analog Mode)</label>
       </variable>
@@ -1556,7 +1594,11 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Automatic Bell Enable</label>
       </variable>
-      <variable label="Automatic Brake Squeal Enable" CV="198" mask="XXXXVXXX" default="0" tooltip="Enables the Automatic Brake Squeal in Digital Mode">
+      <variable label="Automatic Brake Squeal Enable" CV="198" mask="XXXXVXXX" default="0" exclude="chal" tooltip="Enables the Automatic Brake Squeal in Digital Mode">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Automatic Brake Squeal Enable</label>
+      </variable>
+      <variable label="Automatic Brake Squeal Enable" CV="198" mask="XXXXVXXX" default="1" include="chal" tooltip="Enables the Automatic Brake Squeal in Digital Mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Automatic Brake Squeal Enable</label>
       </variable>
@@ -1565,35 +1607,35 @@
         <label>Automatic Steam Blow Down Enable</label>
       </variable>
       <!-- Event Probability Controls follow -->
-      <variable label="Probability Fireman Shovels Coal" CV="201" mask="VVVVVVVV" default="0" tooltip="Sets the probability that the fireman will shovel some coal.">
+      <variable label="Probability Fireman Shovels Coal" CV="201" mask="VVVVVVVV" default="0" tooltip="Sets the probability that the fireman will shovel some coal">
         <decVal max="255"/>
         <label>Probability Fireman Shovels Coal</label>
       </variable>
-      <variable label="Probability Fireman Fills the Tender" CV="202" mask="VVVVVVVV" default="32" tooltip="Sets the probability that the fireman will fill the tender with water.">
+      <variable label="Probability Fireman Fills the Tender" CV="202" mask="VVVVVVVV" default="32" tooltip="Sets the probability that the fireman will fill the tender with water">
         <decVal max="255"/>
         <label>Probability Fireman Fills the Tender</label>
       </variable>
-      <variable label="Probability Fireman Turns His Wrench" CV="203" mask="VVVVVVVV" default="16" tooltip="Sets the probability that the fireman will use his wrench.">
+      <variable label="Probability Fireman Turns His Wrench" CV="203" mask="VVVVVVVV" default="16" tooltip="Sets the probability that the fireman will use his wrench">
         <decVal max="255"/>
         <label>Probability Fireman Turns His Wrench</label>
       </variable>
-      <variable label="Probability Fireman Uses His Grease Gun" CV="204" mask="VVVVVVVV" default="32" tooltip="Sets the probability that the fireman will use the grease gun.">
+      <variable label="Probability Fireman Uses His Grease Gun" CV="204" mask="VVVVVVVV" default="32" tooltip="Sets the probability that the fireman will use the grease gun">
         <decVal max="255"/>
         <label>Probability Fireman Uses His Grease Gun</label>
       </variable>
-      <variable label="Probability Fireman Uses His Oil Can" CV="205" mask="VVVVVVVV" default="64" tooltip="Sets the probability that the fireman will use the oil can.">
+      <variable label="Probability Fireman Uses His Oil Can" CV="205" mask="VVVVVVVV" default="64" tooltip="Sets the probability that the fireman will use the oil can">
         <decVal max="255"/>
         <label>Probability Fireman Uses His Oil Can</label>
       </variable>
-      <variable label="Probability Fireman Uses the Injector" CV="206" mask="VVVVVVVV" default="64" tooltip="Sets the probability that the fireman will use the water injector.">
+      <variable label="Probability Fireman Uses the Injector" CV="206" mask="VVVVVVVV" default="64" tooltip="Sets the probability that the fireman will use the water injector">
         <decVal max="255"/>
         <label>Probability Fireman Uses the Injector</label>
       </variable>
-      <variable label="Probability Fireman Uses the Blower" CV="207" mask="VVVVVVVV" default="64" tooltip="Sets the probability that the fireman will use the firebox blower.">
+      <variable label="Probability Fireman Uses the Blower" CV="207" mask="VVVVVVVV" default="64" tooltip="Sets the probability that the fireman will use the firebox blower">
         <decVal max="255"/>
         <label>Probability Fireman Uses the Blower</label>
       </variable>
-      <variable label="Probability Pop Valve Blows Off" CV="208" mask="VVVVVVVV" default="0" tooltip="Sets the probability that the safety valve will relieve.">
+      <variable label="Probability Pop Valve Blows Off" CV="208" mask="VVVVVVVV" default="0" tooltip="Sets the probability that the safety valve will relieve">
         <decVal max="255"/>
         <label>Probability Pop Valve Blows Off</label>
       </variable>
@@ -1607,7 +1649,7 @@
         <decVal/>
         <label>Motor Ki Coefficient (0-255)</label>
       </variable>
-      <variable label="Motor Control Intensity (0-255)" CV="212" mask="VVVVVVVV" item="Advanced Group 2 Option 3" default="255" include="BB,FEF" tooltip="The CV value is interpreted as n/32 that is fed back from the control loop">
+      <variable label="Motor Control Intensity (0-255)" CV="212" mask="VVVVVVVV" item="Advanced Group 2 Option 3" default="255" include="BB,chal,FEF" tooltip="The CV value is interpreted as n/32 that is fed back from the control loop">
         <decVal/>
         <label>Motor Control Intensity (0-255)</label>
       </variable>
@@ -1624,7 +1666,7 @@
         <label>Motor Control Sample Aperture Time (0-255)</label>
       </variable>
       <variable label="Analog Mode Engine Sound Start" CV="218" mask="VVVVVVVV" item="Sound Group 3 Option 8" default="15" 
-		include="FEF">
+		include="chal,FEF">
         <decVal/>
         <label>Analog Mode Engine Sound Start</label>
       </variable>

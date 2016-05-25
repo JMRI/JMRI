@@ -4,6 +4,8 @@ package jmri.jmrit.operations.locations;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.event.*;
 
@@ -13,6 +15,7 @@ import java.text.MessageFormat;
 import java.util.List;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.setup.Control;
 
 
 /**
@@ -88,8 +91,7 @@ class ChangeTracksFrame extends OperationsFrame{
     	getContentPane().add(p1);
     	setTitle(Bundle.getMessage("MenuItemChangeTrackType"));
     	pack();
-    	if (getWidth() < 250)
-    		setSize(getWidth()+100, getHeight());
+    	setMinimumSize(new Dimension(Control.smallPanelWidth, Control.tinyPanelHeight));
     	setVisible(true); 	
 	}
 	
@@ -113,7 +115,7 @@ class ChangeTracksFrame extends OperationsFrame{
 		List<String> ids = _location.getTrackIdsByNameList(null);
 		for (int i=0; i<ids.size(); i++){
 			Track track = _location.getTrackById(ids.get(i));
-			track.setLocType(type);
+			track.setTrackType(type);
 		}
 		if (type.equals(Track.STAGING))
 			_location.setLocationOps(Location.STAGING);

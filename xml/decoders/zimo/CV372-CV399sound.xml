@@ -3,7 +3,7 @@
 <!-- version 1 - for Unified Software, Nigel Cliffe 17 Nov 2012 -->
 <!-- For Version 32+ Zimo firmware -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude">
-  <variable label="Function Key for Coasting" CV="374" default="0" tooltip="CV374">
+  <variable label="Function Key for Coasting" CV="374" default="0">
     <enumVal>
       <enumChoice choice="Off">
         <choice>Off</choice>
@@ -94,7 +94,7 @@
       </enumChoice>
     </enumVal>
   </variable>
-  <variable label="Sound Slot during Coasting" CV="375" default="0" tooltip="CV375">
+  <variable label="Sound Slot during Coasting" CV="375" default="0">
     <enumVal>
       <enumChoice choice="0">
         <choice>0</choice>

@@ -3,10 +3,10 @@
 <!-- version 1 - for Unified Software -->
 <pane name="Railcom">
   <column>
-    <display item="Enable RailCom" format="checkbox" tooltip="CV 29 bit 3"/>
-    <display item="RailCom channel 1 (Broadcast)" tooltip="CV 28 bit 1 "/>
-    <display item="RailCom channel 2 (Data)" tooltip="CV 28 bit 2"/>
+    <display item="Enable RailCom" format="checkbox"/>
+    <display item="RailCom channel 1 (Broadcast)"/>
+    <display item="RailCom channel 2 (Data)"/>
     <label label=" "/>
-    <display item="RailCom speed reporting method" tooltip="CV158 bit 2"/>
+    <display item="RailCom speed reporting method"/>
   </column>
 </pane>

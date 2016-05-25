@@ -24,6 +24,7 @@ public class YardEditFrame extends TrackEditFrame implements java.beans.Property
 		super.initComponents(location, track);
 
 		_toolMenu.add(new ChangeTrackTypeAction(this));
+		_toolMenu.add(new ShowCarsByLocationAction(false, location.getName(), trackName));
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Yards", true); // NOI18N
 
 		// override text strings for tracks

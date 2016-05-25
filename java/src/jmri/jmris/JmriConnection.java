@@ -3,6 +3,8 @@ package jmri.jmris;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import org.eclipse.jetty.websocket.WebSocket.Connection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Abstraction of DataOutputStream and WebSocket.Connection classes
@@ -16,6 +18,7 @@ public class JmriConnection {
 
     private Connection webSocketConnection = null;
     private DataOutputStream dataOutputStream = null;
+    private final static Logger log = LoggerFactory.getLogger(JmriConnection.class);
 
     /**
      * Create a JmriConnection that sends output to a WebSocket
@@ -61,6 +64,7 @@ public class JmriConnection {
      * @throws IOException
      */
     public void sendMessage(String message) throws IOException {
+        log.debug("Sending {}", message);
         if (this.dataOutputStream != null) {
             this.dataOutputStream.writeBytes(message);
         } else if (this.webSocketConnection != null) {

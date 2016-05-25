@@ -164,7 +164,7 @@ public class PositionableLabel extends JLabel implements Positionable {
             NamedIcon icon = new NamedIcon((NamedIcon)getIcon());
             pos = new PositionableLabel(icon, _editor);
         } else {
-            pos = new PositionableLabel(_unRotatedText, _editor);
+            pos = new PositionableLabel(getText(), _editor);
         }
         return finishClone(pos);
     }
@@ -183,7 +183,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         pos._text = _text;
         pos._icon = _icon;
         pos._control = _control;
-        pos._rotateText = _rotateText;
+//        pos._rotateText = _rotateText;
         pos._unRotatedText = _unRotatedText;
         pos.setLocation(getX(), getY());
         pos._displayLevel = _displayLevel;
@@ -198,20 +198,22 @@ public class PositionableLabel extends JLabel implements Positionable {
         } else {
             pos.setPopupUtility(getPopupUtility().clone(pos, pos.getTextComponent()));
         }
-        pos.setOpaque(isOpaque());
+    	pos.setOpaque(isOpaque());
         pos._saveOpaque = _saveOpaque;
-        if (_icon && _namedIcon!=null) {
+        if (_namedIcon!=null) {
         	pos._namedIcon = cloneIcon(_namedIcon, pos);
             pos.setIcon(pos._namedIcon);
+            pos.rotate(_degrees);		//this will change text in icon with a new _namedIcon.
         }
         pos.updateSize();
         return pos;
     }
+    
     public JComponent getTextComponent() {
     	return this;
     }
 
-    protected NamedIcon cloneIcon(NamedIcon icon, PositionableLabel pos) {
+    public static NamedIcon cloneIcon(NamedIcon icon, PositionableLabel pos) {
     	if (icon.getURL()!=null) {
              return new NamedIcon(icon, pos);   		
     	} else {
@@ -476,14 +478,14 @@ public class PositionableLabel extends JLabel implements Positionable {
         invalidate();
     }
 
-    jmri.util.JmriJFrame _paletteFrame;
+    public jmri.util.JmriJFrame _paletteFrame;
 
     /************ Methods for Item Popups in Control Panel editor ********************/
     /**
      * For item popups in Control Panel Editor
      */
     protected void makePalettteFrame(String title) {
-    	jmri.jmrit.display.palette.ItemPalette.loadIcons();
+    	jmri.jmrit.display.palette.ItemPalette.loadIcons(_editor);
 
         _paletteFrame = new jmri.util.JmriJFrame(title, false, false);
         _paletteFrame.setLocationRelativeTo(this);
@@ -714,7 +716,7 @@ public class PositionableLabel extends JLabel implements Positionable {
                              RenderingHints.VALUE_INTERPOLATION_BICUBIC);
 
         if (_popupUtil!=null) {
-        	if (isOpaque() && _popupUtil.getBackground()!=null) {
+        	if (/*isOpaque() &&*/ _popupUtil.getBackground()!=null) {
         		g2d.setColor(_popupUtil.getBackground());
         		g2d.fillRect(0, 0, width, height);
         	}
@@ -771,7 +773,7 @@ public class PositionableLabel extends JLabel implements Positionable {
     public void setText(String text) {
     	_unRotatedText = text;
     	if (_rotateText && _namedIcon!=null) {
-            _namedIcon.rotate(_degrees, this);		//this will change text in icon
+            rotate(_degrees);		//this will change text in icon with a new _namedIcon.
     	} else {
         	super.setText(text);    		
     	}    	

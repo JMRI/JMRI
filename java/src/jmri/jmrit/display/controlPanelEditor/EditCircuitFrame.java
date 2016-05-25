@@ -239,7 +239,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         JButton convertButton = new JButton(Bundle.getMessage("ButtonConvertIcon"));
         convertButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
-                    _parent.convertIcons();
+                	convertIcons();
                 }
         });
         convertButton.setToolTipText(Bundle.getMessage("ToolTipConvertIcon"));
@@ -255,6 +255,11 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         buttonPanel.add(panel);
 
         return buttonPanel;
+    }
+    
+    private void convertIcons() {
+        _parent.convertIcons();
+        this.toFront();
     }
 
     /************************* end setup **************************/

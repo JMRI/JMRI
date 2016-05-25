@@ -10,7 +10,7 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.routes.RouteLocation;
 
 /**
- * Represents an engine on the layout
+ * Represents a locomotive on the layout
  * 
  * @author Daniel Boudreau (C) Copyright 2008
  * @version $Revision$
@@ -24,12 +24,12 @@ public class Engine extends RollingStock {
 
 	public Engine(String road, String number) {
 		super(road, number);
-		log.debug("New engine " + road + " " + number);
+		log.debug("New loco " + road + " " + number);
 		addPropertyChangeListeners();
 	}
 
 	/**
-	 * Set the engine's model. Note a model has only one length, type, and horsepower rating.
+	 * Set the locomotive's model. Note a model has only one length, type, and horsepower rating.
 	 * 
 	 * @param model
 	 */
@@ -45,10 +45,10 @@ public class Engine extends RollingStock {
 	}
 
 	/**
-	 * Set the engine type for this engine's model
+	 * Set the locomotive type for this locomotive's model
 	 * 
 	 * @param type
-	 *            Engine type: Steam, Diesel, Gas Turbine, etc.
+	 *            Locomotive type: Steam, Diesel, Gas Turbine, etc.
 	 */
 	public void setTypeName(String type) {
 		if (getModel().equals(""))
@@ -67,10 +67,10 @@ public class Engine extends RollingStock {
 	}
 
 	/**
-	 * Set the engine horsepower rating for this engine's model
+	 * Set the locomotive horsepower rating for this locomotive's model
 	 * 
 	 * @param hp
-	 *            engine horsepower
+	 *            locomotive horsepower
 	 */
 	public void setHp(String hp) {
 		if (getModel().equals(""))
@@ -89,10 +89,10 @@ public class Engine extends RollingStock {
 	}
 
 	/**
-	 * Set the engine length for this engine's model
+	 * Set the locomotive length for this locomotive's model
 	 * 
 	 * @param length
-	 *            engine length
+	 *            locomotive length
 	 */
 	public void setLength(String length) {
 		super.setLength(length);
@@ -115,10 +115,10 @@ public class Engine extends RollingStock {
 	}
 
 	/**
-	 * Set the engine weight for this engine's model
+	 * Set the locomotive weight for this locomotive's model
 	 * 
 	 * @param weight
-	 *            engine weight
+	 *            locomotive weight
 	 */
 	public void setWeightTons(String weight) {
 		if (getModel().equals(""))
@@ -137,7 +137,7 @@ public class Engine extends RollingStock {
 	}
 
 	/**
-	 * Place engine in a consist
+	 * Place locomotive in a consist
 	 * 
 	 * @param consist
 	 */
@@ -161,9 +161,9 @@ public class Engine extends RollingStock {
 	}
 
 	/**
-	 * Get the consist for this engine
+	 * Get the consist for this locomotive
 	 * 
-	 * @return null if engine isn't in a consist
+	 * @return null if locomotive isn't in a consist
 	 */
 	public Consist getConsist() {
 		return _consist;
@@ -176,7 +176,7 @@ public class Engine extends RollingStock {
 	}
 
 	/**
-	 * Used to check destination track to see if it will accept engine
+	 * Used to check destination track to see if it will accept locomotive
 	 * 
 	 * @return status, see RollingStock.java
 	 */
@@ -189,7 +189,7 @@ public class Engine extends RollingStock {
 			if (getConsist() == null || (getConsist() != null && getConsist().isLead(this))) {
 				if (getTrain() != null && getRouteLocation() != getRouteDestination()
 						&& getTrain().getLeadEngine() != this) {
-					log.debug("New lead engine (" + toString() + ") for train "
+					log.debug("New lead locomotive (" + toString() + ") for train "
 							+ getTrain().getName());
 					getTrain().setLeadEngine(this);
 					getTrain().createTrainIcon();
@@ -215,7 +215,7 @@ public class Engine extends RollingStock {
 	 */
 	public Engine(org.jdom.Element e) {
 		org.jdom.Attribute a;
-		// must set _model first so engine hp, length, type and weight is set properly
+		// must set _model first so locomotive hp, length, type and weight is set properly
 		if ((a = e.getAttribute(Xml.MODEL)) != null)
 			_model = a.getValue();
 		if ((a = e.getAttribute(Xml.HP)) != null)
@@ -285,7 +285,7 @@ public class Engine extends RollingStock {
 		if (e.getPropertyName().equals(EngineTypes.ENGINETYPES_NAME_CHANGED_PROPERTY)) {
 			if (e.getOldValue().equals(getTypeName())) {
 				if (log.isDebugEnabled())
-					log.debug("Engine (" + toString() + ") sees type name change old: "
+					log.debug("Loco (" + toString() + ") sees type name change old: "
 							+ e.getOldValue() + " new: " + e.getNewValue()); // NOI18N
 				setTypeName((String) e.getNewValue());
 			}
@@ -293,7 +293,7 @@ public class Engine extends RollingStock {
 		if (e.getPropertyName().equals(EngineLengths.ENGINELENGTHS_NAME_CHANGED_PROPERTY)) {
 			if (e.getOldValue().equals(getLength())) {
 				if (log.isDebugEnabled())
-					log.debug("Engine (" + toString() + ") sees length name change old: "
+					log.debug("Loco (" + toString() + ") sees length name change old: "
 							+ e.getOldValue() + " new: " + e.getNewValue()); // NOI18N
 				setLength((String) e.getNewValue());
 			}

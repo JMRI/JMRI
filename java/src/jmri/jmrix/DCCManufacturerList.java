@@ -29,6 +29,8 @@ public class DCCManufacturerList {
     public static final String DCC4PC = "DCC4PC";
     public static final String DCCSPEC = "DCC Specialties";
     public static final String FLEISHMANN = "Fleishmann";
+    public static final String IEEE802154 = "IEEE 802.15.4";
+    public static final String XBee = "XBee (API Mode)";
     public static final String JMRI = "JMRI (Network)";
     public static final String LIONEL = "Lionel TMCC";
     public static final String MAPLE = "Maple Systems";
@@ -50,6 +52,7 @@ public class DCCManufacturerList {
     public static final String TRACTRONICS = "TracTronics";
     public static final String UHLEN = "Uhlenbrock";
     public static final String WANGROW = "Wangrow";
+    public static final String XBEE = "Digi XBee";
     public static final String ZIMO = "Zimo";
     public static final String ZTC = "ZTC";
     
@@ -67,6 +70,7 @@ public class DCCManufacturerList {
           ESU,
           FLEISHMANN,
           HORNBY,
+          IEEE802154,
           JMRI,
           LENZ,
           LIONEL,
@@ -111,6 +115,7 @@ public class DCCManufacturerList {
         if(System.equals(ESU)) { return new jmri.jmrix.ecos.EcosConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(FLEISHMANN)) { return new jmri.jmrix.loconet.Intellibox.FleischmannConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(HORNBY)) { return new jmri.jmrix.lenz.hornbyelite.EliteConnectionTypeList().getAvailableProtocolClasses(); }
+        if(System.equals(IEEE802154)) { return new jmri.jmrix.ieee802154.SerialConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(LENZ)) { return new jmri.jmrix.lenz.LenzConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(LIONEL)) { return new jmri.jmrix.tmcc.SerialConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(MAPLE)) { return new jmri.jmrix.maple.SerialConnectionTypeList().getAvailableProtocolClasses(); }

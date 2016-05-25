@@ -215,7 +215,7 @@ public class SerialNode extends AbstractNode {
         int byteNumber = (bitNumber-1)/8;
         // validate that this byte number is defined
         if (byteNumber > (numOutputCards()*(bitsPerCard/8)) ) {
-            warn("CMRInet - Output bit out-of-range for defined node");
+            warn("CMRI - Output bit out-of-range for defined node");
         }
         if (byteNumber >= 256) byteNumber = 255;
         // update the byte
@@ -239,7 +239,7 @@ public class SerialNode extends AbstractNode {
         int byteNumber = (bitNumber-1)/8;
         // validate that this byte number is defined
         if (byteNumber > (numOutputCards()*(bitsPerCard/8)) ) {
-            warn("CMRInet - Output bit out-of-range for defined node");
+            warn("CMRI - Output bit out-of-range for defined node");
         }
         if (byteNumber >= 256) byteNumber = 255;
         // update the byte
@@ -281,17 +281,17 @@ public class SerialNode extends AbstractNode {
         {
           case SMINI:      if (result!=1)
                            {
-                            warn("CMRInet SMINI "+"(Node "+nodeID+") with "+result+" INPUT cards");
+                            warn("CMRIS MINI "+"(Node "+nodeID+") with "+result+" INPUT cards");
                            }
           break;
           case USIC_SUSIC: if(result>=MAXCARDLOCATIONBYTES)
-                            warn("CMRInet USIC/SUSIC node with "+result+" INPUT cards");
+                            warn("CMRI USIC/SUSIC node with "+result+" INPUT cards");
           break;
           case CPNODE:     if(result<2)  //c2
-                            warn("CMRInet CPNODE node with "+result+" INPUT cards");
+                            warn("CMRI CPNODE node with "+result+" INPUT cards");
           break;
           case PINODE:    if(result<3)  //c2
-                            warn("CMRInet PINODE node with "+result+" INPUT cards");
+                            warn("CMRI PINODE node with "+result+" INPUT cards");
           break;
           default: ;
           break;
@@ -315,20 +315,20 @@ public class SerialNode extends AbstractNode {
          {
            case SMINI:     if (result!=2) 
                            {
-                            warn("CMRInet SMINI "+"(Node "+nodeID+") with "+result+" OUTPUT cards");
+                            warn("CMRI SMINI "+"(Node "+nodeID+") with "+result+" OUTPUT cards");
                            }
            break;
            case USIC_SUSIC: 
             if(result>=MAXCARDLOCATIONBYTES)
-             warn("CMRInet USIC/SUSIC node with "+result+" OUTPUT cards");
+             warn("CMRI USIC/SUSIC node with "+result+" OUTPUT cards");
            break;
            case CPNODE:     //c2
            if(result<2)
-             warn("CMRInet CPNODE node with "+result+" OUTPUT cards");
+             warn("CMRI CPNODE node with "+result+" OUTPUT cards");
            break;
            case PINODE:     //c2
            if(result<3)
-             warn("CMRInet PINODE node with "+result+" OUTPUT cards");
+             warn("CMRI PINODE node with "+result+" OUTPUT cards");
            break;
            default: ;
          }
@@ -632,7 +632,7 @@ public class SerialNode extends AbstractNode {
     public boolean isOutputCard(int cardNum) {
         if (cardNum>63)
         {
-            warn("CMRInet - isOutputCard - cardNum out of range");
+            warn("CMRI - isOutputCard - cardNum out of range");
             return (false);
         }
         if (nodeType==SMINI)
@@ -652,7 +652,7 @@ public class SerialNode extends AbstractNode {
     {
         if (cardNum>63)
         {
-            warn("CMRInet - isInputCard - cardNum out of range");
+            warn("CMRI - isInputCard - cardNum out of range");
             return (false);
         }
         if (nodeType==SMINI)
@@ -685,7 +685,7 @@ public class SerialNode extends AbstractNode {
             }
         }
         // Here if error - cardNum is not an
-        warn("CMRInet - input card to getOutputCardIndex is not an Output Card");
+        warn("CMRI - input card to getOutputCardIndex is not an Output Card");
         return (0);
     }
 
@@ -711,7 +711,7 @@ public class SerialNode extends AbstractNode {
             }
         }
         // Here if error - cardNum is not an
-        warn("CMRInet - input card to getOutputCardIndex is not an Output Card");
+        warn("CMRI - input card to getOutputCardIndex is not an Output Card");
         return (0);
     }
 
@@ -986,7 +986,7 @@ public class SerialNode extends AbstractNode {
         // add initialization bytes
         int k = 2;
         for (int i=0; i<nInitBytes; i++) {
-            // perform CMRInet required DLE processing
+            // perform CMRI required DLE processing
             if ( (initBytes[i]==2) || (initBytes[i]==3) || (initBytes[i]==16) ) {
                 m.setElement(k,16);  // DLE
                 k ++;
@@ -1016,7 +1016,7 @@ public class SerialNode extends AbstractNode {
         // Add output bytes
         int k = 2;
         for (int i=0; i<nOutBytes; i++) {
-            // perform CMRInet required DLE processing
+            // perform CMRI required DLE processing
             if ( (outputArray[i]==2) || (outputArray[i]==3) ||(outputArray[i]==16) ) {
                 m.setElement(k,16);  // DLE
                 k ++;

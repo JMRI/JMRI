@@ -142,19 +142,22 @@ public class ShapeDrawer  {
     
     /**************************** Mouse *************************/
 
-    public boolean doMousePressed(MouseEvent event) {
+    public boolean doMousePressed(MouseEvent event, Positionable pos) {
     	if (_drawFrame!=null) {
     		_drawFrame.anchorPoint(event.getX(), event.getY());
             return true;
     	} else {
-    		Positionable p = _editor.getCurrentSelection();
-    		if (p instanceof PositionableShape) {
-    			if (!p.equals(_currentSelection)) {
+    		if (pos instanceof PositionableShape) {
+    			if (!pos.equals(_currentSelection)) {
     				if (_currentSelection!= null) {
     					_currentSelection.removeHandles();
     				}
-	    			_currentSelection = (PositionableShape)p;
-	    			_currentSelection.drawHandles();
+    				if (_editor.isEditable()) {
+    	    			_currentSelection = (PositionableShape)pos;
+    	    			_currentSelection.drawHandles();    					
+    				} else {
+    					_currentSelection =null;
+    				}
     			}    			
     		} else {
 				if (_currentSelection!= null) {

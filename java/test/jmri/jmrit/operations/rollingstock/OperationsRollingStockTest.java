@@ -89,7 +89,7 @@ public class OperationsRollingStockTest extends TestCase {
 		Assert.assertEquals("RollingStock Constant LOCATION_CHANGED_PROPERTY", "rolling stock location", RollingStock.LOCATION_CHANGED_PROPERTY);
 		Assert.assertEquals("RollingStock Constant TRACK_CHANGED_PROPERTY", "rolling stock track location", RollingStock.TRACK_CHANGED_PROPERTY);
 		Assert.assertEquals("RollingStock Constant DESTINATION_CHANGED_PROPERTY", "rolling stock destination", RollingStock.DESTINATION_CHANGED_PROPERTY);
-		Assert.assertEquals("RollingStock Constant DESTINATIONTRACK_CHANGED_PROPERTY", "rolling stock track destination", RollingStock.DESTINATIONTRACK_CHANGED_PROPERTY);
+		Assert.assertEquals("RollingStock Constant DESTINATIONTRACK_CHANGED_PROPERTY", "rolling stock track destination", RollingStock.DESTINATION_TRACK_CHANGED_PROPERTY);
 
 		Assert.assertEquals("RollingStock Constant COUPLER", 4, RollingStock.COUPLER);
 	}
@@ -137,12 +137,12 @@ public class OperationsRollingStockTest extends TestCase {
 		/* track needs to have a defined length */
 		rs1.setLength("41");
 		testresult = rs1.setLocation(testlocation1, testtrack1);
-		Assert.assertEquals("RollingStock null Set Length null", "length (45)", testresult);
+		Assert.assertEquals("RollingStock null Set Length null", "length (45) " + Setup.getLengthUnit().toLowerCase(), testresult);
 
 		/* track needs to be long enough */
 		testtrack1.setLength(40);
 		testresult = rs1.setLocation(testlocation1, testtrack1);
-		Assert.assertEquals("RollingStock null Set Length short", "length (45)", testresult);
+		Assert.assertEquals("RollingStock null Set Length short", "length (45) " + Setup.getLengthUnit().toLowerCase(), testresult);
 
 		/* track needs to be long enough */
 		testtrack1.setLength(44);  // rs length + Coupler == 4
@@ -151,28 +151,28 @@ public class OperationsRollingStockTest extends TestCase {
 		Assert.assertEquals("RollingStock null Set Length match", "okay", testresult);
 
 		/* track needs to accept road */
-		testtrack1.setRoadOption(Track.INCLUDEROADS);
+		testtrack1.setRoadOption(Track.INCLUDE_ROADS);
 		testresult = rs1.setLocation(testlocation1, testtrack1);
 		Assert.assertEquals("RollingStock null Set includeroads", "road (TESTROAD)", testresult);
 
 		/* track needs to accept road */
-		testtrack1.setRoadOption(Track.INCLUDEROADS);
+		testtrack1.setRoadOption(Track.INCLUDE_ROADS);
 		testtrack1.addRoadName("TESTROAD");
 		testresult = rs1.setLocation(testlocation1, testtrack1);
 		Assert.assertEquals("RollingStock Set includeroads", "okay", testresult);
 
 		/* track needs to accept road */
-		testtrack1.setRoadOption(Track.EXCLUDEROADS);
+		testtrack1.setRoadOption(Track.EXCLUDE_ROADS);
 		testresult = rs1.setLocation(testlocation1, testtrack1);
 		Assert.assertEquals("RollingStock Set excluderoads", "road (TESTROAD)", testresult);
 
 		/* track needs to accept road */
-		testtrack1.setRoadOption(Track.ALLROADS);
+		testtrack1.setRoadOption(Track.ALL_ROADS);
 		testresult = rs1.setLocation(testlocation1, testtrack1);
 		Assert.assertEquals("RollingStock Set allroads", "okay", testresult);
 
 		/* track needs to accept road */
-		testtrack1.setRoadOption(Track.EXCLUDEROADS);
+		testtrack1.setRoadOption(Track.EXCLUDE_ROADS);
 		testtrack1.deleteRoadName("TESTROAD");
 		testresult = rs1.setLocation(testlocation1, testtrack1);
 		Assert.assertEquals("RollingStock Set null excluderoads", "okay", testresult);

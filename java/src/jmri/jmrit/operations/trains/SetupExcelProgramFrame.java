@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
 /**
@@ -49,13 +50,13 @@ public class SetupExcelProgramFrame extends OperationsFrame {
 		// row 1
 		JPanel pDirectoryName = new JPanel();
 		pDirectoryName.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("DirectoryName")));
-		pDirectoryName.add(new JLabel(CustomManifest.getDirectoryName()));
+		pDirectoryName.add(new JLabel(TrainCustomManifest.getDirectoryName()));
 
 		JPanel pFileName = new JPanel();
 		pFileName.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("FileName")));
 		pFileName.add(fileName);
 		
-		fileName.setText(CustomManifest.getFileName());
+		fileName.setText(TrainCustomManifest.getFileName());
 
 		// row 4 buttons
 		JPanel pB = new JPanel();
@@ -71,10 +72,10 @@ public class SetupExcelProgramFrame extends OperationsFrame {
 		addButtonAction(testButton);
 		addButtonAction(saveButton);
 
-		addHelpMenu("package.jmri.jmrit.operations.Operations_TrainScripts", true); // NOI18N
+		addHelpMenu("package.jmri.jmrit.operations.Operations_SetupExcelProgram", true); // NOI18N
 		setTitle(Bundle.getMessage("MenuItemSetupExcelProgram"));
 		
-		setMinimumSize(new Dimension(300, 200));
+		setMinimumSize(new Dimension(Control.smallPanelWidth, Control.smallPanelHeight));
 		pack();
 		setVisible(true);
 	}
@@ -82,18 +83,18 @@ public class SetupExcelProgramFrame extends OperationsFrame {
 	// Save and Test
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		
-		CustomManifest.setFileName(fileName.getText());
+		TrainCustomManifest.setFileName(fileName.getText());
 
 		if (ae.getSource() == testButton) {
-			if (CustomManifest.manifestCreatorFileExists()) {
+			if (TrainCustomManifest.manifestCreatorFileExists()) {
 				JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
 						.getMessage("DirectoryNameFileName"), new Object[] {
-						CustomManifest.getDirectoryName(), CustomManifest.getFileName() }), Bundle
+						TrainCustomManifest.getDirectoryName(), TrainCustomManifest.getFileName() }), Bundle
 						.getMessage("ManifestCreatorFound"), JOptionPane.INFORMATION_MESSAGE);
 			} else {
 				JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
-						.getMessage("DirectoryNameFileName"), new Object[] {
-						CustomManifest.getDirectoryName(), CustomManifest.getFileName() }), Bundle
+						.getMessage("LoadDirectoryNameFileName"), new Object[] {
+						TrainCustomManifest.getDirectoryName(), TrainCustomManifest.getFileName() }), Bundle
 						.getMessage("ManifestCreatorNotFound"), JOptionPane.ERROR_MESSAGE);
 			}
 		}

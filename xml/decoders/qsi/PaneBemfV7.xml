@@ -13,7 +13,7 @@
 <!-- for more details.                                                      -->
 <!-- version 1 - new file panes for QSi V7 files -->
 <!-- version 2 - Add support for V8 -->
-<pane name="BEMF">
+<pane name="BEMF" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <column>
     <row>
       <column>
@@ -23,6 +23,10 @@
         <label label=" "/>
         <display item="CV56.254.6"/>
         <label label=" "/>
+        <display item="Wheel Diameter"/>
+        <display item="Locomotive Scale"/>
+        <display item="Scale Wheel Diameter"/>
+        <display item="Power Conversion Stopping Distance"/>
       </column>
       <label label="        "/>
       <column>
@@ -32,12 +36,12 @@
         <label label=" "/>
         <row>
           <display item="CV56.5" layout="above" label=""/>
-          <display item="CV56.5" layout="above" format="hslider"/>
+          <display item="CV56.5" layout="above" format="hslider-percent"/>
         </row>
         <label label=" "/>
         <row>
           <display item="CV56.6" layout="above" label=""/>
-          <display item="CV56.6" layout="above" format="hslider"/>
+          <display item="CV56.6" layout="above" format="hslider-percent"/>
         </row>
         <label label=" "/>
         <row>
@@ -48,19 +52,17 @@
           <column>
             <row>
               <display item="CV56.8 Value" layout="above" label=""/>
-              <display item="CV56.8 Value" layout="above" format="hslider"/>
+              <display item="CV56.8 Value" layout="above" format="hslider-percent"/>
             </row>
           </column>
         </row>
         <row>
           <display item="CV56.9" layout="above" label=""/>
-          <display item="CV56.9" layout="above" format="hslider"/>
+          <display item="CV56.9" layout="above" format="hslider-percent"/>
         </row>
         <label label=" "/>
         <display item="SMPH-BEMF Ratio"/>
-        <display item="Wheel Diameter"/>
-        <display item="Locomotive Scale"/>
-        <display item="Scale Wheel Diameter"/>
+        <display item="BEMF-SMPH Calibration Distance"/>
       </column>
     </row>
     <label label=" "/>
@@ -68,25 +70,25 @@
       <column>
         <row>
           <display item="CV56.18.0" layout="above" label=""/>
-          <display item="CV56.18.0" layout="above" format="hslider"/>
+          <display item="CV56.18.0" layout="above" format="hslider-percent"/>
         </row>
         <label label="BEMF less then (Min_BEMF + 5)"/>
         <label label=" "/>
         <row>
           <display item="CV56.19.0" layout="above" label=""/>
-          <display item="CV56.19.0" layout="above" format="hslider"/>
+          <display item="CV56.19.0" layout="above" format="hslider-percent"/>
         </row>
         <label label="BEMF between (Min_BEMF + 5) and 54"/>
         <label label=" "/>
         <row>
           <display item="CV56.20.0" layout="above" label=""/>
-          <display item="CV56.20.0" layout="above" format="hslider"/>
+          <display item="CV56.20.0" layout="above" format="hslider-percent"/>
         </row>
         <label label="BEMF between 54 and 108"/>
         <label label=" "/>
         <row>
           <display item="CV56.21.0" layout="above" label=""/>
-          <display item="CV56.21.0" layout="above" format="hslider"/>
+          <display item="CV56.21.0" layout="above" format="hslider-percent"/>
         </row>
         <label label="BEMF greater then 108"/>
       </column>
@@ -94,25 +96,25 @@
       <column>
         <row>
           <display item="CV56.18.1" layout="above" label=""/>
-          <display item="CV56.18.1" layout="above" format="hslider"/>
+          <display item="CV56.18.1" layout="above" format="hslider-percent"/>
         </row>
         <label label=" "/>
         <label label=" "/>
         <row>
           <display item="CV56.19.1" layout="above" label=""/>
-          <display item="CV56.19.1" layout="above" format="hslider"/>
+          <display item="CV56.19.1" layout="above" format="hslider-percent"/>
         </row>
         <label label=" "/>
         <label label=" "/>
         <row>
           <display item="CV56.20.1" layout="above" label=""/>
-          <display item="CV56.20.1" layout="above" format="hslider"/>
+          <display item="CV56.20.1" layout="above" format="hslider-percent"/>
         </row>
         <label label=" "/>
         <label label=" "/>
         <row>
           <display item="CV56.21.1" layout="above" label=""/>
-          <display item="CV56.21.1" layout="above" format="hslider"/>
+          <display item="CV56.21.1" layout="above" format="hslider-percent"/>
         </row>
         <label label=" "/>
       </column>
@@ -120,25 +122,25 @@
       <column>
         <row>
           <display item="CV56.18.2" layout="above" label=""/>
-          <display item="CV56.18.2" layout="above" format="hslider"/>
+          <display item="CV56.18.2" layout="above" format="hslider-percent"/>
         </row>
         <label label=" "/>
         <label label=" "/>
         <row>
           <display item="CV56.19.2" layout="above" label=""/>
-          <display item="CV56.19.2" layout="above" format="hslider"/>
+          <display item="CV56.19.2" layout="above" format="hslider-percent"/>
         </row>
         <label label=" "/>
         <label label=" "/>
         <row>
           <display item="CV56.20.2" layout="above" label=""/>
-          <display item="CV56.20.2" layout="above" format="hslider"/>
+          <display item="CV56.20.2" layout="above" format="hslider-percent"/>
         </row>
         <label label=" "/>
         <label label=" "/>
         <row>
           <display item="CV56.21.2" layout="above" label=""/>
-          <display item="CV56.21.2" layout="above" format="hslider"/>
+          <display item="CV56.21.2" layout="above" format="hslider-percent"/>
         </row>
         <label label=" "/>
       </column>

@@ -18,20 +18,19 @@ import javax.swing.table.TableColumnModel;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
 /**
  * Table Model for edit of route locations used by operations
  * 
- * @author Daniel Boudreau Copyright (C) 2008
+ * @author Daniel Boudreau Copyright (C) 2008, 2013
  * @version $Revision$
  */
-public class RouteEditTableModel extends javax.swing.table.AbstractTableModel implements
-		PropertyChangeListener {
+public class RouteEditTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
 	// Defines the columns
 	private static final int IDCOLUMN = 0;
@@ -268,12 +267,12 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 			return Integer.toString(rl.getMaxCarMoves());
 		case PICKUPCOLUMN: {
 			JComboBox cb = getYesNoComboBox();
-			cb.setSelectedItem(rl.canPickup() ? Bundle.getMessage("yes") : Bundle.getMessage("no"));
+			cb.setSelectedItem(rl.isPickUpAllowed() ? Bundle.getMessage("yes") : Bundle.getMessage("no"));
 			return cb;
 		}
 		case DROPCOLUMN: {
 			JComboBox cb = getYesNoComboBox();
-			cb.setSelectedItem(rl.canDrop() ? Bundle.getMessage("yes") : Bundle.getMessage("no"));
+			cb.setSelectedItem(rl.isDropAllowed() ? Bundle.getMessage("yes") : Bundle.getMessage("no"));
 			return cb;
 		}
 		case WAITCOLUMN: {
@@ -411,21 +410,19 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 		if (moves <= 500) {
 			rl.setMaxCarMoves(moves);
 		} else {
-			JOptionPane.showMessageDialog(null, Bundle.getMessage("MaximumLocationMoves"),
-					Bundle.getMessage("CanNotChangeMoves"), JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, Bundle.getMessage("MaximumLocationMoves"), Bundle
+					.getMessage("CanNotChangeMoves"), JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
 	private void setDrop(Object value, int row) {
 		RouteLocation rl = _route.getLocationById(list.get(row));
-		rl.setCanDrop(((String) ((JComboBox) value).getSelectedItem()).equals(Bundle
-				.getMessage("yes")));
+		rl.setDropAllowed(((String) ((JComboBox) value).getSelectedItem()).equals(Bundle.getMessage("yes")));
 	}
 
 	private void setPickup(Object value, int row) {
 		RouteLocation rl = _route.getLocationById(list.get(row));
-		rl.setCanPickup(((String) ((JComboBox) value).getSelectedItem()).equals(Bundle
-				.getMessage("yes")));
+		rl.setPickUpAllowed(((String) ((JComboBox) value).getSelectedItem()).equals(Bundle.getMessage("yes")));
 	}
 
 	private int _maxTrainLength = Setup.getTrainLength();
@@ -441,8 +438,8 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 			wait = Integer.parseInt(value.toString());
 		} catch (NumberFormatException e) {
 			log.error("Location wait must be a number");
-			JOptionPane.showMessageDialog(null, Bundle.getMessage("EnterWaitTimeMinutes"),
-					Bundle.getMessage("WaitTimeNotValid"), JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, Bundle.getMessage("EnterWaitTimeMinutes"), Bundle
+					.getMessage("WaitTimeNotValid"), JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		rl.setWait(wait);
@@ -466,15 +463,23 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 			log.error("Maximum departure length must be a postive number");
 			return;
 		}
-		if (length <= Setup.getTrainLength()) {
+		if (length < 500 && Setup.getLengthUnit().equals(Setup.FEET) || length < 160
+				&& Setup.getLengthUnit().equals(Setup.METER)) {
+			// warn that train length might be too short
+			if (JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle.getMessage("LimitTrainLength"),
+					new Object[] { length, Setup.getLengthUnit().toLowerCase(), rl.getName() }), Bundle
+					.getMessage("WarningTooShort"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.CANCEL_OPTION)
+				return;
+		}
+		if (length > Setup.getTrainLength()) {
+			log.error("Maximum departure length can not exceed maximum train length");
+			JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("DepartureLengthNotExceed"),
+					new Object[] { length, Setup.getTrainLength() }), Bundle.getMessage("CanNotChangeMaxLength"),
+					JOptionPane.ERROR_MESSAGE);
+			return;
+		} else {
 			rl.setMaxTrainLength(length);
 			_maxTrainLength = length;
-		} else {
-			log.error("Maximum departure length can not exceed maximum train length");
-			JOptionPane.showMessageDialog(null, MessageFormat.format(
-					Bundle.getMessage("DepartureLengthNotExceed"),
-					new Object[] { length, Setup.getTrainLength() }), Bundle
-					.getMessage("CanNotChangeMaxLength"), JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -491,8 +496,8 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 			rl.setGrade(grade);
 		} else {
 			log.error("Maximum grade is 6 percent");
-			JOptionPane.showMessageDialog(null, Bundle.getMessage("MaxGrade"),
-					Bundle.getMessage("CanNotChangeGrade"), JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, Bundle.getMessage("MaxGrade"), Bundle.getMessage("CanNotChangeGrade"),
+					JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -531,21 +536,21 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 		JScrollPane commentScroller = new JScrollPane(commentTextArea);
 		dialog.add(commentScroller, BorderLayout.CENTER);
 		commentTextArea.setText(rl.getComment());
-		
+
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER));
 		dialog.add(buttonPane, BorderLayout.SOUTH);
-		
+
 		JButton okayButton = new JButton(Bundle.getMessage("Okay"));
 		okayButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				rl.setComment(commentTextArea.getText());
-				dialog.dispose();				
+				dialog.dispose();
 				return;
 			}
 		});
 		buttonPane.add(okayButton);
-	
+
 		JButton cancelButton = new JButton(Bundle.getMessage("Cancel"));
 		cancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -554,7 +559,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 			}
 		});
 		buttonPane.add(cancelButton);
-		
+
 		dialog.setModal(true);
 		dialog.pack();
 		dialog.setVisible(true);
@@ -592,8 +597,8 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 	// this table listens for changes to a route and it's locations
 	public void propertyChange(PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
-			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue()
-					+ " new: " + e.getNewValue()); // NOI18N
+			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue() + " new: "
+					+ e.getNewValue()); // NOI18N
 		if (e.getPropertyName().equals(Route.LISTCHANGE_CHANGED_PROPERTY)) {
 			updateList();
 			fireTableDataChanged();
@@ -629,6 +634,5 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 		fireTableDataChanged();
 	}
 
-	static Logger log = LoggerFactory
-			.getLogger(RouteEditTableModel.class.getName());
+	static Logger log = LoggerFactory.getLogger(RouteEditTableModel.class.getName());
 }

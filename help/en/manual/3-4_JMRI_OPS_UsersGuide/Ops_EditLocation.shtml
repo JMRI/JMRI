@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en"><head><!-- Copyright ($Author: dat7719 $) 2009 --><!-- $Id: Ops_Locations.shtml 18278 2011-08-23 19:50:23Z dat7719 $ -->
+
+
+
+<title>Operations-Edit Locations</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/"><!-- /Style --></head>
+<body>
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+<div id="mainContent"><a name="Top"></a>
+<h1>Using JMRI® to Operate Trains</h1>
+<h1>Operations Edit Location Window</h1>
+<div align="right">
+<p><a href="Ops_Locations_List.shtml">Back</a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+<hr>
+<p>The <span style="font-weight: bold;">Edit
+Locations</span> window as shown is opened from the <span style="font-weight: bold;">Locations</span> window
+using individual location&nbsp; <span style="font-weight: bold;">Edit</span>
+button and allows you to edit a specific location..&nbsp; </p>
+<p style="text-align: center;"><img style="width: 770px; height: 740px;" alt="edit loction" src="images/Ops_Location_Edit.png"><br>
+</p>
+<a href="Ops_EditLocation_menu.shtml"><span style="font-weight: bold;"></span></a><a href="Ops_EditLocation_menu.shtml"><span style="font-weight: bold;">Menu Bar</span></a><br><br>You
+may select Spurs, Yards, Classification/Interchange or Staging Only (if
+&nbsp;greyed out option is not available at this location)<br><div style="margin-left: 40px;"><img style="width: 800px; height: 248px;" alt="spur" src="images/Ops_locations_trackSpur.png"><br><img style="width: 800px; height: 176px;" alt="yard" src="images/Ops_Location_trackYards.png"><br><img style="width: 800px; height: 150px;" alt="interchange" src="images/Ops_Location_interchange.png"><br>No Staging tracks at this location.<br><br>You may edit ot add another track to the location&nbsp; using the <a href="Ops_EditLocation_track.shtml"><span style="font-weight: bold;">Edit </span></a>button column for any of the tracks shown.<br><br>This window entries are basically the same as the <a href="Ops_AddLocations.shtml"><span style="font-weight: bold;">Add Location </span></a>window.<br><br>At the bottom of the page:<br><br><span style="font-weight: bold;">Delete Location</span> button removes this location from your railroad.<br><span style="font-weight: bold;">Save Location </span>button saves any changes made on this window to the locaiton.<br><br></div>
+<div align="right">
+<p><a href="Ops_Locations_List.shtml">Back<br>
+</a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+<!--#include virtual="/Footer" -->
+</div>
+</body></html>

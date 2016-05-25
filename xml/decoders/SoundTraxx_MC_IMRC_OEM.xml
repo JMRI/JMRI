@@ -389,7 +389,7 @@
         </enumVal>
         <label>Consist Braking Sign</label>
       </variable>
-      <variable label="Speed Table Selection" CV="25" mask="XXXVVVVV" default="0" tooltip="Select a manufacturers speed curve, or use a curve you define yourself.">
+      <variable label="Speed Table Selection" CV="25" mask="XXXVVVVV" default="0" tooltip="Select a manufacturers speed curve, or use a curve you define yourself">
         <enumVal>
           <enumChoice choice="Disabled, Speed Curves not used">
             <choice>Disabled, Speed Curves not used</choice>

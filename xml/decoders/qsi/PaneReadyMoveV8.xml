@@ -12,7 +12,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <!-- version 1 - new file panes for QSi V8 files -->
-<pane name="Ready to Move">
+<pane name="Ready to Move" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <column>
     <row>
       <column>
@@ -31,7 +31,7 @@
         <label label="        "/>
         <row>
           <display item="CV120.1.0" layout="above" label=""/>
-          <display item="CV120.1.0" layout="above" format="hslider"/>
+          <display item="CV120.1.0" layout="above" format="hslider-percent"/>
         </row>
         <display item="CV120.1.0 hoot" format="checkbox"/>
         <label label="        "/>
@@ -39,7 +39,7 @@
         <label label="        "/>
         <row>
           <display item="CV120.2.0" layout="above" label=""/>
-          <display item="CV120.2.0" layout="above" format="hslider"/>
+          <display item="CV120.2.0" layout="above" format="hslider-percent"/>
         </row>
         <display item="CV120.2.0 hoot" format="checkbox"/>
         <label label="        "/>
@@ -47,7 +47,7 @@
         <label label="        "/>
         <row>
           <display item="CV120.3.0" layout="above" label=""/>
-          <display item="CV120.3.0" layout="above" format="hslider"/>
+          <display item="CV120.3.0" layout="above" format="hslider-percent"/>
         </row>
         <display item="CV120.3.0 hoot" format="checkbox"/>
         <label label="        "/>
@@ -57,19 +57,19 @@
       <column>
         <row>
           <display item="CV120.4.0" layout="above" label=""/>
-          <display item="CV120.4.0" layout="above" format="hslider"/>
+          <display item="CV120.4.0" layout="above" format="hslider-percent"/>
         </row>
         <display item="CV120.4.0 hoot" format="checkbox"/>
         <label label="        "/>
         <row>
           <display item="CV120.5.0" layout="above" label=""/>
-          <display item="CV120.5.0" layout="above" format="hslider"/>
+          <display item="CV120.5.0" layout="above" format="hslider-percent"/>
         </row>
         <display item="CV120.5.0 hoot" format="checkbox"/>
         <label label="        "/>
         <row>
           <display item="CV120.6.0" layout="above" label=""/>
-          <display item="CV120.6.0" layout="above" format="hslider"/>
+          <display item="CV120.6.0" layout="above" format="hslider-percent"/>
         </row>
         <display item="CV120.6.0 hoot" format="checkbox"/>
         <label label="        "/>
@@ -90,31 +90,31 @@
       <column>
         <row>
           <display item="CV120.4.1" layout="above" label=""/>
-          <display item="CV120.4.1" layout="above" format="hslider"/>
+          <display item="CV120.4.1" layout="above" format="hslider-percent"/>
         </row>
         <display item="CV120.4.1 hoot" format="checkbox"/>
         <label label="        "/>
         <row>
           <display item="CV120.5.1" layout="above" label=""/>
-          <display item="CV120.5.1" layout="above" format="hslider"/>
+          <display item="CV120.5.1" layout="above" format="hslider-percent"/>
         </row>
         <display item="CV120.5.1 hoot" format="checkbox"/>
         <label label="        "/>
         <row>
           <display item="CV120.6.1" layout="above" label=""/>
-          <display item="CV120.6.1" layout="above" format="hslider"/>
+          <display item="CV120.6.1" layout="above" format="hslider-percent"/>
         </row>
         <display item="CV120.6.1 hoot" format="checkbox"/>
         <label label="        "/>
         <row>
           <display item="CV120.7.1" layout="above" label=""/>
-          <display item="CV120.7.1" layout="above" format="hslider"/>
+          <display item="CV120.7.1" layout="above" format="hslider-percent"/>
         </row>
         <display item="CV120.7.1 hoot" format="checkbox"/>
         <label label="        "/>
         <row>
           <display item="CV120.8.1" layout="above" label=""/>
-          <display item="CV120.8.1" layout="above" format="hslider"/>
+          <display item="CV120.8.1" layout="above" format="hslider-percent"/>
         </row>
         <display item="CV120.8.1 hoot" format="checkbox"/>
         <label label="        "/>
@@ -124,7 +124,7 @@
       <column>
         <row>
           <display item="CV120.9.0" layout="above" label=""/>
-          <display item="CV120.9.0" layout="above" format="hslider"/>
+          <display item="CV120.9.0" layout="above" format="hslider-percent"/>
         </row>
         <display item="CV120.9.0 hoot" format="checkbox"/>
       </column>

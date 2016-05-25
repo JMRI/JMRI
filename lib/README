@@ -69,7 +69,7 @@ jdom.jar
  from <jdom.org>
  
 jython.jar
- version 2.1
+ version 2.5.3 from jython.org (was jython-2.5.3.jar)
  
 junit.jar
  version 3.8.2

@@ -42,6 +42,9 @@ public class JmriFaceless extends apps.AppsBase {
     public JmriFaceless(String[] args) {
         super("JmriFaceless", "JmriFacelessConfig3.xml", args);
         this.start();
+      
+        //start LocoNetOverTcp server if configured to autostart
+        jmri.jmrix.loconet.loconetovertcp.Server.getInstance();  
     }
 
 	// Main entry point

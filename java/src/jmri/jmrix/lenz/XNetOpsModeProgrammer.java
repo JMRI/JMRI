@@ -92,24 +92,21 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
         return (mode==Programmer.OPSBYTEMODE);
     }
 
-    /**
+    /*
      * Can this ops-mode programmer read back values?
      * Indirectly we can, though this requires an external display 
      * (a Lenz LRC120) and enabling railcom.
      * @return true to allow us to trigger an ops mode read
      */
-    public boolean getCanRead() {
-                // An operations mode read can be triggered on command 
-                // stations which support Operations Mode Writes (LZ100,
-                // LZV100,MultiMouse).  Whether or not the operation produces
-                // a result depends on additional external hardware (a booster 
-                // with an enabled  RailCom cutout (LV102 or similar) and a 
-                // RailCom receiver circuit (LRC120 or similar)).
-                // We have no way of determining if the required external 
-                // hardware is present, so we return true for all command 
-                // stations on which the Operations Mode Programmer is enabled.
-		return(true);
-    }
+    // An operations mode read can be triggered on command 
+    // stations which support Operations Mode Writes (LZ100,
+    // LZV100,MultiMouse).  Whether or not the operation produces
+    // a result depends on additional external hardware (a booster 
+    // with an enabled  RailCom cutout (LV102 or similar) and a 
+    // RailCom receiver circuit (LRC120 or similar)).
+    // We have no way of determining if the required external 
+    // hardware is present, so we return true for all command 
+    // stations on which the Operations Mode Programmer is enabled.
 
     synchronized public void message(XNetReply l) {
 	if (progState == XNetProgrammer.NOTPROGRAMMING) {

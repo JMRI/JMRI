@@ -7,6 +7,8 @@ import java.awt.event.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Iterator;
 
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
@@ -37,20 +39,48 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
     private String _currentPortalName;			// name of last portal Icon made
     
     private JTextField  _portalName = new JTextField();
+    private JPanel _dndPanel;
 
     static int STRUT_SIZE = 10;
     static boolean _firstInstance = true;
     static Point _loc = null;
     static Dimension _dim = null;
 
-    public EditPortalFrame(String title, CircuitBuilder parent, OBlock block) {
+    /* Ctor for fix a portal error  */
+    public EditPortalFrame(String title, CircuitBuilder parent, OBlock block, Portal portal, OBlock adjacent) {
+    	this(title, parent, block, true);
+    	_adjacentBlock = adjacent;
+    	String name = portal.getName();
+    	_portalName.setText(name);
+    	_currentPortalName = name;
+    	_portalName.setText(name);
+
+        if (_parent.getPortalIconMap().get(name)==null) {
+        	PortalIcon pi = new PortalIcon(_parent._editor, portal);
+        	pi.setLevel(Editor.MARKERS);
+        	pi.setStatus(PortalIcon.VISIBLE);
+            _parent.addPortalIcon(pi);
+            java.util.List<Positionable> list = _parent.getCircuitGroup();
+            Iterator<Positionable> iter = list.iterator();
+            while(iter.hasNext()) {
+            	Positionable pos = iter.next();
+            	if (pos instanceof IndicatorTrack) {
+            		int x = pos.getX() + pos.getWidth()/2;
+            		int y = pos.getY() + pos.getHeight()/2;            		
+            		pi.setLocation(x, y);
+            		parent._editor.putItem(pi);
+            	}
+            }
+        }
+    }
+    public EditPortalFrame(String title, CircuitBuilder parent, OBlock block, boolean update) {
         _homeBlock = block;
         _parent = parent;
         setTitle(java.text.MessageFormat.format(title, _homeBlock.getDisplayName()));
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent e) {
-                closingEvent();
+                closingEvent(true);
             }
         });
         addHelpMenu("package.jmri.jmrit.display.CircuitBuilder", true);
@@ -59,14 +89,13 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
         contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
-        contentPane.add(makePortalPanel());
+        contentPane.add(makePortalPanel(update));
         contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
 
         JPanel border = new JPanel();
         border.setLayout(new java.awt.BorderLayout(10,10));
         border.add(contentPane);
         setContentPane(border);
-        setSize(500, 500);
         pack();
         if (_firstInstance) {
             setLocationRelativeTo(_parent._editor);
@@ -88,7 +117,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
         doneButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
-                    closingEvent();
+                    closingEvent(false);
                 }
         });
         panel.add(doneButton);
@@ -101,7 +130,12 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         return panel;
     }
 
-    private JPanel makePortalPanel() {
+    /**
+     * 
+     * @param update true frame for correcting icon position
+     * @return JPanel
+     */
+    private JPanel makePortalPanel(boolean update) {
         JPanel portalPanel = new JPanel();
         portalPanel.setLayout(new BoxLayout(portalPanel, BoxLayout.Y_AXIS));
         portalPanel.add(Box.createVerticalStrut(STRUT_SIZE));
@@ -116,6 +150,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         _portalList.setCellRenderer(new PortalCellRenderer());
         _portalList.addListSelectionListener(this);
         portalPanel.add(new JScrollPane(_portalList));
+        _portalList.setPreferredSize(new Dimension(300,150));
 
         JButton clearButton = new JButton(Bundle.getMessage("buttonClearSelection"));
         clearButton.addActionListener(new ActionListener() {
@@ -153,35 +188,45 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
                     deletePortal();
                 }
         });
-        deleteButton.setToolTipText(Bundle.getMessage("ToolTipDeletePortal"));
+        deleteButton.setToolTipText(Bundle.getMessage("ToolTipDeletePortal"));       
         panel.add(deleteButton);
- 
+        
         portalPanel.add(panel);
-        portalPanel.add(Box.createVerticalStrut(STRUT_SIZE));
-
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        JLabel l = new JLabel(Bundle.getMessage("enterNameToDrag"));
-        l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
-        panel.add(l);
-        l = new JLabel(Bundle.getMessage("dragNewIcon"));
-        l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
-        panel.add(l);
-        panel.add(Box.createVerticalStrut(STRUT_SIZE/2));
-        l = new JLabel(Bundle.getMessage("selectPortal"));
-        l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
-        panel.add(l);
-        l = new JLabel(Bundle.getMessage("dragIcon"));
-        l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
-        panel.add(l);
-        JPanel p = new JPanel();
-        p.add(panel);
-        portalPanel.add(p);
-
-        portalPanel.add(makeDndIconPanel());
         portalPanel.add(Box.createVerticalStrut(STRUT_SIZE));
+        if (update) {
+            JLabel l = new JLabel(Bundle.getMessage("portalIconPosition"));
+            l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+            panel.add(l);
+            l = new JLabel(Bundle.getMessage("placeIconOnGap"));
+            l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+            panel.add(l);
+            JPanel p = new JPanel();
+            p.add(panel);
+            portalPanel.add(p);            
+        } else{
+            JLabel l = new JLabel(Bundle.getMessage("enterNameToDrag"));
+            l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+            panel.add(l);
+            l = new JLabel(Bundle.getMessage("dragNewIcon"));
+            l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+            panel.add(l);
+            panel.add(Box.createVerticalStrut(STRUT_SIZE/2));
+            l = new JLabel(Bundle.getMessage("selectPortal"));
+            l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+            panel.add(l);
+            l = new JLabel(Bundle.getMessage("dragIcon"));
+            l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+            panel.add(l);
+            JPanel p = new JPanel();
+            p.add(panel);
+            portalPanel.add(p);
 
-        portalPanel.add(MakeButtonPanel());
+            portalPanel.add(makeDndIconPanel());
+            portalPanel.add(Box.createVerticalStrut(STRUT_SIZE));
+        }
+        portalPanel.add(MakeButtonPanel());        	
         return portalPanel;
     }
 
@@ -220,10 +265,20 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         Portal portal = (Portal)_portalList.getSelectedValue();
         if (portal!=null) {
             _portalName.setText(portal.getName());
-            _parent._editor.highlight(_parent.getPortalIconMap().get(portal.getName()));
+            PortalIcon icon = _parent.getPortalIconMap().get(portal.getName());
+            if (icon!=null) {
+                icon.setStatus(PortalIcon.VISIBLE);            	
+            }
+            _parent._editor.highlight(icon);
         } else {
             _portalName.setText(null);
         }
+    }
+    
+    protected void setSelection(Positionable pos) {
+    	if (pos instanceof PortalIcon) {
+            _portalName.setText(((PortalIcon)pos).getName());    		
+    	}
     }
 
     class PortalListModel extends AbstractListModel {
@@ -251,7 +306,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
             _parent._editor.highlight(icon);
     		return false;
     	}
-    	return true;
+     	return true;
     }
     private String testPortalIcon(PortalIcon icon) {
         java.util.List<Positionable> list = _parent.getCircuitIcons(_homeBlock);
@@ -313,16 +368,29 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
             return msg;
         }
         return msg;
-    }
+    }		// end testPortalIcon
 
     /**
     * Called after click on portal icon
     */
     protected void checkPortalIconForUpdate(PortalIcon icon) {
-        if (!checkPortalIcon(icon)) {
-            return;
-        }
         Portal portal = icon.getPortal();
+        if (!checkPortalIcon(icon)) {
+        	if (_adjacentBlock==null) {
+                return;        		
+        	}
+        	String name = portal.getName();
+            int result = JOptionPane.showConfirmDialog(this, Bundle.getMessage("repositionPortal",
+            		name, _homeBlock.getDisplayName(), _adjacentBlock.getDisplayName()), Bundle.getMessage("makePortal"), JOptionPane.YES_NO_OPTION, 
+                            JOptionPane.QUESTION_MESSAGE);
+            if (result==JOptionPane.NO_OPTION) {
+            	return;
+            }
+        	// Change portal position
+            portal.dispose();
+            portal = new Portal(_homeBlock, name, _adjacentBlock);
+            icon.setPortal(portal);
+        }
         OBlock block = portal.getToBlock();
         if (block==null) {
             portal.setToBlock(_adjacentBlock, false);
@@ -341,15 +409,47 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
                             portal.setFromBlock(_adjacentBlock, true);
                         }
                     } else {
-                        log.error("Portal has Home block "+_homeBlock+" on both sides.");
+                        log.info("Portal has Home block "+_homeBlock+" on both sides. Is this is a Balloon track circuit?");
                     }
                 }
             }
         }
+        
+        checkForDuplication(portal);
+        
+        _parent._editor.highlight(icon);        
         _parent.getPortalIconMap().put(icon.getName(), icon);
         _portalListModel.dataChange();
     }
 
+    private void checkForDuplication(Portal portal) {
+        // check for duplication
+        OBlock toBlock = portal.getToBlock();
+        OBlock fromBlock = portal.getFromBlock();
+        java.util.List<Portal> list = toBlock.getPortals();
+        if (list.size()>0) {
+            Iterator<Portal> iter = list.iterator();
+            while (iter.hasNext()) {
+            	Portal p = iter.next();
+            	if (p.equals(portal)) {
+            		continue;
+            	}
+            	if ((toBlock.equals(p.getToBlock()) && fromBlock.equals(p.getFromBlock()) )
+            	        || (toBlock.equals(p.getFromBlock()) && fromBlock.equals(p.getToBlock()) ) ) {
+
+            	    notifyDuplicatePortal(portal, p, toBlock, fromBlock);
+            		break;
+            	}
+            }
+        }
+    }
+    
+    private void notifyDuplicatePortal(Portal primary, Portal secondary, OBlock toBlock, OBlock fromBlock) {
+        JOptionPane.showMessageDialog(this, Bundle.getMessage("parallelPortal",
+                primary.getName(), secondary.getName(),toBlock.getDisplayName(), fromBlock.getDisplayName()), 
+                Bundle.getMessage("makePortal"), JOptionPane.INFORMATION_MESSAGE);
+    }
+    
     private boolean changeBlock(OBlock block) {
         if (block.equals(_adjacentBlock)) {
             return false;     // no change
@@ -366,43 +466,72 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         return false;
     }
 
-/*    private void checkPortalIcons() {
+    private boolean checkPortalIcons() {
         java.util.List<Portal> portals = _homeBlock.getPortals();
-        Hashtable<String, PortalIcon> iconMap = _parent.getPortalIconMap();
+        HashMap<String, PortalIcon> iconMap = _parent.getPortalIconMap();
         if (log.isDebugEnabled()) log.debug("checkPortalIcons: "+_homeBlock.getDisplayName()+
                                             " has "+portals.size()+" portals, iconMap has "+
                                             iconMap.size()+" icons");
         for (int i=0; i<portals.size(); i++) {
         	PortalIcon icon = iconMap.get(portals.get(i).getName());
             if (icon==null) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("noPortalIcon", portals.get(i).getName()), 
-                        Bundle.getMessage("makePortal"), JOptionPane.INFORMATION_MESSAGE);
-                return;
-            } else if (!checkPortalIcon(icon)) {
-                return;
+                int result = JOptionPane.showConfirmDialog(this, Bundle.getMessage("noPortalIcon",
+                		portals.get(i).getName()), Bundle.getMessage("makePortal"), JOptionPane.YES_NO_OPTION, 
+                                JOptionPane.QUESTION_MESSAGE);
+                if (result==JOptionPane.YES_OPTION) {
+                	return false;
+                }
             }
         }
-    }*/
+        return true;
+    }
     
     /**
-    * Check if icon is placed on the icons of a block
+    * Check if icon is placed on the track icons of a block
     * Called when EditPortalFrame is closed
+    * list is the set of icons representing a block
     */
-    static boolean portalIconOK(java.util.List<Positionable> list, PortalIcon icon) {
-        if (icon==null) {
+    static boolean portalIconOK(java.util.List<Positionable> aList, PortalIcon icon, java.util.List<Positionable> bList) {
+        if (icon==null || aList==null || bList==null) {
             return false;
         }
+        boolean ok = false;
+        String status = icon.getStatus();
+        icon.setStatus(PortalIcon.VISIBLE);
         Rectangle homeRect = new Rectangle();
-        for (int i=0; i<list.size(); i++) {
-            if (list.get(i) instanceof PortalIcon) {
+        Iterator<Positionable> iter = aList.iterator();
+        while (iter.hasNext()) {
+        	Positionable pos = iter.next();
+            if (pos instanceof PortalIcon) {
                 continue;
             }
-            homeRect = list.get(i).getBounds(homeRect);
+            homeRect = pos.getBounds(homeRect);
             if (iconIntersectsRect(icon, homeRect)) {
-                return true;
+            	ok = true;
+                break;
             }
+        	
         }
-        return false;
+        if (!ok) {
+            icon.setStatus(status);
+        	return false;
+        }
+        ok = false;
+        iter = bList.iterator();
+        while (iter.hasNext()) {
+           	Positionable pos = iter.next();
+            if (pos instanceof PortalIcon) {
+                continue;
+            }
+            homeRect = pos.getBounds(homeRect);
+            if (iconIntersectsRect(icon, homeRect)) {
+            	ok = true;
+                break;
+            }
+        	
+        }
+        icon.setStatus(status);
+        return ok;
     }
 
     static boolean iconIntersectsRect(Positionable icon, Rectangle rect) {
@@ -412,16 +541,19 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
 
     private void changePortalName() {
         Portal portal = (Portal)_portalList.getSelectedValue();
-        String oldName = portal.getName();
+        String oldName = null;
+        if (portal!=null) {
+            oldName = portal.getName();        	
+        }
         String name = _portalName.getText();
-        if (name==null || name.trim().length()==0 ) {
+        if (portal==null || name==null || name.trim().length()==0 ) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("changePortalName"), 
                             Bundle.getMessage("makePortal"), JOptionPane.INFORMATION_MESSAGE);
             return;
         }
-        _parent.changePortalName(oldName, name);		// update maps
         String msg = portal.setName(name);
         if (msg==null) {
+            _parent.changePortalName(oldName, name);		// update maps
             _portalListModel.dataChange();
         } else {
             JOptionPane.showMessageDialog(this, msg, 
@@ -432,11 +564,15 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
     private void deletePortal() {
         String name = _portalName.getText();
         Portal portal = (Portal)_portalList.getSelectedValue();
+        if (portal==null) {
+        	portal = _parent.getPortalByName(name);
+        }
         if (portal !=null) {
             int result = JOptionPane.showConfirmDialog(this, Bundle.getMessage("confirmPortalDelete",
             		portal.getName()), Bundle.getMessage("makePortal"), JOptionPane.YES_NO_OPTION, 
                             JOptionPane.QUESTION_MESSAGE);
             if (result==JOptionPane.YES_OPTION) {
+            	// removes portal and stubs all paths through it.
                 portal.dispose();
                 _portalListModel.dataChange();
             }
@@ -451,15 +587,17 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         _parent.removePortal(icon.getName());
         _parent.getCircuitIcons(_homeBlock).remove(icon);
         icon.remove();
+        _parent._editor.getSelectionGroup().remove(icon);
         _parent._editor.repaint();
     }
 
-    protected void closingEvent() {
-//        checkPortalIcons();
-        _parent.closePortalFrame(_homeBlock);
-        _loc = getLocation(_loc);
-        _dim = getSize(_dim);
-        dispose();
+    protected void closingEvent(boolean close) {
+        if (checkPortalIcons() || close) {
+            _parent.closePortalFrame(_homeBlock);
+            _loc = getLocation(_loc);
+            _dim = getSize(_dim);
+            dispose();        	
+        }
     }
 
     protected OBlock getHomeBlock() {
@@ -469,7 +607,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
     /********************** DnD *****************************/
 
     protected JPanel makeDndIconPanel() {
-        JPanel iconPanel = new JPanel();
+    	_dndPanel = new JPanel();
 
         String fileName = "resources/icons/throttles/RoundRedCircle20.png";
         NamedIcon icon = new NamedIcon(fileName, fileName);
@@ -484,8 +622,8 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         } catch (java.lang.ClassNotFoundException cnfe) {
             cnfe.printStackTrace();
         }
-        iconPanel.add(panel);
-        return iconPanel;
+        _dndPanel.add(panel);
+        return _dndPanel;
     }    
 
     public class IconDragJLabel extends DragJLabel {
@@ -523,7 +661,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
                     }
                 	pi = new PortalIcon(_parent._editor, portal);
                 	pi.setLevel(Editor.MARKERS);
-                	pi.setStatus(PortalIcon.BLOCK);
+                	pi.setStatus(PortalIcon.VISIBLE);
                     _parent.addPortalIcon(pi);
                 }
                 _currentPortalName = name;

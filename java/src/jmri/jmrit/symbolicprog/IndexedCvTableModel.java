@@ -89,6 +89,9 @@ public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel im
     public Programmer getProgrammer() {
         return mProgrammer;
     }
+    
+    public void setProgrammer(Programmer p) { mProgrammer = p; }
+
 
     // basic methods for AbstractTableModel implementation
     public int getRowCount() { return _numRows; }

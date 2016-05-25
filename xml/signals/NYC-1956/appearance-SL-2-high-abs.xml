@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
+  
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>John</firstname><surname>Lang</surname></personname>
+    </author>    
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2013-04-01</date>
+        <authorinitials>JDL</authorinitials>
+        <revremark>Initial version</revremark>
+    </revision>
+    
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2013-07-10</date>
+        <authorinitials>JDL</authorinitials>
+        <revremark>aspect mapping revisions</revremark>
+    </revision>
+    
+  </revhistory>
+
+  <aspecttable>NYC 1956</aspecttable>
+  <name>Double searchlight high absolute signal</name>
+  <reference>As described in the New York Central System publication "Rules of the Operating Department, Effective October 28, 1956."</reference>
+  <description>Appearances for a two-searchlight signal head without other badging</description>
+  
+  <appearances>
+
+    <appearance>
+      <aspectname>Clear</aspectname>
+      <show>green</show>
+      <show>red</show>
+      <reference>Rule 281</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-abs/Rule 281.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Advance Approach Medium</aspectname>
+      <show>green</show>
+      <show>yellow</show>
+      <reference>Rule 281A</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-abs/Rule 281A.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach Limited</aspectname>
+      <show>yellow</show>
+      <show>flashgreen</show>
+      <reference>Rule 281B</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-abs/Rule 281B.gif</imagelink>
+    </appearance>
+    
+    <appearance>
+      <aspectname>Limited Clear</aspectname>
+      <show>red</show>
+      <show>flashgreen</show>
+      <reference>Rule 281C</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-abs/Rule 281C.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Limited-Approach</aspectname>
+      <show>red</show>
+      <show>flashyellow</show>
+      <reference>Rule 281D</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-abs/Rule 281D.gif</imagelink>
+    </appearance>
+  
+    <appearance>
+      <aspectname>Approach Medium</aspectname>
+      <show>yellow</show>
+      <show>green</show>
+      <reference>Rule 282</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-abs/Rule 282.gif</imagelink>
+    </appearance>
+     
+    <appearance>
+      <aspectname>Advance Approach</aspectname>
+      <show>yellow</show>
+      <show>yellow</show>
+      <reference>Rule 282A</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-abs/Rule 282A.gif</imagelink>
+    </appearance>
+ 
+    <appearance>
+      <aspectname>Approach</aspectname>
+      <show>yellow</show>
+      <show>red</show>
+      <reference>Rule 285</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-abs/Rule 285.gif</imagelink>
+    </appearance>
+ 
+    <appearance>
+      <aspectname>Slow-Clear</aspectname>
+      <show>red</show>
+      <show>green</show>
+      <reference>Rule 287</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-abs/Rule 287.gif</imagelink>
+    </appearance>
+     
+    <appearance>
+      <aspectname>Restricting</aspectname>
+      <show>red</show>
+      <show>yellow</show>
+      <reference>Rule 290</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-abs/Rule 290.gif</imagelink>
+    </appearance>
+     
+    <appearance>
+      <aspectname>Stop</aspectname>
+      <show>red</show>
+      <show>red</show>
+      <reference>Rule 292</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-abs/Rule 292.gif</imagelink>
+    </appearance>
+    
+    <appearance>
+      <aspectname>Held</aspectname>
+      <show>red</show>
+      <show>red</show>
+      <reference>CTC Rules</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-2-high-abs/Held.gif</imagelink>
+    </appearance>
+  
+    </appearances>
+  <specificappearances>
+  	<danger>
+  		<aspect>Stop</aspect>
+  	</danger>
+  	<held>
+  		<aspect>Held</aspect>
+  	</held>
+  </specificappearances>
+  
+  <aspectMappings>
+ <aspectMapping>
+      <advancedAspect>Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Limited Clear</ourAspect>
+      <ourAspect>Slow-Clear</ourAspect>
+    </aspectMapping>
+ 
+    <aspectMapping>
+      <advancedAspect>Advance Approach Medium</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Limited Clear</ourAspect>
+      <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Slow-Clear</ourAspect>
+    </aspectMapping>
+        
+    <aspectMapping>
+      <advancedAspect>Approach Limited</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Limited Clear</ourAspect>
+      <ourAspect>Slow-Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Limited Clear</advancedAspect>
+      <ourAspect>Approach Limited</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Limited-Approach</advancedAspect>
+      <ourAspect>Approach Limited</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Approach Medium</advancedAspect>
+      <ourAspect>Approach Limited</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Advance Approach</advancedAspect>
+      <ourAspect>Approach Limited</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Medium Clear</advancedAspect>
+      <ourAspect>Approach Medium</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Medium-Advance Approach</advancedAspect>
+      <ourAspect>Approach Medium</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Medium-Approach Slow</advancedAspect>
+      <ourAspect>Approach Medium</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Approach Slow</advancedAspect>
+      <ourAspect>Approach Medium</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Approach</advancedAspect>
+      <ourAspect>Approach Medium</ourAspect>
+      <ourAspect>Advance Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Medium-Approach</advancedAspect>
+      <ourAspect>Approach Medium</ourAspect>
+    </aspectMapping>
+    
+    <aspectMapping>
+      <advancedAspect>Slow-Clear</advancedAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Slow-Approach</advancedAspect>
+      <ourAspect>Advance Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Restricting</advancedAspect>
+      <ourAspect>Advance Approach</ourAspect>
+      <ourAspect>Limited-Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Stop and Proceed</advancedAspect>
+      <ourAspect>Limited-Approach</ourAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Stop</advancedAspect>
+      <ourAspect>Limited-Approach</ourAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+
+  </aspectMappings>
+  
+</appearancetable>  
+  
+
+  

@@ -38,6 +38,27 @@ public class EasyDccProgrammerTest extends TestCase {
 			((t.outbound.elementAt(0))).toString());
 	}
 
+    // Test names ending with "String" are for the new writeCV(String, ...) 
+    // etc methods.  If you remove the older writeCV(int, ...) tests, 
+    // you can rename these. Note that not all (int,...) tests may have a 
+    // String(String, ...) test defined, in which case you should create those.
+    
+	public void testWriteSequenceString() throws JmriException {
+		// infrastructure objects
+		EasyDccInterfaceScaffold t = new EasyDccInterfaceScaffold();
+		EasyDccListenerScaffold l = new EasyDccListenerScaffold();
+
+		EasyDccProgrammer p = new EasyDccProgrammer();
+
+		// and do the write
+		p.writeCV("10", 20, l);
+
+		// check write message sent
+		Assert.assertEquals("write message sent", 1, t.outbound.size());
+		Assert.assertEquals("write message contents", "P 00A 14",
+			((t.outbound.elementAt(0))).toString());
+	}
+
 	public void testWriteRegisterSequence() throws JmriException {
 		// infrastructure objects
 		EasyDccInterfaceScaffold t = new EasyDccInterfaceScaffold();
@@ -50,6 +71,25 @@ public class EasyDccProgrammerTest extends TestCase {
 
 		// and do the write
 		p.writeCV(3, 12, l);
+
+		// check write message sent
+		Assert.assertEquals("write message sent", 1, t.outbound.size());
+		Assert.assertEquals("write message contents", "S3 0C",
+			((t.outbound.elementAt(0))).toString());
+	}
+
+	public void testWriteRegisterSequenceString() throws JmriException {
+		// infrastructure objects
+		EasyDccInterfaceScaffold t = new EasyDccInterfaceScaffold();
+		EasyDccListenerScaffold l = new EasyDccListenerScaffold();
+
+		EasyDccProgrammer p = new EasyDccProgrammer();
+
+        // set register mode
+        p.setMode(Programmer.REGISTERMODE);
+
+		// and do the write
+		p.writeCV("3", 12, l);
 
 		// check write message sent
 		Assert.assertEquals("write message sent", 1, t.outbound.size());
@@ -85,6 +125,34 @@ public class EasyDccProgrammerTest extends TestCase {
 		Assert.assertEquals(" value read", 20, rcvdValue);
 	}
 
+	public void testReadSequenceString() throws JmriException {
+		// infrastructure objects
+		EasyDccInterfaceScaffold t = new EasyDccInterfaceScaffold();
+		EasyDccListenerScaffold l = new EasyDccListenerScaffold();
+
+		EasyDccProgrammer p = new EasyDccProgrammer();
+
+		// and do the read
+		p.readCV("10", l);
+
+		// check "read command" message sent
+		Assert.assertEquals("read message sent", 1, t.outbound.size());
+		Assert.assertEquals("read message contents", "R 00A",
+			((t.outbound.elementAt(0))).toString());
+		// reply from programmer arrives
+		EasyDccReply r = new EasyDccReply();
+		r.setElement(0, 'C');
+		r.setElement(1, 'V');
+		r.setElement(2, '0');
+		r.setElement(3, '1');
+		r.setElement(4, '0');
+		r.setElement(5, '1');
+		r.setElement(6, '4');
+		t.sendTestReply(r);
+		Assert.assertEquals(" programmer listener invoked", 1, rcvdInvoked);
+		Assert.assertEquals(" value read", 20, rcvdValue);
+	}
+
 	public void testReadRegisterSequence() throws JmriException {
 		// infrastructure objects
 		EasyDccInterfaceScaffold t = new EasyDccInterfaceScaffold();
@@ -97,6 +165,35 @@ public class EasyDccProgrammerTest extends TestCase {
 
 		// and do the read
 		p.readCV(3, l);
+
+		// check "read command" message sent
+		Assert.assertEquals("read message sent", 1, t.outbound.size());
+		Assert.assertEquals("read message contents", "V3",
+			((t.outbound.elementAt(0))).toString());
+		// reply from programmer arrives
+		EasyDccReply r = new EasyDccReply();
+		r.setElement(0, 'V');
+		r.setElement(1, '3');
+		r.setElement(2, '1');
+		r.setElement(3, '4');
+		t.sendTestReply(r);
+
+		Assert.assertEquals(" programmer listener invoked", 1, rcvdInvoked);
+		Assert.assertEquals(" value read", 20, rcvdValue);
+	}
+
+	public void testReadRegisterSequenceString() throws JmriException {
+		// infrastructure objects
+		EasyDccInterfaceScaffold t = new EasyDccInterfaceScaffold();
+		EasyDccListenerScaffold l = new EasyDccListenerScaffold();
+
+		EasyDccProgrammer p = new EasyDccProgrammer();
+
+        // set register mode
+        p.setMode(Programmer.REGISTERMODE);
+
+		// and do the read
+		p.readCV("3", l);
 
 		// check "read command" message sent
 		Assert.assertEquals("read message sent", 1, t.outbound.size());

@@ -12,7 +12,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <!-- version 1 - new file panes for QSi V8 files -->
-<pane name="Sound Select">
+<pane name="Sound Select" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <column>
     <row>
       <column>
@@ -59,7 +59,7 @@
           <column>
             <row>
               <display item="CV51.15 Value" layout="above" label=""/>
-              <display item="CV51.15 Value" layout="above" format="hslider"/>
+              <display item="CV51.15 Value" layout="above" format="hslider-percent"/>
             </row>
           </column>
         </row>
@@ -68,13 +68,38 @@
       <column>
         <row>
           <column>
+            <display item="CV118.8 Sign 16" format="offradiobutton" label="" layout="left"/>
+            <display item="CV118.8 Sign 16" format="onradiobutton" label="" layout="left"/>
+          </column>
+          <column>
+            <row>
+              <display item="CV118.8 Value 16" layout="above" label=""/>
+              <display item="CV118.8 Value 16" layout="above" format="hslider-percent"/>
+            </row>
+          </column>
+        </row>
+        <label label=" "/>
+        <row>
+          <column>
             <display item="CV118.10 Sign" format="offradiobutton" label="" layout="left"/>
             <display item="CV118.10 Sign" format="onradiobutton" label="" layout="left"/>
           </column>
           <column>
             <row>
               <display item="CV118.10 Value" layout="above" label=""/>
-              <display item="CV118.10 Value" layout="above" format="hslider"/>
+              <display item="CV118.10 Value" layout="above" format="hslider-percent"/>
+            </row>
+          </column>
+        </row>
+        <row>
+          <column>
+            <display item="CV118.10 Sign 16" format="offradiobutton" label="" layout="left"/>
+            <display item="CV118.10 Sign 16" format="onradiobutton" label="" layout="left"/>
+          </column>
+          <column>
+            <row>
+              <display item="CV118.10 Value 16" layout="above" label=""/>
+              <display item="CV118.10 Value 16" layout="above" format="hslider-percent"/>
             </row>
           </column>
         </row>
@@ -87,7 +112,19 @@
           <column>
             <row>
               <display item="CV118.11 Value" layout="above" label=""/>
-              <display item="CV118.11 Value" layout="above" format="hslider"/>
+              <display item="CV118.11 Value" layout="above" format="hslider-percent"/>
+            </row>
+          </column>
+        </row>
+        <row>
+          <column>
+            <display item="CV118.11 Sign 16" format="offradiobutton" label="" layout="left"/>
+            <display item="CV118.11 Sign 16" format="onradiobutton" label="" layout="left"/>
+          </column>
+          <column>
+            <row>
+              <display item="CV118.11 Value 16" layout="above" label=""/>
+              <display item="CV118.11 Value 16" layout="above" format="hslider-percent"/>
             </row>
           </column>
         </row>

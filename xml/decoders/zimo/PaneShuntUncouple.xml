@@ -3,11 +3,11 @@
 <!-- version 1 - for Unified Software -->
 <pane name="Shunt/Uncouple">
   <column>
-    <display item="Shunting" tooltip="CV 124, bit 2"/>
+    <display item="Shunting"/>
     <label label=" ">
       <label> </label>
     </label>
-    <display item="Shunt Function Key" tooltip="CV 124 bits 2 + 6"/>
+    <display item="Shunt Function Key" tooltip="+ 6"/>
     <display item="Shunt Function Key Extension"/>
     <label label=" ">
       <label> </label>
@@ -16,7 +16,7 @@
     <label label=" ">
       <label> </label>
     </label>
-    <display item="Half Speed Key" tooltip="CV 124, bit 3 + 4"/>
+    <display item="Half Speed Key" tooltip="+ 4"/>
     <display item="Half Speed Key Extension"/>
     <label label=" ">
       <label> </label>
@@ -27,11 +27,11 @@
     </label>
     <row>
       <column>
-        <display item="Uncoupler" tooltip="CV 115"/>
+        <display item="Uncoupler"/>
         <label label=" ">
           <label> </label>
         </label>
-        <display item="Auto Uncouple" tooltip="CV 116"/>
+        <display item="Auto Uncouple"/>
       </column>
       <column>
         <label label=" ">

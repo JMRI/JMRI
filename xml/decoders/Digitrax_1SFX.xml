@@ -219,7 +219,7 @@
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/bemf.xml"/>
       <!-- Sound options -->
-      <variable label="Master Volume" CV="58" item="Sound Setting 1" tooltip="CV 58" default="9" comment="0-15, use about 4-8">
+      <variable label="Master Volume" CV="58" item="Sound Setting 1" default="9" comment="0-15, use about 4-8">
         <decVal max="15"/>
         <label>Master Volume</label>
         <label xml:lang="it">Volume principale</label>
@@ -361,111 +361,111 @@
         <label xml:lang="it">Funzionamento Funzione 6</label>
       </variable>
       <!-- Sound options -->
-      <variable label="Notch Rate" CV="132" tooltip="CV 132" item="Sound Setting 2" default="127">
+      <variable label="Notch Rate" CV="132" item="Sound Setting 2" default="127">
         <decVal/>
         <label>Notch Rate</label>
         <label xml:lang="it">Tasso di Notch</label>
       </variable>
-      <variable label="Notch Rate" CV="132" tooltip="CV 132" item="Sound Setting 2" default="64" include="1646">
+      <variable label="Notch Rate" CV="132" item="Sound Setting 2" default="64" include="1646">
         <decVal/>
         <label>Notch Rate</label>
         <label xml:lang="it">Tasso di Notch</label>
       </variable>
-      <variable label="Volume When Muted" CV="135" tooltip="CV 135" item="Sound Setting 3">
+      <variable label="Volume When Muted" CV="135" item="Sound Setting 3">
         <decVal/>
         <label>Volume When Muted</label>
         <label xml:lang="it">Volume quando silenziato</label>
       </variable>
-      <variable label="Prime Mover/Chuff Volume" CV="140" tooltip="CV 140" item="Sound Setting 4" default="60" include="1446,1645">
+      <variable label="Prime Mover/Chuff Volume" CV="140" item="Sound Setting 4" default="60" include="1446,1645">
         <decVal max="64"/>
         <label>Prime Mover/Chuff Volume</label>
         <label xml:lang="it">Volume motore principale/Chuff</label>
       </variable>
-      <variable label="Motor/Track Volume (1=Off)" CV="140" tooltip="CV 140" item="Sound Setting 4" default="64" include="1646">
+      <variable label="Motor/Track Volume (1=Off)" CV="140" item="Sound Setting 4" default="64" include="1646">
         <decVal max="64"/>
         <label>Motor/Track Volume</label>
         <label xml:lang="it">Volume motore/Rotaie</label>
       </variable>
-      <variable label="Bell Volume" CV="141" tooltip="CV 141" item="Sound Setting 5" default="25" include="1446,1645">
+      <variable label="Bell Volume" CV="141" item="Sound Setting 5" default="25" include="1446,1645">
         <decVal max="64"/>
         <label>Bell Volume</label>
         <label xml:lang="it">Volume Campana</label>
       </variable>
-      <variable label="Whistle Volume (1=Off)" CV="141" tooltip="CV 141" item="Sound Setting 5" default="64" include="1646">
+      <variable label="Whistle Volume (1=Off)" CV="141" item="Sound Setting 5" default="64" include="1646">
         <decVal max="64"/>
         <label>Whistle Volume</label>
         <label xml:lang="it">Volume Fischio</label>
       </variable>
-      <variable label="Horn/Whistle Volume" CV="142" tooltip="CV 142" item="Sound Setting 6" default="60" include="1446,1645">
+      <variable label="Horn/Whistle Volume" CV="142" item="Sound Setting 6" default="60" include="1446,1645">
         <decVal max="64"/>
         <label>Horn/Whistle Volume</label>
         <label xml:lang="it">Volume Tromba/Fischio</label>
       </variable>
-      <variable label="Crossing Bell Volume (1=Off)" CV="142" tooltip="CV 142" item="Sound Setting 6" default="64" include="1646">
+      <variable label="Crossing Bell Volume (1=Off)" CV="142" item="Sound Setting 6" default="64" include="1646">
         <decVal max="64"/>
         <label>Crossing Bell Volume</label>
         <label xml:lang="it">Volume Campana in Incrocio</label>
       </variable>
-      <variable label="Air Features Volume" CV="143" tooltip="CV 143" item="Sound Setting 7" default="30" include="1446,1645">
+      <variable label="Air Features Volume" CV="143" item="Sound Setting 7" default="30" include="1446,1645">
         <decVal max="64"/>
         <label>Air Features Volume</label>
         <label xml:lang="it">Volume Aria Compressa</label>
       </variable>
-      <variable label="Compressor Volume (1=Off)" CV="143" tooltip="CV 143" item="Sound Setting 7" default="45" include="1646">
+      <variable label="Compressor Volume (1=Off)" CV="143" item="Sound Setting 7" default="45" include="1646">
         <decVal max="64"/>
         <label>Compressor Volume</label>
         <label xml:lang="it">Volume Compressore</label>
       </variable>
-      <variable label="Dynamic Brake Volume" CV="144" tooltip="CV 144" item="Sound Setting 8" default="55" include="1446,1645">
+      <variable label="Dynamic Brake Volume" CV="144" item="Sound Setting 8" default="55" include="1446,1645">
         <decVal max="64"/>
         <label>Dynamic Brake Volume</label>
         <label xml:lang="it">Volume frenata dinamica</label>
       </variable>
-      <variable label="Voice Alert Sounds Volume (1=Off)" CV="144" tooltip="CV 144" item="Sound Setting 8" default="64" include="1646">
+      <variable label="Voice Alert Sounds Volume (1=Off)" CV="144" item="Sound Setting 8" default="64" include="1646">
         <decVal max="64"/>
         <label>Voice Alert Sounds</label>
         <label xml:lang="it">Volume segnalazione a Voce</label>
       </variable>
-      <variable label="Misc Volumes (reserved)" CV="145" tooltip="CV 145" item="Sound Setting 9" default="15" include="1446,1645">
+      <variable label="Misc Volumes (reserved)" CV="145" item="Sound Setting 9" default="15" include="1446,1645">
         <decVal max="64"/>
         <label>Misc Volumes (reserved)</label>
         <label xml:lang="it">Volume vari (riservata)</label>
       </variable>
-      <variable label="Track Squeal Volume (1=Off)" CV="145" tooltip="CV 145" item="Sound Setting 9" default="64" include="1646">
+      <variable label="Track Squeal Volume (1=Off)" CV="145" item="Sound Setting 9" default="64" include="1646">
         <decVal max="64"/>
         <label>Track Squeal Volume</label>
         <label xml:lang="it">Volume Stridore Rotaie</label>
       </variable>
-      <variable label="Bell Ring Rate" CV="146" tooltip="CV 146" item="Sound Setting 10" comment="24msec counts" default="9" include="1446,1645">
+      <variable label="Bell Ring Rate" CV="146" item="Sound Setting 10" comment="24msec counts" default="9" include="1446,1645">
         <decVal max="100"/>
         <label>Bell Ring Rate</label>
         <label xml:lang="it">Frequenza Campana</label>
         <comment>24msec counts</comment>
         <comment xml:lang="it">in incrementi da 24 msec</comment>
       </variable>
-      <variable label="Time Between Cycles (60=2min)" CV="146" tooltip="CV 146" item="Sound Setting 10" comment="2 sec counts" default="60" include="1646">
+      <variable label="Time Between Cycles (60=2min)" CV="146" item="Sound Setting 10" comment="2 sec counts" default="60" include="1646">
         <decVal max="64"/>
         <label>Time Between Cycles</label>
         <label xml:lang="it">Tempo tra i Cicli</label>
         <comment>24msec counts</comment>
         <comment xml:lang="it">in incrementi da 24 msec</comment>
       </variable>
-      <variable label="Air Drier Rate" CV="147" tooltip="CV 147" item="Sound Setting 11" default="50" include="1446,1645">
+      <variable label="Air Drier Rate" CV="147" item="Sound Setting 11" default="50" include="1446,1645">
         <decVal max="64"/>
         <label>Air Drier Rate</label>
         <label xml:lang="it">Frequenza Compressore</label>
       </variable>
-      <variable label="Compressor Running Time (10=20 Seconds)" CV="147" tooltip="CV 147" item="Sound Setting 11" default="10" include="1646">
+      <variable label="Compressor Running Time (10=20 Seconds)" CV="147" item="Sound Setting 11" default="10" include="1646">
         <decVal max="64"/>
         <label>Compressor Running Time</label>
         <label xml:lang="it">Tempo Attività Compressore</label>
       </variable>
-      <variable label="Compressor Run/Popoff Rate" CV="148" tooltip="CV 148" item="Sound Setting 12" default="30" include="1446,1645">
+      <variable label="Compressor Run/Popoff Rate" CV="148" item="Sound Setting 12" default="30" include="1446,1645">
         <decVal/>
         <label>Compressor Run/Popoff Rate</label>
         <label xml:lang="it">Frequenza compressore Run/Popoff</label>
       </variable>
-      <variable label="Compressor On Time" CV="149" tooltip="CV 149" item="Sound Setting 13" default="20" include="1446,1645">
+      <variable label="Compressor On Time" CV="149" item="Sound Setting 13" default="20" include="1446,1645">
         <decVal/>
         <label>Compressor On Time</label>
         <label xml:lang="it">Tempo accensione Compressore</label>

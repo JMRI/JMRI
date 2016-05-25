@@ -35,8 +35,8 @@ public class ClockItemPanel extends IconItemPanel {
     /**
     * Constructor for plain icons and backgrounds
     */
-    public ClockItemPanel(JmriJFrame parentFrame, String type, String family, Editor editor) {
-        super(parentFrame,  type, family, editor);
+    public ClockItemPanel(JmriJFrame parentFrame, String type, Editor editor) {
+        super(parentFrame,  type, editor);
         setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
     }
     

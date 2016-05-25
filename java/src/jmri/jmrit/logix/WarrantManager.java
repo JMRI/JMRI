@@ -53,17 +53,19 @@ public class WarrantManager extends AbstractManager
         Warrant r;
         if (userName!= null && userName.trim().length() > 0) {
             r = getByUserName(userName);
-            if (r!=null) return null;
+            if (r==null) {
+                r = getBySystemName(systemName);
+            }
+            if (r!=null) {
+            	log.warn("Warrant "+r.getDisplayName()+"  exits.");
+            	return null;
+            }
         }
-		String sName = systemName.toUpperCase();
-        if (!sName.startsWith("IW")) {
-            sName = "IW"+sName;
-        }
-        if (sName.length() < 3) {
+		String sName = systemName.trim().toUpperCase();
+        if ((sName.compareTo(systemName)!=0) || !sName.startsWith("IW") || sName.length() < 3) {
+        	log.error("Warrant system name \""+systemName+"\" must be upper case  begining with \"IW\".");
             return null;
         }
-        r = getBySystemName(sName);
-        if (r!=null) return null;
         // Warrant does not exist, create a new Warrant
         r = new Warrant(sName,userName);
         // save in the maps

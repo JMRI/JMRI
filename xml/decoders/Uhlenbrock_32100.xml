@@ -40,7 +40,7 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <variable label="SUSI-range" CV="897" default="1" tooltip="Will not read/write properly if multiple SUSI modules attached. CV897">
+      <variable label="SUSI-range" CV="897" default="1" tooltip="Will not read/write properly if multiple SUSI modules attached">
         <enumVal>
           <enumChoice choice="Not used">
             <choice>Not used</choice>
@@ -58,20 +58,20 @@
         <label>SUSI-range</label>
       </variable>
       <!-- Range I variables -->
-      <variable label="Range I Manufacturer ID" CV="900" readOnly="yes" item="Manufacturer" default="85" tooltip="CV900">
+      <variable label="Range I Manufacturer ID" CV="900" readOnly="yes" item="Manufacturer" default="85">
         <decVal/>
         <label>Range I Manufacturer ID</label>
       </variable>
-      <variable label="Range I Software version" CV="901" readOnly="yes" item="Decoder Version" tooltip="CV901">
+      <variable label="Range I Software version" CV="901" readOnly="yes" item="Decoder Version">
         <decVal/>
         <label>Range I Software version</label>
       </variable>
-      <variable label="Range I Sound Volume" CV="902" default="255" tooltip="0-255 CV902">
+      <variable label="Range I Sound Volume" CV="902" default="255" tooltip="0-255">
         <decVal/>
         <label>Range I Software version</label>
       </variable>
       <!-- Speculating that CV 903 is F0, not really clear from manuals -->
-      <variable label="Range I F0 activated sound" CV="903" default="0" tooltip="CV903">
+      <variable label="Range I F0 activated sound" CV="903" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -103,7 +103,7 @@
         </enumVal>
         <label>Range I F0 activated sound</label>
       </variable>
-      <variable label="Range I F1 activated sound" CV="904" default="3" tooltip="CV904">
+      <variable label="Range I F1 activated sound" CV="904" default="3">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -135,7 +135,7 @@
         </enumVal>
         <label>Range I F1 activated sound</label>
       </variable>
-      <variable label="Range I F2 activated sound" CV="905" default="2" tooltip="CV905">
+      <variable label="Range I F2 activated sound" CV="905" default="2">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -167,7 +167,7 @@
         </enumVal>
         <label>Range I F2 activated sound</label>
       </variable>
-      <variable label="Range I F3 activated sound" CV="906" default="4" tooltip="CV906">
+      <variable label="Range I F3 activated sound" CV="906" default="4">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -199,7 +199,7 @@
         </enumVal>
         <label>Range I F3 activated sound</label>
       </variable>
-      <variable label="Range I F4 activated sound" CV="907" default="1" tooltip="CV907">
+      <variable label="Range I F4 activated sound" CV="907" default="1">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -231,7 +231,7 @@
         </enumVal>
         <label>Range I F4 activated sound</label>
       </variable>
-      <variable label="Range I F5 activated sound" CV="905" default="0" tooltip="CV905">
+      <variable label="Range I F5 activated sound" CV="905" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -263,7 +263,7 @@
         </enumVal>
         <label>Range I F5 activated sound</label>
       </variable>
-      <variable label="Range I F6 activated sound" CV="909" default="0" tooltip="CV909">
+      <variable label="Range I F6 activated sound" CV="909" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -295,7 +295,7 @@
         </enumVal>
         <label>Range I F6 activated sound</label>
       </variable>
-      <variable label="Range I F7 activated sound" CV="910" default="0" tooltip="CV910">
+      <variable label="Range I F7 activated sound" CV="910" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -327,7 +327,7 @@
         </enumVal>
         <label>Range I F7 activated sound</label>
       </variable>
-      <variable label="Range I F8 activated sound" CV="911" default="8" tooltip="CV911">
+      <variable label="Range I F8 activated sound" CV="911" default="8">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -359,7 +359,7 @@
         </enumVal>
         <label>Range I F8 activated sound</label>
       </variable>
-      <variable label="Range I F9 activated sound" CV="912" default="0" tooltip="CV912">
+      <variable label="Range I F9 activated sound" CV="912" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -391,7 +391,7 @@
         </enumVal>
         <label>Range I F9 activated sound</label>
       </variable>
-      <variable label="Range I F10 activated sound" CV="913" default="0" tooltip="CV913">
+      <variable label="Range I F10 activated sound" CV="913" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -423,7 +423,7 @@
         </enumVal>
         <label>Range I F10 activated sound</label>
       </variable>
-      <variable label="Range I F11 activated sound" CV="914" default="0" tooltip="CV914">
+      <variable label="Range I F11 activated sound" CV="914" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -455,7 +455,7 @@
         </enumVal>
         <label>Range I F11 activated sound</label>
       </variable>
-      <variable label="Range I F12 activated sound" CV="915" default="0" tooltip="CV915">
+      <variable label="Range I F12 activated sound" CV="915" default="0">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -487,43 +487,43 @@
         </enumVal>
         <label>Range I F12 activated sound</label>
       </variable>
-      <variable label="Range I Chuff Control" CV="920" mask="XXXXXXXV" default="1" tooltip="CV920 bit 0">
+      <variable label="Range I Chuff Control" CV="920" mask="XXXXXXXV" default="1">
         <enumVal>
           <enumChoice choice="Wheel sensor only"/>
           <enumChoice choice="Decoder data and wheel sensor"/>
         </enumVal>
       </variable>
-      <variable label="Range I End step" CV="920" mask="VXXXXXXX" default="1" tooltip="CV920 bit 7">
+      <variable label="Range I End step" CV="920" mask="VXXXXXXX" default="1">
         <enumVal>
           <enumChoice choice="Always on"/>
           <enumChoice choice="Off when sound is off"/>
         </enumVal>
       </variable>
-      <variable label="Range I Trigger level with load increase" CV="921" default="5" tooltip="0-128 128=tone change is off CV921">
+      <variable label="Range I Trigger level with load increase" CV="921" default="5" tooltip="0-128 128=tone change is off">
         <decVal max="128"/>
         <label>Range I Trigger level with load increase</label>
       </variable>
-      <variable label="Range I Trigger level with load decrease" CV="922" default="5" tooltip="0-128 128=tone change is off CV922">
+      <variable label="Range I Trigger level with load decrease" CV="922" default="5" tooltip="0-128 128=tone change is off">
         <decVal max="128"/>
         <label>Range I Trigger level with load decrease</label>
       </variable>
-      <variable label="Range I Trigger level for cooling fan in E-lok" CV="923" default="128" tooltip="0-255 255=cooling fan sound off CV923">
+      <variable label="Range I Trigger level for cooling fan in E-lok" CV="923" default="128" tooltip="0-255 255=cooling fan sound off">
         <decVal/>
         <label>Range I Trigger level for cooling fan in E-lok</label>
       </variable>
-      <variable label="Range I Trigger level for brake screeching" CV="924" default="27" tooltip="0-255 255=brake screeching sound off CV924">
+      <variable label="Range I Trigger level for brake screeching" CV="924" default="27" tooltip="0-255 255=brake screeching sound off">
         <decVal/>
         <label>Range I Trigger level for brake screeching</label>
       </variable>
-      <variable label="Range I Sensitivity to load change" CV="925" default="4" tooltip="1=reacts rapidly to 8=reacts slowly CV925">
+      <variable label="Range I Sensitivity to load change" CV="925" default="4" tooltip="1=reacts rapidly to 8=reacts slowly">
         <decVal max="8"/>
         <label>Range I Sensitivity to load change</label>
       </variable>
-      <variable label="Range I Time between two chuffs at max speed" CV="938" default="0" tooltip="CV938">
+      <variable label="Range I Time between two chuffs at max speed" CV="938" default="0">
         <decVal/>
         <label>Range I  Time between two chuffs at max speed</label>
       </variable>
-      <variable label="Range I Time between two chuffs at speed step 1" CV="939" default="255" tooltip="CV939">
+      <variable label="Range I Time between two chuffs at speed step 1" CV="939" default="255">
         <decVal/>
         <label>Range I  Time between two chuffs at speed step 1</label>
       </variable>

@@ -3,11 +3,11 @@
 <!-- version 1.1, Nigel Cliffe - correcting naming of CV's 155 and 156  -->
 <!-- version 1, Mark Waters - for Unified Software -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude">
-  <variable label="Max drive Time after signal loss" CV="153" item="Packet Time-out Value" default="0" tooltip="When Energy storage cct connected, 0-255 (0-25sec) CV153">
+  <variable label="Max drive Time after signal loss" CV="153" item="Packet Time-out Value" default="0" tooltip="When Energy storage cct connected, 0-255 (0-25sec)">
     <decVal min="0" max="255"/>
     <label>Max drive Time after signal loss</label>
   </variable>
-  <variable label="Special Output Configuration" CV="154" mask="XXXXXXXV" default="0" tooltip="CV154 bit0">
+  <variable label="Special Output Configuration" CV="154" mask="XXXXXXXV" default="0">
     <enumVal>
       <enumChoice choice="No Special Configuration">
         <choice>No Special Configuration</choice>
@@ -18,7 +18,7 @@
     </enumVal>
     <label>Special Output Configuration</label>
   </variable>
-  <variable label="Drive Away if Startup sound still playing" CV="154" mask="XXXXXXVX" default="0" tooltip="CV154 bit1">
+  <variable label="Drive Away if Startup sound still playing" CV="154" mask="XXXXXXVX" default="0">
     <enumVal>
       <enumChoice choice="No">
         <choice>No</choice>
@@ -29,7 +29,7 @@
     </enumVal>
     <label>Drive Away if Startup sound still playing</label>
   </variable>
-  <variable label="Second Motorola Address" CV="154" mask="XXXXVXXX" default="0" item="Advanced Group 1 Option 5" tooltip="CV154 bit3">
+  <variable label="Second Motorola Address" CV="154" mask="XXXXVXXX" default="0" item="Advanced Group 1 Option 5">
     <enumVal>
       <enumChoice choice="Enabled">
         <choice>Enabled</choice>
@@ -40,7 +40,7 @@
     </enumVal>
     <label>Second Motorola Address</label>
   </variable>
-  <variable label="Two Stage Air Compressor" CV="154" mask="XXXVXXXX" default="0" tooltip="Z1=fast, Z2=slow, CV154 bit4">
+  <variable label="Two Stage Air Compressor" CV="154" mask="XXXVXXXX" default="0" tooltip="Z1=fast, Z2=slow">
     <enumVal>
       <enumChoice choice="Disabled">
         <choice>Enabled</choice>
@@ -51,7 +51,7 @@
     </enumVal>
     <label>Two Stage Air Compressor</label>
   </variable>
-  <variable label="ACKnoledgement Pulse 'Forward only'" CV="154" mask="XXVXXXXX" default="0" item="Advanced Group 1 Option 2" tooltip="CV154 bit5">
+  <variable label="ACKnoledgement Pulse 'Forward only'" CV="154" mask="XXVXXXXX" default="0" item="Advanced Group 1 Option 2">
     <enumVal>
       <enumChoice choice="Normal">
         <choice>Enabled</choice>
@@ -62,7 +62,7 @@
     </enumVal>
     <label>ACKnoledgement Pulse 'Forward only'</label>
   </variable>
-  <variable label="ACKnoledgement Pulse 'Reverse only'" CV="154" mask="XVXXXXXX" default="0" item="Advanced Group 1 Option 3" tooltip="CV154 bit6">
+  <variable label="ACKnoledgement Pulse 'Reverse only'" CV="154" mask="XVXXXXXX" default="0" item="Advanced Group 1 Option 3">
     <enumVal>
       <enumChoice choice="Normal">
         <choice>Enabled</choice>
@@ -73,7 +73,7 @@
     </enumVal>
     <label>ACKnoledgement Pulse 'Reverse only'</label>
   </variable>
-  <variable label="Delay Shutdown untill end of Starting Whistle" CV="154" mask="VXXXXXXX" default="0" tooltip="CV154 bit7">
+  <variable label="Delay Shutdown untill end of Starting Whistle" CV="154" mask="VXXXXXXX" default="0">
     <enumVal>
       <enumChoice choice="No">
         <choice>No</choice>
@@ -84,7 +84,7 @@
     </enumVal>
     <label>Delay Shutdown</label>
   </variable>
-  <variable label="Half Speed Key Extension" CV="155" default="0" tooltip="CV155">
+  <variable label="Half Speed Key Extension" CV="155" default="0">
     <enumVal>
       <enumChoice choice="Use Setting in CV124 above">
         <choice>Setting in CV124</choice>
@@ -149,7 +149,7 @@
     </enumVal>
     <label>Half Speed Key Extension</label>
   </variable>
-  <variable label="Shunt Function Key Extension" CV="156" default="0" tooltip="CV156">
+  <variable label="Shunt Function Key Extension" CV="156" default="0">
     <enumVal>
       <enumChoice choice="Use Setting in CV124 above">
         <choice>Setting in CV124</choice>
@@ -214,7 +214,7 @@
     </enumVal>
     <label>Shunt Function Key Extension</label>
   </variable>
-  <variable label="MAN Key Extension (Disable HLU or ABC signal control)" CV="157" default="0" tooltip="Disables ABC and HLU Signal Control. CV157">
+  <variable label="MAN Key Extension (Disable HLU or ABC signal control)" CV="157" default="0" tooltip="Disables ABC and HLU Signal Control">
     <enumVal>
       <enumChoice choice="MAN (Zimo)">
         <choice>Setting in CV124</choice>

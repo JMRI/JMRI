@@ -1870,13 +1870,13 @@
   </decoder>
   <pane name="ESU">
     <column>
-      <display item="Signal Dependent Acceleration" tooltip="CV 61"/>
-      <display item="Signal Dependent Deceleration" tooltip="CV 62"/>
+      <display item="Signal Dependent Acceleration"/>
+      <display item="Signal Dependent Deceleration"/>
       <label label=" ">
         <label> </label>
       </label>
-      <display item="Marklin brake track activated" tooltip="CV 49, bit 1"/>
-      <display item="ZIMO Signal Dependence Active" tooltip="CV 49, bit 2"/>
+      <display item="Marklin brake track activated"/>
+      <display item="ZIMO Signal Dependence Active"/>
     </column>
     <name>ESU</name>
   </pane>
@@ -1886,28 +1886,28 @@
         <label>F-9(r) Key Output Control</label>
       </label>
       <separator/>
-      <display item="F9(r) controls output 6" format="checkbox" label="Soundslot 1" tooltip="CV 47, bit 0">
+      <display item="F9(r) controls output 6" format="checkbox" label="Soundslot 1">
         <label>Soundslot 1</label>
       </display>
-      <display item="F9(r) controls output 7" format="checkbox" label="Soundslot 2" tooltip="CV 47, bit 1">
+      <display item="F9(r) controls output 7" format="checkbox" label="Soundslot 2">
         <label>Soundslot 2</label>
       </display>
-      <display item="F9(r) controls output 8" format="checkbox" label="Soundslot 3" tooltip="CV 47, bit 2">
+      <display item="F9(r) controls output 8" format="checkbox" label="Soundslot 3">
         <label>Soundslot 3</label>
       </display>
-      <display item="F9(r) controls output 9" format="checkbox" label="Soundslot 4" tooltip="CV 47, bit 3">
+      <display item="F9(r) controls output 9" format="checkbox" label="Soundslot 4">
         <label>Soundslot 4</label>
       </display>
-      <display item="F9(r) controls output 10" format="checkbox" label="Soundslot 5" tooltip="CV 47, bit 4">
+      <display item="F9(r) controls output 10" format="checkbox" label="Soundslot 5">
         <label>Soundslot 5</label>
       </display>
-      <display item="F9(r) controls output 11" format="checkbox" label="Soundslot 6" tooltip="CV 47, bit 5">
+      <display item="F9(r) controls output 11" format="checkbox" label="Soundslot 6">
         <label>Soundslot 6</label>
       </display>
-      <display item="F9(r) controls output 12" format="checkbox" label="Soundslot 7" tooltip="CV 47, bit 6">
+      <display item="F9(r) controls output 12" format="checkbox" label="Soundslot 7">
         <label>Soundslot 7</label>
       </display>
-      <display item="F9(r) controls output 13" format="checkbox" label="Soundslot 8" tooltip="CV 47, bit 7">
+      <display item="F9(r) controls output 13" format="checkbox" label="Soundslot 8">
         <label>Soundslot 8</label>
       </display>
       <label label=" ">
@@ -1917,28 +1917,28 @@
         <label>F-10(r) Key Output Control</label>
       </label>
       <separator/>
-      <display item="F10(r) controls output 6" format="checkbox" label="Soundslot 1" tooltip="CV 48, bit 0">
+      <display item="F10(r) controls output 6" format="checkbox" label="Soundslot 1">
         <label>Soundslot 1</label>
       </display>
-      <display item="F10(r) controls output 7" format="checkbox" label="Soundslot 2" tooltip="CV 48, bit 1">
+      <display item="F10(r) controls output 7" format="checkbox" label="Soundslot 2">
         <label>Soundslot 2</label>
       </display>
-      <display item="F10(r) controls output 8" format="checkbox" label="Soundslot 3" tooltip="CV 48, bit 2">
+      <display item="F10(r) controls output 8" format="checkbox" label="Soundslot 3">
         <label>Soundslot 3</label>
       </display>
-      <display item="F10(r) controls output 9" format="checkbox" label="Soundslot 4" tooltip="CV 48, bit 3">
+      <display item="F10(r) controls output 9" format="checkbox" label="Soundslot 4">
         <label>Soundslot 4</label>
       </display>
-      <display item="F10(r) controls output 10" format="checkbox" label="Soundslot 5" tooltip="CV 48, bit 4">
+      <display item="F10(r) controls output 10" format="checkbox" label="Soundslot 5">
         <label>Soundslot 5</label>
       </display>
-      <display item="F10(r) controls output 11" format="checkbox" label="Soundslot 6" tooltip="CV 48, bit 5">
+      <display item="F10(r) controls output 11" format="checkbox" label="Soundslot 6">
         <label>Soundslot 6</label>
       </display>
-      <display item="F10(r) controls output 12" format="checkbox" label="Soundslot 7" tooltip="CV 48, bit 6">
+      <display item="F10(r) controls output 12" format="checkbox" label="Soundslot 7">
         <label>Soundslot 7</label>
       </display>
-      <display item="F10(r) controls output 13" format="checkbox" label="Soundslot 8" tooltip="CV 48, bit 7">
+      <display item="F10(r) controls output 13" format="checkbox" label="Soundslot 8">
         <label>Soundslot 8</label>
       </display>
     </column>

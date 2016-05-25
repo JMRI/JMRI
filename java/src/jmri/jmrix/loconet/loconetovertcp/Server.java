@@ -66,6 +66,7 @@ public class Server {
             String settingsFileName = FileUtil.getUserFilesPath() + SETTINGS_FILE_NAME;
 
             try {
+                log.debug("Server: opening settings file " + settingsFileName);
                 java.io.InputStream settingsStream = new FileInputStream(settingsFileName);
                 try {
                     settings.load(settingsStream);
@@ -90,6 +91,7 @@ public class Server {
         // we can't use the store capabilities of java.util.Properties, as
         // they are not present in Java 1.1.8
         String settingsFileName = FileUtil.getUserFilesPath() + SETTINGS_FILE_NAME;
+        log.debug("Server: saving settings file " + settingsFileName);
 
         try {
             OutputStream outStream = new FileOutputStream(settingsFileName);
@@ -148,12 +150,14 @@ public class Server {
             socketListener = new Thread(new ClientListener());
             socketListener.setDaemon(true);
             socketListener.setName("LocoNetOverTcpServer");
+            log.info("Starting new LocoNetOverTcpServer listener on port " + portNumber);
             socketListener.start();
             updateServerStateListener();
             // advertise over Zeroconf/Bonjour
             if (this.service == null) {
                 this.service = ZeroConfService.create("_loconetovertcpserver._tcp.local.", portNumber);
             }
+            log.info("Starting ZeroConfService _loconetovertcpserver._tcp.local for LocoNetOverTCP Server");
             this.service.publish();
             if (this.shutDownTask == null) {
                 this.shutDownTask = new QuietShutDownTask("LocoNetOverTcpServer") {

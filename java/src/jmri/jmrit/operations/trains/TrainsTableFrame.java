@@ -164,16 +164,28 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		resetRB.setToolTipText(Bundle.getMessage("ResetTip"));
 
 		// row 2
+		JPanel addTrain = new JPanel();
+		addTrain.setBorder(BorderFactory.createTitledBorder(""));
+		addTrain.add(addButton);
+		
+		JPanel select = new JPanel();
+		select.setBorder(BorderFactory.createTitledBorder(""));
+		select.add(buildButton);
+		select.add(printButton);
+		select.add(openFileButton);
+		select.add(runFileButton);
+		select.add(printSwitchButton);
+		select.add(terminateButton);
+		
+		JPanel save = new JPanel();
+		save.setBorder(BorderFactory.createTitledBorder(""));
+		save.add(saveButton);
+		
 		JPanel cp2 = new JPanel();
-		cp2.setBorder(BorderFactory.createTitledBorder(""));
-		cp2.add(addButton);
-		cp2.add(buildButton);
-		cp2.add(printButton);
-		cp2.add(openFileButton);
-		cp2.add(runFileButton);
-		cp2.add(printSwitchButton);
-		cp2.add(terminateButton);
-		cp2.add(saveButton);
+		cp2.setLayout(new BoxLayout(cp2, BoxLayout.X_AXIS));
+		cp2.add(addTrain);
+		cp2.add(select);
+		cp2.add(save);
 
 		// place controls in scroll pane
 		JPanel controlPanel = new JPanel();
@@ -262,7 +274,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		// add help menu to window
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true); // NOI18N
 
-		pack();
+		initMinimumSize();
 
 		// listen for timetable changes
 		trainManager.addPropertyChangeListener(this);
@@ -355,12 +367,12 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		}
 		if (ae.getSource() == runFileButton) {
 			// Processes the CSV Manifest files using an external custom program.
-			if (!CustomManifest.manifestCreatorFileExists()) {
+			if (!TrainCustomManifest.manifestCreatorFileExists()) {
 				log.warn("Manifest creator file not found!, directory name: "
-						+ CustomManifest.getDirectoryName() + ", file name: " + CustomManifest.getFileName()); // NOI18N
+						+ TrainCustomManifest.getDirectoryName() + ", file name: " + TrainCustomManifest.getFileName()); // NOI18N
 				JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
-						.getMessage("DirectoryNameFileName"), new Object[] {
-						CustomManifest.getDirectoryName(), CustomManifest.getFileName() }), Bundle
+						.getMessage("LoadDirectoryNameFileName"), new Object[] {
+						TrainCustomManifest.getDirectoryName(), TrainCustomManifest.getFileName() }), Bundle
 						.getMessage("ManifestCreatorNotFound"), JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -381,13 +393,13 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 						// Make sure our csv manifest file exists for this Train.
 						File csvFile = train.createCSVManifestFile();
 						// Add it to our collection to be processed.
-						CustomManifest.addCVSFile(csvFile);
+						TrainCustomManifest.addCVSFile(csvFile);
 					}
 				}
 			}
 			
 			// Now run the user specified custom Manifest processor program
-			CustomManifest.process();
+			TrainCustomManifest.process();
 		}
 		if (ae.getSource() == printSwitchButton) {
 			if (tslef != null)
