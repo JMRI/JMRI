@@ -49,7 +49,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     public String getBeanType() {
         return Bundle.getMessage("BeanNameTurnout");
     }
-    
+
     private String closedText = InstanceManager.turnoutManagerInstance().getClosedText();
     private String thrownText = InstanceManager.turnoutManagerInstance().getThrownText();
 
@@ -97,7 +97,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * layout and hope for the best.
      */
     public void setCommandedState(int s) {
-        log.debug("set commanded state for turnout {} to {}", getFullyFormattedDisplayName(), 
+        log.debug("set commanded state for turnout {} to {}", getFullyFormattedDisplayName(),
                 (s==Turnout.CLOSED ? closedText : thrownText));
         newCommandedState(s);
         myOperator = getTurnoutOperator(); // MUST set myOperator before starting the thread
@@ -328,7 +328,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * state. Turnout that have local buttons can also be locked if their
      * decoder supports it.
      *
-     * @param locked
+     * @param turnoutLockout lockout state to monitor. Possible values
+     *                       {@link #CABLOCKOUT}, {@link #PUSHBUTTONLOCKOUT}.
+     *                       Can be combined to monitor both states.
+     * @param locked         true if turnout to be locked
      */
     public void setLocked(int turnoutLockout, boolean locked) {
         boolean firechange = false;
@@ -871,4 +874,3 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     private final static Logger log = LoggerFactory.getLogger(AbstractTurnout.class.getName());
 }
-
