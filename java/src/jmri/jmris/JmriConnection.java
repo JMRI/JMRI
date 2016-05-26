@@ -26,7 +26,7 @@ public class JmriConnection {
     /**
      * Create a JmriConnection that sends output to a WebSocket.
      *
-     * @param connection
+     * @param connection WebSocket Session to use.
      */
     public JmriConnection(Session connection) {
         this.session = connection;
@@ -35,7 +35,7 @@ public class JmriConnection {
     /**
      * Create a JmriConnection that sends output to a DataOutputStream.
      *
-     * @param output
+     * @param output DataOutputStream to use
      */
     public JmriConnection(DataOutputStream output) {
         this.dataOutputStream = output;
@@ -93,8 +93,8 @@ public class JmriConnection {
      * This method throws an IOException so the server or servlet holding the
      * connection open can respond to the exception.
      *
-     * @param message
-     * @throws IOException
+     * @param message message to send
+     * @throws IOException if problem sending message
      */
     public void sendMessage(String message) throws IOException {
         log.debug("Sending {}", message);
@@ -120,7 +120,7 @@ public class JmriConnection {
      * <code>getSession().close()</code> since Session.close() does not throw an
      * IOException.
      *
-     * @throws IOException
+     * @throws IOException if problem closing connection
      */
     public void close() throws IOException {
         if (this.dataOutputStream != null) {

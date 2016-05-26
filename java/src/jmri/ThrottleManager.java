@@ -185,7 +185,8 @@ public interface ThrottleManager {
     /**
      * Get the integer value representing a protocol
      *
-     * @param selection
+     * @param selection specific protocol string, see the specific throttle
+     *                  manager for values
      * @return the integer value of the protocol
      */
     public LocoAddress.Protocol getProtocolFromString(String selection);

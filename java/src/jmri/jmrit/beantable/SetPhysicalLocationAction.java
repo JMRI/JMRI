@@ -41,8 +41,8 @@ public class SetPhysicalLocationAction extends AbstractAction {
     /**
      * Constructor
      *
-     * @param s
-     * @param reporter
+     * @param s title of the action
+     * @param reporter {@link Reporter} to use
      */
     public SetPhysicalLocationAction(String s, Reporter reporter) {
         super(s);
@@ -54,7 +54,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
     /**
      * Action method
      *
-     * @param e
+     * @param e the associated {@link ActionEvent} that triggered this action
      */
     @Override
     public void actionPerformed(ActionEvent e) {

@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Support for some .hex files emitted by some tool-sets requires support for
  * the Extended Segment Address record type (record type "02"), which may be
- * used in I16HEX format files. This version of the <code>readHex</code> method
+ * used in I16HEX format files. This version of the {@link #readHex} method
  * supports the Extended Segment Address record type ONLY when the segment
  * specified in the data field is 0x0000.
  * <p>
@@ -65,11 +65,11 @@ import org.slf4j.LoggerFactory;
  * <p>
  * The class does not have to know anything about filenames or filename
  * extensions. Instead, to read a file, an instantiating method will create a
- * <code>File</code> object and pass that object to <code>readHex</code>.
+ * {@link File} object and pass that object to {@link #readHex}.
  * Similarly, when writing the contents of data storage to a file, the
- * instantiating method will create a <code>File</code> and an associated
- * <code>Writer</code> and pass the <code>Writer</code> object to
- * <code>writeHex</code>. The mechanisms implemented within this class do not
+ * instantiating method will create a {@link File} and an associated
+ * {@link Writer} and pass the {@link Writer} object to
+ * {@link writeHex}. The mechanisms implemented within this class do not
  * know about or care about the filename or its extension and do not use that
  * information as part of its file interpretation or file creation.
  * <p>
@@ -77,6 +77,62 @@ import org.slf4j.LoggerFactory;
  * to 256 pages of up to 65536 bytes per page. A "sparse" implementation of
  * memory is modeled, where only occupied pages are allocated within the JAVA
  * system's memory.
+ * <hr>
+ * The Intel "Hexadecimal Object File Format File Format Specification"
+ * uses the following terms for the fields of the record:
+ * <dl>
+ * <dt>RECORD MARK</dt><dd>first character of a record.  ':'</dd>
+ * 
+ * <dt>RECLEN</dt><dd>a two-character specifier of the number of bytes of information 
+ *          in the "INFO or DATA" field.  Immediately follows the RECORD 
+ *          MARK charcter. Since each byte within the "INFO or DATA" field is 
+ *          represented by two ASCII characters, the data field contains twice
+ *          the RECLEN value number of ASCII characters.</dd>
+ * 
+ * <dt>LOAD OFFSET</dt><dd>specifies the 16-bit starting load offset of the data bytes.
+ *          This applies only to "Data" records, so this class requires that
+ *          this field must encode 0x0000 for all other record types.  The LOAD
+ *          OFFSET field immediately follows the RECLEN field.
+ * <p>
+ *          Note that for the 24-bit addressing format used with ".DMF" 
+ *          files, this field is a 24-bit starting load offset, represented by
+ *          six ASCII characters, rather than the four ASCII characters 
+ *          specified in the Intel specification.</dd>
+ * 
+ * <dt>RECTYP</dt><dd>RECord TYPe - indicates the record type for this record.  The 
+ *          RECTYPE field immediately follows the LOAD OFFSET field.</dd>
+ * 
+ * <dt>INFO or DATA</dt><dd>(Optional) field containing information or data which is 
+ *          appropriate to the RECTYP.  Immediately follows the RECTYP field.
+ *          contains RECLEN times 2 characters, where consecutive pairs of
+ *          characters represent one byte of info or data.</dd>
+ * 
+ * <dt>CHKSUM</dt><dd>8-bit Checksum, computed using the hexadecimal byte values represented 
+ *          by the character pairs in RECLEN, LOAD OFFSET, RECTYP, and INFO 
+ *          or DATA fields, such that the computed sum, when added to the 
+ *          CKSUM value, sums to an 8-bit value of 0x00.</dd>
+ * </dl>
+ * This information based on the Intel document "Hexadecimal Object File Format
+ * Specification", Revision A, January 6, 1988.
+ * <p>
+ * Mnemonically, a properly formatted record would appear as:
+ * </p><pre>
+ *     :lloooott{dd}cc
+ * where:
+ *      ':'     is the RECORD MARK
+ *      "ll"    is the RECLEN
+ *      "oooo"  is the 16-bit LOAD OFFSET
+ *      "tt"    is the RECTYP
+ *      "{dd}"  is the INFO or DATA field, containing zero or more pairs of 
+ *                  characters of Info or Data associated with the record
+ *      "cc"    is the CHKSUM
+ * </pre><p>
+ * and a few examples of complaint record would be:
+ * </p><ul>
+ *     <li>:02041000FADE07
+ *     <li>:020000024010AC
+ *     <li>:00000001FF
+ * </ul>
  *
  * @author	Bob Jacobsen Copyright (C) 2005, 2008
  * @author B. Milhaupt Copyright (C) 2014
@@ -87,8 +143,7 @@ public class MemoryContents {
 
     /* For convenience, a page of local storage of data is sized to equal one 
      * "segment" within an input file.  As such, the terms "page" and "segment" 
-     * are used interchangeably throughout the <code>MemotyContents</code> class 
-     * code.
+     * are used interchangeably throughout here.
      * 
      * The number of pages is chosen to match the 24-bit address space.
      */
@@ -119,7 +174,7 @@ public class MemoryContents {
      *
      * Implemented as a two-dimensional array where the first dimension
      * represents the "page" number, and the second dimension represents the
-     * byte within the page of <code>PAGESIZE</code> bytes.
+     * byte within the page of {@link #PAGESIZE} bytes.
      */
     private final int[][] pageArray;
     private int currentPage;
@@ -138,67 +193,16 @@ public class MemoryContents {
      * Defines the LOAD OFFSET field type used/expected for records in "I8HEX"
      * and ".DMF" file formats.
      * <p>
-     * When reading a file using the <code>readHex</code> method, the value is
+     * When reading a file using the {@link #readHex} method, the value is
      * inferred from the first record and then used to validate the remaining
      * records in the file.
      * <p>
-     * This value must be properly set before invoking the <code>writeHex</code>
+     * This value must be properly set before invoking the {@link #writeHex}
      * method.
      */
     private LoadOffsetFieldType loadOffsetFieldType = LoadOffsetFieldType.UNDEFINED;
 
-    /*
-     * The Intel "Hexadecimal Object File Format File Format Specification"
-     * uses the following terms for the fields of the record:
-     * 
-     * RECORD MARK - first character of a record.  ':'
-     * 
-     * RECLEN - a two-character specifier of the number of bytes of information 
-     *          in the "INFO or DATA" field.  Immediately follows the RECORD 
-     *          MARK charcter. Since each byte within the "INFO or DATA" field is 
-     *          represented by two ASCII characters, the data field contains twice
-     *          the RECLEN value number of ASCII characters.
-     * 
-     * LOAD OFFSET - specifies the 16-bit starting load offset of the data bytes.
-     *          This applies only to "Data" records, so this class requires that
-     *          this field must encode 0x0000 for all other record types.  The LOAD
-     *          OFFSET field immediately follows the RECLEN field.
-     * 
-     *          Note that for the 24-bit addressing format used with ".DMF" 
-     *          files, this field is a 24-bit starting load offset, represented by
-     *          six ASCII characters, rather than the four ASCII characters 
-     *          specified in the Intel specification.
-     * 
-     * RECTYP - RECord TYPe - indicates the record type for this record.  The 
-     *          RECTYPE field immediately follows the LOAD OFFSET field.
-     * 
-     * INFO or DATA - (Optional) field containing information or data which is 
-     *          appropriate to the RECTYP.  Immediately follows the RECTYP field.
-     *          contains RECLEN times 2 characters, where consecutive pairs of
-     *          characters represent one byte of info or data.
-     * 
-     * CHKSUM - 8-bit Checksum, computed using the hexadecimal byte values represented 
-     *          by the character pairs in RECLEN, LOAD OFFSET, RECTYP, and INFO 
-     *          or DATA fields, such that the computed sum, when added to the 
-     *          CKSUM value, sums to an 8-bit value of 0x00.
-     * 
-     * This information based on the Intel document "Hexadecimal Object File Format
-     * Specification", Revisoin A, January 6, 1988.
-     * 
-     * Mnemonically, a properly formatted record would appear as:
-     *     :lloooott{dd}cc
-     * where:
-     *      ':'     is the RECORD MARK
-     *      "ll"    is the RECLEN
-     *      "oooo"  is the 16-bit LOAD OFFSET
-     *      "tt"    is the RECTYP
-     *      "{dd}"  is the INFO or DATA field, containing zero or more pairs of 
-     *                  characters of Info or Data associated with the record
-     *      "cc"    is the CHKSUM
-     * and a few examples of complaint recorsd would be:
-     *      :02041000FADE07
-     *      :020000024010AC
-     *      :00000001FF
+    /**
      */
     public MemoryContents() {
         pageArray = new int[PAGES][];
@@ -243,7 +247,7 @@ public class MemoryContents {
      * comments for use by the invoking method.
      * <p>
      * Integrity checks include:
-     * <ul>
+     * </p><ul>
      * <li>Identification of LOAD OFFSET field type from first record
      * <li>Verification that all subsequent records use the same LOAD OFFSET
      * field type
@@ -255,8 +259,8 @@ public class MemoryContents {
      * <li>Identification of a file without any data record
      * <li>Identification of any records which have extra characters after the
      * checksum
-     * <ul>
-     * When reading the file, <code>readHex</code> infers the addressing format
+     * </ul><p>
+     * When reading the file, {@link #readHex} infers the addressing format
      * from the first record found in the file, and future records are
      * interpreted using that addressing format. It is not necessary to
      * pre-configure the addressing format before reading the file. This is a
@@ -271,13 +275,12 @@ public class MemoryContents {
      * information. Such Key/Value pair information is used within the .DMF
      * format to provide configuration information for firmware update
      * mechanism. This class also extracts key/value pair comments "I8HEX"
-     * format files. After successful completion of this <code>readHex</code>,
-     * the the <code>getValue(String
-     * keyName)</code> method may be used to inspect individual key values.
+     * format files. After successful completion of this {@link readHex},
+     * then the {@link #extractValueOfKey(String keyName)} method may be used to inspect individual key values.
      * <p>
      * Key/Value pair definition comment lines are of the format:
      * <p>
-     * <code>! KeyName: Value</code>
+     * {@code ! KeyName: Value}
      *
      * @param filename string containing complete filename with path
      * @throws FileNotFoundException               if the file does not exist
@@ -333,8 +336,8 @@ public class MemoryContents {
      * <li>Identification of a file without any data record
      * <li>Identification of any records which have extra characters after the
      * checksum
-     * <ul>
-     * When reading the file, <code>readHex</code> infers the addressing format
+     * </ul><p>
+     * When reading the file, {@link #readHex} infers the addressing format
      * from the first record found in the file, and future records are
      * interpreted using that addressing format. It is not necessary to
      * pre-configure the addressing format before reading the file. This is a
@@ -349,15 +352,14 @@ public class MemoryContents {
      * information. Such Key/Value pair information is used within the .DMF
      * format to provide configuration information for firmware update
      * mechanism. This class also extracts key/value pair comments "I8HEX"
-     * format files. After successful completion of this <code>readHex</code>,
-     * the the <code>getValue(String
-     * keyName)</code> method may be used to inspect individual key values.
+     * format files. After successful completion of this method,
+     * then the {@code #extractValueOfKey(String keyName)} method may be used to inspect individual key values.
      * <p>
      * Key/Value pair definition comment lines are of the format:
      * <p>
-     * <code>! KeyName: Value</code>
+     * {@code ! KeyName: Value}
      *
-     * @param file
+     * @param file file to read
      * @throws FileNotFoundException               if the file does not exist
      * @throws MemoryFileRecordLengthException     if a record line is too long
      *                                             or short
@@ -721,7 +723,8 @@ public class MemoryContents {
      *
      * @param w Writer to which the character stream is sent
      * @throws IOException                         upon file access problem
-     * @throws MemoryFileAddressingFormatException
+     * @throws MemoryFileAddressingFormatException if unsupported addressing
+     *                                             format
      */
     public void writeHex(Writer w) throws IOException, MemoryFileAddressingFormatException {
         writeHex(w, 16);
@@ -736,9 +739,9 @@ public class MemoryContents {
      * beginning of the character stream. Note that comments of the key/value
      * format implemented here is not in compliance with the "I8HEX" format.
      * <p>
-     * The "I8HEX" format is used when the <code>loadOffsetFieldType</code> is
+     * The "I8HEX" format is used when the {@link #loadOffsetFieldType} is
      * configured for 16-bit addresses in the record LOAD OFFSET field. The
-     * ".DMF" format is used when the <code>loadOffsetFieldType</code> is
+     * ".DMF" format is used when the {@link #loadOffsetFieldType} is
      * configured for 24-bit addresses in the record LOAD OFFSET field.
      * <p>
      * The method generates only RECTYPs "00" and "01", and does not generate
@@ -750,7 +753,8 @@ public class MemoryContents {
      * @param blockSize    is the maximum number of bytes defined in a data
      *                     record
      * @throws IOException                         upon file access problem
-     * @throws MemoryFileAddressingFormatException
+     * @throws MemoryFileAddressingFormatException if unsupported addressing
+     *                                             format
      */
     public void writeHex(Writer writer, boolean writeKeyVals, int blockSize)
             throws IOException, MemoryFileAddressingFormatException {
@@ -765,9 +769,9 @@ public class MemoryContents {
      * memory in either the Intel "I8HEX" or Digitrax ".DMF" file format to a
      * Writer.
      * <p>
-     * The "I8HEX" format is used when the <code>loadOffsetFieldType</code> is
+     * The "I8HEX" format is used when the{@link #loadOffsetFieldType} is
      * configured for 16-bit addresses in the record LOAD OFFSET field. The
-     * ".DMF" format is used when the <code>loadOffsetFieldType</code> is
+     * ".DMF" format is used when the {@link #loadOffsetFieldType} is
      * configured for 24-bit addresses in the record LOAD OFFSET field.
      * <p>
      * The method generates only RECTYPs "00" and "01", and does not generate
@@ -776,7 +780,8 @@ public class MemoryContents {
      * @param writer    Writer to which the character stream is sent
      * @param blocksize is the maximum number of bytes defined in a data record
      * @throws IOException                         upon file access problem
-     * @throws MemoryFileAddressingFormatException
+     * @throws MemoryFileAddressingFormatException if unsupported addressing
+     *                                             format
      */
     private void writeHex(Writer writer, int blockSize)
             throws IOException, MemoryFileAddressingFormatException {
@@ -948,7 +953,7 @@ public class MemoryContents {
      *
      * @param location location within programmatic representation of memory to
      *                 report
-     * @return the value found at the specified location.\
+     * @return value found at the specified location.
      */
     public int getLocation(int location) {
         currentPage = location / PAGESIZE;
@@ -1141,7 +1146,7 @@ public class MemoryContents {
      * <p>
      * Key/value pair information is extractable only from comments of the form:
      * <p>
-     * <code>! Key/Value</code>
+     * {@code ! Key/Value}
      *
      * @param keyName Key/value comment line, including the leading "! "
      * @return String containing Key name
@@ -1194,8 +1199,8 @@ public class MemoryContents {
      * key does not exist, a new key/value pair comment is added to the
      * key/value storage list.
      *
-     * @param keyName
-     * @param value
+     * @param keyName key to use
+     * @param value   value to store
      */
     public void addKeyValueComment(String keyName, String value) {
         int keyIndex;
@@ -1218,9 +1223,9 @@ public class MemoryContents {
 
     /**
      * Configures the Addressing format used in the LOAD OFFSET field when
-     * writing to a .hex file using the <code>writeHex</code> method.
+     * writing to a .hex file using the {@link #writeHex} method.
      * <p>
-     * Note that the <code>readHex</code> method infers the addressing format
+     * Note that the {@link #readHex} method infers the addressing format
      * from the first record in the file and updates the stored address format
      * based on the format found in the file.
      *
@@ -1232,8 +1237,8 @@ public class MemoryContents {
 
     /**
      * Returns the current addressing format setting. The current setting is
-     * established by the last occurrence of the <code>setAddressFormat</code>
-     * method or <code>readHex</code> method invocation.
+     * established by the last occurrence of the {@link #setAddressFormat}
+     * method or {@link #readHex} method invocation.
      *
      * @return the current Addressing format setting
      */
@@ -1249,7 +1254,7 @@ public class MemoryContents {
      * the writeHex method.
      * <p>
      * @param writer Writer to which the character stream is sent
-     * @throws IOException
+     * @throws IOException if problems writing data to file
      */
     public void writeComments(Writer writer) throws IOException {
         for (String s : keyValComments) {
@@ -1445,7 +1450,7 @@ public class MemoryContents {
             super(s);
         }
     }
-    
+
     /**
      * Summarize contents
      */
@@ -1459,6 +1464,6 @@ public class MemoryContents {
         }
         return new String(retval);
     }
-    
+
     private final static Logger log = LoggerFactory.getLogger(MemoryContents.class.getName());
 }

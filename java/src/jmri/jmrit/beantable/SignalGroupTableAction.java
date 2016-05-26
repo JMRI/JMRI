@@ -59,7 +59,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
-     * @param s
+     * @param s title of the action
      */
     public SignalGroupTableAction(String s) {
         super(s);
