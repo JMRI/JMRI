@@ -440,7 +440,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
      * optional, in that other table formats can use this table model. But we
      * put it here to help keep it consistent.
      *
-     * @param table
+     * @param table {@link JTable} to configure
      */
     public void configureTable(JTable table) {
         // allow reordering of the columns
@@ -489,8 +489,8 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
      * Service method to setup a column so that it will hold a button for it's
      * values
      *
-     * @param table
-     * @param column
+     * @param table  {@link JTable} to use
+     * @param column Column to setup
      * @param sample Typical button, used for size
      */
     protected void setColumnToHoldButton(JTable table, int column, JButton sample) {
