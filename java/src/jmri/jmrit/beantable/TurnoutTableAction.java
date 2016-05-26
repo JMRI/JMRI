@@ -791,8 +791,8 @@ public class TurnoutTableAction extends AbstractTableAction {
     }
 
     /**
-     * Create a JComboBox<String> containing all the options for turnout
-     * automation parameters for this turnout
+     * Create a {@literal JComboBox<String>} containing all the options for
+     * turnout automation parameters for this turnout
      *
      * @param t	the turnout
      * @return	the JComboBox

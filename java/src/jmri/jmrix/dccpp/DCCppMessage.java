@@ -1208,20 +1208,20 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *   ID: the numeric ID (0-32767) of the turnout to control
      *   THROW: 0 (unthrown) or 1 (thrown)
      *   
-     *   returns: <H ID THROW>
+     *   returns:{@code <H ID THROW>}
      *
-     * ADD: <T ID ADDRESS SUBADDRESS>
+     * ADD: {@code <T ID ADDRESS SUBADDRESS>}
      *    ID: the numeric ID (0-32767) of the turnout to control
      *    ADDRESS: Decoder address (0-511)
      *    SUBADDRESS: Decoder subaddress (0-3)
-     *    RETURNS: <O> on success, <X> on failure
+     *    RETURNS: {@code <O>} on success, {@code <X>} on failure
      *
-     * DELETE: <T ID>
+     * DELETE: {@code <T ID>}
      *    ID: the numeric ID (0-32767) of the turnout to control
-     *    RETURNS: <O> on success, <X> on failure
+     *    RETURNS: {@code <O>} on success, {@code <X>} on failure
      *
-     * LIST: <T>
-     *    RETURNS: <H ID ADDRESS SUBADDRESS THROW> for each defined turnout or <X> if no turnouts defined.
+     * LIST: {@code <T>}
+     *    RETURNS: {@code <H ID ADDRESS SUBADDRESS THROW>} for each defined turnout or {@code <X>} if no turnouts defined.
      */
     public static DCCppMessage makeTurnoutCommandMsg(int id, boolean thrown) {
 	// Sanity check inputs
@@ -1319,13 +1319,13 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *    ID (0-32767)
      *    PIN: Arduino Pin # of sensor
      *    PULLUP: TRUE if use internal pullup for PIN, FALSE if don't.
-     *    RETURNS: <O> on success, <X> on failure
+     *    RETURNS: {@code <O>} on success, {@code <X>} on failure
      *
      * DELETE: {@code <S ID>}
-     *    RETURNS: <O> on success, <X> on failure
+     *    RETURNS: {@code <O>} on success, {@code <X>} on failure
      *
      * LIST: {@code <S>}
-     *    RETURNS: <Q ID PIN PULLUP> for each defined sensor, or <X> if no sensors defined.
+     *    RETURNS: {@code <Q ID PIN PULLUP>} for each defined sensor, or {@code <X>} if no sensors defined.
      */
     public static DCCppMessage makeSensorAddMsg(int id, int pin, int pullup) {
 	// Sanity check inputs
