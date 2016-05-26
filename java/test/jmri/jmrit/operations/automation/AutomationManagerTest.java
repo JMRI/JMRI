@@ -53,7 +53,7 @@ public class AutomationManagerTest extends OperationsTestCase {
     }
     
     /**
-     * Creates an automation with 6 items, and checks to see if all items
+     * Creates an automation with 5 items, and checks to see if all items
      * are copied correctly.
      */
     public void testCopyAutomation() {
@@ -96,8 +96,8 @@ public class AutomationManagerTest extends OperationsTestCase {
         Assert.assertNotNull("test automation creation", copy);
         
         // There are now three automations
-        Assert.assertEquals(3, manager.getSize());
-        Assert.assertEquals(5, copy.getSize());
+        Assert.assertEquals("The number of automations", 3, manager.getSize());
+        Assert.assertEquals("The number of items", 5, copy.getSize());
         
         Assert.assertEquals(copy.getComment(), automation.getComment());
         
@@ -105,6 +105,7 @@ public class AutomationManagerTest extends OperationsTestCase {
         Assert.assertEquals("1st item is build train", copyItem1.getActionName(), item1.getActionName());
         Assert.assertNotNull(copyItem1.getTrain());
         Assert.assertNull(copyItem1.getGotoAutomationItem());
+        Assert.assertNull(copyItem1.getTrainSchedule());
         Assert.assertNull(copyItem1.getRouteLocation());
         Assert.assertEquals(copyItem1.getTrain(), item1.getTrain());
         Assert.assertEquals("item1 OK message", copyItem1.getMessage());
@@ -120,6 +121,8 @@ public class AutomationManagerTest extends OperationsTestCase {
         Assert.assertNull(copyItem2.getRouteLocation());
         Assert.assertEquals(copyItem2.getGotoAutomationItem().getActionName(), item2.getGotoAutomationItem().getActionName());
         Assert.assertNull(copyItem2.getAutomationToRun());
+        Assert.assertEquals("", copyItem2.getMessage());
+        Assert.assertEquals("", copyItem2.getMessageFail());
         Assert.assertTrue(copyItem2.isHaltFailureEnabled());
        
         AutomationItem copyItem3 = copy.getItemBySequenceId(3);
@@ -131,6 +134,8 @@ public class AutomationManagerTest extends OperationsTestCase {
         Assert.assertEquals(copyItem3.getTrain(), item3.getTrain());
         Assert.assertEquals(copyItem3.getRouteLocation(), item3.getRouteLocation());
         Assert.assertNull(copyItem3.getAutomationToRun());
+        Assert.assertEquals("", copyItem3.getMessage());
+        Assert.assertEquals("", copyItem3.getMessageFail());
         Assert.assertTrue(copyItem3.isHaltFailureEnabled());
         
         AutomationItem copyItem4 = copy.getItemBySequenceId(4);
