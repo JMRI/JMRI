@@ -6,6 +6,13 @@ import jmri.jmrix.cmri.serial.SerialNode;
 import jmri.jmrix.cmri.serial.SerialReply;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.jmrix.cmri.serial.cmrinetmetrics.CMRInetMetricsData;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Frame displaying (and logging) CMRI serial command messages
@@ -15,23 +22,65 @@ import jmri.jmrix.cmri.serial.cmrinetmetrics.CMRInetMetricsData;
  */
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
 
+    protected JButton packetFilterButton = new JButton();  //c2
+
     public SerialMonFrame() {
         super();
     }
 
+    @Override
     protected String title() {
         return "CMRI Serial Command Monitor";
     }
 
+    @Override
     protected void init() {
         // connect to TrafficController
         SerialTrafficController.instance().addSerialListener(this);
     }
 
+    @Override
     public void dispose() {
         SerialTrafficController.instance().removeSerialListener(this);
         super.dispose();
     }
+
+    @Override
+    public void initComponents() throws Exception {
+         super.initComponents();
+
+        packetFilterButton.setText("Filter Packets");
+        packetFilterButton.setVisible(true);
+        packetFilterButton.setToolTipText("Opens CMRInet Packet Filter");
+
+        JPanel pane1 = new JPanel();
+        pane1.setLayout(new BoxLayout(pane1, BoxLayout.X_AXIS));
+        pane1.add(packetFilterButton);
+        getContentPane().add(pane1);
+
+        packetFilterButton.addActionListener(new ActionListener() {
+           @Override
+           public void actionPerformed(ActionEvent e) {
+               openPacketFilterPerformed(e);
+           }
+       });
+
+
+    }
+
+
+
+    public void openPacketFilterPerformed(ActionEvent e) {
+                // create a SerialFilterFrame
+                SerialFilterFrame f = new SerialFilterFrame();
+                try {
+                        f.initComponents();
+                        }
+                catch (Exception ex) {
+                        log.warn("SerialFilterAction starting SerialFilterFrame: Exception: "+ex.toString());
+                        }
+                f.setVisible(true);
+        }
 
   /********************
      Transmit Packets
@@ -183,5 +232,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                 nextLine("unrecognized rep: \""+l.toString()+"\"\n", "");
             }
     }
+
+    private static final Logger log = LoggerFactory.getLogger(SerialMonFrame.class.getName());
 
 }
