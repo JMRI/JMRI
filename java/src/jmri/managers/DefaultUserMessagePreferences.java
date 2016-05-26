@@ -303,7 +303,6 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * class.
      *
      * @param name  A unique identifer for preference.
-     * @param state
      */
     public void setSessionPreferenceState(String name, boolean state) {
         if (state) {

@@ -106,7 +106,6 @@ public class DecoderFile extends XmlFile {
     /**
      * Test for correct decoder version number
      *
-     * @param i
      * @return true if decoder version matches id
      */
     public boolean isVersion(int i) {

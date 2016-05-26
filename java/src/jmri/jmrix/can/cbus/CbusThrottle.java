@@ -96,7 +96,6 @@ public class CbusThrottle extends AbstractThrottle {
     /**
      * Set initial throttle values as taken from PLOC reply from hardware
      *
-     * @param speed
      * @param f0f4
      * @param f5f8
      * @param f9f12
@@ -469,7 +468,6 @@ public class CbusThrottle extends AbstractThrottle {
      * support CBUS sharing by taking direction received <b>from</b> the
      * hardware in an OPC_DSPD message.
      *
-     * @param forward
      */
     public void updateIsForward(boolean forward) {
         boolean old = isForward;

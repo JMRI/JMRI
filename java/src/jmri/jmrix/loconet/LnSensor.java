@@ -70,7 +70,6 @@ public class LnSensor extends AbstractSensor implements LocoNetListener {
      * listeners by putting it out on LocoNet. In turn, the code in this class
      * should use setOwnState to handle internal sets and bean notifies.
      *
-     * @param s
      * @throws jmri.JmriException
      */
     public void setKnownState(int s) throws jmri.JmriException {
@@ -94,7 +93,6 @@ public class LnSensor extends AbstractSensor implements LocoNetListener {
      * _once_ if anything has changed state (or set the commanded state
      * directly)
      *
-     * @param l
      */
     public void message(LocoNetMessage l) {
         // parse message type

@@ -176,7 +176,6 @@ public final class JmriScriptEngineManager {
      * Given a file extension, get the ScriptEngine registered to handle that
      * extension.
      *
-     * @param extension
      * @return a ScriptEngine or null
      */
     public ScriptEngine getEngineByExtension(String extension) {
@@ -191,7 +190,6 @@ public final class JmriScriptEngineManager {
      * Given a mime type, get the ScriptEngine registered to handle that mime
      * type.
      *
-     * @param mimeType
      * @return a ScriptEngine or null
      */
     public ScriptEngine getEngineByMimeType(String mimeType) {
@@ -205,7 +203,6 @@ public final class JmriScriptEngineManager {
     /**
      * Given a short name, get the ScriptEngine registered by that name.
      *
-     * @param shortName
      * @return a ScriptEngine or null
      */
     public ScriptEngine getEngineByName(String shortName) {
@@ -219,7 +216,6 @@ public final class JmriScriptEngineManager {
     /**
      * Get a ScriptEngine by it's name.
      *
-     * @param engineName
      * @return a ScriptEngine or null
      */
     public ScriptEngine getEngine(String engineName) {
@@ -240,8 +236,6 @@ public final class JmriScriptEngineManager {
     /**
      * Evaluate a script using the given ScriptEngine.
      *
-     * @param script
-     * @param engine
      * @return
      * @throws ScriptException
      */
@@ -256,8 +250,6 @@ public final class JmriScriptEngineManager {
     /**
      * Evaluate a script using the given ScriptEngine.
      *
-     * @param reader
-     * @param engine
      * @return
      * @throws ScriptException
      */
@@ -269,7 +261,6 @@ public final class JmriScriptEngineManager {
      * Evaluate a script contained in a file. Uses the extension of the file to
      * determine which ScriptEngine to use.
      *
-     * @param file
      * @return
      * @throws ScriptException
      * @throws FileNotFoundException
@@ -293,8 +284,6 @@ public final class JmriScriptEngineManager {
      * {@link javax.script.Bindings} to add to the script's context. Uses the
      * extension of the file to determine which ScriptEngine to use.
      *
-     * @param file
-     * @param n
      * @return
      * @throws ScriptException
      * @throws FileNotFoundException
@@ -318,8 +307,6 @@ public final class JmriScriptEngineManager {
      * script. Uses the extension of the file to determine which ScriptEngine to
      * use.
      *
-     * @param file
-     * @param context
      * @return
      * @throws ScriptException
      * @throws FileNotFoundException
@@ -381,7 +368,6 @@ public final class JmriScriptEngineManager {
      * Given a file extension, get the ScriptEngineFactory registered to handle
      * that extension.
      *
-     * @param extension
      * @return a ScriptEngineFactory or null
      */
     public ScriptEngineFactory getFactoryByExtension(String extension) {
@@ -396,7 +382,6 @@ public final class JmriScriptEngineManager {
      * Given a mime type, get the ScriptEngineFactory registered to handle that
      * mime type.
      *
-     * @param mimeType
      * @return a ScriptEngineFactory or null
      */
     public ScriptEngineFactory getFactoryByMimeType(String mimeType) {
@@ -410,7 +395,6 @@ public final class JmriScriptEngineManager {
     /**
      * Given a short name, get the ScriptEngineFactory registered by that name.
      *
-     * @param shortName
      * @return a ScriptEngineFactory or null
      */
     public ScriptEngineFactory getFactoryByName(String shortName) {
@@ -424,7 +408,6 @@ public final class JmriScriptEngineManager {
     /**
      * Get a ScriptEngineFactory by it's name.
      *
-     * @param factoryName
      * @return a ScriptEngineFactory or null
      */
     public ScriptEngineFactory getFactory(String factoryName) {

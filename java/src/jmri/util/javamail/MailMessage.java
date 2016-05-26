@@ -120,7 +120,6 @@ public class MailMessage {
     /**
      * sets the protocol to be used connecting to the mailhost default smtp
      *
-     * @param p
      */
     public void setProtocol(String p) {
         this.pProtocol = p;
@@ -139,7 +138,6 @@ public class MailMessage {
      * sets if encryption will used when connecting to the mailhost default is
      * true
      *
-     * @param t
      */
     public void setTls(boolean t) {
         if (t) {
@@ -161,7 +159,6 @@ public class MailMessage {
     /**
      * sets if authorization will be used to the mailhost default is true
      *
-     * @param t
      */
     public void setAuth(boolean t) {
         if (t) {
@@ -234,7 +231,6 @@ public class MailMessage {
     /**
      * Adds the text to the message as a separate Mime part
      *
-     * @param text
      */
     public void setText(String text) {
         try {
@@ -249,7 +245,6 @@ public class MailMessage {
     /**
      * Adds the provided file to the message as a separate Mime part.
      *
-     * @param file
      */
     public void setFileAttachment(String file) {
         try {

@@ -14,7 +14,6 @@ public class ConnectionNameFromSystemName {
     /**
      * Locates the connected systems name from a given prefix.
      *
-     * @param prefix
      * @return The Connection System Name
      */
     static public String getConnectionName(String prefix) {
@@ -34,7 +33,6 @@ public class ConnectionNameFromSystemName {
     /**
      * Locates the connected systems prefix from a given System name.
      *
-     * @param name
      * @return The system prefix
      */
     static public String getPrefixFromName(String name) {

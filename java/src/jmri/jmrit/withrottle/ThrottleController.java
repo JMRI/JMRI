@@ -95,7 +95,6 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
     /**
      * Add a listener to handle: listener.sendPacketToDevice(message);
      *
-     * @param listener
      */
     public void addControllerListener(ControllerInterface listener) {
         if (controllerListeners == null) {

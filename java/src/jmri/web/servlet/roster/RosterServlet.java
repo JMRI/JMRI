@@ -76,8 +76,6 @@ public class RosterServlet extends HttpServlet {
     /**
      * Parse all HTTP GET requests and pass to appropriate method
      *
-     * @param request
-     * @param response
      * @throws ServletException
      * @throws IOException
      */
@@ -105,8 +103,6 @@ public class RosterServlet extends HttpServlet {
     /**
      * Handle POST requests. POST requests are treated as GET requests.
      *
-     * @param request
-     * @param response
      * @throws ServletException
      * @throws IOException
      * @see #doGet(javax.servlet.http.HttpServletRequest,
@@ -134,9 +130,6 @@ public class RosterServlet extends HttpServlet {
      * <code>/roster/group/&lt;group%20name&gt;</code> with a JSON payload for
      * the filter.
      *
-     * @param request
-     * @param response
-     * @param group
      * @throws ServletException
      * @throws IOException
      */
@@ -178,9 +171,6 @@ public class RosterServlet extends HttpServlet {
      * This method responds to POST URLs <code>/roster</code> and
      * <code>/roster/list</code> with a JSON payload for the filter.
      *
-     * @param request
-     * @param response
-     * @param groups
      * @throws ServletException
      * @throws IOException
      */
@@ -225,8 +215,6 @@ public class RosterServlet extends HttpServlet {
      * <li>height</li> <li>maxHeight</li> <li>minHeight</li> <li>width</li>
      * <li>maxWidth</li> <li>minWidth</li></ul>
      *
-     * @param request
-     * @param response
      * @throws ServletException
      * @throws IOException
      */
@@ -303,10 +291,6 @@ public class RosterServlet extends HttpServlet {
      * and {@link #doEntry(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
      * }.
      *
-     * @param request
-     * @param response
-     * @param filter
-     * @param groups
      * @throws ServletException
      * @throws IOException
      */
@@ -393,8 +377,6 @@ public class RosterServlet extends HttpServlet {
      * Process the image for a roster entry image or icon request. This always
      * returns a PNG image.
      *
-     * @param request
-     * @param response
      * @param file     {@link java.io.File} object containing an image
      * @throws ServletException
      * @throws IOException

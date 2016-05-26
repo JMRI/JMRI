@@ -72,7 +72,6 @@ public class ProfileManager extends Bean {
      * Create a new ProfileManager. In almost all cases, the use of
      * {@link #getDefault()} is preferred.
      *
-     * @param catalog
      */
     // TODO: write Test cases using this.
     public ProfileManager(File catalog) {
@@ -127,7 +126,6 @@ public class ProfileManager extends Bean {
      * Set the {@link Profile} to use. This method finds the Profile by Id and
      * calls {@link #setActiveProfile(jmri.profile.Profile)}.
      *
-     * @param id
      */
     public void setActiveProfile(String id) {
         if (id == null) {
@@ -154,7 +152,6 @@ public class ProfileManager extends Bean {
      * Once the {@link jmri.ConfigureManager} is loaded, this only sets the
      * Profile used at next application start.
      *
-     * @param profile
      */
     public void setActiveProfile(Profile profile) {
         Profile old = activeProfile;
@@ -275,7 +272,6 @@ public class ProfileManager extends Bean {
     /**
      * Get the enabled {@link Profile} at index.
      *
-     * @param index
      * @return A Profile
      */
     public Profile getProfiles(int index) {
@@ -288,8 +284,6 @@ public class ProfileManager extends Bean {
     /**
      * Set the enabled {@link Profile} at index.
      *
-     * @param profile
-     * @param index
      */
     public void setProfiles(Profile profile, int index) {
         Profile oldProfile = profiles.get(index);
@@ -357,7 +351,6 @@ public class ProfileManager extends Bean {
     /**
      * Get the search path at index.
      *
-     * @param index
      * @return A path that may contain profiles.
      */
     public File getSearchPaths(int index) {
@@ -588,8 +581,6 @@ public class ProfileManager extends Bean {
      * Copy a JMRI configuration not in a profile and its user preferences to a
      * profile.
      *
-     * @param config
-     * @param name
      * @return The profile with the migrated configuration.
      * @throws IllegalArgumentException
      * @throws IOException
@@ -640,7 +631,6 @@ public class ProfileManager extends Bean {
      * This method returns true if a migration occurred, and false in all other
      * circumstances.
      *
-     * @param configFilename
      * @return true if a user's existing config was migrated, false otherwise
      * @throws IllegalArgumentException
      * @throws IOException

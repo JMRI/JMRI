@@ -54,10 +54,6 @@ public class ValidatedTextField extends javax.swing.JTextField {
      * Parameter validationErrorMessage is passed as an argument to the property
      * change listener for the instantiating class.
      *
-     * @param len
-     * @param forceUppercase
-     * @param validationRegExpr
-     * @param validationErrorMessage
      */
     public ValidatedTextField(Integer len,
             boolean forceUppercase,
@@ -132,13 +128,7 @@ public class ValidatedTextField extends javax.swing.JTextField {
      * Parameter validationErrorMessage is passed as an argument to the property
      * change listener for the instantiating class.
      *
-     * @param len
      * @param allow0LengthValue
-     * @param forceUppercase
-     * @param minValue
-     * @param maxValue
-     * @param validationRegExpr
-     * @param validationErrorMessage
      */
     public ValidatedTextField(
             Integer len,
@@ -203,11 +193,7 @@ public class ValidatedTextField extends javax.swing.JTextField {
      * Parameter validationErrorMessage is passed as an argument to the property
      * change listener for the instantiating class.
      *
-     * @param len
      * @param allow0LengthValue
-     * @param minValue
-     * @param maxValue
-     * @param validationErrorMessage
      */
     public ValidatedTextField(
             Integer len,
@@ -271,10 +257,6 @@ public class ValidatedTextField extends javax.swing.JTextField {
      * Parameter validationErrorMessage is passed as an argument to the property
      * change listener for the instantiating class.
      *
-     * @param len
-     * @param minAcceptableVal
-     * @param maxAcceptableVal
-     * @param validationErrorMessage
      */
     public ValidatedTextField(Integer len,
             int minAcceptableVal,
@@ -469,7 +451,6 @@ public class ValidatedTextField extends javax.swing.JTextField {
      * Method to set the "Last Queried Value". This value is used by the
      * colorization process when focus is exiting the field.
      *
-     * @param lastQueriedValue
      */
     public void setLastQueriedValue(String lastQueriedValue) {
         lastQueryValue = lastQueriedValue;

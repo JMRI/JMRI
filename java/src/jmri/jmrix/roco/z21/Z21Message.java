@@ -48,7 +48,6 @@ public class Z21Message extends AbstractMRMessage {
      * This ctor interprets the String as the exact sequence to send,
      * byte-for-byte.
      *
-     * @param m
      */
     public Z21Message(String m) {
         super(m);

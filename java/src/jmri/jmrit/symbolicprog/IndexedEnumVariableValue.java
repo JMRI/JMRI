@@ -177,7 +177,6 @@ public class IndexedEnumVariableValue extends VariableValue
      *
      * If the value is larger than any defined, a new one is created.
      *
-     * @param value
      */
     protected void selectValue(int value) {
         if (value > 256) {
@@ -327,7 +326,6 @@ public class IndexedEnumVariableValue extends VariableValue
     /**
      * Notify the connected CVs of a state change from above
      *
-     * @param state
      */
     public void setCvState(int state) {
         (_cvMap.get(getCvName())).setState(state);

@@ -163,7 +163,6 @@ public final class JmriPreferencesProvider {
      * Returns the name of the package for the class in a format that is treated
      * as a single token.
      *
-     * @param cls
      * @return A sanitized package name
      */
     public static String findCNBForClass(@Nonnull Class<?> cls) {

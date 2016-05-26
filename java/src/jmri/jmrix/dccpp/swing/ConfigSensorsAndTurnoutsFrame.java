@@ -613,8 +613,6 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
         /**
          * Deprecated
          * Use insertData(Vector, Boolean) instead
-         * @param values
-         * @param isnew
          */
         // Note: May be obsoleted by insertData(Vector v)
         @Deprecated
@@ -775,8 +773,6 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
         /**
          * Deprecated
          * Use insertData(Vector, Boolean) instead
-         * @param values
-         * @param isnew
          */
         // Note: May be obsoleted by insertData(Vector v)
         @Deprecated
@@ -934,8 +930,6 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
         /**
          * Deprecated
          * Use insertData(Vector, Boolean) instead
-         * @param values
-         * @param isnew
          */
         // Note: May be obsoleted by insertData(Vector v)
         @Deprecated

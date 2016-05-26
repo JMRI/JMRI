@@ -52,9 +52,6 @@ public class Profile implements Comparable<Profile> {
      * read-only property of the Profile. The {@link ProfileManager} will only
      * load a single profile with a given id.
      *
-     * @param name
-     * @param id
-     * @param path
      * @throws IOException
      * @throws IllegalArgumentException
      */
@@ -93,7 +90,6 @@ public class Profile implements Comparable<Profile> {
      * This method exists purely to support subclasses.
      *
      * @param path       The Profile's directory
-     * @param isReadable
      * @throws IOException
      */
     protected Profile(File path, boolean isReadable) throws IOException {
@@ -219,7 +215,6 @@ public class Profile implements Comparable<Profile> {
     /**
      * Test if the given path or subdirectories contains a Profile.
      *
-     * @param path
      * @return true if path or subdirectories contains a Profile.
      * @since 3.9.4
      */
@@ -242,7 +237,6 @@ public class Profile implements Comparable<Profile> {
     /**
      * Test if the given path is within a directory that is a Profile.
      *
-     * @param path
      * @return true if path or parent directories is a Profile.
      * @since 3.9.4
      */
@@ -259,7 +253,6 @@ public class Profile implements Comparable<Profile> {
     /**
      * Test if the given path is a Profile.
      *
-     * @param path
      * @return true if path is a Profile.
      * @since 3.9.4
      */

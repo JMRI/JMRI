@@ -83,7 +83,6 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * Send a DCC packet to the rails. This implements the CommandStation
      * interface.
      *
-     * @param packet
      */
     public void sendPacket(byte[] packet, int repeats) {
         if (repeats > 7) {
