@@ -13,11 +13,11 @@ import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammerException;
 import jmri.Sensor;
-import jmri.jmrit.logix.Warrant;
-import jmri.jmrit.logix.OBlock;
 import jmri.ThrottleListener;
 import jmri.ThrottleManager;
 import jmri.Turnout;
+import jmri.jmrit.logix.OBlock;
+import jmri.jmrit.logix.Warrant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -283,8 +283,6 @@ public class AbstractAutomaton implements Runnable {
      * <P>
      * Because of the way Jython access handles synchronization, this is
      * explicitly synchronized internally.
-     *
-     * @param milliseconds
      */
     protected void wait(int milliseconds) {
         if (!inThread) {
@@ -822,7 +820,7 @@ public class AbstractAutomaton implements Runnable {
      * Obtains a DCC throttle, including waiting for the command station
      * response.
      *
-     * @param address
+     * @param address     Numeric address value
      * @param longAddress true if this is a long address, false for a short
      *                    address
      * @param waitSecs    number of seconds to wait for throttle to acquire
@@ -950,7 +948,7 @@ public class AbstractAutomaton implements Runnable {
      * Write a CV on the service track, including waiting for completion.
      *
      * @param CV    Number 1 through 512
-     * @param value
+     * @param value Value 0-255 to be written
      * @return true if completed OK
      */
     public boolean writeServiceModeCV(int CV, int value) {
@@ -1024,7 +1022,7 @@ public class AbstractAutomaton implements Runnable {
      * Write a CV in ops mode, including waiting for completion.
      *
      * @param CV          Number 1 through 512
-     * @param value
+     * @param value       0-255 value to be written
      * @param loco        Locomotive decoder address
      * @param longAddress true is the locomotive is using a long address
      * @return true if completed OK

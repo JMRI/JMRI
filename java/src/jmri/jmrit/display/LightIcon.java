@@ -290,7 +290,6 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
     /**
      * Change the light when the icon is clicked
      *
-     * @param e
      */
     // Was mouseClicked, changed to mouseRelease to workaround touch screen driver limitation
     public void doMouseClicked(java.awt.event.MouseEvent e) {

@@ -52,9 +52,10 @@ public class PackageTest extends TestCase {
         suite.addTest(SignalSystemFileCheckTest.suite());
         suite.addTest(SingleTurnoutSignalHeadTest.suite());
         suite.addTest(TwoIndexTcsProgrammerFacadeTest.suite());
+        suite.addTest(BundleTest.suite());
 
         // sub-packages
-        suite.addTest(jmri.implementation.swing.SwingShutDownTaskTest.suite());
+        suite.addTest(jmri.implementation.swing.PackageTest.suite());
         suite.addTest(ReporterTest.suite());
 
         return suite;

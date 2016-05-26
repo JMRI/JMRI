@@ -423,7 +423,7 @@ public class BlockManagerXmlTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {BlockManagerXmlTest.class.getName()};
+        String[] testCaseName = {"-noloading",BlockManagerXmlTest.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 

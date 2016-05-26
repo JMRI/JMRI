@@ -1,4 +1,3 @@
-// InstallTest.java
 package apps.InstallTest;
 
 import apps.Apps;
@@ -35,7 +34,6 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author	Ken Cameron Copyright 2008
- * @version $Revision$
  */
 public class InstallTest extends Apps {
 

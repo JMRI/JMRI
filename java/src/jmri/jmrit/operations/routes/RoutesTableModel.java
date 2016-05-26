@@ -5,6 +5,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
@@ -84,6 +85,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
         
         setPreferredWidths(frame, table);
 
+        table.setRowHeight(new JComboBox<>().getPreferredSize().height);
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
     }
@@ -102,14 +104,17 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
         table.getColumnModel().getColumn(EDIT_COLUMN).setPreferredWidth(80);
     }
 
+    @Override
     public synchronized int getRowCount() {
         return sysList.size();
     }
 
+    @Override
     public int getColumnCount() {
         return HIGHESTCOLUMN;
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case ID_COLUMN:
@@ -129,6 +134,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
         }
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case ID_COLUMN:
@@ -148,6 +154,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
         }
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
             case EDIT_COLUMN:
@@ -157,6 +164,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
         }
     }
 
+    @Override
     public synchronized Object getValueAt(int row, int col) {
         if (row >= sysList.size()) {
             return "ERROR unknown " + row; // NOI18N
@@ -183,6 +191,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
         }
     }
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
         switch (col) {
             case EDIT_COLUMN:
@@ -202,6 +211,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
         }
         // use invokeLater so new window appears on top
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 ref = new RouteEditFrame();
                 Route route = sysList.get(row);
@@ -210,6 +220,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
         });
     }
 
+    @Override
     public synchronized void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e

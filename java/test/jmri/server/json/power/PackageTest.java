@@ -27,6 +27,7 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.server.json.power.PowerTest");
         suite.addTestSuite(JsonPowerHttpServiceTest.class);
         suite.addTestSuite(JsonPowerSocketServiceTest.class);
+        suite.addTest(BundleTest.suite());
 
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             // put any tests that require a UI here.

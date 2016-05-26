@@ -1,4 +1,3 @@
-// LoadXmlConfigAction.java
 package jmri.configurexml;
 
 import java.awt.event.ActionEvent;
@@ -18,15 +17,9 @@ import org.slf4j.LoggerFactory;
  * information stored in configuration files.
  *
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version	$Revision$
  * @see jmri.jmrit.XmlFile
  */
 public class LoadXmlConfigAction extends LoadStoreBaseAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6243836869038163553L;
 
     public LoadXmlConfigAction() {
         this("Open Panel File ...");
@@ -42,7 +35,7 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
 
     /**
      *
-     * @param fileChooser
+     * @param fileChooser {@link JFileChooser} to use for file selection
      * @return true if successful
      */
     protected boolean loadFile(JFileChooser fileChooser) {

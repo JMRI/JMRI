@@ -35,7 +35,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.can.adapters.PackageTest.suite());
 
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(jmri.jmrix.can.swing.monitor.PackageTest.suite());
+            suite.addTest(jmri.jmrix.can.swing.PackageTest.suite());
         }
 
         suite.addTest(jmri.jmrix.can.cbus.PackageTest.suite());

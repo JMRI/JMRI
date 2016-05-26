@@ -41,6 +41,7 @@ public class PrintTrainsAction extends PrintTrainAction {
         trainsTableFrame = frame;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         // obtain a HardcopyWriter to do this

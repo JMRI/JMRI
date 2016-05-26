@@ -20,8 +20,6 @@ import javax.swing.event.AncestorListener;
 import javax.swing.event.ChangeEvent;
 import jmri.jmrit.operations.setup.Control;
 import jmri.util.JmriJFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for operations
@@ -239,5 +237,5 @@ public class OperationsFrame extends JmriJFrame implements AncestorListener {
         ((OperationsPanel) this.getContentPane()).ancestorMoved(event);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OperationsFrame.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(OperationsFrame.class.getName());
 }

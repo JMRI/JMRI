@@ -69,7 +69,7 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
         InstanceManager.setProgrammerManager(getProgrammerManager());
 
-        InstanceManager.setPowerManager(getPowerManager());
+        InstanceManager.store(getPowerManager(), jmri.PowerManager.class);
 
         InstanceManager.setTurnoutManager(getTurnoutManager());
 

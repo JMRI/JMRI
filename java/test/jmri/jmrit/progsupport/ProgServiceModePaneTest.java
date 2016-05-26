@@ -73,12 +73,7 @@ public class ProgServiceModePaneTest extends TestCase {
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
         // clear InstanceManager
-        new InstanceManager() {
-            protected void init() {
-                root = this;
-                super.init();
-            }
-        };
+        jmri.util.JUnitUtil.resetInstanceManager();
     }
 
     protected void tearDown() {

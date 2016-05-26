@@ -48,6 +48,18 @@
       <authorinitials>KWD</authorinitials>
       <revremark>Add Diverging flag</revremark>
     </revision>
+    <revision>
+      <revnumber>2.2</revnumber>
+      <date>2016-04-01</date>
+      <authorinitials>MST</authorinitials>
+      <revremark>Add low appearances</revremark>
+    </revision>
+    <revision>
+      <revnumber>2.3</revnumber>
+      <date>2016-05-05</date>
+      <authorinitials>MST</authorinitials>
+      <revremark>Add Held and Dark specific appearances</revremark>
+    </revision>
   </revhistory>
   <aspects>
     <aspect>
@@ -82,6 +94,13 @@
       <speed2>Limited</speed2>
       <route>Diverging</route>
     </aspect>
+    <aspect>
+      <name>Unlit</name>
+      <indication>Unlit</indication>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+    </aspect>
+    
   </aspects>
   <appearancefiles>
     <appearancefile href="appearance-one-searchlight.xml" />

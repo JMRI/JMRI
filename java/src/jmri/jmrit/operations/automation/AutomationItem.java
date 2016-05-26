@@ -90,6 +90,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         return _id;
     }
 
+    @Override
     public String toString() {
         return getId(); // for property changes
     }
@@ -357,7 +358,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         if (getAction() != null)
             return isActionSuccessful() ? getAction().getActionSuccessfulString() : getAction().getActionFailedString();
         else
-            return "unknown";
+            return "unknown"; // NOI18N
 
     }
 
@@ -499,7 +500,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         e.setAttribute(Xml.ID, getId());
         e.setAttribute(Xml.SEQUENCE_ID, Integer.toString(getSequenceId()));
         e.setAttribute(Xml.NAME, getActionName());
-        e.setAttribute(Xml.ACTION_CODE, "0x" + Integer.toHexString(getActionCode()));
+        e.setAttribute(Xml.ACTION_CODE, "0x" + Integer.toHexString(getActionCode())); // NOI18N
         e.setAttribute(Xml.HALT_FAIL, isHaltFailureEnabled() ? Xml.TRUE : Xml.FALSE);
         e.setAttribute(Xml.ACTION_RAN, isActionRan() ? Xml.TRUE : Xml.FALSE);
         e.setAttribute(Xml.ACTION_SUCCESSFUL, isActionSuccessful() ? Xml.TRUE : Xml.FALSE);
@@ -531,6 +532,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         return e;
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("AutomationItem id ({}) sees property change: ({}) old: ({}) new: ({})",

@@ -18,7 +18,7 @@ public class Z21Test extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {Z21Test.class.getName()};
+        String[] testCaseName = {"-noloading",Z21Test.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
@@ -37,6 +37,7 @@ public class Z21Test extends TestCase {
         suite.addTest(new TestSuite(Z21XNetTurnoutManagerTest.class));
         suite.addTest(new TestSuite(Z21XNetTurnoutTest.class));
         suite.addTest(jmri.jmrix.roco.z21.simulator.Z21SimulatorTest.suite());
+        suite.addTest(BundleTest.suite());
         return suite;
     }
 

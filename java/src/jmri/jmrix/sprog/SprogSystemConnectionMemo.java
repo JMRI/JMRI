@@ -6,6 +6,8 @@ import jmri.InstanceManager;
 import jmri.ProgrammerManager;
 import jmri.ThrottleManager;
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
+import jmri.jmrix.sprog.update.SprogType;
+import jmri.jmrix.sprog.update.SprogVersion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +27,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         super("S", "Sprog");
         this.st = st;
         sprogMode = sm;  // static
+        sprogVersion = new SprogVersion(new SprogType(SprogType.UNKNOWN));
         register();
         InstanceManager.store(this, SprogSystemConnectionMemo.class); // also register as specific type
     }
@@ -32,6 +35,15 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     public SprogSystemConnectionMemo(SprogMode sm) {
         super("S", "Sprog");
         sprogMode = sm;  // static
+        sprogVersion = new SprogVersion(new SprogType(SprogType.UNKNOWN));
+        register();
+        InstanceManager.store(this, SprogSystemConnectionMemo.class); // also register as specific type
+    }
+
+    public SprogSystemConnectionMemo(SprogMode sm, SprogType type) {
+        super("S", "Sprog");
+        sprogMode = sm;  // static
+        sprogVersion = new SprogVersion(type);
         register();
         InstanceManager.store(this, SprogSystemConnectionMemo.class); // also register as specific type
     }
@@ -39,6 +51,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     public SprogSystemConnectionMemo() {
         super("S", "Sprog");
         register(); // registers general type
+        sprogVersion = new SprogVersion(new SprogType(SprogType.UNKNOWN));
         InstanceManager.store(this, SprogSystemConnectionMemo.class); // also register as specific type
 
         //Needs to be implemented
@@ -46,14 +59,51 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
          jmri.jmrix.swing.ComponentFactory.class);*/
     }
 
+    /**
+     * Set the SPROG mode for this connection
+     * 
+     * @param mode 
+     */
     public void setSprogMode(SprogMode mode) {
         sprogMode = mode;
     }
 
+    /**
+     * Return the SPROG mode for this connection
+     * 
+     * @return SprogMode 
+     */
     public SprogMode getSprogMode() {
         return sprogMode;
     }
     private SprogMode sprogMode;// = SprogMode.SERVICE;
+    
+    /**
+     * Return the SPROG version object for this connection
+     * 
+     * @return SprogVersion
+     */
+    public SprogVersion getSprogVersion() {
+        return sprogVersion;
+    }
+
+    /**
+     * Set the SPROG version object for this connection
+     */
+    public void setSprogVersion(SprogVersion version) {
+        sprogVersion = version;
+    }
+
+    private SprogVersion sprogVersion;
+
+    /**
+     * Return the type of SPROG connected
+     * 
+     * @return SprogType
+     */
+    public SprogType getSprogType() {
+        return sprogVersion.sprogType;
+    }
 
     jmri.jmrix.swing.ComponentFactory cf = null;
 
@@ -68,19 +118,6 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         this.st = st;
     }
     private SprogTrafficController st;
-
-    /**
-     * Provide a menu with all items attached to this system connection
-     */
-    public javax.swing.JMenu getMenu() {
-        switch (sprogMode) {
-            case OPS:
-                return new SPROGMenu(this);
-            case SERVICE:
-                return new SPROGCSMenu(this);
-        }
-        return new SPROGMenu(this);
-    }
 
     private Thread slotThread;
 
@@ -176,7 +213,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
                 getProgrammerManager());
 
         powerManager = new jmri.jmrix.sprog.SprogPowerManager(this);
-        jmri.InstanceManager.setPowerManager(powerManager);
+        jmri.InstanceManager.store(powerManager, jmri.PowerManager.class);
 
         jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.sprog.SprogTurnoutManager());
 

@@ -39,6 +39,7 @@ public class PrintSavedTrainManifestAction extends AbstractAction {
 
     Train _train;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         File file = getFile();
         if (file == null || !file.exists()) {
@@ -87,6 +88,7 @@ public class PrintSavedTrainManifestAction extends AbstractAction {
     }
 
     private static class FileFilter extends javax.swing.filechooser.FileFilter {
+        @Override
         public boolean accept(File f) {
             if (f.isDirectory())
                 return true;
@@ -97,6 +99,7 @@ public class PrintSavedTrainManifestAction extends AbstractAction {
                 return false;
         }
 
+        @Override
         public String getDescription() {
             return Bundle.getMessage("TextFiles");
         }

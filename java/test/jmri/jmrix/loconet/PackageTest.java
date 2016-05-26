@@ -54,6 +54,11 @@ public class PackageTest extends TestCase {
         suite.addTest(LnSensorAddressTest.suite());
         suite.addTest(LnSensorManagerTest.suite());
         suite.addTest(LnCommandStationTypeTest.suite());
+        suite.addTest(BundleTest.suite());
+        suite.addTest(jmri.jmrix.loconet.pr3.PackageTest.suite());
+        suite.addTest(jmri.jmrix.loconet.hexfile.PackageTest.suite());
+        suite.addTest(jmri.jmrix.loconet.lnsvf2.PackageTest.suite());
+        suite.addTest(jmri.jmrix.loconet.downloader.PackageTest.suite());
 
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             suite.addTest(jmri.jmrix.loconet.locoio.PackageTest.suite());

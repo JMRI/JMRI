@@ -9,12 +9,12 @@ import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import jmri.jmrix.sprog.SprogCommandStation;
 import jmri.jmrix.sprog.SprogConstants;
 import jmri.jmrix.sprog.SprogListener;
 import jmri.jmrix.sprog.SprogMessage;
 import jmri.jmrix.sprog.SprogReply;
 import jmri.jmrix.sprog.SprogTrafficController;
+import jmri.jmrix.sprog.serialdriver.SerialDriverAdapter;
 import jmri.jmrix.sprog.update.SprogType;
 import jmri.jmrix.sprog.update.SprogVersion;
 import jmri.jmrix.sprog.update.SprogVersionListener;
@@ -27,10 +27,14 @@ import org.slf4j.LoggerFactory;
  *
  * Updated Jan 2010 by Andrew Berridge - fixed errors caused by trying to send
  * some commands while slot manager is active
+ * 
+ * Updated April 2016 by Andrew Crosland remove the checks on slot manager
+ * status, implement a timeout and look for the correct replies which may be
+ * delayed by replies for slot manager.
  *
  * Refactored
  *
- * @author	Andrew Crosland Copyright (C) 2008
+ * @author	Andrew Crosland Copyright (C) 2008, 2016
  * @version	$Revision$
  */
 public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements SprogListener, SprogVersionListener {
@@ -61,7 +65,6 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
 
     // members for handling the SPROG interface
     SprogTrafficController tc = null;
-    SprogCommandStation sm = null;
     SprogMessage msg;
     String replyString;
     String tmpString = null;
@@ -92,18 +95,19 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         super();
     }
 
+    @Override
     protected String title() {
         return "Sprog Console";
     }
 
+    @Override
     protected void init() {
         // connect to TrafficController
         tc = SprogTrafficController.instance();
-        // connect to SlotManager (it is only used in Command Station mode)
-        sm = SprogCommandStation.instance();
         tc.addSprogListener(this);
     }
 
+    @Override
     public void dispose() {
         SprogTrafficController.instance().removeSprogListener(this);
         super.dispose();
@@ -111,6 +115,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     // Ignore unsynchronized access to state
+    @Override
     public void initComponents() throws Exception {
         //SprogMessage msg;
         super.initComponents();
@@ -121,6 +126,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
 
         // Let user press return to enter message
         entryField.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 enterButtonActionPerformed(e);
             }
@@ -155,6 +161,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         });
 
         sendButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendButtonActionPerformed(e);
             }
@@ -245,6 +252,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         saveButton.setToolTipText("Save SPROG configuration (in the SPROG EEPROM)");
 
         saveButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 saveButtonActionPerformed(e);
             }
@@ -258,11 +266,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         pack();
 
         // Now the GUI is all setup we can get the SPROG version
-        // Only send this if we have zero active slots in slot manager
-        // in command mode
-        if (sm.getInUseCount() == 0) {
-            SprogVersionQuery.requestVersion(this);
-        }
+        SprogVersionQuery.requestVersion(this);
     }
 
     /**
@@ -272,11 +276,13 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
      * Specific implementations can override this to show their own help page if
      * desired.
      */
+    @Override
     protected void addHelpMenu() {
         addHelpMenu("package.jmri.jmrix.sprog.console.SprogConsoleFrame", true);
     }
 
     // Override superclass to append return
+    @Override
     public void enterButtonActionPerformed(java.awt.event.ActionEvent e) {
         nextLine(entryField.getText() + "\n", "");
     }
@@ -293,7 +299,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     public void validateCurrent() {
         String currentRange = "200 - 996";
         int validLimit = 996;
-        if (sv.sprogType.sprogType > SprogType.SPROGIIv3) {
+        if (SerialDriverAdapter.instance().getSystemConnectionMemo().getSprogVersion().sprogType.sprogType > SprogType.SPROGIIv3) {
             currentRange = "200 - 2499";
             validLimit = 2499;
         }
@@ -316,20 +322,21 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
 
     synchronized public void saveButtonActionPerformed(java.awt.event.ActionEvent e) {
         SprogMessage saveMsg;
+        int currentLimitForHardware;
         // Send Current Limit if possible
         state = State.CURRENTSENT;
         if (isCurrentLimitPossible()) {
             validateCurrent();
-            // Value written is number of ADC steps 0f 4.88mV across 0.47 ohms
-            currentLimit = currentLimit * 470 / 4880;
+            // Value written is scaled from mA to hardware units
+            currentLimitForHardware = (int) (currentLimit * (1/sv.sprogType.getCurrentMultiplier()));
             if (sv.sprogType.sprogType < SprogType.SPROGIIv3) {
                 // Hack for SPROG bug where MSbyte of value must be non-zero
-                currentLimit += 256;
+                currentLimitForHardware += 256;
             }
-            tmpString = String.valueOf(currentLimit);
+            tmpString = String.valueOf(currentLimitForHardware);
             saveMsg = new SprogMessage("I " + tmpString);
         } else {
-            // Else send blank message to kicj things off
+            // Else send blank message to kick things off
             saveMsg = new SprogMessage(" " + tmpString);
         }
         nextLine("cmd: \"" + saveMsg.toString() + "\"\n", "");
@@ -341,45 +348,32 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     // Called from synchronised code
     public boolean isCurrentLimitPossible() {
-        if (sv.hasCurrentLimit()) {
-            return true;
-        } else {
-            return false;
-        }
+        return sv.hasCurrentLimit();
     }
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     // Called from synchronised code
     public boolean isBlueLineSupportPossible() {
-        if (sv.hasBlueLine()) {
-            return true;
-        } else {
-            return false;
-        }
+        return sv.hasBlueLine();
     }
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     // Called from synchronised code
     public boolean isFirmwareUnlockPossible() {
-        if (sv.hasFirmwareLock()) {
-            return true;
-        } else {
-            return false;
-        }
+        return sv.hasFirmwareLock();
     }
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     // Called from synchronised code
     public boolean isZTCModePossible() {
-        if (sv.hasZTCMode()) {
-            return true;
-        } else {
-            return false;
-        }
+        return sv.hasZTCMode();
     }
 
+    @Override
     synchronized public void notifyVersion(SprogVersion v) {
         sv = v;
+        // Save it for others
+        SerialDriverAdapter.instance().getSystemConnectionMemo().setSprogVersion(v);
         if (log.isDebugEnabled()) {
             log.debug("Found: " + sv.toString());
         }
@@ -388,7 +382,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
             JOptionPane.showMessageDialog(null, "SPROG prompt not found",
                     "SPROG Console", JOptionPane.ERROR_MESSAGE);
         } else {
-            if (sv.sprogType.sprogType > SprogType.SPROGIIv3) {
+            if ((sv.sprogType.sprogType > SprogType.SPROGIIv3) &&(sv.sprogType.sprogType < SprogType.NANO)) {
                 currentTextField.setToolTipText("Enter new current limit in milliAmps (less than 2500)");
             }
             // We know what we're connected to
@@ -417,125 +411,115 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
             ztcCheckBox.setEnabled(isZTCModePossible());
 
             // Get Current Limit if available
-            if (isCurrentLimitPossible() && sm.getInUseCount() == 0) {
+            if (isCurrentLimitPossible()) {
                 state = State.CURRENTQUERYSENT;
                 msg = new SprogMessage(1);
                 msg.setOpCode('I');
                 nextLine("cmd: \"" + msg + "\"\n", "");
                 tc.sendSprogMessage(msg, this);
+                startTimer();
             } else {
                 // Set default and get the mode word
-                currentLimit = (SprogConstants.DEFAULT_I * 4880) / 470;
+                currentLimit = (int) (SprogConstants.DEFAULT_I * sv.sprogType.getCurrentMultiplier());
                 currentTextField.setText(String.valueOf(SprogConstants.DEFAULT_I));
-
-                //Only send this if we have zero active slots in slot manager
-                //in command mode           
-                if (sm.getInUseCount() == 0) {
-                    state = State.MODEQUERYSENT;
-                    msg = new SprogMessage(1);
-                    msg.setOpCode('M');
-                    nextLine("cmd: \"" + msg + "\"\n", "");
-                    tc.sendSprogMessage(msg, this);
-                } else {
-                    state = State.IDLE;
-                }
+                state = State.MODEQUERYSENT;
+                msg = new SprogMessage(1);
+                msg.setOpCode('M');
+                nextLine("cmd: \"" + msg + "\"\n", "");
+                tc.sendSprogMessage(msg, this);
+                startTimer();
             }
         }
     }
 
+    @Override
     public synchronized void notifyMessage(SprogMessage l) {  // receive a message and log it
         nextLine("cmd: \"" + l.toString() + "\"\n", "");
     }
 
+    @Override
     public synchronized void notifyReply(SprogReply l) {  // receive a reply message and log it
         SprogMessage msg;
+        int currentLimitFromHardware;
         replyString = l.toString();
         nextLine("rep: \"" + replyString + "\"\n", "");
 
         // *** Check for error reply
         switch (state) {
             case IDLE:
-                if (log.isDebugEnabled()) {
-                    log.debug("reply in IDLE state: " + replyString);
-                }
+                log.debug("reply in IDLE state: " + replyString);
                 break;
             case CURRENTQUERYSENT:
-                if (log.isDebugEnabled()) {
-                    log.debug("reply in CURRENTQUERYSENT state: " + replyString);
-                }
-                int valueLength = 4;
-                if (sv.sprogType.sprogType >= SprogType.SPROGIIv3) {
-                    valueLength = 6;
-                }
-                tmpString = replyString.substring(replyString.indexOf("=")
-                        + 1, replyString.indexOf("=") + valueLength);
-                if (log.isDebugEnabled()) {
+                // Look for an "I=" reply
+                log.debug("reply in CURRENTQUERYSENT state: " + replyString);
+                if (replyString.contains("I=")) {
+                    stopTimer();
+                    int valueLength = 4;
+                    if (sv.sprogType.sprogType >= SprogType.SPROGIIv3) {
+                        valueLength = 6;
+                    }
+                    tmpString = replyString.substring(replyString.indexOf("=")
+                            + 1, replyString.indexOf("=") + valueLength);
                     log.debug("Current limit string: " + tmpString);
-                }
-                // Value returned is number of ADC steps 0f 4.88mV across 0.47 ohms
-                // SPROG 3 is equivalent, using .047R sense with 10x amplifier
-                // Convert to milliAmps using integer math
-                try {
-                    currentLimit = (Integer.parseInt(tmpString) * 4880) / 470;
-                } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(null, "Malformed Reply for current limit",
-                            "SPROG Console", JOptionPane.ERROR_MESSAGE);
-                    state = State.IDLE;
-                    return;
-                }
-                if (log.isDebugEnabled()) {
-                    log.debug("Current limit value: " + currentLimit);
-                }
-                currentTextField.setText(String.valueOf(currentLimit));
-                currentTextField.setEnabled(true);
-                // Next get the mode word
-                // Only get this if we have zero active slots in slot manager
-                // in command mode
-                if (sm.getInUseCount() == 0) {
+                    try {
+                        currentLimitFromHardware = Integer.parseInt(tmpString);
+                    } catch (NumberFormatException e) {
+                        JOptionPane.showMessageDialog(null, "Malformed Reply for current limit",
+                                "SPROG Console", JOptionPane.ERROR_MESSAGE);
+                        state = State.IDLE;
+                        return;
+                    }
+                    // Value written is scaled from hardware units to mA
+                    currentLimit = (int)(currentLimitFromHardware * sv.sprogType.getCurrentMultiplier());
+                    log.debug("Current limit scale factor: " + sv.sprogType.getCurrentMultiplier());
+                    log.debug("Current limit from hardware: " + currentLimitFromHardware + " scaled to: " + currentLimit + "mA");
+                    currentTextField.setText(String.valueOf(currentLimit));
+                    currentTextField.setEnabled(true);
+
+                    // Next get the mode word
                     state = State.MODEQUERYSENT;
                     msg = new SprogMessage(1);
                     msg.setOpCode('M');
                     nextLine("cmd: \"" + msg + "\"\n", "");
                     tc.sendSprogMessage(msg, this);
-                } else {
-                    state = State.IDLE;
+                    startTimer();
                 }
                 break;
             case MODEQUERYSENT:
-                if (log.isDebugEnabled()) {
-                    log.debug("reply in MODEQUERYSENT state: " + replyString);
-                }
-                tmpString = replyString.substring(replyString.indexOf("=")
-                        + 2, replyString.indexOf("=") + 6);
-                // Value returned is in hex
-                try {
-                    modeWord = Integer.parseInt(tmpString, 16);
-                } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(null, "Malformed Reply for mode word",
-                            "SPROG Console", JOptionPane.ERROR_MESSAGE);
+                log.debug("reply in MODEQUERYSENT state: " + replyString);
+                if (replyString.contains("M=")) {
+                    stopTimer();
+                    tmpString = replyString.substring(replyString.indexOf("=")
+                            + 2, replyString.indexOf("=") + 6);
+                    // Value returned is in hex
+                    try {
+                        modeWord = Integer.parseInt(tmpString, 16);
+                    } catch (NumberFormatException e) {
+                        JOptionPane.showMessageDialog(null, "Malformed Reply for mode word",
+                                "SPROG Console", JOptionPane.ERROR_MESSAGE);
+                        state = State.IDLE;
+                        return;
+                    }
                     state = State.IDLE;
-                    return;
-                }
-                state = State.IDLE;
-                // Set Speed step radio buttons, etc., according to mode word
-                if ((modeWord & SprogConstants.STEP14_BIT) != 0) {
-                    speed14Button.setSelected(true);
-                } else if ((modeWord & SprogConstants.STEP28_BIT) != 0) {
-                    speed28Button.setSelected(true);
-                } else {
-                    speed128Button.setSelected(true);
-                }
-                if ((modeWord & SprogConstants.ZTC_BIT) != 0) {
-                    ztcCheckBox.setSelected(true);
-                }
-                if ((modeWord & SprogConstants.BLUE_BIT) != 0) {
-                    blueCheckBox.setSelected(true);
+                    // Set Speed step radio buttons, etc., according to mode word
+                    if ((modeWord & SprogConstants.STEP14_BIT) != 0) {
+                        speed14Button.setSelected(true);
+                    } else if ((modeWord & SprogConstants.STEP28_BIT) != 0) {
+                        speed28Button.setSelected(true);
+                    } else {
+                        speed128Button.setSelected(true);
+                    }
+                    if ((modeWord & SprogConstants.ZTC_BIT) != 0) {
+                        ztcCheckBox.setSelected(true);
+                    }
+                    if ((modeWord & SprogConstants.BLUE_BIT) != 0) {
+                        blueCheckBox.setSelected(true);
+                    }
                 }
                 break;
             case CURRENTSENT:
-                if (log.isDebugEnabled()) {
-                    log.debug("reply in CURRENTSENT state: " + replyString);
-                }
+                // Any reply will do here
+                log.debug("reply in CURRENTSENT state: " + replyString);
                 // Get new mode word - assume 128 steps
                 modeWord = SprogConstants.STEP128_BIT;
                 if (speed14Button.isSelected()) {
@@ -566,9 +550,8 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                 tc.sendSprogMessage(msg, this);
                 break;
             case MODESENT:
-                if (log.isDebugEnabled()) {
-                    log.debug("reply in MODESENT state: " + replyString);
-                }
+                // Any reply will do here
+                log.debug("reply in MODESENT state: " + replyString);
                 // Write to EEPROM
                 state = State.WRITESENT;
                 msg = new SprogMessage("W");
@@ -576,9 +559,8 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                 tc.sendSprogMessage(msg, this);
                 break;
             case WRITESENT:
-                if (log.isDebugEnabled()) {
-                    log.debug("reply in WRITESENT state: " + replyString);
-                }
+                // Any reply will do here
+                log.debug("reply in WRITESENT state: " + replyString);
                 // All done
                 state = State.IDLE;
         }
@@ -593,15 +575,15 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         state = State.IDLE;
     }
 
-    protected int SHORT_TIMEOUT = 500;
+    protected int TIMEOUT = 1000;
 
     javax.swing.Timer timer = null;
 
     /**
      * Internal routine to start timer to protect the mode-change.
      */
-    protected void startShortTimer() {
-        restartTimer(SHORT_TIMEOUT);
+    protected void startTimer() {
+        restartTimer(TIMEOUT);
     }
 
     /**
@@ -614,11 +596,12 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     }
 
     /**
-     * Internal routine to handle timer starts & restarts
+     * Internal routine to handle timer starts {@literal &} restarts
      */
     protected void restartTimer(int delay) {
         if (timer == null) {
             timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     timeout();
                 }

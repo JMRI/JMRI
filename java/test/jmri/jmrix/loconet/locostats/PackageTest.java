@@ -26,6 +26,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.loconet.locostats.LocoStatsTest");  // no tests in this class itself
         suite.addTest(LocoStatsFrameTest.suite());
+        suite.addTest(BundleTest.suite());
         return suite;
     }
 

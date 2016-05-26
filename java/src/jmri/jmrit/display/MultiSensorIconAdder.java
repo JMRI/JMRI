@@ -111,7 +111,6 @@ public class MultiSensorIconAdder extends IconAdder {
     /**
      * Only called from MultiSensorIcon popup
      *
-     * @param icons
      */
     void setMultiIcon(List<MultiSensorIcon.Entry> icons) {
         for (int i = 0; i < icons.size(); i++) {

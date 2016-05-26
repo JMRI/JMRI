@@ -17,6 +17,7 @@ public class LocationTrackPair {
     }
 
     // for combo boxes
+    @Override
     public String toString() {
         return _location.getName() + " (" + _track.getName() + ")";
     }

@@ -27,14 +27,7 @@ public class RpsPositionIconTest extends jmri.util.SwingTestCase {
         rpsIcon = new RpsPositionIcon(panel);
         jf.getContentPane().add(rpsIcon);
 
-        jmri.InstanceManager i = new jmri.InstanceManager() {
-            protected void init() {
-                super.init();
-                root = this;
-                store(new jmri.managers.InternalTurnoutManager(), jmri.TurnoutManager.class);
-            }
-        };
-        Assert.assertNotNull("Instance exists", i);
+        jmri.util.JUnitUtil.resetInstanceManager();
 
         // test buttons
         JButton originButton = new JButton("Set 0,0");

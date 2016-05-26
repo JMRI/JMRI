@@ -71,7 +71,7 @@ public class AspectGenerator implements java.beans.PropertyChangeListener {
     /**
      * Access the state of a specific head
      *
-     * @param num Head number 0 -> getNumHeads()-1
+     * @param num Head number {@code 0 -> getNumHeads()-1}
      * @return A SignalHead-defined constant
      */
     public int getHeadState(int num) {

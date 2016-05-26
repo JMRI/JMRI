@@ -47,7 +47,7 @@ public class SimpleServerTest extends TestCase {
         suite.addTest(jmri.jmris.simpleserver.SimpleLightServerTest.suite());
         suite.addTest(jmri.jmris.simpleserver.SimpleOperationsServerTest.suite());
         suite.addTest(jmri.jmris.simpleserver.SimpleServerManagerTest.suite());
-
+        suite.addTest(BundleTest.suite());
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             // put any tests that require a UI here.
             suite.addTest(jmri.jmris.simpleserver.SimpleServerFrameTest.suite());

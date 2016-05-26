@@ -1,4 +1,3 @@
-// SpeedTableVarValue.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.BorderLayout;
@@ -72,9 +71,9 @@ import org.slf4j.LoggerFactory;
  * @author Dave Heap Copyright (C) 2012 Added support for Marklin mfx style
  * speed table
  * @author Dave Heap Copyright (C) 2013 Changes to fix mfx speed table issue
- * (Vstart & Vhigh not written)
- * @author Dave Heap - generate cvList array to incorporate Vstart & Vhigh
- * @version	$Revision$
+ * (Vstart {@literal &} Vhigh not written)
+ * @author Dave Heap - generate cvList array to incorporate Vstart {@literal &}
+ * Vhigh
  *
  */
 public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {
@@ -158,7 +157,6 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
      * <P>
      * Sets the CV(s) as needed.
      *
-     * @param e
      */
     public void stateChanged(ChangeEvent e) {
         // e.getSource() points to the JSlider object - find it in the list
@@ -576,11 +574,10 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         // all the way up now
         _cvMap.get(cvList[1]).setValue((int) Math.round(last));
         // and push each one down (except the first, left as it was)
-        double previous = first;
         double ratio = Math.pow(1. - factor, nValues - 1.);
         double limit = last + (last - first) * ratio;
         for (int i = 1; i < nValues; i++) {
-            previous = limit - (limit - first) * ratio / Math.pow(1. - factor, nValues - 1. - i);
+            double previous = limit - (limit - first) * ratio / Math.pow(1. - factor, nValues - 1. - i);
             int value = (int) (Math.floor(previous));
             _cvMap.get(cvList[i]).setValue(value);
         }
@@ -636,7 +633,6 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
     /**
      * Notify the connected CVs of a state change from above
      *
-     * @param state
      */
     public void setCvState(int state) {
         _cvMap.get(cvList[0]).setState(state);

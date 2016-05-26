@@ -46,6 +46,7 @@ public class TrainSchedule {
     }
 
     // for combo boxes
+    @Override
     public String toString() {
         return _name;
     }

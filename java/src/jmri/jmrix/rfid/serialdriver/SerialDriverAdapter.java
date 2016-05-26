@@ -377,7 +377,6 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
     /**
      * Set the baud rate.
      *
-     * @param rate
      */
     @Override
     public void configureBaudRate(String rate) {

@@ -1,6 +1,7 @@
 // FileUtil.java
 package jmri.util;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,6 +15,7 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -102,7 +104,6 @@ public final class FileUtil {
      * of returning null (as File would). Use {@link #getURI(java.lang.String) }
      * or {@link #getURL(java.lang.String) } instead of this method if possible.
      *
-     * @param path
      * @return {@link java.io.File} at path
      * @throws java.io.FileNotFoundException
      * @see #getURI(java.lang.String)
@@ -121,7 +122,6 @@ public final class FileUtil {
      * {@link java.io.FileNotFoundException} if the file cannot be found instead
      * of returning null (as File would).
      *
-     * @param path
      * @return {@link java.io.File} at path
      * @throws java.io.FileNotFoundException
      * @see #getFile(java.lang.String)
@@ -136,9 +136,7 @@ public final class FileUtil {
      * {@link java.io.FileNotFoundException} if the URL cannot be found instead
      * of returning null.
      *
-     * @param path
      * @return {@link java.net.URL} at path
-     * @throws FileNotFoundException
      * @see #getFile(java.lang.String)
      * @see #getURI(java.lang.String)
      */
@@ -303,7 +301,6 @@ public final class FileUtil {
     /**
      * Convert a portable filename into an absolute filename.
      *
-     * @param path
      * @return An absolute filename
      */
     static public String getAbsoluteFilename(String path) {
@@ -460,7 +457,6 @@ public final class FileUtil {
      * Note that this method may return a false positive if the filename is a
      * file: URL.
      *
-     * @param filename
      * @return true if filename is portable
      */
     static public boolean isPortableFilename(String filename) {
@@ -563,7 +559,6 @@ public final class FileUtil {
      * Convenience method that calls
      * {@link FileUtil#setProgramPath(java.io.File)} with the passed in path.
      *
-     * @param path
      */
     static public void setProgramPath(String path) {
         FileUtilSupport.getDefault().setProgramPath(new File(path));
@@ -577,7 +572,6 @@ public final class FileUtil {
      * loading JMRI (prior to loading any other JMRI code) to be meaningfully
      * used.
      *
-     * @param path
      */
     static public void setProgramPath(File path) {
         FileUtilSupport.getDefault().setProgramPath(path);
@@ -587,7 +581,6 @@ public final class FileUtil {
      * Get the URL of a portable filename if it can be located using
      * {@link #findURL(java.lang.String)}
      *
-     * @param path
      * @return URL of portable or absolute path
      */
     static public URI findExternalFilename(String path) {
@@ -951,7 +944,6 @@ public final class FileUtil {
     /**
      * Return the {@link java.net.URI} for a given URL
      *
-     * @param url
      * @return a URI or null if the conversion would have caused a
      *         {@link java.net.URISyntaxException}
      */
@@ -1023,8 +1015,6 @@ public final class FileUtil {
      *
      * @param file The text file.
      * @return The contents of the file.
-     * @throws FileNotFoundException
-     * @throws IOException
      */
     public static String readFile(File file) throws IOException {
         return FileUtil.readURL(FileUtil.fileToURL(file));
@@ -1036,20 +1026,18 @@ public final class FileUtil {
      *
      * @param url The text URL.
      * @return The contents of the file.
-     * @throws FileNotFoundException
-     * @throws IOException
      */
     public static String readURL(URL url) throws IOException {
         try {
-            InputStreamReader in = new InputStreamReader(url.openStream(), "UTF-8"); // NOI18N
-            BufferedReader reader = new BufferedReader(in);
-            StringBuilder builder = new StringBuilder();
-            String aux;
-            while ((aux = reader.readLine()) != null) {
-                builder.append(aux);
+            StringBuilder builder;
+            try (InputStreamReader in = new InputStreamReader(url.openStream(), StandardCharsets.UTF_8);
+                    BufferedReader reader = new BufferedReader(in)) {
+                builder = new StringBuilder();
+                String aux;
+                while ((aux = reader.readLine()) != null) {
+                    builder.append(aux);
+                }
             }
-            reader.close();
-            in.close();
             return builder.toString();
         } catch (NullPointerException ex) {
             return null;
@@ -1077,7 +1065,6 @@ public final class FileUtil {
      * Create a directory if required. Any parent directories will also be
      * created.
      *
-     * @param path
      */
     public static void createDirectory(String path) {
         FileUtil.createDirectory(new File(path));
@@ -1087,7 +1074,6 @@ public final class FileUtil {
      * Create a directory if required. Any parent directories will also be
      * created.
      *
-     * @param dir
      */
     public static void createDirectory(File dir) {
         if (!dir.exists()) {
@@ -1103,9 +1089,10 @@ public final class FileUtil {
      * {@link java.nio.file.Files#delete(java.nio.file.Path)} or
      * {@link java.nio.file.Files#deleteIfExists(java.nio.file.Path)} for files.
      *
-     * @param path
      * @return true if path was deleted, false otherwise
      */
+    @SuppressFBWarnings(value="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
+            justification="listFiles() is documented to return null only if isDirectory() is false")
     public static boolean delete(File path) {
         if (path.isDirectory()) {
             for (File file : path.listFiles()) {
@@ -1120,9 +1107,7 @@ public final class FileUtil {
      * {@link java.nio.file.Files#copy(java.nio.file.Path, java.io.OutputStream)}
      * for files.
      *
-     * @param source
      * @param dest   must be the file, not the destination directory.
-     * @throws IOException
      */
     public static void copy(File source, File dest) throws IOException {
         if (!source.exists()) {
@@ -1174,15 +1159,14 @@ public final class FileUtil {
      * @throws java.io.IOException if file cannot be written to
      */
     public static void appendTextToFile(File file, String text) throws IOException {
-        PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(file, true), "UTF-8")); // NOI18N
-        pw.println(text);
-        pw.close();
+        try (PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(file, true), StandardCharsets.UTF_8))) {
+            pw.println(text);
+        }
     }
 
     /**
      * Backup a file.
-     * 
-     * @param file
+     *
      * @throws java.io.IOException 
      * @see jmri.util.FileUtilSupport#backup(java.io.File) 
      */
@@ -1192,8 +1176,6 @@ public final class FileUtil {
     
     /**
      * Rotate a file
-     * @param file
-     * @param max
      * @param extension 
      * @throws java.io.IOException 
      * @see jmri.util.FileUtilSupport#rotate(java.io.File, int, java.lang.String) 

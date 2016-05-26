@@ -14,7 +14,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<project name="JMRI" default="debug" basedir=".">
+<project name="JMRI" default="debug" basedir="." xmlns:jacoco="antlib:org.jacoco.ant">
 
     <!-- basedir="." means all paths are relative to the top level -->
     <!-- directory in the project.  We expect that lib et al will  -->
@@ -109,6 +109,7 @@
     <property name="scriptdir"    value="${basedir}/scripts"/>
     <property name="javadir"      value="${basedir}/java"/>
     <property name="doctarget"    value="${javadir}/doc"/>
+    <property name="coveragetarget" value="${basedir}/coveragereport"/>
     <property name="source"       value="${javadir}/src"/>
     <property name="target"       value="${javadir}/classes"/>
     <property name="test"         value="${javadir}/test"/>
@@ -240,6 +241,29 @@
         </sequential>
     </macrodef>
 
+    <!-- Java Code Coverage -->
+    <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
+        <classpath path="lib/jacocoant.jar" />
+    </taskdef>
+
+    <!-- fileset for the jacoco targets. -->
+    <fileset id="jacocofileset" dir="${target}">
+        <include name="**/*.class" />
+        <!-- Exclude classes necessary for testing only from the code coverage report-->
+        <exclude name="**/*Test*.class" />
+        <!-- Exclude testing infrastructure classes -->
+        <exclude name="**/*Scaffold.class" />
+        <exclude name="**/*JUnit*.class" />
+        <exclude name="**/*Demo.class" />
+        <exclude name="**/*Mock*.class" />
+        <exclude name="jmri/jmrit/symbolicprog/tabbedframe/CheckProgrammerNames.class" />
+        <exclude name="jmri/jmrix/openlcb/SampleFactory.class" />
+        <exclude name="jmri/util/swing/SamplePane.class" />
+        <exclude name="apps/tests/Log4JFixture.class" />
+    </fileset>
+
+
+
     <!-- end of definitions -->
 
     <!-- target definitions start here -->
@@ -314,6 +338,8 @@
             <fileset file="jmri-fb.html"/>
             <fileset dir="temp"/>
             <fileset dir="lib/cachedir"/>
+            <fileset dir="${coveragetarget}"/>
+            <fileset file="jacoco.exec"/>
         </delete>
     </target>
 
@@ -1057,6 +1083,7 @@
     </target>
 
     <target name="headlesstest" depends="tests, runtime-library-selection" description="run headless test suite">
+        <jacoco:coverage destfile="jacoco.exec">
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." >
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
@@ -1074,8 +1101,26 @@
             </test>
 
         </junit>
+        </jacoco:coverage>
     </target>
 
+    <target name="headless-coveragereport" depends="headlesstest" description="Generate Test Coverage Report from headlesstest">
+    <!-- Generate Code Coverage report
+    See: http://www.eclemma.org/jacoco/trunk/doc/ant.html -->
+       <jacoco:report>
+          <executiondata>
+              <file file="jacoco.exec" />
+          </executiondata>
+ 
+          <structure name="AntTestReporting">
+              <classfiles>
+                 <fileset refid="jacocofileset"/>
+              </classfiles>
+          </structure>
+ 
+          <html destdir="${coveragetarget}" />
+       </jacoco:report>
+    </target>
 
     <target name="ci-test" depends="tests, runtime-library-selection" description="run AllTest CI tests">
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
@@ -1162,6 +1207,7 @@
     </target>
 
     <target name="logalltest" depends="tests, runtime-library-selection" description="run headless test suite">
+        <jacoco:coverage destfile="jacoco.exec">
         <junit haltonerror="false" haltonfailure="false" showoutput="yes" printsummary="withOutAndErr" fork="yes" dir="." timeout="3600000">
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
@@ -1176,7 +1222,29 @@
             </test>
 
         </junit>
+        </jacoco:coverage>
     </target>
+
+
+    <target name="alltest-coveragereport" depends="logalltest" description="Generate Test Coverage Report from logalltest">
+    <!-- Generate Code Coverage report
+    See: http://www.eclemma.org/jacoco/trunk/doc/ant.html -->
+       <jacoco:report>
+          <executiondata>
+              <file file="jacoco.exec" />
+          </executiondata>
+ 
+          <structure name="AntTestReporting">
+              <classfiles>
+                 <fileset refid="jacocofileset"/>
+              </classfiles>
+          </structure>
+ 
+          <html destdir="${coveragetarget}" />
+       </jacoco:report>
+    </target>
+
+
 
     <!-- end of test execution targets -->
 
@@ -1274,7 +1342,7 @@
         </jar>
     </target>
 
-    <target name="javadoc" depends="init, jjdoc, compile-generated-source" description="create JavaDocs">
+    <target name="javadoc" depends="init, jjdoc, compile-generated-source, plantuml" description="create JavaDocs">
         <javadoc packagenames="jmri.*, apps.*"
            maxmemory="512m"
            overview="${source}/jmri/overview.html"
@@ -1292,7 +1360,13 @@
             <packageset dir="${tmptarget}" defaultexcludes="yes">
                 <include name="jmri/**"/>
             </packageset>
-            <arg value="-Xdoclint:all,-missing,-accessibility,-html,-syntax"/> <!-- dropping some 1.8 warnings -->
+            <arg value="-Xdoclint:all,-missing,-accessibility"/> <!-- dropping some 1.8 warnings -->
+            <arg value="-Xmaxwarns"/>
+            <arg value="500"/><!-- change from default 100 warnings -->
+            <arg value="-Xmaxerrs"/>
+            <arg value="500"/><!-- change from default 100 errors -->
+            <!-- disable output of custom @navassoc tag - used for UML image generation -->
+            <tag name="navassoc" enabled="false"/>
 
             <group title="Core" packages="jmri"/>
             <group title="Cross-system Tools" packages="jmri.jmrit:jmri.jmrit.*"/>
@@ -1337,7 +1411,7 @@
   <!-- use of the public option in the main task definition, and -->
   <!-- the execution of "dot" at the bottom.                     -->
   <!-- Requires Graphviz from http://www.graphviz.org            -->
-    <target name="javadoc-uml" depends="init, jjdoc, compile-generated-source" description="create JavaDocs with UML">
+    <target name="javadoc-uml" depends="init, jjdoc, compile-generated-source, plantuml" description="create JavaDocs with UML">
         <javadoc packagenames="jmri.*, apps.*"
            maxmemory="512m"
            overview="${source}/jmri/overview.html"
@@ -1355,7 +1429,14 @@
             <packageset dir="${tmptarget}" defaultexcludes="yes">
                 <include name="jmri/**"/>
             </packageset>
-            <arg value="-Xdoclint:all,-missing,-accessibility,-html,-syntax"/> <!-- dropping some 1.8 warnings -->
+            <arg value="-Xdoclint:all,-missing,-accessibility"/> <!-- dropping some 1.8 warnings -->
+            <arg value="-Xmaxwarns"/>
+            <arg value="500"/><!-- change from default 100 warnings -->
+            <arg value="-Xmaxerrs"/>
+            <arg value="500"/><!-- change from default 100 errors -->
+            <!-- disable output of custom @navassoc tag - used for UML image generation -->
+            <tag name="navassoc" enabled="false"/>
+
             <doclet name="org.umlgraph.doclet.UmlGraphDoc"
                                   path="${libdir}/UmlGraph-5.7.jar">
                 <param name="-attributes"/>
@@ -1410,6 +1491,17 @@
             <fileset dir="${doctarget}" includes="*.dot"/>
             <mapper type="glob" from="*.dot" to="*.png"/>
         </apply>
+    </target>
+
+    <taskdef name="plantuml" classname="net.sourceforge.plantuml.ant.PlantUmlTask" classpath="${libdir}/plantuml.jar" />
+
+    <target name="plantuml">
+        <plantuml output="${doctarget}" >
+        <fileset dir="${source}">
+                <include name="jmri/**/*.java"/>
+                <include name="apps/**/*.java"/>
+        </fileset>
+        </plantuml>
     </target>
 
     <target name="uploadjavadoc" description="upload existing JavaDocs to jmri.org without recreating">
@@ -1467,7 +1559,7 @@
     <target name="findbugs" depends="dist" description="generate FindBugs report. Specify FindBugs install with local.properties file or &quot;-Dfindbugs.home=YourFindBugsInstallDirectory&quot; on command line." >
         <findbugs home="${findbugs.home}"
                   output="html"
-                  outputFile="${jartarget}/jmri-fb.html"
+                  outputFile="${jartarget}/findbugs.html"
                   jvmargs="-Xmx1536m"
                   timeout="12000000"
                   excludeFilter=".findbugs.xml"

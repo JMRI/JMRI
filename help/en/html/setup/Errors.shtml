@@ -91,6 +91,14 @@ This page lists the error message that can result, and describes what they mean.
  
   <p> Check the electrical connections to the programming track, and also within the locomotive. </p>
  </dd>
+ <dt><strong>310 &#8212; Sequence Error</strong></dt>
+ <dd>
+  <p> For some reason, the programming operation ended early and the command station returned to normal mode (left service mode)
+        before it should have.</p>
+ 
+  <p> This is an unusual error, which might indicate that you've selected the wrong command station type in the preferences. Check that.
+        If that's correct and it's still happening, ask for help on the JMRI users list. </p>
+ </dd>
 
 </dl>
 <hr>

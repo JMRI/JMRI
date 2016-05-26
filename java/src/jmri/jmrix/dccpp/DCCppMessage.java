@@ -1,4 +1,3 @@
-// DCCppMessage.java
 package jmri.jmrix.dccpp;
 
 import java.util.regex.Matcher;
@@ -17,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2002
  * @author	Paul Bender Copyright (C) 2003-2010
  * @author	Mark Underwood Copyright (C) 2015
- * @version	$Revision$
  *
  * Based on XNetMessage by Bob Jacobsen and Paul Bender
  */
@@ -146,7 +144,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     /**
      * Parse a string and generate/return a DCCppMessage object
      * 
-     * @param s String of DCC++ message without the < > brackets
+     * @param s String of DCC++ message without the {@literal < >} brackets
      * @return DCCppMessage
      */
     
@@ -302,7 +300,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     
     /**
      * toString() converts DCCppMessage to String format
-     * (without the <> brackets)
+     * (without the {@code <>} brackets)
      * 
      * @return String form of message.
      */
@@ -1165,7 +1163,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     /**
      * Stationary Decoder Message
      *
-     * Format: <a ADDRESS SUBADDRESS ACTIVATE>
+     * Format: {@code <a ADDRESS SUBADDRESS ACTIVATE>}
      *
      *    ADDRESS:  the primary address of the decoder (0-511)
      *    SUBADDRESS: the subaddress of the decoder (0-3)
@@ -1174,12 +1172,12 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *    Note that many decoders and controllers combine the ADDRESS and SUBADDRESS into a single number, N,
      *    from  1 through a max of 2044, where
      *    
-     *    N = (ADDRESS - 1) * 4 + SUBADDRESS + 1, for all ADDRESS>0
+     *    {@code N = (ADDRESS - 1) * 4 + SUBADDRESS + 1, for all ADDRESS>0}
      *    
      *    OR
      *    
-     *    ADDRESS = INT((N - 1) / 4) + 1
-     *    SUBADDRESS = (N - 1) % 4
+     *    {@code ADDRESS = INT((N - 1) / 4) + 1}
+     *    {@code SUBADDRESS = (N - 1) % 4}
      *    
      *    returns: NONE
     */
@@ -1205,25 +1203,25 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     /**
      * Predefined Turnout Control Message
      *
-     * Format: <T ID THROW>
+     * Format: {@code <T ID THROW>}
      *
      *   ID: the numeric ID (0-32767) of the turnout to control
      *   THROW: 0 (unthrown) or 1 (thrown)
      *   
-     *   returns: <H ID THROW>
+     *   returns:{@code <H ID THROW>}
      *
-     * ADD: <T ID ADDRESS SUBADDRESS>
+     * ADD: {@code <T ID ADDRESS SUBADDRESS>}
      *    ID: the numeric ID (0-32767) of the turnout to control
      *    ADDRESS: Decoder address (0-511)
      *    SUBADDRESS: Decoder subaddress (0-3)
-     *    RETURNS: <O> on success, <X> on failure
+     *    RETURNS: {@code <O>} on success, {@code <X>} on failure
      *
-     * DELETE: <T ID>
+     * DELETE: {@code <T ID>}
      *    ID: the numeric ID (0-32767) of the turnout to control
-     *    RETURNS: <O> on success, <X> on failure
+     *    RETURNS: {@code <O>} on success, {@code <X>} on failure
      *
-     * LIST: <T>
-     *    RETURNS: <H ID ADDRESS SUBADDRESS THROW> for each defined turnout or <X> if no turnouts defined.
+     * LIST: {@code <T>}
+     *    RETURNS: {@code <H ID ADDRESS SUBADDRESS THROW>} for each defined turnout or {@code <X>} if no turnouts defined.
      */
     public static DCCppMessage makeTurnoutCommandMsg(int id, boolean thrown) {
 	// Sanity check inputs
@@ -1317,17 +1315,17 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
     /** Create/Delete/Query Sensor
      * 
-     * ADD: <S ID PIN PULLUP>
+     * ADD: {@code <S ID PIN PULLUP>}
      *    ID (0-32767)
      *    PIN: Arduino Pin # of sensor
      *    PULLUP: TRUE if use internal pullup for PIN, FALSE if don't.
-     *    RETURNS: <O> on success, <X> on failure
+     *    RETURNS: {@code <O>} on success, {@code <X>} on failure
      *
-     * DELETE: <S ID>
-     *    RETURNS: <O> on success, <X> on failure
+     * DELETE: {@code <S ID>}
+     *    RETURNS: {@code <O>} on success, {@code <X>} on failure
      *
-     * LIST: <S>
-     *    RETURNS: <Q ID PIN PULLUP> for each defined sensor, or <X> if no sensors defined.
+     * LIST: {@code <S>}
+     *    RETURNS: {@code <Q ID PIN PULLUP>} for each defined sensor, or {@code <X>} if no sensors defined.
      */
     public static DCCppMessage makeSensorAddMsg(int id, int pin, int pullup) {
 	// Sanity check inputs
@@ -1363,7 +1361,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     /**
      * Write Direct CV Byte to Programming Track
      *
-     * Format: <W CV VALUE CALLBACKNUM CALLBACKSUB>
+     * Format: {@code <W CV VALUE CALLBACKNUM CALLBACKSUB>}
      *
      *   ID: the numeric ID (0-32767) of the turnout to control
      *   THROW: 0 (unthrown) or 1 (thrown)
@@ -1374,7 +1372,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *    
      * Note: The two-argument form embeds the opcode in CALLBACKSUB to aid in decoding the responses.
      *
-     *    returns: <r CALLBACKNUM|CALLBACKSUB|CV Value)
+     *    returns: {@code <r CALLBACKNUM|CALLBACKSUB|CV Value)}
      *    where VALUE is a number from 0-255 as read from the requested CV, or -1 if verificaiton read fails
      */
     public static DCCppMessage makeWriteDirectCVMsg(int cv, int val) {
@@ -1404,7 +1402,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     /**
      * Write Direct CV Bit to Programming Track
      *
-     * Format: <B CV BIT VALUE CALLBACKNUM CALLBACKSUB>
+     * Format: {@code <B CV BIT VALUE CALLBACKNUM CALLBACKSUB>}
      *
      *    writes, and then verifies, a single bit within a Configuration Variable to the decoder of an engine on the programming track
      *    
@@ -1416,7 +1414,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *    
      * Note: The two-argument form embeds the opcode in CALLBACKSUB to aid in decoding the responses.
      *
-     *    returns: <r CALLBACKNUM|CALLBACKSUB|CV BIT VALUE)
+     *    returns: {@code <r CALLBACKNUM|CALLBACKSUB|CV BIT VALUE)}
      *    where VALUE is a number from 0-1 as read from the requested CV bit, or -1 if verificaiton read fails
      */    
     public static DCCppMessage makeBitWriteDirectCVMsg(int cv, int bit, int val) {
@@ -1448,7 +1446,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     /**
      * Read Direct CV Byte from Programming Track
      *
-     * Format: <R CV CALLBACKNUM CALLBACKSUB>
+     * Format: {@code <R CV CALLBACKNUM CALLBACKSUB>}
      *
      *    reads a Configuration Variable from the decoder of an engine on the programming track
      *    
@@ -1458,7 +1456,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *    
      * Note: The two-argument form embeds the opcode in CALLBACKSUB to aid in decoding the responses.
      *
-     *    returns: <r CALLBACKNUM|CALLBACKSUB|CV VALUE)
+     *    returns: {@code <r CALLBACKNUM|CALLBACKSUB|CV VALUE>}
      *    where VALUE is a number from 0-255 as read from the requested CV, or -1 if read could not be verified
      */    
     public static DCCppMessage makeReadDirectCVMsg(int cv) {
@@ -1488,7 +1486,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     /**
      * Write Direct CV Byte to Main Track
      *
-     * Format: <w CAB CV VALUE>
+     * Format: {@code <w CAB CV VALUE>}
      *
      *    writes, without any verification, a Configuration Variable to the decoder of an engine on the main operations track
      *    
@@ -1518,7 +1516,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     /**
      * Write Direct CV Bit to Main Track
      *
-     * Format: <b CAB CV BIT VALUE>
+     * Format: {@code <b CAB CV BIT VALUE>}
      *
      *    writes, without any verification, a single bit within a Configuration Variable to the decoder of an engine on the main operations track
      *    
@@ -1552,9 +1550,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     /**
      * Set Track Power ON or OFFf
      *
-     * Format: <1> (ON) or <0> (OFF)
+     * Format: {@code <1> (ON) or <0> (OFF)}
      *
-     * Returns <p1> (ON) or <p0> (OFF)
+     * Returns {@code <p1> (ON) or <p0> (OFF)}
      */
     public static DCCppMessage makeSetTrackPowerMsg(boolean on) {
 	//String s = new String(Character.toString((on ? DCCppConstants.TRACK_POWER_ON : DCCppConstants.TRACK_POWER_OFF)));
@@ -1575,11 +1573,11 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     /**
      * Read main operations track current
      *
-     * Format: <c>
+     * Format: {@code <c>}
      *
      *    reads current being drawn on main operations track
      *    
-     *    returns: <a CURRENT> 
+     *    returns: {@code <a CURRENT>}
      *    where CURRENT = 0-1024, based on exponentially-smoothed weighting scheme
      */
    public static DCCppMessage makeReadTrackCurrentMsg() {
@@ -1589,7 +1587,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      /**
      * Read DCC++ Base Station Status
      *
-     * Format: <s>
+     * Format: {@code <s>}
      *
      *    returns status messages containing track power status, throttle status, turn-out status, and a version number
      *    NOTE: this is very useful as a first command for an interface to send to this sketch in order to verify connectivity and update any GUI to reflect actual throttle and turn-out settings
@@ -1629,7 +1627,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *              and 1).  A negative value indicates emergency stop.
      * @param isForward true for forward, false for reverse.
      *
-     * Format: <t REGISTER CAB SPEED DIRECTION>
+     * Format: {@code <t REGISTER CAB SPEED DIRECTION>}
      *
      *    sets the throttle for a given register/cab combination 
      *    
@@ -1638,7 +1636,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *    SPEED: throttle speed from 0-126, or -1 for emergency stop (resets SPEED to 0)
      *    DIRECTION: 1=forward, 0=reverse.  Setting direction when speed=0 or speed=-1 only effects directionality of cab lighting for a stopped train
      *    
-     *    returns: <T REGISTER SPEED DIRECTION>
+     *    returns: {@code <T REGISTER SPEED DIRECTION>}
      *    
      */
     public static DCCppMessage makeSpeedAndDirectionMsg(int register, int address, float speed, boolean isForward) {
@@ -1666,7 +1664,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     /** 
      * Function Group Messages (common serial format)
      * 
-     * Format: <f CAB BYTE1 [BYTE2]>
+     * Format: {@code <f CAB BYTE1 [BYTE2]>}
      *
      *    turns on and off engine decoder functions F0-F28 (F0 is sometimes called FL)  
      *    NOTE: setting requests transmitted directly to mobile engine decoder --- current state of engine functions is not stored by this program
@@ -2135,5 +2133,3 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     private final static Logger log = LoggerFactory.getLogger(DCCppMessage.class.getName());
 
 }
-
-/* @(#)DCCppMessage.java */

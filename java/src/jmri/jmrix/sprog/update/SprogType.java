@@ -26,7 +26,9 @@ public class SprogType {
     public static final int SPROG3 = 30;
     public static final int SPROGIV = 40;
     public static final int SPROG5 = 50;
+    public static final int PISPROGONE = 60;
     public static final int NANO = 1000;
+    public static final int PISPROGNANO = 1001;
     public static final int SNIFFER = 2000;
     public int sprogType = UNKNOWN;
 
@@ -66,6 +68,26 @@ public class SprogType {
         return false;
     }
 
+/**
+ * Return the multiplier for scaling the current limit from hardware units
+ * to physical units (mA).
+ * 
+ * @return the multiplier for the current limit
+ */
+    public double getCurrentMultiplier() {
+        switch (sprogType) {
+            case PISPROGONE:
+                // Value returned is number of ADC steps 0f 3.22mV across 0.47
+                // ohms, or equivalent
+                return 3220.0/470;
+                
+            default:
+                // Value returned is number of ADC steps 0f 4.88mV across 0.47
+                // ohms, or equivalent
+                return 4880.0/470;
+        }
+    }
+    
     /**
      * Get the Flash memory block Length for bootloader
      *
@@ -89,7 +111,9 @@ public class SprogType {
             case SPROG3:
             case SPROGIV:
             case SPROG5:
+            case PISPROGONE:
             case NANO:
+            case PISPROGNANO:
             case SNIFFER:
                 return 16;
         }
@@ -143,6 +167,18 @@ public class SprogType {
                 }
                 break;
 
+            case PISPROGNANO:
+                if ((addr >= 0x0C00) && (addr < 0x1FF0)) {
+                    return true;
+                }
+                break;
+                
+            case PISPROGONE:
+                if ((addr >= 0x1000) && (addr < 0x3F00)) {
+                    return true;
+                }
+                break;
+
             default:
                 return false;
         }
@@ -162,6 +198,12 @@ public class SprogType {
             case NANO:
             case SNIFFER:
                 return 0x2200;
+
+            case PISPROGNANO:
+                return 0x0C00;
+
+            case PISPROGONE:
+                return 0x1000;
 
             default:
                 break;
@@ -207,8 +249,12 @@ public class SprogType {
                 return "SPROG IV ";
             case SPROG5:
                 return "SPROG 5 ";
+            case PISPROGONE:
+                return "Pi-SPROG One";
             case NANO:
                 return "SPROG Nano ";
+            case PISPROGNANO:
+                return "Pi-SPROG Nano ";
             case SNIFFER:
                 return "SPROG Sniffer ";
             default:

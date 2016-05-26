@@ -51,16 +51,18 @@ import org.slf4j.LoggerFactory;
  * AllocationPlan objects are discarded.
  * <P>
  *
- * <P>
+ * <BR>
+ * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is open source software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published by the
- * Free Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
+ * </P><P>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * </P>
  *
  * @author	Dave Duchamp Copyright (C) 2011
  * @version	$Revision$
@@ -395,8 +397,8 @@ public class AutoAllocate {
                 }
             }
         }
-// djd debugging 
-        log.info("{}: auto allocating Section {}", ar.getActiveTrain().getTrainName(), ar.getSection().getUserName());
+        log.debug("{}: auto allocating Section {}", ar.getActiveTrain().getTrainName(), 
+                ar.getSectionName());
         _dispatcher.allocateSection(ar, null);
         return true;
     }
@@ -1101,7 +1103,12 @@ public class AutoAllocate {
             }
         }
         if (seq == 0) {
-            log.error("ActiveTrain has no occupied Section");
+            if (at.getMode() != ActiveTrain.MANUAL) {
+                log.error("{}: ActiveTrain has no occupied Section. Halting immediately to avoid runaway.", at.getTrainName());
+                at.getAutoActiveTrain().getAutoEngineer().setHalt(true);
+            } else {
+                log.debug("{}: ActiveTrain has no occupied Section, running in Manual mode.", at.getTrainName());                
+            }           
         } else {
             curSection = temSection;
         }

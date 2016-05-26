@@ -22,7 +22,7 @@ public class RailroadNamePreferencesPanel extends JPanel implements PreferencesP
     private JFrame parentFrame = null;
 
     public RailroadNamePreferencesPanel() {
-        preferences = WebServerManager.getWebServerPreferences();
+        preferences = WebServerPreferences.getDefault();
         initGUI();
         setGUI();
     }

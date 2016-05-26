@@ -24,17 +24,11 @@ import org.slf4j.LoggerFactory;
 public final class OperationsManager {
 
     private ShutDownTask shutDownTask = null;
-    private final String operationsFolderName;
 
     static private OperationsManager instance = null;
     static private final Logger log = LoggerFactory.getLogger(OperationsManager.class);
 
     private OperationsManager() {
-        this("operations"); // NOI18N
-    }
-
-    private OperationsManager(String operationsFolderName) {
-        this.operationsFolderName = operationsFolderName;
         // ensure the default instance of all operations managers
         // are initialized by calling their instance() methods
         // Is there a different, more optimal order for this?
@@ -70,26 +64,13 @@ public final class OperationsManager {
     }
 
     /**
-     * Override the default OperationsManager. Used for unit testing.
-     *
-     * @param operationsFolderName
-     */
-    protected static void setInstance(String operationsFolderName) {
-        instance = new OperationsManager(operationsFolderName);
-    }
-
-    /**
      * Get the path to the Operations folder, rooted in the User's file path, as
      * a String.
      *
      * @return A path
-     * @see #getOperationsFolderName()
      */
     public String getPath() {
-        if (this.getOperationsFolderName().endsWith(File.separator)) {
-            return OperationsXml.getFileLocation() + this.getOperationsFolderName();
-        }
-        return OperationsXml.getFileLocation() + this.getOperationsFolderName() + File.separator;
+        return OperationsXml.getFileLocation() + OperationsXml.getOperationsDirectoryName() + File.separator;
     }
 
     /**
@@ -159,12 +140,5 @@ public final class OperationsManager {
                 return true;
             }
         };
-    }
-
-    /**
-     * @return the operationsFolderName
-     */
-    public String getOperationsFolderName() {
-        return operationsFolderName;
     }
 }

@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
+import jmri.InstanceManager;
 import jmri.beans.Bean;
 import jmri.jmrit.XmlFile;
 import jmri.profile.ProfileManager;
@@ -39,6 +40,8 @@ public class WebServerPreferences extends Bean {
     public static final String RailRoadName = "railRoadName"; // NOI18N
     public static final String AllowRemoteConfig = "allowRemoteConfig"; // NOI18N
     public static final String ReadonlyPower = "readonlyPower"; // NOI18N
+    public static final String DISABLE_FRAME_SERVER = "disableFrames"; // NOI18N
+    public static final String REDIRECT_FRAMES = "redirectFramesToPanels"; // NOI18N
 
     // Flag that prefs have not been saved:
     private boolean isDirty = false;
@@ -50,8 +53,10 @@ public class WebServerPreferences extends Bean {
     private final ArrayList<String> disallowedFrames = new ArrayList<>(Arrays.asList(Bundle.getMessage("DefaultDisallowedFrames").split(";")));
     private String railRoadName = Bundle.getMessage("DefaultRailroadName");
     private boolean allowRemoteConfig = false;
-    protected boolean readonlyPower = true;
+    private boolean readonlyPower = true;
     private int port = 12080;
+    private boolean disableFrames = false;
+    private boolean redirectFramesToPanels = true;
     private static Logger log = LoggerFactory.getLogger(WebServerPreferences.class.getName());
 
     public WebServerPreferences(String fileName) {
@@ -80,7 +85,7 @@ public class WebServerPreferences extends Bean {
         this.readPreferences(sharedPreferences);
         if (migrate) {
             try {
-                log.info("Migrating from old Webserver preferences in {} to new format in {}.", fileName, FileUtil.getAbsoluteFilename("profile:preferences"));
+                log.info("Migrating from old Webserver preferences in {} to new format in {}.", fileName, FileUtil.getAbsoluteFilename("profile:profile"));
                 sharedPreferences.sync();
             } catch (BackingStoreException ex) {
                 log.error("Unable to write WebServer preferences.", ex);
@@ -93,6 +98,13 @@ public class WebServerPreferences extends Bean {
         this.readPreferences(sharedPreferences);
     }
 
+    public static WebServerPreferences getDefault() {
+        if (InstanceManager.getDefault(WebServerPreferences.class) == null) {
+            InstanceManager.setDefault(WebServerPreferences.class, new WebServerPreferences());
+        }
+        return InstanceManager.getDefault(WebServerPreferences.class);
+    }
+
     private void readPreferences(Preferences sharedPreferences) {
         this.allowRemoteConfig = sharedPreferences.getBoolean(AllowRemoteConfig, this.allowRemoteConfig);
         this.clickDelay = sharedPreferences.getInt(ClickDelay, this.clickDelay);
@@ -101,9 +113,11 @@ public class WebServerPreferences extends Bean {
         this.readonlyPower = sharedPreferences.getBoolean(ReadonlyPower, this.readonlyPower);
         this.refreshDelay = sharedPreferences.getInt(RefreshDelay, this.refreshDelay);
         this.useAjax = sharedPreferences.getBoolean(UseAjax, this.useAjax);
+        this.disableFrames = sharedPreferences.getBoolean(DISABLE_FRAME_SERVER, this.disableFrames);
+        this.redirectFramesToPanels = sharedPreferences.getBoolean(REDIRECT_FRAMES, this.redirectFramesToPanels);
         try {
-            if (sharedPreferences.nodeExists(DisallowedFrames)) { // throws BackingStoreException
-                Preferences frames = sharedPreferences.node(DisallowedFrames);
+            Preferences frames = sharedPreferences.node(DisallowedFrames);
+            if (frames.keys().length != 0) {
                 this.disallowedFrames.clear();
                 for (String key : frames.keys()) { // throws BackingStoreException
                     this.disallowedFrames.add(frames.get(key, null));
@@ -115,36 +129,43 @@ public class WebServerPreferences extends Bean {
         }
         this.port = sharedPreferences.getInt(Port, this.port);
     }
-    
+
     public void load(Element child) {
         Attribute a;
-        if ((a = child.getAttribute(ClickDelay)) != null) {
+        a = child.getAttribute(ClickDelay);
+        if (a != null) {
             try {
-                setClickDelay(Integer.valueOf(a.getValue()));
-            } catch (NumberFormatException e) {
+                setClickDelay(a.getIntValue());
+            } catch (DataConversionException e) {
                 log.debug(e.getLocalizedMessage(), e);
             }
         }
-        if ((a = child.getAttribute(RefreshDelay)) != null) {
+        a = child.getAttribute(RefreshDelay);
+        if (a != null) {
             try {
-                setRefreshDelay(Integer.valueOf(a.getValue()));
-            } catch (NumberFormatException e) {
+                setRefreshDelay(a.getIntValue());
+            } catch (DataConversionException e) {
                 log.debug(e.getLocalizedMessage(), e);
             }
         }
-        if ((a = child.getAttribute(UseAjax)) != null) {
+        a = child.getAttribute(UseAjax);
+        if (a != null) {
             setUseAjax(Boolean.parseBoolean(a.getValue()));
         }
-        if ((a = child.getAttribute(Simple)) != null) {
+        a = child.getAttribute(Simple);
+        if (a != null) {
             setPlain(Boolean.parseBoolean(a.getValue()));
         }
-        if ((a = child.getAttribute(AllowRemoteConfig)) != null) {
+        a = child.getAttribute(AllowRemoteConfig);
+        if (a != null) {
             setAllowRemoteConfig(Boolean.parseBoolean(a.getValue()));
         }
-        if ((a = child.getAttribute(ReadonlyPower)) != null) {
+        a = child.getAttribute(ReadonlyPower);
+        if (a != null) {
             setReadonlyPower(Boolean.parseBoolean(a.getValue()));
         }
-        if ((a = child.getAttribute(Port)) != null) {
+        a = child.getAttribute(Port);
+        if (a != null) {
             try {
                 setPort(a.getIntValue());
             } catch (DataConversionException ex) {
@@ -152,7 +173,8 @@ public class WebServerPreferences extends Bean {
                 log.error("Unable to read port. Setting to default value.", ex);
             }
         }
-        if ((a = child.getAttribute(RailRoadName)) != null) {
+        a = child.getAttribute(RailRoadName);
+        if (a != null) {
             setRailRoadName(a.getValue());
         }
         Element df = child.getChild(DisallowedFrames);
@@ -227,16 +249,18 @@ public class WebServerPreferences extends Bean {
         sharedPreferences.putBoolean(AllowRemoteConfig, this.allowRemoteConfig());
         sharedPreferences.putBoolean(ReadonlyPower, this.isReadonlyPower());
         sharedPreferences.put(RailRoadName, getRailRoadName());
+        sharedPreferences.putBoolean(DISABLE_FRAME_SERVER, this.isDisableFrames());
+        sharedPreferences.putBoolean(REDIRECT_FRAMES, this.redirectFramesToPanels);
         Preferences node = sharedPreferences.node(DisallowedFrames);
         this.getDisallowedFrames().stream().forEach((frame) -> {
             node.put(Integer.toString(this.disallowedFrames.indexOf(frame)), frame);
         });
+        sharedPreferences.putInt(Port, this.getPort());
         try {
             sharedPreferences.sync();
         } catch (BackingStoreException ex) {
             log.error("Exception while saving web server preferences", ex);
         }
-        sharedPreferences.putInt(Port, this.getPort());
         setIsDirty(false);  //  Resets only when stored
     }
 
@@ -360,6 +384,45 @@ public class WebServerPreferences extends Bean {
         return Bundle.getMessage("DefaultRailroadName");
     }
 
-    public static class WebServerPreferencesXml extends XmlFile {
+    /**
+     * @return true if displaying frames in web pages is disabled, false
+     *         otherwise
+     */
+    public boolean isDisableFrames() {
+        return disableFrames;
+    }
+
+    /**
+     * Set whether or not frames are returned when requests for frames are made
+     * from web pages.
+     *
+     * @param disableFrames true to prevent frames from being displayed in web
+     *                      pages
+     */
+    public void setDisableFrames(boolean disableFrames) {
+        this.disableFrames = disableFrames;
+    }
+
+    /**
+     * Are requests for frames redirected to panels when frames are disabled?
+     *
+     * @return true if frames should be redirected to panels, false otherwise
+     */
+    public boolean isRedirectFramesToPanels() {
+        return redirectFramesToPanels;
+    }
+
+    /**
+     * Set whether or not requests for frames should be redirected to panels
+     * when frames are disabled.
+     *
+     * @param redirectFramesToPanels true if frames should be redirected to
+     *                               panels, false otherwise
+     */
+    public void setRedirectFramesToPanels(boolean redirectFramesToPanels) {
+        this.redirectFramesToPanels = redirectFramesToPanels;
+    }
+
+    private static class WebServerPreferencesXml extends XmlFile {
     }
 }

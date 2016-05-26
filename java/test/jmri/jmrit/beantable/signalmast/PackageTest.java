@@ -8,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for classes in the jmri.jmrit.beantable.signalmast package
  *
  * @author	Bob Jacobsen Copyright 2014
- * @version	$Revision$
  */
 public class PackageTest extends TestCase {
 

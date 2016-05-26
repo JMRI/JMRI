@@ -11,14 +11,8 @@ import jmri.util.swing.WindowInterface;
  * Create a new throttle.
  *
  * @author	Glen Oberhauser
- * @version $Revision$
  */
 public class ThrottleCreationAction extends JmriAbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3268542525652376730L;
 
     public ThrottleCreationAction(String s, WindowInterface wi) {
         super(s, wi);

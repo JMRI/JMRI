@@ -10,12 +10,12 @@ import javax.swing.JPopupMenu;
  * Defines display objects.
  * <P>
  * These are capable of:
- * <UL>
+ * </p><UL>
  * <LI>Being positioned by being dragged around on the screen. (See
  * {@link #setPositionable})
  * <LI>Being hidden. (See {@link #setHidden})
  * <LI>Controlling the layout. (See {@link #setControlling})
- * </OL>
+ * </UL><p>
  * These are manipulated externally, for example by a subclass of
  * {@link Editor}. They are generally not stored directly as part of the state
  * of the object, though they could be, but as part of the state of the external
@@ -80,8 +80,9 @@ public interface Positionable extends Cloneable {
     /**
      * Make a deep copy of Positional object. Implementation should create a new
      * object and immediately pass the object to finishClone() returning the
-     * result of finishClone(). i.e. implementation must be: <br/>
-     * public Positionable deepClone() { Subtype t = new Subtype(); return finishClone(t); } <br/>
+     * result of finishClone(). i.e. implementation must be:
+     * <p>
+     * {@code public Positionable deepClone() { Subtype t = new Subtype(); return finishClone(t); } }
      * <p>
      * Then finishClone() finishes the deep Copy of a Positional object. Implementation should make
      * deep copies of the additional members of this sub class and then pass

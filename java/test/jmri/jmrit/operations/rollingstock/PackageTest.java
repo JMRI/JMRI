@@ -28,6 +28,7 @@ public class PackageTest extends TestCase {
         suite.addTest(OperationsRollingStockTest.suite());
         suite.addTest(jmri.jmrit.operations.rollingstock.cars.PackageTest.suite());
         suite.addTest(jmri.jmrit.operations.rollingstock.engines.PackageTest.suite());
+        suite.addTest(BundleTest.suite());
 
 
         // Last test, deletes log file if one exists

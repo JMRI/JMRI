@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 
 /*
  * A few notes on implementation
- * 
+ *
  * DCCppReply objects are (usually) created by parsing a String that is the result
  * of an incoming reply message from the Base Station.
  * The information is stored as a String, along with a Regex string that allows
@@ -30,9 +30,9 @@ import org.slf4j.LoggerFactory;
  *
  * Listeners and other higher level code should first check to make sure the
  * DCCppReply is of the correct type by calling the relevant isMessageType() method.
- * Then, call the various getThisDataElement() method to retrieve the data of 
+ * Then, call the various getThisDataElement() method to retrieve the data of
  * interest.
- * 
+ *
  * For example, to get the Speed from a Throttle Reply, first check that it
  * /is/ a ThrottleReply by calling message.isThrottleReply(), and then
  * get the speed by calling message.getSpeedInt() or getSpeedString().
@@ -41,13 +41,13 @@ import org.slf4j.LoggerFactory;
  * JMRI code is isolated/insulated from any changes in the actual Base Station
  * message format.  For example, there is no need for the listener code to know
  * that the speed is the second number after the "T" in the reply (nor that a
- * Throttle reply starts with a "T"). 
+ * Throttle reply starts with a "T").
  *
  */
 
 public class DCCppReply extends jmri.jmrix.AbstractMRReply {
-    
-    private ArrayList<Integer> valueList = new ArrayList<>();
+
+    private ArrayList<Integer> valueList = new ArrayList<Integer>();
     protected String myRegex;
     protected StringBuilder myReply;
     protected char opcode;
@@ -65,7 +65,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public DCCppReply(DCCppReply reply) {
         super(reply);
         setBinary(false);
-        valueList = new ArrayList(reply.valueList);
+        valueList = new ArrayList<Integer>(reply.valueList);
         myRegex = reply.myRegex;
         myReply = reply.myReply;
     }
@@ -84,7 +84,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 
     /**
      * Create a reply from a string of hex characters.
-     * 
+     *
      * Not sure this one is needed.
      */
     @Deprecated
@@ -96,7 +96,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         _nDataChars = myReply.length();
         _dataChars = new int[_nDataChars];
     }
-        
+
     protected DCCppReply(char c, String regex) {
         super();
         setBinary(false);
@@ -113,7 +113,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         log.debug("DCCppReply.toString(): char {} {} msg {}", opcode, Character.toString(opcode), myReply.toString());
         return(myReply.toString());
     }
-    
+
     public void parseReply(String s) {
         DCCppReply r = DCCppReplyParser.parseReply(s);
         log.debug("in parseReply() string: {}", s);
@@ -126,21 +126,21 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             log.debug("copied: this: {} opcode {}", this.toString(), opcode);
         }
     }
-    
+
     ///
     ///
     /// TODO: Stopped Refactoring to StringBuilder here 12/12/15
     ///
     ///
-    
+
     /**
      * Parses a string and generates a DCCppReply from the string contents
-     * 
+     *
      * @param s String to be parsed
      * @return DCCppReply or null if not a valid formatted string
      */
     public static DCCppReply parseDCCppReply(String s) {
-        
+
         log.debug("Parse charAt(0): {} ({})", s.charAt(0), Character.toString(s.charAt(0)));
         DCCppReply r = new DCCppReply(s.charAt(0), null);
         switch(s.charAt(0)) {
@@ -154,7 +154,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 } else {
                     return(null);
                 }
-                
+
             case DCCppConstants.THROTTLE_REPLY:
                 if (s.matches(DCCppConstants.THROTTLE_REPLY_REGEX)) {
                     r.myReply = new StringBuilder(s);
@@ -164,7 +164,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 log.debug("Throttle Reply: {}", r.toString());
                 r._nDataChars = r.toString().length();
                 r.myRegex = DCCppConstants.THROTTLE_REPLY_REGEX;
-                return(r);  
+                return(r);
             case DCCppConstants.TURNOUT_REPLY:
                 if (s.matches(DCCppConstants.TURNOUT_REPLY_REGEX)) {
                     r.myReply = new StringBuilder(s);
@@ -182,7 +182,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 }
                 r._nDataChars = r.toString().length();
                 log.debug("Parsed Reply: {} length {}", r.toString(), r._nDataChars);
-                return(r);  
+                return(r);
             case DCCppConstants.OUTPUT_REPLY:
                 if (s.matches(DCCppConstants.OUTPUT_REPLY_REGEX)) {
                     r.myReply = new StringBuilder(s);
@@ -204,7 +204,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     return(null);
                 }
                 r._nDataChars = r.toString().length();
-                return(r);  
+                return(r);
             case DCCppConstants.POWER_REPLY:
                 if (s.matches(DCCppConstants.TRACK_POWER_REPLY_REGEX)) {
                     r.myReply = new StringBuilder(s);
@@ -213,7 +213,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     return(null);
                 }
                 r._nDataChars = r.toString().length();
-                return(r);  
+                return(r);
             case DCCppConstants.CURRENT_REPLY:
                 if (s.matches(DCCppConstants.CURRENT_REPLY_REGEX)) {
                     r.myReply = new StringBuilder(s);
@@ -222,7 +222,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     return(null);
                 }
                 r._nDataChars = r.toString().length();
-                return(r);  
+                return(r);
             case DCCppConstants.WRITE_EEPROM_REPLY:
                 if (s.matches(DCCppConstants.WRITE_EEPROM_REPLY_REGEX)) {
                     r.myReply = new StringBuilder(s);
@@ -231,7 +231,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     return(null);
                 }
                 r._nDataChars = r.toString().length();
-                return(r);  
+                return(r);
             case DCCppConstants.MEMORY_REPLY:
                 if (s.matches(DCCppConstants.FREE_MEMORY_REPLY_REGEX)) {
                     r.myReply = new StringBuilder(s);
@@ -240,7 +240,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     return(null);
                 }
                 r._nDataChars = r.toString().length();
-                return(r);  
+                return(r);
 //            case DCCppConstants.LISTPACKET_REPLY:
             case DCCppConstants.SENSOR_REPLY_H:
                 if (s.matches(DCCppConstants.SENSOR_INACTIVE_REPLY_REGEX)) {
@@ -250,7 +250,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     return(null);
                 }
                 r._nDataChars = r.toString().length();
-                return(r);  
+                return(r);
             case DCCppConstants.SENSOR_REPLY_L:
                 if (s.matches(DCCppConstants.SENSOR_ACTIVE_REPLY_REGEX)) {
                     r.myReply = new StringBuilder(s);
@@ -262,7 +262,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     return(null);
                 }
                 r._nDataChars = r.toString().length();
-                return(r);  
+                return(r);
             case DCCppConstants.MADC_FAIL_REPLY:
                 r.myReply = new StringBuilder(s);
                 r.myRegex = DCCppConstants.MADC_FAIL_REPLY_REGEX;
@@ -275,7 +275,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 return(null);
         }
     }
-    
+
     public int getOpCode() {
         return((opcode) & 0x00FF);
 //	return((getElement(0) & 0x00FF));
@@ -302,7 +302,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             return(' ');
         }
     }
- 
+
     public void setElement(int n, int v) {
         // We want the ASCII value, not the string interpretation of the int
         char c = (char)(v & 0xFF);
@@ -327,7 +327,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public boolean getValueBool(int idx) {
-        Matcher m = this.match(myReply.toString(), myRegex, "gvi");
+        Matcher m = DCCppReply.match(myReply.toString(), myRegex, "gvi");
         if ((m != null) && (idx <= m.groupCount())) {
             return(!m.group(idx).equals("0"));
         } else {
@@ -337,7 +337,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public String getValueString(int idx) {
-        Matcher m = this.match(myReply.toString(), myRegex, "gvs");
+        Matcher m = DCCppReply.match(myReply.toString(), myRegex, "gvs");
         if ((m != null) && (idx <= m.groupCount())) {
             return(m.group(idx));
         } else {
@@ -345,9 +345,9 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             return("");
         }
     }
-    
+
     public int getValueInt(int idx) {
-        Matcher m = this.match(myReply.toString(), myRegex, "gvi");
+        Matcher m = DCCppReply.match(myReply.toString(), myRegex, "gvi");
         if ((m != null) && (idx <= m.groupCount())) {
             return(Integer.parseInt(m.group(idx)));
         } else {
@@ -356,9 +356,9 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         }
     }
 
-    /* 
-     * skipPrefix is not used at this point in time, but is 
-     *  defined as abstract in AbstractMRReply 
+    /*
+     * skipPrefix is not used at this point in time, but is
+     *  defined as abstract in AbstractMRReply
      */
     @Override
     protected int skipPrefix(int index) {
@@ -511,7 +511,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 	    return(0);
         }
     }
-    
+
     public boolean getDirectionBool() {
         // Will return true or false
         if (this.isThrottleReply()) {
@@ -769,7 +769,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 	    return(false);
         }
     }
-    
+
     public String getOutputCmdStateString() {
 	if (this.isOutputCmdReply()) {
             return(this.getValueBool(2) ? "THROWN" : "CLOSED");
@@ -786,11 +786,11 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public boolean getOutputIsHigh() {
         return(this.getOutputCmdStateBool());
     }
-    
+
     public boolean getOutputIsLow() {
         return(!this.getOutputCmdStateBool());
     }
-    
+
     public String getSensorDefNumString() {
 	if (this.isSensorDefReply()) {
             return(this.getValueString(1));
@@ -842,7 +842,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 	    return(false);
         }
     }
-    
+
     public String getSensorNumString() {
 	if (this.isSensorReply()) {
             return(this.getValueString(1));
@@ -868,7 +868,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public int getSensorStateInt() {
 	if (this.isSensorReply()) {
             return(this.myRegex.equals(DCCppConstants.SENSOR_ACTIVE_REPLY_REGEX) ? 1 : 0);
-	} else 
+	} else
 	    log.error("SensorReply Parser called on non-SensorReply message type {}", this.getOpCodeChar());
 	    return(0);
     }
@@ -880,7 +880,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public boolean getSensorIsInactive() {
         return(this.myRegex.equals(DCCppConstants.SENSOR_INACTIVE_REPLY_REGEX));
     }
-    
+
     public String getFreeMemoryString() {
  	if (this.isFreeMemoryReply()) {
             return(this.getValueString(1));
@@ -893,7 +893,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public int getFreeMemoryInt() {
 	return(Integer.parseInt(this.getFreeMemoryString()));
     }
-   
+
 
     //-------------------------------------------------------------------
 
@@ -930,10 +930,10 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 	    (this.matches(DCCppConstants.CURRENT_REPLY_REGEX)) ||
 	    (this.matches(DCCppConstants.SENSOR_REPLY_REGEX)) ||
 	    (this.matches(DCCppConstants.BROKEN_SENSOR_REPLY_REGEX)) ||
-            (this.matches(DCCppConstants.SENSOR_DEF_REPLY_REGEX)) ||    
+            (this.matches(DCCppConstants.SENSOR_DEF_REPLY_REGEX)) ||
 	    (this.matches(DCCppConstants.SENSOR_INACTIVE_REPLY_REGEX)) ||
 	    (this.matches(DCCppConstants.SENSOR_ACTIVE_REPLY_REGEX)) ||
-            (this.matches(DCCppConstants.OUTPUT_REPLY_REGEX)) ||    
+            (this.matches(DCCppConstants.OUTPUT_REPLY_REGEX)) ||
 	    (this.matches(DCCppConstants.MADC_FAIL_REPLY_REGEX)) ||
 	    (this.matches(DCCppConstants.MADC_SUCCESS_REPLY_REGEX)) ||
             (this.matches(DCCppConstants.STATUS_REPLY_REGEX)) ||
@@ -945,11 +945,11 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 	}
     }
 
-    // decode messages of a particular form 
-    /* 
-     * The next group of routines are used by Feedback and/or turnout 
-     * control code.  These are used in multiple places within the code, 
-     * so they appear here. 
+    // decode messages of a particular form
+    /*
+     * The next group of routines are used by Feedback and/or turnout
+     * control code.  These are used in multiple places within the code,
+     * so they appear here.
      */
 
     // NOTE: Methods below here are holdovers from XPressNet implementation

@@ -151,7 +151,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         JPanel p5 = new JPanel();
 
         DefaultListModel<String> groupModel = new DefaultListModel<String>();
-        // Look for Sensor group in Route table 
+        // Look for Sensor group in Route table
         RouteManager rm = InstanceManager.routeManagerInstance();
         List<String> routeList = rm.getSystemNameList();
         int i = 0;
@@ -172,7 +172,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
             }
             i++;
         }
-        // Look for Sensor group in Logix 
+        // Look for Sensor group in Logix
         Logix logix = getSystemLogix();
         for (i = 0; i < logix.getNumConditionals(); i++) {
             String name = logix.getConditionalByNumberOrder(i);
@@ -214,7 +214,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         logix.deActivateLogix();
         String cSystemName = ConditionalSystemPrefix + group.toUpperCase();
         String cUserName = ConditionalUserPrefix + group;
-        // add new Conditional        
+        // add new Conditional
         ArrayList<ConditionalVariable> variableList = new ArrayList<ConditionalVariable>();
         ArrayList<ConditionalAction> actionList = new ArrayList<ConditionalAction>();
         int count = 0;
@@ -257,7 +257,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
             group = _nameField.getText().toUpperCase().trim();
         }
         _nameField.setText(group);
-        // Look for Sensor group in Route table 
+        // Look for Sensor group in Route table
         RouteManager rm = InstanceManager.routeManagerInstance();
         List<String> l = rm.getSystemNameList();
         String prefix = (namePrefix + group + nameDivider).toUpperCase();
@@ -365,7 +365,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
                 }
             }
         }
-        DefaultListModel model = (DefaultListModel) _sensorGroupList.getModel();
+        DefaultListModel<String> model = (DefaultListModel<String>) _sensorGroupList.getModel();
         int index = model.indexOf(group);
         if (index > -1) {
             model.remove(index);

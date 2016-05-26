@@ -3,6 +3,7 @@ package jmri.jmrit.display.layoutEditor;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import jmri.util.JUnitUtil;
 import junit.extensions.jfcunit.TestHelper;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.extensions.jfcunit.finder.AbstractButtonFinder;
@@ -10,7 +11,6 @@ import junit.extensions.jfcunit.finder.DialogFinder;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import jmri.util.JUnitUtil;
 
 /**
  * Swing jfcUnit tests for the LayoutEditor
@@ -83,6 +83,7 @@ public class LayoutEditorWindowTest extends jmri.util.SwingTestCase {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initShutDownManager();
         // dispose of the single PanelMenu instance
         jmri.jmrit.display.PanelMenu.instance().dispose();
     }

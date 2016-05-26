@@ -126,6 +126,7 @@ public class ExceptionDisplayFrame extends JDialog {
         showDetailsButton = new JButton("Show details"); // NOI18N
         showDetailsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         showDetailsButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent arg0) {
                 detailsPanel.setVisible(true);
                 pack();
@@ -213,6 +214,7 @@ public class ExceptionDisplayFrame extends JDialog {
 
         closeButton = new JButton("Close"); // NOI18N
         closeButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent arg0) {
                 dispose();
             }

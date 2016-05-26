@@ -1,4 +1,3 @@
-// AbstractValue.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.Color;
@@ -22,7 +21,6 @@ import java.beans.PropertyChangeSupport;
  * Description:	Represents a single CV value
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2005
- * @version	$Revision$
  */
 public abstract class AbstractValue {
 

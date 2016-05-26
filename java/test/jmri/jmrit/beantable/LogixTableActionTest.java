@@ -30,7 +30,7 @@ public class LogixTableActionTest extends jmri.util.SwingTestCase {
 
     static final int NUM_STATE_VARS = 20;
     static final int NUM_ACTIONS = 27;
-    static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
+    //static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
 
     private static LogixTableAction _logixTable;
 
@@ -56,7 +56,7 @@ public class LogixTableActionTest extends jmri.util.SwingTestCase {
             ThreadingUtil.runOnGUI(()->{ _logixTable.donePressed(null); });
             
             // note: _logixTable.m.EDITCOL = BeanTableDataModel.DELETECOL
-            _logixTable.m.setValueAt(rbx.getString("ButtonEdit"), 0, BeanTableDataModel.DELETECOL);
+            _logixTable.m.setValueAt(Bundle.getMessage("ButtonEdit"), 0, BeanTableDataModel.DELETECOL);
             ThreadingUtil.runOnGUI(()->{ _logixTable.newConditionalPressed(null); });
             
             //_logixTable.helpPressed(null);

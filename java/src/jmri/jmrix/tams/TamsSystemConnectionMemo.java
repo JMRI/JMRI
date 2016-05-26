@@ -59,7 +59,7 @@ public class TamsSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     public void configureManagers() {
 
         powerManager = new jmri.jmrix.tams.TamsPowerManager(getTrafficController());
-        jmri.InstanceManager.setPowerManager(powerManager);
+        jmri.InstanceManager.store(powerManager, jmri.PowerManager.class);
 
         InstanceManager.setProgrammerManager(getProgrammerManager());
 

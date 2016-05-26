@@ -43,15 +43,18 @@ public class EngineTypes extends RollingStockAttribute {
         return _instance;
     }
 
+    @Override
     protected String getDefaultNames() {
         return TYPES;
     }
 
+    @Override
     public void addName(String type) {
         super.addName(type);
         setDirtyAndFirePropertyChange(ENGINETYPES_CHANGED_PROPERTY, null, type);
     }
 
+    @Override
     public void deleteName(String type) {
         super.deleteName(type);
         setDirtyAndFirePropertyChange(ENGINETYPES_CHANGED_PROPERTY, type, null);

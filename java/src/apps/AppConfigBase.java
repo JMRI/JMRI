@@ -1,4 +1,3 @@
-// AppConfigBase.java
 package apps;
 
 import java.text.MessageFormat;
@@ -13,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import jmri.Application;
 import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.UserPreferencesManager;
 import jmri.jmrix.JmrixConfigPane;
 import jmri.swing.ManagingPreferencesPanel;
@@ -28,7 +28,6 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2003, 2008, 2010
  * @author Matthew Harris copyright (c) 2009
  * @author	Ken Cameron Copyright (C) 2011
- * @version	$Revision$
  */
 public class AppConfigBase extends JmriPanel {
 
@@ -217,7 +216,7 @@ public class AppConfigBase extends JmriPanel {
         final UserPreferencesManager p;
         p = InstanceManager.getDefault(UserPreferencesManager.class);
         p.resetChangeMade();
-        if (restartRequired) {
+        if (restartRequired && !InstanceManager.getDefault(ShutDownManager.class).isShuttingDown()) {
             JLabel question = new JLabel(MessageFormat.format(rb.getString("MessageLongQuitWarning"), Application.getApplicationName()));
             Object[] options = {rb.getString("RestartNow"), rb.getString("RestartLater")};
             int retVal = JOptionPane.showOptionDialog(this,
@@ -241,7 +240,7 @@ public class AppConfigBase extends JmriPanel {
         }
         // don't restart the program, just close the window
         if (getTopLevelAncestor() != null) {
-            ((JFrame) getTopLevelAncestor()).setVisible(false);
+            getTopLevelAncestor().setVisible(false);
         }
     }
 

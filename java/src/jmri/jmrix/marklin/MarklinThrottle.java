@@ -112,7 +112,7 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
     }
 
     /**
-     * Set the speed & direction.
+     * Set the speed {@literal &} direction.
      * <P>
      * This intentionally skips the emergency stop value of 1.
      *
@@ -248,7 +248,7 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
             if (m.getCommand() == MarklinConstants.LOCOSPEED) {
                 int speed = m.getElement(9);
                 speed = (speed << 8) + (m.getElement(10));
-                Float newSpeed = new Float(floatSpeed(speed));
+                Float newSpeed = Float.valueOf(floatSpeed(speed));
                 if (log.isDebugEnabled()) {
                     log.debug("Speed raw " + speed + " float " + newSpeed);
                 }

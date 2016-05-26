@@ -28,7 +28,6 @@ import jmri.Turnout;
 import jmri.implementation.AbstractNamedBean;
 import jmri.jmrit.beantable.beanedit.BeanEditItem;
 import jmri.jmrit.beantable.beanedit.BeanItemPanel;
-import jmri.util.ColorUtil;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

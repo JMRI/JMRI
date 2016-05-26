@@ -58,7 +58,7 @@ import org.slf4j.LoggerFactory;
  */
 public class InstanceManager {
 
-    static final private HashMap<Class<?>, ArrayList<Object>> managerLists = new HashMap<>();
+    static final protected HashMap<Class<?>, ArrayList<Object>> managerLists = new HashMap<>();
 
     /* properties */
     public static String CONSIST_MANAGER = "consistmanager"; // NOI18N
@@ -143,16 +143,8 @@ public class InstanceManager {
                 try {
                     l.add(type.getConstructor((Class[]) null).newInstance((Object[]) null));
                     log.debug("      auto-created default of {}", type.getName());
-                } catch (NoSuchMethodException e) {
-                    log.error("Exception creating auto-default object", e); // unexpected
-                    return null;
-                } catch (InstantiationException e) {
-                    log.error("Exception creating auto-default object", e); // unexpected
-                    return null;
-                } catch (IllegalAccessException e) {
-                    log.error("Exception creating auto-default object", e); // unexpected
-                    return null;
-                } catch (java.lang.reflect.InvocationTargetException e) {
+                } catch (NoSuchMethodException | InstantiationException 
+                            | IllegalAccessException | java.lang.reflect.InvocationTargetException e) {
                     log.error("Exception creating auto-default object", e); // unexpected
                     return null;
                 }
@@ -203,7 +195,7 @@ public class InstanceManager {
 
         StringBuffer retval = new StringBuffer();
         for (Class<?> c : managerLists.keySet()) {
-            retval.append("List of");
+            retval.append("List of ");
             retval.append(c);
             retval.append(" with ");
             retval.append(Integer.toString(getList(c).size()));
@@ -218,31 +210,6 @@ public class InstanceManager {
     }
 
     static InstanceInitializer initializer = new jmri.managers.DefaultInstanceInitializer();
-
-    // @TODO This constructor needs to go away, but its being used by lots of test cases in older form 
-    // - see JUnitUtil.resetInstanceManager for replacement
-    @Deprecated
-    public InstanceManager() {
-        init();
-    }
-
-    // This is a separate, protected member so it
-    // can be overridden in unit tests
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "Only used during system initialization")
-    protected void init() {
-        log.trace("running default init");
-        managerLists.clear();
-    }
-
-    /**
-     * The "root" object is the instance manager that's answering requests for
-     * other instances. Protected access to allow changes during JUnit testing.
-     */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
-            value = "MS_PKGPROTECT",
-            justification = "Protected access to allow changes during JUnit testing.")
-    static protected InstanceManager root;
 
     /**
      * Remove notification on changes to specific types
@@ -526,14 +493,6 @@ public class InstanceManager {
      *
      *                   Migrate JMRI uses of these, then move to next category
      * ****************************************************************************/
-    /**
-     * @deprecated Since 3.7.1, use @{link #store} and @{link #setDefault}
-     * directly.
-     */
-    @Deprecated
-    static public void setPowerManager(PowerManager p) {
-        store(p, PowerManager.class);
-    }
 
     /**
      * @deprecated Since 3.7.1, use @{link #store} and @{link #setDefault}
@@ -702,6 +661,15 @@ public class InstanceManager {
     //static public void setTabbedPreferences(TabbedPreferences p) {
     //    store(p, TabbedPreferences.class);
     //}
+    ///**
+    // * @deprecated Since 3.7.1, use @{link #store} and @{link #setDefault}
+    // * directly.
+    // */
+    // @Deprecated
+    // static public void setPowerManager(PowerManager p) {
+    //     store(p, PowerManager.class);
+    // }
+
     /* *************************************************************************** */
     private final static Logger log = LoggerFactory.getLogger(InstanceManager.class.getName());
 }

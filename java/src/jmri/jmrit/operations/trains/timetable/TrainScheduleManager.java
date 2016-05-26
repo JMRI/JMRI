@@ -293,6 +293,7 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
         newSchedule(Bundle.getMessage("Saturday"));
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         log.debug("ScheduleManager sees property change: ({}) old: ({}) new ({})",
                 e.getPropertyName(), e.getOldValue(), e.getNewValue());

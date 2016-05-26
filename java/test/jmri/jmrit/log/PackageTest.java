@@ -41,7 +41,9 @@ public class PackageTest extends TestCase {
 
     // test suite from all defined tests
     public static Test suite() {
-        return new TestSuite(PackageTest.class);
+        TestSuite suite = new TestSuite(PackageTest.class);
+        suite.addTest(BundleTest.suite());
+        return suite;
     }
 
     // The minimal setup for log4J

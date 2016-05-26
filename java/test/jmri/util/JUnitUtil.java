@@ -1,17 +1,18 @@
 package jmri.util;
 
 import java.lang.reflect.InvocationTargetException;
-
 import jmri.ConditionalManager;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.LogixManager;
-import jmri.NamedBean;
 import jmri.MemoryManager;
+import jmri.NamedBean;
 import jmri.PowerManager;
 import jmri.PowerManagerScaffold;
 import jmri.ReporterManager;
+import jmri.RouteManager;
+import jmri.ShutDownManager;
 import jmri.SignalHeadManager;
 import jmri.SignalMastLogicManager;
 import jmri.implementation.JmriConfigurationManager;
@@ -26,10 +27,7 @@ import jmri.managers.DefaultLogixManager;
 import jmri.managers.DefaultMemoryManager;
 import jmri.managers.DefaultSignalMastLogicManager;
 import jmri.managers.InternalReporterManager;
-import jmri.managers.InternalLightManager;
 import jmri.managers.InternalSensorManager;
-import jmri.managers.InternalTurnoutManager;
-
 import junit.framework.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,19 +41,19 @@ import org.slf4j.LoggerFactory;
  * to use JFCUnit for that.
  * <p>
  * If you're using the InstanceManager, setUp() implementation should start
- * with:  <code><pre>
+ * with:  <pre><code>
  * super.setUp();
  * JUnitUtil.resetInstanceManager();
  * JUnitUtil.initInternalTurnoutManager();
  * JUnitUtil.initInternalLightManager();
  * JUnitUtil.initInternalSensorManager();
  * JUnitUtil.initDebugThrottleManager();
- * </pre></code>
+ * </code></pre>
  * <p>
- * Your tearDown() should end with:  <code><pre>
+ * Your tearDown() should end with:  <pre><code>
  * JUnitUtil.resetInstanceManager();
  * super.tearDown();
- * </pre></code>
+ * </code></pre>
  *
  * Note that memory managers and some others are completely internal, and will
  * be reset when you reset the instance manager.
@@ -94,7 +92,7 @@ public class JUnitUtil {
     }
 
     static final int WAITFOR_DELAY_STEP = 5;
-    static final int WAITFOR_MAX_DELAY = 5000; // really long, but only matters when failing
+    static final int WAITFOR_MAX_DELAY = 15000; // really long, but only matters when failing
     
     /** 
      * Wait for a specific condition to be true, without having to wait longer
@@ -168,15 +166,12 @@ public class JUnitUtil {
         // clear system connections
         jmri.jmrix.SystemConnectionMemo.reset();
 
-        // create a new instance manager
+        // create a new instance manager & use initializer to clear static list of state
         new InstanceManager() {
-            @Override
-            protected void init() {
-                root = null;
-                super.init();
-                root = this;
-            }
+            { managerLists.clear(); }
         };
+        
+        // add the NamedBeanHandleManager, which is always needed
         InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
     }
 
@@ -210,9 +205,16 @@ public class JUnitUtil {
         // now done automatically by InstanceManager's autoinit
         jmri.InstanceManager.sensorManagerInstance();
         InternalSensorManager.setDefaultStateForNewSensors(jmri.Sensor.UNKNOWN);
-
     }
 
+    public static void initRouteManager() {
+        // routes provide sensors, so ensure the sensor manager is initialized
+        // routes need turnouts, so ensure the turnout manager is initialized
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalTurnoutManager();
+        InstanceManager.getDefault(RouteManager.class);
+    }
+    
     public static void initMemoryManager() {
         MemoryManager m = new DefaultMemoryManager();
         if (InstanceManager.configureManagerInstance() != null) {
@@ -296,6 +298,18 @@ public class JUnitUtil {
         if (InstanceManager.configureManagerInstance() != null) {
             InstanceManager.configureManagerInstance().registerConfig(m, jmri.Manager.CONDITIONALS);
         }
+    }
+    
+    public static void initShutDownManager() {
+        if (InstanceManager.getDefault(ShutDownManager.class) == null) {
+            InstanceManager.setDefault(ShutDownManager.class, new MockShutDownManager());
+        }
+    }
+
+    public static void initStartupActionsManager() {
+        InstanceManager.store(
+                new apps.StartupActionsManager(),
+                apps.StartupActionsManager.class);
     }
 
     private final static Logger log = LoggerFactory.getLogger(JUnitUtil.class.getName());

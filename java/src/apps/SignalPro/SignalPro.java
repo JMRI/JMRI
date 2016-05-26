@@ -1,4 +1,3 @@
-// SignalPro.java
 package apps.SignalPro;
 
 import apps.Apps;
@@ -35,7 +34,6 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Bob Jacobsen Copyright 2003-2010
- * @version $Revision$
  */
 public class SignalPro extends Apps {
 

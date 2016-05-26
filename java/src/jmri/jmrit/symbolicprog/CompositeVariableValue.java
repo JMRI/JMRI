@@ -1,4 +1,3 @@
-// CompositeVariableValue.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.Component;
@@ -47,7 +46,6 @@ import org.slf4j.LoggerFactory;
  * </ol>
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001, 2005, 2013
- * @version	$Revision$
  *
  */
 public class CompositeVariableValue extends EnumVariableValue implements ActionListener, PropertyChangeListener {
@@ -278,7 +276,6 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
      * <P>
      * Does this by delegating to the SettingList
      *
-     * @param value
      */
     protected void selectValue(int value) {
         if (log.isDebugEnabled()) {
@@ -317,7 +314,6 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
      * Notify the connected CVs of a state change from above by way of the
      * variables (e.g. not direct to CVs)
      *
-     * @param state
      */
     public void setCvState(int state) {
         Iterator<VariableValue> i = variables.iterator();

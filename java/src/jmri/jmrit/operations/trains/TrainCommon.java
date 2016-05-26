@@ -1859,9 +1859,9 @@ public class TrainCommon {
     }
 
     public static String getDate(Date date) {
-        SimpleDateFormat format = new SimpleDateFormat("M/dd/yyyy HH:mm");
+        SimpleDateFormat format = new SimpleDateFormat("M/dd/yyyy HH:mm"); // NOI18N
         if (Setup.is12hrFormatEnabled()) {
-            format = new SimpleDateFormat("M/dd/yyyy hh:mm a");
+            format = new SimpleDateFormat("M/dd/yyyy hh:mm a"); // NOI18N
         }
         return format.format(date);
     }

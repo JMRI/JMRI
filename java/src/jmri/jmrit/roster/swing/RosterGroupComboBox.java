@@ -1,4 +1,3 @@
-// RosterGroupComboBox.java
 package jmri.jmrit.roster.swing;
 
 import java.beans.PropertyChangeEvent;
@@ -14,15 +13,10 @@ import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
  * A JComboBox of Roster Groups.
  *
  * @author Randall Wood Copyright (C) 2011, 2014
- * @version	$Revision: $
  * @see jmri.jmrit.roster.Roster
  */
 public class RosterGroupComboBox extends JComboBox<String> implements RosterGroupSelector {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1817542492929278953L;
     private Roster _roster;
     private boolean allEntriesEnabled = true;
 
@@ -30,7 +24,6 @@ public class RosterGroupComboBox extends JComboBox<String> implements RosterGrou
      * Create a RosterGroupComboBox with an arbitrary Roster instead of the
      * default Roster instance.
      *
-     * @param roster
      */
     // needed for unit tests
     public RosterGroupComboBox(Roster roster) {
@@ -40,7 +33,6 @@ public class RosterGroupComboBox extends JComboBox<String> implements RosterGrou
     /**
      * Create a RosterGroupComboBox with an arbitrary selection.
      *
-     * @param selection
      */
     public RosterGroupComboBox(String selection) {
         this(Roster.instance(), selection);
@@ -49,8 +41,6 @@ public class RosterGroupComboBox extends JComboBox<String> implements RosterGrou
     /**
      * Create a RosterGroupComboBox with arbitrary selection and Roster.
      *
-     * @param roster
-     * @param selection
      */
     public RosterGroupComboBox(Roster roster, String selection) {
         super();
@@ -92,7 +82,6 @@ public class RosterGroupComboBox extends JComboBox<String> implements RosterGrou
     /**
      * Update the combo box and select given String.
      *
-     * @param selection
      */
     public final void update(String selection) {
         removeAllItems();

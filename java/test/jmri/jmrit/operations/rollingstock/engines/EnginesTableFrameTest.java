@@ -31,13 +31,13 @@ public class EnginesTableFrameTest extends OperationsSwingTestCase {
         EnginesTableFrame etf = new EnginesTableFrame();
         Assert.assertEquals("number of Engines 1", "5", etf.numEngines.getText());
 
-        EngineManager cManager = EngineManager.instance();
+        EngineManager eManager = EngineManager.instance();
         // 5 Engines to check
-        Engine e1 = cManager.getByRoadAndNumber("NH", "1");
-        Engine e2 = cManager.getByRoadAndNumber("UP", "2");
-        Engine e3 = cManager.getByRoadAndNumber("AA", "3");
-        Engine e4 = cManager.getByRoadAndNumber("SP", "2");
-        Engine e5 = cManager.getByRoadAndNumber("NH", "5");
+        Engine e1 = eManager.getByRoadAndNumber("NH", "1");
+        Engine e2 = eManager.getByRoadAndNumber("UP", "2");
+        Engine e3 = eManager.getByRoadAndNumber("AA", "3");
+        Engine e4 = eManager.getByRoadAndNumber("SP", "2");
+        Engine e5 = eManager.getByRoadAndNumber("NH", "5");
 
         // default is sort by number
         List<RollingStock> Engines = etf.enginesModel.getSelectedEngineList();
@@ -184,9 +184,9 @@ public class EnginesTableFrameTest extends OperationsSwingTestCase {
         Track boxfordHood = boxford.addTrack("Hood", Track.SPUR);
         boxfordHood.setLength(300);
 
-        EngineManager cManager = EngineManager.instance();
+        EngineManager eManager = EngineManager.instance();
         // add 5 Engines to table
-        Engine e1 = cManager.newEngine("NH", "1");
+        Engine e1 = eManager.newEngine("NH", "1");
         e1.setModel("RS1");
         e1.setBuilt("2009");
         e1.setMoves(55);
@@ -198,7 +198,7 @@ public class EnginesTableFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("e1 location", Track.OKAY, e1.setLocation(westford, westfordYard));
         Assert.assertEquals("e1 destination", Track.OKAY, e1.setDestination(boxford, boxfordJacobson));
 
-        Engine e2 = cManager.newEngine("UP", "2");
+        Engine e2 = eManager.newEngine("UP", "2");
         e2.setModel("FT");
         e2.setBuilt("2004");
         e2.setMoves(50);
@@ -206,7 +206,7 @@ public class EnginesTableFrameTest extends OperationsSwingTestCase {
         jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 2");
         e2.setRfid("RFID 2");
 
-        Engine e3 = cManager.newEngine("AA", "3");
+        Engine e3 = eManager.newEngine("AA", "3");
         e3.setModel("SW8");
         e3.setBuilt("2006");
         e3.setMoves(40);
@@ -216,7 +216,7 @@ public class EnginesTableFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("e3 location", Track.OKAY, e3.setLocation(boxford, boxfordHood));
         Assert.assertEquals("e3 destination", Track.OKAY, e3.setDestination(boxford, boxfordYard));
 
-        Engine e4 = cManager.newEngine("SP", "2");
+        Engine e4 = eManager.newEngine("SP", "2");
         e4.setModel("GP35");
         e4.setBuilt("1990");
         e4.setMoves(30);
@@ -226,7 +226,7 @@ public class EnginesTableFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("e4 location", Track.OKAY, e4.setLocation(westford, westfordSiding));
         Assert.assertEquals("e4 destination", Track.OKAY, e4.setDestination(boxford, boxfordHood));
 
-        Engine e5 = cManager.newEngine("NH", "5");
+        Engine e5 = eManager.newEngine("NH", "5");
         e5.setModel("SW1200");
         e5.setBuilt("1956");
         e5.setMoves(25);

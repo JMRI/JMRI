@@ -34,6 +34,8 @@ public class PackageTest extends TestCase {
         suite.addTest(LayoutTurnoutTest.suite());
         suite.addTest(LayoutConnectivityTest.suite());
 
+        suite.addTest(BundleTest.suite());
+
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             suite.addTest(LayoutEditorActionTest.suite());
             suite.addTest(LayoutEditorTest.suite());

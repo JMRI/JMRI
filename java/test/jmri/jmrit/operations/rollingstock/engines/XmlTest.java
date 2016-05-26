@@ -236,7 +236,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("engine e4 built date", "", e4.getBuilt());
         Assert.assertEquals("engine e4 color", "", e4.getColor());
         Assert.assertEquals("engine e4 comment", "", e4.getComment());
-        Assert.assertEquals("engine e4 length", "", e4.getLength());
+        Assert.assertEquals("engine e4 length", "0", e4.getLength());
         Assert.assertEquals("engine e4 moves", 0, e4.getMoves());
         Assert.assertEquals("engine e4 number", "Test Number 4", e4.getNumber());
         Assert.assertEquals("engine e4 out of service", false, e4.isOutOfService());
@@ -266,7 +266,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("engine e6 built date", "", e6.getBuilt());
         Assert.assertEquals("engine e6 color", "", e6.getColor());
         Assert.assertEquals("engine e6 comment", "", e6.getComment());
-        Assert.assertEquals("engine e6 length", "", e6.getLength());
+        Assert.assertEquals("engine e6 length", "0", e6.getLength());
         Assert.assertEquals("engine e6 moves", 0, e6.getMoves());
         Assert.assertEquals("engine e6 number", "Test Number 6", e6.getNumber());
         Assert.assertEquals("engine e6 out of service", false, e6.isOutOfService());

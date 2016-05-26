@@ -36,12 +36,10 @@ public abstract class TurnoutOperationXml extends jmri.configurexml.AbstractXmlA
             log.debug("loadOperation for class {}", className);
             try {
                 Class<?> adapterClass = Class.forName(className);
-                if (adapterClass != null) {
-                    TurnoutOperationXml adapter = (TurnoutOperationXml) adapterClass.newInstance();
-                    result = adapter.loadOne(e);
-                    if (result.getName().charAt(0) == '*') {
-                        result.setNonce(true);
-                    }
+                TurnoutOperationXml adapter = (TurnoutOperationXml) adapterClass.newInstance();
+                result = adapter.loadOne(e);
+                if (result.getName().charAt(0) == '*') {
+                    result.setNonce(true);
                 }
             } catch (ClassNotFoundException e1) {
                 log.error("while creating TurnoutOperation", e1);

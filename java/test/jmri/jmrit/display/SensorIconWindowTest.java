@@ -6,6 +6,7 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import jmri.Sensor;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.util.JUnitUtil;
 import junit.extensions.jfcunit.TestHelper;
 import junit.extensions.jfcunit.eventdata.EventDataConstants;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
@@ -193,9 +194,10 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
     protected void setUp() throws Exception {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initShutDownManager();
     }
 
     protected void tearDown() throws Exception {

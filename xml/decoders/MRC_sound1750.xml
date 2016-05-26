@@ -6,6 +6,8 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Alain Le Marchand" version="1" lastUpdated="20160409"/>
   <!-- made from the MRC_1663 version 4.1  -->
+  <version author="Peter Ulvestad" version="2" lastUpdated="20160501"/>
+  <!-- added miising CV29 for speed table  -->
   <decoder>
     <family name="Sound Decoders" mfg="MRC" lowVersionID="25" highVersionID="25" comment="Synchronized Sound Brilliance(TM) Decoders">
       <model model="1750 - HO Scale - Walthers GP15-1" numOuts="2" numFns="28" maxTotalCurrent="1.5A" extFnsMRC="yes" formFactor="HO" connector="DropIn" comment="&lt;html&gt;HO-Scale, &lt;br&gt; with multiple types (16 horns, 8 bells) &lt;br&gt;and with wireless remote&lt;/html&gt;">
@@ -78,20 +80,8 @@
         <label xml:lang="de">Höchstgeschwindigkeit</label>
         <tooltip>Range 0-32</tooltip>
       </variable>
-      <variable CV="7" item="Decoder Version" readOnly="yes" default="25" tooltip="is the decoder software version, Read Only">
-        <decVal/>
-        <label>Manufacturer version number</label>
-        <label xml:lang="it">Versione Decoder: </label>
-        <label xml:lang="fr">Version décodeur: </label>
-        <label xml:lang="de">Decoder Version: </label>
-      </variable>
-      <variable CV="8" item="Manufacturer" readOnly="yes" default="143" tooltip="=143 for MRC, Read Only">
-        <decVal/>
-        <label>Manufacturer ID</label>
-        <label xml:lang="it">ID Costruttore: </label>
-        <label xml:lang="fr">ID constructeur: </label>
-        <label xml:lang="de">Hersteller ID: </label>
-      </variable>
+      <!-- CV=7/8 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
       <!-- CV=19 -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <!-- CV=21 -->
@@ -100,6 +90,7 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table1-28.xml"/>
       <variable CV="49" mask="XXXXXXXV" item="Sound Option 1" tooltip="can turn off all sound except the Horn" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Sound on/off</label>

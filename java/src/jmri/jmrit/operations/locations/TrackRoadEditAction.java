@@ -24,6 +24,7 @@ public class TrackRoadEditAction extends AbstractAction {
         _frame = frame;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (tref != null) {
             tref.dispose();

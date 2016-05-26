@@ -20,7 +20,6 @@ public class PanelEditorTest extends TestCase {
     TurnoutIcon to = null;
 
     public void testShow() throws Exception {
-        jmri.util.JUnitUtil.initConfigureManager();
 
         // load and display
         File f = new File("java/test/jmri/jmrit/display/verify/PanelEditorTest1.xml");
@@ -29,7 +28,6 @@ public class PanelEditorTest extends TestCase {
     }
 
     public void testShow2() throws Exception {
-        jmri.util.JUnitUtil.initConfigureManager();
 
         // load and display
         File f = new File("java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml");
@@ -38,7 +36,6 @@ public class PanelEditorTest extends TestCase {
     }
 
     public void testShow3() throws Exception {
-        jmri.util.JUnitUtil.initConfigureManager();
 
         // load and display
         File f = new File("java/test/jmri/jmrit/display/configurexml/load/OneOfEach.3.3.3.xml");
@@ -69,6 +66,7 @@ public class PanelEditorTest extends TestCase {
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
+        jmri.util.JUnitUtil.initConfigureManager();
     }
 
     protected void tearDown() {

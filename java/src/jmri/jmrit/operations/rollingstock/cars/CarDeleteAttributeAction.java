@@ -20,6 +20,7 @@ final class CarDeleteAttributeAction extends AbstractAction {
 
     CarAttributeEditFrame caef;
 
+    @Override
     public void actionPerformed(ActionEvent ae) {
         log.debug("Delete unused attributes");
         caef.deleteUnusedAttributes();

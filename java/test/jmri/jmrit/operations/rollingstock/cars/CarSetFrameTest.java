@@ -46,7 +46,7 @@ public class CarSetFrameTest extends OperationsSwingTestCase {
         c1.setCaboose(true);
         c1.setComment("Test Car NH 1 Comment");
 
-        Car c2 = cManager.newCar("UP", "2");
+        Car c2 = cManager.newCar("UP", "22");
         c2.setBuilt("2004");
         c2.setColor("Blue");
         c2.setLength("50");

@@ -255,6 +255,7 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
         }
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
