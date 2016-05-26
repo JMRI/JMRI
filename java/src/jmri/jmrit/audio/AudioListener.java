@@ -210,7 +210,7 @@ public interface AudioListener extends Audio {
      * <li>Source
      * </ul>
      *
-     * @param gain
+     * @param gain new gain value - range 0.0f to 1.0f
      */
     public void setGain(float gain);
 
