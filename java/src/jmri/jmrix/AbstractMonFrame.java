@@ -260,20 +260,20 @@ public abstract class AbstractMonFrame extends JmriJFrame {
         paneA.add(pane1);
 
         JPanel pane4 = new JPanel();
-        pane4.setLayout(new BoxLayout(pane2, BoxLayout.X_AXIS));
+        pane4.setLayout(new BoxLayout(pane4, BoxLayout.X_AXIS));
         pane4.add(openFileChooserButton);
         pane4.add(startLogButton);
         pane4.add(stopLogButton);
         paneA.add(pane4);
 
         JPanel pane5 = new JPanel();
-        pane5.setLayout(new BoxLayout(pane3, BoxLayout.X_AXIS));
+        pane5.setLayout(new BoxLayout(pane5, BoxLayout.X_AXIS));
         pane5.add(enterButton);
         pane5.add(entryField);
         paneA.add(pane5);
         
         JPanel pane6 = new JPanel();
-        pane6.setLayout(new BoxLayout(pane4, BoxLayout.X_AXIS));
+        pane6.setLayout(new BoxLayout(pane6, BoxLayout.X_AXIS));
         pane6.add(enterButton);
         pane6.add(entryField);
         paneA.add(pane6);
