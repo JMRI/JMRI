@@ -395,8 +395,8 @@ public class AutoAllocate {
                 }
             }
         }
-// djd debugging 
-        log.info("{}: auto allocating Section {}", ar.getActiveTrain().getTrainName(), ar.getSection().getUserName());
+        log.debug("{}: auto allocating Section {}", ar.getActiveTrain().getTrainName(), 
+                ar.getSectionName());
         _dispatcher.allocateSection(ar, null);
         return true;
     }
@@ -1101,7 +1101,12 @@ public class AutoAllocate {
             }
         }
         if (seq == 0) {
-            log.error("ActiveTrain {} has no occupied Section", at.getTrainName());
+            if (at.getMode() != ActiveTrain.MANUAL) {
+                log.error("{}: ActiveTrain has no occupied Section. Halting immediately to avoid runaway.", at.getTrainName());
+                at.getAutoActiveTrain().getAutoEngineer().setHalt(true);
+            } else {
+                log.debug("{}: ActiveTrain has no occupied Section, running in Manual mode.", at.getTrainName());                
+            }           
         } else {
             curSection = temSection;
         }

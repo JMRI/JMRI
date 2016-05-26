@@ -1,4 +1,3 @@
-// RunJythonScript.java
 package jmri.jmrit.jython;
 
 import java.awt.event.ActionEvent;
@@ -24,11 +23,8 @@ import org.slf4j.LoggerFactory;
  * directly invoke that file.
  *
  * @author	Bob Jacobsen Copyright (C) 2004, 2007
- * @version $Revision$
  */
 public class RunJythonScript extends JmriAbstractAction {
-
-    private static final long serialVersionUID = -2957647278966956841L;
 
     public RunJythonScript(String s, WindowInterface wi) {
         super(s, wi);
@@ -129,5 +125,3 @@ public class RunJythonScript extends JmriAbstractAction {
     private final static Logger log = LoggerFactory.getLogger(RunJythonScript.class.getName());
 
 }
-
-/* @(#)RunJythonScript.java */
