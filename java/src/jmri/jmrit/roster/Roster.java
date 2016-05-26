@@ -584,7 +584,6 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * that finds the default location, does a backup and then calls this.
      *
      * @param file an op
-     * @throws IOException
      */
     void writeFile(File file) throws java.io.IOException {
         // create root element

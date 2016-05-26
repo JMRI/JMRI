@@ -116,7 +116,6 @@ public class DCCManufacturerList {
      *
      * Note: No system should not be using a SystemConnectionMemo at this point.
      *
-     * @return
      * @deprecated Without replacement. Use
      * {@link jmri.util.ConnectionNameFromSystemName#getPrefixFromName(java.lang.String)}
      * for equivalent functionality.

@@ -865,7 +865,6 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * @param p        Who to notify on complete
      * @param addr     Address of the locomotive
      * @param longAddr true if a long address, false if short address
-     * @throws ProgrammerException
      */
     public void readCVOpsMode(int CV, jmri.ProgListener p, int addr, boolean longAddr) throws jmri.ProgrammerException {
         lopsa = addr & 0x7f;

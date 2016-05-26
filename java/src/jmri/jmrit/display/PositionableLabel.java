@@ -786,7 +786,6 @@ public class PositionableLabel extends JLabel implements Positionable {
     /**
      * create a text image whose bit map can be rotated
      *
-     * @return
      */
     private NamedIcon makeTextIcon(String text) {
         if (text == null || text.equals("")) {

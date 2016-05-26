@@ -137,7 +137,6 @@ public final class FileUtil {
      * of returning null.
      *
      * @return {@link java.net.URL} at path
-     * @throws FileNotFoundException
      * @see #getFile(java.lang.String)
      * @see #getURI(java.lang.String)
      */
@@ -1016,8 +1015,6 @@ public final class FileUtil {
      *
      * @param file The text file.
      * @return The contents of the file.
-     * @throws FileNotFoundException
-     * @throws IOException
      */
     public static String readFile(File file) throws IOException {
         return FileUtil.readURL(FileUtil.fileToURL(file));
@@ -1029,8 +1026,6 @@ public final class FileUtil {
      *
      * @param url The text URL.
      * @return The contents of the file.
-     * @throws FileNotFoundException
-     * @throws IOException
      */
     public static String readURL(URL url) throws IOException {
         try {
@@ -1113,7 +1108,6 @@ public final class FileUtil {
      * for files.
      *
      * @param dest   must be the file, not the destination directory.
-     * @throws IOException
      */
     public static void copy(File source, File dest) throws IOException {
         if (!source.exists()) {

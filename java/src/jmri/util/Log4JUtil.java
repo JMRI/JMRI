@@ -151,7 +151,6 @@ public class Log4JUtil {
      * This method sets the system property <i>jmri.log.path</i> to the JMRI
      * settings directory if not specified.
      *
-     * @throws IOException
      * @see jmri.util.FileUtil#getPreferencesPath()
      */
     static private void configureLogging(String config) throws IOException {

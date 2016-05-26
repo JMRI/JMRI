@@ -128,7 +128,6 @@ public class MailMessage {
     /**
      * shows the protocol to be used connecting to the mailhost
      *
-     * @return
      */
     public String getProtocol() {
         return (this.pProtocol);
@@ -150,7 +149,6 @@ public class MailMessage {
     /**
      * shows if encryption will be used when connecting to the mailhost
      *
-     * @return
      */
     public boolean isTls() {
         return ((this.pTls.equals("true") ? true : false));
@@ -171,7 +169,6 @@ public class MailMessage {
     /**
      * shows if authorization will be used to the mailhost
      *
-     * @return
      */
     public boolean isAuth() {
         return ((this.pAuth.equals("true") ? true : false));

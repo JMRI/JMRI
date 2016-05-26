@@ -64,7 +64,6 @@ public class CbusOpCodes {
      * @param msg CbusMessage to be decoded
      * @param ext flag for extended message Return String decoded message
      * @param header CAN Header
-     * @return 
      */
     public static String decode(AbstractMessage msg, Boolean ext, int header) {
         if (ext == false) {

@@ -657,7 +657,6 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
      * Writes all bytes to NCE CS memory as long as there are no user input
      * errors
      *
-     * @return
      */
     private boolean saveMacro() {
         if (firstTime) {

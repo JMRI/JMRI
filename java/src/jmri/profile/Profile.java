@@ -37,7 +37,6 @@ public class Profile implements Comparable<Profile> {
      * in storage on the computer.
      *
      * @param path The Profile's directory
-     * @throws IOException
      */
     public Profile(File path) throws IOException {
         this(path, true);
@@ -52,8 +51,6 @@ public class Profile implements Comparable<Profile> {
      * read-only property of the Profile. The {@link ProfileManager} will only
      * load a single profile with a given id.
      *
-     * @throws IOException
-     * @throws IllegalArgumentException
      */
     public Profile(String name, String id, File path) throws IOException, IllegalArgumentException {
         if (!path.getName().equals(id)) {
@@ -90,7 +87,6 @@ public class Profile implements Comparable<Profile> {
      * This method exists purely to support subclasses.
      *
      * @param path       The Profile's directory
-     * @throws IOException
      */
     protected Profile(File path, boolean isReadable) throws IOException {
         this.path = path;
