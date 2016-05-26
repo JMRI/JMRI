@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
  * BINARY COMMAND SET
  * <p>
  * The RS-232 port binary commands are designed to work in a computer friendly
- * way. Command format is: <command number> <data> <data> ...
+ * way. Command format is: {@code <command number> <data> <data> ...}
  * <p>
  * Commands range from 0x80 to 0xBF
  * <p>

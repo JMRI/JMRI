@@ -396,7 +396,7 @@ public final class XMLUtil extends Object {
      * some CDATA sections my not be written as CDATA section or may be merged with
      * other CDATA section at the same level. Also if plain text nodes are mixed with
      * CDATA sections at the same level all text is likely to end up in one big CDATA section.
-     * <br/>
+     * <br>
      * For nodes that only have one CDATA section this method should work fine.
      * </p>
      * 
@@ -951,8 +951,9 @@ public final class XMLUtil extends Object {
      * This compares localName (nodeName if localName is null) to name,
      * and checks the tags namespace with the provided namespace.
      * A <code>null</code> namespace will match any namespace.
-     *
-     * <ul>This is differs from the DOM version by:
+     * <p>
+     * This is differs from the DOM version by:
+     * <ul>
      * <li>not searching recursively</li>
      * <li>returns a single result</li>
      * </ul>
