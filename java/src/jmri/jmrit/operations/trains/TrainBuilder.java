@@ -84,17 +84,18 @@ public class TrainBuilder extends TrainCommon {
 
     /**
      * Build rules:
-     * <ul>
-     * <li>1. Need at least one location in route to build train
-     * <li>2. Select only locos and cars the that train can service
-     * <li>3. Optional TODO, train must depart with the required number of moves
+     * <ol>
+     * <li>Need at least one location in route to build train
+     * <li>Select only locos and cars the that train can service
+     * <li>Optional TODO, train must depart with the required number of moves
      * (cars)
-     * <li>4. If required, add caboose or car with FRED to train
-     * <li>5. When departing staging find a track matching train requirements
-     * <li>6. All cars and locos on one track must leave staging
-     * <li>7. Service locations based on train direction, location car types and
+     * <li>If required, add caboose or car with FRED to train
+     * <li>When departing staging find a track matching train requirements
+     * <li>All cars and locos on one track must leave staging
+     * <li>Service locations based on train direction, location car types and
      * roads
-     * <li>8. Ignore track direction when train is a local (serves one location)
+     * <li>Ignore track direction when train is a local (serves one location)
+     * </ol>
      *
      * @param train the train that is to be built
      *
