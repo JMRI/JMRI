@@ -76,8 +76,6 @@ public class RosterServlet extends HttpServlet {
     /**
      * Parse all HTTP GET requests and pass to appropriate method
      *
-     * @throws ServletException
-     * @throws IOException
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -103,8 +101,6 @@ public class RosterServlet extends HttpServlet {
     /**
      * Handle POST requests. POST requests are treated as GET requests.
      *
-     * @throws ServletException
-     * @throws IOException
      * @see #doGet(javax.servlet.http.HttpServletRequest,
      * javax.servlet.http.HttpServletResponse)
      */
@@ -130,8 +126,6 @@ public class RosterServlet extends HttpServlet {
      * <code>/roster/group/&lt;group%20name&gt;</code> with a JSON payload for
      * the filter.
      *
-     * @throws ServletException
-     * @throws IOException
      */
     protected void doGroup(HttpServletRequest request, HttpServletResponse response, String group) throws ServletException, IOException {
         log.debug("Getting group {}", group);
@@ -171,8 +165,6 @@ public class RosterServlet extends HttpServlet {
      * This method responds to POST URLs <code>/roster</code> and
      * <code>/roster/list</code> with a JSON payload for the filter.
      *
-     * @throws ServletException
-     * @throws IOException
      */
     protected void doList(HttpServletRequest request, HttpServletResponse response, Boolean groups) throws ServletException, IOException {
         ObjectNode data;
@@ -215,8 +207,6 @@ public class RosterServlet extends HttpServlet {
      * <li>height</li> <li>maxHeight</li> <li>minHeight</li> <li>width</li>
      * <li>maxWidth</li> <li>minWidth</li></ul>
      *
-     * @throws ServletException
-     * @throws IOException
      */
     protected void doEntry(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String[] pathInfo = request.getPathInfo().substring(1).split("/");
@@ -291,8 +281,6 @@ public class RosterServlet extends HttpServlet {
      * and {@link #doEntry(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
      * }.
      *
-     * @throws ServletException
-     * @throws IOException
      */
     protected void doRoster(HttpServletRequest request, HttpServletResponse response, JsonNode filter, Boolean groups) throws ServletException, IOException {
         ServletUtil.getInstance().setNonCachingHeaders(response);
@@ -378,8 +366,6 @@ public class RosterServlet extends HttpServlet {
      * returns a PNG image.
      *
      * @param file     {@link java.io.File} object containing an image
-     * @throws ServletException
-     * @throws IOException
      */
     void doImage(HttpServletRequest request, HttpServletResponse response, File file) throws ServletException, IOException {
         BufferedImage image;

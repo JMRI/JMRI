@@ -53,7 +53,6 @@ public class MultipartMessage {
      *
      * @param requestURL URL to which this request should be sent
      * @param charSet    character set encoding of this message
-     * @throws IOException
      */
     public MultipartMessage(String requestURL, String charSet) throws IOException {
         this.charSet = charSet;
@@ -97,7 +96,6 @@ public class MultipartMessage {
      * @param fieldName  name attribute in form &lt;input name="{fieldName}"
      *                   type="file" /&gt;
      * @param uploadFile file to be uploaded
-     * @throws IOException
      */
     public void addFilePart(String fieldName, File uploadFile) throws IOException {
         addFilePart(fieldName, uploadFile, URLConnection.guessContentTypeFromName(uploadFile.getName()));
@@ -111,7 +109,6 @@ public class MultipartMessage {
      *                   type="file" /&gt;
      * @param uploadFile file to be uploaded
      * @param fileType   MIME type of file
-     * @throws IOException
      */
     public void addFilePart(String fieldName, File uploadFile, String fileType) throws IOException {
         log.debug("add file field: " + fieldName + "; file: " + uploadFile + "; type: " + fileType);

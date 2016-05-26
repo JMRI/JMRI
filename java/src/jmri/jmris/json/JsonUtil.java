@@ -175,7 +175,6 @@ public class JsonUtil {
      * @param data    The JSON representation of the consist. See
      * {@link #getConsist(Locale, jmri.DccLocoAddress) } for the
      *                JSON structure.
-     * @throws JsonException
      */
     static public void putConsist(Locale locale, DccLocoAddress address, JsonNode data) throws JsonException {
         try {
@@ -194,7 +193,6 @@ public class JsonUtil {
      * @param locale The locale to throw exceptions in.
      * @return JSON array of consists as in the structure returned by
      * {@link #getConsist(Locale, jmri.DccLocoAddress) }
-     * @throws JsonException
      */
     static public JsonNode getConsists(Locale locale) throws JsonException {
         try {
@@ -229,7 +227,6 @@ public class JsonUtil {
      * @param locale  the locale to throw exceptions in
      * @param address the consist address
      * @param data    the consist as a JsonObject
-     * @throws JsonException
      */
     static public void setConsist(Locale locale, DccLocoAddress address, JsonNode data) throws JsonException {
         try {
@@ -804,7 +801,6 @@ public class JsonUtil {
      * @param locale The locale to throw exceptions in
      * @param name   The name of the route
      * @param data   A JsonNode containing route attributes to set
-     * @throws JsonException
      * @see jmri.Route#TOGGLE
      */
     static public void setRoute(Locale locale, String name, JsonNode data) throws JsonException {
@@ -1178,7 +1174,6 @@ public class JsonUtil {
      * @param locale The locale to throw exceptions in.
      * @param id     The id of the train.
      * @param data   Train data to change.
-     * @throws JsonException
      */
     static public void setTrain(Locale locale, String id, JsonNode data) throws JsonException {
         Train train = TrainManager.instance().getTrainById(id);

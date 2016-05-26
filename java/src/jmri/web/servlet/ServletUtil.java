@@ -103,7 +103,6 @@ public class ServletUtil {
     /**
      * Write a file to the given response.
      *
-     * @throws IOException
      */
     public void writeFile(HttpServletResponse response, File file, String contentType) throws IOException {
         if (file.exists()) {

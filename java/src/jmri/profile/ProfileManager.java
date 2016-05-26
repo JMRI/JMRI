@@ -188,7 +188,6 @@ public class ProfileManager extends Bean {
     /**
      * Save the active {@link Profile} and automatic start setting.
      *
-     * @throws IOException
      */
     public void saveActiveProfile() throws IOException {
         this.saveActiveProfile(this.getActiveProfile(), this.autoStartActiveProfile);
@@ -225,7 +224,6 @@ public class ProfileManager extends Bean {
      *
      * @see #getConfigFile()
      * @see #setConfigFile(java.io.File)
-     * @throws IOException
      */
     public void readActiveProfile() throws IOException {
         Properties p = new Properties();
@@ -560,7 +558,6 @@ public class ProfileManager extends Bean {
      * Create a default profile if no profiles exist.
      *
      * @return A new profile or null if profiles already exist.
-     * @throws IOException
      */
     public Profile createDefaultProfile() throws IllegalArgumentException, IOException {
         if (this.getAllProfiles().isEmpty()) {
@@ -582,8 +579,6 @@ public class ProfileManager extends Bean {
      * profile.
      *
      * @return The profile with the migrated configuration.
-     * @throws IllegalArgumentException
-     * @throws IOException
      */
     public Profile migrateConfigToProfile(File config, String name) throws IllegalArgumentException, IOException {
         String pid = FileUtil.sanitizeFilename(name);
@@ -632,8 +627,6 @@ public class ProfileManager extends Bean {
      * circumstances.
      *
      * @return true if a user's existing config was migrated, false otherwise
-     * @throws IllegalArgumentException
-     * @throws IOException
      */
     public boolean migrateToProfiles(String configFilename) throws IllegalArgumentException, IOException {
         File appConfigFile = new File(configFilename);
@@ -680,7 +673,6 @@ public class ProfileManager extends Bean {
      *                                included?
      * @param exportExternalRoster    It the roster is not within the profile
      *                                directory, should it be included?
-     * @throws IOException
      * @throws org.jdom2.JDOMException
      */
     public void export(Profile profile, File target, boolean exportExternalUserFiles, boolean exportExternalRoster) throws IOException, JDOMException {
@@ -775,7 +767,6 @@ public class ProfileManager extends Bean {
      * headless app launches.
      *
      * @return The active {@link Profile}
-     * @throws IOException
      * @see ProfileManagerDialog#getStartingProfile(java.awt.Frame)
      */
     public static Profile getStartingProfile() throws IOException {

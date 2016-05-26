@@ -278,7 +278,6 @@ public class FileUtilSupport extends Bean {
      * four revisions are retained. The lowest numbered revision is the most
      * recent.
      *
-     * @throws IOException
      */
     public void backup(File file) throws IOException {
         this.rotate(file, 4, "bak");
@@ -292,7 +291,6 @@ public class FileUtilSupport extends Bean {
      * @param extension The extension to use for the rotations. If null or an
      *                  empty string, the rotation number is used as the
      *                  extension.
-     * @throws IOException
      * @throws IllegalArgumentException if max is less than one
      * @see #backup(java.io.File) 
      */

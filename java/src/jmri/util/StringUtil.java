@@ -273,7 +273,6 @@ public class StringUtil {
     /**
      * Sort String[] representing numbers, in ascending order.
      *
-     * @throws NumberFormatException
      */
     static public void numberSort(String[] values) throws NumberFormatException {
         for (int i = 0; i <= values.length - 2; i++) { // stop sort early to save time!

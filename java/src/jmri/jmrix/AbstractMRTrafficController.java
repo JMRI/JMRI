@@ -840,7 +840,6 @@ abstract public class AbstractMRTrafficController {
      * <P>
      * (This is public for testing purposes) Runs in the "Receive" thread.
      *
-     * @throws IOException
      */
     public void handleOneIncomingReply() throws IOException {
             // we sit in this until the message is complete, relying on
