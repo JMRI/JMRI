@@ -13,9 +13,9 @@ import jmri.jmrit.progsupport.ProgModeSelector;
  * manipulation) parts are unchanged.
  * <P>
  * The JComboBox implementation always had to have selected entries, so we added
- * dummy "select from .." items at the top & used those to indicate that there
- * was no selection in that box. Here, the lack of a selection indicates there's
- * no selection.
+ * dummy "select from .." items at the top {@literal &} used those to indicate
+ * that there was no selection in that box. Here, the lack of a selection
+ * indicates there's no selection.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2008, 2015
  */

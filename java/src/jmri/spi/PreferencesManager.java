@@ -15,7 +15,7 @@ import jmri.util.prefs.InitializationException;
  * {@link #initialize(jmri.profile.Profile)} is called as the PreferencesManager
  * may be constructed before the {@link jmri.profile.Profile} is known.
  *
- * @see jmri.util.prefs.AbstractPreferencesMananger for an abstract
+ * @see jmri.util.prefs.AbstractPreferencesManager for an abstract
  * implementation that is ready to extend.
  * @author Randall Wood 2015
  */
@@ -31,15 +31,12 @@ public interface PreferencesManager extends JmriServiceProviderInterface {
      * returns true if throwing an InitializationException to ensure that the
      * provider is not repeatedly initialized.
      *
-     * @param profile
-     * @throws jmri.util.prefs.InitializationException
      */
     public void initialize(@Nonnull Profile profile) throws InitializationException;
 
     /**
      * Test if the PreferencesManager is initialized for the provided Profile.
      *
-     * @param profile
      * @return true if the provider is initialized.
      */
     public boolean isInitialized(@Nonnull Profile profile);
@@ -71,8 +68,6 @@ public interface PreferencesManager extends JmriServiceProviderInterface {
 
     /**
      * Save the preferences that this provider manages for the provided Profile.
-     *
-     * @param profile
      */
     public void savePreferences(@Nonnull Profile profile);
 

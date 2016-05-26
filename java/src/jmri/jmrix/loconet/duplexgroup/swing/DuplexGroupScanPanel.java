@@ -213,7 +213,6 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
      * match, a message is displayed on the status line in the GUI, else nothing
      * is displayed in the GUI status line.
      * <p>
-     * @param m
      */
     public void message(LocoNetMessage m) {
         if (stopRequested == true) {
@@ -254,7 +253,6 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
      * attached IPL-capable equipment, check to see if it reports a UR92 device
      * as attached. If so, increment count of UR92 devices. Else ignore.
      *
-     * @param m
      * @return true if message is an IPL device report indicating a UR92
      *         present, else return false.
      */

@@ -71,8 +71,9 @@ import org.slf4j.LoggerFactory;
  * @author Dave Heap Copyright (C) 2012 Added support for Marklin mfx style
  * speed table
  * @author Dave Heap Copyright (C) 2013 Changes to fix mfx speed table issue
- * (Vstart & Vhigh not written)
- * @author Dave Heap - generate cvList array to incorporate Vstart & Vhigh
+ * (Vstart {@literal &} Vhigh not written)
+ * @author Dave Heap - generate cvList array to incorporate Vstart {@literal &}
+ * Vhigh
  *
  */
 public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {
@@ -156,7 +157,6 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
      * <P>
      * Sets the CV(s) as needed.
      *
-     * @param e
      */
     public void stateChanged(ChangeEvent e) {
         // e.getSource() points to the JSlider object - find it in the list
@@ -633,7 +633,6 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
     /**
      * Notify the connected CVs of a state change from above
      *
-     * @param state
      */
     public void setCvState(int state) {
         _cvMap.get(cvList[0]).setState(state);

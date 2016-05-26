@@ -198,7 +198,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     private static boolean isSelectVisible = false;
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "GUI ease of use")
+            justification = "GUI ease of use")  // NOI18N
     public void toggleSelectVisible() {
         XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
         isSelectVisible = !tcm.isColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN));
@@ -282,7 +282,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     }
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
-            justification = "default case is sort by number")
+            justification = "default case is sort by number")  // NOI18N
     public List<RollingStock> getCarList(int sort) {
         List<RollingStock> list;
         switch (sort) {

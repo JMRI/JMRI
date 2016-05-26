@@ -10,7 +10,7 @@ import jmri.PowerManager;
 /**
  * Provide the required SystemConnectionMemo for the XPA+Modem adapters.
  * <p>
- * @author Randall Wood <randall.h.wood@alexandriasoftware.com>
+ * @author Randall Wood randall.h.wood@alexandriasoftware.com
  * @author Paul Bender Copyright (C) 2016
  */
 public class XpaSystemConnectionMemo extends SystemConnectionMemo {

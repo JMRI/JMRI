@@ -47,8 +47,7 @@ import org.slf4j.LoggerFactory;
  * This is a complete re-implementation of the apps.Apps support for JMRI
  * applications.
  * <p>
- * Each using application provides it's own main() method. See e.g.
- * apps.gui3.demo3.Demo3 for an example.
+ * Each using application provides it's own main() method.
  * <p>
  * There are a large number of missing features marked with TODO in comments
  * including code from the earlier implementation.

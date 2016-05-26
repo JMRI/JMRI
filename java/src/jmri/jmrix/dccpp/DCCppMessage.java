@@ -1,4 +1,3 @@
-// DCCppMessage.java
 package jmri.jmrix.dccpp;
 
 import java.util.regex.Matcher;
@@ -17,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2002
  * @author	Paul Bender Copyright (C) 2003-2010
  * @author	Mark Underwood Copyright (C) 2015
- * @version	$Revision$
  *
  * Based on XNetMessage by Bob Jacobsen and Paul Bender
  */
@@ -146,7 +144,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     /**
      * Parse a string and generate/return a DCCppMessage object
      * 
-     * @param s String of DCC++ message without the < > brackets
+     * @param s String of DCC++ message without the {@literal < >} brackets
      * @return DCCppMessage
      */
     
@@ -1174,12 +1172,12 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *    Note that many decoders and controllers combine the ADDRESS and SUBADDRESS into a single number, N,
      *    from  1 through a max of 2044, where
      *    
-     *    N = (ADDRESS - 1) * 4 + SUBADDRESS + 1, for all ADDRESS>0
+     *    {@code N = (ADDRESS - 1) * 4 + SUBADDRESS + 1, for all ADDRESS>0}
      *    
      *    OR
      *    
-     *    ADDRESS = INT((N - 1) / 4) + 1
-     *    SUBADDRESS = (N - 1) % 4
+     *    {@code ADDRESS = INT((N - 1) / 4) + 1}
+     *    {@code SUBADDRESS = (N - 1) % 4}
      *    
      *    returns: NONE
     */
@@ -1374,7 +1372,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *    
      * Note: The two-argument form embeds the opcode in CALLBACKSUB to aid in decoding the responses.
      *
-     *    returns: <r CALLBACKNUM|CALLBACKSUB|CV Value)
+     *    returns: {@code <r CALLBACKNUM|CALLBACKSUB|CV Value)}
      *    where VALUE is a number from 0-255 as read from the requested CV, or -1 if verificaiton read fails
      */
     public static DCCppMessage makeWriteDirectCVMsg(int cv, int val) {
@@ -1416,7 +1414,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *    
      * Note: The two-argument form embeds the opcode in CALLBACKSUB to aid in decoding the responses.
      *
-     *    returns: <r CALLBACKNUM|CALLBACKSUB|CV BIT VALUE)
+     *    returns: {@code <r CALLBACKNUM|CALLBACKSUB|CV BIT VALUE)}
      *    where VALUE is a number from 0-1 as read from the requested CV bit, or -1 if verificaiton read fails
      */    
     public static DCCppMessage makeBitWriteDirectCVMsg(int cv, int bit, int val) {
@@ -2135,5 +2133,3 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     private final static Logger log = LoggerFactory.getLogger(DCCppMessage.class.getName());
 
 }
-
-/* @(#)DCCppMessage.java */

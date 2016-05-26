@@ -64,7 +64,6 @@ public class WiFiConsistManager extends AbstractConsistManager {
     /**
      * Add a listener to handle: listener.sendPacketToDevice(message);
      *
-     * @param listener
      */
     public void addControllerListener(ControllerInterface listener) {
         if (listeners == null) {

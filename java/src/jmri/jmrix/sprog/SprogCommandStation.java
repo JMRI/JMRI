@@ -283,10 +283,6 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
      * than possibly waiting for a complete traversal of all slots before the
      * new speed is actually sent to the hardware.
      *
-     * @param mode
-     * @param address
-     * @param spd
-     * @param isForward
      */
     public void setSpeed(int mode, DccLocoAddress address, int spd, boolean isForward) {
         SprogSlot s = this.findAddressSpeedPacket(address);
@@ -554,7 +550,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     SprogSystemConnectionMemo adaptermemo;
 
     /**
-     * @brief get user name
+     * Get user name
      * 
      * @return the user name
      */
@@ -567,7 +563,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     }
 
     /**
-     * @brief get system prefix
+     * Get system prefix
      * 
      * @return the system prefix
      */
@@ -592,8 +588,8 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     }
 
     /**
-     * Internal routine to handle timer starts & restarts
-    * 
+     * Internal routine to handle timer starts {@literal &} restarts
+     * 
      * @param delay timer delay
      */
     static protected void restartTimer(int delay) {

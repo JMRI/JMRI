@@ -97,8 +97,6 @@ public interface NamedBean {
 
     /**
      * Remove a request for a call-back when a bound property changes.
-     * 
-     * @param l
      */
     public void removePropertyChangeListener(@Nullable java.beans.PropertyChangeListener l);
 
@@ -203,25 +201,18 @@ public interface NamedBean {
      *<p>
      * Prior to JMRI 4.3, the key was of Object type.  It was 
      * constrained to String to make these more like normal Java Beans.
-     * 
-     * @param key
-     * @param value
      */
     public void setProperty(@Nonnull String key, Object value);
 
     /**
      * Retrieve the value associated with a key. If no value has been set for
      * that key, returns null.
-     * 
-     * @param key
      * @return The value of the property or null.
      */
     public @Nullable Object getProperty(@Nonnull String key);
 
     /**
      * Remove the key/value pair against the NamedBean.
-     * 
-     * @param key
      */
     public void removeProperty(@Nonnull String key);
 

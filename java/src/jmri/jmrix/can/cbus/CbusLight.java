@@ -76,8 +76,6 @@ public class CbusLight extends AbstractLight
     /**
      * Handle a request to change state by sending CBUS events.
      *
-     * @param oldState
-     * @param newState
      */
     @Override
     protected void doNewState(int oldState, int newState) {

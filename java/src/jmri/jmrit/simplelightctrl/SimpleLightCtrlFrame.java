@@ -345,7 +345,6 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
     /**
      * handles request to update status
      *
-     * @param e
      */
     public void statusButtonActionPerformed(java.awt.event.ActionEvent e) {
         // load address from switchAddrTextField

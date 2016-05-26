@@ -43,9 +43,6 @@ public class JMRIdemo extends Apps {
 
     /**
      * Adds the development menu to the default main menu bar.
-     *
-     * @param menuBar
-     * @param wi
      */
     @Override
     protected void createMenus(JMenuBar menuBar, WindowInterface wi) {

@@ -146,7 +146,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
         }
 
         /**
-         * Save button action -> save this Reporter's location
+         * Save button action {@literal ->} save this Reporter's location
          */
         public void saveButtonActionPerformed(java.awt.event.ActionEvent ae) {
             // check to see if a location has been selected

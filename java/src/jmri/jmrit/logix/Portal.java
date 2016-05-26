@@ -303,7 +303,6 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
      * Get the paths to the portal within the connected Block i.e. the paths in
      * this (the param) block through the Portal
      *
-     * @param block
      * @return null if portal does not connect to block
      */
     public List<OPath> getPathsWithinBlock(OBlock block) {
@@ -335,7 +334,6 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
      * Get the paths from the portal in the next connected Block i.e. paths in
      * the block on the other side of the portal from this (the param) block
      *
-     * @param block
      * @return null if portal does not connect to block
      */
     public List<OPath> getPathsFromOpposingBlock(OBlock block) {
@@ -350,7 +348,6 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
     /**
      * Call is from BlockOrder when setting the path
      *
-     * @param block
      */
     protected void setEntryState(OBlock block) {
         try {
@@ -560,7 +557,6 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
     /**
      * Check if path connects to Portal
      *
-     * @param path
      */
     public boolean isValidPath(OPath path) {
         String name = path.getName();

@@ -75,7 +75,7 @@ public class Mx1Message extends jmri.jmrix.NetMessage implements Serializable {
     /**
      * Indicates where the message is to/from in the header byte.
      *<p>
-     * Up to JMRI 4.3.5, this was doing ((mod & MX1) == MX1) for the 
+     * Up to JMRI 4.3.5, this was doing {@code ((mod & MX1) == MX1)} for the 
      * first test, which is really 0 == 0 and always true.
      * At that point it was changed to just check the bottom two bits.
      */

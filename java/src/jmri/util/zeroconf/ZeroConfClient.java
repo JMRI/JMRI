@@ -55,7 +55,6 @@ public class ZeroConfClient {
     /**
      * Get all servers providing the specified service.
      *
-     * @param service
      * @return A list of servers or an empty list.
      */
     @Nonnull public List<ServiceInfo> getServices(@Nonnull String service) {

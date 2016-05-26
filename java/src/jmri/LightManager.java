@@ -31,7 +31,8 @@ public interface LightManager extends Manager {
      * new Light. Otherwise, the makeSystemName method will attempt to turn it
      * into a valid system name.
      *
-     * @param name
+     * @param name User name, system name, or address which can be promoted to
+     *             system name
      * @return Never null under normal circumstances
      */
     public Light provideLight(String name);

@@ -196,7 +196,6 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      * info.
      *
      * @see #updateRepresentation
-     * @param t
      */
     public void setToolTipText(String t) {
         _tooltipText = t;
@@ -206,7 +205,6 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      * Add the proper tooltip text to a graphical rep before returning it, sets
      * the visibility
      *
-     * @param c
      */
     protected JComponent updateRepresentation(JComponent c) {
         c.setToolTipText(_tooltipText);

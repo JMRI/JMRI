@@ -45,10 +45,10 @@ import org.slf4j.LoggerFactory;
  * Implementation of {@link UserPreferencesManager} that saves user interface
  * preferences that should be automatically remembered as they are set.
  *
- * This class is intended to be a transistional class from a single user
+ * This class is intended to be a transitional class from a single user
  * interface preferences manager to multiple, domain-specific (windows, tables,
- * dialogs, etc) user interface preferences managers. I beleive that
- * domain-specific managers could more efficently, both in the API and at
+ * dialogs, etc) user interface preferences managers. I believe that
+ * domain-specific managers could more efficiently, both in the API and at
  * runtime, handle each user interface preference need than a single monolithic
  * manager.
  *
@@ -296,7 +296,6 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
      * class.
      *
      * @param name  A unique identifer for preference.
-     * @param state
      */
     @Override
     public void setSessionPreferenceState(String name, boolean state) {
@@ -317,8 +316,8 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     /**
      * Show an info message ("don't forget ...") with a given dialog title and
      * user message. Use a given preference name to determine whether to show it
-     * in the future. The classString & item parameters should form a unique
-     * value
+     * in the future. The classString {@literal &} item parameters should form a
+     * unique value
      *
      * @param title    Message Box title
      * @param message  Message to be displayed
@@ -334,8 +333,8 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
      * Show an info message ("don't forget ...") with a given dialog title and
      * user message. Use a given preference name to determine whether to show it
      * in the future. added flag to indicate that the message should be
-     * suppressed JMRI session only. The classString & item parameters should
-     * form a unique value
+     * suppressed JMRI session only. The classString {@literal &} item
+     * parameters should form a unique value
      *
      * @param title          Message Box title
      * @param message        Message to be displayed
@@ -355,8 +354,8 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
      * Show an info message ("don't forget ...") with a given dialog title and
      * user message. Use a given preference name to determine whether to show it
      * in the future. added flag to indicate that the message should be
-     * suppressed JMRI session only. The classString & item parameters should
-     * form a unique value
+     * suppressed JMRI session only. The classString {@literal &} item
+     * parameters should form a unique value
      *
      * @param title          Message Box title
      * @param message        Message to be displayed
@@ -376,8 +375,8 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
      * Show an info message ("don't forget ...") with a given dialog title and
      * user message. Use a given preference name to determine whether to show it
      * in the future. added flag to indicate that the message should be
-     * suppressed JMRI session only. The classString & item parameters should
-     * form a unique value
+     * suppressed JMRI session only. The classString {@literal &} item
+     * parameters should form a unique value
      *
      * @param title          Message Box title
      * @param message        Message to be displayed
@@ -1321,8 +1320,6 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
 
     /**
      *
-     * @param elementName
-     * @param namespace
      * @return an Element or null if the requested element does not exist
      */
     @Nullable
