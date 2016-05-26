@@ -1262,7 +1262,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
      * Stopping block only used in MODE_RUN _stoppingBlock is an occupied OBlock
      * preventing the train from continuing the route
      *
-     * @param block
      */
     protected void setStoppingBlock(OBlock block) {
         if (_runMode != MODE_RUN) {

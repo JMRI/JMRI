@@ -141,7 +141,6 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
      * pairs
      *
      * @param shared Top level Element to unpack.
-     * @param perNode
      * @return 
      */
     @Override

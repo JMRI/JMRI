@@ -1228,7 +1228,6 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
          * Use this to determine if the signalmast logic is stored in the panel
          * file and if all the information is stored.
          *
-         * @param store
          */
         void setStore(int store) {
             this.store = store;
@@ -1379,7 +1378,6 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
          * Sets which blocks must be inactive for the signal not to be set at a
          * stop aspect
          *
-         * @param blocks
          */
         void setBlocks(Hashtable<Block, Integer> blocks) {
             log.debug(destination.getDisplayName() + " Set blocks called");
@@ -1408,7 +1406,6 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
          * Sets which blocks must be inactive for the signal not to be set at a
          * stop aspect
          *
-         * @param blocks
          */
         //public void setLayoutBlocks
         public void setAutoBlocks(LinkedHashMap<Block, Integer> blocks) {
@@ -1442,7 +1439,6 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
         /**
          * Sets which masts must be in a given state before our mast can be set.
          *
-         * @param masts
          */
         void setMasts(Hashtable<SignalMast, String> masts) {
             if (this.userSetMasts != null) {
@@ -1514,7 +1510,6 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
          * Sets which sensors must be in a given state before our mast can be
          * set.
          *
-         * @param sensors
          */
         void setSensors(Hashtable<NamedBeanHandle<Sensor>, Integer> sensors) {
             if (this.userSetSensors != null) {

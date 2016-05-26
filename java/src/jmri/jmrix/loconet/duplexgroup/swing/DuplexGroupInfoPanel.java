@@ -439,7 +439,6 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
      * ValidatedTextField.VTF_PC_STAT_LN_UPDATE LnDplxGrpInfoImpl -
      * StatusDontBlastError, StatusLineUpdate, NumberOfUr92sUpdate,
      *
-     * @param evt
      */
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
         // these messages can arrive without a complete

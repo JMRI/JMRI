@@ -113,7 +113,6 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
      * it in a JFrame
      *
      * @param shared Top level Element to unpack.
-     * @param perNode
      * @return true if successful
      */
     @Override

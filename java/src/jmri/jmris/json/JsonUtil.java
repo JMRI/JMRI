@@ -635,7 +635,6 @@ public class JsonUtil {
      * folder of the JMRI server. It is expected that clients will fill in the
      * server IP address and port as they know it to be.
      *
-     * @param locale
      * @param id     The id of an entry in the roster.
      * @return a roster entry in JSON notation
      * @deprecated since 4.3.5
@@ -652,7 +651,6 @@ public class JsonUtil {
      * folder of the JMRI server. It is expected that clients will fill in the
      * server IP address and port as they know it to be.
      *
-     * @param locale
      * @param re     A RosterEntry that may or may not be in the roster.
      * @return a roster entry in JSON notation
      * @deprecated since 4.3.5
@@ -1370,8 +1368,6 @@ public class JsonUtil {
      * JSON errors should be handled by throwing a
      * {@link jmri.server.json.JsonException}.
      *
-     * @param code
-     * @param message
      * @return
      * @deprecated
      */
@@ -1392,7 +1388,6 @@ public class JsonUtil {
      * Type may be <code>L</code> for long or <code>S</code> for short. If the
      * type is not specified, type is assumed to be short.
      *
-     * @param address
      * @return The DccLocoAddress for address.
      */
     static public DccLocoAddress addressForString(String address) {

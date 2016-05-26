@@ -138,7 +138,6 @@ public class LnSensorAddress {
     /**
      * Update a LocoNet message to have this address.
      *
-     * @param m
      */
     public void insertAddress(LocoNetMessage m) {
         m.setElement(1, getLowBits());

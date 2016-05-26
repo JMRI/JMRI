@@ -298,7 +298,6 @@ public class Calibrater extends jmri.util.JmriJFrame {
     /**
      * Called from Warrant goingActive
      * Compute actual speed and set throttle factor
-     * @param index
      */
     protected void calibrateAt(int index) {
         if (_calibrateIndex == index) {

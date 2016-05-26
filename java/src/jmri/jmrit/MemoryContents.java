@@ -220,7 +220,6 @@ public class MemoryContents {
      * Initialize a single page of data storage, if and only if the page has not
      * been initialized already.
      *
-     * @param page
      */
     private void initPage(int page) {
         if (pageArray[page] != null) {

@@ -162,8 +162,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
 
     /**
      * Removes any warrant, not just NXWarrant
-     * 
-     * @param w
+     *
      */
     public void removeNXWarrant(Warrant w) {
         w.removePropertyChangeListener(this);

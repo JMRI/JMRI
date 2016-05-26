@@ -1263,8 +1263,6 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     /**
      * writes bytes of NCE macro memory
      *
-     * @param macroNum
-     * @param b
      */
     private boolean writeMacroMemory(int macroNum, byte[] b) {
         if (isUsb) {

@@ -322,7 +322,6 @@ public class SplitVariableValue extends VariableValue
     /**
      * Notify the connected CVs of a state change from above
      *
-     * @param state
      */
     public void setCvState(int state) {
         (_cvMap.get(getCvNum())).setState(state);

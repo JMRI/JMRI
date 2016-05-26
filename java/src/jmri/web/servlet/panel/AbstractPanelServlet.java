@@ -78,8 +78,6 @@ abstract class AbstractPanelServlet extends HttpServlet {
      * </li>
      * </ol>
      *
-     * @param request
-     * @param response
      * @throws ServletException
      * @throws IOException
      */

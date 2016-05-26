@@ -1140,7 +1140,6 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     /**
     *
     * @param vertical  Label orientation true = above, false = left
-    * @param textField
     * @param label String label message
     * @return
     */

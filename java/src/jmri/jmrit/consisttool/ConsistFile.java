@@ -250,7 +250,6 @@ public class ConsistFile extends XmlFile {
     /**
      * Write all consists to the default file name
      *
-     * @param consistList
      * @throws IOException
      */
     public void writeFile(ArrayList<DccLocoAddress> consistList) throws IOException {

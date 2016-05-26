@@ -239,7 +239,6 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
      * JFrame
      *
      * @param shared Top level Element to unpack.
-     * @param perNode
      * @return 
      */
     @Override

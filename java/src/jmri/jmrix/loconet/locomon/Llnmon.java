@@ -135,8 +135,6 @@ public class Llnmon {
      * addressLow & addressHigh in a form appropriate for the type of address (2
      * or 4 digit) using the Digitrax 'mixed mode' if necessary.
      *
-     * @param addressLow
-     * @param addressHigh
      * @return
      */
     private static String convertToMixed(int addressLow, int addressHigh) {
@@ -3396,7 +3394,6 @@ public class Llnmon {
      * sets the loconet turnout manager which is used to find turnout "user
      * names" from turnout "system names"
      *
-     * @param loconetTurnoutManager
      */
     public void setLocoNetTurnoutManager(jmri.TurnoutManager loconetTurnoutManager) {
         turnoutManager = loconetTurnoutManager;
@@ -3407,7 +3404,6 @@ public class Llnmon {
      * sets the loconet sensor manager which is used to find sensor "user names"
      * from sensor "system names"
      *
-     * @param loconetSensorManager
      */
     public void setLocoNetSensorManager(jmri.SensorManager loconetSensorManager) {
         sensorManager = loconetSensorManager;

@@ -45,10 +45,8 @@ public class NullProfile extends Profile {
      * read-only property of the Profile. The {@link ProfileManager} will only
      * load a single profile with a given id.
      *
-     * @param name
      * @param id   If null, {@link jmri.profile.ProfileManager#createUniqueId()}
      *             will be used to generate the id.
-     * @param path
      * @throws IOException
      * @throws IllegalArgumentException
      */

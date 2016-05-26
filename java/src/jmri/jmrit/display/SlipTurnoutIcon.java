@@ -837,7 +837,6 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     /**
      * Throw the turnout when the icon is clicked
      *
-     * @param e
      */
     public void doMouseClicked(java.awt.event.MouseEvent e) {
         if (!_editor.getFlag(Editor.OPTION_CONTROLS, isControlling())) {
@@ -1084,7 +1083,6 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
      * Displays a popup menu to select a given state, rather than cycling
      * through each state
      *
-     * @param popup
      */
     public boolean showPopUp(JPopupMenu popup) {
         if (isEditable()) {

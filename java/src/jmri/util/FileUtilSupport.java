@@ -163,7 +163,6 @@ public class FileUtilSupport extends Bean {
      * Convenience method that calls
      * {@link FileUtil#setProgramPath(java.io.File)} with the passed in path.
      *
-     * @param path
      */
     public void setProgramPath(String path) {
         this.setProgramPath(new File(path));
@@ -177,7 +176,6 @@ public class FileUtilSupport extends Bean {
      * loading JMRI (prior to loading any other JMRI code) to be meaningfully
      * used.
      *
-     * @param path
      */
     public void setProgramPath(File path) {
         String old = this.programPath;
@@ -280,7 +278,6 @@ public class FileUtilSupport extends Bean {
      * four revisions are retained. The lowest numbered revision is the most
      * recent.
      *
-     * @param file
      * @throws IOException
      */
     public void backup(File file) throws IOException {
