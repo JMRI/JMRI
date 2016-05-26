@@ -135,11 +135,11 @@ public class FnMapPanelESU extends JPanel {
 
     /**
      * <p>
-     * Default column labels.
+     * Default column labels.</p>
      * <dl>
      * <dt>Two rows are available for column labels</dt>
      * <dd>Use the '|' character to designate a row break</dd>
-     * </dl></p>
+     * </dl>
      * <p>
      * Item labels can be overridden by the "output" element of the "model"
      * element from the decoder definition file.</p>
