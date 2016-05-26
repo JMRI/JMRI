@@ -39,8 +39,8 @@ public class MatrixSignalMast extends AbstractSignalMast {
     String errorChars = "nnnnn";
     char[] errorBits = errorChars.toCharArray();
 
-    String UnLitChars = "uuuuu"; // default starting value
-    char[] unLitBits = UnLitChars.toCharArray();
+    String UnLitChars = "00000"; // default starting value
+    char[] unLitBits; // = UnLitChars.toCharArray();
 
     public MatrixSignalMast(String systemName, String userName) {
         super(systemName, userName);
@@ -132,7 +132,9 @@ public class MatrixSignalMast extends AbstractSignalMast {
                 if (aspectToOutput.containsKey("Stop")) {
                     updateOutputs(getBitsForAspect("Stop")); // show Red
                 } else {
-                    updateOutputs(unLitBits); // Dark (instead of Red), always available
+                    if (unLitBits != null) {
+                        updateOutputs(unLitBits); // Dark (instead of Red), always available
+                    }
                 }
             }
             if (aspectToOutput.containsKey(aspect) && aspectToOutput.get(aspect) != errorBits) {
@@ -159,8 +161,10 @@ public class MatrixSignalMast extends AbstractSignalMast {
             setAspect(getAspect());
             // if true, activate prior aspect
         } else {
-            updateOutputs(unLitBits); // directly set outputs
-            //c.sendPacket(NmraPacket.altAccSignalDecoderPkt(dccSignalDecoderAddress, unLitId), packetRepeatCount);
+            if (unLitBits != null) {
+                updateOutputs(unLitBits); // directly set outputs
+                //c.sendPacket(NmraPacket.altAccSignalDecoderPkt(dccSignalDecoderAddress, unLitId), packetRepeatCount);
+            }
         }
         super.setLit(newLit);
     }
@@ -250,20 +254,6 @@ public class MatrixSignalMast extends AbstractSignalMast {
         // is supplied as char array, no conversion needed
         aspectToOutput.put(aspect, bitArray);
     }
-
-/*    // used?
-    public List<String> getBitstrings() {
-        // provide to xml as normal Strings
-        ArrayList<String> bitlist = new ArrayList<String>(16);
-        if (aspectToOutput != null) { // hashtable
-            Set<String> keys = aspectToOutput.keySet(); // not a list
-            for(String key: keys){
-                String bits = new String(aspectToOutput.get(key)); // convert char[] to string
-                bitlist.add(bits);
-            }
-        }
-        return bitlist;
-    }*/
 
     /**
      *  Provide one series of on/off digits from aspectToOutput hashmap to xml

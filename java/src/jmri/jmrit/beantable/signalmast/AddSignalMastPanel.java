@@ -435,7 +435,7 @@ public class AddSignalMastPanel extends JPanel {
             }
             */
             if (xmast.allowUnLit()) {
-                char[] mastUnLitBits = xmast.getUnLitBits(); // load char[] for unLit from mast, uuuuu = unvalid
+                char[] mastUnLitBits = xmast.getUnLitBits(); // load char[] for unLit from mast
                 char[] unLitPanelBits = Arrays.copyOf(mastUnLitBits, 5); // store as 5 character array in panel var unLitPanelBits
                 UnLitCheck1.setSelected(unLitPanelBits[0] == '1'); // set checkboxes
                 UnLitCheck2.setSelected(unLitPanelBits[1] == '1');
@@ -878,7 +878,7 @@ public class AddSignalMastPanel extends JPanel {
                     try {
                         matrixMast.setUnLitBits(trimUnLitBits()); // same as line 987
                     } catch (Exception ex) {
-                        log.error("failed to read and copy unLitBits");
+                        log.error("failed to read and copy unLitPanelBits");
                     }                }
                 if (!user.equals("")) {
                     matrixMast.setUserName(user);
@@ -985,7 +985,7 @@ public class AddSignalMastPanel extends JPanel {
                     try {
                         matrixMast.setUnLitBits(trimUnLitBits()); // same as line 878
                     } catch (Exception ex) {
-                        log.error("failed to read and copy unLitBits");
+                        log.error("failed to read and copy unLitPanelBits");
                     }
                 }
             }
@@ -1840,7 +1840,7 @@ public class AddSignalMastPanel extends JPanel {
         }
     }*/
 
-    String defaultBits = "00000";
+    String defaultChars = "00000";
 
     /**
      * Call for sub panel per aspect from hashmap matrixAspect with check boxes to set properties
@@ -1852,7 +1852,7 @@ public class AddSignalMastPanel extends JPanel {
             return;
         }
         if (bitString == null) {
-            char[] bitString = defaultBits.toCharArray();
+            char[] bitString = defaultChars.toCharArray();
         }
         String mastType = mastNames.get(mastBox.getSelectedIndex()).getName();
         mastType = mastType.substring(11, mastType.indexOf(".xml"));
@@ -1887,7 +1887,7 @@ public class AddSignalMastPanel extends JPanel {
      */
     void matrixUnLitPanel() {
         if (unLitPanelBits == null) {
-            char[] unLitPanelBits = defaultBits.toCharArray();
+            char[] unLitPanelBits = defaultChars.toCharArray();
         }
         matrixUnLitPanel.setLayout(new BoxLayout(matrixUnLitPanel, BoxLayout.Y_AXIS));
         JPanel matrixUnLitDetails = new JPanel();
