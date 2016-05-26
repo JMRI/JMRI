@@ -11,7 +11,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -28,9 +27,6 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 import jmri.util.FileUtil;
-import jmri.jmrix.cmri.serial.serialmon.SerialFilterFrame;
-import jmri.jmrix.cmri.serial.serialmon.SerialMonFrame;
-
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,16 +64,13 @@ public abstract class AbstractMonFrame extends JmriJFrame {
     
     // member declarations
     public boolean loggingEnabled = false;  // true if message logging to a file
-    public boolean freezeDisplay  = false;  // true if display is halted
 
     protected JButton clearButton = new JButton();
-//    protected JToggleButton freezeButton = new JToggleButton();
-    protected JButton doneButton = new JButton();
-    protected JButton freezeButton = new JButton();
+    protected JToggleButton freezeButton = new JToggleButton();
     protected JScrollPane jScrollPane1 = new JScrollPane();
     protected JTextArea monTextPane = new JTextArea();
-    protected JButton startLogButton = new JButton();
-    protected JButton stopLogButton = new JButton();
+//    protected JButton startLogButton = new JButton();
+//    protected JButton stopLogButton = new JButton();
     protected JButton logMsgButton = new JButton();
     protected JCheckBox rawCheckBox = new JCheckBox();
     protected JCheckBox timeCheckBox = new JCheckBox();
@@ -87,7 +80,6 @@ public abstract class AbstractMonFrame extends JmriJFrame {
     protected JButton openFileChooserButton = new JButton();
     protected JTextField entryField = new JTextField();
     protected JButton enterButton = new JButton();
-    protected JButton packetfilterButton = new JButton();  //c2
     String rawDataCheck = this.getClass().getName()+".RawData";
     String timeStampCheck = this.getClass().getName()+".TimeStamp";
     String deltaTCheck = this.getClass().getName()+".DeltaT";
@@ -176,11 +168,11 @@ public abstract class AbstractMonFrame extends JmriJFrame {
         startLogButton.setText(Bundle.getMessage("ButtonStartLogging"));
         startLogButton.setVisible(true);
         startLogButton.setToolTipText(Bundle.getMessage("TooltipStartLogging")); // NOI18N
-*/
+
         stopLogButton.setText(Bundle.getMessage("ButtonStopLogging")); // NOI18N
         stopLogButton.setVisible(true);
         stopLogButton.setToolTipText(Bundle.getMessage("TooltipStopLogging")); // NOI18N
-
+*/
         rawCheckBox.setText(Bundle.getMessage("ButtonShowRaw")); // NOI18N
         rawCheckBox.setVisible(true);
         rawCheckBox.setToolTipText(Bundle.getMessage("TooltipShowRaw")); // NOI18N
@@ -191,9 +183,9 @@ public abstract class AbstractMonFrame extends JmriJFrame {
         timeCheckBox.setToolTipText(Bundle.getMessage("TooltipShowTimestamps")); // NOI18N
         timeCheckBox.setSelected(p.getSimplePreferenceState(timeStampCheck));
         
-        deltaTBox.setText("w/Time Diff");
+        deltaTBox.setText(Bundle.getMessage("ButtonShowDeltaT"));
         deltaTBox.setVisible(true);
-        deltaTBox.setToolTipText("If checked, show time difference in mS");
+        deltaTBox.setToolTipText(Bundle.getMessage("TooltipDeltaT"));
         deltaTBox.setSelected(p.getSimplePreferenceState(deltaTCheck));
         
         alwaysOnTopCheckBox.setText(Bundle.getMessage("ButtonWindowOnTop")); // NOI18N
@@ -211,14 +203,6 @@ public abstract class AbstractMonFrame extends JmriJFrame {
         openFileChooserButton.setVisible(true);
         openFileChooserButton.setToolTipText(Bundle.getMessage("TooltipChooseLogFile")); // NOI18N
 
-        packetfilterButton.setText("Filter Packets");
-        packetfilterButton.setVisible(true);
-        packetfilterButton.setToolTipText("Opens CMRInet Packet Filter");
-
-        doneButton.setText("Done");
-        doneButton.setVisible(true);
-        doneButton.setToolTipText("Exit Serial Monitor");
-
         setTitle(title());
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
@@ -227,57 +211,33 @@ public abstract class AbstractMonFrame extends JmriJFrame {
 
         JPanel paneA = new JPanel();
         paneA.setLayout(new BoxLayout(paneA, BoxLayout.Y_AXIS));
-        
-        JPanel pane3 = new JPanel();
-        pane3.setLayout(new BoxLayout(pane3, BoxLayout.X_AXIS));
-        pane3.add(openFileChooserButton);
- /*
-        pane3.add(startLogButton);
-        pane3.add(stopLogButton);
- */
-        pane3.add(logMsgButton);
-        paneA.add(pane3);
 
-        JPanel pane2 = new JPanel();
-        pane2.setLayout(new BoxLayout(pane2, BoxLayout.X_AXIS));
-        pane2.add(rawCheckBox);
-        pane2.add(timeCheckBox);
-        pane2.add(deltaTBox);
-        pane2.add(alwaysOnTopCheckBox);
-        pane2.add(packetfilterButton);
-        paneA.add(pane2);
-        
         JPanel pane1 = new JPanel();
         pane1.setLayout(new BoxLayout(pane1, BoxLayout.X_AXIS));
         pane1.add(clearButton);
         pane1.add(freezeButton);
         pane1.add(rawCheckBox);
         pane1.add(timeCheckBox);
+        pane1.add(deltaTBox);
         pane1.add(alwaysOnTopCheckBox);
-        
-        pane1.add(Box.createRigidArea(new Dimension(50,0)));
-        pane1.add(doneButton);
         paneA.add(pane1);
 
-        JPanel pane4 = new JPanel();
-        pane4.setLayout(new BoxLayout(pane4, BoxLayout.X_AXIS));
-        pane4.add(openFileChooserButton);
-        pane4.add(startLogButton);
-        pane4.add(stopLogButton);
-        paneA.add(pane4);
+        JPanel pane2 = new JPanel();
+        pane2.setLayout(new BoxLayout(pane2, BoxLayout.X_AXIS));
+        pane2.add(openFileChooserButton);
+ /*
+        pane2.add(startLogButton);
+        pane2.add(stopLogButton);
+ */
+        pane2.add(logMsgButton);
+        paneA.add(pane2);
 
-        JPanel pane5 = new JPanel();
-        pane5.setLayout(new BoxLayout(pane5, BoxLayout.X_AXIS));
-        pane5.add(enterButton);
-        pane5.add(entryField);
-        paneA.add(pane5);
+        JPanel pane3 = new JPanel();
+        pane3.setLayout(new BoxLayout(pane3, BoxLayout.X_AXIS));
+        pane3.add(enterButton);
+        pane3.add(entryField);
+        paneA.add(pane3);
         
-        JPanel pane6 = new JPanel();
-        pane6.setLayout(new BoxLayout(pane6, BoxLayout.X_AXIS));
-        pane6.add(enterButton);
-        pane6.add(entryField);
-        paneA.add(pane6);
-
         getContentPane().add(paneA);
 
         // connect actions to buttons
@@ -340,22 +300,6 @@ public abstract class AbstractMonFrame extends JmriJFrame {
             public void actionPerformed(ActionEvent e) {
                 doAutoScroll(monTextPane, autoScrollCheckBox.isSelected());
             }
-        });
-
-         packetfilterButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                openPacketFilterPerformed(e);
-            }
-        });
-         
-        doneButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setVisible(false);
-                dispose();
-            }
-
         });
 
        // set file chooser to a default
@@ -423,8 +367,7 @@ public abstract class AbstractMonFrame extends JmriJFrame {
         }
 
         // if not frozen, display it in the Swing thread
-//        if (!freezeButton.isSelected()) {
-        if (!freezeDisplay) {
+        if (!freezeButton.isSelected()) {
             Runnable r = new Runnable() {
                 public void run() {
                     synchronized (self) {
@@ -504,7 +447,8 @@ public abstract class AbstractMonFrame extends JmriJFrame {
                 }   
            }
            logStream = null;
-           logMsgButton.setText("Start Logging");
+           logMsgButton.setText(Bundle.getMessage("ButtonStartLogging"));
+           logMsgButton.setToolTipText(Bundle.getMessage("TooltipStartLogging"));
            setMsgLogging( false );
         }
         else
@@ -513,7 +457,8 @@ public abstract class AbstractMonFrame extends JmriJFrame {
             // start logging
             try {
                 logStream = new PrintStream (new FileOutputStream(logFileChooser.getSelectedFile()));
-                logMsgButton.setText("Stop Logging");
+                logMsgButton.setText(Bundle.getMessage("ButtonStopLogging"));
+                logMsgButton.setToolTipText(Bundle.getMessage("TooltipStopLogging"));
                 setMsgLogging( true );
 
             } catch (Exception ex) {
@@ -525,20 +470,18 @@ public abstract class AbstractMonFrame extends JmriJFrame {
     public synchronized void freezeButtonActionPerformed(java.awt.event.ActionEvent e)
     {
         // freeze/resume the monitor output
-        if (freezeDisplay) 
+        if (!freezeButton.isSelected()) 
         {
-           freezeButton.setText("Freeze Display");
-           freezeDisplay = false;
+           freezeButton.setText(Bundle.getMessage("ButtonFreezeScreen"));
         }
         else
         {  
-           freezeButton.setText("Resume Display");
-           freezeDisplay = true;
+           freezeButton.setText(Bundle.getMessage("ButtonResumeScreen"));
         }
     }
     
 
-
+/*
     public synchronized void startLogButtonActionPerformed(java.awt.event.ActionEvent e) {
         // start logging by creating the stream
         if (logStream == null) {  // successive clicks don't restart the file
@@ -561,6 +504,7 @@ public abstract class AbstractMonFrame extends JmriJFrame {
             logStream = null;
         }
     }
+*/
 
     public void openFileChooserButtonActionPerformed(java.awt.event.ActionEvent e) {
         // start at current file, show dialog
@@ -574,23 +518,12 @@ public abstract class AbstractMonFrame extends JmriJFrame {
             //File file = logFileChooser.getSelectedFile();
             // if we were currently logging, start the new file
             if (loggingNow) {
-                startLogButtonActionPerformed(e);
+                //startLogButtonActionPerformed(e);
+                logButtonActionPerformed(e);
             }
         }
     }
 
-    public void openPacketFilterPerformed(ActionEvent e) {
-		// create a SerialFilterFrame
-		SerialFilterFrame f = new SerialFilterFrame();
-		try {
-			f.initComponents();
-			}
-		catch (Exception ex) {
-			log.warn("SerialFilterAction starting SerialFilterFrame: Exception: "+ex.toString());
-			}
-		f.setVisible(true);
-	}
-    
     public void enterButtonActionPerformed(java.awt.event.ActionEvent e) {
         nextLine(entryField.getText() + "\n", ""); // NOI18N
     }
