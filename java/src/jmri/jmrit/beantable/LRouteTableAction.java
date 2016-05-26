@@ -69,7 +69,7 @@ public class LRouteTableAction extends AbstractTableAction {
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
-     * @param s
+     * @param s title of the action
      */
     public LRouteTableAction(String s) {
         super(s);
