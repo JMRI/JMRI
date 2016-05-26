@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import jmri.Block;
 import jmri.EntryPoint;
+import jmri.InstanceManager;
 import jmri.Section;
 import jmri.Transit;
 import jmri.Turnout;
@@ -40,6 +41,9 @@ public class AutoTurnouts {
     public AutoTurnouts(DispatcherFrame d) {
         _dispatcher = d;
     }
+
+    private String closedText = InstanceManager.turnoutManagerInstance().getClosedText();
+    private String thrownText = InstanceManager.turnoutManagerInstance().getThrownText();
 
     // operational variables
     protected DispatcherFrame _dispatcher = null;
@@ -78,8 +82,8 @@ public class AutoTurnouts {
      * Layout Editor panel.
      */
     protected boolean setTurnoutsInSection(Section s, int seqNum, Section nextSection,
-            ActiveTrain at, LayoutEditor le, boolean alwaysSet, Section prevSection) {
-        return turnoutUtil(s, seqNum, nextSection, at, le, alwaysSet, true, prevSection);
+            ActiveTrain at, LayoutEditor le, boolean trustKnownTurnouts, Section prevSection) {
+        return turnoutUtil(s, seqNum, nextSection, at, le, trustKnownTurnouts, true, prevSection);
     }
 
     /**
@@ -89,7 +93,7 @@ public class AutoTurnouts {
      * finds.
      */
     private boolean turnoutUtil(Section s, int seqNum, Section nextSection,
-            ActiveTrain at, LayoutEditor le, boolean alwaysSet, boolean set, Section prevSection) {
+            ActiveTrain at, LayoutEditor le, boolean trustKnownTurnouts, boolean set, Section prevSection) {
         // validate input and initialize
         Transit tran = at.getTransit();
         if ((s == null) || (seqNum > tran.getMaxSequence()) || (!tran.containsSection(s)) || (le == null)) {
@@ -188,28 +192,39 @@ public class AutoTurnouts {
                 if (turnoutList.get(i) instanceof LayoutSlip) {
                     setting = ((LayoutSlip) turnoutList.get(i)).getTurnoutState(settingsList.get(i));
                 }
-                // test current setting
-                if (alwaysSet) {
+                // check or ignore current setting based on flag, set in Options
+                if (!trustKnownTurnouts) {
+                    log.debug("{}: setting turnout {} to {}", at.getTrainName(), to.getFullyFormattedDisplayName(), 
+                            (setting==Turnout.CLOSED ? closedText : thrownText));
                     to.setCommandedState(setting);
-                } else if (to.getKnownState() != setting) {
-                    // turnout is not set correctly
-                    if (set) {
-                        // setting has been requested, is Section free and Block unoccupied
-                        if ((s.getState() == Section.FREE) && (curBlock.getState() != Block.OCCUPIED)) {
-                            // send setting command
-                            to.setCommandedState(setting);
+                    try { Thread.sleep(100); } catch(Exception ex) {}  //TODO: move this to separate thread
+                } else {
+                    if (to.getKnownState() != setting) {
+                        // turnout is not set correctly
+                        if (set) {
+                            // setting has been requested, is Section free and Block unoccupied
+                            if ((s.getState() == Section.FREE) && (curBlock.getState() != Block.OCCUPIED)) {
+                                // send setting command
+                                log.debug("{}: turnout {} commanded to {}", at.getTrainName(), to.getFullyFormattedDisplayName(), 
+                                        (setting==Turnout.CLOSED ? closedText : thrownText));
+                                to.setCommandedState(setting);
+                                try { Thread.sleep(100); } catch(Exception ex) {}  //TODO: move this to separate thread
+                            } else {
+                                turnoutsOK = false;
+                            }
                         } else {
                             turnoutsOK = false;
                         }
                     } else {
-                        turnoutsOK = false;
+                        log.debug("{}: turnout {} already {}, skipping", at.getTrainName(), to.getFullyFormattedDisplayName(), 
+                                (setting==Turnout.CLOSED ? closedText : thrownText));                        
                     }
                 }
                 if (turnoutList.get(i) instanceof LayoutSlip) {
                     //Look at the state of the second turnout in the slip
                     setting = ((LayoutSlip) turnoutList.get(i)).getTurnoutBState(settingsList.get(i));
                     to = ((LayoutSlip) turnoutList.get(i)).getTurnoutB();
-                    if (alwaysSet) {
+                    if (!trustKnownTurnouts) {
                         to.setCommandedState(setting);
                     } else if (to.getKnownState() != setting) {
                         // turnout is not set correctly

@@ -284,6 +284,8 @@ public class XNetReplyTest extends TestCase {
         Assert.assertEquals("Feedback Message Type", 1, r.getFeedbackMessageType() );
         r = new XNetReply("42 05 48 0F");
         Assert.assertEquals("Feedback Message Type", 2, r.getFeedbackMessageType() );
+        r = new XNetReply("63 10 01 04 76"); // not a feedback message.
+        Assert.assertEquals("Feedback Message Type", -1, r.getFeedbackMessageType() );
     }
 
     // getting the feedback message type (turnout without feedback, 
@@ -296,6 +298,8 @@ public class XNetReplyTest extends TestCase {
         Assert.assertEquals("Broadcast Feedback Message Type", 1, r.getFeedbackMessageType(1) );
         r = new XNetReply("42 05 48 0F");
         Assert.assertEquals("Broadcast Feedback Message Type", 2, r.getFeedbackMessageType(1) );
+        r = new XNetReply("63 10 01 04 76"); // not a feedback message.
+        Assert.assertEquals("Broadcast Feedback Message Type", -1, r.getFeedbackMessageType(1) );
     }
 
     // getting the status from a turnout feedback response
@@ -309,6 +313,10 @@ public class XNetReplyTest extends TestCase {
 
 	// ask for address 21
 	Assert.assertEquals("Turnout Status", -1 , r.getTurnoutStatus(1));
+        // feedback message for turnout 22, with invalid state.
+        r = new XNetReply("42 05 0C 45");
+        Assert.assertEquals("Turnout Status", -1 , r.getTurnoutStatus(0));
+
         // feedback message for turnout 21, closed
         r = new XNetReply("42 05 01 46");
         Assert.assertEquals("Turnout Status", jmri.Turnout.CLOSED, r.getTurnoutStatus(1));
@@ -317,22 +325,52 @@ public class XNetReplyTest extends TestCase {
         Assert.assertEquals("Turnout Status", jmri.Turnout.THROWN, r.getTurnoutStatus(1));
 	// ask for address 22.
 	Assert.assertEquals("Turnout Status", -1 , r.getTurnoutStatus(0));
+	// send invalid value for parameter (only 0 and 1 are valid).
+	Assert.assertEquals("Turnout Status", -1 , r.getTurnoutStatus(3));
+        // feedback message for turnout 21, with invalid state.
+        r = new XNetReply("42 05 03 47");
+        Assert.assertEquals("Turnout Status", -1 , r.getTurnoutStatus(1));
     }
 
     // getting the status from a turnout broadcast feedback response
     public void testGetBroadcastTurnoutMessageStatus() {
-        // feedback message for turnout
+        // feedback message for turnout 22, closed
         XNetReply r = new XNetReply("42 05 04 43");
         Assert.assertEquals("Broadcast Turnout Status", jmri.Turnout.CLOSED, r.getTurnoutStatus(1,0));
+        // feedback message for turnout 22, thrown
         r = new XNetReply("42 05 08 4F");
         Assert.assertEquals("Broadcast Turnout Status", jmri.Turnout.THROWN, r.getTurnoutStatus(1,0));
+
+	// ask for address 21
+	Assert.assertEquals("Broadcast Turnout Status", -1 , r.getTurnoutStatus(1,1));
+        // feedback message for turnout 22, with invalid state.
+        r = new XNetReply("42 05 0C 45");
+        Assert.assertEquals("Broadcast Turnout Status", -1 , r.getTurnoutStatus(1,0));
+        // feedback message for turnout 21, closed
+        r = new XNetReply("42 05 01 46");
+        Assert.assertEquals("Broadcast Turnout Status", jmri.Turnout.CLOSED, r.getTurnoutStatus(1,1));
+        // feedback message for turnout 21, thrown
+        r = new XNetReply("42 05 02 45");
+        Assert.assertEquals("Broadcast Turnout Status", jmri.Turnout.THROWN, r.getTurnoutStatus(1,1));
+	// ask for address 22.
+	Assert.assertEquals("Broadcast Turnout Status", -1 , r.getTurnoutStatus(1,0));
+	// send invalid value for parameter (only 0 and 1 are valid).
+	Assert.assertEquals("Broadcast Turnout Status", -1 , r.getTurnoutStatus(1,3));
+        // feedback message for turnout 21, with invalid state.
+        r = new XNetReply("42 05 03 47");
+        Assert.assertEquals("Broadcast Turnout Status", -1 , r.getTurnoutStatus(1,1));
     }
 
     // getting the address from a feedback encoder response
     public void testGetEncoderMsgAddr() {
-        // feedback message for turnout
+        // feedback message for sensor
         XNetReply r = new XNetReply("42 05 48 0f");
         Assert.assertEquals("Feedback Encoder Message Address", 5, r.getFeedbackEncoderMsgAddr());
+        // turnout
+        r = new XNetReply("42 05 08 4F");
+        Assert.assertEquals("Feedback Encoder Message Address", -1, r.getFeedbackEncoderMsgAddr());
+        r = new XNetReply("63 10 01 04 76"); // not a feedback message.
+        Assert.assertEquals("Feedback Encoder Message Address", -1, r.getFeedbackEncoderMsgAddr());
     }
 
     // getting the address from a broadcast feedback encoder response
@@ -340,6 +378,11 @@ public class XNetReplyTest extends TestCase {
         // feedback message for turnout
         XNetReply r = new XNetReply("42 05 48 0f");
         Assert.assertEquals("Broadcast Feedback Encoder Message Address", 5, r.getFeedbackEncoderMsgAddr(1));
+        // turnout
+        r = new XNetReply("42 05 08 4F");
+        Assert.assertEquals("Feedback Encoder Message Address", -1, r.getFeedbackEncoderMsgAddr(1));
+        r = new XNetReply("63 10 01 04 76"); // not a feedback message.
+        Assert.assertEquals("Feedback Encoder Message Address", -1, r.getFeedbackEncoderMsgAddr(1));
     }
 
     // throttle related replies.
@@ -351,6 +394,9 @@ public class XNetReplyTest extends TestCase {
         // long address
         r = new XNetReply("E3 40 C1 04 61");
         Assert.assertEquals("Throttle Message Address", 260, r.getThrottleMsgAddr());
+        // not a throttle message.
+        r = new XNetReply("42 05 48 0f");
+        Assert.assertEquals("Throttle Message Address", -1, r.getThrottleMsgAddr());
     }
 
     // check is this a throttle response
