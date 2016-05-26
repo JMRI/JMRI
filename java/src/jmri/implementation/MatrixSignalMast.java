@@ -39,7 +39,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
     String errorChars = "nnnnn";
     char[] errorBits = errorChars.toCharArray();
 
-    String UnLitChars = "00000"; // default starting value
+    String UnLitChars = "uuuuu"; // default starting value
     char[] unLitBits = UnLitChars.toCharArray();
 
     public MatrixSignalMast(String systemName, String userName) {
@@ -129,7 +129,11 @@ public class MatrixSignalMast extends AbstractSignalMast {
                 // Clear all the current states, this will result in the signalmast going blank (RED) for a very short time.
                 // ToDo: pick up drop down choice for DCCPackets or Turnouts outputs
                 // c.sendPacket(NmraPacket.altAccSignalDecoderPkt(dccSignalDecoderAddress, aspectToOutput.get(aspect)), packetRepeatCount);
-                this.setBitsForAspect("Stop", unLitBits); // or Dark?
+                if (aspectToOutput.containsKey("Stop")) {
+                    updateOutputs(getBitsForAspect("Stop")); // show Red
+                } else {
+                    updateOutputs(unLitBits); // Dark (instead of Red), always available
+                }
             }
             if (aspectToOutput.containsKey(aspect) && aspectToOutput.get(aspect) != errorBits) {
                 // ToDo: pick up drop down choice for either DCC direct packets or Turnouts as outputs
@@ -153,7 +157,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
         }
         if (newLit) {
             setAspect(getAspect());
-            // activate prior aspect
+            // if true, activate prior aspect
         } else {
             updateOutputs(unLitBits); // directly set outputs
             //c.sendPacket(NmraPacket.altAccSignalDecoderPkt(dccSignalDecoderAddress, unLitId), packetRepeatCount);
@@ -161,15 +165,27 @@ public class MatrixSignalMast extends AbstractSignalMast {
         super.setLit(newLit);
     }
 
-    public void setUnlitBits(char[] bits) {
-        unLitBits = bits;
+    public void setUnLitBits(char[] bits) {
+        char[] unLitBits = bits;
     }
 
-    public char[] getUnlitBits() {
+    /**
+     *  Receive unLitBits from xml
+     *  @param bitString String for 1-n 1/0 chararacters setting an unlit aspect
+     */
+    public void setUnLitBits(String bitString) {
+        unLitBits = bitString.toCharArray();
+    }
+
+    public char[] getUnLitBits() {
         return unLitBits;
     }
 
-    public String getUnlitChars() {
+    /**
+     *  Hand unLitBits to xml
+     *  @return String for 1-n 1/0 chararacters setting an unlit aspect
+     */
+    public String getUnLitChars() {
         return String.valueOf(unLitBits);
     }
 
@@ -235,7 +251,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
         aspectToOutput.put(aspect, bitArray);
     }
 
-    // used?
+/*    // used?
     public List<String> getBitstrings() {
         // provide to xml as normal Strings
         ArrayList<String> bitlist = new ArrayList<String>(16);
@@ -247,7 +263,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
             }
         }
         return bitlist;
-    }
+    }*/
 
     /**
      *  Provide one series of on/off digits from aspectToOutput hashmap to xml
@@ -329,12 +345,11 @@ public class MatrixSignalMast extends AbstractSignalMast {
             log.debug("Empty char[] received");
         }
         for (int i = 0; i < BitNum; i++) {
-            //if (bits[i] == '1' && getTurnoutBean(i).getCommandedState() == Turnout.THROWN) { // no need to set a state already set
+            if (bits[i] == '1' && getTurnoutBean(i).getCommandedState() == Turnout.THROWN) { // no need to set a state already set
                 //getTurnoutBean(i).setCommandedState(Turnout.CLOSED); // NPE ERROR HERE
-            //} else if (bits[i] == '0'  && getTurnoutBean(i).getCommandedState() == Turnout.CLOSED) {
+            } else if (bits[i] == '0'  && getTurnoutBean(i).getCommandedState() == Turnout.CLOSED) {
                 //getTurnoutBean(i).setCommandedState(Turnout.THROWN); // NPE ERROR HERE
-            //} else if
-            if (bits[i] == 'n') {
+            } else if (bits[i] == 'n' || bits[i] == 'u') {
                 // let pass, extra chars up to 5 are not defined
             } else {
                 // invalid char

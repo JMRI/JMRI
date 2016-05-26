@@ -46,6 +46,7 @@ public class MatrixSignalMastXml
         Element unlit = new Element("unlit");
         if (p.allowUnLit()) {
             unlit.setAttribute("allowed", "yes");
+            unlit.addContent(new Element("bitString").addContent(p.getUnLitChars()));
         } else {
             unlit.setAttribute("allowed", "no");
         }
@@ -127,6 +128,8 @@ public class MatrixSignalMastXml
                     m.setAllowUnLit(false);
                 } else {
                     m.setAllowUnLit(true);
+                    String bits = unlit.getChild("bitString").getText();
+                    m.setUnLitBits(bits);
                 }
             }
         }
