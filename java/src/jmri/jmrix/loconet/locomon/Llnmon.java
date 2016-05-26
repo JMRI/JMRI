@@ -135,7 +135,6 @@ public class Llnmon {
      * addressLow & addressHigh in a form appropriate for the type of address (2
      * or 4 digit) using the Digitrax 'mixed mode' if necessary.
      *
-     * @return
      */
     private static String convertToMixed(int addressLow, int addressHigh) {
 

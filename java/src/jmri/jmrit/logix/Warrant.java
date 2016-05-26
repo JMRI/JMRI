@@ -367,7 +367,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     /**
      * Sets dccAddress and fetches RosterEntry
      * @param id address as a String
-     * @return
      */
     public boolean setDccAddress(String id) {
         _train = Roster.instance().entryFromTitle(id);
@@ -1179,7 +1178,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
      * Called from propertyChange()
      * For the start block a return of true will allow warrant to acquire a throttle and
      * launch an engineer.  return ignored for all other blocks
-     * @return
      */
     private boolean checkStoppingBlock() {
         boolean ret = false;

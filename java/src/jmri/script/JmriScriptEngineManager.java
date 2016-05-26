@@ -236,7 +236,6 @@ public final class JmriScriptEngineManager {
     /**
      * Evaluate a script using the given ScriptEngine.
      *
-     * @return
      */
     public Object eval(String script, ScriptEngine engine) throws ScriptException {
         if (PYTHON.equals(engine.getFactory().getEngineName()) && this.jython != null) {
@@ -249,7 +248,6 @@ public final class JmriScriptEngineManager {
     /**
      * Evaluate a script using the given ScriptEngine.
      *
-     * @return
      */
     public Object eval(Reader reader, ScriptEngine engine) throws ScriptException {
         return engine.eval(reader);
@@ -259,7 +257,6 @@ public final class JmriScriptEngineManager {
      * Evaluate a script contained in a file. Uses the extension of the file to
      * determine which ScriptEngine to use.
      *
-     * @return
      */
     public Object eval(File file) throws ScriptException, FileNotFoundException, IOException {
         ScriptEngine engine = this.getEngineByExtension(FilenameUtils.getExtension(file.getName()));
@@ -279,7 +276,6 @@ public final class JmriScriptEngineManager {
      * {@link javax.script.Bindings} to add to the script's context. Uses the
      * extension of the file to determine which ScriptEngine to use.
      *
-     * @return
      */
     public Object eval(File file, Bindings n) throws ScriptException, FileNotFoundException, IOException {
         ScriptEngine engine = this.getEngineByExtension(FilenameUtils.getExtension(file.getName()));
@@ -299,7 +295,6 @@ public final class JmriScriptEngineManager {
      * script. Uses the extension of the file to determine which ScriptEngine to
      * use.
      *
-     * @return
      */
     public Object eval(File file, ScriptContext context) throws ScriptException, FileNotFoundException, IOException {
         ScriptEngine engine = this.getEngineByExtension(FilenameUtils.getExtension(file.getName()));

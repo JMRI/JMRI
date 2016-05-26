@@ -351,7 +351,6 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      * Called from setPath. looking for other warrants that may have allocated
      * blocks that share TO's with this block.
      *
-     * @return
      */
     private String checkSharedTO() {
         List<HashMap<OBlock, List<OPath>>> blockList = _sharedTO.get(_pathName);

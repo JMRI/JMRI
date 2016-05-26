@@ -379,7 +379,6 @@ abstract public class AbstractProxyManager implements Manager {
     /**
      * Get a list of all system names.
      *
-     * @return
      */
     @Override
     public List<String> getSystemNameList() {

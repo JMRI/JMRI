@@ -163,7 +163,6 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
      * Set the roster entry, if it exists, or train id string if not.
      * i.e. set enough info to get a dccLocoAddress
      * @param name may be roster Id or address
-     * @return
      */
     protected String setTrainInfo(String name) {
         if (log.isDebugEnabled()) {
@@ -1141,7 +1140,6 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     *
     * @param vertical  Label orientation true = above, false = left
     * @param label String label message
-    * @return
     */
    static protected JPanel makeTextBoxPanel(boolean vertical, JComponent textField, String label, String tooltip) {
        JPanel panel = new JPanel();

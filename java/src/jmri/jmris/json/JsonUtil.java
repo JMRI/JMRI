@@ -1363,7 +1363,6 @@ public class JsonUtil {
      * JSON errors should be handled by throwing a
      * {@link jmri.server.json.JsonException}.
      *
-     * @return
      * @deprecated
      */
     @Deprecated

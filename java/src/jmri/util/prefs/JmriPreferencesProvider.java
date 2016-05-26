@@ -137,7 +137,6 @@ public final class JmriPreferencesProvider {
      * Note that the first use of a node-specific setting can be different than
      * the first use of a multi-node setting.
      *
-     * @return
      */
     public boolean isFirstUse() {
         return this.firstUse;

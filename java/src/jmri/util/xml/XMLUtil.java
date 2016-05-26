@@ -1012,7 +1012,6 @@ public final class XMLUtil extends Object {
      * 
      * @param from element to translate
      * @param namespace namespace to be translated to
-     * @return
      * 
      * @since 8.4
      */

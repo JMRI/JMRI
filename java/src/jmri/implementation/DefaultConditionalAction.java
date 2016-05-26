@@ -119,7 +119,6 @@ public class DefaultConditionalAction implements ConditionalAction {
     /**
      * If this is an indirect reference return the Memory bean
      *
-     * @return
      */
     private Memory getIndirectBean(String devName) {
         if (devName != null && devName.length() > 0 && devName.charAt(0) == '@') {
@@ -139,7 +138,6 @@ public class DefaultConditionalAction implements ConditionalAction {
     /**
      * Return the device bean that will do the action
      *
-     * @return
      */
     private NamedBean getActionBean(String devName) {
         NamedBean bean = null;
