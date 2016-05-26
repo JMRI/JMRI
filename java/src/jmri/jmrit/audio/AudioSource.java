@@ -19,7 +19,6 @@ import jmri.Audio;
  * form, and can be used for any purpose. The "system" name is provided by the
  * system-specific implementations, and provides a unique mapping to the layout
  * control system (e.g. LocoNet, NCE, etc) and address within that system.
- * <BR>
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -311,10 +310,10 @@ public interface AudioSource extends Audio {
      * Default value = 1.0f
      * <p>
      * Applies only to sub-types:
-     * <ul>
+     * </p><ul>
      * <li>Listener
      * <li>Source
-     * <ul>
+     * </ul>
      *
      * @param gain the gain of this AudioSource
      */
@@ -328,7 +327,7 @@ public interface AudioSource extends Audio {
      * Default value = 1.0f
      * <p>
      * Applies only to sub-types:
-     * <ul>
+     * </p><ul>
      * <li>Source
      * </ul>
      *
@@ -344,7 +343,7 @@ public interface AudioSource extends Audio {
      * Default value = 1.0f
      * <p>
      * Applies only to sub-types:
-     * <ul>
+     * </p><ul>
      * <li>Source
      * </ul>
      *
@@ -358,7 +357,7 @@ public interface AudioSource extends Audio {
      * Default value = 1.0f
      * <p>
      * Applies only to sub-types:
-     * <ul>
+     * </p><ul>
      * <li>Source
      * </ul>
      *
@@ -379,7 +378,7 @@ public interface AudioSource extends Audio {
      * a quarter volume, etc ...
      * <p>
      * Applies only to sub-types:
-     * <ul>
+     * </p><ul>
      * <li>Source
      * </ul>
      *
@@ -396,7 +395,7 @@ public interface AudioSource extends Audio {
      * be zero.
      * <p>
      * Applies only to sub-types:
-     * <ul>
+     * </p><ul>
      * <li>Source
      * </ul>
      */

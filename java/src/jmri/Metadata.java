@@ -10,7 +10,6 @@ import java.util.List;
  * provides a single container for listing and storing JMRI meta data. This
  * class is used by the DefaultXmlIOServer object.
  *
- * <BR>
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -78,9 +77,7 @@ public class Metadata {
     }
 
     /**
-     * A list of known meta data names.
-     *
-     * @return List<String>
+     * Get the list of known meta-data names.
      */
     public static List<String> getSystemNameList() {
         return Arrays.asList(Metadata.getSystemNameArray());

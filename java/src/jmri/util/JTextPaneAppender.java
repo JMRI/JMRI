@@ -149,7 +149,7 @@ public class JTextPaneAppender extends AppenderSkeleton {
 
     /**
      * Set current TextPane
-     * <p>
+     * 
      * @param aTextpane
      */
     public void setTextPane(JTextPane aTextpane) {
@@ -169,7 +169,7 @@ public class JTextPaneAppender extends AppenderSkeleton {
     // option setters and getters
     /**
      * setColorEmerg
-     * <p>
+     * 
      * @param color
      */
     public void setColorEmerg(Color color) {
@@ -185,7 +185,7 @@ public class JTextPaneAppender extends AppenderSkeleton {
 
     /**
      * setColorError
-     * <p>
+     * 
      * @param color
      */
     public void setColorError(Color color) {
@@ -201,7 +201,7 @@ public class JTextPaneAppender extends AppenderSkeleton {
 
     /**
      * setColorWarn
-     * <p>
+     * 
      * @param color
      */
     public void setColorWarn(Color color) {
@@ -217,7 +217,7 @@ public class JTextPaneAppender extends AppenderSkeleton {
 
     /**
      * setColorInfo
-     * <p>
+     * 
      * @param color
      */
     public void setColorInfo(Color color) {
@@ -233,7 +233,7 @@ public class JTextPaneAppender extends AppenderSkeleton {
 
     /**
      * setColorDebug
-     * <p>
+     * 
      * @param color
      */
     public void setColorDebug(Color color) {
@@ -249,7 +249,7 @@ public class JTextPaneAppender extends AppenderSkeleton {
 
     /**
      * Sets the font size of all Level's
-     * <p>
+     *
      * @param aSize
      */
     public void setFontSize(int aSize) {
@@ -262,7 +262,7 @@ public class JTextPaneAppender extends AppenderSkeleton {
 
     /**
      * Sets the font size of a particular Level
-     * <p>
+     *
      * @param aSize
      * @param aLevel
      */
@@ -275,7 +275,7 @@ public class JTextPaneAppender extends AppenderSkeleton {
 
     /**
      * Get the font size for a particular logging level
-     * <p>
+     *
      * @param aLevel
      */
     public int getFontSize(Level aLevel) {
@@ -289,7 +289,7 @@ public class JTextPaneAppender extends AppenderSkeleton {
 
     /**
      * Sets the font name of all known Level's
-     * <p>
+     *
      * @param aName
      */
     public void setFontName(String aName) {
@@ -302,7 +302,7 @@ public class JTextPaneAppender extends AppenderSkeleton {
 
     /**
      * setFontName
-     * <p>
+     *
      * @param aName
      * @param aLevel
      */
@@ -316,7 +316,7 @@ public class JTextPaneAppender extends AppenderSkeleton {
 
     /**
      * Retrieves the font name of a particular Level
-     * <p>
+     *
      * @param aLevel
      */
     public String getFontName(Level aLevel) {
