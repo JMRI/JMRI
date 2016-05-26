@@ -29,9 +29,10 @@ public class PackageTest extends TestCase {
         suite.addTest(BundleTest.suite());
 
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(JythonTest.suite());
+            suite.addTest(JythonWindowsTest.suite());
         }
 
+        suite.addTest(SampleScriptTest.suite());
         return suite;
     }
 
