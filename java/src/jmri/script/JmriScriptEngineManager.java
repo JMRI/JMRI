@@ -22,6 +22,7 @@ import jmri.AudioManager;
 import jmri.BlockManager;
 import jmri.CommandStation;
 import jmri.InstanceManager;
+import jmri.Light;
 import jmri.LightManager;
 import jmri.MemoryManager;
 import jmri.NamedBean;
@@ -131,6 +132,8 @@ public final class JmriScriptEngineManager {
         bindings.put("LOCKED", Turnout.LOCKED);
         bindings.put("ACTIVE", Sensor.ACTIVE);
         bindings.put("INACTIVE", Sensor.INACTIVE);
+        bindings.put("ON", Light.ON);
+        bindings.put("OFF", Light.OFF);
         bindings.put("UNKNOWN", NamedBean.UNKNOWN);
         bindings.put("INCONSISTENT", NamedBean.INCONSISTENT);
         bindings.put("DARK", SignalHead.DARK);
