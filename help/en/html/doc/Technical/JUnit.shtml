@@ -54,6 +54,11 @@
         <li><a href="#complicatedGuiTesting">Testing Complicated GUI code</a></li>
         </ul>
     </ul>
+    <li><a href="#testScriptCode">Testing Script Code</a></li>
+        <ul>
+        <li><a href="#sampleScriptTesting">Testing Jython sample scripts</a></li>
+        </ul>
+    </ul>
     <li><a href="#issues">Issues</a></li>
 </ul>
 
@@ -501,6 +506,22 @@ mouse cursor around while they're running)
 For more complex GUI testing, you can invoke various aspects of the interface
 and check internal state using test code.
 
+<h2><a id="testScriptCode" name="testScriptCode"></a>Testing Script Code</h2>
+
+JMRI ships with sample scripts.  This section discussions how you can write 
+simple tests for those to ensure they keep working.
+
+<h3><a id="sampleJythonScriptTesting" name="sampleJythonScriptTesting"></a>Testing Jython sample scripts</h3>
+
+Test scripts can be placed in <code>jython</code> and invoked by 
+<code><a href="https://github.com/JMRI/JMRI/blob/master/java/test/jmri/jmrit/jython/SampleScriptTest.java">java/test/jmri/jmrit/jython/SampleScriptTest.java</a></code>.
+<p>
+See the <code><a href="https://github.com/JMRI/JMRI/blob/master/jython/test/jmri_bindings_test.py">jmri_bindings_test.py</a></code> 
+sample for syntax.
+<p>
+The <code>SampleScriptTest</code> class is a placeholder, and should (eventually) be extended to pick up files automatically, 
+to support xUnit testing, etc.
+<p>
 
 <h2><a name="issues">Issues</a></h2>
 
