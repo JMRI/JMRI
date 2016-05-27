@@ -1214,12 +1214,12 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     private Element mRootElement = null;
 
     /**
-     * Load a pre-existing CvTableModel object with the CV contents of this
+     * Load pre-existing Variable and CvTableModel object with the contents of this
      * entry
      *
      * @param cvModel  Model to load, must exist
      */
-    public void loadCvModel(CvTableModel cvModel, IndexedCvTableModel iCvModel) {
+    public void loadCvModel(VariableTableModel varModel, CvTableModel cvModel, IndexedCvTableModel iCvModel) {
         if (cvModel == null) {
             log.error("loadCvModel must be given a non-null argument");
             return;
@@ -1229,6 +1229,10 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             return;
         }
         try {
+            if (varModel != null) {
+                LocoFile.loadVariableModel(mRootElement.getChild("locomotive"), varModel);
+            }
+
             LocoFile.loadCvModel(mRootElement.getChild("locomotive"), cvModel, iCvModel, getDecoderFamily());
         } catch (Exception ex) {
             log.error("Error reading roster entry", ex);
