@@ -1,4 +1,3 @@
-// SE8Panel.java
 package jmri.jmrix.loconet.se8;
 
 import java.awt.FlowLayout;
@@ -29,14 +28,8 @@ import org.slf4j.LoggerFactory;
  * Inc for separate permission.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2004, 2007, 2010
- * @version $Revision$
  */
 public class SE8Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7400087827251524534L;
 
     public SE8Panel() {
         this(1);

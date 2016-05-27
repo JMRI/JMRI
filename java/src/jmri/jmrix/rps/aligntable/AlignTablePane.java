@@ -1,4 +1,3 @@
-// AlignTableFrame.java
 package jmri.jmrix.rps.aligntable;
 
 import java.awt.Dimension;
@@ -30,14 +29,9 @@ import org.slf4j.LoggerFactory;
  * Pane for user management of RPS alignment.
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
  */
 public class AlignTablePane extends javax.swing.JPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3252695029810160130L;
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.rps.aligntable.AlignTableBundle");
 
     /**

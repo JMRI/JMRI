@@ -1,4 +1,3 @@
-// DuplexGroupScanPanel.java
 package jmri.jmrix.loconet.duplexgroup.swing;
 
 import java.awt.BasicStroke;

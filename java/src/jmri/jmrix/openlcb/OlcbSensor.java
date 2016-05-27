@@ -1,4 +1,3 @@
-// OlcbSensor.java
 package jmri.jmrix.openlcb;
 
 import java.util.Timer;
@@ -156,6 +155,3 @@ public class OlcbSensor extends AbstractSensor implements CanListener {
     private final static Logger log = LoggerFactory.getLogger(OlcbSensor.class.getName());
 
 }
-
-
-/* @(#)OlcbSensor.java */
