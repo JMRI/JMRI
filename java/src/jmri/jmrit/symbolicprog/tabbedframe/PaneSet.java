@@ -65,9 +65,9 @@ public class PaneSet {
         // load from decoder file
         loadDecoderFromLoco(re);
 
-        // fill the CV values from the specific loco file
+        // finally fill the Variable and CV values from the specific loco file
         if (re.getFileName() != null) {
-            re.loadCvModel(cvModel, iCvModel);
+            re.loadCvModel(variableModel, cvModel, iCvModel);
         }
     }
 

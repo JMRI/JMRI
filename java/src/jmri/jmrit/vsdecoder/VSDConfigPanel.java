@@ -427,7 +427,7 @@ public class VSDConfigPanel extends JmriPanel {
         if (_rosterEntry.getFileName() != null) {
             // set the loco file name in the roster entry
             _rosterEntry.readFile();  // read, but don't yet process
-            _rosterEntry.loadCvModel(cvModel, iCvModel);
+            _rosterEntry.loadCvModel(variableModel, cvModel, iCvModel);
         }
 
         // id has to be set!

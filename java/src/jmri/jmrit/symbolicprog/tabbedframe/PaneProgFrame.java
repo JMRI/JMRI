@@ -438,9 +438,9 @@ abstract public class PaneProgFrame extends JmriJFrame
         // save default values
         saveDefaults();
 
-        // finally fill the CV values from the specific loco file
+        // finally fill the Variable and CV values from the specific loco file
         if (_rosterEntry.getFileName() != null) {
-            _rosterEntry.loadCvModel(cvModel, iCvModel);
+            _rosterEntry.loadCvModel(variableModel, cvModel, iCvModel);
         }
 
         // mark file state as consistent
