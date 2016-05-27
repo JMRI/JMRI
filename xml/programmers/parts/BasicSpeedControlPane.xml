@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
   <name>Basic Speed Control</name>
-  <name xml:lang="ca">Control b\u00e0sic de velocitat</name>
-  <name xml:lang="it">Controllo Semplificato Velocit\u00e0 </name>
+  <name xml:lang="ca">Control bàsic de velocitat</name>
+  <name xml:lang="it">Controllo Semplificato Velocità </name>
   <name xml:lang="de">Einfache Geschwindikeitseinstellung</name>
-  <name xml:lang="da">Grundl\u00e6ggende Speed Kontrol</name>
+  <name xml:lang="da">Grundlæggende Speed Kontrol</name>
   <column>
     <row>
       <column>
@@ -13,13 +13,13 @@
         </label>
         <display item="Speed Table Definition" format="offradiobutton" layout="above" label="Select this button to use settings shown below">
           <label xml:lang="it">Seleziona questo pulsante per usare le impostazioni visualizzate sotto</label>
-          <label xml:lang="ca">Selecciona aquest bot\u00db per usar les caracter\u00ccstiques seg\u00b8ents</label>
+          <label xml:lang="ca">Selecciona aquest botÛ per usar les caracterÌstiques seg¸ents</label>
           <label xml:lang="de">Um die Einstellungen unten zu benutzen, diesen Button markieren</label>
         </display>
         <label>
           <text>           To turn off, use Speed Table pane</text>
           <text xml:lang="de">Zum Ausschalten, die Lasche Geschwindigkeitskennlinie benutzen</text>
-          <text xml:lang="it">           Per disabilitare usa la Tabella velocit\u00e0</text>
+          <text xml:lang="it">           Per disabilitare usa la Tabella velocità</text>
         </label>
         <label>
           <text> </text>
@@ -39,36 +39,36 @@
     <row>
       <column>
         <display item="Vstart" tooltip="Sets the starting voltage at throttle speed step 1">
-          <tooltip xml:lang="it">Imposta Tensione Motore iniziale a Velocit\u00e0 1</tooltip>
+          <tooltip xml:lang="it">Imposta Tensione Motore iniziale a Velocità 1</tooltip>
           <tooltip xml:lang="ca">Estableix el voltatge inicial al pas 1</tooltip>
           <tooltip xml:lang="de">Geschwindigkeit bei niedrigster Fahrstufe einstellen</tooltip>
         </display>
         <display item="Vmid" tooltip="Sets the voltage at mid throttle">
-          <tooltip xml:lang="it">Imposta Tensione Motore a Velocit\u00e0 Intermedia</tooltip>
+          <tooltip xml:lang="it">Imposta Tensione Motore a Velocità Intermedia</tooltip>
           <tooltip xml:lang="ca">Estableix el voltatge a mig regulador</tooltip>
           <tooltip xml:lang="de">Geschwindigkeit bei mittlerer Fahrstufe einstellen</tooltip>
         </display>
         <display item="Vhigh" tooltip="Sets the maximum voltage at full throttle">
-          <tooltip xml:lang="it">Imposta Tensione Motore a Velocit\u00e0 Massima</tooltip>
-          <tooltip xml:lang="ca">Estableix el voltatge amb el regulador al m\u2021xim</tooltip>
-          <tooltip xml:lang="de">Geschwindigkeit bei h\u00f6chster Fahrstufe einstellen</tooltip>
+          <tooltip xml:lang="it">Imposta Tensione Motore a Velocità Massima</tooltip>
+          <tooltip xml:lang="ca">Estableix el voltatge amb el regulador al m‡xim</tooltip>
+          <tooltip xml:lang="de">Geschwindigkeit bei höchster Fahrstufe einstellen</tooltip>
         </display>
       </column>
       <column>
         <display item="Vstart" format="hslider" label="" tooltip="Sets the starting voltage at throttle speed step 1">
-          <tooltip xml:lang="it">Imposta Tensione Motore iniziale a Velocit\u00e0 1</tooltip>
+          <tooltip xml:lang="it">Imposta Tensione Motore iniziale a Velocità 1</tooltip>
           <tooltip xml:lang="ca">Estableix el voltatge inicial al pas 1</tooltip>
           <tooltip xml:lang="de">Geschwindigkeit bei niedrigster Fahrstufe einstellen</tooltip>
         </display>
         <display item="Vmid" format="hslider" label="" tooltip="Sets the voltage at mid throttle">
-          <tooltip xml:lang="it">Imposta Tensione Motore a Velocit\u00e0 Intermedia</tooltip>
+          <tooltip xml:lang="it">Imposta Tensione Motore a Velocità Intermedia</tooltip>
           <tooltip xml:lang="ca">Estableix el voltatge a mig regulador</tooltip>
           <tooltip xml:lang="de">Geschwindigkeit bei mittlerer Fahrstufe einstellen</tooltip>
         </display>
         <display item="Vhigh" format="hslider" label="" tooltip="Sets the maximum voltage at full throttle">
-          <tooltip xml:lang="it">Imposta Tensione Motore a Velocit\u00e0 Massima</tooltip>
-          <tooltip xml:lang="ca">Estableix el voltatge amb el regulador al m\u2021xim</tooltip>
-          <tooltip xml:lang="de">Geschwindigkeit bei h\u00f6chster Fahrstufe einstellen</tooltip>
+          <tooltip xml:lang="it">Imposta Tensione Motore a Velocità Massima</tooltip>
+          <tooltip xml:lang="ca">Estableix el voltatge amb el regulador al m‡xim</tooltip>
+          <tooltip xml:lang="de">Geschwindigkeit bei höchster Fahrstufe einstellen</tooltip>
         </display>
       </column>
     </row>
@@ -78,8 +78,8 @@
           <text> </text>
         </label>
         <display item="Speed Table/Mid Range Cab Speed Step" tooltip="Sets voltage curve for mid throttle, set Vstart and Vhigh first">
-          <tooltip xml:lang="it">Imposta Curva Tensione Motore a Velocit\u00e0 Media. Imposta prima Vstart e Vhigh</tooltip>
-          <tooltip xml:lang="ca">Estableix corba de voltatge per punt mitj\u2021 del regulador. Cal establir primer Vinici i VAlt</tooltip>
+          <tooltip xml:lang="it">Imposta Curva Tensione Motore a Velocità Media. Imposta prima Vstart e Vhigh</tooltip>
+          <tooltip xml:lang="ca">Estableix corba de voltatge per punt mitj‡ del regulador. Cal establir primer Vinici i VAlt</tooltip>
           <tooltip xml:lang="de">Geschwindigkeitkurve bei mittlerer Fahrstufe einstellen, erst Vmin und Vmax einstellen</tooltip>
         </display>
         <label>
