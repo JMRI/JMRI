@@ -125,7 +125,6 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
 
     /**
      * Constructor which allows the caller to pass in the board ID number
-     * <p>
      */
     protected AbstractBoardProgPanel(int boardNum) {
         this(boardNum, false);
@@ -432,7 +431,6 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
      * value (specified by opswIndex), rather than a sequence of OpSws as done
      * by writeAll().
      *
-     * @param opswIndex <p>
      * @see jmri.jmrix.loconet.AbstractBoardProgPanel#writeAll()
      */
     public void writeOne(int opswIndex) {

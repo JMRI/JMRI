@@ -1,4 +1,3 @@
-// LnPacketizer.java
 package jmri.jmrix.loconet;
 
 import java.io.DataInputStream;
@@ -18,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * listeners in that same thread. Reception and transmission are handled in
  * dedicated threads by RcvHandler and XmtHandler objects. Those are internal
  * classes defined here. The thread priorities are:
- * <P>
  * <UL>
  * <LI> RcvHandler - at highest available priority
  * <LI> XmtHandler - down one, which is assumed to be above the GUI
@@ -32,7 +30,6 @@ import org.slf4j.LoggerFactory;
  * Inc for separate permission.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version $Revision$
  *
  */
 public class LnPacketizer extends LnTrafficController {
@@ -591,5 +588,3 @@ public class LnPacketizer extends LnTrafficController {
 
     private final static Logger log = LoggerFactory.getLogger(LnPacketizer.class.getName());
 }
-
-/* @(#)LnPacketizer.java */

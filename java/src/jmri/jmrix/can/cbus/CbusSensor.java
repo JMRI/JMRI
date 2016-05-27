@@ -1,4 +1,3 @@
-// CbusSensor.java
 package jmri.jmrix.can.cbus;
 
 import jmri.Sensor;
@@ -14,14 +13,9 @@ import org.slf4j.LoggerFactory;
  * Extend jmri.AbstractSensor for CBUS controls.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version $Revision$
  */
 public class CbusSensor extends AbstractSensor implements CanListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3589288718741372494L;
     CbusAddress addrActive;    // go to active state
     CbusAddress addrInactive;  // go to inactive state
 
@@ -85,7 +79,6 @@ public class CbusSensor extends AbstractSensor implements CanListener {
      * listeners by putting it out on CBUS. In turn, the code in this class
      * should use setOwnState to handle internal sets and bean notifies.
      *
-     * @throws jmri.JmriException
      */
     public void setKnownState(int s) throws jmri.JmriException {
         CanMessage m;
@@ -132,6 +125,3 @@ public class CbusSensor extends AbstractSensor implements CanListener {
     private final static Logger log = LoggerFactory.getLogger(CbusSensor.class.getName());
 
 }
-
-
-/* @(#)CbusSensor.java */

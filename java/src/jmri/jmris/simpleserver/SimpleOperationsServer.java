@@ -1,4 +1,3 @@
-//SimpleOperationsServer.java
 package jmri.jmris.simpleserver;
 
 import java.beans.PropertyChangeEvent;
@@ -23,7 +22,6 @@ import org.slf4j.LoggerFactory;
  * @author Dan Boudreau Copyright (C) 2012 (Documented the code, changed reply
  * format, and some minor refactoring)
  * @author Randall Wood Copyright (C) 2012
- * @version $Revision$
  */
 public class SimpleOperationsServer extends AbstractOperationsServer {
 
@@ -140,7 +138,6 @@ public class SimpleOperationsServer extends AbstractOperationsServer {
      *
      * @param contents is the ArrayList of Attributes to be sent. A linefeed
      *                 ('\n") is appended to the String.
-     * @throws java.io.IOException
      */
     @Override
     public void sendMessage(ArrayList<Attribute> contents) throws IOException {
@@ -249,8 +246,6 @@ public class SimpleOperationsServer extends AbstractOperationsServer {
      * command like "LOCATIONS". A command like "TRAINLENGTH" requires a train
      * name. The delimiter is the tab character.
      *
-     * @throws jmri.JmriException
-     * @throws java.io.IOException
      */
     @Override
     public void parseStatus(String statusString) throws JmriException, IOException {

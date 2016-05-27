@@ -1,4 +1,3 @@
-// LnSensor.java
 package jmri.jmrix.loconet;
 
 import jmri.Sensor;
@@ -16,14 +15,9 @@ import org.slf4j.LoggerFactory;
  * Inc for separate permission.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version $Revision$
  */
 public class LnSensor extends AbstractSensor implements LocoNetListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7056878460532584580L;
     private LnSensorAddress a;
 
     public LnSensor(String systemName, String userName, LnTrafficController tc, String prefix) {
@@ -70,7 +64,6 @@ public class LnSensor extends AbstractSensor implements LocoNetListener {
      * listeners by putting it out on LocoNet. In turn, the code in this class
      * should use setOwnState to handle internal sets and bean notifies.
      *
-     * @throws jmri.JmriException
      */
     public void setKnownState(int s) throws jmri.JmriException {
         // send OPC_INPUT_REP with new state to this address
@@ -136,5 +129,3 @@ public class LnSensor extends AbstractSensor implements LocoNetListener {
     private final static Logger log = LoggerFactory.getLogger(LnSensor.class.getName());
 
 }
-
-/* @(#)LnSensor.java */

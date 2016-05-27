@@ -14,14 +14,9 @@ import org.slf4j.LoggerFactory;
  * Extend jmri.AbstractSensor for OpenLCB controls.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2008, 2010, 2011
- * @version $Revision$
  */
 public class OlcbSensor extends AbstractSensor implements CanListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1114385900236113026L;
     static int ON_TIME = 500; // time that sensor is active after being tripped
     Timer timer = null;
 
@@ -81,7 +76,6 @@ public class OlcbSensor extends AbstractSensor implements CanListener {
      * listeners by putting it out on CBUS. In turn, the code in this class
      * should use setOwnState to handle internal sets and bean notifies.
      *
-     * @throws jmri.JmriException
      */
     public void setKnownState(int s) throws jmri.JmriException {
         CanMessage m;

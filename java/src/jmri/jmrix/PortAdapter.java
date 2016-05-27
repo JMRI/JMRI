@@ -30,7 +30,6 @@ public interface PortAdapter {
     /**
      * Open the connection
      *
-     * @throws java.lang.Exception
      */
     public void connect() throws Exception;
 
