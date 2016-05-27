@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Interface for the container of a set of PaneProgPanes. The panes use services
  * provided here to work with buttons and the busy cursor.
- *
+ * <p>
  * TODO: Several methods are copied from PaneProgFrame and should be refactored
  * No programmer support yet No glass pane support Need better support for
  * visible/non-visible panes Special panes (Roster entry, attributes, graphics)
@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
  */
 public class PaneSet {
 
-    List<PaneProgPane> paneList = new ArrayList<PaneProgPane>();
+    List<PaneProgPane> paneList = new ArrayList<>();
     PaneContainer container;
     Programmer mProgrammer;
     CvTableModel cvModel = null;
