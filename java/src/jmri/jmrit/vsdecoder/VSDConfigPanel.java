@@ -417,7 +417,7 @@ public class VSDConfigPanel extends JmriPanel {
     protected boolean storeFile(RosterEntry _rosterEntry) {
         log.debug("storeFile starts");
         // We need to create a programmer, a cvTableModel, an iCvTableModel, and a variableTableModel.
-        // Doesn't matter which, so we'll use the LocoNet programmer.
+        // Doesn't matter which, so we'll use the Global programmer.
         Programmer p = InstanceManager.programmerManagerInstance().getGlobalProgrammer();
         CvTableModel cvModel = new CvTableModel(null, p);
         IndexedCvTableModel iCvModel = new IndexedCvTableModel(null, p);
