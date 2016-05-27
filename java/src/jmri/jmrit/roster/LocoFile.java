@@ -173,6 +173,41 @@ class LocoFile extends XmlFile {
     }
 
     /**
+     * Load a VariableTableModel from the locomotive element in the File
+     *
+     * @param loco    A JDOM Element containing the locomotive definition
+     * @param varModel An existing VariableTableModel object
+     */
+    public static void loadVariableModel(Element loco, VariableTableModel varModel) {
+
+        Element values = loco.getChild("values");
+
+        if (values == null) {
+            String rosterName = loco.getAttributeValue("id");
+            log.error("no values element found in config file; Variable values not loaded for \"{}\"", loco.getAttributeValue("id"));
+            return;
+        }
+        
+        Element decoderDef = values.getChild("decoderDef");
+
+        if (decoderDef == null) {
+            String rosterName = loco.getAttributeValue("id");
+            log.error("no decoderDef element found in config file; Variable values not loaded for \"{}\"", loco.getAttributeValue("id"));
+            return;
+        }
+        
+        
+        // get the CV values and load
+        if (log.isDebugEnabled()) {
+            log.debug("Found " + decoderDef.getChildren("varValue").size() + " varValue elements");
+        }
+
+        for (Element element : decoderDef.getChildren("varValue")) {
+        }
+
+    }
+
+    /**
      * Write an XML version of this object, including also the RosterEntry
      * information, and memory-resident decoder contents.
      *

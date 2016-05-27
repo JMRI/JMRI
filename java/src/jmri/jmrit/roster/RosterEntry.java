@@ -113,9 +113,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     protected int _maxSpeedPCT = 100;
 
     /**
-     *
-     * @return @deprecated since 4.1.4 use {@link jmri.jmrit.roster.RosterConfigManager#getDefaultOwner()
-     * } instead
+     * @deprecated since 4.1.4 use {@link jmri.jmrit.roster.RosterConfigManager#getDefaultOwner()} instead
      */
     @Deprecated
     public static String getDefaultOwner() {
@@ -123,9 +121,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     /**
-     *
-     * @deprecated since 4.1.4 use {@link jmri.jmrit.roster.RosterConfigManager#setDefaultOwner(java.lang.String)
-     * } instead
+     * @deprecated since 4.1.4 use {@link jmri.jmrit.roster.RosterConfigManager#setDefaultOwner(java.lang.String)} instead
      */
     @Deprecated
     public static void setDefaultOwner(String n) {
@@ -161,7 +157,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     /**
      * Construct a blank object.
-     *
      */
     public RosterEntry() {
     }
