@@ -205,6 +205,7 @@ class LocoFile extends XmlFile {
         for (int i = 0; i < varModel.getRowCount(); i++) {
             log.debug("  map put {} to {}", varModel.getItem(i), varModel.getVariable(i));
             map.put(varModel.getItem(i), varModel.getVariable(i));
+            map.put(varModel.getLabel(i), varModel.getVariable(i));
         }
                 
         for (Element element : decoderDef.getChildren("varValue")) {
