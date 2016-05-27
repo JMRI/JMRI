@@ -1,29 +1,5 @@
 package jmri.jmrit.vsdecoder.swing;
 
-/**
- * class VSDConfigDialog
- *
- * Configuration dialog for setting up a new VSDecoder
- */
-
-/*
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
- * for more details.
- * <P>
- *
- * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision: 21510 $
- */
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -61,20 +37,33 @@ import jmri.jmrit.vsdecoder.VSDecoderManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Configuration dialog for setting up a new VSDecoder
+ * <hr>
+ * This file is part of JMRI.
+ * <P>
+ * JMRI is free software; you can redistribute it and/or modify it under 
+ * the terms of version 2 of the GNU General Public License as published 
+ * by the Free Software Foundation. See the "COPYING" file for a copy
+ * of this license.
+ * <P>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * for more details.
+ * <P>
+ *
+ * @author			Mark Underwood Copyright (C) 2011
+ */
 @SuppressWarnings("deprecation")
 public class VSDConfigDialog extends JDialog {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3891269629328182031L;
 
     private static final ResourceBundle rb = VSDSwingBundle.bundle();
 
     public static final String CONFIG_PROPERTY = "Config";
 
     // Map of Mnemonic KeyEvent values to GUI Components
-    private static final Map<String, Integer> Mnemonics = new HashMap<String, Integer>();
+    private static final Map<String, Integer> Mnemonics = new HashMap<>();
 
     static {
         Mnemonics.put("RosterTab", KeyEvent.VK_R);
@@ -192,7 +181,7 @@ public class VSDConfigDialog extends JDialog {
         // Profile select Pane
         profilePanel = new JPanel();
         profilePanel.setLayout(new BoxLayout(profilePanel, BoxLayout.PAGE_AXIS));
-        profileComboBox = new javax.swing.JComboBox<Object>();
+        profileComboBox = new javax.swing.JComboBox<>();
         profileComboBox.setToolTipText(rb.getString("ProfileComboBoxToolTip"));
         profileLabel = new javax.swing.JLabel();
         profileLoadButton = new JButton(rb.getString("LoadVSDFileButtonLabel"));
@@ -204,7 +193,7 @@ public class VSDConfigDialog extends JDialog {
         title.setTitlePosition(TitledBorder.DEFAULT_POSITION);
         profilePanel.setBorder(title2);
 
-        profileComboBox.setModel(new javax.swing.DefaultComboBoxModel<Object>());
+        profileComboBox.setModel(new javax.swing.DefaultComboBoxModel<>());
         // Add any already-loaded profile names
         ArrayList<String> sl = VSDecoderManager.instance().getVSDProfileNames();
         if (sl.isEmpty()) {
@@ -418,7 +407,7 @@ public class VSDConfigDialog extends JDialog {
 
         // This is a bit tedious...
         // Pull all of the existing names from the Profile ComboBox
-        ArrayList<String> ce_list = new ArrayList<String>();
+        ArrayList<String> ce_list = new ArrayList<>();
         for (int i = 0; i < profileComboBox.getItemCount(); i++) {
             ce_list.add(profileComboBox.getItemAt(i).toString());
         }
