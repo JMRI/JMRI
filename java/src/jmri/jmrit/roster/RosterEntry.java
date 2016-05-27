@@ -114,7 +114,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     /**
      *
-     * @return @deprecated since 4.1.4 use {@link jmri.jmrit.roster.RosterConfigManager#getDefaultOwner()
+     * @deprecated since 4.1.4 use {@link jmri.jmrit.roster.RosterConfigManager#getDefaultOwner()
      * } instead
      */
     @Deprecated
@@ -665,8 +665,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     /**
      * Loads function names from a JDOM element. Does not change values that are
      * already present!
-     *
-     * @param e3
      */
     public void loadFunctions(Element e3) {
         this.loadFunctions(e3, "family");
@@ -675,8 +673,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     /**
      * Loads function names from a JDOM element. Does not change values that are
      * already present!
-     *
-     * @param e3
      */
     public void loadFunctions(Element e3, String source) {
         /*Load flag once, means that when the roster entry is edited only the first set of function labels are displayed 
@@ -739,8 +735,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     /**
      * Loads sound names from a JDOM element. Does not change values that are
      * already present!
-     *
-     * @param e3
      */
     public void loadSounds(Element e3, String source) {
         /*Load flag once, means that when the roster entry is edited only the first set of sound labels are displayed 
@@ -767,8 +761,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     /**
      * Loads attribute key/value pairs from a JDOM element.
-     *
-     * @param e3
      */
     public void loadAttributes(Element e3) {
         if (e3 != null) {
