@@ -1,4 +1,3 @@
-//SimpleOperationsServer.java
 package jmri.jmris.json;
 
 import static jmri.jmris.json.JSON.CODE;
@@ -29,7 +28,6 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender Copyright (C) 2010
  * @author Dan Boudreau Copyright (C) 2012 (Documented the code, changed reply
  * format, and some minor refactoring)
- * @version $Revision: 21313 $
  */
 public class JsonOperationsServer extends AbstractOperationsServer {
 
@@ -46,7 +44,6 @@ public class JsonOperationsServer extends AbstractOperationsServer {
     /**
      * Overridden method to do nothing.
      *
-     * @throws java.io.IOException
      */
     @Override
     public void sendMessage(ArrayList<Attribute> contents) throws IOException {
@@ -73,8 +70,6 @@ public class JsonOperationsServer extends AbstractOperationsServer {
     /**
      * Overridden method to do nothing.
      *
-     * @throws jmri.JmriException
-     * @throws java.io.IOException
      */
     @Override
     public void parseStatus(String statusString) throws JmriException, IOException {

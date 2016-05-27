@@ -1,4 +1,3 @@
-// FileUtil.java
 package jmri.util;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -38,7 +37,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright 2003, 2005, 2006
  * @author Randall Wood Copyright 2012, 2013, 2014
- * @version $Revision$
  */
 public final class FileUtil {
 
@@ -105,7 +103,6 @@ public final class FileUtil {
      * or {@link #getURL(java.lang.String) } instead of this method if possible.
      *
      * @return {@link java.io.File} at path
-     * @throws java.io.FileNotFoundException
      * @see #getURI(java.lang.String)
      * @see #getURL(java.lang.String)
      */
@@ -123,7 +120,6 @@ public final class FileUtil {
      * of returning null (as File would).
      *
      * @return {@link java.io.File} at path
-     * @throws java.io.FileNotFoundException
      * @see #getFile(java.lang.String)
      * @see #getURL(java.lang.String)
      */
@@ -1167,7 +1163,6 @@ public final class FileUtil {
     /**
      * Backup a file.
      *
-     * @throws java.io.IOException 
      * @see jmri.util.FileUtilSupport#backup(java.io.File) 
      */
     public static void backup(File file) throws IOException {
@@ -1176,8 +1171,6 @@ public final class FileUtil {
     
     /**
      * Rotate a file
-     * @param extension 
-     * @throws java.io.IOException 
      * @see jmri.util.FileUtilSupport#rotate(java.io.File, int, java.lang.String) 
      * @see backup
      */

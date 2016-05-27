@@ -24,7 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An icon to display a status of a Memory.<P>
+ * An icon to display a status of a Memory.
  * <P>
  * The value of the memory can't be changed with this icon.
  * <P>

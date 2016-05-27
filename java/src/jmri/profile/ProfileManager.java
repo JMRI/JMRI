@@ -673,7 +673,6 @@ public class ProfileManager extends Bean {
      *                                included?
      * @param exportExternalRoster    It the roster is not within the profile
      *                                directory, should it be included?
-     * @throws org.jdom2.JDOMException
      */
     public void export(Profile profile, File target, boolean exportExternalUserFiles, boolean exportExternalRoster) throws IOException, JDOMException {
         if (!target.exists() && !target.createNewFile()) {
