@@ -1,4 +1,3 @@
-// ValidatedTextField.java
 package jmri.jmrix.loconet.duplexgroup.swing;
 
 import java.awt.event.FocusEvent;
@@ -17,10 +16,6 @@ import java.awt.event.FocusListener;
  */
 public class ValidatedTextField extends javax.swing.JTextField {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4592093311837686838L;
     ValidatedTextField thisone;
 
     /**
@@ -128,7 +123,6 @@ public class ValidatedTextField extends javax.swing.JTextField {
      * Parameter validationErrorMessage is passed as an argument to the property
      * change listener for the instantiating class.
      *
-     * @param allow0LengthValue
      */
     public ValidatedTextField(
             Integer len,
@@ -193,7 +187,6 @@ public class ValidatedTextField extends javax.swing.JTextField {
      * Parameter validationErrorMessage is passed as an argument to the property
      * change listener for the instantiating class.
      *
-     * @param allow0LengthValue
      */
     public ValidatedTextField(
             Integer len,

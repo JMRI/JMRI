@@ -348,7 +348,6 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      * describing element.
      *
      * @return null if no valid element
-     * @throws java.lang.NumberFormatException
      */
     protected VariableValue createIndexedVariableFromElement(Element e, String name, String comment, String cvName, boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, String cv, String mask, String item, String productID, String modelID, String familyID) throws NumberFormatException {
         VariableValue iv = null;

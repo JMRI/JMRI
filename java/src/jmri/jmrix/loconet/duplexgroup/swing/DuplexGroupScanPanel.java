@@ -1,4 +1,3 @@
-// DuplexGroupScanPanel.java
 package jmri.jmrix.loconet.duplexgroup.swing;
 
 import java.awt.BasicStroke;
@@ -29,15 +28,10 @@ import org.slf4j.LoggerFactory;
  * clarity, only the term UR92 is used herein.
  *
  * @author B. Milhaupt Copyright 2010, 2011
- * @version	$Revision: 1.0 $
  */
 public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         implements LocoNetListener, javax.swing.event.ChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2574511937558247304L;
     DuplexChannelInfo dci[] = new DuplexChannelInfo[LnDplxGrpInfoImplConstants.DPLX_MAX_CH - LnDplxGrpInfoImplConstants.DPLX_MIN_CH + 1];
     private javax.swing.Timer tmr;
     private static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.loconet.duplexgroup.DuplexGroupScan");
@@ -212,7 +206,6 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
      * currently displayed in the GUI. If the received information does not
      * match, a message is displayed on the status line in the GUI, else nothing
      * is displayed in the GUI status line.
-     * <p>
      */
     public void message(LocoNetMessage m) {
         if (stopRequested == true) {

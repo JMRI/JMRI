@@ -339,7 +339,6 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
     /**
      * Local method to do specific port configuration
      *
-     * @throws gnu.io.UnsupportedCommOperationException
      */
     protected void setSerialPort() throws gnu.io.UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
