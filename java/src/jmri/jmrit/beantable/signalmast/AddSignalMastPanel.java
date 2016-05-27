@@ -66,6 +66,7 @@ public class AddSignalMastPanel extends JPanel {
     String systemSelectionCombo = this.getClass().getName() + ".SignallingSystemSelected";
     String mastSelectionCombo = this.getClass().getName() + ".SignallingMastSelected";
     String driverSelectionCombo = this.getClass().getName() + ".SignallingDriverSelected";
+    String matrixBitNumSelectionCombo = this.getClass().getName() + ".matrixBitNumSelected";
     List<NamedBean> alreadyUsed = new ArrayList<NamedBean>();
 
     JComboBox<String> signalMastDriver;
@@ -86,6 +87,8 @@ public class AddSignalMastPanel extends JPanel {
     JPanel matrixMastPanel = new JPanel();
     char[] bitString;
     char[] unLitPanelBits;
+    String emptyChars = "00000";
+    char[] emptyBits = emptyChars.toCharArray();
     JLabel bitNumLabel = new JLabel(Bundle.getMessage("MatrixBitsLabel") + ":");
     JComboBox<String> columnChoice = new JComboBox<String>(new String[]{"1","2","3","4","5"});
 
@@ -180,6 +183,9 @@ public class AddSignalMastPanel extends JPanel {
         matrixMastBitnumPanel = makeMatrixMastBitnumPanel(); // create panel
         add(matrixMastBitnumPanel);
         matrixMastBitnumPanel.setVisible(false);
+        if (prefs.getComboBoxLastSelection(matrixBitNumSelectionCombo) != null) {
+            columnChoice.setSelectedItem(prefs.getComboBoxLastSelection(matrixBitNumSelectionCombo)); // setting for bitNum
+        }
 
         matrixMastScroll = new JScrollPane(matrixMastPanel);
         matrixMastScroll.setBorder(BorderFactory.createEmptyBorder());
@@ -438,10 +444,18 @@ public class AddSignalMastPanel extends JPanel {
                 char[] mastUnLitBits = xmast.getUnLitBits(); // load char[] for unLit from mast
                 char[] unLitPanelBits = Arrays.copyOf(mastUnLitBits, 5); // store as 5 character array in panel var unLitPanelBits
                 UnLitCheck1.setSelected(unLitPanelBits[0] == '1'); // set checkboxes
-                UnLitCheck2.setSelected(unLitPanelBits[1] == '1');
-                UnLitCheck3.setSelected(unLitPanelBits[2] == '1');
-                UnLitCheck4.setSelected(unLitPanelBits[3] == '1');
-                UnLitCheck5.setSelected(unLitPanelBits[4] == '1');
+                if (bitNum > 1) {
+                    UnLitCheck2.setSelected(unLitPanelBits[1] == '1');
+                }
+                if (bitNum > 2) {
+                    UnLitCheck3.setSelected(unLitPanelBits[2] == '1');
+                }
+                if (bitNum > 3) {
+                    UnLitCheck4.setSelected(unLitPanelBits[3] == '1');
+                }
+                if (bitNum > 4) {
+                    UnLitCheck5.setSelected(unLitPanelBits[4] == '1');
+                }
                 String value = String.valueOf(unLitPanelBits); // convert back from char[] to String
                 unLitBitsField.setText(value);
             }
@@ -528,6 +542,7 @@ public class AddSignalMastPanel extends JPanel {
             } else if ((Bundle.getMessage("DCCMast").equals(signalMastDriver.getSelectedItem())) || (Bundle.getMessage("LNCPMast").equals(signalMastDriver.getSelectedItem())) ) {
                 dccUnLitPanel.setVisible(true);
             } else if (Bundle.getMessage("MatrixCtlMast").equals(signalMastDriver.getSelectedItem())) {
+                unLitPanelBits = emptyBits; // start with '00000'
                 matrixUnLitPanel.setVisible(true);
             }
         }
@@ -828,8 +843,8 @@ public class AddSignalMastPanel extends JPanel {
                 InstanceManager.signalMastManagerInstance().register(dccMast);
             } else if (Bundle.getMessage("MatrixCtlMast").equals(signalMastDriver.getSelectedItem())) {
                 // Create was pressed for new mast, check all boxes are filled
-                if (turnoutBox1 == null || bitNum > 1 && turnoutBox2 == null || bitNum > 2 && turnoutBox3 == null ||
-                        bitNum > 3 && turnoutBox4 == null || bitNum > 4 && turnoutBox5 == null) {
+                if (turnoutBox1 == null || (bitNum > 1 && turnoutBox2 == null) || (bitNum > 2 && turnoutBox3 == null) ||
+                        (bitNum > 3 && turnoutBox4 == null) || (bitNum > 4 && turnoutBox5 == null)) {
                     //error dialog
                     JOptionPane.showMessageDialog(null, Bundle.getMessage("MatrixOutputEmpty", mastname));
                     log.error("Empty output on panel");
@@ -873,18 +888,19 @@ public class AddSignalMastPanel extends JPanel {
                 //matrixMast.resetPreviousStates(resetPreviousState.isSelected()); // read from panel, to do
 
                 matrixMast.setAllowUnLit(allowUnLit.isSelected());
-                if (allowUnLit.isSelected() && unLitPanelBits != null) {
+                if (allowUnLit.isSelected()) {
                     // copy bits from UnLitPanel var unLitPanelBits
                     try {
-                        matrixMast.setUnLitBits(trimUnLitBits()); // same as line 987
+                        matrixMast.setUnLitBits(trimUnLitBits()); // same as line 1002
                     } catch (Exception ex) {
                         log.error("failed to read and copy unLitPanelBits");
-                    }                }
+                    }
+                }
                 if (!user.equals("")) {
                     matrixMast.setUserName(user);
                 }
+                prefs.addComboBoxLastSelection(matrixBitNumSelectionCombo, (String) columnChoice.getSelectedItem()); // store bitNum pref
                 InstanceManager.signalMastManagerInstance().register(matrixMast);
-                // To do: store bitNum (number of columns) in prefs, see line 885?
             }
 
             prefs.addComboBoxLastSelection(systemSelectionCombo, (String) sigSysBox.getSelectedItem());
@@ -981,9 +997,9 @@ public class AddSignalMastPanel extends JPanel {
                 }
                 // matrixMast.resetPreviousStates(resetPreviousState.isSelected());
                 matrixMast.setAllowUnLit(allowUnLit.isSelected());
-                if (allowUnLit.isSelected() && unLitPanelBits != null) {
+                if (allowUnLit.isSelected()) {
                     try {
-                        matrixMast.setUnLitBits(trimUnLitBits()); // same as line 878
+                        matrixMast.setUnLitBits(trimUnLitBits()); // same as line 894
                     } catch (Exception ex) {
                         log.error("failed to read and copy unLitPanelBits");
                     }
@@ -997,7 +1013,11 @@ public class AddSignalMastPanel extends JPanel {
      * @return char[] of length bitNum copied from unLitPanelBits
      */
     protected char[] trimUnLitBits() {
-        return Arrays.copyOf(unLitPanelBits, bitNum);
+        if (unLitPanelBits != null) {
+            return Arrays.copyOf(unLitPanelBits, bitNum);
+        } else {
+            return Arrays.copyOf(emptyBits, bitNum);
+        }
     }
 
     /**
@@ -1840,7 +1860,7 @@ public class AddSignalMastPanel extends JPanel {
         }
     }*/
 
-    String defaultChars = "00000";
+    //String defaultChars = "00000";
 
     /**
      * Call for sub panel per aspect from hashmap matrixAspect with check boxes to set properties
@@ -1852,7 +1872,7 @@ public class AddSignalMastPanel extends JPanel {
             return;
         }
         if (bitString == null) {
-            char[] bitString = defaultChars.toCharArray();
+            char[] bitString = emptyBits;
         }
         String mastType = mastNames.get(mastBox.getSelectedIndex()).getName();
         mastType = mastType.substring(11, mastType.indexOf(".xml"));
@@ -1886,8 +1906,11 @@ public class AddSignalMastPanel extends JPanel {
      * JPanel to set outputs for an unlit (Dark) Matrix Signal Mast
      */
     void matrixUnLitPanel() {
+        if (bitNum < 1 || bitNum > 5) {
+            bitNum = 5; // default to 5 col for (first) new mast
+        }
         if (unLitPanelBits == null) {
-            char[] unLitPanelBits = defaultChars.toCharArray();
+            char[] unLitPanelBits = emptyBits;
         }
         matrixUnLitPanel.setLayout(new BoxLayout(matrixUnLitPanel, BoxLayout.Y_AXIS));
         JPanel matrixUnLitDetails = new JPanel();

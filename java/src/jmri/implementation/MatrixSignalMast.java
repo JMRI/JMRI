@@ -39,8 +39,9 @@ public class MatrixSignalMast extends AbstractSignalMast {
     String errorChars = "nnnnn";
     char[] errorBits = errorChars.toCharArray();
 
-    String UnLitChars = "00000"; // default starting value
-    char[] unLitBits; // = UnLitChars.toCharArray();
+    String emptyChars = "00000"; // default starting value
+    char[] emptyBits = emptyChars.toCharArray();
+    char[] unLitBits;
 
     public MatrixSignalMast(String systemName, String userName) {
         super(systemName, userName);
@@ -182,7 +183,11 @@ public class MatrixSignalMast extends AbstractSignalMast {
     }
 
     public char[] getUnLitBits() {
-        return unLitBits;
+        if (unLitBits != null) {
+            return unLitBits;
+        } else {
+            return errorBits;
+        }
     }
 
     /**
@@ -190,7 +195,11 @@ public class MatrixSignalMast extends AbstractSignalMast {
      *  @return String for 1-n 1/0 chararacters setting an unlit aspect
      */
     public String getUnLitChars() {
-        return String.valueOf(unLitBits);
+        if (unLitBits != null) {
+            return String.valueOf(unLitBits);
+        } else {
+            return errorChars;
+        }
     }
 
     public Turnout getOutput(int colnum) { // as bean
@@ -261,7 +270,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
      *  @param aspect String describing valid signal mast aspect, like "Clear"
      */
     public String getBitstring(String aspect) {
-        if (aspectToOutput != null) { // hashtable
+        if (aspectToOutput.containsKey(aspect)) { // hashtable
             String bitString = new String(aspectToOutput.get(aspect)); // convert char[] to string
             return bitString;
             }
