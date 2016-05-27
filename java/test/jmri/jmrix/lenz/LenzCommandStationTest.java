@@ -242,7 +242,11 @@ public class LenzCommandStationTest extends TestCase {
 
     public void testSendPacket() {
         LenzCommandStation c = new LenzCommandStation();
-        Assert.assertEquals("X",c.getSystemPrefix()); // default.
+        // sending without setting the traffic controller should
+        // generate an error message.
+        c.sendPacket(jmri.NmraPacket.opsCvWriteByte(100,true,29,5),1);
+jmri.util.JUnitAppender.assertErrorMessage("Send Packet Called without setting traffic controller");
+
         XNetInterfaceScaffold xis = new XNetInterfaceScaffold(c);
         c.setTrafficController(xis);
         c.sendPacket(jmri.NmraPacket.opsCvWriteByte(100,true,29,5),1);
