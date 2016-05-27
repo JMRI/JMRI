@@ -173,9 +173,9 @@ public final class XMLUtil extends Object {
 
     /**
      * Creates an empty DOM document. E.g.:
-     * <p><pre>
+     * <pre>
      * Document doc = createDocument("book", null, null, null);
-     * </pre><p>
+     * </pre>
      * creates new DOM of a well-formed document with root element named book.
      *
      * @param rootQName qualified name of root element. e.g. <code>myroot</code> or <code>ns:myroot</code>

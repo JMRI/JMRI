@@ -721,7 +721,6 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
 
     /**
      * Name a valid roster entry filename from an entry name.
-     * <p>
      * <ul>
      * <li>Replaces all problematic characters with "_". <li>Append .xml suffix
      * </ul> Does not check for duplicates.
