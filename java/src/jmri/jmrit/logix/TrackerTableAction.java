@@ -402,7 +402,6 @@ public class TrackerTableAction extends AbstractAction {
          * Adds listeners to all blocks in the range of a Tracker.
          * Called when a new tracker is created.
          *
-         * @param newTracker
          */
         private void addBlockListeners(Tracker tracker) {
             List<OBlock> range = tracker.getRange();
@@ -591,9 +590,6 @@ public class TrackerTableAction extends AbstractAction {
          * indicate the new occupancy positions of the train. Upon return,
          * update the listeners for the trains next move
          *
-         * @param tracker
-         * @param block
-         * @param state
          */
         private void processTrackerStateChange(Tracker tracker, OBlock block, int state) {
             List<OBlock> oldRange = tracker.getRange();// range in effect when state change was detected 

@@ -80,7 +80,6 @@ public class StringUtil {
     /**
      * Convert an int to a exactly two hexadecimal characters
      *
-     * @param val
      * @return String exactly two characters long
      */
     static public String twoHexFromInt(int val) {
@@ -189,7 +188,6 @@ public class StringUtil {
      * This is a lexagraphic sort; lower case goes to the end. Identical entries
      * are retained, so the output length is the same as the input length.
      *
-     * @param values
      */
     static public void sort(String[] values) {
         try {
@@ -237,7 +235,6 @@ public class StringUtil {
      * This is a case-blind sort. Identical entries are retained, so the output
      * length is the same as the input length.
      *
-     * @param values
      */
     static public void sort(Object[] values) {
         try {
@@ -267,7 +264,6 @@ public class StringUtil {
      * This is a case-independent lexagraphic sort. Identical entries are
      * retained, so the output length is the same as the input length.
      *
-     * @param values
      */
     static public void sortUpperCase(Object[] values) {
         // no Java sort, so ugly bubble sort
@@ -277,8 +273,6 @@ public class StringUtil {
     /**
      * Sort String[] representing numbers, in ascending order.
      *
-     * @param values
-     * @throws NumberFormatException
      */
     static public void numberSort(String[] values) throws NumberFormatException {
         for (int i = 0; i <= values.length - 2; i++) { // stop sort early to save time!
@@ -299,7 +293,6 @@ public class StringUtil {
      * Join a collection of strings, separated by a delimiter
      *
      * @param s	        collection of strings
-     * @param delimiter
      * @return e.g. {@code join({"abc","def,"ghi"}, ".") ==> "abc.def.ghi"}
      */
     public static String join(Collection<String> s, String delimiter) {
@@ -318,7 +311,6 @@ public class StringUtil {
      * Join an array of strings, separated by a delimiter
      *
      * @param s	        collection of strings
-     * @param delimiter
      * @return e.g. {@code join({"abc","def,"ghi"}, ".") ==> "abc.def.ghi"}
      */
     public static String join(String[] s, String delimiter) {

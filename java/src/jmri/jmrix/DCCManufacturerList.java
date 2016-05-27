@@ -32,7 +32,6 @@ public class DCCManufacturerList {
     /**
      * Get a list of class names that handle the given system.
      *
-     * @param System
      * @return The list of class names
      * @deprecated use
      * {@link jmri.jmrix.ConnectionConfigManager#getConnectionTypes(java.lang.String)}.
@@ -117,8 +116,6 @@ public class DCCManufacturerList {
      *
      * Note: No system should not be using a SystemConnectionMemo at this point.
      *
-     * @param a
-     * @return
      * @deprecated Without replacement. Use
      * {@link jmri.util.ConnectionNameFromSystemName#getPrefixFromName(java.lang.String)}
      * for equivalent functionality.

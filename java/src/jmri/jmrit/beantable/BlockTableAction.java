@@ -44,7 +44,6 @@ public class BlockTableAction extends AbstractTableAction {
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
-     * @param actionName
      */
     public BlockTableAction(String actionName) {
         super(actionName);

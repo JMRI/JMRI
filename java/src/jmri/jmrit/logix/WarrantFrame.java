@@ -772,7 +772,6 @@ public class WarrantFrame extends WarrantRoute {
     /**
      * all non-null returns are fatal
      *
-     * @return
      */
     private String checkTrainId() {
         String msg = null;

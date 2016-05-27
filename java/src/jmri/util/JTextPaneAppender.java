@@ -40,10 +40,6 @@ public class JTextPaneAppender extends AppenderSkeleton {
     /**
      * Constructor
      *
-     * @param aLayout
-     * @param aName
-     * @param aFilterArray
-     * @param aTextPane
      */
     public JTextPaneAppender(Layout aLayout, String aName, Filter[] aFilterArray, JTextPane aTextPane) {
         this();
@@ -149,8 +145,7 @@ public class JTextPaneAppender extends AppenderSkeleton {
 
     /**
      * Set current TextPane
-     * 
-     * @param aTextpane
+     *
      */
     public void setTextPane(JTextPane aTextpane) {
         myTextPane = aTextpane;
@@ -169,8 +164,7 @@ public class JTextPaneAppender extends AppenderSkeleton {
     // option setters and getters
     /**
      * setColorEmerg
-     * 
-     * @param color
+     *
      */
     public void setColorEmerg(Color color) {
         setColor(Level.FATAL, color);
@@ -185,8 +179,7 @@ public class JTextPaneAppender extends AppenderSkeleton {
 
     /**
      * setColorError
-     * 
-     * @param color
+     *
      */
     public void setColorError(Color color) {
         setColor(Level.ERROR, color);
@@ -201,8 +194,7 @@ public class JTextPaneAppender extends AppenderSkeleton {
 
     /**
      * setColorWarn
-     * 
-     * @param color
+     *
      */
     public void setColorWarn(Color color) {
         setColor(Level.WARN, color);
@@ -217,8 +209,7 @@ public class JTextPaneAppender extends AppenderSkeleton {
 
     /**
      * setColorInfo
-     * 
-     * @param color
+     *
      */
     public void setColorInfo(Color color) {
         setColor(Level.INFO, color);
@@ -233,8 +224,7 @@ public class JTextPaneAppender extends AppenderSkeleton {
 
     /**
      * setColorDebug
-     * 
-     * @param color
+     *
      */
     public void setColorDebug(Color color) {
         setColor(Level.DEBUG, color);
@@ -250,7 +240,6 @@ public class JTextPaneAppender extends AppenderSkeleton {
     /**
      * Sets the font size of all Level's
      *
-     * @param aSize
      */
     public void setFontSize(int aSize) {
         Enumeration<MutableAttributeSet> e = myAttributeSet.elements();
@@ -263,8 +252,6 @@ public class JTextPaneAppender extends AppenderSkeleton {
     /**
      * Sets the font size of a particular Level
      *
-     * @param aSize
-     * @param aLevel
      */
     public void setFontSize(int aSize, Level aLevel) {
         MutableAttributeSet set = myAttributeSet.get(aLevel.toString());
@@ -276,7 +263,6 @@ public class JTextPaneAppender extends AppenderSkeleton {
     /**
      * Get the font size for a particular logging level
      *
-     * @param aLevel
      */
     public int getFontSize(Level aLevel) {
         AttributeSet attrSet = myAttributeSet.get(aLevel.toString());
@@ -290,7 +276,6 @@ public class JTextPaneAppender extends AppenderSkeleton {
     /**
      * Sets the font name of all known Level's
      *
-     * @param aName
      */
     public void setFontName(String aName) {
         Enumeration<MutableAttributeSet> e = myAttributeSet.elements();
@@ -303,8 +288,6 @@ public class JTextPaneAppender extends AppenderSkeleton {
     /**
      * setFontName
      *
-     * @param aName
-     * @param aLevel
      */
     public void setFontName(String aName, Level aLevel) {
         MutableAttributeSet set = myAttributeSet.get(aLevel.toString());
@@ -317,7 +300,6 @@ public class JTextPaneAppender extends AppenderSkeleton {
     /**
      * Retrieves the font name of a particular Level
      *
-     * @param aLevel
      */
     public String getFontName(Level aLevel) {
         AttributeSet attrSet = myAttributeSet.get(aLevel.toString());

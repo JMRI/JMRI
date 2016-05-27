@@ -283,10 +283,6 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
      * than possibly waiting for a complete traversal of all slots before the
      * new speed is actually sent to the hardware.
      *
-     * @param mode
-     * @param address
-     * @param spd
-     * @param isForward
      */
     public void setSpeed(int mode, DccLocoAddress address, int spd, boolean isForward) {
         SprogSlot s = this.findAddressSpeedPacket(address);

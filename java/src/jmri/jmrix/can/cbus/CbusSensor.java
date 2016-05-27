@@ -85,7 +85,6 @@ public class CbusSensor extends AbstractSensor implements CanListener {
      * listeners by putting it out on CBUS. In turn, the code in this class
      * should use setOwnState to handle internal sets and bean notifies.
      *
-     * @param s
      * @throws jmri.JmriException
      */
     public void setKnownState(int s) throws jmri.JmriException {
@@ -104,7 +103,6 @@ public class CbusSensor extends AbstractSensor implements CanListener {
     /**
      * Track layout status from messages being sent to CAN
      *
-     * @param f
      */
     public void message(CanMessage f) {
         if (addrActive.match(f)) {
@@ -117,7 +115,6 @@ public class CbusSensor extends AbstractSensor implements CanListener {
     /**
      * Track layout status from messages being received from CAN
      *
-     * @param f
      */
     public void reply(CanReply f) {
         if (addrActive.match(f)) {

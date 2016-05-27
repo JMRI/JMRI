@@ -102,7 +102,6 @@ public class ClockMonPane extends LnPanel implements SlotListener {
     /**
      * Handle changed slot contents, due to clock changes.
      *
-     * @param s
      */
     public void notifyChangedSlot(LocoNetSlot s) {
         if (s.getSlot() != LnConstants.FC_SLOT) {

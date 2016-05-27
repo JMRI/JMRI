@@ -126,7 +126,6 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
     /**
      * Constructor which allows the caller to pass in the board ID number
      * <p>
-     * @param boardNum
      */
     protected AbstractBoardProgPanel(int boardNum) {
         this(boardNum, false);
@@ -156,7 +155,6 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
     /**
      * Set the Board ID number (also known as board address number)
      *
-     * @param boardId
      */
     public void setBoardIdValue(Integer boardId) {
         if (boardId < 1) {
@@ -228,7 +226,6 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
     /**
      * updates the status line
      *
-     * @param msg
      */
     protected void setStatus(String msg) {
         status.setText(msg);
@@ -469,7 +466,6 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
      * operation messages, and automatically advances to the next OpSw operation
      * as directed by nextState().
      *
-     * @param m
      */
     public void message(LocoNetMessage m) {
         if (log.isDebugEnabled()) {

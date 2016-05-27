@@ -23,7 +23,6 @@ public class RosterGroup extends Bean implements RosterObject {
      *
      * This sets the name without calling {@link #setName(java.lang.String) }.
      *
-     * @param name
      */
     public RosterGroup(String name) {
         this.name = name;

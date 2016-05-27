@@ -46,7 +46,6 @@ public class JsonOperationsServer extends AbstractOperationsServer {
     /**
      * Overridden method to do nothing.
      *
-     * @param contents
      * @throws java.io.IOException
      */
     @Override
@@ -74,7 +73,6 @@ public class JsonOperationsServer extends AbstractOperationsServer {
     /**
      * Overridden method to do nothing.
      *
-     * @param statusString
      * @throws jmri.JmriException
      * @throws java.io.IOException
      */

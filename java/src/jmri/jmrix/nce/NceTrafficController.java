@@ -222,7 +222,6 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      * <LI>{@link #USB_SYSTEM_SB5}
      * </UL>
      *
-     * @param val
      */
     public void setUsbSystem(int val) {
         usbSystem = val;
@@ -317,7 +316,6 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      * <LI>{@link #CMDS_ALL_SYS}
      * </UL>
      *
-     * @param val
      */
     public void setCmdGroups(long val) {
         cmdGroups = val;

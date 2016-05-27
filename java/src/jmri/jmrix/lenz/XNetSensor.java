@@ -118,7 +118,6 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
      * sensor with respect to whether or not a feedback request was sent. This
      * is used only when the sensor is created by on layout feedback.
      *
-     * @param l
      *
      */
     synchronized void initmessage(XNetReply l) {
@@ -134,7 +133,6 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
      * _once_ if anything has changed state (or set the commanded state
      * directly)
      *
-     * @param l
      */
     public synchronized void message(XNetReply l) {
         if (log.isDebugEnabled()) {

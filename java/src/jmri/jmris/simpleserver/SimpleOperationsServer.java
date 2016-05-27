@@ -249,7 +249,6 @@ public class SimpleOperationsServer extends AbstractOperationsServer {
      * command like "LOCATIONS". A command like "TRAINLENGTH" requires a train
      * name. The delimiter is the tab character.
      *
-     * @param statusString
      * @throws jmri.JmriException
      * @throws java.io.IOException
      */

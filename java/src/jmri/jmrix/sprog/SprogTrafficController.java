@@ -154,7 +154,6 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     /**
      * Forward a preformatted message to the interface
      *
-     * @param m
      */
     public void sendSprogMessage(SprogMessage m) {
         // stream to port in single write, as that's needed by serial
