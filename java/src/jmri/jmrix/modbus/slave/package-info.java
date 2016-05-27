@@ -1,6 +1,5 @@
 /**
  * Provide JMRI access as a slave node on Modbus networks.
- * <p>
  *
  * <h2>Related Documentation</h2>
  *

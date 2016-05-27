@@ -157,7 +157,6 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
      * <P>
      * Sets the CV(s) as needed.
      *
-     * @param e
      */
     public void stateChanged(ChangeEvent e) {
         // e.getSource() points to the JSlider object - find it in the list
@@ -634,7 +633,6 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
     /**
      * Notify the connected CVs of a state change from above
      *
-     * @param state
      */
     public void setCvState(int state) {
         _cvMap.get(cvList[0]).setState(state);

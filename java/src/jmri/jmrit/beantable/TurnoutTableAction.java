@@ -56,7 +56,7 @@ public class TurnoutTableAction extends AbstractTableAction {
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
-     * @param actionName
+     * @param actionName title of the action
      */
     public TurnoutTableAction(String actionName) {
         super(actionName);
@@ -791,8 +791,8 @@ public class TurnoutTableAction extends AbstractTableAction {
     }
 
     /**
-     * Create a JComboBox<String> containing all the options for turnout
-     * automation parameters for this turnout
+     * Create a {@literal JComboBox<String>} containing all the options for
+     * turnout automation parameters for this turnout
      *
      * @param t	the turnout
      * @return	the JComboBox

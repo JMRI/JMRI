@@ -37,7 +37,6 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
     /**
      * Ctor for an object being created during load process
      *
-     * @param p
      */
     public AbstractNetworkConnectionConfig(NetworkPortAdapter p) {
         adapter = p;

@@ -65,7 +65,6 @@ public class AlmImplementation implements LocoNetListener {
     /**
      * Handle ALM_WR_ACCESS message
      *
-     * @param msg
      */
     void writeMsg(LocoNetMessage msg) {
         // sort out the ATASK
@@ -149,7 +148,6 @@ public class AlmImplementation implements LocoNetListener {
     /**
      * Handle ALM_RD_ACCESS message
      *
-     * @param msg
      */
     void readMsg(LocoNetMessage msg) {
     }

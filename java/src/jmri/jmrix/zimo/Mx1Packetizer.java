@@ -1,6 +1,3 @@
-/**
- * Mx1Packetizer.java
- */
 package jmri.jmrix.zimo;
 
 import static jmri.jmrix.zimo.Mx1Message.PROGCMD;
@@ -24,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * listeners in that same thread. Reception and transmission are handled in
  * dedicated threads by RcvHandler and XmtHandler objects. Those are internal
  * classes defined here. The thread priorities are:
- * <P>
  * <UL>
  * <LI> RcvHandler - at highest available priority
  * <LI> XmtHandler - down one, which is assumed to be above the GUI
@@ -32,7 +28,6 @@ import org.slf4j.LoggerFactory;
  * </UL>
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version $Revision$
  *
  * Adapted by Sip Bosch for use with zimo Mx-1
  *
@@ -713,6 +708,3 @@ public class Mx1Packetizer extends Mx1TrafficController {
 
     private final static Logger log = LoggerFactory.getLogger(Mx1Packetizer.class.getName());
 }
-
-
-/* @(#)Mx1Packetizer.java */

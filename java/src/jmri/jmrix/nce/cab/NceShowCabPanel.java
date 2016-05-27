@@ -1248,8 +1248,6 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     /**
      * Process for functions F0-F4
      *
-     * @param currCabId
-     * @param c
      */
     private void procFunctions0_4(int currCabId, int c) {
         if ((c & NceCmdStationMemory.FUNC_L_F0) != 0) {
@@ -1282,8 +1280,6 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     /**
      * Process for functions 5 through 12
      *
-     * @param currCabId
-     * @param c
      */
     private void procFunctions5_12(int currCabId, int c) {
         if ((c & NceCmdStationMemory.FUNC_H_F5) != 0) {
@@ -1331,8 +1327,6 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     /**
      * Process char for functions 13-20
      *
-     * @param currCabId
-     * @param c
      */
     private void procFunctions13_20(int currCabId, int c) {
         if ((c & NceCmdStationMemory.FUNC_H_F13) != 0) {
@@ -1380,8 +1374,6 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     /**
      * Process char for functions 21-28
      *
-     * @param currCabId
-     * @param c
      */
     private void procFunctions21_28(int currCabId, int c) {
         if ((c & NceCmdStationMemory.FUNC_H_F21) != 0) {

@@ -57,7 +57,6 @@ public class RenameRosterGroupAction extends JmriAbstractAction {
      * name of the group to be copied is already known and is not the
      * selectedRosterGroup property of the WindowInterface.
      *
-     * @param event
      */
     @Override
     public void actionPerformed(ActionEvent event) {

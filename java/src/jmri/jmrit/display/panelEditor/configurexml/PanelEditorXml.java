@@ -92,7 +92,6 @@ public class PanelEditorXml extends AbstractXmlAdapter {
      * JFrame
      *
      * @param shared Top level Element to unpack.
-     * @param perNode
      * @return true if successful
      */
     @Override

@@ -1,4 +1,3 @@
-// DecoderIndexFile.java
 package jmri.jmrit.decoderdefn;
 
 import java.io.File;
@@ -31,8 +30,6 @@ import org.slf4j.LoggerFactory;
  * member to navigate to a single one.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- *
  */
 public class DecoderIndexFile extends XmlFile {
 
@@ -218,8 +215,6 @@ public class DecoderIndexFile extends XmlFile {
      * updated; if it does, then forces the update.
      *
      * @return true is the index should be reloaded because it was updated
-     * @throws org.jdom2.JDOMException
-     * @throws java.io.IOException
      */
     static boolean updateIndexIfNeeded() throws org.jdom2.JDOMException, java.io.IOException {
         // get version from master index; if not found, give up

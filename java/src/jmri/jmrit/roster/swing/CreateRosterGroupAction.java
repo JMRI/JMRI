@@ -91,8 +91,6 @@ public class CreateRosterGroupAction extends JmriAbstractAction {
      * <dd>An ArrayList&lt;RosterEntry&gt; of roster entries.
      * </dl>
      *
-     * @param key
-     * @param value
      */
     @Override
     @SuppressWarnings("unchecked")

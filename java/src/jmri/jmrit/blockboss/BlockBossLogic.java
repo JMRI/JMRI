@@ -1106,7 +1106,6 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
      * Return the BlockBossLogic item governing a specific signal, having
      * removed it from use.
      *
-     * @param signal
      * @return never null
      */
     public static BlockBossLogic getStoppedObject(String signal) {
@@ -1117,7 +1116,6 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
      * Return the BlockBossLogic item governing a specific signal, having
      * removed it from use.
      *
-     * @param sh
      * @return never null
      */
     public static BlockBossLogic getStoppedObject(SignalHead sh) {
