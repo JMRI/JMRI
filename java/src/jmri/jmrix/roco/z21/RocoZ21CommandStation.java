@@ -10,10 +10,9 @@ import org.slf4j.LoggerFactory;
  * This class keeps track of the broadcast flags associated with the 
  * currently connected Roco Z21 Command Station.
  * <P>
- * Brief descriptions of the flags are as follows (losely
+ * Brief descriptions of the flags are as follows (loosely
  * translated from  section 2.16 of the manual from the German 
  * with the aid of google translate).
- * <P>
  * <UL>
  * <LI>0x00000001 send XPressNet related information (track
  * power on/off, programming mode, short circuit, broadcast stop,
@@ -27,7 +26,7 @@ import org.slf4j.LoggerFactory;
  * Locomotive or turnout data.</LI>
  * <LI>0x02000000 send Locomotive specific LocoNet data to the client.</LI>
  * <LI>0x04000000 send Turnout specific LocoNet data to the client.</LI>
- * <LI>0x08000000 send Occupancy information from LocoNet to the client</LI
+ * <LI>0x08000000 send Occupancy information from LocoNet to the client</LI>
  * </UL>
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001 

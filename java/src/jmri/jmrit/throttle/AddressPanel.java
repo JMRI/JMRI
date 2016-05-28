@@ -91,7 +91,6 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
      * Add an AddressListener. AddressListeners are notified when the user
      * selects a new address and when a Throttle is acquired for that address
      *
-     * @param l
      */
     public void addAddressListener(AddressListener l) {
         if (listeners == null) {
@@ -105,7 +104,6 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
     /**
      * Remove an AddressListener.
      *
-     * @param l
      */
     public void removeAddressListener(AddressListener l) {
         if (listeners == null) {

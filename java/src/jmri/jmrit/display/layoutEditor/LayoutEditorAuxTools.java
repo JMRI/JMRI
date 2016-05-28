@@ -1,4 +1,3 @@
-// jmri.jmrit.display.LayoutEditorAuxTools.java
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.geom.Point2D;
@@ -22,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * directly from LayoutEditor or LayoutEditor specific modules.
  * <P>
  * @author Dave Duchamp Copyright (c) 2008
- * @version $Revision$
  */
 public class LayoutEditorAuxTools {
 
@@ -88,7 +86,6 @@ public class LayoutEditorAuxTools {
      * 2) and 3) above. For case 1), two track segments, the direction reflects
      * an "average" over the two track segments. See LayoutConnectivity for the
      * allowed values of direction.
-     * <P>
      *
      */
     public void initializeBlockConnectivity() {

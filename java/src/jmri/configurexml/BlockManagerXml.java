@@ -204,9 +204,9 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
      * The BlockManager in the InstanceManager is created automatically.
      *
      * @param sharedBlocks Element containing the block elements to load.
-     * @param perNodeBlocks
+     * @param perNodeBlocks Per-node block elements to load.
      * @return true if successful
-     * @throws jmri.configurexml.JmriConfigureXmlException
+     * @throws jmri.configurexml.JmriConfigureXmlException if error during load
      */
     @Override
     public boolean load(Element sharedBlocks, Element perNodeBlocks) throws JmriConfigureXmlException {

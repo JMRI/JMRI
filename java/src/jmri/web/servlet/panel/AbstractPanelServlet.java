@@ -78,10 +78,6 @@ abstract class AbstractPanelServlet extends HttpServlet {
      * </li>
      * </ol>
      *
-     * @param request
-     * @param response
-     * @throws ServletException
-     * @throws IOException
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

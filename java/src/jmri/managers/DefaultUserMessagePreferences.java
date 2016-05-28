@@ -303,7 +303,6 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * class.
      *
      * @param name  A unique identifer for preference.
-     * @param state
      */
     public void setSessionPreferenceState(String name, boolean state) {
         if (state) {
@@ -333,8 +332,8 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
     /**
      * Show an info message ("don't forget ...") with a given dialog title and
      * user message. Use a given preference name to determine whether to show it
-     * in the future. The classString & item parameters should form a unique
-     * value
+     * in the future. The classString {@literal &} item parameters should form a
+     * unique value
      *
      * @param title    Message Box title
      * @param message  Message to be displayed
@@ -349,8 +348,8 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * Show an info message ("don't forget ...") with a given dialog title and
      * user message. Use a given preference name to determine whether to show it
      * in the future. added flag to indicate that the message should be
-     * suppressed JMRI session only. The classString & item parameters should
-     * form a unique value
+     * suppressed JMRI session only. The classString {@literal &} item
+     * parameters should form a unique value
      *
      * @param title          Message Box title
      * @param message        Message to be displayed
@@ -369,8 +368,8 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * Show an info message ("don't forget ...") with a given dialog title and
      * user message. Use a given preference name to determine whether to show it
      * in the future. added flag to indicate that the message should be
-     * suppressed JMRI session only. The classString & item parameters should
-     * form a unique value
+     * suppressed JMRI session only. The classString {@literal &} item
+     * parameters should form a unique value
      *
      * @param title          Message Box title
      * @param message        Message to be displayed
@@ -389,8 +388,8 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * Show an info message ("don't forget ...") with a given dialog title and
      * user message. Use a given preference name to determine whether to show it
      * in the future. added flag to indicate that the message should be
-     * suppressed JMRI session only. The classString & item parameters should
-     * form a unique value
+     * suppressed JMRI session only. The classString {@literal &} item
+     * parameters should form a unique value
      *
      * @param title          Message Box title
      * @param message        Message to be displayed

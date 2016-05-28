@@ -61,7 +61,7 @@ public interface MemoryManager extends Manager {
      * Locate via user name, then system name if needed. If that fails, return
      * null
      *
-     * @param name
+     * @param name User name or system name to match
      * @return null if no match found
      */
     public Memory getMemory(String name);

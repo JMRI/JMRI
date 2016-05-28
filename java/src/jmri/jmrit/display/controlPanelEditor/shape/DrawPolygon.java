@@ -189,7 +189,6 @@ public class DrawPolygon extends DrawFrame {
 
     /**
      * @param pt is "startPoint" the upper left corner of the figure
-     * @return
      */
     private GeneralPath makePath(Point pt) {
         GeneralPath path = new GeneralPath(GeneralPath.WIND_EVEN_ODD, _vertices.size() + 1);
@@ -203,7 +202,6 @@ public class DrawPolygon extends DrawFrame {
     /**
      * "startPoint" will be the upper left corner of the figure
      *
-     * @return
      */
     private Point getStartPoint() {
         int x = _vertices.get(0).x;

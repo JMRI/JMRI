@@ -39,7 +39,6 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
     /**
      * Locate via user name, then system name if needed.
      *
-     * @param name
      * @return Null if nothing by that name exists
      */
     public Turnout getTurnout(String name) {

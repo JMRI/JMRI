@@ -84,7 +84,7 @@ import org.slf4j.LoggerFactory;
  * a variable depending on what has previously happened. It should write every
  * variable (at least) once.
  * <DT>Read All<DD>This should read every variable once.
- * <img src=<"doc-files/PaneProgPane-ReadAllSequenceDiagram.png">
+ * <img src="doc-files/PaneProgPane-ReadAllSequenceDiagram.png">
  * <DT>Read Changes<DD>This should read every variable that's marked as changed.
  * Currently, we use a common definition of changed with the write operations,
  * and that someday might have to change.
@@ -631,8 +631,9 @@ public class PaneProgPane extends javax.swing.JPanel
 
     /**
      * Invoked by "Read changes on sheet" button, this sets in motion a
-     * continuing sequence of "read" operations on the variables & CVs in the
-     * Pane. Only variables in states marked as "changed" will be read.
+     * continuing sequence of "read" operations on the variables {@literal &}
+     * CVs in the Pane. Only variables in states marked as "changed" will be
+     * read.
      *
      * @return true is a read has been started, false if the pane is complete.
      */
@@ -684,11 +685,11 @@ public class PaneProgPane extends javax.swing.JPanel
 
     /**
      * Invoked by "Read Full Sheet" button, this sets in motion a continuing
-     * sequence of "read" operations on the variables & CVs in the Pane. The
-     * read mechanism only reads variables in certain states (and needs to do
-     * that to handle error processing right now), so this is implemented by
-     * first setting all variables and CVs on this pane to TOREAD in
-     * prepReadPaneAll, then starting the execution.
+     * sequence of "read" operations on the variables {@literal &} CVs in the
+     * Pane. The read mechanism only reads variables in certain states (and
+     * needs to do that to handle error processing right now), so this is
+     * implemented by first setting all variables and CVs on this pane to TOREAD
+     * in prepReadPaneAll, then starting the execution.
      *
      * @return true is a read has been started, false if the pane is complete.
      */
@@ -1265,8 +1266,9 @@ public class PaneProgPane extends javax.swing.JPanel
 
     /**
      * Invoked by "Compare changes on sheet" button, this sets in motion a
-     * continuing sequence of "confirm" operations on the variables & CVs in the
-     * Pane. Only variables in states marked as "changed" will be checked.
+     * continuing sequence of "confirm" operations on the variables {@literal &}
+     * CVs in the Pane. Only variables in states marked as "changed" will be
+     * checked.
      *
      * @return true is a confirm has been started, false if the pane is
      *         complete.
@@ -1284,11 +1286,11 @@ public class PaneProgPane extends javax.swing.JPanel
 
     /**
      * Invoked by "Compare Full Sheet" button, this sets in motion a continuing
-     * sequence of "confirm" operations on the variables & CVs in the Pane. The
-     * read mechanism only reads variables in certain states (and needs to do
-     * that to handle error processing right now), so this is implemented by
-     * first setting all variables and CVs on this pane to TOREAD in
-     * prepReadPaneAll, then starting the execution.
+     * sequence of "confirm" operations on the variables {@literal &} CVs in the
+     * Pane. The read mechanism only reads variables in certain states (and
+     * needs to do that to handle error processing right now), so this is
+     * implemented by first setting all variables and CVs on this pane to TOREAD
+     * in prepReadPaneAll, then starting the execution.
      *
      * @return true is a confirm has been started, false if the pane is
      *         complete.
@@ -2421,11 +2423,9 @@ public class PaneProgPane extends javax.swing.JPanel
      * Pick an appropriate function map panel depending on model attribute.
      * <dl>
      * <dt>If attribute extFnsESU="yes":</dt>
-     * <dd>Invoke FnMapPanelESU(VariableTableModel v, List<Integer> varsUsed,
-     * Element model)</dd>
+     * <dd>Invoke {@code FnMapPanelESU(VariableTableModel v, List<Integer> varsUsed, Element model)}</dd>
      * <dt>Otherwise:</dt>
-     * <dd>Invoke FnMapPanel(VariableTableModel v, List<Integer> varsUsed,
-     * Element model)</dd>
+     * <dd>Invoke {@code FnMapPanel(VariableTableModel v, List<Integer> varsUsed, Element model)}</dd>
      * </dl>
      */
     void pickFnMapPanel(JPanel c, GridBagLayout g, GridBagConstraints cs, Element modelElem) {
@@ -2636,8 +2636,8 @@ public class PaneProgPane extends javax.swing.JPanel
     /**
      * Appends text to a String possibly in HTML format (as used in many Swing
      * components).
-     *
-     * Ensures any appended text is added prior to the closing </html> tag, if
+     * <p>
+     * Ensures any appended text is added prior to the closing {@code </html>} tag, if
      * there is one.
      *
      * @param baseText  original text
@@ -2662,7 +2662,7 @@ public class PaneProgPane extends javax.swing.JPanel
     /**
      * Optionally add CV numbers and bit numbers to tool tip text based on
      * Roster Preferences setting.
-     *
+     * <p>
      * Needs to be independent of VariableValue methods to allow use by
      * non-standard elements such as SpeedTableVarValue, DccAddressPanel,
      * FnMapPanel.

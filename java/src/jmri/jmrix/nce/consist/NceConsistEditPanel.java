@@ -1794,11 +1794,6 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
     /**
      * updates NCE CS based on the loco line supplied called by load button
      *
-     * @param locoRosterBox
-     * @param locoTextField
-     * @param adrButton
-     * @param dirButton
-     * @param cmdButton
      */
     private void loadOneLine(JComboBox<Object> locoRosterBox, JTextField locoTextField,
             JButton adrButton, JButton dirButton, JButton cmdButton) {

@@ -291,7 +291,6 @@ public class SecurityElement implements LocoNetListener {
      * newDsState and do update.
      * </UL>
      *
-     * @param l
      */
     public void message(LocoNetMessage l) {
         switch (l.getOpCode()) {
@@ -436,7 +435,6 @@ public class SecurityElement implements LocoNetListener {
      * This OPC_SE message is from the SE attached to a leg, find the occupancy
      * it's asserting
      *
-     * @param l
      */
     int getDsFromMessage(LocoNetMessage l) {
         if ((l.getElement(5) & 0x01) != 0) {
@@ -450,7 +448,6 @@ public class SecurityElement implements LocoNetListener {
      * This OPC_SE message is from the SE attached to a leg, find the speed
      * limit it's asserting
      *
-     * @param l
      */
     int getLimitFromMsg(LocoNetMessage l, int leg) {
         // figure out which leg is interesting

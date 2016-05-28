@@ -19,8 +19,8 @@ public class ScriptButtonPanel extends javax.swing.JPanel {
     /**
      * Creates new form ScriptButtonPanel
      *
-     * @param chooser
-     * @param parent
+     * @param chooser {@link JFileChooser} to use for Browse action
+     * @param parent  parent {@link Component} within which this is contained
      */
     public ScriptButtonPanel(JFileChooser chooser, Component parent) {
         initComponents();

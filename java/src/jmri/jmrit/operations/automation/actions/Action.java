@@ -44,7 +44,7 @@ public abstract class Action {
      * Mask off menu bits.
      * 
      * @param code
-     * @return code & ActionCodes.CODE_MASK
+     * @return code {@literal &} ActionCodes.CODE_MASK
      */
     protected int getCode(int code) {
         return code & ActionCodes.CODE_MASK;
@@ -96,7 +96,7 @@ public abstract class Action {
     }
 
     public String getActionString() {
-        return getFormatedMessage("{0}{1}{2}{3}{4}{5}");
+        return getFormatedMessage("{0}{1}{2}{3}{4}{5}"); // NOI18N
     }
 
     public String getActionSuccessfulString() {

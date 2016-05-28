@@ -125,8 +125,8 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
     }
 
     /**
-     * Send the message to set the state of functions F13 to F20 in function Group 4 &
-     * 5
+     * Send the message to set the state of functions F13 to F20 in function
+     * Group 4 {@literal &} 5
      */
     @Override
     protected void sendFunctionGroup4() {
@@ -176,7 +176,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
     }
 
     /**
-     * Set the speed & direction.
+     * Set the speed {@literal &} direction.
      * <P>
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop

@@ -30,7 +30,6 @@ public class NullProfile extends Profile {
      * exist in storage on the computer.
      *
      * @param path The Profile's directory
-     * @throws IOException
      */
     public NullProfile(File path) throws IOException {
         super(path, false);
@@ -45,12 +44,8 @@ public class NullProfile extends Profile {
      * read-only property of the Profile. The {@link ProfileManager} will only
      * load a single profile with a given id.
      *
-     * @param name
      * @param id   If null, {@link jmri.profile.ProfileManager#createUniqueId()}
      *             will be used to generate the id.
-     * @param path
-     * @throws IOException
-     * @throws IllegalArgumentException
      */
     public NullProfile(String name, String id, File path) throws IOException, IllegalArgumentException {
         this(path);

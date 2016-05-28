@@ -1,6 +1,5 @@
 /**
  * Provides JMRI access to Modbus networks.
- * <p>
  *
  * <h2>Related Documentation</h2>
  *

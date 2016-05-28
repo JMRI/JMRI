@@ -133,8 +133,8 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
      * Add a component to the bottom box. Takes care of organising glue, struts
      * etc
      *
-     * @param comp
-     * @param c
+     * @param comp {@link Component} to add
+     * @param c    Class name
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UUF_UNUSED_FIELD",
             justification = "param c is required in the listedtableframe")

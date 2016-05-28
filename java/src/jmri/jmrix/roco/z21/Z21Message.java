@@ -48,7 +48,6 @@ public class Z21Message extends AbstractMRMessage {
      * This ctor interprets the String as the exact sequence to send,
      * byte-for-byte.
      *
-     * @param m
      */
     public Z21Message(String m) {
         super(m);
@@ -167,12 +166,11 @@ public class Z21Message extends AbstractMRMessage {
     }
 
     /**
-     * Set the boradcast flags as described in section 2.16 of the 
+     * Set the broadcast flags as described in section 2.16 of the 
      * Roco Z21 Protocol Manual.
      * <P>
      * Brief descriptions of the flags are as follows (losely 
      * translated from German with the aid of google translate).
-     * <P>
      * <UL>
      * <LI>0x00000001 send XPressNet related information (track 
      * power on/off, programming mode, short circuit, broadcast stop, 
@@ -186,7 +184,7 @@ public class Z21Message extends AbstractMRMessage {
      * Locomotive or turnout data.</LI>
      * <LI>0x02000000 send Locomotive specific LocoNet data to the client.</LI>
      * <LI>0x04000000 send Turnout specific LocoNet data to the client.</LI>
-     * <LI>0x08000000 send Occupancy information from LocoNet to the client</LI 
+     * <LI>0x08000000 send Occupancy information from LocoNet to the client</LI> 
      * </UL>
      * <P>
      * @param flags integer representing the flags (32 bits).

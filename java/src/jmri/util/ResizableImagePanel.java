@@ -100,7 +100,6 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
      * used image path top folder when dnd enabled, also enable contextual menu
      * with remove entry
      *
-     * @param dnd
      */
     public void setDnd(boolean dnd) {
         if (dnd) {
@@ -173,7 +172,6 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
     /**
      * Allows this DnDImagePanel to force resize of its container
      *
-     * @param b
      */
     public void setResizingContainer(boolean b) {
         _resizeContainer = b;
@@ -198,7 +196,6 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
     /**
      * Allow this DnDImagePanel to respect aspect ratio when resizing content
      *
-     * @param b
      */
     public void setRespectAspectRatio(boolean b) {
         _respectAspectRatio = b;

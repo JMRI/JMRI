@@ -26,6 +26,8 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.operations.automations.PackageTest");   // no tests in this class itself
 
+        suite.addTest(AutomationManagerTest.suite());
+        suite.addTest(AutomationItemTest.suite());
         suite.addTest(BundleTest.suite());
         suite.addTest(jmri.jmrit.operations.automation.actions.PackageTest.suite());
 

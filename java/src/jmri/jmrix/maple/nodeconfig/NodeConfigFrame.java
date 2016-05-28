@@ -1,4 +1,3 @@
-// NodeConfigFrame.java
 package jmri.jmrix.maple.nodeconfig;
 
 import java.awt.Container;
@@ -25,15 +24,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2004, 2008
  * @author	Dave Duchamp Copyright (C) 2004, 2009
- * @version	$Revision$
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1694906139287195915L;
-
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.maple.nodeconfig.NodeConfigBundle");
 
     protected javax.swing.JTextField nodeAddrField = new javax.swing.JTextField(3);

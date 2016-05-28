@@ -1,4 +1,3 @@
-// BDL16Panel.java
 package jmri.jmrix.loconet.bdl16;
 
 import javax.swing.JCheckBox;
@@ -22,14 +21,8 @@ import org.slf4j.LoggerFactory;
  * Inc for separate permission.
  *
  * @author	Bob Jacobsen Copyright (C) 2002, 2004, 2007, 2010
- * @version	$Revision$
  */
 public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -287798661310758892L;
 
     public BDL16Panel() {
         this(1);

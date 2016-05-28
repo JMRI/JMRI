@@ -69,7 +69,7 @@ public class LRouteTableAction extends AbstractTableAction {
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
-     * @param s
+     * @param s title of the action
      */
     public LRouteTableAction(String s) {
         super(s);
@@ -1796,7 +1796,7 @@ public class LRouteTableAction extends AbstractTableAction {
     }
 
     /**
-     * @throw IllegalArgumentException if "user input no good"
+     * @throws IllegalArgumentException if "user input no good"
      * @return The number of conditionals after the creation.
      */
     int makeRouteConditional(int numConds, /*boolean onChange,*/ ArrayList<ConditionalAction> actionList,
@@ -1884,7 +1884,7 @@ public class LRouteTableAction extends AbstractTableAction {
     }
 
     /**
-     * @throw IllegalArgumentException if "user input no good"
+     * @throws IllegalArgumentException if "user input no good"
      * @return The number of conditionals after the creation.
      */
     int makeAlignConditional(int numConds, ArrayList<ConditionalAction> actionList,
