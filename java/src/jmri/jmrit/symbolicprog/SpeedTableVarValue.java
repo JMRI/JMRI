@@ -68,12 +68,9 @@ import org.slf4j.LoggerFactory;
  * from; it should be removed.
  * <P>
  * @author	Bob Jacobsen, Alex Shepherd Copyright (C) 2001, 2004, 2013
- * @author Dave Heap Copyright (C) 2012 Added support for Marklin mfx style
- * speed table
- * @author Dave Heap Copyright (C) 2013 Changes to fix mfx speed table issue
- * (Vstart {@literal &} Vhigh not written)
- * @author Dave Heap - generate cvList array to incorporate Vstart {@literal &}
- * Vhigh
+ * @author Dave Heap Copyright (C) 2012 Added support for Marklin mfx style speed table
+ * @author Dave Heap Copyright (C) 2013 Changes to fix mfx speed table issue (Vstart {@literal &} Vhigh not written)
+ * @author Dave Heap - generate cvList array to incorporate Vstart {@literal &} Vhigh
  *
  */
 public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {
@@ -855,14 +852,8 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
      * a CV state, not a variable.
      *
      * @author			Bob Jacobsen   Copyright (C) 2001
-     * @version
      */
     public class VarSlider extends JSlider {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 7077272684236102449L;
 
         VarSlider(BoundedRangeModel m, CvValue var, int step) {
             super(m);

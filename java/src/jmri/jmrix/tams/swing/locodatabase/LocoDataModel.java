@@ -1,4 +1,3 @@
-// LocoDataModel.java
 package jmri.jmrix.tams.swing.locodatabase;
 
 import java.awt.event.MouseEvent;
@@ -22,14 +21,9 @@ import org.slf4j.LoggerFactory;
  * Table data model for display the loco database of the Tams MC
  *
  * @author Kevin Dickerson Copyright (C) 2012
- * @version $Revision: 17977 $
  */
 public class LocoDataModel extends javax.swing.table.AbstractTableModel implements TamsListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8162723526280674206L;
     static public final int ADDRCOLUMN = 0;
     static public final int SPDCOLUMN = 1;
     static public final int FMTCOLUMN = 2;

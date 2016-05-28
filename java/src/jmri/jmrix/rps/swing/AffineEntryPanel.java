@@ -1,4 +1,3 @@
-// AffineEntryPanel.java
 package jmri.jmrix.rps.swing;
 
 import java.awt.GridLayout;
@@ -15,14 +14,9 @@ import javax.swing.JTextField;
  * Panel for entry and modifiation of an Affine Transform
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version $Revision$
  */
 public class AffineEntryPanel extends javax.swing.JPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1282006269847211098L;
     JTextField m00 = new JTextField(8);
     JTextField m01 = new JTextField(8);
     JTextField m02 = new JTextField(8);

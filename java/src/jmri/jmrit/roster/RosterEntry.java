@@ -113,9 +113,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     protected int _maxSpeedPCT = 100;
 
     /**
-     *
-     * @deprecated since 4.1.4 use {@link jmri.jmrit.roster.RosterConfigManager#getDefaultOwner()
-     * } instead
+     * @deprecated since 4.1.4 use {@link jmri.jmrit.roster.RosterConfigManager#getDefaultOwner()} instead
      */
     @Deprecated
     public static String getDefaultOwner() {
@@ -123,9 +121,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     /**
-     *
-     * @deprecated since 4.1.4 use {@link jmri.jmrit.roster.RosterConfigManager#setDefaultOwner(java.lang.String)
-     * } instead
+     * @deprecated since 4.1.4 use {@link jmri.jmrit.roster.RosterConfigManager#setDefaultOwner(java.lang.String)} instead
      */
     @Deprecated
     public static void setDefaultOwner(String n) {
@@ -161,7 +157,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     /**
      * Construct a blank object.
-     *
      */
     public RosterEntry() {
     }
@@ -1211,12 +1206,12 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     private Element mRootElement = null;
 
     /**
-     * Load a pre-existing CvTableModel object with the CV contents of this
+     * Load pre-existing Variable and CvTableModel object with the contents of this
      * entry
      *
      * @param cvModel  Model to load, must exist
      */
-    public void loadCvModel(CvTableModel cvModel, IndexedCvTableModel iCvModel) {
+    public void loadCvModel(VariableTableModel varModel, CvTableModel cvModel, IndexedCvTableModel iCvModel) {
         if (cvModel == null) {
             log.error("loadCvModel must be given a non-null argument");
             return;
@@ -1226,6 +1221,10 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             return;
         }
         try {
+            if (varModel != null) {
+                LocoFile.loadVariableModel(mRootElement.getChild("locomotive"), varModel);
+            }
+
             LocoFile.loadCvModel(mRootElement.getChild("locomotive"), cvModel, iCvModel, getDecoderFamily());
         } catch (Exception ex) {
             log.error("Error reading roster entry", ex);
