@@ -1,4 +1,3 @@
-// NodeConfigFrame.java
 package jmri.jmrix.oaktree.nodeconfig;
 
 import java.awt.Container;
@@ -21,14 +20,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2004
  * @author	Dave Duchamp Copyright (C) 2004, 2006
- * @version	$Revision$
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4292271400312891621L;
 
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.oaktree.nodeconfig.NodeConfigBundle");
 

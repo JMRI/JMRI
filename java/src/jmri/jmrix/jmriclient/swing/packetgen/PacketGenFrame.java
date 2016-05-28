@@ -1,4 +1,3 @@
-// JMRIClientPacketGenFrame.java
 package jmri.jmrix.jmriclient.swing.packetgen;
 
 import java.awt.Dimension;
@@ -11,14 +10,9 @@ import jmri.jmrix.jmriclient.JMRIClientTrafficController;
  * Description:	Frame for user input of JMRIClient messages
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
  */
 public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.jmriclient.JMRIClientListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5887061407912166629L;
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
