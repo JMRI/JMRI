@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * is an int with values from 0 to 127.
  * <P>
  * @author Andrew Crosland Copyright (C) 2009
- * @version $Revision$
  */
 public class CbusThrottle extends AbstractThrottle {
 
@@ -96,9 +95,6 @@ public class CbusThrottle extends AbstractThrottle {
     /**
      * Set initial throttle values as taken from PLOC reply from hardware
      *
-     * @param f0f4
-     * @param f5f8
-     * @param f9f12
      */
     public void throttleInit(int speed, int f0f4, int f5f8, int f9f12) {
 
@@ -123,14 +119,14 @@ public class CbusThrottle extends AbstractThrottle {
         this.isForward = (speed & 0x80) == 0x80;
     }
 
-    /*
+    /**
      * setSpeedStepMode - set the speed step value.
      * <P>
      * Overridden to capture mode changes to be forwarded to the hardware.
      * New throttles default to 128 step
      * mode
      * <P>
-     * @param Mode - the current speed step mode - default should be 128
+     * @param Mode the current speed step mode - default should be 128
      *              speed step mode in most cases
      */
     @Override

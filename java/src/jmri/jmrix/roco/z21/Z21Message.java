@@ -166,12 +166,11 @@ public class Z21Message extends AbstractMRMessage {
     }
 
     /**
-     * Set the boradcast flags as described in section 2.16 of the 
+     * Set the broadcast flags as described in section 2.16 of the 
      * Roco Z21 Protocol Manual.
      * <P>
      * Brief descriptions of the flags are as follows (losely 
      * translated from German with the aid of google translate).
-     * <P>
      * <UL>
      * <LI>0x00000001 send XPressNet related information (track 
      * power on/off, programming mode, short circuit, broadcast stop, 

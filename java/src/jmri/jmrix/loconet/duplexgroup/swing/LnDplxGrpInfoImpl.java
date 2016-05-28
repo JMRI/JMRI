@@ -1,4 +1,3 @@
-// LnDplxGrpInfoImpl.java
 package jmri.jmrix.loconet.duplexgroup.swing;
 
 import jmri.jmrix.loconet.LnConstants;
@@ -69,10 +68,6 @@ import org.slf4j.LoggerFactory;
  */
 public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jmrix.loconet.LocoNetListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1193918545973539710L;
     private static final boolean limitPasswordToNumericCharacters = false;
     private LocoNetSystemConnectionMemo memo;
     private Integer numUr92;
@@ -696,7 +691,6 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
      * currently displayed in the GUI. If the received information does not
      * match, a message is displayed on the status line in the GUI, else nothing
      * is displayed in the GUI status line.
-     * <p>
      */
     public void message(LocoNetMessage m) {
 

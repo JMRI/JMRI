@@ -99,7 +99,6 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
      * @param server     The server requesting this throttle on behalf of a
      *                   client
      * @return The throttle
-     * @throws jmri.server.json.JsonException
      */
     public static JsonThrottle getThrottle(String throttleId, JsonNode data, JsonThrottleSocketService server) throws JsonException, IOException {
         DccLocoAddress address = null;

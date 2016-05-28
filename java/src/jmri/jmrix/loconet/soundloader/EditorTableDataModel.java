@@ -1,4 +1,3 @@
-// EditorTableDataModel.java
 package jmri.jmrix.loconet.soundloader;
 
 import java.awt.Font;
@@ -26,14 +25,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006
  * @author Dennis Miller Copyright (C) 2006
- * @version	$Revision$
  */
 public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6127498935819325767L;
     static public final int HEADERCOL = 0;
     static public final int TYPECOL = 1;
     static public final int MAPCOL = 2;
