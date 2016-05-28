@@ -181,7 +181,6 @@ class LocoFile extends XmlFile {
         Element values = loco.getChild("values");
 
         if (values == null) {
-            String rosterName = loco.getAttributeValue("id");
             log.error("no values element found in config file; Variable values not loaded for \"{}\"", loco.getAttributeValue("id"));
             return;
         }
@@ -189,7 +188,6 @@ class LocoFile extends XmlFile {
         Element decoderDef = values.getChild("decoderDef");
 
         if (decoderDef == null) {
-            String rosterName = loco.getAttributeValue("id");
             log.error("no decoderDef element found in config file; Variable values not loaded for \"{}\"", loco.getAttributeValue("id"));
             return;
         }
