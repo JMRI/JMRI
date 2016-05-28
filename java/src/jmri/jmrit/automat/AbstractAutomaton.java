@@ -503,25 +503,25 @@ public class AbstractAutomaton implements Runnable {
      * thread. That listener then interrupts the automaton's thread, who
      * confirms the change.
      *
-     * @param Warrant  The name of the warrant to watch
+     * @param warrant  The name of the warrant to watch
      * @param state    State to check (static value from jmri.logix.warrant)
      */
-    public synchronized void waitWarrantRunState(Warrant Warrant, int state) {
+    public synchronized void waitWarrantRunState(Warrant warrant, int state) {
         if (!inThread) {
             log.warn("waitWarrantRunState invoked from invalid context");
         }
         if (log.isDebugEnabled()) {
-            log.debug("waitWarrantRunState "+Warrant.getDisplayName()+", "+state+" starts");
+            log.debug("waitWarrantRunState "+warrant.getDisplayName()+", "+state+" starts");
         }
 
         // do a quick check first, just in case
-        if (Warrant.getRunMode() == state) {
+        if (warrant.getRunMode() == state) {
             log.debug("waitWarrantRunState returns immediately");
             return;
         }
         // register listener
         java.beans.PropertyChangeListener listener;
-        Warrant.addPropertyChangeListener(listener = new java.beans.PropertyChangeListener() {
+        warrant.addPropertyChangeListener(listener = new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 synchronized (self) {
                    log.debug("notify waitWarrantRunState of property change");
@@ -530,12 +530,12 @@ public class AbstractAutomaton implements Runnable {
             }
         });
 
-        while (Warrant.getRunMode() != state) {
+        while (warrant.getRunMode() != state) {
             wait(-1);
         }
 
         // remove the listener
-        Warrant.removePropertyChangeListener(listener);
+        warrant.removePropertyChangeListener(listener);
 
         return;
     }
@@ -547,26 +547,26 @@ public class AbstractAutomaton implements Runnable {
      * thread. That listener then interrupts the automation's thread, who
      * confirms the change.
      *
-     * @param Warrant  The name of the warrant to watch
-     * @param Block    Block to check
-     * @param Occupied Determines whether to wait for the block to become occupied or unoccupied
+     * @param warrant  The name of the warrant to watch
+     * @param block    block to check
+     * @param occupied Determines whether to wait for the block to become occupied or unoccupied
      */
-    public synchronized void waitWarrantBlock(Warrant Warrant, String Block, boolean Occupied) {
+    public synchronized void waitWarrantBlock(Warrant warrant, String block, boolean occupied) {
         if (!inThread) {
             log.warn("waitWarrantBlock invoked from invalid context");
         }
         if (log.isDebugEnabled()) {
-            log.debug("waitWarrantBlock "+Warrant.getDisplayName()+", "+Block+" "+Occupied+" starts");
+            log.debug("waitWarrantBlock "+warrant.getDisplayName()+", "+block+" "+occupied+" starts");
         }
 
         // do a quick check first, just in case
-        if (Warrant.getCurrentBlockName().equals(Block) == Occupied) {
+        if (warrant.getCurrentBlockName().equals(block) == occupied) {
             log.debug("waitWarrantBlock returns immediately");
             return;
         }
         // register listener
         java.beans.PropertyChangeListener listener;
-        Warrant.addPropertyChangeListener(listener = new java.beans.PropertyChangeListener() {
+        warrant.addPropertyChangeListener(listener = new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 synchronized (self) {
                    log.debug("notify waitWarrantBlock of property change");
@@ -575,15 +575,18 @@ public class AbstractAutomaton implements Runnable {
             }
         });
 
-        while (Warrant.getCurrentBlockName().equals(Block) != Occupied) {
+        while (warrant.getCurrentBlockName().equals(block) != occupied) {
             wait(-1);
         }
 
         // remove the listener
-        Warrant.removePropertyChangeListener(listener);
+        warrant.removePropertyChangeListener(listener);
 
         return;
     }
+
+    private boolean blockChanged = false;
+    private String blockName = null;
 
     /**
      * Wait for a warrant to either enter a new block or to stop running.
@@ -592,30 +595,28 @@ public class AbstractAutomaton implements Runnable {
      * thread. That listener then interrupts the automation's thread, who
      * confirms the change.
      *
-     * @param Warrant  The name of the warrant to watch
+     * @param warrant  The name of the warrant to watch
      *
      * Return value: The name of the block that was entered or null if the warrant is no longer running.
      */
-    private boolean blockChanged = false;
-    private String blockName = null;
-    public synchronized String waitWarrantBlockChange(Warrant Warrant) {
+    public synchronized String waitWarrantBlockChange(Warrant warrant) {
         if (!inThread) {
             log.warn("waitWarrantBlockChange invoked from invalid context");
         }
         if (log.isDebugEnabled()) {
-            log.debug("waitWarrantBlockChange "+Warrant.getDisplayName());
+            log.debug("waitWarrantBlockChange "+warrant.getDisplayName());
         }
 
         // do a quick check first, just in case
-        if (Warrant.getRunMode() != Warrant.MODE_RUN) {
+        if (warrant.getRunMode() != Warrant.MODE_RUN) {
             log.debug("waitWarrantBlockChange returns immediately");
             return null;
         }
-        // register listener
+        // register listenerod
         blockChanged = false;
         blockName = null;
         java.beans.PropertyChangeListener listener;
-        Warrant.addPropertyChangeListener(listener = new java.beans.PropertyChangeListener() {
+        warrant.addPropertyChangeListener(listener = new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 synchronized (self) {
                     if (e.getPropertyName().equals("blockChange")) {
@@ -628,16 +629,16 @@ public class AbstractAutomaton implements Runnable {
             }
         });
 
-        while (!blockChanged && Warrant.getRunMode() == Warrant.MODE_RUN) {
+        while (!blockChanged && warrant.getRunMode() == Warrant.MODE_RUN) {
             wait(-1);
         }
 
-        if (Warrant.getRunMode() != Warrant.MODE_RUN) {
+        if (warrant.getRunMode() != Warrant.MODE_RUN) {
             blockName = null;
         }
 
         // remove the listener
-        Warrant.removePropertyChangeListener(listener);
+        warrant.removePropertyChangeListener(listener);
 
         return blockName;
     }
