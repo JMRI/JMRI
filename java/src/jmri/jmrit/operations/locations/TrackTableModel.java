@@ -6,6 +6,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
@@ -96,6 +97,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
             _location.addPropertyChangeListener(this);
         }
         initTable();
+        table.setRowHeight(new JComboBox<>().getPreferredSize().height);
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         updateList();
@@ -149,14 +151,17 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
         tcm.setColumnVisible(tcm.getColumnByModelIndex(ALT_TRACK_COLUMN), _location.hasAlternateTracks());
     }
 
+    @Override
     public int getRowCount() {
         return tracksList.size();
     }
 
+    @Override
     public int getColumnCount() {
         return HIGHESTCOLUMN;
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case ID_COLUMN:
@@ -200,6 +205,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
         }
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case ID_COLUMN:
@@ -243,6 +249,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
         }
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
             case EDIT_COLUMN:
@@ -252,6 +259,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
         }
     }
 
+    @Override
     public Object getValueAt(int row, int col) {
         if (row >= tracksList.size()) {
             return "ERROR row " + row; // NOI18N
@@ -343,6 +351,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
         return "E " + Integer.toString(number); // NOI18N
     }
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
         switch (col) {
             case EDIT_COLUMN:
@@ -362,6 +371,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
         }
         // use invokeLater so new window appears on top
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 tef = new TrackEditFrame();
                 Track tracks = tracksList.get(row);
@@ -372,6 +382,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
     }
 
     // this table listens for changes to a location and it's tracks
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e

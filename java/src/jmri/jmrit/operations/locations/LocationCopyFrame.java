@@ -117,6 +117,7 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
         setTitle(Bundle.getMessage("MenuItemCopyLocation"));
     }
 
+    @Override
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
     protected void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == copyButton) {
@@ -175,6 +176,7 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
         }
     }
 
+    @Override
     protected void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == moveRollingStockCheckBox) {
             deleteTrackCheckBox.setEnabled(moveRollingStockCheckBox.isSelected());
@@ -227,11 +229,13 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
         }
     }
 
+    @Override
     public void dispose() {
         locationManager.removePropertyChangeListener(this);
         super.dispose();
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         log.debug("PropertyChange ({}) new: ({})", e.getPropertyName(), e.getNewValue());
         if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)) {

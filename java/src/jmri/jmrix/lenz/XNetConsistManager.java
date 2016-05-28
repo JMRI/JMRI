@@ -9,9 +9,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Consist Manager for use with the XNetConsist class for the consists it builds
- *
  * @author Paul Bender Copyright (C) 2004-2010
- * @version $Revision$
+ * @navassoc 1 - * jmri.jmrix.lenz.XNetConsist
  */
 public class XNetConsistManager extends AbstractConsistManager {
 

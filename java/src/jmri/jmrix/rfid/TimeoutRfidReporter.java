@@ -1,4 +1,3 @@
-// TimeoutRfidReporter.java
 package jmri.jmrix.rfid;
 
 import jmri.IdTag;
@@ -27,7 +26,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Matthew Harris Copyright (C) 2014
- * @version $Revision$
  * @since 3.9.2
  */
 public class TimeoutRfidReporter extends RfidReporter {
@@ -35,7 +33,7 @@ public class TimeoutRfidReporter extends RfidReporter {
     /**
      * Timeout in ms
      */
-    private static final int timeout = 2000;
+    private static final int TIMEOUT = 2000;
 
     /**
      * Time when something was last reported by this object
@@ -83,7 +81,7 @@ public class TimeoutRfidReporter extends RfidReporter {
         @Override
         @SuppressWarnings("SleepWhileInLoop")
         public void run() {
-            while ((whenLastReported + timeout) > System.currentTimeMillis()) {
+            while ((whenLastReported + TIMEOUT) > System.currentTimeMillis()) {
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException ex) {
@@ -97,10 +95,6 @@ public class TimeoutRfidReporter extends RfidReporter {
         }
     }
 
-    static final long serialVersionUID = 929511727191807608L;
-
     private static final Logger log = LoggerFactory.getLogger(TimeoutRfidReporter.class.getName());
 
 }
-
-/* @(#)TimeoutRfidReporter.java */

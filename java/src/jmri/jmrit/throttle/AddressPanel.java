@@ -42,14 +42,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author glen Copyright (C) 2002
  * @author Daniel Boudreau Copyright (C) 2008 (add consist feature)
- * @version $Revision$
  */
 public class AddressPanel extends JInternalFrame implements ThrottleListener, PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 522758580232523066L;
     private DccThrottle throttle;
     private DccThrottle consistThrottle;
 
@@ -96,7 +91,6 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
      * Add an AddressListener. AddressListeners are notified when the user
      * selects a new address and when a Throttle is acquired for that address
      *
-     * @param l
      */
     public void addAddressListener(AddressListener l) {
         if (listeners == null) {
@@ -110,7 +104,6 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
     /**
      * Remove an AddressListener.
      *
-     * @param l
      */
     public void removeAddressListener(AddressListener l) {
         if (listeners == null) {

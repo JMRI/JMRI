@@ -140,7 +140,6 @@ public class RouteController extends AbstractController implements PropertyChang
     /**
      * This is on the aligned sensor, not the route itself.
      *
-     * @param evt
      */
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("KnownState")) {

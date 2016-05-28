@@ -222,6 +222,7 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
         pack();
     }
 
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == addButton) {
             Location location = _track.getLocation();
@@ -254,6 +255,7 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
         }
     }
 
+    @Override
     public void dispose() {
         if (_track != null) {
             _track.removePropertyChangeListener(this);
@@ -265,6 +267,7 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
         super.dispose();
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         // This should move to the base class
         // Just call LogEvent(e); instead. It will figure out if logging is

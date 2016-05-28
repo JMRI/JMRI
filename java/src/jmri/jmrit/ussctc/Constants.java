@@ -1,11 +1,9 @@
-// Constants.java
 package jmri.jmrit.ussctc;
 
 /**
  * Define common constants for the ussctc package
  *
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version $Revision$
  */
 public interface Constants {
 
@@ -19,5 +17,3 @@ public interface Constants {
     // is needed
 
 }
-
-/* @(#)Constants.java */

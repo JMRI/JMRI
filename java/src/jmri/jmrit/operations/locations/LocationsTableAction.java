@@ -24,6 +24,7 @@ public class LocationsTableAction extends AbstractAction {
 
     private static LocationsTableFrame locationTableFrame = null;
 
+    @Override
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "Show only one LocationsTableFrame")
     public void actionPerformed(ActionEvent e) {
         // create a location table frame

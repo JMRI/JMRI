@@ -1,12 +1,11 @@
 /* OlcbProgrammer.java */
 package jmri.jmrix.openlcb;
 
-import java.util.List;
 import java.util.ArrayList;
-
+import java.util.List;
+import jmri.ProgListener;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
-import jmri.ProgListener;
 
 /**
  * Provide access to the hardware DCC decoder programming capability.

@@ -24,6 +24,7 @@ public class RoutesTableAction extends AbstractAction {
 
     private static RoutesTableFrame routesTableFrame = null;
 
+    @Override
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "Show only one RouteTableFrame")
     public void actionPerformed(ActionEvent e) {
         // create a route table frame

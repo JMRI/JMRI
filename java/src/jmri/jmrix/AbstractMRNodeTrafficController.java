@@ -78,6 +78,7 @@ public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficC
     /**
      * Public method to register a Serial node
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "VO_VOLATILE_INCREMENT", justification = "Method itself is synchronized to protect numNodes")
     public void registerNode(AbstractNode node) {
         synchronized (this) {
             // no validity checking because at this point the node may not be fully defined
@@ -122,6 +123,7 @@ public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficC
     /**
      * Public method to delete a Serial node by node address
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "VO_VOLATILE_INCREMENT", justification = "Method itself is synchronized to protect numNodes")
     public synchronized void deleteNode(int nodeAddress) {
         // find the serial node
         int index = 0;

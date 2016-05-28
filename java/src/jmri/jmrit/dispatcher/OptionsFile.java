@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * This class manipulates the files conforming to the dispatcher-options DTD
  * <p>
  * The file is written when the user requests that options be saved. If the
- * dispatcher-options.xmlfile is present when Dispatcher is requested, it is
+ * dispatcheroptions.xml file is present when Dispatcher is started, it is
  * read and options set accordingly
  *
  * <P>
@@ -60,10 +60,10 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
      *  If the file containing Dispatcher Options does not exist this routine returns quietly.
      */
     public void readDispatcherOptions(DispatcherFrame f) throws org.jdom2.JDOMException, java.io.IOException {
-        log.debug("entered readDispatcherOptions");
         // check if file exists
         if (checkFile(defaultFileName)) {
             // file is present, 
+            log.debug("Reading Dispatcher options from file {}", defaultFileName);
             root = rootFromName(defaultFileName);
             dispatcher = f;
             if (root != null) {
@@ -133,13 +133,27 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
                             dispatcher.setAutoTurnouts(false);
                         }
                     }
+                    if (options.getAttribute("trustknownturnouts") != null) {
+                        dispatcher.setTrustKnownTurnouts(false);
+                        if (options.getAttribute("trustknownturnouts").getValue().equals("yes")) {
+                            dispatcher.setTrustKnownTurnouts(true);
+                        }
+                    }
+                    if (options.getAttribute("minthrottleinterval") != null) {
+                        String s = (options.getAttribute("minthrottleinterval")).getValue();
+                        dispatcher.setMinThrottleInterval(Integer.parseInt(s));
+                    }
+                    if (options.getAttribute("fullramptime") != null) {
+                        String s = (options.getAttribute("fullramptime")).getValue();
+                        dispatcher.setFullRampTime(Integer.parseInt(s));
+                    }
                     if (options.getAttribute("hasoccupancydetection") != null) {
                         dispatcher.setHasOccupancyDetection(true);
                         if (options.getAttribute("hasoccupancydetection").getValue().equals("no")) {
                             dispatcher.setHasOccupancyDetection(false);
                         }
                     }
-                    if (options.getAttribute("shortactivetrainnamesr") != null) {
+                    if (options.getAttribute("shortactivetrainnames") != null) {
                         dispatcher.setShortActiveTrainNames(true);
                         if (options.getAttribute("shortactivetrainnames").getValue().equals("no")) {
                             dispatcher.setShortActiveTrainNames(false);
@@ -191,6 +205,8 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
                     }
                 }
             }
+        } else {
+            log.debug("No Dispatcher options file found at {}, using defaults", defaultFileName);
         }
     }
 
@@ -198,7 +214,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
      *  Writes out Dispatcher options to a file in the user's preferences directory
      */
     public void writeDispatcherOptions(DispatcherFrame f) throws java.io.IOException {
-        log.debug("entered writeDispatcherOptions");
+        log.debug("Saving Dispatcher options to file {}", defaultFileName);
         dispatcher = f;
         root = new Element("dispatcheroptions");
         doc = newDocument(root, dtdLocation + "dispatcher-options.dtd");
@@ -222,6 +238,9 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
         options.setAttribute("trainsfromuser", "" + (dispatcher.getTrainsFromUser() ? "yes" : "no"));
         options.setAttribute("autoallocate", "" + (dispatcher.getAutoAllocate() ? "yes" : "no"));
         options.setAttribute("autoturnouts", "" + (dispatcher.getAutoTurnouts() ? "yes" : "no"));
+        options.setAttribute("trustknownturnouts", "" + (dispatcher.getTrustKnownTurnouts() ? "yes" : "no"));
+        options.setAttribute("minthrottleinterval", "" + (dispatcher.getMinThrottleInterval()));
+        options.setAttribute("fullramptime", "" + (dispatcher.getFullRampTime()));
         options.setAttribute("hasoccupancydetection", "" + (dispatcher.getHasOccupancyDetection() ? "yes" : "no"));
         options.setAttribute("shortactivetrainnames", "" + (dispatcher.getShortActiveTrainNames() ? "yes" : "no"));
         options.setAttribute("shortnameinblock", "" + (dispatcher.getShortNameInBlock() ? "yes" : "no"));

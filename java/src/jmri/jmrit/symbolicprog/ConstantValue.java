@@ -1,4 +1,3 @@
-// ConstantValue.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.Color;
@@ -18,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * there's no CV associated with this.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision$
  *
  */
 public class ConstantValue extends VariableValue {
@@ -145,7 +143,6 @@ public class ConstantValue extends VariableValue {
     /**
      * No connected CV, so this notify does nothing
      *
-     * @param state
      */
     public void setCvState(int state) {
     }

@@ -2,9 +2,8 @@ package jmri;
 
 import java.util.Iterator;
 import java.util.List;
-import jmri.implementation.AbstractTurnout;
-
 import javax.annotation.Nonnull;
+import jmri.implementation.AbstractTurnout;
 
 /**
  * Framework for automating reliable turnout operation. This interface allows a
@@ -160,8 +159,8 @@ public abstract class TurnoutOperation implements Comparable<Object> {
     /**
      * rename an operation
      *
-     * @param newName
-     * @return true iff the name was changed to the new value - otherwise name
+     * @param newName new name to use for rename attempt
+     * @return true if the name was changed to the new value - otherwise name
      *         is unchanged
      */
     public boolean rename(@Nonnull String newName) {

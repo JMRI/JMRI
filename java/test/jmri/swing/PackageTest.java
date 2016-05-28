@@ -27,6 +27,7 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.swing.PackageTest");   // no tests in this class itself
 
         suite.addTest(EditableListTest.suite());
+        suite.addTest(BundleTest.suite());
 
         return suite;
     }

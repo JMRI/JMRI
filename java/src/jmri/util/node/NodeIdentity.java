@@ -15,7 +15,7 @@ import java.util.Enumeration;
 import java.util.List;
 import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;
-import jmri.web.server.WebServerManager;
+import jmri.web.server.WebServerPreferences;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -123,7 +123,6 @@ public class NodeIdentity {
     /**
      * Verify that the current identity is a valid identity for this hardware.
      *
-     * @param identity
      * @return true if the identity is based on this hardware.
      */
     synchronized private boolean validateIdentity(String identity) {
@@ -147,7 +146,6 @@ public class NodeIdentity {
     /**
      * Get a node identity from the current hardware.
      *
-     * @param save
      */
     synchronized private void getIdentity(boolean save) {
         try {
@@ -189,7 +187,7 @@ public class NodeIdentity {
                 }
             }
         } catch (UnknownHostException ex) {
-            this.identity = WebServerManager.getWebServerPreferences().getRailRoadName().replaceAll("[^A-Za-z0-9 ]", "-"); // NOI18N
+            this.identity = WebServerPreferences.getDefault().getRailRoadName().replaceAll("[^A-Za-z0-9 ]", "-"); // NOI18N
             log.error("Cannot get host address or name {}", ex.getLocalizedMessage());
             log.error("Using {} as a fallback.", this.identity);
         }

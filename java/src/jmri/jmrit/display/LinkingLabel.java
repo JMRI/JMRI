@@ -1,9 +1,8 @@
 package jmri.jmrit.display;
 
 import java.awt.event.MouseEvent;
-import javax.swing.JPopupMenu;
 import javax.annotation.Nonnull;
-
+import javax.swing.JPopupMenu;
 import jmri.jmrit.catalog.NamedIcon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

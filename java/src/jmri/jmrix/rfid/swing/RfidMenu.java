@@ -1,4 +1,3 @@
-// RfidMenu.java
 package jmri.jmrix.rfid.swing;
 
 import java.util.ResourceBundle;
@@ -13,16 +12,11 @@ import jmri.util.swing.sdi.JmriJFrameInterface;
  *
  * @author	Bob Jacobsen Copyright 2003, 2006, 2007, 2008
  * @author Matthew Harris Copyright 2011
- * @version $Revision$
  * @since 2.11.4
  */
 public class RfidMenu extends JMenu {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -9172828888739172868L;
-
+    @SuppressWarnings("OverridableMethodCallInConstructor")
     public RfidMenu(RfidSystemConnectionMemo memo) {
 
         super();

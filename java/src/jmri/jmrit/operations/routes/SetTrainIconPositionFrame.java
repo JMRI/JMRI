@@ -87,7 +87,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         // set tool tips
-        placeButton.setToolTipText(Bundle.getMessage("TipPlaceButton") + " " + Setup.getPanelName());
+        placeButton.setToolTipText(Bundle.getMessage("TipPlaceButton") + " \"" + Setup.getPanelName()  + "\"");  // NOI18N
         applyButton.setToolTipText(Bundle.getMessage("TipApplyAllButton"));
         saveButton.setToolTipText(Bundle.getMessage("TipSaveButton"));
 
@@ -174,6 +174,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
 
     }
 
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         // check to see if a location has been selected 
         if (locationBox.getSelectedItem() == null) {
@@ -213,6 +214,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
         }
     }
 
+    @Override
     public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
         if (locationBox.getSelectedItem() == null) {
             resetSpinners();
@@ -223,6 +225,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
         }
     }
 
+    @Override
     public void spinnerChangeEvent(javax.swing.event.ChangeEvent ae) {
         if (ae.getSource() == spinTrainIconEastX && _tIonEast != null) {
             _tIonEast.setLocation((Integer) spinTrainIconEastX.getValue(), _tIonEast.getLocation().y);
@@ -375,16 +378,20 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
 
     private void addIconListener(TrainIcon tI) {
         tI.addComponentListener(new ComponentListener() {
+            @Override
             public void componentHidden(java.awt.event.ComponentEvent e) {
             }
 
+            @Override
             public void componentShown(java.awt.event.ComponentEvent e) {
             }
 
+            @Override
             public void componentMoved(java.awt.event.ComponentEvent e) {
                 trainIconMoved(e);
             }
 
+            @Override
             public void componentResized(java.awt.event.ComponentEvent e) {
             }
         });
@@ -413,6 +420,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
         }
     }
 
+    @Override
     public void dispose() {
         removeIcons();
         super.dispose();

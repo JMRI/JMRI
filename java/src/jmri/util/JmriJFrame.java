@@ -48,7 +48,6 @@ import org.slf4j.LoggerFactory;
  * needed when each invocation of the corresponding action can create a new copy
  * of the window. To do this, you don't have to do anything in your subclass.
  * This class has
- * <p>
  *
  * <pre>
  * <code>
@@ -511,7 +510,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
                 if (sw != null) {
                     try {
                         widthInset = Integer.parseInt(sw);
-                    } catch (Exception e1) {
+                    } catch (NumberFormatException e1) {
                         log.error("Error parsing jmri.inset.width: " + e1);
                     }
                 }
@@ -519,23 +518,23 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
                 if (sh != null) {
                     try {
                         heightInset = Integer.parseInt(sh);
-                    } catch (Exception e1) {
+                    } catch (NumberFormatException e1) {
                         log.error("Error parsing jmri.inset.height: " + e1);
                     }
                 }
 
                 // calculate size as screen size minus space needed for offsets
-                log.debug("getMaximumSize returns normally {},{}", (screen.width - widthInset), (screen.height - heightInset));
+                log.trace("getMaximumSize returns normally {},{}", (screen.width - widthInset), (screen.height - heightInset));
                 return new Dimension(screen.width - widthInset, screen.height - heightInset);
 
             } catch (NoSuchMethodError e) {
                 Dimension screen = getToolkit().getScreenSize();
-                log.debug("getMaximumSize returns approx due to failure {},{}", screen.width, screen.height);
+                log.trace("getMaximumSize returns approx due to failure {},{}", screen.width, screen.height);
                 return new Dimension(screen.width, screen.height - 45); // approximate this...
             }
-        } catch (Exception e2) {
+        } catch (RuntimeException e2) {
             // failed completely, fall back to standard method
-            log.debug("getMaximumSize returns super due to failure {}", super.getMaximumSize());
+            log.trace("getMaximumSize returns super due to failure {}", super.getMaximumSize());
             return super.getMaximumSize();
         }
     }
@@ -583,7 +582,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         if (subClass == null) {
             return JmriJFrame.getFrameList();
         }
-        java.util.List<JmriJFrame> result = new ArrayList<JmriJFrame>();
+        java.util.List<JmriJFrame> result = new ArrayList<>();
         synchronized (list) {
             for (JmriJFrame f : list) {
                 if (subClass.isInstance(f)) {
@@ -609,7 +608,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         return null;
     }
 
-    static volatile java.util.ArrayList<JmriJFrame> list = new java.util.ArrayList<JmriJFrame>();
+    static volatile java.util.ArrayList<JmriJFrame> list = new java.util.ArrayList<>();
 
     // handle resizing when first shown
     private boolean mShown = false;
@@ -939,7 +938,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     }
 
     public Set<String> getPropertyNames() {
-        HashSet<String> names = new HashSet<String>();
+        HashSet<String> names = new HashSet<>();
         names.addAll(properties.keySet());
         names.addAll(Beans.getIntrospectedPropertyNames(this));
         return names;

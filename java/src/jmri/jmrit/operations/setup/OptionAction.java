@@ -25,6 +25,7 @@ public class OptionAction extends AbstractAction {
 
     OptionFrame f = null;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (f == null || !f.isVisible()) {
             f = new OptionFrame();

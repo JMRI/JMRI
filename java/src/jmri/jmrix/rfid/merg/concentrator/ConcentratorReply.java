@@ -1,10 +1,8 @@
-// SpecificReply.java
 package jmri.jmrix.rfid.merg.concentrator;
 
 import jmri.jmrix.rfid.RfidProtocol;
 import jmri.jmrix.rfid.RfidReply;
 import jmri.jmrix.rfid.RfidTrafficController;
-import jmri.jmrix.rfid.protocol.coreid.CoreIdRfidProtocol;
 
 /**
  * Contains the data payload of a serial reply packet. Note that its _only_ the
@@ -12,35 +10,30 @@ import jmri.jmrix.rfid.protocol.coreid.CoreIdRfidProtocol;
  *
  * @author Bob Jacobsen Copyright (C) 2002, 2006, 2007, 2008
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  * @since 2.11.4
  */
 public class ConcentratorReply extends RfidReply {
 
-    RfidTrafficController tc = null;
     RfidProtocol pr = null;
 
     // create a new one
     public ConcentratorReply(RfidTrafficController tc) {
         super(tc);
-        this.tc = tc;
-        this.pr = tc.getAdapterMemo().getProtocol();
+        this.pr = this.tc.getAdapterMemo().getProtocol();
         setBinary(true);
         setUnsolicited();
     }
 
     public ConcentratorReply(RfidTrafficController tc, String s) {
         super(tc, s);
-        this.tc = tc;
-        this.pr = tc.getAdapterMemo().getProtocol();
+        this.pr = this.tc.getAdapterMemo().getProtocol();
         setBinary(true);
         setUnsolicited();
     }
 
     public ConcentratorReply(RfidTrafficController tc, RfidReply l) {
         super(tc, l);
-        this.tc = tc;
-        this.pr = tc.getAdapterMemo().getProtocol();
+        this.pr = this.tc.getAdapterMemo().getProtocol();
         setBinary(true);
         setUnsolicited();
     }
@@ -61,5 +54,3 @@ public class ConcentratorReply extends RfidReply {
         return pr.toMonitorString(this);
     }
 }
-
-/* @(#)SpecificReply.java */

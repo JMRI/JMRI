@@ -22,16 +22,10 @@ import javax.swing.table.TableColumn;
  * you want invisible columns taken into account.
  *
  * @version 0.9 04/03/01
- * @version	$Revision: 20525 $
  * @author Stephen Kelvin, mail@StephenKelvin.de
  * @see DefaultTableColumnModel
  */
 public class XTableColumnModel extends DefaultTableColumnModel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6890678360829524192L;
     /**
      * Array of TableColumn objects in this model. Holds all column objects,
      * regardless of their visibility

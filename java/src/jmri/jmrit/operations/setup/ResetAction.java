@@ -30,6 +30,7 @@ public class ResetAction extends AbstractAction {
         super(s);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // check to see if files are dirty
         if (OperationsXml.areFilesDirty()) {

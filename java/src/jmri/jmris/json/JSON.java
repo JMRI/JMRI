@@ -2,6 +2,8 @@ package jmri.jmris.json;
 
 import jmri.server.json.JsonException;
 import jmri.server.json.power.JsonPowerServiceFactory;
+import jmri.server.json.roster.JsonRoster;
+import jmri.server.json.throttle.JsonThrottle;
 import jmri.server.json.time.JsonTimeServiceFactory;
 
 /**
@@ -213,17 +215,17 @@ public final class JSON {
     /**
      * {@value #ROSTER}
      */
-    public static final String ROSTER = "roster"; // NOI18N
+    public static final String ROSTER = JsonRoster.ROSTER; // NOI18N
     /**
      * {@value #ROSTER_GROUP}
      *
      * @since 2.0
      */
-    public static final String ROSTER_GROUP = "rosterGroup"; // NOI18N
+    public static final String ROSTER_GROUP = JsonRoster.ROSTER_GROUP; // NOI18N
     /**
      * {@value #ROSTER_GROUPS}
      */
-    public static final String ROSTER_GROUPS = "rosterGroups"; // NOI18N
+    public static final String ROSTER_GROUPS = JsonRoster.ROSTER_GROUPS; // NOI18N
     /**
      * {@value #ROUTES}
      */
@@ -323,11 +325,11 @@ public final class JSON {
     /**
      * {@value #ROSTER_ENTRY}
      */
-    public static final String ROSTER_ENTRY = "rosterEntry"; // NOI18N
+    public static final String ROSTER_ENTRY = JsonRoster.ROSTER_ENTRY; // NOI18N
     /**
      * {@value #THROTTLE}
      */
-    public static final String THROTTLE = "throttle"; // NOI18N
+    public static final String THROTTLE = JsonThrottle.THROTTLE; // NOI18N
     /**
      * {@value #TIME}
      */
@@ -746,37 +748,37 @@ public final class JSON {
     /**
      * {@value #ADDRESS}
      */
-    public static final String ADDRESS = "address"; // NOI18N
+    public static final String ADDRESS = JsonThrottle.ADDRESS;
     /**
      * {@value #FORWARD}
      */
-    public static final String FORWARD = "forward"; // NOI18N
+    public static final String FORWARD = JsonThrottle.FORWARD;
     /**
      * {@value #RELEASE}
      */
-    public static final String RELEASE = "release"; // NOI18N
+    public static final String RELEASE = JsonThrottle.RELEASE;
     /**
      * {@value #ESTOP}
      */
-    public static final String ESTOP = "eStop"; // NOI18N
+    public static final String ESTOP = JsonThrottle.ESTOP;
     /**
      * {@value #IDLE}
      */
-    public static final String IDLE = "idle"; // NOI18N
+    public static final String IDLE = JsonThrottle.IDLE;
     /**
      * {@value #SPEED}
      */
-    public static final String SPEED = "speed"; // NOI18N
+    public static final String SPEED = JsonThrottle.SPEED;
     /**
      * {@value #SPEED_STEPS}
      */
-    public static final String SPEED_STEPS = "speedSteps"; // NOI18N
+    public static final String SPEED_STEPS = JsonThrottle.SPEED_STEPS;
     /**
      * Prefix for the throttle function keys (F0-F28).
      * <p>
      * {@value #F}
      */
-    public static final String F = "F"; // NOI18N
+    public static final String F = JsonThrottle.F;
     /**
      * Used by a {@link jmri.jmris.json.JsonThrottle} to notify clients of the
      * number of clients controlling the same throttle.
@@ -785,7 +787,7 @@ public final class JSON {
      *
      * @since 2.0
      */
-    public static final String CLIENTS = "clients"; // NOI18N
+    public static final String CLIENTS = JsonThrottle.CLIENTS;
 
     /* JSON Sensor and Turnout Tokens */
     /**

@@ -1,4 +1,3 @@
-// LoaderPane.java
 package jmri.jmrix.loconet.soundloader;
 
 import java.awt.FlowLayout;

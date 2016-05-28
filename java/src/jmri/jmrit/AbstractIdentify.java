@@ -1,11 +1,10 @@
 package jmri.jmrit;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.Programmer;
 import jmri.ProgrammingMode;
 import jmri.managers.DefaultProgrammerManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base for common code of {@link jmri.jmrit.roster.IdentifyLoco} and

@@ -19,6 +19,7 @@ public class SetupExcelProgramFrameAction extends AbstractAction {
 
     SetupExcelProgramManifestFrame f = null;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a train scripts frame
         if (f != null && f.isVisible()) {

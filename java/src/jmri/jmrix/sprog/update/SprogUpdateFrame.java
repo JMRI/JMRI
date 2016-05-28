@@ -376,7 +376,7 @@ abstract public class SprogUpdateFrame
     }
 
     /**
-     * Internal routine to handle timer starts & restarts
+     * Internal routine to handle timer starts {@literal &} restarts
      */
     synchronized protected void restartTimer(int delay) {
         if (timer == null) {

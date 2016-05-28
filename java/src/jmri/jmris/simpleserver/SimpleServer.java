@@ -12,7 +12,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmris.JmriServer;
 import jmri.util.node.NodeIdentity;
-import jmri.web.server.WebServerManager;
+import jmri.web.server.WebServerPreferences;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -69,7 +69,7 @@ public class SimpleServer extends JmriServer {
 
         // Start by sending a welcome message
         outStream.writeBytes("JMRI " + jmri.Version.name() + " \n");
-        outStream.writeBytes("RAILROAD " + WebServerManager.getWebServerPreferences().getRailRoadName() + " \n");
+        outStream.writeBytes("RAILROAD " + WebServerPreferences.getDefault().getRailRoadName() + " \n");
         outStream.writeBytes("NODE " + NodeIdentity.identity() + " \n");
 
         while (true) {

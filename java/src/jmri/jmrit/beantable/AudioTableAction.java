@@ -1,4 +1,3 @@
-// AudioTableAction.java
 package jmri.jmrit.beantable;
 
 import java.awt.event.ActionEvent;
@@ -40,14 +39,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public class AudioTableAction extends AbstractTableAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 997606126554992440L;
     AudioTableDataModel listeners;
     AudioTableDataModel buffers;
     AudioTableDataModel sources;
@@ -65,7 +59,7 @@ public class AudioTableAction extends AbstractTableAction {
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
-     * @param actionName
+     * @param actionName title of the action
      */
     public AudioTableAction(String actionName) {
         super(actionName);
@@ -102,10 +96,6 @@ public class AudioTableAction extends AbstractTableAction {
 
         // create the frame
         atf = new AudioTableFrame(atp, helpTarget()) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -7518952412034675558L;
 
             /**
              * Include "Add Source..." and "Add Buffer..." buttons
@@ -188,7 +178,7 @@ public class AudioTableAction extends AbstractTableAction {
         JMenu fileMenu = null;
         for (int i = 0; i < menuBar.getMenuCount(); i++) {
             if (menuBar.getComponent(i) instanceof JMenu) {
-                if (((JMenu) menuBar.getComponent(i)).getText().equals(rbapps.getString("MenuFile"))) {
+                if (((JMenu) menuBar.getComponent(i)).getText().equals(Bundle.getMessage("MenuFile"))) {
                     fileMenu = menuBar.getMenu(i);
                 }
             }
@@ -269,11 +259,6 @@ public class AudioTableAction extends AbstractTableAction {
      * Define abstract AudioTableDataModel
      */
     abstract public class AudioTableDataModel extends BeanTableDataModel implements PropertyChangeListener {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 1263874422331471609L;
 
         char subType;
 
@@ -461,11 +446,6 @@ public class AudioTableAction extends AbstractTableAction {
      */
     public class AudioListenerTableDataModel extends AudioTableDataModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 2124461381030149588L;
-
         AudioListenerTableDataModel() {
             super(Audio.LISTENER);
         }
@@ -486,11 +466,6 @@ public class AudioTableAction extends AbstractTableAction {
      */
     public class AudioBufferTableDataModel extends AudioTableDataModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -8823961737671739012L;
-
         AudioBufferTableDataModel() {
             super(Audio.BUFFER);
         }
@@ -505,11 +480,6 @@ public class AudioTableAction extends AbstractTableAction {
      * Specific AudioTableDataModel for Audio Source sub-type
      */
     public class AudioSourceTableDataModel extends AudioTableDataModel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 8123546730548750171L;
 
         AudioSourceTableDataModel() {
             super(Audio.SOURCE);
@@ -537,5 +507,3 @@ public class AudioTableAction extends AbstractTableAction {
         return AudioTableAction.class.getName();
     }
 }
-
-/* @(#)AudioTableAction.java */

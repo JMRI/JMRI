@@ -191,4 +191,13 @@ public class JsonRosterHttpServiceTest extends TestCase {
         assertEquals(Roster.getDefault().getEntriesInGroup(testGroup1).size(),
                 instance.getRosterGroup(locale, testGroup1).path(JSON.DATA).path(JSON.LENGTH).asInt());
     }
+
+
+        // Main entry point
+    static public void main(String[] args) {
+        String[] testCaseName = {"-noloading",JsonRosterHttpServiceTest.class.getName()};
+        junit.swingui.TestRunner.main(testCaseName);
+    }
+
+
 }

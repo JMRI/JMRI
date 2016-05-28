@@ -1,4 +1,3 @@
-// Follower.java
 package jmri.jmrit.ussctc;
 
 import jmri.InstanceManager;
@@ -15,7 +14,6 @@ import jmri.implementation.DefaultRoute;
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version $Revision$
  */
 public class Follower implements Constants {
 
@@ -137,5 +135,3 @@ public class Follower implements Constants {
     boolean invert;
 
 }
-
-/* @(#)Follower.java */

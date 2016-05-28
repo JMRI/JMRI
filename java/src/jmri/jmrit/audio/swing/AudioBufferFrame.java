@@ -53,9 +53,9 @@ public class AudioBufferFrame extends AbstractAudioFrame {
     private final Object lock = new Object();
 
     // UI components for Add/Edit Buffer
-    JLabel urlLabel = new JLabel(Bundle.getMessage("LabelURL"));
+    JLabel urlLabel = new JLabel(Bundle.getMessage("LabelURL") + ":");
     JTextField url = new JTextField(40);
-    JButton buttonBrowse = new JButton(Bundle.getMessage("ButtonBrowse"));
+    JButton buttonBrowse = new JButton("...");
     JCheckBox stream = new JCheckBox(Bundle.getMessage("LabelStream"));
 //    JLabel formatLabel = new JLabel(Bundle.getMessage("LabelFormat"));
 //    JTextField format = new JTextField(20);
@@ -96,6 +96,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
         p2.add(urlLabel);
         p2.add(url);
         buttonBrowse.addActionListener(this::browsePressed);
+        buttonBrowse.setToolTipText(Bundle.getMessage("ToolTipButtonBrowse"));
         p2.add(buttonBrowse);
         p.add(p2);
         p2 = new JPanel();
@@ -163,18 +164,18 @@ public class AudioBufferFrame extends AbstractAudioFrame {
 
         p = new JPanel();
         JButton apply;
-        p.add(apply = new JButton(rb.getString("ButtonApply")));
+        p.add(apply = new JButton(Bundle.getMessage("ButtonApply")));
         apply.addActionListener((ActionEvent e) -> {
             applyPressed(e);
         });
         JButton ok;
-        p.add(ok = new JButton(rb.getString("ButtonOK")));
+        p.add(ok = new JButton(Bundle.getMessage("ButtonOK")));
         ok.addActionListener((ActionEvent e) -> {
             applyPressed(e);
             frame.dispose();
         });
         JButton cancel;
-        p.add(cancel = new JButton(rb.getString("ButtonCancel")));
+        p.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
         cancel.addActionListener((ActionEvent e) -> {
             frame.dispose();
         });
@@ -206,6 +207,9 @@ public class AudioBufferFrame extends AbstractAudioFrame {
      */
     @Override
     public void populateFrame(Audio a) {
+        if (a instanceof AudioBuffer) {
+            throw new IllegalArgumentException(a.getSystemName() + " is not an AudioBuffer object");
+        }
         super.populateFrame(a);
         AudioBuffer b = (AudioBuffer) a;
         url.setText(b.getURL());
@@ -265,7 +269,9 @@ public class AudioBufferFrame extends AbstractAudioFrame {
             }
             if (newBuffer && am.getByUserName(user) != null) {
                 am.deregister(b);
-                counter--;
+                synchronized (lock) {
+                    counter--;
+                }
                 throw new AudioException("Duplicate user name - please modify");
             }
             b.setUserName(user);
@@ -289,7 +295,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
             // Notify changes
             model.fireTableDataChanged();
         } catch (AudioException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), rb.getString("AudioCreateErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), Bundle.getMessage("AudioCreateErrorTitle"), JOptionPane.ERROR_MESSAGE);
         }
     }
 

@@ -1,6 +1,3 @@
-/**
- * ToolsMenu.java
- */
 package jmri.jmrit.ussctc;
 
 import javax.swing.JMenu;
@@ -9,14 +6,8 @@ import javax.swing.JMenu;
  * Create a "Tools" menu containing the USS CTC tools
  *
  * @author	Bob Jacobsen Copyright 2007
- * @version $Revision$
  */
 public class ToolsMenu extends JMenu {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6832144369646539440L;
 
     public ToolsMenu(String name) {
         this();

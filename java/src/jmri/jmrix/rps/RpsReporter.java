@@ -1,4 +1,3 @@
-// RpsReporter.java
 package jmri.jmrix.rps;
 
 import java.util.ArrayList;
@@ -15,10 +14,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * RPS implementation of the Reporter interface.
- * <P>
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
  * @since 2.3.1
  */
 public class RpsReporter extends AbstractReporter implements MeasurementListener {
@@ -76,8 +73,6 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
             notifyLeaving(id);
         }
     }
-
-    private static final long serialVersionUID = 1L;
 
     transient Region region;
     ArrayList<Integer> contents = new ArrayList<Integer>();
@@ -192,5 +187,3 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
 
     private final static Logger log = LoggerFactory.getLogger(RpsReporter.class.getName());
 }
-
-/* @(#)AbstractReporter.java */

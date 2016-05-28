@@ -398,7 +398,6 @@ public abstract class AbstractMonPane extends JmriPanel {
     /**
      * Handle display of traffic.
      *
-     * @param timestamp
      * @param line The traffic in normal parsed form, ending with \n
      * @param raw The traffic in raw form, ending with \n
      */
@@ -602,5 +601,5 @@ public abstract class AbstractMonPane extends JmriPanel {
     protected StringBuffer linesBuffer = new StringBuffer();
     static private int MAX_LINES = 500;
 
-    private static final Logger log = LoggerFactory.getLogger(AbstractMonFrame.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AbstractMonPane.class.getName());
 }

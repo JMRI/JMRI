@@ -135,9 +135,6 @@ public class Llnmon {
      * addressLow & addressHigh in a form appropriate for the type of address (2
      * or 4 digit) using the Digitrax 'mixed mode' if necessary.
      *
-     * @param addressLow
-     * @param addressHigh
-     * @return
      */
     private static String convertToMixed(int addressLow, int addressHigh) {
 
@@ -273,16 +270,10 @@ public class Llnmon {
                 turnoutSystemName = locoNetTurnoutPrefix
                         + SENSOR_ADR(l.getElement(1), l.getElement(2));
 
-                try {
-                    jmri.Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
-                    if ((turnout != null) && (turnout.getUserName() != null) && (turnout.getUserName().length() > 0)) {
-                        turnoutUserName = "(" + turnout.getUserName() + ")";
-                    } else {
-                        turnoutUserName = "()";
-                    }
-                } catch (RuntimeException e) {
-                    throw e;
-                } catch (Exception e) {
+                jmri.Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
+                if ((turnout != null) && (turnout.getUserName() != null) && (!turnout.getUserName().isEmpty())) {
+                    turnoutUserName = "(" + turnout.getUserName() + ")";
+                } else {
                     turnoutUserName = "()";
                 }
                 return "Request switch "
@@ -306,20 +297,12 @@ public class Llnmon {
                 String turnoutUserName = "";
                 turnoutSystemName = locoNetTurnoutPrefix
                         + SENSOR_ADR(l.getElement(1), l.getElement(2));
-
-                try {
-                    jmri.Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
-                    if ((turnout != null) && (turnout.getUserName() != null) && (turnout.getUserName().length() > 0)) {
-                        turnoutUserName = "(" + turnout.getUserName() + ")";
-                    } else {
-                        turnoutUserName = "()";
-                    }
-                } catch (RuntimeException e) {
-                    throw e;
-                } catch (Exception e) {
+                jmri.Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
+                if ((turnout != null) && (turnout.getUserName() != null) && (!turnout.getUserName().isEmpty())) {
+                    turnoutUserName = "(" + turnout.getUserName() + ")";
+                } else {
                     turnoutUserName = "()";
                 }
-
                 return "Request status of switch "
                         + turnoutSystemName + " " + turnoutUserName
                         + ".\n";
@@ -603,30 +586,23 @@ public class Llnmon {
                 // get system and user names
                 String sensorSystemName = locoNetSensorPrefix + contactNum;
                 String sensorUserName = "";
-                try {
-                    sensorSystemName = locoNetSensorPrefix + contactNum;
-                    jmri.Sensor sensor = sensorManager.getBySystemName(
+                sensorSystemName = locoNetSensorPrefix + contactNum;
+                jmri.Sensor sensor = sensorManager.getBySystemName(
                             sensorSystemName);
-                    if ((sensor != null) && (sensor.getUserName() != null) && (sensor.getUserName().length() > 0)) {
-                        sensorUserName = " (" + sensor.getUserName() + ")";
-                    } else {
-                        sensorUserName = "()";
-                    }
-                } catch (RuntimeException e) {
-                    throw e;
-                } catch (Exception e) {
+                if ((sensor != null) && (sensor.getUserName() != null) && (!sensor.getUserName().isEmpty())) {
+                    sensorUserName = " (" + sensor.getUserName() + ")";
+                } else {
                     sensorUserName = "()";
                 }
-
-                int sensor = (SENSOR_ADR(in1, in2) - 1) * 2
+                int sensorid = (SENSOR_ADR(in1, in2) - 1) * 2
                         + ((in2 & LnConstants.OPC_INPUT_REP_SW) != 0 ? 2 : 1);
 
-                int bdlid = ((sensor - 1) / 16) + 1;
-                int bdlin = ((sensor - 1) % 16) + 1;
+                int bdlid = ((sensorid - 1) / 16) + 1;
+                int bdlin = ((sensorid - 1) % 16) + 1;
                 String bdl = "BDL16 #" + bdlid + ", DS" + bdlin;
 
-                int boardid = ((sensor - 1) / 8) + 1;
-                int boardindex = ((sensor - 1) % 8);
+                int boardid = ((sensorid - 1) / 8) + 1;
+                int boardindex = ((sensorid - 1) % 8);
                 String ds54sensors[] = {"AuxA", "SwiA", "AuxB", "SwiB", "AuxC", "SwiC", "AuxD", "SwiD"};
                 String ds64sensors[] = {"A1", "S1", "A2", "S2", "A3", "S3", "A4", "S4"};
                 String se8csensors[] = {"DS01", "DS02", "DS03", "DS04", "DS05", "DS06", "DS07", "DS08"};
@@ -638,10 +614,10 @@ public class Llnmon {
                         + " is "
                         + ((in2 & LnConstants.OPC_INPUT_REP_HI) != 0 ? "Hi" : "Lo")
                         + ".  (" + bdl + "; DS54/64"
-                        + (sensor < 289 ? "/SE8c #" : " #")
+                        + (sensorid < 289 ? "/SE8c #" : " #")
                         + boardid + ", "
                         + ds54sensors[boardindex] + "/" + ds64sensors[boardindex]
-                        + ((sensor < 289) ? "/" + se8csensors[boardindex] : "")
+                        + ((sensorid < 289) ? "/" + se8csensors[boardindex] : "")
                         + ")\n";
             } // case LnConstants.OPC_INPUT_REP
 
@@ -685,16 +661,10 @@ public class Llnmon {
                 turnoutSystemName = locoNetTurnoutPrefix
                         + SENSOR_ADR(sn1, sn2);
 
-                try {
-                    jmri.Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
-                    if ((turnout != null) && (turnout.getUserName() != null) && (turnout.getUserName().length() > 0)) {
-                        turnoutUserName = "(" + turnout.getUserName() + ")";
-                    } else {
-                        turnoutUserName = "()";
-                    }
-                } catch (RuntimeException e) {
-                    throw e;
-                } catch (Exception e) {
+                jmri.Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
+                if ((turnout != null) && (turnout.getUserName() != null ) && (!turnout.getUserName().isEmpty() )) {
+                    turnoutUserName = "(" + turnout.getUserName() + ")";
+                } else {
                     turnoutUserName = "()";
                 }
 
@@ -804,17 +774,10 @@ public class Llnmon {
                     String turnoutUserName = "";
                     turnoutSystemName = locoNetTurnoutPrefix
                             + SENSOR_ADR(l.getElement(1), l.getElement(2));
-
-                    try {
-                        jmri.Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
-                        if ((turnout != null) && (turnout.getUserName() != null) && (turnout.getUserName().length() > 0)) {
-                            turnoutUserName = "(" + turnout.getUserName() + ")";
-                        } else {
-                            turnoutUserName = "()";
-                        }
-                    } catch (RuntimeException e) {
-                        throw e;
-                    } catch (Exception e) {
+                    jmri.Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
+                    if ((turnout != null) && (turnout.getUserName() != null ) && (!turnout.getUserName().isEmpty() )) {
+                        turnoutUserName = "(" + turnout.getUserName() + ")";
+                    } else {
                         turnoutUserName = "()";
                     }
 
@@ -1176,16 +1139,10 @@ public class Llnmon {
                         reporterSystemName = locoNetReporterPrefix
                                 + ((l.getElement(1) & 0x1F) * 128 + l.getElement(2) + 1);
 
-                        try {
-                            jmri.Reporter reporter = reporterManager.getBySystemName(reporterSystemName);
-                            if ((reporter != null) && (reporter.getUserName() != null) && (reporter.getUserName().length() > 0)) {
-                                reporterUserName = "(" + reporter.getUserName() + ")";
-                            } else {
-                                reporterUserName = "()";
-                            }
-                        } catch (RuntimeException e) {
-                            throw e;
-                        } catch (Exception e) {
+                        jmri.Reporter reporter = reporterManager.getBySystemName(reporterSystemName);
+                        if ((reporter != null) && (reporter.getUserName() != null) && (!reporter.getUserName().isEmpty())) {
+                            reporterUserName = "(" + reporter.getUserName() + ")";
+                        } else {
                             reporterUserName = "()";
                         }
                         return "Transponder address "
@@ -2870,16 +2827,10 @@ public class Llnmon {
                                 reporterSystemName = locoNetReporterPrefix
                                         + ((l.getElement(5) & 0x1F) * 128 + l.getElement(6) + 1);
 
-                                try {
-                                    jmri.Reporter reporter = reporterManager.getBySystemName(reporterSystemName);
-                                    if ((reporter != null) && (reporter.getUserName() != null) && (reporter.getUserName().length() > 0)) {
-                                        reporterUserName = "(" + reporter.getUserName() + ")";
-                                    } else {
-                                        reporterUserName = "()";
-                                    }
-                                } catch (RuntimeException e) {
-                                    throw e;
-                                } catch (Exception e) {
+                                jmri.Reporter reporter = reporterManager.getBySystemName(reporterSystemName);
+                                if ((reporter != null) && (reporter.getUserName() != null) && (!reporter.getUserName().isEmpty())) {
+                                    reporterUserName = "(" + reporter.getUserName() + ")";
+                                } else {
                                     reporterUserName = "()";
                                 }
                                 return "Transponder Find report : address "
@@ -3442,7 +3393,6 @@ public class Llnmon {
      * sets the loconet turnout manager which is used to find turnout "user
      * names" from turnout "system names"
      *
-     * @param loconetTurnoutManager
      */
     public void setLocoNetTurnoutManager(jmri.TurnoutManager loconetTurnoutManager) {
         turnoutManager = loconetTurnoutManager;
@@ -3453,7 +3403,6 @@ public class Llnmon {
      * sets the loconet sensor manager which is used to find sensor "user names"
      * from sensor "system names"
      *
-     * @param loconetSensorManager
      */
     public void setLocoNetSensorManager(jmri.SensorManager loconetSensorManager) {
         sensorManager = loconetSensorManager;

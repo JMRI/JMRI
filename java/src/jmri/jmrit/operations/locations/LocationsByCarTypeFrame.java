@@ -71,6 +71,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
         super();
     }
 
+    @Override
     public void initComponents() {
         initComponents(NONE);
     }
@@ -160,12 +161,14 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
         setVisible(true);
     }
 
+    @Override
     public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("combo box action");
         updateLocations();
     }
 
     // Save, Delete, Add
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == saveButton) {
             save();
@@ -273,6 +276,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
         }
     }
 
+    @Override
     public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
         // copy checkbox?
         if (ae.getSource() == copyCheckBox) {
@@ -334,6 +338,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
         }
     }
 
+    @Override
     public void dispose() {
         manager.removePropertyChangeListener(this);
         CarTypes.instance().removePropertyChangeListener(this);
@@ -341,6 +346,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
         super.dispose();
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (log.isDebugEnabled()) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e

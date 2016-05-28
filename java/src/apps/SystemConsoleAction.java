@@ -1,4 +1,3 @@
-// SystemConsoleAction.java
 package apps;
 
 import java.awt.event.ActionEvent;
@@ -21,7 +20,6 @@ import jmri.util.swing.WindowInterface;
  * <P>
  *
  * @author Matthew Harris copyright (c) 2010
- * @version $Revision$
  */
 public class SystemConsoleAction extends jmri.util.swing.JmriAbstractAction {
 
@@ -50,5 +48,3 @@ public class SystemConsoleAction extends jmri.util.swing.JmriAbstractAction {
     }
 
 }
-
-/* @(#)SystemConsoleAction.java */

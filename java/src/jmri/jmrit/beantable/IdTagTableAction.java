@@ -1,4 +1,3 @@
-// IdTagTableAction.java
 package jmri.jmrit.beantable;
 
 import java.awt.event.ActionEvent;
@@ -23,17 +22,11 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a IdTagTable GUI.
  *
- * @author	Bob Jacobsen Copyright (C) 2003
- * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
+ * @author  Bob Jacobsen Copyright (C) 2003
+ * @author  Matthew Harris Copyright (C) 2011
  * @since 2.11.4
  */
 public class IdTagTableAction extends AbstractTableAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1575248820674993316L;
 
     /**
      * Create an action with a specific title.
@@ -41,8 +34,9 @@ public class IdTagTableAction extends AbstractTableAction {
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
-     * @param actionName
+     * @param actionName title of the action
      */
+    @SuppressWarnings("OverridableMethodCallInConstructor")
     public IdTagTableAction(String actionName) {
         super(actionName);
 
@@ -61,17 +55,15 @@ public class IdTagTableAction extends AbstractTableAction {
      * Create the JTable DataModel, along with the changes for the specific case
      * of IdTag objects
      */
+    @Override
     protected void createModel() {
         m = new BeanTableDataModel() {
 
-            /**
-             *
-             */
-            private static final long serialVersionUID = 3809491722828887091L;
             public static final int WHERECOL = NUMCOLUMN;
             public static final int WHENCOL = WHERECOL + 1;
             public static final int CLEARCOL = WHENCOL + 1;
 
+            @Override
             public String getValue(String name) {
                 IdTag tag = InstanceManager.getDefault(IdTagManager.class).getBySystemName(name);
                 if (tag == null) {
@@ -85,6 +77,7 @@ public class IdTagTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             public Manager getManager() {
                 IdTagManager m = InstanceManager.getDefault(IdTagManager.class);
                 if (!m.isInitialised()) {
@@ -93,16 +86,19 @@ public class IdTagTableAction extends AbstractTableAction {
                 return m;
             }
 
+            @Override
             public NamedBean getBySystemName(String name) {
                 return InstanceManager.getDefault(IdTagManager.class).getBySystemName(name);
             }
 
+            @Override
             public NamedBean getByUserName(String name) {
                 return InstanceManager.getDefault(IdTagManager.class).getByUserName(name);
             }
             /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnMemoryInUse(); }
              public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnMemoryInUse(boo); }*/
 
+            @Override
             public void clickOn(NamedBean t) {
                 // don't do anything on click; not used in this class, because
                 // we override setValueAt
@@ -229,12 +225,14 @@ public class IdTagTableAction extends AbstractTableAction {
                 return getClassName();
             }
 
+            @Override
             protected String getBeanType() {
                 return "ID Tag";
             }
         };
     }
 
+    @Override
     protected void setTitle() {
         f.setTitle(Bundle.getMessage("TitleIdTagTable"));
     }
@@ -249,19 +247,18 @@ public class IdTagTableAction extends AbstractTableAction {
     JCheckBox isStateStored = new JCheckBox(Bundle.getMessage("IdStoreState"));
     JCheckBox isFastClockUsed = new JCheckBox(Bundle.getMessage("IdUseFastClock"));
 
+    @Override
     protected void addPressed(ActionEvent e) {
         if (addFrame == null) {
             addFrame = new JmriJFrame(Bundle.getMessage("TitleAddIdTag"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.IdTagAddEdit", true);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
 
-            ActionListener okListener = new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    okPressed(e);
-                }
+            ActionListener okListener = (ActionEvent ev) -> {
+                okPressed(ev);
             };
-            ActionListener cancelListener = new ActionListener() {
-                public void actionPerformed(ActionEvent e) { cancelPressed(e); }
+            ActionListener cancelListener = (ActionEvent ev) -> {
+                cancelPressed(ev);
             };
             addFrame.add(new AddNewDevicePanel(sysName, userName, "ButtonOK", okListener, cancelListener));
         }
@@ -289,7 +286,6 @@ public class IdTagTableAction extends AbstractTableAction {
         } catch (IllegalArgumentException ex) {
             // user input no good
             handleCreateException(sName);
-            return; // without creating       
         }
     }
     //private boolean noWarn = false;
@@ -312,17 +308,13 @@ public class IdTagTableAction extends AbstractTableAction {
     public void addToFrame(BeanTableFrame f) {
         f.addToBottomBox(isStateStored, this.getClass().getName());
         isStateStored.setSelected(InstanceManager.getDefault(IdTagManager.class).isStateStored());
-        isStateStored.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                InstanceManager.getDefault(IdTagManager.class).setStateStored(isStateStored.isSelected());
-            }
+        isStateStored.addActionListener((ActionEvent e) -> {
+            InstanceManager.getDefault(IdTagManager.class).setStateStored(isStateStored.isSelected());
         });
         f.addToBottomBox(isFastClockUsed, this.getClass().getName());
         isFastClockUsed.setSelected(InstanceManager.getDefault(IdTagManager.class).isFastClockUsed());
-        isFastClockUsed.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                InstanceManager.getDefault(IdTagManager.class).setFastClockUsed(isFastClockUsed.isSelected());
-            }
+        isFastClockUsed.addActionListener((ActionEvent e) -> {
+            InstanceManager.getDefault(IdTagManager.class).setFastClockUsed(isFastClockUsed.isSelected());
         });
         log.debug("Added CheckBox in addToFrame method");
     }
@@ -331,25 +323,20 @@ public class IdTagTableAction extends AbstractTableAction {
     public void addToPanel(AbstractTableTabAction f) {
         f.addToBottomBox(isStateStored, this.getClass().getName());
         isStateStored.setSelected(InstanceManager.getDefault(IdTagManager.class).isStateStored());
-        isStateStored.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                InstanceManager.getDefault(IdTagManager.class).setStateStored(isStateStored.isSelected());
-            }
+        isStateStored.addActionListener((ActionEvent e) -> {
+            InstanceManager.getDefault(IdTagManager.class).setStateStored(isStateStored.isSelected());
         });
         f.addToBottomBox(isFastClockUsed, this.getClass().getName());
         isFastClockUsed.setSelected(InstanceManager.getDefault(IdTagManager.class).isFastClockUsed());
-        isFastClockUsed.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                InstanceManager.getDefault(IdTagManager.class).setFastClockUsed(isFastClockUsed.isSelected());
-            }
+        isFastClockUsed.addActionListener((ActionEvent e) -> {
+            InstanceManager.getDefault(IdTagManager.class).setFastClockUsed(isFastClockUsed.isSelected());
         });
         log.debug("Added CheckBox in addToPanel method");
     }
 
+    @Override
     protected String getClassName() {
         return IdTagTableAction.class.getName();
     }
     private static final Logger log = LoggerFactory.getLogger(IdTagTableAction.class.getName());
 }
-
-/* @(#)IdTagTableAction.java */

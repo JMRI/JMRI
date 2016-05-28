@@ -116,6 +116,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
     }
 
     // add, delete, or replace button
+    @Override
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("edit frame button activated");
@@ -182,6 +183,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
         return true;
     }
 
+    @Override
     protected void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("Combo box action");
         updateCarQuanity();
@@ -452,6 +454,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
         comboBox.setSelectedIndex(0); // update count
     }
 
+    @Override
     public void dispose() {
         CarRoads.instance().removePropertyChangeListener(this);
         CarTypes.instance().removePropertyChangeListener(this);
@@ -463,6 +466,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
         super.dispose();
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
@@ -493,10 +497,12 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
 
+    @Override
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
 
+    @Override
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }

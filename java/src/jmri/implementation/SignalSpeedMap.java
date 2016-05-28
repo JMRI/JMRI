@@ -1,20 +1,19 @@
 package jmri.implementation;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
+import javax.annotation.Nonnull;
 import jmri.util.FileUtil;
 import jmri.util.OrderedHashtable;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.annotation.Nonnull;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
  /**
  * Default implementation to map Signal aspects or appearances to speed requirements.
@@ -99,12 +98,12 @@ public class SignalSpeedMap
             }
 
             List<Element> list = root.getChild("aspectSpeeds").getChildren();
-            _table = new OrderedHashtable<String, Float>();
+            _table = new OrderedHashtable<>();
             for (int i = 0; i < list.size(); i++) {
                 String name = list.get(i).getName();
                 Float speed = Float.valueOf(0f);
                 try {
-                    speed = new Float(list.get(i).getText());
+                    speed = Float.valueOf(list.get(i).getText());
                 } catch (NumberFormatException nfe) {
                     log.error("invalid content for "+name+" = "+list.get(i).getText());
                     throw new JDOMException("invalid content for "+name+" = "+list.get(i).getText());
@@ -113,7 +112,7 @@ public class SignalSpeedMap
                 _table.put(name, speed);
             }
 
-            _headTable = new OrderedHashtable<String, String>();
+            _headTable = new OrderedHashtable<>();
             List<Element>l = root.getChild("appearanceSpeeds").getChildren();
             for (int i = 0; i < l.size(); i++) {
                 String name = l.get(i).getName();
@@ -163,7 +162,7 @@ public class SignalSpeedMap
 
     public java.util.Vector<String> getValidSpeedNames() {
         java.util.Enumeration<String> e = _table.keys();
-        java.util.Vector<String> v = new java.util.Vector<String>();
+        java.util.Vector<String> v = new java.util.Vector<>();
         while (e.hasMoreElements()) {
             v.add(e.nextElement());
         }
@@ -173,7 +172,7 @@ public class SignalSpeedMap
     public float getSpeed(@Nonnull String name) {
         if ( !checkSpeed(name)) {
             // not a valid aspect
-            log.warn("attempting to set invalid speed: "+name);
+            log.warn("attempting to get speed for invalid name: '{}'", name);
             //java.util.Enumeration<String> e = _table.keys();
             throw new IllegalArgumentException("attempting to get speed from invalid name: \""+name+"\"");
         }
@@ -220,7 +219,7 @@ public class SignalSpeedMap
     }
 
     public void setAspectTable(@Nonnull Iterator<Entry<String, Float>> iter, int interpretation) {
-        _table = new OrderedHashtable<String, Float>();
+        _table = new OrderedHashtable<>();
         while (iter.hasNext() ) {
             Entry<String, Float> ent = iter.next();
             _table.put(ent.getKey(), ent.getValue());
@@ -228,7 +227,7 @@ public class SignalSpeedMap
         _interpretation = interpretation;
     }
     public void setAppearanceTable(@Nonnull Iterator<Entry<String, String>> iter) {
-        _headTable = new OrderedHashtable<String, String>();
+        _headTable = new OrderedHashtable<>();
         while (iter.hasNext() ) {
             Entry<String, String> ent = iter.next();
             _headTable.put(ent.getKey(), ent.getValue());

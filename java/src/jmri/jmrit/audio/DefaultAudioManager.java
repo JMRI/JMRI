@@ -55,7 +55,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
     }
 
     @Override
-    protected Audio createNewAudio(String systemName, String userName) throws AudioException {
+    protected synchronized Audio createNewAudio(String systemName, String userName) throws AudioException {
 
         if (activeAudioFactory == null) {
             log.debug("Initialise in createNewAudio");
@@ -161,7 +161,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
             if (audioShutDownTask == null) {
                 audioShutDownTask = new QuietShutDownTask("AudioFactory Shutdown") {
                     @Override
-                    public boolean doAction() {
+                    public boolean execute() {
                         InstanceManager.audioManagerInstance().cleanUp();
                         return true;
                     }
@@ -179,24 +179,30 @@ public class DefaultAudioManager extends AbstractAudioManager {
     }
 
     @Override
-    public void deregister(NamedBean s) {
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+            justification = "Synchronized method to ensure correct counter manipulation")
+    public synchronized void deregister(NamedBean s) {
         super.deregister(s);
-        // Decrement the relevant Audio object counter
-        switch (((Audio) s).getSubType()) {
-            case (Audio.BUFFER): {
-                countBuffers--;
-                break;
+        if (s instanceof Audio) {
+            // Decrement the relevant Audio object counter
+            switch (((Audio) s).getSubType()) {
+                case (Audio.BUFFER): {
+                    countBuffers--;
+                    break;
+                }
+                case (Audio.SOURCE): {
+                    countSources--;
+                    break;
+                }
+                case (Audio.LISTENER): {
+                    countListeners--;
+                    break;
+                }
+                default:
+                    throw new IllegalArgumentException();
             }
-            case (Audio.SOURCE): {
-                countSources--;
-                break;
-            }
-            case (Audio.LISTENER): {
-                countListeners--;
-                break;
-            }
-            default:
-                throw new IllegalArgumentException();
+        } else {
+            throw new IllegalArgumentException(s.getSystemName() + " is not an Audio object");
         }
     }
 

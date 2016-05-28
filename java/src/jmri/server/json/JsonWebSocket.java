@@ -32,16 +32,15 @@ public class JsonWebSocket {
         this.connection = new JsonConnection(sn);
         sn.setIdleTimeout((long) (JsonServerPreferences.getDefault().getHeartbeatInterval() * 1.1));
         this.handler = new JsonClientHandler(this.connection);
-        this.shutDownTask = new QuietShutDownTask("Close open web socket") {
-            // NOI18N
+        this.shutDownTask = new QuietShutDownTask("Close open web socket") { // NOI18N
             @Override
             public boolean execute() {
                 try {
-                    JsonWebSocket.this.connection.sendMessage(JsonWebSocket.this.connection.getObjectMapper().createObjectNode().put(JSON.TYPE, JSON.GOODBYE));
+                    JsonWebSocket.this.getConnection().sendMessage(JsonWebSocket.this.getConnection().getObjectMapper().createObjectNode().put(JSON.TYPE, JSON.GOODBYE));
                 } catch (IOException e) {
                     log.warn("Unable to send goodbye while closing socket.\nError was {}", e.getMessage());
                 }
-                JsonWebSocket.this.connection.getSession().close();
+                JsonWebSocket.this.getConnection().getSession().close();
                 return true;
             }
         };
@@ -66,9 +65,9 @@ public class JsonWebSocket {
     public void onError(Throwable thrwbl) {
         if (thrwbl instanceof SocketTimeoutException) {
             log.error(thrwbl.getMessage());
-            return;
+        } else {
+            log.error(thrwbl.getMessage(), thrwbl);
         }
-        log.error(thrwbl.getMessage(), thrwbl);
     }
 
     @OnWebSocketMessage
@@ -81,5 +80,12 @@ public class JsonWebSocket {
             InstanceManager.shutDownManagerInstance().deregister(this.shutDownTask);
         }
     }
-    
+
+    /**
+     * @return the connection
+     */
+    protected JsonConnection getConnection() {
+        return connection;
+    }
+
 }

@@ -1,4 +1,3 @@
-//PowerPane.java
 package jmri.jmrix.sprog.swing;
 
 import java.awt.GridLayout;
@@ -18,14 +17,9 @@ import org.slf4j.LoggerFactory;
  * Pane for power control
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  */
 public class PowerPane extends javax.swing.JPanel implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -9185281612199315791L;
     // GUI member declarations
     static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrit.powerpanel.PowerPanelBundle");
     JLabel onOffStatus = new JLabel(res.getString("LabelUnknown"));

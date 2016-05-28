@@ -96,8 +96,8 @@ public interface Throttle {
     public static final String F28Momentary = "F28Momentary"; // NOI18N
 
     /**
-     * Speed - expressed as a value 0.0 -> 1.0. Negative means emergency stop.
-     * This is an bound property.
+     * Speed - expressed as a value {@literal 0.0 -> 1.0.} Negative means
+     * emergency stop. This is an bound property.
      *
      * @return the speed as a percentage of maximum possible speed
      */
@@ -432,7 +432,7 @@ public interface Throttle {
      * After this, further usage of this Throttle object will result in a
      * JmriException.
      *
-     * @param l
+     * @param l {@link ThrottleListener} to dispose of
      */
     public void dispose(ThrottleListener l);
 
@@ -445,7 +445,7 @@ public interface Throttle {
      * <P>
      * Normally, release ends with a call to dispose.
      *
-     * @param l
+     * @param l {@link ThrottleListener} to release
      */
     public void release(ThrottleListener l);
 
@@ -460,7 +460,7 @@ public interface Throttle {
      * <P>
      * Normally, dispatch ends with a call to dispose.
      *
-     * @param l
+     * @param l {@link ThrottleListener} to dispatch
      */
     public void dispatch(ThrottleListener l);
 

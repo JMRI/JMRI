@@ -23,7 +23,7 @@ public class MultiThrottleController extends ThrottleController {
 
     /**
      * Builds a header to send to the wi-fi device for use in a message.
-     * Includes a separator - <;>
+     * Includes a separator - {@literal <;>}
      *
      * @param chr the character indicating what action is performed
      * @return a pre-assembled header for this DccThrottle

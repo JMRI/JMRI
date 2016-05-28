@@ -90,6 +90,7 @@ public class RestoreDialog extends JDialog {
                 {
                     automaticBackupsRadioButton = new JRadioButton(Bundle.getMessage("RestoreDialog.radioButton.autoBackup"));
                     automaticBackupsRadioButton.addActionListener(new ActionListener() {
+                        @Override
                         public void actionPerformed(ActionEvent e) {
                             do_automaticBackupsRadioButton_actionPerformed(e);
                         }
@@ -100,6 +101,7 @@ public class RestoreDialog extends JDialog {
                 {
                     defaultBackupsRadioButton = new JRadioButton(Bundle.getMessage("RestoreDialog.radioButton.defaultBackup"));
                     defaultBackupsRadioButton.addActionListener(new ActionListener() {
+                        @Override
                         public void actionPerformed(ActionEvent e) {
                             do_defaultBackupsRadioButton_actionPerformed(e);
                         }
@@ -117,6 +119,7 @@ public class RestoreDialog extends JDialog {
             {
                 comboBox = new JComboBox<>();
                 comboBox.addItemListener(new ItemListener() {
+                    @Override
                     public void itemStateChanged(ItemEvent arg0) {
                         do_comboBox_itemStateChanged(arg0);
                     }
@@ -134,6 +137,7 @@ public class RestoreDialog extends JDialog {
             {
                 restoreButton = new JButton(Bundle.getMessage("RestoreDialog.retoreButton.text"));
                 restoreButton.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         do_restoreButton_actionPerformed(e);
                     }
@@ -143,6 +147,7 @@ public class RestoreDialog extends JDialog {
             {
                 JButton cancelButton = new JButton(Bundle.getMessage("BackupDialog.cancelButton.text"));
                 cancelButton.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent arg0) {
                         do_cancelButton_actionPerformed(arg0);
                     }

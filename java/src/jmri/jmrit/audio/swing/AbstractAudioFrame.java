@@ -39,7 +39,7 @@ import jmri.util.JmriJFrame;
  */
 abstract public class AbstractAudioFrame extends JmriJFrame {
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
+    // static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle"); // changed to Bundle method
 
     AbstractAudioFrame frame = this;
 
@@ -55,9 +55,9 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
     static final float FLT_PRECISION = 1 / (float) INT_PRECISION;
 
     // Common UI components for Add/Edit Audio
-    JLabel sysNameLabel = new JLabel(rb.getString("LabelSystemName"));
+    JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
     JTextField sysName = new JTextField(5);
-    JLabel userNameLabel = new JLabel(rb.getString("LabelUserName"));
+    JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     JTextField userName = new JTextField(15);
 
     /**
@@ -156,21 +156,21 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
             this.add(xLabel);
             xValue.setPreferredSize(new JTextField(8).getPreferredSize());
             xValue.setModel(
-                    new SpinnerNumberModel(new Float(0f), new Float(-Audio.MAX_DISTANCE), new Float(Audio.MAX_DISTANCE), new Float(FLT_PRECISION)));
+                    new SpinnerNumberModel(Float.valueOf(0f), Float.valueOf(-Audio.MAX_DISTANCE), Float.valueOf(Audio.MAX_DISTANCE), Float.valueOf(FLT_PRECISION)));
             xValue.setEditor(new JSpinner.NumberEditor(xValue, "0.00"));
             this.add(xValue);
 
             this.add(yLabel);
             yValue.setPreferredSize(new JTextField(8).getPreferredSize());
             yValue.setModel(
-                    new SpinnerNumberModel(new Float(0f), new Float(-Audio.MAX_DISTANCE), new Float(Audio.MAX_DISTANCE), new Float(FLT_PRECISION)));
+                    new SpinnerNumberModel(Float.valueOf(0f), Float.valueOf(-Audio.MAX_DISTANCE), Float.valueOf(Audio.MAX_DISTANCE), Float.valueOf(FLT_PRECISION)));
             yValue.setEditor(new JSpinner.NumberEditor(yValue, "0.00"));
             this.add(yValue);
 
             this.add(zLabel);
             zValue.setPreferredSize(new JTextField(8).getPreferredSize());
             zValue.setModel(
-                    new SpinnerNumberModel(new Float(0f), new Float(-Audio.MAX_DISTANCE), new Float(Audio.MAX_DISTANCE), new Float(FLT_PRECISION)));
+                    new SpinnerNumberModel(Float.valueOf(0f), Float.valueOf(-Audio.MAX_DISTANCE), Float.valueOf(Audio.MAX_DISTANCE), Float.valueOf(FLT_PRECISION)));
             zValue.setEditor(new JSpinner.NumberEditor(zValue, "0.00"));
             this.add(zValue);
 
@@ -215,7 +215,7 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
 
         JSpinner spinner = new JSpinner();
 
-        @SuppressWarnings("UnnecessaryBoxing")
+        @SuppressWarnings({"UnnecessaryBoxing", "OverridableMethodCallInConstructor"})
         JPanelSliderf(String title, Float min, Float max, int majorTicks, int minorTicks) {
             super();
             int iMin = Math.round(min * INT_PRECISION);
@@ -248,7 +248,7 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
             });
             spinner.setPreferredSize(new JTextField(5).getPreferredSize());
             spinner.setModel(
-                    new SpinnerNumberModel(min, min, max, new Float(FLT_PRECISION)));
+                    new SpinnerNumberModel(min, min, max, Float.valueOf(FLT_PRECISION)));
             spinner.setEditor(new JSpinner.NumberEditor(spinner, "0.00"));
             spinner.addChangeListener((ChangeEvent e) -> {
                 slider.setValue(

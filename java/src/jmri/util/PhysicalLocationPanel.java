@@ -18,14 +18,14 @@ import org.slf4j.LoggerFactory;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
+ * JMRI is free software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  * <P>
  *
@@ -33,6 +33,10 @@ import org.slf4j.LoggerFactory;
  */
 public class PhysicalLocationPanel extends JPanel {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
     TitledBorder tb;
     JSpinner xs, ys, zs;
     SpinnerNumberModel spinnerModel;
@@ -60,6 +64,8 @@ public class PhysicalLocationPanel extends JPanel {
         initComponents(title);
     }
 
+    // FIXME: Why does the if statement in this method include a direct false?
+    @SuppressWarnings("unused")
     private GridBagConstraints setConstraints(int x, int y, boolean fill) {
         GridBagConstraints gbc1 = new GridBagConstraints();
         gbc1.insets = new Insets(2, 2, 2, 2);

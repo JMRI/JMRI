@@ -19,18 +19,18 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Table Model for the Warrant List
- * <P>
+ * <BR>
  * <hr>
  * This file is part of JMRI.
  * <P>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * </P><P>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ * </P>
  *
  * @author Pete Cressman Copyright (C) 2009, 2010
  */
@@ -39,7 +39,6 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                                                                         // implements
                                                                         // PropertyChangeListener
 {
-    private static final long serialVersionUID = 6318203351014416147L;
     public static final int WARRANT_COLUMN = 0;
     public static final int ROUTE_COLUMN = 1;
     public static final int TRAIN_NAME_COLUMN = 2;
@@ -163,8 +162,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
 
     /**
      * Removes any warrant, not just NXWarrant
-     * 
-     * @param w
+     *
      */
     public void removeNXWarrant(Warrant w) {
         w.removePropertyChangeListener(this);
@@ -553,6 +551,9 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
 
             }
             break;
+        default:
+           log.error("Invalid Column " + col + " requested.");
+           throw new java.lang.IllegalArgumentException("Invalid Column " + col + " requested.");
         }
         if (msg != null) {
             JOptionPane.showMessageDialog(null, msg,
@@ -657,24 +658,22 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                                 myGreen, true);
                     }
                 } else if (newMode == Warrant.MODE_NONE) {
-                    if (oldMode != Warrant.MODE_NONE) {
-                        OBlock block = bean.getCurrentBlockOrder().getBlock();
-                        int state = block.getState();
-                        if ((state & OBlock.OCCUPIED) != 0
-                                || (state & OBlock.DARK) != 0) {
-                            _frame.setStatusText(
-                                    Bundle.getMessage("warrantEnd",
+                    OBlock block = bean.getCurrentBlockOrder().getBlock();
+                    int state = block.getState();
+                    if ((state & OBlock.OCCUPIED) != 0
+                         || (state & OBlock.DARK) != 0) {
+                       _frame.setStatusText(
+                            Bundle.getMessage("warrantEnd",
                                             bean.getTrainName(),
                                             bean.getDisplayName(),
                                             block.getDisplayName()), myGreen,
-                                    true);
-                        } else {
-                            _frame.setStatusText(
-                                    Bundle.getMessage("warrantAbort",
+                                            true);
+                    } else {
+                        _frame.setStatusText(
+                             Bundle.getMessage("warrantAbort",
                                             bean.getTrainName(),
                                             bean.getDisplayName()), myGreen,
-                                    true);
-                        }
+                                            true);
                     }
                 } else {
                     _frame.setStatusText(Bundle.getMessage("modeChange",

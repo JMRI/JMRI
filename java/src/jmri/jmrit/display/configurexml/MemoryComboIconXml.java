@@ -24,17 +24,17 @@ public class MemoryComboIconXml extends PositionableLabelXml {
     /**
      * Default implementation for storing the contents of a MemorySpinnerIcon
      *
-     * @param o Object to store, of type MemorySpinnerIcon
+     * @param obj Object to store, of type MemorySpinnerIcon
      * @return Element containing the complete info
      */
-    public Element store(Object o) {
+    public Element store(Object obj) {
 
-        MemoryComboIcon p = (MemoryComboIcon) o;
+        MemoryComboIcon memoryIcon = (MemoryComboIcon) obj;
 
         Element element = new Element("memoryComboIcon");
 
         Element elem = new Element("itemList");
-        DefaultComboBoxModel model = p.getComboModel();
+        DefaultComboBoxModel<String> model = memoryIcon.getComboModel();
         for (int i = 0; i < model.getSize(); i++) {
             Element e = new Element("item");
             e.setAttribute("index", "" + i);
@@ -44,9 +44,9 @@ public class MemoryComboIconXml extends PositionableLabelXml {
         element.addContent(elem);
 
         // include attributes
-        element.setAttribute("memory", p.getNamedMemory().getName());
-        storeCommonAttributes(p, element);
-        storeTextInfo(p, element);
+        element.setAttribute("memory", memoryIcon.getNamedMemory().getName());
+        storeCommonAttributes(memoryIcon, element);
+        storeTextInfo(memoryIcon, element);
 
         element.setAttribute("class", "jmri.jmrit.display.configurexml.MemoryComboIconXml");
         return element;

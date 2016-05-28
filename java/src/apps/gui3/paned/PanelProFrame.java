@@ -1,4 +1,3 @@
-// PanelProFrame.java
 package apps.gui3.paned;
 
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -14,14 +13,8 @@ import jmri.util.swing.multipane.PanedInterface;
  * Ignores WindowInterface, since standalone.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version	$Revision$
  */
 public class PanelProFrame extends MultiPaneWindow {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5937729511010257865L;
 
     /**
      * Enhanced constructor for placing the pane in various GUIs
@@ -60,5 +53,3 @@ public class PanelProFrame extends MultiPaneWindow {
         return top;
     }
 }
-
-/* @(#)PanelProFrame.java */

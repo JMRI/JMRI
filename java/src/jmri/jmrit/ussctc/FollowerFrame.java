@@ -1,4 +1,3 @@
-// FollowerFrame.java
 package jmri.jmrit.ussctc;
 
 import javax.swing.BoxLayout;
@@ -8,14 +7,8 @@ import javax.swing.BoxLayout;
  * machines.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version	$Revision$
  */
 public class FollowerFrame extends jmri.util.JmriJFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6090025917852821775L;
 
     public FollowerFrame() {
         super();

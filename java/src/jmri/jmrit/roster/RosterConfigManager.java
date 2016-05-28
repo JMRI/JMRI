@@ -11,11 +11,11 @@ import javax.annotation.Nonnull;
 import jmri.implementation.FileLocationsPreferences;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
-import jmri.util.prefs.AbstractPreferencesProvider;
-import jmri.util.prefs.InitializationException;
-import jmri.spi.PreferencesProvider;
+import jmri.spi.PreferencesManager;
 import jmri.util.FileUtil;
 import jmri.util.FileUtilSupport;
+import jmri.util.prefs.AbstractPreferencesManager;
+import jmri.util.prefs.InitializationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood (C) 2015
  */
-public class RosterConfigManager extends AbstractPreferencesProvider {
+public class RosterConfigManager extends AbstractPreferencesManager {
 
     private String directory = FileUtil.PREFERENCES;
     private String defaultOwner = "";
@@ -55,14 +55,14 @@ public class RosterConfigManager extends AbstractPreferencesProvider {
             try {
                 this.setDirectory(preferences.get(DIRECTORY, this.getDirectory()));
             } catch (IllegalArgumentException ex) {
-                this.setIsInitialized(profile, true);
+                this.setInitialized(profile, true);
                 throw new InitializationException(
                         Bundle.getMessage(Locale.ENGLISH, "IllegalRosterLocation", preferences.get(DIRECTORY, this.getDirectory())),
                         ex.getMessage(),
                         ex);
             }
             Roster.getDefault().setRosterLocation(this.getDirectory());
-            this.setIsInitialized(profile, true);
+            this.setInitialized(profile, true);
         }
     }
 
@@ -79,8 +79,8 @@ public class RosterConfigManager extends AbstractPreferencesProvider {
     }
 
     @Override
-    public Set<Class<? extends PreferencesProvider>> getRequires() {
-        Set<Class<? extends PreferencesProvider>> requires = super.getRequires();
+    public Set<Class<? extends PreferencesManager>> getRequires() {
+        Set<Class<? extends PreferencesManager>> requires = super.getRequires();
         requires.add(FileLocationsPreferences.class);
         return requires;
     }
