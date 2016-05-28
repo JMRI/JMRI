@@ -39,9 +39,9 @@ import org.slf4j.LoggerFactory;
  * manipulation) parts are unchanged.
  * <P>
  * The JComboBox implementation always had to have selected entries, so we added
- * dummy "select from .." items at the top & used those to indicate that there
- * was no selection in that box. Here, the lack of a selection indicates there's
- * no selection.
+ * dummy "select from .." items at the top {@literal &} used those to indicate
+ * that there was no selection in that box. Here, the lack of a selection
+ * indicates there's no selection.
  *
  * Internally, the "filter" is used to only show identified models (leaf nodes).
  * This is implemented in internal InvisibleTreeModel and DecoderTreeNode
@@ -483,7 +483,6 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
         // get the decoder type, it has to be there (assumption!),
         String modelString = locoEntry.getDecoderModel();
         String familyString = locoEntry.getDecoderFamily();
-        String titleString = DecoderFile.titleString(modelString, familyString);
 
         // close the entire GUI (not currently done, users want left open)
         //collapseAll();

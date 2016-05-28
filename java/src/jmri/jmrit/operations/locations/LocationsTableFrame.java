@@ -103,6 +103,7 @@ public class LocationsTableFrame extends OperationsFrame {
         createShutDownTask();
     }
 
+    @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("radio button activated");
         if (ae.getSource() == sortByName) {
@@ -118,6 +119,7 @@ public class LocationsTableFrame extends OperationsFrame {
     }
 
     // add button
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 //		log.debug("location button activated");
         if (ae.getSource() == addButton) {
@@ -126,6 +128,7 @@ public class LocationsTableFrame extends OperationsFrame {
         }
     }
     
+    @Override
     public void dispose() {
         saveTableDetails(locationsTable);
         locationsModel.dispose();

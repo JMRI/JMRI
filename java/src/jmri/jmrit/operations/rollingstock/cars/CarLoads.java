@@ -225,6 +225,7 @@ public class CarLoads extends RollingStockAttribute {
     /**
      * Returns JComboBox with all load names for every type of car
      */
+    @Override
     public void updateComboBox(JComboBox<String> box) {
         box.removeAllItems();
         List<String> names = new ArrayList<String>();
@@ -422,6 +423,7 @@ public class CarLoads extends RollingStockAttribute {
         return NONE;
     }
 
+    @Override
     public int getMaxNameLength() {
         if (maxNameLength == 0) {
             maxNameLength = MIN_NAME_LENGTH;
@@ -464,6 +466,14 @@ public class CarLoads extends RollingStockAttribute {
     @SuppressWarnings("unchecked")
     public Hashtable<String, List<CarLoad>> getList() {
         return (Hashtable<String, List<CarLoad>>) listCarLoads.clone();
+    }
+    
+    @Override
+    public void dispose() {
+        listCarLoads.clear();
+        setDefaultEmptyName(Bundle.getMessage("EmptyCar"));
+        setDefaultLoadName(Bundle.getMessage("LoadedCar"));
+        super.dispose();
     }
 
     /**

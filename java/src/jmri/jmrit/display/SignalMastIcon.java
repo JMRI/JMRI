@@ -466,7 +466,6 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
     /**
      * Change the SignalMast aspect when the icon is clicked.
      *
-     * @param e
      */
     public void doMouseClicked(java.awt.event.MouseEvent e) {
         if (!_editor.getFlag(Editor.OPTION_CONTROLS, isControlling())) {

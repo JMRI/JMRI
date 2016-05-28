@@ -38,7 +38,6 @@ public class InputWindowAction extends AbstractAction {
      * Invoking this action via an event triggers display of a file dialog. If a
      * file is selected, it's then invoked as a script.
      *
-     * @param e
      */
     @Override
     public void actionPerformed(ActionEvent e) {

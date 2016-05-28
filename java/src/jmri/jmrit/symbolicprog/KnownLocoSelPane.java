@@ -1,4 +1,3 @@
-// KnownLocoSelPane.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.event.ActionListener;
@@ -29,14 +28,8 @@ import org.slf4j.LoggerFactory;
  * interested in.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version	$Revision$
  */
 public class KnownLocoSelPane extends LocoSelPane {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 9052342102384471212L;
 
     public KnownLocoSelPane(JLabel s, boolean ident, ProgModeSelector selector) {
         mCanIdent = ident;

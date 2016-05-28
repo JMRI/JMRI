@@ -218,6 +218,8 @@
 
 <mapID target="html.tools.Lights" url="html/tools/Lights.shtml"/>
 
+<mapID target="html.web.index_redirection" url="html/web/index.shtml#redirection"/>
+
 <mapID target="html.hardware.nce.Wangrow_connecting" url="html/hardware/nce/Wangrow.shtml#connecting"/>
 
 <mapID target="package.jmri.jmrit.beantable.LightTable" url="package/jmri/jmrit/beantable/LightTable.shtml"/>

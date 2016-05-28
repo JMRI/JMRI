@@ -151,7 +151,7 @@ public abstract class OperationsXml extends XmlFile {
 
     /**
      * Convert standard string to xml string one character at a time expect when
-     * a \n is found. In that case, insert a "<?p?>".
+     * a \n is found. In that case, insert a {@literal "<?p?>"}.
      *
      * @param comment standard string
      * @return string converted to xml format.
@@ -171,7 +171,7 @@ public abstract class OperationsXml extends XmlFile {
 
     /**
      * Convert xml string comment to standard string format one character at a
-     * time, except when <?p?> is found. In that case, insert a \n and skip over
+     * time, except when {@literal <?p?>} is found. In that case, insert a \n and skip over
      * those characters.
      *
      * @param comment input xml comment string

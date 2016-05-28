@@ -26,6 +26,7 @@ final class CarAttributeAction extends AbstractAction {
 
     CarAttributeEditFrame caef;
 
+    @Override
     public void actionPerformed(ActionEvent ae) {
         log.debug("Show attribute quanity");
         caef.toggleShowQuanity();

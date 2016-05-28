@@ -12,11 +12,11 @@ import jmri.util.SystemType;
  * <p>
  * <b>NOTE</b> All use of this class must be wrapped in a conditional test that
  * ensures that JMRI is not running on Mac OS X or in Try-Catch blocks. The
- * easiest test is:  <code><pre>
+ * easiest test is:  <pre><code>
  * if (SystemType.isMacOSX()) {
  *     ...
  * }
- * </pre></code> A Try-Catch block will need to catch
+ * </code></pre> A Try-Catch block will need to catch
  * {@link java.lang.NoClassDefFoundError} Failure to use one of these methods
  * will result in crashes.
  * <p>

@@ -1,4 +1,3 @@
-// DeleteRosterGroupAction.java
 package jmri.jmrit.roster.swing;
 
 import java.awt.Component;
@@ -33,14 +32,8 @@ import jmri.util.swing.WindowInterface;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision$
  */
 public class CopyRosterGroupAction extends JmriAbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3490415977207449861L;
 
     public CopyRosterGroupAction(String s, WindowInterface wi) {
         super(s, wi);
@@ -67,7 +60,6 @@ public class CopyRosterGroupAction extends JmriAbstractAction {
      * name of the group to be copied is already known and is not the
      * selectedRosterGroup property of the WindowInterface.
      *
-     * @param event
      */
     @Override
     public void actionPerformed(ActionEvent event) {

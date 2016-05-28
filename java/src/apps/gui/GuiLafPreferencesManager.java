@@ -157,14 +157,14 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     }
 
    /**
-     * @return the current Look & Feel default font size
+     * @return the current {@literal Look & Feel} default font size
      */
     public int getDefaultFontSize() {
         return defaultFontSize;
     }
 
    /**
-     * Called to load the current Look & Feel default font size, based on looking up the "List.font" size
+     * Called to load the current {@literal Look & Feel} default font size, based on looking up the "List.font" size
      * <br><br>
      * The value can be can be read by calling {@link #getDefaultFontSize()}
      */
@@ -185,14 +185,14 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     }
 
     private void listLAFfonts() {
-        log.debug("******** LAF=" + UIManager.getLookAndFeel().getClass().getName());
+        log.trace("******** LAF=" + UIManager.getLookAndFeel().getClass().getName());
         java.util.Enumeration<Object> keys = UIManager.getDefaults().keys();
         while (keys.hasMoreElements()) {
             Object key = keys.nextElement();
             Object value = UIManager.get(key);
             if (value instanceof javax.swing.plaf.FontUIResource || value instanceof java.awt.Font || key.toString().endsWith(".font")) {
                 Font f = UIManager.getFont(key);
-                log.debug("Class=" + value.getClass().getName() + ";Key:" + key.toString() + " Font: " + f.getName() + " size: " + f.getSize());
+                log.trace("Class=" + value.getClass().getName() + ";Key:" + key.toString() + " Font: " + f.getName() + " size: " + f.getSize());
             }
         }
     }

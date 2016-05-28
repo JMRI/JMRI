@@ -1,4 +1,3 @@
-// RpsTrackingPanel.java
 package jmri.jmrix.rps.trackingpanel;
 
 import java.awt.BasicStroke;
@@ -34,15 +33,9 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrix.rps.Measurement
  *
  * @author	Bob Jacobsen Copyright (C) 2006, 2008
- * @version $Revision$
  */
 public class RpsTrackingPanel extends javax.swing.JPanel
         implements MeasurementListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5705944161292948723L;
 
     public RpsTrackingPanel() {
         super();

@@ -390,7 +390,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                 }
             }
         };
-        Thread thr = new Thread(r, "initialize preferences");
+        Thread thr = new Thread(r, "init prefs");
         thr.start();
         //Initialise the decoderindex file instance within a seperate thread to help improve first use perfomance
         r = new Runnable() {
@@ -678,9 +678,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
      * <PRE>
      *    menuBar.add(new jmri.jmrix.SystemsMenu());
      * </PRE>
-     *
-     * @param menuBar
-     * @param wi
      */
     protected void systemsMenu(JMenuBar menuBar, WindowInterface wi) {
         ActiveSystemsMenu.addItems(menuBar);
@@ -699,10 +696,10 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
         d.add(new JSeparator());
         try {
-            d.add(new RunJythonScript("RailDriver Throttle", new File(FileUtil.findURL("jython/RailDriver.py").toURI())));
+            d.add(new RunJythonScript(Bundle.getMessage("MenuRailDriverThrottle"), new File(FileUtil.findURL("jython/RailDriver.py").toURI())));
         } catch (URISyntaxException | NullPointerException ex) {
             log.error("Unable to load RailDriver Throttle", ex);
-            JMenuItem i = new JMenuItem("RailDriver Throttle");
+            JMenuItem i = new JMenuItem(Bundle.getMessage("MenuRailDriverThrottle"));
             i.setEnabled(false);
             d.add(i);
         }
@@ -1014,6 +1011,12 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     }
     static SplashWindow sp = null;
     static AWTEventListener debugListener = null;
+    
+    // TODO: Remove the "static" nature of much of the initialization someday.
+    //       It exits to allow splash() to be called first-thing in main(), see e.g.
+    //       apps.DecoderPro.DecoderPro.main(...) 
+    //       Or maybe, just not worry about this here, in the older base class,
+    //       and address it in the newer apps.gui3.Apps3 as that's the base class of the future.
     static boolean debugFired = false;  // true if we've seen F8 during startup
     static boolean debugmsg = false;    // true while we're handling the "No Logix?" prompt window on startup
 
@@ -1023,13 +1026,12 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
     /**
      * Invoke the standard Log4J logging initialization.
-     *
+     * <p>
      * No longer used here. ({@link #splash} calls the initialization directly.
      * Left as a deprecated method because other code, e.g. CATS is still using
      * in in JMRI 3.7 and perhaps 3.8
      *
-     * @deprecated Since 3.7.2, use @{link jmri.util.Log4JUtil#initLogging}
-     * directly.
+     * @deprecated Since 3.7.2, use @{link jmri.util.Log4JUtil#initLogging} directly.
      */
     @Deprecated
     static protected void initLog4J() {
@@ -1044,20 +1046,15 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             Toolkit.getDefaultToolkit().addAWTEventListener(
                     debugListener = new AWTEventListener() {
                 @Override
-                @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST, ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "KeyEvent cast won't fail, debugmsg write is semi-global")
+                @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "debugmsg write is semi-global")
                 public void eventDispatched(AWTEvent e) {
                     if (!debugFired) {
                         /*We set the debugmsg flag on the first instance of the user pressing any button
                                  and the if the debugFired hasn't been set, this allows us to ensure that we don't
                                  miss the user pressing F8, while we are checking*/
                         debugmsg = true;
-                        if (e.getID() == KeyEvent.KEY_PRESSED) {
-                            KeyEvent ky = (KeyEvent) e;
-                            if (ky.getKeyCode() == 119) {
-                                startupDebug();
-                            } else {
-                                debugmsg = false;
-                            }
+                        if (e.getID() == KeyEvent.KEY_PRESSED && e instanceof KeyEvent && ((KeyEvent)e).getKeyCode() == 119) {
+                            startupDebug();
                         } else {
                             debugmsg = false;
                         }

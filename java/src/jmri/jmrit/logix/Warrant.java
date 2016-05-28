@@ -50,7 +50,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     public static final String Normal = "Normal";   // NOI18N
     public static final String Clear = "Clear";     // NOI18N
     
-    private static final long serialVersionUID = 7798395667392538744L;
     // permanent members.
     private ArrayList <BlockOrder> _savedOrders = new ArrayList <BlockOrder>();
     private BlockOrder _viaOrder;
@@ -368,7 +367,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     /**
      * Sets dccAddress and fetches RosterEntry
      * @param id address as a String
-     * @return
      */
     public boolean setDccAddress(String id) {
         _train = Roster.instance().entryFromTitle(id);
@@ -693,13 +691,14 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 log.error(_message);
                 return _message;
             }
-            _student = student;
+            synchronized(this) {
+               _student = student;
+            }
         } else if (mode == MODE_RUN || mode == MODE_MANUAL) {
             if (commands == null || commands.size() == 0) {
                 _commands = _throttleCommands;
             } else {
                 _commands = commands;
-
             }
             // set mode before setStoppingBlock and callback to notifyThrottleFound are called
             _idxCurrentOrder = 0;
@@ -852,7 +851,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
 
         startupWarrant();
         if (_runMode == MODE_LEARN) {
-            _student.notifyThrottleFound(throttle);
+            synchronized(this) {
+               _student.notifyThrottleFound(throttle);
+            }
         } else {
             getBlockSpeedTimes();
             _idxSpeedChange = -1;
@@ -1139,7 +1140,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                             }
                             tempSave.setValue(_trainName);
                             tempSave.setState(tempSave.getState() | OBlock.RUNNING);
-                            tempSave = null;
                         }
                     } else {
                         // starting block allocated to another warrant for the SAME engine
@@ -1178,7 +1178,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
      * Called from propertyChange()
      * For the start block a return of true will allow warrant to acquire a throttle and
      * launch an engineer.  return ignored for all other blocks
-     * @return
      */
     private boolean checkStoppingBlock() {
         boolean ret = false;
@@ -1261,7 +1260,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
      * Stopping block only used in MODE_RUN _stoppingBlock is an occupied OBlock
      * preventing the train from continuing the route
      *
-     * @param block
      */
     protected void setStoppingBlock(OBlock block) {
         if (_runMode != MODE_RUN) {
@@ -1603,7 +1601,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         if ((curBlock.getState() & (OBlock.OCCUPIED | OBlock.DARK))==0 && !_tempRunBlind) {
             _engineer.setHalt(true);        // immediate setspeed = 0
             // should not happen, but...what if...
-            log.error("checkCurrentBlock, block \""+curBlock.getDisplayName()+"\" not occupied! warrant "+getDisplayName());
+            log.error("checkCurrentBlock, block \""+curBlock.getDisplayName()+"\" not occupied! warrant "+getDisplayName(), new Exception("traceback"));
             return true;
         }
         // An estimate for how far to look ahead for a possible speed change

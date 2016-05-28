@@ -52,8 +52,8 @@ public interface ShutDownManager {
      * false if the shutdown was aborted by the user, in which case the program
      * should continue to operate.
      * <p>
-     * <b>NOTE</b> If the OS X application->quit menu item is used, this must
-     * return false to abort the shutdown.
+     * <b>NOTE</b> If the OS X {@literal application->quit} menu item is used,
+     * this must return false to abort the shutdown.
      *
      * @return boolean which should be false
      */
@@ -65,8 +65,8 @@ public interface ShutDownManager {
      * false if the shutdown was aborted by the user, in which case the program
      * should continue to operate.
      * <p>
-     * <b>NOTE</b> If the OS X application->quit menu item is used, this must
-     * return false to abort the shutdown.
+     * <b>NOTE</b> If the OS X {@literal application->quit} menu item is used,
+     * this must return false to abort the shutdown.
      *
      * @return boolean which should be false
      */

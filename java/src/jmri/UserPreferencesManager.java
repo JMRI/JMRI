@@ -126,7 +126,7 @@ public interface UserPreferencesManager {
     public boolean getSessionPreferenceState(String name);
 
     /**
-     * Used to surpress messages for the current session, the information is not
+     * Used to suppress messages for the current session, the information is not
      * stored, can not be changed via the GUI.
      * <p>
      * This can be used to help prevent over loading the user with repetitive
@@ -135,8 +135,8 @@ public interface UserPreferencesManager {
      * should start with the package name (package.Class) for the primary using
      * class.
      *
-     * @param name  A unique identifer for preference.
-     * @param state
+     * @param name  A unique identifier for preference.
+     * @param state suppression state of the item.
      */
     public void setSessionPreferenceState(String name, boolean state);
 
@@ -146,8 +146,8 @@ public interface UserPreferencesManager {
     /**
      * Show an info message ("don't forget ...") with a given dialog title and
      * user message. Use a given preference name to determine whether to show it
-     * in the future. The classString & item parameters should form a unique
-     * value
+     * in the future. The classString {@literal &} item parameters should form a
+     * unique value
      *
      * @param title       Message Box title
      * @param message     Message to be displayed
@@ -160,8 +160,8 @@ public interface UserPreferencesManager {
      * Show an error message ("don't forget ...") with a given dialog title and
      * user message. Use a given preference name to determine whether to show it
      * in the future. added flag to indicate that the message should be
-     * suppressed JMRI session only. The classString & item parameters should
-     * form a unique value
+     * suppressed JMRI session only. The classString {@literal &} item
+     * parameters should form a unique value
      *
      * @param title          Message Box title
      * @param message        Message to be displayed
@@ -178,8 +178,8 @@ public interface UserPreferencesManager {
      * Show an info message ("don't forget ...") with a given dialog title and
      * user message. Use a given preference name to determine whether to show it
      * in the future. added flag to indicate that the message should be
-     * suppressed JMRI session only. The classString & item parameters should
-     * form a unique value
+     * suppressed JMRI session only. The classString {@literal &} item
+     * parameters should form a unique value
      *
      * @param title          Message Box title
      * @param message        Message to be displayed
@@ -196,8 +196,8 @@ public interface UserPreferencesManager {
      * Show a warning message ("don't forget ...") with a given dialog title and
      * user message. Use a given preference name to determine whether to show it
      * in the future. added flag to indicate that the message should be
-     * suppressed JMRI session only. The classString & item parameters should
-     * form a unique value
+     * suppressed JMRI session only. The classString {@literal &} item
+     * parameters should form a unique value
      *
      * @param title          Message Box title
      * @param message        Message to be displayed
@@ -284,7 +284,7 @@ public interface UserPreferencesManager {
      * invoke the methods, this will then trigger the class to send details
      * about its preferences back to this code.
      *
-     * @param strClass
+     * @param strClass description to use for the class
      */
     public void setClassDescription(String strClass);
 
@@ -417,7 +417,7 @@ public interface UserPreferencesManager {
     /**
      * Do we have a saved window position for the class
      *
-     * @param strClass
+     * @param strClass class to check
      * @return true if the window position details are stored, false if not.
      */
     public boolean isWindowPositionSaved(String strClass);
@@ -435,9 +435,9 @@ public interface UserPreferencesManager {
      * These are not bound properties as yet, and don't throw events on
      * modification. Key must not be null.
      *
-     * @param strClass
+     * @param strClass class to use
      * @param key      Prior to 4.3.5, this could be an Object.
-     * @param value
+     * @param value    value to use
      */
     public void setProperty(String strClass, String key, Object value);
 
@@ -445,17 +445,17 @@ public interface UserPreferencesManager {
      * Retrieve the value associated with a key in a given class If no value has
      * been set for that key, returns null.
      *
-     * @param strClass
-     * @param key
-     * @return
+     * @param strClass class to use
+     * @param key      item to retrieve
+     * @return stored value
      */
     public Object getProperty(String strClass, String key);
 
     /**
      * Retrieve the complete current set of keys for a given class.
      *
-     * @param strClass
-     * @return
+     * @param strClass class to use
+     * @return complete set of keys
      */
     public java.util.Set<String> getPropertyKeys(String strClass);
 
@@ -528,7 +528,7 @@ public interface UserPreferencesManager {
     /**
      * Get a list of all the column settings for a specific table
      *
-     * @param table
+     * @param table table to retrieve column settings for
      * @return a List of all the columns in a table, if the table is not valid
      *         an empty list is returned
      */

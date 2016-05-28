@@ -139,6 +139,9 @@ public class Log4JUtil {
         }
         return (program + " version " + jmri.Version.name()
                 + " starts under Java " + System.getProperty("java.version", "<unknown>")
+                + " on " + System.getProperty("os.name", "<unknown>")
+                + " " + System.getProperty("os.arch", "<unknown>")
+                + " v" + System.getProperty("os.version", "<unknown>")
                 + " at " + (new java.util.Date()));
     }
 
@@ -148,8 +151,6 @@ public class Log4JUtil {
      * This method sets the system property <i>jmri.log.path</i> to the JMRI
      * settings directory if not specified.
      *
-     * @param config
-     * @throws IOException
      * @see jmri.util.FileUtil#getPreferencesPath()
      */
     static private void configureLogging(String config) throws IOException {

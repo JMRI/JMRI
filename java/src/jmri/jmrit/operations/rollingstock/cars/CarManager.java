@@ -76,6 +76,7 @@ public class CarManager extends RollingStockManager {
     /**
      * @return requested Car object or null if none exists
      */
+    @Override
     public Car getById(String id) {
         return (Car) super.getById(id);
     }
@@ -87,6 +88,7 @@ public class CarManager extends RollingStockManager {
      * @param number Car number
      * @return requested Car object or null if none exists
      */
+    @Override
     public Car getByRoadAndNumber(String road, String number) {
         return (Car) super.getByRoadAndNumber(road, number);
     }
@@ -99,6 +101,7 @@ public class CarManager extends RollingStockManager {
      * @param road car road.
      * @return the first car found with the specified type and road.
      */
+    @Override
     public Car getByTypeAndRoad(String type, String road) {
         return (Car) super.getByTypeAndRoad(type, road);
     }
@@ -224,6 +227,7 @@ public class CarManager extends RollingStockManager {
      *
      * @return list of cars ordered by the RollingStock's location
      */
+    @Override
     public List<RollingStock> getByLocationList() {
         return getByList(getByKernelList(), BY_LOCATION);
     }

@@ -201,6 +201,18 @@ public class JmriJFrameServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (WebServerPreferences.getDefault().isDisableFrames()) {
+            if (WebServerPreferences.getDefault().isRedirectFramesToPanels()) {
+                if (JSON.JSON.equals(request.getParameter("format"))) {
+                    response.sendRedirect("/panel?format=json");
+                } else {
+                    response.sendRedirect("/panel");
+                }
+            } else {
+                response.sendError(HttpServletResponse.SC_FORBIDDEN, Bundle.getMessage(request.getLocale(), "FramesAreDisabled"));
+            }
+            return;
+        }
         JmriJFrame frame = null;
         String name = getFrameName(request.getRequestURI());
         List<String> disallowedFrames = WebServerPreferences.getDefault().getDisallowedFrames();

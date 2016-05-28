@@ -171,7 +171,7 @@ public class DetectionPanel extends JPanel {
         }
     }
 
-    /**
+    /*
      * **************** Getters & Setters **************************
      */
     public boolean getShowTrainName() {
@@ -237,7 +237,7 @@ public class DetectionPanel extends JPanel {
         }
     }
 
-    /**
+    /*
      * ******************************************
      */
     private void checkDetection() {

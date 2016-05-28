@@ -1,4 +1,3 @@
-// VariableTableModel.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.event.ActionEvent;
@@ -29,14 +28,8 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Boudreau Copyright (C) 2007
  * @author Dave Heap Copyright (C) 2012 Added support for Marklin mfx style
  * speed table
- * @version $Revision$
  */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6912067927864604835L;
 
     private String headers[] = null;
 
@@ -278,7 +271,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             log.error("CvModel reference is null; cannot add variables");
             return;
         }
-        if (CV != "") // some variables have no CV per se
+        if (!CV.equals("")) // some variables have no CV per se
         {
             _cvModel.addCV(CV, readOnly, infoOnly, writeOnly);
         }
@@ -355,7 +348,6 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      * describing element.
      *
      * @return null if no valid element
-     * @throws java.lang.NumberFormatException
      */
     protected VariableValue createIndexedVariableFromElement(Element e, String name, String comment, String cvName, boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, String cv, String mask, String item, String productID, String modelID, String familyID) throws NumberFormatException {
         VariableValue iv = null;
@@ -844,6 +836,8 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      * Configure from a constant. This is like setRow (which processes a
      * variable Element).
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_LOAD_OF_KNOWN_NULL_VALUE",
+            justification = "null mask parameter to ConstantValue constructor expected.")
     public void setConstant(Element e) {
         // get the values for the VariableValue ctor
         String stdname = e.getAttribute("item").getValue();

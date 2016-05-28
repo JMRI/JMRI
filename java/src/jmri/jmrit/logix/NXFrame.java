@@ -27,24 +27,23 @@ import org.slf4j.LoggerFactory;
  * <P>
  * The route can be defined in a form or by mouse clicking on the OBlock
  * IndicatorTrack icons.
- * <P>
+ * <BR>
  * <hr>
  * This file is part of JMRI.
  * <P>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * </P><P>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ * </P>
  *
  * @author  Pete Cressman  Copyright (C) 2009, 2010, 2015
  */
 public class NXFrame extends WarrantRoute {
 
-    private static final long serialVersionUID = -8971792418011219112L;
     private float _scale = 87.1f;
 
     JTextField _trainName = new JTextField(6);
@@ -393,7 +392,6 @@ public class NXFrame extends WarrantRoute {
         if (msg!=null) {
             JOptionPane.showMessageDialog(this, msg,
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-            warrant = null;
         } else {
             closeFrame();           
             if (log.isDebugEnabled()) log.debug("Close Frame.");

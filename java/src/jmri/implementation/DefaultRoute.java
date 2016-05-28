@@ -1,13 +1,5 @@
 package jmri.implementation;
 
-/**
- * Class providing the basic logic of the Route interface.
- *
- * @author	Dave Duchamp Copyright (C) 2004
- * @author Bob Jacobsen Copyright (C) 2006, 2007
- * @author Simon Reader Copyright (C) 2008
- * @author Pete Cressman Copyright (C) 2009
- */
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
@@ -25,6 +17,14 @@ import jmri.script.JmriScriptEngineManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Class providing the basic logic of the Route interface.
+ *
+ * @author	Dave Duchamp Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2006, 2007
+ * @author Simon Reader Copyright (C) 2008
+ * @author Pete Cressman Copyright (C) 2009
+ */
 public class DefaultRoute extends AbstractNamedBean implements Route, java.beans.VetoableChangeListener {
 
     public DefaultRoute(String systemName, String userName) {
@@ -63,11 +63,10 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
     /**
      * Operational instance variables (not saved between runs)
      */
-    ArrayList<OutputSensor> _outputSensorList = new ArrayList<OutputSensor>();
+    ArrayList<OutputSensor> _outputSensorList = new ArrayList<>();
 
     private class OutputSensor {
 
-        //Sensor _sensor;
         NamedBeanHandle<Sensor> _sensor;
         int _state = Sensor.ACTIVE;
 
@@ -107,7 +106,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         }
     }
 
-    ArrayList<ControlSensor> _controlSensorList = new ArrayList<ControlSensor>();
+    ArrayList<ControlSensor> _controlSensorList = new ArrayList<>();
 
     private class ControlSensor extends OutputSensor implements PropertyChangeListener {
 
@@ -143,17 +142,15 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
             }
         }
     }
-    //protected Turnout mTurnout = null;
+
     protected transient PropertyChangeListener mTurnoutListener = null;
-    //protected Turnout mLockTurnout = null;
     protected transient PropertyChangeListener mLockTurnoutListener = null;
 
-    ArrayList<OutputTurnout> _outputTurnoutList = new ArrayList<OutputTurnout>();
+    ArrayList<OutputTurnout> _outputTurnoutList = new ArrayList<>();
 
     private class OutputTurnout implements PropertyChangeListener {
 
         NamedBeanHandle<Turnout> _turnout;
-        //Turnout _turnout;
         int _state;
 
         OutputTurnout(String name) {
@@ -283,7 +280,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
      */
     @Override
     public void clearOutputTurnouts() {
-        _outputTurnoutList = new ArrayList<OutputTurnout>();
+        _outputTurnoutList = new ArrayList<>();
     }
 
     @Override
@@ -386,7 +383,6 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         }
     }
 
-    // output sensors (new interface only)
     /**
      * Add an output Sensor to this Route
      *
@@ -410,7 +406,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
      */
     @Override
     public void clearOutputSensors() {
-        _outputSensorList = new ArrayList<OutputSensor>();
+        _outputSensorList = new ArrayList<>();
     }
 
     @Override
@@ -586,7 +582,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
      */
     @Override
     public void clearRouteSensors() {
-        _controlSensorList = new ArrayList<ControlSensor>();
+        _controlSensorList = new ArrayList<>();
     }
 
     /**
@@ -1071,11 +1067,11 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
                     checkLockTurnout(now, then, (Turnout) e.getSource());
                 }
             };
-            lockCtl.addPropertyChangeListener(mTurnoutListener, getLockControlTurnout(), "Route " + getDisplayName());
+            lockCtl.addPropertyChangeListener(mLockTurnoutListener, getLockControlTurnout(), "Route " + getDisplayName());
         }
 
         checkTurnoutAlignment();
-// register for updates to the Output Turnouts
+        // register for updates to the Output Turnouts
 
     }
 

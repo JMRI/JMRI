@@ -41,19 +41,19 @@ import org.slf4j.LoggerFactory;
  * to use JFCUnit for that.
  * <p>
  * If you're using the InstanceManager, setUp() implementation should start
- * with:  <code><pre>
+ * with:  <pre><code>
  * super.setUp();
  * JUnitUtil.resetInstanceManager();
  * JUnitUtil.initInternalTurnoutManager();
  * JUnitUtil.initInternalLightManager();
  * JUnitUtil.initInternalSensorManager();
  * JUnitUtil.initDebugThrottleManager();
- * </pre></code>
+ * </code></pre>
  * <p>
- * Your tearDown() should end with:  <code><pre>
+ * Your tearDown() should end with:  <pre><code>
  * JUnitUtil.resetInstanceManager();
  * super.tearDown();
- * </pre></code>
+ * </code></pre>
  *
  * Note that memory managers and some others are completely internal, and will
  * be reset when you reset the instance manager.
@@ -92,7 +92,7 @@ public class JUnitUtil {
     }
 
     static final int WAITFOR_DELAY_STEP = 5;
-    static final int WAITFOR_MAX_DELAY = 5000; // really long, but only matters when failing
+    static final int WAITFOR_MAX_DELAY = 15000; // really long, but only matters when failing
     
     /** 
      * Wait for a specific condition to be true, without having to wait longer
@@ -304,6 +304,12 @@ public class JUnitUtil {
         if (InstanceManager.getDefault(ShutDownManager.class) == null) {
             InstanceManager.setDefault(ShutDownManager.class, new MockShutDownManager());
         }
+    }
+
+    public static void initStartupActionsManager() {
+        InstanceManager.store(
+                new apps.StartupActionsManager(),
+                apps.StartupActionsManager.class);
     }
 
     private final static Logger log = LoggerFactory.getLogger(JUnitUtil.class.getName());

@@ -31,7 +31,7 @@ public interface SignalMastManager extends Manager {
      * Locate via user name, then system name if needed. Does not create a new
      * one if nothing found
      *
-     * @param name
+     * @param name User name or system name to match
      * @return null if no match found
      */
     public SignalMast getSignalMast(String name);

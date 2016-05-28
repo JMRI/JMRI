@@ -171,7 +171,7 @@ public class AudioTablePanel extends JPanel {
      * Add a component to the bottom box. Takes care of organising glue, struts
      * etc
      *
-     * @param comp
+     * @param comp {@link Component} to add
      */
     protected void addToBottomBox(Component comp) {
         bottomBox.add(Box.createHorizontalStrut(bottomStrutWidth), bottomBoxIndex);

@@ -639,8 +639,8 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
 
     /**
      * This is purely here for systems that do not implement the
-     * SystemConnectionMemo Acela, CAN BUS, CMRI, Grapevine, QSI, Zimo & RPS and
-     * can be removed one they have been migrated
+     * SystemConnectionMemo Acela, CAN BUS, CMRI, Grapevine, QSI, Zimo
+     * {@literal &} RPS and can be removed one they have been migrated
      *
      * @return Resource bundle for action model
      */

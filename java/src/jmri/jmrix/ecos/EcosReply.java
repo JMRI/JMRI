@@ -52,7 +52,7 @@ public class EcosReply extends jmri.jmrix.AbstractMRReply {
     int endAtElement = -1;
 
     /**
-     * Check for last line starts with "<END "
+     * Check for last line starts with {@code "<END "}
      */
     public boolean containsEnd() {
         for (int i = 0; i < getNumDataElements() - 6; i++) {
@@ -94,7 +94,7 @@ public class EcosReply extends jmri.jmrix.AbstractMRReply {
     }
 
     /**
-     * Is this EcosReply actually an independ <EVENT message?
+     * Is this EcosReply actually an independent {@code <EVENT} message?
      */
     boolean isEvent() {
         if (getNumDataElements() < 8) {

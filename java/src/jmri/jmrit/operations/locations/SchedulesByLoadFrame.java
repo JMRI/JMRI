@@ -106,6 +106,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
         initMinimumSize(new Dimension(Control.panelWidth700, Control.panelHeight250));
     }
 
+    @Override
     public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == typesComboBox) {
             updateLoadComboBox();
@@ -116,6 +117,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
 
     }
 
+    @Override
     public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
         typesComboBox.setEnabled(!allTypesCheckBox.isSelected());
         loadsComboBox.setEnabled(!allLoadsCheckBox.isSelected());
@@ -219,6 +221,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
         repaint();
     }
 
+    @Override
     public void dispose() {
         locationManager.removePropertyChangeListener(this);
         CarTypes.instance().removePropertyChangeListener(this);
@@ -234,6 +237,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
         super.dispose();
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (log.isDebugEnabled())
             log.debug("Property change ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e.getNewValue()); // NOI18N

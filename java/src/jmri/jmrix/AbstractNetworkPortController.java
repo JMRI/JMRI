@@ -91,7 +91,6 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
     /**
      * Remember the associated host name
      *
-     * @param s
      */
     @Override
     public void setHostName(String s) {
@@ -111,7 +110,6 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
      * configuration. Public access to the IP address is through the hostname
      * field.
      *
-     * @param s
      */
     protected void setHostAddress(String s) {
         m_HostAddress = s;
@@ -130,7 +128,6 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
     /**
      * Remember the associated port number
      *
-     * @param p
      *
      */
     @Override
