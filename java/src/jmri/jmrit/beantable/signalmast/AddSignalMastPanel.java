@@ -436,10 +436,9 @@ public class AddSignalMastPanel extends JPanel {
             if (bitNum > 4 && xmast.getOutputName(5) != null && !xmast.getOutputName(5).equals("")){
                 turnoutBox5.setDefaultNamedBean(InstanceManager.turnoutManagerInstance().getTurnout(xmast.getOutputName(5))); // load input into turnoutBox5
             }
-/*           if (xmast.resetPreviousStates()) {
+            if (xmast.resetPreviousStates()) {
                 resetPreviousState.setSelected(true);
             }
-            */
             if (xmast.allowUnLit()) {
                 char[] mastUnLitBits = xmast.getUnLitBits(); // load char[] for unLit from mast
                 char[] unLitPanelBits = Arrays.copyOf(mastUnLitBits, 5); // store as 5 character array in panel var unLitPanelBits
@@ -885,7 +884,7 @@ public class AddSignalMastPanel extends JPanel {
                         matrixMast.setBitsForAspect(aspect, matrixAspect.get(aspect).trimAspectBits()); // return as char[]
                     }
                 }
-                //matrixMast.resetPreviousStates(resetPreviousState.isSelected()); // read from panel, to do
+                matrixMast.resetPreviousStates(resetPreviousState.isSelected()); // read from panel, to do
 
                 matrixMast.setAllowUnLit(allowUnLit.isSelected());
                 if (allowUnLit.isSelected()) {
@@ -995,7 +994,7 @@ public class AddSignalMastPanel extends JPanel {
                         matrixMast.setBitsForAspect(aspect, matrixAspect.get(aspect).trimAspectBits()); // return as char[]
                     }
                 }
-                // matrixMast.resetPreviousStates(resetPreviousState.isSelected());
+                matrixMast.resetPreviousStates(resetPreviousState.isSelected());
                 matrixMast.setAllowUnLit(allowUnLit.isSelected());
                 if (allowUnLit.isSelected()) {
                     try {
@@ -1890,8 +1889,8 @@ public class AddSignalMastPanel extends JPanel {
             matrixMastPanel.add(matrixAspect.get(aspect).getPanel());
             // Matrix checkbox states are set by getPanel()
         }
-        //matrixMastPanel.add(resetPreviousState); //to do
-        //resetPreviousState.setToolTipText(Bundle.getMessage("ResetPreviousToolTip"));
+        matrixMastPanel.add(resetPreviousState);
+        resetPreviousState.setToolTipText(Bundle.getMessage("ResetPreviousToolTip"));
     }
 
     JPanel matrixUnLitPanel = new JPanel();

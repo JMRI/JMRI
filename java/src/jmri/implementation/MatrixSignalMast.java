@@ -34,7 +34,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
      *  Number of columns in logix matrix, default to 5, set in Matrix Mast panel & on loading xml
      *  Used to set size of char[] bitString
     */
-    int BitNum = 5;
+    int bitNum = 5;
 
     String errorChars = "nnnnn";
     char[] errorBits = errorChars.toCharArray();
@@ -128,7 +128,8 @@ public class MatrixSignalMast extends AbstractSignalMast {
             // If the signalmast is lit, then send the commands to change the aspect.
             if (resetPreviousStates) {
                 // Clear all the current states, this will result in the signalmast going blank (RED) for a very short time.
-                // ToDo: pick up drop down choice for DCCPackets or Turnouts outputs
+                // ToDo: check if decoder will accept direct DCC packets
+                // or pick up drop down choice to choose between DCCPackets or Turnouts outputs
                 // c.sendPacket(NmraPacket.altAccSignalDecoderPkt(dccSignalDecoderAddress, aspectToOutput.get(aspect)), packetRepeatCount);
                 if (aspectToOutput.containsKey("Stop")) {
                     updateOutputs(getBitsForAspect("Stop")); // show Red
@@ -342,17 +343,24 @@ public class MatrixSignalMast extends AbstractSignalMast {
     public void updateOutputs (char[] bits) {
         if (bits == null){
             log.debug("Empty char[] received");
-        }
-        for (int i = 0; i < BitNum; i++) {
-            if (bits[i] == '1' && getTurnoutBean(i).getCommandedState() == Turnout.THROWN) { // no need to set a state already set
-                //getTurnoutBean(i).setCommandedState(Turnout.CLOSED); // NPE ERROR HERE
-            } else if (bits[i] == '0'  && getTurnoutBean(i).getCommandedState() == Turnout.CLOSED) {
-                //getTurnoutBean(i).setCommandedState(Turnout.THROWN); // NPE ERROR HERE
-            } else if (bits[i] == 'n' || bits[i] == 'u') {
-                // let pass, extra chars up to 5 are not defined
-            } else {
-                // invalid char
-                log.debug("Invalid element " + bits[i] + " cannot be converted to state for output #" + i);
+        } else {
+            for (int i = 0; i < outputsToBeans.size(); i++) {
+                //log.debug("Setting bits[1] = " + bits[i] + " for output #" + i);
+                if (getTurnoutBean(i + 1) != null) {
+                    getTurnoutBean(i + 1).setBinaryOutput(true); // prevent feedback etc.
+                }
+                if (bits[i] == '1' && getTurnoutBean(i + 1) != null && getTurnoutBean(i + 1).getCommandedState() == Turnout.THROWN) {
+                    // no need to set a state already set
+                    getTurnoutBean(i + 1).setCommandedState(Turnout.CLOSED);
+                } else if (bits[i] == '0' && getTurnoutBean(i + 1) != null && getTurnoutBean(i + 1).getCommandedState() == Turnout.CLOSED) {
+                    getTurnoutBean(i + 1).setCommandedState(Turnout.THROWN);
+                } else if (bits[i] == 'n' || bits[i] == 'u') {
+                    // let pass, extra chars up to 5 are not defined
+                } else {
+                    // invalid char
+                    log.debug("Invalid element " + bits[i] + " cannot be converted to state for output #" + i);
+                }
+// wait between setting?
             }
         }
     }
@@ -371,20 +379,27 @@ public class MatrixSignalMast extends AbstractSignalMast {
         return resetPreviousStates;
     }
 
-    Turnout getTurnoutBean(int i) {
-        if (i < 0 || i > outputsToBeans.size() ) {
+    Turnout getTurnoutBean(int i) { // as bean
+        String key = "output" + Integer.toString(i);
+        if (i < 1 || i > outputsToBeans.size() ) {
             return null;
         }
-        return outputsToBeans.get("output" + i).getBean();
+        if (outputsToBeans.containsKey(key) && outputsToBeans.get(key) != null){
+            return outputsToBeans.get(key).getBean();
+        }
+        return null;
     }
 
-/*    public String getTurnoutName(int i) {
-        if (i < 0 || i > outputsToBeans.size() ) {
+    public String getTurnoutName(int i) {
+        String key = "output" + Integer.toString(i);
+        if (i < 1 || i > outputsToBeans.size() ) {
             return null;
         }
-        outputsToBeans.get("output" + i).getName();
+        if (outputsToBeans.containsKey(key) && outputsToBeans.get(key) != null) {
+            return outputsToBeans.get(key).getName();
+        }
         return null;
-    }*/
+    }
 
     boolean isTurnoutUsed(Turnout t) {
         for (int i = 1; i <= outputsToBeans.size(); i++) {
@@ -416,22 +431,22 @@ public class MatrixSignalMast extends AbstractSignalMast {
 
     /** Store number of outputs from integer
     * @param number int for the number of outputs defined for this mast
-    * @see #BitNum
+    * @see #bitNum
     */
     public void setBitNum(int number) {
-            BitNum = number;
+            bitNum = number;
     }
 
     /** Store number of outputs from integer
      * @param bits char[] for outputs defined for this mast
-     * @see #BitNum
+     * @see #bitNum
      */
     public void setBitNum(char[] bits) {
-        BitNum = bits.length;
+        bitNum = bits.length;
     }
 
     public int getBitNum() {
-        return BitNum;
+        return bitNum;
     }
 
     public void setAspectDisabled(String aspect) {
