@@ -1,4 +1,3 @@
-// MrcPacketGenPanel.java
 package jmri.jmrix.mrc.swing.packetgen;
 
 import java.awt.Dimension;
@@ -14,15 +13,11 @@ import jmri.util.StringUtil;
  * @author	Ken Cameron	Copyright (C) 2010 derived from:
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 25018 $
  */
 public class MrcPacketGenPanel extends jmri.jmrix.mrc.swing.MrcPanel {
 
     //ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.mrc.packetgen.MrcPacketGenBundle");
-    /**
-     *
-     */
-    private static final long serialVersionUID = 491326388683242575L;
+
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();

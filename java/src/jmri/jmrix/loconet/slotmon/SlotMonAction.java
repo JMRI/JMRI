@@ -8,8 +8,4 @@ package jmri.jmrix.loconet.slotmon;
 @Deprecated
 public class SlotMonAction extends SlotMonPane.Default {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -100223304807143866L;
 }

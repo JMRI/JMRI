@@ -76,11 +76,6 @@ public class PaneOpsProgAction extends AbstractAction {
         // known loco on main track
         JPanel pane1 = new KnownLocoSelPane(false) {  // no ident in ops mode yet
 
-            /**
-             *
-             */
-            private static final long serialVersionUID = 2816965509649056116L;
-
             protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
                     String filename) {
                 String title = java.text.MessageFormat.format(SymbolicProgBundle.getMessage("FrameOpsProgrammerTitle"),

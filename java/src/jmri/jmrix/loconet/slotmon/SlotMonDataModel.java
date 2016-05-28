@@ -1,4 +1,3 @@
-// SlotMonDataModel.java
 package jmri.jmrix.loconet.slotmon;
 
 import java.awt.event.MouseEvent;

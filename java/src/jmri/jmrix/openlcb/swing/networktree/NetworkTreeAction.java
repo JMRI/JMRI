@@ -1,4 +1,3 @@
-// NetworkTreeAction.java
 package jmri.jmrix.openlcb.swing.networktree;
 
 /**
@@ -14,5 +13,3 @@ public class NetworkTreeAction extends NetworkTreePane.Default {
      */
     private static final long serialVersionUID = -8956847407603222742L;
 }
-
-/* @(#)NetworkTreeAction.java */

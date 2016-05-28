@@ -2,11 +2,9 @@ package jmri.jmrit.roster;
 
 import java.io.*;
 import java.util.List;
+import java.util.HashMap;
 import jmri.jmrit.XmlFile;
-import jmri.jmrit.symbolicprog.CvTableModel;
-import jmri.jmrit.symbolicprog.CvValue;
-import jmri.jmrit.symbolicprog.IndexedCvTableModel;
-import jmri.jmrit.symbolicprog.VariableTableModel;
+import jmri.jmrit.symbolicprog.*;
 import org.jdom2.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -170,6 +168,71 @@ class LocoFile extends XmlFile {
         if (cvObject != null) {
             cvObject.setState(CvValue.FROMFILE);
         }
+    }
+
+    /**
+     * Load a VariableTableModel from the locomotive element in the File
+     *
+     * @param loco    A JDOM Element containing the locomotive definition
+     * @param varModel An existing VariableTableModel object
+     */
+    public static void loadVariableModel(Element loco, VariableTableModel varModel) {
+
+        Element values = loco.getChild("values");
+
+        if (values == null) {
+            log.error("no values element found in config file; Variable values not loaded for \"{}\"", loco.getAttributeValue("id"));
+            return;
+        }
+        
+        Element decoderDef = values.getChild("decoderDef");
+
+        if (decoderDef == null) {
+            log.error("no decoderDef element found in config file; Variable values not loaded for \"{}\"", loco.getAttributeValue("id"));
+            return;
+        }
+        
+        
+        // get the Variable values and load
+        if (log.isDebugEnabled()) {
+            log.debug("Found " + decoderDef.getChildren("varValue").size() + " varValue elements");
+        }
+
+        // preload an index
+        HashMap<String, VariableValue> map = new HashMap<>();
+        for (int i = 0; i < varModel.getRowCount(); i++) {
+            log.debug("  map put {} to {}", varModel.getItem(i), varModel.getVariable(i));
+            map.put(varModel.getItem(i), varModel.getVariable(i));
+            map.put(varModel.getLabel(i), varModel.getVariable(i));
+        }
+                
+        for (Element element : decoderDef.getChildren("varValue")) {
+            // locate the row
+            if (element.getAttribute("item") == null) {
+                if (log.isDebugEnabled()) {
+                    log.debug("unexpected null in item {} {}", element, element.getAttributes());
+                }
+                break;
+            }
+            if (element.getAttribute("value") == null) {
+                if (log.isDebugEnabled()) {
+                    log.debug("unexpected null in value {} {}", element, element.getAttributes());
+                }
+                break;
+            }
+
+            String item = element.getAttribute("item").getValue();
+            String value = element.getAttribute("value").getValue();
+            log.debug("Variable \"{}\" has value: {}", item, value);
+            
+            VariableValue var = map.get(item);
+            if (var != null) {
+                var.setValue(value);
+            } else {
+                log.warn("Did not find locofile variable \"{}\" in decoder definition, not loading", item);
+            }
+        }
+
     }
 
     /**

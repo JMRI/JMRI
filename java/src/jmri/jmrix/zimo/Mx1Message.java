@@ -547,7 +547,6 @@ public class Mx1Message extends jmri.jmrix.NetMessage implements Serializable {
      *                    too.
      * @param speed       Speed Step in the actual Speed Step System
      * @param dcc         Is this a packet for a DCC or Motorola device
-     * @param cData1
      * @param cData2      - Functions Output 0-7
      * @param cData3      - Functions Output 9-12
      * @return Mx1Message

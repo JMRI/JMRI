@@ -21,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * Decimal representation of a value.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- *
  */
 public class DecVariableValue extends VariableValue
         implements ActionListener, PropertyChangeListener, FocusListener {
@@ -386,14 +385,8 @@ public class DecVariableValue extends VariableValue
      * an underlying variable
      *
      * @author			Bob Jacobsen   Copyright (C) 2001
-     * @version
      */
     public class VarTextField extends JTextField {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 7844901319795104952L;
 
         VarTextField(Document doc, String text, int col, DecVariableValue var) {
             super(doc, text, col);

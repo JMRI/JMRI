@@ -65,5 +65,5 @@ public class JmriUserPreferencesManagerTest extends TestCase {
             // Uncomment to force failure if wanting to verify that showMessage does not get called.
             //org.slf4j.LoggerFactory.getLogger(TestUserPreferencesManager.class).error("showMessage called.", new Exception());
         }
-    };
+    }
 }

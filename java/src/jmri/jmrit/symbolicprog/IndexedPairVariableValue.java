@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Howard G. Penny Copyright (C) 2005
  * @author Bob Jacobsen Copyright (C) 2013
- * @deprecated // since 3.7.1
+ * @deprecated since 3.7.1
  *
  */
 @Deprecated // since 3.7.1
@@ -778,14 +778,8 @@ public class IndexedPairVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision$
      */
     public class VarTextField extends JTextField {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 1338720766156931900L;
 
         VarTextField(Document doc, String text, int col, IndexedPairVariableValue var) {
             super(doc, text, col);

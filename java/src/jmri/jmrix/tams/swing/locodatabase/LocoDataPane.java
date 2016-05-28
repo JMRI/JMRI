@@ -1,4 +1,3 @@
-// LocoDataPane.java
 package jmri.jmrix.tams.swing.locodatabase;
 
 import java.awt.FlowLayout;
@@ -24,14 +23,9 @@ import org.slf4j.LoggerFactory;
  * Frame provinging access to the loco database on the Tams MC
  *
  * @author	Kevin Dickerson Copyright (C) 2012
- * @version	$Revision: 17977 $
  */
 public class LocoDataPane extends jmri.jmrix.tams.swing.TamsPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7652937506195229419L;
     LocoDataModel locoModel;
     JTable locoTable;
     JScrollPane locoScroll;
@@ -143,11 +137,6 @@ public class LocoDataPane extends jmri.jmrix.tams.swing.TamsPanel {
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.tams.swing.TamsNamedPaneAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 8803207637297660717L;
 
         public Default() {
             super(rb.getString("Title"),
