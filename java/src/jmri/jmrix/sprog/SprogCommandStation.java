@@ -1,4 +1,3 @@
-/* SprogCommandStation.java */
 package jmri.jmrix.sprog;
 
 import java.util.LinkedList;
@@ -24,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * service mode and ops mode, or two ops mode) at the same time, but this code
  * definitely can't.
  * <P>
- * <P>
  * Updated by Andrew Berridge, January 2010 - state management code now safer,
  * uses enum, etc. Amalgamated with Sprog Slot Manager into a single class -
  * reduces code duplication </P>
@@ -40,7 +38,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2003 
  * @author      Andrew Crosland (C) 2006 ported to SPROG, 2012, 2016
- * @version $Revision$
  */
 public class SprogCommandStation implements CommandStation, SprogListener, Runnable {
 
@@ -283,10 +280,6 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
      * than possibly waiting for a complete traversal of all slots before the
      * new speed is actually sent to the hardware.
      *
-     * @param mode
-     * @param address
-     * @param spd
-     * @param isForward
      */
     public void setSpeed(int mode, DccLocoAddress address, int spd, boolean isForward) {
         SprogSlot s = this.findAddressSpeedPacket(address);
@@ -612,4 +605,3 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(SprogCommandStation.class.getName());
 }
-/* @(#)SprogCommandStation.java */

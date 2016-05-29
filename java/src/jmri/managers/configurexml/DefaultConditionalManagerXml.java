@@ -163,8 +163,8 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
      * Create a ConditionalManager object of the correct class, then register
      * and fill it.
      *
-     * @param sharedConditionals Top level Element to unpack.
-     * @param perNodeConditionals
+     * @param sharedConditionals  Shared top level Element to unpack.
+     * @param perNodeConditionals Per-node top level Element to unpack.
      * @return true if successful
      */
     @Override

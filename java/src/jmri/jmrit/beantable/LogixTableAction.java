@@ -109,7 +109,6 @@ public class LogixTableAction extends AbstractTableAction {
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
-     * @param s
      */
     public LogixTableAction(String s) {
         super(s);

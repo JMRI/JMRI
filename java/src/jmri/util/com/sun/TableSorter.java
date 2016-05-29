@@ -36,14 +36,14 @@ import javax.swing.table.TableModel;
  * numbers have been translated via the internal mapping array. This way, the
  * TableSorter appears to hold another copy of the table with the rows in a
  * different order.
- * <p/>
+ * <p>
  * TableSorter registers itself as a listener to the underlying model, just as
- * the JTable itself would. Events recieved from the model are examined,
+ * the JTable itself would. Events received from the model are examined,
  * sometimes manipulated (typically widened), and then passed on to the
  * TableSorter's listeners (typically the JTable). If a change to the model has
  * invalidated the order of TableSorter's rows, a note of this is made and the
  * sorter will resort the rows the next time a value is requested.
- * <p/>
+ * <p>
  * When the tableHeader property is set, either by using the setTableHeader()
  * method or the two argument constructor, the table header may be used as a
  * complete UI for TableSorter. The default renderer of the tableHeader is
@@ -63,7 +63,7 @@ import javax.swing.table.TableModel;
  * changes to the column do not cancel the statuses of columns that are already
  * sorting - giving a way to initiate a compound sort.
  * </ul>
- * <p/>
+ * <p>
  * This is a long overdue rewrite of a class of the same name that first
  * appeared in the swing table demos in 1997.
  *

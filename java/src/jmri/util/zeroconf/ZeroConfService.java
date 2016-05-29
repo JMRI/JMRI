@@ -157,7 +157,6 @@ public class ZeroConfService {
     /**
      * Create a ZeroConfService object.
      *
-     * @param service
      */
     protected ZeroConfService(ServiceInfo service) {
         this.serviceInfo = service;
@@ -177,8 +176,6 @@ public class ZeroConfService {
      * Generate a ZeroConfService key for searching in the HashMap of running
      * services.
      *
-     * @param type
-     * @param name
      * @return The combination of the name and type of the service.
      */
     protected static String key(String type, String name) {

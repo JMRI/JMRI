@@ -1,4 +1,3 @@
-// SerialMonFrame.java
 package jmri.jmrix.secsi.serialmon;
 
 import jmri.jmrix.secsi.SerialListener;

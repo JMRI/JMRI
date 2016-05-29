@@ -2423,11 +2423,9 @@ public class PaneProgPane extends javax.swing.JPanel
      * Pick an appropriate function map panel depending on model attribute.
      * <dl>
      * <dt>If attribute extFnsESU="yes":</dt>
-     * <dd>Invoke FnMapPanelESU(VariableTableModel v, List<Integer> varsUsed,
-     * Element model)</dd>
+     * <dd>Invoke {@code FnMapPanelESU(VariableTableModel v, List<Integer> varsUsed, Element model)}</dd>
      * <dt>Otherwise:</dt>
-     * <dd>Invoke FnMapPanel(VariableTableModel v, List<Integer> varsUsed,
-     * Element model)</dd>
+     * <dd>Invoke {@code FnMapPanel(VariableTableModel v, List<Integer> varsUsed, Element model)}</dd>
      * </dl>
      */
     void pickFnMapPanel(JPanel c, GridBagLayout g, GridBagConstraints cs, Element modelElem) {
@@ -2638,8 +2636,8 @@ public class PaneProgPane extends javax.swing.JPanel
     /**
      * Appends text to a String possibly in HTML format (as used in many Swing
      * components).
-     *
-     * Ensures any appended text is added prior to the closing </html> tag, if
+     * <p>
+     * Ensures any appended text is added prior to the closing {@code </html>} tag, if
      * there is one.
      *
      * @param baseText  original text
@@ -2664,7 +2662,7 @@ public class PaneProgPane extends javax.swing.JPanel
     /**
      * Optionally add CV numbers and bit numbers to tool tip text based on
      * Roster Preferences setting.
-     *
+     * <p>
      * Needs to be independent of VariableValue methods to allow use by
      * non-standard elements such as SpeedTableVarValue, DccAddressPanel,
      * FnMapPanel.

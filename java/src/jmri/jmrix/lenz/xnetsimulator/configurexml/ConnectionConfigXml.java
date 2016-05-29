@@ -32,7 +32,6 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
      * A Simulator connection needs no extra information, so we reimplement the
      * superclass method to just write the necessary parts.
      *
-     * @param o
      * @return Formatted element containing no attributes except the class name
      */
     public Element store(Object o) {

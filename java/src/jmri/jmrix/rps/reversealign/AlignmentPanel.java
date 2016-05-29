@@ -1,4 +1,3 @@
-// AlignmentPanel.java
 package jmri.jmrix.rps.reversealign;
 
 import java.awt.event.ActionEvent;
@@ -27,7 +26,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *
  * Gather RPS Readings and use them to align the detector.
  * <P>
  * Note that algorithms have a bias to find transmitters with positive Z
@@ -36,15 +34,9 @@ import org.slf4j.LoggerFactory;
  * working for us.
  *
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version $Revision$
  */
 public class AlignmentPanel extends javax.swing.JPanel
         implements ReadingListener, Constants {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7798693118150508821L;
 
     public AlignmentPanel() {
         super();
@@ -495,11 +487,6 @@ public class AlignmentPanel extends javax.swing.JPanel
      * Represent one line (DAQ element) of the operation
      */
     class Line extends JPanel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -758969222553576502L;
 
         Line() {
             setLayout(new java.awt.FlowLayout());

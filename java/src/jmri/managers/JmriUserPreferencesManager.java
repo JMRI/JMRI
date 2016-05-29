@@ -296,7 +296,6 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
      * class.
      *
      * @param name  A unique identifer for preference.
-     * @param state
      */
     @Override
     public void setSessionPreferenceState(String name, boolean state) {
@@ -1321,8 +1320,6 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
 
     /**
      *
-     * @param elementName
-     * @param namespace
      * @return an Element or null if the requested element does not exist
      */
     @Nullable

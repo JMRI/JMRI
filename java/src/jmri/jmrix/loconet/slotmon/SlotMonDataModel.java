@@ -1,4 +1,3 @@
-// SlotMonDataModel.java
 package jmri.jmrix.loconet.slotmon;
 
 import java.awt.event.MouseEvent;
@@ -539,7 +538,6 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
      * optional, in that other table formats can use this table model. But we
      * put it here to help keep it consistent.
      *
-     * @param slotTable
      */
     public void configureTable(JTable slotTable) {
         // allow reordering of the columns

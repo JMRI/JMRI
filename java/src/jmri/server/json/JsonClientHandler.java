@@ -139,8 +139,6 @@ public class JsonClientHandler {
      * off in the form: <code>{"type":"goodbye"}</code> to which an identical
      * response is sent before the connection gets closed.</li></ul>
      *
-     * @param string
-     * @throws IOException
      */
     public void onMessage(String string) throws IOException {
         log.debug("Received from client: {}", string);
@@ -158,8 +156,6 @@ public class JsonClientHandler {
      * See {@link #onMessage(java.lang.String) } for expected JSON objects.
      *
      * @see #onMessage(java.lang.String)
-     * @param root
-     * @throws IOException
      */
     public void onMessage(JsonNode root) throws IOException {
         try {

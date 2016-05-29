@@ -322,7 +322,6 @@ public class SplitVariableValue extends VariableValue
     /**
      * Notify the connected CVs of a state change from above
      *
-     * @param state
      */
     public void setCvState(int state) {
         (_cvMap.get(getCvNum())).setState(state);
@@ -508,11 +507,6 @@ public class SplitVariableValue extends VariableValue
      * @version     $Revision$
      */
     public class VarTextField extends JTextField {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -4853000377889737952L;
 
         VarTextField(Document doc, String text, int col, SplitVariableValue var) {
             super(doc, text, col);

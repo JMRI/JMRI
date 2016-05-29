@@ -77,7 +77,6 @@ public class CbusCommandStation implements CommandStation, DccCommandStation, Ca
     /**
      * Send keep alive (DKEEP) packet for a throttle
      *
-     * @param handle
      */
     public void sendKeepAlive(int handle) {
         CanMessage msg = new CanMessage(2, tc.getCanid());

@@ -1,4 +1,3 @@
-// WaitHandler.java
 package jmri.util;
 
 import java.util.Calendar;
@@ -8,20 +7,19 @@ import java.util.Calendar;
  * described in the {@link java.lang.Object#wait(long)} JavaDocs
  *
  * Generally, when waiting for a notify() operation, you need to provide a test
- * that a valid notify had happened due to e.g. a state change, etc.  <code><pre>
+ * that a valid notify had happened due to e.g. a state change, etc.  <pre><code>
  * new WaitHandler(this, 120) {
  * protected boolean wasSpurious() {
  * return !(state == expectedNextState);
  * }
  * };
- * </pre></code>
+ * </code></pre>
  *
  * By default, interrupting the thread leaves the wait early with the
  * interrupted flag set. InterruptedException is not thrown. You can modify this
  * behavior via the handleInterruptedException routine.
  *
  * @author Bob Jacobsen Copyright 2010
- * @version $Revision$
  */
 public class WaitHandler {
 

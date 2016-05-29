@@ -105,8 +105,7 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation, jmri.Co
      */
     @Override
     public String getVersionString() {
-        return "hardware type: " + getCommandStationType() 
-                + " software version: " + getCommandStationSoftwareVersionBCD();
+        return Bundle.getMessage("CSVersionString", getCommandStationType(),getCommandStationSoftwareVersionBCD());
     }
 
     /* 

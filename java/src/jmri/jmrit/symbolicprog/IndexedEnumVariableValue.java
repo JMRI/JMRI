@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Howard G. Penny Copyright (C) 2005
  * @author	Bob Jacobsen Copyright (C) 2013
- * @deprecated // since 3.7.1
+ * @deprecated since 3.7.1
  *
  */
 @Deprecated // since 3.7.1
@@ -177,7 +177,6 @@ public class IndexedEnumVariableValue extends VariableValue
      *
      * If the value is larger than any defined, a new one is created.
      *
-     * @param value
      */
     protected void selectValue(int value) {
         if (value > 256) {
@@ -327,7 +326,6 @@ public class IndexedEnumVariableValue extends VariableValue
     /**
      * Notify the connected CVs of a state change from above
      *
-     * @param state
      */
     public void setCvState(int state) {
         (_cvMap.get(getCvName())).setState(state);
@@ -588,14 +586,9 @@ public class IndexedEnumVariableValue extends VariableValue
      * model between this object and the real JComboBox value.
      *
      * @author  Bob Jacobsen   Copyright (C) 2001
-     * @version $Revision$
      */
     public static class IVarComboBox extends JComboBox<String> {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 2425259609787639833L;
         IndexedEnumVariableValue _var;
         transient java.beans.PropertyChangeListener _l = null;
 
