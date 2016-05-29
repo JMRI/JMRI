@@ -29,7 +29,6 @@ public class IEEE802154Message extends jmri.jmrix.AbstractMRMessage {
      * This ctor interprets the String as the exact sequence to send,
      * byte-for-byte.
      *
-     * @param m
      */
     public IEEE802154Message(String m, int l) {
         super(m);

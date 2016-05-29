@@ -36,7 +36,6 @@ public interface SerialPortAdapter extends PortAdapter {
     /**
      * Remember the associated port name
      *
-     * @param s
      */
     public void setPort(String s);
 

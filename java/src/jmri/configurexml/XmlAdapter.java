@@ -6,7 +6,6 @@ import org.jdom2.Element;
  * Interface assumed during configuration operations.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision$
  * @see ConfigXmlManager
  */
 public interface XmlAdapter {

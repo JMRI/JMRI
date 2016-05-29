@@ -5,9 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import jmri.util.PhysicalLocation;
 import jmri.implementation.SignalSpeedMap;
-
+import jmri.util.PhysicalLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -230,7 +229,8 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
      * {@link Reporter#getLastReport() last report}.
      *
      * @see Reporter
-     * @param reportingCurrent
+     * @param reportingCurrent true if to use current report; false if to use
+     *                         last report
      */
     public void setReportingCurrent(boolean reportingCurrent) {
         _reportingCurrent = reportingCurrent;

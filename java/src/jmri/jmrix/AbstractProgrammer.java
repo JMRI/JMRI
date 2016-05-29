@@ -2,8 +2,8 @@ package jmri.jmrix;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import javax.annotation.Nonnull;
 import java.util.List;
+import javax.annotation.Nonnull;
 import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammerException;
@@ -211,7 +211,7 @@ public abstract class AbstractProgrammer implements Programmer {
     }
 
     /**
-     * Internal routine to handle timer starts & restarts
+     * Internal routine to handle timer starts {@literal &} restarts
      */
     protected synchronized void restartTimer(int delay) {
         if (log.isDebugEnabled()) {

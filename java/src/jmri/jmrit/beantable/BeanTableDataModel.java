@@ -1,4 +1,3 @@
-// BeanTableDataModel.java
 package jmri.jmrit.beantable;
 
 import java.awt.Component;
@@ -50,15 +49,10 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author Dennis Miller Copyright (C) 2006
- * @version	$Revision$
  */
 abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
         implements PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3276184372154591138L;
     static public final int SYSNAMECOL = 0;
     static public final int USERNAMECOL = 1;
     static public final int VALUECOL = 2;
@@ -446,7 +440,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
      * optional, in that other table formats can use this table model. But we
      * put it here to help keep it consistent.
      *
-     * @param table
+     * @param table {@link JTable} to configure
      */
     public void configureTable(JTable table) {
         // allow reordering of the columns
@@ -495,8 +489,8 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
      * Service method to setup a column so that it will hold a button for it's
      * values
      *
-     * @param table
-     * @param column
+     * @param table  {@link JTable} to use
+     * @param column Column to setup
      * @param sample Typical button, used for size
      */
     protected void setColumnToHoldButton(JTable table, int column, JButton sample) {
@@ -642,11 +636,6 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
 
     public JTable makeJTable(TableSorter sorter) {
         JTable table = new JTable(sorter) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 2511932624004472654L;
-
             public boolean editCellAt(int row, int column, java.util.EventObject e) {
                 boolean res = super.editCellAt(row, column, e);
                 java.awt.Component c = this.getEditorComponent();

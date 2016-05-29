@@ -1,4 +1,3 @@
-// AddSensorPanel.java
 package jmri.jmrit.beantable;
 
 import java.awt.FlowLayout;
@@ -19,14 +18,8 @@ import javax.swing.JTextField;
  *
  * @author	Bob Jacobsen Copyright (C) 2009
  * @author Pete Cressman Copyright (C) 2010
- * @version $Revision$
  */
 public class AddNewBeanPanel extends jmri.util.swing.JmriPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7238135491102630527L;
 
     public AddNewBeanPanel(JTextField sys, JTextField userName, JTextField endRange, JCheckBox addRange, JCheckBox autoSystem,
             String addButtonLabel, ActionListener okListener, ActionListener cancelListener) {
@@ -151,6 +144,3 @@ public class AddNewBeanPanel extends jmri.util.swing.JmriPanel {
     JCheckBox _autoSys;
     JLabel finishLabel = new JLabel(Bundle.getMessage("LabelNumberToAdd"));
 }
-
-
-/* @(#)AddNewBeanPanel.java */

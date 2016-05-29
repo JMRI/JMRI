@@ -330,6 +330,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     StagingEditFrame stef = null;
 
     // Save, Delete, Add
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == addYardButton) {
             yef = new YardEditFrame();
@@ -547,6 +548,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         readerSelector.setEnabled(enabled && Setup.isRfidEnabled());
     }
 
+    @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         setLocationOps();
         setVisibleLocations();
@@ -670,6 +672,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 
     LocationsByCarTypeFrame lctf = null;
 
+    @Override
     public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
         JCheckBox b = (JCheckBox) ae.getSource();
         log.debug("checkbox change {}", b.getText());
@@ -695,6 +698,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 
     private void addCheckBoxTrainAction(JCheckBox b) {
         b.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 checkBoxActionTrainPerformed(e);
             }
@@ -735,6 +739,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         westCheckBox.setSelected((_location.getTrainDirections() & Location.WEST) == Location.WEST);
     }
 
+    @Override
     public void dispose() {
         if (_location != null) {
             _location.removePropertyChangeListener(this);
@@ -751,6 +756,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         super.dispose();
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e

@@ -211,7 +211,7 @@ public interface Turnout extends NamedBean {
     /**
      * Change the value of the inhibit operation indicator
      *
-     * @param io
+     * @param io true to inhibit automatic operation
      */
     public void setInhibitOperation(boolean io);
 

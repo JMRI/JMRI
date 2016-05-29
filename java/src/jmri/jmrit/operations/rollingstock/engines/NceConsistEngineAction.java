@@ -45,6 +45,7 @@ public class NceConsistEngineAction extends AbstractAction {
         }
     }
 
+    @Override
     public void actionPerformed(ActionEvent ae) {
         Thread mb = new NceConsistEngines(tc);
         mb.setName("Nce Consist Sync Engines"); // NOI18N

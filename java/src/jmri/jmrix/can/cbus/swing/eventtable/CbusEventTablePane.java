@@ -133,7 +133,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         List<JMenu> menuList = new ArrayList<JMenu>();
 
         ResourceBundle rb = ResourceBundle.getBundle("apps.AppsBundle");
-        JMenu fileMenu = new JMenu(rb.getString("MenuFile"));
+        JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         JMenuItem openItem = new JMenuItem(rb.getString("MenuItemOpen"));
         fileMenu.add(openItem);
 

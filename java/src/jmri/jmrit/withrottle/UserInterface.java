@@ -328,7 +328,6 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
     /**
      * Received an UDID, filter out any duplicate.
      *
-     * @param device
      */
     @Override
     public void notifyDeviceInfoChanged(DeviceServer device) {

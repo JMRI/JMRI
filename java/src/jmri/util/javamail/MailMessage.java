@@ -61,7 +61,6 @@ import javax.mail.Session;
 import javax.mail.Store;
 import javax.mail.Transport;
 import javax.mail.URLName;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
@@ -121,7 +120,6 @@ public class MailMessage {
     /**
      * sets the protocol to be used connecting to the mailhost default smtp
      *
-     * @param p
      */
     public void setProtocol(String p) {
         this.pProtocol = p;
@@ -130,7 +128,6 @@ public class MailMessage {
     /**
      * shows the protocol to be used connecting to the mailhost
      *
-     * @return
      */
     public String getProtocol() {
         return (this.pProtocol);
@@ -140,7 +137,6 @@ public class MailMessage {
      * sets if encryption will used when connecting to the mailhost default is
      * true
      *
-     * @param t
      */
     public void setTls(boolean t) {
         if (t) {
@@ -153,7 +149,6 @@ public class MailMessage {
     /**
      * shows if encryption will be used when connecting to the mailhost
      *
-     * @return
      */
     public boolean isTls() {
         return ((this.pTls.equals("true") ? true : false));
@@ -162,7 +157,6 @@ public class MailMessage {
     /**
      * sets if authorization will be used to the mailhost default is true
      *
-     * @param t
      */
     public void setAuth(boolean t) {
         if (t) {
@@ -175,7 +169,6 @@ public class MailMessage {
     /**
      * shows if authorization will be used to the mailhost
      *
-     * @return
      */
     public boolean isAuth() {
         return ((this.pAuth.equals("true") ? true : false));
@@ -235,7 +228,6 @@ public class MailMessage {
     /**
      * Adds the text to the message as a separate Mime part
      *
-     * @param text
      */
     public void setText(String text) {
         try {
@@ -250,7 +242,6 @@ public class MailMessage {
     /**
      * Adds the provided file to the message as a separate Mime part.
      *
-     * @param file
      */
     public void setFileAttachment(String file) {
         try {

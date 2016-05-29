@@ -41,6 +41,17 @@ public class Z21Reply extends AbstractMRReply {
         _nDataChars = Math.max(_nDataChars, n + 1);
     }
 
+
+    /**
+     * Get an integer representation of a BCD value
+     *
+     * @param n byte in message to convert
+     * @return Integer value of BCD byte.
+     */
+    public Integer getElementBCD(int n) {
+        return Integer.decode(Integer.toHexString(getElement(n)));
+    }
+
     public void setOpCode(int i) {
         _dataChars[2] = (char) (i & 0x00ff);
         _dataChars[3] = (char) ((i & 0xff00) >> 8);

@@ -21,6 +21,7 @@ public class InterchangeEditFrame extends TrackEditFrame implements java.beans.P
         super();
     }
 
+    @Override
     public void initComponents(Location location, Track track) {
         _type = Track.INTERCHANGE;
 

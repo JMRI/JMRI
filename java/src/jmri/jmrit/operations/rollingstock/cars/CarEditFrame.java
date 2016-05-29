@@ -110,6 +110,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         super(Bundle.getMessage("TitleCarAdd"));
     }
 
+    @Override
     public void initComponents() {
         // the following code sets the frame's initial state
 
@@ -450,6 +451,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
     }
 
     // combo boxes
+    @Override
     public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == typeComboBox && typeComboBox.getSelectedItem() != null) {
             log.debug("Type comboBox sees change, update car loads");
@@ -480,6 +482,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         }
     }
 
+    @Override
     public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
         JCheckBox b = (JCheckBox) ae.getSource();
         log.debug("checkbox change {}", b.getText());
@@ -498,6 +501,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
     }
 
     // Save, Delete, Add, Clear, Calculate, Edit Load buttons
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == saveButton) {
             // log.debug("car save button pressed");
@@ -872,6 +876,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
     // for the carAttributeEditFrame edit buttons
     private void addEditButtonAction(JButton b) {
         b.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 buttonEditActionPerformed(e);
             }
@@ -909,6 +914,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         }
     }
 
+    @Override
     public void dispose() {
         removePropertyChangeListeners();
         super.dispose();
@@ -928,6 +934,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         }
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e

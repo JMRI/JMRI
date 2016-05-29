@@ -414,6 +414,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
      * There aren't any current property changes being monitored
      *
      */
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         log.debug("LocationManager sees property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e
                 .getOldValue(), e.getNewValue()); // NOI18N

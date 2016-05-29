@@ -157,6 +157,7 @@ public class TrainManifestOptionFrame extends OperationsFrame {
     }
 
     // Save button
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == addLogoButton) {
             log.debug("add logo button pressed");

@@ -56,10 +56,12 @@ public class EngineManager extends RollingStockManager {
     /**
      * @return requested Engine object or null if none exists
      */
+    @Override
     public Engine getById(String id) {
         return (Engine) super.getById(id);
     }
 
+    @Override
     public Engine getByRoadAndNumber(String engineRoad, String engineNumber) {
         String engineId = Engine.createId(engineRoad, engineNumber);
         return getById(engineId);

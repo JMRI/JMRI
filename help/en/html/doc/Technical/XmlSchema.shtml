@@ -186,17 +186,20 @@ If we let too many problems build up,
 we'll eventually have a lot of back-fitting to do.
 The W3C online 
 <a href="http://www.w3.org/2001/03/webdata/xsv">schema validation tool</a>
-is a very good tool for checking that JMRI schema changes are still technically 
+is a very good tool for checking that changes to the JMRI schema are still technically 
 correct.  You should check your changes with it before commiting them to the repository.
 Unfortunately, it doesn't seem to to check compliance with nested schema elements,
-e.g. from DocBook (see below) or JMRIschema,
+e.g. from DocBook (see below) or JMRI schema,
 but it's still a very useful check.
 
 <p>
 Using the JMRI "Validate XML File" tool in the "Debug" menu to
 validate a .xml file ("instance file") that uses your new or 
 updated schema is an important check of both. Use it often during
-development.
+development. You can also use it from the command line via e.g.:
+<code><pre>
+./runtest.csh jmri/jmrit/XmlFileValidateAction xml/decoders/0NMRA.xml 
+</pre></code>
 
 <p>
 For a quick file check, Linux and Mac OS X users can validate from the

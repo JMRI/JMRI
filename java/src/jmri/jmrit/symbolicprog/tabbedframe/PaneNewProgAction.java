@@ -1,4 +1,3 @@
-// PaneNewProgAction.java
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import java.awt.event.ActionEvent;
@@ -31,14 +30,9 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2015
- * @version	$Revision$
  */
 public class PaneNewProgAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4761829946106004226L;
     Object o1, o2, o3, o4;
 
     public PaneNewProgAction() {
@@ -71,10 +65,6 @@ public class PaneNewProgAction extends AbstractAction {
 
         // new Loco on programming track
         JPanel pane1 = new LocoSelTreePane(null, null) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -3304246544040107635L;
 
             protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
                     String filename) {
@@ -82,10 +72,6 @@ public class PaneNewProgAction extends AbstractAction {
                 JFrame p = new PaneProgFrame(decoderFile, re,
                         title, "programmers" + File.separator + filename + ".xml",
                         null, false) {
-                            /**
-                             *
-                             */
-                            private static final long serialVersionUID = -4093978952107929146L;
 
                             protected JPanel getModePane() {
                                 return null;
@@ -111,5 +97,3 @@ public class PaneNewProgAction extends AbstractAction {
     private final static Logger log = LoggerFactory.getLogger(PaneProgAction.class.getName());
 
 }
-
-/* @(#)PaneProgAction.java */

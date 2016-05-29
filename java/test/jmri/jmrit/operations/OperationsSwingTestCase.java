@@ -4,6 +4,7 @@ package jmri.jmrit.operations;
 import java.io.File;
 import java.util.List;
 import java.util.Locale;
+import jmri.jmrit.operations.automation.AutomationManager;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.locations.ScheduleManager;
@@ -74,6 +75,7 @@ public class OperationsSwingTestCase extends jmri.util.SwingTestCase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initIdTagManager();
+        JUnitUtil.initShutDownManager();
 
         // set the file location to temp (in the root of the build directory).
         OperationsSetupXml.setFileLocation("temp" + File.separator);
@@ -117,6 +119,7 @@ public class OperationsSwingTestCase extends jmri.util.SwingTestCase {
         CarLoads.instance().dispose();
         CarRoads.instance().dispose();
         CarManager.instance().dispose();
+        AutomationManager.instance().dispose();
         
         // delete file and log directory before testing
         file = new File(RollingStockLogger.instance().getFullLoggerFileName());

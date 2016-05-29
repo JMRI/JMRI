@@ -54,7 +54,6 @@ import org.slf4j.LoggerFactory;
  */
 class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleListener {
 
-    private static final long serialVersionUID = -7592615396122420235L;
     JButton profileButton = new JButton(Bundle.getMessage("ButtonProfile"));
     JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
     JButton testButton = new JButton(Bundle.getMessage("ButtonTest"));

@@ -1,4 +1,3 @@
-// IndexedVariableValue.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.Color;
@@ -23,8 +22,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Howard G. Penny Copyright (C) 2005
  * @author Bob Jacobsen Copyright (C) 2010, 2013
- * @version $Revision$
- * @deprecated // since 3.7.1
+ * @deprecated since 3.7.1
  */
 @Deprecated // since 3.7.1
 public class IndexedVariableValue extends VariableValue
@@ -326,7 +324,6 @@ public class IndexedVariableValue extends VariableValue
     /**
      * Notify the connected CVs of a state change from above
      *
-     * @param state
      */
     public void setCvState(int state) {
         (_cvMap.get(getCvName())).setState(state);
@@ -590,14 +587,8 @@ public class IndexedVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision$
      */
     public class VarTextField extends JTextField {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 2882756295414352651L;
 
         VarTextField(Document doc, String text, int col, IndexedVariableValue var) {
             super(doc, text, col);

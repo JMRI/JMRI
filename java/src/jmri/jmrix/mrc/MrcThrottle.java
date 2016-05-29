@@ -138,8 +138,7 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
     }
 
     /**
-     * Send the message to set the state of functions F13 to F20. MRC Group 4 &
-     * 5
+     * Send the message to set the state of functions F13 to F20. MRC Group 4 and 5
      */
     @Override
     protected void sendFunctionGroup4() {
@@ -190,10 +189,10 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
     }
 
     /**
-     * Set the speed & direction.
+     * Set the speed {@literal &} direction.
      * <P>
      *
-     * @param speed Number from 0 to 1; less than zero is emergency stop
+     * @param speed Number from 0 to 1, or less than zero for emergency stop
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     public void setSpeedSetting(float speed) {

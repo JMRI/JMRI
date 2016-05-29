@@ -24,14 +24,8 @@ import javax.swing.ListSelectionModel;
  *
  * @author	Original Unknown
  * @author	Ken Cameron, copyright 2008
- * @version $Revision$
  */
 public class ThrottleFramePropertyEditor extends JDialog {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1010103920210252063L;
 
     private ThrottleWindow frame;
 

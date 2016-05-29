@@ -37,8 +37,6 @@ public class CbusLightManager extends AbstractLightManager {
      * Internal method to invoke the factory, after all the logic for returning
      * an existing method has been invoked.
      *
-     * @param systemName
-     * @param userName
      * @return never null
      */
     @Override

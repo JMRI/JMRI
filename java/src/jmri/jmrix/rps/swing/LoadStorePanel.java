@@ -1,4 +1,3 @@
-// LoadStorePanel.java
 package jmri.jmrix.rps.swing;
 
 import java.awt.event.ActionEvent;
@@ -15,14 +14,8 @@ import org.slf4j.LoggerFactory;
  * Panel for load/store of RPS setup
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version $Revision$
  */
 public class LoadStorePanel extends javax.swing.JPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2101684476801445613L;
 
     public LoadStorePanel() {
         super();

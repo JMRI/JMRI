@@ -2,7 +2,6 @@ package jmri.web.servlet.panel;
 
 import java.awt.Color;
 import java.util.List;
-import javax.swing.JComponent;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
@@ -131,13 +130,20 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
                     if (!b.getUserName().isEmpty()) {
                         elem.setAttribute("username", b.getUserName());
                     }
-                    //don't send invalid sensors
+                    // get occupancy sensor from layoutblock if it is valid
                     if (!b.getOccupancySensorName().isEmpty()) {
                         Sensor s = sm.getSensor(b.getOccupancySensorName());
                         if (s != null) {
                             elem.setAttribute("occupancysensor", s.getSystemName()); //send systemname
                         }
+                    //if layoutblock has no occupancy sensor, use one from block, if it is populated
+                    } else { 
+                        Sensor s = b.getBlock().getSensor(); 
+                        if (s != null) {
+                            elem.setAttribute("occupancysensor", s.getSystemName()); //send systemname
+                        }
                     }
+
                     elem.setAttribute("occupiedsense", Integer.toString(b.getOccupiedSense()));
                     elem.setAttribute("trackcolor", ColorUtil.colorToString(b.getBlockTrackColor()));
                     elem.setAttribute("occupiedcolor", ColorUtil.colorToString(b.getBlockOccupiedColor()));
@@ -255,10 +261,5 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
     protected String getJsonPanel(String name) {
         // TODO Auto-generated method stub
         return "ERROR JSON support not implemented";
-    }
-
-    @Override
-    protected JComponent getPanel(String name) {
-        return ((LayoutEditor) getEditor(name)).getTargetPanel();
     }
 }

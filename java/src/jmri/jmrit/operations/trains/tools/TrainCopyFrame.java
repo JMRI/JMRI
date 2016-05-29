@@ -79,6 +79,7 @@ public class TrainCopyFrame extends OperationsFrame {
         addButtonAction(copyButton);
     }
 
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == copyButton) {
             log.debug("copy train button activated");
@@ -136,6 +137,7 @@ public class TrainCopyFrame extends OperationsFrame {
         return true;
     }
 
+    @Override
     public void dispose() {
         super.dispose();
     }

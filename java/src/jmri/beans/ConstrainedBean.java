@@ -1,4 +1,3 @@
-// ConstrainedBean.java
 package jmri.beans;
 
 import java.beans.IndexedPropertyChangeEvent;
@@ -85,8 +84,8 @@ public abstract class ConstrainedBean extends Bean implements VetoableChangeProv
      * If a PropertyVetoException is thrown, ensure the property change does not
      * complete.
      *
-     * @param event
-     * @throws PropertyVetoException
+     * @param event {@link PropertyChangeEvent} to be fired
+     * @throws PropertyVetoException if property update vetoed
      */
     public void fireVetoableChange(PropertyChangeEvent event) throws PropertyVetoException {
         this.vetoableChangeSupport.fireVetoableChange(event);
@@ -100,10 +99,10 @@ public abstract class ConstrainedBean extends Bean implements VetoableChangeProv
      * If a PropertyVetoException is thrown, ensure the property change does not
      * complete.
      *
-     * @param propertyName
-     * @param oldValue
-     * @param newValue
-     * @throws PropertyVetoException
+     * @param propertyName property that is about to change
+     * @param oldValue     old value of the property
+     * @param newValue     new value of the property
+     * @throws PropertyVetoException if property update vetoed
      */
     public void fireVetoableChange(String propertyName, Object oldValue, Object newValue) throws PropertyVetoException {
         this.vetoableChangeSupport.fireVetoableChange(propertyName, oldValue, newValue);
@@ -117,10 +116,10 @@ public abstract class ConstrainedBean extends Bean implements VetoableChangeProv
      * If a PropertyVetoException is thrown, ensure the property change does not
      * complete.
      *
-     * @param propertyName
-     * @param oldValue
-     * @param newValue
-     * @throws PropertyVetoException
+     * @param propertyName property that is about to change
+     * @param oldValue     old value of the property
+     * @param newValue     new value of the property
+     * @throws PropertyVetoException if property update vetoed
      */
     public void fireVetoableChange(String propertyName, int oldValue, int newValue) throws PropertyVetoException {
         this.vetoableChangeSupport.fireVetoableChange(propertyName, oldValue, newValue);
@@ -134,10 +133,10 @@ public abstract class ConstrainedBean extends Bean implements VetoableChangeProv
      * If a PropertyVetoException is thrown, ensure the property change does not
      * complete.
      *
-     * @param propertyName
-     * @param oldValue
-     * @param newValue
-     * @throws PropertyVetoException
+     * @param propertyName property that is about to change
+     * @param oldValue     old value of the property
+     * @param newValue     new value of the property
+     * @throws PropertyVetoException if property update vetoed
      */
     public void fireVetoableChange(String propertyName, boolean oldValue, boolean newValue) throws PropertyVetoException {
         this.vetoableChangeSupport.fireVetoableChange(propertyName, oldValue, newValue);

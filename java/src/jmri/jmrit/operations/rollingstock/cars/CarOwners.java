@@ -40,15 +40,18 @@ public class CarOwners extends RollingStockAttribute {
         return _instance;
     }
 
+    @Override
     protected String getDefaultNames() {
         return ""; // there aren't any
     }
 
+    @Override
     public void addName(String owner) {
         super.addName(owner);
         setDirtyAndFirePropertyChange(CAROWNERS_CHANGED_PROPERTY, null, owner);
     }
 
+    @Override
     public void deleteName(String owner) {
         super.deleteName(owner);
         setDirtyAndFirePropertyChange(CAROWNERS_CHANGED_PROPERTY, owner, null);

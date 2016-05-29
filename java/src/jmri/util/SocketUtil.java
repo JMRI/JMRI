@@ -20,7 +20,7 @@ import java.net.Socket;
 public class SocketUtil {
 
     /**
-     * Return the remote address, if possible, otherwise "<unknown>"
+     * Return the remote address, if possible, otherwise {@code "<unknown>"}
      */
     static public String getRemoteSocketAddress(Socket socket) {
         try {

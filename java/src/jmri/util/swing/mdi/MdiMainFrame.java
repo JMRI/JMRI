@@ -1,4 +1,3 @@
-// MdiMainFrame.java
 package jmri.util.swing.mdi;
 
 import java.awt.BorderLayout;
@@ -25,14 +24,8 @@ import jmri.util.swing.JTreeUtil;
  *
  * @author Bob Jacobsen Copyright 2010
  * @since 2.9.4
- * @version $Revision$
  */
 public class MdiMainFrame extends jmri.util.JmriJFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1989252677160684285L;
 
     /**
      * Create and initialize a multi-pane GUI window.

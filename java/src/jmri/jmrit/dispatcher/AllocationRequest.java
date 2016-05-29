@@ -72,8 +72,8 @@ public class AllocationRequest {
     public String getSectionName() {
         String s = mSection.getSystemName();
         String u = mSection.getUserName();
-        if ((u != null) && (!u.equals(""))) {
-            return (s + "( " + u + " )");
+        if ((u != null) && (!u.equals("") && (!u.equals(s)))) {
+            return (s + "(" + u + ")");
         }
         return s;
     }

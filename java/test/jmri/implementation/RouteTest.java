@@ -1,8 +1,8 @@
 package jmri.implementation;
 
-import jmri.Route;
-import jmri.Sensor;
-import jmri.Turnout;
+import jmri.*;
+import jmri.util.*;
+
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -25,7 +25,6 @@ public class RouteTest extends TestCase {
     /**
      * The following equalities are needed so that old files can be read
      */
-    @SuppressWarnings("all")
     public void testRouteAndTurnoutConstants() {
         Assert.assertTrue("CLOSED is ONCLOSED", Turnout.CLOSED == Route.ONCLOSED);
         Assert.assertTrue("THROWN is ONTHROWN", Turnout.THROWN == Route.ONTHROWN);
@@ -90,6 +89,22 @@ public class RouteTest extends TestCase {
         Assert.assertTrue("not vetoed when enabled", !r.isVetoed());
     }
 
+    public void testTurnoutsAlignedSensor() {
+        DefaultRoute r = new DefaultRoute("test");
+        r.setTurnoutsAlignedSensor("IS123");
+        Assert.assertEquals("Sensor name stored", "IS123", r.getTurnoutsAlignedSensor());     
+        r.activateRoute();
+        
+    }
+
+    public void testLockControlTurnout() {
+        DefaultRoute r = new DefaultRoute("test");
+        r.setLockControlTurnout("IT123");
+        Assert.assertEquals("Turnout name stored", "IT123", r.getLockControlTurnout());     
+        r.activateRoute();
+        
+    }
+
     // There's a comment in DefaultRoute that says the following
     // are "constraints due to implementation", so let's test those here
     //
@@ -118,5 +133,20 @@ public class RouteTest extends TestCase {
         TestSuite suite = new TestSuite(RouteTest.class);
         return suite;
     }
+    
+    // The minimal setup for log4J
+    protected void setUp() throws Exception {
+        super.setUp();
+        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalTurnoutManager();
+    }
 
+    protected void tearDown() throws Exception {
+        JUnitUtil.resetInstanceManager();
+        super.tearDown();
+        apps.tests.Log4JFixture.tearDown();
+    }
+   
 }

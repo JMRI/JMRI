@@ -231,6 +231,7 @@ public class Car extends RollingStock {
         return _nextLoadName;
     }
 
+    @Override
     public String getWeightTons() {
         String weight = super.getWeightTons();
         if (!_weightTons.equals(DEFAULT_WEIGHT)) {
@@ -252,6 +253,7 @@ public class Car extends RollingStock {
      * Returns a car's weight adjusted for load. An empty car's weight is 1/3
      * the car's loaded weight.
      */
+    @Override
     public int getAdjustedWeightTons() {
         int weightTons = 0;
         try {
@@ -563,6 +565,7 @@ public class Car extends RollingStock {
      * @return status OKAY, TYPE, ROAD, LENGTH, ERROR_TRACK, CAPACITY, SCHEDULE,
      *         CUSTOM
      */
+    @Override
     public String testDestination(Location destination, Track track) {
         String status = super.testDestination(destination, track);
         if (!status.equals(Track.OKAY)) {
@@ -587,6 +590,7 @@ public class Car extends RollingStock {
      *         requirements. Also changes the car load status when the car
      *         reaches its destination.
      */
+    @Override
     public String setDestination(Location destination, Track track) {
         return setDestination(destination, track, false);
     }
@@ -596,8 +600,8 @@ public class Car extends RollingStock {
      *
      * @param destination
      * @param track       (yard, spur, staging, or interchange track)
-     * @param force       when true ignore track length, type, & road when
-     *                    setting destination
+     * @param force       when true ignore track length, type, {@literal &} road
+     *                    when setting destination
      * @return "okay" if successful, "type" if the rolling stock's type isn't
      *         acceptable, or "length" if the rolling stock length didn't fit,
      *         or Schedule if the destination will not accept the car because
@@ -605,6 +609,7 @@ public class Car extends RollingStock {
      *         requirements. Also changes the car load status when the car
      *         reaches its destination.
      */
+    @Override
     public String setDestination(Location destination, Track track, boolean force) {
         // save destination name and track in case car has reached its destination
         String destinationName = getDestinationName();
@@ -732,6 +737,7 @@ public class Car extends RollingStock {
         return buf.toString();
     }
 
+    @Override
     public void reset() {
         setScheduleItemId(getPreviousScheduleId()); // revert to previous
         setNextLoadName(NONE);
@@ -746,6 +752,7 @@ public class Car extends RollingStock {
         super.reset();
     }
 
+    @Override
     public void dispose() {
         setKernel(null);
         setFinalDestination(null); // removes property change listener
@@ -944,6 +951,7 @@ public class Car extends RollingStock {
         return e;
     }
 
+    @Override
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
         // Set dirty
         CarManagerXml.instance().setDirty(true);
@@ -955,6 +963,7 @@ public class Car extends RollingStock {
         CarLengths.instance().addPropertyChangeListener(this);
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
         super.propertyChange(e);
         if (e.getPropertyName().equals(CarTypes.CARTYPES_NAME_CHANGED_PROPERTY)) {

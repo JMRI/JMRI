@@ -6,8 +6,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import jmri.profile.AuxiliaryConfiguration;
 import jmri.profile.Profile;
-import jmri.util.FileUtil;
-import jmri.util.node.NodeIdentity;
 
 /**
  * Provides a general purpose XML element storage mechanism for the storage of
@@ -28,15 +26,9 @@ import jmri.util.node.NodeIdentity;
  *
  * @author Randall Wood 2015, 2016
  */
-/*
-Need to reduce duplication of code between this and the JmriConfigurationProvider.
- */
-public final class JmriUserInterfaceConfigurationProvider {
+public final class JmriUserInterfaceConfigurationProvider extends AbstractConfigurationProvider {
 
     private final Configuration configuration;
-    private final Profile project;
-    private boolean privateBackedUp = false;
-    private boolean sharedBackedUp = false;
 
     public static final String NAMESPACE = "http://www.netbeans.org/ns/auxiliary-configuration/1"; // NOI18N
 
@@ -85,35 +77,23 @@ public final class JmriUserInterfaceConfigurationProvider {
      *
      * @return The AuxiliaryConfiguration.
      */
-    private AuxiliaryConfiguration getConfiguration() {
+    @Override
+    protected AuxiliaryConfiguration getConfiguration() {
         return this.configuration;
     }
 
+    @Override
+    protected File getConfigurationFile(boolean shared) {
+        if (this.project == null) {
+            return new File(this.getConfigurationDirectory(shared), Profile.UI_CONFIG); // NOI18N
+        } else {
+            return new File(this.getConfigurationDirectory(shared), Profile.UI_CONFIG); // NOI18N
+        }
+    }
+
     JmriUserInterfaceConfigurationProvider(Profile project) {
-        this.project = project;
+        super(project);
         this.configuration = new Configuration();
-    }
-
-    private File getConfigurationFile(boolean shared) {
-        if (JmriUserInterfaceConfigurationProvider.this.project == null) {
-            return new File(this.getConfigurationDirectory(shared), Profile.UI_CONFIG); // NOI18N
-        } else {
-            return new File(this.getConfigurationDirectory(shared), Profile.UI_CONFIG); // NOI18N
-        }
-    }
-
-    public File getConfigurationDirectory(boolean shared) {
-        File dir;
-        if (JmriUserInterfaceConfigurationProvider.this.project == null) {
-            dir = new File(FileUtil.getPreferencesPath(), "preferences"); // NOI18N
-        } else {
-            dir = new File(JmriUserInterfaceConfigurationProvider.this.project.getPath(), Profile.PROFILE);
-            if (!shared) {
-                dir = new File(dir, NodeIdentity.identity());
-            }
-        }
-        FileUtil.createDirectory(dir);
-        return dir;
     }
 
     private class Configuration extends JmriConfiguration {
@@ -129,22 +109,22 @@ public final class JmriUserInterfaceConfigurationProvider {
 
         @Override
         protected boolean isSharedBackedUp() {
-            return JmriUserInterfaceConfigurationProvider.this.sharedBackedUp;
+            return JmriUserInterfaceConfigurationProvider.this.isSharedBackedUp();
         }
 
         @Override
         protected void setSharedBackedUp(boolean backedUp) {
-            JmriUserInterfaceConfigurationProvider.this.sharedBackedUp = backedUp;
+            JmriUserInterfaceConfigurationProvider.this.setSharedBackedUp(backedUp);
         }
 
         @Override
         protected boolean isPrivateBackedUp() {
-            return JmriUserInterfaceConfigurationProvider.this.privateBackedUp;
+            return JmriUserInterfaceConfigurationProvider.this.isPrivateBackedUp();
         }
 
         @Override
         protected void setPrivateBackedUp(boolean backedUp) {
-            JmriUserInterfaceConfigurationProvider.this.privateBackedUp = backedUp;
+            JmriUserInterfaceConfigurationProvider.this.setPrivateBackedUp(backedUp);
         }
 
     }

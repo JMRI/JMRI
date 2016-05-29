@@ -1073,7 +1073,7 @@ public class CircuitBuilder {
         block.dispose();
     }
 
-    /**
+    /*
      * *************** Overriden methods of Editor *******************
      *
      * public void paintTargetPanel(Graphics g) { Graphics2D g2d =

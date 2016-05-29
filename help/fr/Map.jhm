@@ -406,7 +406,7 @@
 
 <mapID target="html.hardware.loconet.Digitrax_Support" url="html/hardware/loconet/Digitrax.shtml#Support"/>
 
-<mapID target="html.web.WebServer" url="html/web/WebServer.shtml"/>
+<mapID target="html.web.WebServer" url="html/web/index.shtml"/>
 
 <mapID target="package.apps.Apps" url="package/apps/Apps.shtml"/>
 

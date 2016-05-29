@@ -38,10 +38,6 @@ import org.slf4j.LoggerFactory;
  */
 public class FunctionButton extends JToggleButton implements ActionListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2228118723029439168L;
     private ArrayList<FunctionListener> listeners = new ArrayList<FunctionListener>();
     private int identity; // F0, F1, etc?
     private boolean isOn;

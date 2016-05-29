@@ -1,4 +1,3 @@
-// IndexedCvTableModel.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.event.ActionEvent;
@@ -24,15 +23,10 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Boudreau Copyright (C) 2007
  * @author Bob Jacobsen Copyright (C) 2013, 2014
  * @deprecated since 3.7.1
- * @version $Revision: 24747 $
  */
 @Deprecated // since 3.7.1
 public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6882947172718717151L;
     private int _numRows = 0;                // must be zero until Vectors are initialized
     static final int MAXCVNUM = 1200;
     private Vector<CvValue> _indxCvDisplayVector = new Vector<CvValue>();  // vector of CvValue objects, in display order

@@ -1,11 +1,10 @@
 package jmri.jmrix.roco.z21;
 
-import jmri.implementation.AbstractTurnout;
 import jmri.jmrix.lenz.XNetListener;
 import jmri.jmrix.lenz.XNetMessage;
 import jmri.jmrix.lenz.XNetReply;
-import jmri.jmrix.lenz.XNetTurnout;
 import jmri.jmrix.lenz.XNetTrafficController;
+import jmri.jmrix.lenz.XNetTurnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -81,7 +80,6 @@ public class Z21XNetTurnout extends XNetTurnout implements XNetListener {
      * turnout with respect to whether or not a feedback request was sent. This
      * is used only when the turnout is created by on layout feedback.
      *
-     * @param l
      *
      */
     synchronized void initmessage(XNetReply l) {

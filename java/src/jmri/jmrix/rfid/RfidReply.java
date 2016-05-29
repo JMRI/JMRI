@@ -10,7 +10,8 @@ package jmri.jmrix.rfid;
  */
 abstract public class RfidReply extends jmri.jmrix.AbstractMRReply {
 
-    RfidTrafficController tc = null;
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "URF_UNREAD_FIELD", justification = "used by derived classes to fetch protocol in use")
+    protected RfidTrafficController tc = null;
 
     // create a new one
     public RfidReply(RfidTrafficController tc) {

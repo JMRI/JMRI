@@ -1,4 +1,3 @@
-// LightTableAction.java
 package jmri.jmrit.beantable;
 
 import java.awt.BorderLayout;
@@ -45,14 +44,8 @@ import org.slf4j.LoggerFactory;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version $Revision$
  */
 public class LightTableAction extends AbstractTableAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7804945776791377121L;
 
     /**
      * Create an action with a specific title.
@@ -60,7 +53,7 @@ public class LightTableAction extends AbstractTableAction {
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
-     * @param s
+     * @param s title of the action
      */
     public LightTableAction(String s) {
         super(s);
@@ -86,10 +79,6 @@ public class LightTableAction extends AbstractTableAction {
      */
     protected void createModel() {
         m = new BeanTableDataModel() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 5160578505530460869L;
             static public final int ENABLECOL = NUMCOLUMN;
             static public final int INTENSITYCOL = ENABLECOL + 1;
             static public final int EDITCOL = INTENSITYCOL + 1;
@@ -186,7 +175,7 @@ public class LightTableAction extends AbstractTableAction {
                 if (col == EDITCOL) {
                     return Bundle.getMessage("ButtonEdit");
                 } else if (col == INTENSITYCOL) {
-                    return new Double(((Light) getBySystemName((String) getValueAt(row, SYSNAMECOL))).getTargetIntensity());
+                    return Double.valueOf(((Light) getBySystemName((String) getValueAt(row, SYSNAMECOL))).getTargetIntensity());
                 } else if (col == ENABLECOL) {
                     return Boolean.valueOf(((Light) getBySystemName((String) getValueAt(row, SYSNAMECOL))).getEnabled());
                 } else {
@@ -265,6 +254,7 @@ public class LightTableAction extends AbstractTableAction {
             public NamedBean getByUserName(String name) {
                 return lightManager.getByUserName(name);
             }
+
             /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnLightInUse(); }
              public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnLightInUse(boo); }*/
 
@@ -327,10 +317,10 @@ public class LightTableAction extends AbstractTableAction {
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
     JPanel panel1a = null;
     JPanel varPanel = null;
-    JLabel systemNameLabel = new JLabel(Bundle.getMessage("LightSystemName") + " ");
+    JLabel systemNameLabel = new JLabel(Bundle.getMessage("LabelSystemName") + " ");
     JLabel fixedSystemName = new JLabel("xxxxxxxxxxx");
     JTextField userName = new JTextField(10);
-    JLabel userNameLabel = new JLabel(Bundle.getMessage("LightUserName") + " ");
+    JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName") + " ");
     LightControlTableModel lightControlTableModel = null;
     JButton create;
     JButton update;
@@ -1014,9 +1004,11 @@ public class LightTableAction extends AbstractTableAction {
         // get rid of the add/edit Frame
         clearLightControls();
         status2.setText("");
-        addFrame.setVisible(false);
-        addFrame.dispose();
-        addFrame = null;
+        if (addFrame != null) {
+            addFrame.setVisible(false);
+            addFrame.dispose();
+            addFrame = null;
+        }
     }
 
     private void clearLightControls() {
@@ -1795,10 +1787,6 @@ public class LightTableAction extends AbstractTableAction {
     public class LightControlTableModel extends javax.swing.table.AbstractTableModel implements
             java.beans.PropertyChangeListener {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 5343975370851932129L;
         public static final int TYPE_COLUMN = 0;
         public static final int DESCRIPTION_COLUMN = 1;
         public static final int EDIT_COLUMN = 2;
@@ -1932,4 +1920,3 @@ public class LightTableAction extends AbstractTableAction {
 
     private final static Logger log = LoggerFactory.getLogger(LightTableAction.class.getName());
 }
-/* @(#)LightTableAction.java */

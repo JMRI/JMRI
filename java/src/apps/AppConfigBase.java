@@ -1,4 +1,3 @@
-// AppConfigBase.java
 package apps;
 
 import java.text.MessageFormat;
@@ -29,7 +28,6 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2003, 2008, 2010
  * @author Matthew Harris copyright (c) 2009
  * @author	Ken Cameron Copyright (C) 2011
- * @version	$Revision$
  */
 public class AppConfigBase extends JmriPanel {
 
@@ -242,7 +240,7 @@ public class AppConfigBase extends JmriPanel {
         }
         // don't restart the program, just close the window
         if (getTopLevelAncestor() != null) {
-            ((JFrame) getTopLevelAncestor()).setVisible(false);
+            getTopLevelAncestor().setVisible(false);
         }
     }
 

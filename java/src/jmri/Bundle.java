@@ -124,7 +124,7 @@ public class Bundle {
      *
      * @param key Bundle key to be translated
      * @return Internationalized text
-     * @throws MissingResourceException
+     * @throws MissingResourceException if message cannot be found
      */
     public String handleGetMessage(String key) {
         return this.handleGetMessage(Locale.getDefault(), key);
@@ -139,7 +139,7 @@ public class Bundle {
      * @param locale The locale to be used
      * @param key    Bundle key to be translated
      * @return Internationalized text
-     * @throws MissingResourceException
+     * @throws MissingResourceException if message cannot be found
      */
     public String handleGetMessage(Locale locale, String key) {
         if (bundleName() != null) {

@@ -30,6 +30,7 @@ public class Kernel extends RollingStockGroup {
         return cars;
     }
 
+    @Override
     public void dispose() {
         while (getGroup().size() > 0) {
             Car car = (Car) getGroup().get(0);
