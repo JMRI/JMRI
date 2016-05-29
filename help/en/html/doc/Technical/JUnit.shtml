@@ -147,7 +147,7 @@ to do the accounting. It provides detailed reports at multiple levels:
 <li><href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/">summary by file</a> (e.g. class). Click on a class to see a</li>
 <li><href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/BlockBossLogic/">summary by method</a>. Click on a method to see</li>
 <li><href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/BlockBossLogic/defineIO()/">how each part of the code was covered</a> (may require scrolling down).</li>
-
+</ul>
 
 <h2><a name="write">Writing Tests</a></h2>
 
