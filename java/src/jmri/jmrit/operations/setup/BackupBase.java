@@ -430,7 +430,6 @@ public abstract class BackupBase {
          * @param sourceFileName
          * @param destFileName
          * @param overwrite
-         * @throws IOException
          */
         @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "OBL_UNSATISFIED_OBLIGATION")
         public static void copy(String sourceFileName, String destFileName,

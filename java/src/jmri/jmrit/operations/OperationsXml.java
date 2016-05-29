@@ -72,8 +72,6 @@ public abstract class OperationsXml extends XmlFile {
     }
 
     /**
-     * @throws FileNotFoundException
-     * @throws IOException
      */
     protected void writeFile(String filename) throws FileNotFoundException, IOException {
         log.error("writeFile not overridden");
