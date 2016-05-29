@@ -1,4 +1,3 @@
-// NetworkTreePane.java
 package jmri.jmrix.openlcb.swing.networktree;
 
 import java.awt.Dimension;

@@ -1,4 +1,3 @@
-// OpenLcbCanSendPane.java
 package jmri.jmrix.openlcb.swing.send;
 
 import java.awt.Dimension;
