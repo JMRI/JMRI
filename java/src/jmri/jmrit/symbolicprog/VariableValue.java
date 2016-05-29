@@ -83,6 +83,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     public void setValue(String value) {
         try {
             int val = Integer.parseInt(value);
+            setIntValue(val);
         } catch ( NumberFormatException e) {
             log.debug("skipping set of non-integer value \"{}\"", value);
         }

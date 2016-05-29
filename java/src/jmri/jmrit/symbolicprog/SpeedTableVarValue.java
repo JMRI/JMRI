@@ -338,6 +338,16 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         return buf.toString();
     }
 
+    /** 
+     * Set value from a String value.
+     * <p>
+     * Requires the format written by getValueString, not implemented yet
+     */
+    @Override
+    public void setValue(String value) {
+        log.debug("skipping setValue in SpeedTableVarValue");
+    }
+
     public void setIntValue(int i) {
         log.warn("setIntValue doesn't make sense for a speed table: " + i);
     }

@@ -32,6 +32,9 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.operations.automation.actions.PackageTest.suite());
 
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
+            suite.addTest(AutomationTableFrameGuiTest.suite());
+            suite.addTest(AutomationsTableFrameGuiTest.suite());
+            suite.addTest(AutomationCopyFrameGuiTest.suite());
         }
 
         return suite;

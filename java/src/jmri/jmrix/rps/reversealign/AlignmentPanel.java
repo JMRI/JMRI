@@ -488,11 +488,6 @@ public class AlignmentPanel extends javax.swing.JPanel
      */
     class Line extends JPanel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -758969222553576502L;
-
         Line() {
             setLayout(new java.awt.FlowLayout());
             add(new JLabel("Position:"));
