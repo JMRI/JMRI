@@ -264,8 +264,7 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
     /**
      * Individual files for each rolling stock stored in a directory called
      * "rollingStock" inside the "logger" directory.
-     * 
-     * @param rs
+     *
      * @return
      */
     public String getFullLoggerFileName(RollingStock rs) {

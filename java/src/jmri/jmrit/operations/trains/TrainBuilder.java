@@ -1799,7 +1799,6 @@ public class TrainBuilder extends TrainCommon {
      * checks to see if the kernel has a lead car and the lead car is in
      * service.
      *
-     * @param car
      */
     private void checkKernel(Car car) throws BuildFailedException {
         boolean foundLeadCar = false;
@@ -2389,7 +2388,6 @@ public class TrainBuilder extends TrainCommon {
 
     /**
      *
-     * @param engine
      * @param rl where in the train's route to pick up the engine
      * @param rld where in the train's route to set out the engine
      * @param track destination track for this engine
@@ -3636,7 +3634,6 @@ public class TrainBuilder extends TrainCommon {
      * wasn't given a destination, shifts the car's order earlier in the car
      * list so it won't be evaluated again.
      *
-     * @param car
      */
     private void checkCarOrder(Car car) {
         // is car sitting on a FIFO or LIFO track?
@@ -3666,7 +3663,6 @@ public class TrainBuilder extends TrainCommon {
     /**
      * Checks to see if car has a destination and tries to add car to train
      *
-     * @param car
      * @param rl the car's route location
      * @param routeIndex where in the route the car pick up is
      * @return true if car has a destination.
@@ -4430,7 +4426,6 @@ public class TrainBuilder extends TrainCommon {
      * pulled by this train, but cars were sent to the alternate because the
      * spur was full at the time it was tested.
      *
-     * @param rl
      * @return true if one or more cars were redirected
      */
     private boolean redirectCarsFromAlternateTrack() {

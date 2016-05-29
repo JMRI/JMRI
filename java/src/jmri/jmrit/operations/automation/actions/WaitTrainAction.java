@@ -43,8 +43,7 @@ public class WaitTrainAction extends Action implements PropertyChangeListener {
     /**
      * Wait for train to build and no location, or train to arrive at location,
      * or train build to be deselected.
-     * 
-     * @param evt
+     *
      */
     private void trainUpdate(PropertyChangeEvent evt) {
         if (getAutomationItem() != null) {
