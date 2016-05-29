@@ -22,8 +22,6 @@ import static jmri.server.json.JSON.PONG;
 import static jmri.server.json.JSON.PROGRAMMER;
 import static jmri.server.json.JSON.REPORTER;
 import static jmri.server.json.JSON.REPORTERS;
-import static jmri.server.json.JSON.SENSOR;
-import static jmri.server.json.JSON.SENSORS;
 import static jmri.server.json.JSON.SIGNAL_HEAD;
 import static jmri.server.json.JSON.SIGNAL_HEADS;
 import static jmri.server.json.JSON.SIGNAL_MAST;
@@ -48,7 +46,6 @@ import jmri.jmris.json.JsonConsistServer;
 import jmri.jmris.json.JsonOperationsServer;
 import jmri.jmris.json.JsonProgrammerServer;
 import jmri.jmris.json.JsonReporterServer;
-import jmri.jmris.json.JsonSensorServer;
 import jmri.jmris.json.JsonServerPreferences;
 import jmri.jmris.json.JsonSignalHeadServer;
 import jmri.jmris.json.JsonSignalMastServer;
@@ -64,7 +61,6 @@ public class JsonClientHandler {
     private final JsonOperationsServer operationsServer;
     private final JsonProgrammerServer programmerServer;
     private final JsonReporterServer reporterServer;
-    private final JsonSensorServer sensorServer;
     private final JsonSignalHeadServer signalHeadServer;
     private final JsonSignalMastServer signalMastServer;
     private final JsonThrottleServer throttleServer;
@@ -78,7 +74,6 @@ public class JsonClientHandler {
         this.operationsServer = new JsonOperationsServer(this.connection);
         this.programmerServer = new JsonProgrammerServer(this.connection);
         this.reporterServer = new JsonReporterServer(this.connection);
-        this.sensorServer = new JsonSensorServer(this.connection);
         this.signalHeadServer = new JsonSignalHeadServer(this.connection);
         this.signalMastServer = new JsonSignalMastServer(this.connection);
         this.throttleServer = new JsonThrottleServer(this.connection);
@@ -103,7 +98,6 @@ public class JsonClientHandler {
         this.operationsServer.dispose();
         this.programmerServer.dispose();
         this.reporterServer.dispose();
-        this.sensorServer.dispose();
         this.signalHeadServer.dispose();
         this.signalMastServer.dispose();
         services.values().stream().forEach((set) -> {
@@ -206,9 +200,6 @@ public class JsonClientHandler {
                     case REPORTERS:
                         reply = JsonUtil.getReporters(this.connection.getLocale());
                         break;
-                    case SENSORS:
-                        reply = JsonUtil.getSensors(this.connection.getLocale());
-                        break;
                     case SIGNAL_HEADS:
                         reply = JsonUtil.getSignalHeads(this.connection.getLocale());
                         break;
@@ -246,9 +237,6 @@ public class JsonClientHandler {
                         break;
                     case PROGRAMMER:
                         this.programmerServer.parseRequest(this.connection.getLocale(), data);
-                        break;
-                    case SENSOR:
-                        this.sensorServer.parseRequest(this.connection.getLocale(), data);
                         break;
                     case SIGNAL_HEAD:
                         this.signalHeadServer.parseRequest(this.connection.getLocale(), data);
