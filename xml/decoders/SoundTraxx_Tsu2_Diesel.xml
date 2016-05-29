@@ -1,0 +1,1508 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2016 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2016</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Michael</firstname>
+        <surname>Mosher</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2016-05-29</date>
+      <authorinitials>MM</authorinitials>
+      <revremark>New file, based on ECO Diesel file + (ALM) Factoring and minor adjustments</revremark>
+    </revision>
+  </revhistory>
+  <version author="Michael Mosher" version="1" lastUpdated="20160529"/>
+  <!-- Version 1:   Based on Tsunami2 Diesel Technical Reference version 1.0    -->
+  <!--                                                                          -->
+  <!-- Decoder Model information follows -->
+  <decoder>
+    <family name="Tsunami2 Diesel" mfg="SoundTraxx (Throttle-Up)" comment="These are the -retail- version Econami Diesel decoders">
+      <model model="TSU-1100 EMD Diesels" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="other" productID="885001" comment="Model 885001">
+        <versionCV lowVersionID="71"/>
+        <output name="3" label="  FX3  "/>
+        <output name="4" label="  FX4  "/>
+        <output name="5" label="Airhorn| ">
+            <label xml:lang="it">Tromba| </label>
+        </output>
+        <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+        </output>
+        <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|Dinamici</label>
+        </output>
+        <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+        </output>
+        <output name="9" label="Straight|to 8"/>
+        <output name="10" label="General|Service"/>
+        <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+        </output>
+        <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+        </output>
+        <output name="13" label="HEP|Mode"/>
+        <output name="14" label="Ind/Train|Brake"/>
+        <output name="15" label="Coupler| ">
+            <label xml:lang="it">Accoppiatore| </label>
+        </output>
+        <size length="27" width="10.5" height="5" units="mm"/>
+      </model>
+      <model model="TSU-1100 GE Diesels" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="other" productID="885002" comment="Model 885002">
+        <versionCV lowVersionID="71"/>
+        <output name="3" label="  FX3  "/>
+        <output name="4" label="  FX4  "/>
+        <output name="5" label="Airhorn| ">
+            <label xml:lang="it">Tromba| </label>
+        </output>
+        <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+        </output>
+        <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|Dinamici</label>
+        </output>
+        <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+        </output>
+        <output name="9" label="Straight|to 8"/>
+        <output name="10" label="General|Service"/>
+        <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+        </output>
+        <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+        </output>
+        <output name="13" label="HEP|Mode"/>
+        <output name="14" label="Ind/Train|Brake"/>
+        <output name="15" label="Coupler| ">
+            <label xml:lang="it">Accoppiatore| </label>
+        </output>
+        <size length="27" width="10.5" height="5" units="mm"/>
+      </model>
+      <model model="TSU-1100 Alco Diesels" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="other" productID="885003" comment="Model 885003">
+        <versionCV lowVersionID="71"/>
+        <output name="3" label="  FX3  "/>
+        <output name="4" label="  FX4  "/>
+        <output name="5" label="Airhorn| ">
+            <label xml:lang="it">Tromba| </label>
+        </output>
+        <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+        </output>
+        <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|Dinamici</label>
+        </output>
+        <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+        </output>
+        <output name="9" label="Straight|to 8"/>
+        <output name="10" label="General|Service"/>
+        <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+        </output>
+        <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+        </output>
+        <output name="13" label="HEP|Mode"/>
+        <output name="14" label="Ind/Train|Brake"/>
+        <output name="15" label="Coupler| ">
+            <label xml:lang="it">Accoppiatore| </label>
+        </output>
+        <size length="27" width="10.5" height="5" units="mm"/>
+      </model>
+      <model model="TSU-1100 Baldwin Diesels" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="other" productID="885004" comment="Model 885004">
+        <versionCV lowVersionID="71"/>
+        <output name="3" label="  FX3  "/>
+        <output name="4" label="  FX4  "/>
+        <output name="5" label="Airhorn| ">
+            <label xml:lang="it">Tromba| </label>
+        </output>
+        <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+        </output>
+        <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|Dinamici</label>
+        </output>
+        <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+        </output>
+        <output name="9" label="Straight|to 8"/>
+        <output name="10" label="General|Service"/>
+        <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+        </output>
+        <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+        </output>
+        <output name="13" label="HEP|Mode"/>
+        <output name="14" label="Ind/Train|Brake"/>
+        <output name="15" label="Coupler| ">
+            <label xml:lang="it">Accoppiatore| </label>
+        </output>
+        <size length="27" width="10.5" height="5" units="mm"/>
+      </model>
+      <functionlabels>
+        <functionlabel num="0" lockable="true">Headlight</functionlabel>
+        <functionlabel num="1" lockable="true">Bell</functionlabel>
+        <functionlabel num="2" lockable="false">Horn</functionlabel>
+        <functionlabel num="3" lockable="true">Short Horn</functionlabel>
+        <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
+        <functionlabel num="5" lockable="true">RPM+</functionlabel>
+        <functionlabel num="6" lockable="true">RPM-</functionlabel>
+        <functionlabel num="7" lockable="true">Dimmer</functionlabel>
+        <functionlabel num="8" lockable="true">Mute</functionlabel>
+        <functionlabel num="9" lockable="true">Xing Signal</functionlabel>
+        <functionlabel num="10" lockable="true">Straight to Eight</functionlabel>
+        <functionlabel num="11" lockable="true">Ind/Train Brake</functionlabel>
+        <functionlabel num="12" lockable="true">Brake Select</functionlabel>
+        <functionlabel num="13" lockable="true">Coupler</functionlabel>
+        <functionlabel num="14" lockable="true">Half Speed</functionlabel>
+        <functionlabel num="15" lockable="true">Handbrake</functionlabel>
+        <functionlabel num="16" lockable="true">HEP Mode</functionlabel>
+        <functionlabel num="17" lockable="true">Fuel Loading</functionlabel>
+        <functionlabel num="18" lockable="true">General Service</functionlabel>
+        <functionlabel num="20" lockable="true">Steam Generator</functionlabel>
+        <functionlabel num="21" lockable="true">Sander Valve</functionlabel>
+        <functionlabel num="22" lockable="true">Cab Chatter</functionlabel>
+        <functionlabel num="23" lockable="true">All Aboard</functionlabel>
+        <functionlabel num="24" lockable="true">FX3 Output</functionlabel>
+        <functionlabel num="25" lockable="true">FX4 Output</functionlabel>
+        <functionlabel num="26" lockable="true">FX5 Output</functionlabel>
+        <functionlabel num="27" lockable="true">FX6 Output</functionlabel>
+      </functionlabels>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes">
+      <capability>
+        <name>Indexed CV access</name>
+        <parameter name="PI">32</parameter>
+        <parameter name="SI">31</parameter>
+        <parameter name="cvFirst">false</parameter>
+      </capability>
+    </programming>
+    <!-- Configuration Variable (CV) information follows -->
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOCV.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2CV.xml"/>
+      <!-- Function Mapping follows -->
+      <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls Headlight</label>
+      </variable>
+      <variable item="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls Backup Light</label>
+      </variable>
+      <variable item="FL(f) controls output 5" CV="33" mask="XXXXXVXX" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output Airhorn</label>
+      </variable>
+      <variable item="FL(f) controls output 6" CV="33" mask="XXXXVXXX" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output Bell</label>
+      </variable>
+      <variable item="FL(f) controls output 3" CV="33" mask="XXXVXXXX" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output FX3</label>
+      </variable>
+      <variable item="FL(f) controls output 4" CV="33" mask="XXVXXXXX" minOut="2" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output FX4</label>
+      </variable>
+      <variable item="FL(f) controls output 7" CV="33" mask="XVXXXXXX" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output Dynamics</label>
+      </variable>
+      <variable item="FL(f) controls output 8" CV="33" mask="VXXXXXXX" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output Short</label>
+      </variable>
+      <variable item="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls Headlight</label>
+      </variable>
+      <variable item="FL(r) controls output 2" CV="34" mask="XXXXXXVX" minOut="2" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls Backup Light</label>
+      </variable>
+      <variable item="FL(r) controls output 5" CV="34" mask="XXXXXVXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output Airhorn</label>
+      </variable>
+      <variable item="FL(r) controls output 6" CV="34" mask="XXXXVXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output Bell</label>
+      </variable>
+      <variable item="FL(r) controls output 3" CV="34" mask="XXXVXXXX" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output FX3</label>
+      </variable>
+      <variable item="FL(r) controls output 4" CV="34" mask="XXVXXXXX" minOut="2" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output FX4</label>
+      </variable>
+      <variable item="FL(r) controls output 7" CV="34" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output Dynamics</label>
+      </variable>
+      <variable item="FL(r) controls output 8" CV="34" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output Short</label>
+      </variable>
+      <variable item="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls Headlight</label>
+      </variable>
+      <variable item="F1 controls output 2" CV="35" mask="XXXXXXVX" minOut="2" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls Backup Light</label>
+      </variable>
+      <variable item="F1 controls output 5" CV="35" mask="XXXXXVXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output Airhorn</label>
+      </variable>
+      <variable item="F1 controls output 6" CV="35" mask="XXXXVXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output Bell</label>
+      </variable>
+      <variable item="F1 controls output 3" CV="35" mask="XXXVXXXX" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output FX3</label>
+      </variable>
+      <variable item="F1 controls output 4" CV="35" mask="XXVXXXXX" minOut="2" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output FX4</label>
+      </variable>
+      <variable item="F1 controls output 7" CV="35" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output Dynamics</label>
+      </variable>
+      <variable item="F1 controls output 8" CV="35" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output Short</label>
+      </variable>
+      <variable item="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls Headlight</label>
+      </variable>
+      <variable item="F2 controls output 2" CV="36" mask="XXXXXXVX" minOut="2" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls Backup Light</label>
+      </variable>
+      <variable item="F2 controls output 5" CV="36" mask="XXXXXVXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output Airhorn</label>
+      </variable>
+      <variable item="F2 controls output 6" CV="36" mask="XXXXVXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output Bell</label>
+      </variable>
+      <variable item="F2 controls output 3" CV="36" mask="XXXVXXXX" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output FX3</label>
+      </variable>
+      <variable item="F2 controls output 4" CV="36" mask="XXVXXXXX" minOut="2" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output FX4</label>
+      </variable>
+      <variable item="F2 controls output 7" CV="36" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output Dynamics</label>
+      </variable>
+      <variable item="F2 controls output 8" CV="36" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output Short</label>
+      </variable>
+      <variable item="F3 controls output 6" CV="37" mask="XXXXXXXV" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output Bell</label>
+      </variable>
+      <variable item="F3 controls output 3" CV="37" mask="XXXXXXVX" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output FX3</label>
+      </variable>
+      <variable item="F3 controls output 4" CV="37" mask="XXXXXVXX" minOut="2" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output FX4</label>
+      </variable>
+      <variable item="F3 controls output 7" CV="37" mask="XXXXVXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output Dynamics</label>
+      </variable>
+      <variable item="F3 controls output 8" CV="37" mask="XXXVXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output Short</label>
+      </variable>
+      <variable item="F3 controls output 9" CV="37" mask="XXVXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output Str-8</label>
+      </variable>
+      <variable item="F3 controls output 10" CV="37" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output Gen Ser</label>
+      </variable>
+      <variable item="F3 controls output 11" CV="37" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output Dimmer</label>
+      </variable>
+      <variable item="F4 controls output 6" CV="38" mask="XXXXXXXV" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output Bell</label>
+      </variable>
+      <variable item="F4 controls output 3" CV="38" mask="XXXXXXVX" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output FX3</label>
+      </variable>
+      <variable item="F4 controls output 4" CV="38" mask="XXXXXVXX" minOut="2" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output FX4</label>
+      </variable>
+      <variable item="F4 controls output 7" CV="38" mask="XXXXVXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output Dynamics</label>
+      </variable>
+      <variable item="F4 controls output 8" CV="38" mask="XXXVXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output Short</label>
+      </variable>
+      <variable item="F4 controls output 9" CV="38" mask="XXVXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output Str-8</label>
+      </variable>
+      <variable item="F4 controls output 10" CV="38" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output Gen Ser</label>
+      </variable>
+      <variable item="F4 controls output 11" CV="38" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output Dimmer</label>
+      </variable>
+        <variable item="F5 controls output 6" CV="39" mask="XXXXXXXV" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F5 controls output Bell</label>
+        </variable>
+        <variable item="F5 controls output 3" CV="39" mask="XXXXXXVX" minOut="1" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F5 controls output FX3</label>
+        </variable>
+        <variable item="F5 controls output 4" CV="39" mask="XXXXXVXX" minOut="2" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F5 controls output FX4</label>
+        </variable>
+        <variable item="F5 controls output 7" CV="39" mask="XXXXVXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F5 controls output Dynamics</label>
+        </variable>
+        <variable item="F5 controls output 8" CV="39" mask="XXXVXXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F5 controls output Short</label>
+        </variable>
+        <variable item="F5 controls output 9" CV="39" mask="XXVXXXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F5 controls output Str-8</label>
+        </variable>
+        <variable item="F5 controls output 10" CV="39" mask="XVXXXXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F5 controls output Gen Ser</label>
+        </variable>
+        <variable item="F5 controls output 11" CV="39" mask="VXXXXXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F5 controls output Dimmer</label>
+        </variable>
+        <variable item="F6 controls output 6" CV="40" mask="XXXXXXXV" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F6 controls output Bell</label>
+        </variable>
+        <variable item="F6 controls output 3" CV="40" mask="XXXXXXVX" minOut="1" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F6 controls output FX3</label>
+        </variable>
+        <variable item="F6 controls output 4" CV="40" mask="XXXXXVXX" minOut="2" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F6 controls output FX4</label>
+        </variable>
+        <variable item="F6 controls output 7" CV="40" mask="XXXXVXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F6 controls output Dynamics</label>
+        </variable>
+        <variable item="F6 controls output 8" CV="40" mask="XXXVXXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F6 controls output Short</label>
+        </variable>
+        <variable item="F6 controls output 9" CV="40" mask="XXVXXXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F6 controls output Str-8</label>
+        </variable>
+        <variable item="F6 controls output 10" CV="40" mask="XVXXXXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F6 controls output Gen Ser</label>
+        </variable>
+        <variable item="F6 controls output 11" CV="40" mask="VXXXXXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F6 controls output Dimmer</label>
+        </variable>
+        <variable item="F7 controls output 7" CV="41" mask="XXXXXXXV" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F7 controls output Dynamics</label>
+        </variable>
+        <variable item="F7 controls output 8" CV="41" mask="XXXXXXVX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F7 controls output Short</label>
+        </variable>
+        <variable item="F7 controls output 9" CV="41" mask="XXXXXVXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F7 controls output Str-8</label>
+        </variable>
+        <variable item="F7 controls output 10" CV="41" mask="XXXXVXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F7 controls output Gen Ser</label>
+        </variable>
+        <variable item="F7 controls output 11" CV="41" mask="XXXVXXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F7 controls output Dimmer</label>
+        </variable>
+        <variable item="F7 controls output 12" CV="41" mask="XXVXXXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F7 controls output Mute</label>
+        </variable>
+        <variable item="F7 controls output 13" CV="41" mask="XVXXXXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F7 controls output HEP</label>
+        </variable>
+        <variable item="F7 controls output 14" CV="41" mask="VXXXXXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F7 controls output Brake</label>
+        </variable>
+        <variable item="F8 controls output 7" CV="42" mask="XXXXXXXV" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F8 controls output Dynamics</label>
+        </variable>
+        <variable item="F8 controls output 8" CV="42" mask="XXXXXXVX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F8 controls output Short</label>
+        </variable>
+        <variable item="F8 controls output 9" CV="42" mask="XXXXXVXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F8 controls output Str-8</label>
+        </variable>
+        <variable item="F8 controls output 10" CV="42" mask="XXXXVXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F8 controls output Gen Ser</label>
+        </variable>
+        <variable item="F8 controls output 11" CV="42" mask="XXXVXXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F8 controls output Dimmer</label>
+        </variable>
+        <variable item="F8 controls output 12" CV="42" mask="XXVXXXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F8 controls output Mute</label>
+        </variable>
+        <variable item="F8 controls output 13" CV="42" mask="XVXXXXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F8 controls output HEP</label>
+        </variable>
+        <variable item="F8 controls output 14" CV="42" mask="VXXXXXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F8 controls output Brake</label>
+        </variable>
+        <variable item="F9 controls output 7" CV="43" mask="XXXXXXXV" default="0" minFn="9">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F9 controls output Dynamics</label>
+        </variable>
+        <variable item="F9 controls output 8" CV="43" mask="XXXXXXVX" default="0" minFn="9">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F9 controls output Short</label>
+        </variable>
+        <variable item="F9 controls output 9" CV="43" mask="XXXXXVXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F9 controls output Str-8</label>
+        </variable>
+        <variable item="F9 controls output 10" CV="43" mask="XXXXVXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F9 controls output Gen Ser</label>
+        </variable>
+        <variable item="F9 controls output 11" CV="43" mask="XXXVXXXX" default="0" minFn="9">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F9 controls output Dimmer</label>
+        </variable>
+        <variable item="F9 controls output 12" CV="43" mask="XXVXXXXX" default="0" minFn="9">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F9 controls output Mute</label>
+        </variable>
+        <variable item="F9 controls output 13" CV="43" mask="XVXXXXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F9 controls output HEP</label>
+        </variable>
+        <variable item="F9 controls output 14" CV="43" mask="VXXXXXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F9 controls output Brake</label>
+        </variable>
+        <variable item="F10 controls output 8" CV="44" mask="XXXXXXXV" default="0" minFn="10">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F10 controls output Short</label>
+        </variable>
+        <variable item="F10 controls output 9" CV="44" mask="XXXXXXVX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F10 controls output Str-8</label>
+        </variable>
+        <variable item="F10 controls output 10" CV="44" mask="XXXXXVXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F10 controls output Gen Ser</label>
+        </variable>
+        <variable item="F10 controls output 11" CV="44" mask="XXXXVXXX" default="0" minFn="10">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F10 controls output Dimmer</label>
+        </variable>
+        <variable item="F10 controls output 12" CV="44" mask="XXXVXXXX" default="0" minFn="10">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F10 controls output Mute</label>
+        </variable>
+        <variable item="F10 controls output 13" CV="44" mask="XXVXXXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F10 controls output HEP</label>
+        </variable>
+        <variable item="F10 controls output 14" CV="44" mask="XVXXXXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F10 controls output Brake</label>
+        </variable>
+        <variable item="F10 controls output 15" CV="44" mask="VXXXXXXX" default="0" minFn="10">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F10 controls output Coupler</label>
+        </variable>
+        <variable item="F11 controls output 8" CV="45" mask="XXXXXXXV" default="0" minFn="11">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F11 controls output Short</label>
+        </variable>
+        <variable item="F11 controls output 9" CV="45" mask="XXXXXXVX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F11 controls output Str-8</label>
+        </variable>
+        <variable item="F11 controls output 10" CV="45" mask="XXXXXVXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F11 controls output Gen Ser</label>
+        </variable>
+        <variable item="F11 controls output 11" CV="45" mask="XXXXVXXX" default="0" minFn="11">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F11 controls output Dimmer</label>
+        </variable>
+        <variable item="F11 controls output 12" CV="45" mask="XXXVXXXX" default="0" minFn="11">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F11 controls output Mute</label>
+        </variable>
+        <variable item="F11 controls output 13" CV="45" mask="XXVXXXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F11 controls output HEP</label>
+        </variable>
+        <variable item="F11 controls output 14" CV="45" mask="XVXXXXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F11 controls output Brake</label>
+        </variable>
+        <variable item="F11 controls output 15" CV="45" mask="VXXXXXXX" default="0" minFn="11">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F11 controls output Coupler</label>
+        </variable>
+        <variable item="F12 controls output 8" CV="46" mask="XXXXXXXV" default="0" minFn="12">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F12 controls output Short</label>
+        </variable>
+        <variable item="F12 controls output 9" CV="46" mask="XXXXXXVX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F12 controls output Str-8</label>
+        </variable>
+        <variable item="F12 controls output 10" CV="46" mask="XXXXXVXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F12 controls output Gen Ser</label>
+        </variable>
+        <variable item="F12 controls output 11" CV="46" mask="XXXXVXXX" default="0" minFn="12">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F12 controls output Dimmer</label>
+        </variable>
+        <variable item="F12 controls output 12" CV="46" mask="XXXVXXXX" default="0" minFn="12">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F12 controls output Mute</label>
+        </variable>
+        <variable item="F12 controls output 13" CV="46" mask="XXVXXXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F12 controls output HEP</label>
+        </variable>
+        <variable item="F12 controls output 14" CV="46" mask="XVXXXXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F12 controls output Brake</label>
+        </variable>
+        <variable item="F12 controls output 15" CV="46" mask="VXXXXXXX" default="0" minFn="12">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F12 controls output Coupler</label>
+        </variable>
+      <variable CV="112" mask="XXXXXXXV" item="Sound Option 14" default="1">
+        <enumVal>
+          <enumChoice>
+            <choice>Emergency stop engine shutdown</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>Emergency stop engine idle</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Emergency Stop</label>
+      </variable>
+      <variable CV="112" mask="XXXXXXVX" item="Sound Option 15" default="1">
+	<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Low-pressure alarm bell</label>
+      </variable>
+      <variable CV="114" mask="XXXXVVVV" item="Sound Option 1" default="7" tooltip="Controls how the engine RPMs interact with the speed step setting of the throttle">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumNotch.xml"/>
+        <label>Engine Notch Rate</label>
+      </variable>
+      <variable CV="114" mask="XXXVXXXX" item="Sound Option 2" default="0" tooltip="When this option AND manual (notching) engine control is enabled, locomotive will not move until engine starts">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumInterlock.xml"/>
+        <label>Engine RPM Interlock</label>
+      </variable>
+      <variable CV="114" mask="XXVXXXXX" item="Sound Option 3" default="1" tooltip="Determines whether prime mover will start up automatically or manually">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <label>Engine Auto Start Enable</label>
+      </variable>
+      <variable CV="114" mask="VVXXXXXX" item="Sound Option 4" default="0" tooltip="Controls how the dynamic brakes interact with the engine RPMs">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumDynamic.xml"/>
+        <label>Dynamic Brake Override</label>
+      </variable>
+      <variable CV="116" mask="XVVVVVVV" item="Advanced Group 1 Option 8">
+          <decVal max="127"/>
+          <label>Dynamic Brake Rate</label>
+      </variable>
+      <variable CV="116" mask="VXXXXXXX" item="Advanced Group 1 Option 9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-AddSubtract2.xml"/>
+          <label>Dynamic Brake Rate Sign</label>
+      </variable>
+      <!-- Sound Selection follows -->
+      <variable CV="120" mask="XXVVVVVV" item="Sound Option 6" default="0" tooltip="Selects which airhorn to use">
+        <enumVal>
+          <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumChoiceDieselAirhorn.xml"/>
+        </enumVal>
+        <label>Airhorn Select</label>
+      </variable>
+      <variable CV="121" mask="XXVVVVVV" item="Sound Option 7" default="0" tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
+        <enumVal>
+          <enumChoice>
+            <choice>Short Horn</choice>
+          </enumChoice>
+          <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumChoiceDieselAirhorn.xml"/>
+        </enumVal>
+        <label>Auxiliary Airhorn Select</label>
+      </variable>
+      <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" include="885001" default="18" tooltip="Bell sound effect and ring-rate">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselBell.xml"/>
+        <label>Bell Select</label>
+      </variable>
+      <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" include="885002" default="36" tooltip="Bell sound effect and ring-rate">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselBell.xml"/>
+        <label>Bell Select</label>
+      </variable>
+      <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" include="885003" default="10" tooltip="Bell sound effect and ring-rate">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselBell.xml"/>
+        <label>Bell Select</label>
+      </variable>
+      <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" include="885004" default="47" tooltip="Bell sound effect and ring-rate">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselBell.xml"/>
+        <label>Bell Select</label>
+      </variable>
+      <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="885001" default="0" tooltip="Select one of prime mover sound effects">
+        <enumVal>
+          <enumChoice>
+            <choice>EMD 567 (No Transition)</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>EMD 567 Non-Turbo</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>EMD 567D Turbo</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>EMD Dual 567</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>EMD 645 Non-Turbo</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>EMD 645 Turbo</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>EMD Dual 645 Turbo</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>EMD 710</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>EMD 710 G3C-T2</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Prime Mover Select</label>
+      </variable>
+      <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="885002" default="2" tooltip="Select one of prime mover sound effects">
+        <enumVal>
+          <enumChoice>
+            <choice>FDL-12</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>FDL-16</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>7FDL-16</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>Dual FDL16</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>GEVO G12</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>44-Ton Center Cab Dual Caterpillar</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>GE Cummins</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Prime Mover Select</label>
+      </variable>
+      <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="885003" default="0" tooltip="Select one of prime mover sound effects">
+        <enumVal>
+          <enumChoice>
+            <choice>ALCO 539 Turbo</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>ALCO 539 Non Turbo</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>ALCO 244 Turbo</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>ALCO 251A i6</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>ALCO 251C v12</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>ALCO 251C v12 Super Charged</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>ALCO 251C v12</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>ALCO 251C v16</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>ALCO 251F v16 Super Charged</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Prime Mover Select</label>
+      </variable>
+      <variable CV="123" mask="XXXXXVVV" item="Sound Option 5" include="885004" default="0" tooltip="Select one of prime mover sound effects">
+        <enumVal>
+          <enumChoice>
+            <choice>Baldwin VO</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>Baldwin 608NA</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>Baldwin 608A</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>Baldwin 606NA</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>Rio Grande Southern Galloping Goose</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>Dual Whitcomb</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>Fairbanks-Morse</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Prime Mover Select</label>
+      </variable>
+      <variable CV="124" mask="XXXXXXVV" item="Sound Option 10" include="885001" default="3" tooltip="Select one of air compressor sound effects">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselComp.xml"/>
+        <label>Air Compressor Select</label>
+      </variable>
+      <variable CV="124" mask="XXXXXXVV" item="Sound Option 10" include="885002" default="1" tooltip="Select one of air compressor sound effects">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselComp.xml"/>
+        <label>Air Compressor Select</label>
+      </variable>
+      <variable CV="124" mask="XXXXXXVV" item="Sound Option 10" include="885003" default="0" tooltip="Select one of air compressor sound effects">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselComp.xml"/>
+        <label>Air Compressor Select</label>
+      </variable>
+      <variable CV="124" mask="XXXXXXVV" item="Sound Option 10" include="885004" default="0" tooltip="Select one of air compressor sound effects">
+		<enumVal>
+		  <enumChoice>
+			<choice>Engine Driven</choice>
+		  </enumChoice>
+		  <enumChoice>
+			<choice>GE Whooping (motor driven)</choice>
+		  </enumChoice>
+		  <enumChoice>
+			<choice>GE GEVO Series (motor driven)</choice>
+		  </enumChoice>
+		</enumVal>
+        <label>Air Compressor Select</label>
+      </variable>
+      <!-- End Sound Selection -->
+      <!-- Volume Controls follow -->
+      <variable CV="129" mask="VVVVVVVV" item="Sound Setting 2" default="225" tooltip="Sets the volume of the airhorn">
+        <decVal/>
+        <label>Airhorn Volume</label>
+      </variable>
+      <variable CV="131" mask="VVVVVVVV" item="Sound Setting 4" default="150" tooltip="Sets the volume of the prime mover">
+        <decVal/>
+        <label>Prime Mover Volume</label>
+      </variable>
+      <variable CV="132" mask="VVVVVVVV" item="Sound Setting 5" default="100" tooltip="Sets the volume of the air compressor">
+        <decVal/>
+        <label>Air Compressor Volume</label>
+      </variable>
+      <variable CV="133" mask="VVVVVVVV" item="Sound Setting 6" default="125" tooltip="Sets the volume of the dynamic brakes">
+        <decVal/>
+        <label>Dynamic Brake Volume</label>
+      </variable>
+      <variable CV="134" mask="VVVVVVVV" item="Sound Setting 7" default="75" tooltip="Sets the volume of the radiator fans">
+        <decVal/>
+        <label>Radiator Fans Volume</label>
+      </variable>
+      <variable CV="135" mask="VVVVVVVV" item="Sound Setting 8" default="60" tooltip="Sets the volume of the radiator fans">
+        <decVal/>
+        <label>Alarm Bell Volume</label>
+      </variable>
+      <variable CV="143" mask="VVVVVVVV" item="Sound Setting 16" default="60" tooltip="Sets the volume of the air reservoir poppet valve releasing">
+        <decVal/>
+        <label>Poppet Valve Volume</label>
+      </variable>
+      <variable CV="144" mask="VVVVVVVV" item="Sound Setting 17" default="50" tooltip="Sets the volume of the Steam Generator">
+        <decVal/>
+        <label>Steam Generator Volume</label>
+      </variable>
+      <variable CV="145" mask="VVVVVVVV" item="Sound Setting 18" default="128" tooltip="Sets the volume of the Cab Doors">
+        <decVal/>
+        <label>Cab Doors Volume</label>
+      </variable>
+      <variable CV="147" mask="VVVVVVVV" item="Sound Setting 20" default="128" tooltip="Sets the volume of the Relay Clicks">
+        <decVal/>
+        <label>Relay Clicks Volume</label>
+      </variable>
+      <variable CV="156" mask="VVVVVVVV" item="Sound Setting 29" default="20">
+        <decVal/>
+        <label>Air Conditioner Volume</label>
+      </variable>
+      <variable CV="158" mask="VVVVVVVV" item="Sound Setting 31" default="40">
+        <decVal/>
+        <label>Pneumatic Oilers Volume</label>
+      </variable>
+      <variable CV="159" mask="VVVVVVVV" item="Sound Setting 32" default="20">
+        <decVal/>
+        <label>Toilet Flush Volume</label>
+      </variable>
+      <!-- Individual Reverb Output Level Controls follow -->
+      <variable CV="161" mask="VVVVVVVV" item="Whistle Reverb Level" default="96" tooltip="Sets the percentage of the horn signal level to mix into the reverb input">
+        <decVal/>
+        <label>Horn Reverb Level</label>
+      </variable>
+      <variable CV="163" mask="VVVVVVVV" item="Exhaust Reverb Level" default="0" tooltip="Sets the percentage of the prime mover signal level to mix into the reverb input">
+        <decVal/>
+        <label>Prime Mover Reverb Level</label>
+      </variable>
+      <variable CV="164" mask="VVVVVVVV" item="Air Pump Reverb Level" default="0" tooltip="Sets the percentage of the air compressor signal level to mix into the reverb input">
+        <decVal/>
+        <label>Air Compressor Reverb Level</label>
+      </variable>
+      <variable CV="165" mask="VVVVVVVV" item="Prime Mover 3 Reverb Level" default="0" >
+        <decVal/>
+        <label>Dynamic Brake Reverb Level</label>
+      </variable>
+      <variable CV="166" mask="VVVVVVVV" item="Reverb166" default="0" >
+        <decVal/>
+        <label>Radiator Fans Reverb Level</label>
+      </variable>
+      <variable CV="167" mask="VVVVVVVV" item="Reverb167" default="0" >
+        <decVal/>
+        <label>Alarm Bell Reverb Level</label>
+      </variable>
+      <variable CV="175" mask="VVVVVVVV" item="Reverb175" default="0" >
+        <decVal/>
+        <label>Poppet Valve Reverb Level</label>
+      </variable>
+      <variable CV="176" mask="VVVVVVVV" item="Reverb176" default="0" >
+        <decVal/>
+        <label>Steam Generator Reverb Level</label>
+      </variable>
+      <variable CV="177" mask="VVVVVVVV" item="Reverb177" default="0" >
+        <decVal/>
+        <label>Cab Doors Reverb Level</label>
+      </variable>
+      <variable CV="179" mask="VVVVVVVV" item="Reverb179" default="0" >
+        <decVal/>
+        <label>Relay Clicks Reverb Level</label>
+      </variable>
+      <variable CV="188" mask="VVVVVVVV" item="Reverb188" default="0" >
+        <decVal/>
+        <label>Air Conditioner Reverb Level</label>
+      </variable>
+      <variable CV="191" mask="VVVVVVVV" item="Reverb191" default="0" >
+        <decVal/>
+        <label>Toilet Flush Reverb Level</label>
+      </variable>
+      <variable CV="200" item="Sound Group 3 Option 2" default="10" tooltip="Adjust the duration that occurs between each subsequent pop! of the automatic poppet valve sound effect">
+        <decVal/>
+        <label>Poppet Valve Release Rate</label>
+      </variable>
+      <variable CV="201" item="Probability Fireman Shovels Coal" default="128" >
+        <decVal/>
+        <label>Cab Doors Event Probability</label>
+      </variable>
+      <variable CV="202" item="Probability Fireman Fills the Tender" default="0" >
+        <decVal/>
+        <label>Fuel Loading Event Probability</label>
+      </variable>
+      <variable CV="203" item="Probability Fireman Turns His Wrench" default="128" >
+        <decVal/>
+        <label>Wrenches Event Probability</label>
+      </variable>
+      <variable CV="204" item="Probability Fireman Uses His Grease Gun" default="128" >
+        <decVal/>
+        <label>Pneumatic Oilers Event Probability</label>
+      </variable>
+      <variable CV="205" item="Probability Fireman Uses His Oil Can" default="64" >
+        <decVal/>
+        <label>Cab Chatter Event Probability</label>
+      </variable>
+      <variable CV="206" item="Probability Fireman Uses the Injector" default="32" >
+        <decVal/>
+        <label>Toilet Flush Event Probability</label>
+      </variable>
+      <variable CV="207" item="Probability Fireman Uses the Blower" default="128" >
+        <decVal/>
+        <label>Air Conditioner Event Probability</label>
+      </variable>
+      <variable CV="208" item="Probability Pop Valve Blows Off" default="128" >
+        <decVal/>
+        <label>Relay Clicks Event Probability</label>
+      </variable>
+      <variable CV="219" mask="VVVVVVVV" item="Analog Vhigh" default="15" tooltip="track voltage in analog mode at which the exhaust sound begins">
+        <decVal/>
+        <label>Analog Mode Engine Start Voltage (0-255)</label>
+      </variable>
+      <variable CV="1.275" item="Extended Function Map Independent/Train Brake" default="11">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+	<tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
+      </variable>
+    <variable CV="1.283" item="Extended Function Map Brake Select" default="12">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+        <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
+    </variable>
+    <variable CV="1.284" item="Extended Function Map Alternate Mixer" default="255">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+        <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
+    </variable>
+    <variable CV="1.285" item="Extended Function Map RPM+" default="5">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+        <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
+    </variable>
+    <variable CV="1.286" item="Extended Function Map RPM-" default="6">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+        <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
+    </variable>
+    <variable CV="1.297" item="Extended Function Map Airhorn" default="2">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+        <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
+    </variable>
+    <variable CV="1.299" item="Extended Function Map Dynamic Brake" default="4">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+        <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
+    </variable>
+    <variable CV="1.300" item="Extended Function Map Short Airhorn" default="3">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+        <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
+    </variable>
+    <variable CV="1.301" item="Extended Function Map Straight-to-Eight" default="10">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+        <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
+    </variable>
+    <variable CV="1.302" item="Extended Function Map General Service" default="18">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+        <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
+    </variable>
+    <variable CV="1.303" item="Extended Function Map HEP Mode" default="16">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+        <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
+    </variable>
+    <variable CV="1.304" item="Extended Function Map Cab Chatter" default="22">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+        <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
+    </variable>
+    <variable CV="1.308" item="Extended Function Map Handbrake" default="15">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+        <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
+    </variable>
+    <variable CV="1.309" item="Extended Function Map Sander Valve" default="21">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+        <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
+    </variable>
+    <variable CV="1.312" item="Extended Function Map Steam Generator" default="20">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+        <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
+    </variable>
+    <variable CV="1.313" item="Extended Function Map Fuel Loading" default="17">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+        <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
+    </variable>
+    <variable CV="1.403" mask="XXXXXXXV" item="Independent/Train Brake Automatic Effects - FWDD" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
+    </variable>
+    <variable CV="1.403" mask="XXXXXXVX" item="Independent/Train Brake Automatic Effects - REVD" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
+    </variable>
+    <variable CV="1.403" mask="XXXXXVXX" item="Independent/Train Brake Automatic Effects - FWDS" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
+    </variable>
+    <variable CV="1.403" mask="XXXXVXXX" item="Independent/Train Brake Automatic Effects - REVS" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
+    </variable>
+    <variable CV="1.403" mask="XXXVXXXX" item="Independent/Train Brake Automatic Effects - ESTP" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
+    </variable>
+    <variable CV="1.411" mask="XXXXXXXV" item="Brake Select Automatic Effects - FWDD" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
+    </variable>
+    <variable CV="1.411" mask="XXXXXXVX" item="Brake Select Automatic Effects - REVD" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
+    </variable>
+    <variable CV="1.411" mask="XXXXXVXX" item="Brake Select Automatic Effects - FWDS" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
+    </variable>
+    <variable CV="1.411" mask="XXXXVXXX" item="Brake Select Automatic Effects - REVS" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
+    </variable>
+    <variable CV="1.411" mask="XXXVXXXX" item="Brake Select Automatic Effects - ESTP" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
+    </variable>
+    <variable CV="1.412" mask="XXXXXXXV" item="Alternate Mixer Automatic Effects - FWDD" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
+    </variable>
+    <variable CV="1.412" mask="XXXXXXVX" item="Alternate Mixer Automatic Effects - REVD" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
+    </variable>
+    <variable CV="1.412" mask="XXXXXVXX" item="Alternate Mixer Automatic Effects - FWDS" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
+    </variable>
+    <variable CV="1.412" mask="XXXXVXXX" item="Alternate Mixer Automatic Effects - REVS" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
+    </variable>
+    <variable CV="1.412" mask="XXXVXXXX" item="Alternate Mixer Automatic Effects - ESTP" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
+    </variable>
+    <variable CV="1.413" mask="XXXXXXXV" item="RPM+ Automatic Effects - FWDD" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
+    </variable>
+    <variable CV="1.413" mask="XXXXXXVX" item="RPM+ Automatic Effects - REVD" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
+    </variable>
+    <variable CV="1.413" mask="XXXXXVXX" item="RPM+ Automatic Effects - FWDS" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
+    </variable>
+    <variable CV="1.413" mask="XXXXVXXX" item="RPM+ Automatic Effects - REVS" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
+    </variable>
+    <variable CV="1.413" mask="XXXVXXXX" item="RPM+ Automatic Effects - ESTP" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
+    </variable>
+    <variable CV="1.414" mask="XXXXXXXV" item="RPM- Automatic Effects - FWDD" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
+    </variable>
+    <variable CV="1.414" mask="XXXXXXVX" item="RPM- Automatic Effects - REVD" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
+    </variable>
+    <variable CV="1.414" mask="XXXXXVXX" item="RPM- Automatic Effects - FWDS" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
+    </variable>
+    <variable CV="1.414" mask="XXXXVXXX" item="RPM- Automatic Effects - REVS" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
+    </variable>
+    <variable CV="1.414" mask="XXXVXXXX" item="RPM- Automatic Effects - ESTP" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
+    </variable>
+    <variable CV="1.425" mask="XXXXXXXV" item="Airhorn Automatic Effects - FWDD" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
+    </variable>
+    <variable CV="1.425" mask="XXXXXXVX" item="Airhorn Automatic Effects - REVD" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
+    </variable>
+    <variable CV="1.425" mask="XXXXXVXX" item="Airhorn Automatic Effects - FWDS" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
+    </variable>
+    <variable CV="1.425" mask="XXXXVXXX" item="Airhorn Automatic Effects - REVS" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
+    </variable>
+    <variable CV="1.425" mask="XXXVXXXX" item="Airhorn Automatic Effects - ESTP" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
+    </variable>
+    <variable CV="1.427" mask="XXXXXXXV" item="Dynamic Brake Automatic Effects - FWDD" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
+    </variable>
+    <variable CV="1.427" mask="XXXXXXVX" item="Dynamic Brake Automatic Effects - REVD" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
+    </variable>
+    <variable CV="1.427" mask="XXXXXVXX" item="Dynamic Brake Automatic Effects - FWDS" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
+    </variable>
+    <variable CV="1.427" mask="XXXXVXXX" item="Dynamic Brake Automatic Effects - REVS" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
+    </variable>
+    <variable CV="1.427" mask="XXXVXXXX" item="Dynamic Brake Automatic Effects - ESTP" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
+    </variable>
+    <variable CV="1.428" mask="XXXXXXXV" item="Short Airhorn Automatic Effects - FWDD" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
+    </variable>
+    <variable CV="1.428" mask="XXXXXXVX" item="Short Airhorn Automatic Effects - REVD" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
+    </variable>
+    <variable CV="1.428" mask="XXXXXVXX" item="Short Airhorn Automatic Effects - FWDS" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
+    </variable>
+    <variable CV="1.428" mask="XXXXVXXX" item="Short Airhorn Automatic Effects - REVS" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
+    </variable>
+    <variable CV="1.428" mask="XXXVXXXX" item="Short Airhorn Automatic Effects - ESTP" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
+    </variable>
+    <variable CV="1.429" mask="XXXXXXXV" item="Straight-to-Eight Automatic Effects - FWDD" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
+    </variable>
+    <variable CV="1.429" mask="XXXXXXVX" item="Straight-to-Eight Automatic Effects - REVD" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
+    </variable>
+    <variable CV="1.429" mask="XXXXXVXX" item="Straight-to-Eight Automatic Effects - FWDS" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
+    </variable>
+    <variable CV="1.429" mask="XXXXVXXX" item="Straight-to-Eight Automatic Effects - REVS" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
+    </variable>
+    <variable CV="1.429" mask="XXXVXXXX" item="Straight-to-Eight Automatic Effects - ESTP" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
+    </variable>
+    <variable CV="1.430" mask="XXXXXXXV" item="General Service Automatic Effects - FWDD" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
+    </variable>
+    <variable CV="1.430" mask="XXXXXXVX" item="General Service Automatic Effects - REVD" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
+    </variable>
+    <variable CV="1.430" mask="XXXXXVXX" item="General Service Automatic Effects - FWDS" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
+    </variable>
+    <variable CV="1.430" mask="XXXXVXXX" item="General Service Automatic Effects - REVS" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
+    </variable>
+    <variable CV="1.430" mask="XXXVXXXX" item="General Service Automatic Effects - ESTP" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
+    </variable>
+    <variable CV="1.431" mask="XXXXXXXV" item="HEP Mode Automatic Effects - FWDD" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
+    </variable>
+    <variable CV="1.431" mask="XXXXXXVX" item="HEP Mode Automatic Effects - REVD" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
+    </variable>
+    <variable CV="1.431" mask="XXXXXVXX" item="HEP Mode Automatic Effects - FWDS" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
+    </variable>
+    <variable CV="1.431" mask="XXXXVXXX" item="HEP Mode Automatic Effects - REVS" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
+    </variable>
+    <variable CV="1.431" mask="XXXVXXXX" item="HEP Mode Automatic Effects - ESTP" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
+    </variable>
+    <variable CV="1.432" mask="XXXXXXXV" item="Cab Chatter Automatic Effects - FWDD" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
+    </variable>
+    <variable CV="1.432" mask="XXXXXXVX" item="Cab Chatter Automatic Effects - REVD" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
+    </variable>
+    <variable CV="1.432" mask="XXXXXVXX" item="Cab Chatter Automatic Effects - FWDS" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
+    </variable>
+    <variable CV="1.432" mask="XXXXVXXX" item="Cab Chatter Automatic Effects - REVS" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
+    </variable>
+    <variable CV="1.432" mask="XXXVXXXX" item="Cab Chatter Automatic Effects - ESTP" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
+    </variable>
+    <variable CV="1.436" mask="XXXXXXXV" item="Handbrake Automatic Effects - FWDD" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
+    </variable>
+    <variable CV="1.436" mask="XXXXXXVX" item="Handbrake Automatic Effects - REVD" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
+    </variable>
+    <variable CV="1.436" mask="XXXXXVXX" item="Handbrake Automatic Effects - FWDS" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
+    </variable>
+    <variable CV="1.436" mask="XXXXVXXX" item="Handbrake Automatic Effects - REVS" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
+    </variable>
+    <variable CV="1.436" mask="XXXVXXXX" item="Handbrake Automatic Effects - ESTP" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
+    </variable>
+    <variable CV="1.437" mask="XXXXXXXV" item="Sander Valve Automatic Effects - FWDD" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
+    </variable>
+    <variable CV="1.437" mask="XXXXXXVX" item="Sander Valve Automatic Effects - REVD" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
+    </variable>
+    <variable CV="1.437" mask="XXXXXVXX" item="Sander Valve Automatic Effects - FWDS" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
+    </variable>
+    <variable CV="1.437" mask="XXXXVXXX" item="Sander Valve Automatic Effects - REVS" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
+    </variable>
+    <variable CV="1.437" mask="XXXVXXXX" item="Sander Valve Automatic Effects - ESTP" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
+    </variable>
+    <variable CV="1.440" mask="XXXXXXXV" item="Steam Generator Automatic Effects - FWDD" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
+    </variable>
+    <variable CV="1.440" mask="XXXXXXVX" item="Steam Generator Automatic Effects - REVD" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
+    </variable>
+    <variable CV="1.440" mask="XXXXXVXX" item="Steam Generator Automatic Effects - FWDS" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
+    </variable>
+    <variable CV="1.440" mask="XXXXVXXX" item="Steam Generator Automatic Effects - REVS" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
+    </variable>
+    <variable CV="1.440" mask="XXXVXXXX" item="Steam Generator Automatic Effects - ESTP" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
+    </variable>
+    <variable CV="1.441" mask="XXXXXXXV" item="Fuel Loading Automatic Effects - FWDD" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
+    </variable>
+    <variable CV="1.441" mask="XXXXXXVX" item="Fuel Loading Automatic Effects - REVD" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
+    </variable>
+    <variable CV="1.441" mask="XXXXXVXX" item="Fuel Loading Automatic Effects - FWDS" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
+    </variable>
+    <variable CV="1.441" mask="XXXXVXXX" item="Fuel Loading Automatic Effects - REVS" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
+    </variable>
+    <variable CV="1.441" mask="XXXVXXXX" item="Fuel Loading Automatic Effects - ESTP" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+         <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
+    </variable>
+      <variable CV="2.289" mask="VVVVVVVV" item="Alt Sound Setting 1" default="112" tooltip="Set the alternate volume levels of each sound effect">
+        <decVal/>
+        <label>Airhorn Alt Volume</label>
+      </variable>
+      <variable CV="2.291" mask="VVVVVVVV" item="Alt Sound Setting 3" default="75" tooltip="Set the alternate volume levels of each sound effect">
+        <decVal/>
+        <label>Prime Mover Alt Volume</label>
+      </variable>
+      <variable CV="2.292" mask="VVVVVVVV" item="Alt Sound Setting 4" default="50" tooltip="Set the alternate volume levels of each sound effect">
+        <decVal/>
+        <label>Air Compressor Alt Volume</label>
+      </variable>
+      <variable CV="2.293" mask="VVVVVVVV" item="Alt Sound Setting 5" default="62" tooltip="Set the alternate volume levels of each sound effect">
+        <decVal/>
+        <label>Dynamic Brake Alt Volume</label>
+      </variable>
+      <variable CV="2.294" mask="VVVVVVVV" item="Alt Sound Setting 6" default="37" tooltip="Set the alternate volume levels of each sound effect">
+        <decVal/>
+        <label>Radiator Fans Alt Volume</label>
+      </variable>
+      <variable CV="2.295" mask="VVVVVVVV" item="Alt Sound Setting 7" default="30" tooltip="Set the alternate volume levels of each sound effect">
+        <decVal/>
+        <label>Alarm Bell Alt Volume</label>
+      </variable>
+      <variable CV="2.298" mask="VVVVVVVV" item="Alt Sound Setting 10" default="64" tooltip="Set the alternate volume levels of each sound effect">
+        <decVal/>
+        <label>Train Brake Apply/Release Alt Volume</label>
+      </variable>
+      <variable CV="2.303" mask="VVVVVVVV" item="Alt Sound Setting 15" default="30" tooltip="Set the alternate volume levels of each sound effect">
+        <decVal/>
+        <label>Poppet Valve Alt Volume</label>
+      </variable>
+      <variable CV="2.304" mask="VVVVVVVV" item="Alt Sound Setting 16" default="25" tooltip="Set the alternate volume levels of each sound effect">
+        <decVal/>
+        <label>Steam Generator Alt Volume</label>
+      </variable>
+      <variable CV="2.305" mask="VVVVVVVV" item="Alt Sound Setting 17" default="64" tooltip="Set the alternate volume levels of each sound effect">
+        <decVal/>
+        <label>Cab Doors Alt Volume</label>
+      </variable>
+      <variable CV="2.307" mask="VVVVVVVV" item="Alt Sound Setting 19" default="64" tooltip="Set the alternate volume levels of each sound effect">
+        <decVal/>
+        <label>Relay Clicks Alt Volume</label>
+      </variable>
+      <variable CV="2.313" mask="VVVVVVVV" item="Alt Sound Setting 25" default="75" tooltip="Set the alternate volume levels of each sound effect">
+        <decVal/>
+        <label>Clickety-Clack Alt Volume</label>
+      </variable>
+      <variable CV="2.314" mask="VVVVVVVV" item="Alt Sound Setting 26" default="5" tooltip="Set the alternate volume levels of each sound effect">
+        <decVal/>
+        <label>Sander Valve Alt Volume</label>
+      </variable>
+      <variable CV="2.315" mask="VVVVVVVV" item="Alt Sound Setting 27" default="25" tooltip="Set the alternate volume levels of each sound effect">
+        <decVal/>
+        <label>Fuel Loading Alt Volume</label>
+      </variable>
+      <variable CV="2.316" mask="VVVVVVVV" item="Alt Sound Setting 28" default="10" tooltip="Set the alternate volume levels of each sound effect">
+        <decVal/>
+        <label>Air Conditioner Alt Volume</label>
+      </variable>
+      <variable CV="2.318" mask="VVVVVVVV" item="Alt Sound Setting 30" default="20" tooltip="Set the alternate volume levels of each sound effect">
+        <decVal/>
+        <label>Pneumatic Oilers Alt Volume</label>
+      </variable>
+      <variable CV="2.319" mask="VVVVVVVV" item="Alt Sound Setting 31" default="10" tooltip="Set the alternate volume levels of each sound effect">
+        <decVal/>
+        <label>Toilet Flush Alt Volume</label>
+      </variable>
+      <!-- Dynamic Digital Exhaust Controls follow -->
+      <variable item="Exhaust Low Volume Limit" CV="2.507" mask="VVVVVVVV" default="0" tooltip="&lt;html&gt;Sets the maximum attenuation level of the exhaust sound when the&lt;br&gt;      locomotive is under light load.  (higher no. = greater attenuation)&lt;/html&gt;">
+        <decVal/>
+        <label>Prime Mover Low Volume Limit</label>
+      </variable>
+      <variable item="Exhaust High Volume Limit" CV="2.508" mask="VVVVVVVV" default="255" tooltip="&lt;html&gt;Sets the maximum volume level of the exhaust sound when the&lt;br&gt;      locomotive is under heavy load.  (higher no. = greater volume)&lt;/html&gt;">
+        <decVal/>
+        <label>Prime Mover High Volume Limit</label>
+      </variable>
+      <variable item="Motor Load Gain" CV="2.512" mask="VVVVVVVV" default="0" tooltip="&lt;html&gt;to adjust the correlation between the throttle setting and motor load sensinglt;br&gt;      sets how much the load signal is affected by the model accelerating/decelerating&lt;/html&gt;">
+        <decVal/>
+        <label>Load Sensitivity</label>
+      </variable>
+      <!-- highest used so far: -->
+      <!-- "Advanced Group 1 Option 8" -->
+      <!-- "Advanced Group 2 Option 6" -->
+      <!-- "Sound Option 13"  -->
+      <!-- "Sound Group 1 Option (none yet)" -->
+      <!-- "Sound Group 2 Option (none yet)" -->
+      <!-- "Sound Group 3 Option 2" -->
+      <!-- "Sound Setting 30" -->
+    </variables>
+    <resets>
+      <factReset label="Reset all CVs to factory defaults" CV="8" default="8"/>
+      <factReset label="Reset CVs 1-128 to factory defaults" CV="8" default="9"/>
+      <factReset label="Reset CVs 129-256 to factory defaults" CV="8" default="10"/>
+      <factReset label="Reset CVs 1.257-1.512 to factory defaults" CV="8" default="12"/>
+    </resets>
+  </decoder>
+  <!-- References to external Pane format definitions below -->
+  <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUaltSoundLevelsPane.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneLighting.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneEqualizer.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneDDE.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneReverb.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneASCsteam.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOPaneFnMap.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOlegacyPaneFnMap.xml"/>
+</decoder-config>
