@@ -126,15 +126,17 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
     private boolean _TrainsFromUser = false;
     private boolean _AutoAllocate = false;
     private boolean _AutoTurnouts = false;
+    private boolean _TrustKnownTurnouts = false;
     private boolean _ShortActiveTrainNames = false;
     private boolean _ShortNameInBlock = true;
     private boolean _RosterEntryInBlock = false;
     private boolean _ExtraColorForAllocated = true;
     private boolean _NameInAllocatedBlock = false;
-    private boolean _AlwaysSet = true;
     private boolean _UseScaleMeters = false;  // "true" if scale meters, "false" for scale feet
     private int _LayoutScale = Scale.HO;
     private boolean _SupportVSDecoder = false;
+    private int _MinThrottleInterval = 100; //default time (in ms) between consecutive throttle commands
+    private int _FullRampTime = 10000; //default time (in ms) for RAMP_FAST to go from 0% to 100%
 
     // operational instance variables
     private ArrayList<ActiveTrain> activeTrainsList = new ArrayList<ActiveTrain>();  // list of ActiveTrain objects
@@ -614,8 +616,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
     public String getSectionName(Section sec) {
         String s = sec.getSystemName();
         String u = sec.getUserName();
-        if ((u != null) && (!u.equals(""))) {
-            return (s + "( " + u + " )");
+        if ((u != null) && (!u.equals("") && (!u.equals(s)))) {
+            return (s + "(" + u + ")");
         }
         return s;
     }
@@ -1616,7 +1618,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         if (_AutoTurnouts || at.getAutoRun()) {
             // automatically set the turnouts for this section before allocation
             turnoutsOK = autoTurnouts.setTurnoutsInSection(s, sSeqNum, nextSection,
-                    at, _LE, _AlwaysSet, prevSection);
+                    at, _LE, _TrustKnownTurnouts, prevSection);
         } else {
             // check that turnouts are correctly set before allowing allocation to proceed
             turnoutsOK = autoTurnouts.checkTurnoutsInSection(s, sSeqNum, nextSection,
@@ -1752,8 +1754,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             Section s = sList.get(i);
             String txt = s.getSystemName();
             String user = s.getUserName();
-            if ((user != null) && (!user.equals(""))) {
-                txt = txt + "( " + user + " )";
+            if ((user != null) && (!user.equals("")) && (!user.equals(txt))) {
+                txt = txt + "(" + user + ")";
             }
             choices[i] = txt;
         }
@@ -2049,15 +2051,34 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
     protected boolean getAutoTurnouts() {
         return _AutoTurnouts;
     }
-
     protected void setAutoTurnouts(boolean set) {
         _AutoTurnouts = set;
+    }
+
+    protected boolean getTrustKnownTurnouts() {
+        return _TrustKnownTurnouts;
+    }
+    protected void setTrustKnownTurnouts(boolean set) {
+        _TrustKnownTurnouts = set;
+    }
+
+    protected int getMinThrottleInterval() {
+        return _MinThrottleInterval;
+    }
+    protected void setMinThrottleInterval(int set) {
+        _MinThrottleInterval = set;
+    }
+
+    protected int getFullRampTime() {
+        return _FullRampTime;
+    }
+    protected void setFullRampTime(int set) {
+        _FullRampTime = set;
     }
 
     protected boolean getHasOccupancyDetection() {
         return _HasOccupancyDetection;
     }
-
     protected void setHasOccupancyDetection(boolean set) {
         _HasOccupancyDetection = set;
     }
@@ -2065,7 +2086,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
     protected boolean getUseScaleMeters() {
         return _UseScaleMeters;
     }
-
     protected void setUseScaleMeters(boolean set) {
         _UseScaleMeters = set;
     }
@@ -2073,19 +2093,19 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
     protected boolean getShortActiveTrainNames() {
         return _ShortActiveTrainNames;
     }
-
     protected void setShortActiveTrainNames(boolean set) {
         _ShortActiveTrainNames = set;
         if (allocatedSectionTableModel != null) {
             allocatedSectionTableModel.fireTableDataChanged();
         }
-        allocationRequestTableModel.fireTableDataChanged();
+        if (allocationRequestTableModel != null) {
+            allocationRequestTableModel.fireTableDataChanged();
+        }
     }
 
     protected boolean getShortNameInBlock() {
         return _ShortNameInBlock;
     }
-
     protected void setShortNameInBlock(boolean set) {
         _ShortNameInBlock = set;
     }
@@ -2093,7 +2113,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
     protected boolean getRosterEntryInBlock() {
         return _RosterEntryInBlock;
     }
-
     protected void setRosterEntryInBlock(boolean set) {
         _RosterEntryInBlock = set;
     }
@@ -2101,7 +2120,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
     protected boolean getExtraColorForAllocated() {
         return _ExtraColorForAllocated;
     }
-
     protected void setExtraColorForAllocated(boolean set) {
         _ExtraColorForAllocated = set;
     }
@@ -2109,7 +2127,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
     protected boolean getNameInAllocatedBlock() {
         return _NameInAllocatedBlock;
     }
-
     protected void setNameInAllocatedBlock(boolean set) {
         _NameInAllocatedBlock = set;
     }
@@ -2117,7 +2134,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
     protected int getScale() {
         return _LayoutScale;
     }
-
     protected void setScale(int sc) {
         _LayoutScale = sc;
     }
@@ -2125,7 +2141,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
     public ArrayList<ActiveTrain> getActiveTrainsList() {
         return activeTrainsList;
     }
-
     protected ArrayList<AllocatedSection> getAllocatedSectionsList() {
         return allocatedSections;
     }
@@ -2146,7 +2161,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
     protected boolean getSupportVSDecoder() {
         return _SupportVSDecoder;
     }
-
     protected void setSupportVSDecoder(boolean set) {
         _SupportVSDecoder = set;
     }

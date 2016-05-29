@@ -1,4 +1,3 @@
-// SerialPacketGenFrame.java
 package jmri.jmrix.tmcc.packetgen;
 
 import java.awt.Dimension;
@@ -13,14 +12,9 @@ import jmri.util.StringUtil;
  * Frame for user input of serial messages
  *
  * @author	Bob Jacobsen Copyright (C) 2002, 2003, 2006
- * @version	$Revision$
  */
 public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.tmcc.SerialListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6372326464393162756L;
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();

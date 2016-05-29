@@ -46,8 +46,12 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
         return _instance;
     }
 
+    /**
+     * For tests
+     */
     public void dispose() {
         _automationHashTable.clear();
+        _id = 0;
     }
 
     // stores known Automation instances by id

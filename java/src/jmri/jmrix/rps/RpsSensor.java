@@ -1,4 +1,3 @@
-// RpsSensor.java
 package jmri.jmrix.rps;
 
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * example "RS(0,0,0);(1,0,0);(1,1,0);(0,1,0)".
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version $Revision$
  */
 public class RpsSensor extends AbstractSensor
         implements MeasurementListener {
@@ -99,8 +97,6 @@ public class RpsSensor extends AbstractSensor
 
     transient Region region;
     ArrayList<Integer> contents = new ArrayList<Integer>();
-
-    private static final long serialVersionUID = 1L;
 
     /**
      * Notify parameter listeners that a device has left the region covered by

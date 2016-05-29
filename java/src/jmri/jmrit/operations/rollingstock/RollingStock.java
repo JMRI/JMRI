@@ -406,9 +406,9 @@ public class RollingStock implements java.beans.PropertyChangeListener {
      * Sets rolling stock location on the layout
      *
      * @param location
-     * @param track (yard, spur, staging, or interchange track)
-     * @param force when true place rolling stock ignore track length, type, &
-     *            road
+     * @param track    (yard, spur, staging, or interchange track)
+     * @param force    when true place rolling stock ignore track length, type,
+     *                 {@literal &} road
      * @return "okay" if successful, "type" if the rolling stock's type isn't
      *         acceptable, "road" if rolling stock road isn't acceptable, or
      *         "length" if the rolling stock length didn't fit.
@@ -494,9 +494,9 @@ public class RollingStock implements java.beans.PropertyChangeListener {
      * Sets rolling stock destination on the layout
      *
      * @param destination
-     * @param track (yard, spur, staging, or interchange track)
-     * @param force when true ignore track length, type, & road when setting
-     *            destination
+     * @param track       (yard, spur, staging, or interchange track)
+     * @param force       when true ignore track length, type, {@literal &} road
+     *                    when setting destination
      * @return "okay" if successful, "type" if the rolling stock's type isn't
      *         acceptable, or "length" if the rolling stock length didn't fit.
      */
@@ -847,7 +847,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         if (_lastDate.equals((new java.util.GregorianCalendar()).getGregorianChange()))
             return NONE; // return an empty string for the default date.
         SimpleDateFormat format =
-                new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+                new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");  // NOI18N
         return format.format(_lastDate);
     }
 
@@ -876,17 +876,17 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         // create a date object from the value.
         try {
             // try the new format (with seconds).
-            SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+            SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");  // NOI18N
             _lastDate = formatter.parse(date);
         } catch (java.text.ParseException pe0) {
             // try the old 12 hour format (no seconds).
             try {
-                SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mmaa");
+                SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mmaa");  // NOI18N
                 _lastDate = formatter.parse(date);
             } catch (java.text.ParseException pe1) {
                 try {
                     // try 24hour clock.
-                    SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+                    SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm");  // NOI18N
                     _lastDate = formatter.parse(date);
                 } catch (java.text.ParseException pe2) {
                     log.warn("Not able to parse date: {} for rolling stock ({})", date, toString());

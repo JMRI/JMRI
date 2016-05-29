@@ -27,7 +27,7 @@ public class SignalMastTableAction extends AbstractTableAction {
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
-     * @param actionName
+     * @param actionName title of the action
      */
     public SignalMastTableAction(String actionName) {
         super(actionName);

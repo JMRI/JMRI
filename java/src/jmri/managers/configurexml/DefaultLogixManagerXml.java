@@ -100,8 +100,8 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
      * Create a LogixManager object of the correct class, then register and fill
      * it.
      *
-     * @param sharedLogix Top level Element to unpack.
-     * @param perNodeLogix
+     * @param sharedLogix  Shared top level Element to unpack.
+     * @param perNodeLogix Per-node top level Element to unpack.
      * @return true if successful
      */
     @Override

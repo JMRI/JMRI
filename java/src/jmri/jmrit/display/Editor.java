@@ -367,8 +367,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * An Editor may or may not choose to use 'this' as its frame or the
      * interior class 'TargetPane' for its targetPanel.
      *
-     * @param targetPanel
-     * @param frame
      */
     protected void setTargetPanel(JLayeredPane targetPanel, JmriJFrame frame) {
         if (targetPanel == null) {
@@ -766,7 +764,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     /**
      * Does global flag sets Positionable and Control for individual items
      *
-     * @param set
      */
     public void setGlobalSetsLocalFlag(boolean set) {
         _globalSetsLocal = set;
@@ -883,7 +880,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     /**
      * Hide or show menus on the target panel.
      *
-     * @param state
      * @since 3.9.5
      */
     public void setPanelMenuVisible(boolean state) {
@@ -1111,8 +1107,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 
     /**
-     * Display the X & Y coordinates of the Positionable item and provide a
-     * dialog menu item to edit them.
+     * Display the {@literal X & Y} coordinates of the Positionable item and
+     * provide a dialog menu item to edit them.
      *
      * @param p     The item to add the menu item to
      * @param popup The menu item to add the action to
@@ -1364,8 +1360,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * Add a checkbox to display a tooltip for the Positionable item and if
      * showable, provide a dialog menu to edit it.
      *
-     * @param p
-     * @param popup
      */
     public void setShowTooltipMenu(Positionable p, JPopupMenu popup) {
         if (p.getDisplayLevel() == BKG) {
@@ -1423,8 +1417,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     /**
      * Add an action to remove the Positionable item.
      *
-     * @param p
-     * @param popup
      */
     public void setRemoveMenu(Positionable p, JPopupMenu popup) {
         popup.add(new AbstractAction(Bundle.getMessage("Remove")) {
@@ -2909,8 +2901,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * Called from setSelectionsAttributes - i.e. clone because maybe several
      * Positionables use the data
      *
-     * @param newUtil
-     * @param p
      */
     protected void setAttributes(PositionablePopupUtil newUtil, Positionable p) {
         p.setPopupUtility(newUtil.clone(p, p.getTextComponent()));
@@ -3205,14 +3195,12 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * Called from TargetPanel's paint method for additional drawing by editor
      * view
      *
-     * @param g
      */
     abstract protected void paintTargetPanel(Graphics g);
 
     /**
      * Set an object's location when it is created.
      *
-     * @param obj
      */
     abstract protected void setNextLocation(Positionable obj);
 
@@ -3220,8 +3208,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * Editor Views should make calls to this class (Editor) to set popup menu
      * items. See 'Popup Item Methods' above for the calls.
      *
-     * @param p
-     * @param event
      */
     abstract protected void showPopUp(Positionable p, MouseEvent event);
 
@@ -3234,7 +3220,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     /**
      * set up item(s) to be copied by paste
      *
-     * @param p
      */
     abstract protected void copyItem(Positionable p);
 
@@ -3275,7 +3260,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * Get an Editor of a particular name. If more than one exists, there's no
      * guarantee as to which is returned.
      *
-     * @param name
      * @return an Editor or null if no matching Editor could be found
      */
     public static Editor getEditor(String name) {

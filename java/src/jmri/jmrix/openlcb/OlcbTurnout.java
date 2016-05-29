@@ -1,4 +1,3 @@
-// OlcbTurnout.java
 package jmri.jmrix.openlcb;
 
 import jmri.Turnout;
@@ -109,5 +108,3 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout
 
     private final static Logger log = LoggerFactory.getLogger(OlcbTurnout.class.getName());
 }
-
-/* @(#)OlcbTurnout.java */

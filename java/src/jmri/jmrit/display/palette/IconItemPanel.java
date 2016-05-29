@@ -111,7 +111,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
 
     /**
      * Plain icons have only one family, usually named "set" Override for plain
-     * icon & background and put all icons here
+     * icon {@literal &} background and put all icons here
      */
     protected void initIconFamiliesPanel() {
         HashMap<String, HashMap<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);

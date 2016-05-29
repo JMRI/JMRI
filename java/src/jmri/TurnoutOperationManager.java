@@ -51,7 +51,7 @@ public class TurnoutOperationManager {
      * add a new operation Silently replaces any existing operation with the
      * same name
      *
-     * @param op
+     * @param op {@link TurnoutOperation} to add/replace
      */
     protected void addOperation(@Nonnull TurnoutOperation op) {
         TurnoutOperation previous;
@@ -87,7 +87,7 @@ public class TurnoutOperationManager {
     /**
      * find a TurnoutOperation by its name
      *
-     * @param name
+     * @param name name of {@link TurnoutOperation} to retrieve
      * @return	the operation
      */
     public TurnoutOperation getOperation(@Nonnull String name) {

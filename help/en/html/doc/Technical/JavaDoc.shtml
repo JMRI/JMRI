@@ -67,6 +67,49 @@ A nice discussion of how to use the "deprecated" label
 in documentation is available on the
 <a href="http://docs.oracle.com/javase/7/docs/technotes/guides/javadoc/deprecation/deprecation.html">"How and When To Deprecate APIs" page</a>.
 
+<p>
+The JavaDoc content is interpreted as HTML 4.01, so it should be valid HTML 4.01. If it's not,
+it probably won't display properly when somebody wants to understand your code, so it's in 
+your interest to get the JavaDoc comments right.
+<p>
+For example, you have to properly handle &amp; and &lt; character, e.g. to show a generic type.
+To do that, place the test in {@literal ...} or {@code ...} blocks.
+<p>
+You also have to (sometimes) end your paragraph tags to start another type of element, e.g. lists: 
+<code><pre>
+ * Some text that forms a paragraph
+ * &lt;p&gt;
+ * Some more text. 
+ * &lt;p&gt;
+ * Last text, start list. Note end-paragraph tag.
+ * &lt;/p&gt;&lt;ul&gt;
+ *    &lt;li&gt;List item
+ * &lt;/ul&gt;
+</pre></code>
+Note that HTML 4.01 wants paragraph tags to be ended with &lt;/p&gt;, and that you can't have a list inside a paragraph.
+<p>
+Some error messages and their translations:
+<dl>
+<dt>"malformed HTML"</dt><dt>"bad HTML entity"</dt><dd>Probably use of &amp;, &lt; or &gt; characters on the indicated line</dd>
+<dt>"bad use of '&gt;'"</dt><dd>Probably using '&gt;' as a character, e.g. A -&gt; B. If so, replace with "&amp;gt;" or wrap the line with @literal</dd>
+</dl>
+
+Finally, note that this JavaDoc line is malformed:
+<code><pre>
+ * @param foo
+</pre></code>
+because it doesn't include any explanatory text. The line should be more like:
+<code><pre>
+ * @param foo Holds the latest Bar instance
+</pre></code>
+or just omitted.
+
+<p>
+We are currently suppressing the "accessibility" class of JavaDoc errors, which is 
+mostly about providing extra information on tables and images, and the "missing" class of 
+errors, which tags it if an @param or @return isn't provided in any places that could have 
+received comments.  There are so many of these that it's not practical to tag them.
+
 <h2>UML and UmlGraph for Developers</h2>
 
 UML is a broad and deep language for describing the 

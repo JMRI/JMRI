@@ -340,7 +340,6 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
      * Identify locomotive complete, act on it by setting the GUI. This will
      * fire "GUI changed" events which will reset the decoder GUI.
      *
-     * @param dccAddress
      */
     protected void selectLoco(int dccAddress) {
         // raise the button again

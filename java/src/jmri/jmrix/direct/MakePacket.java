@@ -3,8 +3,8 @@ package jmri.jmrix.direct;
 
 
 /**
- * Provide utilities for coding/decoding NMRA S&RP DCC packets into sequences to
- * send through a standard serial port.
+ * Provide utilities for coding/decoding NMRA {@literal S&RP} DCC packets into
+ * sequences to send through a standard serial port.
  * <P>
  * This is strongly based on the makepckt.c file from the PacketScript 1.1.
  * package of Kenneth Rice. The original header comment from that file follows
@@ -20,9 +20,9 @@ package jmri.jmrix.direct;
  *      databits: 8
  *      baudrate: 19200
  *
- *      ==> one serial bit takes 52.08 usec. (at 19200 baud)
+ *      {@literal ==>} one serial bit takes 52.08 usec. (at 19200 baud)
  *
- *      ==> NMRA-1-Bit: 01         (52 usec low and 52 usec high)
+ *      {@literal ==>} NMRA-1-Bit: 01         (52 usec low and 52 usec high)
  *          NMRA-0-Bit: 0011       (at least 100 usec low and high)
  *           note we are allowed to stretch NMRA-0 e.g. 000111,
  *           00001111, 000001111

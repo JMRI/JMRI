@@ -1,5 +1,3 @@
-// VSDecoderBundle.java
-
 /*
  * <hr>
  * This file is part of JMRI.
@@ -30,8 +28,6 @@ import java.util.ResourceBundle;
  * Adapted from ThrottleBundle by Bob Jacobsen (2010)
  *
  * @author Mark Underwood Copyright 2011
- * @since
- * @version $Revision: 18209 $
  */
 public class VSDSwingBundle {
 

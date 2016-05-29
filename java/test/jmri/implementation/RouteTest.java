@@ -91,7 +91,6 @@ public class RouteTest extends TestCase {
 
     public void testTurnoutsAlignedSensor() {
         DefaultRoute r = new DefaultRoute("test");
-        Sensor s = InstanceManager.sensorManagerInstance().provideSensor("IS123");
         r.setTurnoutsAlignedSensor("IS123");
         Assert.assertEquals("Sensor name stored", "IS123", r.getTurnoutsAlignedSensor());     
         r.activateRoute();
@@ -100,7 +99,6 @@ public class RouteTest extends TestCase {
 
     public void testLockControlTurnout() {
         DefaultRoute r = new DefaultRoute("test");
-        Turnout s = InstanceManager.turnoutManagerInstance().provideTurnout("IT123");
         r.setLockControlTurnout("IT123");
         Assert.assertEquals("Turnout name stored", "IT123", r.getLockControlTurnout());     
         r.activateRoute();

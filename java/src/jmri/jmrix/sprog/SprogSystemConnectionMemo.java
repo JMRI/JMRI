@@ -1,4 +1,3 @@
-// SprogSystemConnectionMemo.javaf
 package jmri.jmrix.sprog;
 
 import java.util.ResourceBundle;
@@ -19,7 +18,6 @@ import org.slf4j.LoggerFactory;
  * activate their particular system.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version $Revision$
  */
 public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -62,7 +60,6 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     /**
      * Set the SPROG mode for this connection
      * 
-     * @param mode 
      */
     public void setSprogMode(SprogMode mode) {
         sprogMode = mode;
@@ -77,7 +74,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         return sprogMode;
     }
     private SprogMode sprogMode;// = SprogMode.SERVICE;
-    
+
     /**
      * Return the SPROG version object for this connection
      * 
@@ -281,6 +278,3 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     private final static Logger log = LoggerFactory.getLogger(SprogSystemConnectionMemo.class.getName());
 }
-
-
-/* @(#)SprogSystemConnectionMemo.java */

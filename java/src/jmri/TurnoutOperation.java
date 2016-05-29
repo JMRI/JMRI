@@ -159,8 +159,8 @@ public abstract class TurnoutOperation implements Comparable<Object> {
     /**
      * rename an operation
      *
-     * @param newName
-     * @return true iff the name was changed to the new value - otherwise name
+     * @param newName new name to use for rename attempt
+     * @return true if the name was changed to the new value - otherwise name
      *         is unchanged
      */
     public boolean rename(@Nonnull String newName) {

@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * AbstractThrottleManager.
  * <P>
  * @author Paul Bender Copyright (C) 2002-2004
- * @navassoc - - 1..* jmri.jmrix.lenz.XNetThrottle
+ * @navassoc 1 - * jmri.jmrix.lenz.XNetThrottle
  */
 public class XNetThrottleManager extends AbstractThrottleManager implements ThrottleManager, XNetListener {
 

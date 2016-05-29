@@ -278,7 +278,7 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 
     private String getDate() {
         Date date = Calendar.getInstance().getTime();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy_MM_dd");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy_MM_dd");  // NOI18N
         return simpleDateFormat.format(date);
     }
 
@@ -290,8 +290,8 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
      */
     private String getTime() {
         String time = Calendar.getInstance().getTime().toString();
-        SimpleDateFormat dt = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy");
-        SimpleDateFormat dtout = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        SimpleDateFormat dt = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy");  // NOI18N
+        SimpleDateFormat dtout = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");  // NOI18N
         try {
             return dtout.format(dt.parse(time));
         } catch (ParseException e) {

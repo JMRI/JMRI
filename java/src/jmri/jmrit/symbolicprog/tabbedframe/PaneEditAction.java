@@ -57,10 +57,6 @@ public class PaneEditAction extends AbstractAction {
 
         // known entry, no programmer
         JPanel pane1 = new KnownLocoSelPane(false) {  // not programming
-            /**
-             *
-             */
-            private static final long serialVersionUID = 5342530851054805325L;
 
             protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
                     String filename) {
@@ -68,10 +64,6 @@ public class PaneEditAction extends AbstractAction {
                 JFrame p = new PaneProgFrame(decoderFile, re,
                         title, "programmers" + File.separator + filename + ".xml",
                         null, false) {
-                            /**
-                             *
-                             */
-                            private static final long serialVersionUID = 8759999350875150400L;
 
                             protected JPanel getModePane() {
                                 return null;

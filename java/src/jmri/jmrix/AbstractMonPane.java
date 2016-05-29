@@ -398,7 +398,6 @@ public abstract class AbstractMonPane extends JmriPanel {
     /**
      * Handle display of traffic.
      *
-     * @param timestamp
      * @param line The traffic in normal parsed form, ending with \n
      * @param raw The traffic in raw form, ending with \n
      */

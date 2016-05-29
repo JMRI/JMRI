@@ -44,19 +44,18 @@ import org.slf4j.LoggerFactory;
  * to inform users where and how the various elements are used. In particular to
  * identify useless elements ('orphans'). Currently, called only from the Logix
  * JFrame, which is probably not its ultimate UI.
- * <P>
- *
+ * <BR>
  * <hr>
  * This file is part of JMRI.
  * <P>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * </P><P>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ * </P>
  * @author Pete Cressman Copyright 2009
  */
 public class Maintenance {

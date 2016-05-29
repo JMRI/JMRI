@@ -23,7 +23,7 @@ public class ListedTableAction extends AbstractAction {
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
-     * @param s
+     * @param s title of the action
      */
     public ListedTableAction(String s, String selection) {
         super(s);

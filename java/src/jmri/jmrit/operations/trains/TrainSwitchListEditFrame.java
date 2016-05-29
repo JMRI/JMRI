@@ -307,8 +307,8 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
      *            preview)
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
-            value = {"UC_USELESS_CONDITION", "RpC_REPEATED_CONDITIONAL_TEST"},
-            justification = "isChanged value is dependent on which user button is activated")
+            value = {"UC_USELESS_CONDITION", "RpC_REPEATED_CONDITIONAL_TEST"}, // NOI18N
+            justification = "isChanged value is dependent on which user button is activated") // NOI18N
     private void buildSwitchList(boolean isPreview, boolean isChanged, boolean isCsv, boolean isUpdate) {
         TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
         // this for loop prevents ConcurrentModificationException when printing and status changes
@@ -442,8 +442,8 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
      *            custom switch lists for all enabled locations.
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
-            value = {"UC_USELESS_CONDITION", "RpC_REPEATED_CONDITIONAL_TEST"},
-            justification = "isChanged value is dependent on which user button is activated")
+            value = {"UC_USELESS_CONDITION", "RpC_REPEATED_CONDITIONAL_TEST"}, // NOI18N
+            justification = "isChanged value is dependent on which user button is activated") // NOI18N
     private void runCustomSwitchLists(boolean isChanged) {
         if (!Setup.isGenerateCsvSwitchListEnabled()) {
             return;
