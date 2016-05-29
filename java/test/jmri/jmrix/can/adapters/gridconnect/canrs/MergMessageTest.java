@@ -66,7 +66,7 @@ public class MergMessageTest extends TestCase {
     static public void main(String[] args) {
         apps.tests.AllTest.initLogging();
         String[] testCaseName = {"-noloading", MergMessageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
