@@ -606,7 +606,6 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         /**
          * Dark colors need white lettering
          *
-         * @return
          */
         private Color getForegroundColor(Color background) {
             if (background == null) {

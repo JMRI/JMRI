@@ -1087,7 +1087,6 @@ public class Location implements java.beans.PropertyChangeListener {
     
     /**
      * True if this location has a track with pick up or set out restrictions.
-     * @return
      */
     public boolean hasServiceRestrictions() {
         Track track;

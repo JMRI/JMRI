@@ -265,7 +265,6 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
      * Individual files for each rolling stock stored in a directory called
      * "rollingStock" inside the "logger" directory.
      *
-     * @return
      */
     public String getFullLoggerFileName(RollingStock rs) {
         if (!OperationsXml.checkFileName(rs.toString())) { // NOI18N
@@ -284,8 +283,7 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
     /**
      * Return the date and time in an MS Excel friendly format yyyy/MM/dd
      * HH:mm:ss
-     * 
-     * @return
+     *
      */
     private String getTime() {
         String time = Calendar.getInstance().getTime().toString();
