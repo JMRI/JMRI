@@ -29,6 +29,7 @@ public class UncaughtExceptionHandlerTest extends SwingTestCase {
         JUnitAppender.assertErrorMessage("Uncaught Exception caught by jmri.util.exceptionhandler.UncaughtExceptionHandler");
     }
 
+    @SuppressWarnings("all") // because we're deliberately forcing an NPE to test the handler
     public void testSwing() throws Exception {
         try {
             javax.swing.SwingUtilities.invokeAndWait(() -> {
