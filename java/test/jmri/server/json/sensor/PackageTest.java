@@ -1,4 +1,4 @@
-package jmri.server.json;
+package jmri.server.json.sensor;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -24,15 +24,10 @@ public class PackageTest extends TestCase {
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.server.JsonTest");
+        TestSuite suite = new TestSuite("jmri.server.json.sensor.SensorTest");
+        suite.addTestSuite(JsonSensorHttpServiceTest.class);
+        suite.addTestSuite(JsonSensorSocketServiceTest.class);
         suite.addTest(BundleTest.suite());
-        suite.addTest(jmri.server.json.light.PackageTest.suite());
-        suite.addTest(jmri.server.json.memory.PackageTest.suite());
-        suite.addTest(jmri.server.json.power.PackageTest.suite());
-        suite.addTest(jmri.server.json.roster.PackageTest.suite());
-        suite.addTest(jmri.server.json.route.PackageTest.suite());
-        suite.addTest(jmri.server.json.sensor.PackageTest.suite());
-        suite.addTest(jmri.server.json.turnout.PackageTest.suite());
 
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             // put any tests that require a UI here.
@@ -42,12 +37,10 @@ public class PackageTest extends TestCase {
     }
 
     // The minimal setup for log4J
-    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
-    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
