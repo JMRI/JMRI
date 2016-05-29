@@ -109,7 +109,7 @@ public class Z21XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrT
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", Z21XNetTurnoutManagerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
