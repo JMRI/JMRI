@@ -110,6 +110,10 @@ mostly about providing extra information on tables and images, and the "missing"
 errors, which tags it if an @param or @return isn't provided in any places that could have 
 received comments.  There are so many of these that it's not practical to tag them.
 
+<p>
+For a summary of current JavaDoc errors in the code, see 
+<a href="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/lastBuild/warnings3Result/">Builds Jenkins job</a>.
+
 <h2>UML and UmlGraph for Developers</h2>
 
 UML is a broad and deep language for describing the 
