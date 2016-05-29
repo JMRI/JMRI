@@ -24,7 +24,7 @@ public class LayoutBlockTest extends TestCase {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
         // dispose of the single PanelMenu instance
-        jmri.jmrit.display.PanelMenu.instance().dispose();
+        jmri.jmrit.display.PanelMenu.dispose();
         // reset the instance manager.
         JUnitUtil.resetInstanceManager();
     }
@@ -33,7 +33,7 @@ public class LayoutBlockTest extends TestCase {
     protected void tearDown() throws Exception {
         super.tearDown();
         // dispose of the single PanelMenu instance
-        jmri.jmrit.display.PanelMenu.instance().dispose();
+        jmri.jmrit.display.PanelMenu.dispose();
         JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
