@@ -71,7 +71,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
             manager.deregister(tree);
         }
         tree = manager.newCatalogTree("NXPI", "Item Palette");
-        CatalogTreeNode root = (CatalogTreeNode) tree.getRoot();
+        CatalogTreeNode root = tree.getRoot();
 
         Iterator<Entry<String, HashMap<String, HashMap<String, NamedIcon>>>> it = _iconMaps.entrySet().iterator();
         while (it.hasNext()) {
@@ -143,7 +143,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
         CatalogTree tree = manager.getBySystemName("NXPI");
         if (tree != null) {
-            CatalogTreeNode root = (CatalogTreeNode) tree.getRoot();
+            CatalogTreeNode root = tree.getRoot();
             @SuppressWarnings("unchecked") // root.children() is still unchecked in JDOM2
             Enumeration<CatalogTreeNode> e = root.children();
             while (e.hasMoreElements()) {
