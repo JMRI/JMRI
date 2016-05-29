@@ -1,4 +1,3 @@
-// OpenLcbCanSendAction.java
 package jmri.jmrix.openlcb.swing.send;
 
 /**
@@ -14,5 +13,3 @@ public class OpenLcbCanSendAction extends OpenLcbCanSendPane.Default {
      */
     private static final long serialVersionUID = -2653850619154579104L;
 }
-
-/* @(#)OpenLcbCanSendAction.java */

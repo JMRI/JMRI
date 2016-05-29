@@ -22,6 +22,7 @@ public class TrainEditBuildOptionsAction extends AbstractAction {
 
     TrainEditBuildOptionsFrame f = null;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a train edit option frame
         if (f != null && f.isVisible()) {

@@ -3,8 +3,13 @@ package jmri.jmrix.dccpp.simulator;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.dccpp.DCCppCommandStation;
 import jmri.jmrix.dccpp.DCCppConstants;
@@ -12,13 +17,9 @@ import jmri.jmrix.dccpp.DCCppInitializationManager;
 import jmri.jmrix.dccpp.DCCppMessage;
 import jmri.jmrix.dccpp.DCCppPacketizer;
 import jmri.jmrix.dccpp.DCCppReply;
+import jmri.jmrix.dccpp.DCCppReplyParser;
 import jmri.jmrix.dccpp.DCCppSimulatorPortController;
 import jmri.jmrix.dccpp.DCCppTrafficController;
-import jmri.jmrix.dccpp.DCCppReplyParser;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
-import java.util.Random;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

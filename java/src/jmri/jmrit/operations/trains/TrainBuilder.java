@@ -84,17 +84,18 @@ public class TrainBuilder extends TrainCommon {
 
     /**
      * Build rules:
-     * <ul>
-     * <li>1. Need at least one location in route to build train
-     * <li>2. Select only locos and cars the that train can service
-     * <li>3. Optional TODO, train must depart with the required number of moves
+     * <ol>
+     * <li>Need at least one location in route to build train
+     * <li>Select only locos and cars the that train can service
+     * <li>Optional TODO, train must depart with the required number of moves
      * (cars)
-     * <li>4. If required, add caboose or car with FRED to train
-     * <li>5. When departing staging find a track matching train requirements
-     * <li>6. All cars and locos on one track must leave staging
-     * <li>7. Service locations based on train direction, location car types and
+     * <li>If required, add caboose or car with FRED to train
+     * <li>When departing staging find a track matching train requirements
+     * <li>All cars and locos on one track must leave staging
+     * <li>Service locations based on train direction, location car types and
      * roads
-     * <li>8. Ignore track direction when train is a local (serves one location)
+     * <li>Ignore track direction when train is a local (serves one location)
+     * </ol>
      *
      * @param train the train that is to be built
      *
@@ -279,7 +280,7 @@ public class TrainBuilder extends TrainCommon {
                 rl.setCarMoves(rl.getMaxCarMoves()); // don't allow car moves for this location
             } else {
                 // we're going to use this location, so initialize the location
-                rl.setCarMoves(0); // clear the number of moves			
+                rl.setCarMoves(0); // clear the number of moves
                 requested += rl.getMaxCarMoves(); // add up the total number of car moves requested
                 // show the type of moves allowed at this location
                 if (location.isStaging() && rl.isPickUpAllowed()
@@ -1993,7 +1994,7 @@ public class TrainBuilder extends TrainCommon {
      * percent controls how many cars are placed in any given pass. When departing
      * staging, ignore those cars on the first pass unless the option to build normal
      * was selected by user.
-     * 
+     *
      * @param percent How much of the available moves should be used in this pass.
      * @param firstPass True if first pass, ignore cars in staging.
      * @throws BuildFailedException
@@ -2082,7 +2083,7 @@ public class TrainBuilder extends TrainCommon {
                     }
                 }
             }
-            
+
             int saveReqMoves = _reqNumOfMoves; // save a copy for status message
             addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildLocReqMoves"), new Object[]{
                     rl.getName(), rl.getId(), _reqNumOfMoves, rl.getMaxCarMoves() - rl.getCarMoves(),
@@ -2109,7 +2110,7 @@ public class TrainBuilder extends TrainCommon {
                 }
                 addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
             }
-            
+
             _carIndex = 0; // see reportCarsNotMoved(rl, percent) below
 
             findDestinationsForCarsFromLocation(rl, routeIndex, false);
@@ -2393,7 +2394,7 @@ public class TrainBuilder extends TrainCommon {
     }
 
     /**
-     * 
+     *
      * @param engine
      * @param rl where in the train's route to pick up the engine
      * @param rld where in the train's route to set out the engine
@@ -2599,7 +2600,8 @@ public class TrainBuilder extends TrainCommon {
     }
 
     private final boolean ignoreTrainDirectionIfLastLoc = false;
-
+    // FIXME: ignoreTrainDirectionIfLastLoc has no way to become true, hence the if statement using it below cannot ever be true
+    @SuppressWarnings("unused")
     private boolean checkDropTrainDirection(RollingStock rs, RouteLocation rld, Track track) {
         // local?
         if (_train.isLocalSwitcher()) {
@@ -3643,7 +3645,7 @@ public class TrainBuilder extends TrainCommon {
      * Determines if car was sitting on a FIFO or LIFO track, and if the car
      * wasn't given a destination, shifts the car's order earlier in the car
      * list so it won't be evaluated again.
-     * 
+     *
      * @param car
      */
     private void checkCarOrder(Car car) {
@@ -4533,7 +4535,7 @@ public class TrainBuilder extends TrainCommon {
      * If the train's HP requirements are significantly higher or lower than the
      * engine that was assigned, the program will search for a more appropriate
      * engine, and assign that engine to the train.
-     * 
+     *
      * The HP calculation is based on a minimum train speed of 36 MPH. The
      * formula HPT x 12 / % Grade = Speed, is used to determine the horsepower
      * required. Speed is fixed at 36 MPH. For example a 1% grade requires a

@@ -141,12 +141,12 @@ def writeDetails(csvFile):
         # For the bitwise comparisons, use the following pattern to read the
         # individual bits:
         #
-        #   if (cv29Value & {bit}) != 0:
+        #   if (cv29Value & {value}) == {value}:
         #       csvFile.write("bit set")
         #   else:
         #       csvFile.write("bit clear")
         #
-        # where {bit} is one of the following values:
+        # where {value} is one of the following:
         #
         #   Pos  Bit  Value
         #   1st    0      1
@@ -163,13 +163,13 @@ def writeDetails(csvFile):
 
         # Now do the bitwise comparisons.
         # First example is speedsteps, which is the second bit 
-        if (cv29Value & 2) != 0:
+        if (cv29Value & 2) == 2:
             csvFile.write("28/128 Steps")
         else:
             csvFile.write("14 Steps")
 
         # Second example is DC mode, which is the third bit 
-        if (cv29Value & 4) != 0:
+        if (cv29Value & 4) == 4:
             csvFile.write("On")
         else:
             csvFile.write("Off")

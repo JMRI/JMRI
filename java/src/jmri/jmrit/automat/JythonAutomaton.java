@@ -1,8 +1,7 @@
 package jmri.jmrit.automat;
 
-import jmri.InstanceManager;
-
 import java.lang.reflect.InvocationTargetException;
+import jmri.InstanceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -23,8 +23,6 @@ public final class RowSorterUtil {
      * Get the sort order for a column given a RowSorter for the TableModel
      * containing the column.
      *
-     * @param rowSorter
-     * @param column
      * @return the sort order or {@link javax.swing.SortOrder#UNSORTED}.
      */
     @Nonnull
@@ -44,9 +42,6 @@ public final class RowSorterUtil {
      * This makes all other columns unsorted, even if the specified column is
      * also specified to be unsorted.
      *
-     * @param rowSorter
-     * @param column
-     * @param sortOrder
      */
     public static void setSortOrder(@Nonnull RowSorter<? extends TableModel> rowSorter, int column, @Nonnull SortOrder sortOrder) {
         List<RowSorter.SortKey> keys = new ArrayList<>();

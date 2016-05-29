@@ -16,17 +16,17 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JRadioButton;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import jmri.Block;
 import jmri.InstanceManager;
-import jmri.implementation.SignalSpeedMap;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.Reporter;
 import jmri.Sensor;
+import jmri.implementation.SignalSpeedMap;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +44,6 @@ public class BlockTableAction extends AbstractTableAction {
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
-     * @param actionName
      */
     public BlockTableAction(String actionName) {
         super(actionName);

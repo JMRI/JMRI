@@ -26,6 +26,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.profile.PackageTest");  // no tests in this class itself
         suite.addTest(new TestSuite(ProfileUtilsTest.class));
+        suite.addTest(BundleTest.suite());
         return suite;
     }
 

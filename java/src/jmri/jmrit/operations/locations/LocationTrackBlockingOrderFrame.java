@@ -111,6 +111,7 @@ public class LocationTrackBlockingOrderFrame extends OperationsFrame implements 
     }
 
     // Reset and Save
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == resetButton && _location != null) {
             _location.resetTracksByBlockingOrder();
@@ -139,6 +140,7 @@ public class LocationTrackBlockingOrderFrame extends OperationsFrame implements 
         saveButton.setEnabled(enabled);
     }
 
+    @Override
     public void dispose() {
         if (_location != null) {
             _location.removePropertyChangeListener(this);
@@ -147,6 +149,7 @@ public class LocationTrackBlockingOrderFrame extends OperationsFrame implements 
         super.dispose();
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e

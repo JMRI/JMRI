@@ -31,8 +31,7 @@ which by itself will return a page listing available frames.
 It uses the facilities of the <code>jmri.util.JmriJFrame</code> class
 to locate windows and create an image of their current appearance.
 The window does not have to be maximized, but it does have to be open;
-it's OK for the window to have been minimized to the Start Bar (Windows)
-or converted to an icon (Mac OS X and Linux).
+it's OK for the window to have been minimized.
 
 <p>
 The <a href="index.shtml#Configure">Web Server Preferences</a> can be used to adjust the default delay after
@@ -69,7 +68,7 @@ To display any <em>already open</em> JMRI window as a <b>clickable</b> image tha
 
 <p>
 The <code>jmri/web/servlet/frameimage/JmriJFrameServlet.properties</code> 
-  <a href="https://svn.code.sf.net/p/jmri/code/trunk/jmri/java/src/jmri/web/servlet/frameimage/JmriJFrameServlet.properties" target=_new>
+  <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/web/servlet/frameimage/JmriJFrameServlet.properties">
   properties file</a> can be used to configure the HTML that's returned when
 a frame is requested.</p>
 

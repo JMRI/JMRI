@@ -1,4 +1,3 @@
-// PaneOpsProgAction.java
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import java.awt.event.ActionEvent;
@@ -32,14 +31,9 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  */
 public class PaneOpsProgAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2255562820678458397L;
     Object o1, o2, o3, o4;
     JLabel statusLabel;
 
@@ -82,11 +76,6 @@ public class PaneOpsProgAction extends AbstractAction {
         // known loco on main track
         JPanel pane1 = new KnownLocoSelPane(false) {  // no ident in ops mode yet
 
-            /**
-             *
-             */
-            private static final long serialVersionUID = 2816965509649056116L;
-
             protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
                     String filename) {
                 String title = java.text.MessageFormat.format(SymbolicProgBundle.getMessage("FrameOpsProgrammerTitle"),
@@ -122,5 +111,3 @@ public class PaneOpsProgAction extends AbstractAction {
     private final static Logger log = LoggerFactory.getLogger(PaneOpsProgAction.class.getName());
 
 }
-
-/* @(#)PaneOpsProgAction.java */

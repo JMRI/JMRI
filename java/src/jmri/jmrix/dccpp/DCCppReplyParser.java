@@ -5,7 +5,6 @@
  */
 package jmri.jmrix.dccpp;
 
-import jmri.jmrix.dccpp.DCCppReply;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

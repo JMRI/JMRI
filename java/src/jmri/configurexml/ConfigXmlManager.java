@@ -369,7 +369,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     /**
      * Writes config, tools and user to a file.
      *
-     * @param file
+     * @param file config file to write
      */
     public boolean storeAll(File file) {
         boolean result = true;
@@ -438,7 +438,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     /**
      * Writes prefs to a file.
      *
-     * @param file
+     * @param file config file to write.
      */
     public boolean storeConfig(File file) {
         boolean result = true;
@@ -456,10 +456,10 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     /**
      * Writes user and config info to a file.
      * <P>
-     * Config is included here because it doesnt hurt to read it again, and the
+     * Config is included here because it doesn't hurt to read it again, and the
      * user data (typically a panel) requires it to be present first.
      *
-     * @param file
+     * @param file config file to write
      */
     public boolean storeUser(File file) {
         boolean result = true;
@@ -554,7 +554,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * @param fi               file to load
      * @param registerDeferred true to register objects to defer
      * @return true if no problems during the load
-     * @throws JmriConfigureXmlException
+     * @throws JmriConfigureXmlException if problem during load
      * @see jmri.configurexml.XmlAdapter#loadDeferred()
      * @since 2.11.2
      */
@@ -574,7 +574,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * @param url              URL of file to load
      * @param registerDeferred true to register objects to defer
      * @return true if no problems during the load
-     * @throws JmriConfigureXmlException
+     * @throws JmriConfigureXmlException if problem during load
      * @see jmri.configurexml.XmlAdapter#loadDeferred()
      * @since 3.3.2
      */
@@ -602,11 +602,11 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             } catch (java.lang.reflect.InvocationTargetException e) {
                 throw new JmriConfigureXmlException(e);
             }
-            
-            return result.get(); 
+
+            return result.get();
         }
     }
-    
+
     private boolean loadOnSwingThread(URL url, boolean registerDeferred) throws JmriConfigureXmlException {
         boolean result = true;
         Element root = null;

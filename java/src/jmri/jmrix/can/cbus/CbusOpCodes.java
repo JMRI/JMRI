@@ -64,7 +64,6 @@ public class CbusOpCodes {
      * @param msg CbusMessage to be decoded
      * @param ext flag for extended message Return String decoded message
      * @param header CAN Header
-     * @return 
      */
     public static String decode(AbstractMessage msg, Boolean ext, int header) {
         if (ext == false) {
@@ -75,7 +74,7 @@ public class CbusOpCodes {
     }
 
     /**
-     * Hashmap for decoding CBUS opcodes <opc, string description>
+     * Hashmap for decoding CBUS opcodes {@code <opc, string description>}
      */
     public static final Map<Integer, String> opcodeMap = createMap();
 

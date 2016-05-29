@@ -17,7 +17,7 @@
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
       <revnumber>1</revnumber>
-      <date>2016-04-12</date>
+      <date>2016-04-29</date>
       <authorinitials>EB</authorinitials>
       <revremark>Initial version in 4.3.5, built on appearance-High</revremark>
     </revision>
@@ -34,20 +34,20 @@
       <show>red</show>
       <reference>Rule 215</reference>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-NR.gif</imagelink>
-      <imagelink type="small">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-NR.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/smallschematics/aspects/ProRail-1954/prorail-nr.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Track Out of Service</aspectname>
       <show>flashred</show>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-NRF.gif</imagelink>
-      <imagelink type="small">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-NRF.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/smallschematics/aspects/ProRail-1954/prorail-nrf.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Clear</aspectname>
       <show>green</show>
       <reference>Rule 201</reference>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-NG0.gif</imagelink>
-      <imagelink type="small">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-NG0.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/smallschematics/aspects/ProRail-1954/prorail-ng0.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Medium</aspectname>

@@ -1,4 +1,3 @@
-// RpsTrackingFrame.java
 package jmri.jmrix.rps.trackingpanel;
 
 import java.awt.Dimension;
@@ -15,14 +14,8 @@ import javax.swing.JSeparator;
  * Frame containing the entire display tool
  *
  * @author	Bob Jacobsen Copyright (C) 2006, 2008
- * @version $Revision$
  */
 public class RpsTrackingFrame extends jmri.util.JmriJFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2932962639315165044L;
 
     public RpsTrackingFrame(String s) {
         super(s);
@@ -146,6 +139,3 @@ public class RpsTrackingFrame extends jmri.util.JmriJFrame {
         panel.clear();
     }
 }
-
-
-/* @(#)RpsTrackingFrame.java */

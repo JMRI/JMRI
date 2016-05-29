@@ -1,4 +1,3 @@
-// XpaTurnout.java
 package jmri.jmrix.xpa;
 
 import jmri.Turnout;
@@ -11,24 +10,24 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author	Paul Bender Copyright (C) 2004
- * @version	$Revision$
  */
 public class XpaTurnout extends AbstractTurnout {
 
     /**
      *
      */
-    private static final long serialVersionUID = -1847371708656010119L;
     // Private data member to keep track of what turnout we control.
-    int _number;
+    private int _number;
+    private XpaTrafficController tc = null;
 
     /**
      * Xpa turnouts use any addres allowed as an accessory decoder address on
      * the particular command station.
      */
-    public XpaTurnout(int number) {
-        super("PT" + number);
+    public XpaTurnout(int number,XpaSystemConnectionMemo m) {
+        super(m.getSystemPrefix() + "T" + number);
         _number = number;
+        tc = m.getXpaTrafficController();
     }
 
     public int getNumber() {
@@ -53,7 +52,7 @@ public class XpaTurnout extends AbstractTurnout {
             // send a THROWN command
             m = XpaMessage.getSwitchReverseMsg(_number);
         }
-        XpaTrafficController.instance().sendXpaMessage(m, null);
+        tc.sendXpaMessage(m, null);
     }
 
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {

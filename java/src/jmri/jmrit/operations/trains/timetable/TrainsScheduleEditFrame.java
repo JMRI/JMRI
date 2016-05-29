@@ -68,6 +68,7 @@ public class TrainsScheduleEditFrame extends OperationsFrame implements java.bea
 
     }
 
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == deleteButton && comboBox.getSelectedItem() != null) {
             trainScheduleManager.deregister((TrainSchedule) comboBox.getSelectedItem());
@@ -90,11 +91,13 @@ public class TrainsScheduleEditFrame extends OperationsFrame implements java.bea
         }
     }
 
+    @Override
     public void dispose() {
         trainScheduleManager.removePropertyChangeListener(this);
         super.dispose();
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e

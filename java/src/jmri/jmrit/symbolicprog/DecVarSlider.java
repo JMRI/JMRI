@@ -1,4 +1,3 @@
-//DecVarSlider.java
 package jmri.jmrit.symbolicprog;
 
 import javax.swing.BoundedRangeModel;
@@ -14,14 +13,8 @@ import org.slf4j.LoggerFactory;
  * an underlying variable; we return one of these in DecValVariable.getNewRep.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision$
  */
 public class DecVarSlider extends JSlider implements ChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1009744573300199533L;
 
     DecVarSlider(DecVariableValue var, int min, int max) {
         super(new DefaultBoundedRangeModel(min, 0, min, max));

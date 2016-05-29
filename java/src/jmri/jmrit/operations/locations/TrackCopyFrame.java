@@ -129,6 +129,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
     }
 
     // location combo box
+    @Override
     protected void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == locationBox) {
             updateTrackComboBox();
@@ -155,6 +156,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
         }
     }
 
+    @Override
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
     protected void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == copyButton) {
@@ -211,6 +213,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
         }
     }
 
+    @Override
     protected void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == sameNameCheckBox) {
             updateTrackName();
@@ -268,6 +271,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
         }
     }
 
+    @Override
     public void dispose() {
         LocationManager.instance().removePropertyChangeListener(this);
         if (_location != null) {
@@ -276,6 +280,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
         super.dispose();
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         log.debug("PropertyChange ({}) new ({})", e.getPropertyName(), e.getNewValue());
         if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)) {

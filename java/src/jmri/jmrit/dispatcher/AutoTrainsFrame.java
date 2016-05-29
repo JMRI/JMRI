@@ -457,7 +457,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
             if (at.getMode() == ActiveTrain.MANUAL) {
                 float speedValue = value;
                 speedValue = speedValue * 0.01f;
-                aat.setTargetSpeed(speedValue);
+                aat.getAutoEngineer().setSpeedImmediate(speedValue);
             } else {
                 log.warn("unexpected slider change on line " + s);
             }
@@ -560,6 +560,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
             sep.setVisible(false);
         }
         autoTrainsFrame.pack();
+        autoTrainsFrame.setAutoRequestFocus(false);
         autoTrainsFrame.setVisible(true);
     }
 

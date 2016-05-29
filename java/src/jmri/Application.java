@@ -42,8 +42,8 @@ public class Application {
      * Set the current JMRI application name.
      *
      * @param applicationName String containing the JMRI application name
-     * @throws IllegalAccessException
-     * @throws IllegalArgumentException
+     * @throws IllegalAccessException   if attempting to modify once set
+     * @throws IllegalArgumentException if a null name passed
      */
     public static void setApplicationName(String applicationName) throws IllegalAccessException, IllegalArgumentException {
         if (Application.name == null) {
@@ -98,4 +98,3 @@ public class Application {
     }
 
 }
-

@@ -1,4 +1,3 @@
-// SlotMonPane.java
 package jmri.jmrix.loconet.slotmon;
 
 import java.awt.FlowLayout;

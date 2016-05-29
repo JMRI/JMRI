@@ -1,24 +1,5 @@
 package jmri.server.json;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.ServiceLoader;
-import jmri.JmriException;
-import jmri.jmris.json.JsonConsistServer;
-import jmri.jmris.json.JsonOperationsServer;
-import jmri.jmris.json.JsonProgrammerServer;
-import jmri.jmris.json.JsonReporterServer;
-import jmri.jmris.json.JsonSensorServer;
-import jmri.jmris.json.JsonServerPreferences;
-import jmri.jmris.json.JsonSignalHeadServer;
-import jmri.jmris.json.JsonSignalMastServer;
-import jmri.jmris.json.JsonThrottleServer;
-import jmri.jmris.json.JsonUtil;
 import static jmri.server.json.JSON.CARS;
 import static jmri.server.json.JSON.CONSIST;
 import static jmri.server.json.JSON.CONSISTS;
@@ -53,6 +34,26 @@ import static jmri.server.json.JSON.TRAIN;
 import static jmri.server.json.JSON.TRAINS;
 import static jmri.server.json.JSON.TYPE;
 import static jmri.server.json.JSON.XML;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.ServiceLoader;
+import jmri.JmriException;
+import jmri.jmris.json.JsonConsistServer;
+import jmri.jmris.json.JsonOperationsServer;
+import jmri.jmris.json.JsonProgrammerServer;
+import jmri.jmris.json.JsonReporterServer;
+import jmri.jmris.json.JsonSensorServer;
+import jmri.jmris.json.JsonServerPreferences;
+import jmri.jmris.json.JsonSignalHeadServer;
+import jmri.jmris.json.JsonSignalMastServer;
+import jmri.jmris.json.JsonThrottleServer;
+import jmri.jmris.json.JsonUtil;
 import jmri.spi.JsonServiceFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -138,8 +139,6 @@ public class JsonClientHandler {
      * off in the form: <code>{"type":"goodbye"}</code> to which an identical
      * response is sent before the connection gets closed.</li></ul>
      *
-     * @param string
-     * @throws IOException
      */
     public void onMessage(String string) throws IOException {
         log.debug("Received from client: {}", string);
@@ -157,8 +156,6 @@ public class JsonClientHandler {
      * See {@link #onMessage(java.lang.String) } for expected JSON objects.
      *
      * @see #onMessage(java.lang.String)
-     * @param root
-     * @throws IOException
      */
     public void onMessage(JsonNode root) throws IOException {
         try {

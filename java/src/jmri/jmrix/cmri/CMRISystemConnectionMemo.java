@@ -1,7 +1,6 @@
 package jmri.jmrix.cmri;
 
 import java.util.ResourceBundle;
-import jmri.InstanceManager;
 import jmri.jmrix.SystemConnectionMemo;
 
 /**

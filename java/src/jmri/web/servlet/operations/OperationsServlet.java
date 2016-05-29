@@ -84,9 +84,11 @@ public class OperationsServlet extends HttpServlet {
                     this.processConductor(id, request, response);
                 } else if (report.equals("trains")) {
                     // TODO: allow for editing/building/reseting train
+                    log.warn("Unhandled request for \"trains\"");
                     response.sendError(HttpServletResponse.SC_BAD_REQUEST);
                 } else {
                     // Don't know what to do
+                    log.warn("Unparsed request for \"{}\"", report);
                     response.sendError(HttpServletResponse.SC_BAD_REQUEST);
                 }
             }

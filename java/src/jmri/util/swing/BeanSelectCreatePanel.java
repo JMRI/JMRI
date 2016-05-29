@@ -17,10 +17,6 @@ import jmri.util.ConnectionNameFromSystemName;
 
 public class BeanSelectCreatePanel extends JPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8850883067365493880L;
     Manager _manager;
     NamedBean _defaultSelect;
     String _reference = null;

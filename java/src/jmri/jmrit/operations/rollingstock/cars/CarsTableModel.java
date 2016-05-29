@@ -198,7 +198,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     private static boolean isSelectVisible = false;
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "GUI ease of use")
+            justification = "GUI ease of use")  // NOI18N
     public void toggleSelectVisible() {
         XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
         isSelectVisible = !tcm.isColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN));
@@ -282,7 +282,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     }
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
-            justification = "default case is sort by number")
+            justification = "default case is sort by number")  // NOI18N
     public List<RollingStock> getCarList(int sort) {
         List<RollingStock> list;
         switch (sort) {
@@ -426,14 +426,17 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_COLUMN), false);
     }
 
+    @Override
     public int getRowCount() {
         return sysList.size();
     }
 
+    @Override
     public int getColumnCount() {
         return HIGHESTCOLUMN;
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case SELECT_COLUMN:
@@ -489,6 +492,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         }
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case SELECT_COLUMN:
@@ -501,6 +505,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         }
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
             case SELECT_COLUMN:
@@ -516,6 +521,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         }
     }
 
+    @Override
     public Object getValueAt(int row, int col) {
         if (row >= sysList.size()) {
             return "ERROR row " + row; // NOI18N
@@ -609,6 +615,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     CarEditFrame cef = null;
     CarSetFrame csf = null;
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
         Car car = (Car) sysList.get(row);
         switch (col) {
@@ -622,6 +629,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 }
                 // use invokeLater so new window appears on top
                 SwingUtilities.invokeLater(new Runnable() {
+                    @Override
                     public void run() {
                         csf = new CarSetFrame();
                         csf.initComponents();
@@ -636,6 +644,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 }
                 // use invokeLater so new window appears on top
                 SwingUtilities.invokeLater(new Runnable() {
+                    @Override
                     public void run() {
                         cef = new CarEditFrame();
                         cef.initComponents();
@@ -703,6 +712,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         }
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e

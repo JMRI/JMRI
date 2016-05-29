@@ -1,4 +1,3 @@
-// GenericImportAction.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.event.ActionEvent;
@@ -15,13 +14,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author	Dave Heap Copyright (C) 2015
- * @version $Revision: 22821 $
  */
 public class GenericImportAction extends AbstractAction {
 
-    /**
-     *
-     */
     CvTableModel mModel;
     JFrame mParent;
     JLabel mStatus;

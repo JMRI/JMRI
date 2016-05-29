@@ -118,6 +118,7 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
         _table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
     }
 
+    @Override
     public synchronized int getRowCount() {
         return sysList.size();
     }
@@ -126,10 +127,12 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
         return FIXEDCOLUMN;
     }
 
+    @Override
     public int getColumnCount() {
         return getFixedColumn() + scheduleManager.numEntries();
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case IDCOLUMN:
@@ -151,6 +154,7 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
         return "unknown"; // NOI18N
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case IDCOLUMN:
@@ -166,6 +170,7 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
         return null;
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
             case IDCOLUMN:
@@ -177,6 +182,7 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
         }
     }
 
+    @Override
     public synchronized Object getValueAt(int row, int col) {
         if (row >= sysList.size()) {
             return "ERROR row " + row; // NOI18N
@@ -204,6 +210,7 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
         return "unknown " + col; // NOI18N
     }
 
+    @Override
     public synchronized void setValueAt(Object value, int row, int col) {
         TrainSchedule ts = getSchedule(col);
         if (ts != null) {
@@ -220,6 +227,7 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
         }
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e

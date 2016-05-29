@@ -1,4 +1,3 @@
-// PacketGenFrame.java
 package jmri.jmrix.tams.swing.packetgen;
 
 import java.awt.Dimension;
@@ -14,14 +13,9 @@ import jmri.util.StringUtil;
  * Frame for user input of Tams messages Based on work by Bob Jacobsen
  *
  * @author	Kevin Dickerson Copyright (C) 2012
- * @version $Revision: 17977 $
  */
 public class PacketGenPanel extends jmri.jmrix.tams.swing.TamsPanel implements TamsListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5155072043615176052L;
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();

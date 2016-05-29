@@ -10,10 +10,11 @@
  *    The JSON type is used to send changes to JSON server and to listen for changes made elsewhere.
  *    Drawn widgets are handled by drawing directly on the javascript "canvas" layer.
  *  
- *  TODO: show error notification or grey-out panel when panel and/or server goes away
+ *  TODO: show error dialog while retrying connection
+ *  TODO: add Cancel button to return to home page on errors (not found, etc.)
  *  TODO: handle "&" in usernames (see Indicator Demo 00.xml)
  *  TODO: handle drawn ellipse (see LMRC APB)
- *  TODO: update drawn track on color and width changes
+ *  TODO: update drawn track on color and width changes (would need to create system objects to reflect these chgs)
  *  TODO: research movement of locoicons ("promote" locoicon to system entity in JMRI?, add panel-level listeners?)
  *  TODO: finish layoutturntable (draw rays) (see Mtn RR and CnyMod27)
  *  TODO: address color differences between java panel and javascript panel (e.g. lightGray)
@@ -1394,13 +1395,14 @@ var $getNextState = function($widget) {
                         break;
                 }
             case 1 :
-//            getSignalHead().setLit(!getSignalHead().getLit());
-                break;
+            	//TODO: handle lit/unlit toggle
+            	// getSignalHead().setLit(!getSignalHead().getLit());
+            	break;
             case 2 :
-//            getSignalHead().setHeld(!getSignalHead().getHeld());
-                $nextState = ($widget.state * 1 == HELD ? RED : HELD);  //toggle between red and held states
+            	// getSignalHead().setHeld(!getSignalHead().getHeld());
+            	$nextState = ($widget.state * 1 == HELD ? RED : HELD);  //toggle between red and held states
                 break;
-            case 3: //loop through all iconX and get "next one"
+            case 3: //loop through all elements, finding iconX and get "next one", skipping special ones
                 var $firstState = undefined;
                 var $currentState = undefined;
                 for (k in $widget) {
@@ -1421,26 +1423,40 @@ var $getNextState = function($widget) {
         } //end of switch 
 
     } else if ($widget.widgetType == 'signalmasticon') { //special case for signalmasticons
-        //loop through all iconX and get "next one"
-        var $firstState = undefined;
-        var $currentState = undefined;
-        for (k in $widget) {
-            var s = k.substr(4); //extract the state from current icon var
-            //look for next icon value, skipping Held, Dark and Unknown
-            if (k.indexOf('icon') == 0 && typeof $widget[k] !== "undefined" && s != 'Held' && s != 'Dark' && s != 'Unknown') { 
-                if (typeof $firstState == "undefined")
-                    $firstState = s;  //remember the first state (for last one)
-                if (typeof $currentState !== "undefined" && typeof $nextState == "undefined")
-                    $nextState = s; //last one was the current, so this one must be next
-                if (s == $widget.state)
-                    $currentState = s;
-                if (window.console)
-                    console.log('key: ' + k + " first=" + $firstState);
-            }
-        };
-        
-        if (typeof $nextState == "undefined")
-            $nextState = $firstState;  //if still not set, start over
+    	//loop through all elements, finding iconXXX and get next iconXXX, skipping special ones
+    	switch ($widget.clickmode * 1) {          //   logic based on SignalMastIcon.java
+    	case 0 :
+    		var $firstState = undefined;
+    		var $currentState = undefined;
+    		for (k in $widget) {
+    			var s = k.substr(4); //extract the state from current icon var
+    			//look for next icon value, skipping Held, Dark and Unknown
+    			if (k.indexOf('icon') == 0 && typeof $widget[k] !== "undefined" && s != 'Held' && s != 'Dark' 
+              && s !='Unlit' && s !=  'Unknown') { 
+    				if (typeof $firstState == "undefined")
+    					$firstState = s;  //remember the first state (for last one)
+    				if (typeof $currentState !== "undefined" && typeof $nextState == "undefined")
+    					$nextState = s; //last one was the current, so this one must be next
+    				if (s == $widget.state)
+    					$currentState = s;
+    				if (window.console)
+    					console.log('key: ' + k + " first=" + $firstState);
+    			}
+    		};
+    		if (typeof $nextState == "undefined")
+    			$nextState = $firstState;  //if still not set, start over
+    		break;
+    		
+    	case 1 :
+    		//TODO: handle lit/unlit states 
+    		break;
+    		
+    	case 2 :
+    		//toggle between stop and held state
+    		$nextState = ($widget.state == "Held" ? "Stop" : "Held");  
+    		break;
+    		
+    	}; //end of switch clickmode
 
     } else {  //start with INACTIVE, then toggle to ACTIVE and back
         $nextState = ($widget.state == ACTIVE ? INACTIVE : ACTIVE);

@@ -76,6 +76,7 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
         this.tc = tc;
     }
 
+    @Override
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "EngineManager only provides Engine Objects")
     // we use a thread so the status frame will work!
     public void run() {
@@ -259,9 +260,11 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
         return m;
     }
 
+    @Override
     public void message(NceMessage m) {
     } // ignore replies
 
+    @Override
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"NN_NAKED_NOTIFY", "NO_NOTIFY_NOT_NOTIFYALL"}, justification = "Only want to notify this thread" )
     public void reply(NceReply r) {
 

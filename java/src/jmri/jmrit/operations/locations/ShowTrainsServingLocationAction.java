@@ -28,6 +28,7 @@ public class ShowTrainsServingLocationAction extends AbstractAction {
     Track _track;
     ShowTrainsServingLocationFrame _frame;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (_frame != null) {
             _frame.dispose();

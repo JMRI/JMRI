@@ -25,6 +25,7 @@ public class BackupFilesAction extends AbstractAction {
         super(s);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         backUp();
     }
@@ -67,6 +68,7 @@ public class BackupFilesAction extends AbstractAction {
 
     private static class fileFilter extends javax.swing.filechooser.FileFilter {
 
+        @Override
         public boolean accept(File f) {
             if (f.isDirectory()) {
                 return true;
@@ -80,6 +82,7 @@ public class BackupFilesAction extends AbstractAction {
             }
         }
 
+        @Override
         public String getDescription() {
             return Bundle.getMessage("BackupFolders");
         }

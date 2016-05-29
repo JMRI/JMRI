@@ -53,7 +53,7 @@ public class LightTableAction extends AbstractTableAction {
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
-     * @param s
+     * @param s title of the action
      */
     public LightTableAction(String s) {
         super(s);

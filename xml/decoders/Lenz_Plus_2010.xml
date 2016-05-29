@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Carasso (Alain355) acarasso_fr@yahoo.fr" version="5.1" lastUpdated="20160429"/>
   <version author="Alain Carasso (Alain355) acarasso_fr@yahoo.fr" version="5" lastUpdated="20160414"/>
   <version author="Bernd Wisotzki (Ba), wsb56" version="4" lastUpdated="20140730"/>
   <version author="Bernd Wisotzki (Ba), wsb56" version="3" lastUpdated="20140524"/>
@@ -55,19 +56,22 @@ Silver direct+ Silent-Back EMF DCC Decoder
 	Comments for version 5
 
 	1) Added the Lenz standard plus V2 decoder (RailCom, 4 outputs with F1(f) and F1(r))
+	2) Added versionID check for those Plus Serie decoder when known
 
 	-->
   <!--
 nmraWarrant="yes" nmraWarrantStart="200604"
 -->
   <decoder>
-    <family name="Lenz Plus decoders released March 2010" mfg="Lenz" highVersionID="99" lowVersionID="90" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive">
+    <family name="Lenz Plus decoders released March 2010, updated April 2016" mfg="Lenz" highVersionID="99" lowVersionID="72" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive">
     	<model model="Standard+ NEM652 10231-01" numOuts="3" numFns="31" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A">
+		<versionCV highVersionID="93" lowVersionID="93"/>
     		<output name="1" label="A" maxcurrent="0.3A"/>
     		<output name="2" label="B" maxcurrent="0.3A"/>
     		<output name="3" label="C" maxcurrent="0.3A"/>
     	</model>
     	<model model="Standard+ V2 NEM652 10231-02" numOuts="4" numFns="31" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A">
+			<versionCV highVersionID="77" lowVersionID="77"/>
     		<output name="1" label="A" maxcurrent="0.3A"/>
     		<output name="2" label="B" maxcurrent="0.3A"/>
     		<output name="3" label="C" maxcurrent="0.3A"/>
@@ -82,14 +86,17 @@ nmraWarrant="yes" nmraWarrantStart="200604"
     		<output name="2" label="B" maxcurrent="0.3A"/>
     	</model>
     	<model model="Silver+ mini wired 10310-02" numOuts="2" numFns="31" maxMotorCurrent="0.5A" formFactor="N" maxTotalCurrent="0.5A">
+    		<versionCV highVersionID="96" lowVersionID="96"/>
     		<output name="1" label="A - White" maxcurrent="0.3A"/>
     		<output name="2" label="B - Yellow" maxcurrent="0.3A"/>
     	</model>
     	<model model="Silver+ mini NEM651 10311-02" numOuts="2" numFns="31" maxMotorCurrent="0.5A" formFactor="N" maxTotalCurrent="0.5A">
+    		<versionCV highVersionID="96" lowVersionID="96"/>
     		<output name="1" label="A" maxcurrent="0.3A"/>
     		<output name="2" label="B" maxcurrent="0.3A"/>
     	</model>
     	<model model="Silver+ NEM652 10331-01" numOuts="5" numFns="31" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A">
+    		<versionCV highVersionID="95" lowVersionID="95"/>
     		<output name="1" label="A" maxcurrent="0.5A"/>
     		<output name="2" label="B" maxcurrent="0.5A"/>
     		<output name="3" label="C" maxcurrent="0.5A"/>
@@ -97,6 +104,7 @@ nmraWarrant="yes" nmraWarrantStart="200604"
     		<output name="5" label="E" maxcurrent="0.5A"/>
     	</model>
     	<model model="Silver+ PluX12 10312-01" numOuts="5" numFns="31" maxMotorCurrent="0.75A" formFactor="TT" maxTotalCurrent="0.75A">
+      		<versionCV highVersionID="97" lowVersionID="97"/>
     		<output name="1" label="A" maxcurrent="0.5A"/>
     		<output name="2" label="B" maxcurrent="0.5A"/>
     		<output name="3" label="C" maxcurrent="0.5A"/>
@@ -104,6 +112,7 @@ nmraWarrant="yes" nmraWarrantStart="200604"
     		<output name="5" label="E" maxcurrent="0.5A"/>
     	</model>
     	<model model="Silver+ Next18 10312-01" numOuts="5" numFns="31" maxMotorCurrent="0.75A" formFactor="TT" maxTotalCurrent="0.75A" comment="New in 2014">
+    		<versionCV highVersionID="94" lowVersionID="94"/>
     		<output name="1" label="A" maxcurrent="0.5A"/>
     		<output name="2" label="B" maxcurrent="0.5A"/>
     		<output name="3" label="C" maxcurrent="0.5A"/>
@@ -111,6 +120,7 @@ nmraWarrant="yes" nmraWarrantStart="200604"
     		<output name="5" label="E" maxcurrent="0.5A"/>
     	</model>
     	<model model="Silver+ 21 10321-01" numOuts="5" numFns="31" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A">
+    		<versionCV highVersionID="99" lowVersionID="99"/>
     		<output name="1" label="A" maxcurrent="0.5A"/>
     		<output name="2" label="B" maxcurrent="0.5A"/>
     		<output name="3" label="C" maxcurrent="0.5A"/>
@@ -118,6 +128,7 @@ nmraWarrant="yes" nmraWarrantStart="200604"
     		<output name="5" label="E" maxcurrent="0.5A"/>
     	</model>
     	<model model="Silver+ direct 10330-01" numOuts="5" numFns="31" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A">
+    		<versionCV highVersionID="98" lowVersionID="98"/>
     		<output name="1" label="A" maxcurrent="0.5A"/>
     		<output name="2" label="B" maxcurrent="0.5A"/>
     		<output name="3" label="C" maxcurrent="0.5A"/>
@@ -133,6 +144,7 @@ nmraWarrant="yes" nmraWarrantStart="200604"
     		<output name="2" label="B" maxcurrent="0.3A"/>
     	</model>
     	<model model="Gold+ NEM652 10433-01" numOuts="5" numFns="31" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A">
+    		<versionCV highVersionID="91" lowVersionID="91"/>
     		<output name="1" label="A" maxcurrent="0.5A"/>
     		<output name="2" label="B" maxcurrent="0.5A"/>
     		<output name="3" label="C" maxcurrent="0.5A"/>

@@ -161,6 +161,7 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
         trainManager.addPropertyChangeListener(this);
     }
 
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == saveButton) {
             // save option manual or auto
@@ -186,6 +187,7 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
         }
     }
 
+    @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         makePanelsVisible();
     }
@@ -206,6 +208,7 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
         pColorTerminated.setVisible(!manualRadioButton.isSelected());
     }
     
+    @Override
     public void comboBoxActionPerformed(ActionEvent ae) {
         Train train = (Train) trainBox.getSelectedItem();
         if (train != null) {
@@ -214,6 +217,7 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
         }
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e.getNewValue()); // NOI18N
@@ -223,6 +227,7 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
         }
     }
 
+    @Override
     public void dispose() {
         trainManager.removePropertyChangeListener(this);
         super.dispose();

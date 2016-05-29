@@ -312,6 +312,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         new AutoSave();
     }
 
+    @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("radio button activated");
         if (ae.getSource() == showId) {
@@ -337,6 +338,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     TrainSwitchListEditFrame tslef;
 
     // add, build, print, switch lists, terminate, and save buttons
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         // log.debug("train button activated");
         if (ae.getSource() == addButton) {
@@ -474,6 +476,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         conductorRB.setSelected(trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.CONDUCTOR));
     }
 
+    @Override
     public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == buildMsgBox) {
             trainManager.setBuildMessagesEnabled(buildMsgBox.isSelected());
@@ -543,6 +546,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         }
     }
 
+    @Override
     public void dispose() {
         trainsModel.dispose();
         trainManager.runShutDownScripts();
@@ -553,6 +557,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         super.dispose();
     }
 
+    @Override
     protected void handleModified() {
         if (!getModifiedFlag()) {
             return;
@@ -576,11 +581,13 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         }
     }
 
+    @Override
     protected void storeValues() {
         super.storeValues();
         saveTableDetails(trainsTable);
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e

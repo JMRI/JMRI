@@ -157,7 +157,6 @@ public class InputWindow extends JPanel {
 
     /**
      *
-     * @param fileChooser
      * @return true if successful
      */
     protected boolean loadFile(JFileChooser fileChooser) {
@@ -194,7 +193,6 @@ public class InputWindow extends JPanel {
         }
         /**
          *
-         * @param fileChooser
          * @return true if successful
          */
     protected boolean storeFile(JFileChooser fileChooser) {

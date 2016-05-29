@@ -15,14 +15,14 @@ import jmri.jmrit.symbolicprog.ProgrammerConfigManager;
 import jmri.managers.ManagerDefaultSelector;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
-import jmri.spi.PreferencesProvider;
 import jmri.util.jdom.JDOMUtil;
-import jmri.util.prefs.AbstractPreferencesProvider;
+import jmri.util.prefs.AbstractPreferencesManager;
 import jmri.util.prefs.InitializationException;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.spi.PreferencesManager;
 
 /**
  * Manager for Startup Actions. Reads preferences at startup and triggers
@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood (C) 2015, 2016
  */
-public class StartupActionsManager extends AbstractPreferencesProvider {
+public class StartupActionsManager extends AbstractPreferencesManager {
 
     private final List<StartupModel> actions = new ArrayList<>();
     private final HashMap<Class<? extends StartupModel>, StartupModelFactory> factories = new HashMap<>();
@@ -78,13 +78,13 @@ public class StartupActionsManager extends AbstractPreferencesProvider {
                 log.debug("No element to read");
             }
             this.isDirty = false;
-            this.setIsInitialized(profile, true);
+            this.setInitialized(profile, true);
         }
     }
 
     @Override
-    public Set<Class<? extends PreferencesProvider>> getRequires() {
-        Set<Class<? extends PreferencesProvider>> requires = super.getRequires();
+    public Set<Class<? extends PreferencesManager>> getRequires() {
+        Set<Class<? extends PreferencesManager>> requires = super.getRequires();
         requires.add(ManagerDefaultSelector.class);
         requires.add(FileLocationsPreferences.class);
         requires.add(RosterConfigManager.class);

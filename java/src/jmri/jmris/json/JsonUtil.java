@@ -1,6 +1,9 @@
 // JsonUtil.java
 package jmri.jmris.json;
 
+import static jmri.jmris.json.JSON.*;
+import static jmri.jmrit.operations.trains.TrainCommon.splitString;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -27,129 +30,6 @@ import jmri.SensorManager;
 import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.Turnout;
-import static jmri.jmris.json.JSON.ACTIVE;
-import static jmri.jmris.json.JSON.ACTIVE_PROFILE;
-import static jmri.jmris.json.JSON.ADDRESS;
-import static jmri.jmris.json.JSON.ADD_COMMENT;
-import static jmri.jmris.json.JSON.APPEARANCE;
-import static jmri.jmris.json.JSON.APPEARANCE_NAME;
-import static jmri.jmris.json.JSON.ASPECT;
-import static jmri.jmris.json.JSON.ASPECT_DARK;
-import static jmri.jmris.json.JSON.ASPECT_HELD;
-import static jmri.jmris.json.JSON.ASPECT_UNKNOWN;
-import static jmri.jmris.json.JSON.CABOOSE;
-import static jmri.jmris.json.JSON.CAR;
-import static jmri.jmris.json.JSON.CARS;
-import static jmri.jmris.json.JSON.CLOSED;
-import static jmri.jmris.json.JSON.CODE;
-import static jmri.jmris.json.JSON.COLOR;
-import static jmri.jmris.json.JSON.COMMENT;
-import static jmri.jmris.json.JSON.CONSIST;
-import static jmri.jmris.json.JSON.CONTROL_PANEL;
-import static jmri.jmris.json.JSON.DATA;
-import static jmri.jmris.json.JSON.DECODER_FAMILY;
-import static jmri.jmris.json.JSON.DECODER_MODEL;
-import static jmri.jmris.json.JSON.DEPARTURE_LOCATION;
-import static jmri.jmris.json.JSON.DEPARTURE_TIME;
-import static jmri.jmris.json.JSON.DESCRIPTION;
-import static jmri.jmris.json.JSON.DESTINATION;
-import static jmri.jmris.json.JSON.DIRECTION;
-import static jmri.jmris.json.JSON.ENGINE;
-import static jmri.jmris.json.JSON.ENGINES;
-import static jmri.jmris.json.JSON.ERROR;
-import static jmri.jmris.json.JSON.EXPECTED_ARRIVAL;
-import static jmri.jmris.json.JSON.EXPECTED_DEPARTURE;
-import static jmri.jmris.json.JSON.F;
-import static jmri.jmris.json.JSON.FINAL_DESTINATION;
-import static jmri.jmris.json.JSON.FORMER_NODES;
-import static jmri.jmris.json.JSON.FORWARD;
-import static jmri.jmris.json.JSON.FUNCTION_KEYS;
-import static jmri.jmris.json.JSON.GROUP;
-import static jmri.jmris.json.JSON.HAZARDOUS;
-import static jmri.jmris.json.JSON.HEARTBEAT;
-import static jmri.jmris.json.JSON.HELLO;
-import static jmri.jmris.json.JSON.ICON;
-import static jmri.jmris.json.JSON.ICON_NAME;
-import static jmri.jmris.json.JSON.ID;
-import static jmri.jmris.json.JSON.IMAGE;
-import static jmri.jmris.json.JSON.INACTIVE;
-import static jmri.jmris.json.JSON.INCONSISTENT;
-import static jmri.jmris.json.JSON.INVERTED;
-import static jmri.jmris.json.JSON.IS_LONG_ADDRESS;
-import static jmri.jmris.json.JSON.JMRI;
-import static jmri.jmris.json.JSON.JSON;
-import static jmri.jmris.json.JSON.JSON_PROTOCOL_VERSION;
-import static jmri.jmris.json.JSON.KERNEL;
-import static jmri.jmris.json.JSON.LABEL;
-import static jmri.jmris.json.JSON.LAST_REPORT;
-import static jmri.jmris.json.JSON.LAYOUT_PANEL;
-import static jmri.jmris.json.JSON.LEAD_ENGINE;
-import static jmri.jmris.json.JSON.LENGTH;
-import static jmri.jmris.json.JSON.LIGHT;
-import static jmri.jmris.json.JSON.LIT;
-import static jmri.jmris.json.JSON.LOAD;
-import static jmri.jmris.json.JSON.LOCATION;
-import static jmri.jmris.json.JSON.LOCATIONS;
-import static jmri.jmris.json.JSON.LOCATION_ID;
-import static jmri.jmris.json.JSON.LOCKABLE;
-import static jmri.jmris.json.JSON.MAX_SPD_PCT;
-import static jmri.jmris.json.JSON.MEMORY;
-import static jmri.jmris.json.JSON.MESSAGE;
-import static jmri.jmris.json.JSON.METADATA;
-import static jmri.jmris.json.JSON.MFG;
-import static jmri.jmris.json.JSON.MODEL;
-import static jmri.jmris.json.JSON.NAME;
-import static jmri.jmris.json.JSON.NETWORK_SERVICE;
-import static jmri.jmris.json.JSON.NODE;
-import static jmri.jmris.json.JSON.NULL;
-import static jmri.jmris.json.JSON.NUMBER;
-import static jmri.jmris.json.JSON.OFF;
-import static jmri.jmris.json.JSON.ON;
-import static jmri.jmris.json.JSON.OWNER;
-import static jmri.jmris.json.JSON.PANEL;
-import static jmri.jmris.json.JSON.PORT;
-import static jmri.jmris.json.JSON.POSITION;
-import static jmri.jmris.json.JSON.POWER;
-import static jmri.jmris.json.JSON.PREFIX;
-import static jmri.jmris.json.JSON.RAILROAD;
-import static jmri.jmris.json.JSON.RATE;
-import static jmri.jmris.json.JSON.REMOVE_COMMENT;
-import static jmri.jmris.json.JSON.REPORT;
-import static jmri.jmris.json.JSON.REPORTER;
-import static jmri.jmris.json.JSON.RETURN_WHEN_EMPTY;
-import static jmri.jmris.json.JSON.ROAD;
-import static jmri.jmris.json.JSON.ROSTER;
-import static jmri.jmris.json.JSON.ROSTER_ENTRY;
-import static jmri.jmris.json.JSON.ROSTER_GROUP;
-import static jmri.jmris.json.JSON.ROSTER_GROUPS;
-import static jmri.jmris.json.JSON.ROUTE;
-import static jmri.jmris.json.JSON.ROUTE_ID;
-import static jmri.jmris.json.JSON.SELECTED_ICON;
-import static jmri.jmris.json.JSON.SENSOR;
-import static jmri.jmris.json.JSON.SEQUENCE;
-import static jmri.jmris.json.JSON.SHUNTING_FUNCTION;
-import static jmri.jmris.json.JSON.SIGNAL_HEAD;
-import static jmri.jmris.json.JSON.SIGNAL_MAST;
-import static jmri.jmris.json.JSON.SIZE_LIMIT;
-import static jmri.jmris.json.JSON.STATE;
-import static jmri.jmris.json.JSON.STATUS;
-import static jmri.jmris.json.JSON.STATUS_CODE;
-import static jmri.jmris.json.JSON.SYSTEM_CONNECTION;
-import static jmri.jmris.json.JSON.TERMINATES_LOCATION;
-import static jmri.jmris.json.JSON.THROWN;
-import static jmri.jmris.json.JSON.TIME;
-import static jmri.jmris.json.JSON.TOGGLE;
-import static jmri.jmris.json.JSON.TOKEN_HELD;
-import static jmri.jmris.json.JSON.TRACK;
-import static jmri.jmris.json.JSON.TRAIN;
-import static jmri.jmris.json.JSON.TURNOUT;
-import static jmri.jmris.json.JSON.TYPE;
-import static jmri.jmris.json.JSON.UNKNOWN;
-import static jmri.jmris.json.JSON.URL;
-import static jmri.jmris.json.JSON.USERNAME;
-import static jmri.jmris.json.JSON.UTILITY;
-import static jmri.jmris.json.JSON.VALUE;
-import static jmri.jmris.json.JSON.WEIGHT;
 import jmri.jmrit.consisttool.ConsistFile;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
@@ -165,7 +45,6 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.Train;
-import static jmri.jmrit.operations.trains.TrainCommon.splitString;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
@@ -296,7 +175,6 @@ public class JsonUtil {
      * @param data    The JSON representation of the consist. See
      * {@link #getConsist(Locale, jmri.DccLocoAddress) } for the
      *                JSON structure.
-     * @throws JsonException
      */
     static public void putConsist(Locale locale, DccLocoAddress address, JsonNode data) throws JsonException {
         try {
@@ -315,7 +193,6 @@ public class JsonUtil {
      * @param locale The locale to throw exceptions in.
      * @return JSON array of consists as in the structure returned by
      * {@link #getConsist(Locale, jmri.DccLocoAddress) }
-     * @throws JsonException
      */
     static public JsonNode getConsists(Locale locale) throws JsonException {
         try {
@@ -350,7 +227,6 @@ public class JsonUtil {
      * @param locale  the locale to throw exceptions in
      * @param address the consist address
      * @param data    the consist as a JsonObject
-     * @throws JsonException
      */
     static public void setConsist(Locale locale, DccLocoAddress address, JsonNode data) throws JsonException {
         try {
@@ -756,10 +632,9 @@ public class JsonUtil {
      * folder of the JMRI server. It is expected that clients will fill in the
      * server IP address and port as they know it to be.
      *
-     * @param locale
      * @param id     The id of an entry in the roster.
      * @return a roster entry in JSON notation
-     * @deprcated since 4.3.5
+     * @deprecated since 4.3.5
      */
     @Deprecated
     static public JsonNode getRosterEntry(Locale locale, String id) {
@@ -773,7 +648,6 @@ public class JsonUtil {
      * folder of the JMRI server. It is expected that clients will fill in the
      * server IP address and port as they know it to be.
      *
-     * @param locale
      * @param re     A RosterEntry that may or may not be in the roster.
      * @return a roster entry in JSON notation
      * @deprecated since 4.3.5
@@ -927,7 +801,6 @@ public class JsonUtil {
      * @param locale The locale to throw exceptions in
      * @param name   The name of the route
      * @param data   A JsonNode containing route attributes to set
-     * @throws JsonException
      * @see jmri.Route#TOGGLE
      */
     static public void setRoute(Locale locale, String name, JsonNode data) throws JsonException {
@@ -1301,7 +1174,6 @@ public class JsonUtil {
      * @param locale The locale to throw exceptions in.
      * @param id     The id of the train.
      * @param data   Train data to change.
-     * @throws JsonException
      */
     static public void setTrain(Locale locale, String id, JsonNode data) throws JsonException {
         Train train = TrainManager.instance().getTrainById(id);
@@ -1491,9 +1363,6 @@ public class JsonUtil {
      * JSON errors should be handled by throwing a
      * {@link jmri.server.json.JsonException}.
      *
-     * @param code
-     * @param message
-     * @return
      * @deprecated
      */
     @Deprecated
@@ -1513,7 +1382,6 @@ public class JsonUtil {
      * Type may be <code>L</code> for long or <code>S</code> for short. If the
      * type is not specified, type is assumed to be short.
      *
-     * @param address
      * @return The DccLocoAddress for address.
      */
     static public DccLocoAddress addressForString(String address) {

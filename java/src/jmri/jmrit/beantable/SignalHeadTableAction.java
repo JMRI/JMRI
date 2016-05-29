@@ -53,7 +53,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
-     * @param s
+     * @param s title of the action
      */
     public SignalHeadTableAction(String s) {
         super(s);
@@ -1309,7 +1309,8 @@ public class SignalHeadTableAction extends AbstractTableAction {
                     try {
                         number = Integer.parseInt(jtf.getText());
                         s.setOutputForAppearance(s.getValidStates()[i], number);
-                    } catch (Exception ex) {
+                    } catch (RuntimeException ex) {
+                        log.warn("error setting \"{}\" output for appearance \"{}\"", systemNameText, jtf.getText());
                     }
                 } else {
                     s.dispose();

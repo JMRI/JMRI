@@ -24,6 +24,7 @@ public class EnableDestinationAction extends AbstractAction {
         _csFrame = frame;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         _csFrame.setDestinationEnabled(true);
     }

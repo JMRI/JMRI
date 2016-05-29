@@ -106,10 +106,10 @@ public class JsonRouteSocketServiceTest extends TestCase {
             // Route TOGGLE - remains ACTIVE
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IR1").put(JSON.STATE, JSON.TOGGLE);
             service.onMessage(JsonRouteServiceFactory.ROUTE, message, Locale.ENGLISH);
-            Assert.assertEquals(Sensor.ACTIVE, route1.getState());
             JUnitUtil.waitFor(() -> {
                 return route1.getState() == Sensor.ACTIVE;
             }, "Route to activate");
+            Assert.assertEquals(Sensor.ACTIVE, route1.getState());
             // Route TOGGLE - becomes ACTIVE
             sensor1.setKnownState(Sensor.INACTIVE);
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IR1").put(JSON.STATE, JSON.TOGGLE);

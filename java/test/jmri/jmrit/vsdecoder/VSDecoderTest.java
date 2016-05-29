@@ -39,14 +39,11 @@ public class VSDecoderTest extends TestCase {
         suite.addTest(jmri.jmrit.vsdecoder.NotchTriggerTest.suite());
         suite.addTest(jmri.jmrit.vsdecoder.VSDSoundTest.suite());
         suite.addTest(jmri.jmrit.vsdecoder.SoundBiteTest.suite());
+        suite.addTest(BundleTest.suite());
+        suite.addTest(jmri.jmrit.vsdecoder.swing.PackageTest.suite());
 
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
 	    // Put swing tests here (?)
-
-            //suite.addTest(jmri.jmrit.roster.CopyRosterItemActionTest.suite());
-            //suite.addTest(jmri.jmrit.roster.RosterEntryPaneTest.suite());
-            //suite.addTest(jmri.jmrit.roster.FunctionLabelPaneTest.suite());
-            //suite.addTest(jmri.jmrit.roster.IdentifyLocoTest.suite());
         }
 
         return suite;

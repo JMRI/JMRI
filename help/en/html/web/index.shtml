@@ -57,7 +57,7 @@
     <h2>Web Server Preferences</h2>
     <p>Web Server Preferences are in two categories:</p>
     <dl>
-        <dt><a href="WebServer.shtml">Web Server</a></dt>
+        <dt>Web Server</dt>
         <dd>
             <dl>
                 <dt>Port#</dt>
@@ -75,6 +75,12 @@
         </dd>
         <dt><a href="FrameServlet.shtml">Frame Server</a></dt>
         <dd><dl>
+                <dt>Disable Frames</dt>
+                <dd>Disable the frame server. Disabling the frame server
+                    disables most other preferences.</dd>
+                <dt>Use Panels Instead</dt>
+                <dd>If the frame server is disabled, requests for frames can be
+                    redirected to <a href="PanelServlet.shtml">panels</a>.</dd> 
                 <dt>Click Delay</dt>
                 <dd>Wait the specified number of seconds after a click
                     on the window (frame) image before refreshing the image.</dd>
@@ -177,6 +183,43 @@
         modifications do not cause the templates to break entirely. If
         web access does not work as expected after modifying a template,
         check the JMRI logs for the cause.</p>
+
+    <h2><a name="redirection">Request Redirection</a></h2>
+    <p>The JMRI web server will automatically redirect the following requests:</p>
+    <dl>
+        <dt>/index.html</dt>
+        <dd>Redirects to <code>/</code> since the static HTML root was replaced
+            with a dynamic HTML root.</dd>
+        <dt>/prefs/index.html</dt>
+        <dd>Redirects to <code>/</code> since the static HTML root was replaced
+            with a dynamic HTML root. Some WiThrottle clients refuse to allow
+            access to the web server if a request to
+            <code>/prefs/index.html</code> returns an error.</dd>
+        <dt>/prefs/roster.xml</dt>
+        <dd>Redirects to <code>/roster?format=xml</code> since users can opt to
+            have the roster outside the normal preferences file location, and
+            the <a href="RosterServlet.shtml">roster servlet</a> can load the
+            roster from any location.</dd>
+        <dt>/web/operationsConductor.html</dt>
+        <dd>Redirects to <code>/operations</code> since this page was replaced
+            with the <a href="Operations.shtml">operations servlet</a>.</dd>
+        <dt>/web/operationsManifest.html</dt>
+        <dd>Redirects to <code>/operations</code> since this page was replaced
+            with the <a href="Operations.shtml">operations servlet</a>.</dd>
+        <dt>/web/operationsTrains.html</dt>
+        <dd>Redirects to <code>/operations</code> since this page was replaced
+            with the <a href="Operations.shtml">operations servlet</a>.</dd>
+        <dt>/web/showPanel.html</dt>
+        <dd>Redirects to <code>/panel</code>.</dd>
+    </dl>
+
+    <h2><a id="security">Security</a></h2>
+    <p>By default, JMRI only allows limited access to your computer.
+        Only files that are located within the JMRI distribution directory
+        or the JMRI preferences directory will be provided in response to
+        requests.  This is not air-tight security, however, and you should
+        be careful to not put important content in those directories or link
+        them to other parts of your computer.</p>
 
 <!--#include virtual="/Footer" -->
   </div><!-- closes #mainContent-->
