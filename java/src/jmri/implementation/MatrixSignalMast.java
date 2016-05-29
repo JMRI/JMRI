@@ -34,14 +34,13 @@ public class MatrixSignalMast extends AbstractSignalMast {
      *  Number of columns in logix matrix, default to 5, set in Matrix Mast panel & on loading xml
      *  Used to set size of char[] bitString
     */
-    int bitNum = 5;
+    protected int mastBitNum = 5;
 
-    String errorChars = "nnnnn";
+    static String errorChars = "nnnnn";
     char[] errorBits = errorChars.toCharArray();
 
-    String emptyChars = "00000"; // default starting value
+    static String emptyChars = "00000"; // default starting value
     char[] emptyBits = emptyChars.toCharArray();
-    char[] unLitBits;
 
     public MatrixSignalMast(String systemName, String userName) {
         super(systemName, userName);
@@ -53,15 +52,17 @@ public class MatrixSignalMast extends AbstractSignalMast {
         configureFromName(systemName);
     }
 
-    void configureFromName(String systemName) {
+    protected String mastType = "IF$xsm";
+
+    protected void configureFromName(String systemName) {
         // split out the basic information
         String[] parts = systemName.split(":");
         if (parts.length < 3) {
             log.error("SignalMast system name needs at least three parts: " + systemName);
             throw new IllegalArgumentException("System name needs at least three parts: " + systemName);
         }
-        if (!parts[0].equals("IF$xsm")) {
-            log.warn("SignalMast system name should start with IF$xsm but is " + systemName);
+        if (!parts[0].equals(mastType)) {
+            log.warn("SignalMast system name should start with " + mastType + " but is " + systemName);
         }
         String system = parts[1];
         String mast = parts[2];
@@ -82,6 +83,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
     }
 
     protected HashMap<String, char[]> aspectToOutput = new HashMap<String, char[]>(16); // "Clear" - 01001 char[] pairs
+    protected char[] unLitBits;
 
     /**
      * Store bits in aspectToOutput hashmap
@@ -173,6 +175,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
 
     public void setUnLitBits(char[] bits) {
         char[] unLitBits = bits;
+        System.out.println("Received unLitBits: " + String.valueOf(unLitBits)); // debug EBR
     }
 
     /**
@@ -185,9 +188,11 @@ public class MatrixSignalMast extends AbstractSignalMast {
 
     public char[] getUnLitBits() {
         if (unLitBits != null) {
+            System.out.println("xmast.getUnLitBits returns " + String.valueOf(unLitBits)); // debug EBR
             return unLitBits;
         } else {
-            return errorBits;
+            System.out.println("xmast sent: " + String.valueOf(emptyBits) + " because unLitBits = >" + unLitBits + "<"); // debug EBR
+            return emptyBits;
         }
     }
 
@@ -199,7 +204,8 @@ public class MatrixSignalMast extends AbstractSignalMast {
         if (unLitBits != null) {
             return String.valueOf(unLitBits);
         } else {
-            return errorChars;
+            System.out.println("EmptyChars supplied to xml"); // debug EBR
+            return emptyChars.substring(0, (mastBitNum)); // should only be called when Unlit = true
         }
     }
 
@@ -284,7 +290,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
      */
     public List<String> getOutputs() { // provide to xml
         // to do: use for loop
-        ArrayList<String> outputlist = new ArrayList<String>(); // (5) or (bitNum) ?
+        ArrayList<String> outputlist = new ArrayList<String>(); // (5) or (mastBitNum) ?
         //list = outputsToBeans.keySet();
         outputlist.add(outputsToBeans.get("output1").getName()); // convert NBH to name (String)
         if (outputsToBeans.containsKey("output2")) {
@@ -303,7 +309,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
         return outputlist;
     }
 
-    HashMap<String, NamedBeanHandle<Turnout>> outputsToBeans = new HashMap<String, NamedBeanHandle<Turnout>>(5); // output# - bean pairs
+    protected HashMap<String, NamedBeanHandle<Turnout>> outputsToBeans = new HashMap<String, NamedBeanHandle<Turnout>>(5); // output# - bean pairs
 
     //looks a lot like the next method, remove?
     NamedBeanHandle<Turnout> TurnoutNameToHandle (String turnoutName) {
@@ -360,7 +366,6 @@ public class MatrixSignalMast extends AbstractSignalMast {
                     // invalid char
                     log.debug("Invalid element " + bits[i] + " cannot be converted to state for output #" + i);
                 }
-// wait between setting?
             }
         }
     }
@@ -431,22 +436,22 @@ public class MatrixSignalMast extends AbstractSignalMast {
 
     /** Store number of outputs from integer
     * @param number int for the number of outputs defined for this mast
-    * @see #bitNum
+    * @see #mastBitNum
     */
     public void setBitNum(int number) {
-            bitNum = number;
+            mastBitNum = number;
     }
 
     /** Store number of outputs from integer
      * @param bits char[] for outputs defined for this mast
-     * @see #bitNum
+     * @see #mastBitNum
      */
     public void setBitNum(char[] bits) {
-        bitNum = bits.length;
+        mastBitNum = bits.length;
     }
 
     public int getBitNum() {
-        return bitNum;
+        return mastBitNum;
     }
 
     public void setAspectDisabled(String aspect) {
