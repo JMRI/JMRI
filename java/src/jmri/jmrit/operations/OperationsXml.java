@@ -72,8 +72,6 @@ public abstract class OperationsXml extends XmlFile {
     }
 
     /**
-     * @throws FileNotFoundException
-     * @throws IOException
      */
     protected void writeFile(String filename) throws FileNotFoundException, IOException {
         log.error("writeFile not overridden");
@@ -192,8 +190,7 @@ public abstract class OperationsXml extends XmlFile {
     }
     
     /**
-     * Checks name for the file control characters: 
-     * @param name
+     * Checks name for the file control characters:
      * @return true if name is okay, false if name contains a control character.
      */
     public static boolean checkFileName(String name) {

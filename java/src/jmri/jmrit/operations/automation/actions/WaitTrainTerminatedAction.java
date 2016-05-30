@@ -42,8 +42,7 @@ public class WaitTrainTerminatedAction extends Action implements PropertyChangeL
     /**
      * Wait for train to terminate or if user deselects the train build
      * checkbox.
-     * 
-     * @param evt
+     *
      */
     private void trainUpdate(PropertyChangeEvent evt) {
         if (getAutomationItem() != null) {
