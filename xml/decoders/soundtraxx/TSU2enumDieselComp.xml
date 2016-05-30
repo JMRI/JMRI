@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2010 All rights reserved -->
+<!-- Copyright (C) JMRI 2016 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -11,21 +11,18 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<!-- version 1 - new include file for SoundTraxx Tsunami -->
-<!-- version 2 - new Reserve values for Tsunami2 (Alain Le Marchand 2016-05-29) -->
+<!-- version 1 - new include file for SoundTraxx Tsunami2                   -->
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <enumChoice value="0">
-    <choice>Disabled, Speed Curves not used</choice>
-    <choice xml:lang="it">Disabilitata, Curva velocità non utilizzata</choice>
+  <enumChoice>
+	<choice>Engine Driven</choice>
   </enumChoice>
-  <enumChoice value="1">
-    <choice>Disabled, Speed Curves not used</choice>
-    <choice xml:lang="it">Disabilitata, Curva velocità non utilizzata</choice>
+  <enumChoice>
+	<choice>GE Whooping (motor driven)</choice>
   </enumChoice>
-    <enumChoice value="2">
-    <choice>Linear/3-Point Speed Table</choice>
+  <enumChoice>
+	<choice>GE GEVO Series (motor driven)</choice>
   </enumChoice>
-  <enumChoice value="16">
-    <choice>28-Point Custom Speed Table</choice>
+  <enumChoice>
+	<choice>EMD Shaft Driven</choice>
   </enumChoice>
 </enumVal>
