@@ -56,8 +56,8 @@ import org.slf4j.LoggerFactory;
 /**
  * JPanel to create a new Signal Mast
  *
- * @author	Bob Jacobsen Copyright (C) 2009, 2010, 2016
- * @author Egbert Broerse Copyright (C) 2016
+ * @author  Bob Jacobsen Copyright (C) 2009, 2010, 2016
+ * @author  Egbert Broerse Copyright (C) 2016
  */
 public class AddSignalMastPanel extends JPanel {
 
@@ -107,7 +107,7 @@ public class AddSignalMastPanel extends JPanel {
         signalMastDriver = new JComboBox<String>(new String[]{
             Bundle.getMessage("HeadCtlMast"), Bundle.getMessage("TurnCtlMast"), Bundle.getMessage("VirtualMast"), Bundle.getMessage("MatrixCtlMast")
         });
-        //Only allow the creation of DCC SignalMast if a command station instance is present, otherwise it will not work, so no point in adding it.
+        // Only allow the creation of DCC SignalMast if a command station instance is present, otherwise it will not work, so no point in adding it.
         if (jmri.InstanceManager.getList(jmri.CommandStation.class) != null) {
             signalMastDriver.addItem(Bundle.getMessage("DCCMast"));
             java.util.List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
@@ -674,7 +674,6 @@ public class AddSignalMastPanel extends JPanel {
         if (prefs.getComboBoxLastSelection(mastSelectionCombo + ":" + ((String) sigSysBox.getSelectedItem())) != null) {
             mastBox.setSelectedItem(prefs.getComboBoxLastSelection(mastSelectionCombo + ":" + ((String) sigSysBox.getSelectedItem())));
         }
-
     }
 
     HashMap<String, Integer> map = new HashMap<String, Integer>();
@@ -807,7 +806,7 @@ public class AddSignalMastPanel extends JPanel {
                     return;
                 }
                 String systemNameText = ConnectionNameFromSystemName.getPrefixFromName((String) systemPrefixBox.getSelectedItem());
-                //if we return a null string then we will set it to use internal, thus picking up the default command station at a later date.
+                // if we return a null string then we will set it to use internal, thus picking up the default command station at a later date.
                 if (systemNameText.equals("\0")) {
                     systemNameText = "I";
                 }
@@ -862,7 +861,7 @@ public class AddSignalMastPanel extends JPanel {
 
                 matrixMast.setBitNum(bitNum); // store number of columns in aspect - outputs matrix in mast
 
-                //store outputs from turnoutBoxes; method in line 950
+                //store outputs from turnoutBoxes; method in line 976
                 matrixMast.setOutput("output1", turnoutBox1.getDisplayName()); // store choice from turnoutBox1
                 if (bitNum > 1) {
                     matrixMast.setOutput("output2", turnoutBox2.getDisplayName()); // store choice from turnoutBox2
@@ -878,7 +877,7 @@ public class AddSignalMastPanel extends JPanel {
                 }
 
                 for (String aspect : matrixAspect.keySet()) {
-                    // store matrix in mast per aspect, compare with #955
+                    // store matrix in mast per aspect, compare with line 991
                     matrixMastPanel.add(matrixAspect.get(aspect).getPanel()); // read from aspect panel to mast
                     if (matrixAspect.get(aspect).isAspectDisabled()) {
                         matrixMast.setAspectDisabled(aspect);
@@ -973,7 +972,7 @@ public class AddSignalMastPanel extends JPanel {
                 MatrixSignalMast matrixMast = (MatrixSignalMast) mast;
                 matrixMast.setBitNum(bitNum); // store number of columns in aspect - outputs matrix in mast
 
-                //store outputs from turnoutBoxes; method in line 950
+                //store outputs from turnoutBoxes; method in line 865
                 matrixMast.setOutput("output1", turnoutBox1.getDisplayName()); // store choice from turnoutBox1
                 if (bitNum > 1) {
                     matrixMast.setOutput("output2", turnoutBox2.getDisplayName()); // store choice from turnoutBox2
@@ -988,7 +987,7 @@ public class AddSignalMastPanel extends JPanel {
                     }
                 }
                 for (String aspect : matrixAspect.keySet()) {
-                    // store matrix in mast, compare with #864
+                    // store matrix in mast, compare with line 881
                     // from matrixMastPanel hashtable to matrixMast
                     matrixMastPanel.add(matrixAspect.get(aspect).getPanel()); // update from aspect panel to mast
                     if (matrixAspect.get(aspect).isAspectDisabled()) {
@@ -1021,22 +1020,6 @@ public class AddSignalMastPanel extends JPanel {
             return Arrays.copyOf(unLitPanelBits, bitNum);
         } else {
             return Arrays.copyOf(emptyBits, bitNum);
-        }
-    }
-
-    /**
-     * Copied from SignalHeadTableAction for MatrixMast, needed?
-    * */
-    protected Turnout getTurnoutFromPanel(BeanSelectCreatePanel bp, String reference) {
-        if (bp == null) {
-            return null;
-        }
-        //bp.setReference(reference);
-        try {
-            return (Turnout) bp.getNamedBean();
-        } catch (jmri.JmriException ex) {
-            log.warn("skipping creation of turnout not found for " + reference);
-            return null;
         }
     }
 
@@ -1758,14 +1741,15 @@ public class AddSignalMastPanel extends JPanel {
         if ((matrixAspect.size() & 1) == 1) {
             // spacer before "Copy from mast"
             matrixMastPanel.add(new JLabel());
-            // spacer
         }
         matrixMastPanel.add(resetPreviousState); // checkbox
         resetPreviousState.setToolTipText(Bundle.getMessage("ResetPreviousToolTip"));
         // copy option matrixMast bitstrings = settings
-        //matrixMastPanel.add(new JLabel()); // another spacer
-        matrixMastPanel.add(new JLabel(Bundle.getMessage("MatrixMastCopyAspectBits")));
-        matrixMastPanel.add(copyFromMastSelection());
+        JPanel matrixCopyPanel = new JPanel();
+        matrixCopyPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
+        matrixCopyPanel.add(new JLabel(Bundle.getMessage("MatrixMastCopyAspectBits") + ":"));
+        matrixCopyPanel.add(copyFromMastSelection());
+        matrixMastPanel.add(matrixCopyPanel);
         // setReference(name + ":" + output); //write mast name to bean comment? see turnoutMast
     }
 
@@ -1788,7 +1772,7 @@ public class AddSignalMastPanel extends JPanel {
         repaint();
     }
 
-    //option: write mast name to bean comment?, not on aspect level, called from #1520
+    //to do: write mast name to bean comment?, not on aspect level, called from #1520
     /*  void setReference(String bits) {
         aspectBitsField.setReference(bits); // was turnout, should be string
     }*/
@@ -1831,7 +1815,8 @@ public class AddSignalMastPanel extends JPanel {
             return false;
         }
         if (DccSignalMast.isDCCAddressUsed(address) != null) {
-            String msg = Bundle.getMessage("DCCMastAddressAssigned", new Object[]{dccAspectAddressField.getText(), DccSignalMast.isDCCAddressUsed(address)});
+            String msg = Bundle.getMessage("DCCMastAddressAssigned", new Object[]{dccAspectAddressField.getText(),
+             DccSignalMast.isDCCAddressUsed(address)});
             JOptionPane.showMessageDialog(null, msg);
             return false;
         }
@@ -1842,24 +1827,13 @@ public class AddSignalMastPanel extends JPanel {
         MatrixSignalMast mast = (MatrixSignalMast) InstanceManager.signalMastManagerInstance().getNamedBean(strMast);
         if (bitNum != mast.getBitNum()) {
             int i = JOptionPane.showConfirmDialog(null, Bundle.getMessage("MatrixColWarning", mast.getBitNum(), bitNum),
-                    "Different number of Columns",
+                    Bundle.getMessage("MatrixColWarningTitle"),
                     JOptionPane.YES_NO_OPTION);
             if (i != 0) {
                 return;
             }
 
         }
-/*        for (String aspect : matrixAspect.keySet()) {
-            if (mast.isAspectDisabled(aspect)) {
-                matrixAspect.get(aspect).setAspectDisabled(true);
-            } else {
-                char[] mastBits = mast.getBitsForAspect(aspect); // same as loading an existing MatrixMast
-                char[] panelAspectBits = Arrays.copyOf(mastBits, 5); // store as 5 character array in panel
-                matrixPanel.setAspectBoxes(panelAspectBits); // for 5 char[]
-            }
-        }*/
-        //java.util.Enumeration<String> aspects = appMap.getAspects();
-        // in matrixPanel hashtable fill in mast settings per aspect
         for (String key : matrixAspect.keySet()) {
             // select the right checkboxes
             MatrixAspectPanel matrixPanel = matrixAspect.get(key); // load aspectpanel from hashmap
@@ -1882,9 +1856,6 @@ public class AddSignalMastPanel extends JPanel {
         if (!Bundle.getMessage("MatrixCtlMast").equals(signalMastDriver.getSelectedItem())) {
             return;
         }
-        //if (bitString == null) {
-            //char[] bitString = emptyBits;
-        //}
         String mastType = mastNames.get(mastBox.getSelectedIndex()).getName();
         mastType = mastType.substring(11, mastType.indexOf(".xml"));
         jmri.implementation.DefaultSignalAppearanceMap sigMap = jmri.implementation.DefaultSignalAppearanceMap.getMap(sigsysname, mastType);
@@ -2033,7 +2004,7 @@ public class AddSignalMastPanel extends JPanel {
         void setAspectDisabled(boolean boo) {
             disabledCheck.setSelected(boo);
             if (boo) { // disable all (output bit) checkboxes on this aspect panel
-                //aspectBitsField.setEnabled(false); // always Disabled
+                // aspectBitsField always Disabled
                 bitCheck1.setEnabled(false);
                 if (bitNum > 1) {
                     bitCheck2.setEnabled(false);
@@ -2048,7 +2019,7 @@ public class AddSignalMastPanel extends JPanel {
                     bitCheck5.setEnabled(false);
                 }
             } else { // enable all (output bit) checkboxes on this aspect panel
-                //aspectBitsField.setEnabled(true); // always Disabled
+                // aspectBitsField always Disabled
                 bitCheck1.setEnabled(true);
                 if (bitNum > 1) {
                     bitCheck2.setEnabled(true);
