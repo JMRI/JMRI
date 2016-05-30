@@ -1,4 +1,3 @@
-// ActiveFlag.java
 package jmri.jmrix.can.cbus;
 
 /**
@@ -9,7 +8,6 @@ package jmri.jmrix.can.cbus;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2008, 2009
  * @author Andrew Crosland 2008
- * @version $Revision$
  */
 abstract public class ActiveFlag {
 
@@ -23,5 +21,3 @@ abstract public class ActiveFlag {
         return flag;
     }
 }
-
-/* @(#)ActiveFlag.java */
