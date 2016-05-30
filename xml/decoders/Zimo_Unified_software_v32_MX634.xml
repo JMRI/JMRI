@@ -12,91 +12,170 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="Mark Waters mark16jmri@mybtinternet.com" version="1" lastUpdated="20150207"/>
-  <!-- Based on the "2014 04 20" English version of the ZIMO "Small decoder manual	     -->
-  <!--                                                                                       -->
-  <!-- This decoder XML is meant to be used with the "Comprehensive" programmer format.      -->
-  <!-- Continued the practice of using unrelated "item" names to place Zimo unique           -->
-  <!-- variables on the proper pane of the Comprehensive programmer.                         -->
-  <!-- V 1 new file - Mark Waters - 7 Feb 2015-->
-  <!-- V 1.1 updated file - Mark Waters - 28 Dec 2015 - superceeded by Zimo_Unified_software_MX634v31 file, Hidden in decoder tree  -->
-  <decoder>
-    <family name="Zimo Unified software (version 32+)" mfg="Zimo">
-      <model show="no" model="MX634 version 32+" replacementModel="MX634 version 25+" replacementFamily="Zimo Unified software (version 25+)" lowVersionID="32" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" numOuts="8" numFns="14" productID="240">
-        <output name="1" label="Front Light"/>
-        <output name="2" label="Rear Light"/>
-        <output name="3" label="FO 1"/>
-        <output name="4" label="FO 2"/>
-        <output name="5" label="FO 3"/>
-        <output name="6" label="FO 4"/>
-        <output name="7" label="FO 5 (+5v)"/>
-        <output name="8" label="FO 6 (+5v)"/>
-        <size length="20.5" width="15.5" height="4" units="mm"/>
-      </model>
-      <model show="no" model="MX634R version 32+" replacementModel="MX634R version 25+" replacementFamily="Zimo Unified software (version 25+)" lowVersionID="32" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="NMRAmedium" numOuts="8" numFns="14" productID="240">
-        <output name="1" label="Front Light"/>
-        <output name="2" label="Rear Light"/>
-        <output name="3" label="FO 1"/>
-        <output name="4" label="FO 2"/>
-        <output name="5" label="FO 3"/>
-        <output name="6" label="FO 4"/>
-        <output name="7" label="FO 5 (+5v)"/>
-        <output name="8" label="FO 6 (+5v)"/>
-        <size length="20.5" width="15.5" height="4" units="mm"/>
-      </model>
-      <model show="no" model="MX634F version 32+" replacementModel="MX634F version 25+" replacementFamily="Zimo Unified software (version 25+)" lowVersionID="32" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="NMRAsmall" numOuts="8" numFns="14" productID="240">
-        <output name="1" label="Front Light"/>
-        <output name="2" label="Rear Light"/>
-        <output name="3" label="FO 1"/>
-        <output name="4" label="FO 2"/>
-        <output name="5" label="FO 3"/>
-        <output name="6" label="FO 4"/>
-        <output name="7" label="FO 5 (+5v)"/>
-        <output name="8" label="FO 6 (+5v)"/>
-        <size length="20.5" width="15.5" height="4" units="mm"/>
-      </model>
-      <model show="no" model="MX634D version 32+" replacementModel="MX634D version 25+" replacementFamily="Zimo Unified software (version 25+)" lowVersionID="32" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="240">
-        <output name="1" label="Front Light"/>
-        <output name="2" label="Rear Light"/>
-        <output name="3" label="FO 1"/>
-        <output name="4" label="FO 2"/>
-        <output name="5" label="FO 3"/>
-        <output name="6" label="FO 4"/>
-        <output name="7" label="FO 5 (+5v)"/>
-        <output name="8" label="FO 6 (+5v)"/>
-        <size length="20.5" width="15.5" height="4" units="mm"/>
-      </model>
-    </family>
-    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
-    <variables>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV1-CV99.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV100-CV152version30.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV153-CV157version28.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV158version32.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV159-CV160.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV161-CV185Servo.xml"/>
-      <variable item="Decoder ID 1" CV="250" default="240" readOnly="yes">
-        <decVal/>
-        <label>Decoder ID 1</label>
-        <label xml:lang="it">ID 1 Decoder: </label>
-      </variable>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV400-CV428.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV430-CV489.xml"/>
-    </variables>
-    <xi:include href="http://jmri.org/xml/decoders/zimo/factReset-v32.xml"/>
-  </decoder>
-  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAccelDecel.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneShuntUncouple.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAltFunctionMap6+2.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSwissMapping.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneFunctionOutput.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSmoke.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneZimoSpecific.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneRailcom.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneABC.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSpeedRegulation.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneServos2.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneDecoderlock.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneInputMapping.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneLoadCode.xml"/>
+	<version author="ronald@wirkuhns.de" version="2" lastUpdated="2016/05/06"/>
+	<!-- add translation to german in splitted files -->
+	<version author="Mark Waters mark16jmri@mybtinternet.com" version="1" lastUpdated="20150207"/>
+	<!-- Based on the "2014 04 20" English version of the ZIMO "Small decoder manual	     -->
+	<!--                                                                                       -->
+	<!-- This decoder XML is meant to be used with the "Comprehensive" programmer format.      -->
+	<!-- Continued the practice of using unrelated "item" names to place Zimo unique           -->
+	<!-- variables on the proper pane of the Comprehensive programmer.                         -->
+	<!-- V 1 new file - Mark Waters - 7 Feb 2015-->
+	<decoder>
+		<family name="Zimo Unified software (version 32+)" mfg="Zimo">
+			<model model="MX634 version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" numOuts="8" numFns="14" productID="240">
+				<output name="1" label="Front Light">
+					<label xml:lang="de">Lvor</label>
+				</output>
+				<output name="2" label="Rear Light">
+					<label xml:lang="de">Lrück</label>
+				</output>
+				<output name="3" label="FO 1">
+					<label xml:lang="de">FA1</label>
+				</output>
+				<output name="4" label="FO 2">
+					<label xml:lang="de">FA2</label>
+				</output>
+				<output name="5" label="FO 3">
+					<label xml:lang="de">FA3</label>
+				</output>
+				<output name="6" label="FO 4">
+					<label xml:lang="de">FA4</label>
+				</output>
+				<output name="7" label="FO 5 (+5v)">
+					<label xml:lang="de">FA5|(+5v)</label>
+				</output>
+				<output name="8" label="FO 6 (+5v)">
+					<label xml:lang="de">FA6|(+5v)</label>
+				</output>
+				<size length="20.5" width="15.5" height="4" units="mm"/>
+			</model>
+			<model model="MX634R version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="NMRAmedium" numOuts="8" numFns="14" productID="240">
+				<output name="1" label="Front Light">
+					<label xml:lang="de">Lvor</label>
+				</output>
+				<output name="2" label="Rear Light">
+					<label xml:lang="de">Lrück</label>
+				</output>
+				<output name="3" label="FO 1">
+					<label xml:lang="de">FA1</label>
+				</output>
+				<output name="4" label="FO 2">
+					<label xml:lang="de">FA2</label>
+				</output>
+				<output name="5" label="FO 3">
+					<label xml:lang="de">FA3</label>
+				</output>
+				<output name="6" label="FO 4">
+					<label xml:lang="de">FA4</label>
+				</output>
+				<output name="7" label="FO 5 (+5v)">
+					<label xml:lang="de">FA5|(+5v)</label>
+				</output>
+				<output name="8" label="FO 6 (+5v)">
+					<label xml:lang="de">FA6|(+5v)</label>
+				</output>
+				<size length="20.5" width="15.5" height="4" units="mm"/>
+			</model>
+			<model model="MX634F version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="NMRAsmall" numOuts="8" numFns="14" productID="240">
+				<output name="1" label="Front Light">
+					<label xml:lang="de">Lvor</label>
+				</output>
+				<output name="2" label="Rear Light">
+					<label xml:lang="de">Lrück</label>
+				</output>
+				<output name="3" label="FO 1">
+					<label xml:lang="de">FA1</label>
+				</output>
+				<output name="4" label="FO 2">
+					<label xml:lang="de">FA2</label>
+				</output>
+				<output name="5" label="FO 3">
+					<label xml:lang="de">FA3</label>
+				</output>
+				<output name="6" label="FO 4">
+					<label xml:lang="de">FA4</label>
+				</output>
+				<output name="7" label="FO 5 (+5v)">
+					<label xml:lang="de">FA5</label>
+				</output>
+				<output name="8" label="FO 6 (+5v)">
+					<label xml:lang="de">FA6</label>
+				</output>
+				<size length="20.5" width="15.5" height="4" units="mm"/>
+			</model>
+			<model model="MX634D version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="240">
+				<output name="1" label="Front Light">
+					<label xml:lang="de">Lvor</label>
+				</output>
+				<output name="2" label="Rear Light">
+					<label xml:lang="de">Lrück</label>
+				</output>
+				<output name="3" label="FO 1">
+					<label xml:lang="de">FA1</label>
+				</output>
+				<output name="4" label="FO 2">
+					<label xml:lang="de">FA2</label>
+				</output>
+				<output name="5" label="FO 3">
+					<label xml:lang="de">FA3</label>
+				</output>
+				<output name="6" label="FO 4">
+					<label xml:lang="de">FA4</label>
+				</output>
+				<output name="7" label="FO 5 (+5v)">
+					<label xml:lang="de">FA5</label>
+				</output>
+				<output name="8" label="FO 6 (+5v)">
+					<label xml:lang="de">FA6</label>
+				</output>
+				<size length="20.5" width="15.5" height="4" units="mm"/>
+			</model>
+		</family>
+		<programming direct="yes" paged="yes" register="yes" ops="yes"/>
+		<variables>
+			<xi:include href="http://jmri.org/xml/decoders/zimo/CV1-CV99.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/zimo/CV100-CV152version30.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/zimo/CV153-CV157version28.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/zimo/CV158version32.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/zimo/CV159-CV160.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/zimo/CV161-CV185Servo.xml"/>
+			<variable item="Decoder ID 1" CV="250" default="240" readOnly="yes">
+				<decVal/>
+				<label>Decoder ID 1</label>
+				<label xml:lang="it">ID 1 Decoder: </label>
+			</variable>
+			<variable item="Decoder ID 2" CV="251" readOnly="yes">
+				<decVal/>
+				<label>Decoder ID 2</label>
+				<label xml:lang="it">ID 2 Decoder: </label>
+			</variable>
+			<variable item="Decoder ID 3" CV="252" readOnly="yes">
+				<decVal/>
+				<label>Decoder ID 3</label>
+				<label xml:lang="it">ID 3 Decoder: </label>
+			</variable>
+			<variable item="Decoder ID 4" CV="253" readOnly="yes">
+				<decVal/>
+				<label>Decoder ID 4</label>
+				<label xml:lang="it">ID 4 Decoder: </label>
+			</variable>
+			<!--xi:include href="http://jmri.org/xml/decoders/zimo/CV400-CV428.xml"/-->
+			<!--xi:include href="http://jmri.org/xml/decoders/zimo/CV430-CV489.xml"/-->
+		</variables>
+		<xi:include href="http://jmri.org/xml/decoders/zimo/factReset-v32.xml"/>
+	</decoder>
+	<xi:include href="http://jmri.org/xml/decoders/zimo/PaneAccelDecel.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/zimo/PaneShuntUncouple.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/zimo/PaneAltFunctionMap6+2.xml"/>
+	<!--xi:include href="http://jmri.org/xml/decoders/zimo/PaneSwissMapping.xml"/-->
+	<xi:include href="http://jmri.org/xml/decoders/zimo/PaneFunctionOutput.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/zimo/PaneSmoke.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/zimo/PaneZimoSpecific.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/zimo/PaneRailcom.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/zimo/PaneABC.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/zimo/PaneSpeedRegulation.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/zimo/PaneServos2.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/zimo/PaneDecoderlock.xml"/>
+	<!--xi:include href="http://jmri.org/xml/decoders/zimo/PaneInputMapping.xml"/-->
 </decoder-config>
