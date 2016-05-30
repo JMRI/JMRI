@@ -19,7 +19,7 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -31,6 +31,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.server.json.power.PackageTest.suite());
         suite.addTest(jmri.server.json.roster.PackageTest.suite());
         suite.addTest(jmri.server.json.route.PackageTest.suite());
+        suite.addTest(jmri.server.json.sensor.PackageTest.suite());
         suite.addTest(jmri.server.json.turnout.PackageTest.suite());
 
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {

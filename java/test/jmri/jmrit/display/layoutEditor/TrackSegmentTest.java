@@ -15,7 +15,6 @@ import java.awt.geom.Point2D;
 public class TrackSegmentTest extends TestCase {
 
     public void testCtor() {
-        LayoutTurnout  t = new LayoutTurnout();
         LayoutEditor le = new LayoutEditor();
         PositionablePoint p1 = new PositionablePoint("a",PositionablePoint.ANCHOR,new Point2D.Double(0.0,0.0),le);
         PositionablePoint p2 = new PositionablePoint("b",PositionablePoint.ANCHOR,new Point2D.Double(1.0,1.0),le);
@@ -29,7 +28,7 @@ public class TrackSegmentTest extends TestCase {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
         // dispose of the single PanelMenu instance
-        jmri.jmrit.display.PanelMenu.instance().dispose();
+        jmri.jmrit.display.PanelMenu.dispose();
         // reset the instance manager.
         JUnitUtil.resetInstanceManager();
     }
@@ -38,7 +37,7 @@ public class TrackSegmentTest extends TestCase {
     protected void tearDown() throws Exception {
         super.tearDown();
         // dispose of the single PanelMenu instance
-        jmri.jmrit.display.PanelMenu.instance().dispose();
+        jmri.jmrit.display.PanelMenu.dispose();
         JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
@@ -52,7 +51,7 @@ public class TrackSegmentTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", TrackSegmentTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
