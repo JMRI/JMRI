@@ -122,7 +122,7 @@ public class RouteController extends AbstractController implements PropertyChang
             }
             list.append("}|{");
             String turnoutsAlignedSensor = r.getTurnoutsAlignedSensor();
-            if (turnoutsAlignedSensor != "") {  //only set if found
+            if (!turnoutsAlignedSensor.equals("")) {  //only set if found
                 Sensor routeAligned = InstanceManager.sensorManagerInstance().provideSensor(turnoutsAlignedSensor);
                 if (routeAligned != null) {
                     list.append(routeAligned.getKnownState());
@@ -167,7 +167,7 @@ public class RouteController extends AbstractController implements PropertyChang
         for (String sysName : sysNameList) {
             Route r = manager.getBySystemName(sysName);
             String turnoutsAlignedSensor = r.getTurnoutsAlignedSensor();
-            if (turnoutsAlignedSensor != "") {  //only set if found
+            if (!turnoutsAlignedSensor.equals("")) {  //only set if found
                 Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(turnoutsAlignedSensor);
                 NamedBeanHandle<Sensor> routeAligned = nbhm.getNamedBeanHandle(turnoutsAlignedSensor, sensor);
                 if (routeAligned != null) {
