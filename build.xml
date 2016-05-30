@@ -333,13 +333,9 @@
             description="remove all non-respository files from a build"
             depends="clean">
         <delete quiet="true">
-            <fileset file="findbugs.xml"/>
-            <fileset file="junit-results.xml"/>
-            <fileset file="jmri-fb.html"/>
             <fileset dir="temp"/>
             <fileset dir="lib/cachedir"/>
             <fileset dir="${coveragetarget}"/>
-            <fileset file="jacoco.exec"/>
         </delete>
     </target>
 
@@ -354,6 +350,10 @@
             <fileset dir="${genjavasrcdir}"/>
             <fileset file="${javadir}/manifest"/>
             <fileset dir="${tempdir}"/>
+            <fileset file="findbugs.xml"/>
+            <fileset file="junit-results.xml"/>
+            <fileset file="jmri-fb.html"/>
+            <fileset file="jacoco.exec"/>
         </delete>
         <ant dir="xml/XSLT" target="clean" inheritAll="false"  />
     </target>
