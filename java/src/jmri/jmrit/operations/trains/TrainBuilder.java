@@ -4521,7 +4521,7 @@ public class TrainBuilder extends TrainCommon {
             }
             if (numberCars == 0) {
                 addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildMovesCompleted"),
-                        new Object[]{rl.getName()}));
+                        new Object[]{rl.getMaxCarMoves(), rl.getName()}));
             }
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCarIgnored"), new Object[]{
                     car.toString(), car.getTypeName(), car.getLoadName(), car.getLocationName(), car.getTrackName()}));
