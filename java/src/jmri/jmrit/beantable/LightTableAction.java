@@ -659,7 +659,7 @@ public class LightTableAction extends AbstractTableAction {
         }
         // check if Light exists under an alternate name if an alternate name exists
         String altName = InstanceManager.lightManagerInstance().convertSystemNameToAlternate(suName);
-        if (altName != "") {
+        if (!altName.equals("")) {
             g = InstanceManager.lightManagerInstance().getBySystemName(altName);
             if (g != null) {
                 // Light already exists
@@ -861,7 +861,7 @@ public class LightTableAction extends AbstractTableAction {
         if (g == null) {
             // check if Light exists under an alternate name if an alternate name exists
             String altName = InstanceManager.lightManagerInstance().convertSystemNameToAlternate(sName);
-            if (altName != "") {
+            if (!altName.equals("")) {
                 g = InstanceManager.lightManagerInstance().getBySystemName(altName);
                 if (g != null) {
                     sName = altName;

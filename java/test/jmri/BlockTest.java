@@ -43,7 +43,6 @@ public class BlockTest extends TestCase {
 
     public void testHashCode() {
         Block b1 = new Block("SystemName1");
-        Block b2 = new Block("SystemName2");
         
         //multiple Block objects with same SystemName are really the same
         Block b1a = new Block("SystemName1");
