@@ -87,7 +87,6 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
      * Finds an existing automation or creates a new automation if needed
      * requires automation's name creates a unique id for this automation
      *
-     * @param name
      *
      * @return new automation or existing automation
      */

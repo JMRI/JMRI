@@ -330,7 +330,6 @@ public class TrainManager implements java.beans.PropertyChangeListener {
      * Finds an existing train or creates a new train if needed requires train's
      * name creates a unique id for this train
      *
-     * @param name
      *
      * @return new train or existing train
      */
@@ -428,7 +427,6 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 
     /**
      *
-     * @param car
      * @return Train that can service car from its current location to the its
      * destination.
      */
@@ -438,9 +436,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 
     /**
      *
-     * @param car
      * @param excludeTrain The only train not to try.
-     * @param buildReport
      * @return Train that can service car from its current location to the its
      * destination.
      */

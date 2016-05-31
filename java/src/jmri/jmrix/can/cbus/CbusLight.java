@@ -1,4 +1,3 @@
-// CbusTurnout.java
 package jmri.jmrix.can.cbus;
 
 import jmri.implementation.AbstractLight;
@@ -13,15 +12,10 @@ import org.slf4j.LoggerFactory;
  * Light implementation for CBUS connections.
  *
  * @author Matthew Harris Copyright (C) 2015
- * @version $Revision$
  */
 public class CbusLight extends AbstractLight
         implements CanListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6522418534748086660L;
     CbusAddress addrOn;   // go to on state
     CbusAddress addrOff;   // go to off state
 
@@ -111,5 +105,3 @@ public class CbusLight extends AbstractLight
 
     private static final Logger log = LoggerFactory.getLogger(CbusLight.class.getName());
 }
-
-/* @(#)CbusTurnout.java */

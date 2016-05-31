@@ -119,7 +119,6 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     /**
      * Search for engine by road number
      *
-     * @param roadNumber
      * @return -1 if not found, table row number if found
      */
     public int findEngineByRoadNumber(String roadNumber) {

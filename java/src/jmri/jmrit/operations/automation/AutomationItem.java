@@ -78,7 +78,6 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
 
     /**
      *
-     * @param id
      */
     public AutomationItem(String id) {
         log.debug("New automation item id: {}", id);
@@ -195,8 +194,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
 
     /**
      * The automation for actions, not the automation associated with this item.
-     * 
-     * @param automation
+     *
      */
     public void setAutomationToRun(Automation automation) {
         Automation old = AutomationManager.instance().getAutomationById(_automationIdToRun);
@@ -223,8 +221,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
 
     /**
      * The automation for action GOTO, not this automation item.
-     * 
-     * @param automationItem
+     *
      */
     public void setGotoAutomationItem(AutomationItem automationItem) {
         AutomationItem oldItem = null;

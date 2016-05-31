@@ -1,4 +1,3 @@
-// CbusCommandStation.java
 package jmri.jmrix.can.cbus;
 
 import jmri.CommandStation;
@@ -19,7 +18,6 @@ import org.slf4j.LoggerFactory;
  * should always be referred to.
  *
  * @author Andrew Crosland Copyright (C) 2009
- * @version $Revision$
  */
 public class CbusCommandStation implements CommandStation, DccCommandStation, CanListener {
 
@@ -183,5 +181,3 @@ public class CbusCommandStation implements CommandStation, DccCommandStation, Ca
 
     private final static Logger log = LoggerFactory.getLogger(CbusCommandStation.class.getName());
 }
-
-/* @(#)CbusCommandStation.java */

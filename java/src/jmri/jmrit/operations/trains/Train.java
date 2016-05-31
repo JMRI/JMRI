@@ -821,7 +821,6 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * Get train's status in the specified locale.
      *
-     * @param locale
      * @return Human-readable status
      */
     public String getStatus(Locale locale) {
@@ -831,7 +830,6 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * Get the human-readable status for the requested status code.
      *
-     * @param locale
      * @param code requested status
      * @return Human-readable status
      */
@@ -1455,7 +1453,6 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * Only rolling stock built in or after this year will be used.
      *
-     * @param year
      */
     public void setBuiltStartYear(String year) {
         String old = _builtStartYear;
@@ -1472,7 +1469,6 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * Only rolling stock built in or before this year will be used.
      *
-     * @param year
      */
     public void setBuiltEndYear(String year) {
         String old = _builtEndYear;
@@ -1489,7 +1485,6 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * Determine if train will service rolling stock by built date.
      *
-     * @param date
      * @return true is built date is in the acceptable range.
      */
     public boolean acceptsBuiltDate(String date) {
@@ -2764,8 +2759,7 @@ public class Train implements java.beans.PropertyChangeListener {
      * adding or removing a car from a train, or changing the manifest format.
      * Once the manifest has been regenerated (modified == false), the old
      * status for the train is restored.
-     * 
-     * @param modified
+     *
      */
     public void setModified(boolean modified) {
         log.debug("Set modified {}", modified);
