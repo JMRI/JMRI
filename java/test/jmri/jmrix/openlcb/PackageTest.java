@@ -43,7 +43,7 @@ public class PackageTest extends TestCase {
         suite.addTest(OlcbThrottleTest.suite());
         suite.addTest(OlcbThrottleManagerTest.suite());
         suite.addTest(BundleTest.suite());
-
+        suite.addTest(ActiveFlagTest.suite());
         suite.addTest(jmri.jmrix.openlcb.swing.PackageTest.suite());
 
         return suite;

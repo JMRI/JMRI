@@ -31,6 +31,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(IEEE802154SystemConnectionMemoTest.class));
         suite.addTest(jmri.jmrix.ieee802154.xbee.PackageTest.suite());
         suite.addTest(jmri.jmrix.ieee802154.serialdriver.PackageTest.suite());
+        suite.addTest(ActiveFlagTest.suite());
         return suite;
     }
 

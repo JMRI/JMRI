@@ -27,6 +27,7 @@ public class PackageTest extends TestCase {
         apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite("jmri.jmrix.direct.DirectTest");
         suite.addTest(jmri.jmrix.direct.MakePacketTest.suite());
+        suite.addTest(ActiveFlagTest.suite());
         return suite;
     }
 

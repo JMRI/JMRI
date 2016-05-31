@@ -29,6 +29,7 @@ public class PackageTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.can.nmranet.NmraNetTest");
+        suite.addTest(ActiveFlagTest.suite());
         // suite.addTest(jmri.jmrix.can.CanMessageTest.suite());
         return suite;
     }

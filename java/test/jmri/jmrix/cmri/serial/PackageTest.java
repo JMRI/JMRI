@@ -32,7 +32,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite("jmri.jmrix.cmri.serial.SerialTest");
-
+        suite.addTest(ActiveFlagTest.suite());
         suite.addTest(jmri.jmrix.cmri.serial.SerialTurnoutTest.suite());
         suite.addTest(jmri.jmrix.cmri.serial.SerialTurnoutManagerTest.suite());
         suite.addTest(jmri.jmrix.cmri.serial.SerialSensorManagerTest.suite());
