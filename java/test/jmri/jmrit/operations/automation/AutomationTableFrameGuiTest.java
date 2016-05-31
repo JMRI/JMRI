@@ -89,8 +89,9 @@ public class AutomationTableFrameGuiTest extends OperationsSwingTestCase {
 
         // back to the start
         getHelper().enterClickAndLeave(new MouseEventData(this, f.stepActionButton));
-        Assert.assertNotNull("The first item", automation.getCurrentAutomationItem());
-        Assert.assertEquals("1c1", automation.getCurrentAutomationItem().getId());
+        jmri.util.JUnitUtil.waitFor(() -> 
+        { return automation.getCurrentAutomationItem() != null && "1c1".equals(automation.getCurrentAutomationItem().getId()); },
+        "The 1st item: getId() was 1c1");
         Assert.assertEquals("Do Nothing", automation.getCurrentAutomationItem().getActionName());
 
         f.dispose();

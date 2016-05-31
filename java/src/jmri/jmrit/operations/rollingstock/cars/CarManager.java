@@ -109,7 +109,6 @@ public class CarManager extends RollingStockManager {
     /**
      * Create a new Kernel
      *
-     * @param name
      * @return Kernel
      */
     public Kernel newKernel(String name) {
@@ -127,7 +126,6 @@ public class CarManager extends RollingStockManager {
     /**
      * Delete a Kernel by name
      *
-     * @param name
      */
     public void deleteKernel(String name) {
         Kernel kernel = getKernelByName(name);
@@ -143,7 +141,6 @@ public class CarManager extends RollingStockManager {
     /**
      * Get a Kernel by name
      *
-     * @param name
      * @return named Kernel
      */
     public Kernel getKernelByName(String name) {
@@ -314,7 +311,6 @@ public class CarManager extends RollingStockManager {
      * to this train) on a route, cars are ordered least recently moved to most
      * recently moved.
      *
-     * @param train
      * @return List of cars with no assigned train on a route
      */
     public List<Car> getAvailableTrainList(Train train) {
@@ -411,7 +407,6 @@ public class CarManager extends RollingStockManager {
      * If the train is to be blocked by track blocking order, all of the tracks
      * at that location need a blocking number greater than 0.
      *
-     * @param train
      * @return Ordered list of cars assigned to the train
      */
     public List<Car> getByTrainDestinationList(Train train) {

@@ -222,8 +222,6 @@ public class OperationsPanel extends JPanel implements AncestorListener {
      * Will modify the character column width of a TextArea box to 90% of a
      * panels width. ScrollPane is set to 95% of panel width.
      *
-     * @param scrollPane
-     * @param textArea
      */
     protected void adjustTextAreaColumnWidth(JScrollPane scrollPane, JTextArea textArea) {
         this.adjustTextAreaColumnWidth(scrollPane, textArea, this.getPreferredSize());

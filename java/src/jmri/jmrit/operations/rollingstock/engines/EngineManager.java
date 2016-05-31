@@ -71,8 +71,6 @@ public class EngineManager extends RollingStockManager {
      * Finds an existing engine or creates a new engine if needed requires
      * engine's road and number
      *
-     * @param engineRoad
-     * @param engineNumber
      * @return new engine or existing engine
      */
     public Engine newEngine(String engineRoad, String engineNumber) {
@@ -222,7 +220,6 @@ public class EngineManager extends RollingStockManager {
      * return a list available engines (no assigned train) engines are ordered
      * least recently moved to most recently moved.
      *
-     * @param train
      * @return Ordered list of engines not assigned to a train
      */
     public List<Engine> getAvailableTrainList(Train train) {

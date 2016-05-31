@@ -213,21 +213,18 @@ public class XNetThrottleTest extends TestCase {
 
     public void testGetDccAddress(){
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
-        int n = tc.outbound.size();
         XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
         assertEquals("XNetThrottle getDccAddress()",3,t.getDccAddress());
     }
 
     public void testGetDccAddressLow(){
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
-        int n = tc.outbound.size();
         XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
         assertEquals("XNetThrottle getDccAddressLow()",3,t.getDccAddressLow());
     }
 
     public void testGetDccAddressHigh(){
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
-        int n = tc.outbound.size();
         XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
         assertEquals("XNetThrottle getDccAddressHigh()",0,t.getDccAddressHigh());
     }
