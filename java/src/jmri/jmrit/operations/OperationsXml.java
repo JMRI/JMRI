@@ -18,7 +18,6 @@ import org.slf4j.LoggerFactory;
  * Loads and stores the operation setup using xml files.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision$
  */
 public abstract class OperationsXml extends XmlFile {
 
@@ -72,16 +71,14 @@ public abstract class OperationsXml extends XmlFile {
     }
 
     /**
-     * @throws FileNotFoundException
-     * @throws IOException
      */
     protected void writeFile(String filename) throws FileNotFoundException, IOException {
         log.error("writeFile not overridden");
     }
 
     /**
-     * @throws org.jdom2.JDOMException
-     * @throws java.io.IOException
+     * @throws org.jdom2.JDOMException Due to XML parsing error
+     * @throws java.io.IOException Due to trouble accessing named file
      */
     abstract public void readFile(String filename) throws org.jdom2.JDOMException, java.io.IOException;
 
@@ -192,8 +189,7 @@ public abstract class OperationsXml extends XmlFile {
     }
     
     /**
-     * Checks name for the file control characters: 
-     * @param name
+     * Checks name for the file control characters:
      * @return true if name is okay, false if name contains a control character.
      */
     public static boolean checkFileName(String name) {

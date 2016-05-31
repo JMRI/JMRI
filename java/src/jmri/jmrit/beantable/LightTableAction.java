@@ -1409,7 +1409,7 @@ public class LightTableAction extends AbstractTableAction {
                         status1.setText(Bundle.getMessage("LightError13"));
                         error = true;
                     }
-                } catch (Exception e) {
+                } catch (NumberFormatException e) {
                     status1.setText(Bundle.getMessage("LightError14"));
                     error = true;
                 }
