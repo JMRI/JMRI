@@ -140,6 +140,15 @@ public class XNetReplyTest extends TestCase {
         // CV 1 in direct mode.
         XNetReply r = new XNetReply("63 14 01 04 72");
         Assert.assertTrue(r.isServiceModeResponse());
+        // CV 257 in direct mode.
+        r = new XNetReply("63 15 01 04 72");
+        Assert.assertTrue(r.isServiceModeResponse());
+        // CV 513 in direct mode.
+        r = new XNetReply("63 16 01 04 72");
+        Assert.assertTrue(r.isServiceModeResponse());
+        // CV 769 in direct mode.
+        r = new XNetReply("63 17 01 04 72");
+        Assert.assertTrue(r.isServiceModeResponse());
         // CV 1 in paged mode.
         r = new XNetReply("63 10 01 04 76");
         Assert.assertTrue(r.isServiceModeResponse());
@@ -149,6 +158,9 @@ public class XNetReplyTest extends TestCase {
         // CV 286 in direct mode.
         r = new XNetReply("63 15 1E 14 7C");
         Assert.assertTrue(r.isServiceModeResponse());
+        // not a service mode response.
+        r = new XNetReply("01 04 05");
+        Assert.assertFalse(r.isServiceModeResponse());
     }
 
     // check is paged mode response
@@ -171,6 +183,15 @@ public class XNetReplyTest extends TestCase {
     public void testIsDirectModeResponse() {
         // CV 1 in direct mode.
         XNetReply r = new XNetReply("63 14 01 04 72");
+        Assert.assertTrue(r.isDirectModeResponse());
+        // CV 257 in direct mode.
+        r = new XNetReply("63 15 01 04 72");
+        Assert.assertTrue(r.isDirectModeResponse());
+        // CV 513 in direct mode.
+        r = new XNetReply("63 16 01 04 72");
+        Assert.assertTrue(r.isDirectModeResponse());
+        // CV 769 in direct mode.
+        r = new XNetReply("63 17 01 04 72");
         Assert.assertTrue(r.isDirectModeResponse());
         // CV 1 in paged mode.
         r = new XNetReply("63 10 01 04 76");
@@ -198,6 +219,9 @@ public class XNetReplyTest extends TestCase {
         // CV 286 in direct mode.
         r = new XNetReply("63 15 1E 14 7C");
         Assert.assertEquals("Direct Mode CV>256", 286, r.getServiceModeCVNumber());
+        // not a service mode response.
+        r = new XNetReply("01 04 05");
+        Assert.assertEquals("non-ServiceMode message", -1, r.getServiceModeCVNumber());
     }
 
     // check get service mode CV Value response code.
@@ -215,6 +239,9 @@ public class XNetReplyTest extends TestCase {
         // CV 286 in direct mode.
         r = new XNetReply("63 15 1E 14 7C");
         Assert.assertEquals("Direct Mode CV>256", 20, r.getServiceModeCVValue());
+        // not a service mode response.
+        r = new XNetReply("01 04 05");
+        Assert.assertEquals("Non Service Mode Response", -1, r.getServiceModeCVValue());
     }
 
     // From feedback Messages
@@ -241,11 +268,31 @@ public class XNetReplyTest extends TestCase {
     // getting the address from a feedback response
     public void testGetTurnoutMsgAddr() {
         // feedback message for turnout 21
-        XNetReply r = new XNetReply("42 05 04 43");
+        XNetReply r = new XNetReply("42 05 01 63");
+        Assert.assertEquals("Broadcast Turnout Message Address", 21, r.getTurnoutMsgAddr(1));
+
+        // feedback message for turnout 22, which returns address 21 
+        // (addresses are in pairs).
+        r = new XNetReply("42 05 04 43");
+        Assert.assertEquals("Turnout Message Address", 21, r.getTurnoutMsgAddr());
+        // turnout 22 with feedback 
+        r = new XNetReply("42 05 24 63");
+        Assert.assertEquals("Turnout Message Address", 21, r.getTurnoutMsgAddr() );
+
+        // feedback message for turnout 21 or 22,but neither 21 or 22 operated.
+        r = new XNetReply("42 05 00 47");
         Assert.assertEquals("Turnout Message Address", 21, r.getTurnoutMsgAddr());
         // feedback message for turnout 23
         r = new XNetReply("42 05 14 53");
         Assert.assertEquals("Turnout Message Address", 23, r.getTurnoutMsgAddr());
+        // feedback message for turnout 23 or 24,but neither 23 or 24 operated.
+        r = new XNetReply("42 05 10 53");
+        Assert.assertEquals("Turnout Message Address", 23, r.getTurnoutMsgAddr());
+
+        // feedback message for turnout 24, returns address 23.
+        r = new XNetReply("42 05 18 53");
+        Assert.assertEquals("Turnout Message Address", 23, r.getTurnoutMsgAddr());
+
         // feedback message for a feedback encoder, should return -1.
         r = new XNetReply("42 05 48 0F");
         Assert.assertEquals("Turnout Message Address for Feedback encoder", -1, r.getTurnoutMsgAddr() );
@@ -258,13 +305,35 @@ public class XNetReplyTest extends TestCase {
 
     // getting the address from a broadcast feedback response
     public void testGetBroadcastTurnoutMsgAddr() {
-        // feedback message for turnout 21
-        XNetReply r = new XNetReply("42 05 04 43");
+        // feedback for turnout 21  
+        XNetReply r = new XNetReply("42 05 01 63");
+        Assert.assertEquals("Broadcast Turnout Message Address", 21, r.getTurnoutMsgAddr(1));
+
+        // feedback message for turnout 22, which returns address 21 
+        // (addresses are in pairs).
+        r = new XNetReply("42 05 04 43");
+        Assert.assertEquals("Broadcast Turnout Message Address", 21, r.getTurnoutMsgAddr(1));
+
+        // turnout 22 with feedback 
+        r = new XNetReply("42 05 24 63");
+        Assert.assertEquals("Broadcast Turnout Message Address", 21, r.getTurnoutMsgAddr(1));
+
+        // feedback message for turnout 21 or 22, but neither 21 or 22 operated.
+        r = new XNetReply("42 05 00 47");
         Assert.assertEquals("Broadcast Turnout Message Address", 21, r.getTurnoutMsgAddr(1));
 
         // feedback message for turnout 23
         r = new XNetReply("42 05 14 53");
         Assert.assertEquals("Broadcast Turnout Message Address", 23, r.getTurnoutMsgAddr(1));
+
+        // feedback message for turnout 24, returns address 23.
+        r = new XNetReply("42 05 18 53");
+        Assert.assertEquals("Broadcast Turnout Message Address", 23, r.getTurnoutMsgAddr(1));
+
+        // feedback message for turnout 23 or 24, but neither 23 or 24 operated.
+        r = new XNetReply("42 05 10 53");
+        Assert.assertEquals("Broadcast Turnout Message Address", 23, r.getTurnoutMsgAddr(1));
+
         // feedback message for a feedback encoder, should return -1.
         r = new XNetReply("42 05 48 0F");
         Assert.assertEquals("Broadcast Turnout Message Address for Feedback encoder", -1, r.getTurnoutMsgAddr(1) );
@@ -416,6 +485,20 @@ public class XNetReplyTest extends TestCase {
         // DH Address
         r = new XNetReply("E6 64 00 64 C1 C1 04 E2");
         Assert.assertTrue(r.isThrottleMessage());
+        // XNet V1, locomotive available for operation
+        r = new XNetReply("83 01 00 00 82");
+        Assert.assertTrue(r.isThrottleMessage());
+        // XNet V1, locomotive not available for operation
+        r = new XNetReply("A3 01 00 00 A2");
+        Assert.assertTrue(r.isThrottleMessage());
+        // XNet V2, locomotive available for operation
+        r = new XNetReply("84 01 00 00 00 85");
+        Assert.assertTrue(r.isThrottleMessage());
+        // XNet V2, locomotive not available for operation
+        r = new XNetReply("A4 01 00 00 00 A5");
+        Assert.assertTrue(r.isThrottleMessage());
+
+
         // CV 1 in register mode.
         r = new XNetReply("63 10 01 04 76");
         Assert.assertFalse(r.isThrottleMessage());
@@ -426,6 +509,9 @@ public class XNetReplyTest extends TestCase {
         // Normal Locomotive Information reply
         XNetReply r = new XNetReply("E3 40 C1 04 61");
         Assert.assertTrue(r.isThrottleTakenOverMessage());
+        // Function reply 
+        r = new XNetReply("E3 08 00 00 E6");
+        Assert.assertFalse(r.isThrottleTakenOverMessage());
         // CV 1 in register mode.
         r = new XNetReply("63 10 01 04 76");
         Assert.assertFalse(r.isThrottleTakenOverMessage());
@@ -454,6 +540,9 @@ public class XNetReplyTest extends TestCase {
         // "OK" message
         XNetReply r = new XNetReply("01 04 05");
         Assert.assertTrue(r.isOkMessage());
+        // Error message
+        r = new XNetReply("01 01 00");
+        Assert.assertFalse(r.isOkMessage());
         // CV 1 in register mode.
         r = new XNetReply("63 10 01 04 76");
         Assert.assertFalse(r.isOkMessage());
@@ -464,6 +553,9 @@ public class XNetReplyTest extends TestCase {
         // Timeslot restored message
         XNetReply r = new XNetReply("01 07 06");
         Assert.assertTrue(r.isTimeSlotRestored());
+        // Error message
+        r = new XNetReply("01 01 00");
+        Assert.assertFalse(r.isTimeSlotRestored());
         // CV 1 in register mode.
         r = new XNetReply("63 10 01 04 76");
         Assert.assertFalse(r.isTimeSlotRestored());
@@ -507,6 +599,15 @@ public class XNetReplyTest extends TestCase {
         // LIUSB request resend of data.
         r = new XNetReply("01 0A 0B");
         Assert.assertTrue(r.isCommErrorMessage());
+        // Timeslot Error
+        r = new XNetReply("01 05 04");
+        Assert.assertTrue(r.isCommErrorMessage());
+        // Timeslot Restored
+        r = new XNetReply("01 07 06");
+        Assert.assertTrue(r.isCommErrorMessage());
+        // Data sent while there is no Timeslot
+        r = new XNetReply("01 08 09");
+        Assert.assertTrue(r.isCommErrorMessage());
         // CV 1 in register mode.
         r = new XNetReply("63 10 01 04 76");
         Assert.assertFalse(r.isCommErrorMessage());
@@ -528,6 +629,35 @@ public class XNetReplyTest extends TestCase {
         Assert.assertFalse(r.isTimeSlotErrorMessage());
     }
 
+    // check if this message is a retransmittable error message.
+    public void testIsRetransmittableErrorMsg(){
+       XNetReply r = new XNetReply("61 81 e3"); // CS Busy Message
+       Assert.assertTrue(r.isRetransmittableErrorMsg());
+       r = new XNetReply("61 80 e1"); // transfer error
+       Assert.assertTrue(r.isRetransmittableErrorMsg());
+       r = new XNetReply("01 06 07"); // Buffer overflow (Comm Error)
+       Assert.assertTrue(r.isRetransmittableErrorMsg());
+       r = new XNetReply("01 04 05"); // OK message
+       Assert.assertFalse(r.isRetransmittableErrorMsg());
+    }
+
+    // check if this is an unsolicited message
+    public void testIsUnsolicitedMessage() {
+        // CV 1 in register mode.
+        XNetReply r= new XNetReply("63 10 01 04 76");
+        Assert.assertFalse(r.isUnsolicited());
+        r.setUnsolicited();
+        Assert.assertTrue(r.isUnsolicited());
+        // Throttle taken over message
+        r = new XNetReply("E3 40 C1 04 61");
+        Assert.assertTrue(r.isUnsolicited());
+        // feedback message.
+        r = new XNetReply("42 05 48 0f");
+        Assert.assertTrue(r.isUnsolicited());
+        r.resetUnsolicited();
+        Assert.assertFalse(r.isUnsolicited()); 
+    }
+
 
     // from here down is testing infrastructure
     public XNetReplyTest(String s) {
@@ -537,7 +667,7 @@ public class XNetReplyTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", XNetReplyTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

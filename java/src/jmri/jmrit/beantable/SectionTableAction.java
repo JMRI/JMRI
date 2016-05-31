@@ -634,7 +634,7 @@ public class SectionTableAction extends AbstractTableAction {
                 entryPointList.add(list.get(j));
             }
         }
-        list = (ArrayList<EntryPoint>) curSection.getReverseEntryPointList();
+        list = curSection.getReverseEntryPointList();
         if (list.size() > 0) {
             for (int j = 0; j < list.size(); j++) {
                 entryPointList.add(list.get(j));
@@ -669,7 +669,7 @@ public class SectionTableAction extends AbstractTableAction {
             } else {
                 curSection = sectionManager.createNewSection(sName, uName);
             }
-        } catch (Exception ex) {
+        } catch (NumberFormatException ex) {
             // user input no good
             if (_autoSystemName.isSelected()) {
                 handleCreateException(uName);

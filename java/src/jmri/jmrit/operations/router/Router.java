@@ -229,8 +229,6 @@ public class Router extends TrainCommon {
      * Checks to see if a single train can transport car to its final
      * destination.
      *
-     * @param car
-     * @param clone
      * @return true if single train can transport car to its final destination.
      */
     private boolean checkForSingleTrain(Car car, Car clone) {
@@ -272,9 +270,6 @@ public class Router extends TrainCommon {
      * the needs to go the alternate track or yard track if the car's final
      * destination track is full. Returns false if car is stuck in staging.
      *
-     * @param testTrain
-     * @param car
-     * @param clone
      * @return true for all cases except if car is departing staging and is
      *         stuck there.
      */

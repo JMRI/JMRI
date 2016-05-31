@@ -63,7 +63,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * A set of static methods for converting certain objects to/from JSON
- * representations
+ * representations.
+ *
+ * All methods in this class will eventually be deprecated in favor of the
+ * implementations of the {@code do*} methods in
+ * {@link jmri.server.json.JsonHttpService}.
  *
  * @author rhwood
  */
@@ -632,7 +636,7 @@ public class JsonUtil {
      * folder of the JMRI server. It is expected that clients will fill in the
      * server IP address and port as they know it to be.
      *
-     * @param id     The id of an entry in the roster.
+     * @param id The id of an entry in the roster.
      * @return a roster entry in JSON notation
      * @deprecated since 4.3.5
      */
@@ -648,7 +652,7 @@ public class JsonUtil {
      * folder of the JMRI server. It is expected that clients will fill in the
      * server IP address and port as they know it to be.
      *
-     * @param re     A RosterEntry that may or may not be in the roster.
+     * @param re A RosterEntry that may or may not be in the roster.
      * @return a roster entry in JSON notation
      * @deprecated since 4.3.5
      */
@@ -717,7 +721,7 @@ public class JsonUtil {
     }
 
     /**
-     * 
+     *
      * @param locale The locale of the requesting client
      * @return the list of Roster groups
      * @deprecated since 4.3.5
@@ -733,9 +737,9 @@ public class JsonUtil {
     }
 
     /**
-     * 
+     *
      * @param locale The locale of the requesting client
-     * @param name The name of the group
+     * @param name   The name of the group
      * @return A description of the group including its name and size
      * @deprecated since 4.3.5
      */
@@ -803,6 +807,7 @@ public class JsonUtil {
      * @param data   A JsonNode containing route attributes to set
      * @see jmri.Route#TOGGLE
      */
+    @Deprecated
     static public void setRoute(Locale locale, String name, JsonNode data) throws JsonException {
         try {
             Route route = InstanceManager.routeManagerInstance().getRoute(name);
@@ -831,6 +836,7 @@ public class JsonUtil {
         }
     }
 
+    @Deprecated
     static public JsonNode getSensor(Locale locale, String name) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, SENSOR);
@@ -863,6 +869,7 @@ public class JsonUtil {
         return root;
     }
 
+    @Deprecated
     static public JsonNode getSensors(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
         for (String name : InstanceManager.sensorManagerInstance().getSystemNameList()) {
@@ -871,6 +878,7 @@ public class JsonUtil {
         return root;
     }
 
+    @Deprecated
     static public void putSensor(Locale locale, String name, JsonNode data) throws JsonException {
         try {
             InstanceManager.sensorManagerInstance().provideSensor(name);
@@ -880,6 +888,7 @@ public class JsonUtil {
         setSensor(locale, name, data);
     }
 
+    @Deprecated
     static public void setSensor(Locale locale, String name, JsonNode data) throws JsonException {
         try {
             Sensor sensor = InstanceManager.sensorManagerInstance().getSensor(name);

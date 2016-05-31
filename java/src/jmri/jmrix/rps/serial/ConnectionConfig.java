@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.rps.serial;
 
 import java.util.ResourceBundle;
@@ -7,7 +6,6 @@ import java.util.ResourceBundle;
  * Definition of objects to handle configuring an RPS layout connection.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2008
- * @version	$Revision$
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 

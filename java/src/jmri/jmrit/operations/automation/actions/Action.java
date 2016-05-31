@@ -42,8 +42,7 @@ public abstract class Action {
 
     /**
      * Mask off menu bits.
-     * 
-     * @param code
+     *
      * @return code {@literal &} ActionCodes.CODE_MASK
      */
     protected int getCode(int code) {
@@ -192,8 +191,7 @@ public abstract class Action {
      * <p>
      * action name, train name, route location name, automation name, goto item id,
      * train schedule day.
-     * 
-     * @param message
+     *
      * @return formated message
      */
     public String getFormatedMessage(String message) {

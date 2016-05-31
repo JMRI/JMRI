@@ -26,7 +26,7 @@ public class LayoutConnectivityTest extends TestCase {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
         // dispose of the single PanelMenu instance
-        jmri.jmrit.display.PanelMenu.instance().dispose();
+        jmri.jmrit.display.PanelMenu.dispose();
         // reset the instance manager.
         JUnitUtil.resetInstanceManager();
     }
@@ -35,7 +35,7 @@ public class LayoutConnectivityTest extends TestCase {
     protected void tearDown() throws Exception {
         super.tearDown();
         // dispose of the single PanelMenu instance
-        jmri.jmrit.display.PanelMenu.instance().dispose();
+        jmri.jmrit.display.PanelMenu.dispose();
         JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
@@ -49,7 +49,7 @@ public class LayoutConnectivityTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", LayoutConnectivityTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

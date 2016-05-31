@@ -75,10 +75,6 @@ public class AlignTablePane extends javax.swing.JPanel {
 
         // status info on bottom
         JPanel p = new JPanel() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -4581696245014783172L;
 
             public Dimension getMaximumSize() {
                 int height = getPreferredSize().height;
@@ -109,10 +105,6 @@ public class AlignTablePane extends javax.swing.JPanel {
         add(p);
 
         p = new JPanel() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -497747742857646038L;
 
             public Dimension getMaximumSize() {
                 int height = getPreferredSize().height;
@@ -152,11 +144,6 @@ public class AlignTablePane extends javax.swing.JPanel {
 
         //
         add(loadStore = new jmri.jmrix.rps.swing.LoadStorePanel() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 1028997540423874815L;
-
             // make sure we redisplay if changed
             public void load() {
                 super.load();
@@ -206,10 +193,6 @@ public class AlignTablePane extends javax.swing.JPanel {
      */
     public class AlignModel extends AbstractTableModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 7340607471756623080L;
         static private final int NUMCOL = 0;
         static private final int XCOL = 1;
         static private final int YCOL = 2;
