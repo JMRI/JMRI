@@ -19,9 +19,11 @@ import org.slf4j.LoggerFactory;
  * However, to the extent practical, the JMRI code framework for turnout
  * feedback will be preserved.  It is anticipated that soon, either of
  * two things will be done to the DCC++ firmware:
- * (a) state feedback will be added to Stationary Decoder commands
+ * <ul>
+ * <li>(a) state feedback will be added to Stationary Decoder commands
  * or
- * (b) MADC commands will be added to support Predefined Turnouts.
+ * <li>(b) MADC commands will be added to support Predefined Turnouts.
+ * </ul>
  *
  * The DCCppTurnout supports two types of feedback:
  * <ul>
@@ -29,15 +31,14 @@ import org.slf4j.LoggerFactory;
  *      fakes the response.</li>
  * <li> MONITORING: Uses the Turnout command, lets the Base Station
  *      fake the response :) </li>
- *
+ * </ul>
  *
  * Turnout operation on DCC++ based systems goes through the following
  * sequence:
- * <UL>
- * <LI> set the commanded state, and, Send request to command station to start
- * sending DCC operations packet to track</LI>
- * </UL>
- * <P>
+ * <ul>
+ * <li> set the commanded state, and, Send request to command station to start
+ * sending DCC operations packet to track</li>
+ * </ul>
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author      Paul Bender Copyright (C) 2003-2010
