@@ -198,7 +198,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             }
             return;
         }
-        XNetMessage msg = XNetMessage.getFunctionGroup2SetMomMsg(this.getDccAddress(),
+        XNetMessage msg = XNetMessage.getFunctionGroup3SetMomMsg(this.getDccAddress(),
                 f9Momentary, f10Momentary, f11Momentary, f12Momentary);
         // now, queue the message for sending to the command station
         queueMessage(msg, THROTTLEFUNCSENT);
