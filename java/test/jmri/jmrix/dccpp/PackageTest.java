@@ -48,7 +48,6 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(DCCppSensorManagerTest.class));
         suite.addTest(jmri.jmrix.dccpp.network.DCCppEthernetTest.suite());
         suite.addTest(jmri.jmrix.dccpp.swing.PackageTest.suite());
-        suite.addTest(ActiveFlagTest.suite());
 	/*
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
         }

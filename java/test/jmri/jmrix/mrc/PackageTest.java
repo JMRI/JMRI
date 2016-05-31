@@ -26,7 +26,6 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.mrc.PackageTest");  // no tests in this class itself
         suite.addTest(BundleTest.suite());
-        suite.addTest(ActiveFlagTest.suite());
         suite.addTest(jmri.jmrix.mrc.swing.PackageTest.suite());
 
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {

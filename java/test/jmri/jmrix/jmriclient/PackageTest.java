@@ -38,7 +38,6 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(JMRIClientSystemConnectionMemoTest.class));
         suite.addTest(new TestSuite(JMRIClientPowerManagerTest.class));
         suite.addTest(BundleTest.suite());
-        suite.addTest(ActiveFlagTest.suite());
 
         // if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
         // there are currently no swing tests.

@@ -25,7 +25,6 @@ public class Z21Test extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.roco.z21.z21Test");  // no tests in this class itself
-        suite.addTest(ActiveFlagTest.suite());
         suite.addTest(new TestSuite(Z21AdapterTest.class));
         suite.addTest(new TestSuite(Z21MessageTest.class));
         suite.addTest(new TestSuite(Z21ReplyTest.class));

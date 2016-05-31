@@ -25,7 +25,6 @@ public class PackageTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.marklin.PackageTest");  // no tests in this class itself
-        suite.addTest(ActiveFlagTest.suite());
         return suite;
     }
 }

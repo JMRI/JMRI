@@ -29,7 +29,6 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite("jmri.jmrix.can.cbus.CbusTest");
-        suite.addTest(ActiveFlagTest.suite());
         suite.addTest(jmri.jmrix.can.cbus.CbusAddressTest.suite());
         suite.addTest(jmri.jmrix.can.cbus.CbusProgrammerTest.suite());
         suite.addTest(jmri.jmrix.can.cbus.CbusProgrammerManagerTest.suite());

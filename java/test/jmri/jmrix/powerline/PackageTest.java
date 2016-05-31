@@ -38,7 +38,6 @@ public class PackageTest extends TestCase {
         //suite.addTest(SerialAddressTest.suite());
         suite.addTest(jmri.jmrix.powerline.cm11.CM11Test.suite());
         suite.addTest(jmri.jmrix.powerline.insteon2412s.Insteon2412sTest.suite());
-        suite.addTest(ActiveFlagTest.suite());
         return suite;
     }
 

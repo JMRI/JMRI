@@ -39,7 +39,6 @@ public class PackageTest extends TestCase {
         suite.addTest(SerialMessageTest.suite());
         suite.addTest(SerialTrafficControllerTest.suite());
         suite.addTest(SerialAddressTest.suite());
-        suite.addTest(ActiveFlagTest.suite());
         return suite;
     }
 

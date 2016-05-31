@@ -45,7 +45,6 @@ public class PackageTest extends TestCase {
         suite.addTest(SerialReplyTest.suite());
         suite.addTest(SerialTrafficControllerTest.suite());
         suite.addTest(SerialAddressTest.suite());
-        suite.addTest(ActiveFlagTest.suite());
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             suite.addTest(jmri.jmrix.grapevine.serialmon.SerialMonTest.suite());
         }

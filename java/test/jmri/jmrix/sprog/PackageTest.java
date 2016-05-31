@@ -31,7 +31,6 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite("jmri.jmrix.sprog.PackageTest");
-        suite.addTest(ActiveFlagTest.suite());
         suite.addTest(jmri.jmrix.sprog.SprogMessageTest.suite());
         suite.addTest(jmri.jmrix.sprog.SprogCSStreamPortControllerTest.suite());
 

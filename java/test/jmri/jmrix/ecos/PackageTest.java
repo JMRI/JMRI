@@ -26,7 +26,6 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.ecos.PackageTest");  // no tests in this class itself
         suite.addTest(BundleTest.suite());
-        suite.addTest(ActiveFlagTest.suite());
         suite.addTest(jmri.jmrix.ecos.swing.PackageTest.suite());
 
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
