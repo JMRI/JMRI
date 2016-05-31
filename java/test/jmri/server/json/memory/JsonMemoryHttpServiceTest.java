@@ -88,13 +88,12 @@ public class JsonMemoryHttpServiceTest extends TestCase {
         ObjectMapper mapper = new ObjectMapper();
         JsonMemoryHttpService service = new JsonMemoryHttpService(mapper);
         MemoryManager manager = InstanceManager.getDefault(MemoryManager.class);
-        JsonNode result;
         JsonNode message;
         try {
             // add a memory
             Assert.assertNull(manager.getMemory("IM1"));
             message = mapper.createObjectNode().put(JSON.NAME, "IM1").put(JSON.VALUE, "close");
-            result = service.doPut(JsonMemoryServiceFactory.MEMORY, "IM1", message, Locale.ENGLISH);
+            service.doPut(JsonMemoryServiceFactory.MEMORY, "IM1", message, Locale.ENGLISH);
             Assert.assertNotNull(manager.getMemory("IM1"));
         } catch (JsonException ex) {
             Assert.fail(ex.getMessage());
@@ -110,8 +109,8 @@ public class JsonMemoryHttpServiceTest extends TestCase {
             result = service.doGetList(JsonMemoryServiceFactory.MEMORY, Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(0, result.size());
-            Memory memory1 = manager.provideMemory("IM1");
-            Memory memory2 = manager.provideMemory("IM2");
+            manager.provideMemory("IM1");
+            manager.provideMemory("IM2");
             result = service.doGetList(JsonMemoryServiceFactory.MEMORY, Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(2, result.size());
