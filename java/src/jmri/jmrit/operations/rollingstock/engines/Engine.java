@@ -35,7 +35,6 @@ public class Engine extends RollingStock {
      * Set the locomotive's model. Note a model has only one length, type, and
      * horsepower rating.
      *
-     * @param model
      */
     public void setModel(String model) {
         String old = _model;
@@ -214,7 +213,6 @@ public class Engine extends RollingStock {
     /**
      * Place locomotive in a consist
      *
-     * @param consist
      */
     public void setConsist(Consist consist) {
         if (_consist == consist) {

@@ -100,13 +100,12 @@ public class JsonTurnoutHttpServiceTest extends TestCase {
         ObjectMapper mapper = new ObjectMapper();
         JsonTurnoutHttpService service = new JsonTurnoutHttpService(mapper);
         TurnoutManager manager = InstanceManager.getDefault(TurnoutManager.class);
-        JsonNode result;
         JsonNode message;
         try {
             // add a turnout
             Assert.assertNull(manager.getTurnout("IT1"));
             message = mapper.createObjectNode().put(JSON.NAME, "IT1").put(JSON.STATE, Turnout.CLOSED);
-            result = service.doPut(JsonTurnoutServiceFactory.TURNOUT, "IT1", message, Locale.ENGLISH);
+            service.doPut(JsonTurnoutServiceFactory.TURNOUT, "IT1", message, Locale.ENGLISH);
             Assert.assertNotNull(manager.getTurnout("IT1"));
         } catch (JsonException ex) {
             Assert.fail(ex.getMessage());
@@ -122,8 +121,8 @@ public class JsonTurnoutHttpServiceTest extends TestCase {
             result = service.doGetList(JsonTurnoutServiceFactory.TURNOUT, Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(0, result.size());
-            Turnout turnout1 = manager.provideTurnout("IT1");
-            Turnout turnout2 = manager.provideTurnout("IT2");
+            manager.provideTurnout("IT1");
+            manager.provideTurnout("IT2");
             result = service.doGetList(JsonTurnoutServiceFactory.TURNOUT, Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(2, result.size());

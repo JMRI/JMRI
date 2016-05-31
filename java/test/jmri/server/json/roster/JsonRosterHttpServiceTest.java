@@ -13,8 +13,6 @@ import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -26,7 +24,7 @@ public class JsonRosterHttpServiceTest extends TestCase {
     private final static String testGroup1 = "testGroup1";
     private final static String testEntry1 = "testEntry1";
     private final Locale locale = Locale.ENGLISH;
-    private final static Logger log = LoggerFactory.getLogger(JsonRosterHttpServiceTest.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JsonRosterHttpServiceTest.class);
 
     public JsonRosterHttpServiceTest(String testName) {
         super(testName);
