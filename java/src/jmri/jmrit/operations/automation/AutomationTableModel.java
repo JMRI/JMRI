@@ -363,8 +363,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     /**
      * Returns either a comboBox loaded with Automations, or a goto list of
      * AutomationItems, or TrainSchedules.
-     * 
-     * @param item
+     *
      * @return comboBox loaded with automations or a goto automationIem list
      */
     private JComboBox<?> getAutomationComboBox(AutomationItem item) {

@@ -1,7 +1,3 @@
-/*
- * CbusMessage.java
- *
- */
 package jmri.jmrix.can.cbus;
 
 import jmri.ProgrammingMode;
@@ -15,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * Class to allow use of CBUS concepts to access the underlying can message
  *
  * @author Andrew Crosland Copyright (C) 2008
- * @version $Revision$
  */
 public class CbusMessage {
     /* Methods that take a CanMessage as argument */

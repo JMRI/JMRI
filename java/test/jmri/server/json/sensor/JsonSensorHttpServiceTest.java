@@ -92,13 +92,12 @@ public class JsonSensorHttpServiceTest extends TestCase {
         ObjectMapper mapper = new ObjectMapper();
         JsonSensorHttpService service = new JsonSensorHttpService(mapper);
         SensorManager manager = InstanceManager.getDefault(SensorManager.class);
-        JsonNode result;
         JsonNode message;
         try {
             // add a sensor
             Assert.assertNull(manager.getSensor("IS1"));
             message = mapper.createObjectNode().put(JSON.NAME, "IS1").put(JSON.STATE, JSON.UNKNOWN);
-            result = service.doPut(JsonSensorServiceFactory.SENSOR, "IS1", message, Locale.ENGLISH);
+            service.doPut(JsonSensorServiceFactory.SENSOR, "IS1", message, Locale.ENGLISH);
             Assert.assertNotNull(manager.getSensor("IS1"));
         } catch (JsonException ex) {
             Assert.fail(ex.getMessage());
@@ -114,8 +113,8 @@ public class JsonSensorHttpServiceTest extends TestCase {
             result = service.doGetList(JsonSensorServiceFactory.SENSOR, Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(0, result.size());
-            Sensor sensor1 = manager.provideSensor("IS1");
-            Sensor sensor2 = manager.provideSensor("IS2");
+            manager.provideSensor("IS1");
+            manager.provideSensor("IS2");
             result = service.doGetList(JsonSensorServiceFactory.SENSOR, Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(2, result.size());
