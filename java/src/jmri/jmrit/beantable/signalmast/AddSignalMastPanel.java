@@ -402,22 +402,25 @@ public class AddSignalMastPanel extends JPanel {
 
             bitNum = xmast.getBitNum(); // number of matrix columns = logic outputs = number of bits per Aspect
             updateMatrixMastPanel(); // show only the correct amount of columns for existing matrixMast
+            // @see copyFromMatrixMast line 1840
             if (appMap != null) {
                 java.util.Enumeration<String> aspects = appMap.getAspects();
                 // in matrixPanel hashtable fill in mast settings per aspect
                 while (aspects.hasMoreElements()) {
-                    String key = aspects.nextElement();
-                    // select the right checkboxes
+                    String key = aspects.nextElement(); // for each aspect
                     MatrixAspectPanel matrixPanel = matrixAspect.get(key); // load aspectpanel from hashmap
                     matrixPanel.setAspectDisabled(xmast.isAspectDisabled(key)); // sets a disabled aspect
-                    if (!xmast.isAspectDisabled(key)) {
-                        char[] mastBits = xmast.getBitsForAspect(key);
+                    if (!xmast.isAspectDisabled(key)) { // bits not saved in mast when disabled, so we should not load them back in
+                        char[] mastBits = xmast.getBitsForAspect(key); // same as loading an existing MatrixMast
                         char[] panelAspectBits = Arrays.copyOf(mastBits, 5); // store as 5 character array in panel
-                        matrixPanel.setAspectBoxes(panelAspectBits); // for 5 char[]
+                        matrixPanel.updateAspectBits(panelAspectBits);
+                        matrixPanel.setAspectBoxes(panelAspectBits);
+                        System.out.println("aspectBits = " + String.valueOf(panelAspectBits)); // debug EBR
                         // sets boxes 1 - 5 on aspect sub panel from values in hashmap char[] like: 1001
                     }
                 }
             }
+
             columnChoice.setSelectedIndex(bitNum - 1); // index of items in list starts counting at 0 while "1" is displayed
             columnChoice.setEnabled(false);
             // fill in the names of the outputs from mast:
@@ -880,7 +883,7 @@ public class AddSignalMastPanel extends JPanel {
                     // store matrix in mast per aspect, compare with line 991
                     matrixMastPanel.add(matrixAspect.get(aspect).getPanel()); // read from aspect panel to mast
                     if (matrixAspect.get(aspect).isAspectDisabled()) {
-                        matrixMast.setAspectDisabled(aspect);
+                        matrixMast.setAspectDisabled(aspect); // don't store bits when this aspect is disabled
                     } else {
                         matrixMast.setAspectEnabled(aspect);
                         matrixMast.setBitsForAspect(aspect, matrixAspect.get(aspect).trimAspectBits()); // return as char[]
@@ -968,7 +971,7 @@ public class AddSignalMastPanel extends JPanel {
                     dccMast.setUnlitId(Integer.parseInt(unLitAspectField.getText()));
                 }
             } else if (Bundle.getMessage("MatrixCtlMast").equals(signalMastDriver.getSelectedItem())) {
-                // Apply was pressed, existing MatrixMast
+                // Apply was pressed, store existing MatrixMast
                 MatrixSignalMast matrixMast = (MatrixSignalMast) mast;
                 matrixMast.setBitNum(bitNum); // store number of columns in aspect - outputs matrix in mast
 
@@ -991,7 +994,7 @@ public class AddSignalMastPanel extends JPanel {
                     // from matrixMastPanel hashtable to matrixMast
                     matrixMastPanel.add(matrixAspect.get(aspect).getPanel()); // update from aspect panel to mast
                     if (matrixAspect.get(aspect).isAspectDisabled()) {
-                        matrixMast.setAspectDisabled(aspect);
+                        matrixMast.setAspectDisabled(aspect); // don't store bits when this aspect is disabled
                     } else {
                         matrixMast.setAspectEnabled(aspect);
                         matrixMast.setBitsForAspect(aspect, matrixAspect.get(aspect).trimAspectBits()); // return as char[]
@@ -1832,8 +1835,8 @@ public class AddSignalMastPanel extends JPanel {
             if (i != 0) {
                 return;
             }
-
         }
+        // cf. line 405 loading an existing mast for edit
         for (String key : matrixAspect.keySet()) {
             // select the right checkboxes
             MatrixAspectPanel matrixPanel = matrixAspect.get(key); // load aspectpanel from hashmap
@@ -1841,7 +1844,8 @@ public class AddSignalMastPanel extends JPanel {
             if (!mast.isAspectDisabled(key)) {
                 char[] mastBits = mast.getBitsForAspect(key); // same as loading an existing MatrixMast
                 char[] panelAspectBits = Arrays.copyOf(mastBits, 5); // store as 5 character array in panel
-                matrixPanel.setAspectBoxes(panelAspectBits); // for 5 char[]
+                matrixPanel.updateAspectBits(panelAspectBits);
+                matrixPanel.setAspectBoxes(panelAspectBits);
                 // sets boxes 1 - 5 on aspect sub panel from values in hashmap char[] like: 1001
             }
         }
@@ -1979,9 +1983,10 @@ public class AddSignalMastPanel extends JPanel {
             }
             this.aspect = aspect;
         }
-
-        MatrixAspectPanel(String aspect, char[] aspectBits) {
-            if (aspectBits == null || aspectBits.equals("")) {
+        // used?
+        MatrixAspectPanel(String aspect, char[] panelBits) {
+            System.out.println("panelBits received: " + String.valueOf(panelBits)); // debug EBR
+            if (panelBits == null || panelBits.equals("")) {
                 return;
             }
             this.aspect = aspect;
@@ -1989,7 +1994,12 @@ public class AddSignalMastPanel extends JPanel {
             // i.e. "0101" provided as char[] array
             // easy to manipulate by index
             // copy to checkbox states:
+            aspectBits = panelBits;
             setAspectBoxes(aspectBits);
+        }
+
+        void updateAspectBits(char[] newBits) {
+            aspectBits = newBits;
         }
 
         boolean isAspectDisabled() {

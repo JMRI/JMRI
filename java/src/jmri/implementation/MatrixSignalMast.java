@@ -91,12 +91,12 @@ public class MatrixSignalMast extends AbstractSignalMast {
      * @param bitstring char[] of on/off outputs for the aspect, like "00010"
      * length of bitstring array should match the number of outputs defined, so one digit per output
     */
-    public void setBitsForAspect(String aspect, char[] bitstring) {
+    public void setBitsForAspect(String aspect, char[] bitArray) {
         if (aspectToOutput.containsKey(aspect)) {
             log.debug("Aspect " + aspect + " is already defined as " + aspectToOutput.get(aspect));
             aspectToOutput.remove(aspect);
         }
-        aspectToOutput.put(aspect, bitstring); // store keypair aspectname-bitstring in hashmap
+        aspectToOutput.put(aspect, bitArray); // store keypair aspectname - bitArray in hashmap
     }
 
     /**
@@ -173,8 +173,10 @@ public class MatrixSignalMast extends AbstractSignalMast {
         super.setLit(newLit);
     }
 
+    //char[] unLitBits;
+
     public void setUnLitBits(char[] bits) {
-        char[] unLitBits = bits;
+        unLitBits = bits;
         System.out.println("Received unLitBits: " + String.valueOf(unLitBits)); // debug EBR
     }
 
@@ -186,6 +188,9 @@ public class MatrixSignalMast extends AbstractSignalMast {
         char[] unLitBits = bitString.toCharArray();
     }
 
+    /**
+     *  provide to panel for edit
+     */
     public char[] getUnLitBits() {
         if (unLitBits != null) {
             System.out.println("xmast.getUnLitBits returns " + String.valueOf(unLitBits)); // debug EBR
@@ -220,7 +225,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
 
     /**
      *  Fetch output from outputsToBeans hashmap
-     *  used in Add Mast panel line 400
+     *  used in Add Mast panel line 427
      *  @param colnum int index (1 up to 5) for the column of the desired output
      *  @return NamedBeanHandle to the configured turnout output
      */
@@ -229,7 +234,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
         if (colnum > 0 && colnum <= outputsToBeans.size()) {
             return outputsToBeans.get(key);
         }
-        log.error("Trying to read output NamedBeanHandle " + colnum + " which has not been configured");
+        log.error("Trying to read output NamedBeanHandle " + key + " which has not been configured");
         return null;
     }
 
