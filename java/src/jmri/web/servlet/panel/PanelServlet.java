@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package jmri.web.servlet.panel;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
@@ -27,7 +23,6 @@ import org.slf4j.LoggerFactory;
  */
 public class PanelServlet extends AbstractPanelServlet {
 
-    private static final long serialVersionUID = -5898335055123037426L;
     private final static Logger log = LoggerFactory.getLogger(PanelServlet.class);
 
     @Override
