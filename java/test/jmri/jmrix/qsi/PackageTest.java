@@ -31,6 +31,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite("jmri.jmrix.qsi.QsiTest");
+        suite.addTest(ActiveFlagTest.suite());
         suite.addTest(jmri.jmrix.qsi.QsiTrafficControllerTest.suite());
         suite.addTest(jmri.jmrix.qsi.QsiMessageTest.suite());
         suite.addTest(jmri.jmrix.qsi.QsiReplyTest.suite());

@@ -35,7 +35,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.rps.RegionTest.suite());
         suite.addTest(jmri.jmrix.rps.TransformTest.suite());
         suite.addTest(BundleTest.suite());
-
+        suite.addTest(ActiveFlagTest.suite());
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             suite.addTest(jmri.jmrix.rps.reversealign.AlignmentPanelTest.suite());
             suite.addTest(jmri.jmrix.rps.serial.SerialAdapterTest.suite());
