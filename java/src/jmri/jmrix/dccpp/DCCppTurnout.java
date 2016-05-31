@@ -399,22 +399,57 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
      * 
      * @return 0 if address matches our turnout -1 otherwise
      */
-     // not used, not tested => commented out
-     //
-    //     synchronized private int parseMonitoringFeedbackMessage(DCCppReply l, int startByte) {
+    synchronized private int parseMonitoringFeedbackMessage(DCCppReply l, int startByte) {
+        // check validity & addressing
+        if (l.getTOIDInt() == mNumber) {
+	    // is for this object, parse the message
+	    if (log.isDebugEnabled()) {
+                log.debug("Message for turnout " + mNumber);
+            }
+            if (l.getTOIsThrown()) {
+                synchronized (this) {
+                    newCommandedState(_mThrown);
+                    newKnownState(getCommandedState());
+                }
+                return (0);
+            } else if (l.getTOIsClosed()) {
+                synchronized (this) {
+                    newCommandedState(_mClosed);
+                    newKnownState(getCommandedState());
+                }
+                return (0);
+            } else {
+                // the state is unknown or inconsistent.  If the command state 
+                // does not equal the known state, and the command repeat the 
+                // last command
+		//
+		// This should never happen in the current version of DCC++
+                if (getCommandedState() != getKnownState()) {
+                    forwardCommandChangeToLayout(getCommandedState());
+                }
+                return -1;
+            }
+        }
+        return (-1);
+    }
+
+    // not used, not tested => commented out
+    // but might be due to odd issues back at line 250
+    //
+    //     synchronized private int parseExactFeedbackMessage(DCCppReply l, int startByte) {
     //         // check validity & addressing
-    //         if (l.getTOIDInt() == mNumber) {
+    //         if (l.getOutputNumInt() == mNumber) {
     // 	    // is for this object, parse the message
     // 	    if (log.isDebugEnabled()) {
     //                 log.debug("Message for turnout " + mNumber);
     //             }
-    //             if (l.getTOIsThrown()) {
+    //             if (l.getOutputIsHigh()) {
     //                 synchronized (this) {
     //                     newCommandedState(_mThrown);
     //                     newKnownState(getCommandedState());
     //                 }
     //                 return (0);
-    //             } else if (l.getTOIsClosed()) {
+    //             } else if (l.getOutputIsLow()) {
     //                 synchronized (this) {
     //                     newCommandedState(_mClosed);
     //                     newKnownState(getCommandedState());
@@ -435,39 +470,6 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
     //         return (-1);
     //     }
 
-    synchronized private int parseExactFeedbackMessage(DCCppReply l, int startByte) {
-        // check validity & addressing
-        if (l.getOutputNumInt() == mNumber) {
-	    // is for this object, parse the message
-	    if (log.isDebugEnabled()) {
-                log.debug("Message for turnout " + mNumber);
-            }
-            if (l.getOutputIsHigh()) {
-                synchronized (this) {
-                    newCommandedState(_mThrown);
-                    newKnownState(getCommandedState());
-                }
-                return (0);
-            } else if (l.getOutputIsLow()) {
-                synchronized (this) {
-                    newCommandedState(_mClosed);
-                    newKnownState(getCommandedState());
-                }
-                return (0);
-            } else {
-                // the state is unknown or inconsistent.  If the command state 
-                // does not equal the known state, and the command repeat the 
-                // last command
-		//
-		// This should never happen in the current version of DCC++
-                if (getCommandedState() != getKnownState()) {
-                    forwardCommandChangeToLayout(getCommandedState());
-                }
-                return -1;
-            }
-        }
-        return (-1);
-    }
     public void dispose() {
         this.removePropertyChangeListener(_stateListener);
         super.dispose();
