@@ -91,7 +91,7 @@ public class TurnoutEditAction extends BeanEditAction {
     TurnoutOperationConfig config;
     BeanItemPanel feedback;
     JPanel turnoutOperation = new JPanel();
-    String userDefinedOperation = null;
+    String userDefinedOperation = null;  // ERROR: Something here should be setting this to a user-selected value!
 
     BeanItemPanel feedback() {
         feedback = new BeanItemPanel();
