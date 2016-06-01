@@ -16,6 +16,12 @@ public class XNetMessageExceptionTest extends TestCase {
 
     public void testCtor() {
 
+        XNetMessageException c = new XNetMessageException();
+        Assert.assertNotNull(c);
+    }
+
+    public void testStringCtor() {
+
         XNetMessageException c = new XNetMessageException("Test Exception");
         Assert.assertNotNull(c);
     }
