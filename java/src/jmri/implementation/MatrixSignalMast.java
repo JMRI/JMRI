@@ -23,8 +23,9 @@ import org.slf4j.LoggerFactory;
  * <li>IF$xsm - defines signal masts of this type (x for matri<b>X</b>)
  * <li>basic - name of the signaling system
  * <li>one-searchlight - name of the particular aspect map/mast model
- * <li>($0001) - small ordinal number for telling various matrix signal masts
- * <li>name ending in -nt (for n (binary) Turnout outputs) or [to do:] -nd for direct DCC packets</li>
+ * <li>($0001) - small ordinal number for telling various matrix signal masts apart
+ * <li>name ending in -nt for (binary) Turnout outputs or [to do:] -nd for direct DCC packets,
+ * where n = the number of binary outputs, between 1 and 5</li>
  * </ul>
  *
  * @author	Bob Jacobsen Copyright (C) 2009, 2014
@@ -89,8 +90,8 @@ public class MatrixSignalMast extends AbstractSignalMast {
     /**
      * Store bits in aspectToOutput hashmap
      * @param aspect String valid aspect to define
-     * @param bitstring char[] of on/off outputs for the aspect, like "00010"
-     * length of bitstring array should match the number of outputs defined, so one digit per output
+     * @param bitArray char[] of on/off outputs for the aspect, like "00010"
+     * length of bitArray should match the number of outputs defined, so one digit per output
     */
     public void setBitsForAspect(String aspect, char[] bitArray) {
         if (aspectToOutput.containsKey(aspect)) {
@@ -102,7 +103,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
 
     /**
      * Look up the pattern for an aspect
-     * @param aspect String describing (valid) signal mast aspect, like "Clear"
+     * @param aspect String describing a (valid) signal mast aspect, like "Clear"
      * only called for an already existing mast
      * @return char[] of on/off outputs per aspect, like "00010"
      * length of array should match the number of outputs defined
