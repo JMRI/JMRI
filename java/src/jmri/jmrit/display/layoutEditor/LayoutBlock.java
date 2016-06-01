@@ -2879,7 +2879,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getSource() instanceof LayoutBlock) {
             LayoutBlock srcEvent = (LayoutBlock) e.getSource();
-            if (e.getPropertyName().toString().equals("NewRoute")) {
+            if (e.getPropertyName().equals("NewRoute")) {
                 LayoutBlock lbkblock = (LayoutBlock) e.getNewValue();
                 if (enableUpdateRouteLogging) {
                     log.info("==Event type " + e.getPropertyName().toString() + " New " + lbkblock.getDisplayName());

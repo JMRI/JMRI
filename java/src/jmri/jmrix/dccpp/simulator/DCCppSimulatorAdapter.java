@@ -530,7 +530,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 	    }
 	}
 	// TODO: Still need to strip leading and trailing whitespace.
-	log.debug("Complete message = {}", s.toString());
+	log.debug("Complete message = {}", s);
 	return(DCCppMessage.parseDCCppMessage(s));
     }
 
