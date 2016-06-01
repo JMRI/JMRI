@@ -111,7 +111,6 @@ public class RollingStock implements java.beans.PropertyChangeListener {
     /**
      * Set the rolling stock identification or road number
      *
-     * @param number
      */
     public void setNumber(String number) {
         String old = _number;
@@ -172,8 +171,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 
     /*
      * Sets the length of the rolling stock.
-     * 
-     * @param length
+     *
      */
     public void setLength(String length) {
         String old = _length;
@@ -296,7 +294,6 @@ public class RollingStock implements java.beans.PropertyChangeListener {
      * two years if the rolling stock was built in the 1900s. Use MM-YYYY for
      * units build after 1999.
      *
-     * @param built
      */
     public void setBuilt(String built) {
         String old = _built;
@@ -392,7 +389,6 @@ public class RollingStock implements java.beans.PropertyChangeListener {
     /**
      * Sets rolling stock location on the layout
      *
-     * @param location
      * @param track (yard, spur, staging, or interchange track)
      *
      * @return "okay" if successful, "type" if the rolling stock's type isn't
@@ -405,7 +401,6 @@ public class RollingStock implements java.beans.PropertyChangeListener {
     /**
      * Sets rolling stock location on the layout
      *
-     * @param location
      * @param track    (yard, spur, staging, or interchange track)
      * @param force    when true place rolling stock ignore track length, type,
      *                 {@literal &} road
@@ -481,7 +476,6 @@ public class RollingStock implements java.beans.PropertyChangeListener {
     /**
      * Sets rolling stock destination on the layout
      *
-     * @param destination
      * @param track (yard, spur, staging, or interchange track)
      * @return "okay" if successful, "type" if the rolling stock's type isn't
      *         acceptable, or "length" if the rolling stock length didn't fit.
@@ -493,7 +487,6 @@ public class RollingStock implements java.beans.PropertyChangeListener {
     /**
      * Sets rolling stock destination on the layout
      *
-     * @param destination
      * @param track       (yard, spur, staging, or interchange track)
      * @param force       when true ignore track length, type, {@literal &} road
      *                    when setting destination
@@ -564,8 +557,6 @@ public class RollingStock implements java.beans.PropertyChangeListener {
     /**
      * Used to check destination track to see if it will accept rolling stock
      *
-     * @param destination
-     * @param track
      * @return status OKAY, TYPE, ROAD, LENGTH, ERROR_TRACK
      */
     public String testDestination(Location destination, Track track) {
@@ -620,7 +611,6 @@ public class RollingStock implements java.beans.PropertyChangeListener {
      * space or drop count. Used by car router to test destinations. Does not
      * fire a property change. Use setDestination(Location, Track) instead.
      *
-     * @param track
      */
     public void setDestinationTrack(Track track) {
         if (track != null) {
@@ -677,7 +667,6 @@ public class RollingStock implements java.beans.PropertyChangeListener {
     /**
      * Sets the train that will service this rolling stock.
      *
-     * @param train
      */
     public void setTrain(Train train) {
         Train old = _train;
@@ -900,7 +889,6 @@ public class RollingStock implements java.beans.PropertyChangeListener {
      * Sets the last date when this rolling stock was moved, or was reset from a
      * built train.
      *
-     * @param date
      */
     public void setLastDate(Date date) {
         Date old = _lastDate;

@@ -35,7 +35,7 @@ public class JmriUserPreferencesManagerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", JmriUserPreferencesManagerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -65,5 +65,5 @@ public class JmriUserPreferencesManagerTest extends TestCase {
             // Uncomment to force failure if wanting to verify that showMessage does not get called.
             //org.slf4j.LoggerFactory.getLogger(TestUserPreferencesManager.class).error("showMessage called.", new Exception());
         }
-    };
+    }
 }

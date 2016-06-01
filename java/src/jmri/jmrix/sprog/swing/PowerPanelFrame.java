@@ -1,4 +1,3 @@
-// PowerPanelFrame.java
 package jmri.jmrix.sprog.swing;
 
 import java.util.ResourceBundle;
@@ -8,14 +7,9 @@ import jmri.util.JmriJFrame;
  * Frame for controlling layout power via a PowerManager.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version $Revision$
  */
 public class PowerPanelFrame extends JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1253132940033685L;
     // GUI member declarations
     PowerPane pane = new PowerPane();
 

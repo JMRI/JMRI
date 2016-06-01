@@ -101,7 +101,7 @@ public class SignalSpeedMap
             _table = new OrderedHashtable<>();
             for (int i = 0; i < list.size(); i++) {
                 String name = list.get(i).getName();
-                Float speed = Float.valueOf(0f);
+                Float speed;
                 try {
                     speed = Float.valueOf(list.get(i).getText());
                 } catch (NumberFormatException nfe) {

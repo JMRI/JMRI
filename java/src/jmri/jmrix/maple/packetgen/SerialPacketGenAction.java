@@ -1,4 +1,3 @@
-// SerialPacketGenAction.java
 package jmri.jmrix.maple.packetgen;
 
 import java.awt.event.ActionEvent;
@@ -10,14 +9,8 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a SerialPacketGenFrame object
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version $Revision$
  */
 public class SerialPacketGenAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 9108403301774618719L;
 
     public SerialPacketGenAction(String s) {
         super(s);
@@ -38,6 +31,3 @@ public class SerialPacketGenAction extends AbstractAction {
     }
     private final static Logger log = LoggerFactory.getLogger(SerialPacketGenAction.class.getName());
 }
-
-
-/* @(#)SerialPacketGenAction.java */

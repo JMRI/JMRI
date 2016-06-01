@@ -18,7 +18,7 @@ import java.util.List;
  * component and a <tt>Listener</tt> to receive notification when file(s) have
  * been dropped. Here is an example:
  * </p>
- * <code><pre>
+ * <pre><code>
  *      JPanel myPanel = new JPanel();
  *      new FileDrop( myPanel, new FileDrop.Listener()
  *      {   public void filesDropped( java.io.File[] files )
@@ -27,7 +27,7 @@ import java.util.List;
  *              ...
  *          }   // end filesDropped
  *      }); // end FileDrop.Listener
- * </pre></code>
+ * </code></pre>
  * 
  * You can specify the border that will appear when files are being dragged by
  * calling the constructor with a <tt>javax.swing.border.Border</tt>. Only
@@ -586,7 +586,7 @@ public class FileDrop {
     /* ********  I N N E R   I N T E R F A C E   L I S T E N E R  ******** */
     /**
      * Implement this inner interface to listen for when files are dropped. For
-     * example your class declaration may begin like this:      <code><pre>
+     * example your class declaration may begin like this:      <pre><code>
      *      public class MyClass implements FileDrop.Listener
      *      ...
      *      public void filesDropped( java.io.File[] files )
@@ -594,7 +594,7 @@ public class FileDrop {
      *          ...
      *      }   // end filesDropped
      *      ...
-     * </pre></code>
+     * </code></pre>
      *
      * @since 1.0
      */

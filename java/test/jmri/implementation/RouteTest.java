@@ -25,6 +25,7 @@ public class RouteTest extends TestCase {
     /**
      * The following equalities are needed so that old files can be read
      */
+    @SuppressWarnings("all") // to suppress "Comparing identical expressions"
     public void testRouteAndTurnoutConstants() {
         Assert.assertTrue("CLOSED is ONCLOSED", Turnout.CLOSED == Route.ONCLOSED);
         Assert.assertTrue("THROWN is ONTHROWN", Turnout.THROWN == Route.ONTHROWN);
@@ -91,7 +92,6 @@ public class RouteTest extends TestCase {
 
     public void testTurnoutsAlignedSensor() {
         DefaultRoute r = new DefaultRoute("test");
-        Sensor s = InstanceManager.sensorManagerInstance().provideSensor("IS123");
         r.setTurnoutsAlignedSensor("IS123");
         Assert.assertEquals("Sensor name stored", "IS123", r.getTurnoutsAlignedSensor());     
         r.activateRoute();
@@ -100,7 +100,6 @@ public class RouteTest extends TestCase {
 
     public void testLockControlTurnout() {
         DefaultRoute r = new DefaultRoute("test");
-        Turnout s = InstanceManager.turnoutManagerInstance().provideTurnout("IT123");
         r.setLockControlTurnout("IT123");
         Assert.assertEquals("Turnout name stored", "IT123", r.getLockControlTurnout());     
         r.activateRoute();
@@ -127,7 +126,7 @@ public class RouteTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {RouteTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

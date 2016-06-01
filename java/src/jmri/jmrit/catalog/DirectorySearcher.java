@@ -1,4 +1,3 @@
-// ImageIndexEditor.java
 package jmri.jmrit.catalog;
 
 import java.awt.Font;
@@ -137,7 +136,7 @@ public class DirectorySearcher {
     /**
      * Open one directory.
      *
-     * @param addDir - <pre>if true, allows directory to be added as a tree to the Catalog.
+     * @param addDir if true, allows directory to be added as a tree to the Catalog.<br>
      *                      if false, allows preview panel to drag icons.
      */
     public void openDirectory(boolean addDir) {

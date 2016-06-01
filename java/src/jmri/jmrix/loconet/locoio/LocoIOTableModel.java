@@ -1,4 +1,3 @@
-// LocoIOTableModel.java
 package jmri.jmrix.loconet.locoio;
 
 import java.beans.PropertyChangeEvent;
@@ -31,16 +30,11 @@ import org.slf4j.LoggerFactory;
  * though there are significant modifications.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  */
 public class LocoIOTableModel
         extends javax.swing.table.AbstractTableModel
         implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 145067099477782903L;
     private LocoIOData liodata;
     private boolean inHex;
     //private String maxSizeMode = "";

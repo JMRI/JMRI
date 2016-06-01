@@ -72,6 +72,23 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      */
     abstract public void setIntValue(int i);
 
+    /** 
+     * Set value from a String value.
+     * <p>
+     * The current implementation is a stand-in.  Note that 
+     * e.g. Speed Tables don't use a single Int, so will 
+     * just be skipped. The solution to that is to overload this in 
+     * complicated variable types.
+     */
+    public void setValue(String value) {
+        try {
+            int val = Integer.parseInt(value);
+            setIntValue(val);
+        } catch ( NumberFormatException e) {
+            log.debug("skipping set of non-integer value \"{}\"", value);
+        }
+    }
+    
     /**
      * Get the value as a single number.
      *

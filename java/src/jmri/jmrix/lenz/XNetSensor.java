@@ -1,4 +1,3 @@
-// XNetSensor.java
 package jmri.jmrix.lenz;
 
 import jmri.Sensor;
@@ -10,14 +9,8 @@ import org.slf4j.LoggerFactory;
  * Extend jmri.AbstractSensor for XPressNet layouts.
  * <P>
  * @author	Paul Bender Copyright (C) 2003-2010
- * @version $Revision$
  */
 public class XNetSensor extends AbstractSensor implements XNetListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7452646637169609217L;
 
     private boolean statusRequested = false;
 
@@ -198,6 +191,3 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
     private final static Logger log = LoggerFactory.getLogger(XNetSensor.class.getName());
 
 }
-
-
-/* @(#)XNetSensor.java */

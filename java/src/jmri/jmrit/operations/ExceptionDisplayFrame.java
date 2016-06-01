@@ -90,7 +90,6 @@ public class ExceptionDisplayFrame extends JDialog {
     /**
      * Constructor that takes just an Exception and defaults everything else.
      *
-     * @param ex
      */
     public ExceptionDisplayFrame(Exception ex) {
         this.context = new ExceptionContext(ex, "Operation unavailable", // NOI18N
