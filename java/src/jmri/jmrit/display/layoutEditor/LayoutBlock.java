@@ -2131,7 +2131,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         if (enableDeleteRouteLogging) {
             log.info(msgPrefix + " finshed check and notifying of removed routes from " + notifyingblk.getDisplayName() + " ===");
         }
-        routesToRemove = null;
     }
 
     void addThroughPath(Adjacencies adj) {
