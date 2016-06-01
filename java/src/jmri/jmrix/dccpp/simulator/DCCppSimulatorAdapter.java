@@ -1,4 +1,3 @@
-// DCCppSimulatorAdapter.java
 package jmri.jmrix.dccpp.simulator;
 
 import java.io.DataInputStream;
@@ -38,7 +37,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Paul Bender, Copyright (C) 2009-2010
  * @author	Mark Underwood, Copyright (C) 2015
- * @version	$Revision$
  *
  * Based on jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter
  */

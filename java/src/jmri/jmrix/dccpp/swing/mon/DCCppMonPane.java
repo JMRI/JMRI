@@ -1,4 +1,3 @@
-// DCCppMonPane.java
 package jmri.jmrix.dccpp.swing.mon;
 
 import jmri.jmrix.dccpp.DCCppConstants;
@@ -17,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * @author      Paul Bender Copyright (C) 2004-2014
  * @author      Giorgio Terdina Copyright (C) 2007
  * @author      Mark Underwood Copyright (C) 2015
- * @version $Revision$
  */
 public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppListener {
 
