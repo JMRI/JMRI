@@ -504,7 +504,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
      */
     private DCCppMessage loadChars() throws java.io.IOException {
 	// Spin waiting for start-of-frame '<' character (and toss it)
-	String s = new String();
+	String s = "";
 	byte char1;
 	boolean found_start = false;
 

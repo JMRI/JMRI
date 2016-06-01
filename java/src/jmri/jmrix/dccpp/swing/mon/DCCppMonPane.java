@@ -70,7 +70,7 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
         log.debug("Message in Monitor: {} opcode {}", l.toString(), Character.toString(l.getOpCodeChar()));
         
 	// Beautify and display
-	String text = new String();
+	String text = "";
 
 	switch(l.getOpCodeChar()) {
 	case DCCppConstants.THROTTLE_REPLY:
@@ -185,7 +185,7 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
         }
 
 	// Beautify and display
-	String text = new String();
+	String text = "";
 
 	switch(l.getOpCodeChar()) {
 	case DCCppConstants.THROTTLE_CMD:
