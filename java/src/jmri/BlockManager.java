@@ -9,6 +9,9 @@ import jmri.managers.AbstractManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+
 /**
  * Basic Implementation of a BlockManager.
  * <P>
@@ -45,7 +48,7 @@ public class BlockManager extends AbstractManager
         return Manager.BLOCKS;
     }
 
-    public String getSystemPrefix() {
+    public @Nonnull String getSystemPrefix() {
         return "I";
     }
 
@@ -64,11 +67,12 @@ public class BlockManager extends AbstractManager
     }
 
     /**
-     * Method to create a new Block if it does not exist Returns null if a Block
+     * Method to create a new Block if it does not exist 
+     * @return null if a Block
      * with the same systemName or userName already exists, or if there is
      * trouble creating a new Block.
      */
-    public Block createNewBlock(String systemName, String userName) {
+    public @CheckForNull Block createNewBlock(@Nonnull String systemName, @CheckForNull String userName) {
         // Check that Block does not already exist
         Block r;
         if (userName != null && !userName.equals("")) {
@@ -107,7 +111,7 @@ public class BlockManager extends AbstractManager
         return r;
     }
 
-    public Block createNewBlock(String userName) {
+    public Block createNewBlock(@Nonnull String userName) {
         int nextAutoBlockRef = lastAutoBlockRef + 1;
         StringBuilder b = new StringBuilder("IB:AUTO:");
         String nextNumber = paddedNumber.format(nextAutoBlockRef);
@@ -115,7 +119,7 @@ public class BlockManager extends AbstractManager
         return createNewBlock(b.toString(), userName);
     }
 
-    public Block provideBlock(String name) {
+    public Block provideBlock(@Nonnull String name) {
         Block b = getBlock(name);
         if (b != null) {
             return b;
@@ -136,7 +140,7 @@ public class BlockManager extends AbstractManager
      * User Name. If this fails looks up assuming that name is a System Name. If
      * both fail, returns null.
      */
-    public Block getBlock(String name) {
+    public Block getBlock(@Nonnull String name) {
         Block r = getByUserName(name);
         if (r != null) {
             return r;
@@ -144,16 +148,16 @@ public class BlockManager extends AbstractManager
         return getBySystemName(name);
     }
 
-    public Block getBySystemName(String name) {
+    public Block getBySystemName(@Nonnull String name) {
         String key = name.toUpperCase();
         return (Block) _tsys.get(key);
     }
 
-    public Block getByUserName(String key) {
+    public Block getByUserName(@Nonnull String key) {
         return (Block) _tuser.get(key);
     }
 
-    public Block getByDisplayName(String key) {
+    public Block getByDisplayName(@Nonnull String key) {
         // First try to find it in the user list.
         // If that fails, look it up in the system list
         Block retv = this.getByUserName(key);
@@ -214,7 +218,7 @@ public class BlockManager extends AbstractManager
      * @param re the roster entry
      * @return list of block system names
      */
-    public List<Block> getBlocksOccupiedByRosterEntry(RosterEntry re) {
+    public List<Block> getBlocksOccupiedByRosterEntry(@Nonnull RosterEntry re) {
         List<Block> blockList = new ArrayList<>();
         
         for (String sysName : getSystemNameList()) {
