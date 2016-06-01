@@ -323,9 +323,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                             }
                             StringBuffer packet = new StringBuffer(msg.length() + SEND_PREFIX.length() + 2);
                             packet.append(SEND_PREFIX);
-                            String hexString = new String();
-                            hexString += "<" + msg.toString() + ">";
-                            packet.append(hexString);
+                            packet.append("<" + msg.toString() + ">");
                             if (debug) {
                                 log.debug("Write to LbServer: " + packet.toString());
                             }
