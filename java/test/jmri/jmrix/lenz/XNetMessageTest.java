@@ -41,6 +41,42 @@ public class XNetMessageTest extends TestCase {
         Assert.assertEquals("7th byte", 0xB1, m.getElement(7) & 0xFF);
     }
 
+    public void testStringCtorEmptyString() {
+        XNetMessage m = new XNetMessage("");
+        Assert.assertEquals("length", 0, m.getNumDataElements());
+        Assert.assertTrue("empty reply",m.toString().equals(""));
+    }
+
+    public void testCtorXNetReply(){
+        XNetReply x = new XNetReply("12 34 AB 03 19 06 0B B1");
+        XNetMessage m = new XNetMessage(x);
+        Assert.assertEquals("length", x.getNumDataElements(), m.getNumDataElements());
+        Assert.assertEquals("0th byte", x.getElement(0)& 0xFF, m.getElement(0)& 0xFF);
+        Assert.assertEquals("1st byte", x.getElement(1)& 0xFF, m.getElement(1)& 0xFF);
+        Assert.assertEquals("2nd byte", x.getElement(2)& 0xFF, m.getElement(2)& 0xFF);
+        Assert.assertEquals("3rd byte", x.getElement(3)& 0xFF, m.getElement(3)& 0xFF);
+        Assert.assertEquals("4th byte", x.getElement(4)& 0xFF, m.getElement(4)& 0xFF);
+        Assert.assertEquals("5th byte", x.getElement(5)& 0xFF, m.getElement(5)& 0xFF);
+        Assert.assertEquals("6th byte", x.getElement(6)& 0xFF, m.getElement(6)& 0xFF);
+        Assert.assertEquals("7th byte", x.getElement(7)& 0xFF, m.getElement(7)& 0xFF);
+    }
+
+    // test setting/getting the opcode
+    public void testSetAndGetOpCode(){
+        XNetMessage m = new XNetMessage("12 34 56");
+        Assert.assertEquals(0x1,m.getOpCode());
+        m.setOpCode(0xA);
+        Assert.assertEquals(0xA,m.getOpCode()); 
+    }
+
+    // test setting/getting the opcode
+    public void testGetOpCodeHex(){
+        XNetMessage m = new XNetMessage("12 34 56");
+        Assert.assertEquals("0x1",m.getOpCodeHex());
+        m.setOpCode(0xA);
+        Assert.assertEquals("0xa",m.getOpCodeHex()); 
+    }
+
     // check parity operations
     public void testParity() {
         XNetMessage m;
@@ -83,6 +119,30 @@ public class XNetMessageTest extends TestCase {
         m.setElement(1, 0x36);
         m.setElement(2, 0x8e);
         Assert.assertEquals("parity check test 6", false, m.checkParity());
+    }
+
+    public void testGetElementBCD(){
+        XNetMessage m = new XNetMessage("12 34 56");
+        Assert.assertEquals("BCD value",Integer.valueOf(12),m.getElementBCD(0));
+        Assert.assertEquals("BCD value",Integer.valueOf(34),m.getElementBCD(1));
+        Assert.assertEquals("BCD value",Integer.valueOf(56),m.getElementBCD(2));
+    }
+
+    public void testLength(){
+        XNetMessage m = new XNetMessage("12 34 56");
+        Assert.assertEquals("length",3,m.length());
+        m = new XNetMessage("12 34 56 78");
+        Assert.assertEquals("length",4,m.length());
+    }
+
+
+    // test canned messages.
+    public void testGetLiSpeedRequestMsg() {
+       XNetMessage m = XNetMessage.getLIAddressRequestMsg(1);
+       Assert.assertEquals(0xF2,m.getElement(0));
+       Assert.assertEquals(0x01,m.getElement(1));
+       Assert.assertEquals(1,m.getElement(2));
+       Assert.assertEquals(0xF2,m.getElement(3));
     }
 
     // from here down is testing infrastructure
