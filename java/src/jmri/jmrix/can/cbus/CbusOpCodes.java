@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package jmri.jmrix.can.cbus;
 
 import java.util.Collections;
@@ -12,12 +8,9 @@ import java.util.Set;
 import jmri.jmrix.AbstractMessage;
 
 /**
- * CbusOpCodes.java
- *
- * Description:	methods to decode CBUS opcodes
+ * Methods to decode CBUS opcodes
  *
  * @author	Andrew Crosland Copyright (C) 2009
- * @version $Revision$
  */
 public class CbusOpCodes {
 
@@ -300,5 +293,3 @@ public class CbusOpCodes {
     }
 
 }
-
-/* @(#)CbusOpCodes.java */

@@ -1,4 +1,3 @@
-// CbusEventFilterAction.java
 package jmri.jmrix.can.cbus;
 
 import java.awt.Color;
@@ -11,7 +10,6 @@ import org.slf4j.LoggerFactory;
  * Class to implement filtering of CBUS events.
  *
  * @author	Andrew Crosland Copyright (C) 2008
- * @version	$Revision$
  */
 public class CbusEventFilter {
 

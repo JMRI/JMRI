@@ -538,7 +538,6 @@ public class Track {
     /**
      * Sets the number of rolling stock (cars and or engines) on this track
      *
-     * @param number
      */
     private void setNumberRS(int number) {
         int old = _numberRS;
@@ -552,7 +551,6 @@ public class Track {
     /**
      * Sets the number of cars on this track
      *
-     * @param number
      */
     private void setNumberCars(int number) {
         int old = _numberCars;
@@ -566,7 +564,6 @@ public class Track {
     /**
      * Sets the number of engines on this track
      *
-     * @param number
      */
     private void setNumberEngines(int number) {
         int old = _numberEngines;
@@ -604,7 +601,6 @@ public class Track {
     /**
      * Adds rolling stock to a specific track.
      *
-     * @param rs
      */
     public void addRS(RollingStock rs) {
         setNumberRS(getNumberRS() + 1);
@@ -1203,7 +1199,6 @@ public class Track {
      * Determine if train can set out cars to this track. Based on the train's
      * id or train's route id. See setDropOption(option).
      *
-     * @param train
      * @return true if the train can set out cars to this track.
      */
     public boolean acceptsDropTrain(Train train) {
@@ -1264,7 +1259,6 @@ public class Track {
     /**
      * Add train or route id to this track.
      *
-     * @param id
      */
     public void addPickupId(String id) {
         if (_pickupList.contains(id)) {
@@ -1285,7 +1279,6 @@ public class Track {
      * Determine if train can pick up cars from this track. Based on the train's
      * id or train's route id. See setPickupOption(option).
      *
-     * @param train
      * @return true if the train can pick up cars from this track.
      */
     public boolean acceptsPickupTrain(Train train) {
@@ -1427,7 +1420,6 @@ public class Track {
 
     /**
      *
-     * @param length
      * @return true if the program should ignore some percentage of the car's
      *         length currently consuming track space.
      */
@@ -1750,7 +1742,6 @@ public class Track {
      * Checks to see if car can be placed on this spur using this schedule.
      * Returns OKAY if the schedule can service the car.
      *
-     * @param car
      * @return Track.OKAY track.CUSTOM track.SCHEDULE
      */
     public String checkSchedule(Car car) {
@@ -1867,7 +1858,6 @@ public class Track {
      * item in the list. Load the car with the next schedule load if one exists,
      * and set the car's final destination if there's one in the schedule.
      *
-     * @param car
      * @return Track.OKAY or Track.SCHEDULE
      */
     public String scheduleNext(Car car) {
@@ -1961,8 +1951,6 @@ public class Track {
      * the schedule item. Also sets the next load and wait count that will kick
      * in when the car arrives at the spur with this schedule.
      *
-     * @param scheduleItem
-     * @param car
      */
     private void loadNext(ScheduleItem scheduleItem, Car car) {
         if (scheduleItem == null) {
@@ -2169,7 +2157,6 @@ public class Track {
     /**
      * Returns true if destination is valid from this track.
      *
-     * @param destination
      * @return true if track services the destination
      */
     public boolean acceptsDestination(Location destination) {
