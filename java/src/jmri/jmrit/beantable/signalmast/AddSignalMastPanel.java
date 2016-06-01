@@ -17,6 +17,7 @@ import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.event.ChangeListener;
@@ -415,7 +416,6 @@ public class AddSignalMastPanel extends JPanel {
                         char[] panelAspectBits = Arrays.copyOf(mastBits, 5); // store as 5 character array in panel
                         matrixPanel.updateAspectBits(panelAspectBits);
                         matrixPanel.setAspectBoxes(panelAspectBits);
-                        System.out.println("aspectBits = " + String.valueOf(panelAspectBits)); // debug EBR
                         // sets boxes 1 - 5 on aspect sub panel from values in hashmap char[] like: 1001
                     }
                 }
@@ -444,7 +444,6 @@ public class AddSignalMastPanel extends JPanel {
             }
             if (xmast.allowUnLit()) {
                 char[] mastUnLitBits = xmast.getUnLitBits(); // load char[] for unLit from mast
-                System.out.println("mastUnLitBits received: " + String.valueOf(mastUnLitBits)); // debug EBR
                 char[] unLitPanelBits = Arrays.copyOf(mastUnLitBits, 5); // store as 5 character array in panel var unLitPanelBits
                 UnLitCheck1.setSelected(unLitPanelBits[0] == '1'); // set checkboxes
                 if (bitNum > 1) {
@@ -895,7 +894,6 @@ public class AddSignalMastPanel extends JPanel {
                 if (allowUnLit.isSelected()) {
                     // copy bits from UnLitPanel var unLitPanelBits
                     try {
-                        System.out.println("Sent to xmast: " + String.valueOf(unLitPanelBits)); // debug EBR
                         matrixMast.setUnLitBits(trimUnLitBits()); // same as line 1001,
                     } catch (Exception ex) {
                         log.error("failed to read and copy unLitPanelBits");
@@ -1004,7 +1002,6 @@ public class AddSignalMastPanel extends JPanel {
                 matrixMast.setAllowUnLit(allowUnLit.isSelected());
                 if (allowUnLit.isSelected()) {
                     try {
-                        System.out.println("Sent: " + String.valueOf(unLitPanelBits)); // debug EBR
                         matrixMast.setUnLitBits(trimUnLitBits()); // same as line 893
                     } catch (Exception ex) {
                         log.error("failed to read and copy unLitPanelBits");
@@ -1444,12 +1441,14 @@ public class AddSignalMastPanel extends JPanel {
         for (String name : names) {
             if ((Bundle.getMessage("DCCMast").equals(signalMastDriver.getSelectedItem())) || (Bundle.getMessage("LNCPMast").equals(signalMastDriver.getSelectedItem()))) {
                 if ((InstanceManager.signalMastManagerInstance().getNamedBean(name) instanceof DccSignalMast)
-                        && InstanceManager.signalMastManagerInstance().getSignalMast(name).getSignalSystem().getSystemName().equals(sigsysname)) {
+                        && InstanceManager.signalMastManagerInstance().getSignalMast(name).getSignalSystem().getSystemName().equals(sigsysname)
+                        && !InstanceManager.signalMastManagerInstance().getNamedBean(name).getDisplayName().equals(userName.getText())) { // don't copy yourself
                             mastSelect.addItem(InstanceManager.signalMastManagerInstance().getNamedBean(name).getDisplayName());
                 }
             } else if ((Bundle.getMessage("MatrixCtlMast").equals(signalMastDriver.getSelectedItem()))) {
                 if ((InstanceManager.signalMastManagerInstance().getNamedBean(name) instanceof MatrixSignalMast)
-                        && InstanceManager.signalMastManagerInstance().getSignalMast(name).getSignalSystem().getSystemName().equals(sigsysname)) {
+                        && InstanceManager.signalMastManagerInstance().getSignalMast(name).getSignalSystem().getSystemName().equals(sigsysname)
+                        && !InstanceManager.signalMastManagerInstance().getNamedBean(name).getDisplayName().equals(userName.getText())) { // don't copy yourself
                             mastSelect.addItem(InstanceManager.signalMastManagerInstance().getNamedBean(name).getDisplayName());
                 }
             }
@@ -1576,7 +1575,7 @@ public class AddSignalMastPanel extends JPanel {
         }
     }
 
-    // start update of MatrixMast panel
+    // start of MatrixMast panel
     /**
      * on = thrown, off = closed, no turnout states asked
      */
@@ -1626,7 +1625,7 @@ public class AddSignalMastPanel extends JPanel {
         }
         matrixAspect = new HashMap<String, MatrixAspectPanel>(10);
 
-    /*  Todo option dcc packet
+    /*  Todo: option dcc packet
         java.util.List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
         systemPrefixBox.removeAllItems();
         if (connList != null) {
@@ -1654,7 +1653,7 @@ public class AddSignalMastPanel extends JPanel {
 
         // sub panels (so we can hide all turnouts with Output Type drop down box later)
         JPanel turnoutpanel = new JPanel();
-        // binary matrix outputs go here
+        // binary matrix outputs follow:
         JPanel output1panel = new JPanel();
         output1panel.add(turnoutBox1);
         TitledBorder border1 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
@@ -1711,7 +1710,7 @@ public class AddSignalMastPanel extends JPanel {
         matrixHeaderLabel.setToolTipText(Bundle.getMessage("AspectMatrixHeaderTooltip"));
         matrixMastPanel.add(matrixHeader);
 
-        // option DCC packet
+        // option: configure outputs from DCC packet addresses
  /*       if (matrixDCCListener == null) {
             matrixDCCListener = new FocusListener() {
                 public void focusLost(FocusEvent e) {
@@ -1742,7 +1741,7 @@ public class AddSignalMastPanel extends JPanel {
             // build aspect sub panels
         }
         if ((matrixAspect.size() & 1) == 1) {
-            // spacer before "Copy from mast"
+            // spacer before "Reset previous aspect"
             matrixMastPanel.add(new JLabel());
         }
         matrixMastPanel.add(resetPreviousState); // checkbox
@@ -1753,7 +1752,7 @@ public class AddSignalMastPanel extends JPanel {
         matrixCopyPanel.add(new JLabel(Bundle.getMessage("MatrixMastCopyAspectBits") + ":"));
         matrixCopyPanel.add(copyFromMastSelection());
         matrixMastPanel.add(matrixCopyPanel);
-        // setReference(name + ":" + output); //write mast name to bean comment? see turnoutMast
+        // setReference(name + ":" + output); //write mast name to bean comment? see below
     }
 
     /**
@@ -1761,6 +1760,9 @@ public class AddSignalMastPanel extends JPanel {
      * @param newColNum int with the new value = the number of columns in the Matrix Table
      */
     void bitNumChanged(Integer newColNum) {
+        if (newColNum < 1 || newColNum > 5 || newColNum == bitNum) {
+            return;
+        }
         bitNum = newColNum;
         // show/hide column labels (if any)
         // hide/show output choices per Aspect
@@ -1775,13 +1777,13 @@ public class AddSignalMastPanel extends JPanel {
         repaint();
     }
 
-    //to do: write mast name to bean comment?, not on aspect level, called from #1520
-    /*  void setReference(String bits) {
+    //to do: write mast name to output bean comment, called from ca line 1755
+    /*  void setReference() {
         aspectBitsField.setReference(bits); // was turnout, should be string
     }*/
 
 
-    // todo
+    // todo: validate entries, ie check & warn for duplicates
 /*    static boolean validateMatrixAspectBits(String strAspect) {
         int aspect = -1;
         try {
@@ -1972,25 +1974,33 @@ public class AddSignalMastPanel extends JPanel {
         JTextField aspectBitsField = new JTextField(5); // for debug
         char[] aspectBits;
         String aspect = "";
-        int cols; // number of columns in matrix/pane
         String emptyChars = "00000";
         char[] emptyBits = emptyChars.toCharArray();
 
-
+        /**
+         * Build new aspect matrix panel
+         * called when Add Signal Mast Pane is built
+         * @param aspect String like "Clear"
+         */
         MatrixAspectPanel(String aspect) {
             if (aspectBits == null) {
                 aspectBits = emptyBits;
             }
             this.aspect = aspect;
         }
-        // used?
+
+        /**
+         * Rebuild an aspect matrix panel using char[] previously entered
+         * called from line 1870 when number of columns is changed (new mast creeation only)
+         * @param aspect String like "Clear"
+         * @param panelBits char[] of up to 5 1's and 0's
+         */
         MatrixAspectPanel(String aspect, char[] panelBits) {
-            System.out.println("panelBits received: " + String.valueOf(panelBits)); // debug EBR
             if (panelBits == null || panelBits.equals("")) {
                 return;
             }
             this.aspect = aspect;
-            // aspectBits is char[] of length(cols) describing state of on/off checkboxes
+            // aspectBits is char[] of length(bitNum) describing state of on/off checkboxes
             // i.e. "0101" provided as char[] array
             // easy to manipulate by index
             // copy to checkbox states:

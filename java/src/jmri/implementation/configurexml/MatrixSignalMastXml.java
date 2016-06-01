@@ -29,7 +29,7 @@ public class MatrixSignalMastXml
      * MatrixSignalMastManager
      *
      * @param o Object to store, of type MatrixSignalMast
-     * @return Element containing the complete info
+     * @return e Element containing the complete info
      */
     public Element store(Object o) { // from mast p to XML
         MatrixSignalMast p = (MatrixSignalMast) o;
@@ -129,7 +129,7 @@ public class MatrixSignalMastXml
                 } else {
                     m.setAllowUnLit(true);
                     String bits = unlit.getChild("bitString").getText();
-                    m.setUnLitBits(bits);
+                    ((MatrixSignalMast) m).setUnLitBits(bits);
                 }
             }
         }

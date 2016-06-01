@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+import javax.annotation.Nonnull;
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
 import org.slf4j.Logger;
@@ -82,8 +83,8 @@ public class MatrixSignalMast extends AbstractSignalMast {
         configureAspectTable(system, mast); // (create -default- appmapping in var "map") in AbstractSignalMast
     }
 
-    protected HashMap<String, char[]> aspectToOutput = new HashMap<String, char[]>(16); // "Clear" - 01001 char[] pairs
-    protected char[] unLitBits;
+    private HashMap<String, char[]> aspectToOutput = new HashMap<String, char[]>(16); // "Clear" - 01001 char[] pairs
+    private char[] unLitBits;
 
     /**
      * Store bits in aspectToOutput hashmap
@@ -173,15 +174,12 @@ public class MatrixSignalMast extends AbstractSignalMast {
         super.setLit(newLit);
     }
 
-    //char[] unLitBits;
-
-    public void setUnLitBits(char[] bits) {
+    public void setUnLitBits(@Nonnull char[] bits) {
         unLitBits = bits;
-        System.out.println("Received unLitBits: " + String.valueOf(unLitBits)); // debug EBR
     }
 
     /**
-     *  Receive unLitBits from xml
+     *  Receive unLitBits from xml and store
      *  @param bitString String for 1-n 1/0 chararacters setting an unlit aspect
      */
     public void setUnLitBits(String bitString) {
@@ -193,10 +191,8 @@ public class MatrixSignalMast extends AbstractSignalMast {
      */
     public char[] getUnLitBits() {
         if (unLitBits != null) {
-            System.out.println("xmast.getUnLitBits returns " + String.valueOf(unLitBits)); // debug EBR
             return unLitBits;
         } else {
-            System.out.println("xmast sent: " + String.valueOf(emptyBits) + " because unLitBits = >" + unLitBits + "<"); // debug EBR
             return emptyBits;
         }
     }
@@ -209,7 +205,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
         if (unLitBits != null) {
             return String.valueOf(unLitBits);
         } else {
-            System.out.println("EmptyChars supplied to xml"); // debug EBR
+            log.error("Returning 0 values because unLitBits is empty");
             return emptyChars.substring(0, (mastBitNum)); // should only be called when Unlit = true
         }
     }
@@ -338,9 +334,9 @@ public class MatrixSignalMast extends AbstractSignalMast {
      * @param colname String describing the name of the corresponding output, like "output1"
      * @param turnoutname String for the display name of the output, like "LT1"
     */
-    public void setOutput(String colname, String turnoutname) {
+    public void setOutput(@Nonnull String colname, @Nonnull String turnoutname) {
         if (colname == null || turnoutname == null){
-            log.error("Trying to set a null output. Fix output configuration for mast");
+            log.error("Trying to store a null output. Fix output configuration for mast");
         } else {
             Turnout turn = jmri.InstanceManager.turnoutManagerInstance().getTurnout(turnoutname);
             NamedBeanHandle<Turnout> namedTurnout = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(turnoutname, turn);
