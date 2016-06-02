@@ -135,6 +135,34 @@ public class XNetMessageTest extends TestCase {
         Assert.assertEquals("length",4,m.length());
     }
 
+    public void testSetXNetMessageRetries(){
+        XNetMessage m = new XNetMessage("12 34 56");
+        Assert.assertEquals("Retries ",5,m.getRetries());
+        XNetMessage.setXNetMessageRetries(0); 
+        // the default number of retires should be 0, so create a message to see. 
+        m = new XNetMessage("56 34 12");
+        Assert.assertEquals("Retries",0,m.getRetries());
+    }
+
+    public void testSetXNetMessageTimeout(){
+        XNetMessage m = new XNetMessage("12 34 56");
+        Assert.assertEquals("Timeout",5000,m.getTimeout());
+        XNetMessage.setXNetMessageTimeout(0); 
+        // the default timeout should be 0, so create a message to see. 
+        m = new XNetMessage("56 34 12");
+        Assert.assertEquals("Timeout",0,m.getTimeout());
+    }
+
+    public void testGetAndSetBroadcastReply(){
+        XNetMessage m = new XNetMessage("12 34 56");
+        Assert.assertTrue(m.replyExpected()); // reply expected returns 
+                                              // !broadcastReply, which defaults
+                                              // to false.
+        m.setBroadcastReply();
+        Assert.assertFalse(m.replyExpected());
+    }
+
+
 
     // test canned messages.
     public void testGetLiSpeedRequestMsg() {
@@ -169,6 +197,10 @@ public class XNetMessageTest extends TestCase {
 
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
+        // make sure the message timeouts and retries are set to
+        // the defaults.
+        XNetMessage.setXNetMessageTimeout(5000); 
+        XNetMessage.setXNetMessageRetries(5); 
     }
 
 }
