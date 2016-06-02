@@ -165,12 +165,110 @@ public class XNetMessageTest extends TestCase {
 
 
     // test canned messages.
-    public void testGetLiSpeedRequestMsg() {
+    public void testGetNMRAXNetMsg() {
+       XNetMessage m = XNetMessage.getNMRAXNetMsg(jmri.NmraPacket.opsCvWriteByte(2,false,29,32));
+       Assert.assertEquals(0xE5,m.getElement(0));
+       Assert.assertEquals(0x30,m.getElement(1));
+       Assert.assertEquals(0x02,m.getElement(2));
+       Assert.assertEquals(0xEC,m.getElement(3));
+       Assert.assertEquals(0x1C,m.getElement(4));
+       Assert.assertEquals(0x20,m.getElement(5));
+       Assert.assertEquals(0x07,m.getElement(6));
+    }
+
+    public void testGetTurnoutCommandMsg() {
+       XNetMessage m = XNetMessage.getTurnoutCommandMsg(5,false,true,true);
+       Assert.assertEquals(0x52,m.getElement(0));
+       Assert.assertEquals(0x01,m.getElement(1));
+       Assert.assertEquals(0x89,m.getElement(2));
+       Assert.assertEquals(0xDA,m.getElement(3));
+
+       m = XNetMessage.getTurnoutCommandMsg(5,true,false,true);
+       Assert.assertEquals(0x52,m.getElement(0));
+       Assert.assertEquals(0x01,m.getElement(1));
+       Assert.assertEquals(0x88,m.getElement(2));
+       Assert.assertEquals(0xDB,m.getElement(3));
+
+       m = XNetMessage.getTurnoutCommandMsg(5,false,true,false);
+       Assert.assertEquals(0x52,m.getElement(0));
+       Assert.assertEquals(0x01,m.getElement(1));
+       Assert.assertEquals(0x81,m.getElement(2));
+       Assert.assertEquals(0xD2,m.getElement(3));
+
+       m = XNetMessage.getTurnoutCommandMsg(5,true,false,false);
+       Assert.assertEquals(0x52,m.getElement(0));
+       Assert.assertEquals(0x01,m.getElement(1));
+       Assert.assertEquals(0x80,m.getElement(2));
+       Assert.assertEquals(0xD3,m.getElement(3));
+
+       // both thrown and close generates an error message.
+       m = XNetMessage.getTurnoutCommandMsg(5,true,true,false);
+       jmri.util.JUnitAppender.assertErrorMessage("XPressNet turnout logic can't handle both THROWN and CLOSED yet");
+    }
+
+    public void testGetResumeOperationsMsg() {
+       XNetMessage m = XNetMessage.getResumeOperationsMsg();
+       Assert.assertEquals(0x21,m.getElement(0));
+       Assert.assertEquals(0x81,m.getElement(1));
+       Assert.assertEquals(0xA0,m.getElement(2));
+    }
+
+    public void testGetEmergencyOffMsg() {
+       XNetMessage m = XNetMessage.getEmergencyOffMsg();
+       Assert.assertEquals(0x21,m.getElement(0));
+       Assert.assertEquals(0x80,m.getElement(1));
+       Assert.assertEquals(0xA1,m.getElement(2));
+    }
+
+    public void testGetCSVersionRequestMessage() {
+       XNetMessage m = XNetMessage.getCSVersionRequestMessage();
+       Assert.assertEquals(0x21,m.getElement(0));
+       Assert.assertEquals(0x21,m.getElement(1));
+       Assert.assertEquals(0x00,m.getElement(2));
+    }
+
+    public void testGetCSStatusRequestMessage() {
+       XNetMessage m = XNetMessage.getCSStatusRequestMessage();
+       Assert.assertEquals(0x21,m.getElement(0));
+       Assert.assertEquals(0x24,m.getElement(1));
+       Assert.assertEquals(0x05,m.getElement(2));
+    }
+
+    public void testGetCsAutoStartMessge() {
+       // test autostart mode.
+       XNetMessage m = XNetMessage.getCSAutoStartMessage(true);
+       Assert.assertEquals(0x22,m.getElement(0));
+       Assert.assertEquals(0x22,m.getElement(1));
+       Assert.assertEquals(0x04,m.getElement(2));
+       Assert.assertEquals(0x04,m.getElement(3));
+       // test manual mode.
+       m = XNetMessage.getCSAutoStartMessage(false);
+       Assert.assertEquals(0x22,m.getElement(0));
+       Assert.assertEquals(0x22,m.getElement(1));
+       Assert.assertEquals(0x00,m.getElement(2));
+       Assert.assertEquals(0x00,m.getElement(3));
+    }
+
+    public void testGetLIVersionRequestMessage() {
+       XNetMessage m = XNetMessage.getLIVersionRequestMessage();
+       Assert.assertEquals(0xF0,m.getElement(0));
+       Assert.assertEquals(0xF0,m.getElement(1));
+    }
+
+    public void testGetLIAddressRequestMsg() {
        XNetMessage m = XNetMessage.getLIAddressRequestMsg(1);
        Assert.assertEquals(0xF2,m.getElement(0));
        Assert.assertEquals(0x01,m.getElement(1));
-       Assert.assertEquals(1,m.getElement(2));
+       Assert.assertEquals(0x01,m.getElement(2));
        Assert.assertEquals(0xF2,m.getElement(3));
+    }
+
+    public void testGetLISpeedReqeustMessage() {
+       XNetMessage m = XNetMessage.getLISpeedRequestMsg(1);
+       Assert.assertEquals(0xF2,m.getElement(0));
+       Assert.assertEquals(0x02,m.getElement(1));
+       Assert.assertEquals(0x01,m.getElement(2));
+       Assert.assertEquals(0xF1,m.getElement(3));
     }
 
     // from here down is testing infrastructure
