@@ -6,7 +6,7 @@
  </title>
     <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <meta name="author" content="Bob Jacobsen, Egbert Broerse">
-    <meta name="Date.Modified" content="20160601"/>
+    <meta name="Date.Modified" content="20160602"/>
     <meta name="keywords" content="JMRI help Signal Mast Add">
 
 <!--#include virtual="/Style" -->
@@ -19,7 +19,7 @@
 
 <h1>Adding Signal Masts</h1>
     
-<a href="SignalMastAdd.png"><img src="SignalMastAdd.png" align="right" width="258" height="232" hspace="0" vspace="0" alt="Add Signal Mast panel figure"></a>
+<a href="images/VirtMastPanelApply.png"><img src="images/VirtMastPanelApply.png" align="right" width="239" height="159" hspace="0" vspace="0" alt="Add Signal Mast panel figure"></a>
 <p>
 Signal Masts are configured using one of the available Signaling Systems, and the Signal Mast Types supported within that system.
 <p>
@@ -28,8 +28,9 @@ Signal Masts are configured using one of the available Signaling Systems, and th
 	The third pop-up menu on the Add Signal Mast panel lets you select one of six different Signal Mast Driver types depending upon the hardware being used.<br>
 	Options common to (nearly) all Driver types include:
 	<ul>
-	<li>This Mast can be Unlit: checking this box allows JMRI to turn off the mast, using an extra instruction such as an output state
-	<li>Disabled: checking this box for an Aspect will grey out the options and have JMRI skip it when changing the mast
+	<li>This Mast can be Unlit: checking this box allows JMRI to turn off the mast, using an extra instruction such as an output state.
+	When configuring a mast that can be unlit, the same aspect ID has to be entered in both the field at the top as the Aspect line below for the correct appearance to be displayed in all possible scenarios.
+	<li>Disabled: checking this box for an Aspect will grey out the options and have JMRI skip it when changing the state of this mast
 	<li>Copy Aspects from Mast: DCC, LNCP and Matrix drivers let you copy the settings for a new mast to match an already configured mast.
 	Of course the User Name and outputs should be unique, so they are not copied.
 	</ul>
@@ -38,7 +39,8 @@ Signal Masts are configured using one of the available Signaling Systems, and th
 	<h2>Signal Mast Driver</h2>
 		<dl>
 		<dt>Signal Head Controlled</dt>
-		<dd>Individual Signal Head objects are used to represent each Signal Head on the Signal Mast. Each Signal Head object will then deal with handling the changing of its Appearance
+		<dd><a href="images/SigHeadMastPanel2.png"><img src="images/SigHeadMastPanel2.png" width="262" height="220" hspace="0" vspace="0" alt="DCC Decoder panel"></a><br>
+		Individual Signal Head objects are used to represent each Signal Head on the Signal Mast. Each Signal Head object will then deal with handling the changing of its Appearance
 		depending upon the state of the Signal Mast and the position of this Signal Head relative to other Heads.
 		For each head that has been defined in the Signaling System for the selected Signal Mast type, a drop down box will appear for you to select the JMRI Signal Head that will control
 		that head on this Signal Mast.</dd>
@@ -46,7 +48,8 @@ Signal Masts are configured using one of the available Signaling Systems, and th
 		<dd>This Driver type is for specific hardware that can control the whole Appearance of a Signal Mast based upon the setting of one or more Turnouts. Depending on the hardware used
 		the appropriate options will appear in the setup panel.</dd>
 		<dt>Virtual</dt>
-		<dd>This mast does not directly control any hardware relating to a Signal Mast. It is ideal for locations where a physical mast would not be present on the railroad,
+		<dd><a href="images/VirtMastPanel.png"><img src="images/VirtMastPanel.png" width="238" height="158" hspace="0" vspace="0" alt="DCC Decoder panel"></a><br>
+        This mast does not directly control any hardware relating to a Signal Mast. It is ideal for locations where a physical mast would not be present on the railroad,
 		such as an End Bumper/Buffer Stop, or to 
 		mark the end of a signaling section of track and the beginning of Dark Territory. No commands are sent to the layout, so there's no connection to choose.</dd>
 		<dt><a name="dccsmd">DCC Signal Mast Decoder</a></dt>
@@ -56,7 +59,7 @@ Signal Masts are configured using one of the available Signaling Systems, and th
 		<dt>LNCP Signal Mast Decoder</dt>
 		<dd>Like the previous option, the LocoNet Control Point (LNCP) Driver type needs only a decoder ID and optionally Aspect ID's to drive a <a href="http://www.rr-cirkits.com/manuals/LNCP-manual.pdf">RR_Cirkits LNCP</a> module.</dd>
 		<dt>Output Matrix</dt>
-		<dd><a href="images/matrixPanel-2tAARCreate.png"><img src="images/matrixPanel-2tAARCreate.png" width="254" height="330" hspace="0" vspace="0" alt="Output Matrix Decoder panel"></a><br>
+		<dd><a href="images/MatrixMastPanel-3t.png"><img src="images/MatrixMastPanel-3t.png" width="256" height="257" hspace="0" vspace="0" alt="Output Matrix Decoder panel"></a><br>
 		This Driver creates a truth table to set from 1 to 5 outputs per Aspect. To define 8 different patterns, you will need at least 3 on/off fields.
 		The Output Matrix mast special decoders designed for signals, like a Digirails DR4018. <br>
 		When selected from the Driver drop down list, the panel lets you:
@@ -67,8 +70,8 @@ Signal Masts are configured using one of the available Signaling Systems, and th
 			<li>For each Aspect, Check boxes allow you to set the position op the outputs, hence the matrix name</li>
 			<li>The "bits" are displayed to the right for information purposes only</li>
 			</ol>
-		Click "Create new" to add the new Mast and return to the Signal Mast Table. In this edition, only turnouts an be configured as outputs.
-		The decoder documentation will have to explain which patterns belogn to each Aspect.
+		Click "Create new" to add the new Mast and return to the Signal Mast Table. For now, only turnouts can be configured as outputs.
+		Your decoder documentation will have to explain which patterns belogn to each Aspect.
 		It's not possible to change the number of outputs in the matrix once a mast has been saved.<br>
 		Outputs and the Unlit row can be changed later on by clicking the Edit button in the Mast table.</dd>
 		</dl>
