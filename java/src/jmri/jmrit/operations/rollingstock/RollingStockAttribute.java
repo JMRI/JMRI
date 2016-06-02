@@ -68,7 +68,6 @@ public class RollingStockAttribute {
     /**
      * Performs number sort before adding to list
      *
-     * @param lengths
      */
     public void setValues(String[] lengths) {
         if (lengths.length == 0) {

@@ -43,7 +43,6 @@ public class BlockTest extends TestCase {
 
     public void testHashCode() {
         Block b1 = new Block("SystemName1");
-        Block b2 = new Block("SystemName2");
         
         //multiple Block objects with same SystemName are really the same
         Block b1a = new Block("SystemName1");
@@ -289,7 +288,7 @@ public class BlockTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {BlockTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

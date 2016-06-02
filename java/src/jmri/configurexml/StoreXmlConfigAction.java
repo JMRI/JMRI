@@ -80,7 +80,7 @@ public class StoreXmlConfigAction extends LoadStoreBaseAction {
     }
 
     public void actionPerformed(ActionEvent e) {
-        File file = getFileName(this.getConfigFileChooser());
+        File file = getFileName(getConfigFileChooser());
         if (file == null) {
             return;
         }

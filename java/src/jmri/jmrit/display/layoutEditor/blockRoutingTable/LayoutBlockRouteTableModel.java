@@ -1,4 +1,3 @@
-// LayoutBlockRouteTableModel.java
 package jmri.jmrit.display.layoutEditor.blockRoutingTable;
 
 import java.beans.PropertyChangeListener;
@@ -18,15 +17,9 @@ import org.slf4j.LoggerFactory;
  * fields. But it's a start....
  *
  * @author Bob Jacobsen Copyright (C) 2009, 2010
- * @version $Revision$
  * @since 2.7.5
  */
 public class LayoutBlockRouteTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2084837727852885212L;
 
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
@@ -104,7 +97,7 @@ public class LayoutBlockRouteTableModel extends javax.swing.table.AbstractTableM
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (e.getPropertyName().toString().equals("length")) {
+        if (e.getPropertyName().equals("length")) {
             fireTableDataChanged();
         } else if (e.getPropertyName().toString().equals("routing")) {
             fireTableDataChanged();

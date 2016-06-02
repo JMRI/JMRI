@@ -364,8 +364,6 @@ public class CommonConductorYardmasterPanel extends OperationsPanel implements P
      * car and which pane to use, they are placed in the list "rollingStock"
      * with the prefix "p", "s" or "m" and the car's unique id.
      *
-     * @param rl
-     * @param isManifest
      */
     protected void blockCars(RouteLocation rl, boolean isManifest) {
         if (Setup.isPrintHeadersEnabled()) {

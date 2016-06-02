@@ -124,19 +124,21 @@ the source.  The <a href="http://jmri.org/JavaDoc/doc">JavaDoc</a> is one such s
 
 <h2>Updating the jmri.org site</h2>
 
-<p>Most of the web site contents is updated hourly from a job running on one of the
+<p>Most of the web site contents is updated hourly from jobs running on one of the
 project's Jenkins build servers.  The directories listed above constitute most of the site,
 and this content is updated from the JMRI repository without any additional work.</p>
+<ul>
+<li><a href="http://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20JMRI%20repository/">static content from JMRI/JMRI repository, e.g. help, xml, etc in JMRI distributions</a>
+<li><a href="http://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website%20repository/">static content from JMRI/website repository, e.g. website-only information</a>
+<li><a href="http://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website-legal%20repository/">static content from JMRI/website-legal repository, e.g. content around the JMRI-Katzer legal case</a>
+</ul>
 
 <p>The regeneration of the JavaDoc and xml content involves
-significantly more work than merely updating a directory, and so these are only done once per day, as needed.</p>
-
-<p>The status of the web site updates is available on the JMRI
-<a href="https://jmri.ci.cloudbees.com/job/Development/job/Web%20Site/">production</a>
-and
-<a href="http://builds.jmri.org/jenkins/job/Web%20Site/job/Update%20Static%20Components/">test</a>
-CI servers.
-</p>
+significantly more work than merely updating a directory, and so these are only done once per day, as needed,
+by the
+<a href="http://jmri.tagadab.com/jenkins/job/WebSite/job/generate-website/">Generate Website</a>
+job on the 
+<a href="http://jmri.tagadab.com/jenkins/">production Jenkins server</a>.</p>
 
 <a name="local" id="local"></a><h2>Local Web Site: Mac OS X</h2>
 

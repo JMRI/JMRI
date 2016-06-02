@@ -3,6 +3,7 @@ package jmri.jmris.json;
 import jmri.server.json.JsonException;
 import jmri.server.json.power.JsonPowerServiceFactory;
 import jmri.server.json.roster.JsonRoster;
+import jmri.server.json.sensor.JsonSensorServiceFactory;
 import jmri.server.json.throttle.JsonThrottle;
 import jmri.server.json.time.JsonTimeServiceFactory;
 
@@ -233,7 +234,7 @@ public final class JSON {
     /**
      * {@value #SENSORS}
      */
-    public static final String SENSORS = "sensors"; // NOI18N
+    public static final String SENSORS = JsonSensorServiceFactory.SENSORS;
     /**
      * {@value #SIGNAL_HEADS}
      */
@@ -309,7 +310,7 @@ public final class JSON {
     /**
      * {@value #SENSOR}
      */
-    public static final String SENSOR = "sensor"; // NOI18N
+    public static final String SENSOR = JsonSensorServiceFactory.SENSOR;
     /**
      * {@value #SIGNAL_HEAD}
      */
