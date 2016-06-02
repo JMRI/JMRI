@@ -846,10 +846,12 @@ public class AddSignalMastPanel extends JPanel {
                 InstanceManager.signalMastManagerInstance().register(dccMast);
             } else if (Bundle.getMessage("MatrixCtlMast").equals(signalMastDriver.getSelectedItem())) {
                 // Create was pressed for new mast, check all boxes are filled
-                if (turnoutBox1 == null || (bitNum > 1 && turnoutBox2 == null) || (bitNum > 2 && turnoutBox3 == null) ||
-                        (bitNum > 3 && turnoutBox4 == null) || (bitNum > 4 && turnoutBox5 == null)) {
+                if (turnoutBox1.getDisplayName() == "" || (bitNum > 1 && turnoutBox2.getDisplayName() == "") || (bitNum > 2 && turnoutBox3.getDisplayName() == "") ||
+                        (bitNum > 3 && turnoutBox4.getDisplayName() == "") || (bitNum > 4 && turnoutBox5.getDisplayName() == "")) {
                     //error dialog
-                    JOptionPane.showMessageDialog(null, Bundle.getMessage("MatrixOutputEmpty", mastname));
+                    JOptionPane.showMessageDialog(null, Bundle.getMessage("MatrixOutputEmpty", mastname),
+                            Bundle.getMessage("WarningTitle"),
+                            JOptionPane.ERROR_MESSAGE);
                     log.error("Empty output on panel");
                     return;
                 }
