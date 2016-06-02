@@ -86,9 +86,6 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
         this.getSystemConnectionMemo().setDCCppTrafficController(packets);
 
         new DCCppInitializationManager(this.getSystemConnectionMemo());
-
-        jmri.jmrix.dccpp.ActiveFlag.setActive();
-
     }
 
     /**

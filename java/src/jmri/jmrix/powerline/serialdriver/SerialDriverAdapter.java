@@ -214,9 +214,6 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         tc.connectPort(this);
         // Configure the form of serial address validation for this connection
         this.getSystemConnectionMemo().setSerialAddress(new jmri.jmrix.powerline.SerialAddress(this.getSystemConnectionMemo()));
-
-        // declare up
-        jmri.jmrix.powerline.ActiveFlag.setActive();
     }
 
     // base class methods for the SerialPortController interface

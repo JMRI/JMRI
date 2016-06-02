@@ -11,6 +11,7 @@ package jmri.jmrix.rps;
  * @author	Bob Jacobsen Copyright (C) 2008
  * @version $Revision$
  */
+@Deprecated
 abstract public class ActiveFlag {
 
     static private boolean flag = false;

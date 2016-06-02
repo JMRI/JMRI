@@ -11,6 +11,7 @@ package jmri.jmrix.secsi;
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @version $Revision$
  */
+@Deprecated
 abstract public class ActiveFlag {
 
     static private boolean flag = false;

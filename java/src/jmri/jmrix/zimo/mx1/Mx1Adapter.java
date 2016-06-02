@@ -189,9 +189,6 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
 
         // start operation
         packets.startThreads();
-
-        jmri.jmrix.zimo.ActiveFlag.setActive();
-
     }
 
 // base class methods for the ZimoPortController interface

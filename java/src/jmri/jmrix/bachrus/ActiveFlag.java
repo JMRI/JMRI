@@ -12,6 +12,7 @@ package jmri.jmrix.bachrus;
  * @author	Andrew Crosland Copyright (C) 2010
  * @version $Revision$
  */
+@Deprecated
 abstract public class ActiveFlag {
 
     static private boolean flag = false;

@@ -14,6 +14,7 @@ package jmri.jmrix.acela;
  * @author	Bob Coleman, Copyright (C) 2007, 2008 Based on mrc example, modified
  * to establish Acela support.
  */
+@Deprecated
 abstract public class ActiveFlag {
 
     static private boolean flag = false;

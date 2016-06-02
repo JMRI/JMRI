@@ -9,6 +9,7 @@ package jmri.jmrix.srcp;
  *
  * @author	Bob Jacobsen Copyright (C) 2003
  */
+@Deprecated
 abstract public class ActiveFlag {
 
     static private boolean flag = false;

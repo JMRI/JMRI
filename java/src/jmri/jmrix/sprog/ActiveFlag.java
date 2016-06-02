@@ -12,6 +12,7 @@ package jmri.jmrix.sprog;
  * @author	Bob Jacobsen Copyright (C) 2003
  * @version $Revision$
  */
+@Deprecated
 abstract public class ActiveFlag {
 
     static private boolean flag = false;
