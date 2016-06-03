@@ -24,12 +24,6 @@ public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
 
     XNetInterfaceScaffold lnis;
 
-    public void testArraySort() {
-        String[] str = new String[]{"8567", "8456"};
-        jmri.util.StringUtil.sort(str);
-        Assert.assertEquals("first ", "8456", str[0]);
-    }
-
     public void testMisses() {
         // sample address object
         TurnoutAddress a = new TurnoutAddress("XT22", "user");
