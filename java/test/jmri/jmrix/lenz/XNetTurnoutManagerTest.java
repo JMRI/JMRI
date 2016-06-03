@@ -59,7 +59,6 @@ public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     }
 
     public void testAsAbstractFactory() {
-        lnis = new XNetInterfaceScaffold(new LenzCommandStation());
         // create and register the manager object
         XNetTurnoutManager l = new XNetTurnoutManager(lnis, "X");
         jmri.InstanceManager.setTurnoutManager(l);
@@ -87,6 +86,14 @@ public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
 
     }
 
+    public void testGetSystemPrefix(){
+        Assert.assertEquals("prefix","X",l.getSystemPrefix());
+    }
+
+    public void testAllowMultipleAdditions(){
+        Assert.assertTrue(l.allowMultipleAdditions("foo"));
+    }
+
     // from here down is testing infrastructure
     public XNetTurnoutManagerTest(String s) {
         super(s);
@@ -107,6 +114,7 @@ public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     // The minimal setup for log4J
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
         // prepare an interface, register
         lnis = new XNetInterfaceScaffold(new LenzCommandStation());
         // create and register the manager object
@@ -116,6 +124,7 @@ public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
 
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.resetInstanceManager();
     }
 
     private final static Logger log = LoggerFactory.getLogger(XNetTurnoutManagerTest.class.getName());
