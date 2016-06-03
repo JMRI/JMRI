@@ -684,7 +684,6 @@ public class XNetMessageTest extends TestCase {
        // all off
        XNetMessage m = XNetMessage.getFunctionGroup2OpsMsg(1234,
           false,false,false,false);
-       //Assert.assertEquals(new XNetMessage("92 C4 D2 84"),m);
        Assert.assertEquals(0xE4,m.getElement(0));
        Assert.assertEquals(0x21,m.getElement(1));
        Assert.assertEquals(0xC4,m.getElement(2));
@@ -694,7 +693,6 @@ public class XNetMessageTest extends TestCase {
        // all on
        m = XNetMessage.getFunctionGroup2OpsMsg(1234,
           true,true,true,true);
-       //Assert.assertEquals(new XNetMessage("92 C4 D2 84"),m);
        Assert.assertEquals(0xE4,m.getElement(0));
        Assert.assertEquals(0x21,m.getElement(1));
        Assert.assertEquals(0xC4,m.getElement(2));
@@ -707,7 +705,6 @@ public class XNetMessageTest extends TestCase {
        // all off
        XNetMessage m = XNetMessage.getFunctionGroup2SetMomMsg(1234,
           false,false,false,false);
-       //Assert.assertEquals(new XNetMessage("92 C4 D2 84"),m);
        Assert.assertEquals(0xE4,m.getElement(0));
        Assert.assertEquals(0x25,m.getElement(1));
        Assert.assertEquals(0xC4,m.getElement(2));
@@ -717,7 +714,6 @@ public class XNetMessageTest extends TestCase {
        // all on
        m = XNetMessage.getFunctionGroup2SetMomMsg(1234,
           true,true,true,true);
-       //Assert.assertEquals(new XNetMessage("92 C4 D2 84"),m);
        Assert.assertEquals(0xE4,m.getElement(0));
        Assert.assertEquals(0x25,m.getElement(1));
        Assert.assertEquals(0xC4,m.getElement(2));
