@@ -564,6 +564,296 @@ public class XNetMessageTest extends TestCase {
        Assert.assertEquals(0x84,m.getElement(3));
     }
 
+    public void testGetSpeedAndDirectionMsg(){
+       // 128 speed step mode, forward direction.
+       XNetMessage m = XNetMessage.getSpeedAndDirectionMsg(1234,jmri.DccThrottle.SpeedStepMode128,0.5f,true);
+       Assert.assertEquals(0xE4,m.getElement(0));
+       Assert.assertEquals(0x13,m.getElement(1));
+       Assert.assertEquals(0xC4,m.getElement(2));
+       Assert.assertEquals(0xD2,m.getElement(3));
+       Assert.assertEquals(0xC0,m.getElement(4));
+       Assert.assertEquals(0x21,m.getElement(5));
+
+       // 128 speed step mode, reverse direction.
+       m = XNetMessage.getSpeedAndDirectionMsg(1234,jmri.DccThrottle.SpeedStepMode128,0.5f,false);
+       Assert.assertEquals(0xE4,m.getElement(0));
+       Assert.assertEquals(0x13,m.getElement(1));
+       Assert.assertEquals(0xC4,m.getElement(2));
+       Assert.assertEquals(0xD2,m.getElement(3));
+       Assert.assertEquals(0x40,m.getElement(4));
+       Assert.assertEquals(0xA1,m.getElement(5));
+
+       // 28 speed step mode, forward direction.
+       m = XNetMessage.getSpeedAndDirectionMsg(1234,jmri.DccThrottle.SpeedStepMode28,0.5f,true);
+       Assert.assertEquals(0xE4,m.getElement(0));
+       Assert.assertEquals(0x12,m.getElement(1));
+       Assert.assertEquals(0xC4,m.getElement(2));
+       Assert.assertEquals(0xD2,m.getElement(3));
+       Assert.assertEquals(0x98,m.getElement(4));
+       Assert.assertEquals(0x78,m.getElement(5));
+
+       // 28 speed step mode, reverse direction.
+       m = XNetMessage.getSpeedAndDirectionMsg(1234,jmri.DccThrottle.SpeedStepMode28,0.5f,false);
+       Assert.assertEquals(0xE4,m.getElement(0));
+       Assert.assertEquals(0x12,m.getElement(1));
+       Assert.assertEquals(0xC4,m.getElement(2));
+       Assert.assertEquals(0xD2,m.getElement(3));
+       Assert.assertEquals(0x18,m.getElement(4));
+       Assert.assertEquals(0xF8,m.getElement(5));
+
+       // 27 speed step mode, forward direction.
+       m = XNetMessage.getSpeedAndDirectionMsg(1234,jmri.DccThrottle.SpeedStepMode27,0.5f,true);
+       Assert.assertEquals(0xE4,m.getElement(0));
+       Assert.assertEquals(0x11,m.getElement(1));
+       Assert.assertEquals(0xC4,m.getElement(2));
+       Assert.assertEquals(0xD2,m.getElement(3));
+       Assert.assertEquals(0x98,m.getElement(4));
+       Assert.assertEquals(0x7B,m.getElement(5));
+
+       // 27 speed step mode, reverse direction.
+       m = XNetMessage.getSpeedAndDirectionMsg(1234,jmri.DccThrottle.SpeedStepMode27,0.5f,false);
+       Assert.assertEquals(0xE4,m.getElement(0));
+       Assert.assertEquals(0x11,m.getElement(1));
+       Assert.assertEquals(0xC4,m.getElement(2));
+       Assert.assertEquals(0xD2,m.getElement(3));
+       Assert.assertEquals(0x18,m.getElement(4));
+       Assert.assertEquals(0xFB,m.getElement(5));
+
+       // 14 speed step mode, forward direction.
+       m = XNetMessage.getSpeedAndDirectionMsg(1234,jmri.DccThrottle.SpeedStepMode14,0.5f,true);
+       Assert.assertEquals(0xE4,m.getElement(0));
+       Assert.assertEquals(0x10,m.getElement(1));
+       Assert.assertEquals(0xC4,m.getElement(2));
+       Assert.assertEquals(0xD2,m.getElement(3));
+       Assert.assertEquals(0x88,m.getElement(4));
+       Assert.assertEquals(0x6A,m.getElement(5));
+
+       // 14 speed step mode, reverse direction.
+       m = XNetMessage.getSpeedAndDirectionMsg(1234,jmri.DccThrottle.SpeedStepMode14,0.5f,false);
+       Assert.assertEquals(0xE4,m.getElement(0));
+       Assert.assertEquals(0x10,m.getElement(1));
+       Assert.assertEquals(0xC4,m.getElement(2));
+       Assert.assertEquals(0xD2,m.getElement(3));
+       Assert.assertEquals(0x08,m.getElement(4));
+       Assert.assertEquals(0xEA,m.getElement(5));
+    }
+
+    public void testGetFunctionGroup1OpsMsg() {
+       // all off
+       XNetMessage m = XNetMessage.getFunctionGroup1OpsMsg(1234,
+          false,false,false,false,false);
+       Assert.assertEquals(0xE4,m.getElement(0));
+       Assert.assertEquals(0x20,m.getElement(1));
+       Assert.assertEquals(0xC4,m.getElement(2));
+       Assert.assertEquals(0xD2,m.getElement(3));
+       Assert.assertEquals(0x00,m.getElement(4));
+       Assert.assertEquals(0xD2,m.getElement(5));
+       // all on
+       m = XNetMessage.getFunctionGroup1OpsMsg(1234,
+          true,true,true,true,true);
+       Assert.assertEquals(0xE4,m.getElement(0));
+       Assert.assertEquals(0x20,m.getElement(1));
+       Assert.assertEquals(0xC4,m.getElement(2));
+       Assert.assertEquals(0xD2,m.getElement(3));
+       Assert.assertEquals(0x1F,m.getElement(4));
+       Assert.assertEquals(0xCD,m.getElement(5));
+    }
+
+    public void testGetFunctionGroup1SetMomMsg() {
+       // all off
+       XNetMessage m = XNetMessage.getFunctionGroup1SetMomMsg(1234,
+          false,false,false,false,false);
+       Assert.assertEquals(0xE4,m.getElement(0));
+       Assert.assertEquals(0x24,m.getElement(1));
+       Assert.assertEquals(0xC4,m.getElement(2));
+       Assert.assertEquals(0xD2,m.getElement(3));
+       Assert.assertEquals(0x00,m.getElement(4));
+       Assert.assertEquals(0xD6,m.getElement(5));
+       // all on
+       m = XNetMessage.getFunctionGroup1SetMomMsg(1234,
+          true,true,true,true,true);
+       Assert.assertEquals(0xE4,m.getElement(0));
+       Assert.assertEquals(0x24,m.getElement(1));
+       Assert.assertEquals(0xC4,m.getElement(2));
+       Assert.assertEquals(0xD2,m.getElement(3));
+       Assert.assertEquals(0x1F,m.getElement(4));
+       Assert.assertEquals(0xC9,m.getElement(5));
+    }
+
+    public void testGetFunctionGroup2OpsMsg() {
+       // all off
+       XNetMessage m = XNetMessage.getFunctionGroup2OpsMsg(1234,
+          false,false,false,false);
+       //Assert.assertEquals(new XNetMessage("92 C4 D2 84"),m);
+       Assert.assertEquals(0xE4,m.getElement(0));
+       Assert.assertEquals(0x21,m.getElement(1));
+       Assert.assertEquals(0xC4,m.getElement(2));
+       Assert.assertEquals(0xD2,m.getElement(3));
+       Assert.assertEquals(0x00,m.getElement(4));
+       Assert.assertEquals(0xD3,m.getElement(5));
+       // all on
+       m = XNetMessage.getFunctionGroup2OpsMsg(1234,
+          true,true,true,true);
+       //Assert.assertEquals(new XNetMessage("92 C4 D2 84"),m);
+       Assert.assertEquals(0xE4,m.getElement(0));
+       Assert.assertEquals(0x21,m.getElement(1));
+       Assert.assertEquals(0xC4,m.getElement(2));
+       Assert.assertEquals(0xD2,m.getElement(3));
+       Assert.assertEquals(0x0F,m.getElement(4));
+       Assert.assertEquals(0xDC,m.getElement(5));
+    }
+
+    public void testGetFunctionGroup2SetMomMsg() {
+       // all off
+       XNetMessage m = XNetMessage.getFunctionGroup2SetMomMsg(1234,
+          false,false,false,false);
+       //Assert.assertEquals(new XNetMessage("92 C4 D2 84"),m);
+       Assert.assertEquals(0xE4,m.getElement(0));
+       Assert.assertEquals(0x25,m.getElement(1));
+       Assert.assertEquals(0xC4,m.getElement(2));
+       Assert.assertEquals(0xD2,m.getElement(3));
+       Assert.assertEquals(0x00,m.getElement(4));
+       Assert.assertEquals(0xD7,m.getElement(5));
+       // all on
+       m = XNetMessage.getFunctionGroup2SetMomMsg(1234,
+          true,true,true,true);
+       //Assert.assertEquals(new XNetMessage("92 C4 D2 84"),m);
+       Assert.assertEquals(0xE4,m.getElement(0));
+       Assert.assertEquals(0x25,m.getElement(1));
+       Assert.assertEquals(0xC4,m.getElement(2));
+       Assert.assertEquals(0xD2,m.getElement(3));
+       Assert.assertEquals(0x0F,m.getElement(4));
+       Assert.assertEquals(0xD8,m.getElement(5));
+    }
+
+    public void testGetFunctionGroup3OpsMsg() {
+       // all off
+       XNetMessage m = XNetMessage.getFunctionGroup3OpsMsg(1234,
+          false,false,false,false);
+       Assert.assertEquals(0xE4,m.getElement(0));
+       Assert.assertEquals(0x22,m.getElement(1));
+       Assert.assertEquals(0xC4,m.getElement(2));
+       Assert.assertEquals(0xD2,m.getElement(3));
+       Assert.assertEquals(0x00,m.getElement(4));
+       Assert.assertEquals(0xD0,m.getElement(5));
+       // all on
+       m = XNetMessage.getFunctionGroup3OpsMsg(1234,
+          true,true,true,true);
+       Assert.assertEquals(0xE4,m.getElement(0));
+       Assert.assertEquals(0x22,m.getElement(1));
+       Assert.assertEquals(0xC4,m.getElement(2));
+       Assert.assertEquals(0xD2,m.getElement(3));
+       Assert.assertEquals(0x0F,m.getElement(4));
+       Assert.assertEquals(0xDF,m.getElement(5));
+    }
+
+    public void testGetFunctionGroup3SetMomMsg() {
+       // all off
+       XNetMessage m = XNetMessage.getFunctionGroup3SetMomMsg(1234,
+          false,false,false,false);
+       Assert.assertEquals(0xE4,m.getElement(0));
+       Assert.assertEquals(0x26,m.getElement(1));
+       Assert.assertEquals(0xC4,m.getElement(2));
+       Assert.assertEquals(0xD2,m.getElement(3));
+       Assert.assertEquals(0x00,m.getElement(4));
+       Assert.assertEquals(0xD4,m.getElement(5));
+       // all on
+       m = XNetMessage.getFunctionGroup3SetMomMsg(1234,
+          true,true,true,true);
+       Assert.assertEquals(0xE4,m.getElement(0));
+       Assert.assertEquals(0x26,m.getElement(1));
+       Assert.assertEquals(0xC4,m.getElement(2));
+       Assert.assertEquals(0xD2,m.getElement(3));
+       Assert.assertEquals(0x0F,m.getElement(4));
+       Assert.assertEquals(0xDB,m.getElement(5));
+    }
+
+    public void testGetFunctionGroup4OpsMsg() {
+       // all off
+       XNetMessage m = XNetMessage.getFunctionGroup4OpsMsg(1234,
+          false,false,false,false,false,false,false,false);
+       Assert.assertEquals(0xE4,m.getElement(0));
+       Assert.assertEquals(0x23,m.getElement(1));
+       Assert.assertEquals(0xC4,m.getElement(2));
+       Assert.assertEquals(0xD2,m.getElement(3));
+       Assert.assertEquals(0x00,m.getElement(4));
+       Assert.assertEquals(0xD1,m.getElement(5));
+       // all on
+       m = XNetMessage.getFunctionGroup4OpsMsg(1234,
+          true,true,true,true,true,true,true,true);
+       Assert.assertEquals(0xE4,m.getElement(0));
+       Assert.assertEquals(0x23,m.getElement(1));
+       Assert.assertEquals(0xC4,m.getElement(2));
+       Assert.assertEquals(0xD2,m.getElement(3));
+       Assert.assertEquals(0xFF,m.getElement(4));
+       Assert.assertEquals(0x2E,m.getElement(5));
+    }
+
+    public void testGetFunctionGroup4SetMomMsg() {
+       // all off
+       XNetMessage m = XNetMessage.getFunctionGroup4SetMomMsg(1234,
+          false,false,false,false,false,false,false,false);
+       Assert.assertEquals(0xE4,m.getElement(0));
+       Assert.assertEquals(0x27,m.getElement(1));
+       Assert.assertEquals(0xC4,m.getElement(2));
+       Assert.assertEquals(0xD2,m.getElement(3));
+       Assert.assertEquals(0x00,m.getElement(4));
+       Assert.assertEquals(0xD5,m.getElement(5));
+       // all on
+       m = XNetMessage.getFunctionGroup4SetMomMsg(1234,
+          true,true,true,true,true,true,true,true);
+       Assert.assertEquals(0xE4,m.getElement(0));
+       Assert.assertEquals(0x27,m.getElement(1));
+       Assert.assertEquals(0xC4,m.getElement(2));
+       Assert.assertEquals(0xD2,m.getElement(3));
+       Assert.assertEquals(0xFF,m.getElement(4));
+       Assert.assertEquals(0x2A,m.getElement(5));
+    }
+
+    public void testGetFunctionGroup5OpsMsg() {
+       // all off
+       XNetMessage m = XNetMessage.getFunctionGroup5OpsMsg(1234,
+          false,false,false,false,false,false,false,false);
+       Assert.assertEquals(0xE4,m.getElement(0));
+       Assert.assertEquals(0x28,m.getElement(1));
+       Assert.assertEquals(0xC4,m.getElement(2));
+       Assert.assertEquals(0xD2,m.getElement(3));
+       Assert.assertEquals(0x00,m.getElement(4));
+       Assert.assertEquals(0xDA,m.getElement(5));
+       // all on
+       m = XNetMessage.getFunctionGroup5OpsMsg(1234,
+          true,true,true,true,true,true,true,true);
+       Assert.assertEquals(0xE4,m.getElement(0));
+       Assert.assertEquals(0x28,m.getElement(1));
+       Assert.assertEquals(0xC4,m.getElement(2));
+       Assert.assertEquals(0xD2,m.getElement(3));
+       Assert.assertEquals(0xFF,m.getElement(4));
+       Assert.assertEquals(0x25,m.getElement(5));
+    }
+
+    public void testGetFunctionGroup5SetMomMsg() {
+       // all off
+       XNetMessage m = XNetMessage.getFunctionGroup5SetMomMsg(1234,
+          false,false,false,false,false,false,false,false);
+       Assert.assertEquals(0xE4,m.getElement(0));
+       Assert.assertEquals(0x2C,m.getElement(1));
+       Assert.assertEquals(0xC4,m.getElement(2));
+       Assert.assertEquals(0xD2,m.getElement(3));
+       Assert.assertEquals(0x00,m.getElement(4));
+       Assert.assertEquals(0xDE,m.getElement(5));
+       // all on
+       m = XNetMessage.getFunctionGroup5SetMomMsg(1234,
+          true,true,true,true,true,true,true,true);
+       Assert.assertEquals(0xE4,m.getElement(0));
+       Assert.assertEquals(0x2C,m.getElement(1));
+       Assert.assertEquals(0xC4,m.getElement(2));
+       Assert.assertEquals(0xD2,m.getElement(3));
+       Assert.assertEquals(0xFF,m.getElement(4));
+       Assert.assertEquals(0x21,m.getElement(5));
+    }
+
+
+
     public void testGetResumeOperationsMsg() {
        XNetMessage m = XNetMessage.getResumeOperationsMsg();
        Assert.assertEquals(0x21,m.getElement(0));
