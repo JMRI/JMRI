@@ -15,6 +15,7 @@ public class UncaughtExceptionHandlerTest extends SwingTestCase {
     private boolean caught = false;
     private Thread.UncaughtExceptionHandler defaultExceptionHandler;
 
+    @SuppressWarnings("all") // because we're deliberately forcing an NPE to test the handler
     public void testThread() throws Exception {
         Thread t = new Thread(() -> {
             // null.toString(); will not compile
@@ -28,6 +29,7 @@ public class UncaughtExceptionHandlerTest extends SwingTestCase {
         JUnitAppender.assertErrorMessage("Uncaught Exception caught by jmri.util.exceptionhandler.UncaughtExceptionHandler");
     }
 
+    @SuppressWarnings("all") // because we're deliberately forcing an NPE to test the handler
     public void testSwing() throws Exception {
         try {
             javax.swing.SwingUtilities.invokeAndWait(() -> {

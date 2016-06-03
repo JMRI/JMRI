@@ -16,6 +16,7 @@ public class AutomationTableFrameGuiTest extends OperationsSwingTestCase {
         Assert.assertNotNull("test creation", f);
         f.automationNameTextField.setText("New Automation Test Name");
         f.commentTextField.setText("New Automation Test Comment");
+        flushAWT(); // to allow time to take effect
 
         // Confirm enable state of buttons
         Assert.assertTrue(f.addAutomationButton.isEnabled());
@@ -64,8 +65,9 @@ public class AutomationTableFrameGuiTest extends OperationsSwingTestCase {
         getHelper().enterClickAndLeave(new MouseEventData(this, f.addActionButton));
         getHelper().enterClickAndLeave(new MouseEventData(this, f.addActionButton));
         Assert.assertEquals(3, automation.getSize());
-        Assert.assertNotNull("The first item", automation.getCurrentAutomationItem());
-        Assert.assertEquals("1c1", automation.getCurrentAutomationItem().getId());
+        jmri.util.JUnitUtil.waitFor(() -> 
+            { return automation.getCurrentAutomationItem() != null && "1c1".equals(automation.getCurrentAutomationItem().getId()); },
+            "The 1st item: getId() was 1c1");
         Assert.assertEquals("Do Nothing", automation.getCurrentAutomationItem().getActionName());
         
         Assert.assertEquals("1c1", automation.getItemBySequenceId(1).getId());
@@ -74,19 +76,22 @@ public class AutomationTableFrameGuiTest extends OperationsSwingTestCase {
 
         // test step button
         getHelper().enterClickAndLeave(new MouseEventData(this, f.stepActionButton));
-        Assert.assertNotNull("The 2nd item", automation.getCurrentAutomationItem());
-        Assert.assertEquals("1c2", automation.getCurrentAutomationItem().getId());
+        jmri.util.JUnitUtil.waitFor(() -> 
+            { return automation.getCurrentAutomationItem() != null && "1c2".equals(automation.getCurrentAutomationItem().getId()); },
+            "The 2nd item: getId() was 1c2");
         Assert.assertEquals("Do Nothing", automation.getCurrentAutomationItem().getActionName());
 
         getHelper().enterClickAndLeave(new MouseEventData(this, f.stepActionButton));
-        Assert.assertNotNull("The 3rd item", automation.getCurrentAutomationItem());
-        Assert.assertEquals("1c3", automation.getCurrentAutomationItem().getId());
+        jmri.util.JUnitUtil.waitFor(() -> 
+            { return automation.getCurrentAutomationItem() != null && "1c3".equals(automation.getCurrentAutomationItem().getId()); },
+            "The 3rd item: getId() was 1c3");
         Assert.assertEquals("Do Nothing", automation.getCurrentAutomationItem().getActionName());
 
         // back to the start
         getHelper().enterClickAndLeave(new MouseEventData(this, f.stepActionButton));
-        Assert.assertNotNull("The first item", automation.getCurrentAutomationItem());
-        Assert.assertEquals("1c1", automation.getCurrentAutomationItem().getId());
+        jmri.util.JUnitUtil.waitFor(() -> 
+        { return automation.getCurrentAutomationItem() != null && "1c1".equals(automation.getCurrentAutomationItem().getId()); },
+        "The 1st item: getId() was 1c1");
         Assert.assertEquals("Do Nothing", automation.getCurrentAutomationItem().getActionName());
 
         f.dispose();

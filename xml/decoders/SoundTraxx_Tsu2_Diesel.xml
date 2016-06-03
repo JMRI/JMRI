@@ -701,7 +701,7 @@
       <!-- Sound Selection follows -->
       <variable CV="120" mask="XXVVVVVV" item="Sound Option 6" default="0" tooltip="Selects which airhorn to use">
         <enumVal>
-          <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumChoiceDieselAirhorn.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumChoiceDieselAirHorn.xml"/>
         </enumVal>
         <label>Airhorn Select</label>
       </variable>
@@ -710,7 +710,7 @@
           <enumChoice>
             <choice>Short Horn</choice>
           </enumChoice>
-          <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumChoiceDieselAirhorn.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumChoiceDieselAirHorn.xml"/>
         </enumVal>
         <label>Auxiliary Airhorn Select</label>
       </variable>

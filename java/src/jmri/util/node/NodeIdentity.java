@@ -200,7 +200,6 @@ public class NodeIdentity {
      * Save the current node identity and all former identities to file.
      */
     private void saveIdentity() {
-        FileWriter fw = null;
         Document doc = new Document();
         doc.setRootElement(new Element(ROOT_ELEMENT));
         Element identityElement = new Element(NODE_IDENTITY);

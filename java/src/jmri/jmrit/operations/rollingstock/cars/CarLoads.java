@@ -86,7 +86,6 @@ public class CarLoads extends RollingStockAttribute {
     /**
      * Gets the appropriate car loads for the car's type.
      *
-     * @param type
      * @return JComboBox with car loads starting with empty string.
      */
     public JComboBox<String> getSelectComboBox(String type) {
@@ -101,7 +100,6 @@ public class CarLoads extends RollingStockAttribute {
     /**
      * Gets the appropriate car loads for the car's type.
      *
-     * @param type
      * @return JComboBox with car loads.
      */
     public JComboBox<String> getComboBox(String type) {
