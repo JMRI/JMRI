@@ -19,8 +19,8 @@
 
 <h1>The Signal Mast Table</h1>
 
-<a href="SignalMasts-num.png">
-   <img src="SignalMasts-num.png" 
+<a href="images/SignalMasts-num.png">
+   <img src="images/SignalMasts-num.png"
         width="619" height="166" align="right">
 </a>
 		<p>JMRI Signals Masts are managed in the Signal Mast Table. You access this tool from the <b>Tools > Tables > Signal Masts</b> menu.</p>
@@ -45,8 +45,8 @@
 "<a href="SignalMastAddEdit.shtml">Add..</a>" button below the Signal Mast Table.
 	  The window that opens next will prompt you for whatever setup information is needed.</p>
 
-	<a href="SignalingPairs.png">
- <img src="SignalingPairs.png" align="right" width="303" height="122" hspace="0" vspace="0" alt="Signaling Pairs window">
+	<a href="images/SignalingPairs.png">
+ <img src="images/SignalingPairs.png" align="right" width="303" height="122" hspace="0" vspace="0" alt="Signaling Pairs window">
 </a>
 		<p>After you clicked on one of the "Edit Logic" buttons in the Signal Mast Table, the Signaling Pairs window appears.
 		Choose one of the displayed lines and click the "Edit" button to open the Edit window.</p>

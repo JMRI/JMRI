@@ -38,16 +38,16 @@ Signal Masts are configured using one of the available Signaling Systems, and th
 	
 	<h2>Signal Mast Driver</h2>
 		<dl>
-		<dt>Signal Head Controlled</dt>
+		<dt><a name="headCtl">Signal Head Controlled</a></dt>
 		<dd><a href="images/SigHeadMastPanel2.png"><img src="images/SigHeadMastPanel2.png" width="262" height="220" hspace="0" vspace="0" alt="DCC Decoder panel"></a><br>
 		Individual Signal Head objects are used to represent each Signal Head on the Signal Mast. Each Signal Head object will then deal with handling the changing of its Appearance
 		depending upon the state of the Signal Mast and the position of this Signal Head relative to other Heads.
 		For each head that has been defined in the Signaling System for the selected Signal Mast type, a drop down box will appear for you to select the JMRI Signal Head that will control
 		that head on this Signal Mast.</dd>
-		<dt>Turnout Controlled</dt>
+		<dt><a name="turnoutCtl">Turnout Controlled</a></dt>
 		<dd>This Driver type is for specific hardware that can control the whole Appearance of a Signal Mast based upon the setting of one or more Turnouts. Depending on the hardware used
 		the appropriate options will appear in the setup panel.</dd>
-		<dt>Virtual</dt>
+		<dt><a name="virtual">Virtual</a></dt>
 		<dd><a href="images/VirtMastPanel.png"><img src="images/VirtMastPanel.png" width="238" height="158" hspace="0" vspace="0" alt="DCC Decoder panel"></a><br>
         This mast does not directly control any hardware relating to a Signal Mast. It is ideal for locations where a physical mast would not be present on the railroad,
 		such as an End Bumper/Buffer Stop, or to 
@@ -58,7 +58,7 @@ Signal Masts are configured using one of the available Signaling Systems, and th
 		Enter the Aspect numbers configured in your decoder against each Aspect. The default values for the ID of each Aspect as defined in the Signaling System definition can be over-written. Decoders like the <a href="http://signalist.co.uk">Signalist SC1</a> have Signal Mast types preconfigured and you just select the correct table with a CV and get the Aspect numbers from the manual.</li>
 		<dt>LNCP Signal Mast Decoder</dt>
 		<dd>Like the previous option, the LocoNet Control Point (LNCP) Driver type needs only a decoder ID and optionally Aspect ID's to drive a <a href="http://www.rr-cirkits.com/manuals/LNCP-manual.pdf">RR_Cirkits LNCP</a> module.</dd>
-		<dt>Output Matrix</dt>
+		<dt><a name="matrixCtl">Output Matrix</a></dt>
 		<dd><a href="images/MatrixMastPanel-3t.png"><img src="images/MatrixMastPanel-3t.png" width="256" height="257" hspace="0" vspace="0" alt="Output Matrix Decoder panel"></a><br>
 		This Driver creates a truth table to set from 1 to 5 outputs per Aspect. To define 8 different patterns, you will need at least 3 on/off fields.
 		The Output Matrix mast special decoders designed for signals, like a Digirails DR4018. <br>
