@@ -3,7 +3,6 @@ package jmri.jmrix.loconet;
 import java.util.ArrayList;
 import java.util.List;
 import jmri.Turnout;
-import jmri.TurnoutAddress;
 import jmri.TurnoutManager;
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -40,10 +39,6 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
     }
 
     public void testMisses() {
-        // sample address object
-        TurnoutAddress a = new TurnoutAddress("LT22", "user");
-        Assert.assertNotNull("exists", a);
-
         // try to get nonexistant turnouts
         Assert.assertTrue(null == l.getByUserName("foo"));
         Assert.assertTrue(null == l.getBySystemName("bar"));
