@@ -3,6 +3,7 @@
 <!--UpDated by Herv&#233; Blorec le 2013/09/09-->
 <html lang="fr">
 <head>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
     <TITLE>
  	JMRI: Turnout Feedback
    </TITLE>
@@ -15,7 +16,6 @@
 
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=.iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
