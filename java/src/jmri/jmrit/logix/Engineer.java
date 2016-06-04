@@ -214,7 +214,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
 
     /**
      * Cannot set _runOnET until current NOOP command completes
-     * @param set
      */
     protected void setRunOnET(Boolean set) {
         if (_debug) log.debug("setRunOnET "+set+" command #"+(_idxCurrentCommand)+                
@@ -523,9 +522,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     }
 
     /**
-     * Set Sensor state 
-     * @param sensorName
-     * @param action
+     * Set Sensor state
      */
     static private void setSensor(String sensorName, String act) {
         String action = act.toUpperCase();    
@@ -546,9 +543,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     }
 
     /**
-     * Wait for Sensor state event 
-     * @param sensorName
-     * @param action
+     * Wait for Sensor state event
      */
     private void getSensor(String sensorName, String act) {
         String action = act.toUpperCase();    

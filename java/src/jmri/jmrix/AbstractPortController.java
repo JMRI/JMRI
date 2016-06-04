@@ -152,8 +152,6 @@ abstract public class AbstractPortController implements PortAdapter {
     /**
      * Set the value of an option
      *
-     * @param option
-     * @param value
      */
     @Override
     public void setOptionState(String option, String value) {
@@ -165,7 +163,6 @@ abstract public class AbstractPortController implements PortAdapter {
     /**
      * Get the value of a specific option.
      *
-     * @param option
      * @return the option value
      */
     @Override
@@ -179,7 +176,6 @@ abstract public class AbstractPortController implements PortAdapter {
     /**
      * Return a list of the various choices allowed with an option.
      *
-     * @param option
      * @return list of valid values for the option
      */
     @Override
@@ -350,7 +346,6 @@ abstract public class AbstractPortController implements PortAdapter {
     /**
      * Service method to purge a stream of initial contents
      * while opening the connection.
-     * @param serialStream
      */
      @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SR_NOT_CHECKED", justification = "skipping all, don't care what skip() returns")
      protected void purgeStream(@Nonnull java.io.InputStream serialStream) throws java.io.IOException {
@@ -388,7 +383,6 @@ abstract public class AbstractPortController implements PortAdapter {
      * <code>super.setSystemConnectionMemo(memo)</code> at some point to ensure
      * the SystemConnectionMemo gets set.
      *
-     * @param connectionMemo
      */
     @Override
     @OverridingMethodsMustInvokeSuper

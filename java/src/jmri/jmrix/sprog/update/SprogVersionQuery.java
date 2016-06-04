@@ -114,7 +114,6 @@ public class SprogVersionQuery implements SprogListener {
     /**
      * Notify all registered listeners of the SPROG version
      *
-     * @param v
      */
     protected static synchronized void notifyVersion(SprogVersion v) {
         ver = v;
@@ -132,7 +131,6 @@ public class SprogVersionQuery implements SprogListener {
     /**
      * SprogListener notify Message not used
      *
-     * @param m
      */
     @Override
     public void notifyMessage(SprogMessage m) {
@@ -141,7 +139,6 @@ public class SprogVersionQuery implements SprogListener {
     /**
      * SprogListener notify Reply listens to replies and looks for version reply
      *
-     * @param m
      */
     @Override
     synchronized public void notifyReply(SprogReply m) {
@@ -306,8 +303,8 @@ public class SprogVersionQuery implements SprogListener {
     }
 
     /**
-     * Internal routine to handle timer starts & restarts
-    * 
+     * Internal routine to handle timer starts {@literal &} restarts
+     * 
      * @param delay timer delay
      */
     static protected void restartTimer(int delay) {

@@ -11,9 +11,9 @@ import junit.framework.TestSuite;
  *
  * Some of these tests are here, as they're cross-class functions
  *
- * @author	Bob Jacobsen Copyright 2009
+ * @author	Bob Jacobsen Copyright 2009, 2016
  */
-public class JythonTest extends TestCase {
+public class JythonWindowsTest extends TestCase {
 
     // Really a check of Jython init, including the defaults file
     public void testExec() {
@@ -56,19 +56,19 @@ public class JythonTest extends TestCase {
     }
 
     // from here down is testing infrastructure
-    public JythonTest(String s) {
+    public JythonWindowsTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", JythonTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        String[] testCaseName = {"-noloading", JythonWindowsTest.class.getName()};
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite(JythonTest.class);
+        TestSuite suite = new TestSuite(JythonWindowsTest.class);
         return suite;
     }
 

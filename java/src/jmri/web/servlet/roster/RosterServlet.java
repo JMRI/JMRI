@@ -76,10 +76,6 @@ public class RosterServlet extends HttpServlet {
     /**
      * Parse all HTTP GET requests and pass to appropriate method
      *
-     * @param request
-     * @param response
-     * @throws ServletException
-     * @throws IOException
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -105,10 +101,6 @@ public class RosterServlet extends HttpServlet {
     /**
      * Handle POST requests. POST requests are treated as GET requests.
      *
-     * @param request
-     * @param response
-     * @throws ServletException
-     * @throws IOException
      * @see #doGet(javax.servlet.http.HttpServletRequest,
      * javax.servlet.http.HttpServletResponse)
      */
@@ -127,18 +119,13 @@ public class RosterServlet extends HttpServlet {
      *
      * This method responds to the following GET URL patterns: <ul>
      * <li>/roster/group/&lt;group%20name&gt;</li>
-     * <li>/roster/group/&lt;group%20name&gt;?filter=filter[&filter=filter]</li>
+     * <li>/roster/group/&lt;group%20name&gt;?filter=filter[&amp;filter=filter]</li>
      * </ul>
      *
      * This method responds to the POST URL
      * <code>/roster/group/&lt;group%20name&gt;</code> with a JSON payload for
      * the filter.
      *
-     * @param request
-     * @param response
-     * @param group
-     * @throws ServletException
-     * @throws IOException
      */
     protected void doGroup(HttpServletRequest request, HttpServletResponse response, String group) throws ServletException, IOException {
         log.debug("Getting group {}", group);
@@ -173,16 +160,11 @@ public class RosterServlet extends HttpServlet {
      *
      * This method responds to the following GET URL patterns: <ul>
      * <li>/roster/</li> <li>/roster/list</li>
-     * <li>/roster/list?filter=filter[&filter=filter]</li> </ul>
+     * <li>/roster/list?filter=filter[&amp;filter=filter]</li> </ul>
      *
      * This method responds to POST URLs <code>/roster</code> and
      * <code>/roster/list</code> with a JSON payload for the filter.
      *
-     * @param request
-     * @param response
-     * @param groups
-     * @throws ServletException
-     * @throws IOException
      */
     protected void doList(HttpServletRequest request, HttpServletResponse response, Boolean groups) throws ServletException, IOException {
         ObjectNode data;
@@ -225,10 +207,6 @@ public class RosterServlet extends HttpServlet {
      * <li>height</li> <li>maxHeight</li> <li>minHeight</li> <li>width</li>
      * <li>maxWidth</li> <li>minWidth</li></ul>
      *
-     * @param request
-     * @param response
-     * @throws ServletException
-     * @throws IOException
      */
     protected void doEntry(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String[] pathInfo = request.getPathInfo().substring(1).split("/");
@@ -303,12 +281,6 @@ public class RosterServlet extends HttpServlet {
      * and {@link #doEntry(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
      * }.
      *
-     * @param request
-     * @param response
-     * @param filter
-     * @param groups
-     * @throws ServletException
-     * @throws IOException
      */
     protected void doRoster(HttpServletRequest request, HttpServletResponse response, JsonNode filter, Boolean groups) throws ServletException, IOException {
         ServletUtil.getInstance().setNonCachingHeaders(response);
@@ -393,11 +365,7 @@ public class RosterServlet extends HttpServlet {
      * Process the image for a roster entry image or icon request. This always
      * returns a PNG image.
      *
-     * @param request
-     * @param response
      * @param file     {@link java.io.File} object containing an image
-     * @throws ServletException
-     * @throws IOException
      */
     void doImage(HttpServletRequest request, HttpServletResponse response, File file) throws ServletException, IOException {
         BufferedImage image;

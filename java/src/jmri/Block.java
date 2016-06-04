@@ -229,7 +229,8 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
      * {@link Reporter#getLastReport() last report}.
      *
      * @see Reporter
-     * @param reportingCurrent
+     * @param reportingCurrent true if to use current report; false if to use
+     *                         last report
      */
     public void setReportingCurrent(boolean reportingCurrent) {
         _reportingCurrent = reportingCurrent;

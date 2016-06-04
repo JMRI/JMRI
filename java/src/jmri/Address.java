@@ -6,7 +6,9 @@ package jmri;
  * are primary consumer of these
  *
  * @author	Bob Jacobsen Copyright (C) 2001
+ * @deprecated since 4.3.7
  */
+@Deprecated
 public class Address {
 
     public Address(String system, String user) {

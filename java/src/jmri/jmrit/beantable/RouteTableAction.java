@@ -68,7 +68,7 @@ public class RouteTableAction extends AbstractTableAction {
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
-     * @param s
+     * @param s title of the action
      */
     public RouteTableAction(String s) {
         super(s);
@@ -1571,7 +1571,7 @@ public class RouteTableAction extends AbstractTableAction {
     }
 
     /**
-     * @throw IllegalArgumentException if "user input no good"
+     * @throws IllegalArgumentException if "user input no good"
      * @return The number of conditionals after the creation.
      */
     int makeSensorConditional(JmriBeanComboBox jmriBox, JComboBox<String> sensorbox, int numConds,
@@ -1607,7 +1607,7 @@ public class RouteTableAction extends AbstractTableAction {
     }
 
     /**
-     * @throw IllegalArgumentException if "user input no good"
+     * @throws IllegalArgumentException if "user input no good"
      * @return The number of conditionals after the creation.
      */
     int makeTurnoutConditional(JmriBeanComboBox jmriBox, JComboBox<String> box, int numConds,

@@ -1,4 +1,3 @@
-// TamsPanel.java
 package jmri.jmrix.tams.swing;
 
 import jmri.jmrix.tams.TamsSystemConnectionMemo;
@@ -12,14 +11,9 @@ import jmri.jmrix.tams.TamsSystemConnectionMemo;
  * Based on work by Bob Jacobsen
  *
  * @author	Kevin Dickerson Copyright (C) 2012
- * @version $Revision: 17977 $
  */
 abstract public class TamsPanel extends jmri.util.swing.JmriPanel implements TamsPanelInterface {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3918718731058984206L;
     /**
      * make "memo" object available as convenietams
      */

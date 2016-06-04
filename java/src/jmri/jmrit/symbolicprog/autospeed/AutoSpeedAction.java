@@ -1,4 +1,3 @@
-// AutoSpeedAction.java
 package jmri.jmrit.symbolicprog.autospeed;
 
 import java.awt.event.ActionEvent;
@@ -28,14 +27,9 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  */
 public class AutoSpeedAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 9045736525279746469L;
     Object o1, o2, o3, o4;
     JLabel statusLabel;
 
@@ -70,11 +64,6 @@ public class AutoSpeedAction extends AbstractAction {
 
         // known loco on main track
         JPanel pane1 = new KnownLocoSelPane(false) {  // no ident in ops mode yet
-
-            /**
-             *
-             */
-            private static final long serialVersionUID = -4507849769156281853L;
 
             protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
                     String filename) {
@@ -112,5 +101,3 @@ public class AutoSpeedAction extends AbstractAction {
     private final static Logger log = LoggerFactory.getLogger(AutoSpeedAction.class.getName());
 
 }
-
-/* @(#)AutoSpeedAction.java */

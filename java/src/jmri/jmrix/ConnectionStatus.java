@@ -56,7 +56,6 @@ public class ConnectionStatus {
      * sets the connection state of a communication port
      *
      * @param portName = communication port name
-     * @param state
      */
     public synchronized void setConnectionState(String portName, String state) {
         log.debug("set " + portName + " connection status: " + state);
@@ -83,7 +82,6 @@ public class ConnectionStatus {
     /**
      * get the status of a communication port
      *
-     * @param portName
      * @return status string
      */
     public synchronized String getConnectionState(String portName) {
@@ -103,7 +101,6 @@ public class ConnectionStatus {
     /**
      * Returns status of a communication port
      *
-     * @param portName
      * @return true if port connection is operational or unknown, false if not
      */
     public synchronized boolean isConnectionOk(String portName) {

@@ -1,4 +1,3 @@
-// EditorFilePane.java
 package jmri.jmrix.loconet.soundloader;
 
 import java.io.File;
@@ -21,14 +20,8 @@ import org.slf4j.LoggerFactory;
  * Pane for editing Digitrax SPJ files
  *
  * @author	Bob Jacobsen Copyright (C) 2006, 2010
- * @version	$Revision$
  */
 public class EditorFilePane extends javax.swing.JPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4194558549451699808L;
 
     // GUI member declarations
     static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrix.loconet.soundloader.Editor");

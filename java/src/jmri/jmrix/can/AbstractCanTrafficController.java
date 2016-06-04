@@ -177,7 +177,6 @@ abstract public class AbstractCanTrafficController
      * <P>
      * Overridden to include translation form the CAN hardware format
      *
-     * @throws IOException
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE")
     // Ignore false positive that msg is never used

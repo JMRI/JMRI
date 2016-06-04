@@ -83,7 +83,6 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
      * If we're waiting for this, it indicates successful end of a write ALM
      * sequence.
      *
-     * @param msg
      */
     void lackMsg(LocoNetMessage msg) {
         if (handleNextLACK) {
@@ -99,7 +98,6 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
      * <P>
      * If we're not an image, reply to all commands
      *
-     * @param msg
      */
     void writeMsg(LocoNetMessage msg) {
         // sort out the ATASK
@@ -234,7 +232,6 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
      * <P>
      * If we're not an image, we just sent this, so we'll ignore it.
      *
-     * @param msg
      */
     void readMsg(LocoNetMessage msg) {
         // sort out the ATASK

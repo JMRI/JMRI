@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
  * An XPA+Modem implementation of the Throttle for XPressNet Systems
  *
  * @author Paul Bender Copyright (C) 2004
- * @version $Revision$
  */
 public class XpaThrottle extends AbstractThrottle {
 
@@ -47,7 +46,7 @@ public class XpaThrottle extends AbstractThrottle {
     }
 
     /**
-     * Set the speed & direction.
+     * Set the speed and direction.
      * <P>
      * This intentionally skips the emergency stop value of 1.
      *

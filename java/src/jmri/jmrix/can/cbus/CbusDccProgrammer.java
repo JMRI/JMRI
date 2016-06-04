@@ -1,4 +1,3 @@
-// CbusDccProgrammer.java
 package jmri.jmrix.can.cbus;
 
 import java.util.ArrayList;
@@ -17,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * programmer.
  *
  * @author Andrew Crosland Copyright (C) 2009
- * @version	$Revision$
  */
 public class CbusDccProgrammer extends AbstractProgrammer implements CanListener {
 
@@ -215,5 +213,3 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
     private final static Logger log = LoggerFactory.getLogger(CbusDccProgrammer.class.getName());
 
 }
-
-/* @(#)CbusDccProgrammer.java */

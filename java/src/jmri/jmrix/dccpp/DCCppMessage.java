@@ -1,4 +1,3 @@
-// DCCppMessage.java
 package jmri.jmrix.dccpp;
 
 import java.util.regex.Matcher;
@@ -17,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2002
  * @author	Paul Bender Copyright (C) 2003-2010
  * @author	Mark Underwood Copyright (C) 2015
- * @version	$Revision$
  *
  * Based on XNetMessage by Bob Jacobsen and Paul Bender
  */
@@ -146,7 +144,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     /**
      * Parse a string and generate/return a DCCppMessage object
      * 
-     * @param s String of DCC++ message without the < > brackets
+     * @param s String of DCC++ message without the {@literal < >} brackets
      * @return DCCppMessage
      */
     
@@ -367,7 +365,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
     
     public String getValueString(int idx) {
-        Matcher m = this.match(myMessage.toString(), myRegex, "gvs");
+        Matcher m = match(myMessage.toString(), myRegex, "gvs");
         if ((m != null) && (idx <= m.groupCount())) {
             return(m.group(idx));
         } else {
@@ -377,7 +375,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
     
     public int getValueInt(int idx) {
-        Matcher m = this.match(myMessage.toString(), myRegex, "gvi");
+        Matcher m = match(myMessage.toString(), myRegex, "gvi");
         if ((m != null) && (idx <= m.groupCount())) {
             return(Integer.parseInt(m.group(idx)));
         } else {
@@ -387,7 +385,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
     
     public boolean getValueBool(int idx) {
-        Matcher m = this.match(myMessage.toString(), myRegex, "gvi");
+        Matcher m = match(myMessage.toString(), myRegex, "gvi");
         if ((m != null) && (idx <= m.groupCount())) {
             return(!m.group(idx).equals("0"));
         } else {
@@ -1174,12 +1172,12 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *    Note that many decoders and controllers combine the ADDRESS and SUBADDRESS into a single number, N,
      *    from  1 through a max of 2044, where
      *    
-     *    N = (ADDRESS - 1) * 4 + SUBADDRESS + 1, for all ADDRESS>0
+     *    {@code N = (ADDRESS - 1) * 4 + SUBADDRESS + 1, for all ADDRESS>0}
      *    
      *    OR
      *    
-     *    ADDRESS = INT((N - 1) / 4) + 1
-     *    SUBADDRESS = (N - 1) % 4
+     *    {@code ADDRESS = INT((N - 1) / 4) + 1}
+     *    {@code SUBADDRESS = (N - 1) % 4}
      *    
      *    returns: NONE
     */
@@ -1210,20 +1208,20 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *   ID: the numeric ID (0-32767) of the turnout to control
      *   THROW: 0 (unthrown) or 1 (thrown)
      *   
-     *   returns: <H ID THROW>
+     *   returns:{@code <H ID THROW>}
      *
-     * ADD: <T ID ADDRESS SUBADDRESS>
+     * ADD: {@code <T ID ADDRESS SUBADDRESS>}
      *    ID: the numeric ID (0-32767) of the turnout to control
      *    ADDRESS: Decoder address (0-511)
      *    SUBADDRESS: Decoder subaddress (0-3)
-     *    RETURNS: <O> on success, <X> on failure
+     *    RETURNS: {@code <O>} on success, {@code <X>} on failure
      *
-     * DELETE: <T ID>
+     * DELETE: {@code <T ID>}
      *    ID: the numeric ID (0-32767) of the turnout to control
-     *    RETURNS: <O> on success, <X> on failure
+     *    RETURNS: {@code <O>} on success, {@code <X>} on failure
      *
-     * LIST: <T>
-     *    RETURNS: <H ID ADDRESS SUBADDRESS THROW> for each defined turnout or <X> if no turnouts defined.
+     * LIST: {@code <T>}
+     *    RETURNS: {@code <H ID ADDRESS SUBADDRESS THROW>} for each defined turnout or {@code <X>} if no turnouts defined.
      */
     public static DCCppMessage makeTurnoutCommandMsg(int id, boolean thrown) {
 	// Sanity check inputs
@@ -1321,13 +1319,13 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *    ID (0-32767)
      *    PIN: Arduino Pin # of sensor
      *    PULLUP: TRUE if use internal pullup for PIN, FALSE if don't.
-     *    RETURNS: <O> on success, <X> on failure
+     *    RETURNS: {@code <O>} on success, {@code <X>} on failure
      *
      * DELETE: {@code <S ID>}
-     *    RETURNS: <O> on success, <X> on failure
+     *    RETURNS: {@code <O>} on success, {@code <X>} on failure
      *
      * LIST: {@code <S>}
-     *    RETURNS: <Q ID PIN PULLUP> for each defined sensor, or <X> if no sensors defined.
+     *    RETURNS: {@code <Q ID PIN PULLUP>} for each defined sensor, or {@code <X>} if no sensors defined.
      */
     public static DCCppMessage makeSensorAddMsg(int id, int pin, int pullup) {
 	// Sanity check inputs
@@ -1374,7 +1372,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *    
      * Note: The two-argument form embeds the opcode in CALLBACKSUB to aid in decoding the responses.
      *
-     *    returns: <r CALLBACKNUM|CALLBACKSUB|CV Value)
+     *    returns: {@code <r CALLBACKNUM|CALLBACKSUB|CV Value)}
      *    where VALUE is a number from 0-255 as read from the requested CV, or -1 if verificaiton read fails
      */
     public static DCCppMessage makeWriteDirectCVMsg(int cv, int val) {
@@ -1416,7 +1414,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *    
      * Note: The two-argument form embeds the opcode in CALLBACKSUB to aid in decoding the responses.
      *
-     *    returns: <r CALLBACKNUM|CALLBACKSUB|CV BIT VALUE)
+     *    returns: {@code <r CALLBACKNUM|CALLBACKSUB|CV BIT VALUE)}
      *    where VALUE is a number from 0-1 as read from the requested CV bit, or -1 if verificaiton read fails
      */    
     public static DCCppMessage makeBitWriteDirectCVMsg(int cv, int bit, int val) {
@@ -1608,8 +1606,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      * Note: This just sends a THROTTLE command with speed = -1
      */
     public static DCCppMessage makeAddressedEmergencyStop(int register, int address) {
-	// Sanity check inputs
-	if (address < 0 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
+        // Sanity check inputs
+        if (address < 0 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
 
         DCCppMessage m = new DCCppMessage(DCCppConstants.THROTTLE_CMD);
         m.myMessage.append(" " + register);
@@ -1719,17 +1717,18 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
             boolean f3,
             boolean f4) 
     { 
-	// Sanity check inputs
-	if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
+
+        // Sanity check inputs
+        if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
         
         DCCppMessage m = new DCCppMessage(DCCppConstants.FUNCTION_CMD);
         m.myMessage.append(" " + address);
         
-	int byte1 = 128 + (f0 ? 16 : 0);
-	byte1 += (f1 ? 1 : 0);
-	byte1 += (f2 ? 2 : 0);
-	byte1 += (f3 ? 4 : 0);
-	byte1 += (f4 ? 8 : 0);
+        int byte1 = 128 + (f0 ? 16 : 0);
+        byte1 += (f1 ? 1 : 0);
+        byte1 += (f2 ? 2 : 0);
+        byte1 += (f3 ? 4 : 0);
+        byte1 += (f4 ? 8 : 0);
         m.myMessage.append(" " + byte1);
         m.myRegex = DCCppConstants.FUNCTION_CMD_REGEX;
         
@@ -1753,17 +1752,17 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
             boolean f3,
             boolean f4) {
 
-	// Sanity check inputs
-	if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
+        // Sanity check inputs
+        if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
 	
         DCCppMessage m = new DCCppMessage(DCCppConstants.FUNCTION_CMD);
         m.myMessage.append(" " + address);
 
-	int byte1 = 128 + (f0 ? 16 : 0);
-	byte1 += (f1 ? 1 : 0);
-	byte1 += (f2 ? 2 : 0);
-	byte1 += (f3 ? 4 : 0);
-	byte1 += (f4 ? 8 : 0);
+        int byte1 = 128 + (f0 ? 16 : 0);
+        byte1 += (f1 ? 1 : 0);
+        byte1 += (f2 ? 2 : 0);
+        byte1 += (f3 ? 4 : 0);
+        byte1 += (f4 ? 8 : 0);
 
         m.myMessage.append(" " + byte1);
         m.myRegex = DCCppConstants.FUNCTION_CMD_REGEX;
@@ -1787,17 +1786,17 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
             boolean f7,
             boolean f8) {
 
-	// Sanity check inputs
-	if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
+        // Sanity check inputs
+        if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
 	
         DCCppMessage m = new DCCppMessage(DCCppConstants.FUNCTION_CMD);
         m.myMessage.append(" " + address);
 
-	int byte1 = 176;
-	byte1 += (f5 ? 1 : 0);
-	byte1 += (f6 ? 2 : 0);
-	byte1 += (f7 ? 4 : 0);
-	byte1 += (f8 ? 8 : 0);
+        int byte1 = 176;
+        byte1 += (f5 ? 1 : 0);
+        byte1 += (f6 ? 2 : 0);
+        byte1 += (f7 ? 4 : 0);
+        byte1 += (f8 ? 8 : 0);
 
         m.myMessage.append(" " + byte1);
         m.myRegex = DCCppConstants.FUNCTION_CMD_REGEX;
@@ -1819,17 +1818,18 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
             boolean f6,
             boolean f7,
             boolean f8) {
-	// Sanity check inputs
-	if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
+
+        // Sanity check inputs
+        if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
 	
         DCCppMessage m = new DCCppMessage(DCCppConstants.FUNCTION_CMD);
         m.myMessage.append(" " + address);
 
-	int byte1 = 176;
-	byte1 += (f5 ? 1 : 0);
-	byte1 += (f6 ? 2 : 0);
-	byte1 += (f7 ? 4 : 0);
-	byte1 += (f8 ? 8 : 0);
+        int byte1 = 176;
+        byte1 += (f5 ? 1 : 0);
+        byte1 += (f6 ? 2 : 0);
+        byte1 += (f7 ? 4 : 0);
+        byte1 += (f8 ? 8 : 0);
         m.myMessage.append(" " + byte1);
         m.myRegex = DCCppConstants.FUNCTION_CMD_REGEX;
         
@@ -1852,17 +1852,17 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
             boolean f11,
             boolean f12) {
 
-	// Sanity check inputs
-	if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
+        // Sanity check inputs
+        if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
 	
         DCCppMessage m = new DCCppMessage(DCCppConstants.FUNCTION_CMD);
         m.myMessage.append(" " + address);
 
-	int byte1 = 160;
-	byte1 += (f9 ? 1 : 0);
-	byte1 += (f10 ? 2 : 0);
-	byte1 += (f11 ? 4 : 0);
-	byte1 += (f12 ? 8 : 0);
+        int byte1 = 160;
+        byte1 += (f9 ? 1 : 0);
+        byte1 += (f10 ? 2 : 0);
+        byte1 += (f11 ? 4 : 0);
+        byte1 += (f12 ? 8 : 0);
         m.myMessage.append(" " + byte1);
         m.myRegex = DCCppConstants.FUNCTION_CMD_REGEX;
         
@@ -1883,17 +1883,18 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
             boolean f10,
             boolean f11,
             boolean f12) {
-	// Sanity check inputs
-	if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
+
+        // Sanity check inputs
+        if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
 	
         DCCppMessage m = new DCCppMessage(DCCppConstants.FUNCTION_CMD);
         m.myMessage.append(" " + address);
 	
-	int byte1 = 160;
-	byte1 += (f9 ? 1 : 0);
-	byte1 += (f10 ? 2 : 0);
-	byte1 += (f11 ? 4 : 0);
-	byte1 += (f12 ? 8 : 0);
+        int byte1 = 160;
+        byte1 += (f9 ? 1 : 0);
+        byte1 += (f10 ? 2 : 0);
+        byte1 += (f11 ? 4 : 0);
+        byte1 += (f12 ? 8 : 0);
         m.myMessage.append(" " + byte1);
         m.myRegex = DCCppConstants.FUNCTION_CMD_REGEX;
         
@@ -1922,21 +1923,22 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
             boolean f18,
             boolean f19,
             boolean f20) {
-	// Sanity check inputs
-	if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
+
+        // Sanity check inputs
+        if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
 	
         DCCppMessage m = new DCCppMessage(DCCppConstants.FUNCTION_CMD);
         m.myMessage.append(" " + address);
 
-	int byte2 = 0;
-	byte2 += (f13 ? 1 : 0);
-	byte2 += (f14 ? 2 : 0);
-	byte2 += (f15 ? 4 : 0);
-	byte2 += (f16 ? 8 : 0);
-	byte2 += (f17 ? 16 : 0);
-	byte2 += (f18 ? 32 : 0);
-	byte2 += (f19 ? 64 : 0);
-	byte2 += (f20 ? 128 : 0);
+        int byte2 = 0;
+        byte2 += (f13 ? 1 : 0);
+        byte2 += (f14 ? 2 : 0);
+        byte2 += (f15 ? 4 : 0);
+        byte2 += (f16 ? 8 : 0);
+        byte2 += (f17 ? 16 : 0);
+        byte2 += (f18 ? 32 : 0);
+        byte2 += (f19 ? 64 : 0);
+        byte2 += (f20 ? 128 : 0);
         m.myMessage.append(" " + DCCppConstants.FUNCTION_GROUP4_BYTE1);
         m.myMessage.append(" " + byte2);
         m.myRegex = DCCppConstants.FUNCTION_CMD_REGEX;
@@ -1966,21 +1968,22 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
             boolean f18,
             boolean f19,
             boolean f20) {
-	// Sanity check inputs
-	if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
+
+        // Sanity check inputs
+        if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
 	
         DCCppMessage m = new DCCppMessage(DCCppConstants.FUNCTION_CMD);
         m.myMessage.append(" " + address);
 
-	int byte2 = 0;
-	byte2 += (f13 ? 1 : 0);
-	byte2 += (f14 ? 2 : 0);
-	byte2 += (f15 ? 4 : 0);
-	byte2 += (f16 ? 8 : 0);
-	byte2 += (f17 ? 16 : 0);
-	byte2 += (f18 ? 32 : 0);
-	byte2 += (f19 ? 64 : 0);
-	byte2 += (f20 ? 128 : 0);
+        int byte2 = 0;
+        byte2 += (f13 ? 1 : 0);
+        byte2 += (f14 ? 2 : 0);
+        byte2 += (f15 ? 4 : 0);
+        byte2 += (f16 ? 8 : 0);
+        byte2 += (f17 ? 16 : 0);
+        byte2 += (f18 ? 32 : 0);
+        byte2 += (f19 ? 64 : 0);
+        byte2 += (f20 ? 128 : 0);
 
         m.myMessage.append(" " + DCCppConstants.FUNCTION_GROUP4_BYTE1);
         m.myMessage.append(" " + byte2);
@@ -2011,22 +2014,22 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
             boolean f26,
             boolean f27,
             boolean f28) {
-	// Sanity check inputs
-	if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
+        // Sanity check inputs
+        if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
 	
         DCCppMessage m = new DCCppMessage(DCCppConstants.FUNCTION_CMD);
         m.myMessage.append(" " + address);
 
-	int byte2 = 0;
-	byte2 += (f21 ? 1 : 0);
-	byte2 += (f22 ? 2 : 0);
-	byte2 += (f23 ? 4 : 0);
-	byte2 += (f24 ? 8 : 0);
-	byte2 += (f25 ? 16 : 0);
-	byte2 += (f26 ? 32 : 0);
-	byte2 += (f27 ? 64 : 0);
-	byte2 += (f28 ? 128 : 0);
-	log.debug("DCCppMessage: Byte2 = {}", byte2);
+        int byte2 = 0;
+        byte2 += (f21 ? 1 : 0);
+        byte2 += (f22 ? 2 : 0);
+        byte2 += (f23 ? 4 : 0);
+        byte2 += (f24 ? 8 : 0);
+        byte2 += (f25 ? 16 : 0);
+        byte2 += (f26 ? 32 : 0);
+        byte2 += (f27 ? 64 : 0);
+        byte2 += (f28 ? 128 : 0);
+        log.debug("DCCppMessage: Byte2 = {}", byte2);
 
         m.myMessage.append(" " + DCCppConstants.FUNCTION_GROUP5_BYTE1);
         m.myMessage.append(" " + byte2);
@@ -2057,21 +2060,22 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
             boolean f26,
             boolean f27,
             boolean f28) {
-	// Sanity check inputs
-	if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
+
+        // Sanity check inputs
+        if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
 	
         DCCppMessage m = new DCCppMessage(DCCppConstants.FUNCTION_CMD);
         m.myMessage.append(" " + address);
 
-	int byte2 = 0;
-	byte2 += (f21 ? 1 : 0);
-	byte2 += (f22 ? 2 : 0);
-	byte2 += (f23 ? 4 : 0);
-	byte2 += (f24 ? 8 : 0);
-	byte2 += (f25 ? 16 : 0);
-	byte2 += (f26 ? 32 : 0);
-	byte2 += (f27 ? 64 : 0);
-	byte2 += (f28 ? 128 : 0);
+        int byte2 = 0;
+        byte2 += (f21 ? 1 : 0);
+        byte2 += (f22 ? 2 : 0);
+        byte2 += (f23 ? 4 : 0);
+        byte2 += (f24 ? 8 : 0);
+        byte2 += (f25 ? 16 : 0);
+        byte2 += (f26 ? 32 : 0);
+        byte2 += (f27 ? 64 : 0);
+        byte2 += (f28 ? 128 : 0);
 
         m.myMessage.append(" " + DCCppConstants.FUNCTION_GROUP5_BYTE1);
         m.myMessage.append(" " + byte2);
@@ -2092,10 +2096,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
     /** Write DCC Packet to a specified Register on the Main*/
     public static DCCppMessage makeWriteDCCPacketMainMsg( int register, int num_bytes, byte[] bytes) {
-	// Sanity Check Inputs
-	if (register < 0 || register > DCCppConstants.MAX_MAIN_REGISTERS) return(null);
-	if (num_bytes < 2 || num_bytes > 5) return(null);
-	for (int j = 0; j < num_bytes; j++) { if (bytes[j] < 0 || bytes[j] > 255) return(null); }
+        // Sanity Check Inputs
+        if (register < 0 || register > DCCppConstants.MAX_MAIN_REGISTERS) return(null);
+        if (num_bytes < 2 || num_bytes > 5) return(null);
 	
         DCCppMessage m = new DCCppMessage(DCCppConstants.WRITE_DCC_PACKET_MAIN);
         for (int k = 0; k < num_bytes; k++) {
@@ -2108,10 +2111,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	
     /** Write DCC Packet to a specified Register on the Programming Track*/
     public static DCCppMessage makeWriteDCCPacketProgMsg( int register, int num_bytes, byte bytes[]) {
-	// Sanity Check Inputs
-	if (register < 0 || register > DCCppConstants.MAX_MAIN_REGISTERS) return(null);
-	if (num_bytes < 2 || num_bytes > 5) return(null);
-	for (int j = 0; j < num_bytes; j++) { if (bytes[j] < 0 || bytes[j] > 255) return(null); }
+        // Sanity Check Inputs
+        if (register < 0 || register > DCCppConstants.MAX_MAIN_REGISTERS) return(null);
+        if (num_bytes < 2 || num_bytes > 5) return(null);
 	
         DCCppMessage m = new DCCppMessage(DCCppConstants.WRITE_DCC_PACKET_PROG);
         for (int k = 0; k < num_bytes; k++) {
@@ -2135,5 +2137,3 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     private final static Logger log = LoggerFactory.getLogger(DCCppMessage.class.getName());
 
 }
-
-/* @(#)DCCppMessage.java */

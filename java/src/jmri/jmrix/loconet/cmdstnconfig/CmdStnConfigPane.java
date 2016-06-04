@@ -44,7 +44,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Alex Shepherd Copyright (C) 2004
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version	$Revision$
  */
 public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
 

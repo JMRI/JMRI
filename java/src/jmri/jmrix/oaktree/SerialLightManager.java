@@ -1,4 +1,3 @@
-// SerialLightManager.java
 package jmri.jmrix.oaktree;
 
 import jmri.Light;
@@ -15,15 +14,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Dave Duchamp Copyright (C) 2004
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version	$Revision$
  */
 public class SerialLightManager extends AbstractLightManager {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1309071610469295115L;
-
     public SerialLightManager() {
 
     }
@@ -108,5 +100,3 @@ public class SerialLightManager extends AbstractLightManager {
     private final static Logger log = LoggerFactory.getLogger(SerialLightManager.class.getName());
 
 }
-
-/* @(#)SerialLighttManager.java */

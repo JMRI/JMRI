@@ -53,7 +53,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
-     * @param s
+     * @param s title of the action
      */
     public SignalHeadTableAction(String s) {
         super(s);
@@ -1263,7 +1263,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 log.error("Unexpected type: " + typeBox.getSelectedItem());
             }
             
-        } catch (Exception ex) {
+        } catch (NumberFormatException ex) {
             handleCreateException(ex, systemName.getText());
             return; // without creating    
         }
@@ -1336,7 +1336,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                         nbhm.getNamedBeanHandle(t1.getSystemName(), t1),
                         nbhm.getNamedBeanHandle(t2.getSystemName(), t2),
                         userName.getText());
-            } catch (Exception ex) {
+            } catch (NumberFormatException ex) {
                 // user input no good
                 handleCreate2TurnoutException(t1.getSystemName(),
                         t2.getSystemName(), userName.getText());

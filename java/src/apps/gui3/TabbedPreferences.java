@@ -130,7 +130,7 @@ public class TabbedPreferences extends AppConfigBase {
      *<p>
      * Keeps a current state to prevent doing its work twice.
      *
-     * @returns The current state, which should be INITIALISED if all is well.
+     * @return The current state, which should be INITIALISED if all is well.
      */
     @SuppressWarnings("rawtypes")
     public synchronized int init() {

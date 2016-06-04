@@ -1,4 +1,3 @@
-// LocoMonFrame.java
 package jmri.jmrix.loconet.locomon;
 
 import jmri.jmrix.loconet.LnTrafficController;
@@ -9,16 +8,10 @@ import jmri.jmrix.loconet.LocoNetMessage;
  * LocoNet Monitor Frame displaying (and logging) LocoNet messages
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @version $Revision$
  * @deprecated 2.9.5
  */
 @Deprecated
 public class LocoMonFrame extends jmri.jmrix.AbstractMonFrame implements LocoNetListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1761967273446973451L;
 
     public LocoMonFrame(LnTrafficController tc) {
         super();

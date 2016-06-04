@@ -131,11 +131,6 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
      */
     static class SettingList extends ArrayList<Setting> {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -931774092092164586L;
-
         public SettingList() {
             super();
             if (log.isDebugEnabled()) {
@@ -276,7 +271,6 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
      * <P>
      * Does this by delegating to the SettingList
      *
-     * @param value
      */
     protected void selectValue(int value) {
         if (log.isDebugEnabled()) {
@@ -315,7 +309,6 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
      * Notify the connected CVs of a state change from above by way of the
      * variables (e.g. not direct to CVs)
      *
-     * @param state
      */
     public void setCvState(int state) {
         Iterator<VariableValue> i = variables.iterator();

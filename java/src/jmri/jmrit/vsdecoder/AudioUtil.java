@@ -106,7 +106,7 @@ public class AudioUtil {
      * @param prefix : prefix to use when generating AudioBuffer system names.
      * @param blist  : list of AudioByteBuffers to convert.
      *
-     * @return (List<AudioBuffer>) List of AudioBuffers
+     * @return List of AudioBuffers
      */
     static public List<AudioBuffer> getAudioBufferList(String prefix, List<AudioByteBuffer> blist) {
         // Sanity check the prefix, since if it's wrong we'll get a casting error below.

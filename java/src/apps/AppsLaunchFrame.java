@@ -81,9 +81,6 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
      * Create default menubar.
      * <P>
      * This does not include the development menu.
-     *
-     * @param menuBar
-     * @param wi
      */
     protected void createMenus(JMenuBar menuBar, WindowInterface wi, AppsLaunchPane pane) {
         // the debugging statements in the following are
@@ -186,9 +183,6 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
      * <PRE>
      *    menuBar.add(new jmri.jmrix.SystemsMenu());
      * </PRE>
-     *
-     * @param menuBar
-     * @param wi
      */
     protected void systemsMenu(JMenuBar menuBar, WindowInterface wi) {
         ActiveSystemsMenu.addItems(menuBar);

@@ -4631,10 +4631,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // loop over all defined turnouts
         if (_turnoutSelection != null) {
             for (Map.Entry<LayoutTurnout, TurnoutSelection> entry : _turnoutSelection.entrySet()) {
-                LayoutTurnout t = (LayoutTurnout) entry.getKey();
+                LayoutTurnout t = entry.getKey();
                 if (t.getVersion() == 2 && ((t.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
                         || (t.getTurnoutType() == LayoutTurnout.LH_XOVER) || (t.getTurnoutType() == LayoutTurnout.RH_XOVER))) {
-                    TurnoutSelection ts = (TurnoutSelection) entry.getValue();
+                    TurnoutSelection ts = entry.getValue();
                     if (ts.getPointA()) {
                         Point2D coord = t.getCoordsA();
                         g.drawRect((int) coord.getX() - 4, (int) coord.getY() - 4, 9, 9);
@@ -4928,7 +4928,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             boolean oldTurnout = noWarnLayoutTurnout;
             noWarnLayoutTurnout = true;
             for (Map.Entry<LayoutTurnout, TurnoutSelection> entry : _turnoutSelection.entrySet()) {
-                removeLayoutTurnout((LayoutTurnout) entry.getKey());
+                removeLayoutTurnout(entry.getKey());
             }
             noWarnLayoutTurnout = oldTurnout;
         }
@@ -4965,11 +4965,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
         boolean removed = false;
         for (Map.Entry<LayoutTurnout, TurnoutSelection> entry : _turnoutSelection.entrySet()) {
-            LayoutTurnout t = (LayoutTurnout) entry.getKey();
+            LayoutTurnout t = entry.getKey();
             if (t == p) {
                 if (t.getVersion() == 2 && ((t.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
                         || (t.getTurnoutType() == LayoutTurnout.LH_XOVER) || (t.getTurnoutType() == LayoutTurnout.RH_XOVER))) {
-                    TurnoutSelection ts = (TurnoutSelection) entry.getValue();
+                    TurnoutSelection ts = entry.getValue();
                     Rectangle2D r = new Rectangle2D.Double(
                             dLoc.getX() - SIZE, dLoc.getY() - SIZE, SIZE2, SIZE2);
                     if (ts.getPointA()) {
@@ -5182,7 +5182,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         if (_turnoutSelection != null) {
             for (Map.Entry<LayoutTurnout, TurnoutSelection> entry : _turnoutSelection.entrySet()) {
-                LayoutTurnout comp = (LayoutTurnout) entry.getKey();
+                LayoutTurnout comp = entry.getKey();
                 if (alignX) {
                     sum += comp.getCoordsCenter().getX();
                 } else {
@@ -5252,7 +5252,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
         if (_turnoutSelection != null) {
             for (Map.Entry<LayoutTurnout, TurnoutSelection> entry : _turnoutSelection.entrySet()) {
-                LayoutTurnout comp = (LayoutTurnout) entry.getKey();
+                LayoutTurnout comp = entry.getKey();
                 if (alignX) {
                     comp.setCoordsCenter(new Point2D.Double(ave, comp.getCoordsCenter().getY()));
                 } else {
@@ -5359,11 +5359,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // loop over all defined turnouts
         if (_turnoutSelection != null) {
             for (Map.Entry<LayoutTurnout, TurnoutSelection> entry : _turnoutSelection.entrySet()) {
-                LayoutTurnout t = (LayoutTurnout) entry.getKey();
+                LayoutTurnout t = entry.getKey();
                 if (t.getVersion() == 2 && ((t.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
                         || (t.getTurnoutType() == LayoutTurnout.LH_XOVER) || (t.getTurnoutType() == LayoutTurnout.RH_XOVER))) {
 
-                    TurnoutSelection ts = (TurnoutSelection) entry.getValue();
+                    TurnoutSelection ts = entry.getValue();
                     if (ts.getPointA()) {
                         Point2D coord = t.getCoordsA();
                         t.setCoordsA(new Point2D.Double(returnNewXPostition(e, coord.getX()),
@@ -5594,11 +5594,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
                     if (_turnoutSelection != null) {
                         for (Map.Entry<LayoutTurnout, TurnoutSelection> entry : _turnoutSelection.entrySet()) {
-                            LayoutTurnout t = (LayoutTurnout) entry.getKey();
+                            LayoutTurnout t = entry.getKey();
                             if (t.getVersion() == 2 && ((t.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
                                     || (t.getTurnoutType() == LayoutTurnout.LH_XOVER) || (t.getTurnoutType() == LayoutTurnout.RH_XOVER))) {
 
-                                TurnoutSelection ts = (TurnoutSelection) entry.getValue();
+                                TurnoutSelection ts = entry.getValue();
                                 if (ts.getPointA()) {
                                     Point2D coord = t.getCoordsA();
                                     xNew = (int) coord.getX() + offsetx;

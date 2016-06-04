@@ -37,7 +37,6 @@ public abstract class AbstractLightManager extends AbstractManager
      * new Light. Otherwise, the makeSystemName method will attempt to turn it
      * into a valid system name.
      *
-     * @param name
      * @return Never null unless valid systemName cannot be found
      */
     public Light provideLight(String name) {
@@ -56,7 +55,6 @@ public abstract class AbstractLightManager extends AbstractManager
      * Locate via user name, then system name if needed. Does not create a new
      * one if nothing found
      *
-     * @param name
      * @return null if no match found
      */
     public Light getLight(String name) {

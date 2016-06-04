@@ -212,8 +212,6 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
      * For use when the DP3 window is called from another JMRI instance, set
      * this to prevent the DP3 from shutting down JMRI when the window is
      * closed.
-     *
-     * @param quitAllowed
      */
     protected void allowQuit(boolean quitAllowed) {
         if (allowQuit != quitAllowed) {
@@ -1164,11 +1162,6 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     /**
      * Identify locomotive complete, act on it by setting the GUI. This will
      * fire "GUI changed" events which will reset the decoder GUI.
-     *
-     * @param dccAddress
-     * @param isLong
-     * @param mfgId
-     * @param modelId
      */
     protected void selectLoco(int dccAddress, boolean isLong, int mfgId, int modelId) {
         // raise the button again
@@ -1238,10 +1231,6 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
      * implemented button with the buttons in their own class etc, but this will
      * work for now. Basic button is button Id 1, comprehensive button is button
      * id 2
-     *
-     * @param buttonId
-     * @param programmer
-     * @param buttonText
      */
     public void setProgrammerLaunch(int buttonId, String programmer, String buttonText) {
         if (buttonId == 1) {
