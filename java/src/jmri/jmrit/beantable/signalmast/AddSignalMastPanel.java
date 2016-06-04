@@ -867,14 +867,19 @@ public class AddSignalMastPanel extends JPanel {
 
                 //store outputs from turnoutBoxes; method in line 976
                 matrixMast.setOutput("output1", turnoutBox1.getDisplayName()); // store choice from turnoutBox1
+                setMatrixReference(turnoutBox1, name + ":output1"); // write mast name to output1 bean comment
                 if (bitNum > 1) {
                     matrixMast.setOutput("output2", turnoutBox2.getDisplayName()); // store choice from turnoutBox2
+                    setMatrixReference(turnoutBox2, name + ":output2"); // write mast name to output1 bean comment
                     if (bitNum > 2) {
                         matrixMast.setOutput("output3", turnoutBox3.getDisplayName()); // store choice from turnoutBox3
+                        setMatrixReference(turnoutBox3, name + ":output3"); // write mast name to output1 bean comment
                         if (bitNum > 3) {
                             matrixMast.setOutput("output4", turnoutBox4.getDisplayName()); // store choice from turnoutBox4
+                            setMatrixReference(turnoutBox4, name + ":output4"); // write mast name to output1 bean comment
                             if (bitNum > 4) {
                                 matrixMast.setOutput("output5", turnoutBox5.getDisplayName()); // store choice from turnoutBox5
+                                setMatrixReference(turnoutBox5, name + ":output5"); // write mast name to output1 bean comment
                             }
                         }
                     }
@@ -974,17 +979,21 @@ public class AddSignalMastPanel extends JPanel {
                 // Apply was pressed, store existing MatrixMast
                 MatrixSignalMast matrixMast = (MatrixSignalMast) mast;
                 matrixMast.setBitNum(bitNum); // store number of columns in aspect - outputs matrix in mast
-
                 //store outputs from turnoutBoxes; method in line 865
                 matrixMast.setOutput("output1", turnoutBox1.getDisplayName()); // store choice from turnoutBox1
+                setMatrixReference(turnoutBox1, matrixMast.getSystemName() + ":output1"); // write mast name to output1 bean comment
                 if (bitNum > 1) {
                     matrixMast.setOutput("output2", turnoutBox2.getDisplayName()); // store choice from turnoutBox2
+                    setMatrixReference(turnoutBox2, matrixMast.getSystemName() + ":output2"); // write mast name to output2 bean comment
                     if (bitNum > 2) {
                         matrixMast.setOutput("output3", turnoutBox3.getDisplayName()); // store choice from turnoutBox3
+                        setMatrixReference(turnoutBox3, matrixMast.getSystemName() + ":output3"); // write mast name to output3 bean comment
                         if (bitNum > 3) {
                             matrixMast.setOutput("output4", turnoutBox4.getDisplayName()); // store choice from turnoutBox4
+                            setMatrixReference(turnoutBox4, matrixMast.getSystemName() + ":output4"); // write mast name to output4 bean comment
                             if (bitNum > 4) {
                                 matrixMast.setOutput("output5", turnoutBox5.getDisplayName()); // store choice from turnoutBox5
+                                setMatrixReference(turnoutBox5, matrixMast.getSystemName() + ":output5"); // write mast name to output5 bean comment
                             }
                         }
                     }
@@ -1754,7 +1763,6 @@ public class AddSignalMastPanel extends JPanel {
         matrixCopyPanel.add(new JLabel(Bundle.getMessage("MatrixMastCopyAspectBits") + ":"));
         matrixCopyPanel.add(copyFromMastSelection());
         matrixMastPanel.add(matrixCopyPanel);
-        // setReference(name + ":" + output); //write mast name to bean comment? see below
     }
 
     /**
@@ -1779,11 +1787,14 @@ public class AddSignalMastPanel extends JPanel {
         repaint();
     }
 
-    //to do: write mast name to output bean comment, called from ca line 1755
-    /*  void setReference() {
-        aspectBitsField.setReference(bits); // was turnout, should be string
-    }*/
-
+    /**
+     * Write mast name + output no. to output bean comment, called from ca line 980
+     */
+    void setMatrixReference(BeanSelectCreatePanel bp, String functionName) {
+        //System.out.println("box: " + bp.getDisplayName()); // debug
+        //System.out.println("name: " + functionName); // debug
+        bp.setReference(functionName);
+    }
 
     // todo: validate entries, ie check & warn for duplicates
 /*    static boolean validateMatrixAspectBits(String strAspect) {
@@ -1900,21 +1911,24 @@ public class AddSignalMastPanel extends JPanel {
         if (unLitPanelBits == null) {
             char[] unLitPanelBits = emptyBits;
         }
-        matrixUnLitPanel.setLayout(new BoxLayout(matrixUnLitPanel, BoxLayout.Y_AXIS));
         JPanel matrixUnLitDetails = new JPanel();
+        matrixUnLitDetails.setLayout(new jmri.util.javaworld.GridLayout2(1, 1)); // stretch to full width
+        //matrixUnLitDetails.setAlignmentX(matrixUnLitDetails.RIGHT_ALIGNMENT);
         matrixUnLitDetails.add(UnLitCheck1);
         matrixUnLitDetails.add(UnLitCheck2);
         matrixUnLitDetails.add(UnLitCheck3);
         matrixUnLitDetails.add(UnLitCheck4);
         matrixUnLitDetails.add(UnLitCheck5);
 
-        matrixUnLitDetails.add(unLitBitsField);
-        unLitBitsField.setEnabled(false); // not editable, just for debugging
+        //matrixUnLitDetails.add(unLitBitsField);
+        //unLitBitsField.setEnabled(false); // not editable, just for debugging
+        //unLitBitsField.setVisible(false); // set to true to check/debug unLitBits
 
         matrixUnLitPanel.add(matrixUnLitDetails);
         TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
         border.setTitle(Bundle.getMessage("MatrixUnLitDetails"));
         matrixUnLitPanel.setBorder(border);
+        matrixUnLitPanel.setToolTipText(Bundle.getMessage("MatrixUnlitTooltip"));
 
         UnLitCheck1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -2141,6 +2155,7 @@ public class AddSignalMastPanel extends JPanel {
                 bitCheck5.setVisible(bitNum > 4);
                 matrixDetails.add(aspectBitsField);
                 aspectBitsField.setEnabled(false); // not editable, just for debugging
+                aspectBitsField.setVisible(false); // set to true to check/debug
 
                 panel.add(matrixDetails);
                 TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
