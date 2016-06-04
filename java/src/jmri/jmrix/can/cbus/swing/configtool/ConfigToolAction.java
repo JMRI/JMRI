@@ -1,4 +1,3 @@
-// ConfigToolAction.java
 package jmri.jmrix.can.cbus.swing.configtool;
 
 /**
@@ -7,14 +6,8 @@ package jmri.jmrix.can.cbus.swing.configtool;
  * @author	Bob Jacobsen Copyright (C) 2008
  * @version	$Revision$
  * @since 2.3.1
- * @deprecated 2.99.2
+ * @deprecated 2.99.2 - left so old files can be read
  */
 @Deprecated
 public class ConfigToolAction extends ConfigToolPane.Default {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7266460541058394892L;
 }
-/* @(#)ConfigToolAction.java */

@@ -1,4 +1,3 @@
-// LayoutSignalHeadIconXml.java
 package jmri.jmrit.display.layoutEditor.configurexml;
 
 import jmri.configurexml.AbstractXmlAdapter;
@@ -15,8 +14,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
  * @author Kevin Dickerson, Deprecated
- * @version $Revision$
- * @deprecated 2.7.8
+ * @deprecated 2.7.8  - left so old files can be read 
  */
 @Deprecated
 public class LayoutSignalHeadIconXml extends AbstractXmlAdapter {

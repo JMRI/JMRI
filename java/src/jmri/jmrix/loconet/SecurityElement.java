@@ -43,7 +43,7 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2002
  * @version $Revision$
  * @deprecated 2.13.5, Does not work with the multi-connection correctly,
- * believe not to work correctly before hand and that the feature is not used.
+ * believe not to work correctly before hand and that the feature is not used - left to allow old files to be read
  */
 @Deprecated
 public class SecurityElement implements LocoNetListener {

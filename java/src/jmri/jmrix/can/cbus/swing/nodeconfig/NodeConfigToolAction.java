@@ -1,4 +1,3 @@
-// NodeConfigToolAction.java
 package jmri.jmrix.can.cbus.swing.nodeconfig;
 
 /**
@@ -7,16 +6,8 @@ package jmri.jmrix.can.cbus.swing.nodeconfig;
  * @author	Bob Jacobsen Copyright (C) 2008
  * @version	$Revision$
  * @since 2.3.1
- * @deprecated 2.99.2
+ * @deprecated 2.99.2  - left so old files can be read
  */
 @Deprecated
 public class NodeConfigToolAction extends NodeConfigToolPane.Default {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4597119966501136198L;
-
 }
-
-/* @(#)NodeConfigToolAction.java */

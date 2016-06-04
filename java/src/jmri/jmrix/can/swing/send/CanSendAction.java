@@ -1,4 +1,3 @@
-// CanSendAction.java
 package jmri.jmrix.can.swing.send;
 
 /**
@@ -6,14 +5,8 @@ package jmri.jmrix.can.swing.send;
  *
  * @author	Bob Jacobsen Copyright (C) 2008
  * @version $Revision$
- * @deprecated 2.99.2
+ * @deprecated 2.99.2 - left so old files can be read
  */
 @Deprecated
 public class CanSendAction extends CanSendPane.Default {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5134619777909198817L;
 }
-/* @(#)CanSendAction.java */
