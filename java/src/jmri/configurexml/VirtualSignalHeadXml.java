@@ -5,7 +5,7 @@ package jmri.configurexml;
  * 2.5.4 files) can still be read by deferring to the present class.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @deprecated 2.5.4
+ * @deprecated 2.5.4 - left so old files can be read
  */
 @Deprecated
 @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")

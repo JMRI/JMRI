@@ -1,10 +1,9 @@
-// LayoutReporterIconXml.java
 package jmri.jmrit.display.configurexml;
 
 /**
  * Stand-in class for backward compatibility
  *
- * @deprecated 2.9.4
+ * @deprecated 2.9.4 - left so old files can be read
  *
  */
 @Deprecated

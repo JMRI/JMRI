@@ -12,8 +12,7 @@ import org.jdom2.Element;
  *
  * @author Dave Duchamp Copyright: Copyright (c) 2008
  * @author Kevin Dickerson, Deprecated
- * @version $Revision$
- * @deprecated 2.7.8
+ * @deprecated 2.7.8  - left so old files can be read
  */
 @Deprecated
 public class LayoutReporterIconXml extends PositionableLabelXml {

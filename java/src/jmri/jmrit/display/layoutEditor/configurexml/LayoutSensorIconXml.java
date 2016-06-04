@@ -12,8 +12,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author David Duchamp Copyright (c) 2007
  * @author Kevin Dickerson, Deprecated
- * @version $Revision$
- * @deprecated 2.7.8
+ * @deprecated 2.7.8  - left so old files can be read
  */
 @Deprecated
 public class LayoutSensorIconXml extends AbstractXmlAdapter {

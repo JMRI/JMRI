@@ -11,8 +11,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author David Duchamp Copyright: Copyright (c) 2009
  * @author Kevin Dickerson, Deprecated
- * @version $Revision$
- * @deprecated 2.7.8
+ * @deprecated 2.7.8 - left so old files can be read
  */
 @Deprecated
 public class LayoutMemoryIconXml extends AbstractXmlAdapter {

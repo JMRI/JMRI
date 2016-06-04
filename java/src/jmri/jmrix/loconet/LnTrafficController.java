@@ -24,10 +24,10 @@ public abstract class LnTrafficController implements LocoNetInterface {
      *         need be creating one.
      * @deprecated 2.13.4
      */
-    @Deprecated
-    static public LnTrafficController instance() {
-        return self;
-    }
+    //@Deprecated
+    //static public LnTrafficController instance() {
+    //    return self;
+    //}
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT")
     // FindBugs wants this package protected, but we're removing it when multi-connection
