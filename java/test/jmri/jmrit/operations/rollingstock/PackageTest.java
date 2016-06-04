@@ -19,7 +19,7 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -28,6 +28,7 @@ public class PackageTest extends TestCase {
         suite.addTest(OperationsRollingStockTest.suite());
         suite.addTest(jmri.jmrit.operations.rollingstock.cars.PackageTest.suite());
         suite.addTest(jmri.jmrit.operations.rollingstock.engines.PackageTest.suite());
+        suite.addTest(BundleTest.suite());
 
 
         // Last test, deletes log file if one exists

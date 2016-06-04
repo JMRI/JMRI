@@ -1,4 +1,3 @@
-// ProgrammerConfigPane.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.event.ActionEvent;
@@ -20,13 +19,10 @@ import jmri.swing.PreferencesPanel;
 /**
  * Provide GUI to configure symbolic programmer defaults.
  *
- *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
- * @version	$Revision$
  */
 public class ProgrammerConfigPane extends JPanel implements PreferencesPanel {
 
-    private static final long serialVersionUID = 3341676760826030384L;
     private final ResourceBundle apb = ResourceBundle.getBundle("apps.AppsConfigBundle");
 
     public ProgrammerConfigPane() {

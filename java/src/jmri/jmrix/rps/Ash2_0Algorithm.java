@@ -1,4 +1,3 @@
-// Ash2_0Algorithm.java
 package jmri.jmrix.rps;
 
 import javax.vecmath.Point3d;
@@ -83,7 +82,6 @@ import org.slf4j.LoggerFactory;
  * stop here but it doesn't. Stage 3 runs the All-Together iteration 15 times,
  * also using weights according to distance, to produce a more refined result.
  * <P>
- * <P>
  * The program always runs through all the iterations regardless of how fast or
  * slow the solution converges. Only at the end does it compute the variance of
  * the residuals (differences between measured receiver distances and those from
@@ -125,7 +123,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author	Robert Ashenfelter Copyright (C) 2007
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version	$Revision$
  */
 public class Ash2_0Algorithm extends AbstractCalculator {
 
@@ -438,5 +435,3 @@ public class Ash2_0Algorithm extends AbstractCalculator {
 
     private final static Logger log = LoggerFactory.getLogger(Ash2_0Algorithm.class.getName());
 }
-
-/* @(#)Ash2_0Algorithm.java */

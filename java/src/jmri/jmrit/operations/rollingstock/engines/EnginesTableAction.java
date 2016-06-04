@@ -26,6 +26,7 @@ public class EnginesTableAction extends AbstractAction {
         this(Bundle.getMessage("MenuEngines")); // NOI18N
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a engine table frame
         new EnginesTableFrame();

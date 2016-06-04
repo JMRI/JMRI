@@ -19,7 +19,7 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -54,6 +54,11 @@ public class PackageTest extends TestCase {
         suite.addTest(LnSensorAddressTest.suite());
         suite.addTest(LnSensorManagerTest.suite());
         suite.addTest(LnCommandStationTypeTest.suite());
+        suite.addTest(BundleTest.suite());
+        suite.addTest(jmri.jmrix.loconet.pr3.PackageTest.suite());
+        suite.addTest(jmri.jmrix.loconet.hexfile.PackageTest.suite());
+        suite.addTest(jmri.jmrix.loconet.lnsvf2.PackageTest.suite());
+        suite.addTest(jmri.jmrix.loconet.downloader.PackageTest.suite());
 
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             suite.addTest(jmri.jmrix.loconet.locoio.PackageTest.suite());

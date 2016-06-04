@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001 Portions by Paul Bender Copyright (C)
  * 2003
- * @version	$Revision$
  */
 public class LenzCommandStation implements jmri.jmrix.DccCommandStation, jmri.CommandStation {
 
@@ -102,12 +101,11 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation, jmri.Co
     }
 
     /**
-     * Provides the version string returned during the initial check. This
-     * function is not yet implemented...
-     *
+     * Provides the version string returned during the initial check.
      */
+    @Override
     public String getVersionString() {
-        return "<unknown>";
+        return Bundle.getMessage("CSVersionString", getCommandStationType(),getCommandStationSoftwareVersionBCD());
     }
 
     /* 
@@ -117,6 +115,7 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation, jmri.Co
     /**
      * Lenz does use a service mode
      */
+    @Override
     public boolean getHasServiceMode() {
         return true;
     }
@@ -125,6 +124,7 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation, jmri.Co
      * If this command station has a service mode, is the command station
      * currently in that mode?
      */
+    @Override
     public boolean getInServiceMode() {
         return mInServiceMode;
     }
@@ -190,11 +190,12 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation, jmri.Co
      sendPacket function */
     /**
      * Send a specific packet to the rails.
-     *
+     * <p>
      * @param packet  Byte array representing the packet, including the
      *                error-correction byte. Must not be null.
      * @param repeats Number of times to repeat the transmission.
      */
+    @Override
     public void sendPacket(byte[] packet, int repeats) {
 
         if (_tc == null) {
@@ -224,6 +225,7 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation, jmri.Co
 
     XNetSystemConnectionMemo adaptermemo;
 
+    @Override
     public String getUserName() {
         if (adaptermemo == null) {
             return "XPressnet";
@@ -231,6 +233,7 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation, jmri.Co
         return adaptermemo.getUserName();
     }
 
+    @Override
     public String getSystemPrefix() {
         if (adaptermemo == null) {
             return "X";

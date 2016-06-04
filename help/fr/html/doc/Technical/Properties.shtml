@@ -3,11 +3,10 @@
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
 <!-- $Id$ -->
-<!-- Translated by Blorec HervÃ© le 2011-07-06-->
+<!-- Translated by Blorec Hervé le 2011-07-06-->
 <title>JMRI: System Properties</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=  utf-8">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -22,67 +21,67 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h2> JMRI: PropriÃ©tÃ©s du SystÃ¨me</h2>
+<h2> JMRI: Propriétés du Système</h2>
 
-Cette page liste les propriÃ©tÃ©s du systÃ¨me que JMRI utilise.
+Cette page liste les propriétés du système que JMRI utilise.
 
-<h3>PropriÃ©tÃ©s SystÃ¨me d'Exploitation</h3>
+<h3>Propriétés Système d'Exploitation</h3>
 <dl>
 
 <dt>
 os.name
 <dd>
-La plupart de JMRI est indÃ©pendant du systÃ¨me, mais dans quelques
-d'endroits nous fournissons le code spÃ©cifique au systÃ¨me pour personnaliser l'expÃ©rience de l'utilisateur.
-C'est la propriÃ©tÃ© que nous utilisons pour dire quel type de systÃ¨me d 'exploitation
+La plupart de JMRI est indépendant du système, mais dans quelques
+d'endroits nous fournissons le code spécifique au système pour personnaliser l'expérience de l'utilisateur.
+C'est la propriété que nous utilisons pour dire quel type de système d 'exploitation
 est en cours d'utilisation.
 <p>
-Par exemple, on localise le<a href="../../apps/DecoderPro/Files.shtml#location"> rÃ©pertoire prÃ©fÃ©rences </a>
- par dÃ©faut dans des lieux diffÃ©rents selon le type de systÃ¨me.
+Par exemple, on localise le<a href="../../apps/DecoderPro/Files.shtml#location"> répertoire préférences </a>
+ par défaut dans des lieux différents selon le type de système.
 
 <dt>
 user.dir
 <dd>
-Java dÃ©finit celui-ci pour Ãªtre le rÃ©pertoire dans lequel JMRI est exÃ©cutÃ©.
-JMRI l'utilise pour trouver bon nombre de ses dossiers; cette propriÃ©tÃ© ne devrait pas
-Ãªtre changÃ© par l'utilisateur!
+Java définit celui-ci pour être le répertoire dans lequel JMRI est exécuté.
+JMRI l'utilise pour trouver bon nombre de ses dossiers; cette propriété ne devrait pas
+être changé par l'utilisateur!
 
 <dt>
 user.home
 <dd>
-Java dÃ©finit celui-ci comme le rÃ©pertoire "home" de l'utilisateur actuel.
-JMRI l'utilise, sur certains systÃ¨mes, pour localiser les
-emplacements par dÃ©faut pour le rÃ©pertoire des prÃ©fÃ©rences.
+Java définit celui-ci comme le répertoire "home" de l'utilisateur actuel.
+JMRI l'utilise, sur certains systèmes, pour localiser les
+emplacements par défaut pour le répertoire des préférences.
 
 <dt>
 gnu.io.rxtx.SerialPorts
 <dd>
-La bibliothÃ¨que RXTX communications utilise cette option pour spÃ©cifier les
-ports supplÃ©mentaires Ã  utiliser. Si vous avez par exemple un adaptateur USB vers un adaptateur sÃ©rie
- qui ne s'affiche pas dans les boÃ®tes du sÃ©lecteur de prÃ©fÃ©rences,
-attribuer son nom Ã  cette propriÃ©tÃ©.
+La bibliothèque RXTX communications utilise cette option pour spécifier les
+ports supplémentaires à utiliser. Si vous avez par exemple un adaptateur USB vers un adaptateur série
+ qui ne s'affiche pas dans les boîtes du sélecteur de préférences,
+attribuer son nom à cette propriété.
 <p>
 -Dgnu.io.rxtx.SerialPorts=/dev/ttyUSB0
 <p>
-Les scripts de dÃ©marrage Linux le fera si vous avez dÃ©fini la variable d'environnement JMRI_SERIAL_PORT.
+Les scripts de démarrage Linux le fera si vous avez défini la variable d'environnement JMRI_SERIAL_PORT.
 
 </dl>
 
-<h3>JMRI propriÃ©tÃ©s</h3>
+<h3>JMRI propriétés</h3>
 <dl>
 
 <dt>
 jmri.prefsdir
 <dd>
-En dÃ©finissant cette propriÃ©tÃ©, vous pouvez dÃ©finir explicitement oÃ¹ JMRI doit
-chercher le rÃ©pertoire de prÃ©fÃ©rence.
+En définissant cette propriété, vous pouvez définir explicitement où JMRI doit
+chercher le répertoire de préférence.
 
 <dt>
 jmri.inset.height
 <dd>
-Si elle est dÃ©finie, fournit une valeur minimum d'encart pour la hauteur de la fenÃªtres JMRI.
-L'encart est l'espace allouÃ© pour les dÃ©corations en haut et en bas de l'Ã©cran.
-Mettez lui un nombre entier positif N pour s'assurer que les fenÃªtres JMRI
+Si elle est définie, fournit une valeur minimum d'encart pour la hauteur de la fenêtres JMRI.
+L'encart est l'espace alloué pour les décorations en haut et en bas de l'écran.
+Mettez lui un nombre entier positif N pour s'assurer que les fenêtres JMRI
 seront ouvertes avec N pixels disponibles en haut et/ou en bas.
 <p>
 -Djmri.inset.height=45
@@ -90,10 +89,10 @@ seront ouvertes avec N pixels disponibles en haut et/ou en bas.
 <dt>
 jmri.inset.width
 <dd>
-Si elle est dÃ©finie, fournit une valeur minimum d'encart la largeur de fenÃªtres JMRI.
-L'encart est l'espace allouÃ© pour les dÃ©corations sur les cÃ´tÃ©s de l'Ã©cran.
-Mettez lui un nombre entier positif N pour s'assurer que les fenÃªtres JMRI 
-seront ouvertes avec N pixels disponibles sur les cÃ´tÃ©s
+Si elle est définie, fournit une valeur minimum d'encart la largeur de fenêtres JMRI.
+L'encart est l'espace alloué pour les décorations sur les côtés de l'écran.
+Mettez lui un nombre entier positif N pour s'assurer que les fenêtres JMRI 
+seront ouvertes avec N pixels disponibles sur les côtés
 </dl>
     
 <!--#include virtual="/Footer" -->

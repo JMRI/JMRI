@@ -29,7 +29,6 @@ public class ProxyLightManager extends AbstractProxyManager
     /**
      * Locate via user name, then system name if needed.
      *
-     * @param name
      * @return Null if nothing by that name exists
      */
     public Light getLight(String name) {
@@ -46,7 +45,6 @@ public class ProxyLightManager extends AbstractProxyManager
      * new Light. Otherwise, the makeSystemName method will attempt to turn it
      * into a valid system name.
      *
-     * @param name
      * @return Never null under normal circumstances
      */
     public Light provideLight(String name) {

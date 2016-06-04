@@ -141,6 +141,7 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
 
     int value = JOptionPane.NO_OPTION;
 
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == previousButton) {
             updateRouteLocation(BACK);
@@ -170,6 +171,7 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
         }
     }
 
+    @Override
     public void spinnerChangeEvent(javax.swing.event.ChangeEvent ae) {
         if (ae.getSource() == spinTrainIconX && _tIon != null) {
             _tIon.setLocation((Integer) spinTrainIconX.getValue(), _tIon.getLocation().y);
@@ -276,16 +278,20 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
 
     private void addIconListener(TrainIcon tI) {
         tI.addComponentListener(new ComponentListener() {
+            @Override
             public void componentHidden(java.awt.event.ComponentEvent e) {
             }
 
+            @Override
             public void componentShown(java.awt.event.ComponentEvent e) {
             }
 
+            @Override
             public void componentMoved(java.awt.event.ComponentEvent e) {
                 trainIconMoved(e);
             }
 
+            @Override
             public void componentResized(java.awt.event.ComponentEvent e) {
             }
         });
@@ -305,6 +311,7 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
         }
     }
 
+    @Override
     public void dispose() {
         removeIcons();
         _route.removePropertyChangeListener(this);
@@ -314,6 +321,7 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
         super.dispose();
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (log.isDebugEnabled()) {
             log.debug("Property change ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e.getNewValue());

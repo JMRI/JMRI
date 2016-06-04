@@ -1,4 +1,3 @@
-// PreviewDialog.java
 package jmri.jmrit.catalog;
 
 import java.awt.BorderLayout;
@@ -33,31 +32,24 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Create a Dialog to display the images in a file system directory.
- * <P>
- *
- *
+ * <BR>
  * <hr>
- * This file is part of JMRI. Displays filtered files from a file system
- * directory. May be modal or modeless. Modeless has dragging enabled.
+ * This file is part of JMRI.
  * <P>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * </P><P>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ * </P>
  *
  * @author	Pete Cressman Copyright 2009
  *
  */
 public class PreviewDialog extends JDialog {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -65980932474359139L;
     JPanel _selectedImage;
     static Color _grayColor = new Color(235, 235, 235);
     Color _currentBackground = _grayColor;
@@ -454,7 +446,6 @@ public class PreviewDialog extends JDialog {
             for (int i = 0; i < memoryTest.size(); i++) {
                 memoryTest.remove(i);
             }
-            memoryTest = null;
             //if (log.isDebugEnabled()) log.debug("Max Memory available= "+total+" bytes");
         }
         return total;

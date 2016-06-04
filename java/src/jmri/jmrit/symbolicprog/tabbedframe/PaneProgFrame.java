@@ -1,6 +1,5 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
-import javax.annotation.Nonnull;
 import java.awt.BorderLayout;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -11,6 +10,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
@@ -49,7 +49,6 @@ import jmri.jmrit.symbolicprog.EnumVariableValue;
 import jmri.jmrit.symbolicprog.FactoryResetAction;
 import jmri.jmrit.symbolicprog.IndexedCvTableModel;
 import jmri.jmrit.symbolicprog.LokProgImportAction;
-import jmri.jmrit.symbolicprog.QuantumCvMgrImportAction;
 import jmri.jmrit.symbolicprog.Pr1ExportAction;
 import jmri.jmrit.symbolicprog.Pr1ImportAction;
 import jmri.jmrit.symbolicprog.Pr1WinExportAction;
@@ -58,6 +57,7 @@ import jmri.jmrit.symbolicprog.PrintCvAction;
 import jmri.jmrit.symbolicprog.ProgrammerConfigManager;
 import jmri.jmrit.symbolicprog.Qualifier;
 import jmri.jmrit.symbolicprog.QualifierAdder;
+import jmri.jmrit.symbolicprog.QuantumCvMgrImportAction;
 import jmri.jmrit.symbolicprog.ResetTableModel;
 import jmri.jmrit.symbolicprog.SymbolicProgBundle;
 import jmri.jmrit.symbolicprog.VariableTableModel;
@@ -438,9 +438,9 @@ abstract public class PaneProgFrame extends JmriJFrame
         // save default values
         saveDefaults();
 
-        // finally fill the CV values from the specific loco file
+        // finally fill the Variable and CV values from the specific loco file
         if (_rosterEntry.getFileName() != null) {
-            _rosterEntry.loadCvModel(cvModel, iCvModel);
+            _rosterEntry.loadCvModel(variableModel, cvModel, iCvModel);
         }
 
         // mark file state as consistent

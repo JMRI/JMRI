@@ -1,16 +1,16 @@
 package jmri.jmrix.dccpp.dccppovertcp;
 
-import java.util.NoSuchElementException;
-import java.util.LinkedList;
-import java.io.InputStreamReader;
 import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.NoSuchElementException;
 import jmri.jmrix.dccpp.DCCppCommandStation;
+import jmri.jmrix.dccpp.DCCppListener;
+import jmri.jmrix.dccpp.DCCppMessage;
 import jmri.jmrix.dccpp.DCCppNetworkPortController;
 import jmri.jmrix.dccpp.DCCppPacketizer;
-import jmri.jmrix.dccpp.DCCppMessage;
 import jmri.jmrix.dccpp.DCCppReply;
 import jmri.jmrix.dccpp.DCCppReplyParser;
-import jmri.jmrix.dccpp.DCCppListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +24,6 @@ import org.slf4j.LoggerFactory;
  * listeners in that same thread. Reception and transmission are handled in
  * dedicated threads by RcvHandler and XmtHandler objects. Those are internal
  * classes defined here. The thread priorities are:
- * <P>
  * <UL>
  * <LI> RcvHandler - at highest available priority
  * <LI> XmtHandler - down one, which is assumed to be above the GUI
@@ -324,9 +323,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                             }
                             StringBuffer packet = new StringBuffer(msg.length() + SEND_PREFIX.length() + 2);
                             packet.append(SEND_PREFIX);
-                            String hexString = new String();
-                            hexString += "<" + msg.toString() + ">";
-                            packet.append(hexString);
+                            packet.append("<" + msg.toString() + ">");
                             if (debug) {
                                 log.debug("Write to LbServer: " + packet.toString());
                             }

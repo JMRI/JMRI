@@ -327,35 +327,27 @@ public class XNetProgrammerTest extends TestCase {
 
         p.setMode(DefaultProgrammerManager.REGISTERMODE);
         Assert.assertTrue("Version 3.5 LZ100 Can Write CV3 in register mode", p.getCanWrite("3"));
-        jmri.util.JUnitAppender.assertErrorMessage("cs Type: 0 CS Version: 3.5");
 
         p.setMode(DefaultProgrammerManager.PAGEMODE);
         Assert.assertTrue("Version 3.5 LZ100 Can Write CV3 in paged mode", p.getCanWrite("3"));
-        jmri.util.JUnitAppender.assertErrorMessage("cs Type: 0 CS Version: 3.5");
 
         p.setMode(DefaultProgrammerManager.DIRECTBYTEMODE);
         Assert.assertTrue("Version 3.5 LZ100 Can Write CV3 in direct byte mode", p.getCanWrite("3"));
-        jmri.util.JUnitAppender.assertErrorMessage("cs Type: 0 CS Version: 3.5");
 
         p.setMode(DefaultProgrammerManager.DIRECTBITMODE);
         Assert.assertTrue("Version 3.5 LZ100 Can Write CV3 in direct bit mode", p.getCanWrite("3"));
-        jmri.util.JUnitAppender.assertErrorMessage("cs Type: 0 CS Version: 3.5");
 
         p.setMode(DefaultProgrammerManager.REGISTERMODE);
         Assert.assertFalse("Version 3.5 LZ100 Can not Write CV300 in register mode", p.getCanWrite("300"));
-        jmri.util.JUnitAppender.assertErrorMessage("cs Type: 0 CS Version: 3.5");
 
         p.setMode(DefaultProgrammerManager.PAGEMODE);
         Assert.assertFalse("Version 3.5 LZ100 Can not Write CV300 in paged mode", p.getCanWrite("300"));
-        jmri.util.JUnitAppender.assertErrorMessage("cs Type: 0 CS Version: 3.5");
 
         p.setMode(DefaultProgrammerManager.DIRECTBYTEMODE);
         Assert.assertFalse("Version 3.5 LZ100 Can not Write CV300 in direct byte mode", p.getCanWrite("300"));
-        jmri.util.JUnitAppender.assertErrorMessage("cs Type: 0 CS Version: 3.5");
 
         p.setMode(DefaultProgrammerManager.DIRECTBITMODE);
         Assert.assertFalse("Version 3.5 LZ100 Can not Write CV300 in direct bit mode", p.getCanWrite("300"));
-        jmri.util.JUnitAppender.assertErrorMessage("cs Type: 0 CS Version: 3.5");
 
     }
 
@@ -371,35 +363,27 @@ public class XNetProgrammerTest extends TestCase {
 
         p.setMode(DefaultProgrammerManager.REGISTERMODE);
         Assert.assertTrue("Version 3.6 LZ100 Can Write CV3 in register mode", p.getCanWrite("3"));
-        jmri.util.JUnitAppender.assertErrorMessage("cs Type: 0 CS Version: 3.6");
 
         p.setMode(DefaultProgrammerManager.PAGEMODE);
         Assert.assertTrue("Version 3.6 LZ100 Can Write CV3 in paged mode", p.getCanWrite("3"));
-        jmri.util.JUnitAppender.assertErrorMessage("cs Type: 0 CS Version: 3.6");
 
         p.setMode(DefaultProgrammerManager.DIRECTBYTEMODE);
         Assert.assertTrue("Version 3.6 LZ100 Can Write CV3 in direct byte mode", p.getCanWrite("3"));
-        jmri.util.JUnitAppender.assertErrorMessage("cs Type: 0 CS Version: 3.6");
 
         p.setMode(DefaultProgrammerManager.DIRECTBITMODE);
         Assert.assertTrue("Version 3.6 LZ100 Can Write CV3 in direct bit mode", p.getCanWrite("3"));
-        jmri.util.JUnitAppender.assertErrorMessage("cs Type: 0 CS Version: 3.6");
 
         p.setMode(DefaultProgrammerManager.REGISTERMODE);
         Assert.assertFalse("Version 3.6 LZ100 Can not Write CV300 in register mode", p.getCanWrite("300"));
-        jmri.util.JUnitAppender.assertErrorMessage("cs Type: 0 CS Version: 3.6");
 
         p.setMode(DefaultProgrammerManager.PAGEMODE);
         Assert.assertFalse("Version 3.6 LZ100 Can not Write CV300 in paged mode", p.getCanWrite("300"));
-        jmri.util.JUnitAppender.assertErrorMessage("cs Type: 0 CS Version: 3.6");
 
         p.setMode(DefaultProgrammerManager.DIRECTBITMODE);
         Assert.assertTrue("Version 3.6 LZ100 Can Write CV300 in direct bit mode", p.getCanWrite("300"));
-        jmri.util.JUnitAppender.assertErrorMessage("cs Type: 0 CS Version: 3.6");
 
         p.setMode(DefaultProgrammerManager.DIRECTBYTEMODE);
         Assert.assertTrue("Version 3.6 LZ100 Can Write CV300 in direct byte mode", p.getCanWrite("300"));
-        jmri.util.JUnitAppender.assertErrorMessage("cs Type: 0 CS Version: 3.6");
 
     }
 
@@ -415,35 +399,27 @@ public class XNetProgrammerTest extends TestCase {
 
         p.setMode(DefaultProgrammerManager.REGISTERMODE);
         Assert.assertTrue("Version 3.0 LH200 Can Write CV3 in register mode", p.getCanWrite("3"));
-        jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 3.0");
 
         p.setMode(DefaultProgrammerManager.PAGEMODE);
         Assert.assertTrue("Version 3.0 LH200 Can Write CV3 in paged mode", p.getCanWrite("3"));
-        jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 3.0");
 
         p.setMode(DefaultProgrammerManager.DIRECTBYTEMODE);
         Assert.assertTrue("Version 3.0 LH200 Can Write CV3 in direct byte mode", p.getCanWrite("3"));
-        jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 3.0");
 
         p.setMode(DefaultProgrammerManager.DIRECTBITMODE);
         Assert.assertTrue("Version 3.0 LH200 Can Write CV3 in direct bit mode", p.getCanWrite("3"));
-        jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 3.0");
 
         p.setMode(DefaultProgrammerManager.REGISTERMODE);
         Assert.assertFalse("Version 3.0 LH200 Can not Write CV300 in register mode", p.getCanWrite("300"));
-        jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 3.0");
 
         p.setMode(DefaultProgrammerManager.PAGEMODE);
         Assert.assertFalse("Version 3.0 LH200 Can not Write CV300 in paged mode", p.getCanWrite("300"));
-        jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 3.0");
 
         p.setMode(DefaultProgrammerManager.DIRECTBITMODE);
         Assert.assertFalse("Version 3.0 LH200 Can not Write CV300 in direct bit mode", p.getCanWrite("300"));
-        jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 3.0");
 
         p.setMode(DefaultProgrammerManager.DIRECTBYTEMODE);
         Assert.assertFalse("Version 3.0 LH200 Can not Write CV300 in direct byte mode", p.getCanWrite("300"));
-        jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 3.0");
 
     }
 
@@ -459,35 +435,27 @@ public class XNetProgrammerTest extends TestCase {
 
         p.setMode(DefaultProgrammerManager.REGISTERMODE);
         Assert.assertTrue("Version 4.0 MultiMaus Can Write CV3 in register mode", p.getCanWrite("3"));
-        jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
 
         p.setMode(DefaultProgrammerManager.PAGEMODE);
         Assert.assertTrue("Version 4.0 MultiMaus Can Write CV3 in paged mode", p.getCanWrite("3"));
-        jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
 
         p.setMode(DefaultProgrammerManager.DIRECTBYTEMODE);
         Assert.assertTrue("Version 4.0 MultiMaus Can Write CV3 in direct byte mode", p.getCanWrite("3"));
-        jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
 
         p.setMode(DefaultProgrammerManager.DIRECTBITMODE);
         Assert.assertTrue("Version 4.0 MultiMaus Can Write CV3 in direct bit mode", p.getCanWrite("3"));
-        jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
 
         p.setMode(DefaultProgrammerManager.REGISTERMODE);
         Assert.assertFalse("Version 4.0 MultiMaus Can not Write CV300 in register mode", p.getCanWrite("300"));
-        jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
 
         p.setMode(DefaultProgrammerManager.PAGEMODE);
         Assert.assertFalse("Version 4.0 MultiMaus Can not Write CV300 in paged mode", p.getCanWrite("300"));
-        jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
 
         p.setMode(DefaultProgrammerManager.DIRECTBITMODE);
         Assert.assertFalse("Version 4.0 MultiMaus Can not Write CV300 in direct bit mode", p.getCanWrite("300"));
-        jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
 
         p.setMode(DefaultProgrammerManager.DIRECTBYTEMODE);
         Assert.assertFalse("Version 4.0 MultiMaus Can not Write CV300 in direct byte mode", p.getCanWrite("300"));
-        jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
 
     }
 
@@ -504,35 +472,27 @@ public class XNetProgrammerTest extends TestCase {
 
         p.setMode(DefaultProgrammerManager.REGISTERMODE);
         Assert.assertTrue("Version 3.5 LZ100 Can Read CV3 in register mode", p.getCanRead("3"));
-        //jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
 
         p.setMode(DefaultProgrammerManager.PAGEMODE);
         Assert.assertTrue("Version 3.5 LZ100 Can Read CV3 in paged mode", p.getCanRead("3"));
-        //jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
 
         p.setMode(DefaultProgrammerManager.DIRECTBYTEMODE);
         Assert.assertTrue("Version 3.5 LZ100 Can Read CV3 in direct byte mode", p.getCanRead("3"));
-        //jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
 
         p.setMode(DefaultProgrammerManager.DIRECTBITMODE);
         Assert.assertTrue("Version 3.5 LZ100 Can Read CV3 in direct bit mode", p.getCanRead("3"));
-        //jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
 
         p.setMode(DefaultProgrammerManager.REGISTERMODE);
         Assert.assertFalse("Version 3.5 LZ100 Can not Read CV300 in register mode", p.getCanRead("300"));
-        //jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
 
         p.setMode(DefaultProgrammerManager.PAGEMODE);
         Assert.assertFalse("Version 3.5 LZ100 Can not Read CV300 in paged mode", p.getCanRead("300"));
-        //jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
 
         p.setMode(DefaultProgrammerManager.DIRECTBYTEMODE);
         Assert.assertFalse("Version 3.5 LZ100 Can not Read CV300 in direct byte mode", p.getCanRead("300"));
-        //jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
 
         p.setMode(DefaultProgrammerManager.DIRECTBITMODE);
         Assert.assertFalse("Version 3.5 LZ100 Can not Read CV300 in direct bit mode", p.getCanRead("300"));
-        //jmri.util.JUnitAppender.assertErrorMessage("cs Type: 1 CS Version: 4.0");
 
     }
 
@@ -635,7 +595,7 @@ public class XNetProgrammerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", XNetProgrammerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

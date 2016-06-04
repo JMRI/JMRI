@@ -181,6 +181,7 @@ public class TrainScriptFrame extends OperationsFrame {
                 JButton removeBuildScripts = new JButton(Bundle.getMessage("RemoveScript"));
                 removeBuildScripts.setName(scripts.get(i));
                 removeBuildScripts.addActionListener(new java.awt.event.ActionListener() {
+                    @Override
                     public void actionPerformed(java.awt.event.ActionEvent e) {
                         buttonActionRemoveBuildScript(e);
                     }
@@ -208,6 +209,7 @@ public class TrainScriptFrame extends OperationsFrame {
                 JButton removeAfterBuildScripts = new JButton(Bundle.getMessage("RemoveScript"));
                 removeAfterBuildScripts.setName(scripts.get(i));
                 removeAfterBuildScripts.addActionListener(new java.awt.event.ActionListener() {
+                    @Override
                     public void actionPerformed(java.awt.event.ActionEvent e) {
                         buttonActionRemoveAfterBuildScript(e);
                     }
@@ -235,6 +237,7 @@ public class TrainScriptFrame extends OperationsFrame {
                 JButton removeMoveScripts = new JButton(Bundle.getMessage("RemoveScript"));
                 removeMoveScripts.setName(scripts.get(i));
                 removeMoveScripts.addActionListener(new java.awt.event.ActionListener() {
+                    @Override
                     public void actionPerformed(java.awt.event.ActionEvent e) {
                         buttonActionRemoveMoveScript(e);
                     }
@@ -262,6 +265,7 @@ public class TrainScriptFrame extends OperationsFrame {
                 JButton removeTerminationScripts = new JButton(Bundle.getMessage("RemoveScript"));
                 removeTerminationScripts.setName(scripts.get(i));
                 removeTerminationScripts.addActionListener(new java.awt.event.ActionListener() {
+                    @Override
                     public void actionPerformed(java.awt.event.ActionEvent e) {
                         buttonActionRemoveTerminationScript(e);
                     }
@@ -274,6 +278,7 @@ public class TrainScriptFrame extends OperationsFrame {
     }
 
     // Save train, add scripts buttons
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (_train != null) {
             if (ae.getSource() == addBuildScriptButton) {

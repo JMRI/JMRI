@@ -9,7 +9,6 @@ import jmri.LocoAddress;
  * address has been selected.
  *
  * @author glen Copyright (C) 2002
- * @version $Revision$
  */
 public interface AddressListener extends EventListener {
 

@@ -55,17 +55,18 @@ abstract public class SystemConnectionMemo {
         this.userNameAsLoaded = null;
     }
 
-    private static boolean initialised = false;
+    // private static boolean initialised = false;
 
     /**
      * Provides a method to reserve System Names and prefixes at creation
      */
     private static void initialise() {
-        if (!initialised) {
+        log.debug("initialise called");
+//        if (!initialised) {
 //             addUserName("Internal");
 //             addSystemPrefix("I");
 //             initialised = true;
-        }
+//        }
     }
 
     /**
@@ -76,7 +77,7 @@ abstract public class SystemConnectionMemo {
         sysPrefixes = new ArrayList<>();
         listeners = new HashSet<>();
         
-        initialised = false;
+        //initialised = false;
     }
     
     protected static ArrayList<String> userNames = new ArrayList<>();
@@ -154,7 +155,6 @@ abstract public class SystemConnectionMemo {
     /**
      * Set the system prefix.
      *
-     * @param systemPrefix
      * @throws java.lang.NullPointerException if systemPrefix is null
      * @return true if the system prefix could be set
      */
@@ -195,7 +195,6 @@ abstract public class SystemConnectionMemo {
     /**
      * Set the user name for the system connection.
      *
-     * @param name
      * @throws java.lang.NullPointerException if name is null
      * @return true if the user name could be set.
      */

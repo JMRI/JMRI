@@ -1,4 +1,3 @@
-// FnMapPanel.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.GridBagConstraints;
@@ -88,14 +87,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author	Dave Heap Copyright (C) 2014
- * @version	$Revision$
  */
 public class FnMapPanel extends JPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8500513259142259577L;
     // GridBayLayout column numbers
     int fnNameCol = 0;
     int firstOutCol = 1;
@@ -211,7 +205,7 @@ public class FnMapPanel extends JPanel {
                                 // this really would be better fixed in EnumVariableValue
                                 // done here to avoid side effects elsewhere
                                 String displayFormat = "checkbox";
-                                if (((var.getMask().replace("X", "")).length()) != 1) {
+                                if ((var.getMask() != null) && (((var.getMask().replace("X", "")).length()) != 1)) {
                                     displayFormat = "";
                                 }
                                 JComponent j = (JComponent) (_varModel.getRep(iVar, displayFormat));

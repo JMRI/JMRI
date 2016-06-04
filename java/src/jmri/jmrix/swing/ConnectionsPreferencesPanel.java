@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Randall Wood <randall.h.wood@alexandriasoftware.com>
+ * @author Randall Wood randall.h.wood@alexandriasoftware.com
  */
 public class ConnectionsPreferencesPanel extends JTabbedPane implements ManagingPreferencesPanel {
 

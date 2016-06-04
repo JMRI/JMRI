@@ -155,7 +155,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 
     //Set the mode information for XPressNet Turnouts.
     synchronized static private void setModeInformation(String[] feedbackNames, int[] feedbackModes) {
-        // if it hasn't been done already, create static arrays to hold 
+        // if it hasn't been done already, create static arrays to hold
         // the Lenz specific feedback information.
         if (modeNames == null) {
             if (feedbackNames.length != feedbackModes.length) {
@@ -188,7 +188,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         return mNumber;
     }
 
-    // Set the Commanded State.   This method overides setCommandedState in 
+    // Set the Commanded State.   This method overides setCommandedState in
     // the Abstract Turnout class.
     public void setCommandedState(int s) {
         if (log.isDebugEnabled()) {
@@ -286,7 +286,6 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
      * turnout with respect to whether or not a feedback request was sent. This
      * is used only when the turnout is created by on layout feedback.
      *
-     * @param l
      *
      */
     synchronized void initmessage(XNetReply l) {
@@ -312,7 +311,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                 }
                 return;
             } else if (l.isRetransmittableErrorMsg()) {
-                return; // don't do anything, the Traffic 
+                return; // don't do anything, the Traffic
                 // Controller is handling retransmitting
                 // this one.
             } else {
@@ -357,7 +356,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 
     /*
      *  With Direct Mode feedback, if we see ANY valid response to our
-     *  request, we ask the command station to stop sending information 
+     *  request, we ask the command station to stop sending information
      *  to the stationary decoder.
      *  <p>
      *  No effort is made to interpret feedback when using direct mode
@@ -366,15 +365,15 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
      *
      */
     synchronized private void handleDirectModeFeedback(XNetReply l) {
-        /* If commanded state does not equal known state, we are 
-         going to check to see if one of the following conditions 
+        /* If commanded state does not equal known state, we are
+         going to check to see if one of the following conditions
          applies:
          1) The recieved message is a feedback message for a turnout
-         and one of the two addresses to which it applies is our 
+         and one of the two addresses to which it applies is our
          address
-         2) We recieve an "OK" message, indicating the command was 
+         2) We recieve an "OK" message, indicating the command was
          successfully sent
-           
+
          If either of these two cases occur, we trigger an off message
          */
 
@@ -396,7 +395,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                                 && (l.getTurnoutMsgAddr(i) == mNumber))
                                 || (((mNumber % 2) == 0)
                                 && (l.getTurnoutMsgAddr(i) == mNumber - 1))) {
-                            // This message includes feedback for this turnout  
+                            // This message includes feedback for this turnout
                             if (log.isDebugEnabled()) {
                                 log.debug("Turnout " + mNumber + " DIRECT feedback mode - directed reply received.");
                             }
@@ -426,10 +425,10 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     }
 
     /*
-     *  With Monitoring Mode feedback, if we see a feedback message, we 
-     *  interpret that message and use it to display our feedback. 
-     *  <P> 
-     *  After we send a request to operate a turnout, We ask the command 
+     *  With Monitoring Mode feedback, if we see a feedback message, we
+     *  interpret that message and use it to display our feedback.
+     *  <P>
+     *  After we send a request to operate a turnout, We ask the command
      *  station to stop sending information to the stationary decoder
      *  when the either a feedback message or an "OK" message is recieved.
      *
@@ -437,9 +436,9 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
      *
      */
     synchronized private void handleMonitoringModeFeedback(XNetReply l) {
-        /* In Monitoring Mode, We have two cases to check if CommandedState 
-         does not equal KnownState, otherwise, we only want to check to 
-         see if the messages we recieve indicate this turnout chagned 
+        /* In Monitoring Mode, We have two cases to check if CommandedState
+         does not equal KnownState, otherwise, we only want to check to
+         see if the messages we recieve indicate this turnout chagned
          state
          */
         if (log.isDebugEnabled()) {
@@ -450,7 +449,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         if (internalState == IDLE || internalState == STATUSREQUESTSENT) {
             if (l.isFeedbackBroadcastMessage()) {
                 // This is a feedback message, we need to check and see if it
-                // indicates this turnout is to change state or if it is for 
+                // indicates this turnout is to change state or if it is for
                 // another turnout.
                 int numDataBytes = l.getElement(0) & 0x0f;
                 for (int i = 1; i < numDataBytes; i += 2) {
@@ -469,9 +468,9 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                 for (int i = 1; i < numDataBytes; i += 2) {
                     int messageType = l.getFeedbackMessageType(i);
                     if (messageType == 0 || messageType == 1) {
-                        // In Monitoring mode, treat both turnouts with feedback 
-                        // and turnouts without feedback as turnouts without 
-                        // feedback.  i.e. just interpret the feedback 
+                        // In Monitoring mode, treat both turnouts with feedback
+                        // and turnouts without feedback as turnouts without
+                        // feedback.  i.e. just interpret the feedback
                         // message, don't check to see if the motion is complete
                         if (parseFeedbackMessage(l, i) != -1) {
                             // We need to tell the turnout to shut off the output.
@@ -497,20 +496,21 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 
 
     /*
-     *  With Exact Mode feedback, if we see a feedback message, we 
-     *  interpret that message and use it to display our feedback. 
-     *  <P> 
-     *  After we send a request to operate a turnout, We ask the command 
+     *  With Exact Mode feedback, if we see a feedback message, we
+     *  interpret that message and use it to display our feedback.
+     *  <P>
+     *  After we send a request to operate a turnout, We ask the command
      *  station to stop sending information to the stationary decoder
      *  when the either a feedback message or an "OK" message is recieved.
      *
      *  @param l an {@link XNetReply} message
      *
      */
-    synchronized private void handleExactModeFeedback(XNetReply l) {
-        // We have three cases to check if CommandedState does 
-        // not equal KnownState, otherwise, we only want to check to 
-        // see if the messages we recieve indicate this turnout chagned 
+    @SuppressWarnings("unused")
+    synchronized private void handleExactModeFeedback(XNetReply reply) {
+        // We have three cases to check if CommandedState does
+        // not equal KnownState, otherwise, we only want to check to
+        // see if the messages we recieve indicate this turnout chagned
         // state
         if (log.isDebugEnabled()) {
             log.debug("Handle Message for turnout "
@@ -518,13 +518,14 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         }
         if (getCommandedState() == getKnownState()
                 && (internalState == IDLE || internalState == STATUSREQUESTSENT)) {
-            if (l.isFeedbackBroadcastMessage()) {
+            if (reply.isFeedbackBroadcastMessage()) {
                 // This is a feedback message, we need to check and see if it
-                // indicates this turnout is to change state or if it is for 
+                // indicates this turnout is to change state or if it is for
                 // another turnout.
-                int numDataBytes = l.getElement(0) & 0x0f;
+                int numDataBytes = reply.getElement(0) & 0x0f;
+                // FIXME: Eclipse thinks there is dead code in this for loop. Someone should re-evaluate it. For now warning is suppressed.
                 for (int i = 1; i < numDataBytes; i += 2) {
-                    if (parseFeedbackMessage(l, i) != -1) {
+                    if (parseFeedbackMessage(reply, i) != -1) {
                         if (log.isDebugEnabled()) {
                             log.debug("Turnout " + mNumber + " EXACT feedback mode - state change from feedback.");
                         }
@@ -535,26 +536,26 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         } else if (getCommandedState() != getKnownState()
                 || internalState == COMMANDSENT
                 || internalState == STATUSREQUESTSENT) {
-            if (l.isFeedbackBroadcastMessage()) {
-                int numDataBytes = l.getElement(0) & 0x0f;
+            if (reply.isFeedbackBroadcastMessage()) {
+                int numDataBytes = reply.getElement(0) & 0x0f;
                 for (int i = 1; i < numDataBytes; i += 2) {
                     if ((mNumber % 2 != 0
-                            && (l.getTurnoutMsgAddr(i) == mNumber))
+                            && (reply.getTurnoutMsgAddr(i) == mNumber))
                             || (((mNumber % 2) == 0)
-                            && (l.getTurnoutMsgAddr(i) == mNumber - 1))) {
-                        // This message includes feedback for this turnout  
-                        int messageType = l.getFeedbackMessageType(i);
+                            && (reply.getTurnoutMsgAddr(i) == mNumber - 1))) {
+                        // This message includes feedback for this turnout
+                        int messageType = reply.getFeedbackMessageType(i);
                         if (messageType == 1) {
-                            // The first case is that we recieve a message for 
+                            // The first case is that we recieve a message for
                             // this turnout and this turnout provides feedback.
-                            // In this case, we want to check to see if the 
-                            // turnout has completed it's movement before doing 
+                            // In this case, we want to check to see if the
+                            // turnout has completed it's movement before doing
                             // anything else.
-                            if (!motionComplete(l, i)) {
+                            if (!motionComplete(reply, i)) {
                                 if (log.isDebugEnabled()) {
                                     log.debug("Turnout " + mNumber + " EXACT feedback mode - state change from feedback, CommandedState!=KnownState - motion not complete");
                                 }
-                                // If the motion is NOT complete, send a feedback 
+                                // If the motion is NOT complete, send a feedback
                                 // request for this nibble
                                 XNetMessage msg = XNetMessage.getFeedbackRequestMsg(
                                         mNumber, ((mNumber % 4) <= 1));
@@ -564,10 +565,10 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                                 if (log.isDebugEnabled()) {
                                     log.debug("Turnout " + mNumber + " EXACT feedback mode - state change from feedback, CommandedState!=KnownState - motion complete");
                                 }
-                                // If the motion is completed, behave as though 
+                                // If the motion is completed, behave as though
                                 // this is a turnout without feedback.
-                                parseFeedbackMessage(l, i);
-                                // We need to tell the turnout to shut off the 
+                                parseFeedbackMessage(reply, i);
+                                // We need to tell the turnout to shut off the
                                 // output.
                                 sendOffMessage();
                             }
@@ -576,17 +577,17 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                                 log.debug("Turnout " + mNumber + " EXACT feedback mode - state change from feedback, CommandedState!=KnownState - Turnout does not provide feedback");
                             }
                             // The second case is that we recieve a message about
-                            // this turnout, and this turnout does not provide 
-                            // feedback. In this case, we want to check the 
+                            // this turnout, and this turnout does not provide
+                            // feedback. In this case, we want to check the
                             // contents of the message and act accordingly.
-                            parseFeedbackMessage(l, i);
+                            parseFeedbackMessage(reply, i);
                             // We need to tell the turnout to shut off the output.
                             sendOffMessage();
                         }
                         break;
                     }
                 }
-            } else if (l.isOkMessage()) {
+            } else if (reply.isOkMessage()) {
                 // Finally, we may just recieve an OK message.
                 if (log.isDebugEnabled()) {
                     log.debug("Turnout " + mNumber + " EXACT feedback mode - OK message triggering OFF message.");
@@ -609,9 +610,9 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         // Set the known state to the commanded state.
         synchronized (this) {
             //try{
-            // To avoid some of the command station busy 
-            // messages, add a short delay before sending the 
-            // first off message.  
+            // To avoid some of the command station busy
+            // messages, add a short delay before sending the
+            // first off message.
             if (internalState != OFFSENT) {
                 new java.util.Timer().schedule(new offTask(this), 30);
                 newKnownState(getCommandedState());
@@ -662,19 +663,19 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     }
 
     /*
-     * parse the feedback message, and set the status of the turnout 
+     * parse the feedback message, and set the status of the turnout
      * accordingly
      *
      * @param l - feedback broadcast message
      * @param startByte - first Byte of message to check
-     * 
+     *
      * @return 0 if address matches our turnout -1 otherwise
      */
     synchronized private int parseFeedbackMessage(XNetReply l, int startByte) {
         // check validity & addressing
-        // if this is an ODD numbered turnout, then we always get the 
-        // right response from .getTurnoutMsgAddr.  If this is an even 
-        // numbered turnout, we need to check the messages for the odd 
+        // if this is an ODD numbered turnout, then we always get the
+        // right response from .getTurnoutMsgAddr.  If this is an even
+        // numbered turnout, we need to check the messages for the odd
         // numbered turnout in the nibble as well.
         if (mNumber % 2 != 0 && (l.getTurnoutMsgAddr(startByte) == mNumber)) {
             // is for this object, parse the message
@@ -697,8 +698,8 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                 }
                 return (0);
             } else {
-                // the state is unknown or inconsistent.  If the command state 
-                // does not equal the known state, and the command repeat the 
+                // the state is unknown or inconsistent.  If the command state
+                // does not equal the known state, and the command repeat the
                 // last command
                 if (getCommandedState() != getKnownState()) {
                     forwardCommandChangeToLayout(getCommandedState());
@@ -727,8 +728,8 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                 }
                 return (0);
             } else {
-                // the state is unknown or inconsistent.  If the command state 
-                // does not equal the known state, and the command repeat the 
+                // the state is unknown or inconsistent.  If the command state
+                // does not equal the known state, and the command repeat the
                 // last command
                 if (getCommandedState() != getKnownState()) {
                     forwardCommandChangeToLayout(getCommandedState());
@@ -741,20 +742,20 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 
 
     /*
-     * Determine if this feedback message says the turnout has completed 
-     * it's motion or not.  Returns true for mostion complete, false 
-     * otherwise. 
+     * Determine if this feedback message says the turnout has completed
+     * it's motion or not.  Returns true for mostion complete, false
+     * otherwise.
      *
      * @param l - feedback broadcast message
      * @param startByte - first Byte of message to check
-     * 
+     *
      * @return true if motion complete, false otherwise
      */
     synchronized private boolean motionComplete(XNetReply l, int startByte) {
         // check validity & addressing
-        // if this is an ODD numbered turnout, then we always get the 
-        // right response from .getTurnoutMsgAddr.  If this is an even 
-        // numbered turnout, we need to check the messages for the odd 
+        // if this is an ODD numbered turnout, then we always get the
+        // right response from .getTurnoutMsgAddr.  If this is an even
+        // numbered turnout, we need to check the messages for the odd
         // numbered turnout in the nibble as well.
         if (mNumber % 2 != 0 && (l.getTurnoutMsgAddr(startByte) == mNumber)) {
             // is for this object, parse the message
@@ -802,10 +803,10 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         }
 
         /*
-         * If we're  not using DIRECT feedback mode, we need to listen for 
-         * state changes to know when to send an OFF message after we set the 
+         * If we're  not using DIRECT feedback mode, we need to listen for
+         * state changes to know when to send an OFF message after we set the
          * known state
-         * If we're using DIRECT mode, all of this is handled from the 
+         * If we're using DIRECT mode, all of this is handled from the
          * XPressNet Messages
          */
         public void propertyChange(java.beans.PropertyChangeEvent event) {
@@ -818,8 +819,8 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                     log.debug("propertyChange Not Direct Mode property: " + event.getPropertyName() + " old value " + event.getOldValue() + " new value " + event.getNewValue());
                 }
                 if (event.getPropertyName().equals("KnownState")) {
-                    // Check to see if this is a change in the status 
-                    // triggered by a device on the layout, or a change in 
+                    // Check to see if this is a change in the status
+                    // triggered by a device on the layout, or a change in
                     // status we triggered.
                     int oldKnownState = ((Integer) event.getOldValue()).intValue();
                     int curKnownState = ((Integer) event.getNewValue()).intValue();
@@ -828,16 +829,16 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                     }
                     if (curKnownState != INCONSISTENT
                             && _turnout.getCommandedState() == oldKnownState) {
-                        // This was triggered by feedback on the layout, change 
+                        // This was triggered by feedback on the layout, change
                         // the commanded state to reflect the new Known State
                         if (log.isDebugEnabled()) {
                             log.debug("propertyChange CommandedState: " + _turnout.getCommandedState());
                         }
                         _turnout.newCommandedState(curKnownState);
                     } else {
-                        // Since we always set the KnownState to 
-                        // INCONSISTENT when we send a command, If the old 
-                        // known state is INCONSISTENT, we just want to send 
+                        // Since we always set the KnownState to
+                        // INCONSISTENT when we send a command, If the old
+                        // known state is INCONSISTENT, we just want to send
                         // an off message
                         if (oldKnownState == INCONSISTENT) {
                             if (log.isDebugEnabled()) {

@@ -44,6 +44,7 @@ public class Consist extends RollingStockGroup {
         _consistNumber = number;
     }
 
+    @Override
     public void dispose() {
         while (getGroup().size() > 0) {
             Engine engine = (Engine) getGroup().get(0);

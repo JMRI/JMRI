@@ -20,7 +20,7 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -42,7 +42,6 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(SRCPProgrammerManagerTest.class));
         suite.addTest(new TestSuite(SRCPClockControlTest.class));
         suite.addTest(jmri.jmrix.srcp.parser.SRCPClientParserTests.suite());
-
         return suite;
     }
 

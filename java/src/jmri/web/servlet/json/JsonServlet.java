@@ -1,20 +1,6 @@
 // JsonServlet.java
 package jmri.web.servlet.json;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.io.IOException;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.ServiceLoader;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import static jmri.jmris.json.JSON.CAR;
 import static jmri.jmris.json.JSON.CARS;
 import static jmri.jmris.json.JSON.CONSIST;
@@ -34,8 +20,6 @@ import static jmri.jmris.json.JSON.PANELS;
 import static jmri.jmris.json.JSON.RAILROAD;
 import static jmri.jmris.json.JSON.REPORTER;
 import static jmri.jmris.json.JSON.REPORTERS;
-import static jmri.jmris.json.JSON.ROUTE;
-import static jmri.jmris.json.JSON.ROUTES;
 import static jmri.jmris.json.JSON.SENSOR;
 import static jmri.jmris.json.JSON.SENSORS;
 import static jmri.jmris.json.JSON.SIGNAL_HEAD;
@@ -48,18 +32,33 @@ import static jmri.jmris.json.JSON.TRAIN;
 import static jmri.jmris.json.JSON.TRAINS;
 import static jmri.jmris.json.JSON.VALUE;
 import static jmri.jmris.json.JSON.XML;
+import static jmri.server.json.JsonException.CODE;
+import static jmri.server.json.power.JsonPowerServiceFactory.POWER;
+import static jmri.web.servlet.ServletUtil.APPLICATION_JSON;
+import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.io.IOException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.ServiceLoader;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import jmri.jmris.json.JsonServerPreferences;
 import jmri.jmris.json.JsonUtil;
 import jmri.server.json.JsonException;
-import static jmri.server.json.JsonException.CODE;
 import jmri.server.json.JsonHttpService;
 import jmri.server.json.JsonWebSocket;
-import static jmri.server.json.power.JsonPowerServiceFactory.POWER;
 import jmri.spi.JsonServiceFactory;
 import jmri.util.FileUtil;
 import jmri.web.servlet.ServletUtil;
-import static jmri.web.servlet.ServletUtil.APPLICATION_JSON;
-import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
 import org.eclipse.jetty.websocket.servlet.WebSocketServlet;
 import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
 import org.slf4j.Logger;
@@ -195,9 +194,6 @@ public class JsonServlet extends WebSocketServlet {
                         case REPORTERS:
                             reply = JsonUtil.getReporters(request.getLocale());
                             break;
-                        case ROUTES:
-                            reply = JsonUtil.getRoutes(request.getLocale());
-                            break;
                         case SENSORS:
                             reply = JsonUtil.getSensors(request.getLocale());
                             break;
@@ -273,9 +269,6 @@ public class JsonServlet extends WebSocketServlet {
                             break;
                         case REPORTER:
                             reply = JsonUtil.getReporter(request.getLocale(), name);
-                            break;
-                        case ROUTE:
-                            reply = JsonUtil.getRoute(request.getLocale(), name);
                             break;
                         case SENSOR:
                             reply = JsonUtil.getSensor(request.getLocale(), name);
@@ -393,10 +386,6 @@ public class JsonServlet extends WebSocketServlet {
                         case REPORTER:
                             JsonUtil.setReporter(request.getLocale(), name, data);
                             reply = JsonUtil.getReporter(request.getLocale(), name);
-                            break;
-                        case ROUTE:
-                            JsonUtil.setRoute(request.getLocale(), name, data);
-                            reply = JsonUtil.getRoute(request.getLocale(), name);
                             break;
                         case SENSOR:
                             JsonUtil.setSensor(request.getLocale(), name, data);

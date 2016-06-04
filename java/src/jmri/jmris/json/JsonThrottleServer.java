@@ -1,5 +1,12 @@
 package jmri.jmris.json;
 
+import static jmri.jmris.json.JSON.CODE;
+import static jmri.jmris.json.JSON.DATA;
+import static jmri.jmris.json.JSON.ERROR;
+import static jmri.jmris.json.JSON.MESSAGE;
+import static jmri.jmris.json.JSON.THROTTLE;
+import static jmri.jmris.json.JSON.TYPE;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -8,12 +15,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import jmri.JmriException;
 import jmri.jmris.JmriConnection;
-import static jmri.jmris.json.JSON.CODE;
-import static jmri.jmris.json.JSON.DATA;
-import static jmri.jmris.json.JSON.ERROR;
-import static jmri.jmris.json.JSON.MESSAGE;
-import static jmri.jmris.json.JSON.THROTTLE;
-import static jmri.jmris.json.JSON.TYPE;
 
 /**
  * 

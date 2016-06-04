@@ -1,11 +1,10 @@
-// SectionTableAction.java
 package jmri.jmrit.beantable;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -57,15 +56,9 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author	Dave Duchamp Copyright (C) 2008, 2011
- * @version $Revision$
+ * @author GT 2009
  */
-// GT - 12-Oct-2009 - Added "Entry Block" column in entryPointTable
 public class SectionTableAction extends AbstractTableAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8024377620599551244L;
 
     /**
      * Create an action with a specific title.
@@ -73,7 +66,7 @@ public class SectionTableAction extends AbstractTableAction {
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
-     * @param actionName
+     * @param actionName title of the action
      */
     public SectionTableAction(String actionName) {
         super(actionName);
@@ -98,10 +91,6 @@ public class SectionTableAction extends AbstractTableAction {
     protected void createModel() {
         m = new BeanTableDataModel() {
 
-            /**
-             *
-             */
-            private static final long serialVersionUID = 7958656807666017548L;
             static public final int BEGINBLOCKCOL = NUMCOLUMN;
             static public final int ENDBLOCKCOL = BEGINBLOCKCOL + 1;
             static public final int EDITCOL = ENDBLOCKCOL + 1;
@@ -639,13 +628,13 @@ public class SectionTableAction extends AbstractTableAction {
         reverseSensorField.setText(curSection.getReverseBlockingSensorName());
         forwardStopSensorField.setText(curSection.getForwardStoppingSensorName());
         reverseStopSensorField.setText(curSection.getReverseStoppingSensorName());
-        ArrayList<EntryPoint> list = (ArrayList<EntryPoint>) curSection.getForwardEntryPointList();
+        List<EntryPoint> list = curSection.getForwardEntryPointList();
         if (list.size() > 0) {
             for (int j = 0; j < list.size(); j++) {
                 entryPointList.add(list.get(j));
             }
         }
-        list = (ArrayList<EntryPoint>) curSection.getReverseEntryPointList();
+        list = curSection.getReverseEntryPointList();
         if (list.size() > 0) {
             for (int j = 0; j < list.size(); j++) {
                 entryPointList.add(list.get(j));
@@ -680,7 +669,7 @@ public class SectionTableAction extends AbstractTableAction {
             } else {
                 curSection = sectionManager.createNewSection(sName, uName);
             }
-        } catch (Exception ex) {
+        } catch (NumberFormatException ex) {
             // user input no good
             if (_autoSystemName.isSelected()) {
                 handleCreateException(uName);
@@ -922,7 +911,7 @@ public class SectionTableAction extends AbstractTableAction {
     }
 
     private void initializeBlockCombo() {
-        ArrayList<String> allBlocks = (ArrayList<String>) blockManager.getSystemNameList();
+        List<String> allBlocks = blockManager.getSystemNameList();
         blockBox.removeAllItems();
         for (int j = blockBoxList.size(); j > 0; j--) {
             blockBoxList.remove(j - 1);
@@ -969,7 +958,7 @@ public class SectionTableAction extends AbstractTableAction {
 
     private boolean connected(Block b1, Block b2) {
         if ((b1 != null) && (b2 != null)) {
-            ArrayList<Path> paths = (ArrayList<Path>) b1.getPaths();
+            List<Path> paths = b1.getPaths();
             for (int i = 0; i < paths.size(); i++) {
                 if (paths.get(i).getBlock() == b2) {
                     return true;
@@ -990,7 +979,7 @@ public class SectionTableAction extends AbstractTableAction {
             // cycle through Blocks to find Entry Points
             for (int i = 0; i < blockList.size(); i++) {
                 Block sb = blockList.get(i);
-                ArrayList<Path> paths = (ArrayList<Path>) sb.getPaths();
+                List<Path> paths = sb.getPaths();
                 for (int j = 0; j < paths.size(); j++) {
                     Path p = paths.get(j);
                     if (!inSection(p.getBlock())) {
@@ -1295,11 +1284,6 @@ public class SectionTableAction extends AbstractTableAction {
     public class BlockTableModel extends javax.swing.table.AbstractTableModel implements
             java.beans.PropertyChangeListener {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 3125125881974648842L;
-
         public static final int SNAME_COLUMN = 0;
 
         public static final int UNAME_COLUMN = 1;
@@ -1389,11 +1373,6 @@ public class SectionTableAction extends AbstractTableAction {
      * Table model for Entry Points in Create/Edit Section window
      */
     public class EntryPointTableModel extends javax.swing.table.AbstractTableModel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -255007909450019689L;
 
         public static final int BLOCK_COLUMN = 0;
 
@@ -1514,5 +1493,3 @@ public class SectionTableAction extends AbstractTableAction {
 
     private final static Logger log = LoggerFactory.getLogger(SectionTableAction.class.getName());
 }
-
-/* @(#)SectionTableAction.java */

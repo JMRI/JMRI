@@ -60,6 +60,7 @@ public class Automation implements java.beans.PropertyChangeListener {
     }
 
     // for combo boxes
+    @Override
     public String toString() {
         return getName();
     }
@@ -167,6 +168,7 @@ public class Automation implements java.beans.PropertyChangeListener {
             item.getAction().removePropertyChangeListener(this);
             item.getAction().addPropertyChangeListener(this);
             Thread runAction = new Thread(new Runnable() {
+                @Override
                 public void run() {
                     item.getAction().doAction();
                 }
@@ -325,7 +327,6 @@ public class Automation implements java.beans.PropertyChangeListener {
      * Allowable sequence numbers are 0 to max size of automation. 0 = start of
      * list.
      *
-     * @param sequence
      * @return automation item
      */
     public AutomationItem addItem(int sequence) {
@@ -359,7 +360,6 @@ public class Automation implements java.beans.PropertyChangeListener {
     /**
      * Delete a AutomationItem
      *
-     * @param item
      */
     public void deleteItem(AutomationItem item) {
         if (item != null) {
@@ -394,7 +394,6 @@ public class Automation implements java.beans.PropertyChangeListener {
     /**
      * Get a AutomationItem by id
      *
-     * @param id
      * @return automation item
      */
     public AutomationItem getItemById(String id) {
@@ -453,7 +452,6 @@ public class Automation implements java.beans.PropertyChangeListener {
     /**
      * Places a AutomationItem earlier in the automation
      *
-     * @param item
      */
     public void moveItemUp(AutomationItem item) {
         int sequenceId = item.getSequenceId();
@@ -476,7 +474,6 @@ public class Automation implements java.beans.PropertyChangeListener {
     /**
      * Places a AutomationItem later in the automation
      *
-     * @param item
      */
     public void moveItemDown(AutomationItem item) {
         int sequenceId = item.getSequenceId();
@@ -613,6 +610,10 @@ public class Automation implements java.beans.PropertyChangeListener {
                         step(); // continue running by doing the next action
                     }
                 } else if (evt.getPropertyName().equals(Action.ACTION_HALT_CHANGED_PROPERTY)) {
+                    if ((boolean) evt.getNewValue() == true) {
+                        log.debug("User halted successful action");
+                        setNextAutomationItem();
+                    }
                     stop();
                 }
             }
@@ -638,6 +639,7 @@ public class Automation implements java.beans.PropertyChangeListener {
         }
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY)
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e

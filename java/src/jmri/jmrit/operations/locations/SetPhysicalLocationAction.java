@@ -43,6 +43,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
 
     SetPhysicalLocationFrame f = null;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a copy route frame
         if (f == null || !f.isVisible()) {
@@ -114,11 +115,13 @@ public class SetPhysicalLocationAction extends AbstractAction {
 
             // setup buttons
             saveButton.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     saveButtonActionPerformed(e);
                 }
             });
             closeButton.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     closeButtonActionPerformed(e);
                 }
@@ -143,7 +146,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
         }
 
         /**
-         * Save button action -> save this Reporter's location
+         * Save button action {@literal ->} save this Reporter's location
          */
         public void saveButtonActionPerformed(java.awt.event.ActionEvent ae) {
             // check to see if a location has been selected
@@ -170,6 +173,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
             }
         }
 
+        @Override
         public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
             if (locationBox.getSelectedItem() == null) {
                 resetSpinners();
@@ -179,6 +183,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
             }
         }
 
+        @Override
         public void spinnerChangeEvent(javax.swing.event.ChangeEvent ae) {
             if (ae.getSource() == physicalLocation) {
                 Location l = (Location) locationBox.getSelectedItem();
@@ -209,6 +214,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
             l.setPhysicalLocation(physicalLocation.getValue());
         }
 
+        @Override
         public void dispose() {
             super.dispose();
         }

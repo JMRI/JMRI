@@ -32,17 +32,12 @@ import org.slf4j.LoggerFactory;
 public class SignalMastLogicTableAction extends AbstractTableAction {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = -6334687600293911353L;
-
-    /**
      * Create an action with a specific title.
      * <P>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
-     * @param s
+     * @param s title of the action
      */
     public SignalMastLogicTableAction(String s) {
         super(s);
@@ -60,14 +55,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
         JTable dataTable = m.makeJTable(sorter);
         sorter.setTableHeader(dataTable.getTableHeader());
         // create the frame
-        f = new jmri.jmrit.beantable.BeanTableFrame(m, helpTarget(), dataTable) {
-
-            /**
-             *
-             */
-            private static final long serialVersionUID = -4359437797962676692L;
-
-        };
+        f = new jmri.jmrit.beantable.BeanTableFrame(m, helpTarget(), dataTable) {};
         setMenuBar(f);
         setTitle();
         addToFrame(f);
@@ -102,11 +90,6 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
 
     protected void createModel() {
         m = new BeanTableDataModel() {
-
-            /**
-             *
-             */
-            private static final long serialVersionUID = 4691632819840510353L;
             static public final int SOURCECOL = 0;
             static public final int SOURCEAPPCOL = 1;
             static public final int DESTCOL = 2;

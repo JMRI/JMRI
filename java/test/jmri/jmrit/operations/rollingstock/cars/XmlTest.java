@@ -246,7 +246,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("car c4 fred", false, c4.hasFred());
         Assert.assertEquals("car c4 color", "", c4.getColor());
         Assert.assertEquals("car c4 comment", "", c4.getComment());
-        Assert.assertEquals("car c4 length", "", c4.getLength());
+        Assert.assertEquals("car c4 length", "0", c4.getLength());
         Assert.assertEquals("car c4 load", "E", c4.getLoadName());
         Assert.assertEquals("car c4 moves", 0, c4.getMoves());
         Assert.assertEquals("car c4 number", "Test Number 4", c4.getNumber());
@@ -279,7 +279,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("car c6 fred", false, c6.hasFred());
         Assert.assertEquals("car c6 color", "", c6.getColor());
         Assert.assertEquals("car c6 comment", "", c6.getComment());
-        Assert.assertEquals("car c6 length", "", c6.getLength());
+        Assert.assertEquals("car c6 length", "0", c6.getLength());
         Assert.assertEquals("car c6 load", "E", c6.getLoadName());
         Assert.assertEquals("car c6 moves", 0, c6.getMoves());
         Assert.assertEquals("car c6 number", "Test Number 6", c6.getNumber());
@@ -395,7 +395,7 @@ public class XmlTest extends OperationsTestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", XmlTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

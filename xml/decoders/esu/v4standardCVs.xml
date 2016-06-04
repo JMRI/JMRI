@@ -358,7 +358,7 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Motor Overload Protection</label>
   </variable>
-  <variable CV="124" mask="XVXXXXXX" default="0" item="ESU V4 Advanced Stop Behaviour Option 1" exclude="LokSound Micro V4.0,LokSound XL V4.0">
+  <variable CV="245" mask="XVXXXXXX" default="0" item="ESU V4 Advanced Stop Behaviour Option 1" exclude="LokSound Micro V4.0,LokSound XL V4.0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Stop immediately on speed step 0</label>
   </variable>

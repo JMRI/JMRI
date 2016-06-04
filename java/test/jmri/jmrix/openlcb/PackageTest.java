@@ -23,7 +23,7 @@ public class PackageTest extends TestCase {
     static public void main(String[] args) {
         apps.tests.AllTest.initLogging();
         String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -42,7 +42,7 @@ public class PackageTest extends TestCase {
         suite.addTest(OlcbTurnoutTest.suite());
         suite.addTest(OlcbThrottleTest.suite());
         suite.addTest(OlcbThrottleManagerTest.suite());
-
+        suite.addTest(BundleTest.suite());
         suite.addTest(jmri.jmrix.openlcb.swing.PackageTest.suite());
 
         return suite;

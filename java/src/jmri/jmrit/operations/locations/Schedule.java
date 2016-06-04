@@ -48,6 +48,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
     }
 
     // for combo boxes
+    @Override
     public String toString() {
         return _name;
     }
@@ -85,7 +86,6 @@ public class Schedule implements java.beans.PropertyChangeListener {
     /**
      * Adds a car type to the end of this schedule
      *
-     * @param type
      * @return ScheduleItem created for the car type added
      */
     public ScheduleItem addItem(String type) {
@@ -109,8 +109,6 @@ public class Schedule implements java.beans.PropertyChangeListener {
      * Allowable sequence numbers are 0 to max size of schedule. 0 = start of
      * list.
      *
-     * @param item
-     * @param sequence
      * @return schedule item
      */
     public ScheduleItem addItem(String item, int sequence) {
@@ -149,7 +147,6 @@ public class Schedule implements java.beans.PropertyChangeListener {
     /**
      * Delete a ScheduleItem
      *
-     * @param si
      */
     public void deleteItem(ScheduleItem si) {
         if (si != null) {
@@ -178,7 +175,6 @@ public class Schedule implements java.beans.PropertyChangeListener {
     /**
      * Get item by car type (gets last schedule item with this type)
      *
-     * @param type
      * @return schedule item
      */
     public ScheduleItem getItemByType(String type) {
@@ -197,7 +193,6 @@ public class Schedule implements java.beans.PropertyChangeListener {
     /**
      * Get a ScheduleItem by id
      *
-     * @param id
      * @return schedule item
      */
     public ScheduleItem getItemById(String id) {
@@ -247,7 +242,6 @@ public class Schedule implements java.beans.PropertyChangeListener {
     /**
      * Places a ScheduleItem earlier in the schedule
      *
-     * @param si
      */
     public void moveItemUp(ScheduleItem si) {
         int sequenceId = si.getSequenceId();
@@ -270,7 +264,6 @@ public class Schedule implements java.beans.PropertyChangeListener {
     /**
      * Places a ScheduleItem later in the schedule
      *
-     * @param si
      */
     public void moveItemDown(ScheduleItem si) {
         int sequenceId = si.getSequenceId();
@@ -348,6 +341,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
         return e;
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e

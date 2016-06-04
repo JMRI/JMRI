@@ -20,7 +20,7 @@ public class PackageTest extends TestCase {
     static public void main(String[] args) {
         apps.tests.AllTest.initLogging();
         String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -49,6 +49,11 @@ public class PackageTest extends TestCase {
 
         suite.addTest(jmri.jmrit.display.configurexml.PackageTest.suite());
         suite.addTest(jmri.jmrit.display.layoutEditor.PackageTest.suite());
+        suite.addTest(jmri.jmrit.display.panelEditor.PackageTest.suite());
+        suite.addTest(jmri.jmrit.display.palette.PackageTest.suite());
+        suite.addTest(jmri.jmrit.display.controlPanelEditor.PackageTest.suite());
+
+        suite.addTest(BundleTest.suite());
 
         return suite;
     }

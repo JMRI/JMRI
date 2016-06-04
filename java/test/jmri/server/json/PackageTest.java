@@ -19,16 +19,19 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.server.JsonTest");
+        suite.addTest(BundleTest.suite());
         suite.addTest(jmri.server.json.light.PackageTest.suite());
         suite.addTest(jmri.server.json.memory.PackageTest.suite());
         suite.addTest(jmri.server.json.power.PackageTest.suite());
         suite.addTest(jmri.server.json.roster.PackageTest.suite());
+        suite.addTest(jmri.server.json.route.PackageTest.suite());
+        suite.addTest(jmri.server.json.sensor.PackageTest.suite());
         suite.addTest(jmri.server.json.turnout.PackageTest.suite());
 
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {

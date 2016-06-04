@@ -1,4 +1,3 @@
-// RosterEntryComboBox.java
 package jmri.jmrit.roster.swing;
 
 import jmri.jmrit.roster.Roster;
@@ -8,15 +7,9 @@ import jmri.jmrit.roster.Roster;
  * without respect to a roster group.
  *
  * @author Randall Wood Copyright (C) 2011
- * @version $Revision: $
  * @see RosterEntryComboBox
  */
 public class GlobalRosterEntryComboBox extends RosterEntryComboBox {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7160579198258524537L;
 
     /**
      * Create a combo box with all roster entries in the default Roster.
@@ -28,7 +21,6 @@ public class GlobalRosterEntryComboBox extends RosterEntryComboBox {
     /**
      * Create a combo box with all roster entries in an arbitrary Roster.
      *
-     * @param roster
      */
     public GlobalRosterEntryComboBox(Roster roster) {
         super(roster, Roster.ALLENTRIES, null, null, null, null, null, null, null);
@@ -38,13 +30,6 @@ public class GlobalRosterEntryComboBox extends RosterEntryComboBox {
      * Create a combo box with roster entries in the default Roster matching the
      * specified attributes.
      *
-     * @param roadName
-     * @param roadNumber
-     * @param dccAddress
-     * @param mfg
-     * @param decoderMfgID
-     * @param decoderVersionID
-     * @param id
      */
     public GlobalRosterEntryComboBox(String roadName,
             String roadNumber,
@@ -68,14 +53,6 @@ public class GlobalRosterEntryComboBox extends RosterEntryComboBox {
      * Create a combo box with roster entries in an arbitrary Roster matching
      * the specified attributes.
      *
-     * @param roster
-     * @param roadName
-     * @param roadNumber
-     * @param dccAddress
-     * @param mfg
-     * @param decoderMfgID
-     * @param decoderVersionID
-     * @param id
      */
     public GlobalRosterEntryComboBox(Roster roster,
             String roadName,

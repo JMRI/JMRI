@@ -21,17 +21,18 @@ import org.slf4j.LoggerFactory;
  * internal in sync to the Nce clock. The following of the Nce clock is better
  * than the other way around due to the fine tuning available on the internal
  * clock while the Nce clock doesn't.
- * <P>
+ * <BR>
  * <hr>
  * This file is part of JMRI.
  * <P>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * </P><P>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * </P>
  *
  * @author Ken Cameron Copyright (C) 2007
  * @author Dave Duchamp Copyright (C) 2007
@@ -141,6 +142,8 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         log.error("message received: " + m);
     }
 
+    // TODO: Why does this if statement contain a direct false? FIXME!
+    @SuppressWarnings("unused")
     public void reply(NceReply r) {
         if (false && log.isDebugEnabled()) {
             log.debug("NceReply(len " + r.getNumDataElements() + ") waiting: " + waiting

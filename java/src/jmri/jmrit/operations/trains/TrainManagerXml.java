@@ -276,7 +276,6 @@ public class TrainManagerXml extends OperationsXml {
     /**
      * Save previous manifest file in a separate directory called manifestBackups.
      * Each train manifest is saved in a unique directory using the train's name.
-     * @param name
      */
     private void savePreviousManifestFile(String name) {
         if (Setup.isSaveTrainManifestsEnabled()) {
@@ -289,7 +288,7 @@ public class TrainManagerXml extends OperationsXml {
             if (file == null) {
                 log.debug("No {} manifest file to backup", name);
             } else if (file.canWrite()) {
-                String lastModified = new SimpleDateFormat("yyyyMMdd-HHmmss").format(file.lastModified());
+                String lastModified = new SimpleDateFormat("yyyyMMdd-HHmmss").format(file.lastModified()); // NOI18N
                 String backupName = getBackupManifestFilename(name, lastModified); // NOI18N
                 if (file.renameTo(new File(backupName))) {
                     log.debug("created new manifest backup file {}", backupName);

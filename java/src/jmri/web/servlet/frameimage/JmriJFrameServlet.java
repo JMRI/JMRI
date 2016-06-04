@@ -1,5 +1,8 @@
 package jmri.web.servlet.frameimage;
 
+import static jmri.jmris.json.JSON.NAME;
+import static jmri.jmris.json.JSON.URL;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -28,8 +31,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JRadioButton;
 import jmri.jmris.json.JSON;
-import static jmri.jmris.json.JSON.NAME;
-import static jmri.jmris.json.JSON.URL;
 import jmri.jmris.json.JsonUtil;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
@@ -200,6 +201,18 @@ public class JmriJFrameServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (WebServerPreferences.getDefault().isDisableFrames()) {
+            if (WebServerPreferences.getDefault().isRedirectFramesToPanels()) {
+                if (JSON.JSON.equals(request.getParameter("format"))) {
+                    response.sendRedirect("/panel?format=json");
+                } else {
+                    response.sendRedirect("/panel");
+                }
+            } else {
+                response.sendError(HttpServletResponse.SC_FORBIDDEN, Bundle.getMessage(request.getLocale(), "FramesAreDisabled"));
+            }
+            return;
+        }
         JmriJFrame frame = null;
         String name = getFrameName(request.getRequestURI());
         List<String> disallowedFrames = WebServerPreferences.getDefault().getDisallowedFrames();

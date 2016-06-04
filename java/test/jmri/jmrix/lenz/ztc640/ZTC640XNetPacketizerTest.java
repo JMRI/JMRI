@@ -28,7 +28,7 @@ public class ZTC640XNetPacketizerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", ZTC640XNetPacketizerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // The minimal setup for log4J

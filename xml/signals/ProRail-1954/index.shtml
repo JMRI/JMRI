@@ -29,11 +29,11 @@ In version 2 information on Rule numbers and additional Indications were added, 
 <p>
 Remarks:
     <ul>
-        <li>Dwarf signal icons are named -D</li>
-        <li>Flashing icons are named -RF/-RY/-RG</li>
-        <li>Approach signal icons are named -VG/-VY</li>
-        <li>Icons with a lighted number are named -4 and show "4" on the icon, although in real world applications this could display one of the following: 4 (not below Medium aspect as identical to Limited), 6, 8, 10 (rare), 12 or 13</li>
-        <li>A number lighted in White indicates the maximum allowed speed (* 10 km/h)</li>
+        <li>Dwarf signal icons are named -D.</li>
+        <li>Flashing icons are named -RF/-YF/-GF (F for Flashing).</li>
+        <li>Approach signal icons are named -VG/-VY (V for "Voorsein" in Dutch).</li>
+        <li>Icons with a lighted number are named -4 and show "4" on the icon, although in real world applications this could display one of the following: 4 (not below a Medium aspect as that's identical to Limited), 6, 8, 10 (rare), 12 or 13.</li>
+        <li>A number lighted in White indicates the maximum allowed speed (* 10 km/h).</li>
         <li>Although there was no official Stop For Engineering aspect in the 1955 Rules, a Flashing Red indication has been added.<br>
             Since 2000 this is in use indicating Track Out of Service (<em>Buiten Dienst</em>), protecting railroad workers.</li>
     </ul>
@@ -41,17 +41,17 @@ Remarks:
 
 <p>
         <table class="table table-bordered table-hover table-condensed">
-            <thead><tr><th title="Field #1">Rule</th>
+            <thead><tr><th title="Field #1" align="left">Rule #</th>
                 <th title="Field #2">High</th>
                 <th title="Field #3">Dwarf</th>
                 <th title="Field #4">Appro</th>
-                <th title="Field #5">appearance</th>
-                <th title="Field #6">appearance name</th>
-                <th title="Field #7">Next for Main</th>
-                <th title="Field #8">Next for Diverging</th>
-                <th title="Field #9"><a href="http://www.marcrpieters.nl/seinen.html">Marc Pieters #</a></th>
+                <th title="Field #5">Appearance</th>
+                <th title="Field #6">Appearance name</th>
+                <th title="Field #7">Preceding for Main</th>
+                <th title="Field #8">Preceding for Diverging</th>
+                <th title="Field #9" align="center"><a href="http://www.marcrpieters.nl/seinen.html">Marc Pieters #</a></th>
             </tr></thead>
-            <tbody><tr><td align="right">201</td>
+            <tbody><tr><td align="left">201</td>
                 <td>x</td>
                 <td> </td>
                 <td> </td>
@@ -59,29 +59,29 @@ Remarks:
                 <td>Clear</td>
                 <td>Clear</td>
                 <td> </td>
-                <td align="right">18</td>
+                <td align="center">18</td>
             </tr>
-            <tr><td align="right">202</td>
+            <tr><td align="left">202</td>
                 <td> </td>
                 <td> </td>
                 <td>x</td>
-                <td>flashing green + number (not "4")</td>
+                <td>flashing green + number (not&nbsp;"4")</td>
                 <td>Medium (Diverging)</td>
                 <td>N/A</td>
                 <td>Diverging Approach Medium</td>
-                <td align="right">16</td>
+                <td align="center"16</td>
             </tr>
-            <tr><td align="right">206</td>
+            <tr><td align="left">206</td>
                 <td>x</td>
                 <td>x</td>
                 <td>x</td>
-                <td>flashing green (= "4")</td>
+                <td>flashing green (=&nbsp;"4")</td>
                 <td>Limited (Diverging)</td>
                 <td>N/A</td>
                 <td>Diverging Approach Medium</td>
-                <td align="right">14</td>
+                <td align="center">14</td>
             </tr>
-            <tr><td align="right">209</td>
+            <tr><td align="left">209</td>
                 <td> </td>
                 <td> </td>
                 <td> </td>
@@ -89,9 +89,9 @@ Remarks:
                 <td>Approach Medium</td>
                 <td>Clear</td>
                 <td> </td>
-                <td align="right">10</td>
+                <td align="center">10</td>
             </tr>
-            <tr><td align="right">210</td>
+            <tr><td align="left">210</td>
                 <td> </td>
                 <td> </td>
                 <td>x</td>
@@ -99,9 +99,9 @@ Remarks:
                 <td>Diverging Approach Medium</td>
                 <td>Approach Medium</td>
                 <td> </td>
-                <td align="right">12</td>
+                <td align="center">12</td>
             </tr>
-            <tr><td align="right">212</td>
+            <tr><td align="left">212</td>
                 <td>x</td>
                 <td>x</td>
                 <td>x</td>
@@ -109,9 +109,9 @@ Remarks:
                 <td>Approach</td>
                 <td>Clear</td>
                 <td> </td>
-                <td align="right">8</td>
+                <td align="center">8</td>
             </tr>
-            <tr><td align="right">214</td>
+            <tr><td align="left">214</td>
                 <td>x</td>
                 <td>x</td>
                 <td> </td>
@@ -119,9 +119,9 @@ Remarks:
                 <td>Restricting</td>
                 <td>Approach</td>
                 <td> </td>
-                <td align="right">6</td>
+                <td align="center">6</td>
             </tr>
-            <tr><td align="right">215</td>
+            <tr><td align="left">215</td>
                 <td>x</td>
                 <td>x</td>
                 <td> </td>
@@ -129,9 +129,9 @@ Remarks:
                 <td>Stop</td>
                 <td>Approach</td>
                 <td> </td>
-                <td align="right">2</td>
+                <td align="center">2</td>
             </tr>
-            <tr><td align="right">216</td>
+            <tr><td align="left">216</td>
                 <td> </td>
                 <td> </td>
                 <td> </td>
@@ -139,9 +139,9 @@ Remarks:
                 <td>N/A</td>
                 <td>N/A</td>
                 <td> </td>
-                <td align="right"></td>
+                <td align="center"></td>
             </tr>
-            <tr><td align="right"></td>
+            <tr><td align="left">N/A</td>
                 <td>x</td>
                 <td>x</td>
                 <td> </td>
@@ -149,9 +149,9 @@ Remarks:
                 <td>Track Out of Service</td>
                 <td>Stop</td>
                 <td> </td>
-                <td align="right">4</td>
+                <td align="center">4</td>
             </tr>
-            <tr><td align="right"></td>
+            <tr><td align="left">N/A</td>
                 <td>x</td>
                 <td>x</td>
                 <td>x</td>
@@ -159,16 +159,16 @@ Remarks:
                 <td>Not Lit</td>
                 <td> </td>
                 <td> </td>
-                <td align="right"></td>
+                <td align="center"></td>
             </tr>
             </tbody></table>
 </p>
 
 <p>Sources:</p>
     <ul>
-    <li><a href="http://en.wikipedia.org/wiki/Dutch_railway_signalling">Dutch signaling wiki</a></li>
-    <li><a href="http://encyclopedie.beneluxspoor.net/index.php/Lichtseinen">Beneluxspoor Signals (in Dutch)</a></li>
-    <li><a href="http://www.marcrpieters.nl/seinen.html">Marc Pieters' Signaling page (in Dutch)</a></li>
+    <li><a href="http://en.wikipedia.org/wiki/Dutch_railway_signalling">Dutch signaling wiki</a> including a link to Annex 4.</li>
+    <li><a href="http://encyclopedie.beneluxspoor.net/index.php/Lichtseinen">Beneluxspoor Signals (in Dutch)</a>.</li>
+    <li><a href="http://www.marcrpieters.nl/seinen.html">Marc Pieters' Signaling page (in Dutch)</a>.</li>
     </ul>
 <p>
 See the

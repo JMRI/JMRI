@@ -86,11 +86,11 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
      * Creates a new JsonThrottle or returns an existing one if the request is
      * for an existing throttle.
      *
-     * data can contain either a string {@link JSON#ID} node containing the ID
+     * data can contain either a string {@link jmri.jmris.json.JSON#ID} node containing the ID
      * of a {@link jmri.jmrit.roster.RosterEntry} or an integer
-     * {@link JSON#ADDRESS} node. If data contains an ADDRESS, the ID node is
+     * {@link jmri.jmris.json.JSON#ADDRESS} node. If data contains an ADDRESS, the ID node is
      * ignored. The ADDRESS may be accompanied by a boolean
-     * {@link JSON#IS_LONG_ADDRESS} node specifying the type of address, if
+     * {@link jmri.jmris.json.JSON#IS_LONG_ADDRESS} node specifying the type of address, if
      * IS_LONG_ADDRESS is not specified, the inverse of {@link jmri.ThrottleManager#canBeShortAddress(int)
      * } is used as the "best guess" of the address length.
      *
@@ -99,8 +99,6 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
      * @param server     The server requesting this throttle on behalf of a
      *                   client
      * @return The throttle
-     * @throws jmri.server.json.JsonException
-     * @throws IOException
      */
     public static JsonThrottle getThrottle(String throttleId, JsonNode data, JsonThrottleSocketService server) throws JsonException, IOException {
         DccLocoAddress address = null;

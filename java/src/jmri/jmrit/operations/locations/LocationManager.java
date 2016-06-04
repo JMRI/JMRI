@@ -108,7 +108,6 @@ public class LocationManager implements java.beans.PropertyChangeListener {
      * Finds an existing location or creates a new location if needed requires
      * location's name creates a unique id for this location
      *
-     * @param name
      *
      * @return new location or existing location
      */
@@ -414,6 +413,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
      * There aren't any current property changes being monitored
      *
      */
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         log.debug("LocationManager sees property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e
                 .getOldValue(), e.getNewValue()); // NOI18N

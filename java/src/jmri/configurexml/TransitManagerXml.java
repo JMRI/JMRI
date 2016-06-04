@@ -121,8 +121,8 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
      * Create a TransitManager object of the correct class, then register and
      * fill it.
      *
-     * @param sharedTransits Top level Element to unpack.
-     * @param perNodeTransits
+     * @param sharedTransits  Top level Element to unpack.
+     * @param perNodeTransits Per-node top level Element to unpack.
      * @return true if successful
      */
     @Override
@@ -137,8 +137,9 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
      * additional info needed for a specific Transit type, invoke this with the
      * parent of the set of Transit elements.
      *
-     * @param sharedTransits Element containing the Transit elements to load.
-     * @param perNodeTransits
+     * @param sharedTransits  Element containing the Transit elements to load.
+     * @param perNodeTransits Per-node Element containing the Transit elements
+     *                        to load.
      */
     @SuppressWarnings("null")
     public void loadTransits(Element sharedTransits, Element perNodeTransits) {

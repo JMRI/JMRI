@@ -1,4 +1,3 @@
-// LokProgImporter.java
 package jmri.jmrit.symbolicprog;
 
 import java.io.BufferedReader;
@@ -26,7 +25,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author	Alex Shepherd Copyright (C) 2003
  * @author	Dave Heap Copyright (C) 2014
- * @version	$Revision: 24747 $
  */
 public class LokProgImporter {
 
@@ -40,15 +38,15 @@ public class LokProgImporter {
     private static final String CV_SEPARATOR = " = ";
 
     public LokProgImporter(File file, CvTableModel cvModel) throws IOException {
-        try {
+        try (
+                FileReader fileReader = new FileReader(file);
+                BufferedReader bufferedReader = new BufferedReader(fileReader);
+            ){
             CvValue cvObject;
             String CVindex = "";
             String line = null;
             String name = null;
             int value = 0;
-
-            FileReader fileReader = new FileReader(file);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
 
             while ((line = bufferedReader.readLine()) != null) {
                 if (line.startsWith(INDEX_PREFIX)) {

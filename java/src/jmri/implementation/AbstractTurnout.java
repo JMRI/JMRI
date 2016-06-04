@@ -9,8 +9,6 @@ import jmri.Turnout;
 import jmri.TurnoutOperation;
 import jmri.TurnoutOperationManager;
 import jmri.TurnoutOperator;
-import jmri.implementation.SignalSpeedMap;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,6 +49,9 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     public String getBeanType() {
         return Bundle.getMessage("BeanNameTurnout");
     }
+
+    private String closedText = InstanceManager.turnoutManagerInstance().getClosedText();
+    private String thrownText = InstanceManager.turnoutManagerInstance().getThrownText();
 
     /**
      * Handle a request to change state, typically by sending a message to the
@@ -96,8 +97,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * layout and hope for the best.
      */
     public void setCommandedState(int s) {
-        log.debug("set commanded state for turnout " + getSystemName() + " to "
-                + s);
+        log.debug("set commanded state for turnout {} to {}", getFullyFormattedDisplayName(),
+                (s==Turnout.CLOSED ? closedText : thrownText));
         newCommandedState(s);
         myOperator = getTurnoutOperator(); // MUST set myOperator before starting the thread
         if (myOperator == null) {
@@ -327,7 +328,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * state. Turnout that have local buttons can also be locked if their
      * decoder supports it.
      *
-     * @param locked
+     * @param turnoutLockout lockout state to monitor. Possible values
+     *                       {@link #CABLOCKOUT}, {@link #PUSHBUTTONLOCKOUT}.
+     *                       Can be combined to monitor both states.
+     * @param locked         true if turnout to be locked
      */
     public void setLocked(int turnoutLockout, boolean locked) {
         boolean firechange = false;
@@ -804,7 +808,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         String speed = _straightSpeed;
         if (_straightSpeed.equals("Global")) {
             speed = InstanceManager.turnoutManagerInstance().getDefaultClosedSpeed();
-        } else if (speed.equals("Block")) {
+        }
+        if (speed.equals("Block")) {
             return -1;
         }
         try {
@@ -869,4 +874,3 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     private final static Logger log = LoggerFactory.getLogger(AbstractTurnout.class.getName());
 }
-

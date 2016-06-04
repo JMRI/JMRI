@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -138,14 +139,17 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         table.getColumnModel().getColumn(DELETE_COLUMN).setPreferredWidth(70);
     }
 
+    @Override
     public int getRowCount() {
         return _list.size();
     }
 
+    @Override
     public int getColumnCount() {
         return HIGHEST_COLUMN;
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case ID_COLUMN:
@@ -177,6 +181,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         }
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case ID_COLUMN:
@@ -208,6 +213,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         }
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
             case ACTION_COLUMN:
@@ -232,6 +238,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         }
     }
 
+    @Override
     public Object getValueAt(int row, int col) {
         if (row >= _list.size()) {
             return "ERROR row " + row; // NOI18N
@@ -273,6 +280,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         }
     }
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
         if (value == null) {
             log.debug("Warning automation table row {} still in edit", row);
@@ -355,8 +363,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     /**
      * Returns either a comboBox loaded with Automations, or a goto list of
      * AutomationItems, or TrainSchedules.
-     * 
-     * @param item
+     *
      * @return comboBox loaded with automations or a goto automationIem list
      */
     private JComboBox<?> getAutomationComboBox(AutomationItem item) {
@@ -421,10 +428,12 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
             messageFailTextArea.setToolTipText(Bundle.getMessage("TipMessage"));
 
             buttonPane.add(haltCheckBox);
+            buttonPane.add(new JLabel("      ")); // some padding
         }
 
         JButton okayButton = new JButton(Bundle.getMessage("Okay"));
         okayButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent arg0) {
                 item.setMessage(messageTextArea.getText());
                 item.setMessageFail(messageFailTextArea.getText());
@@ -437,6 +446,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
 
         JButton cancelButton = new JButton(Bundle.getMessage("Cancel"));
         cancelButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent arg0) {
                 dialog.dispose();
                 return;
@@ -447,6 +457,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         JButton defaultMessagesButton = new JButton(Bundle.getMessage("DefaultMessages"));
         defaultMessagesButton.setToolTipText(Bundle.getMessage("TipDefaultButton"));
         defaultMessagesButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent arg0) {
                 if (messageTextArea.getText().equals(AutomationItem.NONE)) {
                     messageTextArea.setText(Bundle.getMessage("DefaultMessageOk"));
@@ -480,6 +491,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     }
 
     // this table listens for changes to a automation and it's car types
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY)
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e

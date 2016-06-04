@@ -1,4 +1,3 @@
-// StoreXmlAllAction.java
 package jmri.configurexml;
 
 import java.awt.event.ActionEvent;
@@ -15,15 +14,10 @@ import org.slf4j.LoggerFactory;
  * information stored in configuration files.
  *
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version	$Revision$
  * @see jmri.jmrit.XmlFile
  */
 public class StoreXmlAllAction extends StoreXmlConfigAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2662912096519480927L;
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
 
     public StoreXmlAllAction() {
@@ -35,7 +29,7 @@ public class StoreXmlAllAction extends StoreXmlConfigAction {
     }
 
     public void actionPerformed(ActionEvent e) {
-        java.io.File file = getFileName(this.getAllFileChooser());
+        java.io.File file = getFileName(getAllFileChooser());
         if (file == null) {
             return;
         }

@@ -81,7 +81,7 @@ involve other updates.
 
 <ul>
 
-<li>The library for the included <a href="../../web/WebServer.shtml">Jetty web server</a> will be updated to version 9.3.6.
+<li>The library for the included <a href="../../web">Jetty web server</a> will be updated to version 9.3.6.
 
 <li>At some point, we have to migrate away from <a href="Help.shtml">JavaHelp and JHelpDev</a>.
 At a minimum, we'll need to

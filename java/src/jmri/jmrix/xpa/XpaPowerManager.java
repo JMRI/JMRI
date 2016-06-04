@@ -14,9 +14,9 @@ import jmri.PowerManager;
  */
 public class XpaPowerManager implements PowerManager, XpaListener {
 
-    public XpaPowerManager() {
+    public XpaPowerManager(XpaTrafficController t) {
         // connect to the TrafficManager
-        tc = XpaTrafficController.instance();
+        tc = t;
         tc.addXpaListener(this);
     }
 

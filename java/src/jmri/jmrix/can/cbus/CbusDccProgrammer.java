@@ -1,22 +1,21 @@
-// CbusDccProgrammer.java
 package jmri.jmrix.can.cbus;
 
+import java.util.ArrayList;
+import java.util.List;
+import jmri.ProgrammingMode;
+import jmri.jmrix.AbstractProgrammer;
+import jmri.jmrix.can.CanListener;
+import jmri.jmrix.can.CanMessage;
+import jmri.jmrix.can.CanReply;
+import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.*;
-import jmri.jmrix.AbstractProgrammer;
-
-import java.util.*;
-
-import jmri.jmrix.can.*;
-import jmri.managers.DefaultProgrammerManager;
 
 /**
  * Implements the jmri.Programmer interface via commands for the CBUS
  * programmer.
  *
  * @author Andrew Crosland Copyright (C) 2009
- * @version	$Revision$
  */
 public class CbusDccProgrammer extends AbstractProgrammer implements CanListener {
 
@@ -214,5 +213,3 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
     private final static Logger log = LoggerFactory.getLogger(CbusDccProgrammer.class.getName());
 
 }
-
-/* @(#)CbusDccProgrammer.java */

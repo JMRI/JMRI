@@ -21,7 +21,7 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -47,23 +47,9 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(DCCppSensorTest.class));
         suite.addTest(new TestSuite(DCCppSensorManagerTest.class));
         suite.addTest(jmri.jmrix.dccpp.network.DCCppEthernetTest.suite());
+        suite.addTest(jmri.jmrix.dccpp.swing.PackageTest.suite());
 	/*
-        suite.addTest(new TestSuite(XNetTurnoutTest.class));
-        suite.addTest(new TestSuite(XNetTurnoutManagerTest.class));
-        suite.addTest(new TestSuite(XNetConsistManagerTest.class));
-        suite.addTest(new TestSuite(XNetConsistTest.class));
-        suite.addTest(new TestSuite(XNetExceptionTest.class));
-        suite.addTest(new TestSuite(XNetMessageExceptionTest.class));
-        suite.addTest(jmri.jmrix.lenz.li100.LI100Test.suite());
-        suite.addTest(jmri.jmrix.lenz.li100f.LI100FTest.suite());
-        suite.addTest(jmri.jmrix.lenz.li101.LI101Test.suite());
-        suite.addTest(jmri.jmrix.lenz.liusb.LIUSBTest.suite());
-        suite.addTest(jmri.jmrix.lenz.xntcp.XnTcpTest.suite());
-        suite.addTest(jmri.jmrix.lenz.liusbserver.LIUSBServerTest.suite());
-        suite.addTest(jmri.jmrix.lenz.xnetsimulator.XNetSimulatorTest.suite());
-        suite.addTest(jmri.jmrix.lenz.hornbyelite.EliteTest.suite());
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(jmri.jmrix.lenz.swing.SwingTest.suite());
         }
 	*/
 

@@ -1,4 +1,3 @@
-// JythonSigletAction.java
 package jmri.jmrit.automat;
 
 import java.awt.event.ActionEvent;
@@ -11,14 +10,8 @@ import javax.swing.JPanel;
  * Swing action to create and register a JythonSiglet object
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2007
- * @version $Revision$
  */
 public class JythonSigletAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7767646852999362415L;
 
     public JythonSigletAction(String s, JPanel who) {
         super(s);
@@ -40,5 +33,3 @@ public class JythonSigletAction extends AbstractAction {
         }
     }
 }
-
-/* @(#)JythonSigletAction.java */

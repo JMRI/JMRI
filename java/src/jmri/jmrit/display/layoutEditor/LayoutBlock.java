@@ -28,7 +28,6 @@ import jmri.Turnout;
 import jmri.implementation.AbstractNamedBean;
 import jmri.jmrit.beantable.beanedit.BeanEditItem;
 import jmri.jmrit.beantable.beanedit.BeanItemPanel;
-import jmri.util.ColorUtil;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -2132,7 +2131,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         if (enableDeleteRouteLogging) {
             log.info(msgPrefix + " finshed check and notifying of removed routes from " + notifyingblk.getDisplayName() + " ===");
         }
-        routesToRemove = null;
     }
 
     void addThroughPath(Adjacencies adj) {
@@ -2880,7 +2878,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getSource() instanceof LayoutBlock) {
             LayoutBlock srcEvent = (LayoutBlock) e.getSource();
-            if (e.getPropertyName().toString().equals("NewRoute")) {
+            if (e.getPropertyName().equals("NewRoute")) {
                 LayoutBlock lbkblock = (LayoutBlock) e.getNewValue();
                 if (enableUpdateRouteLogging) {
                     log.info("==Event type " + e.getPropertyName().toString() + " New " + lbkblock.getDisplayName());

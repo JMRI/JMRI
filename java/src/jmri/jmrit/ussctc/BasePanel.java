@@ -1,24 +1,14 @@
-// BasePanel.java
 package jmri.jmrit.ussctc;
 
 import javax.swing.JPanel;
-import jmri.InstanceManager;
-import jmri.Memory;
-import jmri.Sensor;
-import jmri.Turnout;
+import jmri.*;
 
 /**
  * Refactored common routines and data for the GUI panels in this package.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version	$Revision$
  */
 public class BasePanel extends JPanel implements Constants {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1964780376359019410L;
 
     BasePanel() {
         if (rb == null) {
@@ -41,8 +31,9 @@ public class BasePanel extends JPanel implements Constants {
         Turnout t = null;
         try {
             t = InstanceManager.turnoutManagerInstance().provideTurnout(name);
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             // no action taken; will recover later when t is null
+            log.debug("could not create turnout \"{}\"", name);
         }
         if (t == null) {
             complain("ErrorNoTurnoutMatch", name);
@@ -55,8 +46,9 @@ public class BasePanel extends JPanel implements Constants {
         Sensor t = null;
         try {
             t = InstanceManager.sensorManagerInstance().provideSensor(name);
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             // no action taken; will recover later when t is null
+            log.debug("could not create sensor \"{}\"", name);
         }
         if (t == null) {
             complain("ErrorNoSensorMatch", name);
@@ -69,8 +61,9 @@ public class BasePanel extends JPanel implements Constants {
         Memory t = null;
         try {
             t = InstanceManager.memoryManagerInstance().provideMemory(name);
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             // no action taken; will recover later when t is null
+            log.debug("could not create memory \"{}\"", name);
         }
         if (t == null) {
             complain("ErrorNoMemoryMatch", name);
@@ -79,4 +72,5 @@ public class BasePanel extends JPanel implements Constants {
         return true;
     }
 
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BasePanel.class.getName());
 }

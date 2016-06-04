@@ -375,7 +375,7 @@ public class AutoTrainAction {
             case TransitSectionAction.SETLIGHT:
                 // set light on or off
                 if (_autoActiveTrain.getAutoEngineer() != null) {
-                    log.debug("setting light (F0) to {}", tsa.getStringWhat());
+                    log.debug("{}: setting light (F0) to {}", _activeTrain.getTrainName(), tsa.getStringWhat());
                     if (tsa.getStringWhat().equals("On")) {
                         _autoActiveTrain.getAutoEngineer().setFunction(0, true);
                     } else if (tsa.getStringWhat().equals("Off")) {

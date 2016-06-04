@@ -111,7 +111,6 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
     /**
      * Received an UDID, filter out any duplicate.
      *
-     * @param device
      */
     public void notifyDeviceInfoChanged(DeviceServer device) {
 

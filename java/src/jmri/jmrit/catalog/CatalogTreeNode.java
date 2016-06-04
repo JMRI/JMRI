@@ -3,9 +3,7 @@ package jmri.jmrit.catalog;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
-
 import javax.swing.tree.DefaultMutableTreeNode;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -101,7 +99,7 @@ public class CatalogTreeNode extends DefaultMutableTreeNode {
     }
 
     public Enumeration<CatalogTreeNode> children() {
-        return (Enumeration<CatalogTreeNode>) super.children();
+        return super.children();
     }
     
     public ArrayList<CatalogTreeLeaf> getLeaves() {

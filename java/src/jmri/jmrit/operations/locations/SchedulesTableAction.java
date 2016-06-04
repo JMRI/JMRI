@@ -25,6 +25,7 @@ public class SchedulesTableAction extends AbstractAction {
 
     SchedulesTableFrame f = null;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a schedule table frame
         if (f == null || !f.isVisible()) {

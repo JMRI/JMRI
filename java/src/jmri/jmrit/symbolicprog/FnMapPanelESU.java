@@ -1,4 +1,3 @@
-// FnMapPanelESU.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.Dimension;
@@ -84,14 +83,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author	Dave Heap Copyright (C) 2014
- * @version	$Revision: 24716 $
  */
 public class FnMapPanelESU extends JPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5897048084177413562L;
 
     // columns
     final int firstCol = 0;
@@ -142,11 +135,11 @@ public class FnMapPanelESU extends JPanel {
 
     /**
      * <p>
-     * Default column labels.
+     * Default column labels.</p>
      * <dl>
      * <dt>Two rows are available for column labels</dt>
      * <dd>Use the '|' character to designate a row break</dd>
-     * </dl></p>
+     * </dl>
      * <p>
      * Item labels can be overridden by the "output" element of the "model"
      * element from the decoder definition file.</p>
@@ -372,10 +365,11 @@ public class FnMapPanelESU extends JPanel {
                                     itemLabel[item] = rosterEntry.getSoundLabel(Integer.valueOf(itemName[item][0].substring(("Sound slot" + " ").length())));
                                 } catch (Exception e) {
                                 }
-                            } else if (itemName[item][0].startsWith("F")) {
+                            } else if (itemName[item][0].matches("F\\d+")) {
                                 try {
                                     itemLabel[item] = rosterEntry.getFunctionLabel(Integer.valueOf(itemName[item][0].substring(1)));
                                 } catch (Exception e) {
+                                    log.warn("Error for function label \"{}\" in \"{}\"", itemName[item][0], item);
                                 }
                             }
                             if (itemLabel[item] == null) {
