@@ -1,7 +1,7 @@
 package jmri;
 
 /**
- * Migration stand-in for {@link apps.GuiLafConfigPane}
+ * Migration stand-in for {@link apps.GuiLafConfigPane} so old config files can be read
  *
  * @author Bob Jacobsen Copyright (C) 2010
  * @deprecated 2.9.5
