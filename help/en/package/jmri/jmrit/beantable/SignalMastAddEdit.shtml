@@ -61,7 +61,7 @@ Signal Masts are configured using one of the available Signaling Systems, and th
 		<dt><a name="matrixCtl">Output Matrix</a></dt>
 		<dd><a href="images/MatrixMastPanel-3t.png"><img src="images/MatrixMastPanel-3t.png" width="256" height="251" hspace="0" vspace="0" alt="Output Matrix Decoder panel"></a><br>
 		This Driver creates a truth table to set from 1 to 5 outputs per Aspect. To define 8 different patterns, you will need at least 3 on/off fields.
-		The Output Matrix mast special decoders designed for signals, like a Digirails DR4018. <br>
+		The Output Matrix driver was developed to connect decoders configured to connect and drive signals, like a <a href="../../../../html/hardware/digirails/index.shtml#dr4018">Digirails DR4018</a>. <br>
 		When selected from the Driver drop down list, the panel lets you:
 			<ol>
 			<li>Set the number of logic outputs (2 in the screen shot, select from the drop down list).<br>

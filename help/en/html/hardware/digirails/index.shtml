@@ -53,9 +53,9 @@ a JMRI-connected DR5000 unit.
         <p>The Digirails DR4018 decoder can drive turnouts with several protocols.<br>
         </p>
 
-<h3>Signals</h3>
+<a name="dr4018"><h3>Signals</h3></a>
   <p>The Digirails DR4018 decoder can be configured for signaling using DecoderPro.<br>
-  To configure the signal Masts, use the <a href="../../package/jmri/jmrit/beantable/SignalMastAddEdit.shtml#matrixCtl">Matrix Signal Mast</a> driver.<br>
+  To configure the signal Masts, use the <a href="../../../package/jmri/jmrit/beantable/SignalMastAddEdit.shtml#matrixCtl">Matrix Signal Mast</a> driver.<br>
   The Add Mast settings are:<br>
   <a href="matrixPanelProrailCreate.png"><img src="matrixPanelProrailCreate.png" width="381" height="489" hspace="0" vspace="0" alt="DCC Decoder panel"></a></p>
 
