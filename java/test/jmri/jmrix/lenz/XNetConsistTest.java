@@ -1,9 +1,9 @@
 package jmri.jmrix.lenz;
 
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * XNetConsistTest.java
@@ -12,40 +12,40 @@ import junit.framework.TestSuite;
  *
  * @author	Paul Bender
  */
-public class XNetConsistTest extends TestCase {
+public class XNetConsistTest {
 
-    public void testCtor() {
+    private XNetInterfaceScaffold tc = null;
+    private XNetSystemConnectionMemo memo = null;
+
+    @Test public void integerConstructorTest() {
         // infrastructure objects
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
 
-        XNetConsist c = new XNetConsist(5, tc, new XNetSystemConnectionMemo(tc));
+        XNetConsist c = new XNetConsist(5, tc, memo);
         Assert.assertNotNull(c);
     }
 
-    // from here down is testing infrastructure
-    public XNetConsistTest(String s) {
-        super(s);
-    }
+    @Test public void dccLocoAddressConstructorTest() {
+        // infrastructure objects
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", XNetConsistTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
+        jmri.DccLocoAddress addr = new jmri.DccLocoAddress(5,false);
 
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(XNetConsistTest.class);
-        return suite;
+        XNetConsist c = new XNetConsist(addr, tc, memo);
+        Assert.assertNotNull(c);
     }
 
     // The minimal setup for log4J
-    protected void setUp() {
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        tc = new XNetInterfaceScaffold(new LenzCommandStation());
+        memo = new XNetSystemConnectionMemo(tc);
     }
-
-    protected void tearDown() {
+   
+    @After
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
+        tc=null;
+        memo=null;
     }
 
 }
