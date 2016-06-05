@@ -123,7 +123,10 @@ public class WebServerPreferences extends Bean {
             if (frames.keys().length != 0) {
                 this.disallowedFrames.clear();
                 for (String key : frames.keys()) { // throws BackingStoreException
-                    this.disallowedFrames.add(frames.get(key, null));
+                    String frame = frames.get(key, null);
+                    if (frame != null && !frame.trim().isEmpty()) {
+                        this.disallowedFrames.add(frame);
+                    }
                 }
             }
         } catch (BackingStoreException ex) {
@@ -131,6 +134,7 @@ public class WebServerPreferences extends Bean {
             // so do nothing.
         }
         this.port = sharedPreferences.getInt(Port, this.port);
+        this.setIsDirty(false);
     }
 
     public void load(Element child) {
@@ -357,10 +361,12 @@ public class WebServerPreferences extends Bean {
         this.readonlyPower = readonlyPower;
     }
 
-    public void setDisallowedFrames(String[] value) {
-        if (!Arrays.equals(this.getDisallowedFrames(), value)) {
+    public void setDisallowedFrames(String[] disallowedFrames) {
+        String[] old = this.getDisallowedFrames();
+        if (!Arrays.equals(old, disallowedFrames)) {
             this.disallowedFrames.clear();
-            this.disallowedFrames.addAll(Arrays.asList(value));
+            this.disallowedFrames.addAll(Arrays.asList(disallowedFrames));
+            this.firePropertyChange(DisallowedFrames, old, disallowedFrames);
         }
     }
 
@@ -483,6 +489,30 @@ public class WebServerPreferences extends Bean {
         if (!this.restartRequired) {
             this.restartRequired = true;
             this.firePropertyChange(RESTART_REQUIRED, false, true);
+        }
+    }
+
+    @Override
+    protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
+        this.propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
+        if (!DIRTY.equals(propertyName)) {
+            this.setIsDirty(true);
+        }
+    }
+
+    @Override
+    protected void firePropertyChange(String propertyName, boolean oldValue, boolean newValue) {
+        this.propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
+        if (!DIRTY.equals(propertyName)) {
+            this.setIsDirty(true);
+        }
+    }
+
+    @Override
+    protected void firePropertyChange(String propertyName, int oldValue, int newValue) {
+        this.propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
+        if (!DIRTY.equals(propertyName)) {
+            this.setIsDirty(true);
         }
     }
 
