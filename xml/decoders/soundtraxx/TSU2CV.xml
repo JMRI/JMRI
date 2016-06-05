@@ -15,6 +15,7 @@
 <!-- Specific CVs for Tsunami2 decoders                                     -->
 <!--                                                                        -->
 <!-- version 1 - initial file (Michael Mosher 2016-05-26)                   -->
+<!-- version 1.1 - update for electric (Alain Le Marchand 2016-06-04)       -->
 <!--                                                                        -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <variable CV="64" item="Master Brightness" default="255" tooltip="Adjust the brightness level of all lighting outputs">
@@ -45,9 +46,13 @@
       <decVal/>
       <label>Sander Valve Volume</label>
     </variable>
-    <variable CV="155" mask="VVVVVVVV" item="Sound Setting 28" default="50">
+    <variable CV="155" mask="VVVVVVVV" item="Sound Setting 28" default="50" exclude="886001">
       <decVal/>
       <label>Fuel Loading Volume</label>
+    </variable>
+    <variable CV="155" mask="VVVVVVVV" item="Sound Setting 28" default="55" include="886001"> <!-- Electrical -->
+      <decVal/>
+      <label>Electrical Arcing</label>
     </variable>
     <variable CV="157" mask="VVVVVVVV" item="Sound Setting 30" default="50">
       <decVal/>
@@ -98,15 +103,19 @@
       <decVal/>
       <label>Sander Valve Reverb Level</label>
     </variable>
-    <variable CV="187" mask="VVVVVVVV" item="Reverb187" default="0">
+    <variable CV="187" mask="VVVVVVVV" item="Reverb187" default="0" exclude="886001">
       <decVal/>
       <label>Fuel Loading Reverb Level</label>
+    </variable>
+    <variable CV="187" mask="VVVVVVVV" item="Reverb187" default="0" include="886001"> <!-- Electrical -->
+      <decVal/>
+      <label>Electrical Arcing Reverb Level</label>
     </variable>
     <variable CV="189" mask="VVVVVVVV" item="Reverb189" default="0">
       <decVal/>
       <label>Wrenches Reverb Level</label>
     </variable>
-    <variable CV="190" mask="VVVVVVVV" item="Reverb190" default="0">
+    <variable CV="190" mask="VVVVVVVV" item="Reverb190" default="0" exclude="886001"> <!-- exclude Electrical -->
       <decVal/>
       <label>Pneumatic Oilers Reverb Level</label>
     </variable>
