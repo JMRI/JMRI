@@ -1,4 +1,3 @@
-// RosterServlet.java
 package jmri.web.servlet.roster;
 
 import static jmri.jmris.json.JSON.ADDRESS;
@@ -260,7 +259,7 @@ public class RosterServlet extends HttpServlet {
                     this.doImage(request, response, FileUtil.getFile(re.getFunctionSelectedImage(function)));
                 }
             } else if (type.equals("file")) {
-                ServletUtil.getInstance().writeFile(response, new File(Roster.getFileLocation(), "roster" + File.separator + re.getFileName()), ServletUtil.UTF8_APPLICATION_XML); // NOI18N
+                ServletUtil.getInstance().writeFile(response, new File(Roster.getDefault().getRosterLocation(), "roster" + File.separator + re.getFileName()), ServletUtil.UTF8_APPLICATION_XML); // NOI18N
             } else if (type.equals("throttle")) {
                 ServletUtil.getInstance().writeFile(response, new File(FileUtil.getUserFilesPath(), "throttle" + File.separator + id + ".xml"), ServletUtil.UTF8_APPLICATION_XML); // NOI18N
             } else {
