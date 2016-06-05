@@ -948,18 +948,6 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     }
 
     /**
-     * Return the filename String for the default roster file, including
-     * location. This is here to allow easy override in tests.
-     *
-     * @deprecated Use a Roster-specific value or Roster.getDefault().getRosterIndexPath() instead
-     * @return The roster default location.
-     */
-    @Deprecated
-    public static String defaultRosterFilename() {
-        return Roster.getDefault().getRosterIndexPath();
-    }
-
-    /**
      * Set the default location for the Roster file, and all individual
      * locomotive files.
      *

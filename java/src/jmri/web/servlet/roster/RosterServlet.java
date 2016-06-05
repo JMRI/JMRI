@@ -291,9 +291,9 @@ public class RosterServlet extends HttpServlet {
             response.getWriter().print(JsonUtil.getRoster(request.getLocale(), filter));
         } else if (JSON.XML.equals(request.getParameter("format"))) { // NOI18N
             response.setContentType(UTF8_APPLICATION_XML);
-            File roster = new File(Roster.defaultRosterFilename());
+            File roster = new File(Roster.getDefault().getRosterIndexPath());
             if (roster.exists()) {
-                response.getWriter().print(FileUtil.readFile(new File(Roster.defaultRosterFilename())));
+                response.getWriter().print(FileUtil.readFile(roster));
             }
         } else if (("html").equals(request.getParameter("format"))) {
             String row;
