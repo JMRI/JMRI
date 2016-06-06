@@ -264,11 +264,8 @@ public class WebServerPreferences extends Bean {
             this.disallowedFrames.stream().forEach((frame) -> {
                 node.put(Integer.toString(this.disallowedFrames.indexOf(frame)), frame);
             });
-            log.debug("Have {} excess disallowed frames...", node.keys().length - this.disallowedFrames.size());
             if (this.disallowedFrames.size() < node.keys().length) {
-                log.debug("Clearing {} excess disallowed frames...", node.keys().length - this.disallowedFrames.size());
                 for (int i = node.keys().length - 1; i >= this.disallowedFrames.size(); i--) {
-                    log.debug("Clearing excess disallowed frame {}", i);
                     node.remove(Integer.toString(i));
                 }
             }
