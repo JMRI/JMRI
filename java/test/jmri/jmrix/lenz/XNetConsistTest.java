@@ -93,6 +93,68 @@ public class XNetConsistTest {
         Assert.assertEquals("Other Consist Limit",0,c.sizeLimit());   
     } 
 
+    @Test public void checkContainsAdvanced(){
+        XNetConsist c = new XNetConsist(5, tc, memo);
+        c.setConsistType(jmri.Consist.ADVANCED_CONSIST);
+        jmri.DccLocoAddress A = new jmri.DccLocoAddress(200,true);
+        jmri.DccLocoAddress B = new jmri.DccLocoAddress(250,true);
+        // nothing added, should be false for all.
+        Assert.assertFalse("Advanced Consist Contains",c.contains(A));   
+        Assert.assertFalse("Advanced Consist Contains",c.contains(B));   
+        // add just A
+        c.restore(A,true); // use restore here, as it does not send
+                           // any data to the command station
+        Assert.assertTrue("Advanced Consist Contains",c.contains(A));   
+        Assert.assertFalse("Advanced Consist Contains",c.contains(B));   
+        // then add B
+        c.restore(B,false);
+        Assert.assertTrue("Advanced Consist Contains",c.contains(A));   
+        Assert.assertTrue("Advanced Consist Contains",c.contains(B));   
+    }
+
+    @Test public void checkContainsCS(){
+        XNetConsist c = new XNetConsist(5, tc, memo);
+        c.setConsistType(jmri.Consist.CS_CONSIST);
+        jmri.DccLocoAddress A = new jmri.DccLocoAddress(200,true);
+        jmri.DccLocoAddress B = new jmri.DccLocoAddress(250,true);
+        // nothing added, should be false for all.
+        Assert.assertFalse("CS Consist Contains",c.contains(A));   
+        Assert.assertFalse("CS Consist Contains",c.contains(B));   
+        // add just A
+        c.restore(A,true); // use restore here, as it does not send
+                           // any data to the command station
+        Assert.assertTrue("CS Consist Contains",c.contains(A));   
+        Assert.assertFalse("CS Consist Contains",c.contains(B));   
+        // then add B
+        c.restore(B,false);
+        Assert.assertTrue("CS Consist Contains",c.contains(A));   
+        Assert.assertTrue("CS Consist Contains",c.contains(B));   
+    }
+
+    @Test public void checkGetLocoDirectionAdvanced(){
+        XNetConsist c = new XNetConsist(5, tc, memo);
+        c.setConsistType(jmri.Consist.ADVANCED_CONSIST);
+        jmri.DccLocoAddress A = new jmri.DccLocoAddress(200,true);
+        jmri.DccLocoAddress B = new jmri.DccLocoAddress(250,true);
+        c.restore(A,true); // use restore here, as it does not send
+                           // any data to the command station
+        c.restore(B,false); // revese direction.
+        Assert.assertTrue("Direction in Advanced Consist",c.getLocoDirection(A));   
+        Assert.assertFalse("Direction in Advanced Consist",c.getLocoDirection(B));   
+    }
+
+    @Test public void checkGetLocoDirectionCS(){
+        XNetConsist c = new XNetConsist(5, tc, memo);
+        c.setConsistType(jmri.Consist.CS_CONSIST);
+        jmri.DccLocoAddress A = new jmri.DccLocoAddress(200,true);
+        jmri.DccLocoAddress B = new jmri.DccLocoAddress(250,true);
+        c.restore(A,true); // use restore here, as it does not send
+                           // any data to the command station
+        c.restore(B,false); // revese direction.
+        Assert.assertTrue("Direction in CS Consist",c.getLocoDirection(A));   
+        Assert.assertFalse("Direction in CS Consist",c.getLocoDirection(B));   
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
