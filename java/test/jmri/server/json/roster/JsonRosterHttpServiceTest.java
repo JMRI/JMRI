@@ -73,6 +73,7 @@ public class JsonRosterHttpServiceTest extends TestCase {
             exception = ex;
         }
         assertNotNull(exception);
+        // false positive warning from Eclipse on following line, please leave in place until we update ecj.jar GitHub #1417
         assertEquals(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, exception.getCode());
     }
 
@@ -97,6 +98,7 @@ public class JsonRosterHttpServiceTest extends TestCase {
             exception = ex;
         }
         assertNotNull(exception);
+        // false positive warning from Eclipse on following line, please leave in place until we update ecj.jar GitHub #1417
         assertEquals(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, exception.getCode());
     }
 
@@ -120,6 +122,7 @@ public class JsonRosterHttpServiceTest extends TestCase {
             exception = ex;
         }
         assertNotNull(exception);
+        // false positive warning from Eclipse on following line, please leave in place until we update ecj.jar GitHub #1417
         assertEquals(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, exception.getCode());
     }
 
@@ -156,6 +159,7 @@ public class JsonRosterHttpServiceTest extends TestCase {
             exception = ex;
         }
         assertNotNull(exception);
+        // false positive warning from Eclipse on following line, please leave in place until we update ecj.jar GitHub #1417
         assertEquals(HttpServletResponse.SC_NOT_FOUND, exception.getCode());
     }
 
