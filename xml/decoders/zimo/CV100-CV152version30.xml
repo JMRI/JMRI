@@ -10,6 +10,7 @@
 <!-- version 1.3 18 Jan 2015 Mark Waters -  fixed errors in CV114 and CV152 include href, added more includes for CV133 for newer decoders -->
 <!-- version 1.4 5 jan 2015 Mark Waters   - fixed dimming mask inverted -->
 <!-- version 1.5 23 Jan 2015 Mark Waters -  added more includes for CV133 for newer decoders -->
+<!-- version 1.6 06 Jun 2016 Ronald Kuhn -  added german translation -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
  <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
   <!-- Used unrelated item names used to place CV107-108 on the Lights pane -->
@@ -18,372 +19,461 @@
       <enumChoice choice="Not active">
         <choice>Not active</choice>
         <choice xml:lang="it">Non Attivo</choice>
+        <choice xml:lang="de">nicht aktiv</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F1 key">
         <choice>Controlled by F1 key</choice>
         <choice xml:lang="it">Controllato da F1</choice>
+        <choice xml:lang="de">gesteuert mit F1</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F2 key">
         <choice>Controlled by F2 key</choice>
         <choice xml:lang="it">Controllato da F2</choice>
+        <choice xml:lang="de">gesteuert mit F2</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F3 key">
         <choice>Controlled by F3 key</choice>
         <choice xml:lang="it">Controllato da F3</choice>
+        <choice xml:lang="de">gesteuert mit F3</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F4 key">
         <choice>Controlled by F4 key</choice>
         <choice xml:lang="it">Controllato da F4</choice>
+        <choice xml:lang="de">gesteuert mit F4</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F5 key">
         <choice>Controlled by F5 key</choice>
         <choice xml:lang="it">Controllato da F5</choice>
+        <choice xml:lang="de">gesteuert mit F5</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F6 key">
         <choice>Controlled by F6 key</choice>
         <choice xml:lang="it">Controllato da F6</choice>
+        <choice xml:lang="de">gesteuert mit F6</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F7 key">
         <choice>Controlled by F7 key</choice>
         <choice xml:lang="it">Controllato da F7</choice>
+        <choice xml:lang="de">gesteuert mit F7</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F8 key">
         <choice>Controlled by F8 key</choice>
         <choice xml:lang="it">Controllato da F8</choice>
+        <choice xml:lang="de">gesteuert mit F8</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F9 key">
         <choice>Controlled by F9 key</choice>
         <choice xml:lang="it">Controllato da F9</choice>
+        <choice xml:lang="de">gesteuert mit F9</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F10 key">
         <choice>Controlled by F10 key</choice>
         <choice xml:lang="it">Controllato da F10</choice>
+        <choice xml:lang="de">gesteuert mit F10</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F11 key">
         <choice>Controlled by F11 key</choice>
         <choice xml:lang="it">Controllato da F11</choice>
+        <choice xml:lang="de">gesteuert mit F11</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F12 key">
         <choice>Controlled by F12 key</choice>
         <choice xml:lang="it">Controllato da F12</choice>
+        <choice xml:lang="de">gesteuert mit F12</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F13 key">
         <choice>Controlled by F13 key</choice>
         <choice xml:lang="it">Controllato da F13</choice>
+        <choice xml:lang="de">gesteuert mit F13</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F14 key">
         <choice>Controlled by F14 key</choice>
         <choice xml:lang="it">Controllato da F14</choice>
+        <choice xml:lang="de">gesteuert mit F14</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F15 key">
         <choice>Controlled by F15 key</choice>
         <choice xml:lang="it">Controllato da F15</choice>
+        <choice xml:lang="de">gesteuert mit F15</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F16 key">
         <choice>Controlled by F16 key</choice>
         <choice xml:lang="it">Controllato da F16</choice>
+        <choice xml:lang="de">gesteuert mit F16</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F17 key">
         <choice>Controlled by F17 key</choice>
         <choice xml:lang="it">Controllato da F17</choice>
+        <choice xml:lang="de">gesteuert mit F17</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F18 key">
         <choice>Controlled by F18 key</choice>
         <choice xml:lang="it">Controllato da F18</choice>
+        <choice xml:lang="de">gesteuert mit F18</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F19 key">
         <choice>Controlled by F19 key</choice>
         <choice xml:lang="it">Controllato da F19</choice>
+        <choice xml:lang="de">gesteuert mit F19</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F20 key">
         <choice>Controlled by F20 key</choice>
         <choice xml:lang="it">Controllato da F20</choice>
+        <choice xml:lang="de">gesteuert mit F20</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F21 key">
         <choice>Controlled by F21 key</choice>
         <choice xml:lang="it">Controllato da F21</choice>
+        <choice xml:lang="de">gesteuert mit F21</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F22 key">
         <choice>Controlled by F22 key</choice>
         <choice xml:lang="it">Controllato da F22</choice>
+        <choice xml:lang="de">gesteuert mit F22</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F23 key">
         <choice>Controlled by F23 key</choice>
         <choice xml:lang="it">Controllato da F23</choice>
+        <choice xml:lang="de">gesteuert mit F23</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F24 key">
         <choice>Controlled by F24 key</choice>
         <choice xml:lang="it">Controllato da F24</choice>
+        <choice xml:lang="de">gesteuert mit F24</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F25 key">
         <choice>Controlled by F25 key</choice>
         <choice xml:lang="it">Controllato da F25</choice>
+        <choice xml:lang="de">gesteuert mit F25</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F26 key">
         <choice>Controlled by F26 key</choice>
         <choice xml:lang="it">Controllato da F26</choice>
+        <choice xml:lang="de">gesteuert mit F26</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F27 key">
         <choice>Controlled by F27 key</choice>
         <choice xml:lang="it">Controllato da F27</choice>
+        <choice xml:lang="de">gesteuert mit F27</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F28 key">
         <choice>Controlled by F28 key</choice>
         <choice xml:lang="it">Controllato da F28</choice>
+        <choice xml:lang="de">gesteuert mit F28</choice>
       </enumChoice>
     </enumVal>
     <label>Loco front lights off</label>
     <label xml:lang="it">Luci Frontali Off</label>
+    <label xml:lang="de">Lok Spitzenlicht aus</label>
   </variable>
   <variable CV="107" mask="VVVXXXXX" item="Function F0F option 2">
     <enumVal>
       <enumChoice choice="None">
         <choice>None</choice>
         <choice xml:lang="it">Nessuna</choice>
+        <choice xml:lang="de">keine</choice>
       </enumChoice>
       <enumChoice choice="Function output 1">
         <choice>Function output 1</choice>
         <choice xml:lang="it">Uscita Funzione 1</choice>
+        <choice xml:lang="de">FA 1</choice>
       </enumChoice>
       <enumChoice choice="Function output 2">
         <choice>Function output 2</choice>
         <choice xml:lang="it">Uscita Funzione 2</choice>
+        <choice xml:lang="de">FA 2</choice>
       </enumChoice>
       <enumChoice choice="Function output 3">
         <choice>Function output 3</choice>
         <choice xml:lang="it">Uscita Funzione 3</choice>
+        <choice xml:lang="de">FA 3</choice>
       </enumChoice>
       <enumChoice choice="Function output 4">
         <choice>Function output 4</choice>
         <choice xml:lang="it">Uscita Funzione 4</choice>
+        <choice xml:lang="de">FA 4</choice>
       </enumChoice>
       <enumChoice choice="Function output 5">
         <choice>Function output 5</choice>
         <choice xml:lang="it">Uscita Funzione 5</choice>
+        <choice xml:lang="de">FA 5</choice>
       </enumChoice>
       <enumChoice choice="Function output 6">
         <choice>Function output 6</choice>
         <choice xml:lang="it">Uscita Funzione 6</choice>
+        <choice xml:lang="de">FA 6</choice>
       </enumChoice>
       <enumChoice choice="Function output 7">
         <choice>Function output 7</choice>
         <choice xml:lang="it">Uscita Funzione 7</choice>
+        <choice xml:lang="de">FA 7</choice>
       </enumChoice>
     </enumVal>
     <label>Loco front additional function off</label>
     <label xml:lang="it">Funzione addizionale Frontale Off</label>
+    <label xml:lang="de">Lok Spitzenlicht zusätzlich aus</label>
   </variable>
   <variable CV="108" mask="XXXVVVVV" item="Function F0F option 3">
     <enumVal>
       <enumChoice choice="Not active">
         <choice>Not active</choice>
         <choice xml:lang="it">Non Attivo</choice>
+        <choice xml:lang="de">nicht aktiv</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F1 key">
         <choice>Controlled by F1 key</choice>
         <choice xml:lang="it">Controllato da F1</choice>
+        <choice xml:lang="de">gesteuert mit F1</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F2 key">
         <choice>Controlled by F2 key</choice>
         <choice xml:lang="it">Controllato da F2</choice>
+        <choice xml:lang="de">gesteuert mit F2</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F3 key">
         <choice>Controlled by F3 key</choice>
         <choice xml:lang="it">Controllato da F3</choice>
+        <choice xml:lang="de">gesteuert mit F3</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F4 key">
         <choice>Controlled by F4 key</choice>
         <choice xml:lang="it">Controllato da F4</choice>
+        <choice xml:lang="de">gesteuert mit F4</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F5 key">
         <choice>Controlled by F5 key</choice>
         <choice xml:lang="it">Controllato da F5</choice>
+        <choice xml:lang="de">gesteuert mit F5</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F6 key">
         <choice>Controlled by F6 key</choice>
         <choice xml:lang="it">Controllato da F6</choice>
+        <choice xml:lang="de">gesteuert mit F6</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F7 key">
         <choice>Controlled by F7 key</choice>
         <choice xml:lang="it">Controllato da F7</choice>
+        <choice xml:lang="de">gesteuert mit F7</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F8 key">
         <choice>Controlled by F8 key</choice>
         <choice xml:lang="it">Controllato da F8</choice>
+        <choice xml:lang="de">gesteuert mit F8</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F9 key">
         <choice>Controlled by F9 key</choice>
         <choice xml:lang="it">Controllato da F9</choice>
+        <choice xml:lang="de">gesteuert mit F9</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F10 key">
         <choice>Controlled by F10 key</choice>
         <choice xml:lang="it">Controllato da F10</choice>
+        <choice xml:lang="de">gesteuert mit F10</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F11 key">
         <choice>Controlled by F11 key</choice>
         <choice xml:lang="it">Controllato da F11</choice>
+        <choice xml:lang="de">gesteuert mit F11</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F12 key">
         <choice>Controlled by F12 key</choice>
         <choice xml:lang="it">Controllato da F12</choice>
+        <choice xml:lang="de">gesteuert mit F12</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F13 key">
         <choice>Controlled by F13 key</choice>
         <choice xml:lang="it">Controllato da F13</choice>
+        <choice xml:lang="de">gesteuert mit F13</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F14 key">
         <choice>Controlled by F14 key</choice>
         <choice xml:lang="it">Controllato da F14</choice>
+        <choice xml:lang="de">gesteuert mit F14</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F15 key">
         <choice>Controlled by F15 key</choice>
         <choice xml:lang="it">Controllato da F15</choice>
+        <choice xml:lang="de">gesteuert mit F15</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F16 key">
         <choice>Controlled by F16 key</choice>
         <choice xml:lang="it">Controllato da F16</choice>
+        <choice xml:lang="de">gesteuert mit F16</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F17 key">
         <choice>Controlled by F17 key</choice>
         <choice xml:lang="it">Controllato da F17</choice>
+        <choice xml:lang="de">gesteuert mit F17</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F18 key">
         <choice>Controlled by F18 key</choice>
         <choice xml:lang="it">Controllato da F18</choice>
+        <choice xml:lang="de">gesteuert mit F18</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F19 key">
         <choice>Controlled by F19 key</choice>
         <choice xml:lang="it">Controllato da F19</choice>
+        <choice xml:lang="de">gesteuert mit F19</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F20 key">
         <choice>Controlled by F20 key</choice>
         <choice xml:lang="it">Controllato da F20</choice>
+        <choice xml:lang="de">gesteuert mit F20</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F21 key">
         <choice>Controlled by F21 key</choice>
         <choice xml:lang="it">Controllato da F21</choice>
+        <choice xml:lang="de">gesteuert mit F21</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F22 key">
         <choice>Controlled by F22 key</choice>
         <choice xml:lang="it">Controllato da F22</choice>
+        <choice xml:lang="de">gesteuert mit F22</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F23 key">
         <choice>Controlled by F23 key</choice>
         <choice xml:lang="it">Controllato da F23</choice>
+        <choice xml:lang="de">gesteuert mit F23</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F24 key">
         <choice>Controlled by F24 key</choice>
         <choice xml:lang="it">Controllato da F24</choice>
+        <choice xml:lang="de">gesteuert mit F24</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F25 key">
         <choice>Controlled by F25 key</choice>
         <choice xml:lang="it">Controllato da F25</choice>
+        <choice xml:lang="de">gesteuert mit F25</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F26 key">
         <choice>Controlled by F26 key</choice>
         <choice xml:lang="it">Controllato da F26</choice>
+        <choice xml:lang="de">gesteuert mit F26</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F27 key">
         <choice>Controlled by F27 key</choice>
         <choice xml:lang="it">Controllato da F27</choice>
+        <choice xml:lang="de">gesteuert mit F27</choice>
       </enumChoice>
       <enumChoice choice="Controlled by F28 key">
         <choice>Controlled by F28 key</choice>
         <choice xml:lang="it">Controllato da F28</choice>
+        <choice xml:lang="de">gesteuert mit F28</choice>
       </enumChoice>
     </enumVal>
     <label>Loco rear lights off</label>
     <label xml:lang="it">Luci Posteriori Off</label>
+    <label xml:lang="de">Lok Schlußlicht aus</label>
   </variable>
   <variable CV="108" mask="VVVXXXXX" item="Function F0F option 4">
     <enumVal>
       <enumChoice choice="None">
         <choice>None</choice>
         <choice xml:lang="it">Nessuna</choice>
+        <choice xml:lang="de">keine</choice>
       </enumChoice>
       <enumChoice choice="Function output 1">
         <choice>Function output 1</choice>
         <choice xml:lang="it">Uscita Funzione 1</choice>
+        <choice xml:lang="de">FA 1</choice>
       </enumChoice>
       <enumChoice choice="Function output 2">
         <choice>Function output 2</choice>
         <choice xml:lang="it">Uscita Funzione 2</choice>
+        <choice xml:lang="de">FA 2</choice>
       </enumChoice>
       <enumChoice choice="Function output 3">
         <choice>Function output 3</choice>
         <choice xml:lang="it">Uscita Funzione 3</choice>
+        <choice xml:lang="de">FA 3</choice>
       </enumChoice>
       <enumChoice choice="Function output 4">
         <choice>Function output 4</choice>
         <choice xml:lang="it">Uscita Funzione 4</choice>
+        <choice xml:lang="de">FA 4</choice>
       </enumChoice>
       <enumChoice choice="Function output 5">
         <choice>Function output 5</choice>
         <choice xml:lang="it">Uscita Funzione 5</choice>
+        <choice xml:lang="de">FA 5</choice>
       </enumChoice>
       <enumChoice choice="Function output 6">
         <choice>Function output 6</choice>
         <choice xml:lang="it">Uscita Funzione 6</choice>
+        <choice xml:lang="de">FA 6</choice>
       </enumChoice>
       <enumChoice choice="Function output 7">
         <choice>Function output 7</choice>
         <choice xml:lang="it">Uscita Funzione 7</choice>
+        <choice xml:lang="de">FA 7</choice>
       </enumChoice>
     </enumVal>
     <label>Loco rear additional function off</label>
     <label xml:lang="it">Funzione addizionale Posteriore Off</label>
+    <label xml:lang="de">Lok Schlußlicht zusätzlich aus</label>
   </variable>
-  <variable item="Smoke Characteristic" CV="112" mask="XXXXXXXV">
+  <variable CV="112" item="Smoke Characteristic" mask="XXXXXXXV">
     <enumVal>
       <enumChoice choice="Speed dependent">
         <choice>Speed dependent</choice>
         <choice xml:lang="it">Dipende da velocità</choice>
+        <choice xml:lang="de">Sollwertabhängig</choice>
       </enumChoice>
       <enumChoice choice="Load dependent">
         <choice>Load dependent</choice>
         <choice xml:lang="it">Dipende dal carico</choice>
+        <choice xml:lang="de">Lastabhängig</choice>
       </enumChoice>
     </enumVal>
     <label>Smoke Characteristic</label>
     <label xml:lang="it">Specifiche Fumo</label>
+    <label xml:lang="de">Raucherzeugung</label>
   </variable>
-  <variable item="Advanced Ack" CV="112" mask="XXXXXXVX">
+  <variable CV="112" item="Advanced Ack" mask="XXXXXXVX">
     <enumVal>
       <enumChoice choice="Normal">
         <choice>Normal</choice>
         <choice xml:lang="it">Normale</choice>
+        <choice xml:lang="de">Normal</choice>
       </enumChoice>
       <enumChoice choice="High Frequency - High Power">
         <choice>High Frequency - High Power</choice>
         <choice xml:lang="it">Frequenza Alta - Alto Carico</choice>
+        <choice xml:lang="de">Hochfrequenz-Stromimpulse</choice>
       </enumChoice>
     </enumVal>
     <label>ACKnowledgement</label>
     <label xml:lang="it">Riconoscimento</label>
+    <label xml:lang="de">POM Quittierung</label>
   </variable>
-  <variable item="Loco Number Recognition" CV="112" mask="XXXXXVXX" default="1">
+  <variable CV="112" item="Loco Number Recognition" mask="XXXXXVXX" default="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Loco Number Recognition</label>
     <label xml:lang="it">Riconoscimento Numero Loco</label>
+    <label xml:lang="de">Zugnummernimpulse</label>
   </variable>
-  <variable item="NMRA" CV="112" mask="XXXXVXXX" default="0">
+  <variable CV="112" item="NMRA" mask="XXXXVXXX" default="0">
     <enumVal>
       <enumChoice choice="NMRA/MAN">
         <choice>NMRA/MAN</choice>
+        <choice xml:lang="de">NMRA/MAN (12-Funktions-Modus)</choice>
       </enumChoice>
       <enumChoice choice="MAN">
         <choice>MAN</choice>
+        <choice xml:lang="de">MAN (8-Funktions-Modus)</choice>
       </enumChoice>
     </enumVal>
     <label>NMRA</label>
     <label xml:lang="it">Compatibilità NMRA</label>
+    <label xml:lang="de">Funktionsmodus</label>
   </variable>
-  <variable item="Pulse Chain Recognition (LGB)" CV="112" mask="XXXVXXXX" default="0">
+  <variable CV="112" item="Pulse Chain Recognition (LGB)" mask="XXXVXXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Pulse Chain Recognition (LGB)</label>
     <label xml:lang="it">Riconoscimento treno Impulsi (LGB)</label>
+    <label xml:lang="de">F1-Pulskettenempfang (LGB)</label>
   </variable>
-  <variable CV="112" item="DC Brake Momentum" tooltip="Active if CV9=0" mask="XXVXXXXX" default="0">
+  <variable CV="112" item="DC Brake Momentum" mask="XXVXXXXX" default="0">
     <enumVal>
       <enumChoice choice="20kHz">
         <choice>20kHz</choice>
@@ -394,233 +484,287 @@
     </enumVal>
     <label>PWM Frequency</label>
     <label xml:lang="it">Frequenza PWM</label>
-  </variable>
-  <variable CV="112" mask="XVXXXXXX" default="0" item="Radio Power Conversion">
+	<label xml:lang="de">Motoransteuerungsfrequenz</label>
+	<tooltip>Active if CV9=0</tooltip>
+	<tooltip xml:lang="de">Aktiv wenn CV9=0</tooltip>
+   </variable>
+  <variable CV="112" item="Radio Power Conversion" mask="XVXXXXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Non directional DC braking</label>
     <label xml:lang="it">Frenatura non direzionale in DC</label>
+    <label xml:lang="de">„Märklin“-Bremsen</label>
+	<tooltip>(+ CV #29, Bit 2, #124, 5)</tooltip>
   </variable>
-  <variable item="Pulse Chain Generation" CV="112" mask="VXXXXXXX" default="0">
+  <variable CV="112" item="Pulse Chain Generation" mask="VXXXXXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Pulse Chain Generation</label>
     <label xml:lang="it">Generazione treno impulsi</label>
+    <label xml:lang="de">F1-Pulskettenerzeugung (LGB)</label>
   </variable>
-  <variable CV="113" default="0" item="EMF Feedback Cutout" tooltip="Controls how much Feedback Cutoff">
+  <variable CV="113" default="0" item="EMF Feedback Cutout">
     <decVal min="0" max="255"/>
     <label>EMF Feedback Cutoff Intensity</label>
     <label xml:lang="it">Intensità Taglio EMF</label>
-  </variable>
-  <variable item="Dim Front Light" CV="114" mask="XXXXXXXV" default="0">
+	<label xml:lang="de">Regeleinfluss</label>
+	<tooltip>Controls how much Feedback Cutoff</tooltip>
+	<tooltip xml:lang="de">Ausmaß der EMK, Lastregelung (0=kein EMK bis 255=max)</tooltip>
+   </variable>
+  <variable CV="114" item="Dim Front Light" mask="XXXXXXXV" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim Front Light</label>
     <label xml:lang="it">Smorzamento Luci frontali</label>
+    <label xml:lang="de">Dim Licht vorn</label>
   </variable>
-  <variable item="Dim Rear Light" CV="114" mask="XXXXXXVX" default="0">
+  <variable CV="114" item="Dim Rear Light" mask="XXXXXXVX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim Rear Light</label>
     <label xml:lang="it">Smorzamento Luci posteriori</label>
+    <label xml:lang="de">Dim Licht hinten</label>
   </variable>
-  <variable item="Dim function output 1" CV="114" mask="XXXXXVXX" default="0">
+  <variable CV="114" item="Dim function output 1" mask="XXXXXVXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim function output 1</label>
      <label xml:lang="it">Smorzamento Uscita funzioni 1</label>
+    <label xml:lang="de">Dim FA 1</label>
   </variable>
-  <variable item="Dim function output 2" CV="114" mask="XXXXVXXX" default="0">
+  <variable CV="114" item="Dim function output 2" mask="XXXXVXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim function output 2</label>
      <label xml:lang="it">Smorzamento Uscita funzioni 2</label>
+    <label xml:lang="de">Dim FA 2</label>
   </variable>
-  <variable item="Dim function output 3" CV="114" mask="XXXVXXXX" default="0" minOut="5">
+  <variable CV="114" item="Dim function output 3" mask="XXXVXXXX" default="0" minOut="5">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim function output 3</label>
      <label xml:lang="it">Smorzamento Uscita funzioni 3</label>
+    <label xml:lang="de">Dim FA 3</label>
   </variable>
-  <variable item="Dim function output 4" CV="114" mask="XXVXXXXX" default="0" minOut="6">
+  <variable CV="114" item="Dim function output 4" mask="XXVXXXXX" default="0" minOut="6">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim function output 4</label>
      <label xml:lang="it">Smorzamento Uscita funzioni 4</label>
+    <label xml:lang="de">Dim FA 4</label>
   </variable>
-  <variable item="Dim function output 5" CV="114" mask="XVXXXXXX" default="0" minOut="7">
+  <variable CV="114" item="Dim function output 5" mask="XVXXXXXX" default="0" minOut="7">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim function output 5</label>
      <label xml:lang="it">Smorzamento Uscita funzioni 5</label>
+    <label xml:lang="de">Dim FA 5</label>
   </variable>
-  <variable item="Dim function output 6" CV="114" mask="VXXXXXXX" default="0" minOut="8">
+  <variable CV="114" item="Dim function output 6" mask="VXXXXXXX" default="0" minOut="8">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim function output 6</label>
      <label xml:lang="it">Smorzamento Uscita funzioni 6</label>
+    <label xml:lang="de">Dim FA 6</label>
   </variable>
-  <variable item="Uncoupler" CV="115" default="0">
+  <variable CV="115" item="Uncoupler" default="0">
     <decVal max="99"/>
     <label>Uncoupler</label>
     <label xml:lang="it">Sganciatore</label>
+    <label xml:lang="de">Kupplung</label>
+	<tooltip xml:lang="de">Einschaltzeit für digitale Kupplung (Einheit 0,1 sek d.h. 60 = 6 sek)</tooltip>
   </variable>
-  <variable item="Auto Uncouple" CV="116" default="0">
+  <variable CV="116" item="Auto Uncouple" default="0">
     <decVal max="199"/>
     <label>Auto Uncouple</label>
     <label xml:lang="it">Sgancio Automatico</label>
+    <label xml:lang="de">Kupplungs-Walzer</label>
   </variable>
-  <variable item="Flash Rate" CV="117" default="0">
+  <variable CV="117" item="Flash Rate" default="0">
     <decVal max="99"/>
     <label>Flash Rate</label>
     <label xml:lang="it">Frequenza Lampeggio</label>
+    <label xml:lang="de">Blinken</label>
   </variable>
-  <variable item="Flash front light" CV="118" mask="XXXXXXXV" default="0">
+  <variable CV="118" item="Flash front light" mask="XXXXXXXV" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Flash front light</label>
     <label xml:lang="it">Lampeggio Luci Frontali</label>
+    <label xml:lang="de">Blinken Licht vorn</label>
   </variable>
-  <variable item="Flash rear light" CV="118" mask="XXXXXXVX" default="0">
+  <variable CV="118" item="Flash rear light" mask="XXXXXXVX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Flash rear light</label>
-     <label xml:lang="it">Lampeggio Luci posteriori</label>
+    <label xml:lang="it">Lampeggio Luci posteriori</label>
+    <label xml:lang="de">Blinken Licht hinten</label>
   </variable>
-  <variable item="Flash function output 1" CV="118" mask="XXXXXVXX" default="0">
+  <variable CV="118" item="Flash function output 1" mask="XXXXXVXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Flash function output 1</label>
     <label xml:lang="it">Lampeggio uscita funzione 1</label>
+    <label xml:lang="de">Blinken FA 1</label>
   </variable>
-  <variable item="Flash function output 2" CV="118" mask="XXXXVXXX" default="0">
+  <variable CV="118" item="Flash function output 2" mask="XXXXVXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Flash function output 2</label>
     <label xml:lang="it">Lampeggio uscita funzione 2</label>
+    <label xml:lang="de">Blinken FA 2</label>
   </variable>
-  <variable item="Flash function output 3" CV="118" mask="XXXVXXXX" default="0" minOut="5">
+  <variable CV="118" item="Flash function output 3" mask="XXXVXXXX" default="0" minOut="5">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Flash function output 3</label>
     <label xml:lang="it">Lampeggio uscita funzione 3</label>
+    <label xml:lang="de">Blinken FA 3</label>
   </variable>
-  <variable item="Flash function output 4" CV="118" mask="XXVXXXXX" default="0" minOut="6">
+  <variable CV="118" item="Flash function output 4" mask="XXVXXXXX" default="0" minOut="6">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Flash function output 4</label>
     <label xml:lang="it">Lampeggio uscita funzione 4</label>
+    <label xml:lang="de">Blinken FA 4</label>
   </variable>
-  <variable item="Inverse Flash Output 2" CV="118" mask="XVXXXXXX" default="0">
+  <variable CV="118" item="Inverse Flash Output 2" mask="XVXXXXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Inverse Flash Output 2</label>
     <label xml:lang="it">Lampeggio invertito uscita 2</label>
+    <label xml:lang="de">invers Blinken FA 2</label>
   </variable>
-  <variable item="Inverse Flash Output 4" CV="118" mask="VXXXXXXX" default="0" minOut="6">
+  <variable CV="118" item="Inverse Flash Output 4" mask="VXXXXXXX" default="0" minOut="6">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Inverse Flash Output 4</label>
     <label xml:lang="it">Lampeggio invertito uscita 4</label>
+    <label xml:lang="de">invers Blinken FA 4</label>
   </variable>
-  <variable item="F6 dims front light" CV="119" mask="XXXXXXXV" default="0">
+  <variable CV="119" item="F6 dims front light" mask="XXXXXXXV" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F6 dims front light</label>
     <label xml:lang="it">F6 smorza Luci frontali</label>
+    <label xml:lang="de">F6 dimmt Licht vorn</label>
   </variable>
-  <variable item="F6 dims rear light" CV="119" mask="XXXXXXVX" default="0">
+  <variable CV="119" item="F6 dims rear light" mask="XXXXXXVX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F6 dims rear light</label>
     <label xml:lang="it">F6 smorza Luci posteriori</label>
+    <label xml:lang="de">F6 dimmt Licht hinten</label>
   </variable>
-  <variable item="F6 dims function output 1" CV="119" mask="XXXXXVXX" default="0">
+  <variable CV="119" item="F6 dims function output 1" mask="XXXXXVXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F6 dims function output 1</label>
     <label xml:lang="it">F6 smorza Uscita funzione 1</label>
+    <label xml:lang="de">F6 dimmt FA 1</label>
   </variable>
-  <variable item="F6 dims function output 2" CV="119" mask="XXXXVXXX" default="0">
+  <variable CV="119" item="F6 dims function output 2" mask="XXXXVXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F6 dims function output 2</label>
     <label xml:lang="it">F6 smorza Uscita funzione 2</label>
+    <label xml:lang="de">F6 dimmt FA 2</label>
   </variable>
-  <variable item="F6 dims function output 3" CV="119" mask="XXXVXXXX" default="0" minOut="5">
+  <variable CV="119" item="F6 dims function output 3" mask="XXXVXXXX" default="0" minOut="5">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F6 dims function output 3</label>
     <label xml:lang="it">F6 smorza Uscita funzione 3</label>
+    <label xml:lang="de">F6 dimmt FA 3</label>
   </variable>
-  <variable item="F6 dims function output 4" CV="119" mask="XXVXXXXX" default="0" minOut="6">
+  <variable CV="119" item="F6 dims function output 4" mask="XXVXXXXX" default="0" minOut="6">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F6 dims function output 4</label>
     <label xml:lang="it">F6 smorza Uscita funzione 4</label>
+    <label xml:lang="de">F6 dimmt FA 4</label>
   </variable>
-  <variable item="F6 inverted" CV="119" mask="VXXXXXXX" default="0">
+  <variable CV="119" item="F6 inverted" mask="VXXXXXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F6 inverted</label>
     <label xml:lang="it">F6 invertito</label>
+    <label xml:lang="de">F6 invertiert</label>
   </variable>
-  <variable item="F7 dims front light" CV="120" mask="XXXXXXXV" default="0">
+  <variable CV="120" item="F7 dims front light" mask="XXXXXXXV" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F7 dims front light</label>
     <label xml:lang="it">F7 smorza Luci frontali</label>
+    <label xml:lang="de">F7 dimmt Licht vorn</label>
   </variable>
-  <variable item="F7 dims rear light" CV="120" mask="XXXXXXVX" default="0">
+  <variable CV="120" item="F7 dims rear light" mask="XXXXXXVX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F7 dims rear light</label>
     <label xml:lang="it">F7 smorza Luci posteriori</label>
+    <label xml:lang="de">F7 dimmt Licht hinten</label>
   </variable>
-  <variable item="F7 dims function output 1" CV="120" mask="XXXXXVXX" default="0">
+  <variable CV="120" item="F7 dims function output 1" mask="XXXXXVXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F7 dims function output 1</label>
     <label xml:lang="it">F7 smorza Uscita funzione 1</label>
+    <label xml:lang="de">F7 dimmt FA 1</label>
   </variable>
-  <variable item="F7 dims function output 2" CV="120" mask="XXXXVXXX" default="0">
+  <variable CV="120" item="F7 dims function output 2" mask="XXXXVXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F7 dims function output 2</label>
     <label xml:lang="it">F7 smorza Uscita funzione 2</label>
+    <label xml:lang="de">F7 dimmt FA 2</label>
   </variable>
-  <variable item="F7 dims function output 3" CV="120" mask="XXXVXXXX" default="0" minOut="5">
+  <variable CV="120" item="F7 dims function output 3" mask="XXXVXXXX" default="0" minOut="5">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F7 dims function output 3</label>
     <label xml:lang="it">F7 smorza Uscita funzione 3</label>
+    <label xml:lang="de">F7 dimmt FA 3</label>
   </variable>
-  <variable item="F7 dims function output 4" CV="120" mask="XXVXXXXX" default="0" minOut="6">
+  <variable CV="120" item="F7 dims function output 4" mask="XXVXXXXX" default="0" minOut="6">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F7 dims function output 4</label>
     <label xml:lang="it">F7 smorza Uscita funzione 4</label>
+    <label xml:lang="de">F7 dimmt FA 4</label>
   </variable>
-  <variable item="F7 inverted" CV="120" mask="VXXXXXXX" default="0">
+  <variable CV="120" item="F7 inverted" mask="VXXXXXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F7 inverted</label>
     <label xml:lang="it">F7 invertito</label>
+    <label xml:lang="de">F7 invertiert</label>
   </variable>
-  <variable item="Exponential Acceleration" CV="121" default="0" comment="Adds an exponential acceleration">
+  <variable CV="121" item="Exponential Acceleration" default="0">
     <decVal max="99"/>
     <label>Exponential Acceleration</label>
     <label xml:lang="it">Accellerazione Esponenziale</label>
+    <label xml:lang="de">Expon. Beschleunigung</label>
     <comment>Adds an exponential acceleration</comment>
     <comment xml:lang="it">Aggiunge una Accellerazione Esponenziale</comment>
+    <comment xml:lang="de">Beschleunigungsverlauf nach einer annähernden Exponentialfunktion</comment>
   </variable>
-  <variable item="Exponential Deceleration" CV="122" default="0" comment="Adds an exponential deceleration">
+  <variable CV="122" item="Exponential Deceleration" default="0">
     <decVal max="99"/>
     <label>Exponential Deceleration</label>
     <label xml:lang="it">Decellerazione Esponenziale</label>
+    <label xml:lang="de">Expon. Bremskurve</label>
     <comment>Adds an exponential deceleration</comment>
     <comment xml:lang="it">Aggiunge una Decellerazione Esponenziale</comment>
+    <comment xml:lang="de">Bremsverlauf nach einer annähernden Exponentialfunktion</comment>
   </variable>
-  <variable item="Adaptive Acceleration/Deceleration" CV="123" default="0">
+  <variable CV="123" item="Adaptive Acceleration/Deceleration" default="0">
     <decVal max="99"/>
     <label>Adaptive Acceleration/Deceleration</label>
-     <label xml:lang="it">Accell./Decell.adattabile</label>
+    <label xml:lang="it">Accell./Decell.adattabile</label>
+    <label xml:lang="de">Adaptives Beschleunigen/Bremsen</label>
   </variable>
   <variable CV="124" default="0" mask="XXXXXXVV" item="Shunting Usage">
     <enumVal>
       <enumChoice choice="no shunting">
         <choice>no shunting</choice>
         <choice xml:lang="it">nessuna manovra</choice>
+        <choice xml:lang="de">kein Einfluss</choice>
       </enumChoice>
       <enumChoice choice="no exponential and adaptive influence">
         <choice>no exponential and adaptive influence</choice>
         <choice xml:lang="it">nessuna influenza esponenziale / adattabile</choice>
+        <choice xml:lang="de">Taste deaktiviert Exponential + Adaptiv</choice>
       </enumChoice>
       <enumChoice choice="1/4 acceleration/deceleration">
         <choice>1/4 acceleration/deceleration</choice>
         <choice xml:lang="it">1/4 Accell. / Decell.</choice>
+        <choice xml:lang="de">1/4 Beschleunigungs-/Bremszeit</choice>
       </enumChoice>
       <enumChoice choice="no acceleration/deceleration">
         <choice>no acceleration/deceleration</choice>
         <choice xml:lang="it">nessuna Accell. / Decell.</choice>
+        <choice xml:lang="de">deaktiviert Beschleun./Bremszeit</choice>
       </enumChoice>
     </enumVal>
     <label>Shunting</label>
     <label xml:lang="it">Manovra</label>
+    <label xml:lang="de">Rangieren</label>
   </variable>
-  <variable item="Half Speed Key" CV="124" mask="XXXVVXXX" default="0">
+  <variable CV="124" item="Half Speed Key" mask="XXXVVXXX" default="0">
     <enumVal>
       <enumChoice choice="not set">
         <choice>not set</choice>
         <choice xml:lang="it">nessuno</choice>
+        <choice xml:lang="de">keine</choice>
       </enumChoice>
       <enumChoice choice="F7">
         <choice>F7</choice>
@@ -631,8 +775,9 @@
     </enumVal>
     <label>Half Speed Key</label>
     <label xml:lang="it">Tasto mezza velocità</label>
+    <label xml:lang="de">Rangiergeschwindigkeit</label>
   </variable>
-  <variable item="Shunt Function Key" CV="124" mask="XVXXXVXX" default="0">
+  <variable CV="124" item="Shunt Function Key" mask="XVXXXVXX" default="0">
     <enumVal>
       <enumChoice choice="Man (Zimo)">
         <choice>Man (Zimo)</choice>
@@ -646,22 +791,26 @@
     </enumVal>
     <label>Shunt Function Key</label>
     <label xml:lang="it">Tasto funzione Manovra</label>
+    <label xml:lang="de">Rangierfunktionstaste</label>
   </variable>
-  <variable item="Analog Power Conversion" CV="124" mask="XXVXXXXX" default="0">
+  <variable CV="124" item="Analog Power Conversion" mask="XXVXXXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Polarity Dependent DC stopping method</label>
     <label xml:lang="it">Metodo fermata in DC dipendente da polarità</label>
+    <label xml:lang="de">polaritätsabhängige DC-Bremsabschnitte</label>
   </variable>
-  <variable item="SUSI" CV="124" mask="VXXXXXXX" default="0" minOut="6">
+  <variable CV="124" item="SUSI" mask="VXXXXXXX" default="0" minOut="6">
     <!-- value 0 => Susi,  value 1 => normal function outputs -->
     <enumVal>
       <enumChoice choice="SUSI Serial interface for sound board">
         <choice>SUSI Serial interface for sound board</choice>
         <choice xml:lang="it">Interf.seriale SUSI</choice>
+        <choice xml:lang="de">SUSI-Schnittstelle aktiv</choice>
       </enumChoice>
       <enumChoice choice="Output as additional Function Pads">
         <choice>Output as additional Function Pads</choice>
         <choice xml:lang="it">uscita su Pad funzione addizionale</choice>
+        <choice xml:lang="de">FU-Ausgänge anstelle SUSI aktiviert</choice>
       </enumChoice>
     </enumVal>
     <label>SUSI</label>
@@ -675,11 +824,13 @@
     </enumVal>
     <label>Front light effect generated</label>
     <label xml:lang="it">Effetti Luci frontali</label>
+    <label xml:lang="de">Lvor Effekt</label>
   </variable>
   <variable CV="125" mask="XXXXXXVV" item="Output 1 behavior">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
     <label>Front light behavior</label>
     <label xml:lang="it">Comportamento Luci frontali</label>
+    <label xml:lang="de">Lvor Verhalten</label>
   </variable>
   <variable CV="126" mask="VVVVVVXX" item="Output 2 effect generated">
      <enumVal>
@@ -690,11 +841,13 @@
     </enumVal>
     <label>Rear light effect generated</label>
     <label xml:lang="it">Effetti Luci posteriori</label>
+    <label xml:lang="de">Lrück Effekt</label>
   </variable>
   <variable CV="126" mask="XXXXXXVV" item="Output 2 behavior">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
     <label>Rear light behavior</label>
     <label xml:lang="it">Comportamento Luci posteriori</label>
+    <label xml:lang="de">Lrück Verhalten</label>
   </variable>
   <variable CV="127" mask="VVVVVVXX" item="Output 3 effect generated">
      <enumVal>
@@ -705,11 +858,13 @@
     </enumVal>
     <label>Function output 1 effect generated</label>
     <label xml:lang="it">Effetti uscita Funzione 1</label>
+    <label xml:lang="de">FA1 Effekt</label>
   </variable>
   <variable CV="127" mask="XXXXXXVV" item="Output 3 behavior">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
     <label>Function output 1 behavior</label>
     <label xml:lang="it">Comportamento uscita Funzione 1</label>
+    <label xml:lang="de">FA1 Verhalten</label>
   </variable>
   <variable CV="128" mask="VVVVVVXX" item="Output 4 effect generated">
      <enumVal>
@@ -720,11 +875,13 @@
     </enumVal>
     <label>Function output 2 effect generated</label>
     <label xml:lang="it">Effetti uscita Funzione 2</label>
+    <label xml:lang="de">FA2 Effekt</label>
   </variable>
   <variable CV="128" mask="XXXXXXVV" item="Output 4 behavior">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
     <label>Function output 2 behavior</label>
     <label xml:lang="it">Comportamento uscita Funzione 2</label>
+    <label xml:lang="de">FA2 Verhalten</label>
   </variable>
   <variable CV="129" mask="VVVVVVXX" item="Output 5 effect generated" minOut="5">
      <enumVal>
@@ -735,11 +892,13 @@
     </enumVal>
     <label>Function output 3 effect generated</label>
     <label xml:lang="it">Effetti uscita Funzione 3</label>
+    <label xml:lang="de">FA3 Effekt</label>
   </variable>
   <variable CV="129" mask="XXXXXXVV" item="Output 5 behavior" minOut="5">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
     <label>Function output 3 behavior</label>
     <label xml:lang="it">Comportamento uscita Funzione 3</label>
+    <label xml:lang="de">FA3 Verhalten</label>
   </variable>
   <variable CV="130" mask="VVVVVVXX" item="Output 6 effect generated" minOut="6">
      <enumVal>
@@ -750,11 +909,13 @@
     </enumVal>
     <label>Function output 4 effect generated</label>
     <label xml:lang="it">Effetti uscita Funzione 4</label>
+    <label xml:lang="de">FA4 Effekt</label>
   </variable>
   <variable CV="130" mask="XXXXXXVV" item="Output 6 behavior" minOut="6">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
     <label>Function output 4 behavior</label>
     <label xml:lang="it">Comportamento uscita Funzione 4</label>
+    <label xml:lang="de">FA4 Verhalten</label>
   </variable>
   <variable CV="131" mask="VVVVVVXX" minOut="7" item="Output 7 effect generated">
      <enumVal>
@@ -765,11 +926,13 @@
     </enumVal>
     <label>Function output 5 effect generated</label>
     <label xml:lang="it">Effetti uscita Funzione 5</label>
+    <label xml:lang="de">FA5 Effekt</label>
   </variable>
   <variable CV="131" mask="XXXXXXVV" minOut="7" item="Output 7 behavior">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
     <label>Function output 5 behavior</label>
     <label xml:lang="it">Comportamento uscita Funzione 5</label>
+    <label xml:lang="de">FA5 Verhalten</label>
   </variable>
   <variable CV="132" mask="VVVVVVXX" minOut="8" item="Output 8 effect generated">
      <enumVal>
@@ -780,64 +943,80 @@
     </enumVal>
     <label>Functin output 6 effect generated</label>
     <label xml:lang="it">Effetti uscita Funzione 6</label>
+    <label xml:lang="de">FA6 Effekt</label>
   </variable>
   <variable CV="132" mask="XXXXXXVV" minOut="8" item="Output 8 behavior">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
     <label>Function output 6 behavior</label>
     <label xml:lang="it">Comportamento uscita Funzione 6</label>
+    <label xml:lang="de">FA6 Verhalten</label>
   </variable>
   <variable CV="133" item="Function Output as virtual Cam or Smoke Fan" default="0" minOut="4" include="217">
     <enumVal>
       <enumChoice choice="Function Output 2 Normal Output">
         <choice>Function Ouptput 2 Normal Output</choice>
         <choice xml:lang="it">Uscita Funzione 2 Uscita Normale</choice>
+        <choice xml:lang="de">FA2 - Normal</choice>
       </enumChoice>
       <enumChoice choice="Function Output 2 Cam Pulses or Smoke Fan">
         <choice>Function Ouptput 2 Cam Pulses or Smoke Fan</choice>
         <choice xml:lang="it">Uscita Funzione 2 Impulso Cam  o Ventola Fumo</choice>
+        <choice xml:lang="de">FA2 - Rauchventilator</choice>
       </enumChoice>
     </enumVal>
     <label>Function Output 2 as virtual Cam or Smoke Fan</label>
     <label xml:lang="it">Uscita 2 Cam virtuale  o Ventola Fumo</label>
+    <label xml:lang="de">FA2 - Funktionsauswahl</label>
   </variable>
   <variable CV="133" item="Function Output as virtual Cam or Smoke Fan" default="0" minOut="6" include="201,203,210,211,212,213,214,215,216,218,219,220,221,222,225,233,237,240,234,243,246,253">
     <enumVal>
       <enumChoice choice="Function Output 4 Normal Output">
         <choice>Function Ouptput 4 Normal Output</choice>
         <choice xml:lang="it">Uscita Funzione 4 Uscita Normale</choice>
+        <choice xml:lang="de">FA4 - Normal</choice>
       </enumChoice>
       <enumChoice choice="Function Output 4 Cam Pulses or Smoke Fan">
         <choice>Function Ouptput 4 Cam Pulses or Smoke Fan</choice>
         <choice xml:lang="it">Uscita Funzione 4 Impulso Cam  o Ventola Fumo</choice>
+        <choice xml:lang="de">FA4 - Rauchventilator</choice>
       </enumChoice>
     </enumVal>
     <label>Function Output 4 as virtual Cam or Smoke Fan</label>
     <label xml:lang="it">Uscita 4 Cam virtuale  o Ventola Fumo</label>
+    <label xml:lang="de">FA4 - Funktionsauswahl</label>
   </variable>
   <variable CV="133" item="Function Output as virtual Cam or Smoke Fan" default="0" minOut="12" include="208,209">
     <enumVal>
       <enumChoice choice="Function Output 10 Normal Output">
         <choice>Function Ouptput 10 Normal Output</choice>
         <choice xml:lang="it">Uscita Funzione 10 Uscita Normale</choice>
+        <choice xml:lang="de">FA10 - Normal</choice>
       </enumChoice>
       <enumChoice choice="Function Output 10 Cam Pulses or Smoke Fan">
         <choice>Function Ouptput 10 Cam Pulses or Smoke Fan</choice>
         <choice xml:lang="it">Uscita Funzione 10 Impulso Cam  o Ventola Fumo</choice>
+        <choice xml:lang="de">FA10 - Rauchventilator</choice>
       </enumChoice>
     </enumVal>
     <label>Function Output 10 as virtual Cam or Smoke Fan</label>
     <label xml:lang="it">Uscita 10 Cam virtuale  o Ventola Fumo</label>
+    <label xml:lang="de">FA10 - Funktionsauswahl</label>
   </variable>
-  <variable item="Asymmetrical DCC Threshold" CV="134" default="106">
+  <variable CV="134" item="Asymmetrical DCC Threshold" default="106">
     <decVal max="214"/>
     <label>Asymmetrical DCC Threshold</label>
     <label xml:lang="it">Soglia DCC asimmetrica</label>
+    <label xml:lang="de">Asymmetrie-Schwelle</label>
   </variable>
-  <variable item="km/h speed regulation control and range" CV="135" opsOnly="yes" default="0">
+  <variable CV="135" item="km/h speed regulation control and range" opsOnly="yes" default="0">
     <enumVal>
       <enumChoice choice="Not Active">
         <choice>Not Active</choice>
         <choice xml:lang="it">Non attiva</choice>
+        <choice xml:lang="de">nicht aktiv</choice>
+      </enumChoice>
+      <enumChoice choice="0.1" value="1">
+        <choice>0.1</choice>
       </enumChoice>
       <enumChoice choice="0.2" value="2">
         <choice>0.2</choice>
@@ -899,229 +1078,280 @@
     </enumVal>
     <label>km/h speed regulation control and range</label>
     <label xml:lang="it">Regolazione velocità e valori km/h</label>
+    <label xml:lang="de">km/h–Geschwindigkeitsregelung</label>
   </variable>
-  <variable item="km/h speed regulation control number readout" CV="136" readOnly="yes">
+  <variable CV="136" item="km/h speed regulation control number readout" readOnly="yes">
     <decVal/>
     <label>km/h speed regulation control number readout</label>
     <label xml:lang="it">Lettura valori Regolazione velocità e km/h</label>
+    <label xml:lang="de">km/h–Geschwindigkeitsregelung - Kontrollzahl</label>
   </variable>
-  <variable item="Smoke PWM at standstill" CV="137">
+  <variable CV="137" item="Smoke PWM at standstill">
     <decVal/>
     <label>Smoke PWM at standstill</label>
     <label xml:lang="it">Impulsi Fumo da fermo</label>
+    <label xml:lang="de">Rauch im Stillstand</label>
   </variable>
-  <variable item="Smoke PWM at minimum speed" CV="138">
+  <variable CV="138" item="Smoke PWM at minimum speed">
     <decVal/>
     <label>Smoke PWM at minimum speed</label>
     <label xml:lang="it">Impulsi Fumo velocità minima</label>
+    <label xml:lang="de">Rauch bei Fahrt</label>
   </variable>
-  <variable item="Smoke PWM at max speed" CV="139">
+  <variable CV="139" item="Smoke PWM at max speed">
     <decVal/>
     <label>Smoke PWM at max speed</label>
     <label xml:lang="it">Impulsi Fumo velocità massima</label>
+    <label xml:lang="de">Rauch bei Beschleunigung</label>
   </variable>
-  <variable item="Distance controlled stopping" CV="140" default="0">
+  <variable CV="140" item="Distance controlled stopping" default="0">
     <enumVal>
       <enumChoice choice="not active">
         <choice>not active</choice>
-        <choice xml:lang="it">non attivo</choice>
+        <choice xml:lang="it">Non Attivo</choice>
+        <choice xml:lang="de">nicht aktiv</choice>
       </enumChoice>
       <enumChoice choice="Automatic stops, Signal controlled speed influence or Asymmetric DCC">
         <choice>Automatic stops, Signal controlled speed influence or Asymmetric DCC</choice>
         <choice xml:lang="it">Stop Automatico, Controllato da segnale o DCC asimmetrica</choice>
+        <choice xml:lang="de">automatisches Anhalten mit ZIMO HLU oder ABC</choice>
       </enumChoice>
       <enumChoice choice="Manual stops using cab">
         <choice>Manual stops using cab</choice>
         <choice xml:lang="it">Stop manuale con palmare</choice>
+        <choice xml:lang="de">manuelles Anhalten</choice>
       </enumChoice>
       <enumChoice choice="Automatic and Manual stops">
         <choice>Automatic and Manual stops</choice>
         <choice xml:lang="it">Stop manuale e Automatico</choice>
+        <choice xml:lang="de">automatisches und manuelles Anhalten</choice>
       </enumChoice>
       <enumChoice choice="Automatic stops with immediate braking" value="11">
         <choice>Automatic stops with immediate braking</choice>
         <choice xml:lang="it">Stop automatico con freno di emergenza</choice>
+        <choice xml:lang="de">sofort automatisches Anhalten mit ZIMO HLU oder ABC</choice>
       </enumChoice>
       <enumChoice choice="Manual stops with immediate braking">
         <choice>Manual stops with immediate braking</choice>
         <choice xml:lang="it">Stop manuale con freno di emergenza</choice>
+        <choice xml:lang="de">sofort manuelles Anhalten</choice>
       </enumChoice>
       <enumChoice choice="Automatic and Manual stops with immediate braking">
         <choice>Automatic and Manual stops with immediate braking</choice>
         <choice xml:lang="it">Stop automatico e manuale con freno di emergenza</choice>
+        <choice xml:lang="de">sofort automatisches und manuelles Anhalten</choice>
       </enumChoice>
     </enumVal>
     <label>Distance controlled stopping</label>
     <label xml:lang="it">Distanza di Fermata</label>
+    <label xml:lang="de">Distanzgesteuerter Halt</label>
   </variable>
-  <variable item="Distance controlled stopping Distance" CV="141" default="0">
+  <variable CV="141" item="Distance controlled stopping Distance" default="0">
     <decVal min="0" max="255"/>
     <label>Distance controlled stopping Distance</label>
-        <label xml:lang="it">Controllo Distanza di Fermata</label>
+    <label xml:lang="it">Controllo Distanza di Fermata</label>
+    <label xml:lang="de">Distanzgesteuerter Halt - konstanter Bremsweg</label>
   </variable>
-  <variable item="Distance controlled stopping speed correction (ABC)" CV="142" default="12">
+  <variable CV="142" item="Distance controlled stopping speed correction (ABC)" default="12">
     <decVal min="0" max="255"/>
     <label>Distance controlled stopping speed correction (ABC)</label>
     <label xml:lang="it">Correzione velocità Distanza di Fermata (ABC)</label>
+    <label xml:lang="de">Distanzgesteuerter Halt - Schnellfahr-Kompensation (ABC)</label>
   </variable>
-  <variable item="Distance controlled stopping speed correction (HLU)" CV="143" default="0">
+  <variable CV="143" item="Distance controlled stopping speed correction (HLU)" default="0">
     <decVal min="0" max="255"/>
     <label>Distance controlled stopping speed correction (HLU)</label>
     <label xml:lang="it">Correzione velocità Distanza di Fermata (HLU)</label>
+    <label xml:lang="de">Distanzgesteuerter Halt - Schnellfahr-Kompensation (HLU)</label>
   </variable>
-  <variable item="Service Mode Programming Locked" CV="144" mask="XVXXXXXX" default="0">
+  <variable CV="144" item="Service Mode Programming Locked" mask="XVXXXXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Service Mode Programming Locked</label>
     <label xml:lang="it">Blocco programmazione in modo Servizio</label>
+    <label xml:lang="de">Programmiersperre</label>
   </variable>
-  <variable item="Software Update Locked" CV="144" mask="VXXXXXXX" default="0">
+  <variable CV="144" item="Software Update Locked" mask="VXXXXXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Software Update Locked</label>
     <label xml:lang="it">Blocco aggiornamento Software</label>
+    <label xml:lang="de">Updatesperre</label>
   </variable>
   <variable CV="145" item="Kick Start" default="0">
     <enumVal>
       <enumChoice choice="Normal (DC and Coreless)" value="0">
         <choice>Normal (DC and Coreless)</choice>
         <choice xml:lang="it">Normale (DC e Coreless)</choice>
+        <choice xml:lang="de">Normal (DC und Bürstenlos)</choice>
       </enumChoice>
       <enumChoice choice="Low Impedance DC (with added capacitor see manual)" value="1">
         <choice>Low Impedance DC (with added capacitor see manual)</choice>
         <choice xml:lang="it">Bassa impedenza DC(con condensatoe: vedere manuale)</choice>
+        <choice xml:lang="de">Spezialeinstellung Fleischmann-Rundmotor</choice>
       </enumChoice>
       <enumChoice choice="C or Softdrive-Sinus (FO4 not useable)" value="10">
         <choice>C or Softdrive-Sinus (FO4 not useable)</choice>
         <choice xml:lang="it">C o Softdrive-Sinusoidale (F4 non usabile)</choice>
+        <choice xml:lang="de">C oder Softdrive-Sinus (FA4 nicht verwendbar)</choice>
       </enumChoice>
       <enumChoice choice="alternative C or Softdrive-Sinus (FO4 useable)" value="11">
         <choice>alternative C or Softdrive-Sinus (FO4 useable)</choice>
         <choice xml:lang="it">C alternativo o Softdrive-Sinusoidale (F4 usabile)</choice>
+        <choice xml:lang="de">alternativ C oder Softdrive-Sinus (FA4 verwendbar)</choice>
       </enumChoice>
       <enumChoice choice="Special C or Softdrive-Sinus requiring normal output (FO4 not useable)" value="12">
         <choice>Special C or Softdrive-Sinus requiring normal output (FO4 not useable)</choice>
         <choice xml:lang="it">C Speciale o Softdrive-Sinusoidale con uscita normale (F4 non usabile)</choice>
+        <choice xml:lang="de">Spezial C oder Softdrive-Sinus benötigt FA (FA4 nicht verwendbar)</choice>
       </enumChoice>
       <enumChoice choice="Special C or Softdrive-Sinus for Marklin Gottardo (FO3 is directional selection of 3rd rail pickup)" value="13">
         <choice>Special C or Softdrive-Sinus for Marklin Gottardo (FO3 is directional selection of 3rd rail pickup)</choice>
         <choice xml:lang="it">C Speciale o Softdrive-Sinusoidale per Marklin Gottardo (F3 selezione direzionale della terza rotaia)</choice>
+        <choice xml:lang="de">Spezial C oder Softdrive-Sinus für Märklin Gotthard (F3 ist Richtungsauswahl)</choice>
       </enumChoice>
     </enumVal>
     <label>Motor Control Method</label>
     <label xml:lang="it">Metodo controllo motore</label>
+    <label xml:lang="de">Motor-Regelung</label>
   </variable>
-  <variable CV="146" default="0" item="Load Control" tooltip="Motor Backlash Control">
+  <variable CV="146" default="0" item="Load Control">
     <decVal min="0" max="255"/>
     <label>Motor Backlash Control</label>
     <label xml:lang="it">Controllo rinculo motore</label>
-  </variable>
+    <label xml:lang="de">Ausgleich Leergang</label>
+ 	<tooltip>Motor Backlash Control</tooltip>
+   </variable>
   <variable CV="147" default="0" item="Total PWM Period">
     <decVal min="0" max="255"/>
     <label>EMK measure timeout</label>
     <label xml:lang="it">Misura timeout EMK</label>
+    <label xml:lang="de">EMK – Messlücke</label>
   </variable>
   <variable CV="148" default="0" item="EMF Control Reference">
     <decVal min="0" max="255"/>
     <label>Differential value</label>
     <label xml:lang="it">Valore differenziale</label>
+    <label xml:lang="de">EMK - D-Wert</label>
   </variable>
   <variable CV="149" mask="VVVVVVVX" default="0" item="EMF Enable">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
     <label>Adaptive proportional value</label>
     <label xml:lang="it">Valore proprzionale adattabile</label>
+    <label xml:lang="de">EMK - P-Wert</label>
   </variable>
   <variable CV="150" default="0" item="EMF Static Config">
     <decVal min="0" max="255"/>
     <label>Regulation at full speed</label>
     <label xml:lang="it">Regolazione a velocità massima</label>
+    <label xml:lang="de">EMK - Ausregelung bei Vollgeschwindigkeit</label>
   </variable>
   <variable CV="151" item="Advanced Group 1 Option 1" default="0" tooltip="Motor braked by shorting output">
     <enumVal>
       <enumChoice choice="No Braking">
         <choice>No Braking</choice>
         <choice xml:lang="it"> Nessuna Frenata</choice>
+        <choice xml:lang="de"> kein Bremsen</choice>
       </enumChoice>
       <enumChoice choice="Gradual brake application over 1sec from Stop" value="1">
         <choice>Gradual brake application over 1sec from Stop</choice>
         <choice xml:lang="it">Frenata graduale oltre 1 sec. dallo stop</choice>
+        <choice xml:lang="de">Schrittweise Bremsen über 1 Sek vom letzten Stop</choice>
       </enumChoice>
       <enumChoice choice="Gradual brake application over 2sec from Stop" value="2">
         <choice>Gradual brake application over 2sec from Stop</choice>
         <choice xml:lang="it">Frenata graduale oltre 2 sec. dallo stop</choice>
+        <choice xml:lang="de">Schrittweise Bremsen über 2 Sek vom letzten Stop</choice>
       </enumChoice>
       <enumChoice choice="Gradual brake application over 3sec from Stop" value="3">
         <choice>Gradual brake application over 3sec from Stop</choice>
         <choice xml:lang="it">Frenata graduale oltre 3 sec. dallo stop</choice>
+        <choice xml:lang="de">Schrittweise Bremsen über 3 Sek vom letzten Stop</choice>
       </enumChoice>
       <enumChoice choice="Gradual brake application over 4sec from Stop" value="4">
         <choice>Gradual brake application over 4sec from Stop</choice>
         <choice xml:lang="it">Frenata graduale oltre 4 sec. dallo stop</choice>
+        <choice xml:lang="de">Schrittweise Bremsen über 4 Sek vom letzten Stop</choice>
       </enumChoice>
       <enumChoice choice="Gradual brake application over 5sec from Stop" value="5">
         <choice>Gradual brake application over 5sec from Stop</choice>
         <choice xml:lang="it">Frenata graduale oltre 5 sec. dallo stop</choice>
+        <choice xml:lang="de">Schrittweise Bremsen über 5 Sek vom letzten Stop</choice>
       </enumChoice>
       <enumChoice choice="Gradual brake application over 6sec from Stop" value="6">
         <choice>Gradual brake application over 6sec from Stop</choice>
         <choice xml:lang="it">Frenata graduale oltre 6 sec. dallo stop</choice>
+        <choice xml:lang="de">Schrittweise Bremsen über 6 Sek vom letzten Stop</choice>
       </enumChoice>
       <enumChoice choice="Gradual brake application over 7sec from Stop" value="7">
         <choice>Gradual brake application over 7sec from Stop</choice>
         <choice xml:lang="it">Frenata graduale oltre 7 sec. dallo stop</choice>
+        <choice xml:lang="de">Schrittweise Bremsen über 7 Sek vom letzten Stop</choice>
       </enumChoice>
       <enumChoice choice="Gradual brake application over 8sec from Stop" value="8">
         <choice>Gradual brake application over 8sec from Stop</choice>
         <choice xml:lang="it">Frenata graduale oltre 8 sec. dallo stop</choice>
+        <choice xml:lang="de">Schrittweise Bremsen über 8 Sek vom letzten Stop</choice>
       </enumChoice>
       <enumChoice choice="Full brake application at Stop" value="2">
         <choice>Full brake application at Stop</choice>
         <choice xml:lang="it">Frenata completa allo stop</choice>
+        <choice xml:lang="de">Vollbremsung bei Stop</choice>
       </enumChoice>
     </enumVal>
     <label>Motor brake</label>
     <label xml:lang="it">Freno motore</label>
+    <label xml:lang="de">Motorbremse</label>
   </variable>
-  <variable item="Dim function output 7" CV="152" mask="XXXXXXXV" default="0" minOut="9">
+  <variable CV="152" item="Dim function output 7" mask="XXXXXXXV" default="0" minOut="9">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim function output 7</label>
     <label xml:lang="it">Funzione smorzamento uscita 7</label>
+    <label xml:lang="de">Dim FA 7</label>
   </variable>
-  <variable item="Dim function output 8" CV="152" mask="XXXXXXVX" default="0" minOut="10">
+  <variable CV="152" item="Dim function output 8" mask="XXXXXXVX" default="0" minOut="10">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim function output 8</label>
     <label xml:lang="it">Funzione smorzamento uscita 8</label>
+    <label xml:lang="de">Dim FA 8</label>
   </variable>
-  <variable item="Dim function output 9" CV="152" mask="XXXXXVXX" default="0" minOut="11">
+  <variable CV="152" item="Dim function output 9" mask="XXXXXVXX" default="0" minOut="11">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim function output 9</label>
     <label xml:lang="it">Funzione smorzamento uscita 9</label>
+    <label xml:lang="de">Dim FA 9</label>
   </variable>
-  <variable item="Dim function output 10" CV="152" mask="XXXXVXXX" default="0" minOut="12">
+  <variable CV="152" item="Dim function output 10" mask="XXXXVXXX" default="0" minOut="12">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim function output 10</label>
     <label xml:lang="it">Funzione smorzamento uscita 10</label>
+    <label xml:lang="de">Dim FA 10</label>
   </variable>
-  <variable item="Dim function output 11" CV="152" mask="XXXVXXXX" default="0" minOut="13">
+  <variable CV="152" item="Dim function output 11" mask="XXXVXXXX" default="0" minOut="13">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim function output 11</label>
     <label xml:lang="it">Funzione smorzamento uscita 11</label>
+    <label xml:lang="de">Dim FA 11</label>
   </variable>
-  <variable item="Dim function output 12" CV="152" mask="XXVXXXXX" default="0" minOut="14">
+  <variable CV="152" item="Dim function output 12" mask="XXVXXXXX" default="0" minOut="14">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Dim function output 12</label>
     <label xml:lang="it">Funzione smorzamento uscita 12</label>
+    <label xml:lang="de">Dim FA 12</label>
   </variable>
-  <variable item="FO3 + FO4 directional setting" CV="152" mask="XVXXXXXX" default="0" minOut="6">
+  <variable CV="152" item="FO3 + FO4 directional setting" mask="XVXXXXXX" default="0" minOut="6">
     <enumVal>
       <enumChoice choice="Non Directional, normal NMRA mapping" value="0">
         <choice>Non Directional, normal NMRA mapping</choice>
         <choice xml:lang="it">non direzionale, Standard NMRA</choice>
+        <choice xml:lang="de">keine Richtung, Standard NMRA</choice>
       </enumChoice>
       <enumChoice choice="FO3 on in reverse, FO4 on in forward" value="1">
         <choice>FO3 on in reverse, FO4 on in forward</choice>
         <choice xml:lang="it">F3 in retro ,F4 in avanti</choice>
+        <choice xml:lang="de">FA3 an rückwärts ,FA4 an vorwärts</choice>
       </enumChoice>
     </enumVal>
     <label>FO3 + FO4 directional setting</label>
     <label xml:lang="it">F3+F4 settaggio direzionale</label>
+    <label xml:lang="de">FA3+FA4 als Richtungs-Ausgänge</label>
   </variable>
 </variables>

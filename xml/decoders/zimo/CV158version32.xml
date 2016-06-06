@@ -1,55 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- version 1.1 Corrected labeling errors for CV158 RailCom speed reporting method, Mark Waters, 17 jan 2015 --> 
 <!-- CV158, which is sound & Railcom related, added by Nigel Cliffe, 17 Nov 2012 -->
+<!-- version 1.1 Corrected labeling errors for CV158 RailCom speed reporting method, Mark Waters, 17 jan 2015 --> 
+<!-- version 1.2, Ronald Kuhn - add german translation  -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <variable item="RailCom speed reporting method" CV="158" mask="XXXXXVXX" default="1">
+  <variable CV="158" item="RailCom speed reporting method" mask="XXXXXVXX" default="1">
     <enumVal>
       <enumChoice choice="Zimo for MX31ZL" value="0">
+      <choice>Zimo for MX31ZL</choice>
+      <choice xml:lang="de">„alte“ Variante (für MX31ZL)</choice>
       </enumChoice>
       <enumChoice choice="Standard Reporting" value="1">
+      <choice>Standard Reporting</choice>
+      <choice xml:lang="de">Rückmeldung nach NMRA</choice>
       </enumChoice>
     </enumVal>
+    <label>RailCom speed reporting method</label>
+    <label xml:lang="de">RailCom Geschwindigkeits-Rückmeldung</label>
   </variable>
-  <variable item="Standing Sound on premature shutdown" CV="158" mask="XXXXVXXX" default="0">
+  <variable CV="158" item="Standing Sound on premature shutdown" mask="XXXXVXXX" default="0">
     <enumVal>
       <enumChoice choice="Present" value="0">
         <choice>Present</choice>
         <choice xml:lang="it">Presente</choice>
+        <choice xml:lang="de">kein Abbruch</choice>
       </enumChoice>
       <enumChoice choice="Disappear" value="1">
         <choice>Disappear</choice>
         <choice xml:lang="it">Sparisce</choice>
+        <choice xml:lang="de">Abbruch</choice>
       </enumChoice>
     </enumVal>
     <label>Standing Sound on premature shutdown</label>
     <label xml:lang="it">Suono distinto per arresto prematuro</label>
+    <label xml:lang="de">Standgeräusch wird vorzeitig abgebrochen</label>
   </variable>
-  <variable item="Chuff rate at higher speed steps" CV="158" mask="XXXVXXXX" default="0">
+  <variable CV="158" item="Chuff rate at higher speed steps" mask="XXXVXXXX" default="0">
     <enumVal>
       <enumChoice choice="Normal" value="0">
         <choice>Normal</choice>
         <choice xml:lang="it">Normale</choice>
+        <choice xml:lang="de">Normal</choice>
       </enumChoice>
       <enumChoice choice="Reduced" value="1">
         <choice>Reduced</choice>
         <choice xml:lang="it">Ridotta</choice>
+        <choice xml:lang="de">Geringer</choice>
       </enumChoice>
     </enumVal>
     <label>Chuff rate at higher speed steps</label>
     <label xml:lang="it">Frequenza di Chuff a velocità massima</label>
+    <label xml:lang="de">&lt;html&gt;DAMPFschlag Häufigkeit steigt&lt;br&gt;beim Schnellfahren unterproportional&lt;/html&gt;</label>
   </variable>
-  <variable item="Drop one speed step to lower turbocharger" CV="158" mask="XXVXXXXX" default="0">
+  <variable CV="158" item="Drop one speed step to lower turbocharger" mask="XXVXXXXX" default="0">
     <enumVal>
       <enumChoice choice="Off (default)" value="0">
         <choice>Normal</choice>
         <choice xml:lang="it">Normale</choice>
+        <choice xml:lang="de">Normal</choice>
       </enumChoice>
       <enumChoice choice="On" value="1">
         <choice>Reduced</choice>
         <choice xml:lang="it">Ridotta</choice>
+        <choice xml:lang="de">Absenken</choice>
       </enumChoice>
     </enumVal>
     <label>Drop one speed step to lower turbocharger</label>
     <label xml:lang="it">Diminiusci di uno step di velocità per diminuire il Turbocompressore</label>
+    <label xml:lang="de">Absenkung Diesel-Sound und Turbolader Sound</label>
   </variable>
 </variables>

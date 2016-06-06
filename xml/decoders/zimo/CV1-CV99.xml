@@ -10,100 +10,162 @@
   <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_255.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/nmra/vStartHighMid.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
-  <variable item="Motor Frequency and EMF sample Rate" CV="9" default="0">
+  <variable CV="9" item="Motor Frequency and EMF sample Rate" default="0">
     <decVal/>
     <label>Motor Frequency and EMF sample Rate</label>
     <label xml:lang="it">Frequenza Motore e Freq.Campionamento EMF</label>
+    <label xml:lang="de">Motoransteuerungsperiode bzw. – frequenz und EMK-Abtastrate</label>
   </variable>
   <variable CV="10" default="0" item="EMF Droop Config" tooltip="Range 0-252">
     <decVal max="252"/>
     <label>EMF Feedback Cutoff Speed Step</label>
     <label xml:lang="it">Step velocità taglio EMF</label>
+    <label xml:lang="de">Regelungs-Cutoff</label>
   </variable>
   <variable item="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>Analog Mode Function Status - F1</label>
-    <label xml:lang="it">Stato Funzioni in Analogico - F1</label>
+      <label>Analog Mode Function Status - F1</label>
+      <label xml:lang="it">Stato Funzioni in analogico - F1</label>
+      <label xml:lang="fr">État de la fonction en analogique - F1</label>
+      <label xml:lang="de">Funktion ein im Analogbetrieb - F1</label>
+      <tooltip>Check to enable function F1 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml.lang="de">Aktivieren Sie die Funktion wenn F1 im Analogbetrieb eingeschaltet sein soll.</tooltip>
   </variable>
   <variable item="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>Analog Mode Function Status - F2</label>
-    <label xml:lang="it">Stato Funzioni in Analogico - F2</label>
+      <label>Analog Mode Function Status - F2</label>
+      <label xml:lang="it">Stato Funzioni in analogico - F2</label>
+      <label xml:lang="fr">État de la fonction en analogique - F2</label>
+      <label xml:lang="de">Funktion ein im Analogbetrieb - F2</label>
+      <tooltip>Check to enable function F2 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml.lang="de">Aktivieren Sie die Funktion wenn F2 im Analogbetrieb eingeschaltet sein soll.</tooltip>
   </variable>
   <variable item="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>Analog Mode Function Status - F3</label>
-    <label xml:lang="it">Stato Funzioni in Analogico - F3</label>
+      <label>Analog Mode Function Status - F3</label>
+      <label xml:lang="it">Stato Funzioni in analogico - F3</label>
+      <label xml:lang="fr">État de la fonction en analogique - F3</label>
+      <label xml:lang="de">Funktion ein im Analogbetrieb - F3</label>
+      <tooltip>Check to enable function F3 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml.lang="de">Aktivieren Sie die Funktion wenn F3 im Analogbetrieb eingeschaltet sein soll.</tooltip>
   </variable>
   <variable item="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>Analog Mode Function Status - F4</label>
-    <label xml:lang="it">Stato Funzioni in Analogico - F4</label>
+      <label>Analog Mode Function Status - F4</label>
+      <label xml:lang="it">Stato Funzioni in analogico - F4</label>
+      <label xml:lang="fr">État de la fonction en analogique - F4</label>
+      <label xml:lang="de">Funktion ein im Analogbetrieb - F4</label>
+      <tooltip>Check to enable function F4 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml.lang="de">Aktivieren Sie die Funktion wenn F4 im Analogbetrieb eingeschaltet sein soll.</tooltip>
   </variable>
   <variable item="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>Analog Mode Function Status - F5</label>
-    <label xml:lang="it">Stato Funzioni in Analogico - F5</label>
+      <label>Analog Mode Function Status - F5</label>
+      <label xml:lang="it">Stato Funzioni in analogico - F5</label>
+      <label xml:lang="fr">État de la fonction en analogique - F5</label>
+      <label xml:lang="de">Funktion ein im Analogbetrieb - F5</label>
+      <tooltip>Check to enable function F5 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml.lang="de">Aktivieren Sie die Funktion wenn F5 im Analogbetrieb eingeschaltet sein soll.</tooltip>
   </variable>
   <variable item="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>Analog Mode Function Status - F6</label>
-    <label xml:lang="it">Stato Funzioni in Analogico - F6</label>
+      <label>Analog Mode Function Status - F6</label>
+      <label xml:lang="it">Stato Funzioni in analogico - F6</label>
+      <label xml:lang="fr">État de la fonction en analogique - F6</label>
+      <label xml:lang="de">Funktion ein im Analogbetrieb - F6</label>
+      <tooltip>Check to enable function F6 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml.lang="de">Aktivieren Sie die Funktion wenn F6 im Analogbetrieb eingeschaltet sein soll.</tooltip>
   </variable>
   <variable item="Analog Mode Function Status - F7" CV="13" mask="XVXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>Analog Mode Function Status - F7</label>
-    <label xml:lang="it">Stato Funzioni in Analogico - F7</label>
+      <label>Analog Mode Function Status - F7</label>
+      <label xml:lang="it">Stato Funzioni in analogico - F7</label>
+      <label xml:lang="fr">État de la fonction en analogique - F7</label>
+      <label xml:lang="de">Funktion ein im Analogbetrieb - F7</label>
+      <tooltip>Check to enable function F7 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml.lang="de">Aktivieren Sie die Funktion wenn F7 im Analogbetrieb eingeschaltet sein soll.</tooltip>
   </variable>
   <variable item="Analog Mode Function Status - F8" CV="13" mask="VXXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>Analog Mode Function Status - F8</label>
-    <label xml:lang="it">Stato Funzioni in Analogico - F8</label>
+      <label>Analog Mode Function Status - F8</label>
+      <label xml:lang="it">Stato Funzioni in analogico - F8</label>
+      <label xml:lang="fr">État de la fonction en analogique - F8</label>
+      <label xml:lang="de">Funktion ein im Analogbetrieb - F8</label>
+      <tooltip>Check to enable function F8 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml.lang="de">Aktivieren Sie die Funktion wenn F8 im Analogbetrieb eingeschaltet sein soll.</tooltip>
   </variable>
   <variable item="Analog Mode Function Status - FL(f)" CV="14" mask="XXXXXXXV">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>Analog Mode Function Status - FL(f)</label>
-    <label xml:lang="it">Stato Funzioni in Analogico - Luci (in avanti)</label>
+       <label>Analog Mode Function Status - FL(f)</label>
+       <label xml:lang="it">Stato Funzioni in Analogico - Luci (in avanti)</label>
+       <label xml:lang="de">Funktion ein im Analogbetrieb - FL(f)</label>
+      <tooltip>Check to enable function FL(f) when the unit is operating in analog power mode</tooltip>
+      <tooltip xml.lang="de">Aktivieren Sie die Funktion wenn FL(f) im Analogbetrieb eingeschaltet sein soll.</tooltip>
   </variable>
   <variable item="Analog Mode Function Status - FL(r)" CV="14" mask="XXXXXXVX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>Analog Mode Function Status - FL(r)</label>
-    <label xml:lang="it">Stato Funzioni in Analogico - Luci (in retro)</label>
+       <label>Analog Mode Function Status - FL(r)</label>
+       <label xml:lang="it">Stato Funzioni in Analogico - Luci (in retro)</label>
+       <label xml:lang="de">Funktion ein im Analogbetrieb - FL(r)</label>
+      <tooltip>Check to enable function FL(r) when the unit is operating in analog power mode</tooltip>
+      <tooltip xml.lang="de">Aktivieren Sie die Funktion wenn FL(r) im Analogbetrieb eingeschaltet sein soll.</tooltip>
   </variable>
   <variable item="Analog Mode Function Status - F9" CV="14" mask="XXXXXVXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>Analog Mode Function Status - F9</label>
-    <label xml:lang="it">Stato Funzioni in Analogico - F9</label>
+       <label>Analog Mode Function Status - F9</label>
+       <label xml:lang="it">Stato Funzioni in analogico - F9</label>
+       <label xml:lang="fr">État de la fonction en analogique - F9</label>
+       <label xml:lang="de">Funktion ein im Analogbetrieb - F9</label>
+      <tooltip>Check to enable function F9 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml.lang="de">Aktivieren Sie die Funktion wenn F9 im Analogbetrieb eingeschaltet sein soll.</tooltip>
   </variable>
   <variable item="Analog Mode Function Status - F10" CV="14" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>Analog Mode Function Status - F10</label>
-    <label xml:lang="it">Stato Funzioni in Analogico - F10</label>
+       <label>Analog Mode Function Status - F10</label>
+       <label xml:lang="it">Stato Funzioni in analogico - F10</label>
+       <label xml:lang="fr">État de la fonction en analogique - F10</label>
+       <label xml:lang="de">Funktion ein im Analogbetrieb - F10</label>
+      <tooltip>Check to enable function F10 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml.lang="de">Aktivieren Sie die Funktion wenn F10 im Analogbetrieb eingeschaltet sein soll.</tooltip>
   </variable>
   <variable item="Analog Mode Function Status - F11" CV="14" mask="XXXVXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>Analog Mode Function Status - F11</label>
-    <label xml:lang="it">Stato Funzioni in Analogico - F11</label>
+       <label>Analog Mode Function Status - F11</label>
+       <label xml:lang="it">Stato Funzioni in analogico - F11</label>
+       <label xml:lang="fr">État de la fonction en analogique - F11</label>
+       <label xml:lang="de">Funktion ein im Analogbetrieb - F11</label>
+      <tooltip>Check to enable function F11 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml.lang="de">Aktivieren Sie die Funktion wenn F11 im Analogbetrieb eingeschaltet sein soll.</tooltip>
   </variable>
   <variable item="Analog Mode Function Status - F12" CV="14" mask="XXVXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>Analog Mode Function Status - F12</label>
-    <label xml:lang="it">Stato Funzioni in Analogico - F12</label>
+       <label>Analog Mode Function Status - F12</label>
+       <label xml:lang="it">Stato Funzioni in analogico - F12</label>
+       <label xml:lang="fr">État de la fonction en analogique - F12</label>
+       <label xml:lang="de">Funktion ein im Analogbetrieb - F12</label>
+      <tooltip>Check to enable function F12 when the unit is operating in analog power mode</tooltip>
+      <tooltip xml.lang="de">Aktivieren Sie die Funktion wenn F12 im Analogbetrieb eingeschaltet sein soll.</tooltip>
   </variable>
   <variable CV="14" item="Zero-1 Power Conversion" mask="XVXXXXXX" default="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Analog operation with accel/decel from CV3/4</label>
     <label xml:lang="it">Operatività in Analogico con accell/decell. da CV 3/4</label>
+    <label xml:lang="de">Anfahr- und Bremsverzögerung (CV 3/4) aktiv</label>
   </variable>
   <variable CV="14" item="Trix Power Conversion" mask="VXXXXXXX" default="0" exclude="223,236">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>DC Regulation</label>
     <label xml:lang="it">Regolazioni in DC</label>
+    <label xml:lang="de">Motorregelung aktiv</label>
   </variable>
-  <variable CV="19" default="0" item="Consist Address" comment="Allows permanent storage of consist address. Range 0-127">
+  <variable CV="19" default="0" item="Consist Address">
     <decVal/>
     <label>Consist Address</label>
     <label xml:lang="it">Indirizzo Consist</label>
+    <label xml:lang="de">Verbundadresse</label>
+    <tooltip>Stores consist address. Range 0-127 (direction set in bit 7)</tooltip>
+    <tooltip xml:lang="it">Indirizzo Consist. Valori 0-127 (direzione nel bit 7)</tooltip>
+    <tooltip xml:lang="de">nur lesend: Speichert die Verbundadresse. Werte 0-127 (Richtung gesetzt in bit 7)</tooltip>
     <comment>Allows permanent storage of consist address. Range 0-127</comment>
     <comment xml:lang="it">Memoria permanente indirizzo Consist. Valori 0-127</comment>
   </variable>
@@ -111,123 +173,152 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
     <label>Consist Address Active For F1</label>
     <label xml:lang="it">Indirizzo Consist attivo per F1</label>
+    <label xml:lang="de">im Verbundbetrieb aktiv F1</label>
   </variable>
   <variable item="Consist Address Active For F2" CV="21" mask="XXXXXXVX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
     <label>Consist Address Active For F2</label>
     <label xml:lang="it">Indirizzo Consist attivo per F2</label>
+    <label xml:lang="de">im Verbundbetrieb aktiv F2</label>
   </variable>
   <variable item="Consist Address Active For F3" CV="21" mask="XXXXXVXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
     <label>Consist Address Active For F3</label>
     <label xml:lang="it">Indirizzo Consist attivo per F3</label>
+    <label xml:lang="de">im Verbundbetrieb aktiv F3</label>
   </variable>
   <variable item="Consist Address Active For F4" CV="21" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
     <label>Consist Address Active For F4</label>
     <label xml:lang="it">Indirizzo Consist attivo per F4</label>
+    <label xml:lang="de">im Verbundbetrieb aktiv F4</label>
   </variable>
   <variable item="Consist Address Active For F5" CV="21" mask="XXXVXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
     <label>Consist Address Active For F5</label>
     <label xml:lang="it">Indirizzo Consist attivo per F5</label>
+    <label xml:lang="de">im Verbundbetrieb aktiv F5</label>
   </variable>
   <variable item="Consist Address Active For F6" CV="21" mask="XXVXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
     <label>Consist Address Active For F6</label>
     <label xml:lang="it">Indirizzo Consist attivo per F6</label>
+    <label xml:lang="de">im Verbundbetrieb aktiv F6</label>
   </variable>
   <variable item="Consist Address Active For F7" CV="21" mask="XVXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
     <label>Consist Address Active For F7</label>
     <label xml:lang="it">Indirizzo Consist attivo per F7</label>
+    <label xml:lang="de">im Verbundbetrieb aktiv F7</label>
   </variable>
   <variable item="Consist Address Active For F8" CV="21" mask="VXXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
     <label>Consist Address Active For F8</label>
     <label xml:lang="it">Indirizzo Consist attivo per F8</label>
+    <label xml:lang="de">im Verbundbetrieb aktiv F8</label>
   </variable>
   <variable item="Consist Address Active For FL in Forward" CV="22" mask="XXXXXXXV">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
     <label>Consist Address Active For FL in Forward</label>
     <label xml:lang="it">Indirizzo Consist attivo per Luci (in avanti)</label>
+    <label xml:lang="de">im Verbundbetrieb aktiv FL bei Vorwärts</label>
   </variable>
   <variable item="Consist Address Active For FL in Reverse" CV="22" mask="XXXXXXVX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
     <label>Consist Address Active For FL in Reverse</label>
     <label xml:lang="it">Indirizzo Consist attivo per Luci (in retro)</label>
+    <label xml:lang="de">im Verbundbetrieb aktiv FL bei Rückwärts</label>
   </variable>
   <variable item="Consist Address Active For F9" CV="22" mask="XXXXXVXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
     <label>Consist Address Active For F9</label>
     <label xml:lang="it">Indirizzo Consist attivo per F9</label>
+    <label xml:lang="de">im Verbundbetrieb aktiv F9</label>
   </variable>
   <variable item="Consist Address Active For F10" CV="22" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
     <label>Consist Address Active For F10</label>
     <label xml:lang="it">Indirizzo Consist attivo per F10</label>
-  </variable>
-  <variable item="Acceleration Trim" CV="23" mask="XVVVVVVV">
-    <decVal max="127"/>
-    <label>Acceleration Trim</label>
-    <label xml:lang="it">Regolazione fine Accellerazione</label>
+    <label xml:lang="de">im Verbundbetrieb aktiv F10</label>
   </variable>
   <variable item="Consist Address Active For F11" CV="22" mask="XXXVXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
     <label>Consist Address Active For F11</label>
     <label xml:lang="it">Indirizzo Consist attivo per F11</label>
+    <label xml:lang="de">im Verbundbetrieb aktiv F11</label>
   </variable>
   <variable item="Consist Address Active For F12" CV="22" mask="XXVXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
     <label>Consist Address Active For F12</label>
     <label xml:lang="it">Indirizzo Consist attivo per F12</label>
+    <label xml:lang="de">im Verbundbetrieb aktiv F12</label>
+  </variable>
+  <variable item="Acceleration Trim" CV="23" mask="XVVVVVVV">
+    <decVal max="127"/>
+    <label>Acceleration Trim</label>
+    <label xml:lang="it">Regolazione fine Accellerazione</label>
+    <label xml:lang="de">Beschleunigungsvariation</label>
+    <tooltip xml:lang="de">Beschleunigungszeit, die zum Wert in CV #3 addiert oder davon abgezogen werden soll.</tooltip>
   </variable>
   <variable item="Acceleration Trim Sign" CV="23" mask="VXXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-AddSubtract.xml"/>
     <label>Acceleration Trim Sign</label>
     <label xml:lang="it">Segno Regolazione fine Accellerazione</label>
+    <label xml:lang="de">Beschleunigungsvariation verwenden</label>
   </variable>
   <variable item="Deceleration Trim" CV="24" mask="XVVVVVVV">
     <decVal max="127"/>
     <label>Deceleration Trim</label>
     <label xml:lang="it">Regolazione fine Decellarazione</label>
+    <label xml:lang="de">Bremszeitvariation</label>
+    <tooltip xml:lang="de">Bremszeit, die zum Wert in CV #4 addiert oder davon abgezogen werden soll.</tooltip>
   </variable>
   <variable item="Deceleration Trim Sign" CV="24" mask="VXXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-AddSubtract2.xml"/>
     <label>Deceleration Trim Sign</label>
     <label xml:lang="it">Segno Regolazione fine Decellarazione</label>
+    <label xml:lang="de">Bremszeitvariation verwenden</label>
   </variable>
   <variable item="Direction Dependent stops with asymmetrical DCC" CV="27">
     <enumVal>
       <enumChoice choice="Does Not Stop">
         <choice>Does Not Stop</choice>
         <choice xml:lang="it">Non si ferma</choice>
+	    <choice xml:lang="de">Kein Bremsen</choice>
       </enumChoice>
       <enumChoice choice="Stops when Right rail is higher voltage">
         <choice>Stops when Right rail is higher voltage</choice>
         <choice xml:lang="it">Si ferma se rotaia destra ha tensione più alta</choice>
+        <choice xml:lang="de">Bremsen, wenn rechte Schienenspannung höher</choice>
       </enumChoice>
       <enumChoice choice="Stops when Left rail is higher voltage">
         <choice>Stops when Left rail is higher voltage</choice>
         <choice xml:lang="it">Si ferma se rotaia sinistra ha tensione più alta</choice>
+        <choice xml:lang="de">Bremsen, wenn linke Schienenspannung höher</choice>
       </enumChoice>
       <enumChoice choice="Stops in Both Directions">
         <choice>Stops in Both Directions</choice>
         <choice xml:lang="it">Si ferma in entrambe le direzioni</choice>
+        <choice xml:lang="de">Bremsen in beiden Richtungen</choice>
       </enumChoice>
     </enumVal>
     <label>Direction Dependent stops with asymmetrical DCC</label>
     <label xml:lang="it">Fermata dipendente da direzione con DCC asimmetrico</label>
+    <label xml:lang="de">Bremskonfiguration</label>
+ 	<tooltip>Brake on DC detect</tooltip>
+    <tooltip xml:lang="de">Bremskonfiguration mittels asymmetrischer DCC-Digitalspannung</tooltip>
   </variable>
   <variable item="RailCom channel 1 (Broadcast)" CV="28" mask="XXXXXXXV">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>RailCom channel 1 (Broadcast)</label>
     <label xml:lang="it">RailCom canale 1 (Broadcast)</label>
+				<label xml:lang="de">RailCom Kanal 1 (Broadcast)</label>
   </variable>
   <variable item="RailCom channel 2 (Data)" CV="28" mask="XXXXXXVX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>RailCom channel 2 (Data)</label>
     <label xml:lang="it">RailCom canale 2 (Dati)</label>
+				<label xml:lang="de">RailCom Kanal 2 (Daten)</label>
   </variable>
   <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
@@ -236,6 +327,7 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Enable RailCom</label>
     <label xml:lang="it">Abilitazione RailCom</label>
+    <label xml:lang="de">RailCom</label>
   </variable>
   <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
   <variable item="FL(f) controls output 1" CV="33" default="1" mask="XXXXXXXV" minOut="1">
@@ -1202,6 +1294,7 @@
     <decVal max="255"/>
     <label>Signal Dependent Acceleration</label>
     <label xml:lang="it">Accellerazione dipendente da Segnale</label>
+    <label xml:lang="de">Signalabhängige (HLU) Beschleunigung</label>
     <comment>Range 0-255</comment>
     <comment xml:lang="it">Valori 0-255</comment>
   </variable>
@@ -1209,6 +1302,7 @@
     <decVal max="255"/>
     <label>Signal Dependent Deceleration</label>
     <label xml:lang="it">Decellarazione dipendente da Segnale</label>
+    <label xml:lang="de">Signalabhängige (HLU) Bremszeit</label>
     <comment>Range 0-255</comment>
     <comment xml:lang="it">Valori 0-255</comment>
   </variable>
@@ -1242,36 +1336,43 @@
     <comment>Range 0-252</comment>
     <comment xml:lang="it">Valori 0-252</comment>
   </variable>
-  <variable item="BEMF config" CV="56" default="0" tooltip="Range 0-199">
+  <variable CV="56" item="BEMF config" default="0" tooltip="Range 0-199">
     <decVal max="199"/>
     <label>BEMF config</label>
     <label xml:lang="it">Configuarzione BEMF</label>
+    <label xml:lang="de">&lt;html&gt;P- und I-Wert&lt;br&gt;der EMK-Regelung&lt;/html&gt;</label>
   </variable>
-  <variable CV="57" default="0" item="Dither frequency" tooltip="Value divided by 10 is voltage applied to motor at full speed, 0 = automatic adjustment">
+  <variable CV="57" default="0" item="Dither frequency">
     <decVal max="255"/>
     <label>Voltage Reference</label>
     <label xml:lang="it">Tensione di Riferimento</label>
+    <label xml:lang="de">Regelungsreferenz</label>
+    <tooltip>Value divided by 10 is voltage applied to motor at full speed, 0 = automatic adjustment</tooltip>
   </variable>
-  <variable CV="58" default="255" item="Dither option" tooltip="Controls how much BEMF (0-no BEMF to 255-max)">
+  <variable CV="58" default="255" item="Dither option">
     <decVal/>
     <label>BEMF Intensity</label>
     <label xml:lang="it">Intensità BEMF</label>
-  </variable>
-  <variable item="Signal Dependent Reaction Time" CV="59" default="5" comment="Range 0-255">
+    <label xml:lang="de">&lt;html&gt;Regelungseinfluss&lt;br&gt;der EMK-Regelung&lt;/html&gt;</label>
+ 	<tooltip>Controls how much BEMF (0-no BEMF to 255-max)</tooltip>
+   </variable>
+  <variable CV="59" item="Signal Dependent Reaction Time" default="5" comment="Range 0-255">
     <decVal max="255"/>
     <label>Signal Dependent Reaction Time</label>
     <label xml:lang="it">Tempo di reazione dipendente da Segnale</label>
+    <label xml:lang="de">Signalabhängige (HLU) Reaktionszeit</label>
     <comment>Range 0-255</comment>
     <comment xml:lang="it">Valori 0-255</comment>
   </variable>
-  <variable item="Output Level" CV="60" default="0" comment="Controls function output voltage (0/255=high / 1 to 254)">
+  <variable CV="60" item="Output Level" default="0">
     <decVal min="0" max="255"/>
     <label>Output Level</label>
     <label xml:lang="it">Livello di uscita</label>
+    <label xml:lang="de">Dimmen für Funktionsausgänge</label>
     <comment>Controls function output voltage (0/255=high / 1 to 254)</comment>
     <comment xml:lang="it">Controlla tensione uscita Funzioni (0-255=alta / 1-254)</comment>
   </variable>
-  <variable item="Special Function Mapping" CV="61" default="0">
+  <variable CV="61" item="Special Function Mapping" default="0">
     <enumVal>
       <enumChoice choice="NMRA Standard Mapping">
         <choice>NMRA Standard Mapping</choice>
@@ -1280,41 +1381,50 @@
       <enumChoice choice="Alternative Mapping, use this page" value="97">
         <choice>Alternative Mapping, use this page</choice>
         <choice xml:lang="it">Mappatura alternativa, usa questa pagina</choice>
+        <choice xml:lang="de">Alternatives Mapping, diese Seite verwenden</choice>
       </enumChoice>
       <enumChoice choice="Use mapping stored by POM CV61=98 method" value="99">
         <choice>Use mapping stored by POM CV61=98 method</choice>
         <choice xml:lang="it">Usa Mappatura in memoria metodo POM CV61=98</choice>
+        <choice xml:lang="de">Benutze Mapping nach POM CV61=98</choice>
       </enumChoice>
     </enumVal>
     <label>Special Function Mapping</label>
     <label xml:lang="it">Mappatura funzioni speciali</label>
+    <label xml:lang="de">Spezielle „ZIMO-Funktionszuordnungen“</label>
   </variable>
   <variable CV="62" default="0" item="Global lighting option 1">
     <decVal min="0" max="9"/>
     <label>Minimum Dimming Value</label>
     <label xml:lang="it">Valore minimo smorzamento luci</label>
+    <label xml:lang="de">Minimum-Dimm-Wert</label>
   </variable>
   <variable CV="63" default="51" item="Global lighting option 2">
     <decVal max="255"/>
     <label>Light Effects Modifications</label>
     <label xml:lang="it">Modifica effetti Luci</label>
+    <label xml:lang="de">Lichteffekte anpassen</label>
   </variable>
   <variable CV="64" default="5" item="Global lighting option 4">
     <decVal min="0" max="9"/>
     <label>Ditch Light Off Time</label>
     <label xml:lang="it">Tempo di Off luci Ditch</label>
+    <label xml:lang="de">Ditchlight Aus-Zeit</label>
   </variable>
-  <variable CV="65" readOnly="yes" default="0" item="Product Number" tooltip="Sub-version Number (read only)">
+  <variable CV="65" readOnly="yes" default="0" item="Product Number">
     <decVal/>
     <label>Sub-version</label>
     <label xml:lang="it">Sub-Vers. Numero prodotto</label>
+ 	<tooltip>Sub-version Number (read only)</tooltip>
+ 	<tooltip xml:lang="de">Unterversion Nummer (nur lesend)</tooltip>
   </variable>
   <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
-  <variable item="Speed Table" CV="67">
+  <variable CV="67" item="Speed Table">
     <speedTableVal/>
     <label>Speed Table</label>
     <label xml:lang="fr">Speed Table(fr)</label>
     <label xml:lang="it">Tabella Velocità</label>
+    <label xml:lang="de">Geschwindigkeitskennlinie</label>
   </variable>
   <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
 </variables>
