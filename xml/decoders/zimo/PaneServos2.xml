@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
+<!-- version 1.1 - Ronald Kuhn - add german translation -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Servos</name>
+  <name xml:lang="it">Comandi Servo</name>
   <column>
     <row>
       <column>
@@ -34,41 +37,32 @@
         <label>
           <text> </text>
         </label>
-        <display item="Servo 1 Function Allocation" label="Function Allocation">
-          <label>Function Allocation</label>
-          <label xml:lang="it">Allocazione Funzioni</label>
+        <display item="Servo 1 Function Allocation">
         </display>
         <label>
           <text> </text>
         </label>
         <row>
           <column>
-            <display item="Servo 1 Rotation Speed" label="Rotation Speed">
-              <label>Rotation Speed</label>
-              <label xml:lang="it">Velocità di Rotazione</label>
+            <display item="Servo 1 Rotation Speed">
             </display>
           </column>
           <column>
             <label>
               <text>Tenths of a second</text>
               <text xml:lang="it">Decimi di secondo</text>
+              <text xml:lang="de">Zehntelsekunden</text>
             </label>
           </column>
         </row>
         <label>
           <text> </text>
         </label>
-        <display item="Servo 1 Left Stop" label="Left Stop">
-          <label>Left Stop</label>
-          <label xml:lang="it">Stop Sinistro</label>
+        <display item="Servo 1 Left Stop">
         </display>
-        <display item="Servo 1 Centre" label="Centre">
-          <label>Centre</label>
-          <label xml:lang="it">Centro</label>
+        <display item="Servo 1 Centre">
         </display>
-        <display item="Servo 1 Right Stop" label="Right Stop">
-          <label>Right Stop</label>
-          <label xml:lang="it">Stop destro</label>
+        <display item="Servo 1 Right Stop">
         </display>
         <label>
           <text> </text>
@@ -89,41 +83,32 @@
         <label>
           <text> </text>
         </label>
-        <display item="Servo 2 Function Allocation" label="Function Allocation">
-          <label>Function Allocation</label>
-          <label xml:lang="it">Allocazione Funzioni</label>
+        <display item="Servo 2 Function Allocation">
         </display>
         <label>
           <text> </text>
         </label>
         <row>
           <column>
-            <display item="Servo 2 Rotation Speed" label="Rotation Speed">
-              <label>Rotation Speed</label>
-              <label xml:lang="it">Velocità di Rotazione</label>
+            <display item="Servo 2 Rotation Speed">
             </display>
           </column>
           <column>
             <label>
               <text>Tenths of a second</text>
               <text xml:lang="it">Decimi di secondo</text>
+              <text xml:lang="de">Zehntelsekunden</text>
             </label>
           </column>
         </row>
         <label>
           <text> </text>
         </label>
-        <display item="Servo 2 Left Stop" label="Left Stop">
-          <label>Left Stop</label>
-          <label xml:lang="it">Stop Sinistro</label>
+        <display item="Servo 2 Left Stop">
         </display>
-        <display item="Servo 2 Centre" label="Centre">
-          <label>Centre</label>
-          <label xml:lang="it">Centro</label>
+        <display item="Servo 2 Centre">
         </display>
-        <display item="Servo 2 Right Stop" label="Right Stop">
-          <label>Right Stop</label>
-          <label xml:lang="it">Stop destro</label>
+        <display item="Servo 2 Right Stop">
         </display>
         <label>
           <text> </text>
@@ -131,6 +116,4 @@
       </column>
     </row>
   </column>
-  <name>Servos</name>
-  <name xml:lang="it">Comandi Servo</name>
 </pane>

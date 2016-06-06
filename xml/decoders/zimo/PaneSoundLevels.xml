@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- modified from the standard Sound Levels pane to cope with more values -->
 <!-- and provide headings suitable for Zimo chips -->
+<!-- version 1.1 - Ronald Kuhn - add german translation -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <name>Zimo Sound Levels</name>
   <name xml:lang="it">Livelli Suono</name>
@@ -603,18 +604,18 @@
   </row>
   <row>
     <column>
-	  <label>
+      <label>
         <text>Sound Level Control by Function Keys</text>
         <text xml:lang="de">Lautstärkekontrolle durch F-Taste</text>
       </label>
-	  <label>
+      <label>
         <text> </text>
       </label>
-	  <display item="Maximum Volume"/>
-	  <display item="Function Key to Increase Volume"/>
-	  <display item="Function Key to Reduce Volume"/>
-	  
-	  <label>
+      <display item="Maximum Volume"/>
+      <display item="Function Key to Increase Volume"/>
+      <display item="Function Key to Reduce Volume"/>
+      
+      <label>
         <text> </text>
       </label>
       <label>

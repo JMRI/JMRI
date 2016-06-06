@@ -11,6 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
+<!-- version 1.5 - Ronald Kuhn - add german translation -->
 <!-- version 1.4, Added Chuff for Articulated Locomotives,  Mark Waters, 4 Feb 2015 -->
 <!-- version 1.3, Nigel Cliffe, added diesel/electric "Solo" settings, V34 firmware related  23 Jan 2015 -->
 <!-- version 1.2, Nigel Cliffe, added "Standing Sound on premature shutdown" and "Chuff rate at higher speed steps" -->
@@ -119,8 +120,8 @@
       <text> </text>
     </label>
     <display item="Multi-system engine Quick Select key"/>
-	<display item="Condition for switching sound sets"/>
-	<display item="Fn key driving solo"/>
+    <display item="Condition for switching sound sets"/>
+    <display item="Fn key driving solo"/>
     <display item="Two Stage Air Compressor"/>
   </column>
   <column>

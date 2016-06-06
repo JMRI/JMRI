@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
+<!-- version 1.1 - Ronald Kuhn - add german translation -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Accel/Decel</name>
+  <name xml:lang="de">Beschleunigungs-/Bremsverhalten</name>
   <column>
     <row>
       <column>
@@ -42,7 +45,7 @@
     <separator/>
     <row>
       <column>
-        <display item="BEMF Intensity"/>
+        <display item="Dither option"/>
       </column>
       <column>
         <label>
@@ -65,18 +68,22 @@
         <label>
             <text>A 'Hundreds' digit of 1 offsets the mid value for 'coreless' motors</text>
             <text xml:lang="it">Numero Centinaia =1 è valore intermedio per motori 'coreless'</text>
+            <text xml:lang="de">Der Hunderterwert modifiziert Einstellungen für Glockenanker-Motoren.</text>
           </label>
           <label>
             <text>Tens digit is the Proportional value, mid value = 5</text>
             <text xml:lang="it">Numero decine è valore proporzionale, valore medio=5</text>
+            <text xml:lang="de">Der Zehnerwert modifiziert den Proportional-Wert der PID-Regelung.</text>
           </label>
           <label>
             <text>Ones digit is the integral value, mid value = 5</text>
             <text xml:lang="it">Numero unità è valore integrale, valore medio =5</text>
+            <text xml:lang="de">Der Einerwert modifiziert den Integral-Wert der PID-Regelung.</text>
           </label>
           <label>
             <text>With default setting of 0, proportional value auto adjusts and integral value is equivalent to 5</text>
             <text xml:lang="it">Con i valori di default = 0 il valore proporzionale si regola automaticamente e il valore integrale è = 5</text>
+            <text xml:lang="de">Mit dem Wert 0 wird der P-Wert automatisch und der I-Wert äquivalent dem Wert 5 eingestellt.</text>
           </label>
         <label>
           <text> </text>
@@ -98,26 +105,32 @@
         <label>
             <text>0 = 20/40KHz (set with CV112) and sample rate auto adjusts between 200Hz (low speed) and 50Hz</text>
             <text xml:lang="it">0 = 20/40KHz (con CV112) e campionamento si regola automaticamente tra 200Hz (bassa velocità) e 50Hz</text>
+            <text xml:lang="de">0 = 20 kHz, 1 = 40 kHz (gesetzt in CV112)</text>
           </label>
           <label>
             <text>Tens digit = Sampling rate (1-9) mid value = 5</text>
             <text xml:lang="it">Numero decine = campionamento (1-9) valore medio=5</text>
+            <text xml:lang="de">Zehnerstelle = Abtastrate (1-9)</text>
           </label>
           <label>
             <text>Ones digit = EMF sampling time (1-9) mid value = 5</text>
             <text xml:lang="it">Numero unità = tempo campionamento EMF(1-9), valore medio =5</text>
+            <text xml:lang="de">Einerstelle = EMK-Messlücke EMF (1-9)</text>
           </label>
           <label>
             <text>100 = 'Spread Spectrum' sampling rate for reduced noise, with medium sampling time</text>
             <text xml:lang="it">100 = Campionamento 'Ampio spettro' per rumore ridotto, con tempo campionamento medio</text>
+            <text xml:lang="de">100 = ausgewogene Wiederholrate für vermindertes Geräusch mit mittlerer Wiederholzeit.</text>
           </label>
           <label>
             <text>255-176 = Low frequency according to formula;-</text>
             <text xml:lang="it">255-176 = Bassa frequenza secondo la formula;-</text>
+            <text xml:lang="de">255-176 = Niederfrequenz. Periode nach der Formel</text>
           </label>
           <label>
             <text>(131 + mantissa * 4) * 2 exp. Bits 0-4 = mantissa, Bits 5-7 = exp</text>
             <text xml:lang="it">(131 + mantissa * 4) * 2 exp. Bits 0-4 = mantissa, Bits 5-7 = exp-</text>
+            <text xml:lang="de">(131 + mantisse * 4) * 2 exp. Bit 0-4 ist mantisse, Bit 5-7 ist exp</text>
           </label>
         <label>
           <text> </text>
@@ -129,6 +142,7 @@
       <label>
         <text>Acceleration/Deceleration time (momentum) can be streched in the lower speed range</text>
         <text xml:lang="it">Il tempo di Accell./Decell. (inerzia) può essere allargato a velocità bassa</text>
+        <text xml:lang="de">Beschleunigungs-/Bremsverhalten kann im Niedriggeschwindigkeitsbereich angepasst werden.</text>
       </label>
     </row>
     <row>
@@ -154,10 +168,12 @@
         <label>
             <text>Tens digit = percentage of speed range to be included (0-9)</text>
             <text xml:lang="it">Numero decine = percentuale velocità da includere (0-9)</text>
+            <text xml:lang="de">Zehnerstelle: Prozentsatz (0 bis 90 %) des Geschwindigkeitsbereichs (0-9)</text>
           </label>
           <label>
             <text>Ones digit = Exponential curve (0-9)</text>
             <text xml:lang="it">Numero unità = curva esponenziale (0-9)</text>
+            <text xml:lang="de">Einerstelle: Parameter für die Krümmung der Exponentialfunktion. (0-9)</text>
           </label>
         <label>
           <text> </text>
@@ -170,10 +186,12 @@
         <label>
             <text>Raising or lowering the speed to the next internal step occurs only if the precedingstep is nearly reached.The tolerance</text>
             <text xml:lang="it">L'incremento o il decremento allo step vicino avviene solo se è raggiunto lo step precedente. La tolleranza</text>
+            <text xml:lang="de">Die Erhöhung bzw. Absenkung der Sollgeschwindigkeit soll erst nach einer definierten Annäherung</text>
           </label>
           <label>
             <text>for reaching the preceding step is defined by this CV (the smaller this value the smoother the acceleration/deceleration)</text>
             <text xml:lang="it">per raggiungere lo step precedente è definita da questa CV ( valori piccoli per accell./decell. più graduali)</text>
+            <text xml:lang="de">der Ist-Geschwindigkeit an die bisher vorgegebene Sollgeschwindigkeit erfolgen.</text>
           </label>
       </column>
     </row>
@@ -199,14 +217,17 @@
         <label>
             <text>Tens digit = acceleration (1-9)</text>
             <text xml:lang="it">Numero decine = accellerazione (1-9)</text>
+            <text xml:lang="de">Zehnerstelle: für Beschleunigung (0-9)</text>
           </label>
           <label>
             <text>Ones digit = deceleration (1-9)</text>
             <text xml:lang="it">Numero unità = decellerazione (1-9)</text>
+            <text xml:lang="de">Einerstelle: für die Bremsung (0-9)</text>
           </label>
           <label>
             <text>Value 0 = no adaptive acceleration/deceleration</text>
             <text xml:lang="it">Valore 0 = nessuna accell./decell. adattativa</text>
+            <text xml:lang="de">0: kein adaptives Verfahren</text>
           </label>
         <label>
           <text> </text>
@@ -214,5 +235,4 @@
       </column>
     </row>
   </column>
-  <name>Accel/Decel</name>
 </pane>

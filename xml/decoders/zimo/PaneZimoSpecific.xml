@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
+<!-- version 1.1 - Ronald Kuhn - add german translation -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Zimo Specific</name>
+  <name xml:lang="it">Specifiche Zimo</name>
+  <name xml:lang="de">ZIMO Spezifisch</name>
   <column>
     <display item="Pulse Chain Recognition (LGB)"/>
     <display item="NMRA"/>
@@ -28,12 +32,13 @@
       <column>
         <label>
           <text>Signal Dependent Speed Limits</text>
+          <text xml:lang="de">Signalabhängige (HLU) Geschwindigkeits-Limits</text>
         </label>
         <separator/>
         <label>
           <text> </text>
         </label>
-        <display item="-1-" label="             -1-">
+        <display item="-1-">
           <label>             -1-</label>
         </display>
         <display item="-U-"/>
@@ -45,9 +50,9 @@
     <label>
       <text> </text>
     </label>
-    <display item="MAN Key Extension (Disable HLU or ABC signal control)" label="Set Function Key to Disable HLU Signal Control">
-       <label>Set Function Key to Disable HLU Signal Control</label>
-       <label xml:lang="it">Tasto funzione per disabilitare controllo segnale HLU</label>
+    <display item="MAN Key Extension (Disable HLU or ABC signal control)">
+       <!--label>Set Function Key to Disable HLU Signal Control</label>
+       <label xml:lang="it">Tasto funzione per disabilitare controllo segnale HLU</label-->
     </display>
     <display item="Distance controlled stopping"/>
     <label>
@@ -68,6 +73,4 @@
       </column>
     </row>
   </column>
-  <name>Zimo Specific</name>
-  <name xml:lang="it">Specifiche Zimo</name>
 </pane>
