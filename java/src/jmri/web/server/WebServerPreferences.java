@@ -249,6 +249,7 @@ public class WebServerPreferences extends Bean {
 
     public void save() {
         Preferences sharedPreferences = ProfileUtils.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
+        sharedPreferences.putInt(Port, this.getPort());
         sharedPreferences.putInt(ClickDelay, this.getClickDelay());
         sharedPreferences.putInt(RefreshDelay, this.getRefreshDelay());
         sharedPreferences.putBoolean(UseAjax, this.isUseAjax());
@@ -258,17 +259,24 @@ public class WebServerPreferences extends Bean {
         sharedPreferences.put(RailRoadName, getRailRoadName());
         sharedPreferences.putBoolean(DISABLE_FRAME_SERVER, this.isDisableFrames());
         sharedPreferences.putBoolean(REDIRECT_FRAMES, this.redirectFramesToPanels);
-        Preferences node = sharedPreferences.node(DisallowedFrames);
-        this.disallowedFrames.stream().forEach((frame) -> {
-            node.put(Integer.toString(this.disallowedFrames.indexOf(frame)), frame);
-        });
-        sharedPreferences.putInt(Port, this.getPort());
         try {
+            Preferences node = sharedPreferences.node(DisallowedFrames);
+            this.disallowedFrames.stream().forEach((frame) -> {
+                node.put(Integer.toString(this.disallowedFrames.indexOf(frame)), frame);
+            });
+            log.debug("Have {} excess disallowed frames...", node.keys().length - this.disallowedFrames.size());
+            if (this.disallowedFrames.size() < node.keys().length) {
+                log.debug("Clearing {} excess disallowed frames...", node.keys().length - this.disallowedFrames.size());
+                for (int i = node.keys().length - 1; i >= this.disallowedFrames.size(); i--) {
+                    log.debug("Clearing excess disallowed frame {}", i);
+                    node.remove(Integer.toString(i));
+                }
+            }
             sharedPreferences.sync();
+            setIsDirty(false);  //  Resets only when stored
         } catch (BackingStoreException ex) {
             log.error("Exception while saving web server preferences", ex);
         }
-        setIsDirty(false);  //  Resets only when stored
     }
 
     public boolean isDirty() {
