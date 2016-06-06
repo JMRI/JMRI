@@ -179,6 +179,7 @@
         <pathelement location="${libdir}/bluecove-bluez-2.1.1-SNAPSHOT.jar"/>
         <pathelement location="${libdir}/bluecove-gpl-2.1.1-SNAPSHOT.jar"/>
         <pathelement location="${libdir}/jhidrawplugin.jar"/>
+        <pathelement location="${libdir}/beansbinding-1.2.1.jar"/>
     </path>
     <pathconvert property="runtime.class.jars" refid="runtime.class.path"/>
    
