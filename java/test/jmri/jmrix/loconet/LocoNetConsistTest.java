@@ -64,24 +64,15 @@ public class LocoNetConsistTest {
         Assert.assertNotNull(c);
     }
 
-    @Ignore("Not quite ready yet")
-    @Test(expected=java.lang.NullPointerException.class) 
-    public void checkDisposeMethod(){
+    @Ignore("not quite ready yet")
+    @Test public void checkDisposeMethod(){
         LocoNetConsist c =  new LocoNetConsist(3,memo);
         ReturnSlotInfo();
-        jmri.DccLocoAddress A = new jmri.DccLocoAddress(200,true);
-        jmri.DccLocoAddress B = new jmri.DccLocoAddress(250,true);
-        c.restore(A,true); // use restore here, as it does not send
-                           // any data to the command station
-        c.restore(B,false); // use restore here, as it does not send
-                           // any data to the command station
-        // before dispose, this should succeed.
-        Assert.assertTrue("Advanced Consist Contains",c.contains(A));
-        Assert.assertTrue("Advanced Consist Contains",c.contains(B));
+        // verify that c has been added to the traffic controller's
+        // list of listeners.
+        int listeners = lnis.numListeners();
         c.dispose();
-        // after dispose, this should fail
-        Assert.assertTrue("Advanced Consist Contains",c.contains(A));
-        Assert.assertTrue("Advanced Consist Contains",c.contains(B));
+        Assert.assertEquals("dispose check",listeners -1, lnis.numListeners());
     }
 
     @Test public void testGetConsistType(){
