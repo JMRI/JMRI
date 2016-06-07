@@ -53,6 +53,8 @@ public class PackageTest extends TestCase {
         suite.addTest(SingleTurnoutSignalHeadTest.suite());
         suite.addTest(TwoIndexTcsProgrammerFacadeTest.suite());
         suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DccConsistTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NmraConsistTest.class));
 
         // sub-packages
         suite.addTest(jmri.implementation.swing.PackageTest.suite());
