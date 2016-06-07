@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -13,61 +14,46 @@
 <!-- for more details.                                                      -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
-    <year>2014</year>
+    <year>2010</year>
     <holder>JMRI</holder>
   </copyright>
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
       <personname>
-        <firstname>Pierre</firstname>
-        <surname>Billon</surname>
+        <firstname>Ronald</firstname>
+        <surname>Kuhn</surname>
       </personname>
     </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
       <revnumber>1</revnumber>
-      <date>2014-02-20</date>
-      <authorinitials>PB</authorinitials>
-      <revremark>
-        This file containts only variables that are common to ALL normal D&amp;H decoders,
-		EXCEPT the low current DH06A that has different default values.
-      </revremark>
-    </revision>
-    <revision>
-      <revnumber>2</revnumber>
-      <date>2014-10-13</date>
-      <authorinitials>PB</authorinitials>
-      <revremark>CV49 exclude for combo sound decoders</revremark>
-    </revision>
-    <revision>
-      <revnumber>3</revnumber>
-      <date>2015-03-06</date>
-      <authorinitials>PB</authorinitials>
-      <revremark>Spelling change CV 61to match new DH def pane for start and brake options</revremark>
+      <date>2016-04-27</date>
+      <authorinitials>RK</authorinitials>
+      <revremark>set default CV#2 for Kuehn N45</revremark>
     </revision>
   </revhistory>
-  <!-- MOTOR SETTINGS -->
-  <variable item="Vhigh" CV="5" default="92">
-    <!-- Dif. Default for DH06A -->
-    <decVal min="0" max="127"/>
+  <variable item="Vstart" CV="2" default="3" comment="A value of 255 corresponds to 100%">
+    <decVal/>
+    <label>Vstart</label>
+    <label xml:lang="it">Volt Partenza</label>
+    <label xml:lang="fr">V démarr.</label>
+    <label xml:lang="de">Anfahrspannung</label>
+    <comment xml:lang="it">Un Valore di 255 corrisponde al 100%</comment>
+    <comment xml:lang="de">Der Wert 255 entspricht 100%</comment>
+  </variable>
+  <variable item="Vhigh" CV="5">
+    <decVal/>
     <label>Vhigh</label>
     <label xml:lang="it">Volt Massimi</label>
     <label xml:lang="fr">Vmax</label>
     <label xml:lang="de">Höchstgeschwindigkeit</label>
   </variable>
-  <variable CV="49" default="1" item="Motor Option 2" tooltip="0=1ms, 1=2ms, 2=4ms, 3=8ms" exclude="Combo sound decoders">
-    <decVal min="0" max="3"/>
-    <label>Impulse width</label>
-    <label xml:lang="it">Largh.Impulsi</label>
-    <label xml:lang="fr">Largeur d'impulsion</label>
-    <label xml:lang="de">Impulsbreite</label>
-  </variable>
-  <variable CV="61" default="63" item="Speed in shunting mode" tooltip="CV61 (0-127)">
-    <decVal min="0" max="127"/>
-    <label>Speed in shunting mode</label>
-    <label xml:lang="it">Velocità in Manovra</label>
-    <label xml:lang="fr">Vitesse en mode manoeuvre</label>
-    <label xml:lang="de">Rangiergang Geschwindigkeit</label>
+  <variable item="Vmid" CV="6">
+    <decVal/>
+    <label>Vmid</label>
+    <label xml:lang="it">Volt Intermedi</label>
+    <label xml:lang="fr">Vmoy</label>
+    <label xml:lang="de">Mittengeschwindigkeit</label>
   </variable>
 </variables>
