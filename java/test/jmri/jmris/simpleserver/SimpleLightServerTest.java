@@ -194,6 +194,29 @@ public class SimpleLightServerTest {
        }
     }
 
+    // test parsing an UNKNOWN status message.
+    @Test public void testParseUnkownStatus() {
+       StringBuilder sb = new StringBuilder();
+       java.io.DataOutputStream output = new java.io.DataOutputStream(
+           new java.io.OutputStream() {
+               // null output string drops characters
+               // could be replaced by one that checks for specific outputs
+               @Override
+               public void write(int b) throws java.io.IOException {
+                   sb.append((char)b);
+               }
+          });
+       java.io.DataInputStream input = new java.io.DataInputStream(System.in);
+       SimpleLightServer a = new SimpleLightServer(input,output);
+       try {
+          a.parseStatus("LIGHT IL1 UNKNOWN\n");
+          // this currently causes no change of state, so we are just 
+          // checking to make sure there is no exception.
+       } catch(jmri.JmriException|java.io.IOException jmrie){
+         Assert.fail("Exception retrieving Status");
+       }
+    }
+
     // The minimal setup for log4J
     @Before public void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
