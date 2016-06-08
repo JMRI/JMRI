@@ -20,7 +20,7 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -42,7 +42,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(XNetSystemConnectionMemoTest.class));
         suite.addTest(new TestSuite(XNetThrottleTest.class));
         suite.addTest(new TestSuite(XNetConsistManagerTest.class));
-        suite.addTest(new TestSuite(XNetConsistTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(XNetConsistTest.class));
         suite.addTest(new TestSuite(XNetInitializationManagerTest.class));
         suite.addTest(new TestSuite(XNetProgrammerTest.class));
         suite.addTest(new TestSuite(XNetProgrammerManagerTest.class));

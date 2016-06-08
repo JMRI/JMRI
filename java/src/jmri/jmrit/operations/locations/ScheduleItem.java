@@ -43,7 +43,6 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 
     /**
      *
-     * @param id
      * @param type car type for schedule
      */
     public ScheduleItem(String id, String type) {

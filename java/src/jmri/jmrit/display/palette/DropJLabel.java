@@ -20,8 +20,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This file is part of JMRI
- *
  * @author Pete Cressman Copyright (c) 2011
  */
 public class DropJLabel extends JLabel implements DropTargetListener {
@@ -126,7 +124,7 @@ public class DropJLabel extends JLabel implements DropTargetListener {
         e.dropComplete(true);
         if (log.isDebugEnabled()) {
             log.debug("DropJLabel.drop COMPLETED for " + label.getName()
-                    + ", " + (newIcon != null ? newIcon.getURL().toString() : " newIcon==null "));
+                    + ", " + (newIcon != null ? newIcon.getURL() : " newIcon==null "));
         }
     }
 

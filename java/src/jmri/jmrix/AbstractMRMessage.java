@@ -25,6 +25,7 @@ abstract public class AbstractMRMessage extends AbstractMessage {
         this();
         if (i < 1) {
             log.error("invalid length in call to ctor");
+            throw new IllegalArgumentException("invalid length in call to ctor");
         }
         _nDataChars = i;
         _dataChars = new int[i];

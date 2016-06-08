@@ -4,7 +4,7 @@ package jmri.jmrit.operations.locations;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.util.JmriJFrame;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -91,7 +91,7 @@ public class LocationTableFrameTest extends OperationsSwingTestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", LocationTableFrameTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

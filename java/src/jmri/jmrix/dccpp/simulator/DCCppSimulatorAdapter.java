@@ -1,4 +1,3 @@
-// DCCppSimulatorAdapter.java
 package jmri.jmrix.dccpp.simulator;
 
 import java.io.DataInputStream;
@@ -38,7 +37,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Paul Bender, Copyright (C) 2009-2010
  * @author	Mark Underwood, Copyright (C) 2015
- * @version	$Revision$
  *
  * Based on jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter
  */
@@ -504,7 +502,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
      */
     private DCCppMessage loadChars() throws java.io.IOException {
 	// Spin waiting for start-of-frame '<' character (and toss it)
-	String s = new String();
+	String s = "";
 	byte char1;
 	boolean found_start = false;
 
@@ -532,7 +530,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 	    }
 	}
 	// TODO: Still need to strip leading and trailing whitespace.
-	log.debug("Complete message = {}", s.toString());
+	log.debug("Complete message = {}", s);
 	return(DCCppMessage.parseDCCppMessage(s));
     }
 

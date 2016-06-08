@@ -179,6 +179,7 @@
         <pathelement location="${libdir}/bluecove-bluez-2.1.1-SNAPSHOT.jar"/>
         <pathelement location="${libdir}/bluecove-gpl-2.1.1-SNAPSHOT.jar"/>
         <pathelement location="${libdir}/jhidrawplugin.jar"/>
+        <pathelement location="${libdir}/beansbinding-1.2.1.jar"/>
     </path>
     <pathconvert property="runtime.class.jars" refid="runtime.class.path"/>
    
@@ -196,7 +197,8 @@
         <pathelement location="${libdir}/AppleJavaExtensions.jar"/> <!-- build with Mac OS X-specific support -->
         <pathelement location="${libdir}/annotations.jar"/> <!-- findbugs build-time only-->
         <pathelement location="${libdir}/jsr305.jar"/>      <!-- findbugs build-time only-->
-        <pathelement location="${libdir}/junit.jar"/>
+        <pathelement location="${libdir}/junit-4.12.jar"/>
+        <pathelement location="${libdir}/hamcrest-core-1.3.jar"/>
         <pathelement location="${libdir}/jfcunit.jar"/>
         <pathelement path="${i18n.class.jars}"/>            <!-- i18n test -->
     </path>
@@ -332,13 +334,9 @@
             description="remove all non-respository files from a build"
             depends="clean">
         <delete quiet="true">
-            <fileset file="findbugs.xml"/>
-            <fileset file="junit-results.xml"/>
-            <fileset file="jmri-fb.html"/>
             <fileset dir="temp"/>
             <fileset dir="lib/cachedir"/>
             <fileset dir="${coveragetarget}"/>
-            <fileset file="jacoco.exec"/>
         </delete>
     </target>
 
@@ -353,6 +351,10 @@
             <fileset dir="${genjavasrcdir}"/>
             <fileset file="${javadir}/manifest"/>
             <fileset dir="${tempdir}"/>
+            <fileset file="findbugs.xml"/>
+            <fileset file="junit-results.xml"/>
+            <fileset file="jmri-fb.html"/>
+            <fileset file="jacoco.exec"/>
         </delete>
         <ant dir="xml/XSLT" target="clean" inheritAll="false"  />
     </target>
@@ -492,7 +494,29 @@
         <!-- Compile the java code from ${source} into ${target} -->
         <antcall target="-java-compile-internal">
             <param name="java.source.directory" value="${source}"/>
+            <param name="deprecation" value="${deprecation}"/>
         </antcall>
+    </target>
+
+    <target name="ci-compile-deprecations"
+            description="compile source, omitting tests, warning on deprecations - for Jenkins CI"
+            depends="init, copyfiles, compile-generated-source">
+        <!-- Compile the java code from ${source} into ${target} allowing lots of deprecations!-->
+        <!-- The following is copied from the -java-compile-internal target -->
+        <!-- Eventually, we want to turn deprecation warnings "on" and remove this target's Xmax parameters -->
+        <javac compiler="modern" 
+               srcdir="${source}"
+               destdir="${target}"
+               source="${source_version}"
+               target="${jre_version}"
+               includeantruntime="false"
+               fork="true"
+               deprecation="on"
+               debug="${java.debugging}">
+            <classpath refid="compile.class.path"/>
+            <compilerarg value="-Xlint:-unchecked"/> 
+            <compilerarg value="-Xmaxwarns"/><compilerarg value="2000"/><!-- change from default 100 warnings -->
+        </javac>
     </target>
 
 

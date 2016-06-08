@@ -3,7 +3,6 @@ package jmri.jmrix.lenz.hornbyelite;
 import java.util.ArrayList;
 import java.util.List;
 import jmri.Turnout;
-import jmri.TurnoutAddress;
 import jmri.TurnoutManager;
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetReply;
@@ -33,10 +32,6 @@ public class EliteXNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMg
     }
 
     public void testMisses() {
-        // sample address object
-        TurnoutAddress a = new TurnoutAddress("XT22", "user");
-        Assert.assertNotNull("exists", a);
-
         // try to get nonexistant turnouts
         Assert.assertTrue(null == l.getByUserName("foo"));
         Assert.assertTrue(null == l.getBySystemName("bar"));
@@ -108,7 +103,7 @@ public class EliteXNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMg
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", EliteXNetTurnoutManagerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

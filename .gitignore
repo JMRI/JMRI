@@ -8,6 +8,7 @@ junit-results.xml
 junit*.properties
 findbugs.xml
 findbugs.html
+jacoco.exec
 
 # runtime artifacts
 messages.log*

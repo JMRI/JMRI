@@ -330,7 +330,7 @@ public class LEConnectivityTest extends jmri.util.SwingTestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {LEConnectivityTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -348,13 +348,13 @@ public class LEConnectivityTest extends jmri.util.SwingTestCase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initShutDownManager();
         // dispose of the single PanelMenu instance
-        jmri.jmrit.display.PanelMenu.instance().dispose();
+        jmri.jmrit.display.PanelMenu.dispose();
 
     }
 
     protected void tearDown() throws Exception {
         // dispose of the single PanelMenu instance
-        jmri.jmrit.display.PanelMenu.instance().dispose();
+        jmri.jmrit.display.PanelMenu.dispose();
         JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
         super.tearDown();

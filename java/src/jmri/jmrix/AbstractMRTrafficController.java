@@ -300,7 +300,7 @@ abstract public class AbstractMRTrafficController {
                     if (mCurrentState == WAITMSGREPLYSTATE) {
                         handleTimeout(m, l);
                     } else if (mCurrentState == AUTORETRYSTATE) {
-                        log.error("Message added back to queue: {}", m.toString());
+                        log.info("Message added back to queue: {}", m.toString());
                         msgQueue.addFirst(m);
                         listenerQueue.addFirst(l);
                         synchronized (xmtRunnable) {
@@ -883,7 +883,7 @@ abstract public class AbstractMRTrafficController {
                     // to automatically handle by re-queueing the last sent
                     // message, otherwise go on to the next message
                     if (msg.isRetransmittableErrorMsg()) {
-                        log.debug("Automatic Recovery from Error Message: {}.  Retransmitted {} times.", msg.toString(), retransmitCount);
+                        log.error("Automatic Recovery from Error Message: {}.  Retransmitted {} times.", msg.toString(), retransmitCount);
                         synchronized (xmtRunnable) {
                             mCurrentState = AUTORETRYSTATE;
                             if (retransmitCount > 0) {

@@ -20,5 +20,6 @@
           <value>34</value>
         </qualifier>
     <decVal/>
+    <label xml:lang="de">Fernlicht-Schwelle</label>
   </variable>
 </variables>
