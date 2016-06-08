@@ -1,4 +1,3 @@
-// JsonUtil.java
 package jmri.jmris.json;
 
 import static jmri.jmris.json.JSON.*;
@@ -54,6 +53,7 @@ import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.profile.ProfileManager;
+import jmri.server.json.JsonException;
 import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
 import jmri.util.node.NodeIdentity;
