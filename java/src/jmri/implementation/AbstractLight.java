@@ -271,7 +271,7 @@ public abstract class AbstractLight extends AbstractNamedBean
      * A value of 0.0 corresponds to full off, and a value of 1.0 corresponds to
      * full on.
      *
-     * @param intensity
+     * @param intensity intensity value
      * @throws IllegalArgumentException when intensity is less than 0.0 or more
      *                                  than 1.0
      * @throws IllegalArgumentException when intensity is not less than the
