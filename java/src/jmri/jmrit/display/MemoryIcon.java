@@ -67,7 +67,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         if (map != null) {
             java.util.Iterator<String> iterator = map.keySet().iterator();
             while (iterator.hasNext()) {
-                String key = iterator.next().toString();
+                String key = iterator.next();
                 String url = map.get(key).getName();
                 pos.addKeyAndIcon(NamedIcon.getIconByName(url), key);
             }
@@ -211,7 +211,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 
             java.util.Iterator<String> iterator = map.keySet().iterator();
             while (iterator.hasNext()) {
-                String key = iterator.next().toString();
+                String key = iterator.next();
                 //String value = ((NamedIcon)map.get(key)).getName();
                 popup.add(new AbstractAction(key) {
 

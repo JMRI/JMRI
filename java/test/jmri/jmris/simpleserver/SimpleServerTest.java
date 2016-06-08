@@ -43,8 +43,8 @@ public class SimpleServerTest extends TestCase {
         suite.addTest(jmri.jmris.simpleserver.SimpleTurnoutServerTest.suite());
         suite.addTest(jmri.jmris.simpleserver.SimplePowerServerTest.suite());
         suite.addTest(jmri.jmris.simpleserver.SimpleReporterServerTest.suite());
-        suite.addTest(jmri.jmris.simpleserver.SimpleSensorServerTest.suite());
-        suite.addTest(jmri.jmris.simpleserver.SimpleLightServerTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SimpleSensorServerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SimpleLightServerTest.class));
         suite.addTest(jmri.jmris.simpleserver.SimpleOperationsServerTest.suite());
         suite.addTest(jmri.jmris.simpleserver.SimpleServerManagerTest.suite());
         suite.addTest(BundleTest.suite());

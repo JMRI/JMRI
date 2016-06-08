@@ -5,6 +5,7 @@
 
 <html lang="fr">
 <head>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
     <TITLE>
  	JMRI: Adding A New System
    </TITLE>
@@ -16,9 +17,6 @@
     <!-- easily replace the common header/footer code for all the web pages -->
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset= iso-8859-1
-
-">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -50,7 +48,7 @@ ordre o&#249; ils ont &#233;t&#233; fait dans ce cas, les autres ordres peuvent 
 et vous ne pourriez pas devoir &#224; faire tout cela.</p>
 <P>
 Dans ce cas particulier, nous avons commenc&#233; par la copie d'une
-rÃ©alisation d'un syst&#232;me existant (SECSI).  Comment
+réalisation d'un syst&#232;me existant (SECSI).  Comment
 nous avons ordonn&#233; ces effets, et fait progresser le processus de base assez
 rapidement.
 
@@ -108,7 +106,7 @@ cvs add powerline/configurexml powerline/serialdriver/configurexml</code>
 </Ul>
 </Dd>
 
-<P> Ã€ ce stade, assurez-vous que vous pouvez compiler.</P>
+<P> À ce stade, assurez-vous que vous pouvez compiler.</P>
 					
 		<h3>Faire  une Migration Basique</h3>
 
@@ -121,7 +119,7 @@ occurrences.</p>
 
            </dd>
             
-		    <P>Ã€ ce stade, assurez-vous que vous pouvez compiler..</P>
+		    <P>À ce stade, assurez-vous que vous pouvez compiler..</P>
 
 		<h3>Cr&#233;er des Tests Basiques</h3>
 
@@ -159,7 +157,7 @@ tests ant <code> &amp;&amp;./runtest.csh jmri.jmrix.powerline.SerialTest</code>
              <p> N'engagez pas ce CVS encore!</p>
             </dd>
 
-<P> Ã€ ce stade, assurez - vous que vous pouvez compiler et ex&#233;cuter DecoderPro, et
+<P> À ce stade, assurez - vous que vous pouvez compiler et ex&#233;cuter DecoderPro, et
 que votre nouveau syst&#232;me appara&#238;t dans le panneau des pr&#233;f&#233;rences.</P>
             
              <dt> Connectez - vous &#224; test arbre</dt>
