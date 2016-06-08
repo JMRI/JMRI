@@ -8,7 +8,7 @@ package jmri.configurexml;
  * @deprecated 2.5.4  - left so old files can be read
  */
 @Deprecated
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "duplicate name OK while deprecated, for XML config migration")
 public abstract class AbstractReporterManagerConfigXML
         extends jmri.managers.configurexml.AbstractReporterManagerConfigXML {
 }
