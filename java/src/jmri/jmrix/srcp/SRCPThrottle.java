@@ -12,7 +12,6 @@ import jmri.jmrix.AbstractThrottle;
  * as an expedient here.
  *
  * @author	Bob Jacobsen Copyright (C) 2001,2008
- * @version $Revision$
  */
 public class SRCPThrottle extends AbstractThrottle {
 
@@ -27,7 +26,7 @@ public class SRCPThrottle extends AbstractThrottle {
     public SRCPThrottle(SRCPBusConnectionMemo memo, DccLocoAddress address,
             String protocol,int mode,int functions){
         super(memo);
-        if(protocol!="N") 
+        if(!protocol.equals("N")) 
            throw new IllegalArgumentException("Protocol " + protocol + " not supported");
         setSpeedStepMode(mode);
 
@@ -100,13 +99,29 @@ public class SRCPThrottle extends AbstractThrottle {
     }
 
     /**
-     * Set the speed & direction.
+     * Send the message to set the state of functions F13, F14, F15, F16, F17,
+     * F18, F19, and F20.
+     */
+    protected void sendFunctionGroup4() {
+        sendUpdate();
+    }
+
+    /**
+     * Send the message to set the state of functions F21, F22, F23, F24,
+     * F25, F26, F27 and F28.
+     */
+    protected void sendFunctionGroup5() {
+        sendUpdate();
+    }
+
+    /**
+     * Set the speed {@literal &} direction.
      * <P>
      * This intentionally skips the emergency stop value of 1.
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     public void setSpeedSetting(float speed) {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
@@ -192,10 +207,11 @@ public class SRCPThrottle extends AbstractThrottle {
                  maxsteps = 27;
                  break;
           case SpeedStepMode28:
-                 maxsteps = 14;
+                 maxsteps = 28;
                  break;
           case SpeedStepMode128:
           default:
+                 maxsteps = 126;
        }
     }
 

@@ -157,12 +157,12 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
             }
         }
 
-        loadCommon(shared, adapter);
+        loadCommon(shared, perNode, adapter);
         // register, so can be picked up next time
         register();
 
         if (adapter.getDisabled()) {
-            unpackElement(shared);
+            unpackElement(shared, perNode);
             return result;
         }
         try {
@@ -181,16 +181,8 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
 
         // once all the configure processing has happened, do any
         // extra config
-        unpackElement(shared);
+        unpackElement(shared, perNode);
         return result;
-    }
-
-    /**
-     * Customizable method if you need to add anything more
-     *
-     * @param e Element being created, update as needed
-     */
-    protected void unpackElement(Element e) {
     }
 
     /**

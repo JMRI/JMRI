@@ -1,4 +1,3 @@
-// NetMessage.java
 package jmri.jmrix;
 
 import java.io.Serializable;
@@ -17,15 +16,8 @@ import org.slf4j.LoggerFactory;
  * different ways. They may not appear at all...
  *
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version	$Revision$
- *
  */
 public abstract class NetMessage implements Serializable {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1209900996744470453L;
 
     /**
      * Create a new object, representing a specific-length message.
@@ -85,7 +77,7 @@ public abstract class NetMessage implements Serializable {
      * Get a String representation of the entire message in hex. This is not
      * intended to be human-readable!
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     public String toString() {
@@ -133,5 +125,3 @@ public abstract class NetMessage implements Serializable {
     private final static Logger log = LoggerFactory.getLogger(NetMessage.class.getName());
 
 }
-
-/* @(#)NetMessage.java */

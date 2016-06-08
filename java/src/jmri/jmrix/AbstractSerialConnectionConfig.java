@@ -1,4 +1,3 @@
-// AbstractSerialConnectionConfig.java
 package jmri.jmrix;
 
 import apps.startup.StartupActionModelUtil;
@@ -36,9 +35,7 @@ import org.slf4j.LoggerFactory;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
- * @version	$Revision$
  */
-//
 abstract public class AbstractSerialConnectionConfig extends AbstractConnectionConfig {
 
     /**
@@ -550,11 +547,6 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     class ComboBoxRenderer extends JLabel
             implements ListCellRenderer<String> {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 3617752100442828216L;
-
         public ComboBoxRenderer() {
             setHorizontalAlignment(LEFT);
             setVerticalAlignment(CENTER);
@@ -573,7 +565,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                 boolean isSelected,
                 boolean cellHasFocus) {
 
-            String displayName = name.toString();
+            String displayName = name;
             setOpaque(index > -1);
             setForeground(Color.black);
             list.setSelectionForeground(Color.black);
@@ -647,8 +639,8 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
 
     /**
      * This is purely here for systems that do not implement the
-     * SystemConnectionMemo Acela, CAN BUS, CMRI, Grapevine, QSI, Zimo & RPS and
-     * can be removed one they have been migrated
+     * SystemConnectionMemo Acela, CAN BUS, CMRI, Grapevine, QSI, Zimo
+     * {@literal &} RPS and can be removed one they have been migrated
      *
      * @return Resource bundle for action model
      */

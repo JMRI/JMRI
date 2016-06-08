@@ -1,9 +1,9 @@
-// Timebase.java
 package jmri;
 
 import java.beans.PropertyChangeListener;
-import java.util.Date;
 import java.time.Instant;
+import java.util.Date;
+import javax.annotation.Nonnull;
 
 /**
  * Provide access to clock capabilities in hardware or software.
@@ -28,28 +28,27 @@ import java.time.Instant;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2004, 2007, 2008
- * @version	$Revision$
  */
 public interface Timebase extends NamedBean {
 
     /**
      * Set the current time
      */
-    public void setTime(Date d);
+    public void setTime(@Nonnull Date d);
 
     /**
      * Set the current time
      * @param i java.time.Instant
      */
-    public void setTime(Instant i);
+    public void setTime(@Nonnull Instant i);
 
     /**
      * Special method for when the user changes fast clock time in Setup Fast
      * Clock.
      */
-    public void userSetTime(Date d);
+    public void userSetTime(@Nonnull Date d);
 
-    public Date getTime();
+    public @Nonnull Date getTime();
 
     public void setRun(boolean y);
 
@@ -92,7 +91,7 @@ public interface Timebase extends NamedBean {
     public boolean getInternalMaster();
 
     // the following provide for choosing among hardware clocks if hardware master		
-    public void setMasterName(String name);
+    public void setMasterName(@Nonnull String name);
 
     public String getMasterName();
 
@@ -126,7 +125,7 @@ public interface Timebase extends NamedBean {
 
     public boolean getStartSetTime();
 
-    public Date getStartTime();
+    public @Nonnull Date getStartTime();
 
     // methods to get set clock start start up option		
     public void setStartClockOption(int option);
@@ -157,28 +156,28 @@ public interface Timebase extends NamedBean {
     /**
      * Request a call-back when the bound Rate or Run property changes.
      */
-    public void addPropertyChangeListener(PropertyChangeListener l);
+    public void addPropertyChangeListener(@Nonnull PropertyChangeListener l);
 
     /**
      * Remove a request for a call-back when a bound property changes.
      */
-    public void removePropertyChangeListener(PropertyChangeListener l);
+    public void removePropertyChangeListener(@Nonnull PropertyChangeListener l);
 
     /**
      * Request a call-back when the minutes place of the time changes.
      */
-    public void addMinuteChangeListener(PropertyChangeListener l);
+    public void addMinuteChangeListener(@Nonnull PropertyChangeListener l);
 
     /**
      * Remove a request for call-back when the minutes place of the time
      * changes.
      */
-    public void removeMinuteChangeListener(PropertyChangeListener l);
+    public void removeMinuteChangeListener(@Nonnull PropertyChangeListener l);
 
     /**
      * Get the list of minute change listeners.
      */
-    public PropertyChangeListener[] getMinuteChangeListeners();
+    public @Nonnull PropertyChangeListener[] getMinuteChangeListeners();
 
     /**
      * Remove references to and from this object, so that it can eventually be
@@ -187,5 +186,3 @@ public interface Timebase extends NamedBean {
     public void dispose();
 
 }
-
-/* @(#)Timebase.java */

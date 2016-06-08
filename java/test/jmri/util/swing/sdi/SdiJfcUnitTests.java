@@ -1,4 +1,3 @@
-// SdiJfcUnitTests.java
 package jmri.util.swing.sdi;
 
 import javax.swing.JButton;
@@ -16,7 +15,6 @@ import junit.framework.TestSuite;
  * Swing jfcUnit tests for the SDI GUI
  *
  * @author	Bob Jacobsen Copyright 2010, 2015
- * @version $Revision$
  */
 public class SdiJfcUnitTests extends jmri.util.SwingTestCase {
 
@@ -67,7 +65,7 @@ public class SdiJfcUnitTests extends jmri.util.SwingTestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {SdiJfcUnitTests.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

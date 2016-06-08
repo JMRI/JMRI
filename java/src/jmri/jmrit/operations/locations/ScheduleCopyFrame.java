@@ -88,6 +88,7 @@ public class ScheduleCopyFrame extends OperationsFrame implements java.beans.Pro
         initMinimumSize(new Dimension(Control.panelWidth400, Control.panelHeight250));
     }
 
+    @Override
     protected void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == copyButton) {
             log.debug("copy Schedule button activated");
@@ -138,11 +139,13 @@ public class ScheduleCopyFrame extends OperationsFrame implements java.beans.Pro
         return true;
     }
 
+    @Override
     public void dispose() {
         scheduleManager.removePropertyChangeListener(this);
         super.dispose();
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         log.debug("PropertyChange ({}) new: ({})", e.getPropertyName(), e.getNewValue());
         if (e.getPropertyName().equals(ScheduleManager.LISTLENGTH_CHANGED_PROPERTY)) {

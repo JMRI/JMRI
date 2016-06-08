@@ -1,4 +1,3 @@
-// RosterGroupTableModel.java
 package jmri.jmrit.roster.swing.rostergroup;
 
 import javax.swing.JTable;
@@ -19,15 +18,10 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2009
  * @author Kevin Dickerson Copyright (C) 2009
- * @version $Revision$
  * @since 2.7.5
  */
 public class RosterGroupTableModel extends javax.swing.table.AbstractTableModel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7420154419304239909L;
     static final int IDCOL = 0;
     static final int ROADNUMBERCOL = 1;
     static final int ROADNAMECOL = 2;
@@ -73,7 +67,6 @@ public class RosterGroupTableModel extends javax.swing.table.AbstractTableModel 
             case ROADNUMBERCOL:
                 return 75;
             case ROADNAMECOL:
-                return new JTextField(20).getPreferredSize().width;
             case OWNERCOL:
                 return new JTextField(20).getPreferredSize().width;
             case ADDTOGROUPCOL: // not actually used due to the configureTable, setColumnToHoldButton, configureButton
@@ -112,10 +105,7 @@ public class RosterGroupTableModel extends javax.swing.table.AbstractTableModel 
     public Object getValueAt(int row, int col) {
         // get roster entry for row
         RosterEntry re = Roster.instance().getEntry(row);
-        if (re == null) {
-            log.debug("roster entry is null!");
-            return "Error";
-        }
+
         switch (col) {
             case IDCOL:
                 return re.getId();

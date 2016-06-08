@@ -1,7 +1,3 @@
-/**
- * XNetProgrammer.java
- */
- // Convert the jmri.Programmer interface into commands for the Lenz XpressNet
 package jmri.jmrix.lenz;
 
 import java.util.ArrayList;
@@ -13,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Programmer support for Lenz XpressNet.
+ * Convert the jmri.Programmer interface into commands for the Lenz XpressNet
  * <P>
  * The read operation state sequence is:
  * <UL>
@@ -24,11 +20,60 @@ import org.slf4j.LoggerFactory;
  * <LI>Send Resume Operations request
  * <LI>Wait for Normal Operations Resumed broadcast
  * </UL>
+ * <img src="doc-files/XPressNetProgrammer-StateDiagram.png">
+ * <img src="doc-files/XPressNetProgrammer-SequenceDiagram.png">
  *
  * @author Bob Jacobsen Copyright (c) 2002, 2007
  * @author Paul Bender Copyright (c) 2003-2010
  * @author Giorgio Terdina Copyright (c) 2007
- * @version $Revision$
+ */
+
+/*
+ * @startuml jmri/jmrix/lenz/doc-files/XPressNetProgrammer-StateDiagram.png
+ * state NormalMode{
+ * [*] --> initialREQUESTSENT: readCV()
+ * [*] --> initialREQUESTSENT: writeCV()
+ * }
+ * [*] --> NormalMode
+ * state ServiceMode{
+ * [*] --> INQUIRESENT 
+ * REQUESTSENT --> INQUIRESENT : Command Successfully Received
+ * REQUESTSENT --> NOTPROGRAMMING : timeout()
+ * INQUIRESENT --> NOTPROGRAMMING : Result Received
+ * INQUIRESENT --> NOTPROGRAMMING : timeout()
+ * NOTPROGRAMMING --> REQUESTSENT : readCV()
+ * NOTPROGRAMMING --> REQUESTSENT : writeCV()
+ * NOTPROGRAMMING --> RequestNormalOps : timeout()
+ * RequestNormalOps --> [*]
+ * }
+ * NormalMode --> ServiceMode : Service Mode Entry Received
+ * ServiceMode --> [*] : Normal Operations Resumed
+ * @enduml
+ *
+ * @startuml jmri/jmrix/lenz/doc-files/XPressNetProgrammer-SequenceDiagram.png
+ * actor user
+ * control programmer
+ * user -> programmer:read/write CV
+ * programmer -> XNetProgrammer:readCV()/writeCV()
+ * XNetProgrammer -> CommandStation: Read/Write CV in appropriate mode.
+ * CommandStation -> XNetProgrammer: Service Mode Entry.
+ * XNetProgrammer -> CommandStation: Request Service Mode Results.
+ * CommandStation -> XNetProgrammer: Service Mode Result or Error Message
+ * XNetProgrammer -> programmer: CV Value or Error Message
+ * programmer -> user: CV value or Error Message
+ * loop 0 or more times
+ * user -> programmer:read/write CV
+ * programmer -> XNetProgrammer:readCV()/writeCV()
+ * XNetProgrammer -> CommandStation: Read/Write CV in appropriate mode.
+ * CommandStation -> XNetProgrammer: Command Successfully Received.
+ * XNetProgrammer -> CommandStation: Request Service Mode Results.
+ * CommandStation -> XNetProgrammer: Service Mode Result or Error Message
+ * XNetProgrammer -> programmer: CV Value or Error Message
+ * programmer -> user: CV value or Error Message
+ * end
+ * XNetProgrammer -> CommandStation: Resume Normal Operations
+ * CommandStation -> XNetProgrammer: Normal Operations Resumed
+ * @enduml
  */
 public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
@@ -111,8 +156,8 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
     public boolean getCanWrite(String addr) {
         if (log.isDebugEnabled()) {
             log.debug("check CV " + addr);
+            log.debug(controller().getCommandStation().getVersionString());
         }
-        log.error("cs Type: " + controller().getCommandStation().getCommandStationType() + " CS Version: " + controller().getCommandStation().getCommandStationSoftwareVersion());
         if (!getCanWrite()) {
             return false; // check basic implementation first
         }
@@ -240,7 +285,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
                 // message can trigger a request for service mode 
                 // results if progrstate is REQUESTSENT.
                 _service_mode = true;
-            } else if (_service_mode == true) {
+            } else {  // _ service_mode == true
                 // Since we get this message as both a broadcast and
                 // a directed message, ignore the message if we're
                 //already in the indicated mode
@@ -254,7 +299,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
                 // "OK" message can not trigger a request for service 
                 // mode results if progrstate is REQUESTSENT.
                 _service_mode = false;
-            } else if (_service_mode == false) {
+            } else { // _service_mode == false 
                 // Since we get this message as both a broadcast and
                 // a directed message, ignore the message if we're
                 //already in the indicated mode
@@ -464,7 +509,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
      * currently programming before allowing the Traffic Controller 
      * to send a request to exit service mode
      */
-    public boolean programmerBusy() {
+    synchronized public boolean programmerBusy() {
         return (progState != NOTPROGRAMMING);
     }
 

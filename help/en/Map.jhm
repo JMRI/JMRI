@@ -218,6 +218,8 @@
 
 <mapID target="html.tools.Lights" url="html/tools/Lights.shtml"/>
 
+<mapID target="html.web.index_redirection" url="html/web/index.shtml#redirection"/>
+
 <mapID target="html.hardware.nce.Wangrow_connecting" url="html/hardware/nce/Wangrow.shtml#connecting"/>
 
 <mapID target="package.jmri.jmrit.beantable.LightTable" url="package/jmri/jmrit/beantable/LightTable.shtml"/>
@@ -407,8 +409,6 @@
 <mapID target="manual.DecoderPro3.Main_NCE_Editconsist" url="manual/DecoderPro3/Main_NCE.shtml#Editconsist"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_LoopingTrainsThroughStaging" url="package/jmri/jmrit/operations/Operations.shtml#LoopingTrainsThroughStaging"/>
-
-<mapID target="html.doc.Technical.JBuilder" url="html/doc/Technical/JBuilder.shtml"/>
 
 <mapID target="package.jmri.jmrix.openlcb.swing.networktree.NetworkTreePane" url="package/jmri/jmrix/openlcb/swing/networktree/NetworkTreePane.shtml"/>
 
@@ -1350,8 +1350,6 @@
 
 <mapID target="html.tools.scripting.AppleScript" url="html/tools/scripting/AppleScript.shtml"/>
 
-<mapID target="html.doc.Technical.XCode" url="html/doc/Technical/XCode.shtml"/>
-
 <mapID target="manual.DecoderPro3.Start_Preferences_WiThrottle" url="manual/DecoderPro3/Start_Preferences.shtml#WiThrottle"/>
 
 <mapID target="package.jmri.jmrit.dispatcher.Dispatcher_glossary" url="package/jmri/jmrit/dispatcher/Dispatcher.shtml#glossary"/>
@@ -1373,6 +1371,8 @@
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_EngineAttributes_Top" url="manual/JMRI_OPS_UsersGuide/Ops_EngineAttributes.shtml#Top"/>
 
 <mapID target="html.hardware.mrc.index" url="html/hardware/mrc/index.shtml"/>
+
+<mapID target="package.jmri.jmrit.operations.Operations_TrainTurnRoute" url="package/jmri/jmrit/operations/Operations.shtml#TrainTurnRoute"/>
 
 <mapID target="package.jmri.jmrix.powerline.packetgen.SerialPacketGenFrame" url="package/jmri/jmrix/powerline/packetgen/SerialPacketGenFrame.shtml"/>
 
@@ -2547,6 +2547,8 @@
 <mapID target="package.jmri.jmrix.loconet.pr3.swing.Pr3Select" url="package/jmri/jmrix/loconet/pr3/swing/Pr3Select.shtml"/>
 
 <mapID target="package.apps.gui3.dp3.DecoderPro3_menubar" url="package/apps/gui3/dp3/DecoderPro3.shtml#menubar"/>
+
+<mapID target="package.jmri.jmrit.beantable.BlockTable_BlockSpeed" url="package/jmri/jmrit/beantable/BlockTable.shtml#BlockSpeed"/>
 
 <mapID target="html.hardware.loconet.Uhlenbrock_hardware" url="html/hardware/loconet/Uhlenbrock.shtml#hardware"/>
 

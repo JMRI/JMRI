@@ -1,4 +1,3 @@
-// OlimexRfidProtocol.java
 package jmri.jmrix.rfid.protocol.olimex;
 
 import jmri.jmrix.AbstractMRReply;
@@ -22,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Matthew Harris Copyright (C) 2014
- * @version $Revision$
  * @since 3.9.2
  */
 public class OlimexRfidProtocol extends RfidProtocol {
@@ -101,5 +99,3 @@ public class OlimexRfidProtocol extends RfidProtocol {
     private static final Logger log = LoggerFactory.getLogger(OlimexRfidProtocol.class.getName());
 
 }
-
-/* @(#)OlimexRfidProtocol.java */

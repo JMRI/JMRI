@@ -14,8 +14,8 @@ import javax.swing.UnsupportedLookAndFeelException;
 import jmri.beans.Bean;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
-import jmri.spi.InitializationException;
-import jmri.spi.PreferencesProvider;
+import jmri.spi.PreferencesManager;
+import jmri.util.prefs.InitializationException;
 import jmri.util.swing.SwingSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood (C) 2015
  */
-public class GuiLafPreferencesManager extends Bean implements PreferencesProvider {
+public class GuiLafPreferencesManager extends Bean implements PreferencesManager {
 
     public static final String FONT_SIZE = "fontSize";
     public static final String LOCALE = "locale";
@@ -88,7 +88,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesProvide
     }
 
     @Override
-    public Iterable<Class<? extends PreferencesProvider>> getRequires() {
+    public Iterable<Class<? extends PreferencesManager>> getRequires() {
         return new HashSet<>();
     }
 
@@ -133,7 +133,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesProvide
     public void setLocale(Locale locale) {
         Locale oldLocale = this.locale;
         this.locale = locale;
-        propertyChangeSupport.firePropertyChange(LOCALE, oldLocale, locale);
+        firePropertyChange(LOCALE, oldLocale, locale);
     }
 
     /**
@@ -152,19 +152,19 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesProvide
         int oldFontSize = this.fontSize;
         this.fontSize = (newFontSize == 0) ? 0 : ((newFontSize < MIN_FONT_SIZE) ? MIN_FONT_SIZE : ((newFontSize > MAX_FONT_SIZE) ? MAX_FONT_SIZE : newFontSize));
         if (this.fontSize != oldFontSize) {
-            propertyChangeSupport.firePropertyChange(FONT_SIZE, oldFontSize, this.fontSize);
+            firePropertyChange(FONT_SIZE, oldFontSize, this.fontSize);
         }
     }
 
    /**
-     * @return the current Look & Feel default font size
+     * @return the current {@literal Look & Feel} default font size
      */
     public int getDefaultFontSize() {
         return defaultFontSize;
     }
 
    /**
-     * Called to load the current Look & Feel default font size, based on looking up the "List.font" size
+     * Called to load the current {@literal Look & Feel} default font size, based on looking up the "List.font" size
      * <br><br>
      * The value can be can be read by calling {@link #getDefaultFontSize()}
      */
@@ -185,14 +185,14 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesProvide
     }
 
     private void listLAFfonts() {
-        log.info("******** LAF=" + UIManager.getLookAndFeel().getClass().getName());
+        log.trace("******** LAF=" + UIManager.getLookAndFeel().getClass().getName());
         java.util.Enumeration<Object> keys = UIManager.getDefaults().keys();
         while (keys.hasMoreElements()) {
             Object key = keys.nextElement();
             Object value = UIManager.get(key);
             if (value instanceof javax.swing.plaf.FontUIResource || value instanceof java.awt.Font || key.toString().endsWith(".font")) {
                 Font f = UIManager.getFont(key);
-                log.info("Class=" + value.getClass().getName() + ";Key:" + key.toString() + " Font: " + f.getName() + " size: " + f.getSize());
+                log.trace("Class=" + value.getClass().getName() + ";Key:" + key.toString() + " Font: " + f.getName() + " size: " + f.getSize());
             }
         }
     }
@@ -230,7 +230,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesProvide
     public void setNonStandardMouseEvent(boolean nonStandardMouseEvent) {
         boolean oldNonStandardMouseEvent = this.nonStandardMouseEvent;
         this.nonStandardMouseEvent = nonStandardMouseEvent;
-        propertyChangeSupport.firePropertyChange(NONSTANDARD_MOUSE_EVENT, oldNonStandardMouseEvent, nonStandardMouseEvent);
+        firePropertyChange(NONSTANDARD_MOUSE_EVENT, oldNonStandardMouseEvent, nonStandardMouseEvent);
     }
 
     /**
@@ -246,7 +246,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesProvide
     public void setLookAndFeel(String lookAndFeel) {
         String oldLookAndFeel = this.lookAndFeel;
         this.lookAndFeel = lookAndFeel;
-        propertyChangeSupport.firePropertyChange(LOOK_AND_FEEL, oldLookAndFeel, lookAndFeel);
+        firePropertyChange(LOOK_AND_FEEL, oldLookAndFeel, lookAndFeel);
     }
 
     /**

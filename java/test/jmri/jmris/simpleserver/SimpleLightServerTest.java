@@ -1,20 +1,20 @@
 //SimpleLightServerTest.java
 package jmri.jmris.simpleserver;
 
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * Tests for the jmri.jmris.simpleserver.SimpleLightServer class
  *
- * @author Paul Bender
- * @version $Revision$
+ * @author Paul Bender Copyright (C) 2012,2016
  */
-public class SimpleLightServerTest extends TestCase {
+public class SimpleLightServerTest {
 
-    public void testCtor() {
+    @Test public void testCtor() {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     // null output string drops characters
@@ -29,7 +29,7 @@ public class SimpleLightServerTest extends TestCase {
     }
 
     // test sending a message.
-    public void testSendMessage() {
+    @Test public void testSendMessage() {
         StringBuilder sb = new StringBuilder();
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
@@ -63,7 +63,7 @@ public class SimpleLightServerTest extends TestCase {
     }
 
     // test sending an error message.
-    public void testSendErrorStatus() {
+    @Test public void testSendErrorStatus() {
         StringBuilder sb = new StringBuilder();
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
@@ -82,28 +82,144 @@ public class SimpleLightServerTest extends TestCase {
         }
     }
 
-    // from here down is testing infrastructure
-    public SimpleLightServerTest(String s) {
-        super(s);
+    // test sending an ON status message.
+    @Test public void CheckSendOnStatus() {
+        StringBuilder sb = new StringBuilder();
+        java.io.DataOutputStream output = new java.io.DataOutputStream(
+                new java.io.OutputStream() {
+                    @Override
+                    public void write(int b) throws java.io.IOException {
+                        sb.append((char)b);
+                    }
+                });
+        java.io.DataInputStream input = new java.io.DataInputStream(System.in);
+        SimpleLightServer a = new SimpleLightServer(input, output);
+        try {
+            a.sendStatus("IL1",jmri.Light.ON);
+            Assert.assertEquals("sendErrorStatus check","LIGHT IL1 ON\n",sb.toString());
+        } catch(java.io.IOException ioe){
+            Assert.fail("Exception sending ON Status");
+        }
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SimpleLightServerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+    // test sending an OFF status message.
+    @Test public void CheckSendOffStatus() {
+        StringBuilder sb = new StringBuilder();
+        java.io.DataOutputStream output = new java.io.DataOutputStream(
+                new java.io.OutputStream() {
+                    @Override
+                    public void write(int b) throws java.io.IOException {
+                        sb.append((char)b);
+                    }
+                });
+        java.io.DataInputStream input = new java.io.DataInputStream(System.in);
+        SimpleLightServer a = new SimpleLightServer(input, output);
+        try {
+            a.sendStatus("IL1",jmri.Light.OFF);
+            Assert.assertEquals("sendErrorStatus check","LIGHT IL1 OFF\n",sb.toString());
+        } catch(java.io.IOException ioe){
+            Assert.fail("Exception sending OFF Status");
+        }
     }
 
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(jmri.jmris.simpleserver.SimpleLightServerTest.class);
+    // test sending an ON status message.
+    @Test public void CheckSendUnknownStatus() {
+        StringBuilder sb = new StringBuilder();
+        java.io.DataOutputStream output = new java.io.DataOutputStream(
+                new java.io.OutputStream() {
+                    @Override
+                    public void write(int b) throws java.io.IOException {
+                        sb.append((char)b);
+                    }
+                });
+        java.io.DataInputStream input = new java.io.DataInputStream(System.in);
+        SimpleLightServer a = new SimpleLightServer(input, output);
+        try {
+            a.sendStatus("IL1",255);
+            Assert.assertEquals("sendErrorStatus check","LIGHT IL1 UNKNOWN\n",sb.toString());
+        } catch(java.io.IOException ioe){
+            Assert.fail("Exception sending UNKNOWN Status");
+        }
+    }
 
-        return suite;
+    // test parsing an ON status message.
+    @Test public void testParseOnStatus() {
+       StringBuilder sb = new StringBuilder();
+       java.io.DataOutputStream output = new java.io.DataOutputStream(
+           new java.io.OutputStream() {
+               @Override
+               public void write(int b) throws java.io.IOException {
+                   sb.append((char)b);
+               }
+          });
+       java.io.DataInputStream input = new java.io.DataInputStream(System.in);
+       SimpleLightServer a = new SimpleLightServer(input,output);
+       try {
+          a.parseStatus("LIGHT IL1 ON\n");
+          jmri.Light light = (jmri.InstanceManager.getDefault(jmri.LightManager.class)).getLight("IL1");
+          Assert.assertEquals("Parse On Status Check",
+                       jmri.Light.ON,
+                       light.getState());
+          // parsing the status also causes a message to return to the client. 
+          Assert.assertEquals("sendErrorStatus check","LIGHT IL1 ON\n",sb.toString());
+       } catch(jmri.JmriException|java.io.IOException jmrie){
+         Assert.fail("Exception retrieving Status");
+       }
+    }
+
+    // test parsing an OFF status message.
+    @Test public void testParseOffStatus() {
+       StringBuilder sb = new StringBuilder();
+       java.io.DataOutputStream output = new java.io.DataOutputStream(
+           new java.io.OutputStream() {
+               // null output string drops characters
+               // could be replaced by one that checks for specific outputs
+               @Override
+               public void write(int b) throws java.io.IOException {
+                   sb.append((char)b);
+               }
+          });
+       java.io.DataInputStream input = new java.io.DataInputStream(System.in);
+       SimpleLightServer a = new SimpleLightServer(input,output);
+       try {
+          a.parseStatus("LIGHT IL1 OFF\n");
+          jmri.Light light = (jmri.InstanceManager.getDefault(jmri.LightManager.class)).getLight("IL1");
+          Assert.assertEquals("Parse OFF Status Check",
+                       jmri.Light.OFF,
+                       light.getState());
+          // parsing the status also causes a message to return to the client. 
+          //Assert.assertEquals("parse OFF Status check","LIGHT IL1 OFF\n",sb.toString());
+       } catch(jmri.JmriException|java.io.IOException jmrie){
+         Assert.fail("Exception retrieving Status");
+       }
+    }
+
+    // test parsing an UNKNOWN status message.
+    @Test public void testParseUnkownStatus() {
+       StringBuilder sb = new StringBuilder();
+       java.io.DataOutputStream output = new java.io.DataOutputStream(
+           new java.io.OutputStream() {
+               // null output string drops characters
+               // could be replaced by one that checks for specific outputs
+               @Override
+               public void write(int b) throws java.io.IOException {
+                   sb.append((char)b);
+               }
+          });
+       java.io.DataInputStream input = new java.io.DataInputStream(System.in);
+       SimpleLightServer a = new SimpleLightServer(input,output);
+       try {
+          a.parseStatus("LIGHT IL1 UNKNOWN\n");
+          // this currently causes no change of state, so we are just 
+          // checking to make sure there is no exception.
+       } catch(jmri.JmriException|java.io.IOException jmrie){
+         Assert.fail("Exception retrieving Status");
+       }
     }
 
     // The minimal setup for log4J
-    protected void setUp() throws Exception {
+    @Before public void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
-        super.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initInternalLightManager();
@@ -111,9 +227,8 @@ public class SimpleLightServerTest extends TestCase {
         jmri.util.JUnitUtil.initDebugThrottleManager();
     }
 
-    protected void tearDown() throws Exception {
+    @After public void tearDown() throws Exception {
         jmri.util.JUnitUtil.resetInstanceManager();
-        super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
 

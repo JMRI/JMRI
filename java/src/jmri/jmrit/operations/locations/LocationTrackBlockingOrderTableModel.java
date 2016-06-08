@@ -6,6 +6,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
@@ -69,6 +70,7 @@ public class LocationTrackBlockingOrderTableModel extends AbstractTableModel imp
             _location.addPropertyChangeListener(this);
         }
         initTable();
+        table.setRowHeight(new JComboBox<>().getPreferredSize().height);
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         updateList();
@@ -96,14 +98,17 @@ public class LocationTrackBlockingOrderTableModel extends AbstractTableModel imp
         tcm.getColumn(DOWN_COLUMN).setPreferredWidth(70);
     }
 
+    @Override
     public int getRowCount() {
         return _tracksList.size();
     }
 
+    @Override
     public int getColumnCount() {
         return HIGHESTCOLUMN;
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case ID_COLUMN:
@@ -123,6 +128,7 @@ public class LocationTrackBlockingOrderTableModel extends AbstractTableModel imp
         }
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case ID_COLUMN:
@@ -142,6 +148,7 @@ public class LocationTrackBlockingOrderTableModel extends AbstractTableModel imp
         }
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
             case ORDER_COLUMN:
@@ -153,6 +160,7 @@ public class LocationTrackBlockingOrderTableModel extends AbstractTableModel imp
         }
     }
 
+    @Override
     public Object getValueAt(int row, int col) {
         if (row >= _tracksList.size()) {
             return "ERROR row " + row; // NOI18N
@@ -179,6 +187,7 @@ public class LocationTrackBlockingOrderTableModel extends AbstractTableModel imp
         }
     }
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
         if (row >= _tracksList.size()) {
             return;
@@ -204,8 +213,9 @@ public class LocationTrackBlockingOrderTableModel extends AbstractTableModel imp
     }
 
     // this table listens for changes to a location and it's tracks
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
-        if (Control.showProperty)
+        if (Control.SHOW_PROPERTY)
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         if (e.getPropertyName().equals(Location.TRACK_LISTLENGTH_CHANGED_PROPERTY)

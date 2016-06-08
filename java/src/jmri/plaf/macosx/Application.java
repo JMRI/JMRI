@@ -1,4 +1,3 @@
-// Application.java
 package jmri.plaf.macosx;
 
 import com.apple.eawt.AppEvent.AboutEvent;
@@ -13,11 +12,11 @@ import jmri.util.SystemType;
  * <p>
  * <b>NOTE</b> All use of this class must be wrapped in a conditional test that
  * ensures that JMRI is not running on Mac OS X or in Try-Catch blocks. The
- * easiest test is:  <code><pre>
+ * easiest test is:  <pre><code>
  * if (SystemType.isMacOSX()) {
  *     ...
  * }
- * </pre></code> A Try-Catch block will need to catch
+ * </code></pre> A Try-Catch block will need to catch
  * {@link java.lang.NoClassDefFoundError} Failure to use one of these methods
  * will result in crashes.
  * <p>
@@ -30,7 +29,7 @@ import jmri.util.SystemType;
  */
 public class Application {
 
-    private static Application sharedApplication = null;
+    private static volatile Application sharedApplication = null;
     private com.apple.eawt.Application application = null;
 
     public static Application getApplication() {
@@ -44,9 +43,7 @@ public class Application {
     }
 
     private Application() {
-        if (application == null) {
-            application = com.apple.eawt.Application.getApplication();
-        }
+        application = com.apple.eawt.Application.getApplication();
     }
 
     public void setAboutHandler(final AboutHandler handler) {

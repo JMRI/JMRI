@@ -20,10 +20,6 @@ import org.slf4j.LoggerFactory;
  */
 public class SprogHexFile extends jmri.util.JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4982055575560612793L;
     private File file;
     private FileInputStream in;
     private BufferedInputStream buffIn;
@@ -124,7 +120,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
      *
      * @return int the data length of the record, or 0 if no data
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "DLS_DEAD_LOCAL_STORE")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE")
     // False positive
     public int read() {
         // Make space for the the maximum size record to be read
@@ -358,7 +354,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
      *
      * @return byte[] array of data bytes
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP")
     // Happy to pass a reference to internal data
     public int[] getData() {
         return data;

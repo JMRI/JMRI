@@ -158,7 +158,7 @@ public class AcelaNodeTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", AcelaNodeTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -209,17 +209,8 @@ public class AcelaNodeTest extends TestCase {
             AcelaTrafficController.instance().initializeAcelaNode(a3);
         }
 
-        // create a new instance manager
-        InstanceManager i = new InstanceManager() {
-            @Override
-            protected void init() {
-                root = null;
-                super.init();
-                root = this;
-            }
-        };
+        jmri.util.JUnitUtil.resetInstanceManager();
 
-        Assert.assertNotNull("exists", i);
         InstanceManager.setTurnoutManager(new InternalTurnoutManager());
         t1 = InstanceManager.turnoutManagerInstance().newTurnout("IT99", "99");
 

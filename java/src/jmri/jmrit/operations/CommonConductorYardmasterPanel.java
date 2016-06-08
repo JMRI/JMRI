@@ -48,10 +48,6 @@ import org.slf4j.LoggerFactory;
  */
 public class CommonConductorYardmasterPanel extends OperationsPanel implements PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4524775039808820663L;
     protected static final String Tab = "     "; // used to space out headers
     protected static final String Space = " "; // used to pad out panels
 
@@ -368,8 +364,6 @@ public class CommonConductorYardmasterPanel extends OperationsPanel implements P
      * car and which pane to use, they are placed in the list "rollingStock"
      * with the prefix "p", "s" or "m" and the car's unique id.
      *
-     * @param rl
-     * @param isManifest
      */
     protected void blockCars(RouteLocation rl, boolean isManifest) {
         if (Setup.isPrintHeadersEnabled()) {

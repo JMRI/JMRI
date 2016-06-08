@@ -1,4 +1,3 @@
-// NceProgrammerTest.java
 package jmri.jmrix.nce;
 
 import java.io.DataInputStream;
@@ -22,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * was done would have been good!
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class NceProgrammerTest extends TestCase {
 
@@ -510,7 +508,7 @@ public class NceProgrammerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {NceProgrammerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

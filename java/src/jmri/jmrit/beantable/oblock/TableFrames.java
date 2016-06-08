@@ -1,23 +1,5 @@
 package jmri.jmrit.beantable.oblock;
 
-/**
- * GUI to define OBlocks
- * <P>
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
- *
- * @author  Pete Cressman (C) 2010
- * @version $Revision$
- */
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Point;
@@ -51,10 +33,12 @@ import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 import jmri.InstanceManager;
 import jmri.Path;
+import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.OPath;
 import jmri.jmrit.logix.WarrantTableAction;
+import jmri.util.SystemType;
 import jmri.util.com.sun.TableSorter;
 import jmri.util.com.sun.TransferActionListener;
 import jmri.util.swing.XTableColumnModel;
@@ -63,12 +47,25 @@ import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * GUI to define OBlocks
+ * <BR>
+ * <hr>
+ * This file is part of JMRI.
+ * <P>
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
+ * </P><P>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * </P>
+ *
+ * @author  Pete Cressman (C) 2010
+ */
 public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5328547694482485128L;
     static int ROW_HEIGHT;
     public static final int STRUT_SIZE = 10;
 
@@ -110,7 +107,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         setTitle(Bundle.getMessage("TitleOBlocks"));
         JMenuBar menuBar = new JMenuBar();
         java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("apps.AppsBundle");
-        JMenu fileMenu = new JMenu(rb.getString("MenuFile"));
+        JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         fileMenu.add(new jmri.configurexml.SaveMenu());
 
         JMenuItem printItem = new JMenuItem(Bundle.getMessage("PrintOBlockTable"));
@@ -175,24 +172,39 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         JMenuItem menuItem = new JMenuItem(rb.getString("MenuItemCut"));
         menuItem.setActionCommand((String) TransferHandler.getCutAction().getValue(Action.NAME));
         menuItem.addActionListener(actionListener);
-        menuItem.setAccelerator(
-                KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
+        if (SystemType.isMacOSX()) {
+            menuItem.setAccelerator(
+                    KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.META_MASK));
+        } else {
+            menuItem.setAccelerator(
+                    KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
+        }
         menuItem.setMnemonic(KeyEvent.VK_T);
         editMenu.add(menuItem);
 
         menuItem = new JMenuItem(rb.getString("MenuItemCopy"));
         menuItem.setActionCommand((String) TransferHandler.getCopyAction().getValue(Action.NAME));
         menuItem.addActionListener(actionListener);
-        menuItem.setAccelerator(
-                KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.CTRL_MASK));
+        if (SystemType.isMacOSX()) {
+            menuItem.setAccelerator(
+                    KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.META_MASK));
+        } else {
+            menuItem.setAccelerator(
+                    KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.CTRL_MASK));
+        }
         menuItem.setMnemonic(KeyEvent.VK_C);
         editMenu.add(menuItem);
 
         menuItem = new JMenuItem(rb.getString("MenuItemPaste"));
         menuItem.setActionCommand((String) TransferHandler.getPasteAction().getValue(Action.NAME));
         menuItem.addActionListener(actionListener);
-        menuItem.setAccelerator(
-                KeyStroke.getKeyStroke(KeyEvent.VK_V, ActionEvent.CTRL_MASK));
+        if (SystemType.isMacOSX()) {
+            menuItem.setAccelerator(
+                    KeyStroke.getKeyStroke(KeyEvent.VK_V, ActionEvent.META_MASK));
+        } else {
+            menuItem.setAccelerator(
+                    KeyStroke.getKeyStroke(KeyEvent.VK_V, ActionEvent.CTRL_MASK));
+        }
         menuItem.setMnemonic(KeyEvent.VK_P);
         editMenu.add(menuItem);
         menuBar.add(editMenu);
@@ -448,7 +460,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         _oBlockTable.getColumnModel().getColumn(OBlockTableModel.CURVECOL).setCellEditor(new DefaultCellEditor(box));
         _oBlockTable.getColumnModel().getColumn(OBlockTableModel.REPORT_CURRENTCOL).setCellRenderer(
                 new MyBooleanRenderer(Bundle.getMessage("Current"), Bundle.getMessage("Last")));
-        box = new JComboBox<String>(jmri.implementation.SignalSpeedMap.getMap().getValidSpeedNames());
+        box = new JComboBox<String>(jmri.InstanceManager.getDefault(SignalSpeedMap.class).getValidSpeedNames());
         box.addItem("");
         _oBlockTable.getColumnModel().getColumn(OBlockTableModel.SPEEDCOL).setCellEditor(new DefaultCellEditor(box));
         _oBlockTable.getColumnModel().getColumn(OBlockTableModel.PERMISSIONCOL).setCellRenderer(

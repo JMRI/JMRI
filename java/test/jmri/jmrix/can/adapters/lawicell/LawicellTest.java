@@ -1,4 +1,3 @@
-// LawicellTest.java
 package jmri.jmrix.can.adapters.lawicell;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.adapters.lawicell package.
  *
  * @author Bob Jacobsen Copyright 2009
- * @version $Revision$
  */
 public class LawicellTest extends TestCase {
 
@@ -25,7 +23,7 @@ public class LawicellTest extends TestCase {
     static public void main(String[] args) {
         apps.tests.AllTest.initLogging();
         String[] testCaseName = {"-noloading", LawicellTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

@@ -1,4 +1,3 @@
-// LIUSBServerAdapter.java
 package jmri.jmrix.lenz.liusbserver;
 
 import java.io.BufferedReader;
@@ -8,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInitializationManager;
 import jmri.jmrix.lenz.XNetNetworkPortController;
@@ -26,7 +26,6 @@ import org.slf4j.LoggerFactory;
  * device puts the system into service mode.
  *
  * @author	Paul Bender (C) 2009-2010
- * @version	$Revision$
  */
 public class LIUSBServerAdapter extends XNetNetworkPortController {
 
@@ -56,12 +55,14 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
         super();
         option1Name = "BroadcastPort";
         options.put(option1Name, new Option("Broadcast Port", new String[]{String.valueOf(LIUSBServerAdapter.BROADCAST_TCP_PORT), ""}));
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.LENZ;
+        this.manufacturerName = jmri.jmrix.lenz.LenzConnectionTypeList.LENZ;
     }
 
-    synchronized public String openPort(String portName, String appName) {
+    @Override
+    synchronized public void connect() throws Exception {
+        opened = false;
         if (log.isDebugEnabled()) {
-            log.debug("openPort called");
+            log.debug("connect called");
         }
         // open the port in XPressNet mode
         try {
@@ -73,13 +74,24 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
             PipedOutputStream tempPipeO = new PipedOutputStream();
             outpipe = new DataOutputStream(tempPipeO);
             pin = new DataInputStream(new PipedInputStream(tempPipeO));
+            opened = true;
         } catch (java.io.IOException e) {
             log.error("init (pipe): Exception: " + e.toString());
+            ConnectionStatus.instance().setConnectionState(
+                        m_HostName, ConnectionStatus.CONNECTION_DOWN);
+            throw e; // re-throw so this can be seen externally.
         } catch (Exception ex) {
             log.error("init (connect): Exception: " + ex.toString());
+            ConnectionStatus.instance().setConnectionState(
+                        m_HostName, ConnectionStatus.CONNECTION_DOWN);
+            throw ex; // re-throw so this can be seen externally.
         }
         keepAliveTimer();
-        return null; // normal operation
+        if (opened) {
+            ConnectionStatus.instance().setConnectionState(
+                    m_HostName, ConnectionStatus.CONNECTION_UP);
+        }
+
     }
 
     /**

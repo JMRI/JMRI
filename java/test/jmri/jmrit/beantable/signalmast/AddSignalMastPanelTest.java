@@ -1,4 +1,3 @@
-// AddSignalMastPanelTest.java
 package jmri.jmrit.beantable.signalmast;
 
 import jmri.implementation.SignalSystemTestUtil;
@@ -53,7 +52,7 @@ public class AddSignalMastPanelTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", AddSignalMastPanelTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

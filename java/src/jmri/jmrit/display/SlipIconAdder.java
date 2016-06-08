@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
  * dragging a row from the turnout table to be dropped on a turnout label
  * <p>
  * To work right, the SlipTurnoutIcon needs to have all images the same size.
- * Based upon MultiSensorIconAdder by Bob Jacobsen & Pete Cressman
+ * Based upon MultiSensorIconAdder by Bob Jacobsen {@literal &} Pete Cressman
  *
  * @author Bob Jacobsen Copyright (c) 2007
  * @author Kevin Dickerson Copyright (c) 2010
@@ -111,7 +111,6 @@ public class SlipIconAdder extends IconAdder {
      * Override. First look for a table selection to set the sensor. If not,
      * then look to change the icon image (super).
      */
-    @SuppressWarnings("null")
     public void makeIconPanel(boolean useDefaults) {
         if (_iconPanel != null) {
             this.remove(_iconPanel);

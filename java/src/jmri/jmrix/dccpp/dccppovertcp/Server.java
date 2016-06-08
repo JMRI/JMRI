@@ -13,10 +13,10 @@ import java.util.LinkedList;
 import java.util.Properties;
 import jmri.InstanceManager;
 import jmri.implementation.QuietShutDownTask;
+import jmri.jmrix.dccpp.DCCppConstants;
 import jmri.util.FileUtil;
 import jmri.util.SocketUtil;
 import jmri.util.zeroconf.ZeroConfService;
-import jmri.jmrix.dccpp.DCCppConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

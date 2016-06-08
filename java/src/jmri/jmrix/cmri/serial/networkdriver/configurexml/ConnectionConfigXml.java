@@ -42,7 +42,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
      *
      * @param e Element being extended
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     protected void extendElement(Element e) {
@@ -83,13 +83,9 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
         return p;
     }
 
-    /**
-     * Unpack the node information when reading the "connection" element
-     *
-     * @param e Element containing the connection info
-     */
-    protected void unpackElement(Element e) {
-        List<Element> l = e.getChildren("node");
+    @Override
+    protected void unpackElement(Element shared, Element perNode) {
+        List<Element> l = shared.getChildren("node");
         for (int i = 0; i < l.size(); i++) {
             Element n = l.get(i);
             int addr = Integer.parseInt(n.getAttributeValue("name"));

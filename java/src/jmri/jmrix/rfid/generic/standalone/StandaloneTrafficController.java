@@ -1,4 +1,3 @@
-// SpecificTrafficController.java
 package jmri.jmrix.rfid.generic.standalone;
 
 import jmri.jmrix.AbstractMRListener;
@@ -22,7 +21,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2005, 2006, 2008
  * @author Matthew Harris Copyright (c) 2011
- * @version $Revision$
  * @since 2.11.4
  */
 public class StandaloneTrafficController extends RfidTrafficController {
@@ -83,6 +81,3 @@ public class StandaloneTrafficController extends RfidTrafficController {
 
     private static final Logger log = LoggerFactory.getLogger(StandaloneTrafficController.class.getName());
 }
-
-
-/* @(#)SpecificTrafficController.java */

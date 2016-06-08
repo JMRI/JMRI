@@ -129,13 +129,13 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
     }
 
     /**
-     * Set the speed & direction.
+     * Set the speed {@literal &} direction.
      * <P>
      * This intentionally skips the emergency stop value of 1.
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     public void setSpeedSetting(float speed) {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
@@ -227,7 +227,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
         if (m.match("L " + address.getNumber()) >= 0) {
             try {
                 String[] lines = m.toString().split(" ");
-                Float newSpeed = new Float(floatSpeed(Integer.parseInt(lines[2])));
+                Float newSpeed = Float.valueOf(floatSpeed(Integer.parseInt(lines[2])));
                 super.setSpeedSetting(newSpeed);
                 if (lines[3].equals("1") && !this.f0) {
                     notifyPropertyChangeListener(Throttle.F0, this.f0, true);

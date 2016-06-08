@@ -13,11 +13,6 @@ package jmri.implementation;
  */
 public abstract class DefaultSignalHead extends AbstractSignalHead {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1008833207689892684L;
-
     public DefaultSignalHead(String systemName, String userName) {
         super(systemName, userName);
     }
@@ -171,12 +166,12 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
         Bundle.getMessage("SignalHeadStateFlashingYellow"),
         Bundle.getMessage("SignalHeadStateFlashingGreen"),};
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     public int[] getValidStates() {
         return validStates;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     public String[] getValidStateNames() {
         return validStateNames;
     }

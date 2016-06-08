@@ -1,4 +1,3 @@
-//JsonSignalHeadServer.java
 package jmri.jmris.json;
 
 import static jmri.jmris.json.JSON.CODE;
@@ -20,6 +19,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmris.AbstractSignalHeadServer;
 import jmri.jmris.JmriConnection;
+import jmri.server.json.JsonException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +28,6 @@ import org.slf4j.LoggerFactory;
  * connection
  *
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision: 21313 $
  */
 public class JsonSignalHeadServer extends AbstractSignalHeadServer {
 

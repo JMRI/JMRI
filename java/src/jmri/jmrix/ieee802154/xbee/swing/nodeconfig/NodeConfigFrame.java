@@ -252,14 +252,6 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
         }
         // all ready, create the new node
         curNode = new XBeeNode();
-        if (curNode == null) {
-            statusText1.setText(rb.getString("Error3"));
-            statusText1.setVisible(true);
-            log.error("Error creating XBee Node, constructor returned null");
-            errorInStatus1 = true;
-            resetNotes2();
-            return;
-        }
         // configure the new node
         setNodeParameters();
 
@@ -276,9 +268,15 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
      * Method to handle discover button
      */
     public void discoverButtonActionPerformed() {
-        // call the node discovery code in the node manager.
-        ((XBeeConnectionMemo) xtc.getAdapterMemo()).getXBeeNodeManager().startNodeDiscovery();
-        initAddressBoxes();
+        jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo memo = xtc.getAdapterMemo();
+        if( memo instanceof XBeeConnectionMemo) {
+           // call the node discovery code in the node manager.
+           ((XBeeConnectionMemo) memo).getXBeeNodeManager().startNodeDiscovery();
+        }
+        // provide user feedback
+        statusText1.setText(rb.getString("FeedBackDiscover"));
+        errorInStatus1 = true;
+        resetNotes2();
     }
 
     /**
@@ -444,19 +442,9 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
      */
     private String readNodeAddress() {
         String addr = "";
-        try {
-            addr = (String) nodeAddrField.getSelectedItem();
-            if (addr.equals("FF FE ") || addr.equals("FF FF ")) {
-                addr = (String) nodeAddr64Field.getSelectedItem();
-            }
-        } catch (Exception e) {
-            log.debug("nodeAddrField Contains \"{}\"",
-                    nodeAddrField.getSelectedItem());
-            statusText1.setText(rb.getString("Error5"));
-            statusText1.setVisible(true);
-            errorInStatus1 = true;
-            resetNotes2();
-            return "";
+        addr = (String) nodeAddrField.getSelectedItem();
+        if (addr.equals("FF FE ") || addr.equals("FF FF ")) {
+            addr = (String) nodeAddr64Field.getSelectedItem();
         }
         return (addr);
     }
@@ -564,7 +552,7 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
         }
 
         public Object getValueAt(int r, int c) {
-            Integer pin = new Integer(r);
+            Integer pin = Integer.valueOf(r);
             try {
                 switch (c) {
                     case BIT_COLUMN:

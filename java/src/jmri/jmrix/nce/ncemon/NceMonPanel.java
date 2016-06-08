@@ -1,13 +1,3 @@
-/**
- * NceMonPane.java
- *
- * Description:	Swing action to create and register a MonFrame object
- *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @version	$Revision$
- * @author	kcameron Copyright (C) 2011 copied from SerialMonPane.java
- * @author	Daniel Boudreau Copyright (C) 2012 added human readable format
- */
 package jmri.jmrix.nce.ncemon;
 
 import javax.swing.JOptionPane;
@@ -19,9 +9,14 @@ import jmri.jmrix.nce.swing.NcePanelInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Swing action to create and register a MonFrame object
+ *
+ * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ * @author	kcameron Copyright (C) 2011 copied from SerialMonPane.java
+ * @author	Daniel Boudreau Copyright (C) 2012 added human readable format
+ */
 public class NceMonPanel extends jmri.jmrix.AbstractMonPane implements NceListener, NcePanelInterface {
-
-    private static final long serialVersionUID = 6106790197336170348L;
 
     public NceMonPanel() {
         super();
@@ -107,8 +102,6 @@ public class NceMonPanel extends jmri.jmrix.AbstractMonPane implements NceListen
      */
     static public class Default extends jmri.jmrix.nce.swing.NceNamedPaneAction {
 
-        private static final long serialVersionUID = -7644336249246783644L;
-
         public Default() {
             super("Nce Command Monitor",
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
@@ -120,6 +113,3 @@ public class NceMonPanel extends jmri.jmrix.AbstractMonPane implements NceListen
     private final static Logger log = LoggerFactory.getLogger(NceMonPanel.class.getName());
 
 }
-
-
-/* @(#)MonAction.java */

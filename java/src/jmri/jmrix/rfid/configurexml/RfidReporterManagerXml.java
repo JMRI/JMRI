@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  * @since 2.11.4
  */
 public class RfidReporterManagerXml extends jmri.managers.configurexml.AbstractReporterManagerConfigXML {
@@ -21,10 +20,12 @@ public class RfidReporterManagerXml extends jmri.managers.configurexml.AbstractR
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element sensors) {
         sensors.setAttribute("class", this.getClass().getName());
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

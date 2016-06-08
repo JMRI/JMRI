@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 import jmri.util.FileUtil;
-import jmri.web.server.WebServerManager;
+import jmri.web.server.WebServerPreferences;
 
 /**
  *
@@ -35,9 +35,9 @@ public class ServletUtil {
      */
     public String getRailroadName(boolean inComments) {
         if (inComments) {
-            return "-->" + WebServerManager.getWebServerPreferences().getRailRoadName() + "<!--"; // NOI18N
+            return "-->" + WebServerPreferences.getDefault().getRailRoadName() + "<!--"; // NOI18N
         }
-        return WebServerManager.getWebServerPreferences().getRailRoadName();
+        return WebServerPreferences.getDefault().getRailRoadName();
     }
 
     public String getFooter(Locale locale, String context) throws IOException {
@@ -67,14 +67,14 @@ public class ServletUtil {
         navBar = navBar.replaceAll("context-[\\w-]*-only", "hidden"); // NOI18N
         // replace class "context-<this-context>" with class "active"
         navBar = navBar.replace(context, "active"); // NOI18N
-        if (WebServerManager.getWebServerPreferences().allowRemoteConfig()) {
+        if (WebServerPreferences.getDefault().allowRemoteConfig()) {
             navBar = navBar.replace("config-enabled-only", "show"); // NOI18N
             navBar = navBar.replace("config-disabled-only", "hidden"); // NOI18N
         } else {
             navBar = navBar.replace("config-enabled-only", "hidden"); // NOI18N
             navBar = navBar.replace("config-disabled-only", "show"); // NOI18N
         }
-        if (!WebServerManager.getWebServerPreferences().isReadonlyPower()) {
+        if (!WebServerPreferences.getDefault().isReadonlyPower()) {
             navBar = navBar.replace("data-power=\"readonly\"", "data-power=\"readwrite\""); // NOI18N
         }
         return navBar;
@@ -90,7 +90,6 @@ public class ServletUtil {
     /**
      * Set HTTP headers in the response to prevent caching.
      *
-     * @param response
      */
     public void setNonCachingHeaders(HttpServletResponse response) {
         Date now = new Date();
@@ -104,10 +103,6 @@ public class ServletUtil {
     /**
      * Write a file to the given response.
      *
-     * @param response
-     * @param file
-     * @param contentType
-     * @throws IOException
      */
     public void writeFile(HttpServletResponse response, File file, String contentType) throws IOException {
         if (file.exists()) {
@@ -116,11 +111,14 @@ public class ServletUtil {
                 response.setStatus(HttpServletResponse.SC_OK);
                 response.setContentLength((int) file.length());
                 FileInputStream fileInputStream = new FileInputStream(file);
-                int bytes;
-                while ((bytes = fileInputStream.read()) != -1) {
-                    response.getOutputStream().write(bytes);
+                try {
+                    int bytes;
+                    while ((bytes = fileInputStream.read()) != -1) {
+                        response.getOutputStream().write(bytes);
+                    }
+                } finally {
+                    fileInputStream.close();
                 }
-                fileInputStream.close();
             } else {
                 response.sendError(HttpServletResponse.SC_FORBIDDEN);
             }

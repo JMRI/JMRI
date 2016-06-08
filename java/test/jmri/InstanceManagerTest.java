@@ -1,4 +1,3 @@
-// InstanceManagerTest.java
 package jmri;
 
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
@@ -14,14 +13,13 @@ import junit.framework.TestSuite;
  * Test InstanceManager
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class InstanceManagerTest extends TestCase implements InstanceManagerAutoDefault {
 
     public void testDefaultPowerManager() {
         PowerManager m = new PowerManagerScaffold();
 
-        InstanceManager.setPowerManager(m);
+        InstanceManager.store(m, jmri.PowerManager.class);
 
         Assert.assertTrue("power manager present", InstanceManager.powerManagerInstance() == m);
     }
@@ -30,8 +28,8 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
         PowerManager m1 = new PowerManagerScaffold();
         PowerManager m2 = new PowerManagerScaffold();
 
-        InstanceManager.setPowerManager(m1);
-        InstanceManager.setPowerManager(m2);
+        InstanceManager.store(m1, jmri.PowerManager.class);
+        InstanceManager.store(m2, jmri.PowerManager.class);
 
         Assert.assertTrue("power manager present", InstanceManager.powerManagerInstance() == m2);
     }
@@ -201,7 +199,7 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {InstanceManagerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -214,20 +212,11 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
     // The minimal setup for log4J
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
-        resetInstanceManager();
+        jmri.util.JUnitUtil.resetInstanceManager();
     }
 
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
-    }
-
-    private void resetInstanceManager() {
-        new jmri.InstanceManager() {
-            protected void init() {
-                super.init();
-                root = this;
-            }
-        };
     }
 
 }

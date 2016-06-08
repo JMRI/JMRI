@@ -1,7 +1,6 @@
 // PrintCarRosterAction.java
 package jmri.jmrit.operations.rollingstock.cars;
 
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GridBagLayout;
@@ -39,16 +38,11 @@ import org.slf4j.LoggerFactory;
  */
 public class PrintCarRosterAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6012807784689139181L;
-
-    public PrintCarRosterAction(String actionName, Frame frame, boolean preview, Component pWho) {
+    public PrintCarRosterAction(String actionName, Frame frame, boolean preview, CarsTableFrame pWho) {
         super(actionName);
         mFrame = frame;
         isPreview = preview;
-        panel = (CarsTableFrame) pWho;
+        panel = pWho;
     }
 
     /**
@@ -62,6 +56,7 @@ public class PrintCarRosterAction extends AbstractAction {
     CarsTableFrame panel;
     CarPrintOptionFrame cpof = null;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (cpof == null) {
             cpof = new CarPrintOptionFrame(this);
@@ -73,6 +68,7 @@ public class PrintCarRosterAction extends AbstractAction {
 
     int numberCharPerLine;
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "CarManager only provides Car Objects")
     private void printCars() {
 
         boolean landscape = false;
@@ -427,6 +423,7 @@ public class PrintCarRosterAction extends AbstractAction {
             initMinimumSize(new Dimension(Control.panelWidth300, Control.panelHeight500));
         }
 
+        @Override
         public void initComponents() {
             if (isPreview) {
                 cpof.setTitle(Bundle.getMessage("MenuItemPreview"));
@@ -449,11 +446,13 @@ public class PrintCarRosterAction extends AbstractAction {
             box.setSelectedItem(panel.carsTableModel.getSortByName());
         }
 
+        @Override
         public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
             setVisible(false);
             pcr.printCars();
         }
         
+        @Override
         public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
             if (sortByComboBox.getSelectedItem() != null && sortByComboBox.getSelectedItem().equals(panel.carsTableModel.getSortByName(panel.carsTableModel.SORTBY_LOCATION))) {
                 printSpace.setEnabled(true);

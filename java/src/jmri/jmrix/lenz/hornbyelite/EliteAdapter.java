@@ -1,4 +1,3 @@
-// EliteAdapter.java
 package jmri.jmrix.lenz.hornbyelite;
 
 import gnu.io.CommPortIdentifier;
@@ -8,6 +7,7 @@ import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Vector;
 import jmri.jmrix.lenz.XNetPacketizer;
@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2002
  * @author Paul Bender, Copyright (C) 2003,2008-2010
- * @version	$Revision$
  */
 public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -34,7 +33,7 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
         option2Name = "Buffer";
         options.put(option2Name, new Option("Check Buffer : ", validOption2));
         setCheckBuffer(true); // default to true for elite
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.HORNBY;
+        this.manufacturerName = EliteConnectionTypeList.HORNBY;
     }
 
     Vector<String> portNameVector = null;
@@ -70,12 +69,7 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {
@@ -203,10 +197,14 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
 
         } catch (gnu.io.NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
-        } catch (Exception ex) {
-            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
-            ex.printStackTrace();
-            return "Unexpected error while opening port " + portName + ": " + ex;
+        } catch (IOException ioe) {
+            log.error("IOException exception while opening port " + portName + " trace follows: " + ioe);
+            ioe.printStackTrace();
+            return "IO exception while opening port " + portName + ": " + ioe;
+        } catch (java.util.TooManyListenersException tmle) {
+            log.error("TooManyListenersException while opening port " + portName + " trace follows: " + tmle);
+            tmle.printStackTrace();
+            return "Too Many Listeners exception while opening port " + portName + ": " + tmle;
         }
 
         return null; // normal operation
@@ -245,7 +243,7 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
         }
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
-        } catch (java.io.IOException e) {
+        } catch (IOException e) {
             log.error("getOutputStream exception: " + e.getMessage());
         }
         return null;
@@ -291,7 +289,7 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
      * Get an array of valid baud rates. This is currently just a message saying
      * its fixed
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] validBaudRates() {
         return validSpeeds;
     }
@@ -300,7 +298,7 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
      * Option 1 controls flow control option
      */
     /*public String option1Name() { return "Elite connection uses "; }
-     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
      public String[] validOption1() { return validOption1; }*/
     protected String[] validSpeeds = new String[]{"9,600 baud", "19,200 baud", "38,400 baud", "57,600 baud", "115,200 baud"};
     protected int[] validSpeedValues = new int[]{9600, 19200, 38400, 57600, 115200};

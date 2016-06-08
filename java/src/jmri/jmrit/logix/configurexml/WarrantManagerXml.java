@@ -9,9 +9,9 @@ import jmri.jmrit.logix.BlockOrder;
 import jmri.jmrit.logix.NXFrame;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
+import jmri.jmrit.logix.SCWarrant;
 import jmri.jmrit.logix.ThrottleSetting;
 import jmri.jmrit.logix.Warrant;
-import jmri.jmrit.logix.SCWarrant;
 import jmri.jmrit.logix.WarrantManager;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
@@ -155,7 +155,6 @@ public class WarrantManagerXml //extends XmlFile
         Element elem = new Element(type);
 
         String time = String.valueOf(command.getTime());
-        if (time==null) time = "";
         elem.setAttribute("time", time);
 
         String str = command.getCommand();

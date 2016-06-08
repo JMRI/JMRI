@@ -1,4 +1,3 @@
-// NotchTriggerTest.java
 package jmri.jmrit.vsdecoder;
 
 import java.beans.PropertyChangeEvent;
@@ -12,7 +11,6 @@ import org.jdom2.Element;
  * Tests for the NotchTrigger class
  *
  * @author Mark Underwood Copyright (C) 2011
- * @version $Revision$
  */
 public class NotchTriggerTest extends TestCase {
 
@@ -135,7 +133,7 @@ public class NotchTriggerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {NotchTriggerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2006, 2007, 2008, 2014 All rights reserved -->
+<!-- Copyright (C) JMRI 2006, 2007, 2008, 2014, 2016 All rights reserved -->
 <!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -13,9 +13,9 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
-  <version author="dick@rr-cirkits.com" version="0.15" lastUpdated="20140226"/>
+  <version author="dick@rr-cirkits.com" version="0.16" lastUpdated="20160310"/>
   <!-- Version 0.01  Working version modified from SignalMan -->
-  <!-- Version 0.15  TowerMan version -->
+  <!-- Version 0.16  TowerMan version -->
   <decoder>
     <family name="Decoders" mfg="RR-CirKits" type="stationary" comment="The TowerMan is normally programmed in OPs mode">
       <model model="TowerMan" comment="16 Line I/O Driver" lowVersionID="10"/>
@@ -7510,6 +7510,8 @@
             <!-- Normal, Alt, Paired -->
             <compositeSetting label="PA1 Mode" value="2"/>
             <!-- Switch, Feedback, Sensor -->
+            <compositeSetting label="PA1 Input Direction" value="0"/>
+            <!-- Normal -->
             <compositeSetting label="PA1 Transition" value="3"/>
             <!-- None, Positive, Negative, Both -->
           </compositeChoice>
@@ -7601,6 +7603,8 @@
             <compositeSetting label="PA2 Output-Input" value="1"/>
             <compositeSetting label="PA2 Paired" value="0"/>
             <compositeSetting label="PA2 Mode" value="2"/>
+            <compositeSetting label="PA2 Input Direction" value="0"/>
+            <!-- Normal -->
             <compositeSetting label="PA2 Transition" value="3"/>
           </compositeChoice>
           <compositeChoice choice="SPST Alt Button">
@@ -7693,6 +7697,8 @@
             <!-- Normal, Alt, Paired -->
             <compositeSetting label="PA3 Mode" value="2"/>
             <!-- Switch, Feedback, Sensor -->
+            <compositeSetting label="PA3 Input Direction" value="0"/>
+            <!-- Normal -->
             <compositeSetting label="PA3 Transition" value="3"/>
             <!-- None, Positive, Negative, Both -->
           </compositeChoice>
@@ -7790,6 +7796,8 @@
             <compositeSetting label="PA4 Output-Input" value="1"/>
             <compositeSetting label="PA4 Paired" value="1"/>
             <compositeSetting label="PA4 Mode" value="0"/>
+            <compositeSetting label="PA4 Input Direction" value="0"/>
+            <!-- Normal -->
             <compositeSetting label="PA4 Transition" value="2"/>
           </compositeChoice>
           <compositeChoice choice="Paired Button Inputs">
@@ -7876,6 +7884,8 @@
             <!-- Normal, Alt, Paired -->
             <compositeSetting label="PA5 Mode" value="2"/>
             <!-- Switch, Feedback, Sensor -->
+            <compositeSetting label="PA5 Input Direction" value="0"/>
+            <!-- Normal -->
             <compositeSetting label="PA5 Transition" value="3"/>
             <!-- None, Positive, Negative, Both -->
           </compositeChoice>
@@ -7967,6 +7977,8 @@
             <compositeSetting label="PA6 Output-Input" value="1"/>
             <compositeSetting label="PA6 Paired" value="0"/>
             <compositeSetting label="PA6 Mode" value="2"/>
+            <compositeSetting label="PA6 Input Direction" value="0"/>
+            <!-- Normal -->
             <compositeSetting label="PA6 Transition" value="3"/>
           </compositeChoice>
           <compositeChoice choice="SPST Alt Button">
@@ -8059,6 +8071,8 @@
             <!-- Normal, Alt, Paired -->
             <compositeSetting label="PA7 Mode" value="2"/>
             <!-- Switch, Feedback, Sensor -->
+            <compositeSetting label="PA7 Input Direction" value="0"/>
+            <!-- Normal -->
             <compositeSetting label="PA7 Transition" value="3"/>
             <!-- None, Positive, Negative, Both -->
           </compositeChoice>
@@ -8150,6 +8164,8 @@
             <compositeSetting label="PA8 Output-Input" value="1"/>
             <compositeSetting label="PA8 Paired" value="0"/>
             <compositeSetting label="PA8 Mode" value="2"/>
+            <compositeSetting label="PA8 Input Direction" value="0"/>
+            <!-- Normal -->
             <compositeSetting label="PA8 Transition" value="3"/>
           </compositeChoice>
           <compositeChoice choice="SPST Alt Button">
@@ -8242,6 +8258,8 @@
             <!-- Normal, Alt, Paired -->
             <compositeSetting label="PB1 Mode" value="2"/>
             <!-- Switch, Feedback, Sensor -->
+            <compositeSetting label="PB1 Input Direction" value="0"/>
+            <!-- Normal -->
             <compositeSetting label="PB1 Transition" value="3"/>
             <!-- None, Positive, Negative, Both -->
           </compositeChoice>
@@ -8333,6 +8351,8 @@
             <compositeSetting label="PB2 Output-Input" value="1"/>
             <compositeSetting label="PB2 Paired" value="0"/>
             <compositeSetting label="PB2 Mode" value="2"/>
+            <compositeSetting label="PB2 Input Direction" value="0"/>
+            <!-- Normal -->
             <compositeSetting label="PB2 Transition" value="3"/>
           </compositeChoice>
           <compositeChoice choice="SPST Alt Button">
@@ -8425,6 +8445,8 @@
             <!-- Normal, Alt, Paired -->
             <compositeSetting label="PB3 Mode" value="2"/>
             <!-- Switch, Feedback, Sensor -->
+            <compositeSetting label="PB3 Input Direction" value="0"/>
+            <!-- Normal -->
             <compositeSetting label="PB3 Transition" value="3"/>
             <!-- None, Positive, Negative, Both -->
           </compositeChoice>
@@ -8516,6 +8538,8 @@
             <compositeSetting label="PB4 Output-Input" value="1"/>
             <compositeSetting label="PB4 Paired" value="0"/>
             <compositeSetting label="PB4 Mode" value="2"/>
+            <compositeSetting label="PB4 Input Direction" value="0"/>
+            <!-- Normal -->
             <compositeSetting label="PB4 Transition" value="3"/>
           </compositeChoice>
           <compositeChoice choice="SPST Alt Button">
@@ -8608,6 +8632,8 @@
             <!-- Normal, Alt, Paired -->
             <compositeSetting label="PB5 Mode" value="2"/>
             <!-- Switch, Feedback, Sensor -->
+            <compositeSetting label="PB5 Input Direction" value="0"/>
+            <!-- Normal -->
             <compositeSetting label="PB5 Transition" value="3"/>
             <!-- None, Positive, Negative, Both -->
           </compositeChoice>
@@ -8699,6 +8725,8 @@
             <compositeSetting label="PB6 Output-Input" value="1"/>
             <compositeSetting label="PB6 Paired" value="0"/>
             <compositeSetting label="PB6 Mode" value="2"/>
+            <compositeSetting label="PB6 Input Direction" value="0"/>
+            <!-- Normal -->
             <compositeSetting label="PB6 Transition" value="3"/>
           </compositeChoice>
           <compositeChoice choice="SPST Alt Button">
@@ -8791,6 +8819,8 @@
             <!-- Normal, Alt, Paired -->
             <compositeSetting label="PB7 Mode" value="2"/>
             <!-- Switch, Feedback, Sensor -->
+            <compositeSetting label="PB7 Input Direction" value="0"/>
+            <!-- Normal -->
             <compositeSetting label="PB7 Transition" value="3"/>
             <!-- None, Positive, Negative, Both -->
           </compositeChoice>
@@ -8882,6 +8912,8 @@
             <compositeSetting label="PB8 Output-Input" value="1"/>
             <compositeSetting label="PB8 Paired" value="0"/>
             <compositeSetting label="PB8 Mode" value="2"/>
+            <compositeSetting label="PB8 Input Direction" value="0"/>
+            <!-- Normal -->
             <compositeSetting label="PB8 Transition" value="3"/>
           </compositeChoice>
           <compositeChoice choice="SPST Alt Button">
@@ -9041,34 +9073,50 @@
             <compositeSetting label="PA1 Output-Input" value="1"/>
             <compositeSetting label="PA1 Paired" value="0"/>
             <compositeSetting label="PA1 Mode" value="2"/>
+            <compositeSetting label="PA1 Input Direction" value="0"/>
+            <!-- Normal -->
             <compositeSetting label="PA1 Transition" value="3"/>
             <compositeSetting label="PA2 Output-Input" value="1"/>
             <compositeSetting label="PA2 Paired" value="0"/>
             <compositeSetting label="PA2 Mode" value="2"/>
+            <compositeSetting label="PA2 Input Direction" value="0"/>
+            <!-- Normal -->
             <compositeSetting label="PA2 Transition" value="3"/>
             <compositeSetting label="PA3 Output-Input" value="1"/>
             <compositeSetting label="PA3 Paired" value="0"/>
             <compositeSetting label="PA3 Mode" value="2"/>
+            <compositeSetting label="PA3 Input Direction" value="0"/>
+            <!-- Normal -->
             <compositeSetting label="PA3 Transition" value="3"/>
             <compositeSetting label="PA4 Output-Input" value="1"/>
             <compositeSetting label="PA4 Paired" value="0"/>
             <compositeSetting label="PA4 Mode" value="2"/>
+            <compositeSetting label="PA4 Input Direction" value="0"/>
+            <!-- Normal -->
             <compositeSetting label="PA4 Transition" value="3"/>
             <compositeSetting label="PA5 Output-Input" value="1"/>
             <compositeSetting label="PA5 Paired" value="0"/>
             <compositeSetting label="PA5 Mode" value="2"/>
+            <compositeSetting label="PA5 Input Direction" value="0"/>
+            <!-- Normal -->
             <compositeSetting label="PA5 Transition" value="3"/>
             <compositeSetting label="PA6 Output-Input" value="1"/>
             <compositeSetting label="PA6 Paired" value="0"/>
             <compositeSetting label="PA6 Mode" value="2"/>
+            <compositeSetting label="PA6 Input Direction" value="0"/>
+            <!-- Normal -->
             <compositeSetting label="PA6 Transition" value="3"/>
             <compositeSetting label="PA7 Output-Input" value="1"/>
             <compositeSetting label="PA7 Paired" value="0"/>
             <compositeSetting label="PA7 Mode" value="2"/>
+            <compositeSetting label="PA7 Input Direction" value="0"/>
+            <!-- Normal -->
             <compositeSetting label="PA7 Transition" value="3"/>
             <compositeSetting label="PA8 Output-Input" value="1"/>
             <compositeSetting label="PA8 Paired" value="0"/>
             <compositeSetting label="PA8 Mode" value="2"/>
+            <compositeSetting label="PA8 Input Direction" value="0"/>
+            <!-- Normal -->
             <compositeSetting label="PA8 Transition" value="3"/>
           </compositeChoice>
           <compositeChoice choice="SPST Alt Button">
@@ -9415,34 +9463,50 @@
             <compositeSetting label="PB1 Output-Input" value="1"/>
             <compositeSetting label="PB1 Paired" value="0"/>
             <compositeSetting label="PB1 Mode" value="2"/>
+            <compositeSetting label="PB1 Input Direction" value="0"/>
+            <!-- Normal -->
             <compositeSetting label="PB1 Transition" value="3"/>
             <compositeSetting label="PB2 Output-Input" value="1"/>
             <compositeSetting label="PB2 Paired" value="0"/>
             <compositeSetting label="PB2 Mode" value="2"/>
+            <compositeSetting label="PB2 Input Direction" value="0"/>
+            <!-- Normal -->
             <compositeSetting label="PB2 Transition" value="3"/>
             <compositeSetting label="PB3 Output-Input" value="1"/>
             <compositeSetting label="PB3 Paired" value="0"/>
             <compositeSetting label="PB3 Mode" value="2"/>
+            <compositeSetting label="PB3 Input Direction" value="0"/>
+            <!-- Normal -->
             <compositeSetting label="PB3 Transition" value="3"/>
             <compositeSetting label="PB4 Output-Input" value="1"/>
             <compositeSetting label="PB4 Paired" value="0"/>
             <compositeSetting label="PB4 Mode" value="2"/>
+            <compositeSetting label="PB4 Input Direction" value="0"/>
+            <!-- Normal -->
             <compositeSetting label="PB4 Transition" value="3"/>
             <compositeSetting label="PB5 Output-Input" value="1"/>
             <compositeSetting label="PB5 Paired" value="0"/>
             <compositeSetting label="PB5 Mode" value="2"/>
+            <compositeSetting label="PB5 Input Direction" value="0"/>
+            <!-- Normal -->
             <compositeSetting label="PB5 Transition" value="3"/>
             <compositeSetting label="PB6 Output-Input" value="1"/>
             <compositeSetting label="PB6 Paired" value="0"/>
             <compositeSetting label="PB6 Mode" value="2"/>
+            <compositeSetting label="PB6 Input Direction" value="0"/>
+            <!-- Normal -->
             <compositeSetting label="PB6 Transition" value="3"/>
             <compositeSetting label="PB7 Output-Input" value="1"/>
             <compositeSetting label="PB7 Paired" value="0"/>
             <compositeSetting label="PB7 Mode" value="2"/>
+            <compositeSetting label="PB7 Input Direction" value="0"/>
+            <!-- Normal -->
             <compositeSetting label="PB7 Transition" value="3"/>
             <compositeSetting label="PB8 Output-Input" value="1"/>
             <compositeSetting label="PB8 Paired" value="0"/>
             <compositeSetting label="PB8 Mode" value="2"/>
+            <compositeSetting label="PB8 Input Direction" value="0"/>
+            <!-- Normal -->
             <compositeSetting label="PB8 Transition" value="3"/>
           </compositeChoice>
           <compositeChoice choice="SPST Alt Button">
@@ -9827,11 +9891,19 @@
             </qualifier>
           </label>
           <label>
-            <text>&lt;html&gt;&lt;span style="color: red;"&gt;&lt;strong&gt;Warning! This unit may require a firmware upgrade!&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;</text>
+            <text>&lt;html&gt;&lt;span style="color: red;"&gt;&lt;strong&gt;Warning!&lt;/span&gt; This unit may require a firmware upgrade. Firmware Version 18 is now available.&lt;/strong&gt;&lt;/html&gt;</text>
             <qualifier>
               <variableref>Firmware Version</variableref>
               <relation>lt</relation>
-              <value>15</value>
+              <value>18</value>
+            </qualifier>
+          </label>
+          <label>
+            <text>  Do a 'Read full sheet' to update values.</text>
+            <qualifier>
+              <variableref>Firmware Version</variableref>
+              <relation>lt</relation>
+              <value>18</value>
             </qualifier>
           </label>
         </column>
@@ -9842,10 +9914,10 @@
             <text> </text>
           </label>
           <label>
-            <text>Use DecoderPro Version 3.7.2 or later.</text>
+            <text>Use DecoderPro Version 4.2.1 or later.</text>
           </label>
           <label>
-            <text>Decoder File Version: 0.15</text>
+            <text>Decoder File Version: 0.16</text>
           </label>
         </column>
       </row>

@@ -16,6 +16,7 @@ import jmri.Sensor;
 import jmri.SignalMast;
 import jmri.SignalMastLogic;
 import jmri.implementation.DefaultSignalMastLogic;
+import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import org.slf4j.Logger;
@@ -36,7 +37,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author	Kevin Dickerson Copyright (C) 2011
- * @version	$Revision$
  */
 public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManager, java.beans.VetoableChangeListener {
 
@@ -45,14 +45,14 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).addPropertyChangeListener(propertyBlockManagerListener);
         jmri.InstanceManager.signalMastManagerInstance().addVetoableChangeListener(this);
         jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
-        //_speedMap = jmri.implementation.SignalSpeedMap.getMap();
+        //_speedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class);
     }
 
     public int getXMLOrder() {
         return Manager.SIGNALMASTLOGICS;
     }
 
-    private static jmri.implementation.SignalSpeedMap _speedMap = jmri.implementation.SignalSpeedMap.getMap();
+    private static SignalSpeedMap _speedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class);
 
     public final static jmri.implementation.SignalSpeedMap getSpeedMap() {
         return _speedMap;

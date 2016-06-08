@@ -27,8 +27,8 @@ column heading.
 <img src="AudioTable.jpg" height="178" width="420">
 </a>
 <p>
-To create a new Audio object, click on the 
-"<a href="AudioAddEdit.shtml">Add...</a>" button at the bottom left of the pane.
+To create a new Audio object, click either the 
+"Add Source..." or the "Add Buffer..." <a href="AudioAddEdit.shtml">button</a> at the bottom left of the pane.
 
 <p>
 For more information on Audio objects, see the 

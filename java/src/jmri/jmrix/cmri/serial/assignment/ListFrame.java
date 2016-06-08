@@ -1,4 +1,3 @@
-// ListFrame.java
 package jmri.jmrix.cmri.serial.assignment;
 
 import java.awt.BorderLayout;
@@ -35,14 +34,8 @@ import org.slf4j.LoggerFactory;
  * Frame for running CMRI assignment list.
  *
  * @author	Dave Duchamp Copyright (C) 2006
- * @version	$Revision$
  */
 public class ListFrame extends jmri.util.JmriJFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -465507473346396767L;
 
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.cmri.serial.assignment.ListBundle");
 
@@ -60,7 +53,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
 
     // node select pane items
     JLabel nodeLabel = new JLabel(rb.getString("NodeBoxLabel") + " ");
-    JComboBox<String> nodeSelBox = new JComboBox<String>();
+    JComboBox<String> nodeSelBox = new JComboBox<>();
     ButtonGroup bitTypeGroup = new ButtonGroup();
     JRadioButton inputBits = new JRadioButton(rb.getString("ShowInputButton") + "   ", false);
     JRadioButton outputBits = new JRadioButton(rb.getString("ShowOutputButton"), true);
@@ -328,10 +321,6 @@ public class ListFrame extends jmri.util.JmriJFrame {
      */
     public class AssignmentTableModel extends AbstractTableModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 1360475678715883889L;
         private String free = rb.getString("AssignmentFree");
         private int curRow = -1;
         private String curRowSysName = "";
@@ -475,7 +464,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
             w.close();
         }
 
-        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
         // Only used occasionally, so inefficient String processing not really a problem
         // though it would be good to fix it if you're working in this area
         protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize[]) {
@@ -554,5 +543,3 @@ public class ListFrame extends jmri.util.JmriJFrame {
     private final static Logger log = LoggerFactory.getLogger(ListFrame.class.getName());
 
 }
-
-/* @(#)ListFrame.java */

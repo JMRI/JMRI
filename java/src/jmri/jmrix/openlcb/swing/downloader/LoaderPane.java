@@ -1,25 +1,25 @@
-// LoaderPane.java
 package jmri.jmrix.openlcb.swing.downloader;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import jmri.jmrit.MemoryContents;
-
 import jmri.jmrix.can.CanSystemConnectionMemo;
-
+import org.openlcb.MimicNodeStore;
+import org.openlcb.NodeID;
 import org.openlcb.implementations.DatagramService;
 import org.openlcb.implementations.MemoryConfigurationService;
-import org.openlcb.MimicNodeStore;
 import org.openlcb.swing.NodeSelector;
-import org.openlcb.NodeID;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Pane for downloading .hex files files to OpenLCB devices which
- * support firmware updates via LocoNet IPL messages.
+ * support firmware updates.
  *<p>
  * This version relies on the file contents interpretation mechanisms built into
  * the readHex() methods found in class jmri.jmrit.MemoryContents to
@@ -34,7 +34,6 @@ import org.slf4j.LoggerFactory;
  * display in the status line of the pane.
  *
  * @author	Bob Jacobsen Copyright (C) 2005, 2015 (from the LocoNet version by B. Milhaupt Copyright (C) 2013, 2014)
- * @version	$Revision$
  */
 public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         implements ActionListener, jmri.jmrix.can.swing.CanPanelInterface {
@@ -47,9 +46,6 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     JPanel selectorPane;
     JTextField spaceField;
     JCheckBox lockNode;
-    /**
-     * LnPanelInterface implementation creates standard form of title
-     */
     public String getTitle(String menuTitle) { return Bundle.getMessage("TitleLoader"); }
 
     public void initComponents(CanSystemConnectionMemo memo) throws Exception {
@@ -117,7 +113,6 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         space = Integer.valueOf(spaceField.getText());
 
         // start the download itself
-        //operation = PXCT2SENDDATA;
         sendSequence();
     }
 
@@ -182,7 +177,6 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         // rest of operation if via callbacks inside sendNext();
 
     }
-
 
     /**
      * Do an OpenLCB write operation for up to 64 bytes from the current
@@ -300,8 +294,6 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
             });
     }
 
-
-
     /**
      * Get NodeID from the GUI
      */
@@ -311,8 +303,8 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     
     @Override
     protected void setDefaultFieldValues() {
-
-        parametersAreValid();
+        // currently, doesn't do anything, as just loading raw hex files.
+        log.debug("setDefaultFieldValues leaves fields unchanged");
     }
 
     /**
@@ -334,7 +326,6 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         return true;
     }
 
-
     /**
      * Nested class to create one of these using old-style defaults
      */
@@ -349,5 +340,4 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     }
 
     private final static Logger log = LoggerFactory.getLogger(LoaderPane.class.getName());
-
 }

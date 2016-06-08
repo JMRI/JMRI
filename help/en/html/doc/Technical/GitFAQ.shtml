@@ -62,7 +62,7 @@ on how to
       <li>Get it from the <a href="http://git-scm.com/downloads">Git download page</a>.
       <li>It comes with the GitHub Desktop application,
 	    available from the <a href="https://desktop.github.com">Git desktop download page</a> (OS X and Windows only).
-      <li>On the Mac, it's included when you <a href="https://developer.apple.com/xcode/download/">install XCode</a>.
+      <li>On the Mac, it's included when you <a href="https://developer.apple.com/xcode/download/">install Xcode</a>.
       <li>On Linux you can use your package installer, e.g. <code>sudo yum install git</code> or <code>sudo apt-get install git</code>.
       </ul>
 	</dd>

@@ -17,7 +17,6 @@
     <!-- or change them to reflect your alternative logo -->
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset= iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -136,9 +135,7 @@ programme pour l'ex&#233;cuter. Vous pouvez m&#234;me inclure vos propres modifi
 Il y a diff&#233;rentes fa&#231;ons pour le faire. Si vous &#234;tes d&#233;j&#224; familier avec l'un des "environnements de d&#233;veloppement int&#233;gr&#233;s" (IDE) populaires 
 regardez la barre de navigation &#224; gauche pour obtenir des instructions sur la fa&#231;on de construire &#224; l'aide JMRI
 <a href="NetBeans.shtml"> NetBeans </a>,
-<a href="XCode.shtml"> XCode </a>,
 <a href="Eclipse.shtml"> Eclipse </a> ou
-<a href="JBuilder.shtml"> JBuilder </a>.
 <P>
 NetBeans fournit un syst&#232;me tr&#232;s pratique pour la construction,  d'ex&#233;cution, et le cas &#233;ch&#233;ant de d&#233;bogage du programme. 
 Si vous n'&#234;tes pas familiariser avec une autre m&#233;thode, nous vous recommandons d'essayer

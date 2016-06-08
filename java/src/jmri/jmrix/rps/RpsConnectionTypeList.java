@@ -11,10 +11,18 @@ package jmri.jmrix.rps;
  */
 public class RpsConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
+    public static final String NAC = "NAC Services";
+
+    @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
             "jmri.jmrix.rps.serial.ConnectionConfig"
         };
+    }
+
+    @Override
+    public String[] getManufacturers() {
+        return new String[]{NAC};
     }
 
 }

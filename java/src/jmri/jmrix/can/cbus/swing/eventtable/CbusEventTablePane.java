@@ -67,7 +67,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
 
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     // There can only be one instance
     public void init() {
 
@@ -133,7 +133,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         List<JMenu> menuList = new ArrayList<JMenu>();
 
         ResourceBundle rb = ResourceBundle.getBundle("apps.AppsBundle");
-        JMenu fileMenu = new JMenu(rb.getString("MenuFile"));
+        JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         JMenuItem openItem = new JMenuItem(rb.getString("MenuItemOpen"));
         fileMenu.add(openItem);
 

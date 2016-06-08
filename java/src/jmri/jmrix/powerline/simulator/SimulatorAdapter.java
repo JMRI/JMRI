@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.powerline.simulator;
 
 import java.io.DataInputStream;
@@ -13,14 +12,12 @@ import org.slf4j.LoggerFactory;
  * Implement simulator for powerline serial systems
  * <P>
  * System names are "PLnnn", where nnn is the bit number without padding.
- *
+ * <P>
  * This is based on the NCE simulator.
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @author	Bob Jacobsen Copyright (C) 2006, 2007, 2008 Converted to multiple
- * connection
+ * @author	Bob Jacobsen Copyright (C) 2006, 2007, 2008 Converted to multiple connection
  * @author kcameron Copyright (C) 2011
- * @version	$Revision$
  */
 public class SimulatorAdapter extends SerialPortController implements
         jmri.jmrix.SerialPortAdapter, Runnable {
@@ -115,95 +112,11 @@ public class SimulatorAdapter extends SerialPortController implements
     }
 
     public void run() { // start a new thread
-        // this thread has one task.  It repeatedly reads from the input pipe
-        // and writes an appropriate response to the output pipe.  This is the heart
-        // of the command station simulation.
-        // report status?
+        // Simulator thread just reports start and ends
         if (log.isInfoEnabled()) {
             log.info("Powerline Simulator Started");
         }
-        while (true) {
-            try {
-                wait(100);
-            } catch (Exception e) {
-
-            }
-            /*
-             SerialMessage m = readMessage();
-             if (log.isDebugEnabled()) {
-             StringBuffer buf = new StringBuffer();
-             buf.append("Powerline Simulator Thread received message: ");
-             for (int i = 0; i < m.getNumDataElements(); i++)
-             buf.append(Integer.toHexString(0xFF & m.getElement(i)) + " ");
-             log.debug(buf.toString());
-             }
-             if (m != null) {
-             SerialReply r = generateReply(m);
-             writeReply(r);
-             if (log.isDebugEnabled() && r != null) {
-             StringBuffer buf = new StringBuffer();
-             buf.append("Powerline Simulator Thread sent reply: ");
-             for (int i = 0; i < r.getNumDataElements(); i++)
-             buf.append(Integer.toHexString(0xFF & r.getElement(i)) + " ");
-             log.debug(buf.toString());
-             }
-             }
-             */
-        }
     }
-//
-//	// readMessage reads one incoming message from the buffer
-//	private SerialMessage readMessage() {
-//		SerialMessage msg = null;
-//		try {
-//			msg = loadChars();
-//		} catch (java.io.IOException e) {
-//
-//		}
-//		return (msg);
-//	}
-//
-//	/**
-//	 * Get characters from the input source.
-//	 *
-//	 * @returns filled message 
-//	 * @throws IOException when presented by the input source.
-//	 */
-//	private SerialMessage loadChars() throws java.io.IOException {
-//		int nchars;
-//		byte[] rcvBuffer = new byte[32];
-//
-//		nchars = inpipe.read(rcvBuffer, 0, 32);
-//		//log.debug("new message received");
-//		SerialMessage msg = new SerialMessage(nchars);
-//
-//		for (int i = 0; i < nchars; i++) {
-//			msg.setElement(i, rcvBuffer[i] & 0xFF);
-//		}
-//		return msg;
-//	}
-//
-//	// generateReply is the heart of the simulation.  It translates an 
-//	// incoming Message into an outgoing Reply.
-//	private SerialReply generateReply(SerialMessage m) {
-//		SerialReply reply = new SerialReply(adaptermemo.getTrafficController());
-//		return reply;
-//	}
-//
-//	private void writeReply(SerialReply r) {
-//		if(r == null)
-//			return;
-//		for (int i = 0; i < r.getNumDataElements(); i++){
-//			try {
-//				outpipe.writeByte((byte) r.getElement(i));
-//			} catch (java.io.IOException ex) {
-//			}
-//		}
-//		try {
-//			outpipe.flush();
-//		} catch (java.io.IOException ex) {
-//		}
-//	}
 
     private final static Logger log = LoggerFactory
             .getLogger(SimulatorAdapter.class.getName());

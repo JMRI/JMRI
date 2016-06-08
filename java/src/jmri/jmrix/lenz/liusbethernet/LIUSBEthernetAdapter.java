@@ -1,4 +1,3 @@
-// LIUSBEthernetAdapter.java
 package jmri.jmrix.lenz.liusbethernet;
 
 import java.util.ResourceBundle;
@@ -17,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * inactivity on the port.
 o*
  * @author	Paul Bender (C) 2011-2013
- * @version	$Revision$
  */
 public class LIUSBEthernetAdapter extends XNetNetworkPortController {
 
@@ -40,7 +38,7 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
         }
         setHostName(DEFAULT_IP_ADDRESS);
         setPort(COMMUNICATION_TCP_PORT);
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.LENZ;
+        this.manufacturerName = jmri.jmrix.lenz.LenzConnectionTypeList.LENZ;
     }
 
     @Override
@@ -108,11 +106,17 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
         if (keepAliveTimer == null) {
             keepAliveTimer = new java.util.TimerTask(){
                 public void run() {
-                    // If the timer times out, send a request for status
-                    LIUSBEthernetAdapter.this.getSystemConnectionMemo().getXNetTrafficController()
-                            .sendXNetMessage(
+                    // If the timer times out, and we are not currently 
+                    // programming, send a request for status
+                    jmri.jmrix.lenz.XNetSystemConnectionMemo m = LIUSBEthernetAdapter.this
+                                              .getSystemConnectionMemo(); 
+                    XNetTrafficController t = m.getXNetTrafficController();
+                    jmri.jmrix.lenz.XNetProgrammer p = (jmri.jmrix.lenz.XNetProgrammer)(m.getProgrammerManager().getGlobalProgrammer());
+                    if(!(p.programmerBusy())) {
+                       t.sendXNetMessage(
                                     jmri.jmrix.lenz.XNetMessage.getCSStatusRequestMessage(),
                                     null);
+                   }
                 }
             };
         } else {

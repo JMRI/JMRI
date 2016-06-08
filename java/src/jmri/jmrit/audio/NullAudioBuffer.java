@@ -1,4 +1,3 @@
-// NullAudioBuffer.java
 package jmri.jmrit.audio;
 
 import java.io.InputStream;
@@ -24,14 +23,8 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Matthew Harris copyright (c) 2009, 2011
- * @version $Revision$
  */
 public class NullAudioBuffer extends AbstractAudioBuffer {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2227618459689268908L;
 
     /**
      * Constructor for new NullAudioBuffer with system name
@@ -132,5 +125,3 @@ public class NullAudioBuffer extends AbstractAudioBuffer {
     private static final Logger log = LoggerFactory.getLogger(NullAudioBuffer.class.getName());
 
 }
-
-/* $(#)NullAudioBuffer.java */

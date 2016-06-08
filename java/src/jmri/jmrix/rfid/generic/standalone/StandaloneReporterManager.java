@@ -1,4 +1,3 @@
-// RfidReporterManager.java
 package jmri.jmrix.rfid.generic.standalone;
 
 import jmri.IdTag;
@@ -20,7 +19,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2008
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  * @since 2.11.4
  */
 public class StandaloneReporterManager extends RfidReporterManager {
@@ -81,5 +79,3 @@ public class StandaloneReporterManager extends RfidReporterManager {
     private static final Logger log = LoggerFactory.getLogger(StandaloneReporterManager.class.getName());
 
 }
-
-/* @(#)SpecificReporterManager.java */

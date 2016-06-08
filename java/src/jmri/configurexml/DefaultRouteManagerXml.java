@@ -5,11 +5,10 @@ package jmri.configurexml;
  * 2.8 files) can still be read by deferring to the present class.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision$
  * @deprecated 2.7.8
  */
 @Deprecated
-@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "duplicate name OK while deprecated, for XML config migration")
 // This is a configurexml migration class, same name is OK
 public class DefaultRouteManagerXml
         extends jmri.managers.configurexml.DefaultRouteManagerXml {

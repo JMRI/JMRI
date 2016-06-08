@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.jmriclient;
 
 import junit.framework.Test;
@@ -21,7 +20,7 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -38,6 +37,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(JMRIClientTrafficControllerTest.class));
         suite.addTest(new TestSuite(JMRIClientSystemConnectionMemoTest.class));
         suite.addTest(new TestSuite(JMRIClientPowerManagerTest.class));
+        suite.addTest(BundleTest.suite());
 
         // if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
         // there are currently no swing tests.

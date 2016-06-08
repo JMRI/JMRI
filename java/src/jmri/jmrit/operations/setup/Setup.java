@@ -10,7 +10,7 @@ import jmri.jmris.AbstractOperationsServer;
 import jmri.jmrit.operations.rollingstock.RollingStockLogger;
 import jmri.jmrit.operations.trains.TrainLogger;
 import jmri.jmrit.operations.trains.TrainManagerXml;
-import jmri.web.server.WebServerManager;
+import jmri.web.server.WebServerPreferences;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -177,10 +177,10 @@ public class Setup {
     public static final String METER = Bundle.getMessage("Meter");
 
     private static final String[] carAttributes = {ROAD, NUMBER, TYPE, LENGTH, LOAD, HAZARDOUS, COLOR, KERNEL, KERNEL_SIZE, OWNER,
-            TRACK, LOCATION, DESTINATION, DEST_TRACK, FINAL_DEST, FINAL_DEST_TRACK, COMMENT, DROP_COMMENT,
-            PICKUP_COMMENT, RWE};
+        TRACK, LOCATION, DESTINATION, DEST_TRACK, FINAL_DEST, FINAL_DEST_TRACK, COMMENT, DROP_COMMENT,
+        PICKUP_COMMENT, RWE};
     private static final String[] engineAttributes = {ROAD, NUMBER, TYPE, MODEL, LENGTH, CONSIST, OWNER, TRACK,
-            LOCATION, DESTINATION, COMMENT};
+        LOCATION, DESTINATION, COMMENT};
 
     private static int scale = HO_SCALE; // Default scale
     private static int ratio = HO_RATIO;
@@ -206,17 +206,17 @@ public class Setup {
     private static String[] pickupEngineMessageFormat = {ROAD, NUMBER, BLANK, MODEL, BLANK, BLANK, LOCATION, COMMENT};
     private static String[] dropEngineMessageFormat = {ROAD, NUMBER, BLANK, MODEL, BLANK, BLANK, DESTINATION, COMMENT};
     private static String[] pickupManifestMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION,
-            COMMENT, PICKUP_COMMENT};
+        COMMENT, PICKUP_COMMENT};
     private static String[] dropManifestMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, DESTINATION,
-            COMMENT, DROP_COMMENT};
+        COMMENT, DROP_COMMENT};
     private static String[] localManifestMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION,
-            DESTINATION, COMMENT};
+        DESTINATION, COMMENT};
     private static String[] pickupSwitchListMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS,
-            LOCATION, COMMENT, PICKUP_COMMENT};
+        LOCATION, COMMENT, PICKUP_COMMENT};
     private static String[] dropSwitchListMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS,
-            DESTINATION, COMMENT, DROP_COMMENT};
+        DESTINATION, COMMENT, DROP_COMMENT};
     private static String[] localSwitchListMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS,
-            LOCATION, DESTINATION, COMMENT};
+        LOCATION, DESTINATION, COMMENT};
     private static String[] missingCarMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, COMMENT};
     private static String pickupEnginePrefix = BOX + Bundle.getMessage("PickUpPrefix");
     private static String dropEnginePrefix = BOX + Bundle.getMessage("SetOutPrefix");
@@ -313,7 +313,7 @@ public class Setup {
     private static boolean printValid = true; // when true print out the valid time and date
     private static boolean sortByTrack = false; // when true manifest work is sorted by track names
     private static boolean printHeaders = false; // when true add headers to manifest and switch lists
-    
+
     private static boolean printCabooseLoad = false; // when true print caboose load
     private static boolean printPassengerLoad = false; // when true print passenger car load
 
@@ -565,7 +565,7 @@ public class Setup {
 
     public static String getRailroadName() {
         if (railroadName == null) {
-            return WebServerManager.getWebServerPreferences().getRailRoadName();
+            return WebServerPreferences.getDefault().getRailRoadName();
         }
         return railroadName;
     }
@@ -573,8 +573,9 @@ public class Setup {
     public static void setRailroadName(String name) {
         String old = railroadName;
         railroadName = name;
-        if (old == null || !old.equals(name))
+        if (old == null || !old.equals(name)) {
             setDirtyAndFirePropertyChange("Railroad Name Change", old, name); // NOI18N
+        }
     }
 
     public static String getHazardousMsg() {
@@ -781,7 +782,7 @@ public class Setup {
      * When true switch list shows all trains visiting a location, even if the
      * train doesn't have any work at that location. When false, switch lists
      * only report a train if it has work at the location.
-     * 
+     *
      * @return When true show all trains visiting a location.
      */
     public static boolean isSwitchListAllTrainsEnabled() {
@@ -875,19 +876,19 @@ public class Setup {
     public static boolean isPrintHeadersEnabled() {
         return printHeaders;
     }
-    
+
     public static void setPrintCabooseLoadEnabled(boolean enable) {
         printCabooseLoad = enable;
     }
-    
+
     public static boolean isPrintCabooseLoadEnabled() {
         return printCabooseLoad;
     }
-    
+
     public static void setPrintPassengerLoadEnabled(boolean enable) {
         printPassengerLoad = enable;
     }
-    
+
     public static boolean isPrintPassengerLoadEnabled() {
         return printPassengerLoad;
     }
@@ -1066,11 +1067,11 @@ public class Setup {
         trainLogger = enable;
         TrainLogger.instance().enableTrainLogging(enable);
     }
-    
+
     public static boolean isSaveTrainManifestsEnabled() {
         return saveTrainManifests;
     }
-    
+
     public static void setSaveTrainManifestsEnabled(boolean enable) {
         saveTrainManifests = enable;
     }
@@ -1676,8 +1677,9 @@ public class Setup {
      */
     public static JComboBox<String> getTrainDirectionComboBox() {
         JComboBox<String> box = new JComboBox<>();
-        for (String direction : getTrainDirectionList())
+        for (String direction : getTrainDirectionList()) {
             box.addItem(direction);
+        }
         return box;
     }
 
@@ -1688,16 +1690,16 @@ public class Setup {
      */
     public static List<String> getTrainDirectionList() {
         List<String> directions = new ArrayList<String>();
-        if ((traindir & EAST) > 0) {
+        if ((traindir & EAST) == EAST) {
             directions.add(EAST_DIR);
         }
-        if ((traindir & WEST) > 0) {
+        if ((traindir & WEST) == WEST) {
             directions.add(WEST_DIR);
         }
-        if ((traindir & NORTH) > 0) {
+        if ((traindir & NORTH) == NORTH) {
             directions.add(NORTH_DIR);
         }
-        if ((traindir & SOUTH) > 0) {
+        if ((traindir & SOUTH) == SOUTH) {
             directions.add(SOUTH_DIR);
         }
         return directions;
@@ -1733,16 +1735,16 @@ public class Setup {
     public static String[] getDirectionStrings(int directions) {
         String[] dir = new String[4];
         int i = 0;
-        if ((directions & EAST) > 0) {
+        if ((directions & EAST) == EAST) {
             dir[i++] = EAST_DIR;
         }
-        if ((directions & WEST) > 0) {
+        if ((directions & WEST) == WEST) {
             dir[i++] = WEST_DIR;
         }
-        if ((directions & NORTH) > 0) {
+        if ((directions & NORTH) == NORTH) {
             dir[i++] = NORTH_DIR;
         }
-        if ((directions & SOUTH) > 0) {
+        if ((directions & SOUTH) == SOUTH) {
             dir[i++] = SOUTH_DIR;
         }
         return dir;
@@ -1773,10 +1775,11 @@ public class Setup {
         Element values;
         Element e = new Element(Xml.OPERATIONS);
         e.addContent(values = new Element(Xml.RAIL_ROAD));
-        if (Setup.getRailroadName().equals(WebServerManager.getWebServerPreferences().getRailRoadName()))
+        if (Setup.getRailroadName().equals(WebServerPreferences.getDefault().getRailRoadName())) {
             values.setAttribute(Xml.NAME, Xml.USE_JMRI_RAILROAD_NAME);
-        else
+        } else {
             values.setAttribute(Xml.NAME, getRailroadName());
+        }
 
         e.addContent(values = new Element(Xml.SETUP));
         values.setAttribute(Xml.COMMENT, getComment());
@@ -1922,7 +1925,7 @@ public class Setup {
             values.setAttribute(Xml.NAME, getManifestLogoURL());
             e.addContent(values);
         }
-        
+
         // manifest save file options
         e.addContent(values = new Element(Xml.MANIFEST_FILE_OPTIONS));
         values.setAttribute(Xml.MANIFEST_SAVE, isSaveTrainManifestsEnabled() ? Xml.TRUE : Xml.FALSE);
@@ -2017,10 +2020,11 @@ public class Setup {
             if (log.isDebugEnabled()) {
                 log.debug("railroadName: {}", name);
             }
-            if (name.equals(Xml.USE_JMRI_RAILROAD_NAME))
+            if (name.equals(Xml.USE_JMRI_RAILROAD_NAME)) {
                 railroadName = null;
-            else
+            } else {
                 railroadName = name; // don't set the dirty bit
+            }
         }
 
         if ((operations.getChild(Xml.SETUP) != null)
@@ -3072,7 +3076,6 @@ public class Setup {
     /**
      * Converts the xml key to the proper locale text
      *
-     * @param keys
      */
     private static void keyToStringConversion(String[] keys) {
         for (int i = 0; i < keys.length; i++) {
@@ -3088,13 +3091,12 @@ public class Setup {
     }
 
     private static final String[] attributtes = {"Road", "Number", "Type", "Model", "Length", "Load", "Color",
-            "Track", "Destination", "Dest&Track", "Final_Dest", "FD&Track", "Location", "Consist", "Kernel", "Kernel_Size", "Owner",
-            "RWE", "Comment", "SetOut_Msg", "PickUp_Msg", "Hazardous", "Tab"};
+        "Track", "Destination", "Dest&Track", "Final_Dest", "FD&Track", "Location", "Consist", "Kernel", "Kernel_Size", "Owner",
+        "RWE", "Comment", "SetOut_Msg", "PickUp_Msg", "Hazardous", "Tab"};
 
     /**
      * Converts the strings into English tags for xml storage
      *
-     * @param strings
      */
     private static void stringToKeyConversion(String[] strings) {
         Locale locale = Locale.ROOT;

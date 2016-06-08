@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.loconet.spjfile;
 
 import jmri.jmrit.Sound;
@@ -11,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.loconet.spjfile package
  *
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -72,7 +70,7 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

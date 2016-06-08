@@ -36,7 +36,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 
     private SprogState sprogState = SprogState.NORMAL;
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     // Ignore FindBugs warnings as there can only be one instance at present
     public SprogTrafficController() {
         if (log.isDebugEnabled()) {
@@ -49,7 +49,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     protected Vector<SprogListener> cmdListeners = new Vector<SprogListener>();
 
     public boolean status() {
-        return (ostream != null & istream != null);
+        return (ostream != null && istream != null);
     }
 
     public synchronized void addSprogListener(SprogListener l) {
@@ -154,7 +154,6 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     /**
      * Forward a preformatted message to the interface
      *
-     * @param m
      */
     public void sendSprogMessage(SprogMessage m) {
         // stream to port in single write, as that's needed by serial

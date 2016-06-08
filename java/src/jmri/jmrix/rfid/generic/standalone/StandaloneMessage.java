@@ -1,4 +1,3 @@
-// SpecificMessage.java
 package jmri.jmrix.rfid.generic.standalone;
 
 import jmri.jmrix.rfid.RfidMessage;
@@ -18,7 +17,6 @@ import jmri.jmrix.rfid.RfidMessage;
  * <P>
  *
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  */
 public class StandaloneMessage extends RfidMessage {
 
@@ -36,5 +34,3 @@ public class StandaloneMessage extends RfidMessage {
     }
 
 }
-
-/* @(#)SpecificMessage.java */

@@ -133,7 +133,7 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
     javax.swing.Timer timer = null;
 
     /**
-     * Internal routine to handle timer starts & restarts
+     * Internal routine to handle timer starts {@literal &} restarts
      */
     protected void restartTimer(int delay) {
         if (timer == null) {
@@ -152,7 +152,6 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
     /**
      * Run button pressed down, start the sequence operation
      *
-     * @param e
      */
     public void runButtonActionPerformed(java.awt.event.ActionEvent e) {
         if (!mRunButton.isSelected()) {
@@ -231,7 +230,6 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
     /**
      * Create a well-formed DCC packet from a String
      *
-     * @param s
      * @return The packet, with contents filled-in
      */
     byte[] createPacket(String s) {

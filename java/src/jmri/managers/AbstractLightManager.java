@@ -1,4 +1,3 @@
-// AbstractLightManager.java
 package jmri.managers;
 
 import jmri.Light;
@@ -13,15 +12,9 @@ import org.slf4j.LoggerFactory;
  * Based on AbstractSignalHeadManager.java and AbstractSensorManager.java
  *
  * @author Dave Duchamp Copyright (C) 2004
- * @version	$Revision$
  */
 public abstract class AbstractLightManager extends AbstractManager
         implements LightManager, java.beans.PropertyChangeListener, java.io.Serializable {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7463899324548206482L;
 
     public AbstractLightManager() {
         super();
@@ -44,7 +37,6 @@ public abstract class AbstractLightManager extends AbstractManager
      * new Light. Otherwise, the makeSystemName method will attempt to turn it
      * into a valid system name.
      *
-     * @param name
      * @return Never null unless valid systemName cannot be found
      */
     public Light provideLight(String name) {
@@ -63,7 +55,6 @@ public abstract class AbstractLightManager extends AbstractManager
      * Locate via user name, then system name if needed. Does not create a new
      * one if nothing found
      *
-     * @param name
      * @return null if no match found
      */
     public Light getLight(String name) {
@@ -244,5 +235,3 @@ public abstract class AbstractLightManager extends AbstractManager
 
     private final static Logger log = LoggerFactory.getLogger(AbstractLightManager.class.getName());
 }
-
-/* @(#)AbstractLightManager.java */

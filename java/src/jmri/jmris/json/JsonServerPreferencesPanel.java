@@ -107,6 +107,7 @@ public class JsonServerPreferencesPanel extends JPanel implements PreferencesPan
         JPanel panel = new JPanel();
         port = new JSpinner(new SpinnerNumberModel(JsonServerPreferences.DEFAULT_PORT, 1, 65535, 1));
         ((JSpinner.DefaultEditor) port.getEditor()).getTextField().setEditable(true);
+        port.setEditor(new JSpinner.NumberEditor(port, "#"));
         this.port.addChangeListener((ChangeEvent e) -> {
             this.setValues();
         });

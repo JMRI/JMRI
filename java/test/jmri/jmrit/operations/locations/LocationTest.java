@@ -6,7 +6,7 @@ import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -20,7 +20,6 @@ import junit.framework.TestSuite;
  * read/write Location: Track support <-- I am here Location: XML read/write
  *
  * @author Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision$
  */
 public class LocationTest extends OperationsTestCase {
 
@@ -674,7 +673,7 @@ public class LocationTest extends OperationsTestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", LocationTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

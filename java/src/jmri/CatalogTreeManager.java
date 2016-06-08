@@ -1,4 +1,3 @@
-// CatalogTreeManager.java
 package jmri;
 
 import java.util.List;
@@ -33,7 +32,7 @@ public interface CatalogTreeManager extends Manager {
      * Locate via user name, then system name if needed. If that fails, return
      * null
      *
-     * @param name
+     * @param name CatalogTree object to locate
      * @return null if no match found
      */
     public CatalogTree getCatalogTree(String name);
@@ -42,6 +41,7 @@ public interface CatalogTreeManager extends Manager {
      * Locate an instance based on a system name. Returns null if no instance
      * already exists.
      *
+     * @param systemName CatalogTree object to locate
      * @return requested CatalogTree object or null if none exists
      */
     public CatalogTree getBySystemName(String systemName);
@@ -50,6 +50,7 @@ public interface CatalogTreeManager extends Manager {
      * Locate an instance based on a user name. Returns null if no instance
      * already exists.
      *
+     * @param userName CatalogTree object to locate
      * @return requested CatalogTree object or null if none exists
      */
     public CatalogTree getByUserName(String userName);
@@ -76,28 +77,30 @@ public interface CatalogTreeManager extends Manager {
      * except to issue warnings. This will mostly happen if you're creating
      * CatalogTree objects when you should be looking them up.
      *
+     * @param systemName system name for new CatalogTree
+     * @param userName   user name for new CatalogTree
      * @return requested CatalogTree object (never null)
      */
     public CatalogTree newCatalogTree(String systemName, String userName);
 
     /**
      * Get a list of all CatalogTree objects' system names.
+     *
+     * @return list of all CatalogTree system names
      */
+    @Override
     public List<String> getSystemNameList();
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "MS_MUTABLE_ARRAY",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_MUTABLE_ARRAY",
             justification = "with existing code structure, just have to accept these exposed arrays. Someday...")
     static final String[] IMAGE_FILTER = {"gif", "jpg", "jpeg", "png"};
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "MS_OOI_PKGPROTECT",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_OOI_PKGPROTECT",
             justification = "with existing code structure, just have to accept these exposed arrays. Someday...")
     static final String[] SOUND_FILTER = {"wav"};
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "MS_OOI_PKGPROTECT",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_OOI_PKGPROTECT",
             justification = "with existing code structure, just have to accept these exposed arrays. Someday...")
     static final String[] SCRIPT_FILTER = {"py", "scpt"};
 
 }
-
-
-/* @(#)CatalogTreeManager.java */

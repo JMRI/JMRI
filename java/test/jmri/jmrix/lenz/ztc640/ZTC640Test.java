@@ -1,4 +1,3 @@
-// ZTC640Test.java
 package jmri.jmrix.lenz.ztc640;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.lenz.ztc640 package
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class ZTC640Test extends TestCase {
 
@@ -21,7 +19,7 @@ public class ZTC640Test extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {ZTC640Test.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

@@ -29,11 +29,6 @@ import org.slf4j.LoggerFactory;
 public class SensorGroupConditional extends DefaultConditional
         implements java.io.Serializable {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6712456167980419493L;
-
     public SensorGroupConditional(String systemName, String userName) {
         super(systemName, userName);
     }

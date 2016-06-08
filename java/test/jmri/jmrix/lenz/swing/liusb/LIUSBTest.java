@@ -1,4 +1,3 @@
-// LIUSBTest.java
 package jmri.jmrix.lenz.swing.liusb;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.lenz.swing.liusb package
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class LIUSBTest extends TestCase {
 
@@ -21,7 +19,7 @@ public class LIUSBTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {LIUSBTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

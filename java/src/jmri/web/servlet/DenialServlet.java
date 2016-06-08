@@ -4,12 +4,13 @@
  */
 package jmri.web.servlet;
 
+import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
+
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
 
 /**
  * Servlet that simply sends an HTTP 403 FORBIDDEN error.
@@ -20,11 +21,6 @@ import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
  * @author rhwood
  */
 public class DenialServlet extends HttpServlet {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5496689594665029622L;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

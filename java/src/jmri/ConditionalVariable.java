@@ -447,7 +447,7 @@ public class ConditionalVariable {
                     log.error("invalid signal mast name= \"" + getName() + "\" in state variable");
                     return (false);
                 }
-                switch ((_type)) {
+                switch (_type) {
                     case Conditional.TYPE_SIGNAL_MAST_LIT:
                         result = f.getLit();
                         break;
@@ -462,6 +462,9 @@ public class ConditionalVariable {
                         } else {
                             result = false;
                         }
+                        break;
+                    default:
+                        log.warn("unexpected type {} in ITEM_TYPE_SIGNALMAST", _type);
                 }
                 break;
             case Conditional.ITEM_TYPE_SIGNALHEAD:

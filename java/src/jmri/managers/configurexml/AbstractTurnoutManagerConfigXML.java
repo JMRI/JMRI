@@ -26,7 +26,6 @@ import org.slf4j.LoggerFactory;
  * time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision$
  */
 public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -64,9 +63,6 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
             // store the turnouts
             while (iter.hasNext()) {
                 String sname = iter.next();
-                if (sname == null) {
-                    log.error("System name null during store");
-                }
                 log.debug("system name is " + sname);
                 Turnout t = tm.getBySystemName(sname);
                 Element elem = new Element("turnout")
@@ -235,13 +231,6 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
             if (t == null) {
                 t = tm.newTurnout(sysName, userName);
                 //Nothing is logged in the console window as the newTurnoutFunction already does this.
-                //log.error("Could not create turnout: '"+sysName+"' user name: '"+(userName==null?"":userName)+"'");
-                if (t == null) {
-                    result = false;
-                    continue;
-                }
-                //result = false;
-                //continue;
             } else if (userName != null) {
                 t.setUserName(userName);
             }

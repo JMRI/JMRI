@@ -1,4 +1,3 @@
-// RpsMonTest.java
 package jmri.jmrix.rps.rpsmon;
 
 import javax.swing.JFrame;
@@ -11,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.rps.rpsmon package.
  *
  * @author Bob Jacobsen Copyright 2006
- * @version $Revision$
  */
 public class RpsMonTest extends TestCase {
 
@@ -34,7 +32,7 @@ public class RpsMonTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {RpsMonTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

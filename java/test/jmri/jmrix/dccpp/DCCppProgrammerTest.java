@@ -5,7 +5,6 @@
  *
  * @author	Bob Jacobsen
  * @author	Mark Underwood (C) 2015
- * @version $Revision$
  */
 package jmri.jmrix.dccpp;
 
@@ -387,7 +386,7 @@ public class DCCppProgrammerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", DCCppProgrammerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

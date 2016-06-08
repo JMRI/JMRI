@@ -12,7 +12,6 @@ import junit.framework.TestSuite;
  * jmri.jmrix.lenz.hornbyelite.HornbyEliteCommandStation class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class HornbyEliteCommandStationTest extends TestCase {
 
@@ -30,7 +29,7 @@ public class HornbyEliteCommandStationTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", HornbyEliteCommandStationTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

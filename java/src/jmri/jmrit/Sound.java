@@ -24,11 +24,10 @@ import org.slf4j.LoggerFactory;
  * jmri.jmrix. It seems most like a "tool using JMRI", or perhaps a tool for use
  * with JMRI, so it was placed in jmri.jmrit.
  * <P>
- * S@see jmri.jmrit.sound
+ * @see jmri.jmrit.sound
  *
  * @author	Bob Jacobsen Copyright (C) 2004, 2006
  * @author Dave Duchamp Copyright (C) 2011 - add streaming play of large files
- * @version	$Revision$
  */
 public class Sound {
 
@@ -131,7 +130,7 @@ public class Sound {
         DataLine.Info info = new DataLine.Info(SourceDataLine.class, format); // format is an AudioFormat object
         if (!AudioSystem.isLineSupported(info)) {
             // Handle the error.
-            log.error("line not supported: " + info);
+            log.warn("line not supported: " + info);
             return;
         }
         // Obtain and open the line.
@@ -156,7 +155,7 @@ public class Sound {
 
     public static class WavBuffer {
 
-        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy
         public WavBuffer(byte[] content) {
             buffer = content;
 
@@ -186,7 +185,7 @@ public class Sound {
         }
 
         // we maintain this, but don't use it for anything yet
-        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "URF_UNREAD_FIELD")
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "URF_UNREAD_FIELD")
         int fmtOffset;
 
         byte[] buffer;
@@ -264,13 +263,9 @@ public class Sound {
             if (streamingSensor == null) {
                 streamingSensor = jmri.InstanceManager.sensorManagerInstance().provideSensor("ISSOUNDSTREAMING");
             }
-            if (streamingSensor != null) {
-                try {
-                    streamingSensor.setState(jmri.Sensor.ACTIVE);
-                } catch (jmri.JmriException ex) {
-                    log.error("Exception while setting ISSOUNDSTREAMING sensor to ACTIVE");
-                }
-            }
+            
+            setSensor(jmri.Sensor.ACTIVE);
+            
             if (!streamingStop) {
                 // set up the SourceDataLine going to the JVM's mixer
                 try {
@@ -291,13 +286,7 @@ public class Sound {
             }
             if (streamingStop) {
                 line.close();
-                if (streamingSensor != null) {
-                    try {
-                        streamingSensor.setState(jmri.Sensor.INACTIVE);
-                    } catch (jmri.JmriException ex) {
-                        log.error("Exception while setting ISSOUNDSTREAMING sensor to INACTIVE - 2");
-                    }
-                }
+                setSensor(jmri.Sensor.INACTIVE);
                 return;
             }
             // Read  the sound file in chunks of bytes into buffer, and
@@ -322,14 +311,19 @@ public class Sound {
             line.drain();
             line.stop();
             line.close();
+            setSensor(jmri.Sensor.INACTIVE);
+        }
+
+        private void setSensor(int mode) {
             if (streamingSensor != null) {
                 try {
-                    streamingSensor.setState(jmri.Sensor.INACTIVE);
+                    streamingSensor.setState(mode);
                 } catch (jmri.JmriException ex) {
-                    log.error("Exception while setting ISSOUNDSTREAMING sensor to INACTIVE");
+                    log.error("Exception while setting ISSOUNDSTREAMING sensor {} to {}", streamingSensor.getDisplayName(), mode);
                 }
             }
         }
+
     }
 
     private final static Logger log = LoggerFactory.getLogger(Sound.class.getName());

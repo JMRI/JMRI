@@ -1,4 +1,3 @@
-// SerialTrafficController.java
 package jmri.jmrix.cmri.serial;
 
 import java.io.DataInputStream;
@@ -25,7 +24,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision$
  */
 public class SerialTrafficController extends AbstractMRNodeTrafficController implements SerialInterface {
 
@@ -94,8 +92,6 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     public void setSensorManager(SerialSensorManager m) {
         mSensorManager = m;
     }
-
-    int curSerialNodeIndex = 0;   // cycles over defined nodes when pollMessage is called
 
     /**
      * Handles initialization, output and polling for C/MRI Serial Nodes from
@@ -197,7 +193,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 
     static volatile protected SerialTrafficController self = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "temporary until mult-system; only set at startup")
     protected void setInstance() {
         self = this;
@@ -271,5 +267,3 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 
     private final static Logger log = LoggerFactory.getLogger(SerialTrafficController.class.getName());
 }
-
-/* @(#)SerialTrafficController.java */

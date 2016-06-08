@@ -1,4 +1,3 @@
-// DebuggerTest.java
 package jmri.jmrix.rps.swing.debugger;
 
 import javax.vecmath.Point3d;
@@ -14,7 +13,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.rps.swing.debugger package
  *
  * @author Bob Jacobsen Copyright 2008
- * @version $Revision$
  */
 public class DebuggerTest extends TestCase {
 
@@ -49,7 +47,7 @@ public class DebuggerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {DebuggerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

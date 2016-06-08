@@ -13,21 +13,21 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JCheckBox;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.JFormattedTextField;
 import javax.swing.table.AbstractTableModel;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
@@ -37,25 +37,21 @@ import org.slf4j.LoggerFactory;
 
 /**
  * WarrantFame creates and edits Warrants
- * <P>
+ * <BR>
  * <hr>
  * This file is part of JMRI.
  * <P>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * </P><P>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
- * This class is a window for creating and editing Warrants.
- * <p>
+ * </P>
  * @author  Pete Cressman Copyright (C) 2009, 2010
  */
 public class WarrantFrame extends WarrantRoute {
-
-    private static final long serialVersionUID = -5799190071870090700L;
 
     static int ROW_HEIGHT;
 
@@ -202,7 +198,7 @@ public class WarrantFrame extends WarrantRoute {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
         panel.add(Box.createHorizontalStrut(2 * STRUT_SIZE));
-        panel.add(new JLabel(Bundle.getMessage("SystemName")));
+        panel.add(new JLabel(Bundle.getMessage("LabelSystemName")));
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
         _sysNameBox = new JTextField(_warrant.getSystemName());
         _sysNameBox.setBackground(Color.white);
@@ -210,7 +206,7 @@ public class WarrantFrame extends WarrantRoute {
         panel.add(_sysNameBox);
         panel.add(Box.createHorizontalStrut(2 * STRUT_SIZE));
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
-        panel.add(new JLabel(Bundle.getMessage("UserName")));
+        panel.add(new JLabel(Bundle.getMessage("LabelUserName")));
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
         _userNameBox = new JTextField(_warrant.getUserName());
         panel.add(_userNameBox);
@@ -400,7 +396,7 @@ public class WarrantFrame extends WarrantRoute {
         _runForward.setSelected(_forward);
         JPanel panel = new JPanel();
         JLabel l = new JLabel(Bundle.getMessage(Bundle.getMessage("TTP")));
-        _TTPtextField.setValue(new Long(_TTP));
+        _TTPtextField.setValue(Long.valueOf(_TTP));
         _TTPtextField.setColumns(10);
         panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
         l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
@@ -776,7 +772,6 @@ public class WarrantFrame extends WarrantRoute {
     /**
      * all non-null returns are fatal
      *
-     * @return
      */
     private String checkTrainId() {
         String msg = null;
@@ -980,11 +975,10 @@ public class WarrantFrame extends WarrantRoute {
                 case Warrant.MODE_NONE:
                     _warrant.removePropertyChangeListener(this);
                     int oldMode = ((Integer) e.getOldValue()).intValue();
-                    int newMode = ((Integer) e.getNewValue()).intValue();
                     if (oldMode != Warrant.MODE_NONE) {
                         OBlock block = _warrant.getCurrentBlockOrder().getBlock();
                         int state = block.getState();
-                        if ((state & OBlock.OCCUPIED) > 0 || (state & OBlock.DARK) > 0
+                        if ((state & OBlock.OCCUPIED) != 0 || (state & OBlock.DARK) != 0
                                  || _runBlind.isSelected()) {
                             setStatusText(
                                     Bundle.getMessage("warrantEnd",
@@ -1066,7 +1060,7 @@ public class WarrantFrame extends WarrantRoute {
                                         .getBlock().getDisplayName(), e.getNewValue()), Color.black);
                     } else if (e.getPropertyName().equals("runMode")) {
                         oldMode = ((Integer) e.getOldValue()).intValue();
-                        newMode = ((Integer) e.getNewValue()).intValue();
+                        int newMode = ((Integer) e.getNewValue()).intValue();
                         if (oldMode == Warrant.MODE_NONE) {
                             if (newMode != Warrant.MODE_NONE) {
                                 setStatusText(Bundle.getMessage("warrantStart",
@@ -1237,10 +1231,6 @@ public class WarrantFrame extends WarrantRoute {
      */
     class ThrottleTableModel extends AbstractTableModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -6424673093367457660L;
         public static final int ROW_NUM = 0;
         public static final int TIME_COLUMN = 1;
         public static final int COMMAND_COLUMN = 2;

@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.ieee802154.xbee.XBeeNode class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class XBeeNodeTest extends TestCase {
 
@@ -47,7 +46,7 @@ public class XBeeNodeTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", XBeeNodeTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

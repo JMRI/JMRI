@@ -20,7 +20,6 @@ import org.slf4j.LoggerFactory;
  * An icon to display the value contained within a Block.<P>
  *
  * @author Bob Jacobsen Copyright (c) 2004
- * @version $Revision: 23861 $
  */
 public class BlockContentsIcon extends MemoryIcon implements java.beans.PropertyChangeListener {
 
@@ -50,19 +49,19 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
         this.setTransferHandler(new TransferHandler());
     }
 
+    @Override
     public Positionable deepClone() {
         BlockContentsIcon pos = new BlockContentsIcon("", _editor);
         return finishClone(pos);
     }
 
-    public Positionable finishClone(Positionable p) {
-        BlockContentsIcon pos = (BlockContentsIcon) p;
+    protected Positionable finishClone(BlockContentsIcon pos) {
         pos.setBlock(namedBlock.getName());
         pos.setOriginalLocation(getOriginalX(), getOriginalY());
         if (map != null) {
             java.util.Iterator<String> iterator = map.keySet().iterator();
             while (iterator.hasNext()) {
-                String key = iterator.next().toString();
+                String key = iterator.next();
                 String url = map.get(key).getName();
                 pos.addKeyAndIcon(NamedIcon.getIconByName(url), key);
             }
@@ -149,7 +148,7 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
 
             java.util.Iterator<String> iterator = map.keySet().iterator();
             while (iterator.hasNext()) {
-                String key = iterator.next().toString();
+                String key = iterator.next();
                 //String value = ((NamedIcon)map.get(key)).getName();
                 popup.add(new AbstractAction(key) {
                     /**

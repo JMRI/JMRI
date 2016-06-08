@@ -35,26 +35,30 @@ public class CarLengths extends RollingStockAttribute {
             // create and load
             _instance = new CarLengths();
         }
-        if (Control.showInstance) {
+        if (Control.SHOW_INSTANCE) {
             log.debug("CarLengths returns instance {}", _instance);
         }
         return _instance;
     }
 
+    @Override
     protected String getDefaultNames() {
         return LENGTHS;
     }
 
     // override, need to perform a number sort
+    @Override
     public void setNames(String[] lengths) {
         setValues(lengths);
     }
 
+    @Override
     public void addName(String length) {
         super.addName(length);
         setDirtyAndFirePropertyChange(CARLENGTHS_CHANGED_PROPERTY, null, length);
     }
 
+    @Override
     public void deleteName(String length) {
         super.deleteName(length);
         setDirtyAndFirePropertyChange(CARLENGTHS_CHANGED_PROPERTY, length, null);

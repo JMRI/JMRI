@@ -1,4 +1,3 @@
-// GuiLafConfigPane.java
 package apps;
 
 import static apps.gui.GuiLafPreferencesManager.MIN_FONT_SIZE;
@@ -42,14 +41,13 @@ import jmri.util.swing.SwingSettings;
  * LAF) configuration item.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2010
- * @version	$Revision$
  * @since 2.9.5 (Previously in jmri package)
  */
 public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
 
     public static final int MAX_TOOLTIP_TIME = 3600;
     public static final int MIN_TOOLTIP_TIME = 1;
-    private static final long serialVersionUID = -3846942336860819413L;
+
     /**
      * Smallest font size shown to a user ({@value}).
      *

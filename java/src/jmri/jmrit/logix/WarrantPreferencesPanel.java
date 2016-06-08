@@ -1,9 +1,5 @@
 package jmri.jmrit.logix;
 
-/**
- * @author Pete Cressman Copyright (C) 2015
- * @version $Revision: 28030 $
- */
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -34,9 +30,11 @@ import jmri.swing.PreferencesPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author Pete Cressman Copyright (C) 2015
+ */
 public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel, ItemListener {
     
-    private static final long serialVersionUID = 7088050123933847146L;
     static int STRUT_SIZE = 10;
     
     private WarrantPreferences _preferences;
@@ -129,6 +127,8 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         panel.add(p);
         return panel;
     }
+
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "fixed number of possible values")
     private ScaleData makeCustomItem(float scale) {
         int cnt = 0;
         while (cnt <_layoutScales.getItemCount()) {
@@ -422,9 +422,10 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
     }*/
 
     /**
-     * Compare GUI vaules with Preferences.  When different, update Preferences
+     * Compare GUI values with Preferences.  When different, update Preferences
      * and set _isDirty flag.
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "fixed number of possible values")
     private void setValues() {
         int depth = _preferences.getSearchDepth();
         try {
@@ -492,7 +493,8 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
             for (int i=0; i<_speedNameMap.size(); i++) {
                 DataPair<String, Float> dp = _speedNameMap.get(i);
                 String name = dp.getKey();
-                if (_preferences.getSpeedNameValue(name)==null || _preferences.getSpeedNameValue(name)!= dp.getValue()) {
+                if (_preferences.getSpeedNameValue(name)==null 
+                        || _preferences.getSpeedNameValue(name).floatValue() != dp.getValue().floatValue()) {
                     different = true;
                     break;
                 }
@@ -513,7 +515,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
             for (int i=0; i<_appearanceMap.size(); i++) {
                 DataPair<String, String> dp = _appearanceMap.get(i);
                 String name = dp.getKey();
-                if (_preferences.getAppearanceValue(name)==null || _preferences.getAppearanceValue(name)!= dp.getValue()) {
+                if (_preferences.getAppearanceValue(name)==null || !_preferences.getAppearanceValue(name).equals(dp.getValue())) {
                     different = true;
                     break;
                 }
@@ -601,7 +603,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         return true; // no validity checking performed
     }
 
-    class DataPair<K, V> {
+    static class DataPair<K, V> {
         K key;
         V value;
         
@@ -617,8 +619,6 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
     /************************* SpeedName Table ******************************/
     class SpeedNameTableModel extends AbstractTableModel {
         
-        private static final long serialVersionUID = 7088050123933847145L;
-
         public SpeedNameTableModel() {
             super();
         }
@@ -700,7 +700,6 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
     }
     /************************* appearance Table ******************************/
     class AppearanceTableModel extends AbstractTableModel {
-        private static final long serialVersionUID = 7088050123933847144L;
 
         public AppearanceTableModel() {
             super();
@@ -777,7 +776,6 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
     }
     /************************* Throttle Step Increment Table ******************************/
     class StepIncrementTableModel extends AbstractTableModel {
-        private static final long serialVersionUID = 7088050123933847143L;
 
         public StepIncrementTableModel() {
             super();

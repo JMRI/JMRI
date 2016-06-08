@@ -142,7 +142,7 @@
 	<li>Paco Ca&ntilde;ada, who provided decoder definitions for <a href="http://www.ppp-digital.es/">PpP decoders</a>.
 	<li>Bill Carman, who located information on the MRC/Athearn F Unit and Challenger decoders
 	<li>Joan Carranc&agrave;, who provided the German DB signal set.
-	<li>Alain Carraso, who provided decoder definition for Arnold and Mistral Train decoders
+	<li>Alain Carasso, who provided decoder definition for Arnold and Mistral Train decoders
 	<li>Peter Cesaro provided MRC decoder definitions
 	<li>Xavier Chazelle, who provided a definition for the N scale
 	    Fleischmann "Leig einheit" F830681 double unit van equipped with a Fleischmann specific dual decoder for opening or closing doors
@@ -221,6 +221,7 @@
 	<li>Marco Forcone, who sacrificed two turnouts motors to the cause of
 	debugging XPressNet Turnout support
 	<li>Dan Foltz created the Manifest Creator and Switch List Creator for operations</li>
+	<li>John Forsythe, who helped with the timing needs of TCS decoders
 	<li>Enzo Fortuna, who created the Italian translation
 	<li>Marc Fournier, who improved the TCS decoder definition
 	    and did the detail work to update the Soundtraxx manufacturer name.
@@ -430,6 +431,7 @@
 	and the ESU LokPilot and LokPilotBasic decoders.
 	<li>Mark Schutzer, who helped debug some significant NCE improvements
 	and contributed the Lenz Gold decoder definition
+	<li>Knut Schwichtenberg, who contributed the FREDI definition files
 	<li>Jim Scorse, who gave generously of his time to answer questions about NCE details
 	and provided debug hardware
 	<li>Brett Scott contributed the scripts for programming DCC Specialties products
@@ -442,7 +444,7 @@
 	investigated how to display the throttle ID in the LocoNet Slot Monitor,
 	updated the Comprehensive programmer format to improve speed,
 	and co-wrote the 2009 DecoderPro manual.
-	<li>Alex Shepherd, who helped move development to JBuilder, a much better tool, and
+	<li>Alex Shepherd, who helped move development to JBuilder, and
 	created the client/server implementation for LocoNet. He's also improved
 	the LocoNet monitor formatting and added support for a new
 	type of accessory decoder

@@ -1,4 +1,3 @@
-//ServiceHandlerTest.java
 package jmri.jmris;
 
 import java.io.IOException;
@@ -12,7 +11,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmris.ServiceHandler class 
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class ServiceHandlerTest extends TestCase {
 
@@ -36,9 +34,7 @@ public class ServiceHandlerTest extends TestCase {
 
     public void testSetAndGetTurnoutServer(){
         AbstractTurnoutServer ts = new AbstractTurnoutServer(){
-            public void sendStatus(int Status) throws IOException{}
             public void sendStatus(String message, int Status) throws IOException{}
-            public void sendErrorStatus(String status,int errorcode) throws IOException {}
             public void sendErrorStatus(String status) throws IOException {}
             public void parseStatus(String statusString) throws JmriException,IOException {}
         };
@@ -51,9 +47,7 @@ public class ServiceHandlerTest extends TestCase {
 
     public void testSetAndGetSensorServer(){
         AbstractSensorServer ts = new AbstractSensorServer(){
-            public void sendStatus(int Status) throws IOException{}
             public void sendStatus(String message, int Status) throws IOException{}
-            public void sendErrorStatus(String status,int errorcode) throws IOException {}
             public void sendErrorStatus(String status) throws IOException {}
             public void parseStatus(String statusString) throws JmriException,IOException {}
         };
@@ -118,7 +112,7 @@ public class ServiceHandlerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {ServiceHandlerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

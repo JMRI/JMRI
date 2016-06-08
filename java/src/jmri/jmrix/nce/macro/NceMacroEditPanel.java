@@ -1,4 +1,3 @@
-// NceMacroEditPanel.java
 package jmri.jmrix.nce.macro;
 
 import java.awt.Dimension;
@@ -71,14 +70,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dan Boudreau Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2013
- * @version $Revision$
  */
 public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements NcePanelInterface, jmri.jmrix.nce.NceListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3192077168997079793L;
 
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.nce.macro.NceMacroBundle");
 
@@ -579,7 +572,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         if (ae.getSource() == deleteButton10) {
 
             // is the user trying to link a macro?
-            if (deleteButton10.getText() == LINK) {
+            if (deleteButton10.getText().equals(LINK)) {
                 if (macroValid == false) { // Error user input incorrect
                     JOptionPane.showMessageDialog(this,
                             rb.getString("GetMacroNumber"), rb.getString("NceMacro"),
@@ -664,7 +657,6 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
      * Writes all bytes to NCE CS memory as long as there are no user input
      * errors
      *
-     * @return
      */
     private boolean saveMacro() {
         if (firstTime) {
@@ -1083,19 +1075,19 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
             // Use JMRI or NCE turnout terminology
             if (checkBoxNce.isSelected()) {
 
-                if (accyCmd != THROWN_NCE) {
+                if (!accyCmd.equals(THROWN_NCE)) {
                     cmdButton.setText(THROWN_NCE);
                 }
-                if (accyCmd != CLOSED_NCE) {
+                if (!accyCmd.equals(CLOSED_NCE)) {
                     cmdButton.setText(CLOSED_NCE);
                 }
 
             } else {
 
-                if (accyCmd != THROWN) {
+                if (!accyCmd.equals(THROWN)) {
                     cmdButton.setText(THROWN);
                 }
-                if (accyCmd != CLOSED) {
+                if (!accyCmd.equals(CLOSED)) {
                     cmdButton.setText(CLOSED);
                 }
             }
@@ -1119,7 +1111,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
 
     private int getAccyRow(byte[] b, int i, JLabel textAccy, JTextField accyTextField, JButton cmdButton) {
         int accyNum = 0;
-        if (textAccy.getText() == ACCESSORY) {
+        if (textAccy.getText().equals(ACCESSORY)) {
             accyNum = getAccyNum(accyTextField.getText());
             if (accyNum < 0) {
                 return accyNum;
@@ -1131,17 +1123,17 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
             int lowerByteH = (((accyNum ^ 0x0700) & 0x0700) >> 4);// 3 MSB 1s complement
             int lowerByteL = ((accyNum & 0x3) << 1);       	// 2 LSB
             int lowerByte = (lowerByteH + lowerByteL + 0x88);
-            if (cmdButton.getText() == CLOSED) // adjust for turnout command	
+            if (cmdButton.getText().equals(CLOSED)) // adjust for turnout command	
             {
                 lowerByte++;
             }
-            if (cmdButton.getText() == CLOSED_NCE) // adjust for turnout command	
+            if (cmdButton.getText().equals(CLOSED_NCE)) // adjust for turnout command	
             {
                 lowerByte++;
             }
             b[i + 1] = (byte) (lowerByte);
         }
-        if (textAccy.getText() == LINK) {
+        if (textAccy.getText().equals(LINK)) {
             int macroLink = validMacro(accyTextField.getText());
             if (macroLink < 0) {
                 return macroLink;
@@ -1159,7 +1151,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         } catch (NumberFormatException e) {
             accyNum = -1;
         }
-        if (accyNum < 1 | accyNum > 2044) {
+        if (accyNum < 1 || accyNum > 2044) {
             JOptionPane.showMessageDialog(this,
                     rb.getString("EnterAccessoryNumber"), rb.getString("NceMacroAddress"),
                     JOptionPane.ERROR_MESSAGE);
@@ -1260,7 +1252,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         } catch (NumberFormatException e) {
             return -1;
         }
-        if (mN < 0 | mN > maxNumMacros) {
+        if (mN < 0 || mN > maxNumMacros) {
             return -1;
         } else {
             return mN;
@@ -1270,8 +1262,6 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     /**
      * writes bytes of NCE macro memory
      *
-     * @param macroNum
-     * @param b
      */
     private boolean writeMacroMemory(int macroNum, byte[] b) {
         if (isUsb) {
@@ -1419,7 +1409,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     int recChar = 0;
     int[] recChars = new int[16];
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "NN_NAKED_NOTIFY", justification = "Thread wait from main transfer loop")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NN_NAKED_NOTIFY", justification = "Thread wait from main transfer loop")
     public void reply(NceReply r) {
         if (log.isDebugEnabled()) {
             log.debug("Receive character");
@@ -1639,11 +1629,6 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.nce.swing.NceNamedPaneAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 8301047661947770441L;
 
         public Default() {
             super("Open NCE Macro Editor",

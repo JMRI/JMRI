@@ -6,7 +6,7 @@ import jmri.beans.BeanInterface;
  * Provide a common class for Roster entries and groups to inherit from. This
  * supports building tree-like user interfaces for Roster entries and groups.
  *
- * @author Randall Wood <randall.h.wood@alexandriasoftware.com>
+ * @author Randall Wood randall.h.wood@alexandriasoftware.com
  */
 public interface RosterObject extends BeanInterface {
 

@@ -12,7 +12,6 @@ import junit.framework.TestCase;
  * Copyright: Copyright (c) 2009</p>
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class LIUSBEthernetXNetPacketizerTest extends TestCase {
 
@@ -29,7 +28,7 @@ public class LIUSBEthernetXNetPacketizerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", LIUSBEthernetXNetPacketizerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // The minimal setup for log4J

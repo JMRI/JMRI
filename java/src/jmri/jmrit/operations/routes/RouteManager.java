@@ -44,7 +44,7 @@ public class RouteManager {
             OperationsSetupXml.instance(); // load setup
             RouteManagerXml.instance(); // load routes
         }
-        if (Control.showInstance) {
+        if (Control.SHOW_INSTANCE) {
             log.debug("RouteManager returns instance {}", _instance);
         }
         return _instance;
@@ -81,7 +81,6 @@ public class RouteManager {
      * Finds an existing route or creates a new route if needed requires route's
      * name creates a unique id for this route
      *
-     * @param name
      *
      * @return new route or existing route
      */

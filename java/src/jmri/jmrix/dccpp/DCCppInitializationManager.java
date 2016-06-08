@@ -40,7 +40,7 @@ public class DCCppInitializationManager extends AbstractDCCppInitializationManag
 	if (systemMemo.getPowerManager() == null) {
 	    log.error("Power Manager not (yet) created!");
 	}
-	jmri.InstanceManager.setPowerManager(systemMemo.getPowerManager());
+	jmri.InstanceManager.store(systemMemo.getPowerManager(), jmri.PowerManager.class);
 	if (jmri.InstanceManager.powerManagerInstance() == null) {
 	    log.error("Power Manager not accessible!");
 	} else {

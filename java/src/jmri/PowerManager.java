@@ -1,4 +1,3 @@
-// PowerManager.java
 package jmri;
 
 import java.beans.PropertyChangeListener;
@@ -27,7 +26,6 @@ import java.beans.PropertyChangeListener;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  */
 public interface PowerManager {
 
@@ -51,6 +49,3 @@ public interface PowerManager {
 
     public String getUserName();
 }
-
-
-/* @(#)PowerManager.java */

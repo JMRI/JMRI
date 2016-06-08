@@ -1,4 +1,3 @@
-// SymbolicProgFrame.java
 package jmri.jmrit.symbolicprog.symbolicframe;
 
 import java.io.File;
@@ -38,15 +37,9 @@ import org.slf4j.LoggerFactory;
  * definition files
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2007
- * @version	$Revision$
  */
 public class SymbolicProgFrame extends jmri.util.JmriJFrame {
 
-    // GUI member declarations
-    /**
-     *
-     */
-    private static final long serialVersionUID = -9126105092523857438L;
     JTextField locoRoadName = new JTextField(12);
     JTextField locoRoadNumber = new JTextField(5);
     JTextField locoMfg = new JTextField(12);
@@ -307,7 +300,7 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame {
                     log.error("Unrecognized config file contents");
                 }
             }
-        } catch (Exception e) {
+        } catch (org.jdom2.JDOMException | java.io.IOException e) {
             log.warn("readAndParseDecoderConfig: readAndParseDecoderConfig exception: " + e);
         }
     }
@@ -443,7 +436,7 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame {
         variableModel.setFileDirty(false);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "REC_CATCH_EXCEPTION") // dead class doesn't need this fixed right now
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "REC_CATCH_EXCEPTION") // dead class doesn't need this fixed right now
     void writeFile() {
         log.warn("SymbolicProgFrame writeFile invoked - is this still right, or should the LocoFile method be used?");
         log.warn("Note use of VersionID attribute...");

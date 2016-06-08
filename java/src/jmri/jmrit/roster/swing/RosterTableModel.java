@@ -1,8 +1,8 @@
-// RosterTableModel.java
 package jmri.jmrit.roster.swing;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.table.DefaultTableModel;
@@ -25,15 +25,10 @@ import org.slf4j.LoggerFactory;
  * fields. But it's a start....
  *
  * @author Bob Jacobsen Copyright (C) 2009, 2010
- * @version $Revision$
  * @since 2.7.5
  */
 public class RosterTableModel extends DefaultTableModel implements PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 994579600898713052L;
     public static final int IDCOL = 0;
     static final int ADDRESSCOL = 1;
     static final int ICONCOL = 2;
@@ -72,7 +67,7 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
             } else {
                 fireTableDataChanged();
             }
-        } else if (e.getPropertyName().equals(RosterGroupSelector.selectedRosterGroupProperty)) {
+        } else if (e.getPropertyName().equals(RosterGroupSelector.SELECTED_ROSTER_GROUP)) {
             setRosterGroup((e.getNewValue() != null) ? e.getNewValue().toString() : null);
         } else if (e.getPropertyName().startsWith("attribute") && e.getSource() instanceof RosterEntry) { // NOI18N
             int row = Roster.instance().getGroupIndex(rosterGroup, (RosterEntry) e.getSource());
@@ -205,7 +200,7 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
             case IDCOL:
                 return re.getId();
             case ADDRESSCOL:
-                return Integer.valueOf(re.getDccLocoAddress().getNumber());
+                return re.getDccLocoAddress().getNumber();
             case DECODERCOL:
                 return re.getDecoderModel();
             case MODELCOL:
@@ -289,7 +284,7 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
                 if (re.getAttribute(attributeName) != null && re.getAttribute(attributeName).equals(valueToSet)) {
                     return;
                 }
-                if ((valueToSet == null) || valueToSet.equals("")) {
+                if ((valueToSet == null) || valueToSet.isEmpty()) {
                     re.deleteAttribute(attributeName);
                 } else {
                     re.putAttribute(attributeName, valueToSet);
@@ -310,7 +305,7 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
             } else if (getColumnClass(column).equals(Integer.class)) {
                 retval = Math.max(retval, new JLabel(getValueAt(row, column).toString()).getPreferredSize().width);
             } else if (getColumnClass(column).equals(ImageIcon.class)) {
-                retval = Math.max(retval, new JLabel((ImageIcon) getValueAt(row, column)).getPreferredSize().width);
+                retval = Math.max(retval, new JLabel((Icon) getValueAt(row, column)).getPreferredSize().width);
             }
         }
         return retval + 5;

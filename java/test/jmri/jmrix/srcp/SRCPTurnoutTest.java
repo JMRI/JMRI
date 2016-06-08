@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.srcp.SRCPTurnout class
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class SRCPTurnoutTest extends TestCase {
 
@@ -36,7 +35,7 @@ public class SRCPTurnoutTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", SRCPTurnoutTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

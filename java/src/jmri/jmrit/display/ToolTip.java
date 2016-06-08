@@ -10,7 +10,6 @@ import java.awt.geom.Rectangle2D;
  * Implements Tooltips for Positionable objects.
  *
  * @author Pete Cressman Copyright (c) 2010
- * @version $Revision 1.0 $
  */
 public class ToolTip {
 

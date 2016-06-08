@@ -118,8 +118,8 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     }
 
     @Override
-    protected void unpackElement(Element e) {
-        List<Element> ecosPref = e.getChildren("commandStationPreferences");
+    protected void unpackElement(Element shared, Element perNode) {
+        List<Element> ecosPref = shared.getChildren("commandStationPreferences");
         EcosPreferences p = ((jmri.jmrix.ecos.EcosSystemConnectionMemo) adapter.getSystemConnectionMemo()).getPreferenceManager();
         for (int i = 0; i < ecosPref.size(); i++) {
             if (ecosPref.get(i).getAttribute("addTurnoutToCS") != null) {

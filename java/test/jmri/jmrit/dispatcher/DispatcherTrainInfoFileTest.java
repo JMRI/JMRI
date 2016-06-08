@@ -1,4 +1,3 @@
-// DispatcherTrainInfoFileTest.java
 package jmri.jmrit.dispatcher;
 
 import junit.framework.Assert;
@@ -10,7 +9,6 @@ import junit.framework.TestSuite;
  * Swing jfcUnit tests for dispatcher train info
  *
  * @author	Dave Duchamp
- * @version $Revision$
  */
 public class DispatcherTrainInfoFileTest extends TestCase {
 
@@ -55,7 +53,7 @@ public class DispatcherTrainInfoFileTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", DispatcherTrainInfoFileTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

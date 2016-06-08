@@ -1,4 +1,3 @@
-// SerialMonFrame.java
 package jmri.jmrix.tmcc.serialmon;
 
 import jmri.jmrix.tmcc.SerialListener;
@@ -10,14 +9,8 @@ import jmri.jmrix.tmcc.SerialTrafficController;
  * Frame displaying (and logging) TMCC serial command messages
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2006
- * @version $Revision$
  */
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6510323420215494043L;
 
     public SerialMonFrame() {
         super();

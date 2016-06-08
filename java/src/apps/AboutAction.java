@@ -1,4 +1,3 @@
-// AboutAction.java
 package apps;
 
 import java.awt.event.ActionEvent;
@@ -13,11 +12,6 @@ import jmri.util.swing.WindowInterface;
  * @author rhwood
  */
 public class AboutAction extends JmriAbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2281549380603511502L;
 
     public AboutAction(String s, WindowInterface wi) {
         super(s, wi);

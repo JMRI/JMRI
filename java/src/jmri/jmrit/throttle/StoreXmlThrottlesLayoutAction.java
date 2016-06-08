@@ -22,14 +22,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Glen Oberhauser
  * @author Daniel Boudreau (C) Copyright 2008
- * @version $Revision$
  */
 public class StoreXmlThrottlesLayoutAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7344068917325110367L;
 
     /**
      * Constructor

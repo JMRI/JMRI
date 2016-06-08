@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
  * DCC-specific content.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2005
- * @version $Revision$
  */
 abstract public class AbstractThrottle implements DccThrottle {
 
@@ -30,7 +29,7 @@ abstract public class AbstractThrottle implements DccThrottle {
     public final static float SPEED_STEP_27_INCREMENT = 1.0f / 27.0f;
     public final static float SPEED_STEP_28_INCREMENT = 1.0f / 28.0f;
     public final static float SPEED_STEP_128_INCREMENT = 1.0f / 126.0f; // remember there are only 126 
-    // non-stop values in 128 speed 
+                                                                        // non-stop values in 128 speed 
 
     protected float speedSetting;
     protected float speedIncrement;
@@ -64,8 +63,8 @@ abstract public class AbstractThrottle implements DccThrottle {
     protected SystemConnectionMemo adapterMemo;
 
     /**
-     * speed - expressed as a value 0.0 -> 1.0. Negative means emergency stop.
-     * This is an bound parameter.
+     * speed - expressed as a value {@literal 0.0 -> 1.0.} Negative means
+     * emergency stop. This is an bound parameter.
      *
      * @return speed
      */
@@ -77,9 +76,8 @@ abstract public class AbstractThrottle implements DccThrottle {
     /**
      * setSpeedSetting - Implementing functions should override this function,
      * but should either make a call to super.setSpeedSetting() to notify the
-     * listeners, or should notify the listeners themselves.
+     * listeners at the end of their work, or should notify the listeners themselves.
      *
-     * @param speed
      */
     @Override
     public void setSpeedSetting(float speed) {
@@ -104,7 +102,6 @@ abstract public class AbstractThrottle implements DccThrottle {
      * should either make a call to super.setIsForward() to notify the
      * listeners, or should notify the listeners themselves.
      *
-     * @param forward
      */
     @Override
     public void setIsForward(boolean forward) {
@@ -443,9 +440,6 @@ abstract public class AbstractThrottle implements DccThrottle {
     /**
      * Trigger the notification of all PropertyChangeListeners
      *
-     * @param property
-     * @param oldValue
-     * @param newValue
      */
     @SuppressWarnings("unchecked")
     protected void notifyPropertyChangeListener(String property, Object oldValue, Object newValue) {
@@ -1321,6 +1315,10 @@ abstract public class AbstractThrottle implements DccThrottle {
     long durationRunning = 0;
     long start;
 
+    /**
+     * Processes updated speed from subclasses.
+     * Used to keep track of total operating time.
+     */
     protected void record(float speed) {
         if (re == null) {
             return;
@@ -1389,7 +1387,6 @@ abstract public class AbstractThrottle implements DccThrottle {
      * Get an integer speed for the given raw speed value. This is a convenience
      * method that calls {@link #intSpeed(float, int) } with a maxStep of 127.
      *
-     * @param speed
      * @return an integer in the range 0-127
      */
     protected int intSpeed(float speed) {

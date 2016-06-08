@@ -1,4 +1,3 @@
-// InstallTest.java
 package apps.InstallTest;
 
 import apps.Apps;
@@ -35,14 +34,8 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author	Ken Cameron Copyright 2008
- * @version $Revision$
  */
 public class InstallTest extends Apps {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1292408345588882623L;
 
     InstallTest(JFrame p) {
         super(p);
@@ -73,11 +66,6 @@ public class InstallTest extends Apps {
         Action serviceprog = new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction(Bundle.getMessage("DpButtonUseProgrammingTrack"));
         Action opsprog = new jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction(Bundle.getMessage("DpButtonProgramOnMainTrack"));
         Action quit = new AbstractAction(Bundle.getMessage("MenuItemQuit")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -9126451934736739677L;
-
             public void actionPerformed(ActionEvent e) {
                 Apps.handleQuit();
             }

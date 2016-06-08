@@ -35,12 +35,15 @@ public class AddSensorPanel extends jmri.util.swing.JmriPanel {
 
     public AddSensorPanel() {
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-        ActionListener listener = new ActionListener() {
+
+        ActionListener okListener = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 okPressed(e);
             }
         };
-
+        ActionListener cancelListener = new ActionListener() {
+            public void actionPerformed(ActionEvent e) { cancelPressed(e); }
+        };
         ActionListener rangeListener = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 canAddRange(e);
@@ -72,7 +75,7 @@ public class AddSensorPanel extends jmri.util.swing.JmriPanel {
         sysName.setName("sysName");
         userName.setName("userName");
         prefixBox.setName("prefixBox");
-        add(new AddNewHardwareDevicePanel(sysName, userName, prefixBox, numberToAdd, range, Bundle.getMessage("ButtonAddSensor"), listener, rangeListener));
+        add(new AddNewHardwareDevicePanel(sysName, userName, prefixBox, numberToAdd, range, Bundle.getMessage("ButtonAddSensor"), okListener, cancelListener, rangeListener));
         canAddRange(null);
 
         //super.AddnewHardwareDevicePanel(sysName, userName, prefixBox, , Bundle.getMessage("ButtonAddSensor")
@@ -148,6 +151,12 @@ public class AddSensorPanel extends jmri.util.swing.JmriPanel {
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
     String userNameError = this.getClass().getName() + ".DuplicateUserName";
     jmri.UserPreferencesManager p;
+
+    void cancelPressed(ActionEvent e) {
+        //p.setVisible(false);
+        //p.dispose();
+        //p = null;
+    }
 
     /*void okPressed(ActionEvent e) {
      String user = userName.getText();

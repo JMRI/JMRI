@@ -1,4 +1,3 @@
-// DecoderPro3Action.java
 package apps.gui3.dp3;
 
 import java.awt.Dimension;
@@ -19,10 +18,6 @@ import jmri.util.swing.WindowInterface;
  */
 public class DecoderPro3Action extends JmriAbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 908346452314380162L;
     DecoderPro3Window mainFrame;
     boolean allowQuit = true;
 

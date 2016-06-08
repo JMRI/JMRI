@@ -1,4 +1,3 @@
-// DefaultSignalSystem.java
 package jmri.implementation;
 
 import java.util.Enumeration;
@@ -15,14 +14,8 @@ import org.slf4j.LoggerFactory;
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version $Revision$
  */
 public class DefaultSignalSystem extends AbstractNamedBean implements SignalSystem {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5899513293974310228L;
 
     public DefaultSignalSystem(String systemName, String userName) {
         super(systemName, userName);
@@ -75,7 +68,7 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
     protected Hashtable<String, Object> getTable(String aspect) {
         Hashtable<String, Object> t = aspects.get(aspect);
         if (t == null) {
-            t = new Hashtable<String, Object>();
+            t = new Hashtable<>();
             aspects.put(aspect, t);
         }
         return t;
@@ -132,12 +125,13 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
                 if (speed != null) {
                     float aspectSpeed = 0.0f;
                     try {
-                        aspectSpeed = new Float(speed);
+                        aspectSpeed = Float.valueOf(speed);
                     } catch (NumberFormatException nx) {
                         try {
-                            aspectSpeed = jmri.implementation.SignalSpeedMap.getMap().getSpeed(speed);
-                        } catch (Exception ex) {
+                            aspectSpeed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(speed);
+                        } catch (IllegalArgumentException ex) {
                             //Considered Normal if the speed does not appear in the map
+                            log.debug("Speed {} not found in map", speed);
                         }
                     }
                     if (aspectSpeed > maximumLineSpeed) {
@@ -149,19 +143,19 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
         }
         if (maximumLineSpeed == 0.0f) {
             //no speeds configured so will use the default.
-            maximumLineSpeed = jmri.implementation.SignalSpeedMap.getMap().getSpeed("Maximum");
+            maximumLineSpeed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed("Maximum");
         }
         return maximumLineSpeed;
     }
 
     protected java.util.Hashtable<String, Hashtable<String, Object>> aspects
-            = new jmri.util.OrderedHashtable<String, Hashtable<String, Object>>();
+            = new jmri.util.OrderedHashtable<>();
 
-    protected java.util.Vector<String> keys = new java.util.Vector<String>();
+    protected java.util.Vector<String> keys = new java.util.Vector<>();
 
-    protected java.util.Vector<String> imageTypes = new java.util.Vector<String>();
+    protected java.util.Vector<String> imageTypes = new java.util.Vector<>();
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     public String toString() {
@@ -186,4 +180,3 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalSystem.class.getName());
 }
 
-/* @(#)DefaultSignalSystem.java */

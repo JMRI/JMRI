@@ -167,7 +167,10 @@ public class SRCPClientVisitor implements jmri.jmrix.srcp.parser.SRCPClientParse
             }
         } else if (group instanceof ASTsm) {
             if (busMemo.provides(jmri.ProgrammerManager.class)) {
-                ((jmri.jmrix.srcp.SRCPProgrammer) (busMemo.getProgrammerManager().getGlobalProgrammer())).reply(node);
+                jmri.jmrix.srcp.SRCPProgrammer programmer = (jmri.jmrix.srcp.SRCPProgrammer) (busMemo.getProgrammerManager().getGlobalProgrammer());
+                if( programmer != null) {
+                   programmer.reply(node);
+                }
             }
         } else if (group instanceof ASTpower) {
             if (busMemo.provides(jmri.PowerManager.class)) {
@@ -176,10 +179,15 @@ public class SRCPClientVisitor implements jmri.jmrix.srcp.parser.SRCPClientParse
                 ((jmri.jmrix.srcp.SRCPPowerManager) busMemo.getPowerManager()).reply(node);
             }
         } else if (group instanceof ASTtime) {
+          log.debug("INFO Response for TIME group with bus " + bus);
         } else if (group instanceof ASTsession) {
+	  log.debug("INFO Response for SESSION group with bus " + bus);
         } else if (group instanceof ASTserver) {
+	  log.debug("INFO Response for SERVER group with bus " + bus);
         } else if (group instanceof ASTdescription) {
+	  log.debug("INFO Response for DESCRIPTION group with bus " + bus);
         } else if (group instanceof ASTlock) {
+	  log.debug("INFO Response for LOCK group with bus " + bus);
         }
         return data;
     }

@@ -1,4 +1,3 @@
-// JTreeUtil.java
 package jmri.util.swing;
 
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -11,7 +10,6 @@ import org.jdom2.Element;
  * definition
  *
  * @author Bob Jacobsen Copyright 2003, 2010
- * @version $Revision$
  * @since 2.9.4
  */
 public class JTreeUtil extends GuiUtilBase {

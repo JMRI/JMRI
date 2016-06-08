@@ -1,10 +1,9 @@
-// UncaughtExceptionHandler.java
 package jmri.util.exceptionhandler;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.*;
 
 /**
  * Class to log exceptions that rise to the top of threads, including to the top
@@ -16,10 +15,10 @@ import java.io.*;
  * </pre>
  *
  * @author Bob Jacobsen Copyright 2003, 2010
- * @version $Revision$
  */
 public class UncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
 
+    @Override
     public void uncaughtException(Thread t, Throwable e) {
 
         // see http://docs.oracle.com/javase/7/docs/api/java/lang/ThreadDeath.html
@@ -27,14 +26,14 @@ public class UncaughtExceptionHandler implements Thread.UncaughtExceptionHandler
             return;
         }
 
-        log.error("Uncaught Exception: {}", generateStackTrace(e));
+        log.error("Uncaught Exception caught by jmri.util.exceptionhandler.UncaughtExceptionHandler", e);
     }
 
-    private String generateStackTrace(Throwable e) {
+    static protected String generateStackTrace(Throwable e) {
         StringWriter writer = new StringWriter();
-        PrintWriter pw = new PrintWriter(writer);
-        e.printStackTrace(pw);
-        pw.close();
+        try (PrintWriter pw = new PrintWriter(writer)) {
+            e.printStackTrace(pw);
+        }
         return writer.toString();
     }
 

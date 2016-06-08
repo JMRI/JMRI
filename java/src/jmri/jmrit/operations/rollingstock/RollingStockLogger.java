@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.OperationsXml;
@@ -52,7 +53,7 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
             // create and load
             _instance = new RollingStockLogger();
         }
-        if (Control.showInstance) {
+        if (Control.SHOW_INSTANCE) {
             log.debug("RollingStockLogger returns instance {}", _instance);
         }
         return _instance;
@@ -263,9 +264,7 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
     /**
      * Individual files for each rolling stock stored in a directory called
      * "rollingStock" inside the "logger" directory.
-     * 
-     * @param rs
-     * @return
+     *
      */
     public String getFullLoggerFileName(RollingStock rs) {
         if (!OperationsXml.checkFileName(rs.toString())) { // NOI18N
@@ -276,26 +275,20 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
     }
 
     private String getDate() {
-        String time = Calendar.getInstance().getTime().toString();
-        SimpleDateFormat dt = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy");
-        SimpleDateFormat dtout = new SimpleDateFormat("yyyy_MM_dd");
-        try {
-            return dtout.format(dt.parse(time));
-        } catch (ParseException e) {
-            return "Error Date Not Known"; // there was an issue
-        }
+        Date date = Calendar.getInstance().getTime();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy_MM_dd");  // NOI18N
+        return simpleDateFormat.format(date);
     }
 
     /**
      * Return the date and time in an MS Excel friendly format yyyy/MM/dd
      * HH:mm:ss
-     * 
-     * @return
+     *
      */
     private String getTime() {
         String time = Calendar.getInstance().getTime().toString();
-        SimpleDateFormat dt = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy");
-        SimpleDateFormat dtout = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        SimpleDateFormat dt = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy");  // NOI18N
+        SimpleDateFormat dtout = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");  // NOI18N
         try {
             return dtout.format(dt.parse(time));
         } catch (ParseException e) {
@@ -358,9 +351,10 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
         removeEngineListeners();
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (e.getPropertyName().equals(RollingStock.TRACK_CHANGED_PROPERTY)) {
-            if (Control.showProperty) {
+            if (Control.SHOW_PROPERTY) {
                 log.debug("Logger sees property change for car {}", e.getSource());
             }
             store((RollingStock) e.getSource());

@@ -1,7 +1,7 @@
 // TreeModel.java
 package jmri.jmrix.jinput;
 
-import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import javax.swing.SwingUtilities;
@@ -172,7 +172,7 @@ public final class TreeModel extends DefaultTreeModel {
     // note they might not arrive for a while
     Controller[] ca;
 
-    @SuppressWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     public Controller[] controllers() {
         return ca;
     }
@@ -213,7 +213,7 @@ public final class TreeModel extends DefaultTreeModel {
             dNode.setValue(value);
 
             // report change to possible listeners
-            pcs.firePropertyChange("Value", dNode, new Float(value));
+            pcs.firePropertyChange("Value", dNode, Float.valueOf(value));
         }
     }
 

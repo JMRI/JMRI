@@ -24,7 +24,6 @@ public class LayoutBlockRouteTableAction extends AbstractAction {
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
-     * @param s
      */
     public LayoutBlockRouteTableAction(String s, LayoutBlock lBlock) {
         super(s);

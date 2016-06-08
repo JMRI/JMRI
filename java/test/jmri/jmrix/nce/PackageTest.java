@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.nce;
 
 import junit.framework.Test;
@@ -25,7 +24,7 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -43,7 +42,9 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.nce.NceMessageTest.suite());
         suite.addTest(jmri.jmrix.nce.NceReplyTest.suite());
         suite.addTest(jmri.jmrix.nce.NcePowerManagerTest.suite());
-
+        suite.addTest(jmri.jmrix.nce.BundleTest.suite());
+        suite.addTest(jmri.jmrix.nce.clockmon.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NceConsistTest.class));
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             suite.addTest(jmri.jmrix.nce.ncemon.NceMonPanelTest.suite());
             suite.addTest(jmri.jmrix.nce.packetgen.NcePacketGenPanelTest.suite());

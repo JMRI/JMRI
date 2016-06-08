@@ -1,4 +1,3 @@
-// SaveMenu.java
 package jmri.configurexml;
 
 import java.util.ResourceBundle;
@@ -9,14 +8,8 @@ import javax.swing.JMenu;
  * (subsets).
  *
  * @author	Bob Jacobsen Copyright 2005
- * @version $Revision$
  */
 public class SaveMenu extends JMenu {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6477363534170911645L;
 
     public SaveMenu(String name) {
         this();

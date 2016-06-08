@@ -10,6 +10,7 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.ImportRollingStock;
+import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.Control;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +32,7 @@ public class ImportEngines extends ImportRollingStock {
     EngineManager manager = EngineManager.instance();
 
     // we use a thread so the status frame will work!
+    @Override
     public void run() {
         File file = getFile();
         if (file == null) {
@@ -351,7 +353,7 @@ public class ImportEngines extends ImportRollingStock {
                                             (engineRoad + " " + engineNumber), engineLocation, engineTrack}), Bundle
                                         .getMessage("OverRide"), JOptionPane.YES_NO_OPTION);
                                 if (results == JOptionPane.YES_OPTION) {
-                                    engine.setLocation(location, track, true); // force engine
+                                    engine.setLocation(location, track, RollingStock.FORCE); // force engine
                                 } else {
                                     break;
                                 }

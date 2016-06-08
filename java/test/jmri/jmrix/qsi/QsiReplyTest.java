@@ -1,4 +1,3 @@
-// QsiReplyTest.java
 package jmri.jmrix.qsi;
 
 import junit.framework.Assert;
@@ -11,7 +10,6 @@ import junit.framework.TestSuite;
  *
  * @author	Bob Jacobsen Copyright 2006, 2007
  *
- * @version $Revision$
  */
 public class QsiReplyTest extends TestCase {
 
@@ -68,7 +66,7 @@ public class QsiReplyTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", QsiReplyTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

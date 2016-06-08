@@ -1,4 +1,3 @@
-// AudioManager.java
 package jmri;
 
 import java.util.List;
@@ -36,7 +35,6 @@ import jmri.jmrit.audio.AudioFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author Matthew Harris Copyright (c) 2009
- * @version $Revision$
  */
 public interface AudioManager extends Manager {
 
@@ -61,7 +59,8 @@ public interface AudioManager extends Manager {
      * new Audio. Otherwise, the makeSystemName method will attempt to turn it
      * into a valid system name.
      *
-     * @param name
+     * @param name User name or system name to match, or which can be promoted
+     *             to system name
      * @return Never null under normal circumstances
      * @throws AudioException if error occurs during creation
      */
@@ -71,7 +70,7 @@ public interface AudioManager extends Manager {
      * Locate via user name, then system name if needed. If that fails, return
      * null
      *
-     * @param name
+     * @param name User name or system name to match
      * @return null if no match found
      */
     public Audio getAudio(String name);
@@ -160,5 +159,3 @@ public interface AudioManager extends Manager {
     public void cleanUp();
 
 }
-
-/* $(#)AudioManager.java */

@@ -1,12 +1,12 @@
 package jmri.managers;
 
+import javax.annotation.Nonnull;
 import jmri.AddressedProgrammer;
 import jmri.Programmer;
 import jmri.ProgrammerManager;
 import jmri.ProgrammingMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import edu.umd.cs.findbugs.annotations.NonNull;
 
 /**
  * Provides a very basic implementation of ProgrammerManager. You give it a
@@ -104,13 +104,20 @@ public class DefaultProgrammerManager implements ProgrammerManager {
     //     public static final ProgrammingMode OPSACCEXTBYTEMODE = new ProgrammingMode("OPSACCEXTBYTEMODE", 121);
     //     public static final ProgrammingMode OPSACCEXTBITMODE  = new ProgrammingMode("OPSACCEXTBITMODE", 122);
     
-    @NonNull private Programmer mProgrammer;
+    private Programmer mProgrammer;
 
-    public DefaultProgrammerManager(@NonNull Programmer pProgrammer) {
+    /**
+     * For case where no global programmer is available
+     */
+    public DefaultProgrammerManager() {
+        mProgrammer = null;  // indicates not present
+    }
+     
+    public DefaultProgrammerManager(@Nonnull Programmer pProgrammer) {
         mProgrammer = pProgrammer;
     }
 
-    public DefaultProgrammerManager(@NonNull Programmer pProgrammer, jmri.jmrix.SystemConnectionMemo memo) {
+    public DefaultProgrammerManager(@Nonnull Programmer pProgrammer, @Nonnull jmri.jmrix.SystemConnectionMemo memo) {
         this(pProgrammer);
         this.userName = memo.getUserName();
     }
@@ -148,14 +155,14 @@ public class DefaultProgrammerManager implements ProgrammerManager {
         return mProgrammer;
     }
 
-    public void releaseGlobalProgrammer(Programmer p) {
+    public void releaseGlobalProgrammer(@Nonnull  Programmer p) {
     }
 
     public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
 
-    public void releaseAddressedProgrammer(AddressedProgrammer p) {
+    public void releaseAddressedProgrammer(@Nonnull AddressedProgrammer p) {
     }
 
     /**
@@ -172,7 +179,7 @@ public class DefaultProgrammerManager implements ProgrammerManager {
      *
      * @return false since there's no chance of getting one
      */
-    public boolean isAddressedModePossible(jmri.LocoAddress l) {
+    public boolean isAddressedModePossible(@Nonnull jmri.LocoAddress l) {
         return isAddressedModePossible();
     }
 

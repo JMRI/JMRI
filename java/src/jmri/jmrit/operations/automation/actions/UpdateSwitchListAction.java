@@ -2,7 +2,7 @@ package jmri.jmrit.operations.automation.actions;
 
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainManager;
-import jmri.jmrit.operations.trains.TrainScheduleManager;
+import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
 
 public class UpdateSwitchListAction extends Action {
 

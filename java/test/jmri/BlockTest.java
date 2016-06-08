@@ -1,4 +1,3 @@
-// BlockTest.java
 package jmri;
 
 import jmri.util.JUnitUtil;
@@ -11,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the Block class
  *
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version $Revision$
  */
 public class BlockTest extends TestCase {
 
@@ -45,7 +43,6 @@ public class BlockTest extends TestCase {
 
     public void testHashCode() {
         Block b1 = new Block("SystemName1");
-        Block b2 = new Block("SystemName2");
         
         //multiple Block objects with same SystemName are really the same
         Block b1a = new Block("SystemName1");
@@ -68,11 +65,6 @@ public class BlockTest extends TestCase {
         SensorManager sm = new jmri.managers.InternalSensorManager();
         count = 0;
         Block b = new Block("SystemName") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 5139018101378690325L;
-
             void handleSensorChange(java.beans.PropertyChangeEvent e) {
                 count++;
             }
@@ -234,11 +226,6 @@ public class BlockTest extends TestCase {
         ReporterManager rm = new jmri.managers.InternalReporterManager();
         count = 0;
         Block b = new Block("SystemName") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 3547154109447369497L;
-
             @Override
             void handleReporterChange(java.beans.PropertyChangeEvent e) {
                 count++;
@@ -255,11 +242,6 @@ public class BlockTest extends TestCase {
         ReporterManager rm = new jmri.managers.InternalReporterManager();
         count = 0;
         Block b = new Block("SystemName") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 5571669574284994013L;
-
             @Override
             void handleReporterChange(java.beans.PropertyChangeEvent e) {
                 if (e.getPropertyName().equals("currentReport")) {
@@ -281,11 +263,6 @@ public class BlockTest extends TestCase {
         ReporterManager rm = new jmri.managers.InternalReporterManager();
         count = 0;
         Block b = new Block("SystemName") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -2814760455640517297L;
-
             @Override
             void handleReporterChange(java.beans.PropertyChangeEvent e) {
                 if (e.getPropertyName().equals("lastReport")) {
@@ -311,7 +288,7 @@ public class BlockTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {BlockTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

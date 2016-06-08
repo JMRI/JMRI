@@ -1,4 +1,3 @@
-// SensorTableWindowTest.java
 package jmri.jmrit.beantable;
 
 import javax.swing.JButton;
@@ -18,7 +17,6 @@ import junit.framework.TestSuite;
  * Swing jfcUnit tests for the sensor table
  *
  * @author	Bob Jacobsen Copyright 2009, 2010
- * @version $Revision$
  */
 public class SensorTableWindowTest extends jmri.util.SwingTestCase {
 
@@ -94,7 +92,7 @@ public class SensorTableWindowTest extends jmri.util.SwingTestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", SensorTableWindowTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

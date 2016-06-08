@@ -32,7 +32,6 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
      * A Simulator connection needs no extra information, so we reimplement the
      * superclass method to just write the necessary parts.
      *
-     * @param o
      * @return Formatted element containing no attributes except the class name
      */
     public Element store(Object o) {
@@ -46,6 +45,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         return e;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UWF_FIELD_NOT_INITALIZED_IN_CONSTRUCTOR", justification = "if adapter is not initilized already, it is initialized by the getInstance() call") 
     @Override
     public boolean load(Element shared, Element perNode) {
         boolean result = true;
@@ -58,7 +58,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         register();
 
         if (adapter.getDisabled()) {
-            unpackElement(shared);
+            unpackElement(shared, perNode);
             return result;
         }
 
@@ -67,6 +67,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         return result;
     }
 
+    @Override
     protected void getInstance() {
         if (adapter == null) {
             adapter = new XNetSimulatorAdapter();

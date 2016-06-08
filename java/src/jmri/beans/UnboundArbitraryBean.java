@@ -1,4 +1,3 @@
-// UnboundBean.java
 package jmri.beans;
 
 import java.util.Set;
@@ -29,8 +28,8 @@ public abstract class UnboundArbitraryBean extends UnboundBean {
      * since the Java introspection methods provide no reliable way to get the
      * size of the indexed property.
      *
-     * @param key
-     * @param index
+     * @param key   Property array to parse.
+     * @param index Element to retrieve.
      * @return value of element or null
      */
     @Override
@@ -48,7 +47,7 @@ public abstract class UnboundArbitraryBean extends UnboundBean {
      * This implementation searches {@link ArbitraryPropertySupport#properties}
      * and uses introspection to get the property.
      *
-     * @param key
+     * @param key Property to retrieve.
      * @return value of key or null.
      * @see BeanInterface#getProperty(java.lang.String)
      */
@@ -78,7 +77,7 @@ public abstract class UnboundArbitraryBean extends UnboundBean {
      * This implementation searches {@link ArbitraryPropertySupport#properties}
      * and uses introspection to get the property.
      *
-     * @param key
+     * @param key Property to inspect.
      * @return true if property exists
      * @see BeanInterface#hasProperty(java.lang.String)
      */
@@ -100,9 +99,9 @@ public abstract class UnboundArbitraryBean extends UnboundBean {
      * that the write method has the following two parameters in order:
      * <code>index</code>, <code>value</code>.
      *
-     * @param key
-     * @param index
-     * @param value
+     * @param key   Property array to use.
+     * @param index Element to write.
+     * @param value Value to set.
      * @see BeanInterface#setIndexedProperty(java.lang.String, int,
      * java.lang.Object)
      */
@@ -120,8 +119,8 @@ public abstract class UnboundArbitraryBean extends UnboundBean {
      * not exist. This implementation also fires a PropertyChangeEvent for the
      * property.
      *
-     * @param key
-     * @param value
+     * @param key   Property to use.
+     * @param value Value to store.
      * @see BeanInterface#setProperty(java.lang.String, java.lang.Object)
      */
     @Override

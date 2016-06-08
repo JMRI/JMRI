@@ -27,11 +27,6 @@ import org.slf4j.LoggerFactory;
 public class DefaultLogix extends AbstractNamedBean
         implements Logix, java.io.Serializable {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4720328516573049659L;
-
     public DefaultLogix(String systemName, String userName) {
         super(systemName, userName);
     }
@@ -66,7 +61,7 @@ public class DefaultLogix extends AbstractNamedBean
 
     /**
      * Move 'row' to 'nextInOrder' and shift all between 'row' and 'nextInOrder'
-     * up one position ( row > nextInOrder )
+     * up one position {@literal ( row > nextInOrder )}
      */
     public void swapConditional(int nextInOrder, int row) {
         if (row <= nextInOrder) {

@@ -56,15 +56,10 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
         }
     }
 
-    /**
-     * Customizable method if you need to add anything more
-     *
-     * @param e Element being created, update as needed
-     */
     @Override
-    protected void unpackElement(Element e) {
-        if (e.getAttribute("transmitPrefix") != null) {
-            ((JMRIClientSystemConnectionMemo) adapter.getSystemConnectionMemo()).setTransmitPrefix(e.getAttribute("transmitPrefix").getValue());
+    protected void unpackElement(Element shared, Element perNode) {
+        if (shared.getAttribute("transmitPrefix") != null) {
+            ((JMRIClientSystemConnectionMemo) adapter.getSystemConnectionMemo()).setTransmitPrefix(shared.getAttribute("transmitPrefix").getValue());
         }
     }
 

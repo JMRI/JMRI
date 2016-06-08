@@ -1,4 +1,3 @@
-// SingleTurnoutSignalHead.java
 package jmri.implementation;
 
 import java.beans.PropertyChangeEvent;
@@ -23,14 +22,8 @@ import org.slf4j.LoggerFactory;
  * Based Upon DoubleTurnoutSignalHead by Bob Jacobsen
  *
  * @author	Kevin Dickerson Copyright (C) 2010
- * @version	$Revision$
  */
 public class SingleTurnoutSignalHead extends DefaultSignalHead implements PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6275671809339636536L;
 
     /**
      * @param on  Appearance constant from {@link jmri.SignalHead} for the
@@ -207,7 +200,7 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead implements Proper
     }
 
     @SuppressWarnings("fallthrough")
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SF_SWITCH_FALLTHROUGH")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     private String getSignalColour(int mAppearance) {
         switch (mAppearance) {
             case SignalHead.RED:
@@ -265,11 +258,10 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead implements Proper
                     // Updates last commanded state.
                     mTurnoutCommandedState = newTurnoutValue;
                     // notify listeners, if any
-                    firePropertyChange("Appearance", new Integer(oldAppearance), new Integer(newAppearance));
+                    firePropertyChange("Appearance", Integer.valueOf(oldAppearance), Integer.valueOf(newAppearance));
                 }
             }
         }
     }
 }
 
-/* @(#)SingleTurnoutSignalHead.java */

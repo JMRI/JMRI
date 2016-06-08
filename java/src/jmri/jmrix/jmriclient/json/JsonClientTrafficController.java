@@ -1,5 +1,13 @@
 package jmri.jmrix.jmriclient.json;
 
+import static jmri.jmris.json.JSON.DATA;
+import static jmri.jmris.json.JSON.GOODBYE;
+import static jmri.jmris.json.JSON.HELLO;
+import static jmri.jmris.json.JSON.LOCALE;
+import static jmri.jmris.json.JSON.PING;
+import static jmri.jmris.json.JSON.PONG;
+import static jmri.jmris.json.JSON.TYPE;
+
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,13 +21,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.SwingUtilities;
 import jmri.jmris.json.JSON;
-import static jmri.jmris.json.JSON.DATA;
-import static jmri.jmris.json.JSON.GOODBYE;
-import static jmri.jmris.json.JSON.HELLO;
-import static jmri.jmris.json.JSON.LOCALE;
-import static jmri.jmris.json.JSON.PING;
-import static jmri.jmris.json.JSON.PONG;
-import static jmri.jmris.json.JSON.TYPE;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;

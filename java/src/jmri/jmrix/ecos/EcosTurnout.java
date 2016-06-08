@@ -66,7 +66,7 @@ public class EcosTurnout extends AbstractTurnout
         _validFeedbackModes = modeValues;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Only used during creation of 1st turnout")
     private void initFeedbackModes() {
         if (_validFeedbackNames.length != _validFeedbackModes.length) {
@@ -143,9 +143,9 @@ public class EcosTurnout extends AbstractTurnout
         // _once_ if anything has changed state (or set the commanded state directly)
 
         // sort out states
-        if ((s & Turnout.CLOSED) > 0) {
+        if ((s & Turnout.CLOSED) != 0) {
             // first look for the double case, which we can't handle
-            if ((s & Turnout.THROWN) > 0) {
+            if ((s & Turnout.THROWN) != 0) {
                 // this is the disaster case!
                 log.error("Cannot command both CLOSED and THROWN " + s);
                 return;

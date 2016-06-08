@@ -18,12 +18,10 @@ import org.slf4j.LoggerFactory;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 25048 $
  */
 public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener {
 
     private MrcTrafficController tc = null;
-    //private MrcInterface network;
 
     /**
      * Constructor.
@@ -140,8 +138,7 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
     }
 
     /**
-     * Send the message to set the state of functions F13 to F20. MRC Group 4 &
-     * 5
+     * Send the message to set the state of functions F13 to F20. MRC Group 4 and 5
      */
     @Override
     protected void sendFunctionGroup4() {
@@ -192,12 +189,12 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
     }
 
     /**
-     * Set the speed & direction.
+     * Set the speed {@literal &} direction.
      * <P>
      *
-     * @param speed Number from 0 to 1; less than zero is emergency stop
+     * @param speed Number from 0 to 1, or less than zero for emergency stop
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     public void setSpeedSetting(float speed) {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
@@ -256,6 +253,7 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
     }
 
     //Might need to look at other packets from handsets to see if they also have control of our loco and adjust from that.
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "fixed number of possible values")
     public void notifyRcv(Date timestamp, MrcMessage m) {
         if (m.getMessageClass() != MrcInterface.THROTTLEINFO
                 || (m.getMessageClass() == MrcInterface.THROTTLEINFO && (m.getElement(0) == MrcPackets.LOCOSOLECONTROLCODE
@@ -286,6 +284,8 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
                         speed = 0;
                     }
                     float val = speed / 126.0f;
+                    
+                    // next line is the FE_FLOATING_POINT_EQUALITY annotated above
                     if (val != this.speedSetting) {
                         notifyPropertyChangeListener("SpeedSetting", this.speedSetting, val); //IN18N
                         this.speedSetting = val;

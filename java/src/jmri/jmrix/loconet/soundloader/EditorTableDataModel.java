@@ -1,4 +1,3 @@
-// EditorTableDataModel.java
 package jmri.jmrix.loconet.soundloader;
 
 import java.awt.Font;
@@ -26,14 +25,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006
  * @author Dennis Miller Copyright (C) 2006
- * @version	$Revision$
  */
 public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6127498935819325767L;
     static public final int HEADERCOL = 0;
     static public final int TYPECOL = 1;
     static public final int MAPCOL = 2;
@@ -49,7 +43,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
 
     SpjFile file;
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "cache resource at 1st start, threading OK")
     public EditorTableDataModel(SpjFile file) {
         super();
@@ -143,7 +137,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
                     return null;
                 }
                 float time = file.getHeader(row + 1).getDataLength() / rate;
-                return new Float(time);
+                return Float.valueOf(time);
             case PLAYBUTTONCOL:
                 if (file.getHeader(row + 1).isWAV()) {
                     return res.getString("ButtonPlay");
@@ -297,7 +291,6 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
      * optional, in that other table formats can use this table model. But we
      * put it here to help keep it consistent.
      *
-     * @param table
      */
     public void configureTable(JTable table) {
         // allow reordering of the columns
@@ -344,8 +337,6 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
      * Service method to setup a column so that it will hold a button for it's
      * values
      *
-     * @param table
-     * @param column
      * @param sample Typical button, used for size
      */
     void setColumnToHoldButton(JTable table, int column, JButton sample) {
@@ -370,7 +361,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
      * column. Data is word wrapped within a column. Can handle data as strings,
      * comboboxes or booleans
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     public void printTable(HardcopyWriter w) {
@@ -419,7 +410,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
         w.close();
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize) {

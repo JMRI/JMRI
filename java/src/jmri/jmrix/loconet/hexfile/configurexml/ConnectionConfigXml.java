@@ -28,7 +28,6 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
      * A HexFile connection needs no extra information, so we reimplement the
      * superclass method to just write the necessary parts.
      *
-     * @param o
      * @return Formatted element containing no attributes except the class name
      */
     public Element store(Object o) {
@@ -96,7 +95,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             String option4Setting = shared.getAttribute("option4").getValue();
             adapter.configureOption4(option4Setting);
         }
-        loadOptions(shared.getChild("options"), adapter);
+        loadOptions(shared.getChild("options"), perNode.getChild("options"), adapter);
         String manufacturer;
         try {
             manufacturer = shared.getAttribute("manufacturer").getValue();

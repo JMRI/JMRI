@@ -8,14 +8,12 @@ import jmri.jmrix.SystemConnectionMemo;
  * System Name Prefix
  *
  * @author Kevin Dickerson Copyright 2010
- * @version $Revision$
  */
 public class ConnectionNameFromSystemName {
 
     /**
      * Locates the connected systems name from a given prefix.
      *
-     * @param prefix
      * @return The Connection System Name
      */
     static public String getConnectionName(String prefix) {
@@ -32,14 +30,9 @@ public class ConnectionNameFromSystemName {
         return DCCManufacturerList.getDCCSystemFromType(prefix.charAt(0));
 
     }
-    /*
-     *  Returns the System prefix of a connection given the system name.
-     */
-
     /**
      * Locates the connected systems prefix from a given System name.
      *
-     * @param name
      * @return The system prefix
      */
     static public String getPrefixFromName(String name) {

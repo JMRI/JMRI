@@ -1,4 +1,3 @@
-// LightTest.java
 package jmri;
 
 import junit.framework.Assert;
@@ -10,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the Light class
  *
  * @author	Bob Jacobsen Copyright (C) 2008, 2010
- * @version $Revision$
  */
 public class LightTest extends TestCase {
 
@@ -41,7 +39,7 @@ public class LightTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {LightTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

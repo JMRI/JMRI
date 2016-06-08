@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.qsi.serialdriver;
 
 import gnu.io.CommPortIdentifier;
@@ -24,13 +23,12 @@ import org.slf4j.LoggerFactory;
  * use any other options at configuration time.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version	$Revision$
  */
 public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix.SerialPortAdapter {
 
     public SerialDriverAdapter() {
         super(new QsiSystemConnectionMemo());
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.QSI;
+        this.manufacturerName = jmri.jmrix.qsi.QSIConnectionTypeList.QSI;
     }
 
     SerialPort activeSerialPort = null;
@@ -70,12 +68,7 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {

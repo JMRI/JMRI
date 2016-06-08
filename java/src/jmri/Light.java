@@ -1,4 +1,3 @@
-// Light.java
 package jmri;
 
 import java.util.ArrayList;
@@ -61,7 +60,6 @@ import jmri.implementation.LightControl;
  * @author	Dave Duchamp Copyright (C) 2004, 2010
  * @author	Ken Cameron Copyright (C) 2008
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
  */
 public interface Light extends NamedBean {
 
@@ -334,5 +332,3 @@ public interface Light extends NamedBean {
      */
     public void deactivateLight();
 }
-
-/* @(#)Light.java */

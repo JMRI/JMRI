@@ -1,4 +1,3 @@
-// PaneProgAction.java
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import java.awt.event.ActionEvent;
@@ -34,14 +33,9 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  */
 public class PaneProgAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6931284008411705904L;
     Object o1, o2, o3, o4;
     JLabel statusLabel;
     jmri.jmrit.progsupport.ProgModeSelector modePane = new jmri.jmrit.progsupport.ProgServiceModeComboBox();
@@ -95,10 +89,6 @@ public class PaneProgAction extends AbstractAction {
 
         // new Loco on programming track
         JPanel pane1 = new CombinedLocoSelTreePane(statusLabel, modePane) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -4214840180299703440L;
 
             protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
                     String filename) {
@@ -142,5 +132,3 @@ public class PaneProgAction extends AbstractAction {
     private final static Logger log = LoggerFactory.getLogger(PaneProgAction.class.getName());
 
 }
-
-/* @(#)PaneProgAction.java */

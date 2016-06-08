@@ -166,7 +166,7 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
     }
 
     public boolean status() {
-        return (pout != null) & (pin != null);
+        return (pout != null) && (pin != null);
     }
 
     // to tell if we're currently putting out data
@@ -218,7 +218,7 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
      * Get an array of valid values for "option 3"; used to display valid
      * options. May not be null, but may have zero entries
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] validOption3() {
         return new String[]{"Normal", "Spread", "One Only", "Both"};
     }

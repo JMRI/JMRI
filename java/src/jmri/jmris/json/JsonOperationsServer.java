@@ -1,5 +1,11 @@
-//SimpleOperationsServer.java
 package jmri.jmris.json;
+
+import static jmri.jmris.json.JSON.CODE;
+import static jmri.jmris.json.JSON.ERROR;
+import static jmri.jmris.json.JSON.ID;
+import static jmri.jmris.json.JSON.MESSAGE;
+import static jmri.jmris.json.JSON.METHOD;
+import static jmri.jmris.json.JSON.TYPE;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,13 +18,8 @@ import javax.management.Attribute;
 import jmri.JmriException;
 import jmri.jmris.AbstractOperationsServer;
 import jmri.jmris.JmriConnection;
-import static jmri.jmris.json.JSON.CODE;
-import static jmri.jmris.json.JSON.ERROR;
-import static jmri.jmris.json.JSON.ID;
-import static jmri.jmris.json.JSON.MESSAGE;
-import static jmri.jmris.json.JSON.METHOD;
-import static jmri.jmris.json.JSON.TYPE;
 import jmri.jmrit.operations.trains.Train;
+import jmri.server.json.JsonException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +29,6 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender Copyright (C) 2010
  * @author Dan Boudreau Copyright (C) 2012 (Documented the code, changed reply
  * format, and some minor refactoring)
- * @version $Revision: 21313 $
  */
 public class JsonOperationsServer extends AbstractOperationsServer {
 
@@ -45,8 +45,6 @@ public class JsonOperationsServer extends AbstractOperationsServer {
     /**
      * Overridden method to do nothing.
      *
-     * @param contents
-     * @throws java.io.IOException
      */
     @Override
     public void sendMessage(ArrayList<Attribute> contents) throws IOException {
@@ -73,9 +71,6 @@ public class JsonOperationsServer extends AbstractOperationsServer {
     /**
      * Overridden method to do nothing.
      *
-     * @param statusString
-     * @throws jmri.JmriException
-     * @throws java.io.IOException
      */
     @Override
     public void parseStatus(String statusString) throws JmriException, IOException {
@@ -140,7 +135,7 @@ public class JsonOperationsServer extends AbstractOperationsServer {
         }
     }
 
-    void parseTrainRequest(Locale locale, JsonNode data) throws IOException, JsonException {
+    public void parseTrainRequest(Locale locale, JsonNode data) throws IOException, JsonException {
         String id = data.path(ID).asText();
         if (!data.path(METHOD).isMissingNode()) {
             JsonUtil.setTrain(locale, id, data);

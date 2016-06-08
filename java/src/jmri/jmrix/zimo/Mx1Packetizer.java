@@ -1,7 +1,6 @@
-/**
- * Mx1Packetizer.java
- */
 package jmri.jmrix.zimo;
+
+import static jmri.jmrix.zimo.Mx1Message.PROGCMD;
 
 import java.io.DataInputStream;
 import java.io.OutputStream;
@@ -9,7 +8,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.concurrent.ConcurrentHashMap;
-import static jmri.jmrix.zimo.Mx1Message.PROGCMD;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * listeners in that same thread. Reception and transmission are handled in
  * dedicated threads by RcvHandler and XmtHandler objects. Those are internal
  * classes defined here. The thread priorities are:
- * <P>
  * <UL>
  * <LI> RcvHandler - at highest available priority
  * <LI> XmtHandler - down one, which is assumed to be above the GUI
@@ -31,7 +28,6 @@ import org.slf4j.LoggerFactory;
  * </UL>
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version $Revision$
  *
  * Adapted by Sip Bosch for use with zimo Mx-1
  *
@@ -45,7 +41,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
 
     // The methods to implement the Mx1Interface
     public boolean status() {
-        return (ostream != null & istream != null);
+        return (ostream != null && istream != null);
     }
 
     public final static boolean ASCII = false;
@@ -353,7 +349,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
                             int b = istream.readByte() & 0xFF;
                             len = len + 1;
                             //if end of message
-                            if (b == 0x0D | b == 0x0A) {
+                            if (b == 0x0D || b == 0x0A) {
                                 msgn.setElement(i, b);
                                 break;
                             }
@@ -487,7 +483,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
     /**
      * Captive class to handle transmission
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "UW_UNCOND_WAIT",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UW_UNCOND_WAIT",
             justification = "while loop controls access")
     class XmtHandler implements Runnable {
 
@@ -712,6 +708,3 @@ public class Mx1Packetizer extends Mx1TrafficController {
 
     private final static Logger log = LoggerFactory.getLogger(Mx1Packetizer.class.getName());
 }
-
-
-/* @(#)Mx1Packetizer.java */

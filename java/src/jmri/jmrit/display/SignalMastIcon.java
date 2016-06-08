@@ -28,7 +28,6 @@ import org.slf4j.LoggerFactory;
  * @see jmri.SignalMastManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2009, 2014
- * @version $Revision$
  */
 public class SignalMastIcon extends PositionableIcon implements java.beans.PropertyChangeListener {
 
@@ -52,13 +51,13 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
         _icon = !_text;
     }
 
+    @Override
     public Positionable deepClone() {
         SignalMastIcon pos = new SignalMastIcon(_editor);
         return finishClone(pos);
     }
 
-    public Positionable finishClone(Positionable p) {
-        SignalMastIcon pos = (SignalMastIcon) p;
+    protected Positionable finishClone(SignalMastIcon pos) {
         pos.setSignalMast(getNamedSignalMast().getName());
         pos._iconMap = cloneMap(_iconMap, pos);
         pos.setClickMode(getClickMode());
@@ -467,7 +466,6 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
     /**
      * Change the SignalMast aspect when the icon is clicked.
      *
-     * @param e
      */
     public void doMouseClicked(java.awt.event.MouseEvent e) {
         if (!_editor.getFlag(Editor.OPTION_CONTROLS, isControlling())) {

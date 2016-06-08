@@ -9,7 +9,7 @@ import java.util.Map;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.SignalHead;
-import jmri.jmris.json.JsonException;
+import jmri.server.json.JsonException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -65,8 +65,13 @@ abstract public class AbstractSignalHeadServer {
                 // only log, since this may be from a remote system
                 log.error("SignalHead " + signalHeadName + " is not available.");
             } else {
-                if (signalHead.getAppearance() != signalHeadState) {
-                    signalHead.setAppearance(signalHeadState);
+                if (signalHead.getAppearance() != signalHeadState || signalHead.getHeld()) {
+                    if (signalHeadState == SignalHead.HELD) {
+                        signalHead.setHeld(true);
+                    } else {
+                        if (signalHead.getHeld()) signalHead.setHeld(false);
+                        signalHead.setAppearance(signalHeadState);
+                    }
                 } else {
                     try {
                         sendStatus(signalHeadName, signalHeadState);

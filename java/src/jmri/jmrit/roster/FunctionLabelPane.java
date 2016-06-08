@@ -163,7 +163,6 @@ public class FunctionLabelPane extends javax.swing.JPanel {
     /**
      * Do the GUI contents agree with a RosterEntry?
      *
-     * @param r
      * @return true if GUI differs from RosterEntry
      */
     public boolean guiChanged(RosterEntry r) {
@@ -232,7 +231,6 @@ public class FunctionLabelPane extends javax.swing.JPanel {
     /**
      * Fill a RosterEntry object from GUI contents
      *
-     * @param r
      *
      */
     public void update(RosterEntry r) {
@@ -274,7 +272,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
     }
     boolean print = false;
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     public void printPane(HardcopyWriter w) {

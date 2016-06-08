@@ -1,4 +1,3 @@
-// XmlFile.java
 package jmri.jmrit;
 
 import java.io.BufferedInputStream;
@@ -44,7 +43,6 @@ import org.slf4j.LoggerFactory;
  * {@link jmri.util.JmriLocalEntityResolver} class.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2007, 2012, 2014
- * @version	$Revision$
  */
 public abstract class XmlFile {
 
@@ -70,8 +68,8 @@ public abstract class XmlFile {
      * read the XML file from a JAR resource.
      *
      * @param name Filename, as needed by {@link #findFile}
-     * @throws org.jdom2.JDOMException
-     * @throws java.io.FileNotFoundException
+     * @throws org.jdom2.JDOMException       only when all methods have failed
+     * @throws java.io.FileNotFoundException if file not found
      * @return null if not found, else root element of located file
      */
     public Element rootFromName(String name) throws JDOMException, IOException {
@@ -100,7 +98,7 @@ public abstract class XmlFile {
      * Exceptions are only thrown when local recovery is impossible.
      *
      * @throws org.jdom2.JDOMException       only when all methods have failed
-     * @throws java.io.FileNotFoundException
+     * @throws java.io.FileNotFoundException if file not found
      * @param file File to be parsed. A FileNotFoundException is thrown if it
      *             doesn't exist.
      * @return root element from the file. This should never be null, as an
@@ -125,7 +123,7 @@ public abstract class XmlFile {
      * Exceptions are only thrown when local recovery is impossible.
      *
      * @throws org.jdom2.JDOMException       only when all methods have failed
-     * @throws java.io.FileNotFoundException
+     * @throws java.io.FileNotFoundException if file not found
      * @param stream InputStream to be parsed.
      * @return root element from the file. This should never be null, as an
      *         exception should be thrown if anything goes wrong.
@@ -140,7 +138,7 @@ public abstract class XmlFile {
      * Exceptions are only thrown when local recovery is impossible.
      *
      * @throws org.jdom2.JDOMException only when all methods have failed
-     * @throws FileNotFoundException
+     * @throws FileNotFoundException   if file not found
      * @param url URL locating the data file
      * @return root element from the file. This should never be null, as an
      *         exception should be thrown if anything goes wrong.
@@ -167,9 +165,8 @@ public abstract class XmlFile {
      * @throws java.io.IOException     if the input cannot be read
      */
     protected Element getRoot(boolean verify, InputStream stream) throws JDOMException, IOException {
-        if (log.isDebugEnabled()) {
-            log.debug("getRoot from stream");
-        }
+        log.trace("getRoot from stream");
+
         SAXBuilder builder = getBuilder(verify);  // argument controls validation
         Document doc = builder.build(new BufferedInputStream(stream));
         doc = processInstructions(doc);  // handle any process instructions
@@ -192,9 +189,8 @@ public abstract class XmlFile {
      * @since 3.1.5
      */
     protected Element getRoot(boolean verify, InputStreamReader reader) throws JDOMException, IOException {
-        if (log.isDebugEnabled()) {
-            log.debug("getRoot from reader with encoding " + reader.getEncoding());
-        }
+        log.trace("getRoot from reader with encoding {}", reader.getEncoding());
+
         SAXBuilder builder = getBuilder(verify);  // argument controls validation
         Document doc = builder.build(new BufferedReader(reader));
         doc = processInstructions(doc);  // handle any process instructions
@@ -205,7 +201,7 @@ public abstract class XmlFile {
     /**
      * Write a File as XML.
      *
-     * @throws FileNotFoundException
+     * @throws FileNotFoundException if file not found
      * @param file File to be created.
      * @param doc  Document to be written out. This should never be null.
      */
@@ -222,6 +218,7 @@ public abstract class XmlFile {
                     .setLineSeparator(System.getProperty("line.separator"))
                     .setTextMode(Format.TextMode.TRIM_FULL_WHITE));
             fmt.output(doc, o);
+            o.flush();
         } finally {
             o.close();
         }
@@ -488,7 +485,7 @@ public abstract class XmlFile {
     }
 
     Document processOneInstruction(ProcessingInstruction p, Document doc) throws org.jdom2.transform.XSLTransformException, org.jdom2.JDOMException, java.io.IOException {
-        log.debug("handling ", p);
+        log.trace("handling ", p);
 
         // check target
         String target = p.getTarget();

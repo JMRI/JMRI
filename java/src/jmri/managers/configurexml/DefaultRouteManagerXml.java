@@ -1,4 +1,3 @@
-// DefaultRouteManagerConfigXML.java
 package jmri.managers.configurexml;
 
 import java.util.List;
@@ -14,13 +13,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provides the functionality for configuring RouteManagers
- * <P>
  *
  * @author Dave Duchamp Copyright (c) 2004
  * @author Daniel Boudreau Copyright (c) 2007
  * @author Simon Reader Copyright (C) 2008
- *
- * @version $Revision$
  */
 public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -66,7 +62,7 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                 // store common parts
                 storeCommon(r, elem);
 
-                if (cTurnout != null && cTurnout != "") {
+                if (cTurnout != null && !cTurnout.equals("")) {
                     elem.setAttribute("controlTurnout", cTurnout);
                     int state = r.getControlTurnoutState();
                     if (state == Route.ONTHROWN) {
@@ -81,7 +77,7 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                         elem.setAttribute("controlTurnoutState", "CLOSED");
                     }
                 }
-                if (cLockTurnout != null && cLockTurnout != "") {
+                if (cLockTurnout != null && !cLockTurnout.equals("")) {
                     elem.setAttribute("controlLockTurnout", cLockTurnout);
                     int state = r.getLockControlTurnoutState();
                     if (state == Route.ONTHROWN) {

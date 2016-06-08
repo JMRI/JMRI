@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.roco.z21;
 
 import javax.swing.JPanel;
@@ -6,12 +5,11 @@ import javax.swing.JPanel;
 /**
  * Handle configuring an layout connection via a Roco z21 or Z21.
  * <P>
- * This uses the {@link z21Adapter} class to do the actual connection.
+ * This uses the {@link Z21Adapter} class to do the actual connection.
  *
  * @author	Paul Bender Copyright (C) 2011
- * @version	$Revision$
  *
- * @see z21Adapter
+ * @see Z21Adapter
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig {
 
@@ -41,7 +39,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
      */
     protected void setInstance() {
         if (adapter == null) {
-            adapter = new z21Adapter();
+            adapter = new Z21Adapter();
         }
     }
 

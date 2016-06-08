@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.secsi;
 
 import junit.framework.Assert;
@@ -10,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.secsi package.
  *
  * @author Bob Jacobsen Copyright 2003, 2007, 2008
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -27,7 +25,7 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

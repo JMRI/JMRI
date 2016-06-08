@@ -1,4 +1,3 @@
-// AbstractAutomaton.java
 package jmri.jmrit.automat;
 
 import java.awt.BorderLayout;
@@ -14,11 +13,11 @@ import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammerException;
 import jmri.Sensor;
-import jmri.jmrit.logix.Warrant;
-import jmri.jmrit.logix.OBlock;
 import jmri.ThrottleListener;
 import jmri.ThrottleManager;
 import jmri.Turnout;
+import jmri.jmrit.logix.OBlock;
+import jmri.jmrit.logix.Warrant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -91,7 +90,6 @@ import org.slf4j.LoggerFactory;
  * Jython code can easily use some of the methods.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version $Revision$
  */
 public class AbstractAutomaton implements Runnable {
 
@@ -285,8 +283,6 @@ public class AbstractAutomaton implements Runnable {
      * <P>
      * Because of the way Jython access handles synchronization, this is
      * explicitly synchronized internally.
-     *
-     * @param milliseconds
      */
     protected void wait(int milliseconds) {
         if (!inThread) {
@@ -507,25 +503,25 @@ public class AbstractAutomaton implements Runnable {
      * thread. That listener then interrupts the automaton's thread, who
      * confirms the change.
      *
-     * @param Warrant  The name of the warrant to watch
+     * @param warrant  The name of the warrant to watch
      * @param state    State to check (static value from jmri.logix.warrant)
      */
-    public synchronized void waitWarrantRunState(Warrant Warrant, int state) {
+    public synchronized void waitWarrantRunState(Warrant warrant, int state) {
         if (!inThread) {
             log.warn("waitWarrantRunState invoked from invalid context");
         }
         if (log.isDebugEnabled()) {
-            log.debug("waitWarrantRunState "+Warrant.getDisplayName()+", "+state+" starts");
+            log.debug("waitWarrantRunState "+warrant.getDisplayName()+", "+state+" starts");
         }
 
         // do a quick check first, just in case
-        if (Warrant.getRunMode() == state) {
+        if (warrant.getRunMode() == state) {
             log.debug("waitWarrantRunState returns immediately");
             return;
         }
         // register listener
         java.beans.PropertyChangeListener listener;
-        Warrant.addPropertyChangeListener(listener = new java.beans.PropertyChangeListener() {
+        warrant.addPropertyChangeListener(listener = new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 synchronized (self) {
                    log.debug("notify waitWarrantRunState of property change");
@@ -534,12 +530,12 @@ public class AbstractAutomaton implements Runnable {
             }
         });
 
-        while (Warrant.getRunMode() != state) {
+        while (warrant.getRunMode() != state) {
             wait(-1);
         }
 
         // remove the listener
-        Warrant.removePropertyChangeListener(listener);
+        warrant.removePropertyChangeListener(listener);
 
         return;
     }
@@ -551,26 +547,26 @@ public class AbstractAutomaton implements Runnable {
      * thread. That listener then interrupts the automation's thread, who
      * confirms the change.
      *
-     * @param Warrant  The name of the warrant to watch
-     * @param Block    Block to check
-     * @param Occupied Determines whether to wait for the block to become occupied or unoccupied
+     * @param warrant  The name of the warrant to watch
+     * @param block    block to check
+     * @param occupied Determines whether to wait for the block to become occupied or unoccupied
      */
-    public synchronized void waitWarrantBlock(Warrant Warrant, String Block, boolean Occupied) {
+    public synchronized void waitWarrantBlock(Warrant warrant, String block, boolean occupied) {
         if (!inThread) {
             log.warn("waitWarrantBlock invoked from invalid context");
         }
         if (log.isDebugEnabled()) {
-            log.debug("waitWarrantBlock "+Warrant.getDisplayName()+", "+Block+" "+Occupied+" starts");
+            log.debug("waitWarrantBlock "+warrant.getDisplayName()+", "+block+" "+occupied+" starts");
         }
 
         // do a quick check first, just in case
-        if (Warrant.getCurrentBlockName().equals(Block) == Occupied) {
+        if (warrant.getCurrentBlockName().equals(block) == occupied) {
             log.debug("waitWarrantBlock returns immediately");
             return;
         }
         // register listener
         java.beans.PropertyChangeListener listener;
-        Warrant.addPropertyChangeListener(listener = new java.beans.PropertyChangeListener() {
+        warrant.addPropertyChangeListener(listener = new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 synchronized (self) {
                    log.debug("notify waitWarrantBlock of property change");
@@ -579,15 +575,18 @@ public class AbstractAutomaton implements Runnable {
             }
         });
 
-        while (Warrant.getCurrentBlockName().equals(Block) != Occupied) {
+        while (warrant.getCurrentBlockName().equals(block) != occupied) {
             wait(-1);
         }
 
         // remove the listener
-        Warrant.removePropertyChangeListener(listener);
+        warrant.removePropertyChangeListener(listener);
 
         return;
     }
+
+    private boolean blockChanged = false;
+    private String blockName = null;
 
     /**
      * Wait for a warrant to either enter a new block or to stop running.
@@ -596,30 +595,28 @@ public class AbstractAutomaton implements Runnable {
      * thread. That listener then interrupts the automation's thread, who
      * confirms the change.
      *
-     * @param Warrant  The name of the warrant to watch
+     * @param warrant  The name of the warrant to watch
      *
      * Return value: The name of the block that was entered or null if the warrant is no longer running.
      */
-    private boolean blockChanged = false;
-    private String blockName = null;
-    public synchronized String waitWarrantBlockChange(Warrant Warrant) {
+    public synchronized String waitWarrantBlockChange(Warrant warrant) {
         if (!inThread) {
             log.warn("waitWarrantBlockChange invoked from invalid context");
         }
         if (log.isDebugEnabled()) {
-            log.debug("waitWarrantBlockChange "+Warrant.getDisplayName());
+            log.debug("waitWarrantBlockChange "+warrant.getDisplayName());
         }
 
         // do a quick check first, just in case
-        if (Warrant.getRunMode() != Warrant.MODE_RUN) {
+        if (warrant.getRunMode() != Warrant.MODE_RUN) {
             log.debug("waitWarrantBlockChange returns immediately");
             return null;
         }
-        // register listener
+        // register listenerod
         blockChanged = false;
         blockName = null;
         java.beans.PropertyChangeListener listener;
-        Warrant.addPropertyChangeListener(listener = new java.beans.PropertyChangeListener() {
+        warrant.addPropertyChangeListener(listener = new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 synchronized (self) {
                     if (e.getPropertyName().equals("blockChange")) {
@@ -632,16 +629,16 @@ public class AbstractAutomaton implements Runnable {
             }
         });
 
-        while (!blockChanged && Warrant.getRunMode() == Warrant.MODE_RUN) {
+        while (!blockChanged && warrant.getRunMode() == Warrant.MODE_RUN) {
             wait(-1);
         }
 
-        if (Warrant.getRunMode() != Warrant.MODE_RUN) {
+        if (warrant.getRunMode() != Warrant.MODE_RUN) {
             blockName = null;
         }
 
         // remove the listener
-        Warrant.removePropertyChangeListener(listener);
+        warrant.removePropertyChangeListener(listener);
 
         return blockName;
     }
@@ -824,7 +821,7 @@ public class AbstractAutomaton implements Runnable {
      * Obtains a DCC throttle, including waiting for the command station
      * response.
      *
-     * @param address
+     * @param address     Numeric address value
      * @param longAddress true if this is a long address, false for a short
      *                    address
      * @param waitSecs    number of seconds to wait for throttle to acquire
@@ -952,7 +949,7 @@ public class AbstractAutomaton implements Runnable {
      * Write a CV on the service track, including waiting for completion.
      *
      * @param CV    Number 1 through 512
-     * @param value
+     * @param value Value 0-255 to be written
      * @return true if completed OK
      */
     public boolean writeServiceModeCV(int CV, int value) {
@@ -960,6 +957,11 @@ public class AbstractAutomaton implements Runnable {
         Programmer programmer = InstanceManager.programmerManagerInstance()
                 .getGlobalProgrammer();
 
+        if (programmer == null) {
+            log.error("No programmer available as JMRI is currently configured");
+            return false;
+        }
+        
         // do the write, response will wake the thread
         try {
             programmer.writeCV(CV, value, new ProgListener() {
@@ -992,7 +994,12 @@ public class AbstractAutomaton implements Runnable {
         Programmer programmer = InstanceManager.programmerManagerInstance()
                 .getGlobalProgrammer();
 
-        // do the write, response will wake the thread
+        if (programmer == null) {
+            log.error("No programmer available as JMRI is currently configured");
+            return -1;
+        }
+        
+        // do the read, response will wake the thread
         cvReturnValue = -1;
         try {
             programmer.readCV(CV, new ProgListener() {
@@ -1016,7 +1023,7 @@ public class AbstractAutomaton implements Runnable {
      * Write a CV in ops mode, including waiting for completion.
      *
      * @param CV          Number 1 through 512
-     * @param value
+     * @param value       0-255 value to be written
      * @param loco        Locomotive decoder address
      * @param longAddress true is the locomotive is using a long address
      * @return true if completed OK
@@ -1026,6 +1033,11 @@ public class AbstractAutomaton implements Runnable {
         Programmer programmer = InstanceManager.programmerManagerInstance()
                 .getAddressedProgrammer(longAddress, loco);
 
+        if (programmer == null) {
+            log.error("No programmer available as JMRI is currently configured");
+            return false;
+        }
+        
         // do the write, response will wake the thread
         try {
             programmer.writeCV(CV, value, new ProgListener() {
@@ -1176,5 +1188,3 @@ public class AbstractAutomaton implements Runnable {
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(AbstractAutomaton.class.getName());
 }
-
-/* @(#)AbstractAutomaton.java */

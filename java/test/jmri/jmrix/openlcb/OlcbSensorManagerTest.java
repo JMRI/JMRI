@@ -1,4 +1,3 @@
-// OlcbSensorManagerTest.java
 package jmri.jmrix.openlcb;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.openlcb.OlcbSensorManager class.
  *
  * @author	Bob Jacobsen Copyright 2008, 2010
- * @version $Revision$
  */
 public class OlcbSensorManagerTest extends TestCase {
 
@@ -24,7 +22,7 @@ public class OlcbSensorManagerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {OlcbSensorManagerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

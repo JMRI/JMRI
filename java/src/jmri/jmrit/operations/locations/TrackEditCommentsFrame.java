@@ -93,6 +93,7 @@ public class TrackEditCommentsFrame extends OperationsFrame {
     }
 
     // Buttons
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == saveButton) {
             _track.setCommentBoth(commentBothTextArea.getText());

@@ -1,4 +1,3 @@
-//AbstractMonPane.java
 package jmri.jmrix;
 
 import java.awt.Dimension;
@@ -36,14 +35,8 @@ import org.slf4j.LoggerFactory;
  * Abstract base class for JPanels displaying communications monitor information
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2010
- * @version	$Revision$
  */
 public abstract class AbstractMonPane extends JmriPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7081617855075498357L;
 
     // template functions to fill in
     @Override
@@ -93,16 +86,11 @@ public abstract class AbstractMonPane extends JmriPanel {
     String filterFieldCheck = this.getClass().getName() + ".FilterField"; // NOI18N
     jmri.UserPreferencesManager p;
 
-    // for locking
-    AbstractMonPane self;
-
     // to find and remember the log file
     final javax.swing.JFileChooser logFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
 
-    @SuppressWarnings("LeakingThisInConstructor") // NOI18N
     public AbstractMonPane() {
         super();
-        self = this;
     }
 
     /**
@@ -212,7 +200,7 @@ public abstract class AbstractMonPane extends JmriPanel {
         }
         //automatically uppercase input in filterField, and only accept spaces and valid hex characters
         ((AbstractDocument) filterField.getDocument()).setDocumentFilter(new DocumentFilter() {
-            final String pattern = "[0-9a-fA-F ]*+"; // typing inserts individual characters
+            final static String pattern = "[0-9a-fA-F ]*+"; // typing inserts individual characters
             public void insertString(DocumentFilter.FilterBypass fb, int offset, String text,
                     AttributeSet attrs) throws BadLocationException {
                 if (text.matches(pattern)) { // NOI18N
@@ -410,7 +398,6 @@ public abstract class AbstractMonPane extends JmriPanel {
     /**
      * Handle display of traffic.
      *
-     * @param timestamp
      * @param line The traffic in normal parsed form, ending with \n
      * @param raw The traffic in raw form, ending with \n
      */
@@ -430,7 +417,7 @@ public abstract class AbstractMonPane extends JmriPanel {
 
         // display parsed data
         sb.append(line);
-        synchronized (self) {
+        synchronized (this) {
             linesBuffer.append(sb.toString());
         }
 
@@ -470,7 +457,7 @@ public abstract class AbstractMonPane extends JmriPanel {
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                synchronized (self) {
+                synchronized (AbstractMonPane.this) {
                     monTextPane.append(linesBuffer.toString());
                     int LineCount = monTextPane.getLineCount();
                     if (LineCount > MAX_LINES) {
@@ -578,7 +565,7 @@ public abstract class AbstractMonPane extends JmriPanel {
         return monTextPane.getText();
     }
 
-    public String getFilterText() {
+    public synchronized String getFilterText() {
         return filterField.getText();
     }
 
@@ -614,5 +601,5 @@ public abstract class AbstractMonPane extends JmriPanel {
     protected StringBuffer linesBuffer = new StringBuffer();
     static private int MAX_LINES = 500;
 
-    private static final Logger log = LoggerFactory.getLogger(AbstractMonFrame.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AbstractMonPane.class.getName());
 }

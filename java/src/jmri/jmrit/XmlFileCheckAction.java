@@ -1,6 +1,7 @@
-// XmlFileCheckAction.java
 package jmri.jmrit;
 
+import jmri.util.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import javax.swing.AbstractAction;
@@ -11,28 +12,26 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Make sure an XML file is readable, without doing a DTD validation.
+ * Make sure an XML file is readable, without doing a Schema validation.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2005, 2007
- * @version	$Revision$
  * @see jmri.jmrit.XmlFile
  * @see jmri.jmrit.XmlFileValidateAction
  */
-public class XmlFileCheckAction extends AbstractAction {
+public class XmlFileCheckAction extends jmri.util.swing.JmriAbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1237100382487992245L;
-
-    public XmlFileCheckAction(String s, JPanel who) {
+    public XmlFileCheckAction(String s, Component who) {
         super(s);
         _who = who;
     }
 
+    public XmlFileCheckAction(String s, WindowInterface wi) {
+        this(s, wi!=null ? wi.getFrame() : null);
+    }
+
     JFileChooser fci;
 
-    JPanel _who;
+    Component _who;
 
     public void actionPerformed(ActionEvent e) {
         if (fci == null) {
@@ -79,6 +78,11 @@ public class XmlFileCheckAction extends AbstractAction {
 
     }
 
+    // never invoked, because we overrode actionPerformed above
+    @Override
+    public JmriPanel makePanel() {
+        throw new IllegalArgumentException("Should not be invoked");
+    }
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(XmlFileCheckAction.class.getName());
 }

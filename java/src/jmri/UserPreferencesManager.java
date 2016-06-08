@@ -1,4 +1,3 @@
-// UserPreferencesManager.java
 package jmri;
 
 import java.awt.Dimension;
@@ -7,6 +6,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import javax.swing.SortOrder;
 
 /**
  * Interface for the User Preferences Manager.
@@ -18,9 +18,10 @@ import java.util.List;
  * @see jmri.managers.DefaultUserMessagePreferences
  *
  * @author Kevin Dickerson Copyright (C) 2010
- * @version	$Revision$
  */
 public interface UserPreferencesManager {
+
+    public static final String PREFERENCES_UPDATED = "PreferencesUpdated"; // NOI18N
 
     public void setLoading();
 
@@ -125,7 +126,7 @@ public interface UserPreferencesManager {
     public boolean getSessionPreferenceState(String name);
 
     /**
-     * Used to surpress messages for the current session, the information is not
+     * Used to suppress messages for the current session, the information is not
      * stored, can not be changed via the GUI.
      * <p>
      * This can be used to help prevent over loading the user with repetitive
@@ -134,8 +135,8 @@ public interface UserPreferencesManager {
      * should start with the package name (package.Class) for the primary using
      * class.
      *
-     * @param name  A unique identifer for preference.
-     * @param state
+     * @param name  A unique identifier for preference.
+     * @param state suppression state of the item.
      */
     public void setSessionPreferenceState(String name, boolean state);
 
@@ -145,8 +146,8 @@ public interface UserPreferencesManager {
     /**
      * Show an info message ("don't forget ...") with a given dialog title and
      * user message. Use a given preference name to determine whether to show it
-     * in the future. The classString & item parameters should form a unique
-     * value
+     * in the future. The classString {@literal &} item parameters should form a
+     * unique value
      *
      * @param title       Message Box title
      * @param message     Message to be displayed
@@ -159,8 +160,8 @@ public interface UserPreferencesManager {
      * Show an error message ("don't forget ...") with a given dialog title and
      * user message. Use a given preference name to determine whether to show it
      * in the future. added flag to indicate that the message should be
-     * suppressed JMRI session only. The classString & item parameters should
-     * form a unique value
+     * suppressed JMRI session only. The classString {@literal &} item
+     * parameters should form a unique value
      *
      * @param title          Message Box title
      * @param message        Message to be displayed
@@ -177,8 +178,8 @@ public interface UserPreferencesManager {
      * Show an info message ("don't forget ...") with a given dialog title and
      * user message. Use a given preference name to determine whether to show it
      * in the future. added flag to indicate that the message should be
-     * suppressed JMRI session only. The classString & item parameters should
-     * form a unique value
+     * suppressed JMRI session only. The classString {@literal &} item
+     * parameters should form a unique value
      *
      * @param title          Message Box title
      * @param message        Message to be displayed
@@ -195,8 +196,8 @@ public interface UserPreferencesManager {
      * Show a warning message ("don't forget ...") with a given dialog title and
      * user message. Use a given preference name to determine whether to show it
      * in the future. added flag to indicate that the message should be
-     * suppressed JMRI session only. The classString & item parameters should
-     * form a unique value
+     * suppressed JMRI session only. The classString {@literal &} item
+     * parameters should form a unique value
      *
      * @param title          Message Box title
      * @param message        Message to be displayed
@@ -282,6 +283,8 @@ public interface UserPreferencesManager {
      * "getClassDescription" and "setMessagePreferenceDetails". If found it will
      * invoke the methods, this will then trigger the class to send details
      * about its preferences back to this code.
+     *
+     * @param strClass description to use for the class
      */
     public void setClassDescription(String strClass);
 
@@ -414,7 +417,7 @@ public interface UserPreferencesManager {
     /**
      * Do we have a saved window position for the class
      *
-     * @param strClass
+     * @param strClass class to check
      * @return true if the window position details are stored, false if not.
      */
     public boolean isWindowPositionSaved(String strClass);
@@ -431,19 +434,30 @@ public interface UserPreferencesManager {
      * Attach a key/value pair to the given class, which can be retrieved later.
      * These are not bound properties as yet, and don't throw events on
      * modification. Key must not be null.
+     *
+     * @param strClass class to use
+     * @param key      Prior to 4.3.5, this could be an Object.
+     * @param value    value to use
      */
-    public void setProperty(String strClass, Object key, Object value);
+    public void setProperty(String strClass, String key, Object value);
 
     /**
      * Retrieve the value associated with a key in a given class If no value has
      * been set for that key, returns null.
+     *
+     * @param strClass class to use
+     * @param key      item to retrieve
+     * @return stored value
      */
-    public Object getProperty(String strClass, Object key);
+    public Object getProperty(String strClass, String key);
 
     /**
      * Retrieve the complete current set of keys for a given class.
+     *
+     * @param strClass class to use
+     * @return complete set of keys
      */
-    public java.util.Set<Object> getPropertyKeys(String strClass);
+    public java.util.Set<String> getPropertyKeys(String strClass);
 
     /**
      * Stores the details of a tables column, so that it can be saved and
@@ -456,7 +470,7 @@ public interface UserPreferencesManager {
      * @param sort   The sort order of the column
      * @param hidden Should the column be hidden
      */
-    public void setTableColumnPreferences(String table, String column, int order, int width, int sort, boolean hidden);
+    public void setTableColumnPreferences(String table, String column, int order, int width, SortOrder sort, boolean hidden);
 
     /**
      * Get the stored position of the column for a given table
@@ -481,9 +495,9 @@ public interface UserPreferencesManager {
      *
      * @param table  The reference for the table
      * @param column The column name
-     * @return 0 if not found
+     * @return {@link javax.swing.SortOrder#UNSORTED} if not found
      */
-    public int getTableColumnSort(String table, String column);
+    public SortOrder getTableColumnSort(String table, String column);
 
     /**
      * Get the stored column hidden state for a given table
@@ -514,7 +528,7 @@ public interface UserPreferencesManager {
     /**
      * Get a list of all the column settings for a specific table
      *
-     * @param table
+     * @param table table to retrieve column settings for
      * @return a List of all the columns in a table, if the table is not valid
      *         an empty list is returned
      */
@@ -566,7 +580,7 @@ public interface UserPreferencesManager {
 
      */
 
-    /*
+ /*
      Example question message dialog box.
         
      final DefaultUserMessagePreferences p;

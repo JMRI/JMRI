@@ -1,4 +1,3 @@
-/* Programmer.java */
 package jmri;
 
 import java.beans.PropertyChangeListener;
@@ -41,7 +40,6 @@ import java.util.List;
  * <P>
  * @see jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2013
- * @version	$Revision$
  */
 public interface Programmer {
 
@@ -190,6 +188,3 @@ public interface Programmer {
     public String decodeErrorCode(int i);
 
 }
-
-
-/* @(#)Programmer.java */

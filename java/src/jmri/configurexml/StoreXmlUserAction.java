@@ -1,4 +1,3 @@
-// StoreXmlUserAction.java
 package jmri.configurexml;
 
 import java.awt.event.ActionEvent;
@@ -18,15 +17,10 @@ import org.slf4j.LoggerFactory;
  * files.
  *
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version	$Revision$
  * @see jmri.jmrit.XmlFile
  */
 public class StoreXmlUserAction extends StoreXmlConfigAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2422199264501755141L;
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
 
     public StoreXmlUserAction() {
@@ -40,8 +34,8 @@ public class StoreXmlUserAction extends StoreXmlConfigAction {
     public void actionPerformed(ActionEvent e) {
         JFileChooser userFileChooser = getUserFileChooser();
         userFileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
-        userFileChooser.setApproveButtonText(rb.getString("MenuItemStore"));
-        userFileChooser.setDialogTitle(rb.getString("MenuItemStore"));
+        userFileChooser.setApproveButtonText(rb.getString("StorePanelTitle"));
+        userFileChooser.setDialogTitle(rb.getString("StorePanelTitle"));
         java.io.File file = getFileCustom(userFileChooser);
 
         if (file == null) {
