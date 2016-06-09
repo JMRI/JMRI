@@ -14,6 +14,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -201,9 +202,21 @@ public class JmriJFrameServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (WebServerPreferences.getDefault().isDisableFrames()) {
+            if (WebServerPreferences.getDefault().isRedirectFramesToPanels()) {
+                if (JSON.JSON.equals(request.getParameter("format"))) {
+                    response.sendRedirect("/panel?format=json");
+                } else {
+                    response.sendRedirect("/panel");
+                }
+            } else {
+                response.sendError(HttpServletResponse.SC_FORBIDDEN, Bundle.getMessage(request.getLocale(), "FramesAreDisabled"));
+            }
+            return;
+        }
         JmriJFrame frame = null;
         String name = getFrameName(request.getRequestURI());
-        List<String> disallowedFrames = WebServerPreferences.getDefault().getDisallowedFrames();
+        List<String> disallowedFrames = Arrays.asList(WebServerPreferences.getDefault().getDisallowedFrames());
         if (name != null) {
             if (disallowedFrames.contains(name)) {
                 response.sendError(HttpServletResponse.SC_FORBIDDEN, "Frame [" + name + "] not allowed (check Preferences)");
@@ -241,8 +254,8 @@ public class JmriJFrameServlet extends HttpServlet {
     private void doHtml(JmriJFrame frame, HttpServletRequest request, HttpServletResponse response, Map<String, String[]> parameters) throws ServletException, IOException {
         Date now = new Date();
         boolean click = false;
-        boolean useAjax = WebServerPreferences.getDefault().useAjax();
-        boolean plain = WebServerPreferences.getDefault().isPlain();
+        boolean useAjax = WebServerPreferences.getDefault().isUseAjax();
+        boolean plain = WebServerPreferences.getDefault().isSimple();
         String clickRetryTime = Integer.toString(WebServerPreferences.getDefault().getClickDelay());
         String noclickRetryTime = Integer.toString(WebServerPreferences.getDefault().getRefreshDelay());
         boolean protect = false;
@@ -318,7 +331,7 @@ public class JmriJFrameServlet extends HttpServlet {
     }
 
     private void doList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<String> disallowedFrames = WebServerPreferences.getDefault().getDisallowedFrames();
+        List<String> disallowedFrames = Arrays.asList(WebServerPreferences.getDefault().getDisallowedFrames());
         String format = request.getParameter("format"); // NOI18N
         ObjectMapper mapper = new ObjectMapper();
         Date now = new Date();

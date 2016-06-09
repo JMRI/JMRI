@@ -1,4 +1,3 @@
-// BackupBase.java
 package jmri.jmrit.operations.setup;
 
 import java.io.File;
@@ -91,7 +90,7 @@ public abstract class BackupBase {
      * directory.
      *
      * @param setName The name of the new backup set
-     * @throws java.io.IOException
+     * @throws java.io.IOException Due to trouble writing files
      */
     public void backupFilesToSetName(String setName) throws IOException {
         validateNotNullOrEmpty(setName);
@@ -114,7 +113,7 @@ public abstract class BackupBase {
      * to be part of the JMRI hierarchy.
      *
      * @param backupDirectory The directory to use for the backup.
-     * @throws java.io.IOException
+     * @throws java.io.IOException Due to trouble writing files
      */
     public void backupFilesToDirectory(File backupDirectory) throws IOException {
         copyBackupSet(getOperationsRoot(), backupDirectory);
@@ -125,7 +124,7 @@ public abstract class BackupBase {
      *
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
-            justification = "not possible")
+            justification = "not possible")  // NOI18N
     public String[] getBackupSetList() {
         String[] setList = getBackupRoot().list();
         // no guarantee of order, so we need to sort
@@ -144,7 +143,7 @@ public abstract class BackupBase {
     }
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
-            justification = "not possible")
+            justification = "not possible")  // NOI18N
     public BackupSet[] getBackupSets() {
         // This is a bit of a kludge for now, until I learn more about dynamic
         // sets
@@ -161,7 +160,6 @@ public abstract class BackupBase {
     /**
      * Check to see if the given backup set already exists in the backup store.
      *
-     * @param setName
      * @return true if it exists
      */
     public boolean checkIfBackupSetExists(String setName) {
@@ -183,8 +181,7 @@ public abstract class BackupBase {
     /**
      * Restores a Backup Set with the given name from the backup store.
      *
-     * @param setName
-     * @throws java.io.IOException
+     * @throws java.io.IOException Due to trouble loading files
      */
     public void restoreFilesFromSetName(String setName) throws IOException {
         copyBackupSet(new File(getBackupRoot(), setName), getOperationsRoot());
@@ -193,8 +190,7 @@ public abstract class BackupBase {
     /**
      * Restores a Backup Set from the given directory.
      *
-     * @param directory
-     * @throws java.io.IOException
+     * @throws java.io.IOException Due to trouble loading files
      */
     public void restoreFilesFromDirectory(File directory) throws IOException {
         log.debug("restoring files from directory {}", directory.getAbsolutePath());
@@ -209,9 +205,7 @@ public abstract class BackupBase {
      *
      * Only copies files that are included in the list of Operations files.
      *
-     * @param sourceDir
-     * @param destDir
-     * @throws java.io.IOException
+     * @throws java.io.IOException Due to trouble reading or writing
      */
     public void copyBackupSet(File sourceDir, File destDir) throws IOException {
         log.debug("copying backup set from: {} to: {}", sourceDir, destDir);
@@ -304,7 +298,7 @@ public abstract class BackupBase {
     /**
      * Reloads the demo Operations files that are distributed with JMRI.
      *
-     * @throws java.io.IOException
+     * @throws java.io.IOException Due to trouble loading files
      */
     public void loadDemoFiles() throws IOException {
         File fromDir = new File(XmlFile.xmlDir(), "demoOperations"); // NOI18N
@@ -375,7 +369,7 @@ public abstract class BackupBase {
      * files in place.
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
-            justification = "not possible")
+            justification = "not possible")  // NOI18N
     public void deleteOperationsFiles() {
         // TODO Maybe this should also only delete specific files used by Operations,
         // and not just all XML files.
@@ -407,7 +401,7 @@ public abstract class BackupBase {
      */
     private String getDate() {
         Date date = Calendar.getInstance().getTime();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy_MM_dd");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy_MM_dd");  // NOI18N
         return simpleDateFormat.format(date);
     }
 
@@ -427,10 +421,6 @@ public abstract class BackupBase {
          * Copies an existing file to a new file. Overwriting a file of the same
          * name is allowed. The destination directory must exist.
          *
-         * @param sourceFileName
-         * @param destFileName
-         * @param overwrite
-         * @throws IOException
          */
         @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "OBL_UNSATISFIED_OBLIGATION")
         public static void copy(String sourceFileName, String destFileName,

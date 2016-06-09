@@ -1,4 +1,3 @@
-// ClockMonPane.java
 package jmri.jmrix.loconet.clockmon;
 
 import java.awt.FlowLayout;
@@ -31,14 +30,8 @@ import org.slf4j.LoggerFactory;
  * active items (Dave Duchamp 2007-2008).
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2004, 2010
- * @version	$Revision$
  */
 public class ClockMonPane extends LnPanel implements SlotListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6741586521030027827L;
 
     public String getHelpTarget() {
         return "package.jmri.jmrix.loconet.clockmon.ClockMonFrame";
@@ -102,7 +95,6 @@ public class ClockMonPane extends LnPanel implements SlotListener {
     /**
      * Handle changed slot contents, due to clock changes.
      *
-     * @param s
      */
     public void notifyChangedSlot(LocoNetSlot s) {
         if (s.getSlot() != LnConstants.FC_SLOT) {

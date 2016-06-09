@@ -596,8 +596,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     }
 
     /**
-     * Internal routine to handle timer starts & restarts
-     * @param delay
+     * Internal routine to handle timer starts {@literal &} restarts
      */
     protected void restartTimer(int delay) {
         if (timer == null) {

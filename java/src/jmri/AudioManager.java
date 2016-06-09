@@ -59,7 +59,8 @@ public interface AudioManager extends Manager {
      * new Audio. Otherwise, the makeSystemName method will attempt to turn it
      * into a valid system name.
      *
-     * @param name
+     * @param name User name or system name to match, or which can be promoted
+     *             to system name
      * @return Never null under normal circumstances
      * @throws AudioException if error occurs during creation
      */
@@ -69,7 +70,7 @@ public interface AudioManager extends Manager {
      * Locate via user name, then system name if needed. If that fails, return
      * null
      *
-     * @param name
+     * @param name User name or system name to match
      * @return null if no match found
      */
     public Audio getAudio(String name);

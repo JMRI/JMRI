@@ -1,4 +1,3 @@
-// AbstractBoardProgPanel.java
 package jmri.jmrix.loconet;
 
 import java.awt.FlowLayout;
@@ -45,15 +44,10 @@ import org.slf4j.LoggerFactory;
  * Inc for separate permission.
  *
  * @author Bob Jacobsen Copyright (C) 2004, 2007
- * @version $Revision$
  */
 abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.LnPanel
         implements LocoNetListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8539447083900083082L;
     JPanel contents = new JPanel();
     java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrix.loconet.LocoNetBundle");
 
@@ -131,8 +125,6 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
 
     /**
      * Constructor which allows the caller to pass in the board ID number
-     * <p>
-     * @param boardNum
      */
     protected AbstractBoardProgPanel(int boardNum) {
         this(boardNum, false);
@@ -161,8 +153,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
 
     /**
      * Set the Board ID number (also known as board address number)
-     * <p>
-     * @param boardId
+     *
      */
     public void setBoardIdValue(Integer boardId) {
         if (boardId < 1) {
@@ -234,7 +225,6 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
     /**
      * updates the status line
      *
-     * @param msg
      */
     protected void setStatus(String msg) {
         status.setText(msg);
@@ -242,7 +232,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
 
     /**
      * Handle GUI layout details during construction.
-     * <P>
+     *
      * @param c component to put on a single line
      */
     protected void appendLine(JComponent c) {
@@ -281,7 +271,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
      * Configure the type word in the LocoNet messages.
      * <P>
      * Known values:
-     * <UL>
+     * </P><UL>
      * <LI>0x70 - PM4
      * <LI>0x71 - BDL16
      * <LI>0x72 - SE8
@@ -440,8 +430,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
      * writeOne() is intended to provide a mechanism to write a single OpSw
      * value (specified by opswIndex), rather than a sequence of OpSws as done
      * by writeAll().
-     * <p>
-     * @param opswIndex <p>
+     *
      * @see jmri.jmrix.loconet.AbstractBoardProgPanel#writeAll()
      */
     public void writeOne(int opswIndex) {
@@ -474,8 +463,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
      * Processes incoming LocoNet message m for OpSw responses to read and write
      * operation messages, and automatically advances to the next OpSw operation
      * as directed by nextState().
-     * <p>
-     * @param m
+     *
      */
     public void message(LocoNetMessage m) {
         if (log.isDebugEnabled()) {

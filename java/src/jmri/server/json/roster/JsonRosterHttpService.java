@@ -123,7 +123,6 @@ class JsonRosterHttpService extends JsonHttpService {
      * folder of the JMRI server. It is expected that clients will fill in the
      * server IP address and port as they know it to be.
      *
-     * @param locale
      * @param id     The id of an entry in the roster.
      * @return a roster entry in JSON notation
      */
@@ -142,7 +141,6 @@ class JsonRosterHttpService extends JsonHttpService {
      * folder of the JMRI server. It is expected that clients will fill in the
      * server IP address and port as they know it to be.
      *
-     * @param locale
      * @param entry  A RosterEntry that may or may not be in the roster.
      * @return a roster entry in JSON notation
      */

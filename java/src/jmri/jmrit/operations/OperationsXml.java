@@ -18,7 +18,6 @@ import org.slf4j.LoggerFactory;
  * Loads and stores the operation setup using xml files.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision$
  */
 public abstract class OperationsXml extends XmlFile {
 
@@ -72,16 +71,14 @@ public abstract class OperationsXml extends XmlFile {
     }
 
     /**
-     * @throws FileNotFoundException
-     * @throws IOException
      */
     protected void writeFile(String filename) throws FileNotFoundException, IOException {
         log.error("writeFile not overridden");
     }
 
     /**
-     * @throws org.jdom2.JDOMException
-     * @throws java.io.IOException
+     * @throws org.jdom2.JDOMException Due to XML parsing error
+     * @throws java.io.IOException Due to trouble accessing named file
      */
     abstract public void readFile(String filename) throws org.jdom2.JDOMException, java.io.IOException;
 
@@ -151,7 +148,7 @@ public abstract class OperationsXml extends XmlFile {
 
     /**
      * Convert standard string to xml string one character at a time expect when
-     * a \n is found. In that case, insert a "<?p?>".
+     * a \n is found. In that case, insert a {@literal "<?p?>"}.
      *
      * @param comment standard string
      * @return string converted to xml format.
@@ -171,7 +168,7 @@ public abstract class OperationsXml extends XmlFile {
 
     /**
      * Convert xml string comment to standard string format one character at a
-     * time, except when <?p?> is found. In that case, insert a \n and skip over
+     * time, except when {@literal <?p?>} is found. In that case, insert a \n and skip over
      * those characters.
      *
      * @param comment input xml comment string
@@ -192,8 +189,7 @@ public abstract class OperationsXml extends XmlFile {
     }
     
     /**
-     * Checks name for the file control characters: 
-     * @param name
+     * Checks name for the file control characters:
      * @return true if name is okay, false if name contains a control character.
      */
     public static boolean checkFileName(String name) {

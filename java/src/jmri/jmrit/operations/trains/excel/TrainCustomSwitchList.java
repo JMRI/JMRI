@@ -57,7 +57,6 @@ public class TrainCustomSwitchList {
     /**
      * Adds one CSV file path to the collection of files to be processed.
      *
-     * @param csvFile
      */
     public static void addCVSFile(File csvFile) {
         // Ignore null files...

@@ -24,7 +24,6 @@ import org.slf4j.LoggerFactory;
  * listeners in that same thread. Reception and transmission are handled in
  * dedicated threads by RcvHandler and XmtHandler objects. Those are internal
  * classes defined here. The thread priorities are:
- * <P>
  * <UL>
  * <LI> RcvHandler - at highest available priority
  * <LI> XmtHandler - down one, which is assumed to be above the GUI
@@ -324,9 +323,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                             }
                             StringBuffer packet = new StringBuffer(msg.length() + SEND_PREFIX.length() + 2);
                             packet.append(SEND_PREFIX);
-                            String hexString = new String();
-                            hexString += "<" + msg.toString() + ">";
-                            packet.append(hexString);
+                            packet.append("<" + msg.toString() + ">");
                             if (debug) {
                                 log.debug("Write to LbServer: " + packet.toString());
                             }

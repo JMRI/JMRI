@@ -15,18 +15,20 @@ import org.slf4j.LoggerFactory;
  * MultiThrottle.
  * <p>
  * Sample messages:<ul>
- * <li> MT+L757<;>L757 On T throttle, add loco L757.
- * <li> MT+L1234<;>L1234 On T throttle, add loco L1234.
- * <li> MTAL757<;>R1 On T throttle, loco L757, set direction to forward.
- * <li> MTAL1234<;>R0 On T throttle, loco L1234, set direction to reverse.
- * <li> MTAL757<;>V42 On T throttle, loco L757, set speed to 42.
- * <li> MTAL1234<;>V42 On T throttle, loco L1234, set speed to 42.
- * <li> MTA*<;>V16 On T throttle, all locos, set speed to 16.
- * <li> MT-L757<;>L757 On T throttle, remove loco L757. (Still has L1234)
+ * <li> {@literal MT+L757<;>L757} On T throttle, add loco L757.
+ * <li> {@literal MT+L1234<;>L1234} On T throttle, add loco L1234.
+ * <li> {@literal MTAL757<;>R1} On T throttle, loco L757, set direction to
+ * forward.
+ * <li> {@literal MTAL1234<;>R0} On T throttle, loco L1234, set direction to
+ * reverse.
+ * <li> {@literal MTAL757<;>V42} On T throttle, loco L757, set speed to 42.
+ * <li> {@literal MTAL1234<;>V42} On T throttle, loco L1234, set speed to 42.
+ * <li> {@literal MTA*<;>V16} On T throttle, all locos, set speed to 16.
+ * <li> {@literal MT-L757<;>L757} On T throttle, remove loco L757. (Still has
+ * L1234)
  * </ul>
  *
  * @author Brett Hoffman Copyright (C) 2011
- * @version $Revision$
  */
 public class MultiThrottle {
 
@@ -51,8 +53,8 @@ public class MultiThrottle {
      * this MultiThrottle.
      *
      * @param message Consists of a control character, the loco's key, a
-     *                separator "<;>", and the action to forward to the
-     *                MultiThrottleController.
+     *                separator {@literal "<;>"}, and the action to forward to
+     *                the MultiThrottleController.
      */
     public void handleMessage(String message) {
         log.debug("MT handleMessage: " + message);
@@ -129,7 +131,6 @@ public class MultiThrottle {
         mtc.shutdownThrottle();
         mtc.removeControllerListener(parentController);
         mtc.removeThrottleControllerListener(parentTCL);
-        mtc = null;
         throttles.remove(key);
         if (log.isDebugEnabled()) {
             log.debug("Throttle: " + key + " removed from MultiThrottle.");

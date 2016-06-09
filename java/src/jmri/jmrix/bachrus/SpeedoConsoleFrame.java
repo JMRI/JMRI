@@ -773,7 +773,6 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
      * Handle "replies" from the hardware. In fact, all the hardware does is
      * send a constant stream of unsolicited speed updates.
      *
-     * @param l
      */
     public synchronized void reply(SpeedoReply l) {  // receive a reply message and log it
         //log.debug("Speedo reply " + l.toString());

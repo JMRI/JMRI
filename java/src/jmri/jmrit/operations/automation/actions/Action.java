@@ -42,9 +42,8 @@ public abstract class Action {
 
     /**
      * Mask off menu bits.
-     * 
-     * @param code
-     * @return code & ActionCodes.CODE_MASK
+     *
+     * @return code {@literal &} ActionCodes.CODE_MASK
      */
     protected int getCode(int code) {
         return code & ActionCodes.CODE_MASK;
@@ -96,7 +95,7 @@ public abstract class Action {
     }
 
     public String getActionString() {
-        return getFormatedMessage("{0}{1}{2}{3}{4}{5}");
+        return getFormatedMessage("{0}{1}{2}{3}{4}{5}"); // NOI18N
     }
 
     public String getActionSuccessfulString() {
@@ -192,8 +191,7 @@ public abstract class Action {
      * <p>
      * action name, train name, route location name, automation name, goto item id,
      * train schedule day.
-     * 
-     * @param message
+     *
      * @return formated message
      */
     public String getFormatedMessage(String message) {

@@ -30,12 +30,12 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
     }
 
     public void actionPerformed(ActionEvent e) {
-        loadFile(this.getConfigFileChooser());
+        loadFile(getConfigFileChooser());
     }
 
     /**
      *
-     * @param fileChooser
+     * @param fileChooser {@link JFileChooser} to use for file selection
      * @return true if successful
      */
     protected boolean loadFile(JFileChooser fileChooser) {

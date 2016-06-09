@@ -119,8 +119,6 @@ public class JLogoutputFrame {
     /**
      * Outputs a message only to the appender which belongs to this frame
      *
-     * @param aLevel
-     * @param aMsg
      */
     public void log(Level aLevel, String aMsg) {
         if (myAppender == null) {
@@ -136,7 +134,6 @@ public class JLogoutputFrame {
      * Creates the appender and adds it to all known Loggers whose additivity
      * flag is false, incl. root logger
      *
-     * @param aTextPane
      * @return A configured Appender
      */
     public JTextPaneAppender createAppender(JTextPane aTextPane) {

@@ -79,7 +79,6 @@ public class JsonRouteHttpService extends JsonHttpService {
      * @return a JSON description of the requested route. Since a route changes
      *         state on a separete thread, this may return a route in the state
      *         prior to this call, the target state, or an intermediate state.
-     * @throws JsonException
      */
     @Override
     public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {

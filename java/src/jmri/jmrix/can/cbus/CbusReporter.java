@@ -26,7 +26,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Mark Riddoch Copyright (C) 2015
- * @version $Revision$
  *
  */
 public class CbusReporter extends AbstractReporter implements CanListener {

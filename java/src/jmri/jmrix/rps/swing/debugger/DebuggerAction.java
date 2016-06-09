@@ -1,4 +1,3 @@
-// DebuggerAction.java
 package jmri.jmrix.rps.swing.debugger;
 
 import java.awt.event.ActionEvent;
@@ -10,14 +9,8 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a DisplayFrame object
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version $Revision$
  */
 public class DebuggerAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6512666760743475128L;
 
     public DebuggerAction(String s) {
         super(s);
@@ -42,6 +35,3 @@ public class DebuggerAction extends AbstractAction {
     private final static Logger log = LoggerFactory.getLogger(DebuggerAction.class.getName());
 
 }
-
-
-/* @(#)DebuggerAction.java */

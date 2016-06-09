@@ -1,4 +1,3 @@
-/* CbusDccOpsModeProgrammer.java */
 package jmri.jmrix.can.cbus;
 
 import java.util.ArrayList;
@@ -20,7 +19,6 @@ import org.slf4j.LoggerFactory;
  *
  * @see jmri.Programmer
  * @author	Andrew Crosland Copyright (C) 2009
- * @version	$Revision$
  */
 public class CbusDccOpsModeProgrammer extends CbusDccProgrammer implements AddressedProgrammer {
 
@@ -114,5 +112,3 @@ public class CbusDccOpsModeProgrammer extends CbusDccProgrammer implements Addre
     }
 
 }
-
-/* @(#)CbusDccOpsModeProgrammer.java */

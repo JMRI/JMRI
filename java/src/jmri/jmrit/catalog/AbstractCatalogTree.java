@@ -54,7 +54,7 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
      * @param pathToRoot Path to Directory to be scanned
      */
     public void insertNodes(String pathToRoot) {
-        CatalogTreeNode root = (CatalogTreeNode) getRoot();
+        CatalogTreeNode root = getRoot();
         if (log.isDebugEnabled()) {
             log.debug("insertNodes: rootName= " + root.getUserObject()
                     + ", pathToRoot= " + pathToRoot);

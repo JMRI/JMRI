@@ -16,6 +16,12 @@ public class XNetMessageExceptionTest extends TestCase {
 
     public void testCtor() {
 
+        XNetMessageException c = new XNetMessageException();
+        Assert.assertNotNull(c);
+    }
+
+    public void testStringCtor() {
+
         XNetMessageException c = new XNetMessageException("Test Exception");
         Assert.assertNotNull(c);
     }
@@ -28,7 +34,7 @@ public class XNetMessageExceptionTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", XNetMessageExceptionTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

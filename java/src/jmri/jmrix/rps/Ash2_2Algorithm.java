@@ -132,22 +132,22 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Return values are the same as with version 2.1. These are as follows.
  * <pre>
- * >= 4    OK.  Value = number of receivers used.
- * 3    Probably OK.  3 receivers used.
- * 1,2    Questionable.  Maybe OK, maybe not.
- * 0    No solution.  Don't even think about using it.  (Position outside the known universe.)
- * -1,-2    Not used.
- * <= -3    Variance of residuals too big.  Probably no good.  Value = minus number of receivers used.
+ * {@literal >= 4}    OK.  Value = number of receivers used.
+ *  3    Probably OK.  3 receivers used.
+ *  1,2    Questionable.  Maybe OK, maybe not.
+ *  0    No solution.  Don't even think about using it.  (Position outside the known universe.)
+ *  -1,-2    Not used.
+ * {@literal <=} -3    Variance of residuals too big.  Probably no good.  Value = minus number of receivers used.
  * (Perhaps close if input is noisy or receiver locations are sloppy.)
- * </pre> Variance too big means RMS residuals > 30 microseconds, i.e. about 0.4
- * inch or 1.0 cm. This is about as small a threshold as I dare use lest random
- * errors occasionally make good measurements appear bad.
+ * </pre> Variance too big means RMS residuals {@literal >} 30 microseconds,
+ * i.e. about 0.4 inch or 1.0 cm. This is about as small a threshold as I dare
+ * use lest random errors occasionally make good measurements appear bad.
  * <p>
  * The restrictions on the configuration of transmitters and receivers,
  * necessary to prevent the program from reporting a spurious position, are the
  * same as those for version 1.1. These are described in the e-mail with that
  * version sent on 12/9/06.
- * 
+ *
 * <P>
  * @author	Robert Ashenfelter Copyright (C) 2008
  * @author	Bob Jacobsen Copyright (C) 2008

@@ -106,11 +106,17 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
         if (keepAliveTimer == null) {
             keepAliveTimer = new java.util.TimerTask(){
                 public void run() {
-                    // If the timer times out, send a request for status
-                    LIUSBEthernetAdapter.this.getSystemConnectionMemo().getXNetTrafficController()
-                            .sendXNetMessage(
+                    // If the timer times out, and we are not currently 
+                    // programming, send a request for status
+                    jmri.jmrix.lenz.XNetSystemConnectionMemo m = LIUSBEthernetAdapter.this
+                                              .getSystemConnectionMemo(); 
+                    XNetTrafficController t = m.getXNetTrafficController();
+                    jmri.jmrix.lenz.XNetProgrammer p = (jmri.jmrix.lenz.XNetProgrammer)(m.getProgrammerManager().getGlobalProgrammer());
+                    if(!(p.programmerBusy())) {
+                       t.sendXNetMessage(
                                     jmri.jmrix.lenz.XNetMessage.getCSStatusRequestMessage(),
                                     null);
+                   }
                 }
             };
         } else {

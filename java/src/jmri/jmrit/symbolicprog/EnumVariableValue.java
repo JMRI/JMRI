@@ -229,7 +229,6 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
      * <P>
      * If the value is larger than any defined, a new one is created.
      *
-     * @param value
      */
     protected void selectValue(int value) {
         for (int i = 0; i < _valueArray.length; i++) {
@@ -403,7 +402,6 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
     /**
      * Notify the connected CVs of a state change from above
      *
-     * @param state
      */
     public void setCvState(int state) {
         _cvMap.get(getCvNum()).setState(state);
