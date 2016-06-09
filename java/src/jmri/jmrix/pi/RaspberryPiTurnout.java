@@ -34,20 +34,32 @@ public class RaspberryPiTurnout extends AbstractTurnout implements Turnout, java
    private int address;
 
    public RaspberryPiTurnout(String systemName) {
-        super(systemName.toUpperCase());
-	log.debug("Provisioning turnout {}",systemName);
-        gpio=GpioFactory.getInstance();
-        address=Integer.parseInt(getSystemName().substring(getSystemName().lastIndexOf("T")+1));
-        pin = gpio.provisionDigitalOutputPin(RaspiPin.getPinByName("GPIO "+address),getSystemName());
-        pin.setShutdownOptions(true, PinState.LOW,PinPullResistance.OFF);
+        this(systemName,GpioFactory.getInstance());
    }
 
    public RaspberryPiTurnout(String systemName, String userName) {
+        this(systemName,userName,GpioFactory.getInstance());
+   }
+
+   public RaspberryPiTurnout(String systemName, GpioController _gpio) {
+        super(systemName.toUpperCase());
+	log.debug("Provisioning turnout {}",systemName);
+        init(systemName.toUpperCase(),_gpio);
+   }
+
+   public RaspberryPiTurnout(String systemName, String userName,GpioController _gpio) {
         super(systemName.toUpperCase(), userName);
         log.debug("Provisioning turnout {} with username '{}'",systemName, userName);
-        gpio=GpioFactory.getInstance();
+        init(systemName.toUpperCase(),_gpio);
+   }
+
+   /**
+    * Common initilization for all constructors
+    */
+   private void init(String systemName, GpioController _gpio) {
+        gpio=_gpio;
         address=Integer.parseInt(getSystemName().substring(getSystemName().lastIndexOf("T")+1));
-        pin = gpio.provisionDigitalOutputPin(RaspiPin.getPinByName("GPIO "+address),getUserName());
+        pin = gpio.provisionDigitalOutputPin(RaspiPin.getPinByName("GPIO "+address),getSystemName());
         pin.setShutdownOptions(true, PinState.LOW,PinPullResistance.OFF);
    }
     
