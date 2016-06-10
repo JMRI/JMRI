@@ -1,4 +1,3 @@
-// SensorGroupFrame.java
 package jmri.jmrit.sensorgroup;
 
 import java.awt.BorderLayout;
@@ -39,14 +38,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2007
  * @author	Pete Cressman Copyright (C) 2009
- * @version	$Revision$
  */
 public class SensorGroupFrame extends jmri.util.JmriJFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3880652830503697536L;
 
     public SensorGroupFrame() {
         super();
@@ -373,7 +366,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
 
         index = _sensorGroupList.getSelectedIndex();
         if (index > -1) {
-            String sysName = ConditionalSystemPrefix + (String) model.elementAt(index);
+            String sysName = ConditionalSystemPrefix + model.elementAt(index);
             String[] msgs = logix.deleteConditional(sysName);
             if (msgs != null) {
                 if (showMsg) {

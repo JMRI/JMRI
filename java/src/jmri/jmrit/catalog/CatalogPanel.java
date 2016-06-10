@@ -213,7 +213,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
                 return;
             }
         }
-        addTreeBranch((CatalogTreeNode) tree.getRoot());
+        addTreeBranch(tree.getRoot());
         _branchModel.add(tree);
         _model.reload();
     }
@@ -260,7 +260,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         TreeNode[] nodes = node.getPath();
         CatalogTreeNode cNode = null;
         for (int i = 0; i < _branchModel.size(); i++) {
-            CatalogTreeNode cRoot = (CatalogTreeNode) _branchModel.get(i).getRoot();
+            CatalogTreeNode cRoot = _branchModel.get(i).getRoot();
             cNode = match(cRoot, nodes, 1);
             if (cNode != null) {
                 break;
@@ -298,7 +298,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         CatalogTree model = null;
         for (int i = 0; i < _branchModel.size(); i++) {
             model = _branchModel.get(i);
-            CatalogTreeNode cRoot = (CatalogTreeNode) model.getRoot();
+            CatalogTreeNode cRoot = model.getRoot();
             if (match(cRoot, nodes, 1) != null) {
                 break;
             }

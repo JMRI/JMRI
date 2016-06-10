@@ -1,4 +1,3 @@
-// CbusProgrammer.java
 package jmri.jmrix.can.cbus;
 
 import java.util.ArrayList;
@@ -16,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * Implements the jmri.Programmer interface via commands for CBUS.
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
  */
 public class CbusProgrammer extends AbstractProgrammer implements CanListener, AddressedProgrammer {
 
@@ -205,6 +203,3 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener, A
 
     private final static Logger log = LoggerFactory.getLogger(CbusProgrammer.class.getName());
 }
-
-
-/* @(#)CbusProgrammer.java */

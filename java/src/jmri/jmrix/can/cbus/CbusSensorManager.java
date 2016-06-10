@@ -1,4 +1,3 @@
-// CbusSensorManager.java
 package jmri.jmrix.can.cbus;
 
 import jmri.JmriException;
@@ -16,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * System names are "MSnnn", where nnn is the sensor number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
  */
 public class CbusSensorManager extends jmri.managers.AbstractSensorManager implements CanListener {
 
@@ -104,5 +102,3 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
     private final static Logger log = LoggerFactory.getLogger(CbusSensorManager.class.getName());
 
 }
-
-/* @(#)CbusSensorManager.java */

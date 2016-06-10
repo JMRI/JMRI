@@ -1,4 +1,3 @@
-//SimpleSensorServer.java
 package jmri.jmris.json;
 
 import static jmri.jmris.json.JSON.NAME;
@@ -11,13 +10,13 @@ import java.util.Locale;
 import jmri.JmriException;
 import jmri.jmris.AbstractRouteServer;
 import jmri.jmris.JmriConnection;
+import jmri.server.json.JsonException;
 
 /**
  * JSON Web Socket interface between the JMRI Sensor manager and a network
  * connection
  *
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision: 21313 $
  */
 public class JsonRouteServer extends AbstractRouteServer {
 

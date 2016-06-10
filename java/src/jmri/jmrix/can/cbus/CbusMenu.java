@@ -1,4 +1,3 @@
-// CbusMenu.java
 package jmri.jmrix.can.cbus;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -8,7 +7,6 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
  *
  * @author	Bob Jacobsen Copyright 2003, 2008, 2009
  * @author Andrew Crosland 2008
- * @version $Revision$
  * @deprecated 2.99.2
  */
 @Deprecated

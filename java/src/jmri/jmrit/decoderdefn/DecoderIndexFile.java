@@ -199,7 +199,7 @@ public class DecoderIndexFile extends XmlFile {
                         e.printStackTrace();
                     }
                 }
-            } catch (Exception e) {
+            } catch (java.io.IOException | org.jdom2.JDOMException e) {
                 log.error("Exception during decoder index update: " + e);
                 e.printStackTrace();
             }

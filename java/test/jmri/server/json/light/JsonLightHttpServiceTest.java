@@ -16,7 +16,7 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import junit.swingui.TestRunner;
+import junit.textui.TestRunner;
 
 /**
  *
@@ -98,13 +98,12 @@ public class JsonLightHttpServiceTest extends TestCase {
         ObjectMapper mapper = new ObjectMapper();
         JsonLightHttpService service = new JsonLightHttpService(mapper);
         LightManager manager = InstanceManager.getDefault(LightManager.class);
-        JsonNode result;
         JsonNode message;
         try {
             // add a light
             Assert.assertNull(manager.getLight("IL1"));
             message = mapper.createObjectNode().put(JSON.NAME, "IL1").put(JSON.STATE, Light.OFF);
-            result = service.doPut(JsonLightServiceFactory.LIGHT, "IL1", message, Locale.ENGLISH);
+            service.doPut(JsonLightServiceFactory.LIGHT, "IL1", message, Locale.ENGLISH);
             Assert.assertNotNull(manager.getLight("IL1"));
         } catch (JsonException ex) {
             Assert.fail(ex.getMessage());
@@ -120,8 +119,8 @@ public class JsonLightHttpServiceTest extends TestCase {
             result = service.doGetList(JsonLightServiceFactory.LIGHT, Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(0, result.size());
-            Light light1 = manager.provideLight("IL1");
-            Light light2 = manager.provideLight("IL2");
+            manager.provideLight("IL1");
+            manager.provideLight("IL2");
             result = service.doGetList(JsonLightServiceFactory.LIGHT, Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(2, result.size());
