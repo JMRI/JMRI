@@ -7,6 +7,7 @@ import jmri.implementation.QuietShutDownTask;
 import jmri.jmris.json.JSON;
 import jmri.jmris.json.JsonServerPreferences;
 import org.eclipse.jetty.websocket.api.Session;
+import org.eclipse.jetty.websocket.api.StatusCode;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketError;
@@ -64,7 +65,7 @@ public class JsonWebSocket {
     @OnWebSocketError
     public void onError(Throwable thrwbl) {
         if (thrwbl instanceof SocketTimeoutException) {
-            log.error(thrwbl.getMessage());
+            this.connection.getSession().close(StatusCode.NO_CLOSE, thrwbl.getMessage());
         } else {
             log.error(thrwbl.getMessage(), thrwbl);
         }
