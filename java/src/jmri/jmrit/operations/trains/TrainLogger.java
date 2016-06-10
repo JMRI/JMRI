@@ -220,7 +220,6 @@ public class TrainLogger extends XmlFile implements java.beans.PropertyChangeLis
     /**
      * Return the date and time in an MS Excel friendly format
      * yyyy/MM/dd HH:mm:ss
-     * @return
      */
     private String getTime() {
         String time = Calendar.getInstance().getTime().toString();

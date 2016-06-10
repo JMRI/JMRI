@@ -404,7 +404,7 @@ public class ManageLocationsFrame extends JmriJFrame {
         }
 
         public String getColumnName(int col) {
-            return columnNames[col].toString();
+            return columnNames[col];
         }
 
         public int getRowCount() {
@@ -484,7 +484,7 @@ public class ManageLocationsFrame extends JmriJFrame {
         }
 
         public String getColumnName(int col) {
-            return columnNames[col].toString();
+            return columnNames[col];
         }
 
         public int getRowCount() {

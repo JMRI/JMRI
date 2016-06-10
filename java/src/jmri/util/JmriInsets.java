@@ -88,7 +88,7 @@ public class JmriInsets {
                     String line = r.readLine();
                     while (line != null) {
                         for (int i = 0; i < desktopList.size(); i++) {
-                            String s = desktopList.get(i).toString();
+                            String s = desktopList.get(i);
                             if (line.contains(s) && !line.contains("grep")) //NOI18N
                             {
                                 return desktopList.indexOf(s);

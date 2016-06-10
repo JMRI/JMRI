@@ -7,6 +7,7 @@ import java.util.List;
 import javax.swing.JComboBox;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import org.jdom2.Attribute;
@@ -92,7 +93,6 @@ public class Route implements java.beans.PropertyChangeListener {
     /**
      * Adds a location to the end of this route
      *
-     * @param location
      * @return RouteLocation created for the location added
      */
     public RouteLocation addLocation(Location location) {
@@ -115,8 +115,6 @@ public class Route implements java.beans.PropertyChangeListener {
      * Add a route location at a specific place (sequence) in the route
      * Allowable sequence numbers are 0 to max size of route;
      *
-     * @param location
-     * @param sequence
      * @return route location
      */
     public RouteLocation addLocation(Location location, int sequence) {
@@ -155,7 +153,6 @@ public class Route implements java.beans.PropertyChangeListener {
     /**
      * Delete a RouteLocation
      *
-     * @param rl
      */
     public void deleteLocation(RouteLocation rl) {
         if (rl != null) {
@@ -231,7 +228,6 @@ public class Route implements java.beans.PropertyChangeListener {
     /**
      * Get location by name (gets last route location with name)
      *
-     * @param name
      * @return route location
      */
     public RouteLocation getLastLocationByName(String name) {
@@ -250,7 +246,6 @@ public class Route implements java.beans.PropertyChangeListener {
     /**
      * Get a RouteLocation by id
      *
-     * @param id
      * @return route location
      */
     public RouteLocation getLocationById(String id) {
@@ -291,7 +286,6 @@ public class Route implements java.beans.PropertyChangeListener {
     /**
      * Places a RouteLocation earlier in the route.
      *
-     * @param rl
      */
     public void moveLocationUp(RouteLocation rl) {
         int sequenceId = rl.getSequenceId();
@@ -314,7 +308,6 @@ public class Route implements java.beans.PropertyChangeListener {
     /**
      * Moves a RouteLocation later in the route.
      *
-     * @param rl
      */
     public void moveLocationDown(RouteLocation rl) {
         int sequenceId = rl.getSequenceId();
@@ -367,6 +360,23 @@ public class Route implements java.beans.PropertyChangeListener {
         return ORPHAN;
     }
     
+    /**
+     * Gets the shortest train length specified in the route.
+     * @return the minimum scale train length for this route.
+     */
+    public int getRouteMinimumTrainLength() {
+        int min = Setup.getMaxTrainLength();
+        for (RouteLocation rl : getLocationsByIdList()) {
+            if (rl.getMaxTrainLength() < min)
+                min = rl.getMaxTrainLength();
+        }
+        return min;
+    }
+    
+    /**
+     * Gets the longest train length specified in the route.
+     * @return the maximum scale train length for this route.
+     */
     public int getRouteMaximumTrainLength() {
         int max = 0;
         for (RouteLocation rl : getLocationsByIdList()) {

@@ -52,7 +52,7 @@ public class DefaultCatalogTreeManagerXml extends XmlFile /* extends jmri.config
             CatalogTree tree = manager.getBySystemName(sname);
             if (log.isDebugEnabled()) {
                 log.debug("Tree: sysName= " + sname + ", userName= " + tree.getUserName());
-                CatalogTreeNode root = (CatalogTreeNode) tree.getRoot();
+                CatalogTreeNode root = tree.getRoot();
                 log.debug("enumerateTree called for root= " + root.toString()
                         + ", has " + root.getChildCount() + " children");
 
@@ -133,7 +133,7 @@ public class DefaultCatalogTreeManagerXml extends XmlFile /* extends jmri.config
                 elem.setAttribute("userName", uname);
             }
 
-            storeNode(elem, (CatalogTreeNode) ct.getRoot());
+            storeNode(elem, ct.getRoot());
 
             if (log.isDebugEnabled()) {
                 log.debug("store CatalogTree " + sname);

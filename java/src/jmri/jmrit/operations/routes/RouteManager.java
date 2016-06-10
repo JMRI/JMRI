@@ -81,7 +81,6 @@ public class RouteManager {
      * Finds an existing route or creates a new route if needed requires route's
      * name creates a unique id for this route
      *
-     * @param name
      *
      * @return new route or existing route
      */
