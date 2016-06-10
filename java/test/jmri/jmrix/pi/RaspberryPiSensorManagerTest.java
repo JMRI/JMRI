@@ -20,6 +20,12 @@ public class RaspberryPiSensorManagerTest {
        Assert.assertNotNull(m);
    }
 
+   @Test
+   public void checkPrefix(){
+       RaspberryPiSensorManager m = new RaspberryPiSensorManager("Pi");
+       Assert.assertEquals("Prefix","Pi",m.getSystemPrefix());
+   }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {

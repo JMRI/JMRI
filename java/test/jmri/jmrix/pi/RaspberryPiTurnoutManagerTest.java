@@ -20,6 +20,13 @@ public class RaspberryPiTurnoutManagerTest {
        Assert.assertNotNull(m);
    }
 
+   @Test
+   public void checkPrefix(){
+       RaspberryPiTurnoutManager m = new RaspberryPiTurnoutManager("Pi");
+       Assert.assertEquals("Prefix","Pi",m.getSystemPrefix());
+   }
+
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
