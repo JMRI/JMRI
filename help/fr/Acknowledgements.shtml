@@ -2,14 +2,14 @@
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.org/community/index.html -->
 
-<html lang="en">
+<html lang="fr">
 <head>
 	<TITLE>JMRI: Acknowledgements</TITLE>
 	<meta content="Bob Jacobsen" name="Author">
 	<meta name="keywords" content="java model railroad JMRI CMRI decoderpro panelpro loconet lenz nce easydcc dcc nmra">
 
 	<!-- Style -->
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 	<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 	<link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -22,13 +22,13 @@
 <div class="nomenu" id="mBody">
 	<div id="mainContent">
 
-		<h2>Acknowledgements: People who've contributed to JMRI</h2>
-		A number have people have contributed their effort to JMRI.
-		They are listed below in alphabetical order. They deserve our thanks.
+		<h2>Remerciements: Personnes qui ont contribuées à JMRI</h2>
+		Un certain nombre de personnes ont contribué par leurs efforts à JMRI.
+		Elles sont listées ci-dessous par ordre alphabétique. Ils méritent nos remerciements.
 		<p>
-			In addition, a large number of people have donated to the
-			project.  For more information, or to donate, please see
-			<a href="http://jmri.org/donations.shtml">our donations page</a>.
+			En complément un nombre important de personnes ont financé le projet. 
+			Pour plus d'information, ou pour donner, SVP voir
+		.  			<a href="http://jmri.org/donations.shtml">notre page de dons</a>.
 
 		<p>
 			<a href="#A">A</a>|<a href="#B">B</a>|<a href="#C">C</a>|<a href="#D">D</a>|<a href="#E">E</a>|<a href="#F">F</a>|<a href="#G">G</a>|<a href="#H">H</a>|<a href="#I">I</a>|<a href="#J">J</a>|<a href="#K">K</a>|<a href="#L">L</a>|<a href="#M">M</a>|<a href="#N">N</a>|<a href="#O">O</a>|<a href="#P">P</a>|<a href="#Q">Q</a>|<a href="#R">R</a>|<a href="#S">S</a>|<a href="#T">T</a>|<a href="#U">U</a>|<a href="#V">V</a>|<a href="#W">W</a>|<a href="#X">X</a>|<a href="#Y">Y</a>|<a href="#Z">Z</a>
@@ -532,12 +532,11 @@
 
 		</ul>
 
-		<h2>Developer Code Swarm</h2>
-		<p>We have created a <a href="http://jmri.org/community/codeswarm.shtml">Code Swarm of JMRI
-			development</a> from its inception to January 2009.  A Code Swarm is a fascinating
-			and dynamic visual representation of change as developers come and go and make
-			changes to the files that make up a project.  More information is available on
-			the <a href="http://jmri.org/community/codeswarm.shtml">Code Swarm</a> page.</p>
+		<h2>Développeur de Code Swarm</h2>
+		<p>nous avons créé un <a href="http://jmri.org/community/codeswarm.shtml">Code Swarm du développement de JMRI
+		</a>depuis sa création à Janvier 2009.  Un Code Swarm est une représentation visuelle dynamique et passionnante 
+		des modifications que les développeurs apportent aux fichiers qui composent un projet.. Plus d'informations sont disponibles sur
+		la page <a href="http://jmri.org/community/codeswarm.shtml">Code Swarm</a> .</p>
 			<!--#include virtual="/Footer" -->
 </div>
 </div>
