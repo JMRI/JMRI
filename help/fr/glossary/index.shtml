@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <head>
-<!-- Translated by Blorec Herv&#233; le 2013-09-25-->
+<!-- Translated by Blorec Herv&#233; le 2016-06-10-->
 <!-- sort routine Copyright http://www.kryogenix.org/code/browser/sorttable/ -->
 <title>JMRI: Glossaire</title>
 <meta name="author" content="Egbert Broerse">
@@ -45,8 +45,8 @@ JMRI: Glossaire
 
 <p>Cette page est le Glossaire JMRI, fournissant de br&#232;ves d&#233;finitions de termes sp&#233;cifiques JMRI, et des liens vers des renseignements suppl&#233;mentaires.</p>
 <p>
-[Feel free to submit suggestions for improvements or additions to the <a href="https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI users</a> Yahoo group, titled &quot;Glossary&quot;.<br>
-Click a heading to sort the list up or down.]</p>
+N'hésitez pas à soumettre des suggestions pour des améliorations ou des ajouts à <a href="https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI users</a> Yahoo group, titled &quot;Glossary&quot;.<br>
+Cliquer sur un titre pour trier la liste vers le haut ou le bas .</p>
 
 <table class="sortable">
 <!-- The JMRI Glossary table, sort by clicking a header -->
@@ -56,7 +56,7 @@ Click a heading to sort the list up or down.]</p>
 <tr>
   <td class="app">All</td>
   <td class="en">Block</td>
-  <td class="descr">A section of track whose occupancy may be individually monitored <a href="../html/tools/Blocks.shtml">...</a></td>
+  <td class="descr">Une section de voie dont l'occupation peut-être surveillée individuellement <a href="../html/tools/Blocks.shtml">...</a></td>
   <td class="de">(Strecken)Block/ Bl&ouml;cke</td>
   <td class="it">Blocco/Blocchi</td>
   <td class="fr">Canton</td>
@@ -76,7 +76,7 @@ Click a heading to sort the list up or down.]</p>
 <tr>
   <td class="app">All</td>
   <td class="en">Light</td>
-  <td class="descr">JMRI output bits that function as on/off switches. When 'Enabled', a Light will respond to changes of its control Sensor, Turnout or Fast Clock. Variable Lights display different intensities (with a special output decoder). Either a Light or a Turnout, but not both, can control a specific digital output bit (address). <a href="../html/tools/Lights.shtml">...</a></td>
+  <td class="descr">Bits de sortie JMRI qui fonctionnent comme des commutateurs on/off. Quand "Activé", une Lumière répondra aux changements de son Capteur de commande, Aiguillage ou Horloge Rapide. Des Lumières Variables affichent différentes intensités (avec un décodeur de sortie spécial). Une Lumière ou un Aiguillage, mais pas les deux, peut commander un bit digital spécifique de sortie (adresse) <a href="../html/tools/Lights.shtml">...</a></td>
   <td class="de">Licht</td>
   <td class="it">Luce</td>
   <td class="fr">Lumi&egrave;re</td>
@@ -96,7 +96,7 @@ Click a heading to sort the list up or down.]</p>
 <tr>
   <td class="app">All</td>
   <td class="en">Memory (Variable)</td>
-  <td class="descr">JMRI software object that can hold any type of contents, like a string of text or an image. Logix can test - and set - the contents of a Memory Variable. Panels can display them. <a href="../html/tools/Memories.shtml">...</a></td>
+  <td class="descr">Objet logiciel JMRI qui peut contenir tout type de contenu, comme une chaîne de texte ou une image. Logix peut tester - et définir  - les contenus d'une Variable Mémoire. Les panneaux peuvent les afficher. <a href="../html/tools/Memories.shtml">...</a></td>
   <td class="de">Speicher</td>
   <td class="it">Variabili in Memoria</td>
   <td class="fr">M&eacute;moire</td>
@@ -106,7 +106,7 @@ Click a heading to sort the list up or down.]</p>
 <tr>
   <td class="app">All</td>
   <td class="en">Reporter</td>
-  <td class="descr">JMRI software object representing information reported back from the layout. It can contain arbitrary information, unlike a Sensor. Each Reporter is associated with some specific source of information on the layout. <a href="../html/tools/Reporters.shtml">...</a></td>
+  <td class="descr">Objet logiciel JMRI representant l'information rapportée depuis le réseau. Elle peut contenir une information arbitraire,contrairement à un capteur. Chaque rapport est associé avec une source d'information spécifique sur le réseaut. <a href="../html/tools/Reporters.shtml">...</a></td>
   <td class="de">Melder</td>
   <td class="it">Reporter</td>
   <td class="fr">Rapport</td>
@@ -126,17 +126,17 @@ Click a heading to sort the list up or down.]</p>
 <tr>
   <td class="app">All</td>
   <td class="en">Script Entry</td>
-  <td class="descr">A series of instructions stored on disk and read into JMRI to interpret, written in the Python language. <a href="../html/tools/scripting/index.shtml">...</a></td>
+  <td class="descr">Une série d'instructions stockées sur le disque et lues dans JMRI pour interprétation, écrites en langage Python. <a href="../html/tools/scripting/index.shtml">...</a></td>
   <td class="de">Skripteingabe</td>
   <td class="it">Ingresso Script</td>
-  <td class="fr"></td>
+  <td class="fr">Scipt d'Entrée</td>
   <td class="en_UK"></td>
   <td class="da"></td>
 </tr>
 <tr>
   <td class="app">All</td>
   <td class="en">Sensor</td>
-  <td class="descr">JMRI input from the layout, used to represent the status of a block occupancy detector, a pushbutton on the fascia etc. A Sensor can be either ACTIVE or INACTIVE (or UNKNOWN). <a href="../html/tools/Sensors.shtml">...</a></td>
+  <td class="descr">Entrée JMRI depuis le réseau pour représenter l'état du détecteur d'occupation du canton,un bouton sur le tableau de bord etc. Un capteur peut être ACTIF, INACTIF ( ou INCONNU ). <a href="../html/tools/Sensors.shtml">...</a></td>
   <td class="de">Detektor</td>
   <td class="it">Sensore</td>
   <td class="fr">Capteur</td>
@@ -157,8 +157,8 @@ Click a heading to sort the list up or down.]</p>
 <tr>
   <td class="app">All</td>
   <td class="en">Turnout</td>
-  <td class="descr">1. A mechanical installation enabling railway trains to be guided from one track to another.<br>
-  2. In JMRI: any On/Off output to the layout, controlled via DCC accessory decoders. The individual output pins on a C/MRI system are also called Turnouts. The two states of the output are called 'Closed' (off, inactive, not commanded state) and 'Thrown' (on, active, commanded state). To report feedback from the layout, Sensor inputs may be assigned to a Turnout. <a href="../html/tools/Turnouts.shtml">...</a></td>
+  <td class="descr">1. Une installation méchanique installation permettant à des trains d'être guidés d'une voie à une autre.<br>
+  2. Dans JMRI n'importe quelle sortie On/Off vers le réseau, commandée par des décodeurs d'accéssoires DCC. les pins individuelles de sortie sur un système C/MRI sont aussi appelées Aiguillage. Les deux états de sortie sont appelés " Direct"(off, inactif, état non commandé ) and "Dévié" (on, actif, état commandé). Pour la rétrosignalisation depuis le réseau, des entrées Capteur peuvent être assignées à un aiguillage <a href="../html/tools/Turnouts.shtml">...</a></td>
   <td class="de">Weiche</td>
   <td class="it">Scambio</td>
   <td class="fr">Aiguillage</td>
@@ -168,7 +168,7 @@ Click a heading to sort the list up or down.]</p>
 <tr>
   <td class="app">All</td>
   <td class="en">User Name</td>
-  <td class="descr">A readable name referring to an item in JMRI, that may be changed and even reused for other items <a href="../html/doc/Technical/Names.shtml">...</a></td>
+  <td class="descr" Un nom lisible faisant référence à un élément dans JMRI, qui peut être changé et même réutilisé pour un autre élément <a href="../html/doc/Technical/Names.shtml">...</a></td>
   <td class="de">Nutzername</td>
   <td class="it">Nome Utente</td>
   <td class="fr">Nom Utilisateur</td>
@@ -181,7 +181,7 @@ Click a heading to sort the list up or down.]</p>
   <td class="descr"></td>
   <td class="de">Direkt Bit (bitweisen Zugriff)</td>
   <td class="it"></td>
-  <td class="fr"></td>
+  <td class="fr">Bit Direct</td>
   <td class="en_UK"></td>
   <td class="da"></td>
 </tr>
@@ -191,7 +191,7 @@ Click a heading to sort the list up or down.]</p>
   <td class="descr"></td>
   <td class="de">Direkt Byte (Bytezugriff )</td>
   <td class="it"></td>
-  <td class="fr"></td>
+  <td class="fr">Octet Direct</td>
   <td class="en_UK"></td>
   <td class="da"></td>
 </tr>
@@ -221,7 +221,7 @@ Click a heading to sort the list up or down.]</p>
   <td class="descr"></td>
   <td class="de">Paged (seitenweise)</td>
   <td class="it"></td>
-  <td class="fr"></td>
+  <td class="fr">Mode paginée</td>
   <td class="en_UK"></td>
   <td class="da"></td>
 </tr>
@@ -241,7 +241,7 @@ Click a heading to sort the list up or down.]</p>
   <td class="descr"></td>
   <td class="de">Programmiergleis</td>
   <td class="it">Binario di Programmazione</td>
-  <td class="fr"></td>
+  <td class="fr">Voie de Programmation</td>
   <td class="en_UK"></td>
   <td class="da">Programmerings Spor</td>
 </tr>
@@ -251,7 +251,7 @@ Click a heading to sort the list up or down.]</p>
   <td class="descr"></td>
   <td class="de">Betriebsgleis</td>
   <td class="it">Programmazione in Linea</td>
-  <td class="fr"></td>
+  <td class="fr">Programmation en exploitation</td>
   <td class="en_UK"></td>
   <td class="da">Programmering p&aring; Anl&aelig;gget</td>
 </tr>
@@ -291,14 +291,14 @@ Click a heading to sort the list up or down.]</p>
   <td class="descr"></td>
   <td class="de">Bedingungssatz</td>
   <td class="it">Conditional</td>
-  <td class="fr"></td>
+  <td class="fr">Conditionnel</td>
   <td class="en_UK"></td>
   <td class="da"></td>
 </tr>
 <tr>
   <td class="app">Logix</td>
   <td class="en">Logix</td>
-  <td class="descr">JMRI software objects that monitor one or more conditions on a layout, and take action when these conditions change in a user-specified way to control outputs on the layout. <a href="../html/tools/Logix.shtml">...</a></td>
+  <td class="descr">Objets logiciels JMRI qui surveille une ou plusieurs conditions sur le réseau, et prend une action quand ces conditions change d'une manière spécifiée par l'utilisateur pour contrôler les sorties sur le réseau <a href="../html/tools/Logix.shtml">...</a></td>
   <td class="de">Logix</td>
   <td class="it">Logix</td>
   <td class="fr">Logix</td>
@@ -307,7 +307,7 @@ Click a heading to sort the list up or down.]</p>
 </tr>
 <tr>
   <td class="app">NX</td>
-  <td class="en">Interlocking</td>
+  <td class="en">Verrouillage</td>
   <td class="descr"></td>
   <td class="de">Verriegelung</td>
   <td class="it"></td>
@@ -321,7 +321,7 @@ Click a heading to sort the list up or down.]</p>
   <td class="descr"></td>
   <td class="de">Gleissloss</td>
   <td class="it"></td>
-  <td class="fr"></td>
+  <td class="fr">Verrou</td>
   <td class="en_UK"></td>
   <td class="da"></td>
 </tr>
@@ -331,7 +331,7 @@ Click a heading to sort the list up or down.]</p>
   <td class="descr"></td>
   <td class="de">verriegeln</td>
   <td class="it"></td>
-  <td class="fr"></td>
+  <td class="fr">Verrouiller</td>
   <td class="en_UK"></td>
   <td class="da"></td>
 </tr>
@@ -341,7 +341,7 @@ Click a heading to sort the list up or down.]</p>
   <td class="descr"></td>
   <td class="de">Einfahrgleis</td>
   <td class="it"></td>
-  <td class="fr"></td>
+  <td class="fr">Voie d'Arrivée</td>
   <td class="en_UK"></td>
   <td class="da"></td>
 </tr>
@@ -371,7 +371,7 @@ Click a heading to sort the list up or down.]</p>
   <td class="descr"></td>
   <td class="de">Zugschlusswagen</td>
   <td class="it"></td>
-  <td class="fr"></td>
+  <td class="fr">Fourgon de Queue</td>
   <td class="en_UK"></td>
   <td class="da"></td>
 </tr>
@@ -401,7 +401,7 @@ Click a heading to sort the list up or down.]</p>
   <td class="descr"></td>
   <td class="de">Zugbegleiter</td>
   <td class="it"></td>
-  <td class="fr"></td>
+  <td class="fr">Chauffeur</td>
   <td class="en_UK"></td>
   <td class="da"></td>
 </tr>
@@ -438,7 +438,7 @@ Click a heading to sort the list up or down.]</p>
 <tr>
   <td class="app">Ops</td>
   <td class="en">Dispatcher</td>
-  <td class="descr">Role assigned during an operating session</td>
+  <td class="descr">Rôle assigné durant une session d'exploitation</td>
   <td class="de">Fahrdienstleiter</td>
   <td class="it"></td>
   <td class="fr">R&eacute;partiteur</td>
@@ -461,7 +461,7 @@ Click a heading to sort the list up or down.]</p>
   <td class="descr"></td>
   <td class="de">Eindziel</td>
   <td class="it">Destinazione</td>
-  <td class="fr">Derni&egrave;r</td>
+  <td class="fr">Destination Finale</td>
   <td class="en_UK"></td>
   <td class="da"></td>
 </tr>
