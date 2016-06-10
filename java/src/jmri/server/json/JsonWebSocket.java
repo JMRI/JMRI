@@ -30,22 +30,22 @@ public class JsonWebSocket {
     @OnWebSocketConnect
     public void onOpen(Session sn) {
         log.debug("Opening connection");
-        this.connection = new JsonConnection(sn);
-        sn.setIdleTimeout((long) (JsonServerPreferences.getDefault().getHeartbeatInterval() * 1.1));
-        this.handler = new JsonClientHandler(this.connection);
-        this.shutDownTask = new QuietShutDownTask("Close open web socket") { // NOI18N
-            @Override
-            public boolean execute() {
-                try {
-                    JsonWebSocket.this.getConnection().sendMessage(JsonWebSocket.this.getConnection().getObjectMapper().createObjectNode().put(JSON.TYPE, JSON.GOODBYE));
-                } catch (IOException e) {
-                    log.warn("Unable to send goodbye while closing socket.\nError was {}", e.getMessage());
-                }
-                JsonWebSocket.this.getConnection().getSession().close();
-                return true;
-            }
-        };
         try {
+            this.connection = new JsonConnection(sn);
+            sn.setIdleTimeout((long) (JsonServerPreferences.getDefault().getHeartbeatInterval() * 1.1));
+            this.handler = new JsonClientHandler(this.connection);
+            this.shutDownTask = new QuietShutDownTask("Close open web socket") { // NOI18N
+                @Override
+                public boolean execute() {
+                    try {
+                        JsonWebSocket.this.getConnection().sendMessage(JsonWebSocket.this.getConnection().getObjectMapper().createObjectNode().put(JSON.TYPE, JSON.GOODBYE));
+                    } catch (IOException e) {
+                        log.warn("Unable to send goodbye while closing socket.\nError was {}", e.getMessage());
+                    }
+                    JsonWebSocket.this.getConnection().getSession().close();
+                    return true;
+                }
+            };
             log.debug("Sending hello");
             this.handler.sendHello(JsonServerPreferences.getDefault().getHeartbeatInterval());
         } catch (IOException e) {
