@@ -118,7 +118,6 @@ public class Location implements java.beans.PropertyChangeListener {
     /**
      * Sets the location's name.
      *
-     * @param name
      */
     public void setName(String name) {
         String old = _name;
@@ -129,6 +128,7 @@ public class Location implements java.beans.PropertyChangeListener {
     }
 
     // for combo boxes
+    @Override
     public String toString() {
         return _name;
     }
@@ -189,7 +189,6 @@ public class Location implements java.beans.PropertyChangeListener {
     /**
      * Set total length of all tracks for this location
      *
-     * @param length
      */
     public void setLength(int length) {
         int old = _length;
@@ -282,7 +281,6 @@ public class Location implements java.beans.PropertyChangeListener {
 
     /**
      *
-     * @param trackType
      * @return True if location has the track type specified Track.INTERCHANGE
      *         Track.YARD Track.SPUR Track.Staging
      */
@@ -330,7 +328,6 @@ public class Location implements java.beans.PropertyChangeListener {
     /**
      * Sets the number of cars and or engines on for this location
      *
-     * @param number
      */
     public void setNumberRS(int number) {
         int old = _numberRS;
@@ -352,7 +349,6 @@ public class Location implements java.beans.PropertyChangeListener {
     /**
      * Sets the number of cars at this location
      *
-     * @param number
      */
     private void setNumberCars(int number) {
         int old = _numberCars;
@@ -374,7 +370,6 @@ public class Location implements java.beans.PropertyChangeListener {
     /**
      * Sets the number of engines at this location
      *
-     * @param number
      */
     private void setNumberEngines(int number) {
         int old = _numberEngines;
@@ -397,7 +392,6 @@ public class Location implements java.beans.PropertyChangeListener {
      * When true, a switchlist is desired for this location. Used for preview
      * and printing a manifest for a single location
      *
-     * @param switchList
      */
     public void setSwitchListEnabled(boolean switchList) {
         boolean old = _switchList;
@@ -520,7 +514,6 @@ public class Location implements java.beans.PropertyChangeListener {
     /**
      * Adds rolling stock to a specific location.
      *
-     * @param rs
      */
     public void addRS(RollingStock rs) {
         setNumberRS(getNumberRS() + 1);
@@ -1094,7 +1087,6 @@ public class Location implements java.beans.PropertyChangeListener {
     
     /**
      * True if this location has a track with pick up or set out restrictions.
-     * @return
      */
     public boolean hasServiceRestrictions() {
         Track track;
@@ -1515,6 +1507,7 @@ public class Location implements java.beans.PropertyChangeListener {
         }
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e

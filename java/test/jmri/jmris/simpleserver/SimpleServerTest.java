@@ -33,7 +33,7 @@ public class SimpleServerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {SimpleServerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -43,11 +43,11 @@ public class SimpleServerTest extends TestCase {
         suite.addTest(jmri.jmris.simpleserver.SimpleTurnoutServerTest.suite());
         suite.addTest(jmri.jmris.simpleserver.SimplePowerServerTest.suite());
         suite.addTest(jmri.jmris.simpleserver.SimpleReporterServerTest.suite());
-        suite.addTest(jmri.jmris.simpleserver.SimpleSensorServerTest.suite());
-        suite.addTest(jmri.jmris.simpleserver.SimpleLightServerTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SimpleSensorServerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SimpleLightServerTest.class));
         suite.addTest(jmri.jmris.simpleserver.SimpleOperationsServerTest.suite());
         suite.addTest(jmri.jmris.simpleserver.SimpleServerManagerTest.suite());
-
+        suite.addTest(BundleTest.suite());
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             // put any tests that require a UI here.
             suite.addTest(jmri.jmris.simpleserver.SimpleServerFrameTest.suite());

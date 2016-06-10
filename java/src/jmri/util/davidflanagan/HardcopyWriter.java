@@ -346,7 +346,6 @@ public class HardcopyWriter extends Writer {
      *
      * @param c the color desired for this String
      * @param s the String
-     * @throws IOException
      */
     public void write(Color c, String s) throws IOException {
         if (page != null) {

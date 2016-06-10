@@ -213,7 +213,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
                 return;
             }
         }
-        addTreeBranch((CatalogTreeNode) tree.getRoot());
+        addTreeBranch(tree.getRoot());
         _branchModel.add(tree);
         _model.reload();
     }
@@ -260,7 +260,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         TreeNode[] nodes = node.getPath();
         CatalogTreeNode cNode = null;
         for (int i = 0; i < _branchModel.size(); i++) {
-            CatalogTreeNode cRoot = (CatalogTreeNode) _branchModel.get(i).getRoot();
+            CatalogTreeNode cRoot = _branchModel.get(i).getRoot();
             cNode = match(cRoot, nodes, 1);
             if (cNode != null) {
                 break;
@@ -298,7 +298,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         CatalogTree model = null;
         for (int i = 0; i < _branchModel.size(); i++) {
             model = _branchModel.get(i);
-            CatalogTreeNode cRoot = (CatalogTreeNode) model.getRoot();
+            CatalogTreeNode cRoot = model.getRoot();
             if (match(cRoot, nodes, 1) != null) {
                 break;
             }
@@ -481,6 +481,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
      * Display the icons in the preview panel
      */
     protected String setIcons() throws OutOfMemoryError {
+        Thread.UncaughtExceptionHandler exceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
         resetPanel();
         CatalogTreeNode node = getSelectedNode();
         if (node == null) {
@@ -593,7 +594,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         gridbag.setConstraints(bottom, c);
         _preview.add(bottom);
 
-        Thread.setDefaultUncaughtExceptionHandler(new jmri.util.exceptionhandler.UncaughtExceptionHandler());
+        Thread.setDefaultUncaughtExceptionHandler(exceptionHandler);
         return java.text.MessageFormat.format(Bundle.getMessage("numImagesInNode"),
                 new Object[]{node.getUserObject(), Integer.valueOf(leaves.size())});
     }

@@ -237,8 +237,8 @@ public class JsonRosterSocketServiceTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {JsonRosterSocketServiceTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        String[] testCaseName = {"-noloading",JsonRosterSocketServiceTest.class.getName()};
+        junit.textui.TestRunner.main(testCaseName);
     }
 
 

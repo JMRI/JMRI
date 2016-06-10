@@ -24,6 +24,7 @@ public class TrackLoadEditAction extends AbstractAction {
         _frame = frame;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (tlef != null) {
             tlef.dispose();

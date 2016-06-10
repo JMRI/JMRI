@@ -26,6 +26,7 @@ public class CarsTableAction extends AbstractAction {
         this(Bundle.getMessage("MenuCars")); // NOI18N
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a car table frame
         new CarsTableFrame(true, null, null);

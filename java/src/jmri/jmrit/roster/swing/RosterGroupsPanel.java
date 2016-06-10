@@ -67,10 +67,6 @@ import org.slf4j.LoggerFactory;
  */
 public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4617322485702894536L;
     private static int GROUPS_MENU = 1;
     private static int ALL_ENTRIES_MENU = 2;
     private JScrollPane scrollPane;
@@ -95,7 +91,6 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
     /**
      * Create a RosterGroupTreePane with the defaultRosterGroup selected.
      *
-     * @param defaultRosterGroup
      */
     public RosterGroupsPanel(String defaultRosterGroup) {
         this.scrollPane = new JScrollPane(getTree());
@@ -503,11 +498,6 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
 
     class TransferHandler extends javax.swing.TransferHandler {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 4224992650668284315L;
-
         @Override
         public boolean canImport(JComponent c, DataFlavor[] transferFlavors) {
             for (DataFlavor flavor : transferFlavors) {
@@ -560,10 +550,6 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
 
     static public class TreeCellRenderer extends DefaultTreeCellRenderer {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 6470385455791687641L;
     }
 
     public class TreeSelectionListener implements javax.swing.event.TreeSelectionListener {

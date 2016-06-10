@@ -13,8 +13,6 @@ import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -26,7 +24,7 @@ public class JsonRosterHttpServiceTest extends TestCase {
     private final static String testGroup1 = "testGroup1";
     private final static String testEntry1 = "testEntry1";
     private final Locale locale = Locale.ENGLISH;
-    private final static Logger log = LoggerFactory.getLogger(JsonRosterHttpServiceTest.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JsonRosterHttpServiceTest.class);
 
     public JsonRosterHttpServiceTest(String testName) {
         super(testName);
@@ -75,6 +73,7 @@ public class JsonRosterHttpServiceTest extends TestCase {
             exception = ex;
         }
         assertNotNull(exception);
+        // false positive warning from Eclipse on following line, please leave in place until we update ecj.jar GitHub #1417
         assertEquals(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, exception.getCode());
     }
 
@@ -99,6 +98,7 @@ public class JsonRosterHttpServiceTest extends TestCase {
             exception = ex;
         }
         assertNotNull(exception);
+        // false positive warning from Eclipse on following line, please leave in place until we update ecj.jar GitHub #1417
         assertEquals(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, exception.getCode());
     }
 
@@ -122,6 +122,7 @@ public class JsonRosterHttpServiceTest extends TestCase {
             exception = ex;
         }
         assertNotNull(exception);
+        // false positive warning from Eclipse on following line, please leave in place until we update ecj.jar GitHub #1417
         assertEquals(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, exception.getCode());
     }
 
@@ -158,6 +159,7 @@ public class JsonRosterHttpServiceTest extends TestCase {
             exception = ex;
         }
         assertNotNull(exception);
+        // false positive warning from Eclipse on following line, please leave in place until we update ecj.jar GitHub #1417
         assertEquals(HttpServletResponse.SC_NOT_FOUND, exception.getCode());
     }
 
@@ -195,8 +197,8 @@ public class JsonRosterHttpServiceTest extends TestCase {
 
         // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {JsonRosterHttpServiceTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        String[] testCaseName = {"-noloading",JsonRosterHttpServiceTest.class.getName()};
+        junit.textui.TestRunner.main(testCaseName);
     }
 
 

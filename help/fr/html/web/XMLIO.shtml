@@ -78,7 +78,7 @@ la mise &#224; jour d'une table lors de tout changement.
 <p>
 S'il vous pla&#238;t noter que ce servlet a seulement &#233;t&#233; utilis&#233; avec
 le
-<a href="WebServer.shtml">Serveur Web JMRI</a>, et peut
+<a href="index.shtml">Serveur Web JMRI</a>, et peut
 ne pas fonctionner avec d'autres conteneurs de servlets. Nous nous sommes engag&#233;s &#224;
 le faire fonctionner, cependant, entrer en contact avec
 les d&#233;veloppeurs JMRI si vous rencontrez des probl&#232;mes.

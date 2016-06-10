@@ -69,7 +69,7 @@ public class SerialSensorManagerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", SerialSensorManagerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -80,14 +80,7 @@ public class SerialSensorManagerTest extends TestCase {
 
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
-        // replace the SensorManager
-        jmri.InstanceManager i = new jmri.InstanceManager() {
-            protected void init() {
-                super.init();
-                root = this;
-            }
-        };
-        Assert.assertNotNull("exists", i);
+        jmri.util.JUnitUtil.resetInstanceManager();
     }
 
     // The minimal setup for log4J

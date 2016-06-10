@@ -1,12 +1,37 @@
 <FindBugsFilter>
+    <!-- items to eventually restore, in rough order -->
+    
      <Match>
-       <!-- Cleanup of class, method names left for later-->
+       <!-- Cleanup of class, method names for clarity, as good examples -->
        <Bug code="Nm" />
      </Match>
 
      <Match>
-       <!-- Design issue, for later -->
+       <!-- Design issue -->
+       <Bug pattern="PZLA_PREFER_ZERO_LENGTH_ARRAYS" />
+     </Match>
+
+     <Match>
+       <!-- Minor clarity issue -->
+       <Bug pattern="RI_REDUNDANT_INTERFACES" />
+     </Match>
+
+     <Match>
+       <!-- This is marked as high priority, but is
+            really just a minor efficiency issue. 
+            Suppressed for now to focus attention on 
+            other high-priority items.  -->
+       <Bug pattern="DM_BOXED_PRIMITIVE_FOR_PARSING" />
+     </Match>
+
+     <Match>
+       <!-- Design issue -->
        <Bug pattern="SIC_INNER_SHOULD_BE_STATIC_ANON" />
+     </Match>
+
+     <Match>
+       <!-- Design issue -->
+       <Bug pattern="SIC_INNER_SHOULD_BE_STATIC_NEEDS_THIS" />
      </Match>
 
      <Match>
@@ -32,35 +57,14 @@
      </Match>
 
      <Match>
-       <!-- Design issue, for later -->
-       <Bug pattern="SIC_INNER_SHOULD_BE_STATIC_NEEDS_THIS" />
-     </Match>
-
-     <Match>
-       <!-- Design issue, for later -->
-       <Bug pattern="PZLA_PREFER_ZERO_LENGTH_ARRAYS" />
-     </Match>
-
-     <Match>
-       <!-- Minor clean-up issue, for later -->
-       <Bug pattern="RI_REDUNDANT_INTERFACES" />
-     </Match>
-
-     <Match>
-       <!-- This is marked as high priority, but is
-            really just a minor efficiency issue. 
-            Suppressed for now to focus attention on 
-            other high-priority items.  -->
-       <Bug pattern="DM_BOXED_PRIMITIVE_FOR_PARSING" />
-     </Match>
-
-     <Match>
-       <!-- JMRI code is often written to trust wierd from other classes,
-            so the question of "malicious" is complicated. These should 
-            eventually be restored one-by-one   -->
+       <!-- JMRI code is often written to trust weird from other classes,
+            so the question of "malicious" is complicated. The rules in 
+            this category should be restored in small batches  -->
        <Bug category="MALICIOUS_CODE" />
      </Match>
 
+    <!-- items we're unlikely to restore -->
+    
      <Match>
        <!-- JMRI does not use serialization, permanently ignore -->
        <Bug code="Se,SnVI" />

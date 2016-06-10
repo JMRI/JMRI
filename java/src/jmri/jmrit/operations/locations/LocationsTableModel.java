@@ -6,6 +6,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
@@ -90,6 +91,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         
         setPreferredWidths(frame, table);
         
+        table.setRowHeight(new JComboBox<>().getPreferredSize().height);
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
     }
@@ -119,14 +121,17 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         table.getColumnModel().getColumn(EDITCOLUMN).setPreferredWidth(80);
     }
 
+    @Override
     public synchronized int getRowCount() {
         return locationsList.size();
     }
 
+    @Override
     public int getColumnCount() {
         return HIGHESTCOLUMN;
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case IDCOLUMN:
@@ -154,6 +159,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         }
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case IDCOLUMN:
@@ -181,6 +187,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         }
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
             case EDITCOLUMN:
@@ -191,6 +198,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         }
     }
 
+    @Override
     public synchronized Object getValueAt(int row, int col) {
         if (row >= getRowCount()) {
             return "ERROR row " + row; // NOI18N
@@ -243,6 +251,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         }
     }
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
         switch (col) {
             case ACTIONCOLUMN:
@@ -261,6 +270,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     private synchronized void editLocation(int row) {
         // use invokeLater so new window appears on top
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 Location loc = locationsList.get(row);
                 log.debug("Edit location ({})", loc.getName());
@@ -280,6 +290,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     private synchronized void launchYardmaster(int row) {
         // use invokeLater so new window appears on top
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 log.debug("Yardmaster");
                 Location loc = locationsList.get(row);
@@ -288,6 +299,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         });
     }
 
+    @Override
     public synchronized void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e

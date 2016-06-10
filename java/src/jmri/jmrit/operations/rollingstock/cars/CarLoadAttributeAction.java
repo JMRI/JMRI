@@ -26,6 +26,7 @@ final class CarLoadAttributeAction extends AbstractAction {
 
     CarLoadEditFrame clef;
 
+    @Override
     public void actionPerformed(ActionEvent ae) {
         log.debug("Show attribute quanity");
         clef.toggleShowQuanity();

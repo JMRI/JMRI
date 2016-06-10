@@ -36,7 +36,7 @@ public class FileUtilSupport extends Bean {
     // initialize logging
     private static final Logger log = LoggerFactory.getLogger(FileUtilSupport.class);
     // default instance
-    private static FileUtilSupport defaultInstance = null;
+    volatile private static FileUtilSupport defaultInstance = null;
 
     /**
      * Get the user's home directory.
@@ -163,7 +163,6 @@ public class FileUtilSupport extends Bean {
      * Convenience method that calls
      * {@link FileUtil#setProgramPath(java.io.File)} with the passed in path.
      *
-     * @param path
      */
     public void setProgramPath(String path) {
         this.setProgramPath(new File(path));
@@ -177,7 +176,6 @@ public class FileUtilSupport extends Bean {
      * loading JMRI (prior to loading any other JMRI code) to be meaningfully
      * used.
      *
-     * @param path
      */
     public void setProgramPath(File path) {
         String old = this.programPath;
@@ -280,8 +278,6 @@ public class FileUtilSupport extends Bean {
      * four revisions are retained. The lowest numbered revision is the most
      * recent.
      *
-     * @param file
-     * @throws IOException
      */
     public void backup(File file) throws IOException {
         this.rotate(file, 4, "bak");
@@ -295,7 +291,6 @@ public class FileUtilSupport extends Bean {
      * @param extension The extension to use for the rotations. If null or an
      *                  empty string, the rotation number is used as the
      *                  extension.
-     * @throws IOException
      * @throws IllegalArgumentException if max is less than one
      * @see #backup(java.io.File) 
      */

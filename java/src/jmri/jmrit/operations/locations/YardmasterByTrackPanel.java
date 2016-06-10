@@ -172,6 +172,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
     private void update() {
         // use invokeLater to prevent deadlock
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 runUpdate();
             }
@@ -414,6 +415,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
         trackComboBox.setVisible(true);
     }
 
+    @Override
     public void dispose() {
         if (_location != null)
             _location.removePropertyChangeListener(this);

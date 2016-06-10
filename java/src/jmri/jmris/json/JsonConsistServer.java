@@ -1,5 +1,12 @@
-// JsonConsistServer.java
 package jmri.jmris.json;
+
+import static jmri.jmris.json.JSON.ADDRESS;
+import static jmri.jmris.json.JSON.DATA;
+import static jmri.jmris.json.JSON.DELETE;
+import static jmri.jmris.json.JSON.IS_LONG_ADDRESS;
+import static jmri.jmris.json.JSON.METHOD;
+import static jmri.jmris.json.JSON.PUT;
+import static jmri.jmris.json.JSON.STATUS;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,20 +22,13 @@ import jmri.ConsistManager;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.jmris.JmriConnection;
-import static jmri.jmris.json.JSON.ADDRESS;
-import static jmri.jmris.json.JSON.DATA;
-import static jmri.jmris.json.JSON.DELETE;
-import static jmri.jmris.json.JSON.IS_LONG_ADDRESS;
-import static jmri.jmris.json.JSON.METHOD;
-import static jmri.jmris.json.JSON.PUT;
-import static jmri.jmris.json.JSON.STATUS;
 import jmri.jmrit.consisttool.ConsistFile;
+import jmri.server.json.JsonException;
 import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *
  * @author rhwood
  */
 public class JsonConsistServer {

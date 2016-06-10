@@ -80,7 +80,7 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
         jmri.InstanceManager.memoryManagerInstance().provideMemory("IM2").setValue("");
 
         to.setMemory("IM2");
-                
+
         jf.pack();
         jf.setVisible(true);
         flushAWT();
@@ -89,7 +89,7 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
         //for (int i=0; i< 10; i++) System.out.println("   "+String.format("0x%8s", Integer.toHexString(colors[i])).replace(' ', '0'));
         boolean white = (colors[3]==0xffffffff)&&(colors[4]==0xffffffff);
         Assert.assertTrue("Expect white pixels", white);
-        
+
         if (System.getProperty("jmri.demo", "false").equals("false")) {
             jf.setVisible(false);
             jf.dispose();
@@ -128,26 +128,28 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
 
     }
 
-    int[] getColor(String frame, String label, int x, int y, int n) {
+    int[] getColor(String frameName, String label, int x, int y, int n) {
         // Find window by name
-        JmriJFrame ft = JmriJFrame.getFrame(frame);
-        Assert.assertNotNull("frame: "+frame, ft);
-        
+        JmriJFrame frame = JmriJFrame.getFrame(frameName);
+        Assert.assertNotNull("frame: "+frameName, frame);
+
         // find label within that
         ComponentFinder finder = new ComponentFinder(MemoryIcon.class);
-        java.util.List list = finder.findAll(ft);
-        Assert.assertNotNull("list: "+frame, list);
-        Assert.assertTrue("length: "+frame+": "+list.size(), list.size()>0);
-        
+        // FIXME: finder.findAll returns an untyped list, so we have issues with casting
+        @SuppressWarnings("rawtypes")
+        java.util.List list = finder.findAll(frame);
+        Assert.assertNotNull("list: "+frameName, list);
+        Assert.assertTrue("length: "+frameName+": "+list.size(), list.size()>0);
+
         // find a point in mid-center of memory icon - location choosen by
         // looking at v4.0.1 on Mac
-        Point p = SwingUtilities.convertPoint(((JComponent)list.get(0)),x,y,ft);
-        
+        Point p = SwingUtilities.convertPoint(((JComponent)list.get(0)),x,y,frame);
+
         // check pixel color (from http://stackoverflow.com/questions/13307962/how-to-get-the-color-of-a-point-in-a-jpanel )
         BufferedImage image = new BufferedImage(400, 300, BufferedImage.TYPE_4BYTE_ABGR);
         Graphics2D g2 = image.createGraphics();
-        ft.paint(g2);
-        
+        frame.paint(g2);
+
         // display a sweep of color
         int[] colors = new int[n];
         for (int i = 0; i<n; i++) {
@@ -168,7 +170,7 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", MemoryIconTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

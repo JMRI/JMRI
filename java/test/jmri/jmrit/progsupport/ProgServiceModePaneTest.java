@@ -60,7 +60,7 @@ public class ProgServiceModePaneTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {ProgServiceModePaneTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -73,12 +73,7 @@ public class ProgServiceModePaneTest extends TestCase {
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
         // clear InstanceManager
-        new InstanceManager() {
-            protected void init() {
-                root = this;
-                super.init();
-            }
-        };
+        jmri.util.JUnitUtil.resetInstanceManager();
     }
 
     protected void tearDown() {

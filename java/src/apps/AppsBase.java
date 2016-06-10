@@ -1,4 +1,3 @@
-// AppsBase.java
 package apps;
 
 import apps.gui3.TabbedPreferences;
@@ -44,7 +43,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author	Bob Jacobsen Copyright 2009, 2010
- * @version $Revision$
  */
 public abstract class AppsBase {
 

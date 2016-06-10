@@ -59,7 +59,7 @@ public class Z21XPressNetTunnelTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", Z21XPressNetTunnelTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -70,14 +70,9 @@ public class Z21XPressNetTunnelTest extends TestCase {
 
     // The minimal setup for log4J
     protected void setUp() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        // initConfigureManager currently causes this test fail when
-        // run independently.  The current tests have been written to
-        // succeed without it, but they do not test the registration
-        // process for the stream controller, which needs the 
-        // ConfigureManager to succeed.
-        //jmri.util.JUnitUtil.initConfigureManager();
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initConfigureManager();
     }
 
     protected void tearDown() {

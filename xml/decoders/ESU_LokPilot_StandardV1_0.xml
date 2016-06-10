@@ -17,6 +17,8 @@
   <version author="Dave Heap" version="1.0" lastUpdated="20150103"/>
   <!-- ver1.1 renamed where necessary to match ESU practice and added decoder-matchable Product IDs -->
   <version author="Dave Heap" version="1.1" lastUpdated="20150427"/>
+  <!-- ver1.2 added LokPilot Nano Standard V1.0 -->
+  <version author="Dave Heap" version="1.2" lastUpdated="20160519"/>
   <decoder>
     <family name="ESU LokPilot Standard V1.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
       <model model="LokPilot Standard V1.0" numOuts="6" maxInputVolts="25 V" maxMotorCurrent="0.9 A" maxTotalCurrent="1.4 A" formFactor="HO" productID="16777308">
@@ -26,6 +28,24 @@
         <output name="4" label="AUX|2" maxcurrent="250 mA"/>
         <output name="5" label="AUX|3" maxcurrent="logic"/>
         <output name="6" label="AUX|4" maxcurrent="logic"/>
+        <output name="7" label="Shunt|Mode"/>
+        <output name="8" label="Acceleration|Deceleration"/>
+        <output name="9" label="Grade|Crossing"/>
+        <output name="10" label="|Dimmer"/>
+        <output name="11" label="Dynamic|Brake"/>
+        <output name="12" label="Virtual|Sound"/>
+        <output name="13" label="|"/>
+        <output name="14" label="|"/>
+        <output name="15" label="|"/>
+        <output name="16" label="|"/>
+        <size length="25.5" width="15.5" height="4.5" units="mm"/>
+        <!-- connector="NEM651, 21MTC, Plux12, wires" -->
+      </model>
+      <model model="LokPilot Nano Standard V1.0" numOuts="4" maxInputVolts="25 V" maxMotorCurrent="0.9 A" maxTotalCurrent="1.0 A" formFactor="N" productID="16777352">
+        <output name="1" label="Front|Light" maxcurrent="150 mA"/>
+        <output name="2" label="Rear|Light" maxcurrent="150 mA"/>
+        <output name="3" label="AUX|1" maxcurrent="150 mA"/>
+        <output name="4" label="AUX|2" maxcurrent="150 mA"/>
         <output name="7" label="Shunt|Mode"/>
         <output name="8" label="Acceleration|Deceleration"/>
         <output name="9" label="Grade|Crossing"/>
@@ -78,8 +98,8 @@
     </programming>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-      <variable CV="2" default="3" item="Vstart" tooltip="Determines the starting speed, range 1-63">
-        <decVal min="1" max="63"/>
+      <variable CV="2" default="3" item="Vstart" tooltip="Determines the starting speed, range 1-255">
+        <decVal min="1" max="255"/>
         <label>Starting Voltage</label>
         <label xml:lang="it">Volt Partenza</label>
         <label xml:lang="fr">V démarr.</label>
@@ -99,14 +119,14 @@
         <label xml:lang="fr">Décélération (0-255)</label>
         <label xml:lang="de">Bremszeit (0-255)</label>
       </variable>
-      <variable CV="5" default="64" item="Vhigh" tooltip="Maximum speed of locomotive, range 0-64">
-        <decVal min="0" max="64"/>
+      <variable CV="5" default="64" item="Vhigh" tooltip="Maximum speed of locomotive, range 1-64">
+        <decVal min="1" max="64"/>
         <label>Maximum Speed</label>
         <label xml:lang="it">Volt Massimi (0-64):</label>
         <label xml:lang="de">Höchstgeschwindigkeit</label>
       </variable>
       <variable item="Vmid" CV="6" default="22" comment="Range 1-64">
-        <decVal min="0" max="64"/>
+        <decVal min="1" max="64"/>
         <label>Vmid</label>
         <comment>Range 0-64</comment>
       </variable>

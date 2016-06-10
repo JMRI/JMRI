@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * view with a list option to the left hand side.
  * <P>
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision$
  */
 public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction {
 
@@ -23,9 +22,9 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
-     * @param s
-     * @param category
-     * @param subCategory
+     * @param s           action title
+     * @param category    action category
+     * @param subCategory action sub-category
      */
     public TabbedPreferencesAction(String s, String category, String subCategory) {
         super(s);

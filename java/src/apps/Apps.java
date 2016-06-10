@@ -1,4 +1,3 @@
-// Apps.java
 package apps;
 
 import apps.gui3.TabbedPreferences;
@@ -113,13 +112,13 @@ import org.slf4j.LoggerFactory;
  * @author Dennis Miller Copyright 2005
  * @author Giorgio Terdina Copyright 2008
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  */
 public class Apps extends JPanel implements PropertyChangeListener, WindowListener {
 
     static String profileFilename;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings({"ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", "SC_START_IN_CTOR"})//"only one application at a time. The thread is only called to help improve user experiance when opening the preferences, it is not critical for it to be run at this stage"
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", "SC_START_IN_CTOR"},
+            justification = "only one application at a time. The thread is only called to help improve user experiance when opening the preferences, it is not critical for it to be run at this stage")
     public Apps(JFrame frame) {
 
         super(true);
@@ -228,8 +227,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         InstanceManager.store(new NamedBeanHandleManager(), NamedBeanHandleManager.class);
         // Install an IdTag manager
         InstanceManager.store(new DefaultIdTagManager(), IdTagManager.class);
-        //Install Entry Exit Pairs Manager
-        InstanceManager.store(new EntryExitPairs(), EntryExitPairs.class);
 
         // install preference manager
         InstanceManager.store(new TabbedPreferences(), TabbedPreferences.class);
@@ -280,6 +277,10 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             log.info("No saved preferences, will open preferences window.  Searched for {}", file.getPath());
             configOK = false;
         }
+
+        //Install Entry Exit Pairs Manager
+        //   Done after load config file so that connection-system-specific Managers are defined and usable
+        InstanceManager.store(new EntryExitPairs(), EntryExitPairs.class);
 
         // Add actions to abstractActionModel
         // Done here as initial non-GUI initialisation is completed
@@ -344,6 +345,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                         // return until deferred load is completed
                         SwingUtilities.invokeAndWait(new Runnable() {
                             @Override
+                            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "configDeferredLoadOK write is semi-global")
                             public void run() {
                                 configDeferredLoadOK = doDeferredLoad(file);
                             }
@@ -389,7 +391,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                 }
             }
         };
-        Thread thr = new Thread(r, "initialize preferences");
+        Thread thr = new Thread(r, "init prefs");
         thr.start();
         //Initialise the decoderindex file instance within a seperate thread to help improve first use perfomance
         r = new Runnable() {
@@ -677,9 +679,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
      * <PRE>
      *    menuBar.add(new jmri.jmrix.SystemsMenu());
      * </PRE>
-     *
-     * @param menuBar
-     * @param wi
      */
     protected void systemsMenu(JMenuBar menuBar, WindowInterface wi) {
         ActiveSystemsMenu.addItems(menuBar);
@@ -698,10 +697,10 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
         d.add(new JSeparator());
         try {
-            d.add(new RunJythonScript("RailDriver Throttle", new File(FileUtil.findURL("jython/RailDriver.py").toURI())));
+            d.add(new RunJythonScript(Bundle.getMessage("MenuRailDriverThrottle"), new File(FileUtil.findURL("jython/RailDriver.py").toURI())));
         } catch (URISyntaxException | NullPointerException ex) {
             log.error("Unable to load RailDriver Throttle", ex);
-            JMenuItem i = new JMenuItem("RailDriver Throttle");
+            JMenuItem i = new JMenuItem(Bundle.getMessage("MenuRailDriverThrottle"));
             i.setEnabled(false);
             d.add(i);
         }
@@ -872,9 +871,13 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         pane2.add(new JLabel(line1()));
         pane2.add(new JLabel(line2()));
         pane2.add(new JLabel(line3()));
-        pane2.add(new JLabel(Bundle.getMessage("ActiveProfile", ProfileManager.getDefault().getActiveProfile().getName())));
-
-        // add listerner for Com port updates
+        
+        if (ProfileManager.getDefault()!=null && ProfileManager.getDefault().getActiveProfile() != null) {
+            pane2.add(new JLabel(Bundle.getMessage("ActiveProfile", ProfileManager.getDefault().getActiveProfile().getName())));
+        } else {
+            pane2.add(new JLabel(Bundle.getMessage("FailedProfile")));            
+        }
+        // add listener for Com port updates
         ConnectionStatus.instance().addPropertyChangeListener(this);
         int i = 0;
         for (ConnectionConfig conn : InstanceManager.getDefault(ConnectionConfigManager.class)) {
@@ -1009,6 +1012,12 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     }
     static SplashWindow sp = null;
     static AWTEventListener debugListener = null;
+    
+    // TODO: Remove the "static" nature of much of the initialization someday.
+    //       It exits to allow splash() to be called first-thing in main(), see e.g.
+    //       apps.DecoderPro.DecoderPro.main(...) 
+    //       Or maybe, just not worry about this here, in the older base class,
+    //       and address it in the newer apps.gui3.Apps3 as that's the base class of the future.
     static boolean debugFired = false;  // true if we've seen F8 during startup
     static boolean debugmsg = false;    // true while we're handling the "No Logix?" prompt window on startup
 
@@ -1018,13 +1027,12 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
     /**
      * Invoke the standard Log4J logging initialization.
-     *
+     * <p>
      * No longer used here. ({@link #splash} calls the initialization directly.
      * Left as a deprecated method because other code, e.g. CATS is still using
      * in in JMRI 3.7 and perhaps 3.8
      *
-     * @deprecated Since 3.7.2, use @{link jmri.util.Log4JUtil#initLogging}
-     * directly.
+     * @deprecated Since 3.7.2, use @{link jmri.util.Log4JUtil#initLogging} directly.
      */
     @Deprecated
     static protected void initLog4J() {
@@ -1039,19 +1047,15 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             Toolkit.getDefaultToolkit().addAWTEventListener(
                     debugListener = new AWTEventListener() {
                 @Override
+                @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "debugmsg write is semi-global")
                 public void eventDispatched(AWTEvent e) {
                     if (!debugFired) {
                         /*We set the debugmsg flag on the first instance of the user pressing any button
                                  and the if the debugFired hasn't been set, this allows us to ensure that we don't
                                  miss the user pressing F8, while we are checking*/
                         debugmsg = true;
-                        if (e.getID() == KeyEvent.KEY_PRESSED) {
-                            KeyEvent ky = (KeyEvent) e;
-                            if (ky.getKeyCode() == 119) {
-                                startupDebug();
-                            } else {
-                                debugmsg = false;
-                            }
+                        if (e.getID() == KeyEvent.KEY_PRESSED && e instanceof KeyEvent && ((KeyEvent)e).getKeyCode() == 119) {
+                            startupDebug();
                         } else {
                             debugmsg = false;
                         }

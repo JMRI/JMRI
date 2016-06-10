@@ -1,4 +1,3 @@
-// LicenseAction.java
 package apps;
 
 import java.io.BufferedReader;
@@ -18,7 +17,6 @@ import jmri.util.swing.WindowInterface;
  * Swing action to display the JMRI license
  *
  * @author	Bob Jacobsen Copyright (C) 2004, 2010
- * @version $Revision$
  */
 public class LicenseAction extends jmri.util.swing.JmriAbstractAction {
 
@@ -47,16 +45,15 @@ public class LicenseAction extends jmri.util.swing.JmriAbstractAction {
 
         String t;
 
-        try {
-            BufferedReader r = new BufferedReader(new InputStreamReader(is, "US-ASCII"));  // file stored as ASCII // NOI18N
+        try (   InputStreamReader isr = new InputStreamReader(is, "US-ASCII");    // file stored as ASCII // NOI18N
+                BufferedReader r = new BufferedReader(isr);
+            ){
             StringBuilder buf = new StringBuilder();
             while (r.ready()) {
                 buf.append(r.readLine());
                 buf.append("\n");
             }
             t = buf.toString();
-
-            r.close();
         } catch (IOException ex) {
             t = "JMRI is distributed under a license. For license information, see the JMRI website http://jmri.org";
         }
@@ -75,4 +72,3 @@ public class LicenseAction extends jmri.util.swing.JmriAbstractAction {
     }
 }
 
-/* @(#)LicenseAction.java */

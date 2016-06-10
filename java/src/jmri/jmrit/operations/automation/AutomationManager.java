@@ -46,8 +46,12 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
         return _instance;
     }
 
+    /**
+     * For tests
+     */
     public void dispose() {
         _automationHashTable.clear();
+        _id = 0;
     }
 
     // stores known Automation instances by id
@@ -83,7 +87,6 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
      * Finds an existing automation or creates a new automation if needed
      * requires automation's name creates a unique id for this automation
      *
-     * @param name
      *
      * @return new automation or existing automation
      */
@@ -255,6 +258,7 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
         }
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e

@@ -1,4 +1,3 @@
-// AppsLaunchPane.java
 package apps;
 
 import apps.startup.StartupActionModelUtil;
@@ -42,7 +41,6 @@ import org.slf4j.LoggerFactory;
  * @author Dennis Miller Copyright 2005
  * @author Giorgio Terdina Copyright 2008
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  */
 public abstract class AppsLaunchPane extends JPanel implements PropertyChangeListener {
 

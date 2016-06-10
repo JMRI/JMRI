@@ -6,7 +6,7 @@
   <TITLE>
  	JMRI: Light Documentation
  </TITLE>
-  <META http-equiv=Content-Type content="text/html; charset= iso-8859-1">
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
 
   <META content="Bob Jacobsen" name=Author>
 
@@ -15,7 +15,6 @@
         content="hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
 
 <!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset= iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" TYPE="image/png">
@@ -45,7 +44,7 @@ mises en oeuvre sur LocoNet (Digitrax) et les syst&#232;mes Oaktree.</p>
 <p>Les  Lumi&#232;res partagent les bits de sortie num&#233;rique disponibles avec les Aiguillages. Soit une
 Lumi&#232;re ou un Aiguillage, mais pas les deux, peut contr&#244;ler un bit de sortie num&#233;rique sp&#233;cifique.
 Puisque les Lumi&#232;res n'ont pas la structure de r&#233;trosignalisation des Aiguillages, les Lumi&#232;res ne doivent pas
-&#234;tre utilis&#233;es pour commander les Aiguillages sur le r&#233;seau; seuls les Aiguillages devraient &#234;tre utilis&#233;s pour commander les commutateurs de voies (Aiguillage) . Pour des raisons historiques, les apparences des TÃªtes Signal sont d&#233;finies en utilisant les aiguillages, m&#234;me si elles peuvent &#234;tre r&#233;ellement  physiquement allum&#233;es par les Lumi&#232;res. Alors les Aiguillages devraient &#234;tre utilis&#233;s pour r&#233;f&#233;rencer les bits de sortie num&#233;rique utilis&#233;s avec TÃªte Signal JMRI. Lumi&#232;re doit &#234;tre utilis&#233;e si vous avez besoin d'un m&#233;canisme simple pour contr&#244;ler l'&#233;clairage ou des d&#233;cors, les voyants du panneau, ou pour
+&#234;tre utilis&#233;es pour commander les Aiguillages sur le r&#233;seau; seuls les Aiguillages devraient &#234;tre utilis&#233;s pour commander les commutateurs de voies (Aiguillage) . Pour des raisons historiques, les apparences des Têtes Signal sont d&#233;finies en utilisant les aiguillages, m&#234;me si elles peuvent &#234;tre r&#233;ellement  physiquement allum&#233;es par les Lumi&#232;res. Alors les Aiguillages devraient &#234;tre utilis&#233;s pour r&#233;f&#233;rencer les bits de sortie num&#233;rique utilis&#233;s avec Tête Signal JMRI. Lumi&#232;re doit &#234;tre utilis&#233;e si vous avez besoin d'un m&#233;canisme simple pour contr&#244;ler l'&#233;clairage ou des d&#233;cors, les voyants du panneau, ou pour
 d'autres  t&#226;ches sous/hors tension o&#249; les m&#233;canismes de contr&#244;le des lumi&#232;res sont adapt&#233;s aux besoins.</p>
 <p>En option, une Lumi&#232;re peut &#234;tre contr&#244;l&#233;e de quatre fa&#231;ons: elle peut &#234;tre
 contr&#244;l&#233;e par un Capteur, par un Aiguillage, par l'Horloge rapide JMRI, ou commut&#233;e

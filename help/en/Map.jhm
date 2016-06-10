@@ -218,6 +218,8 @@
 
 <mapID target="html.tools.Lights" url="html/tools/Lights.shtml"/>
 
+<mapID target="html.web.index_redirection" url="html/web/index.shtml#redirection"/>
+
 <mapID target="html.hardware.nce.Wangrow_connecting" url="html/hardware/nce/Wangrow.shtml#connecting"/>
 
 <mapID target="package.jmri.jmrit.beantable.LightTable" url="package/jmri/jmrit/beantable/LightTable.shtml"/>
@@ -1369,6 +1371,8 @@
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_EngineAttributes_Top" url="manual/JMRI_OPS_UsersGuide/Ops_EngineAttributes.shtml#Top"/>
 
 <mapID target="html.hardware.mrc.index" url="html/hardware/mrc/index.shtml"/>
+
+<mapID target="package.jmri.jmrit.operations.Operations_TrainTurnRoute" url="package/jmri/jmrit/operations/Operations.shtml#TrainTurnRoute"/>
 
 <mapID target="package.jmri.jmrix.powerline.packetgen.SerialPacketGenFrame" url="package/jmri/jmrix/powerline/packetgen/SerialPacketGenFrame.shtml"/>
 

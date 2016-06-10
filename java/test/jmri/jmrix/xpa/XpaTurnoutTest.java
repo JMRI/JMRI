@@ -6,17 +6,16 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * XpaTurnoutTest.java
- *
  * Description:	tests for the jmri.jmrix.xpa.XpaTurnout class
- *
+ * <P>
  * @author	Paul Bender
- * @version $Revision: 17977 $
  */
 public class XpaTurnoutTest extends TestCase {
 
+    XpaSystemConnectionMemo memo = null;
+
     public void testCtor() {
-        XpaTurnout t = new XpaTurnout(3);
+        XpaTurnout t = new XpaTurnout(3,memo);
         Assert.assertNotNull(t);
     }
 
@@ -28,7 +27,7 @@ public class XpaTurnoutTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", XpaTurnoutTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -40,10 +39,13 @@ public class XpaTurnoutTest extends TestCase {
     // The minimal setup for log4J
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        memo = new XpaSystemConnectionMemo();
+        memo.setXpaTrafficController(new XpaTrafficController());
     }
 
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
+        memo = null;
     }
 
 }

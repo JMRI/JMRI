@@ -45,6 +45,7 @@ public class CarManagerXml extends OperationsXml {
         return _instance;
     }
 
+    @Override
     public void writeFile(String name) throws java.io.FileNotFoundException, java.io.IOException {
         if (log.isDebugEnabled()) {
             log.debug("writeFile {}", name);
@@ -114,10 +115,12 @@ public class CarManagerXml extends OperationsXml {
         LocationManagerXml.instance().setDirty(false);
     }
 
+    @Override
     public void setOperationsFileName(String name) {
         operationsFileName = name;
     }
 
+    @Override
     public String getOperationsFileName() {
         return operationsFileName;
     }

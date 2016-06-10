@@ -12,7 +12,6 @@ import junit.framework.TestSuite;
  *
  * @author	Bob Jacobsen Copyright 2003, 2007, 2008
  * @author	Dave Duchamp multi-node extensions 2003
- * @version	$Revision$
  */
 @SuppressWarnings("null")
 public class SerialNodeTest extends TestCase {
@@ -898,7 +897,7 @@ public class SerialNodeTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", SerialNodeTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -910,18 +909,13 @@ public class SerialNodeTest extends TestCase {
     // The minimal setup for log4J
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
-        // replace the SensorManager
-        jmri.InstanceManager i = new jmri.InstanceManager() {
-            protected void init() {
-                super.init();
-                root = null;
-            }
-        };
+
+        jmri.util.JUnitUtil.resetInstanceManager();
+
         // replace the traffic manager
         SerialTrafficControlScaffold tcis = new SerialTrafficControlScaffold();
         // install a grapevine sensor manager
         jmri.InstanceManager.setSensorManager(new jmri.jmrix.grapevine.SerialSensorManager());
-        Assert.assertNotNull("exists", i);
         Assert.assertNotNull("exists", tcis);
     }
 

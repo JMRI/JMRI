@@ -34,10 +34,6 @@ import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-//import java.awt.*;
-//import java.awt.event.*;
-//import java.util.ResourceBundle;
-//import javax.swing.*;
 /**
  * A JFrame to contain throttle elements such as speed control, function panel.
  * It keeps a record of the throttle commands for playback later.
@@ -49,14 +45,8 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright 2008
  *
  * @author Pete Cressman Copyright 2009
- * @version $Revision$
  */
 public class LearnThrottleFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 947885405216962871L;
 
     static int STRUT_SIZE = 10;
 
@@ -388,10 +378,6 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
 
     class ButtonFrame extends JPanel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -8035914158359447338L;
         //private GridBagConstraints sliderConstraints;
         private JButton forwardButton, reverseButton;
         private JLabel forwardLight, reverseLight, stopLabel;

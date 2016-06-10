@@ -1,4 +1,4 @@
-package jmri.jmrit.logix;
+ package jmri.jmrit.logix;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -46,19 +46,18 @@ import org.slf4j.LoggerFactory;
  * the block. Paths are contained within the Block boundaries. Names of OPath
  * objects only need be unique within an OBlock.
  *
- * <P>
- *
+ * <BR>
  * <hr>
  * This file is part of JMRI.
  * <P>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * </P><P>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ * </P>
  *
  * @author	Pete Cressman (C) 2009
  */
@@ -352,7 +351,6 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      * Called from setPath. looking for other warrants that may have allocated
      * blocks that share TO's with this block.
      *
-     * @return
      */
     private String checkSharedTO() {
         List<HashMap<OBlock, List<OPath>>> blockList = _sharedTO.get(_pathName);
@@ -510,7 +508,6 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      * Note the block may be OCCUPIED by a non-warranted train, but the
      * allocation is permitted.
      *
-     * @param warrant
      * @return name of block if block is already allocated to another warrant or
      *         block is OUT_OF_SERVICE
      */

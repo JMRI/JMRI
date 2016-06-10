@@ -75,7 +75,7 @@ public class Mx1Message extends jmri.jmrix.NetMessage implements Serializable {
     /**
      * Indicates where the message is to/from in the header byte.
      *<p>
-     * Up to JMRI 4.3.5, this was doing ((mod & MX1) == MX1) for the 
+     * Up to JMRI 4.3.5, this was doing {@code ((mod & MX1) == MX1)} for the 
      * first test, which is really 0 == 0 and always true.
      * At that point it was changed to just check the bottom two bits.
      */
@@ -547,7 +547,6 @@ public class Mx1Message extends jmri.jmrix.NetMessage implements Serializable {
      *                    too.
      * @param speed       Speed Step in the actual Speed Step System
      * @param dcc         Is this a packet for a DCC or Motorola device
-     * @param cData1
      * @param cData2      - Functions Output 0-7
      * @param cData3      - Functions Output 9-12
      * @return Mx1Message

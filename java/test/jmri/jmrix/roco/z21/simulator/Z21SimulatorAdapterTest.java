@@ -86,7 +86,7 @@ public class Z21SimulatorAdapterTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading" , Z21SimulatorAdapterTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -97,9 +97,9 @@ public class Z21SimulatorAdapterTest extends TestCase {
 
     // The minimal setup for log4J
     protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initConfigureManager();
-        apps.tests.Log4JFixture.setUp();
         try {
            host = java.net.InetAddress.getLocalHost();
         } catch(java.net.UnknownHostException uhe){

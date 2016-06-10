@@ -10,6 +10,7 @@ import java.text.MessageFormat;
 import java.util.Hashtable;
 import java.util.List;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
@@ -143,14 +144,17 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 tcm.getColumn(i).setPreferredWidth(tableColumnWidths[i]);
             }
         }
+        _table.setRowHeight(new JComboBox<>().getPreferredSize().height);
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         _table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
     }
 
+    @Override
     public synchronized int getRowCount() {
         return sysList.size();
     }
 
+    @Override
     public int getColumnCount() {
         return HIGHESTCOLUMN;
     }
@@ -169,6 +173,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     public static final String ACTIONCOLUMNNAME = Bundle.getMessage("Action");
     public static final String EDITCOLUMNNAME = Bundle.getMessage("Edit");
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case IDCOLUMN:
@@ -205,6 +210,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         }
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case IDCOLUMN:
@@ -236,6 +242,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         }
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
             case BUILDCOLUMN:
@@ -249,6 +256,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         }
     }
 
+    @Override
     public synchronized Object getValueAt(int row, int col) {
         if (row >= sysList.size()) {
             return "ERROR row " + row; // NOI18N
@@ -311,6 +319,10 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 if (train.getBuildFailed()) {
                     return Bundle.getMessage("Report");
                 }
+                if (train.getCurrentLocation() == train.getTrainTerminatesRouteLocation()
+                        && trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.MOVE)) {
+                    return Bundle.getMessage("Terminate");
+                }
                 return trainManager.getTrainsFrameTrainAction();
             }
             case EDITCOLUMN:
@@ -320,6 +332,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         }
     }
 
+    @Override
     public synchronized void setValueAt(Object value, int row, int col) {
         switch (col) {
             case EDITCOLUMN:
@@ -358,6 +371,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         }
         // use invokeLater so new window appears on top
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 Train train = sysList.get(row);
                 log.debug("Edit train ({})", train.getName());
@@ -374,6 +388,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         }
         // use invokeLater so new window appears on top
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 ref = new RouteEditFrame();
                 Train train = sysList.get(row);
@@ -394,6 +409,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             }
             // use a thread to allow table updates during build
             build = new Thread(new Runnable() {
+                @Override
                 public void run() {
                     train.build();
                 }
@@ -482,6 +498,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     private void launchConductor(Train train) {
         // use invokeLater so new window appears on top
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 TrainConductorFrame f = _trainConductorHashTable.get(train.getId());
                 // create a copy train frame
@@ -496,15 +513,16 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         });
     }
 
+    @Override
     public synchronized void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change {} old: {} new: {}",
                     e.getPropertyName(), e.getOldValue(), e.getNewValue()); // NOI18N
         }
-        if (e.getPropertyName().equals(Train.STATUS_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY)) {
-            _frame.setModifiedFlag(true);
-        }
+//        if (e.getPropertyName().equals(Train.STATUS_CHANGED_PROPERTY)
+//                || e.getPropertyName().equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY)) {
+//            _frame.setModifiedFlag(true);
+//        }
         if (e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY)
                 || e.getPropertyName().equals(TrainManager.PRINTPREVIEW_CHANGED_PROPERTY)
                 || e.getPropertyName().equals(TrainManager.OPEN_FILE_CHANGED_PROPERTY)
@@ -531,6 +549,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 TableSorter sorter = (TableSorter) _table.getModel();
                 if (!sorter.isSorting()) {
                     SwingUtilities.invokeLater(new Runnable() {
+                        @Override
                         public void run() {
                             _table.scrollRectToVisible(_table.getCellRect(row, 0, true));
                         }
@@ -587,8 +606,6 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         /**
          * Dark colors need white lettering
          *
-         * @param row
-         * @return
          */
         private Color getForegroundColor(Color background) {
             if (background == null) {

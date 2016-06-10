@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @author Ken Cameron Copyright: Copyright (c) 2014
- * @version $Revision$
  * @see apps.startup.PerformScriptModelFactory
  */
 public class PerformScriptModelXml extends jmri.configurexml.AbstractXmlAdapter {

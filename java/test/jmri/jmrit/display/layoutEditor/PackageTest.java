@@ -19,7 +19,7 @@ public class PackageTest extends TestCase {
         apps.tests.Log4JFixture.initLogging();
         
         String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -33,6 +33,8 @@ public class PackageTest extends TestCase {
         suite.addTest(LayoutBlockConnectivityToolsTest.suite());
         suite.addTest(LayoutTurnoutTest.suite());
         suite.addTest(LayoutConnectivityTest.suite());
+
+        suite.addTest(BundleTest.suite());
 
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             suite.addTest(LayoutEditorActionTest.suite());

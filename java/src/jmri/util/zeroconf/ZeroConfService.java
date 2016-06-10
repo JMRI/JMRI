@@ -1,4 +1,3 @@
-// ZeroConfService.java
 package jmri.util.zeroconf;
 
 import java.io.IOException;
@@ -9,6 +8,7 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -66,7 +66,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Randall Wood Copyright (C) 2011, 2013
- * @version	$Revision$
  * @see javax.jmdns.JmDNS
  * @see javax.jmdns.ServiceInfo
  */
@@ -82,7 +81,7 @@ public class ZeroConfService {
     private static final Logger log = LoggerFactory.getLogger(ZeroConfService.class.getName());
     private static final NetworkListener networkListener = new NetworkListener();
     private static final ShutDownTask shutDownTask = new ShutDownTask("Stop ZeroConfServices");
-    
+
     public static final String IPv4 = "IPv4";
     public static final String IPv6 = "IPv6";
 
@@ -158,7 +157,6 @@ public class ZeroConfService {
     /**
      * Create a ZeroConfService object.
      *
-     * @param service
      */
     protected ZeroConfService(ServiceInfo service) {
         this.serviceInfo = service;
@@ -178,8 +176,6 @@ public class ZeroConfService {
      * Generate a ZeroConfService key for searching in the HashMap of running
      * services.
      *
-     * @param type
-     * @param name
      * @return The combination of the name and type of the service.
      */
     protected static String key(String type, String name) {
@@ -245,12 +241,12 @@ public class ZeroConfService {
                 listener.serviceQueued(new ZeroConfServiceEvent(this, null));
             });
             boolean useIPv4 = ProfileUtils.getPreferences(ProfileManager.getDefault().getActiveProfile(),
-                            ZeroConfService.class,
-                            false)
+                    ZeroConfService.class,
+                    false)
                     .getBoolean(ZeroConfService.IPv4, true);
             boolean useIPv6 = ProfileUtils.getPreferences(ProfileManager.getDefault().getActiveProfile(),
-                            ZeroConfService.class,
-                            false)
+                    ZeroConfService.class,
+                    false)
                     .getBoolean(ZeroConfService.IPv6, true);
             for (JmDNS netService : ZeroConfService.netServices().values()) {
                 ZeroConfServiceEvent event;
@@ -294,7 +290,7 @@ public class ZeroConfService {
                             }
                         }
                     } else {
-                        log.debug("skipping '{}' on {}, already in serviceInfos.", this.key(), netService.getInetAddress().getHostAddress());                        
+                        log.debug("skipping '{}' on {}, already in serviceInfos.", this.key(), netService.getInetAddress().getHostAddress());
                     }
                     event = new ZeroConfServiceEvent(this, netService);
                 } catch (IOException ex) {
@@ -343,20 +339,17 @@ public class ZeroConfService {
 
     private static void stopAll(final boolean close) {
         log.debug("Stopping all ZeroConfServices");
-        ZeroConfService.netServices().values().stream().forEach((netService) -> {
-            new Thread() {
-                @Override
-                public void run() {
-                    netService.unregisterAllServices();
-                    if (close) {
-                        try {
-                            netService.close();
-                        } catch (IOException ex) {
-                            log.debug("jmdns.close() returned IOException: {}", ex.getMessage());
-                        }
+        new HashMap<>(ZeroConfService.netServices()).values().parallelStream().forEach((netService) -> {
+            new Thread(() -> {
+                netService.unregisterAllServices();
+                if (close) {
+                    try {
+                        netService.close();
+                    } catch (IOException ex) {
+                        log.debug("jmdns.close() returned IOException: {}", ex.getMessage());
                     }
                 }
-            }.start();
+            }).start();
         });
         ZeroConfService.services().clear();
     }
@@ -430,8 +423,8 @@ public class ZeroConfService {
     }
 
     /**
-     * A list of the non-loopback, non-link-local IP addresses of the host, or null if none
-     * found.
+     * A list of the non-loopback, non-link-local IP addresses of the host, or
+     * null if none found.
      *
      * @return The non-loopback, non-link-local IP addresses on the host.
      */
@@ -532,17 +525,35 @@ public class ZeroConfService {
 
     private static class ShutDownTask extends QuietShutDownTask {
 
+        private boolean isComplete = false;
+
         public ShutDownTask(String name) {
             super(name);
         }
 
         @Override
         public boolean execute() {
-            ZeroConfService.stopAll(true);
-            JmmDNS.Factory.getInstance().removeNetworkTopologyListener(ZeroConfService.networkListener);
+            new Thread(() -> {
+                Date start = new Date();
+                log.debug("Starting to stop services...");
+                ZeroConfService.stopAll(true);
+                log.debug("Stopped all services in {} milliseconds", new Date().getTime() - start.getTime());
+                start = new Date();
+                JmmDNS.Factory.getInstance().removeNetworkTopologyListener(ZeroConfService.networkListener);
+                log.debug("Removed network topology listener in {} milliseconds", new Date().getTime() - start.getTime());
+                this.isComplete = true;
+            }).start();
             return true;
+        }
+        
+        @Override
+        public boolean isParallel() {
+            return true;
+        }
+        
+        @Override
+        public boolean isComplete() {
+            return this.isComplete;
         }
     }
 }
-
-/* @(#)ZeroConfService.java */

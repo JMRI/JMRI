@@ -42,6 +42,7 @@ public class OperationsSetupXml extends OperationsXml {
         return _instance;
     }
 
+    @Override
     public void writeFile(String name) throws java.io.FileNotFoundException, java.io.IOException {
         if (log.isDebugEnabled()) {
             log.debug("writeFile {}", name);
@@ -103,10 +104,12 @@ public class OperationsSetupXml extends OperationsXml {
         Control.load(root);
     }
 
+    @Override
     public void setOperationsFileName(String name) {
         operationsFileName = name;
     }
 
+    @Override
     public String getOperationsFileName() {
         return operationsFileName;
     }

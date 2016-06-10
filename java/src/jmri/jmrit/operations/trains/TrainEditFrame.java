@@ -410,6 +410,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     }
 
     // Save, Delete, Add, Edit, Reset, Set, Clear
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == saveTrainButton) {
             log.debug("train save button activated");
@@ -482,6 +483,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         }
     }
 
+    @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("radio button activated");
         if (_train != null) {
@@ -659,6 +661,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         }
     }
 
+    @Override
     public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
         if (_train == null) {
             return;
@@ -701,6 +704,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
     private void addLocationCheckBoxAction(JCheckBox b) {
         b.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 locationCheckBoxActionPerformed(e);
             }
@@ -843,6 +847,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
     private void addTypeCheckBoxAction(JCheckBox b) {
         b.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 typeCheckBoxActionPerformed(e);
             }
@@ -994,6 +999,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         children.add(frame);
     }
 
+    @Override
     public void dispose() {
         LocationManager.instance().removePropertyChangeListener(this);
         EngineTypes.instance().removePropertyChangeListener(this);
@@ -1020,6 +1026,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         super.dispose();
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e.getNewValue()); // NOI18N

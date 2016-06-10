@@ -4,7 +4,7 @@ package jmri.jmrit.operations.rollingstock.cars;
 import java.util.List;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -165,7 +165,7 @@ public class CarEditFrameTest extends OperationsSwingTestCase {
         c1.setCaboose(true);
         c1.setComment("Test Car NH 1 Comment");
 
-        Car c2 = cManager.newCar("UP", "2");
+        Car c2 = cManager.newCar("UP", "22");
         c2.setBuilt("2004");
         c2.setColor("Blue");
         c2.setLength("50");
@@ -232,7 +232,7 @@ public class CarEditFrameTest extends OperationsSwingTestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", CarEditFrameTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

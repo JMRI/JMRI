@@ -41,7 +41,7 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
         java.util.List<String> l = InstanceManager.logixManagerInstance().getSystemNameList();
         assertEquals("Logix Count", 1, l.size());
 
-        _lRouteTable.m.setValueAt(rbx.getString("ButtonEdit"), 0,
+        _lRouteTable.m.setValueAt(Bundle.getMessage("ButtonEdit"), 0,
                 LRouteTableAction.LBeanTableDataModel.EDITCOL);
         // now close window
         // now close action window
@@ -94,7 +94,7 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", LRouteTableActionTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

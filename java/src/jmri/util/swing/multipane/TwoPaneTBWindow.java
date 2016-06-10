@@ -1,4 +1,3 @@
-// TwoPaneTBWindow.java
 package jmri.util.swing.multipane;
 
 import apps.gui.GuiLafPreferencesManager;
@@ -27,14 +26,8 @@ import jmri.util.swing.JToolBarUtil;
  *
  * @author Bob Jacobsen Copyright 2010
  * @since 2.13.1
- * @version $Revision: 17977 $
  */
 abstract public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6864603332029202076L;
 
     /**
      * Create and initialize a multi-pane GUI window.

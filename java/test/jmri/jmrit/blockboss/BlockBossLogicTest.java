@@ -250,19 +250,9 @@ public class BlockBossLogicTest extends TestCase {
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
 
-        // create a new instance manager
-        InstanceManager i = new InstanceManager() {
-            protected void init() {
-                root = null;
-                super.init();
-                root = this;
-            }
-        };
-
-        Assert.assertNotNull("Instance exists", i);
-
         // reset InstanceManager
         JUnitUtil.resetInstanceManager();
+        
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
 
@@ -306,7 +296,7 @@ public class BlockBossLogicTest extends TestCase {
     static public void main(String[] args) {
         apps.tests.Log4JFixture.initLogging();
         String[] testCaseName = {"-noloading", BlockBossLogicTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

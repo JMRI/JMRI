@@ -23,6 +23,7 @@ public class ScheduleResetHitsAction extends AbstractAction {
         _schedule = schedule;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         _schedule.resetHitCounts();
     }

@@ -1,4 +1,3 @@
-// MergReply.java
 package jmri.jmrix.can.adapters.gridconnect.canrs;
 
 import jmri.jmrix.can.adapters.gridconnect.GridConnectReply;
@@ -15,7 +14,7 @@ import jmri.jmrix.can.adapters.gridconnect.GridConnectReply;
  * MERG hardware uses a fixed 4 or 8 byte header when sending
  * GridConnectMessages to the computer. The 11 bit standard header is left
  * justified in these 4 bytes. The 29 bit standard header is sent as
- * <11 bit SID><0><1><0>< 18 bit EID>
+ * {@code <11 bit SID><0><1><0>< 18 bit EID>}
  * N or R indicates a normal or remote frame, in position 6 or 10 d0 - d7 are
  * the (up to) 8 data bytes
  * <P>
@@ -54,5 +53,3 @@ public class MergReply extends GridConnectReply {
         return val;
     }
 }
-
-/* @(#)MergReply.java */

@@ -14,7 +14,7 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Setup;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.jdom2.JDOMException;
@@ -142,10 +142,10 @@ public class XmlTest extends OperationsTestCase {
         temptrainList = manager.getTrainsByIdList();
         Assert.assertEquals("New Number of Trains", 3, temptrainList.size());
 
-        EngineManager emanager = EngineManager.instance();
-        Engine e1 = emanager.newEngine("UP", "1");
-        Engine e2 = emanager.newEngine("UP", "2");
-        Engine e3 = emanager.newEngine("UP", "3");
+        EngineManager eManager = EngineManager.instance();
+        Engine e1 = eManager.newEngine("UP", "1");
+        Engine e2 = eManager.newEngine("UP", "2");
+        Engine e3 = eManager.newEngine("UP", "3");
 
         // save in backup file
         t3.setBuildEnabled(true);
@@ -626,7 +626,7 @@ public class XmlTest extends OperationsTestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", XmlTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

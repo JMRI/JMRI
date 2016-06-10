@@ -21,7 +21,7 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -52,9 +52,12 @@ public class PackageTest extends TestCase {
         suite.addTest(SignalSystemFileCheckTest.suite());
         suite.addTest(SingleTurnoutSignalHeadTest.suite());
         suite.addTest(TwoIndexTcsProgrammerFacadeTest.suite());
+        suite.addTest(BundleTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DccConsistTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NmraConsistTest.class));
 
         // sub-packages
-        suite.addTest(jmri.implementation.swing.SwingShutDownTaskTest.suite());
+        suite.addTest(jmri.implementation.swing.PackageTest.suite());
         suite.addTest(ReporterTest.suite());
 
         return suite;

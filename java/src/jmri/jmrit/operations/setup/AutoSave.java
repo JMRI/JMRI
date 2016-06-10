@@ -21,6 +21,7 @@ public class AutoSave {
         synchronized (this) {
             if (Setup.isAutoSaveEnabled() && autoSave == null) {
                 autoSave = new Thread(new Runnable() {
+                    @Override
                     public void run() {
                         saveFiles();
                     }

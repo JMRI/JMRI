@@ -20,7 +20,7 @@ import junit.framework.TestSuite;
 
 /**
  * Test of PositionableLabel
- * 
+ *
  * Includes tests <ul>
  * <li>Image transparency and backgrounds
  * <li>Rotating icons and text
@@ -37,9 +37,9 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
 
     public void testSmallPanel() {
         if (!System.getProperty("jmri.headlesstest","false").equals("false")) { return; }
-        
+
         panel = new jmri.jmrit.display.panelEditor.PanelEditor("PositionableLabel Test Panel");
-        
+
         JFrame jf = new JFrame();
         JPanel p = new JPanel();
         jf.getContentPane().add(p);
@@ -52,7 +52,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 if (to.getText().equals("one"))
                     to.setText("two");
-                else 
+                else
                     to.setText("one");
             }
         });
@@ -70,12 +70,12 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         jf.pack();
         jf.setVisible(true);
     }
-    
+
     // Load file showing four labels with backgrounds and make sure they have right color
     // The file used was written with 4.0.1, and behaves as expected from panel names
     public void testBackgroundColorFile() throws Exception {
         if (!System.getProperty("jmri.headlesstest","false").equals("false")) { return; }
-        
+
         // make four windows
         InstanceManager.configureManagerInstance()
                 .load(new java.io.File("java/test/jmri/jmrit/display/configurexml/verify/backgrounds.xml"));
@@ -95,64 +95,66 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         assertPixel("F Bkg none, label Bkg yellow color", Pixel.YELLOW, color3);
         assertPixel("F Bkg blue, label Bkg yellow color", Pixel.YELLOW, color4);
     }
-    
+
     int getColor(String name) {
 
         flushAWT();
 
         // Find window by name
-        JmriJFrame ft = JmriJFrame.getFrame(name);
-        Assert.assertNotNull("frame: "+name, ft);
-        
+        JmriJFrame frame = JmriJFrame.getFrame(name);
+        Assert.assertNotNull("frame: "+name, frame);
+
         // find label within that
         JLabelFinder finder = new JLabelFinder("....");
-        java.util.List list = finder.findAll(ft);
+        // FIXME: finder.findAll returns an untyped list, so we have issues with casting
+        @SuppressWarnings("rawtypes")
+        java.util.List list = finder.findAll(frame);
         Assert.assertNotNull("list: "+name, list);
         Assert.assertTrue("length: "+name+": "+list.size(), list.size()>0);
-                
+
         JComponent component = (JComponent)list.get(0);
         int[] content = getDisplayedContent(component, component.getSize(), new Point(0,0));
-        
+
         int color = content[0];
-        
+
         // Unless in demo mode, close table window
         if (System.getProperty("jmri.demo", "false").equals("false")) {
-            ft.setVisible(false);
+            frame.setVisible(false);
         }
         return color;
     }
-    
+
     // Explicit tests of PositionableLabel features
-    
+
     public void testDisplayTransparent() {
         if (!System.getProperty("jmri.headlesstest","false").equals("false")) { return; }
-    
+
         JFrame f = new JFrame();
         f.getContentPane().setBackground(Color.blue);
         f.setUndecorated(true); // skip frame decoration, which can force a min size.
-        
+
         jmri.jmrit.catalog.NamedIcon icon = new jmri.jmrit.catalog.NamedIcon("resources/icons/redTransparentBox.gif","box"); // 13x13
-        
+
         PositionableLabel label = new PositionableLabel(icon, null);
-        
+
         f.add(label);
         f.pack();
         flushAWT();
         Assert.assertEquals("icon size", new Dimension(13,13).toString(),label.getSize().toString());
-         
+
         int[] val = getDisplayedContent(label, label.getSize(), new Point(0,0));
-        
+
         Assert.assertEquals("icon arraylength", 13*13, val.length);
-        
+
         assertImageNinePoints("icon", val, label.getSize(),
                 Pixel.RED, Pixel.RED, Pixel.RED,
                 Pixel.RED, Pixel.TRANSPARENT, Pixel.RED,
                 Pixel.RED, Pixel.RED, Pixel.RED);
-                        
+
         // now check that background shows through
         // Need to find the icon location first
         Point p = SwingUtilities.convertPoint(label,0,0,f.getContentPane());
-        
+
         val = getDisplayedContent(f.getContentPane(), label.getSize(), p);
 
         Assert.assertEquals("frame arraylength", 13*13, val.length);
@@ -161,26 +163,26 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
                 Pixel.RED, Pixel.RED, Pixel.RED,
                 Pixel.RED, Pixel.BLUE, Pixel.RED,
                 Pixel.RED, Pixel.RED, Pixel.RED);
-                        
+
         f.dispose();
     }
-    
+
     public void testDisplayTransparent45degrees() {
         if (!System.getProperty("jmri.headlesstest","false").equals("false")) { return; }
-    
+
         JFrame f = new JFrame();
         f.getContentPane().setBackground(Color.blue);
         f.setUndecorated(true); // skip frame decoration, which can force a min size.
-        
+
         jmri.jmrit.catalog.NamedIcon icon = new jmri.jmrit.catalog.NamedIcon("resources/icons/redTransparentBox.gif","box"); // 13x13
-        
+
         PositionableLabel label = new PositionableLabel(icon, null);
-        
+
         f.add(label);
         f.pack();
         flushAWT();
         Assert.assertEquals("icon size", new Dimension(13,13).toString(),label.getSize().toString());
-        
+
         // do the rotation, which transforms 13x13 to sqrt(2) bigger, 19x19
         label.rotate(45);
         Assert.assertEquals("icon size", new Dimension(19,19).toString(),label.getSize().toString());
@@ -188,10 +190,10 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         f.pack();
         flushAWT();
         Assert.assertEquals("icon size", new Dimension(19,19).toString(),label.getSize().toString());
-        
+
         // and check
         int[] val = getDisplayedContent(label, label.getSize(), new Point(0,0));
-        
+
         Assert.assertEquals("icon arraylength", 19*19, val.length);
         assertImageNinePoints("icon", val, label.getSize(),
                 Pixel.TRANSPARENT, Pixel.RED, Pixel.TRANSPARENT,
@@ -201,7 +203,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         // now check that background shows through
         // Need to find the icon location first
         Point p = SwingUtilities.convertPoint(label,0,0,f.getContentPane());
-        
+
         val = getDisplayedContent(f.getContentPane(), label.getSize(), p);
 
         Assert.assertEquals("frame arraylength", 19*19, val.length);
@@ -209,45 +211,45 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
                 Pixel.BLUE, Pixel.RED, Pixel.BLUE,
                 Pixel.RED, Pixel.BLUE, Pixel.BLUE,
                 Pixel.BLUE, Pixel.BLUE, Pixel.BLUE);
-                
+
         f.dispose();
     }
-    
+
 
     // test with an RGB animated 13x13 GIF, 0.1 sec per frame
     public void testDisplayAnimatedRGB() throws IOException {
         if (!System.getProperty("jmri.headlesstest","false").equals("false")) { return; }
-   
+
         JFrame f = new JFrame();
         f.getContentPane().setBackground(Color.blue);
         f.setUndecorated(true); // skip frame decoration, which can force a min size.
-        
+
         jmri.jmrit.catalog.NamedIcon icon = new jmri.jmrit.catalog.NamedIcon("resources/icons/RGB-animated-once-Square.gif","box"); // 13x13
-        
+
         PositionableLabel label = new PositionableLabel(icon, null);
-        
+
         f.add(label);
         f.pack();
         flushAWT();
         Assert.assertEquals("icon size", new Dimension(13,13).toString(),label.getSize().toString());
-         
+
         // wait for a bit
         f.setVisible(true);  // needed to get initial animation contents
         flushAWT();
 
         // check for initial red
         int[] val = getDisplayedContent(label, label.getSize(), new Point(0,0));
-        
+
         Assert.assertEquals("icon arraylength", 13*13, val.length);
 
         assertImageNinePoints("icon", val, label.getSize(),
                 Pixel.RED, Pixel.RED, Pixel.RED,
                 Pixel.RED, Pixel.RED, Pixel.RED,
                 Pixel.RED, Pixel.RED, Pixel.RED);
-        
+
         // Need to find the icon location in frame first
         Point p = SwingUtilities.convertPoint(label,0,0,f.getContentPane());
-        
+
         val = getDisplayedContent(f.getContentPane(), label.getSize(), p);
 
         Assert.assertEquals("frame arraylength", 13*13, val.length);
@@ -258,21 +260,21 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
                 Pixel.RED, Pixel.RED, Pixel.RED);
 
         // wait for long enough to reach final red, skipping intermediate green as timing too fussy
-        waitAtLeast(250);        
+        waitAtLeast(250);
 
         val = getDisplayedContent(label, label.getSize(), new Point(0,0));
-        
+
         Assert.assertEquals("icon arraylength", 13*13, val.length);
 
         assertImageNinePoints("icon", val, label.getSize(),
                 Pixel.BLUE, Pixel.BLUE, Pixel.BLUE,
                 Pixel.BLUE, Pixel.BLUE, Pixel.BLUE,
                 Pixel.BLUE, Pixel.BLUE, Pixel.BLUE);
-        
+
         // now check that background shows through
         // Need to find the icon location first
         p = SwingUtilities.convertPoint(label,0,0,f.getContentPane());
-        
+
         val = getDisplayedContent(f.getContentPane(), label.getSize(), p);
 
         Assert.assertEquals("frame arraylength", 13*13, val.length);
@@ -284,11 +286,11 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         // finally done
         f.dispose();
     }
-    
+
     // test with an RGB animated 13x13 GIF, 0.1 sec per frame, rotate
     public void testDisplayAnimatedRGBrotated45degrees() throws IOException {
-        if (!System.getProperty("jmri.headlesstest","false").equals("false")) { return; } 
-    
+        if (!System.getProperty("jmri.headlesstest","false").equals("false")) { return; }
+
          if (System.getProperty("jmri.migrationtests","false").equals("false")) { // skip test for migration, but warn about it
             log.warn("skipping testDisplayAnimatedRGBrotated45degrees because jmri.migrationtests not set true");
             return;
@@ -297,16 +299,16 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         JFrame f = new JFrame();
         f.getContentPane().setBackground(Color.green);
         f.setUndecorated(true); // skip frame decoration, which can force a min size.
-        
+
         jmri.jmrit.catalog.NamedIcon icon = new jmri.jmrit.catalog.NamedIcon("resources/icons/RGB-animated-once-Square2.gif","box"); // 13x13
-        
+
         PositionableLabel label = new PositionableLabel(icon, null);
-        
+
         f.add(label);
         f.pack();
         flushAWT();
         Assert.assertEquals("icon size", new Dimension(13,13).toString(),label.getSize().toString());
-        
+
         // do the rotation, which transforms 13x13 to sqrt(2) bigger, 19x19
         label.rotate(45);
         Assert.assertEquals("icon size", new Dimension(19,19).toString(),label.getSize().toString());
@@ -314,25 +316,25 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         f.pack();
         flushAWT();
         Assert.assertEquals("icon size", new Dimension(19,19).toString(),label.getSize().toString());
-        
+
         // wait for a bit
         f.setVisible(true);  // needed to get initial animation contents
         flushAWT();
-        
+
         // and check
         int[] val = getDisplayedContent(label, label.getSize(), new Point(0,0));
-        
+
         Assert.assertEquals("icon arraylength", 19*19, val.length);
 
         assertImageNinePoints("icon", val, label.getSize(),
                 Pixel.TRANSPARENT, Pixel.RED, Pixel.TRANSPARENT,
                 Pixel.RED, Pixel.RED, Pixel.RED,
                 Pixel.TRANSPARENT, Pixel.RED, Pixel.TRANSPARENT);
-        
+
         // now check that background shows through
         // Need to find the icon location first
         Point p = SwingUtilities.convertPoint(label,0,0,f.getContentPane());
-        
+
         val = getDisplayedContent(f.getContentPane(), label.getSize(), p);
 
         Assert.assertEquals("frame arraylength", 19*19, val.length);
@@ -342,21 +344,21 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
                 Pixel.GREEN, Pixel.RED, Pixel.GREEN);
 
         // wait for long enough to reach final blue, skipping intermediate green as timing too fussy
-        waitAtLeast(250);        
+        waitAtLeast(250);
 
         // and check
         val = getDisplayedContent(label, label.getSize(), new Point(0,0));
-        
+
         Assert.assertEquals("icon arraylength", 19*19, val.length);
         assertImageNinePoints("icon", val, label.getSize(),
                 Pixel.TRANSPARENT, Pixel.BLUE, Pixel.TRANSPARENT,
                 Pixel.BLUE, Pixel.BLUE, Pixel.BLUE,
                 Pixel.TRANSPARENT, Pixel.BLUE, Pixel.TRANSPARENT);
-        
+
         // now check that background shows through
         // Need to find the icon location first
         p = SwingUtilities.convertPoint(label,0,0,f.getContentPane());
-        
+
         val = getDisplayedContent(f.getContentPane(), label.getSize(), p);
 
         Assert.assertEquals("frame arraylength", 19*19, val.length);
@@ -367,10 +369,10 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
 
         f.dispose();
     }
-    
+
     // c.f. http://www.ssec.wisc.edu/~tomw/java/unicode.html#x2580
     final String sampleText = "  \u25CF  "; // note spaces
-    
+
     // FULL BLOCK \u2588
     // BLACK SQUARE \u25A0
     // BLACK CIRCLE \u25CF
@@ -380,34 +382,34 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
 
     public void testDisplayText() {
         if (!System.getProperty("jmri.headlesstest","false").equals("false")) { return; }
-    
+
         JFrame f = new JFrame();
         f.getContentPane().setBackground(Color.blue);
         f.setUndecorated(true); // skip frame decoration, which can force a min size.
-                        
+
         PositionableLabel label = new PositionableLabel(sampleText, null);
         label.setForeground(Color.black); // this is a direct set, not through the UI
         label.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
-        
+
         f.add(label);
         f.pack();
         flushAWT();
 
         Assert.assertTrue("Expect size "+label.getSize()+" wider than height", label.getSize().width > label.getSize().height);
-                 
+
         int[] val = getDisplayedContent(label, label.getSize(), new Point(0,0));
-        
+
         //for (int i=0; i<val.length; i++) System.out.println(" "+i+" "+String.format("0x%8s", Integer.toHexString(val[i])).replace(' ', '0'));
- 
+
         assertImageNinePoints("icon", val, label.getSize(),
                 Pixel.TRANSPARENT, Pixel.TRANSPARENT, Pixel.TRANSPARENT,
                 Pixel.TRANSPARENT, Pixel.BLACK, Pixel.TRANSPARENT,
                 Pixel.TRANSPARENT, Pixel.TRANSPARENT, Pixel.TRANSPARENT);
-        
+
         // now check that background shows through
         // Need to find the icon location first
         Point p = SwingUtilities.convertPoint(label,0,0,f.getContentPane());
-        
+
         val = getDisplayedContent(f.getContentPane(), label.getSize(), p);
 
         assertImageNinePoints("icon", val, label.getSize(),
@@ -417,39 +419,39 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
 
         f.dispose();
     }
-    
+
 
     public void testDisplayTextRotated90() {
         if (!System.getProperty("jmri.headlesstest","false").equals("false")) { return; }
-    
+
         JFrame f = new JFrame();
         f.getContentPane().setBackground(Color.blue);
         f.setUndecorated(true); // skip frame decoration, which can force a min size.
-                        
+
         PositionableLabel label = new PositionableLabel(sampleText, null);
         label.setForeground(Color.black); // this is a direct set, not through the UI
         label.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
-        
+
         f.add(label);
         f.pack();
         flushAWT();
 
         label.rotate(90);
-        
+
         f.pack();
         flushAWT();
 
         Assert.assertTrue("Expect size "+label.getSize()+" higher than width", label.getSize().width < label.getSize().height);
-        
+
         int[] val = getDisplayedContent(label, label.getSize(), new Point(0,0));
-        
+
         //for (int i=0; i<val.length; i++) System.out.println(" "+i+" "+formatPixel(val[i]));
- 
+
         assertImageNinePoints("icon", val, label.getSize(),
                 Pixel.TRANSPARENT, Pixel.TRANSPARENT, Pixel.TRANSPARENT,
                 Pixel.TRANSPARENT, Pixel.BLACK, Pixel.TRANSPARENT,
                 Pixel.TRANSPARENT, Pixel.TRANSPARENT, Pixel.TRANSPARENT);
-        
+
         // now check that background shows through
         // Need to find the icon location first
         Point p = SwingUtilities.convertPoint(label,0,0,f.getContentPane());
@@ -463,36 +465,36 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
 
         f.dispose();
     }
-    
+
     public void testDisplayTextRotated45() {
         if (!System.getProperty("jmri.headlesstest","false").equals("false")) { return; }
-    
+
         JFrame f = new JFrame();
         f.getContentPane().setBackground(Color.blue);
         f.setUndecorated(true); // skip frame decoration, which can force a min size.
-                        
+
         PositionableLabel label = new PositionableLabel(sampleText, null);
         label.setForeground(Color.black); // this is a direct set, not through the UI
         label.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
-        
+
         f.add(label);
         f.pack();
         flushAWT();
 
         label.rotate(45);
-        
+
         f.pack();
         flushAWT();
 
         int[] val = getDisplayedContent(label, label.getSize(), new Point(0,0));
-        
+
         //for (int i=0; i<val.length; i++) System.out.println(" "+i+" "+String.format("0x%8s", Integer.toHexString(val[i])).replace(' ', '0'));
- 
+
         assertImageNinePoints("icon", val, label.getSize(),
                 Pixel.TRANSPARENT, Pixel.TRANSPARENT, Pixel.TRANSPARENT,
                 Pixel.TRANSPARENT, Pixel.BLACK, Pixel.TRANSPARENT,
                 Pixel.TRANSPARENT, Pixel.TRANSPARENT, Pixel.TRANSPARENT);
-        
+
         // now check that background shows through
         // Need to find the icon location first
         Point p = SwingUtilities.convertPoint(label,0,0,f.getContentPane());
@@ -517,7 +519,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", PositionableLabelTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -544,7 +546,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
             junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
             panel = null;
         }
-        
+
         apps.tests.Log4JFixture.tearDown();
     }
 

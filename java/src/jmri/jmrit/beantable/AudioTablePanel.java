@@ -1,4 +1,3 @@
-// AudioTablePanel.java
 package jmri.jmrit.beantable;
 
 import java.awt.BorderLayout;
@@ -36,14 +35,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public class AudioTablePanel extends JPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3379930683020715564L;
     private AudioTableDataModel listenerDataModel;
     private AudioTableDataModel bufferDataModel;
     private AudioTableDataModel sourceDataModel;
@@ -177,7 +171,7 @@ public class AudioTablePanel extends JPanel {
      * Add a component to the bottom box. Takes care of organising glue, struts
      * etc
      *
-     * @param comp
+     * @param comp {@link Component} to add
      */
     protected void addToBottomBox(Component comp) {
         bottomBox.add(Box.createHorizontalStrut(bottomStrutWidth), bottomBoxIndex);
@@ -213,5 +207,3 @@ public class AudioTablePanel extends JPanel {
     private static final Logger log = LoggerFactory.getLogger(AudioTablePanel.class.getName());
 
 }
-
-/* @(#)AudioTablePanel.java */

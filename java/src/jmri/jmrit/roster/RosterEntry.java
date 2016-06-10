@@ -113,9 +113,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     protected int _maxSpeedPCT = 100;
 
     /**
-     *
-     * @return @deprecated since 4.1.4 use {@link jmri.jmrit.roster.RosterConfigManager#getDefaultOwner()
-     * } instead
+     * @deprecated since 4.1.4 use {@link jmri.jmrit.roster.RosterConfigManager#getDefaultOwner()} instead
      */
     @Deprecated
     public static String getDefaultOwner() {
@@ -123,10 +121,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     /**
-     *
-     * @param n
-     * @deprecated since 4.1.4 use {@link jmri.jmrit.roster.RosterConfigManager#setDefaultOwner(java.lang.String)
-     * } instead
+     * @deprecated since 4.1.4 use {@link jmri.jmrit.roster.RosterConfigManager#setDefaultOwner(java.lang.String)} instead
      */
     @Deprecated
     public static void setDefaultOwner(String n) {
@@ -162,7 +157,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     /**
      * Construct a blank object.
-     *
      */
     public RosterEntry() {
     }
@@ -256,9 +250,10 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     /**
      * Ensure the entry has a valid filename. If none exists, create one based
      * on the ID string. Does _not_ enforce any particular naming; you have to
-     * check separately for "&lt.none&gt." or whatever your convention is for
-     * indicating an invalid name. Does replace the space, period, colon, slash
-     * and backslash characters so that the filename will be generally usable.
+     * check separately for {@literal "<none>"} or whatever your convention is
+     * for indicating an invalid name. Does replace the space, period, colon,
+     * slash and backslash characters so that the filename will be generally
+     * usable.
      */
     public void ensureFilenameExists() {
         // if there isn't a filename, store using the id
@@ -665,8 +660,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     /**
      * Loads function names from a JDOM element. Does not change values that are
      * already present!
-     *
-     * @param e3
      */
     public void loadFunctions(Element e3) {
         this.loadFunctions(e3, "family");
@@ -675,9 +668,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     /**
      * Loads function names from a JDOM element. Does not change values that are
      * already present!
-     *
-     * @param e3
-     * @param source
      */
     public void loadFunctions(Element e3, String source) {
         /*Load flag once, means that when the roster entry is edited only the first set of function labels are displayed 
@@ -740,9 +730,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     /**
      * Loads sound names from a JDOM element. Does not change values that are
      * already present!
-     *
-     * @param e3
-     * @param source
      */
     public void loadSounds(Element e3, String source) {
         /*Load flag once, means that when the roster entry is edited only the first set of sound labels are displayed 
@@ -769,8 +756,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     /**
      * Loads attribute key/value pairs from a JDOM element.
-     *
-     * @param e3
      */
     public void loadAttributes(Element e3) {
         if (e3 != null) {
@@ -787,7 +772,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * Define label for a specific function
      *
      * @param fn    function number, starting with 0
-     * @param label
      */
     public void setFunctionLabel(int fn, String label) {
         if (functionLabels == null) {
@@ -819,7 +803,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * Define label for a specific sound
      *
      * @param fn    sound number, starting with 0
-     * @param label
      */
     public void setSoundLabel(int fn, String label) {
         if (soundLabels == null) {
@@ -883,7 +866,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * Define whether a specific function is lockable.
      *
      * @param fn       function number, starting with 0
-     * @param lockable
      */
     public void setFunctionLockable(int fn, boolean lockable) {
         if (functionLockables == null) {
@@ -965,7 +947,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * {@link jmri.jmrit.roster.rostergroup.RosterGroup}s from the specified
      * {@link jmri.jmrit.roster.Roster} if they exist.
      *
-     * @param roster
      * @return list of roster groups
      */
     public List<RosterGroup> getGroups(Roster roster) {
@@ -999,7 +980,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     /**
      * Warn user that the roster entry needs to be resaved.
      *
-     * @param id
      */
     protected void warnShortLong(String id) {
         log.warn("Roster entry \"" + id + "\" should be saved again to store the short/long address value");
@@ -1177,7 +1157,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * done in the LocoFile class.
      *
      * @param cvModel       CV contents to include in file
-     * @param iCvModel
      * @param variableModel Variable contents to include in file
      *
      */
@@ -1227,13 +1206,12 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     private Element mRootElement = null;
 
     /**
-     * Load a pre-existing CvTableModel object with the CV contents of this
+     * Load pre-existing Variable and CvTableModel object with the contents of this
      * entry
      *
      * @param cvModel  Model to load, must exist
-     * @param iCvModel
      */
-    public void loadCvModel(CvTableModel cvModel, IndexedCvTableModel iCvModel) {
+    public void loadCvModel(VariableTableModel varModel, CvTableModel cvModel, IndexedCvTableModel iCvModel) {
         if (cvModel == null) {
             log.error("loadCvModel must be given a non-null argument");
             return;
@@ -1243,6 +1221,10 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             return;
         }
         try {
+            if (varModel != null) {
+                LocoFile.loadVariableModel(mRootElement.getChild("locomotive"), varModel);
+            }
+
             LocoFile.loadCvModel(mRootElement.getChild("locomotive"), cvModel, iCvModel, getDecoderFamily());
         } catch (Exception ex) {
             log.error("Error reading roster entry", ex);
@@ -1297,7 +1279,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * decoder comment fields. Created separate write statements for text and
      * line feeds to work around the HardcopyWriter bug that misplaces borders
      *
-     * @param w
      */
     public void printEntryDetails(Writer w) {
         int linesadded = -1;
@@ -1460,8 +1441,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * the width of the space to print for wrapping purposes. The comment is
      * wrapped on a word wrap basis
      *
-     * @param comment
-     * @param textSpace
      * @return comment wrapped to fit given width
      */
     public Vector<String> wrapComment(String comment, int textSpace) {

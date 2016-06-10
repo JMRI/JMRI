@@ -59,7 +59,7 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     public void configureManagers() {
 
         powerManager = new jmri.jmrix.ecos.EcosPowerManager(getTrafficController());
-        jmri.InstanceManager.setPowerManager(powerManager);
+        jmri.InstanceManager.store(powerManager, jmri.PowerManager.class);
 
         turnoutManager = new jmri.jmrix.ecos.EcosTurnoutManager(this);
         jmri.InstanceManager.setTurnoutManager(turnoutManager);

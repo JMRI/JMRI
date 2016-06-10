@@ -25,7 +25,6 @@ public class ProxySensorManager extends AbstractProxyManager
     /**
      * Locate via user name, then system name if needed.
      *
-     * @param name
      * @return Null if nothing by that name exists
      */
     public Sensor getSensor(String name) {

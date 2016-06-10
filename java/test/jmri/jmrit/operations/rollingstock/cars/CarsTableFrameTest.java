@@ -9,7 +9,7 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.Setup;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -59,9 +59,11 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
         // show all cars?
         Assert.assertTrue("show all cars", ctf.showAllCars);
         // table should be empty
-        Assert.assertEquals("number of cars 1", "0", ctf.numCars.getText());
+        Assert.assertEquals("number of cars", "0", ctf.numCars.getText());
 
         CarManager cManager = CarManager.instance();
+        // confirm no cars
+        Assert.assertEquals("number of cars", 0, cManager.getNumEntries());
         // add 5 cars to table
         loadCars();
 
@@ -71,7 +73,7 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("c1 location", Track.OKAY, c1.setLocation(westford, westfordYard));
         Assert.assertEquals("c1 destination", Track.OKAY, c1.setDestination(boxford, boxfordJacobson));
 
-        Car c2 = cManager.getByRoadAndNumber("UP", "2");
+        Car c2 = cManager.getByRoadAndNumber("UP", "22");
         Assert.assertNotNull(c2);
 
         Car c3 = cManager.getByRoadAndNumber("AA", "3");
@@ -97,9 +99,9 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
         List<RollingStock> cars = ctf.carsTableModel.getSelectedCarList();
         Assert.assertEquals("1st car in sort by number list", c1.getId(), cars.get(0).getId());
         Assert.assertEquals("2nd car in sort by number list", c4.getId(), cars.get(1).getId());
-        Assert.assertEquals("3rd car in sort by number list", c2.getId(), cars.get(2).getId());
-        Assert.assertEquals("4th car in sort by number list", c3.getId(), cars.get(3).getId());
-        Assert.assertEquals("5th car in sort by number list", c5.getId(), cars.get(4).getId());
+        Assert.assertEquals("3rd car in sort by number list", c3.getId(), cars.get(2).getId());
+        Assert.assertEquals("4th car in sort by number list", c5.getId(), cars.get(3).getId());
+        Assert.assertEquals("5th car in sort by number list", c2.getId(), cars.get(4).getId());
 
         // now sort by built date
         getHelper().enterClickAndLeave(new MouseEventData(this, ctf.sortByBuilt));
@@ -162,9 +164,9 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
         cars = ctf.carsTableModel.getSelectedCarList();
         Assert.assertEquals("1st car in sort by number list 2", c1, cars.get(0));
         Assert.assertEquals("2nd car in sort by number list 2", c4, cars.get(1));
-        Assert.assertEquals("3rd car in sort by number list 2", c2, cars.get(2));
-        Assert.assertEquals("4th car in sort by number list 2", c3, cars.get(3));
-        Assert.assertEquals("5th car in sort by number list 2", c5, cars.get(4));
+        Assert.assertEquals("3rd car in sort by number list 2", c3, cars.get(2));
+        Assert.assertEquals("4th car in sort by number list 2", c5, cars.get(3));
+        Assert.assertEquals("5th car in sort by number list 2", c2, cars.get(4));
 
         // test sort by owner
         getHelper().enterClickAndLeave(new MouseEventData(this, ctf.sortByOwner));
@@ -208,7 +210,7 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("5th car in sort by type list", c4, cars.get(4));
 
         // test find text field
-        ctf.findCarTextBox.setText("2");
+        ctf.findCarTextBox.setText("*2");
         getHelper().enterClickAndLeave(new MouseEventData(this, ctf.findButton));
         // table is sorted by type, cars with number 2 are in the first and last rows
         Assert.assertEquals("find car by number 1st", 0, ctf.carsTable.getSelectedRow());
@@ -224,8 +226,6 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
 
     private void loadCars() {
         CarManager cManager = CarManager.instance();
-        // remove previous cars
-        cManager.dispose();
         // add 5 cars to table
         Car c1 = cManager.newCar("NH", "1");
         c1.setBuilt("2009");
@@ -244,7 +244,7 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
         c1.setCaboose(true);
         c1.setComment("Test Car NH 1 Comment");
 
-        Car c2 = cManager.newCar("UP", "2");
+        Car c2 = cManager.newCar("UP", "22");
         c2.setBuilt("2004");
         c2.setColor("Blue");
         c2.setLength("50");
@@ -310,7 +310,7 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", CarsTableFrameTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

@@ -10,6 +10,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarColors;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
@@ -38,7 +39,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
     protected String _number = NONE;
     protected String _road = NONE;
     protected String _type = NONE;
-    protected String _length = NONE;
+    protected String _length = "0";
     protected String _color = NONE;
     protected String _weight = DEFAULT_WEIGHT;
     protected String _weightTons = DEFAULT_WEIGHT;
@@ -110,7 +111,6 @@ public class RollingStock implements java.beans.PropertyChangeListener {
     /**
      * Set the rolling stock identification or road number
      *
-     * @param number
      */
     public void setNumber(String number) {
         String old = _number;
@@ -139,6 +139,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
     /**
      * For combobox and identification
      */
+    @Override
     public String toString() {
         return getRoadName() + " " + getNumber();
     }
@@ -170,8 +171,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 
     /*
      * Sets the length of the rolling stock.
-     * 
-     * @param length
+     *
      */
     public void setLength(String length) {
         String old = _length;
@@ -207,7 +207,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         try {
             return Integer.parseInt(getLength());
         } catch (Exception e) {
-            log.error("Rolling stock ({}) length ({}) is not valid ", toString(), getLength());
+            log.error(Car.class.isInstance(this)?"Car":"Loco" +" ({}) length ({}) is not valid ", toString(), getLength());
         }
         return 0;
     }
@@ -294,7 +294,6 @@ public class RollingStock implements java.beans.PropertyChangeListener {
      * two years if the rolling stock was built in the 1900s. Use MM-YYYY for
      * units build after 1999.
      *
-     * @param built
      */
     public void setBuilt(String built) {
         String old = _built;
@@ -390,7 +389,6 @@ public class RollingStock implements java.beans.PropertyChangeListener {
     /**
      * Sets rolling stock location on the layout
      *
-     * @param location
      * @param track (yard, spur, staging, or interchange track)
      *
      * @return "okay" if successful, "type" if the rolling stock's type isn't
@@ -403,10 +401,9 @@ public class RollingStock implements java.beans.PropertyChangeListener {
     /**
      * Sets rolling stock location on the layout
      *
-     * @param location
-     * @param track (yard, spur, staging, or interchange track)
-     * @param force when true place rolling stock ignore track length, type, &
-     *            road
+     * @param track    (yard, spur, staging, or interchange track)
+     * @param force    when true place rolling stock ignore track length, type,
+     *                 {@literal &} road
      * @return "okay" if successful, "type" if the rolling stock's type isn't
      *         acceptable, "road" if rolling stock road isn't acceptable, or
      *         "length" if the rolling stock length didn't fit.
@@ -479,7 +476,6 @@ public class RollingStock implements java.beans.PropertyChangeListener {
     /**
      * Sets rolling stock destination on the layout
      *
-     * @param destination
      * @param track (yard, spur, staging, or interchange track)
      * @return "okay" if successful, "type" if the rolling stock's type isn't
      *         acceptable, or "length" if the rolling stock length didn't fit.
@@ -491,10 +487,9 @@ public class RollingStock implements java.beans.PropertyChangeListener {
     /**
      * Sets rolling stock destination on the layout
      *
-     * @param destination
-     * @param track (yard, spur, staging, or interchange track)
-     * @param force when true ignore track length, type, & road when setting
-     *            destination
+     * @param track       (yard, spur, staging, or interchange track)
+     * @param force       when true ignore track length, type, {@literal &} road
+     *                    when setting destination
      * @return "okay" if successful, "type" if the rolling stock's type isn't
      *         acceptable, or "length" if the rolling stock length didn't fit.
      */
@@ -562,8 +557,6 @@ public class RollingStock implements java.beans.PropertyChangeListener {
     /**
      * Used to check destination track to see if it will accept rolling stock
      *
-     * @param destination
-     * @param track
      * @return status OKAY, TYPE, ROAD, LENGTH, ERROR_TRACK
      */
     public String testDestination(Location destination, Track track) {
@@ -618,7 +611,6 @@ public class RollingStock implements java.beans.PropertyChangeListener {
      * space or drop count. Used by car router to test destinations. Does not
      * fire a property change. Use setDestination(Location, Track) instead.
      *
-     * @param track
      */
     public void setDestinationTrack(Track track) {
         if (track != null) {
@@ -675,7 +667,6 @@ public class RollingStock implements java.beans.PropertyChangeListener {
     /**
      * Sets the train that will service this rolling stock.
      *
-     * @param train
      */
     public void setTrain(Train train) {
         Train old = _train;
@@ -845,7 +836,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         if (_lastDate.equals((new java.util.GregorianCalendar()).getGregorianChange()))
             return NONE; // return an empty string for the default date.
         SimpleDateFormat format =
-                new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+                new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");  // NOI18N
         return format.format(_lastDate);
     }
 
@@ -874,17 +865,17 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         // create a date object from the value.
         try {
             // try the new format (with seconds).
-            SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+            SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");  // NOI18N
             _lastDate = formatter.parse(date);
         } catch (java.text.ParseException pe0) {
             // try the old 12 hour format (no seconds).
             try {
-                SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mmaa");
+                SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mmaa");  // NOI18N
                 _lastDate = formatter.parse(date);
             } catch (java.text.ParseException pe1) {
                 try {
                     // try 24hour clock.
-                    SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+                    SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm");  // NOI18N
                     _lastDate = formatter.parse(date);
                 } catch (java.text.ParseException pe2) {
                     log.warn("Not able to parse date: {} for rolling stock ({})", date, toString());
@@ -898,7 +889,6 @@ public class RollingStock implements java.beans.PropertyChangeListener {
      * Sets the last date when this rolling stock was moved, or was reset from a
      * built train.
      *
-     * @param date
      */
     public void setLastDate(Date date) {
         Date old = _lastDate;
@@ -1289,6 +1279,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
     }
 
     // rolling stock listens for changes in a location name or if a location is deleted
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
         // if (log.isDebugEnabled()) log.debug("Property change for rolling stock: " + toString()+ " property name: "
         // +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());

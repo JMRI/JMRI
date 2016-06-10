@@ -176,7 +176,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     /*
      * At low speed, readings arrive less often and less filtering
      * is applied to minimise the delay in updating the display
-     * 
+     *
      * Speed measurement is split into 4 ranges with an overlap, tp
      * prevent "hunting" between the ranges.
      */
@@ -260,6 +260,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         super.dispose();
     }
 
+    // FIXME: Why does the if statement in this method include a direct false?
+    @SuppressWarnings("unused")
     public void initComponents() throws Exception {
         setTitle(title());
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -480,7 +482,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         rosterBox = new GlobalRosterEntryComboBox();
         rosterBox.setNonSelectedItem(rb.getString("NoLocoSelected"));
         rosterBox.setToolTipText(rb.getString("TTSelectLocoFromRoster"));
-        /* 
+        /*
          Using an ActionListener didn't select a loco from the ComboBox properly
          so changed it to a PropertyChangeListener approach modeled on the code
          in CombinedLocoSelPane class, layoutRosterSelection method, which is known to work.
@@ -771,7 +773,6 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
      * Handle "replies" from the hardware. In fact, all the hardware does is
      * send a constant stream of unsolicited speed updates.
      *
-     * @param l
      */
     public synchronized void reply(SpeedoReply l) {  // receive a reply message and log it
         //log.debug("Speedo reply " + l.toString());

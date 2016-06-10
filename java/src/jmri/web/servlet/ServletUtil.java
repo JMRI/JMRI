@@ -90,7 +90,6 @@ public class ServletUtil {
     /**
      * Set HTTP headers in the response to prevent caching.
      *
-     * @param response
      */
     public void setNonCachingHeaders(HttpServletResponse response) {
         Date now = new Date();
@@ -104,10 +103,6 @@ public class ServletUtil {
     /**
      * Write a file to the given response.
      *
-     * @param response
-     * @param file
-     * @param contentType
-     * @throws IOException
      */
     public void writeFile(HttpServletResponse response, File file, String contentType) throws IOException {
         if (file.exists()) {

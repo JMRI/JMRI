@@ -51,17 +51,12 @@ import org.slf4j.LoggerFactory;
 public class TurnoutTableAction extends AbstractTableAction {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = -8221584673872246104L;
-
-    /**
      * Create an action with a specific title.
      * <P>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
-     * @param actionName
+     * @param actionName title of the action
      */
     public TurnoutTableAction(String actionName) {
         super(actionName);
@@ -143,11 +138,6 @@ public class TurnoutTableAction extends AbstractTableAction {
         // create the data model object that drives the table;
         // note that this is a class creation, and very long
         m = new BeanTableDataModel() {
-
-            /**
-             *
-             */
-            private static final long serialVersionUID = -8822546005900067212L;
 
             @Override
             public int getColumnCount() {
@@ -624,11 +614,6 @@ public class TurnoutTableAction extends AbstractTableAction {
                 this.sorter = srtr;
                 JTable table = new JTable(srtr) {
 
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = -3082196412648458792L;
-
                     public TableCellRenderer getCellRenderer(int row, int column) {
                         //Convert the displayed index to the model index, rather than the displayed index
                         int modelColumn = getColumnModel().getColumn(column).getModelIndex();
@@ -806,8 +791,8 @@ public class TurnoutTableAction extends AbstractTableAction {
     }
 
     /**
-     * Create a JComboBox<String> containing all the options for turnout
-     * automation parameters for this turnout
+     * Create a {@literal JComboBox<String>} containing all the options for
+     * turnout automation parameters for this turnout
      *
      * @param t	the turnout
      * @return	the JComboBox
@@ -959,10 +944,6 @@ public class TurnoutTableAction extends AbstractTableAction {
 
     protected static class TurnoutOperationEditor extends JDialog {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 3523604197678096714L;
         TurnoutOperationConfig config;
         TurnoutOperation myOp;
         Turnout myTurnout;
@@ -1432,11 +1413,6 @@ public class TurnoutTableAction extends AbstractTableAction {
 
     static class BeanBoxRenderer extends JmriBeanComboBox implements TableCellRenderer {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 7351045146446284915L;
-
         public BeanBoxRenderer() {
             super(InstanceManager.sensorManagerInstance());
             setFirstItemBlank(true);
@@ -1461,11 +1437,6 @@ public class TurnoutTableAction extends AbstractTableAction {
     }
 
     static class BeanComboBoxEditor extends DefaultCellEditor {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 1705620352249335223L;
 
         public BeanComboBoxEditor(JmriBeanComboBox beanBox) {
             super(beanBox);

@@ -3076,7 +3076,6 @@ public class Setup {
     /**
      * Converts the xml key to the proper locale text
      *
-     * @param keys
      */
     private static void keyToStringConversion(String[] keys) {
         for (int i = 0; i < keys.length; i++) {
@@ -3098,7 +3097,6 @@ public class Setup {
     /**
      * Converts the strings into English tags for xml storage
      *
-     * @param strings
      */
     private static void stringToKeyConversion(String[] strings) {
         Locale locale = Locale.ROOT;

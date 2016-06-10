@@ -94,7 +94,6 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
      * Finds an existing schedule or creates a new schedule if needed requires
      * schedule's name creates a unique id for this schedule
      *
-     * @param name
      *
      * @return new TrainSchedule or existing TrainSchedule
      */
@@ -293,6 +292,7 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
         newSchedule(Bundle.getMessage("Saturday"));
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         log.debug("ScheduleManager sees property change: ({}) old: ({}) new ({})",
                 e.getPropertyName(), e.getOldValue(), e.getNewValue());

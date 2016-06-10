@@ -24,6 +24,7 @@ public class TrainScriptAction extends AbstractAction {
 
     TrainScriptFrame f = null;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a train scripts frame
         if (f != null && f.isVisible()) {

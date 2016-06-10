@@ -32,6 +32,7 @@ public class DeleteCarRosterAction extends AbstractAction {
         _carsTableFrame = carsTableFrame;
     }
 
+    @Override
     public void actionPerformed(ActionEvent ae) {
         if (_carsTableFrame.carsTableModel.trackName == null) {
             if (JOptionPane.showConfirmDialog(null, Bundle.getMessage("carSureDelete"),

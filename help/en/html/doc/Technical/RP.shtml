@@ -67,7 +67,7 @@ Not everything needs to be a Vector or an array!
 JMRI uses 
 <a href="http://java.sun.com/docs/books/tutorial/java/generics/index.html">Java generics</a>
 extensively to 
-<href="http://java.sun.com/docs/books/tutorial/java/generics/generics.html">reduce errors and improve understanding</a>.  
+<a href="http://java.sun.com/docs/books/tutorial/java/generics/generics.html">reduce errors and improve understanding</a>.  
 With lots of people writing and sharing code, using 
 generics instead of casts makes it much easier to understand the code, 
 and allows the compiler to catch many misunderstandings about how things
@@ -79,17 +79,17 @@ from the Java Tutorial.
 <LI>
 If you need to use comma-separated variable (CSV) files, 
 please use the
-<A HREF="http://javacsv.sourceforge.net/">javacsv API<a/>
+<a href="http://javacsv.sourceforge.net/">javacsv API</a>
 if possible.  We are already using that in a number of places,
 and will probably use it in more.  If that doesn't provide
 enough functionality, we might eventually move to the
-<A HREF="http://opencsv.sourceforge.net/api/au/com/bytecode/opencsv/">opencsv API</a>, but since we only want to use one,
+<a href="http://opencsv.sourceforge.net/api/au/com/bytecode/opencsv/">opencsv API</a>, but since we only want to use one,
 the conversion will be a lot of work.
 </UL>
 
 <h2>Code Format</h2>
 The 
-<A HREF="http://java.sun.com/docs/codeconv/">Java recommendations</A>
+<A HREF="http://www.oracle.com/technetwork/java/codeconventions-150003.pdf">Java Code Conventions</A>
 (if that link is broken, try <a href="https://web.archive.org/web/20080703230238/http://java.sun.com/docs/codeconv/">this one</a> from the Internet Archive)
 for names, formatting, etc are really useful.
 If you find that you can't read a piece of code, these will help
@@ -123,9 +123,9 @@ so that it would be good to code away from it while it's still working.
 You may want to work with the deprecation checks "on" during compilation.  
 To do that, change this line of build.xml:
 
-<code><pre>
+<pre><code>
 &lt;property name="deprecation" value="on" /&gt;
-</pre></code>
+</code></pre>
 
 <p>
 This lets you pay attention to new deprecation warnings as you code.
@@ -138,11 +138,11 @@ of the technicalities is
 
 We use them this way:
 
-<code><pre>
+<pre><code>
 * @deprecated 2.7.8
 
 @Deprecated // 2.7.8
-</pre></code>
+</code></pre>
 
 where the line contains the version in which the deprecation is applied.  
 That lets you easily know how long ago it was deprecated.

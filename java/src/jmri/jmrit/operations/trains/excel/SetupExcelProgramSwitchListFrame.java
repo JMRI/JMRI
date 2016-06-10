@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SetupExcelProgramSwitchListFrame extends SetupExcelProgramFrame {
 
+    @Override
     public void initComponents() {
         super.initComponents();
 
@@ -32,6 +33,7 @@ public class SetupExcelProgramSwitchListFrame extends SetupExcelProgramFrame {
     }
 
     // Save and Test
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == addButton) {
             File f = selectFile(TrainCustomSwitchList.getDirectoryName());

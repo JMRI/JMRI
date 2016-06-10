@@ -92,6 +92,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
         super(Bundle.getMessage("TitleEngineAdd")); // default is add engine
     }
 
+    @Override
     public void initComponents() {
         // set tips
         builtTextField.setToolTipText(Bundle.getMessage("buildDateTip"));
@@ -370,6 +371,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
     }
 
     // combo boxes
+    @Override
     public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == modelComboBox) {
             if (modelComboBox.getSelectedItem() != null) {
@@ -396,12 +398,14 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
         }
     }
 
+    @Override
     public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
         JCheckBox b = (JCheckBox) ae.getSource();
         log.debug("checkbox change " + b.getText());
     }
 
     // Save, Delete, Add, Clear, Calculate buttons
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == saveButton) {
             // log.debug("engine save button activated");
@@ -597,6 +601,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
     // for the engineAttributeEditFrame edit buttons
     private void addEditButtonAction(JButton b) {
         b.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 buttonEditActionPerformed(e);
             }
@@ -634,6 +639,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
         }
     }
 
+    @Override
     public void dispose() {
         removePropertyChangeListeners();
         super.dispose();
@@ -649,6 +655,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
         manager.removePropertyChangeListener(this);
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e

@@ -32,13 +32,9 @@ public class LnSensorManagerTest extends TestCase {
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
         Assert.assertNotNull("exists", lnis);
 
-        // create and register the manager object in a new instance manager
-        new jmri.InstanceManager() {
-            protected void init() {
-                super.init();
-                root = null;
-            }
-        };
+        // reset InstanceManager
+        jmri.util.JUnitUtil.resetInstanceManager();
+
         LnSensorManager l = new LnSensorManager(lnis, "L");
 
         // sample turnout object
@@ -89,13 +85,9 @@ public class LnSensorManagerTest extends TestCase {
         // prepare an interface, register
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
 
-        // create and register the manager object in a new instance manager
-        new jmri.InstanceManager() {
-            protected void init() {
-                super.init();
-                root = null;
-            }
-        };
+        // reset InstanceManager
+        jmri.util.JUnitUtil.resetInstanceManager();
+
         LnSensorManager l = new LnSensorManager(lnis, "L");
         jmri.InstanceManager.setSensorManager(l);
 
@@ -130,7 +122,7 @@ public class LnSensorManagerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {LnSensorManagerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
