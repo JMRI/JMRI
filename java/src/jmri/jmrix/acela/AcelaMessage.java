@@ -34,7 +34,6 @@ public class AcelaMessage extends jmri.jmrix.AbstractMRMessage {
      * This ctor interprets the String as the exact sequence to send,
      * byte-for-byte.
      *
-     * @param m
      */
     public AcelaMessage(String m) {
         super(m);

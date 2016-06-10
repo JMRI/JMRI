@@ -48,7 +48,6 @@ import org.slf4j.LoggerFactory;
  * needed when each invocation of the corresponding action can create a new copy
  * of the window. To do this, you don't have to do anything in your subclass.
  * This class has
- * <p>
  *
  * <pre>
  * <code>

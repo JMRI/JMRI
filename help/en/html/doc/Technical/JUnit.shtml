@@ -35,6 +35,8 @@
     <li><a href="#Introduction">Introduction</a></li>
     <li><a href="#run">Running the Tests</a></li>
     <li><a href="#Continuous">Continuous Integration Test Execution</a></li>
+        <li><a href="#Reporting">Error Reporting</a></li>
+        <li><a href="#Coverage">Code Coverage Reports</a></li>
     <li><a href="#write">Writing Tests</a></li>
         <ul>
         <li><a href="#writeAddl4ExistClass">Writing Additional Tests for an Existing Class</a></li>
@@ -52,6 +54,11 @@
     <li><a href="#testSwingCode">Testing Swing Code</a></li>
         <ul>
         <li><a href="#complicatedGuiTesting">Testing Complicated GUI code</a></li>
+        </ul>
+    </ul>
+    <li><a href="#testScriptCode">Testing Script Code</a></li>
+        <ul>
+        <li><a href="#sampleScriptTesting">Testing Jython sample scripts</a></li>
         </ul>
     </ul>
     <li><a href="#issues">Issues</a></li>
@@ -108,10 +115,12 @@ runs a specific test or test suite.
 The <a href="ContinuousIntegration.shtml">continuous integration environment</a>
 senses changes in the code repository, rebuilds the code, performs a variety of
 checks.  If no fatal issues are found, the continuous integration process executes 
-the "headlesstest" ant target against the build to run the (non-graphical) tests 
+the "alltest" ant target against the build to run the tests 
 against the successful build of the code base.
-<p>
-If a test fails during the continuous integration execution of "headlesstest", 
+
+<h3><a name="Reporting">Error Reporting</a></h3>
+
+If a test fails during the continuous integration execution of "alltest", 
 an e-mail is sent to the jmri-build e-mail list as well as to the developers who 
 have checked in code which was included in the build.
 <p>You may visit the web site 
@@ -125,6 +134,20 @@ continuous integration</a> web site.
 
 <P>
 (When the build succeeds, nothing is mailed, to cut down on traffic)
+
+<h3><a name="Coverage">Code Coverage Reports</a></h3>
+
+As part of running the tests, Jenkins accumulates information on how much of the
+code was executed, called the "code coverage".  We use the
+<a href="http://eclemma.org/jacoco/">JaCoCo tool</a>
+to do the accounting. It provides detailed reports at multiple levels:
+<ul>
+<li><href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/jacoco/">A plot of coverage as a whole</a>. Click on the graph to see a</li>
+<li><href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/">summary by Java package</a>. Click on a package to see a</li>
+<li><href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/">summary by file</a> (e.g. class). Click on a class to see a</li>
+<li><href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/BlockBossLogic/">summary by method</a>. Click on a method to see</li>
+<li><href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/BlockBossLogic/defineIO()/">how each part of the code was covered</a> (may require scrolling down).</li>
+</ul>
 
 <h2><a name="write">Writing Tests</a></h2>
 
@@ -501,6 +524,22 @@ mouse cursor around while they're running)
 For more complex GUI testing, you can invoke various aspects of the interface
 and check internal state using test code.
 
+<h2><a id="testScriptCode" name="testScriptCode"></a>Testing Script Code</h2>
+
+JMRI ships with sample scripts.  This section discussions how you can write 
+simple tests for those to ensure they keep working.
+
+<h3><a id="sampleJythonScriptTesting" name="sampleJythonScriptTesting"></a>Testing Jython sample scripts</h3>
+
+Test scripts can be placed in <code>jython/test</code> are automatically invoked by
+<code><a href="https://github.com/JMRI/JMRI/blob/master/java/test/jmri/jmrit/jython/SampleScriptTest.java">java/test/jmri/jmrit/jython/SampleScriptTest.java</a></code>.
+<p>
+See the <code><a href="https://github.com/JMRI/JMRI/blob/master/jython/test/jmri_bindings_test.py">jmri_bindings_test.py</a></code> 
+sample for syntax, including examples of how to signal test failures.
+<p>
+In the future, this could be extended to pick up files automatically, 
+to support xUnit testing, etc.
+<p>
 
 <h2><a name="issues">Issues</a></h2>
 

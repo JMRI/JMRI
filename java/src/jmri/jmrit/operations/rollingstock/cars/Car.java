@@ -204,7 +204,6 @@ public class Car extends RollingStock {
     /**
      * Used to keep track of which item in a schedule was used for this car.
      *
-     * @param id
      */
     public void setScheduleItemId(String id) {
         log.debug("Set schedule item id ({}) for car ({})", id, toString());
@@ -504,7 +503,6 @@ public class Car extends RollingStock {
     /**
      * A kernel is a group of cars that are switched as a unit.
      *
-     * @param kernel
      */
     public void setKernel(Kernel kernel) {
         if (_kernel == kernel) {
@@ -581,7 +579,6 @@ public class Car extends RollingStock {
     /**
      * Sets the car's destination on the layout
      *
-     * @param destination
      * @param track       (yard, spur, staging, or interchange track)
      * @return "okay" if successful, "type" if the rolling stock's type isn't
      *         acceptable, or "length" if the rolling stock length didn't fit,
@@ -598,10 +595,9 @@ public class Car extends RollingStock {
     /**
      * Sets the car's destination on the layout
      *
-     * @param destination
      * @param track       (yard, spur, staging, or interchange track)
-     * @param force       when true ignore track length, type, & road when
-     *                    setting destination
+     * @param force       when true ignore track length, type, {@literal &} road
+     *                    when setting destination
      * @return "okay" if successful, "type" if the rolling stock's type isn't
      *         acceptable, or "length" if the rolling stock length didn't fit,
      *         or Schedule if the destination will not accept the car because

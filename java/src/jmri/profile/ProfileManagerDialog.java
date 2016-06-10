@@ -276,7 +276,6 @@ public class ProfileManagerDialog extends JDialog {
      *
      * @param f - The {@link java.awt.Frame} to display the dialog over.
      * @return the active or selected {@link Profile}
-     * @throws IOException
      * @see ProfileManager#getStartingProfile()
      */
     public static Profile getStartingProfile(Frame f) throws IOException {

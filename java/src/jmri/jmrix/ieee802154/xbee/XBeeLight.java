@@ -1,4 +1,3 @@
-// XBeeLight.java
 package jmri.jmrix.ieee802154.xbee;
 
 import jmri.Light;
@@ -7,17 +6,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Light impelementation for XBee systems.
+ * Light implementation for XBee systems.
  * <p>
  * @author Paul Bender Copyright (C) 2014
- * @version $Revision$
  */
 public class XBeeLight extends AbstractLight {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6879258557909355535L;
     private String NodeIdentifier; /* This is a string representation of
      the XBee address in the system name
      It may be an address or it may be
@@ -36,7 +30,6 @@ public class XBeeLight extends AbstractLight {
     /**
      * Create a Light object, with system and user names and a reference to the
      * traffic controller.
-     * <P>
      */
     public XBeeLight(String systemName, String userName, XBeeTrafficController controller) {
         super(systemName, userName);

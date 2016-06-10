@@ -3,7 +3,7 @@ package jmri.jmrit.operations.rollingstock.engines;
 import java.util.ArrayList;
 import java.util.List;
 import jmri.jmrit.operations.OperationsTestCase;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -148,7 +148,7 @@ public class NceConsistEnginesTest extends OperationsTestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", NceConsistEnginesTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

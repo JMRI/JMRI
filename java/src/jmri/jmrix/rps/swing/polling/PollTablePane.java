@@ -1,4 +1,3 @@
-// PollTablePane.java
 package jmri.jmrix.rps.swing.polling;
 
 import java.awt.Dimension;
@@ -30,7 +29,6 @@ import org.slf4j.LoggerFactory;
  * Pane for user management of RPS polling.
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
  */
 public class PollTablePane extends javax.swing.JPanel {
 
@@ -72,11 +70,6 @@ public class PollTablePane extends javax.swing.JPanel {
 
         // status info on bottom
         JPanel p = new JPanel() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 2303477665465877882L;
-
             public Dimension getMaximumSize() {
                 int height = getPreferredSize().height;
                 int width = super.getMaximumSize().width;

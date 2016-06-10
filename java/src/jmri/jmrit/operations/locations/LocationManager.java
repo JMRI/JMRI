@@ -108,7 +108,6 @@ public class LocationManager implements java.beans.PropertyChangeListener {
      * Finds an existing location or creates a new location if needed requires
      * location's name creates a unique id for this location
      *
-     * @param name
      *
      * @return new location or existing location
      */

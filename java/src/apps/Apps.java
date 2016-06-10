@@ -117,7 +117,8 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
     static String profileFilename;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings({"ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", "SC_START_IN_CTOR"})//"only one application at a time. The thread is only called to help improve user experiance when opening the preferences, it is not critical for it to be run at this stage"
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", "SC_START_IN_CTOR"},
+            justification = "only one application at a time. The thread is only called to help improve user experiance when opening the preferences, it is not critical for it to be run at this stage")
     public Apps(JFrame frame) {
 
         super(true);
@@ -678,9 +679,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
      * <PRE>
      *    menuBar.add(new jmri.jmrix.SystemsMenu());
      * </PRE>
-     *
-     * @param menuBar
-     * @param wi
      */
     protected void systemsMenu(JMenuBar menuBar, WindowInterface wi) {
         ActiveSystemsMenu.addItems(menuBar);

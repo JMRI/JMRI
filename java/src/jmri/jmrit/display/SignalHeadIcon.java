@@ -557,7 +557,6 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
      * change may not be permanent if there is logic controlling the signal
      * head.
      *
-     * @param e
      */
     public void doMouseClicked(java.awt.event.MouseEvent e) {
         if (!_editor.getFlag(Editor.OPTION_CONTROLS, isControlling())) {

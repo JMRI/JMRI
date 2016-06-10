@@ -129,7 +129,7 @@ public class BlockManagerTest extends TestCase {
                 Assert.fail("failed to set speed due to wrong reason: " + ex);
             }
         } finally {
-            jmri.util.JUnitAppender.assertWarnMessage("attempting to set invalid speed: Faster");
+            jmri.util.JUnitAppender.assertWarnMessage("attempting to get speed for invalid name: 'Faster'");
         }
         //Assert.assertEquals("faster block speed", "Faster", InstanceManager.blockManagerInstance().getDefaultSpeed());
         Assert.assertTrue("Expected exception", threw);
@@ -150,7 +150,7 @@ public class BlockManagerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {BlockManagerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

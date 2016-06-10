@@ -18,7 +18,6 @@ public interface RfidPanelInterface {
      * This needs to be connected to the initContext() method in implementing
      * classes.
      * @param memo SystemConnectionMemo for configured RFID system
-     * @throws java.lang.Exception
      */
     public void initComponents(RfidSystemConnectionMemo memo) throws Exception;
 

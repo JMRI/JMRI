@@ -198,6 +198,7 @@
       <li><a href="#SwitcherService">Switcher Service</a></li>
       <li><a href="#BuildingTrains">Building Trains</a></li>
       <li><a href="#TrainStatus">Train Status</a></li>
+      <li><a href="#BuildReports">Build Reports</a></li>
       <li><a href="#TroubleShootingBuildingTrains">Problems Building Trains How to Fix</a></li>
       <li><a href="#ReadingBuildReport">Reading the Build Report</a></li>
       <li><a href="#BuildReport">Build Report Details</a></li>
@@ -281,7 +282,7 @@
    bar under "Edit" select "Preferences..." then "Config Profiles". Create a new
    <a href="../../../apps/TabbedPreferences.shtml#Profiles">Configuration Profile</a> for each
    layout that you want to manage. The database for each layout is unique and not shared with the
-   other layouts. 
+   other layouts. You can find each set of operation files under JMRI-&gt; "profile name" -&gt; operations.
    
    <a name="demo"></a>
    <h3>Operations Demo Files</h3>
@@ -301,7 +302,7 @@
    <a name="QuickStartHelp"></a>
    <h3>Quick Start Help</h3>
 
-   In the top level menu for JMRI find the "Tools-&gt;Operations" menu. There are six items in this
+   From the main menu bar for JMRI find the "Tools-&gt;Operations" menu. There are six items in this
    menu. We recommend that you start with
    <a href="#Settings">Settings</a> and work your way down to <a
     href="#Trains">Trains</a>.
@@ -1404,10 +1405,17 @@
    <a name="BuildReportDetails"></a>
    <h3>Build Report Options</h3>
 
-   From the "Operations-&gt;Settings-&gt;Tools" or "Operations-&gt;Trains-&gt;Tools" menu
-   select "Build Report Options" to open the build report options window.
+   From the "Operations-&gt;Settings-&gt;Tools" or "Operations-&gt;Trains-&gt;Tools" menu select
+   "Build Report Options" to open the build report options window.
 
-   <p>You can adjust the amount of information that the build report will show. Select one of
+   <p>
+    The program when building a train produces a <a href="#BuildReports">build report</a> for that
+    train. The report contains details with regards to how the train was built and the various
+    choices the program made when assigning cars to the train.
+   </p>
+
+   <p>You can adjust the amount of information that the <a
+     href="#BuildReports">build report</a> will show. Select one of
     the four levels using the radio buttons in the Build Report Options window. The program when
     generating the build reports stores the "Very Detailed" information to a file. The radio buttons
     control how much of that data is actually printed. The "Minimal" radio button provides the least
@@ -1422,7 +1430,7 @@
       <p>
     For most users, the "Very Detailed" setting is the most appropriate when reading a train's build
     report. For information on the content of the build report please see <a
-     href="#TroubleShootingBuildingTrains">Problems Building Trains How to Fix</a>.
+     href="#BuildReports">Build Reports</a>.
    </p>
 
    <p>You also have the option of using a text editor to view your build report. A text editor
@@ -1748,18 +1756,20 @@
     the repair facility. For example, a random value of 2 would mean that roughly 1 in 50 cars could
     be sent the to RIP track.</p>
 
-   <p>Select from the "Delivery" pull down menu the train timetable when you want
-    the car delivered. Select under "Pickup" when you want the car pulled from the spur.
-    When a train timetable is selected for either delivery or
-    pickup, a car will only be serviced when that train timetable is active. See
-    Trains -&gt; Tools -&gt; <a href="#Timetable">Timetable</a> to select the train Timetable for your
-    session.</p>
-    
+   <p>
+    Select from the "Delivery" pull down menu the train timetable when you want the car delivered,
+    or leave it blank if a car can be delivered at any time. Select under "Pickup" when you want the
+    car pulled from the spur. When a train timetable is selected for either delivery or pickup, a
+    car will only be serviced when that train timetable is active. See Trains -&gt; Tools -&gt; <a
+     href="#Timetable">Timetable</a> to select the train Timetable for your session.
+   </p>
+
    <p>
     You can if you wish specify a particular "Road" for the type of car you entered, or leave it
-    blank if you don't care about the road name. Note
-    only car roads that are accepted by this spur are shown. To review which car roads
-    are available see the <a href="#RoadOptions">road options</a> for this spur.</p>
+    blank if you don't care about the road name. Note only car roads that are accepted by this spur
+    are shown. To review which car roads are available see the <a href="#RoadOptions">road
+     options</a> for this spur.
+   </p>
 
    <p>
     You can also specify the car load received and shipped. Leaving the "Receive" field blank
@@ -1796,7 +1806,7 @@
     delivered any day of the week, the load received can be anything, and the load shipped can be
     the default empty "E" or default load "L". There isn't a destination for the cars, so the
     program can send them anywhere that is willing to accept the boxcars with their new load. And
-    finally the cars can be picked up at anytime.</p>
+    finally the cars can be picked up at any time.</p>
 
    <p>The next line in the schedule is requesting a tankcar with a load of "Oil". Reading the
     entire schedule line for the tankcar, there isn't an random value, the car is only delivered on
@@ -2958,7 +2968,7 @@
 
    In addition to <a href="#ImportingCars">Import from file</a> feature described earlier, you can
    also export your cars to a comma separated value file. The "Export to file" function creates a
-   file named "ExportOperationsCarRoster.csv" in the JMRI-&gt;operations directory. Note that the
+   file named "ExportOperationsCarRoster.csv" in the operations directory. Note that the
    export cars tool will only export the cars shown in the cars window for a location or track.
 
    <h4>Car Roster-&gt;Delete all cars</h4>
@@ -3012,7 +3022,7 @@
    <h4>Modify Trains by Car Type</h4>
 
    <p>The tool "Modify Trains by Car Type" allows you to modify the car types that your trains
-    will service can be found under Trains-&gt;Tools and Cars-&gt;Tools. Very useful when adding a
+    will service can be found under Trains-&gt;Tools or Cars-&gt;Tools. Very useful when adding a
     new car type to your roster.</p>
 
    <a name="SetCars"></a>
@@ -3912,7 +3922,8 @@
    <h4>Modify Trains by Car Type</h4>
 
    The ability to modify the car types that your trains will service can be found under
-   Trains-&gt;Tools and Cars-&gt;Tools. Very useful when adding a new car type to your roster.
+   Trains-&gt;Tools-&gt;Modify Trains by Car Type or Cars-&gt;Tools-&gt;Modify Trains by Car Type.
+   Very useful when adding a new car type to your roster.
 
    <p>
     <img src="images/ModifyTrainsByCarType.png">
@@ -3941,11 +3952,12 @@
    <a name="TrainsTableColors"></a>
    <h4>Train Row Color</h4>
 
-   OperationsPro&trade; gives you two options for color coding the rows in the "Trains" window. You can
-   manually color code your trains, or you can have the program automatically set a train's row
-   color based on the status of the train. For example you could tell the program you want
-   the row colored red if a train fails to build. You can find this feature under "Tools" in the
-   "Trains" window.
+   OperationsPro&trade; gives you two options for color coding the rows in the "Trains" window. You
+   can manually color code your trains, or you can have the program automatically set a train's row
+   color based on the status of the train. For example you could tell the program you want the row
+   colored red if a train fails to build. You can also when using the "Auto" option define a unique
+   color for each train when they are reset. Before switching to "Auto", select the reset row colors
+   for your various trains. You can find this feature under "Tools" in the "Trains" window. 
    
    <a name="Timetable"></a>
    <h4>Timetable</h4>
@@ -4318,7 +4330,7 @@
 
    <p>
     When a train fails to build the status becomes "Build Failed" see <a
-     href="#TroubleShootingBuildingTrains">Problems Building Trains How to Fix</a> to understand how
+     href="#BuildReports">Build Reports</a> to understand how
     to troubleshoot a build failure.
    </p>
 
@@ -4329,8 +4341,8 @@
     route, pressing the "Move" button again causes the program to terminate the train, and the
     train's status becomes "Terminated" along with the date and time of when the train was terminated.</p>
 
-   <a name="TroubleShootingBuildingTrains"></a>
-   <h2>Problems Building Trains How to Fix</h2>
+   <a name="BuildReports"></a>
+   <h2>Build Reports</h2>
 
    If you want to examine how a train was built, you can select the "Build Reports" checkbox at the
    bottom of the train window, and then press the "Print" or "Preview" button for that train. The
@@ -4344,6 +4356,9 @@
     detailed. See the Settings section <a href="#BuildReportDetails"> Build Report Options</a> for
     more information on how to change the build report detail level.
    </p>
+   
+   <a name="TroubleShootingBuildingTrains"></a>
+   <h2>Problems Building Trains How to Fix</h2>
 
    <p>
     The most common reason for a build failure is requesting a caboose or car with FRED and the
@@ -4383,7 +4398,7 @@
 
    OperationsPro&trade; when building a train creates a build report and saves it to a file. Normally you would
    access the build report from the <a href="#BuildingTrains">Trains</a> window or from the edit
-   train "Tools" menu. The text files can be found in the JMRI-&gt;operations-&gt;buildstatus
+   train "Tools" menu. The text files can be found in the operations-&gt;buildstatus
    directory. The build report shows the steps the operations program goes through while building a
    train. The first page provides the route the train will travel and the number of car moves
    requested for each location. The report then shows the car type and locomotive types that the

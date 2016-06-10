@@ -86,7 +86,6 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
      * Finds an existing schedule or creates a new schedule if needed requires
      * schedule's name creates a unique id for this schedule
      *
-     * @param name
      *
      * @return new schedule or existing schedule
      */

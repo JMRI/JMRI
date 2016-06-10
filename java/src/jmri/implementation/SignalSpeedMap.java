@@ -101,7 +101,7 @@ public class SignalSpeedMap
             _table = new OrderedHashtable<>();
             for (int i = 0; i < list.size(); i++) {
                 String name = list.get(i).getName();
-                Float speed = Float.valueOf(0f);
+                Float speed;
                 try {
                     speed = Float.valueOf(list.get(i).getText());
                 } catch (NumberFormatException nfe) {
@@ -172,7 +172,7 @@ public class SignalSpeedMap
     public float getSpeed(@Nonnull String name) {
         if ( !checkSpeed(name)) {
             // not a valid aspect
-            log.warn("attempting to set invalid speed: "+name);
+            log.warn("attempting to get speed for invalid name: '{}'", name);
             //java.util.Enumeration<String> e = _table.keys();
             throw new IllegalArgumentException("attempting to get speed from invalid name: \""+name+"\"");
         }

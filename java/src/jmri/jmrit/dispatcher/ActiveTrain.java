@@ -210,8 +210,8 @@ public class ActiveTrain {
     public String getTransitName() {
         String s = mTransit.getSystemName();
         String u = mTransit.getUserName();
-        if ((u != null) && (!u.equals(""))) {
-            return (s + "( " + u + " )");
+        if ((u != null) && (!u.equals("") && (!u.equals(s)))) {
+            return (s + "(" + u + ")");
         }
         return s;
     }
@@ -707,8 +707,8 @@ public class ActiveTrain {
     private String getSectionName(jmri.Section sc) {
         String s = sc.getSystemName();
         String u = sc.getUserName();
-        if ((u != null) && (!u.equals(""))) {
-            return (s + "( " + u + " )");
+        if ((u != null) && (!u.equals("") && (!u.equals(s)))) {
+            return (s + "(" + u + ")");
         }
         return s;
     }

@@ -589,7 +589,6 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     /**
      * Add a DeviceListener
      *
-     * @param l
      */
     public void addDeviceListener(DeviceListener l) {
         if (listeners == null) {
@@ -603,7 +602,6 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     /**
      * Remove a DeviceListener
      *
-     * @param l
      */
     public void removeDeviceListener(DeviceListener l) {
         if (listeners == null) {

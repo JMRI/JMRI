@@ -41,19 +41,19 @@ import org.slf4j.LoggerFactory;
  * to use JFCUnit for that.
  * <p>
  * If you're using the InstanceManager, setUp() implementation should start
- * with:  <code><pre>
+ * with:  <pre><code>
  * super.setUp();
  * JUnitUtil.resetInstanceManager();
  * JUnitUtil.initInternalTurnoutManager();
  * JUnitUtil.initInternalLightManager();
  * JUnitUtil.initInternalSensorManager();
  * JUnitUtil.initDebugThrottleManager();
- * </pre></code>
+ * </code></pre>
  * <p>
- * Your tearDown() should end with:  <code><pre>
+ * Your tearDown() should end with:  <pre><code>
  * JUnitUtil.resetInstanceManager();
  * super.tearDown();
- * </pre></code>
+ * </code></pre>
  *
  * Note that memory managers and some others are completely internal, and will
  * be reset when you reset the instance manager.

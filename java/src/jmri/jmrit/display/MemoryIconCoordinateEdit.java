@@ -9,18 +9,21 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 /**
- * Displays and allows user to modify x & y coordinates of positionable labels
- * This class has been generalized to provide popup edit dialogs for
- * positionable item properties when TextFields are needed to input data.
+ * Displays and allows user to modify {@literal x & y} coordinates of
+ * positionable labels This class has been generalized to provide popup edit
+ * dialogs for positionable item properties when TextFields are needed to input
+ * data.
  * <P>
  * The class name no longer identifies the full purpose of the class, However
  * the name is retained because coordinate editing was the genesis. The current
  * list of properties served for editing is:
- * <LI>
- * modify x & y coordinates modify level modify tooltip modify border size
- * modify margin size modify fixed size modify rotation degress modify scaling
- * modify text labels modify zoom scaling modify panel name
- * </LI>
+ * <ul>
+ * <li>modify {@literal x & y} coordinates modify level modify tooltip modify
+ * border size</li>
+ * <li>modify margin size modify fixed size modify rotation degress modify
+ * scaling</li>
+ * <li>modify text labels modify zoom scaling modify panel name</li>
+ * </ul>
  * To use, write a static method that provides the dialog frame. Then write an
  * initX method that customizes the dialog for the property.
  *
@@ -108,6 +111,8 @@ public class MemoryIconCoordinateEdit extends CoordinateEdit {
                 dispose();
             }
         });
+        // make large enough to easily move
+        setMinimumSize(new Dimension(250, 175));
         pack();
     }
 }

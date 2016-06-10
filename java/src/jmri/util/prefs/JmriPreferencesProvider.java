@@ -137,7 +137,6 @@ public final class JmriPreferencesProvider {
      * Note that the first use of a node-specific setting can be different than
      * the first use of a multi-node setting.
      *
-     * @return
      */
     public boolean isFirstUse() {
         return this.firstUse;
@@ -163,7 +162,6 @@ public final class JmriPreferencesProvider {
      * Returns the name of the package for the class in a format that is treated
      * as a single token.
      *
-     * @param cls
      * @return A sanitized package name
      */
     public static String findCNBForClass(@Nonnull Class<?> cls) {

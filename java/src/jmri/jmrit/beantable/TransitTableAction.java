@@ -45,22 +45,26 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a TransitTable GUI.
  *
- * <P This file is part of JMRI. <P JMRI is open source software; you can
- * redistribute it and/or modify it under the terms of version 2 of the GNU
- * General Public License as published by the Free Software Foundation. See the
- * "COPYING" file for a copy of this license. <P JMRI is distributed in the hope
- * that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
- * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * General Public License for more details.
+ * <P>
+ * This file is part of JMRI.
+ * <P>
+ * JMRI is open source software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published by the
+ * Free Software Foundation. See the "COPYING" file for a copy of this license.
+ * <P>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author	Dave Duchamp Copyright (C) 2008, 2010, 2011
  */
 public class TransitTableAction extends AbstractTableAction {
 
     /**
-     * Create an action with a specific title. <P Note that the argument is the
-     * Action title, not the title of the resulting frame. Perhaps this should
-     * be changed? @param actionName
+     * Create an action with a specific title.
+     * <P>
+     * Note that the argument is the Action title, not the title of the
+     * resulting frame. Perhaps this should be changed? @param actionName
      */
     public TransitTableAction(String actionName) {
         super(actionName);
@@ -1385,11 +1389,11 @@ public class TransitTableAction extends AbstractTableAction {
             List<EntryPoint> s1ReverseEntries = s1.getReverseEntryPointList();
             List<EntryPoint> s2Entries = new ArrayList<>();
             if (restrictedDirection == Section.FORWARD) {
-                s2Entries = (ArrayList<EntryPoint>) s2.getReverseEntryPointList();
+                s2Entries = s2.getReverseEntryPointList();
             } else if (restrictedDirection == Section.REVERSE) {
-                s2Entries = (ArrayList<EntryPoint>) s2.getForwardEntryPointList();
+                s2Entries = s2.getForwardEntryPointList();
             } else {
-                s2Entries = (ArrayList<EntryPoint>) s2.getEntryPointList();
+                s2Entries = s2.getEntryPointList();
             }
             for (int i = 0; i < s1ReverseEntries.size(); i++) {
                 Block b1 = s1ReverseEntries.get(i).getFromBlock();

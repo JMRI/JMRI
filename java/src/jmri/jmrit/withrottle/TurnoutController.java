@@ -142,7 +142,6 @@ public class TurnoutController extends AbstractController implements PropertyCha
 
     /**
      *
-     * @param evt
      */
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("KnownState")) {

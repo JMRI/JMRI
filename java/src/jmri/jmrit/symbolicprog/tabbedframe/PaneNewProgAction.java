@@ -65,10 +65,6 @@ public class PaneNewProgAction extends AbstractAction {
 
         // new Loco on programming track
         JPanel pane1 = new LocoSelTreePane(null, null) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -3304246544040107635L;
 
             protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
                     String filename) {
@@ -76,10 +72,6 @@ public class PaneNewProgAction extends AbstractAction {
                 JFrame p = new PaneProgFrame(decoderFile, re,
                         title, "programmers" + File.separator + filename + ".xml",
                         null, false) {
-                            /**
-                             *
-                             */
-                            private static final long serialVersionUID = -4093978952107929146L;
 
                             protected JPanel getModePane() {
                                 return null;

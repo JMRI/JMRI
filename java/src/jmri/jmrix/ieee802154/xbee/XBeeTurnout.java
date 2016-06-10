@@ -1,4 +1,3 @@
-// XBeeTurnout.java
 package jmri.jmrix.ieee802154.xbee;
 
 import jmri.Turnout;
@@ -7,17 +6,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Turnout impelementation for XBee systems.
+ * Turnout implementation for XBee systems.
  * <p>
  * @author Paul Bender Copyright (C) 2014
- * @version $Revision$
  */
 public class XBeeTurnout extends AbstractTurnout {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3933452737189092378L;
     private String NodeIdentifier; /* This is a string representation of
      the XBee address in the system name
      It may be an address or it may be
@@ -38,7 +32,6 @@ public class XBeeTurnout extends AbstractTurnout {
     /**
      * Create a Turnout object, with system and user names and a reference to
      * the traffic controller.
-     * <P>
      */
     public XBeeTurnout(String systemName, String userName, XBeeTrafficController controller) {
         super(systemName, userName);

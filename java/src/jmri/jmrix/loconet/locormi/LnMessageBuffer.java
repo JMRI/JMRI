@@ -1,12 +1,5 @@
 package jmri.jmrix.loconet.locormi;
 
-/**
- * Handle a RMI connection for a single remote client. Description: Copyright:
- * Copyright (c) 2002
- *
- * @author Alex Shepherd
- * @version $Revision$
- */
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.LinkedList;
@@ -14,10 +7,14 @@ import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
 
+/**
+ * Handle a RMI connection for a single remote client. Description: Copyright:
+ * Copyright (c) 2002
+ *
+ * @author Alex Shepherd
+ */
 public class LnMessageBuffer extends UnicastRemoteObject implements LnMessageBufferInterface, LocoNetListener {
 
-    // versioned Jul 17, 2003 - was CVS revision 1.5
-    static final long serialVersionUID = -8483947910723134277L;
     LinkedList<LocoNetMessage> messageList = null;
 
     public LnMessageBuffer() throws RemoteException {

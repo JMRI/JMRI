@@ -96,6 +96,8 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         return pane1a;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
+            justification = "return values for jmri.InstanceManager.programmerManagerInstance() and programmerManagerInstance().getGlobalProgrammer() are checked known to be non-null before the getGlobalProgrammer().getCanRead() call is executed.")
     JToggleButton addDecoderIdentButton() {
         JToggleButton iddecoder = new JToggleButton(Bundle.getMessage("ButtonReadType"));
         iddecoder.setToolTipText(Bundle.getMessage("TipSelectType"));
@@ -149,6 +151,8 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
      *
      * @return a JPanel for handling the entry-selection GUI
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
+            justification = "return values for jmri.InstanceManager.programmerManagerInstance() and programmerManagerInstance().getGlobalProgrammer() are checked known to be non-null before the getGlobalProgrammer().getCanRead() call is executed.")
     protected JPanel layoutRosterSelection() {
         JPanel pane2a = new JPanel();
         pane2a.setLayout(new BoxLayout(pane2a, BoxLayout.X_AXIS));
@@ -336,7 +340,6 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
      * Identify locomotive complete, act on it by setting the GUI. This will
      * fire "GUI changed" events which will reset the decoder GUI.
      *
-     * @param dccAddress
      */
     protected void selectLoco(int dccAddress) {
         // raise the button again
