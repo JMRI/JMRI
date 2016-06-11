@@ -45,7 +45,7 @@ JMRI: Glossaire
 
 <p>Cette page est le Glossaire JMRI, fournissant de br&#232;ves d&#233;finitions de termes sp&#233;cifiques JMRI, et des liens vers des renseignements suppl&#233;mentaires.</p>
 <p>
-N'hésitez pas à soumettre des suggestions pour des améliorations ou des ajouts à <a href="https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI users</a> Yahoo group, titled &quot;Glossary&quot;.<br>
+N'h&#233;sitez pas &#225; soumettre des suggestions pour des am&#233;liorations ou des ajouts &#225; <a href="https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI users</a> Yahoo group, titled &quot;Glossary&quot;.<br>
 Cliquer sur un titre pour trier la liste vers le haut ou le bas .</p>
 
 <table class="sortable">
@@ -56,7 +56,7 @@ Cliquer sur un titre pour trier la liste vers le haut ou le bas .</p>
 <tr>
   <td class="app">All</td>
   <td class="en">Block</td>
-  <td class="descr">Une section de voie dont l'occupation peut-être surveillée individuellement <a href="../html/tools/Blocks.shtml">...</a></td>
+  <td class="descr">Une section de voie dont l'occupation peut-&#234;tre surveill&#233;e individuellement <a href="../html/tools/Blocks.shtml">...</a></td>
   <td class="de">(Strecken)Block/ Bl&ouml;cke</td>
   <td class="it">Blocco/Blocchi</td>
   <td class="fr">Canton</td>
@@ -76,7 +76,7 @@ Cliquer sur un titre pour trier la liste vers le haut ou le bas .</p>
 <tr>
   <td class="app">All</td>
   <td class="en">Light</td>
-  <td class="descr">Bits de sortie JMRI qui fonctionnent comme des commutateurs on/off. Quand "Activé", une Lumière répondra aux changements de son Capteur de commande, Aiguillage ou Horloge Rapide. Des Lumières Variables affichent différentes intensités (avec un décodeur de sortie spécial). Une Lumière ou un Aiguillage, mais pas les deux, peut commander un bit digital spécifique de sortie (adresse) <a href="../html/tools/Lights.shtml">...</a></td>
+  <td class="descr">Bits de sortie JMRI qui fonctionnent comme des commutateurs on/off. Quand "Activ&#233;", une Lumi&#232;re r&#233;pondra aux changements de son Capteur de commande, Aiguillage ou Horloge Rapide. Des Lumi&#232;res Variables affichent diff&#233;rentes intensit&#233;s (avec un d&#233;codeur de sortie sp&#233;cial). Une Lumi&#232;re ou un Aiguillage, mais pas les deux, peut commander un bit digital sp&#233;cifique de sortie (adresse) <a href="../html/tools/Lights.shtml">...</a></td>
   <td class="de">Licht</td>
   <td class="it">Luce</td>
   <td class="fr">Lumi&egrave;re</td>
@@ -96,7 +96,7 @@ Cliquer sur un titre pour trier la liste vers le haut ou le bas .</p>
 <tr>
   <td class="app">All</td>
   <td class="en">Memory (Variable)</td>
-  <td class="descr">Objet logiciel JMRI qui peut contenir tout type de contenu, comme une chaîne de texte ou une image. Logix peut tester - et définir  - les contenus d'une Variable Mémoire. Les panneaux peuvent les afficher. <a href="../html/tools/Memories.shtml">...</a></td>
+  <td class="descr">Objet logiciel JMRI qui peut contenir tout type de contenu, comme une chaîne de texte ou une image. Logix peut tester - et d&#233;finir  - les contenus d'une Variable M&#233;moire. Les panneaux peuvent les afficher. <a href="../html/tools/Memories.shtml">...</a></td>
   <td class="de">Speicher</td>
   <td class="it">Variabili in Memoria</td>
   <td class="fr">M&eacute;moire</td>
@@ -106,7 +106,7 @@ Cliquer sur un titre pour trier la liste vers le haut ou le bas .</p>
 <tr>
   <td class="app">All</td>
   <td class="en">Reporter</td>
-  <td class="descr">Objet logiciel JMRI representant l'information rapportée depuis le réseau. Elle peut contenir une information arbitraire,contrairement à un capteur. Chaque rapport est associé avec une source d'information spécifique sur le réseaut. <a href="../html/tools/Reporters.shtml">...</a></td>
+  <td class="descr">Objet logiciel JMRI representant l'information rapport&#233;e depuis le r&#233;seau. Elle peut contenir une information arbitraire,contrairement &#225; un capteur. Chaque rapport est associ&#233; avec une source d'information sp&#233;cifique sur le r&#233;seaut. <a href="../html/tools/Reporters.shtml">...</a></td>
   <td class="de">Melder</td>
   <td class="it">Reporter</td>
   <td class="fr">Rapport</td>
@@ -126,17 +126,17 @@ Cliquer sur un titre pour trier la liste vers le haut ou le bas .</p>
 <tr>
   <td class="app">All</td>
   <td class="en">Script Entry</td>
-  <td class="descr">Une série d'instructions stockées sur le disque et lues dans JMRI pour interprétation, écrites en langage Python. <a href="../html/tools/scripting/index.shtml">...</a></td>
+  <td class="descr">Une s&#233;rie d'instructions stock&#233;es sur le disque et lues dans JMRI pour interpr&#233;tation, &#233;crites en langage Python. <a href="../html/tools/scripting/index.shtml">...</a></td>
   <td class="de">Skripteingabe</td>
   <td class="it">Ingresso Script</td>
-  <td class="fr">Scipt d'Entrée</td>
+  <td class="fr">Scipt d'Entr&#233;e</td>
   <td class="en_UK"></td>
   <td class="da"></td>
 </tr>
 <tr>
   <td class="app">All</td>
   <td class="en">Sensor</td>
-  <td class="descr">Entrée JMRI depuis le réseau pour représenter l'état du détecteur d'occupation du canton,un bouton sur le tableau de bord etc. Un capteur peut être ACTIF, INACTIF ( ou INCONNU ). <a href="../html/tools/Sensors.shtml">...</a></td>
+  <td class="descr">Entr&#233;e JMRI depuis le r&#233;seau pour repr&#233;senter l'&#233;tat du d&#233;tecteur d'occupation du canton,un bouton sur le tableau de bord etc. Un capteur peut &#234;tre ACTIF, INACTIF ( ou INCONNU ). <a href="../html/tools/Sensors.shtml">...</a></td>
   <td class="de">Detektor</td>
   <td class="it">Sensore</td>
   <td class="fr">Capteur</td>
@@ -157,8 +157,8 @@ Cliquer sur un titre pour trier la liste vers le haut ou le bas .</p>
 <tr>
   <td class="app">All</td>
   <td class="en">Turnout</td>
-  <td class="descr">1. Une installation méchanique installation permettant à des trains d'être guidés d'une voie à une autre.<br>
-  2. Dans JMRI n'importe quelle sortie On/Off vers le réseau, commandée par des décodeurs d'accéssoires DCC. les pins individuelles de sortie sur un système C/MRI sont aussi appelées Aiguillage. Les deux états de sortie sont appelés " Direct"(off, inactif, état non commandé ) and "Dévié" (on, actif, état commandé). Pour la rétrosignalisation depuis le réseau, des entrées Capteur peuvent être assignées à un aiguillage <a href="../html/tools/Turnouts.shtml">...</a></td>
+  <td class="descr">1. Une installation m&#233;chanique installation permettant &#225; des trains d'&#234;tre guid&#233;s d'une voie &#225; une autre.<br>
+  2. Dans JMRI n'importe quelle sortie On/Off vers le r&#233;seau, command&#233;e par des d&#233;codeurs d'acc&#233;ssoires DCC. les pins individuelles de sortie sur un syst&#232;me C/MRI sont aussi appel&#233;es Aiguillage. Les deux &#233;tats de sortie sont appel&#233;s " Direct"(off, inactif, &#233;tat non command&#233; ) and "D&#233;vi&#233;" (on, actif, &#233;tat command&#233;). Pour la r&#233;trosignalisation depuis le r&#233;seau, des entr&#233;es Capteur peuvent &#234;tre assign&#233;es &#225; un aiguillage <a href="../html/tools/Turnouts.shtml">...</a></td>
   <td class="de">Weiche</td>
   <td class="it">Scambio</td>
   <td class="fr">Aiguillage</td>
@@ -168,7 +168,7 @@ Cliquer sur un titre pour trier la liste vers le haut ou le bas .</p>
 <tr>
   <td class="app">All</td>
   <td class="en">User Name</td>
-  <td class="descr" Un nom lisible faisant référence à un élément dans JMRI, qui peut être changé et même réutilisé pour un autre élément <a href="../html/doc/Technical/Names.shtml">...</a></td>
+  <td class="descr" Un nom lisible faisant r&#233;f&#233;rence &#225; un &#233;l&#233;ment dans JMRI, qui peut &#234;tre chang&#233; et m&#234;me r&#233;utilis&#233; pour un autre &#233;l&#233;ment <a href="../html/doc/Technical/Names.shtml">...</a></td>
   <td class="de">Nutzername</td>
   <td class="it">Nome Utente</td>
   <td class="fr">Nom Utilisateur</td>
@@ -221,7 +221,7 @@ Cliquer sur un titre pour trier la liste vers le haut ou le bas .</p>
   <td class="descr"></td>
   <td class="de">Paged (seitenweise)</td>
   <td class="it"></td>
-  <td class="fr">Mode paginée</td>
+  <td class="fr">Mode pagin&#233;e</td>
   <td class="en_UK"></td>
   <td class="da"></td>
 </tr>
@@ -298,7 +298,7 @@ Cliquer sur un titre pour trier la liste vers le haut ou le bas .</p>
 <tr>
   <td class="app">Logix</td>
   <td class="en">Logix</td>
-  <td class="descr">Objets logiciels JMRI qui surveille une ou plusieurs conditions sur le réseau, et prend une action quand ces conditions change d'une manière spécifiée par l'utilisateur pour contrôler les sorties sur le réseau <a href="../html/tools/Logix.shtml">...</a></td>
+  <td class="descr">Objets logiciels JMRI qui surveille une ou plusieurs conditions sur le r&#233;seau, et r&#233;alise une action quand ces conditions change d'une mani&#232;re sp&#233;cifi&#233;e par l'utilisateur pour contr&#234;ler les sorties sur le r&#233;seau <a href="../html/tools/Logix.shtml">...</a></td>
   <td class="de">Logix</td>
   <td class="it">Logix</td>
   <td class="fr">Logix</td>
@@ -341,7 +341,7 @@ Cliquer sur un titre pour trier la liste vers le haut ou le bas .</p>
   <td class="descr"></td>
   <td class="de">Einfahrgleis</td>
   <td class="it"></td>
-  <td class="fr">Voie d'Arrivée</td>
+  <td class="fr">Voie d'Arriv&#233;e</td>
   <td class="en_UK"></td>
   <td class="da"></td>
 </tr>
@@ -438,7 +438,7 @@ Cliquer sur un titre pour trier la liste vers le haut ou le bas .</p>
 <tr>
   <td class="app">Ops</td>
   <td class="en">Dispatcher</td>
-  <td class="descr">Rôle assigné durant une session d'exploitation</td>
+  <td class="descr">R&#234;le assign&#233; durant une session d'exploitation</td>
   <td class="de">Fahrdienstleiter</td>
   <td class="it"></td>
   <td class="fr">R&eacute;partiteur</td>
@@ -518,7 +518,7 @@ Cliquer sur un titre pour trier la liste vers le haut ou le bas .</p>
 <tr>
   <td class="app">Ops</td>
   <td class="en">Move</td>
-  <td class="descr">Apply one step for a train, moving it to the next Location (Button)</td>
+  <td class="descr">Effectuer une &#233;tape pour un train, le d&#233;placant &#225; l'emplacement suivant (Bouton)</td>
   <td class="de">Schritt</td>
   <td class="it">Muovi</td>
   <td class="fr">D&eacute;placer</td>
@@ -528,7 +528,7 @@ Cliquer sur un titre pour trier la liste vers le haut ou le bas .</p>
 <tr>
   <td class="app">Ops</td>
   <td class="en">Operations (menu)</td>
-  <td class="descr">JMRI module allowing you to create computer generated train Manifests for your railroad following predefined criteria. <a href="../package/jmri/jmrit/operations/Operations.shtml">...</a></td>
+  <td class="descr">Module JMRI module vous permettant de cr&#233;er des Manifestes de train g&#233;n&#233;r&#233;s par ordinateur pour votre r&#233;seau suivant des crit&#232;res d&#233;finis <a href="../package/jmri/jmrit/operations/Operations.shtml">...</a></td>
   <td class="de">Betrieb</td>
   <td class="it">Esercizio</td>
   <td class="fr">Exploitations</td>
@@ -558,7 +558,7 @@ Cliquer sur un titre pour trier la liste vers le haut ou le bas .</p>
 <tr id="opsroute">
   <td class="app">Ops</td>
   <td class="en">Route (ops)</td>
-  <td class="descr">A series of Locations and Tracks where cars can be picked up or set out. Trains are assigned to Routes, optionally following a Time Table. <a href="../package/jmri/jmrit/operations/Operations.shtml#Routes">...</a>  (see <a href="#pproute">PP</a>)</td>
+  <td class="descr">Une serie d'Emplacements et de Voies o&#249; les wagons peuvent &#234;tre collect&#233;s ou d&#233;pos&#233;s. Les trains sont affect&#233;s aux Itin&#233;raires, en suivant &#233;ventuellement un Horaire. <a href="../package/jmri/jmrit/operations/Operations.shtml#Routes">...</a>  (see <a href="#pproute">PP</a>)</td>
   <td class="de">Fahrstrecke</td>
   <td class="it">Itinerario</td>
   <td class="fr">Itin&eacute;raire/Chemin (Trains)</td>
@@ -578,7 +578,7 @@ Cliquer sur un titre pour trier la liste vers le haut ou le bas .</p>
 <tr>
   <td class="app">Ops</td>
   <td class="en">Section</td>
-  <td class="descr">A set of adjacent Blocks that may be allocated to a train traveling in a given direction. <a href="../html/tools/Sections.shtml">...</a></td>
+  <td class="descr">Un jeu de Cantons adjacents qui peuvent &#234;tre affect&#233;s &#225; un train circulant dans une direction donn&#233;e. <a href="../html/tools/Sections.shtml">...</a></td>
   <td class="de">Bereich</td>
   <td class="it">Sezione</td>
   <td class="fr">Section</td>
@@ -621,7 +621,7 @@ Cliquer sur un titre pour trier la liste vers le haut ou le bas .</p>
   <td class="descr"></td>
   <td class="de">Anhalten</td>
   <td class="it"></td>
-  <td class="fr"></td>
+  <td class="fr">Arr&#234;t</td>
   <td class="en_UK"></td>
   <td class="da"></td>
 </tr>
@@ -658,8 +658,8 @@ Cliquer sur un titre pour trier la liste vers le haut ou le bas .</p>
 <tr>
   <td class="app">Ops</td>
   <td class="en">Time Table</td>
-  <td class="descr">1. On US railroads under timetable and train order (TT&amp;TO) operation: a predetermined operating plan (the timetable) unless superseded by train orders conveyed to the train from the dispatcher, through local intermediaries. <a href="https://en.wikipedia.org/wiki/Train_order_operation">...</a><br>
-  2. In JMRI OperationsPro: a table defining which trains will run on any given day of the week.
+  <td class="descr">1. Sur les chemins de fer des &#201;tats-Unis, fonctionnement en vertu d'horaire et d'ordre de train pour (TT & amp; A): un plan de fonctionnement pr&#233;d&#233;termin&#233; (l'horaire) &#225; moins d'&#234;tre remplac&#233; par des ordres transmis au train par le dispatcheurr, par le biais d'interm&#233;diaires locaux.. <a href="https://en.wikipedia.org/wiki/Train_order_operation">...</a><br>
+  2. Dans l'OperationsPro JMRI: un tableaud&#233;finissant quel train circulera un jour donn&#233; de la semaine..
   <a href="../package/jmri/jmrit/operations/Operations.shtml#Timetable">...</a></td>
   <td class="de">Fahrplan/Kursbuch</td>
   <td class="it">Tabella Orario</td>
@@ -700,8 +700,8 @@ Cliquer sur un titre pour trier la liste vers le haut ou le bas .</p>
 <tr>
   <td class="app">Ops</td>
   <td class="en">Warrant</td>
-  <td class="descr">1. Permission to authorize a train's use of the main line. Dispatchers issue them to train crews instead of using signals. <a href="https://en.wikipedia.org/wiki/Track_warrant">...</a><br>
-  2. A special JMRI Logix with information to run an automated train. Activating it will set the turnouts for a specified <a href="#pproute">Route</a> and drive the train over the route, optionally using prerecorded throttle adjustments. <a href="../package/jmri/jmrit/logix/Warrant.shtml">...</a></td>
+  <td class="descr">1. Permission Pour un train d'utiliser la voie principale. Les dispatcheurs les d&#233;livrent aux &#233;quipes &#225; bord au lieu d'utiliser les signaux. <a href="https://en.wikipedia.org/wiki/Track_warrant">...</a><br>
+  2. Un Logix JMRI sp&#233;cial avec information pour faire circuler un train automatis&#233;. Son activation basculera les aiguillages pour un itin&#233;raire sp&#233;cifi&#233; <a href="#pproute">Route</a> et pilotera le train au long de l'itin&#233;raire, utilisant &#233;ventuellement des ajustement de r&#233;gulateur pr&#233;enregistr&#233;s. <a href="../package/jmri/jmrit/logix/Warrant.shtml">...</a></td>
   <td class="de">Fahrerlaubnis</td>
   <td class="it"></td>
   <td class="fr">Bulletin/Mandat</td>
@@ -721,7 +721,7 @@ Cliquer sur un titre pour trier la liste vers le haut ou le bas .</p>
 <tr>
   <td class="app">PP</td>
   <td class="en">Layout Editor</td>
-  <td class="descr">A JMRI app for making a smart schematic of your layout while  constructing the logic for signals, routes etc. behind the scenes. <a href="../html/apps/PanelPro/PanelPro.shtml#le">...</a></td>
+  <td class="descr">Une application JMRI pour faire un sch&#233;ma intelligent de votre r&#233;seau tout en construisant la logique pour les signaux, les itin&#233;raires etc. en coulisses. <a href="../html/apps/PanelPro/PanelPro.shtml#le">...</a></td>
   <td class="de">Anlageeditor</td>
   <td class="it">Editor Tracciato</td>
   <td class="fr">&Eacute;diteur de R&eacute;seau</td>
@@ -741,17 +741,17 @@ Cliquer sur un titre pour trier la liste vers le haut ou le bas .</p>
 <tr>
   <td class="app">PP</td>
   <td class="en">Control Panel Editor</td>
-  <td class="descr">A variant of Panel Editor, using menus instead of a separate editing pane <a href="../html/apps/PanelPro/PanelPro.shtml#cpe">...</a></td>
+  <td class="descr">Une variante d'&Eacute;diteur Panneau, utilisant des menus au lieu d'une &#233;dition de panneau s&#233;par&#233; <a href="../html/apps/PanelPro/PanelPro.shtml#cpe">...</a></td>
   <td class="de">Control Panel Editor</td>
   <td class="it">Editor Controlli</td>
   <td class="fr">&Eacute;diteur Panneau de Commande</td>
   <td class="en_UK"></td>
   <td class="da">Kontrol Panel Editor</td>
 </tr>
-<tr>
+<tr>">
   <td class="app">PP</td>
   <td class="en">Panel Editor</td>
-  <td class="descr">A JMRI app for graphically drawing a Panel and then animate parts of it to show the state of items on your layout and click to control them. <a href="../html/apps/PanelPro/PanelPro.shtml#pe">...</a></td>
+  <td class="descr">Une application JMRI pour dessiner graphiquement un Panneau et animer ensuite des parties de celui-ci pour montrer l'&#233;tat des &#233;l&#233;ments sur le r&#233;seau et cliquer pour les commander. <a href="../html/apps/PanelPro/PanelPro.shtml#pe">...</a></td>
   <td class="de">Gleisstellbildeditor</td>
   <td class="it">Editor Panello</td>
   <td class="fr">&Eacute;diteur de Panneaux</td>
@@ -771,7 +771,7 @@ Cliquer sur un titre pour trier la liste vers le haut ou le bas .</p>
 <tr id="pproute">
   <td class="app">PP</td>
   <td class="en">Route (PP)</td>
-  <td class="descr">A collection of Turnouts and/or Sensors whose states may be set all at once. When triggered, you can set it up to play a sound or run a script. <a href="../html/tools/Routes.shtml">...</a> (see <a href="#opsroute">Ops</a>)</td>
+  <td class="descr">Un groupement d'Aiguillages et/ou de Capteurs dont l'&#233;tat peut &#234;tre d&#233;fini en une seule commande. Quand il est d&#233;clench&#233; , vous pouvez le d&#233;finir pour jouer un son ou ex&#233;cuter un script. <a href="../html/tools/Routes.shtml">...</a> (see <a href="#opsroute">Ops</a>)</td>
   <td class="de">Weichenstra&szlig;e</td>
   <td class="it">Itinerario</td>
   <td class="fr">Itin&eacute;raire</td>
@@ -801,10 +801,10 @@ Cliquer sur un titre pour trier la liste vers le haut ou le bas .</p>
 <tr>
   <td class="app">Prefs</td>
   <td class="en">Defaults</td>
-  <td class="descr">Tab showing preferred Connection for each tool (note <a href="#prefsi18n">I18N</a>)</td>
+  <td class="descr">Onglets montrant la connexion pr&#233;f&#233;r&#233;e pour chaque outil (note <a href="#prefsi18n">I18N</a>)</td>
   <td class="de">Vorzug</td>
   <td class="it"></td>
-  <td class="fr">D&eacute;fauts</td>
+  <td class="fr"> Par D&eacute;fauts</td>
   <td class="en_UK"></td>
   <td class="da">Standard</td>
 </tr>
@@ -824,14 +824,14 @@ Cliquer sur un titre pour trier la liste vers le haut ou le bas .</p>
   <td class="descr"></td>
   <td class="de">Signalart</td>
   <td class="it">Stato</td>
-  <td class="fr">&Eacute;tat</td>
+  <td class="fr">Apparence</td>
   <td class="en_UK"></td>
   <td class="da">Tilstand</td>
 </tr>
 <tr>
   <td class="app">Signals</td>
   <td class="en">Signal Aspect</td>
-  <td class="descr">One of a series of allowed options for the visual pattern of a Signal Mast using one or more Signal Heads or Arms to convey a speed or route Indication to the engineer. Eg. the "Stop" Aspect has a meaning: "Stop the train". Each aspect has an associated "indication" (set of lights or arms) and both are in the Rule Book. <a href="../html/tools/signaling/AspectSignaling.shtml">...</a></td>
+  <td class="descr">Une des s&#233;ries d'options autoris&#233;es pour le mod&#232;le visuel d'un M&#226;t de Signalisation utilisant un ou plusieurs Feux de Signalisation ou Bras pour transmettre une vitesse ou une indication d'itin&#233;raire au m&#233;canicien. Ex: he l'Aspect "Stop" signifie: "Arr&#234;ter le train". Chaque aspect a une "indication" associ&#233;e (ensemble de lumi&#232;res ou de bras) et sont les deux dans un Livre de R&#233;glements. <a href="../html/tools/signaling/AspectSignaling.shtml">...</a></td>
   <td class="de">Signalbegriff</td>
   <td class="it"></td>
   <td class="fr">Aspect</td>
@@ -841,20 +841,20 @@ Cliquer sur un titre pour trier la liste vers le haut ou le bas .</p>
 <tr>
   <td class="app">Signals</td>
   <td class="en">Signal Head</td>
-  <td class="descr">Individual signal unit on a lit or semaphore Signal Mast. It shows exactly one Appearance, generally a color (though not always, e.g. semaphores) set by JMRI e.g. 'Red' or 'Flashing Yellow'. <a href="../html/tools/signaling/SignalHeads.shtml">...</a></td>
+  <td class="descr">Unit&#233; de signal Individuel sur un M&#226;t de signalisation allum&#233; ou un S&#233;maphore. Il montre exactement une Apparence, g&#233;n&#233;ralement une couleur (mais pas toujours, ex: s&#233;maphores) d&#233;finie par JMRI ee: "Rouge" ou "Clignotant Jaune". <a href="../html/tools/signaling/SignalHeads.shtml">...</a></td>
   <td class="de">Signalschirm</td>
   <td class="it">Vela Segnale</td>
-  <td class="fr">T&ecirc;te Signal</td>
+  <td class="fr">Feu de Signalisation</td>
   <td class="en_UK"></td>
   <td class="da">Signal Hoved</td>
 </tr>
 <tr>
   <td class="app">Signals</td>
   <td class="en">Signal Mast</td>
-  <td class="descr">An entire railroad signal with one or more Signal Heads, showing an Aspect to manage the flow of the Trains. <a href="../html/tools/signaling/SignalMasts.shtml">...</a></td>
+  <td class="descr">Un signal entier de chemin de fer avec un ou plusieurs Feux de Signalisation, montrant un Aspect pour g&#233;rer le flux des trains. <a href="../html/tools/signaling/SignalMasts.shtml">...</a></td>
   <td class="de">Signalmast</td>
   <td class="it">Stante Segnale</td>
-  <td class="fr">M&acirc;t Signal</td>
+  <td class="fr">M&acirc;t de Signalisation</td>
   <td class="en_UK"></td>
   <td class="da">Signal Mast</td>
 </tr>
@@ -912,7 +912,7 @@ Cliquer sur un titre pour trier la liste vers le haut ou le bas .</p>
 <tr>
   <td class="app">Tools</td>
   <td class="en">Throttle</td>
-  <td class="descr">Tool to run a DCC decoder equipped Locomotive using a computer or smartphone for control instead of a hand-held throttle.<a href="../html/tools/throttle/ThrottleMain.shtml">...</a></td>
+  <td class="descr">Outil pour exploiter une Locomotive &#233;quip&#233;e d'un d&#233;codeur DCC en utilisant un ordinateur ou un smartphone pour la commander au lieu d'un regulateur manuel.<a href="../html/tools/throttle/ThrottleMain.shtml">...</a></td>
   <td class="de">Fahrregler</td>
   <td class="it">Palmare</td>
   <td class="fr">R&eacute;gulateur</td>
@@ -1025,7 +1025,7 @@ Cliquer sur un titre pour trier la liste vers le haut ou le bas .</p>
   <td class="descr">Uncheck (Check Box)</td>
   <td class="de">(Alle) Abw&auml;hlen (Kontrollk&auml;stchen)</td>
   <td class="it">Azzera (Tutti)</td>
-  <td class="fr">(Tout) Effacer</td>
+  <td class="fr"> Effacer (Tout)</td>
   <td class="en_UK"></td>
   <td class="da"></td>
 </tr>
@@ -1075,7 +1075,7 @@ Cliquer sur un titre pour trier la liste vers le haut ou le bas .</p>
   <td class="descr"></td>
   <td class="de">Ausblenden</td>
   <td class="it">Nascondi</td>
-  <td class="fr"></td>
+  <td class="fr">Cacher</td>
   <td class="en_UK"></td>
   <td class="da">Skjul</td>
 </tr>
@@ -1165,7 +1165,7 @@ Cliquer sur un titre pour trier la liste vers le haut ou le bas .</p>
   <td class="descr"></td>
   <td class="de">(Alle) Markieren/Anw&auml;hlen</td>
   <td class="it">Seleziona (Tutti)</td>
-  <td class="fr">(Tout) S&eacute;lectionner</td>
+  <td class="fr">S&eacute;lectionner (Tout) </td>
   <td class="en_UK"></td>
   <td class="da"></td>
 </tr>
@@ -1205,7 +1205,7 @@ Cliquer sur un titre pour trier la liste vers le haut ou le bas .</p>
   <td class="descr"></td>
   <td class="de">Reiter</td>
   <td class="it"></td>
-  <td class="fr">Volet</td>
+  <td class="fr">Onglet</td>
   <td class="en_UK"></td>
   <td class="da"></td>
 </tr>
@@ -1215,7 +1215,7 @@ Cliquer sur un titre pour trier la liste vers le haut ou le bas .</p>
   <td class="descr"></td>
   <td class="de">-Tabelle</td>
   <td class="it">Tabello</td>
-  <td class="fr">Tableau de-</td>
+  <td class="fr">Tableau-</td>
   <td class="en_UK"></td>
   <td class="da">Tabeller</td>
 </tr>
