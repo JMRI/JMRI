@@ -55,8 +55,8 @@ JMRI_OPTIONS=${JMRI_OPTIONS:-}
 # set default config name
 CONFIGNAME=""
 
-# set DEBUG to anything to see debugging output
-# DEBUG=yes
+# set DEBUG to any non-empty string to see debugging output
+DEBUG=""
 
 # process command line arguments
 while [ $# -gt 0 ] ; do
@@ -121,8 +121,8 @@ fi
 #
 # * So look for the Oracle Java 7 JRE and use it if found
 # * Otherwise, use java_home if it's present
-# * As a last resort, use the default 'java' command and let the user 
-#   deal with it.  
+# * As a last resort, use the default 'java' command and let the user
+#   deal with it.
 
 if [ "$OS" = "macosx" ] ; then
     # on Mac OS X, we default to logging, since the Console app make it less visible unless you look for it
@@ -203,7 +203,7 @@ if [ -z "$ARCH" ] ; then
             if [ "${ARCH:0:3}" = "arm" ] ; then
 
                 #determine arm version & hard vs. soft float using readelf
-                ARCHVERSION=`readelf -A /proc/self/exe | grep Tag_CPU_arch | cut -d : -f2`  
+                ARCHVERSION=`readelf -A /proc/self/exe | grep Tag_CPU_arch | cut -d : -f2`
                 if [ -z "$ARCHVERSION" -o "${ARCHVERSION:1:2}" = "v5" ] ; then
                     ARCH="armv5"
                 elif [ "${ARCHVERSION:1:2}" = "v6" ] ; then
