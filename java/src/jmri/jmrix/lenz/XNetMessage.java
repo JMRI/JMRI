@@ -35,16 +35,18 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
      * Create a new object, representing a specific-length message.
      *
      * @param len Total bytes in message, including opcode and error-detection
-     *            byte.
+     *            byte.  Valid values are 0 to 15 (0x0 to 0xF).
      */
     public XNetMessage(int len) {
         super(len);
+        if (len > 15 ) {  // only check upper bound. Lower bound checked in
+                          // super call.
+            log.error("Invalid length in ctor: " + len);
+            throw new IllegalArgumentException("Invalid length in ctor: " + len);
+        }
         setBinary(true);
         setRetries(_nRetries);
         setTimeout(XNetMessageTimeout);
-        if (len > 15 || len < 0) {
-            log.error("Invalid length in ctor: " + len);
-        }
         _nDataChars = len;
     }
 

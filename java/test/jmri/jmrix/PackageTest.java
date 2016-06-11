@@ -19,7 +19,7 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -36,9 +36,11 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.ConnectionConfigManagerTest.suite());
 
         suite.addTest(jmri.jmrix.acela.PackageTest.suite());
+        suite.addTest(jmri.jmrix.bachrus.PackageTest.suite());
         suite.addTest(jmri.jmrix.can.PackageTest.suite());
         suite.addTest(jmri.jmrix.cmri.serial.PackageTest.suite());
         suite.addTest(jmri.jmrix.dcc.PackageTest.suite());
+        suite.addTest(jmri.jmrix.dcc4pc.PackageTest.suite());
         suite.addTest(jmri.jmrix.direct.PackageTest.suite());
         suite.addTest(jmri.jmrix.easydcc.PackageTest.suite());
         suite.addTest(jmri.jmrix.grapevine.PackageTest.suite());
@@ -46,10 +48,12 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.lenz.PackageTest.suite());
         suite.addTest(jmri.jmrix.loconet.PackageTest.suite());
         suite.addTest(jmri.jmrix.maple.PackageTest.suite());
+        suite.addTest(jmri.jmrix.marklin.PackageTest.suite());
         suite.addTest(jmri.jmrix.modbus.PackageTest.suite());
         suite.addTest(jmri.jmrix.nce.PackageTest.suite());
         suite.addTest(jmri.jmrix.oaktree.PackageTest.suite());
         suite.addTest(jmri.jmrix.openlcb.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.pi.PackageTest.class));
         suite.addTest(jmri.jmrix.powerline.PackageTest.suite());
         suite.addTest(jmri.jmrix.pricom.PackageTest.suite());
         suite.addTest(jmri.jmrix.qsi.PackageTest.suite());
@@ -59,6 +63,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.tmcc.PackageTest.suite());
         suite.addTest(jmri.jmrix.xpa.PackageTest.suite());
         suite.addTest(jmri.jmrix.srcp.PackageTest.suite());
+        suite.addTest(jmri.jmrix.tams.PackageTest.suite());
         suite.addTest(jmri.jmrix.ieee802154.PackageTest.suite());
         suite.addTest(jmri.jmrix.roco.PackageTest.suite());
         suite.addTest(jmri.jmrix.rfid.PackageTest.suite());
@@ -66,6 +71,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.zimo.PackageTest.suite());
         suite.addTest(jmri.jmrix.mrc.PackageTest.suite());
         suite.addTest(jmri.jmrix.ecos.PackageTest.suite());
+        suite.addTest(jmri.jmrix.wangrow.PackageTest.suite());
 	
         return suite;
 

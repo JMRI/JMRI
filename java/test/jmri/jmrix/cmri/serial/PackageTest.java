@@ -25,14 +25,13 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
         apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite("jmri.jmrix.cmri.serial.SerialTest");
-
         suite.addTest(jmri.jmrix.cmri.serial.SerialTurnoutTest.suite());
         suite.addTest(jmri.jmrix.cmri.serial.SerialTurnoutManagerTest.suite());
         suite.addTest(jmri.jmrix.cmri.serial.SerialSensorManagerTest.suite());

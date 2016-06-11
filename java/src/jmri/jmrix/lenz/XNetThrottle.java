@@ -198,7 +198,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             }
             return;
         }
-        XNetMessage msg = XNetMessage.getFunctionGroup2SetMomMsg(this.getDccAddress(),
+        XNetMessage msg = XNetMessage.getFunctionGroup3SetMomMsg(this.getDccAddress(),
                 f9Momentary, f10Momentary, f11Momentary, f12Momentary);
         // now, queue the message for sending to the command station
         queueMessage(msg, THROTTLEFUNCSENT);
@@ -485,7 +485,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                 sendQueuedMessage();
             } else if (l.isRetransmittableErrorMsg()) {
                 /* this is a communications error */
-                log.error("Communications error occured - message recieved was: " + l);
+                log.debug("Communications error occured - message recieved was: " + l);
             } else if (l.getElement(0) == XNetConstants.CS_INFO
                     && l.getElement(1) == XNetConstants.CS_NOT_SUPPORTED) {
                 /* The Command Station does not support this command */
@@ -496,7 +496,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                 /* this is an unknown error */
                 requestState = THROTTLEIDLE;
                 sendQueuedMessage();
-                log.warn("Received unhandled response: " + l);
+                log.debug("Received unhandled response: " + l);
             }
         } else if (requestState == THROTTLESTATSENT) {
             if (log.isDebugEnabled()) {
@@ -652,7 +652,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                 }
             } else if (l.isRetransmittableErrorMsg()) {
                 /* this is a communications error */
-                log.error("Communications error occured - message received was: " + l);
+                log.debug("Communications error occured - message received was: " + l);
             } else if (l.getElement(0) == XNetConstants.CS_INFO
                     && l.getElement(1) == XNetConstants.CS_NOT_SUPPORTED) {
                 /* The Command Station does not support this command */
@@ -663,7 +663,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                 /* this is an unknown error */
                 requestState = THROTTLEIDLE;
                 sendQueuedMessage();
-                log.warn("Received unhandled response: " + l);
+                log.debug("Received unhandled response: " + l);
             }
         }
         //requestState=THROTTLEIDLE;

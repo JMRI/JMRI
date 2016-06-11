@@ -3,6 +3,7 @@
 <!-- UpDated by Blorec Herv&#233; le 2013-09-04--> 
 <html lang="fr">
 <head>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
     <TITLE>
  	JMRI: Portable File Access
     </TITLE>
@@ -17,7 +18,6 @@
     <!-- or change them to reflect your alternative logo -->
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset= utf-8">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -32,7 +32,7 @@
 
 <H1>JMRI: Acc&#232;s aux fichiers Portables</H1>
 
-JMRI utilise des fichiers pour les icÃ´nes, images, fichiers de panneau, scripts, et
+JMRI utilise des fichiers pour les icônes, images, fichiers de panneau, scripts, et
 beaucoup d'autres choses. Les r&#233;f&#233;rences &#224; ceux-ci sont couramment utilis&#233;es ci-dessus
 par des codes diff&#233;rents, et stock&#233;es dans des fichiers XML. Certains de ces fichiers
 sont distribu&#233;s avec JMRI, et certains sont cr&#233;&#233;s en dehors du r&#233;pertoire de distribution JMRI par l'utilisateur local.
@@ -47,17 +47,17 @@ Si le nom
 <UL>
 <LI> commence par "program", traiter le reste comme
              chemin relatif du r&#233;pertoire du programme
-<LI> commence avec une Â«preference:",  traiter le reste comme
+<LI> commence avec une «preference:",  traiter le reste comme
              chemin d'acc&#232;s relatif du r&#233;pertoire des pr&#233;f&#233;rences
-<LI> commence par "homeÂ«, traiter le reste comme
+<LI> commence par "home«, traiter le reste comme
              chemin d'acc&#232;s relatif du r&#233;pertoire dans la propri&#233;t&#233; user.home, l'id&#233;e de Java dans le r&#233;pertoire home de l'utilisateur
 <LI> commence par "resource", traiter le reste comme
              chemin relatif au r&#233;pertoire du programme
-                  (obsol&#232;te, voir Â«programme:" ci-dessus)
+                  (obsol&#232;te, voir «programme:" ci-dessus)
 <LI> commence par "file: ", traiter le reste comme
              un chemin relatif au r&#233;pertoire des ressources ci-dessous
              dans le r&#233;pertoire des preferences
-                  (obsol&#232;te, voir la Â«pr&#233;f&#233;rence:" ci-dessus)
+                  (obsol&#232;te, voir la «pr&#233;f&#233;rence:" ci-dessus)
 </ ul>
 Sinon, traiter le nom comme un chemin relatif ci-dessous le r&#233;pertoire du programme pour fournir
 la compatibilit&#233; descendante. Dans tous les cas, les chemins absolus fonctionnent, mais

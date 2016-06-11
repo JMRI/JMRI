@@ -1,4 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2016 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new pane file for SoundTraxx Econami                       -->
+<!-- version 2 - Updated for SoundTraxx Tsunami2                            -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
   <name>Legacy Function Map</name>
   <name xml:lang="ca">Mapejat de funcions</name>
@@ -21,7 +35,7 @@
               &lt;em&gt;
                 Note: CVs 33-46 are set to values of 0 by default, offer a secondary method of function mapping,
                 &lt;br/&gt;
-                and are not used to determine Econami’s default function assignments.
+                and are not used to determine Tsunami 2's or Econami’s default function assignments.
               &lt;/em&gt;
             &lt;/strong&gt;
             &lt;br/&gt;

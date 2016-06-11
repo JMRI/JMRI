@@ -224,7 +224,7 @@ There's more info on how to do that on the
 Changes to Help pages which are checked-in should show up automatically on the JMRI.org
 site after a short while. 
 There's a 
-<a href="http://builds.jmri.org/jenkins/job/Web%20Site/job/Update%20Static%20Components/">Jenkins job</a>
+<a href="http://jmri.tagadab.com/jenkins/job/WebSite/job/generate-website/">Jenkins job</a>
 that handles periodic updates for the static (from repository, unlike e.g. JavaDoc) pages.
 
 <!--#include virtual="/Footer" -->
