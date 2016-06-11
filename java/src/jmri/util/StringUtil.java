@@ -1,4 +1,3 @@
-// StringUtil.java
 package jmri.util;
 
 import java.util.Collection;
@@ -15,7 +14,6 @@ import java.util.Iterator;
  * an explicit implementation when running on Java 1.1
  *
  * @author Bob Jacobsen Copyright 2003
- * @version $Revision$
  */
 public class StringUtil {
 
@@ -370,6 +368,8 @@ public class StringUtil {
     }
 
     /**
+     * Quotes unmatched closed parentheses; matched  ( ) pairs are left unchanged.
+     *
      * If there's an unmatched ), quote it with \, and quote \ with \ too.
      */
     static public String parenQuote(String in) {
