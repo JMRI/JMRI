@@ -2207,7 +2207,7 @@ public class LogixTableAction extends AbstractTableAction {
                     rbx.getString("LogicHelpText6"),
                     rbx.getString("LogicHelpText7")
                 },
-                rbx.getString("HelpButton"), javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                Bundle.getMessage("MenuHelp"), javax.swing.JOptionPane.INFORMATION_MESSAGE);
     }
 
     /**
@@ -2521,7 +2521,7 @@ public class LogixTableAction extends AbstractTableAction {
         JPanel p = new JPanel();
         p.add(new JLabel(rbx.getString("LabelActionFile")));
         _setPanel.add(p);
-        _actionSetButton = new JButton(rbx.getString("FileButton")); // TODO replace by ...
+        _actionSetButton = new JButton("..."); // "File" replaced by ...
         _actionSetButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 validateAction();
@@ -2530,6 +2530,7 @@ public class LogixTableAction extends AbstractTableAction {
         });
         _actionSetButton.setMaximumSize(_actionSetButton.getPreferredSize());
         _setPanel.add(_actionSetButton);
+        _actionSetButton.setToolTipText(rbx.getString("FileButtonHint"));
         _setPanel.add(Box.createVerticalGlue());
         _setPanel.setVisible(false);
         panel2.add(_setPanel);

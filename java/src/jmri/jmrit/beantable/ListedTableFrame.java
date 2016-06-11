@@ -168,7 +168,7 @@ public class ListedTableFrame extends BeanTableFrame {
 
     JPanel errorPanel(String text) {
         JPanel error = new JPanel();
-        error.add(new JLabel(Bundle.getMessage("ErrorAddingTable", text), BorderLayout.CENTER);
+        error.add(new JLabel(Bundle.getMessage("ErrorAddingTable", text)));
         return error;
     }
 
