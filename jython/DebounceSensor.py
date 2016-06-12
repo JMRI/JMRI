@@ -2,7 +2,7 @@
 # version of another sensor. Both the on and off delays
 # may be specified.
 #
-# Author: Ken Cameron, copyright 2008
+# Author: Ken Cameron, copyright 2008,2016
 # Part of the JMRI distribution
 #
 # A ActionListener is used to get timeout events.
@@ -31,6 +31,8 @@ class DebounceSensor(java.beans.PropertyChangeListener) :
     isChangingOff = False
     timeoutListener = None
     hasDisplay = False
+    debugLevel = 0
+    filterOn = False
 
     def init(self, inSensor, outSensor, onDelay, offDelay):
         self.watchedSensorName = inSensor
@@ -61,8 +63,15 @@ class DebounceSensor(java.beans.PropertyChangeListener) :
         # I don't bother with the event, I just check everything again
         self.delayTimer.stop()
         newState = self.watchedSensor.getKnownState()
-        #print("DebounceProp " + self.resultSensorName + ":" + newState.toString() + " event: " + event.propertyName + " has " + event.newValue.toString() + "\n")
-        if (self.isChangingOn == False and self.isChangingOff == False) :
+        if (self.debugLevel > 1) :
+            print("DebounceProp " + self.resultSensorName + ":" + self.stateName(self.watchedSensor.getKnownState()) + " event name: " + event.propertyName + " old: " + str(event.oldValue) + " to " + str(event.newValue))
+        if (self.filterOn and newState == INCONSISTENT) :
+            if (self.debugLevel > 1) :
+                print("DebounceProp " + self.resultSensorName + ": skipping INCONSISTENT")
+        elif (self.filterOn and newState == UNKNOWN) :
+            if (self.debugLevel > 1) :
+                print("DebounceProp " + self.resultSensorName + ": skipping UNKNOWN")
+        elif (self.isChangingOn == False and self.isChangingOff == False) :
             # nothing changing, normal change starting
             if (newState == ACTIVE) :
                 self.isChangingOn = True
@@ -87,7 +96,8 @@ class DebounceSensor(java.beans.PropertyChangeListener) :
 
     def changeOnToOff(self) :
         # the source went from on to off
-        #print("changeOnToOff")
+        if (self.debugLevel > 1) :
+            print("Debounce " + self.resultSensorName + " changeOnToOff")
         if (self.offTimeout != 0) :
             self.delayTimer.setInitialDelay(self.offTimeout)
             self.delayTimer.start()
@@ -96,7 +106,8 @@ class DebounceSensor(java.beans.PropertyChangeListener) :
         return
 
     def changeOffToOn(self) :
-        #print("changeOffToOn")
+        if (self.debugLevel > 1) :
+            print("Debounce " + self.resultSensorName + " changeOffToOn")
         # the source went from off to on
         if (self.onTimeout != 0) :
             self.delayTimer.setInitialDelay(self.onTimeout)
@@ -106,7 +117,8 @@ class DebounceSensor(java.beans.PropertyChangeListener) :
         return
 
     def resetSensors(self, newState) :
-        print("resetSensors: " + self.resultSensorName + ", shouldn't happen!")
+        if (self.debugLevel > 0) :
+            print("debounce resetSensors: " + self.resultSensorName + ", shouldn't happen!")
         self.isChangingOn = False
         self.isChangingOff = False
         self.currentState = newState
@@ -129,21 +141,25 @@ class DebounceSensor(java.beans.PropertyChangeListener) :
         # see which phase we think we are in
         self.delayTimer.stop()
         newState = self.watchedSensor.getKnownState()
-        #print("DebounceTimeout " + self.resultSensorName + ":" + newState.toString() + " event: " + event.toString() 
-        #    + ":" + self.isChangingOn.toString() + ":" + self.isChangingOff.toString()
-        #    +":\n")
+        if (self.debugLevel > 1) :
+            print("DebounceTimeout " + self.resultSensorName + ":" + self.stateName(newState) + " event: " + str(event) 
+            + ":" + str(self.isChangingOn) + ":" + str(self.isChangingOff)
+            +":\n")
         if (self.isChangingOn == False and self.isChangingOff == False) :
             # nothing changing, this shouldn't happen
-            #print("both changing false")
+            if (self.debugLevel > 1) :
+                print("both changing false")
             self.resetSensors(newState)
         elif (self.isChangingOn == True and self.isChangingOff == False and newState == ACTIVE) :
             # we were changing to on, got time out
-            #print("is active timeout")
+            if (self.debugLevel > 1) :
+                print("is active timeout")
             self.resultSensor.setKnownState(ACTIVE)
             self.isChangingOn = False
         elif (self.isChangingOn == False and self.isChangingOff == True and newState == INACTIVE) :
             # we were changing to off, got timeout
-            #print("is inactive timeout")
+            if (self.debugLevel > 1) :
+                print("is inactive timeout")
             self.resultSensor.setKnownState(INACTIVE)
             self.isChangingOff = False
         else :
@@ -162,8 +178,45 @@ class DebounceSensor(java.beans.PropertyChangeListener) :
         self.currentState = ACTIVE
         self.isChangingOn = False
         return
+
+    def setDebugLevel(self, value) :
+        if (value >= 0 and value <= 2) :
+            self.debugValue = value
+        return
+
+    def getDebugLevel(self) :
+        return self.debugLevel
     
-# invoke this script from the system directory
+    # turn on filter of UNKNOWN/INCONSISTENT
+    def setFilterOn(self) :
+        self.filterOn = True
+        return
+
+    # turn off filter of UNKNOWN/INCONSISTENT
+    def setFilterOn(self) :
+        self.filterOn = False
+        return
+
+    # show filter status
+    def getFilter(self) :
+        state = "Filter Off"
+        if (self.filterOn) :
+            state = "Filter On"
+        return state
+
+    # Define routine to map status numbers to text
+    def stateName(self, state) :
+        if (state == ACTIVE) :
+            return "ACTIVE"
+        if (state == INACTIVE) :
+            return "INACTIVE"
+        if (state == INCONSISTENT) :
+            return "INCONSISTENT"
+        if (state == UNKNOWN) :
+            return "UNKNOWN"
+        return "(invalid)"
+        
+    # invoke this script from the system directory
 # then create a file (with your panels) that has
 # lines like these (without the ## comments)
 # Params:
