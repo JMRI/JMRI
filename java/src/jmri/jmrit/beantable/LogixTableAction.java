@@ -313,7 +313,7 @@ public class LogixTableAction extends AbstractTableAction {
      }
     
      */ public void setMenuBar(BeanTableFrame f) {
-        JMenu menu = new JMenu(Bundle.getMessage("OptionsMenu"));
+        JMenu menu = new JMenu(Bundle.getMessage("MenuOptions"));
         menu.setMnemonic(KeyEvent.VK_O);
         javax.swing.JMenuBar menuBar = f.getJMenuBar();
         /*
