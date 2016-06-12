@@ -495,7 +495,7 @@ public class StringUtil {
      * value is displayed within square brackets and separated by commas.
      */
     @CheckReturnValue
-    static public <E> @Nonnull String arrayToString(@Nonnull E[] v) {
+    static public @Nonnull <E> String arrayToString(@Nonnull E[] v) {
         StringBuffer retval = new StringBuffer();
         boolean first = true;
         for (E e : v) {
