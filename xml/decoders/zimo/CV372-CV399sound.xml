@@ -28,9 +28,11 @@
         </qualifier>
   <variable item="Volume dependent on Speed" CV="372" default="0" tooltip="CV372">
 	<decVal />
+    <label xml:lang="de">E-Motor: Lautstärke Beschleunigen</label>
   </variable>
   <variable item="Volume dependent on Braking" CV="373" default="0" tooltip="CV373">
 	<decVal />
+    <label xml:lang="de">E-Motor: Lautstärke Bremsen</label>
   </variable>
 </variables>
   
@@ -39,6 +41,7 @@
     <enumVal>
       <enumChoice choice="Off">
         <choice>Off</choice>
+        <choice xml:lang="de">Aus</choice>
       </enumChoice>
       <enumChoice choice="F1">
         <choice>F1</choice>
@@ -127,6 +130,7 @@
     </enumVal>
     <label>Function Key for Coasting</label>
     <label xml:lang="it">Tasto Funzione per cambio in Folle</label>
+    <label xml:lang="de">Coasting Taste</label>
   </variable>
   <variable item="Sound Slot during Coasting" CV="375" default="0">
     <enumVal>
@@ -166,6 +170,7 @@
     </enumVal>
     <label>Sound Slot during Coasting</label>
     <label xml:lang="it">Slot Suono per cambio in Folle</label>
+    <label xml:lang="de">Coasting Stufe</label>
   </variable>
 
 <variables>
@@ -176,9 +181,11 @@
         </qualifier>  
   <variable item="Percentage Reduction of Driving Sound Volume" CV="376" default="0" tooltip="CV376">
 	<decVal />
+    <label xml:lang="de">Fahrsound Lautstärke</label>
   </variable>
   <variable item="Likeihood of switchgear sparks" CV="378" default="0" tooltip="CV378">
 	<decVal />
+    <label xml:lang="de">Lichtblitzen Beschleunigen</label>
   </variable>
   
   <variable item="Electric brake function key" CV="380" default="0" tooltip="CV380">
@@ -186,6 +193,7 @@
       <enumChoice choice="No key assigned">
         <choice>No key assigned</choice>
         <choice xml:lang="it">Nessun Tasto</choice>
+        <choice xml:lang="de">keine</choice>
       </enumChoice>
       <enumChoice choice="F1">
         <choice>F1</choice>
@@ -272,51 +280,68 @@
         <choice>F28</choice>
       </enumChoice>
     </enumVal>
+    <label xml:lang="de">Elektrische Bremse Taste</label>
   </variable>
   <variable item="Electric brake minimum speed" CV="381" default="0" tooltip="CV381">
 	<decVal />
+    <label xml:lang="de">Elektrische Bremse min. Fahrstufe</label>
   </variable>
   <variable item="Electric brake maximum speed" CV="382" default="0" tooltip="CV382">
 	<decVal />
+    <label xml:lang="de">Elektrische Bremse max. Fahrstufe</label>
   </variable>
   <variable item="Electric brake pitch" CV="383" default="0" tooltip="CV383">
 	<decVal />
+    <label xml:lang="de">&lt;html&gt;Elektrische Bremse Abhängigkeit&lt;br&gt;Tonhöhe von Fahrgeschwindigkeit&lt;/html&gt;</label>
   </variable>
   <variable item="Electric brake deceleration threshold" CV="384" default="0" tooltip="CV384">
 	<decVal />
+    <label xml:lang="de">Elektrische Bremse Verzögerungsschwelle</label>
   </variable>
   <variable item="Electric brake downhill" CV="385" default="0" tooltip="CV385">
 	<decVal />
+    <label xml:lang="de">Elektrische Bremse Gefällefahrt</label>
   </variable>
   <variable item="Electric brake loop time interval" mask="XXXXXVVV" CV="386" default="0" tooltip="CV386, values 0-7">
 	<decVal />
+    <label xml:lang="de">Elektrische Bremse Loop 1</label>
+    <tooltip xml:lang="de">Laufzeit-Verlängerung (0-7 = 0-7s)</tooltip>
   </variable>
   <variable item="Electric brake loop cutoff" mask="XXXXVXXX" CV="386" default="0" tooltip="CV386 bit 3">
 	<enumVal>
 		<enumChoice choice="0">
         <choice>Fade out</choice>
+        <choice xml:lang="de">ausblenden</choice>
       </enumChoice>
       <enumChoice choice="1">
         <choice>Cut off</choice>
+        <choice xml:lang="de">ausschalten</choice>
       </enumChoice>
 	</enumVal>
+    <label xml:lang="de">Elektrische Bremse Loop 2</label>
+    <tooltip xml:lang="de">Am Ende Sound Loop beenden und Sample bis Ende abspielen statt Sound ausblenden</tooltip>
   </variable>
   
   <variable item="Influence of Acceleration on Diesel Sound Steps" CV="387" default="0" tooltip="CV387">
 	<decVal />
+    <label xml:lang="de">Beschleunigen Diesel-Sound</label>
   </variable>
   <variable item="Influence of Deceleration on Diesel Sound Steps" CV="388" default="0" tooltip="CV388">
 	<decVal />
+    <label xml:lang="de">Bremsen Diesel-Sound</label>
   </variable>
   <variable item="Limitation of Acceleration on Diesel Sound Steps" CV="389" default="0" tooltip="CV389">
 	<decVal />
+    <label xml:lang="de">Diesel Stufe Beschleunigungslimit</label>
   </variable>
   
   <variable item="Momentum reduction when driving solo" CV="390" default="0" tooltip="CV390">
 	<decVal />
+    <label xml:lang="de">Reduzierung Verzögerungszeiten</label>
   </variable>
   <variable item="Driving idle sound speed step threshold" CV="391" default="0" tooltip="CV391">
 	<decVal />
+    <label xml:lang="de">Gescchwindigkeitsschwelle anheben</label>
   </variable>
   
   
@@ -325,21 +350,26 @@
 	<enumVal>
 		<enumChoice choice="0">
         <choice>no</choice>
+        <choice xml:lang="de">nein</choice>
       </enumChoice>
       <enumChoice choice="1">
         <choice>yes</choice>
+        <choice xml:lang="de">ja</choice>
       </enumChoice>
 	</enumVal>
+    <label xml:lang="de">Lichtblitze bei Schaltwerksgeräusch</label>
   </variable>
 
   <variable item="Maximum Volume" CV="395" default="0">
 	<decVal />
+    <label xml:lang="de">Maximale Lautstärke</label>
   </variable>
   <variable item="Function Key to Increase Volume"  CV="396"  default="0" tooltip="CV396">
 	 <enumVal>
       <enumChoice choice="No key assigned">
         <choice>No key assigned</choice>
         <choice xml:lang="it">Nessun Tasto</choice>
+        <choice xml:lang="de">keine</choice>
       </enumChoice>
       <enumChoice choice="F1">
         <choice>F1</choice>
@@ -426,12 +456,14 @@
         <choice>F28</choice>
       </enumChoice>
     </enumVal>
+    <label xml:lang="de">Leiser Taste</label>
   </variable>
   <variable item="Function Key to Reduce Volume"  CV="397"  default="0"  tooltip="CV397">
 	 <enumVal>
       <enumChoice choice="No key assigned">
         <choice>No key assigned</choice>
         <choice xml:lang="it">Nessun Tasto</choice>
+        <choice xml:lang="de">keine</choice>
       </enumChoice>
       <enumChoice choice="F1">
         <choice>F1</choice>
@@ -518,11 +550,14 @@
         <choice>F28</choice>
       </enumChoice>
     </enumVal>
+    <label xml:lang="de">Lauter Taste</label>
   </variable>
   
-  <variable item="Automatic Coasting Speed Steps"  CV="398"  default="0" tooltip="Number of steps speed has to be
-reduced within 0.5 seconds for coasting effect">
+  <variable item="Automatic Coasting Speed Steps"  CV="398"  default="0">
 	<decVal />
+    <label xml:lang="de">Automatische Coasting-Wirkung</label>
+	<tooltip>Number of steps speed has to be reduced within 0.5 seconds for coasting effect</tooltip>
+	<tooltip xml:lang="de">&lt;html&gt;Anzahl Fahrstufen (von 255) einstellen um die innerhalb von ca. 0,5s gebremst&lt;br&gt;werden muss damit der Diesel- Motor auf "Idle/Stand" abgesenkt wird.&lt;/html&gt;</tooltip>
   </variable>
 </variables>
   
