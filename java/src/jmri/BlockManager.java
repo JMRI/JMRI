@@ -65,9 +65,6 @@ public class BlockManager extends AbstractManager
 
     private boolean saveBlockPath = true;
 
-    /** 
-     * Note this is an enquiry method, not a setter
-     */
     @CheckReturnValue
     public boolean isSavedPathInfo() {
         return saveBlockPath;
@@ -122,7 +119,7 @@ public class BlockManager extends AbstractManager
         return r;
     }
 
-    public Block createNewBlock(@Nonnull String userName) {
+    public @Nonnull Block createNewBlock(@Nonnull String userName) {
         int nextAutoBlockRef = lastAutoBlockRef + 1;
         StringBuilder b = new StringBuilder("IB:AUTO:");
         String nextNumber = paddedNumber.format(nextAutoBlockRef);
@@ -130,7 +127,7 @@ public class BlockManager extends AbstractManager
         return createNewBlock(b.toString(), userName);
     }
 
-    public Block provideBlock(@Nonnull String name) {
+    public @Nonnull Block provideBlock(@Nonnull String name) {
         Block b = getBlock(name);
         if (b != null) {
             return b;
@@ -151,7 +148,8 @@ public class BlockManager extends AbstractManager
      * User Name. If this fails looks up assuming that name is a System Name. If
      * both fail, returns null.
      */
-    public Block getBlock(@Nonnull String name) {
+    @CheckReturnValue
+    public @CheckForNull Block getBlock(@Nonnull String name) {
         Block r = getByUserName(name);
         if (r != null) {
             return r;
@@ -159,16 +157,19 @@ public class BlockManager extends AbstractManager
         return getBySystemName(name);
     }
 
-    public Block getBySystemName(@Nonnull String name) {
+    @CheckReturnValue
+    public @CheckForNull Block getBySystemName(@Nonnull String name) {
         String key = name.toUpperCase();
         return (Block) _tsys.get(key);
     }
 
-    public Block getByUserName(@Nonnull String key) {
+    @CheckReturnValue
+    public @CheckForNull Block getByUserName(@Nonnull String key) {
         return (Block) _tuser.get(key);
     }
 
-    public Block getByDisplayName(@Nonnull String key) {
+    @CheckReturnValue
+    public @CheckForNull Block getByDisplayName(@Nonnull String key) {
         // First try to find it in the user list.
         // If that fails, look it up in the system list
         Block retv = this.getByUserName(key);
@@ -181,7 +182,7 @@ public class BlockManager extends AbstractManager
 
     static BlockManager _instance = null;
 
-    static public BlockManager instance() {
+    static public @CheckForNull BlockManager instance() {
         if (_instance == null) {
             _instance = new BlockManager();
         }
@@ -190,11 +191,10 @@ public class BlockManager extends AbstractManager
 
     String defaultSpeed = "Normal";
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_PARAM_DEREF", justification = "We are validating user input however the value is stored in its original format")
-    public void setDefaultSpeed(String speed) throws JmriException {
-        if (speed == null) {
-            throw new JmriException("Value of requested default thrown speed can not be null");
-        }
+    /**
+     * @throws IllegalArgumentException if provided speed is invalid
+     */
+    public void setDefaultSpeed(@Nonnull String speed) {
         if (defaultSpeed.equals(speed)) {
             return;
         }
@@ -205,7 +205,7 @@ public class BlockManager extends AbstractManager
             try {
                 jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(speed);
             } catch (Exception ex) {
-                throw new JmriException("Value of requested default block speed is not valid");
+                throw new IllegalArgumentException("Value of requested default block speed \""+speed+"\" is not valid");
             }
         }
         String oldSpeed = defaultSpeed;
@@ -213,11 +213,14 @@ public class BlockManager extends AbstractManager
         firePropertyChange("DefaultBlockSpeedChange", oldSpeed, speed);
     }
 
-    public String getDefaultSpeed() {
+    @CheckReturnValue
+    public @Nonnull String getDefaultSpeed() {
         return defaultSpeed;
     }
 
-    public String getBeanTypeHandled() {
+    @Override
+    @CheckReturnValue
+    public @Nonnull String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameBlock");
     }
     
@@ -229,7 +232,8 @@ public class BlockManager extends AbstractManager
      * @param re the roster entry
      * @return list of block system names
      */
-    public List<Block> getBlocksOccupiedByRosterEntry(@Nonnull RosterEntry re) {
+    @CheckReturnValue
+    public @Nonnull List<Block> getBlocksOccupiedByRosterEntry(@Nonnull RosterEntry re) {
         List<Block> blockList = new ArrayList<>();
         
         for (String sysName : getSystemNameList()) {

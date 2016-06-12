@@ -218,7 +218,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
                     InstanceManager.blockManagerInstance().setDefaultSpeed(speed);
                 }
             }
-        } catch (jmri.JmriException ex) {
+        } catch (IllegalArgumentException ex) {
             log.error(ex.toString());
         }
 

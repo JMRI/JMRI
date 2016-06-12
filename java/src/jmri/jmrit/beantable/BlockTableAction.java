@@ -601,7 +601,7 @@ public class BlockTableAction extends AbstractTableAction {
         //We will allow the turnout manager to handle checking if the values have changed
         try {
             InstanceManager.blockManagerInstance().setDefaultSpeed(speedValue);
-        } catch (jmri.JmriException ex) {
+        } catch (IllegalArgumentException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + speedValue);
             return;
         }
