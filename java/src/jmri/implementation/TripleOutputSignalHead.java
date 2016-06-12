@@ -1,4 +1,3 @@
-// TripleOutputSignalHead.java
 package jmri.implementation;
 
 import jmri.NamedBeanHandle;
@@ -24,7 +23,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Suzie Tall based on Bob Jacobsen's work
  * @author	Bob Jacobsen Copyright (C) 2003, 2008
- * @version	$Revision: 22821 $
  */
 public class TripleOutputSignalHead extends DoubleTurnoutSignalHead {
     public TripleOutputSignalHead(String sys, String user, NamedBeanHandle<Turnout> green, NamedBeanHandle<Turnout> blue, NamedBeanHandle<Turnout> red) {
@@ -160,5 +158,3 @@ public class TripleOutputSignalHead extends DoubleTurnoutSignalHead {
 
     private final static Logger log = LoggerFactory.getLogger(TripleOutputSignalHead.class.getName());
 }
-
-/* @(#)TripleOutputSignalHead.java */
