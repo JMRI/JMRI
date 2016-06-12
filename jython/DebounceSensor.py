@@ -56,7 +56,7 @@ class DebounceSensor(java.beans.PropertyChangeListener) :
         self.priorInput = self.currentState
         self.resultSensor.setKnownState(self.currentState)
         self.watchedSensor.addPropertyChangeListener(self)
-        print("debounce init " + self.resultSensorName + " watching " + self.watchedSensorName)
+        #print("debounce init " + self.resultSensorName + " watching " + self.watchedSensorName)
         return
         
     def propertyChange(self, event) :
