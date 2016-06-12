@@ -345,7 +345,7 @@ public class StringUtil {
      * @param divider Where to divide the input; this does not appear in output
      */
     @CheckReturnValue
-    static public @Nonnull String[] split(@Nonnull String input, @nNnnull String divider) {
+    static public @Nonnull String[] split(@Nonnull String input, @Nonnull String divider) {
         int size = 0;
         String temp = input;
 
