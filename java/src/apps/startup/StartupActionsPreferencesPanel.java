@@ -6,6 +6,7 @@ import apps.StartupModel;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.IndexedPropertyChangeEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -271,7 +272,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
     JButton upBtn;
     // End of variables declaration//GEN-END:variables
 
-    class TableModel extends AbstractTableModel implements PropertyChangeListener {
+    private class TableModel extends AbstractTableModel implements PropertyChangeListener {
 
         private final StartupActionsManager manager;
 
@@ -352,7 +353,15 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            this.fireTableDataChanged();
+            int index = -1;
+            if (evt instanceof IndexedPropertyChangeEvent) {
+                index = ((IndexedPropertyChangeEvent) evt).getIndex();
+            }
+            if (index != -1 && evt.getOldValue() instanceof Integer) {
+                this.fireTableRowsUpdated((Integer) evt.getOldValue(), index);
+            } else {
+                this.fireTableDataChanged();
+            }
             StartupActionsPreferencesPanel.this.isRestartRequired = true;
         }
     }
