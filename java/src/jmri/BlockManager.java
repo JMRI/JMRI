@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+import javax.annotation.CheckReturnValue;
 
 /**
  * Basic Implementation of a BlockManager.
@@ -44,25 +45,35 @@ public class BlockManager extends AbstractManager
         jmri.InstanceManager.reporterManagerInstance().addVetoableChangeListener(this);
     }
 
+    @Override
+    @CheckReturnValue
     public int getXMLOrder() {
         return Manager.BLOCKS;
     }
 
+    @Override
+    @CheckReturnValue
     public @Nonnull String getSystemPrefix() {
         return "I";
     }
 
+    @Override
+    @CheckReturnValue
     public char typeLetter() {
         return 'B';
     }
 
     private boolean saveBlockPath = true;
 
-    public boolean savePathInfo() {
+    /** 
+     * Note this is an enquiry method, not a setter
+     */
+    @CheckReturnValue
+    public boolean isSavedPathInfo() {
         return saveBlockPath;
     }
 
-    public void savePathInfo(boolean save) {
+    public void setSavedPathInfo(boolean save) {
         saveBlockPath = save;
     }
 
