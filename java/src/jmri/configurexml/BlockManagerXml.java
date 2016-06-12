@@ -150,7 +150,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
                             elem.addContent(re);
                         }
 
-                        if (tm.savePathInfo()) {
+                        if (tm.isSavedPathInfo()) {
                             // then the paths
                             List<Path> paths = b.getPaths();
                             for (int i = 0; i < paths.size(); i++) {
