@@ -2,6 +2,10 @@ package jmri;
 
 import java.util.List;
 
+import javax.annotation.CheckReturnValue;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+
 /**
  * Locate an IdTag object representing a specific IdTag.
  * <P>
@@ -53,7 +57,7 @@ public interface IdTagManager extends Manager {
      *                                  e.g. an illegal name or name that can't
      *                                  be parsed.
      */
-    public IdTag provideIdTag(String name);
+    public @CheckForNull IdTag provideIdTag(@Nonnull String name);
 
     /**
      * Locate via tag ID, then by user name, and finally system name if needed.
@@ -62,7 +66,8 @@ public interface IdTagManager extends Manager {
      * @param name tag name being requested
      * @return null if no match found
      */
-    public IdTag getIdTag(String name);
+    @CheckReturnValue
+    public @CheckForNull IdTag getIdTag(@Nonnull String name);
 
     /**
      * Locate an instance based on a system name. Returns null if no instance
@@ -71,7 +76,8 @@ public interface IdTagManager extends Manager {
      * @param systemName system name being requested
      * @return requested IdTag object or null if none exists
      */
-    public IdTag getBySystemName(String systemName);
+    @CheckReturnValue
+    public @CheckForNull IdTag getBySystemName(@Nonnull String systemName);
 
     /**
      * Locate an instance based on a user name. Returns null if no instance
@@ -80,7 +86,8 @@ public interface IdTagManager extends Manager {
      * @param userName user name being requested
      * @return requested IdTag object or null if none exists
      */
-    public IdTag getByUserName(String userName);
+    @CheckReturnValue
+    public @CheckForNull IdTag getByUserName(@Nonnull String userName);
 
     /**
      * Locate an instance based on a tag ID. Returns null if no instance already
@@ -89,7 +96,8 @@ public interface IdTagManager extends Manager {
      * @param tagID tag ID being requested
      * @return requested IdTag object or null if none exists
      */
-    public IdTag getByTagID(String tagID);
+    @CheckReturnValue
+    public @CheckForNull IdTag getByTagID(@Nonnull String tagID);
 
     /**
      * Return an instance with the specified system and user names. Note that
@@ -118,13 +126,14 @@ public interface IdTagManager extends Manager {
      *                                  an illegal name or name that can't be
      *                                  parsed.
      */
-    public IdTag newIdTag(String systemName, String userName);
+    public @Nonnull IdTag newIdTag(@Nonnull String systemName, @CheckForNull String userName);
 
     /**
      * Get a list of all IdTag's system names.
      */
     @Override
-    public List<String> getSystemNameList();
+    @CheckReturnValue
+    public @Nonnull List<String> getSystemNameList();
 
     /**
      * Get a list of all IdTags seen by a specified Reporter within a specific
@@ -134,7 +143,8 @@ public interface IdTagManager extends Manager {
      * @param threshold Time threshold (in ms)
      * @return List of matching IdTags
      */
-    public List<IdTag> getTagsForReporter(Reporter reporter, long threshold);
+    @CheckReturnValue
+    public @Nonnull List<IdTag> getTagsForReporter(@Nonnull Reporter reporter, long threshold);
 
     /**
      * Define if the manager should persist details of when and where all known
@@ -149,6 +159,7 @@ public interface IdTagManager extends Manager {
      *
      * @return True to store state; False to discard state
      */
+    @CheckReturnValue
     public boolean isStateStored();
 
     /**
@@ -166,6 +177,7 @@ public interface IdTagManager extends Manager {
      *
      * @return True to use the fast clock; False to use the system clock
      */
+    @CheckReturnValue
     public boolean isFastClockUsed();
 
     /**
@@ -178,6 +190,7 @@ public interface IdTagManager extends Manager {
      *
      * @return state of initialisation
      */
+    @CheckReturnValue
     public boolean isInitialised();
 
 }
