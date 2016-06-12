@@ -1,4 +1,3 @@
-// AbstractSignalMast.java
 package jmri.implementation;
 
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * Abstract class providing the basic logic of the SignalMast interface.
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version $Revision$
  */
 public abstract class AbstractSignalMast extends AbstractNamedBean
         implements SignalMast, java.io.Serializable, java.beans.VetoableChangeListener {
@@ -225,5 +223,3 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
     }
 
 }
-
-/* @(#)AbstractSignalMast.java */
