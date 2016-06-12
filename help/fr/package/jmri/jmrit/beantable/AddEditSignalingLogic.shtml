@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<title>JMRI: Adding/Editing SignalMast Logic</title>
+	<!-- copy from jmrit/beantable/ to  jmrit/signalling/ to keep identical-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+Translated by Herv&#233; BLOREC on 2016-06-12
+<meta name="Date.Modified" content="20150523"/>
+<meta name="Author" content="Kevin Dickerson, Egbert Broerse">
+<meta name="keywords" content="JMRI help SignalMast Logic Add Edit">
+
+<!--#include virtual="/Style" -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1><a name="Ajout/Modification Itin&#233;raires"></a>Ajout/Modification Itin&#233;raires Logique M&#226;t de Signalisation</h1>
+
+		<p>Apr&#232;s avoir cliquer sur le bouton "Ajouter.." au-dessous du <a href="../beantable/SignalMastLogicTable.shtml">Tableau Logique M&#226;t de Signalisation </a>, la fen&#234;tre suivante apparait:</p>
+		
+	<a href="../beantable/SignalMastLogicAdd.png">
+ <img src="../beantable/SignalMastLogicAdd.png" align="right" width="340" height="300" hspace="0" vspace="0" ALT="Signal Head Logic Add window">
+</a>
+
+<p>D&#233;marrer la cr&#233;ation d'une Logique de M&#226;t de Signalisation en s&#233;lectionnant un 
+M&#226;t de Signalisation Origine suivi par un M&#226;t de Signalisation Destination  depuis la fen&#234;tre. Le M&#226;t Origine est celui 
+que vous souhaitez commander et d&#233;finir les &#201;tats. Le M&#226;t Destination est le signal suivant en bas de la ligne. 
+Les &#201;tats du M&#226;t Destination ainsi que l'&#233;tat des Aiguillages et des Cantons que vous cochez sur cet &#233;cran auront un 
+effet direct sur l'&#201;tat du M&#226;t Origine. 
+		Si vous n'utilisez pas l'&#201;diteur de Panneau alors aucune validation n'est effectu&#233;e des M&#226;ts de Signalisation
+source et destination. Si l'&#201;diteur de Panneau est utilis&#233;, alors le syst&#232;me essaiera et d&#233;terminera si le M&#226;t Destination est 
+atteignable depuis le M&#226;t Origine  
+</p>
+<p>La case "Utiliser les Chemins de l'&#201;diteur de Panneau" vous permet 
+d'obtenir que JMRI g&#233;n&#232;re automatiquement les Cantons, Aiguillages,
+et M&#226;t de Signalisation requis, ainsi que leurs &#233;tats, qui sont localis&#233;s entre
+ les M&#226;t de Signalisation origine et destination. <br>
+ 		Lors de la s&#233;lection "Utiliser les Chemins de l'&#201;diteur de Panneau", deux autres cases apparaîtront:
+"Utilser les D&#233;tails de l'Aiguillage de l'&#201;diteur de Panneau" et "Utiliser les D&#233;tails du Canton de l'&#201;diteur de Panneau".
+La s&#233;lection de l'une d'elles d&#233;terminera quelle information de l'&#201;diteur de Panneau est utilis&#233;e quand le syst&#232;me g&#233;n&#232;re automatiquement l'itin&#233;raire.<br>
+L'information g&#233;n&#233;r&#233;e automatiquement n'est pas sauvegard&#233;e avec le ficihier panneau, mais elle est g&#233;n&#233;r&#233;e &#224; chaque ouverture de l'&#233;diteur de panneau.<br>
+Si l'information sur l'&#201;diteur de Panneau est modifi&#233;e, les changements ne sont pas
+r&#233;percut&#233;S imm&#233;diatement dans la Logique M&#226;t de Signalisation; vous devrez stocker le panneau, fermer JMRI
+et r&#233;ouvrir le panneau pour que la Logique M&#226;t de Signalisation soit mise &#224; jour.</p>
+<p>
+L'option "Permettre &#224; la Logique de D&#233;terminer Automatiquement Les Conflits Mats de Signalisation"
+essaie de d&#233;terminer quel M&#226;t de signalisation pourrait &#233;ventuellement entraîner un itin&#233;raire incompatible
+s'il n'&#233;tait pas d&#233;fini &#224; danger.
+</p>
+<p>La fonctionnalit&#233; "Verrouiller les Aiguillages quand la Logique M&#226;t de Signalisation est active" vous permet de
+d&#233;sactiver s&#233;lectivement des commandes d'accessoireS (Aiguillage) depuis un pupitre et/ou des boutons c&#226;bl&#233;s localement.
+Lorqu'elle est s&#233;lectionn&#233;e,JMRI d&#233;sactive les boutons poussoirs en envoyant une commande d&#233;sactivation bouton poussoir
+aux d&#233;codeurs d'aiguillages quand l'itin&#233;raire est v&#233;rrouil&#233;, et active les boutons poussoirs 
+quand l'itin&#233;raire est d&#233;averrouill&#233;. Lors du verrouillage par une commande depuis un pupitre,
+le programme JMRI surveille l'adresse accessoire de l'Aiguillage et s'il 
+d&#233;tecte un changement de commande depuis un pupitre, il l'annulera imm&#233;diatement
+en envoyant la commande oppos&#233;e &#224; l'Aiguillage. Tous les Aiguillages qui sont surveill&#233;s par le programme JMRI et qui sont inclus 
+dans l'itin&#233;raire seront verrouill&#233;s.</p>
+
+<p>Le bouton radio "Montrer" vous permet de montrer tous ou seulement les Aiguillages, Capteurs, Cantons M&#226;t de Signalisation
+s&#233;lectionn&#233;s qui font parti de la Logique M&#226;t de Signalisation.</p>
+<p>
+Il y a quatre onglets sous les boutons "Montrer", chacun contient les d&#233;tails des Cantons,
+Aiguillages, Capteurs, et M&#226;ts de signalisation qui font la Logique M&#226;t de Signalisation pour ce M&#226;t Origine.
+Dans chacun des onglets, il y a un tableau modifiable qui vous permet de s&#233;lectionner manuellement
+quel(s) &#233;l&#233;ment(s) doit &#234;tre inclus dans la Logique M&#226;t de Signalisation et l'&#233;tat 
+dans lequel chaque &#233;l&#233;ment doit &#234;tre.<br>
+Dessous il y a un second tableau qui montre les &#233;l&#233;ments g&#233;n&#233;r&#233;s automatiquement 
+( except&#233; sousl'onglet Capteur ). Les &#233;l&#233;ments entr&#233;s manuellement &#233;craseront 
+les &#233;l&#233;ments g&#233;n&#233;r&#233;s automatiquement, donc si vous souhaitez &#233;craser un &#233;l&#233;ment dans cette liste g&#233;n&#233;r&#233;e 
+automatiquement, s&#233;lectionnez alors l'&#233;l&#233;ment correspondant
+et d&#233;finissez son &#233;tat dans le tableau sup&#232;rieur.
+
+Cliquez la case "Inclure" dans n'importe quel tableau pour ajouter l'&#233;l&#233;ment d&#233;sir&#233; dans votre 
+Logique M&#226;t de Signalisation. Apr&#232;s la case "Inclure" 
+se trouve l'option &#201;tat dans lequel doit &#234;tre l'&#233;l&#233;ment pour que le M&#226;t de Signalisation Origine devienne actif.
+Par exemple, si vous souhaitez qu'un Aiguillage soit dans un &#233;tat D&#233;vi&#233; pour d&#233;clencher 
+la Logique M&#226;t de Signalisation, Alors s&#233;lectionnez "D&#233;vi&#233;" dans la liste d&#233;roulante. Si vous souhaitez &#233;craser un 
+Aiguillage qui a &#233;t&#233; inclus automatiquement, et vous ne vous souciez pas dans quel &#233;tat 
+il est, cochez "Inclure" dans le tableau sup&#232;rieur et s&#233;lectionnez "n'Importe quel &#201;tat" dans le menu d&#233;roulant.</p>
+
+<p>Cliquer sur le bouton " Mise &#224; Jour Logique (M&#226;t) Signalisation" ajoutera ou mettre &#224; jour cette Logique de M&#226;t de Signalisation dans le syst&#232;me. Une fois ajout&#233;, les
+tableaux contenant les donn&#233;es g&#233;n&#233;r&#233;es automatiquement seront reremplies.<br>Astuce: 
+	     Pour mettre &#224; jour/remplir la colonne d'&#201;tat sous l'onglet M&#226;ts de Signalisation, mise &#224; jour &amp; r&#233;ouvrir l'&#233;l&#233;ment Logique M&#226;t de Signalisation
+	
+	     <p>Retour &#224; la page d'aide <a href="../beantable/SignalMastLogicTable.shtml">Tableau Logique M&#226;t de Signalisation</a>.
+
+<!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+</body>
+</html>
