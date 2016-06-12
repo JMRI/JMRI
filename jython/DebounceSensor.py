@@ -37,11 +37,11 @@ class DebounceSensor(java.beans.PropertyChangeListener) :
     def init(self, inSensor, outSensor, onDelay, offDelay):
         self.watchedSensorName = inSensor
         self.resultSensorName = outSensor
-        self.watchedSensor = sensors.getSensor(inSensor)
+        self.watchedSensor = sensors.provideSensor(inSensor)
         if (self.watchedSensor == None) :
            print("Couldn't assign inSensor: " + inSensor + " - Run stopped\n")
            return
-        self.resultSensor = sensors.getSensor(outSensor)
+        self.resultSensor = sensors.provideSensor(outSensor)
         if (self.resultSensor == None) :
            print("Couldn't assign outSensor: " + outSensor + " - Run stopped\n")
            return
