@@ -53,6 +53,5 @@
     <label>Locomotive Direction</label>
     <tooltip>Sets the relative direction of the loco when told to move forward</tooltip>
     <tooltip xml:lang="it">Stabilisce la direzione di marcia relativa quando la loco è in marcia avanti</tooltip>
-    <tooltip xml:lang="de">Legt die relative Fahrtrichtung der Lokomotive fest wenn Fahrbefehl "Vorwärts" erteilt wird.</tooltip>
     </variable>
 </variables>

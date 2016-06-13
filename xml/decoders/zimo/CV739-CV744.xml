@@ -17,7 +17,6 @@
     <decVal/>
     <label>Switch triggered sound S1</label>
     <label xml:lang="it">Suono S1 iniziato da Switch</label>
-    <label xml:lang="de">Lautstärke Schalteing.-Sound S1</label>
   </variable>
   <variable CV="740" item="Switch input 2 Sound Sample" include="208,210,224,227,230">
     <decVal/>
@@ -27,7 +26,6 @@
     <decVal/>
     <label>Switch triggered sound S2</label>
     <label xml:lang="it">Suono S2 iniziato da Switch</label>
-    <label xml:lang="de">Lautstärke Schalteing.-Sound S2</label>
   </variable>
   <variable CV="742" item="Switch input 3 Sound Sample" include="208,224,227,230">
     <decVal/>
@@ -37,6 +35,5 @@
     <decVal/>
     <label>Switch triggered sound S3</label>
     <label xml:lang="it">Suono S3 iniziato da Switch</label>
-    <label xml:lang="de">Lautstärke Schalteing.-Sound S3</label>
   </variable>
 </variables>

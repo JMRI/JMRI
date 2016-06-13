@@ -19,7 +19,6 @@ import jmri.JmriException;
 import jmri.jmris.AbstractOperationsServer;
 import jmri.jmris.JmriConnection;
 import jmri.jmrit.operations.trains.Train;
-import jmri.server.json.JsonException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

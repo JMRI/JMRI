@@ -72,13 +72,8 @@ public class SimpleSensorServer extends AbstractSensorServer {
             setSensorActive(statusString.substring(index, statusString.indexOf(" ", index + 1)).toUpperCase());
         } else {
             // default case, return status for this sensor/
-            String sensorName = statusString.substring(index,statusString.length()-1).toUpperCase(); // remove the \n
-            if( sensorName.contains(" ") ){
-                // remove anything following the space.
-                sensorName = sensorName.substring(0,sensorName.indexOf(" "));
-            }
-            Sensor sensor = jmri.InstanceManager.sensorManagerInstance().provideSensor(sensorName);
-            sendStatus(sensorName, sensor.getKnownState());
+            Sensor sensor = jmri.InstanceManager.sensorManagerInstance().provideSensor(statusString.substring(index).toUpperCase());
+            sendStatus(statusString.substring(index).toUpperCase(), sensor.getKnownState());
 
         }
     }

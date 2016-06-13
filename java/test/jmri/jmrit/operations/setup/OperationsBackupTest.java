@@ -14,7 +14,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.util.FileUtil;
-import org.junit.Assert;
+import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

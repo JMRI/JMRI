@@ -51,7 +51,7 @@
         <choice>Use Vstart, Vmid, Vhigh (CV29, bit 4)</choice>
         <choice xml:lang="it">Usa Vstart-Vmid-Vmax (CV29, bit 4)</choice>
         <choice xml:lang="fr">Utiliser Vstart, Vmoy, Vmax (CV29, bit 4)</choice>
-        <choice xml:lang="de">Anfahr-, Mitten-, Höchstgeschwindigkeit nutzen (CV29, bit 4)</choice>
+        <choice xml:lang="de">Anfahr-, Mitten-, Höchst-geschwindigkeit nutzen (CV29, bit 4)</choice>
       </enumChoice>
       <enumChoice choice="Use Speed Table">
         <choice>Use Speed Table (CV's 67-94)</choice>
@@ -61,8 +61,8 @@
       </enumChoice>
     </enumVal>
     <label>Use Speed Table</label>
-    <label xml:lang="it">Usa Tabella Velocità</label>
     <label xml:lang="fr">Tableau de vitesse</label>
     <label xml:lang="de">Geschwindigkeitskennlinie nutzen</label>
+    <label xml:lang="it">Usa Tabella Velocità</label>
   </variable>
 </variables>

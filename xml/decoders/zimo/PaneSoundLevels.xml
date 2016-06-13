@@ -3,8 +3,6 @@
 <!-- and provide headings suitable for Zimo chips -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <name>Zimo Sound Levels</name>
-  <name xml:lang="it">Livelli Suono</name>
-  <name xml:lang="de">ZIMO Lautstärke-Einstellung</name>
   <row>
     <column>
       <label>
@@ -23,7 +21,6 @@
       <label>
         <text>Function Key Controlled Sounds </text>
         <text xml:lang="it">Suoni controllati da Tasti Funzione</text>
-        <text xml:lang="de">Funktions-Sounds</text>
       </label>
       <label>
         <text> </text>
@@ -327,7 +324,6 @@
       <label>
         <text>Automatic Sound Levels </text>
         <text xml:lang="it">Livello Automatico Suoni</text>
-        <text xml:lang="de">Ablauf-Sounds</text>
       </label>
       <label>
         <text> </text>
@@ -605,14 +601,13 @@
     <column>
 	  <label>
         <text>Sound Level Control by Function Keys</text>
-        <text xml:lang="de">Lautstärkekontrolle durch F-Taste</text>
       </label>
 	  <label>
         <text> </text>
       </label>
-	  <display item="Maximum Volume"/>
-	  <display item="Function Key to Increase Volume"/>
-	  <display item="Function Key to Reduce Volume"/>
+	  <display item="Maximum Volume" label="Maximum Volume"/>
+	  <display item="Function Key to Increase Volume" label="Function Key to Increase Volume"/>
+	  <display item="Function Key to Reduce Volume" label="Function Key to Reduce Volume"/>
 	  
 	  <label>
         <text> </text>
@@ -623,7 +618,6 @@
       <label>
         <text>Switch triggered sounds </text>
         <text xml:lang="it">Livello Suoni regolato da Ingresso</text>
-        <text xml:lang="de">Schalteingangs-Sounds</text>
       </label>
       <label>
         <text> </text>
@@ -661,7 +655,6 @@
       <label>
         <text>Randomly generated sounds </text>
         <text xml:lang="it">Suoni Casuali</text>
-        <text xml:lang="de">Zufalls-Sounds</text>
       </label>
       <label>
         <text> </text>
@@ -904,4 +897,5 @@
       </label>
     </column>
   </row>
+  <name xml:lang="it">Livelli Suono</name>
 </pane>

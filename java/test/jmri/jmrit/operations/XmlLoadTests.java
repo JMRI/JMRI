@@ -12,7 +12,7 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
+import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

@@ -109,7 +109,6 @@
       <xs:attribute name="greenBackground" type="xs:integer"/>
       <xs:attribute name="blueBackground" type="xs:integer"/>
       <xs:attribute name="autoblkgenerate" type="yesNoType" default="yes"/>
-      <xs:attribute name="gridSize" type="xs:integer"/>
       <xs:attribute name="openDispatcher" type="yesNoType" default="no"/>
       <xs:attribute name="useDirectTurnoutControl" type="yesNoType" default="no"/>
     </xs:complexType>

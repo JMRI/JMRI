@@ -49,20 +49,17 @@
     <enumVal>
           <enumChoice choice="14 speed step format">
             <choice xml:lang="it">Formato 14 step</choice>
-            <choice xml:lang="de">14 Fahrstufen Modus</choice>
           </enumChoice>
-            <enumChoice choice="28/128 speed step format">
-            <choice>28/128 speed step format(recommended)</choice>
-            <choice xml:lang="it">Formato 28 o 128 step (raccomandato)</choice>
-            <choice xml:lang="de">28/128 Fahrstufen Modus (empfohlen)</choice>
+          <enumChoice choice="28/128 speed step format">
+          <choice>28/128 speed step format(recommended)</choice>
+          <choice xml:lang="it">Formato 28 o 128 step (raccomandato)</choice>
           </enumChoice>
         </enumVal>
     <label>Speed Steps</label>
     <label xml:lang="fr">Pas de vitesse</label>
     <label xml:lang="de">Fahrstufen</label>
     <label xml:lang="it">Step Velocità</label>
-       <tooltip>Sets the Speed Step for motor, also may affect some light settings</tooltip>
+    <tooltip>Sets the Speed Step for motor, also may affect some light settings</tooltip>
        <tooltip xml:lang="it">Seleziona Step Velocità motore, potrebbe avere effetti sulle luci</tooltip>
-       <tooltip xml:lang="de">Setzt den Fahrstufenmodus und hat Auswirkung auf einige Lichteffekte</tooltip>
   </variable>
 </variables>

@@ -32,6 +32,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.BlockTest.suite());
         suite.addTest(jmri.BlockManagerTest.suite());
         suite.addTest(jmri.DccLocoAddressTest.suite());
+        suite.addTest(jmri.DccConsistTest.suite());
         suite.addTest(jmri.InstanceManagerTest.suite());
         suite.addTest(jmri.LightTest.suite());
         suite.addTest(jmri.NmraPacketTest.suite());

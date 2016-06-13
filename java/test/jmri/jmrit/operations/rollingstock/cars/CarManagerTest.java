@@ -8,7 +8,7 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.Train;
-import org.junit.Assert;
+import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 

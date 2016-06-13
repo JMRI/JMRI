@@ -3,7 +3,7 @@ package jmri.jmrit.operations.rollingstock.cars;
 
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
-import org.junit.Assert;
+import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 

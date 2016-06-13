@@ -40,7 +40,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.easydcc.EasyDccReplyTest.suite());
         suite.addTest(jmri.jmrix.easydcc.EasyDccPowerManagerTest.suite());
         suite.addTest(jmri.jmrix.easydcc.EasyDccConsistManagerTest.suite());
-        suite.addTest(new junit.framework.JUnit4TestAdapter(EasyDccConsistTest.class));
+        suite.addTest(jmri.jmrix.easydcc.EasyDccConsistTest.suite());
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             suite.addTest(jmri.jmrix.easydcc.easydccmon.EasyDccMonFrameTest.suite());
             suite.addTest(jmri.jmrix.easydcc.easydccmon.EasyDccMonActionTest.suite());

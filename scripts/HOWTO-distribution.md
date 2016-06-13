@@ -156,9 +156,7 @@ We roll some general code maintenance items into the release process.  They can 
 
 - Create a [new milestone](https://github.com/JMRI/JMRI/milestones) with the _next_ release number, dated the 2nd Saturday of the month (might be already there, we've been posting them a few in advance)
 
-- Merge all relevant PRs in the [JMRI/website repository](https://github.com/JMRI/website) to ensure release note draft is up to date
-
-- Create the _next_ release note, so that people will document new (overlapping) changes there. (We need to work through automation of version number values below) (If you're creating a production version, its release note is made from a merge of the features of all the test releases; also create the *.*.1 note for the next test release)
+- Create the _next_ release note, so that people will document new (overlapping) changes there. (We need to work through automation of version number values below)
 
 ```    
         cd (local web copy)/releasenotes
@@ -284,7 +282,7 @@ If you're building locally:
 - *Wait for some replies* before proceeding
 
 ================================================================================
-## Further Changes to Contents
+## Further Changes
 
 If anybody wants to add a change from here on in, they should
 

@@ -8,7 +8,7 @@ import jmri.Light;
  * <P>
  * Light objects require a number of instance variables. Since Light objects are
  * created using the standard JMRI systemName/userName concept, accessor
- * routines are provided for setting and editing these instance variables.
+ * routines are provided for setting and editting these instance variables.
  * <P>
  * Each Light may have one or more control mechanisms, of the types defined in
  * the Light interface. A Light may also not have any control mechanisms
@@ -50,7 +50,6 @@ public abstract class AbstractLight extends AbstractNamedBean
         super(systemName.toUpperCase());
     }
 
-    @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameLight");
     }
@@ -58,7 +57,7 @@ public abstract class AbstractLight extends AbstractNamedBean
     /**
      * System independent instance variables (saved between runs)
      */
-    protected ArrayList<LightControl> lightControlList = new ArrayList<>();
+    protected ArrayList<LightControl> lightControlList = new ArrayList<LightControl>();
     protected double mMaxIntensity = 1.0;
     protected double mMinIntensity = 0.0;
 
@@ -73,18 +72,14 @@ public abstract class AbstractLight extends AbstractNamedBean
 
     /**
      * Get enabled status
-     * @return enabled status
      */
-    @Override
     public boolean getEnabled() {
         return mEnabled;
     }
 
     /**
      * Set enabled status
-     * @param v status to set
      */
-    @Override
     public void setEnabled(boolean v) {
         boolean old = mEnabled;
         mEnabled = v;
@@ -100,7 +95,6 @@ public abstract class AbstractLight extends AbstractNamedBean
      *         intensity. See e.g. {@link AbstractVariableLight} for an abstract
      *         implementation of variable intensity.
      */
-    @Override
     public boolean isIntensityVariable() {
         return false;
     }
@@ -120,13 +114,11 @@ public abstract class AbstractLight extends AbstractNamedBean
      * All others result in an exception, instead of the INTERMEDIATE state,
      * because this class does not implement analog intensity
      * <P>
-     * @param intensity target intensity value
      * @throws IllegalArgumentException when intensity is less than 0.0 or more
      *                                  than 1.0
      * @throws IllegalArgumentException when intensity is more than MinIntensity
      *                                  and less than MaxIntensity
      */
-    @Override
     public void setTargetIntensity(double intensity) {
         if (log.isDebugEnabled()) {
             log.debug("setTargetIntensity " + intensity);
@@ -158,7 +150,6 @@ public abstract class AbstractLight extends AbstractNamedBean
      * minimum.
      * <p>
      * Does not change state.
-     * @param intensity low intensity value
      */
     protected void updateIntensityLow(double intensity) {
         notifyTargetIntensityChange(intensity);
@@ -170,7 +161,6 @@ public abstract class AbstractLight extends AbstractNamedBean
      * max
      * <p>
      * Does not change state.
-     * @param intensity intermediate intensity value
      */
     protected void updateIntensityIntermediate(double intensity) {
         // not in value range!
@@ -182,7 +172,6 @@ public abstract class AbstractLight extends AbstractNamedBean
      * maximum
      * <p>
      * Does not change state.
-     * @param intensity high intensity value
      */
     protected void updateIntensityHigh(double intensity) {
         notifyTargetIntensityChange(intensity);
@@ -195,9 +184,7 @@ public abstract class AbstractLight extends AbstractNamedBean
      * <p>
      * A value of 0.0 corresponds to full off, and a value of 1.0 corresponds to
      * full on.
-     * @return current intensity
      */
-    @Override
     public double getCurrentIntensity() {
         return mCurrentIntensity;
     }
@@ -211,9 +198,7 @@ public abstract class AbstractLight extends AbstractNamedBean
      * full on.
      * <p>
      * Bound property
-     * @return target intensity
      */
-    @Override
     public double getTargetIntensity() {
         return mCurrentIntensity;
     }
@@ -226,15 +211,13 @@ public abstract class AbstractLight extends AbstractNamedBean
      * A value of 0.0 corresponds to full off, and a value of 1.0 corresponds to
      * full on.
      *
-     * @param intensity max intensity
      * @throws IllegalArgumentException when intensity is less than 0.0 or more
      *                                  than 1.0
      * @throws IllegalArgumentException when intensity is not greater than the
      *                                  current value of the minIntensity
      *                                  property
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "OK to compare floating point")
-    @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
     public void setMaxIntensity(double intensity) {
         if (intensity < 0.0 || intensity > 1.0) {
             throw new IllegalArgumentException("Illegal intensity value: " + intensity);
@@ -256,9 +239,7 @@ public abstract class AbstractLight extends AbstractNamedBean
      * <p>
      * A value of 0.0 corresponds to full off, and a value of 1.0 corresponds to
      * full on.
-     * @return max intensity
      */
-    @Override
     public double getMaxIntensity() {
         return mMaxIntensity;
     }
@@ -271,15 +252,13 @@ public abstract class AbstractLight extends AbstractNamedBean
      * A value of 0.0 corresponds to full off, and a value of 1.0 corresponds to
      * full on.
      *
-     * @param intensity intensity value
      * @throws IllegalArgumentException when intensity is less than 0.0 or more
      *                                  than 1.0
      * @throws IllegalArgumentException when intensity is not less than the
      *                                  current value of the maxIntensity
      *                                  property
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "OK to compare floating point")
-    @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
     public void setMinIntensity(double intensity) {
         if (intensity < 0.0 || intensity > 1.0) {
             throw new IllegalArgumentException("Illegal intensity value: " + intensity);
@@ -301,9 +280,7 @@ public abstract class AbstractLight extends AbstractNamedBean
      * <p>
      * A value of 0.0 corresponds to full off, and a value of 1.0 corresponds to
      * full on.
-     * @return min intensity value
      */
-    @Override
     public double getMinIntensity() {
         return mMinIntensity;
     }
@@ -316,9 +293,7 @@ public abstract class AbstractLight extends AbstractNamedBean
      * intensity level to another.
      * <p>
      * Unbound property
-     * @return transition availability
      */
-    @Override
     public boolean isTransitionAvailable() {
         return false;
     }
@@ -332,10 +307,8 @@ public abstract class AbstractLight extends AbstractNamedBean
      * <p>
      * Bound property
      * <p>
-     * @param minutes transition duration
      * @throws IllegalArgumentException if minutes is not 0.0
      */
-    @Override
     public void setTransitionTime(double minutes) {
         if (minutes != 0.0) {
             throw new IllegalArgumentException("Illegal transition time: " + minutes);
@@ -348,7 +321,6 @@ public abstract class AbstractLight extends AbstractNamedBean
      * <p>
      * @return 0.0 if the output intensity transition is instantaneous
      */
-    @Override
     public double getTransitionTime() {
         return 0.0;
     }
@@ -359,9 +331,7 @@ public abstract class AbstractLight extends AbstractNamedBean
      * <p>
      * Bound property so that listeners can conveniently learn when the
      * transition is over.
-     * @return is transitioning
      */
-    @Override
     public boolean isTransitioning() {
         return false;
     }
@@ -369,9 +339,7 @@ public abstract class AbstractLight extends AbstractNamedBean
     /**
      * Handle a request for a state change. For these lights, ON and OFF just
      * transition immediately between MinIntensity and MaxIntensity
-     * @param newState new state
      */
-    @Override
     public void setState(int newState) {
         if (log.isDebugEnabled()) {
             log.debug("setState " + newState + " was " + mState);
@@ -404,9 +372,8 @@ public abstract class AbstractLight extends AbstractNamedBean
     /**
      * Change the stored target intensity value and do notification, but don't
      * change anything in the hardware
-     * @param intensity intensity value
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "OK to compare floating point")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
     protected void notifyTargetIntensityChange(double intensity) {
         double oldValue = mCurrentIntensity;
         mCurrentIntensity = intensity;
@@ -418,8 +385,6 @@ public abstract class AbstractLight extends AbstractNamedBean
     /**
      * Change the stored state value and do notification, but don't change
      * anything in the hardware
-     * @param oldState old value
-     * @param newState new value
      */
     protected void notifyStateChange(int oldState, int newState) {
         mState = newState;
@@ -430,13 +395,10 @@ public abstract class AbstractLight extends AbstractNamedBean
 
     /**
      * Implement the specific change of state needed by hardware
-     * @param oldState old state
-     * @param newState new state
      */
     protected void doNewState(int oldState, int newState) {
     }
 
-    @Override
     public int getState() {
         return mState;
     }
@@ -444,23 +406,23 @@ public abstract class AbstractLight extends AbstractNamedBean
     /**
      * Activates a light activating all its LightControl objects.
      */
-    @Override
     public void activateLight() {
-        lightControlList.stream().forEach((lc) -> {
+        for (int i = 0; i < lightControlList.size(); i++) {
+            LightControl lc = lightControlList.get(i);
             lc.activateLightControl();
-        });
+        }
     }
 
     /**
      * Deactivates a light by deactivating each of its LightControl objects.
      */
-    @Override
     public void deactivateLight() {
         // skip if Light is not active
         if (mActive) {
-            lightControlList.stream().forEach((lc) -> {
+            for (int i = 0; i < lightControlList.size(); i++) {
+                LightControl lc = lightControlList.get(i);
                 lc.deactivateLightControl();
-            });
+            }
             mActive = false;
         }
     }
@@ -468,7 +430,6 @@ public abstract class AbstractLight extends AbstractNamedBean
     /**
      * LightControl management methods
      */
-    @Override
     public void clearLightControls() {
         // deactivate all Light Controls if any are active
         deactivateLight();
@@ -478,17 +439,15 @@ public abstract class AbstractLight extends AbstractNamedBean
         }
     }
 
-    @Override
     public void addLightControl(jmri.implementation.LightControl c) {
         lightControlList.add(c);
     }
 
-    @Override
     public ArrayList<LightControl> getLightControlList() {
-        ArrayList<LightControl> listCopy = new ArrayList<>();
-        lightControlList.stream().forEach((lightControlList1) -> {
-            listCopy.add(lightControlList1);
-        });
+        ArrayList<LightControl> listCopy = new ArrayList<LightControl>();
+        for (int i = 0; i < lightControlList.size(); i++) {
+            listCopy.add(lightControlList.get(i));
+        }
         return listCopy;
     }
 

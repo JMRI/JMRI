@@ -3,7 +3,6 @@
   <name>Sound</name>
   <name xml:lang="it">Suoni</name>
   <name xml:lang="de">Sound</name>
-  <name xml:lang="da">Lyd</name>
   <column>
     <display item="Sound Option 1"/>
     <display item="Sound Option 2"/>
