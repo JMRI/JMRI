@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<title>Comprehensive Programmer - Advanced Features Pane</title>
+<!-- translated by Hervé BLOREC <bzh56420@yahoo.fr> on 2016-06-13 -->
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent"></div>
+
+<a name="Top"></a>
+<h1>Programmeur Avancé DecoderPro&reg; </h1>
+<h2>Volet Étiquettes de Fonction</h2>
+
+<div align="right">
+<p><a href="Adv_start.shtml">Précedent | </a><a href="Adv_RosterMedia.shtml">Suivant </a></p>
+<p><a href="index.shtml">Retour à l'Index</a></p>
+</div>
+
+<hr>
+<p>Ce volet est plus qu'un bloc-notes pour garder une trace de ce qui arrive 
+quand les boutons de fonction sont appuyés.&nbsp; Il interagit aussi avec le  <a href="Main_Throttle.shtml">Régulateur JMRI</a>. </p>
+<p style="text-align: center;"><img style="width: 636px; height: 598px;" src="images/Adv_03_FunctionLabels.png" alt="function labels"></p>
+<p>L'Onglet <strong>Étiquette de Fonction </strong> fait les réglages pour le 
+Logiciel Régulateurs au sein de JMRI. Principalement les Régulateurs à l'écran, mais 
+certains paramètres sont en miroir sur les téléphones intelligents ( iPhone, Android )
+utlisant l'interface WiThrottle.</p>
+<p>Quand vous utiliser la liste déroulante sur le régulateur JMRI pour sélectionner 
+une loco depuis votre inventaire, les boutons fonctions seront marqués avec les
+descriptions que vous avez entrées pour ces;fonctions dans ce volet. </p>
+<p>Dans cet exemple, les touches Fonctions sur le Régulateur sont libellées
+pour une FP-45 avec un décodeur Son Tsunami avec les fonctions sons et éclairage.
+.</p>
+<p style="text-align: center;"><img src="images/Adv_03_FunctionOnThrottle.png" alt="throttle" height="523" width="531"></p>
+<p>L'usage des cases, les images, la définition du type de bouton et le bouton radio à droite de chaque fonction peuvent être définis:
+</p><table border="1" cellpadding="2" cellspacing="1" width="80%">
+  <tbody><tr>
+    <td width="13%"><strong>verrou</strong></td>
+    <td width="87%"><p> Rends le bouton de fonction "verrouillable" ou "non-verrouillable". Quand la case est cochée la fonction est "verrouillée"
+    <p><strong>Fonction Verrouillée </strong>Quand
+présseé restera On(position basse) jusqu'à ce que vous pressiez encore le bouton ex: bouton Fonction
+libelé "Cloche" tintera jusqu'à ce que vous pressiez encore.</p>
+    <p><strong>Fonction Non-Verouillée </strong>quand vous pressez la fonction bascule On etpuis Off. ex: bouton Fonction libélé "corne brève", quand pressé fournit un coup de corne.</p></td>
+  </tr>
+  <tr>
+    <td><strong>off</strong></td>
+    <td>Image pour l'icône qui est affichée sur le Bouton Fonction quand il est à l'état Off.</td>
+  </tr>
+  <tr>
+    <td><strong>on</strong></td>
+    <td>Image pour l'icône qui est affichée sur le Bouton Fonction quand il est à l'état On.</td>
+  </tr>
+  <tr>
+    <td><strong>shunt</strong></td>
+    <td>Définit
+une touche de fonction "virtuelle" pour le logiciel JMRI. L'option "verrou" nécessite aussi
+d'être définie simultanément avec l'activation de la touche de fonction 
+virtuelle "shunt". Quand cette touche de Fonction est pressée le curseur de vitesse du régulateur
+sur le logiciel régulateur change pour le style zéro central,
+plutôt que la "course complète avec la touche de direction séparée"</td>
+  </tr>
+</tbody></table>
+<p>You may drag and drop icons into the off or on space holder herer or in the Throttle Function pane properties.
+</p><p>
+</p><p>You  may also edit the function button text in the <strong><a href="Main_Throttle.shtml">JMRI Throttle</a></strong> and save those changes to the selected Roster entry. To use these changed entries in the future, make  sure you click on the
+  <input name="button" id="button" value="Save to Roster" type="submit"> 
+  to save these values into the Roster entry that is in use.
+</p><hr>
+
+<div align="right">
+<p><a href="Comp_LightFX.shtml"></a><a href="Adv_start.shtml">Previous | </a><a href="Adv_RosterMedia.shtml">Next </a></p>
+<p><a href="index.shtml">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
+</html>
