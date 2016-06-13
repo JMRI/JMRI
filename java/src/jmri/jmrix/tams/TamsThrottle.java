@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An implementation of DccThrottle with code specific to an TAMS connection.
+ * An implementation of DccThrottle with code specific to a TAMS connection.
  * <P>
  * Based on Glen Oberhauser's original LnThrottle implementation
  *
@@ -47,15 +47,21 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
         //get the status if know of the current loco
         TamsMessage m = new TamsMessage("xL " + address.getNumber());
         m.setTimeout(10000);
+        m.setBinary(false);
+        m.setReplyType('L');
         tc.sendTamsMessage(m, this);
 
         tc.addPollMessage(m, this);
 
         m = new TamsMessage("xF " + address.getNumber());
+        m.setBinary(false);
+        m.setReplyType('L');
         tc.sendTamsMessage(m, this);
         tc.addPollMessage(m, this);
 
         m = new TamsMessage("xFX " + address.getNumber());
+        m.setBinary(false);
+        m.setReplyType('L');
         tc.sendTamsMessage(m, this);
         tc.addPollMessage(m, this);
 
@@ -83,6 +89,8 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
         sb.append(",");
         sb.append((f4 ? "1" : "0"));
         TamsMessage m = new TamsMessage(sb.toString());
+        m.setBinary(false);
+        m.setReplyType('L');
         tc.sendTamsMessage(m, this);
     }
 
@@ -107,6 +115,8 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
         sb.append((f8 ? "1" : "0"));
 
         TamsMessage m = new TamsMessage(sb.toString());
+        m.setBinary(false);
+        m.setReplyType('T');
         tc.sendTamsMessage(m, this);
     }
 
@@ -124,6 +134,8 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
         sb.append((f12 ? "1" : "0"));
 
         TamsMessage m = new TamsMessage(sb.toString());
+        m.setBinary(false);
+        m.setReplyType('L');
         tc.sendTamsMessage(m, this);
 
     }
@@ -164,6 +176,8 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
         sb.append(",");
 
         TamsMessage m = new TamsMessage(sb.toString());
+        m.setBinary(false);
+        m.setReplyType('L');
         tc.sendTamsMessage(m, this);
 
         if (oldSpeed != this.speedSetting) {
@@ -201,7 +215,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
     }
 
     public void message(TamsMessage m) {
-        //System.out.println("Ecos message - "+ m);
+        //System.out.println("Tams message - "+ m);
         // messages are ignored
     }
 

@@ -14,6 +14,7 @@ import jmri.util.StringUtil;
  * Frame for user input of Tams messages Based on work by Bob Jacobsen
  *
  * @author	Kevin Dickerson Copyright (C) 2012
+ * @revisor Jan Boen
  * @version $Revision: 17977 $
  */
 public class PacketGenPanel extends jmri.jmrix.tams.swing.TamsPanel implements TamsListener {
@@ -27,6 +28,7 @@ public class PacketGenPanel extends jmri.jmrix.tams.swing.TamsPanel implements T
     javax.swing.JButton sendButton = new javax.swing.JButton();
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(20);
     javax.swing.JCheckBox checkBoxBinCmd = new javax.swing.JCheckBox();
+    javax.swing.JCheckBox checkBoxReplyType = new javax.swing.JCheckBox();
 
     public PacketGenPanel() {
         super();
@@ -51,11 +53,17 @@ public class PacketGenPanel extends jmri.jmrix.tams.swing.TamsPanel implements T
             checkBoxBinCmd.setText("Binary");
             checkBoxBinCmd.setVisible(true);
             checkBoxBinCmd.setToolTipText("Check to enable binary commands");
-            checkBoxBinCmd.setSelected(true);
+            checkBoxBinCmd.setSelected(false);
+
+            checkBoxReplyType.setText("Multi Byte Reply");
+            checkBoxReplyType.setVisible(true);
+            checkBoxReplyType.setToolTipText("Check when you expect binary reply containing MULTIPLE bytes");
+            checkBoxReplyType.setSelected(false);
 
             add(jLabel1);
             add(packetTextField);
             add(checkBoxBinCmd);
+            add(checkBoxReplyType);
             add(sendButton);
 
             sendButton.addActionListener(new java.awt.event.ActionListener() {
@@ -93,6 +101,12 @@ public class PacketGenPanel extends jmri.jmrix.tams.swing.TamsPanel implements T
                 return;
             }
             m.setBinary(true);
+            if (checkBoxReplyType.isSelected()){
+            	m.setReplyOneByte(false);
+            } else {
+            	m.setReplyOneByte(true);
+            }
+            //Must add logic so the replyType gets properly populated 
         } else {
 
             m = new TamsMessage(packetTextField.getText().length());

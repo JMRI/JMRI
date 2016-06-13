@@ -11,11 +11,12 @@ import org.slf4j.LoggerFactory;
  * TamsDCC implementation of a ThrottleManager.
  * <P>
  * Based on early NCE code.
+ * Adapted to use binary commands to greatly improve efficiency by reducing the number of poll messages and replies
  *
- * Based on work by Bob Jacobsen
+ * Based on work by Bob Jacobsen and Kevin Dickerson
  *
- * @author	Kevin Dickerson Copyright (C) 2012
- * @version $Revision: 19121 $
+ * @author	Jan Boen
+ * @version $Revision: 160524 $
  */
 public class TamsThrottleManager extends AbstractThrottleManager implements TamsListener {
 
