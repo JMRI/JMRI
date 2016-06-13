@@ -35,6 +35,7 @@ public class StartupActionsManager extends AbstractPreferencesManager {
     private final List<StartupModel> actions = new ArrayList<>();
     private final HashMap<Class<? extends StartupModel>, StartupModelFactory> factories = new HashMap<>();
     private boolean isDirty = false;
+    private boolean restartRequired = false;
     public final static String STARTUP = "startup"; // NOI18N
     public final static String NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/startup-4-3-5.xsd"; // NOI18N
     public final static String NAMESPACE_OLD = "http://jmri.org/xml/schema/auxiliary-configuration/startup-2-9-6.xsd"; // NOI18N
@@ -148,7 +149,7 @@ public class StartupActionsManager extends AbstractPreferencesManager {
     private void setActions(int index, StartupModel model, boolean fireChange) {
         if (!this.actions.contains(model)) {
             this.actions.add(index, model);
-            this.isDirty = true;
+            this.setRestartRequired();
             if (fireChange) {
                 this.fireIndexedPropertyChange(STARTUP, index, null, model);
             }
@@ -189,7 +190,7 @@ public class StartupActionsManager extends AbstractPreferencesManager {
     private void removeAction(StartupModel model, boolean fireChange) {
         int index = this.actions.indexOf(model);
         this.actions.remove(model);
-        this.isDirty = true;
+        this.setRestartRequired();
         if (fireChange) {
             this.fireIndexedPropertyChange(STARTUP, index, model, null);
         }
@@ -205,5 +206,23 @@ public class StartupActionsManager extends AbstractPreferencesManager {
 
     public boolean isDirty() {
         return this.isDirty;
+    }
+
+    /**
+     * Mark that a change requires a restart. As a side effect, marks this
+     * manager dirty.
+     */
+    public void setRestartRequired() {
+        this.restartRequired = true;
+        this.isDirty = true;
+    }
+
+    /**
+     * Indicate if a restart is required for preferences to be applied.
+     *
+     * @return true if a restart is required, false otherwise
+     */
+    public boolean isRestartRequired() {
+        return this.isDirty || this.restartRequired;
     }
 }

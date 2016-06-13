@@ -35,8 +35,6 @@ import jmri.swing.PreferencesPanel;
  */
 public class StartupActionsPreferencesPanel extends JPanel implements PreferencesPanel {
 
-    private boolean isRestartRequired = false;
-
     /**
      * Creates new form StartupActionsPreferencesPanel
      */
@@ -248,7 +246,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
 
     @Override
     public boolean isRestartRequired() {
-        return this.isDirty() || this.isRestartRequired;
+        return InstanceManager.getDefault(StartupActionsManager.class).isRestartRequired();
     }
 
     @Override
@@ -301,7 +299,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
                 case 0:
                     return model;
                 case 1:
-                    return InstanceManager.getDefault(StartupActionsManager.class).getFactories(model.getClass()).getDescription();
+                    return this.manager.getFactories(model.getClass()).getDescription();
                 default:
                     return null;
             }
@@ -362,7 +360,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
             } else {
                 this.fireTableDataChanged();
             }
-            StartupActionsPreferencesPanel.this.isRestartRequired = true;
+            this.manager.setRestartRequired();
         }
     }
 }
