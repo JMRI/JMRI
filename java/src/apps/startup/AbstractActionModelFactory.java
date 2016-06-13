@@ -1,5 +1,6 @@
 package apps.startup;
 
+import apps.StartupActionsManager;
 import apps.StartupModel;
 import java.awt.Component;
 import javax.swing.JOptionPane;
@@ -43,6 +44,7 @@ abstract public class AbstractActionModelFactory implements StartupModelFactory 
                     model.getName());
             if (name != null && !name.equals(model.getName())) {
                 model.setName(name);
+                InstanceManager.getDefault(StartupActionsManager.class).setRestartRequired();
             }
         }
     }
