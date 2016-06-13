@@ -9,7 +9,7 @@ import java.util.Map;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.SignalMast;
-import jmri.server.json.JsonException;
+import jmri.jmris.json.JsonException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

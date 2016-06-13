@@ -1,3 +1,4 @@
+// AddressedHighCvProgrammerFacade.java
 package jmri.implementation;
 
 import jmri.ProgListener;
@@ -23,6 +24,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.implementation.ProgrammerFacadeSelector
  *
  * @author Bob Jacobsen Copyright (C) 2013
+ * @version	$Revision: 24246 $
  */
 public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade implements ProgListener {
 
@@ -209,3 +211,5 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
     private final static Logger log = LoggerFactory.getLogger(AddressedHighCvProgrammerFacade.class.getName());
 
 }
+
+/* @(#)SprogProgrammer.java */

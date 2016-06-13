@@ -21,7 +21,6 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
         super(systemName);
     }
 
-    @Override
     public String getAppearanceName(int appearance) {
         String ret = jmri.util.StringUtil.getNameFromState(
                 appearance, getValidStates(), getValidStateNames());
@@ -32,14 +31,12 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
         }
     }
 
-    @Override
     public String getAppearanceName() {
         return getAppearanceName(getAppearance());
     }
 
     protected int mAppearance = DARK;
 
-    @Override
     public int getAppearance() {
         return mAppearance;
     }
@@ -57,9 +54,7 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
 
     /**
      * Default behavior for "lit" parameter is to track value and return it.
-     * @return is lit
      */
-    @Override
     public boolean getLit() {
         return mLit;
     }
@@ -71,9 +66,7 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
 
     /**
      * "Held" parameter is just tracked and notified.
-     * @return is held
      */
-    @Override
     public boolean getHeld() {
         return mHeld;
     }
@@ -83,9 +76,7 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
      * <P>
      * This generally shouldn't be used by Java code; use setAppearance instead.
      * The is provided to make Jython script access easier to read.
-     * @param s new state
      */
-    @Override
     public void setState(int s) {
         setAppearance(s);
     }
@@ -95,19 +86,17 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
      * <P>
      * This generally shouldn't be used by Java code; use getAppearance instead.
      * The is provided to make Jython script access easier to read.
-     * @return current state
      */
-    @Override
     public int getState() {
         return getAppearance();
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"EI_EXPOSE_REP", "MS_EXPOSE_REP"}, justification = "OK until Java 1.6 allows return of cheap array copy")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings({"EI_EXPOSE_REP", "MS_EXPOSE_REP"}) // OK until Java 1.6 allows return of cheap array copy
     public static int[] getDefaultValidStates() {
         return validStates;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"EI_EXPOSE_REP", "MS_EXPOSE_REP"}, justification = "OK until Java 1.6 allows return of cheap array copy")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings({"EI_EXPOSE_REP", "MS_EXPOSE_REP"}) // OK until Java 1.6 allows return of cheap array copy
     public static String[] getDefaultValidStateNames() {
         return validStateNames;
     }
@@ -144,21 +133,18 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
         Bundle.getMessage("SignalHeadStateFlashingGreen"),
         Bundle.getMessage("SignalHeadStateFlashingLunar"),};
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "OK until Java 1.6 allows return of cheap array copy")
-    @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     public int[] getValidStates() {
         return validStates;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "OK until Java 1.6 allows return of cheap array copy")
-    @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     public String[] getValidStateNames() {
         return validStateNames;
     }
 
     abstract boolean isTurnoutUsed(Turnout t);
 
-    @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         if ("CanDelete".equals(evt.getPropertyName())) { //IN18N
             if (isTurnoutUsed((Turnout) evt.getOldValue())) {
@@ -170,7 +156,6 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
         }
     }
 
-    @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameSignalHead");
     }

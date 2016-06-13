@@ -1,14 +1,15 @@
+// Bundle.java
 package jmri.jmrit.turnoutoperations;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import edu.umd.cs.findbugs.annotations.CheckReturnValue;
+import edu.umd.cs.findbugs.annotations.DefaultAnnotation;
+import edu.umd.cs.findbugs.annotations.NonNull;
+import edu.umd.cs.findbugs.annotations.Nullable;
+import edu.umd.cs.findbugs.annotations.SuppressWarnings;
 import java.util.Locale;
-import javax.annotation.CheckReturnValue;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
 
-@ParametersAreNonnullByDefault
-@CheckReturnValue
-@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Desired pattern is repeated class names with package-level access to members")
+@DefaultAnnotation({NonNull.class, CheckReturnValue.class})
+@SuppressWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Desired pattern is repeated class names with package-level access to members")
 
 @net.jcip.annotations.Immutable
 
@@ -19,6 +20,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * the local resource bundle name.
  *
  * @author Bob Jacobsen Copyright (C) 2012
+ * @version $Revision: 17977 $
  * @since 3.3.1
  */
 public class Bundle extends jmri.Bundle {
@@ -109,3 +111,5 @@ public class Bundle extends jmri.Bundle {
     }
 
 }
+
+/* @(#)Bundle.java */

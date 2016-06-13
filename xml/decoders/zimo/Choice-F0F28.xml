@@ -16,7 +16,6 @@
       <enumChoice choice="None">
         <choice>None</choice>
         <choice xml:lang="it">Nessuna</choice>
-        <choice xml:lang="de">keine</choice>
       </enumChoice>
       <enumChoice choice="F0" value="29">
         <choice>F0</choice>

@@ -7,7 +7,7 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
-import org.junit.Assert;
+import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 

@@ -1,3 +1,4 @@
+// AddSignalMastPanel.java
 package jmri.jmrit.beantable.signalmast;
 
 import java.awt.Color;
@@ -51,9 +52,11 @@ import org.slf4j.LoggerFactory;
  * JPanel to create a new SignalMast
  *
  * @author	Bob Jacobsen Copyright (C) 2009, 2010
+ * @version $Revision$
  */
 public class AddSignalMastPanel extends JPanel {
 
+    private static final long serialVersionUID = 2027577182244302143L;
     jmri.UserPreferencesManager prefs = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
     String systemSelectionCombo = this.getClass().getName() + ".SignallingSystemSelected";
     String mastSelectionCombo = this.getClass().getName() + ".SignallingMastSelected";
@@ -572,7 +575,7 @@ public class AddSignalMastPanel extends JPanel {
                         + sigsysname
                         + ":" + mastname.substring(11, mastname.length() - 4));
                 for (JmriBeanComboBox head : headList) {
-                    if (head !=null && head.getSelectedDisplayName() != null) build.append("(" + StringUtil.parenQuote(head.getSelectedDisplayName()) + ")");
+                    build.append("(" + StringUtil.parenQuote(head.getSelectedDisplayName()) + ")");
                 }
                 String name = build.toString();
                 log.debug("add signal: " + name);
@@ -1290,3 +1293,5 @@ public class AddSignalMastPanel extends JPanel {
     private final static Logger log = LoggerFactory.getLogger(AddSignalMastPanel.class.getName());
 }
 
+
+/* @(#)SensorTableAction.java */

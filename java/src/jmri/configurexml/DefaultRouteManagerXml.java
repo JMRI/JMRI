@@ -8,7 +8,7 @@ package jmri.configurexml;
  * @deprecated 2.7.8
  */
 @Deprecated
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "duplicate name OK while deprecated, for XML config migration")
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
 // This is a configurexml migration class, same name is OK
 public class DefaultRouteManagerXml
         extends jmri.managers.configurexml.DefaultRouteManagerXml {

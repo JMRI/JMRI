@@ -1,3 +1,4 @@
+// SignalHeadSignalMast.javaa
 package jmri.implementation;
 
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ import org.slf4j.LoggerFactory;
  * </ul>
  *
  * @author	Bob Jacobsen Copyright (C) 2009
+ * @version $Revision$
  */
 public class SignalHeadSignalMast extends AbstractSignalMast implements java.beans.VetoableChangeListener {
 
@@ -302,3 +304,5 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
 
     private final static Logger log = LoggerFactory.getLogger(SignalHeadSignalMast.class.getName());
 }
+
+/* @(#)SignalHeadSignalMast.java */

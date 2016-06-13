@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
 import jmri.jmrit.display.LocoIcon;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
-import org.junit.Assert;
+import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 

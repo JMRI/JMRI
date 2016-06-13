@@ -1,3 +1,4 @@
+//JsonTurnoutServer.java
 package jmri.jmris.json;
 
 import static jmri.jmris.json.JSON.METHOD;
@@ -12,7 +13,6 @@ import java.util.Locale;
 import jmri.JmriException;
 import jmri.jmris.AbstractTurnoutServer;
 import jmri.jmris.JmriConnection;
-import jmri.server.json.JsonException;
 
 /**
  * JSON Server interface between the JMRI turnout manager and a network
@@ -25,6 +25,7 @@ import jmri.server.json.JsonException;
  *
  * @author Paul Bender Copyright (C) 2010
  * @author Randall Wood Copyright (C) 2012, 2013
+ * @version $Revision: 21327 $
  * @deprecated 4.3.4
  */
 @Deprecated

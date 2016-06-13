@@ -169,6 +169,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         while (e.hasMoreElements()) {
             String aspect = e.nextElement();
             String s = appMap.getProperty(aspect, "imagelink");
+            s = s.substring(s.indexOf("resources"));
             NamedIcon n = new NamedIcon(s, s);
             _currentIconMap.put(aspect, n);
         }

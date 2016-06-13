@@ -4,7 +4,7 @@ package jmri.jmrit.operations.locations;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.util.JmriJFrame;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
-import org.junit.Assert;
+import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 

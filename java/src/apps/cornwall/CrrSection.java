@@ -1,3 +1,4 @@
+// CrrSection.java
 package apps.cornwall;
 
 import jmri.InstanceManager;
@@ -14,9 +15,10 @@ import org.slf4j.LoggerFactory;
 /**
  * Abstract base class for Cornwall RR automation.
  * <P>
- * Defines useful constants, and handles basic structure of the update process.
+ * Defines useful constants, and handles basic structure of hte update process.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
+ * @version $Revision$
  */
 public abstract class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
 
@@ -115,8 +117,8 @@ public abstract class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
         return true;   // never terminate permanently
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", "LI_LAZY_INIT_UPDATE_STATIC"},
-            justification = "this code uses statics poorly, but it's not threaded, and too old to fix, so mark as OK")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings({"ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", "LI_LAZY_INIT_UPDATE_STATIC"})
+    // this code uses statics poorly, but it's not threaded, and too old to fix, so mark as OK
     CrrSection() {
         SensorManager tm = InstanceManager.sensorManagerInstance();
         // initialize the static turnout list
@@ -295,3 +297,5 @@ public abstract class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
     private final static Logger log = LoggerFactory.getLogger(CrrSection.class.getName());
 
 }
+
+/* @(#)CrrSection.java */

@@ -1,9 +1,11 @@
+// DefaultMemory.java
 package jmri.implementation;
 
 /**
  * Concrete implementation of the Reporter interface for the Internal system.
  *
  * @author	Bob Jacobsen Copyright (C) 2004
+ * @version	$Revision$
  */
 public class DefaultMemory extends AbstractMemory {
 
@@ -39,3 +41,5 @@ public class DefaultMemory extends AbstractMemory {
         setValue("" + s);
     }
 }
+
+/* @(#)DefaultMemory.java */

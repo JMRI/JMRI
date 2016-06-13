@@ -29,8 +29,11 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrit.display.configurexml.PositionableLabelXml
  * @author Bob Jacobsen Copyright 2002, 2008
  * @author Pete Cressman Copyright: Copyright (c) 2009, 2010
+ * @version $Revision$
  */
 public class NamedIcon extends ImageIcon {
+
+    private static final long serialVersionUID = -5274934991719576677L;
 
     /**
      * Create a NamedIcon that is a complete copy of an existing NamedIcon
