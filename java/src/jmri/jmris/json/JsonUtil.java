@@ -1,4 +1,3 @@
-// JsonUtil.java
 package jmri.jmris.json;
 
 import static jmri.jmris.json.JSON.*;
@@ -12,6 +11,7 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
@@ -53,6 +53,7 @@ import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.profile.ProfileManager;
+import jmri.server.json.JsonException;
 import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
 import jmri.util.node.NodeIdentity;
@@ -473,7 +474,7 @@ public class JsonUtil {
     static public ObjectNode getPanel(Locale locale, Editor editor, String format) {
         if (editor.getAllowInFrameServlet()) {
             String title = ((JmriJFrame) editor.getTargetPanel().getTopLevelAncestor()).getTitle();
-            if (!title.isEmpty() && !WebServerPreferences.getDefault().getDisallowedFrames().contains(title)) {
+            if (!title.isEmpty() && !Arrays.asList(WebServerPreferences.getDefault().getDisallowedFrames()).contains(title)) {
                 String type = PANEL;
                 String name = "Panel";
                 if (editor instanceof ControlPanelEditor) {
