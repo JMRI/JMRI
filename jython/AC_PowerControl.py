@@ -1,10 +1,10 @@
 ##################################################################################
 #
-# Script that controls an IoT (internet of things) device using HTTP GET commands.
+# Script that controls an IoT (internet of things) device using HTML GET commands.
 # This is an example on how to control other devices from JMRI.
 # It uses this ethernet double relay: http://www.robot-electronics.co.uk/htm/eth002tech.htm
 # (this link explains how it works and how to configure and use it)
-# You may find different devices on the market that are controlled by HTTP GET commands.
+# You may find different devices on the market that are controlled by HTML GET commands.
 #
 # What this script does for me:
 #

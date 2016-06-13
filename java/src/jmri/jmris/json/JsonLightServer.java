@@ -7,7 +7,6 @@ import java.util.Locale;
 import jmri.JmriException;
 import jmri.jmris.AbstractLightServer;
 import jmri.jmris.JmriConnection;
-import jmri.server.json.JsonException;
 import static jmri.jmris.json.JSON.LIGHT;
 import static jmri.jmris.json.JSON.METHOD;
 import static jmri.jmris.json.JSON.NAME;

@@ -59,7 +59,6 @@
     <label xml:lang="de">Verbundadresse</label>
     <tooltip>Stores consist address. Range 0-127 (direction set in bit 7)</tooltip>
     <tooltip xml:lang="it">Indirizzo Consist. Valori 0-127 (direzione nel bit 7)</tooltip>
-    <tooltip xml:lang="de">nur lesend: Speichert die Verbundadresse. Werte 0-127 (Richtung gesetzt in bit 7)</tooltip>
   </variable>
   <variable item="Consist Direction" CV="19" mask="VXXXXXXX" default="0" tooltip="This loco runs Normal(default) or Reversed(address+128) when in the consist">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
@@ -69,6 +68,5 @@
     <label xml:lang="de">Verbund-Richtung</label>
     <tooltip>This loco runs Normal(default) or Reversed(address+128) when in the consist</tooltip>
     <tooltip xml:lang="it">Direzione loco nel Consist - Normale(default) o all'indietro (indirizzo+128)</tooltip>
-    <tooltip xml:lang="de">nur lesend: Die Lok fährt im Verbundbetrieb vorwärts oder rückwärts.</tooltip>
   </variable>
 </variables>

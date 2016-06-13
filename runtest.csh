@@ -12,7 +12,6 @@
 #  jmri.demo             Keep some test windows open after tests run
 #  jmri.headlesstest     Tests won't attempt to use screen
 #  jmri.skipschematests  Skip tests of XML schema if true
-#  jmri.skipscripttests  Skip tests of Jython scripts if true
 #
 # E.g.: 
 # setenv JMRI_OPTIONS -Djmri.skipschematests=true

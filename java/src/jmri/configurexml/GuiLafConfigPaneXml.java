@@ -7,6 +7,6 @@ package jmri.configurexml;
  * @deprecated 2.9.5
  */
 @Deprecated
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "duplicate name OK while deprecated, for XML config migration")
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
 public class GuiLafConfigPaneXml extends apps.configurexml.GuiLafConfigPaneXml {
 }

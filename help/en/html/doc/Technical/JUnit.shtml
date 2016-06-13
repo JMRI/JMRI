@@ -531,13 +531,13 @@ simple tests for those to ensure they keep working.
 
 <h3><a id="sampleJythonScriptTesting" name="sampleJythonScriptTesting"></a>Testing Jython sample scripts</h3>
 
-Test scripts can be placed in <code>jython/test</code> are automatically invoked by
+Test scripts can be placed in <code>jython</code> and invoked by 
 <code><a href="https://github.com/JMRI/JMRI/blob/master/java/test/jmri/jmrit/jython/SampleScriptTest.java">java/test/jmri/jmrit/jython/SampleScriptTest.java</a></code>.
 <p>
 See the <code><a href="https://github.com/JMRI/JMRI/blob/master/jython/test/jmri_bindings_test.py">jmri_bindings_test.py</a></code> 
-sample for syntax, including examples of how to signal test failures.
+sample for syntax.
 <p>
-In the future, this could be extended to pick up files automatically, 
+The <code>SampleScriptTest</code> class is a placeholder, and should (eventually) be extended to pick up files automatically, 
 to support xUnit testing, etc.
 <p>
 

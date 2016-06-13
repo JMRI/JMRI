@@ -7,6 +7,7 @@ package jmri.jmris.json;
  * @deprecated Use {@link jmri.server.json.JsonException}
  */
 @Deprecated
+@SuppressWarnings("serial")
 public class JsonException extends jmri.server.json.JsonException {
 
     public JsonException(int i, String s, Throwable t) {

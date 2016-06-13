@@ -11,7 +11,6 @@ import java.util.Locale;
 import jmri.JmriException;
 import jmri.jmris.AbstractTimeServer;
 import jmri.jmris.JmriConnection;
-import jmri.server.json.JsonException;
 
 @Deprecated
 public class JsonTimeServer extends AbstractTimeServer {

@@ -17,7 +17,6 @@ import java.util.Locale;
 import jmri.jmris.JmriConnection;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
-import jmri.server.json.JsonException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

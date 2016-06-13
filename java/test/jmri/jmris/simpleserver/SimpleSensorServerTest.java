@@ -1,20 +1,19 @@
 //SimpleSensorServerTest.java
 package jmri.jmris.simpleserver;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import junit.framework.Assert;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * Tests for the jmri.jmris.simpleserver.SimpleSensorServer class
  *
- * @author Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender
  */
-public class SimpleSensorServerTest {
+public class SimpleSensorServerTest extends TestCase {
 
-    @Test public void testCtor() {
+    public void testCtor() {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     // null output string drops characters
@@ -29,7 +28,7 @@ public class SimpleSensorServerTest {
     }
 
     // test sending a message.
-    @Test public void testSendMessage() {
+    public void testSendMessage() {
         StringBuilder sb = new StringBuilder();
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
@@ -63,7 +62,7 @@ public class SimpleSensorServerTest {
     }
 
     // test sending an error message.
-    @Test public void testSendErrorStatus() {
+    public void testSendErrorStatus() {
         StringBuilder sb = new StringBuilder();
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
@@ -83,184 +82,31 @@ public class SimpleSensorServerTest {
         }
     }
 
-    // test intializing a Sensor status message.
-    @Test public void checkInitSensor() {
-        StringBuilder sb = new StringBuilder();
-        java.io.DataOutputStream output = new java.io.DataOutputStream(
-                new java.io.OutputStream() {
-                    @Override
-                    public void write(int b) throws java.io.IOException {
-                        sb.append((char)b);
-                    }
-                });
-        java.io.DataInputStream input = new java.io.DataInputStream(System.in);
-        SimpleSensorServer a = new SimpleSensorServer(input, output);
-        a.initSensor("IS1");
-        Assert.assertNotNull((jmri.InstanceManager.getDefault(jmri.SensorManager.class)).getSensor("IS1"));
+
+
+
+    // from here down is testing infrastructure
+    public SimpleSensorServerTest(String s) {
+        super(s);
     }
 
-    // test sending an ACTIVE status message.
-    @Test public void CheckSendActiveStatus() {
-        StringBuilder sb = new StringBuilder();
-        java.io.DataOutputStream output = new java.io.DataOutputStream(
-                new java.io.OutputStream() {
-                    @Override
-                    public void write(int b) throws java.io.IOException {
-                        sb.append((char)b);
-                    }
-                });
-        java.io.DataInputStream input = new java.io.DataInputStream(System.in);
-        SimpleSensorServer a = new SimpleSensorServer(input, output);
-        a.initSensor("IS1");
-        try {
-            a.sendStatus("IS1",jmri.Sensor.ACTIVE);
-            Assert.assertEquals("sendStatus check","SENSOR IS1 ACTIVE\n",sb.toString());
-        } catch(java.io.IOException ioe){
-            Assert.fail("Exception sending ACTIVE Status");
-        }
+    // Main entry point
+    static public void main(String[] args) {
+        String[] testCaseName = {SimpleSensorServerTest.class.getName()};
+        junit.textui.TestRunner.main(testCaseName);
     }
 
-    // test sending an INACTIVE status message.
-    @Test public void CheckSendInActiveStatus() {
-        StringBuilder sb = new StringBuilder();
-        java.io.DataOutputStream output = new java.io.DataOutputStream(
-                new java.io.OutputStream() {
-                    @Override
-                    public void write(int b) throws java.io.IOException {
-                        sb.append((char)b);
-                    }
-                });
-        java.io.DataInputStream input = new java.io.DataInputStream(System.in);
-        SimpleSensorServer a = new SimpleSensorServer(input, output);
-        a.initSensor("IS1");
-        try {
-            a.sendStatus("IS1",jmri.Sensor.ACTIVE);
-            Assert.assertEquals("sendStatus check","SENSOR IS1 ACTIVE\n",sb.toString());
-        } catch(java.io.IOException ioe){
-            Assert.fail("Exception sending ACTIVE Status");
-        }
-    }
+    // test suite from all defined tests
+    public static Test suite() {
+        TestSuite suite = new TestSuite(jmri.jmris.simpleserver.SimpleSensorServerTest.class);
 
-    // test sending an UNKNOWN status message.
-    @Test public void CheckSendUnkownStatus() {
-        StringBuilder sb = new StringBuilder();
-        java.io.DataOutputStream output = new java.io.DataOutputStream(
-                new java.io.OutputStream() {
-                    @Override
-                    public void write(int b) throws java.io.IOException {
-                        sb.append((char)b);
-                    }
-                });
-        java.io.DataInputStream input = new java.io.DataInputStream(System.in);
-        SimpleSensorServer a = new SimpleSensorServer(input, output);
-        a.initSensor("IS1");
-        try {
-            a.sendStatus("IS1",jmri.Sensor.UNKNOWN);
-            Assert.assertEquals("sendStatus check","SENSOR IS1 UNKNOWN\n",sb.toString());
-        } catch(java.io.IOException ioe){
-            Assert.fail("Exception sending UNKNOWN Status");
-        }
-    }
-
-    // test Parsing an ACTIVE status message.
-    @Test public void parseActiveStatus() {
-        StringBuilder sb = new StringBuilder();
-        java.io.DataOutputStream output = new java.io.DataOutputStream(
-                new java.io.OutputStream() {
-                    @Override
-                    public void write(int b) throws java.io.IOException {
-                        sb.append((char)b);
-                    }
-                });
-        java.io.DataInputStream input = new java.io.DataInputStream(System.in);
-        SimpleSensorServer a = new SimpleSensorServer(input, output);
-        try {
-            a.parseStatus("SENSOR IS1 ACTIVE\n");
-            jmri.Sensor sensor = (jmri.InstanceManager.getDefault(jmri.SensorManager.class)).getSensor("IS1");
-          Assert.assertEquals("Parse Active Status Check",
-                       jmri.Sensor.ACTIVE,
-                       sensor.getState());
-            // parsing the status also causes a message to return to
-            // the client.
-            Assert.assertEquals("parse Active check","SENSOR IS1 ACTIVE\n",sb.toString());
-        } catch(jmri.JmriException | java.io.IOException ioe){
-            Assert.fail("Exception parsing ACTIVE Status");
-        }
-    }
-
-    // test Parsing an INACTIVE status message.
-    @Test public void parseInactiveStatus() {
-        StringBuilder sb = new StringBuilder();
-        java.io.DataOutputStream output = new java.io.DataOutputStream(
-                new java.io.OutputStream() {
-                    @Override
-                    public void write(int b) throws java.io.IOException {
-                        sb.append((char)b);
-                    }
-                });
-        java.io.DataInputStream input = new java.io.DataInputStream(System.in);
-        SimpleSensorServer a = new SimpleSensorServer(input, output);
-        try {
-            a.parseStatus("SENSOR IS1 INACTIVE\n");
-            jmri.Sensor sensor = (jmri.InstanceManager.getDefault(jmri.SensorManager.class)).getSensor("IS1");
-          Assert.assertEquals("Parse Inactive Status Check",
-                       jmri.Sensor.INACTIVE,
-                       sensor.getState());
-            // parsing the status also causes a message to return to
-            // the client.
-            Assert.assertEquals("parse Inactive check","SENSOR IS1 INACTIVE\n",sb.toString());
-        } catch(jmri.JmriException | java.io.IOException ioe){
-            Assert.fail("Exception parsing ACTIVE Status");
-        }
-    }
-
-    // test Parsing an blank status message.
-    @Test public void parseBlankStatus() {
-        StringBuilder sb = new StringBuilder();
-        java.io.DataOutputStream output = new java.io.DataOutputStream(
-                new java.io.OutputStream() {
-                    @Override
-                    public void write(int b) throws java.io.IOException {
-                        sb.append((char)b);
-                    }
-                });
-        java.io.DataInputStream input = new java.io.DataInputStream(System.in);
-        SimpleSensorServer a = new SimpleSensorServer(input, output);
-        try {
-            a.parseStatus("SENSOR IS1\n");
-            // nothing has changed the sensor, so it should be unknown.
-            Assert.assertEquals("parse blank check","SENSOR IS1 UNKNOWN\n",sb.toString());
-        } catch(jmri.JmriException | java.io.IOException ioe){
-            Assert.fail("Exception parsing ACTIVE Status");
-        }
-    }
-
-    // test Parsing an other status message.
-    @Test public void parseOtherStatus() {
-        StringBuilder sb = new StringBuilder();
-        java.io.DataOutputStream output = new java.io.DataOutputStream(
-                new java.io.OutputStream() {
-                    @Override
-                    public void write(int b) throws java.io.IOException {
-                        sb.append((char)b);
-                    }
-                });
-        java.io.DataInputStream input = new java.io.DataInputStream(System.in);
-        SimpleSensorServer a = new SimpleSensorServer(input, output);
-        try {
-            a.parseStatus("SENSOR IS1 UNKNOWN\n");
-            // this isn't INACTIVE or ACTIVE, so it should be just like
-            // blank.
-            // nothing has changed the sensor, so it should be unknown.
-            Assert.assertEquals("parse blank check","SENSOR IS1 UNKNOWN\n",sb.toString());
-        } catch(jmri.JmriException | java.io.IOException ioe){
-            Assert.fail("Exception parsing ACTIVE Status");
-        }
+        return suite;
     }
 
     // The minimal setup for log4J
-    @Before public void setUp() throws Exception {
+    protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
+        super.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initInternalLightManager();
@@ -268,8 +114,9 @@ public class SimpleSensorServerTest {
         jmri.util.JUnitUtil.initDebugThrottleManager();
     }
 
-    @After public void tearDown() throws Exception {
+    protected void tearDown() throws Exception {
         jmri.util.JUnitUtil.resetInstanceManager();
+        super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
 

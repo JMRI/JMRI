@@ -46,7 +46,6 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         super(systemName.toUpperCase(), userName);
     }
 
-    @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameTurnout");
     }
@@ -77,7 +76,6 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * Sets a new Commanded state, if need be notifying the listeners, but does
      * NOT send the command downstream. This is used when a new commanded state
      * is noticed from another command.
-     * @param s new state
      */
     protected void newCommandedState(int s) {
         if (_commandedState != s) {
@@ -88,7 +86,6 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         }
     }
 
-    @Override
     public int getKnownState() {
         return _knownState;
     }
@@ -98,9 +95,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * appropriate starts a TurnoutOperator to do its thing. If there is no
      * TurnoutOperator (not required or nothing suitable) then just tell the
      * layout and hope for the best.
-     * @param s commanded state to set
      */
-    @Override
     public void setCommandedState(int s) {
         log.debug("set commanded state for turnout {} to {}", getFullyFormattedDisplayName(),
                 (s==Turnout.CLOSED ? closedText : thrownText));
@@ -117,7 +112,6 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         }
     }
 
-    @Override
     public int getCommandedState() {
         return _commandedState;
     }
@@ -164,7 +158,6 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * @return	true iff state is a valid one and the known state is the same as
      *         commanded
      */
-    @Override
     public boolean isConsistentState() {
         return _commandedState == _knownState
                 && (_commandedState == CLOSED || _commandedState == THROWN);
@@ -187,9 +180,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * <P>
      * Note that getState() and setState(int) are not symmetric: getState is the
      * known state, and set state modifies the commanded state.
-     * @param s new state
      */
-    @Override
     public void setState(int s) {
         setCommandedState(s);
     }
@@ -202,9 +193,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * <P>
      * Note that getState() and setState(int) are not symmetric: getState is the
      * known state, and set state modifies the commanded state.
-     * @return current state
      */
-    @Override
     public int getState() {
         return getKnownState();
     }
@@ -228,38 +217,31 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     private int _controlType = 0;
 
     /* Type of turnout control - defaults to 0 for 'steady state' */
-    @Override
     public int getNumberOutputBits() {
         return _numberOutputBits;
     }
 
-    @Override
     public void setNumberOutputBits(int num) {
         _numberOutputBits = num;
     }
 
-    @Override
     public int getControlType() {
         return _controlType;
     }
 
-    @Override
     public void setControlType(int num) {
         _controlType = num;
     }
 
-    @Override
     public int getValidFeedbackTypes() {
         return _validFeedbackTypes;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "OK until Java 1.6 allows return of cheap array copy")
-    @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     public String[] getValidFeedbackNames() {
         return _validFeedbackNames;
     }
 
-    @Override
     public void setFeedbackMode(String mode) throws IllegalArgumentException {
         for (int i = 0; i < _validFeedbackNames.length; i++) {
             if (mode.equals(_validFeedbackNames[i])) {
@@ -270,7 +252,6 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         throw new IllegalArgumentException("Unexpected mode: " + mode);
     }
 
-    @Override
     public void setFeedbackMode(int mode) throws IllegalArgumentException {
         // check for error - following removed the low bit from mode
         int test = mode & (mode - 1);
@@ -288,12 +269,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         setLocked(CABLOCKOUT, false);
     }
 
-    @Override
     public int getFeedbackMode() {
         return _activeFeedbackType;
     }
 
-    @Override
     public String getFeedbackModeName() {
         for (int i = 0; i < _validFeedbackNames.length; i++) {
             if (_activeFeedbackType == _validFeedbackModes[i]) {
@@ -304,7 +283,6 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                 + _activeFeedbackType);
     }
 
-    @Override
     public void setInverted(boolean inverted) {
         boolean oldInverted = _inverted;
         _inverted = inverted;
@@ -327,9 +305,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * <P>
      * Used in polling loops in system-specific code, so made final to allow
      * optimization.
-     * @return inverted status
      */
-    @Override
     final public boolean getInverted() {
         return _inverted;
     }
@@ -339,9 +315,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     /**
      * Determine if the turnouts can be inverted. If true inverted turnouts
      * supported.
-     * @return invert supported
      */
-    @Override
     public boolean canInvert() {
         return false;
     }
@@ -359,7 +333,6 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      *                       Can be combined to monitor both states.
      * @param locked         true if turnout to be locked
      */
-    @Override
     public void setLocked(int turnoutLockout, boolean locked) {
         boolean firechange = false;
         if ((turnoutLockout & CABLOCKOUT) != 0 && _cabLockout != locked) {
@@ -390,10 +363,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     /**
      * Determine if turnout is locked. Returns true if turnout is locked. There
      * are two types of locks, cab lockout, and pushbutton lockout.
-     * @param turnoutLockout turnout to check
-     * @return locked state
      */
-    @Override
     public boolean getLocked(int turnoutLockout) {
         if (turnoutLockout == CABLOCKOUT) {
             return _cabLockout;
@@ -415,12 +385,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     protected boolean _enablePushButtonLockout = false;
 
-    @Override
     public boolean canLock(int turnoutLockout) {
         return false;
     }
 
-    @Override
     public void enableLockOperation(int turnoutLockout, boolean enabled) {
     }
 
@@ -428,9 +396,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * When true, report to console anytime a cab attempts to change the state
      * of a turnout on the layout. When a turnout is cab locked, only JMRI is
      * allowed to change the state of a turnout.
-     * @param reportLocked report locked state
      */
-    @Override
     public void setReportLocked(boolean reportLocked) {
         boolean oldReportLocked = _reportLocked;
         _reportLocked = reportLocked;
@@ -444,9 +410,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * When true, report to console anytime a cab attempts to change the state
      * of a turnout on the layout. When a turnout is cab locked, only JMRI is
      * allowed to change the state of a turnout.
-     * @return report locked state
      */
-    @Override
     public boolean getReportLocked() {
         return _reportLocked;
     }
@@ -459,8 +423,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     protected String[] _validDecoderNames = PushbuttonPacket
             .getValidDecoderNames();
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "OK until Java 1.6 allows return of cheap array copy")
-    @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     public String[] getValidDecoderNames() {
         return _validDecoderNames;
     }
@@ -468,12 +431,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     // set the turnout decoder default to unknown
     protected String _decoderName = PushbuttonPacket.unknown;
 
-    @Override
     public String getDecoderName() {
         return _decoderName;
     }
 
-    @Override
     public void setDecoderName(String decoderName) {
         _decoderName = decoderName;
     }
@@ -497,12 +458,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         return myOperator;
     }
 
-    @Override
     public TurnoutOperation getTurnoutOperation() {
         return myTurnoutOperation;
     }
 
-    @Override
     public void setTurnoutOperation(TurnoutOperation toper) {
         if (log.isDebugEnabled()) {
             log.debug("setTurnoutOperation Called for turnout {}.  Operation type {}", this.getSystemName(), toper);
@@ -526,12 +485,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         }
     }
 
-    @Override
     public boolean getInhibitOperation() {
         return inhibitOperation;
     }
 
-    @Override
     public void setInhibitOperation(boolean io) {
         inhibitOperation = io;
     }
@@ -579,7 +536,6 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     //Sensor getSecondSensor() = null;
     private NamedBeanHandle<Sensor> _secondNamedSensor;
 
-    @Override
     public void provideFirstFeedbackSensor(String pName) throws jmri.JmriException {
         if (InstanceManager.sensorManagerInstance() != null) {
             if (pName == null || pName.equals("")) {
@@ -608,7 +564,6 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     }
 
-    @Override
     public Sensor getFirstSensor() {
         if (_firstNamedSensor == null) {
             return null;
@@ -616,12 +571,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         return _firstNamedSensor.getBean();
     }
 
-    @Override
     public NamedBeanHandle<Sensor> getFirstNamedSensor() {
         return _firstNamedSensor;
     }
 
-    @Override
     public void provideSecondFeedbackSensor(String pName) throws jmri.JmriException {
         if (InstanceManager.sensorManagerInstance() != null) {
             if (pName == null || pName.equals("")) {
@@ -650,7 +603,6 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         }
     }
 
-    @Override
     public Sensor getSecondSensor() {
         if (_secondNamedSensor == null) {
             return null;
@@ -658,12 +610,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         return _secondNamedSensor.getBean();
     }
 
-    @Override
     public NamedBeanHandle<Sensor> getSecondNamedSensor() {
         return _secondNamedSensor;
     }
 
-    @Override
     public void setInitialKnownStateFromFeedback() {
         if (_activeFeedbackType == ONESENSOR) {
             // ONESENSOR feedback 
@@ -710,7 +660,6 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * React to sensor changes by changing the KnownState if using an
      * appropriate sensor mode
      */
-    @Override
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
         if (evt.getSource() == myTurnoutOperation) {
             operationPropertyChange(evt);
@@ -768,13 +717,11 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         }
     }
 
-    @Override
     public void setBinaryOutput(boolean state) {
         binaryOutput = true;
     }
     protected boolean binaryOutput = false;
 
-    @Override
     public void dispose() {
         if (getFirstSensor() != null) {
             getFirstSensor().removePropertyChangeListener(this);
@@ -792,7 +739,6 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     //boolean useBlockSpeed = true;
 
     //float speedThroughTurnout = 0;
-    @Override
     public float getDivergingLimit() {
         if ((_divergeSpeed == null) || (_divergeSpeed.equals(""))) {
             return -1;
@@ -818,7 +764,6 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         }
     }
 
-    @Override
     public String getDivergingSpeed() {
         if (_divergeSpeed.equals("Global")) {
             return ("Use Global " + InstanceManager.turnoutManagerInstance().getDefaultThrownSpeed());
@@ -829,7 +774,6 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         return _divergeSpeed;
     }
 
-    @Override
     public void setDivergingSpeed(String s) throws JmriException {
         if (s == null) {
             throw new JmriException("Value of requested turnout thrown speed can not be null");
@@ -857,7 +801,6 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         firePropertyChange("TurnoutDivergingSpeedChange", oldSpeed, s);
     }
 
-    @Override
     public float getStraightLimit() {
         if ((_straightSpeed == null) || (_straightSpeed.equals(""))) {
             return -1;
@@ -881,7 +824,6 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         }
     }
 
-    @Override
     public String getStraightSpeed() {
         if (_straightSpeed.equals("Global")) {
             return ("Use Global " + InstanceManager.turnoutManagerInstance().getDefaultClosedSpeed());
@@ -892,7 +834,6 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         return _straightSpeed;
     }
 
-    @Override
     public void setStraightSpeed(String s) throws JmriException {
         if (s == null) {
             throw new JmriException("Value of requested turnout straight speed can not be null");
@@ -920,7 +861,6 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         firePropertyChange("TurnoutStraightSpeedChange", oldSpeed, s);
     }
 
-    @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         if ("CanDelete".equals(evt.getPropertyName())) { //IN18N
             if (evt.getOldValue().equals(getFirstSensor()) || evt.getOldValue().equals(getSecondSensor())) {

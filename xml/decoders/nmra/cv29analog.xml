@@ -69,6 +69,5 @@
     <label>Power Source Conversion</label>
     <tooltip>NMRA Digital only: Digital Operation Only - DC conversion enabled: both Digital + Analog, default is Off</tooltip>
     <tooltip xml:lang="it">'4' bit. Permette alla loco di andare in DC, per default è Off</tooltip>
-    <tooltip xml:lang="de">Nur Digital nach NMRA: Die Lokomotive fährt nur digital. Analogbetrieb Aktiviert: Die Lokomotive fährt sowohl digital als auch analog.</tooltip>
   </variable>
 </variables>

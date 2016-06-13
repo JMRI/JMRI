@@ -1,3 +1,4 @@
+// JsonConsistServer.java
 package jmri.jmris.json;
 
 import static jmri.jmris.json.JSON.ADDRESS;
@@ -23,12 +24,12 @@ import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.jmris.JmriConnection;
 import jmri.jmrit.consisttool.ConsistFile;
-import jmri.server.json.JsonException;
 import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ *
  * @author rhwood
  */
 public class JsonConsistServer {

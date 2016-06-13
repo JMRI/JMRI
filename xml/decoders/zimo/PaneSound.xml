@@ -50,20 +50,14 @@
       <text> </text>
     </label>
     <display item="Drive Away if Startup sound still playing"/>
-    <label>
-      <text> </text>
-    </label>
     <display item="Delay Shutdown untill end of Starting Whistle"/>
-    <label>
-      <text> </text>
-    </label>
     <display item="Standing Sound on premature shutdown"/>
   </column>
   <column>
     <display item="Virtual cam chuff frequency"/>
     <display item="Steam chuff frequency at speed step 1"/>
     <display item="Real cam sensor chuff rate"/>
-    <display item="Real cam sensor chuff rate 1"/>
+    <display item="Real cam sensor chuff rate 1" label="Real cam sensor chuff rate"/>
     <display item="Chuff for Articulated Locomotives" format="checkbox"/>
     <display item="Lead chuff accentuated"/>
     <display item="Overlapping effect at high speeds"/>

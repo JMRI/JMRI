@@ -8,10 +8,10 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
+import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.jdom2.JDOMException;
-import org.junit.Assert;
 
 /**
  * Tests for the Operations Route class Last manually cross-checked on 20090131
@@ -142,7 +142,7 @@ public class OperationsRoutesTest extends OperationsTestCase {
         Assert.assertEquals("RouteLocation Train Weight", 240, rl1.getTrainWeight());
         Assert.assertEquals("RouteLocation Max Car Moves", 32, rl1.getMaxCarMoves());
         Assert.assertEquals("RouteLocation Car Moves", 10, rl1.getCarMoves());
-        Assert.assertEquals("RouteLocation Grade", "2.0", Double.toString(rl1.getGrade()));
+        Assert.assertEquals("RouteLocation Grade", 2.0, rl1.getGrade());
         Assert.assertEquals("RouteLocation Icon X", 12, rl1.getTrainIconX());
         Assert.assertEquals("RouteLocation Icon Y", 8, rl1.getTrainIconY());
 
@@ -633,7 +633,7 @@ public class OperationsRoutesTest extends OperationsTestCase {
         Assert.assertEquals("rl1 can pickup", false, rl1.isPickUpAllowed());
         Assert.assertEquals("rl1 car moves", 0, rl1.getCarMoves()); // default
         Assert.assertEquals("rl1 comment", "rl1 comment", rl1.getComment());
-        Assert.assertEquals("rl1 grade", "5.0", Double.toString(rl1.getGrade()));
+        Assert.assertEquals("rl1 grade", Double.valueOf("5"), rl1.getGrade());
         Assert.assertEquals("rl1 max car moves", 8, rl1.getMaxCarMoves());
         Assert.assertEquals("rl1 max train length", 345, rl1.getMaxTrainLength());
         Assert.assertEquals("rl1 train direction", Location.SOUTH, rl1.getTrainDirection());
@@ -651,7 +651,7 @@ public class OperationsRoutesTest extends OperationsTestCase {
         Assert.assertEquals("rl2 can pickup", true, rl2.isPickUpAllowed());
         Assert.assertEquals("rl2 car moves", 0, rl2.getCarMoves()); // default
         Assert.assertEquals("rl2 comment", "r2l2 comment", rl2.getComment());
-        Assert.assertEquals("rl2 grade", "1.0", Double.toString(rl2.getGrade()));
+        Assert.assertEquals("rl2 grade", Double.valueOf("1"), rl2.getGrade());
         Assert.assertEquals("rl2 max car moves", 181, rl2.getMaxCarMoves());
         Assert.assertEquals("rl2 max train length", 4561, rl2.getMaxTrainLength());
         Assert.assertEquals("rl2 train direction", Location.EAST, rl2.getTrainDirection());
@@ -665,7 +665,7 @@ public class OperationsRoutesTest extends OperationsTestCase {
         Assert.assertEquals("rl4 can pickup", false, rl4.isPickUpAllowed());
         Assert.assertEquals("rl4 car moves", 0, rl4.getCarMoves()); // default
         Assert.assertEquals("rl4 comment", "r2l4 comment", rl4.getComment());
-        Assert.assertEquals("rl4 grade", "2.0", Double.toString(rl4.getGrade()));
+        Assert.assertEquals("rl4 grade", Double.valueOf("2"), rl4.getGrade());
         Assert.assertEquals("rl4 max car moves", 18, rl4.getMaxCarMoves());
         Assert.assertEquals("rl4 max train length", 456, rl4.getMaxTrainLength());
         Assert.assertEquals("rl4 train direction", Location.NORTH, rl4.getTrainDirection());

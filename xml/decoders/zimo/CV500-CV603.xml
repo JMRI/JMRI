@@ -13,7 +13,6 @@
     <decVal/>
     <label>Overall Volume</label>
     <label xml:lang="it">Volume Generale</label>
-    <label xml:lang="de">Gesamtlautstärke</label>
   </variable>
   <variable CV="570" item="F0 Sound Sample">
     <decVal/>
@@ -23,7 +22,6 @@
     <decVal/>
     <label>Volume on Key F0</label>
     <label xml:lang="it">Volume per Tasto F0</label>
-    <label xml:lang="de">Lautstärke von F0</label>
   </variable>
   <variable item="F0 Sound Loop" CV="572" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -41,7 +39,6 @@
     <decVal/>
     <label>Volume on Key F1</label>
     <label xml:lang="it">Volume per Tasto F1</label>
-    <label xml:lang="de">Lautstärke von F1</label>
   </variable>
   <variable item="F1 Sound Loop" CV="515" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -59,7 +56,6 @@
     <decVal/>
     <label>Volume on Key F2</label>
     <label xml:lang="it">Volume per Tasto F2</label>
-    <label xml:lang="de">Lautstärke von F2</label>
   </variable>
   <variable item="F2 Sound Loop" CV="518" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -77,7 +73,6 @@
     <decVal/>
     <label>Volume on Key F3</label>
     <label xml:lang="it">Volume per Tasto F3</label>
-    <label xml:lang="de">Lautstärke von F3</label>
   </variable>
   <variable item="F3 Sound Loop" CV="521" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -95,7 +90,6 @@
     <decVal/>
     <label>Volume on Key F4</label>
     <label xml:lang="it">Volume per Tasto F4</label>
-    <label xml:lang="de">Lautstärke von F4</label>
   </variable>
   <variable item="F4 Sound Loop" CV="524" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -113,7 +107,6 @@
     <decVal/>
     <label>Volume on Key F5</label>
     <label xml:lang="it">Volume per Tasto F5</label>
-    <label xml:lang="de">Lautstärke von F5</label>
   </variable>
   <variable item="F5 Sound Loop" CV="527" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -131,7 +124,6 @@
     <decVal/>
     <label>Volume on Key F6</label>
     <label xml:lang="it">Volume per Tasto F6</label>
-    <label xml:lang="de">Lautstärke von F6</label>
   </variable>
   <variable item="F6 Sound Loop" CV="530" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -149,7 +141,6 @@
     <decVal/>
     <label>Volume on Key F7</label>
     <label xml:lang="it">Volume per Tasto F7</label>
-    <label xml:lang="de">Lautstärke von F7</label>
   </variable>
   <variable item="F7 Sound Loop" CV="533" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -167,7 +158,6 @@
     <decVal/>
     <label>Volume on Key F8</label>
     <label xml:lang="it">Volume per Tasto F8</label>
-    <label xml:lang="de">Lautstärke von F8</label>
   </variable>
   <variable item="F8 Sound Loop" CV="536" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -185,7 +175,6 @@
     <decVal/>
     <label>Volume on Key F9</label>
     <label xml:lang="it">Volume per Tasto F9</label>
-    <label xml:lang="de">Lautstärke von F9</label>
   </variable>
   <variable item="F9 Sound Loop" CV="539" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -203,7 +192,6 @@
     <decVal/>
     <label>Volume on Key F10</label>
     <label xml:lang="it">Volume per Tasto F10</label>
-    <label xml:lang="de">Lautstärke von F10</label>
   </variable>
   <variable item="F10 Sound Loop" CV="542" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -221,7 +209,6 @@
     <decVal/>
     <label>Volume on Key F11</label>
     <label xml:lang="it">Volume per Tasto F11</label>
-    <label xml:lang="de">Lautstärke von F11</label>
   </variable>
   <variable item="F11 Sound Loop" CV="545" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -239,7 +226,6 @@
     <decVal/>
     <label>Volume on Key F12</label>
     <label xml:lang="it">Volume per Tasto F12</label>
-    <label xml:lang="de">Lautstärke von F12</label>
   </variable>
   <variable item="F12 Sound Loop" CV="548" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -257,7 +243,6 @@
     <decVal/>
     <label>Volume on Key F13</label>
     <label xml:lang="it">Volume per Tasto F13</label>
-    <label xml:lang="de">Lautstärke von F13</label>
   </variable>
   <variable item="F13 Sound Loop" CV="551" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -275,7 +260,6 @@
     <decVal/>
     <label>Volume on Key F14</label>
     <label xml:lang="it">Volume per Tasto F14</label>
-    <label xml:lang="de">Lautstärke von F14</label>
   </variable>
   <variable item="F14 Sound Loop" CV="554" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -293,7 +277,6 @@
     <decVal/>
     <label>Volume on Key F15</label>
     <label xml:lang="it">Volume per Tasto F15</label>
-    <label xml:lang="de">Lautstärke von F15</label>
   </variable>
   <variable item="F15 Sound Loop" CV="557" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -311,7 +294,6 @@
     <decVal/>
     <label>Volume on Key F16</label>
     <label xml:lang="it">Volume per Tasto F16</label>
-    <label xml:lang="de">Lautstärke von F16</label>
   </variable>
   <variable item="F16 Sound Loop" CV="560" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -329,7 +311,6 @@
     <decVal/>
     <label>Volume on Key F17</label>
     <label xml:lang="it">Volume per Tasto F17</label>
-    <label xml:lang="de">Lautstärke von F17</label>
   </variable>
   <variable item="F17 Sound Loop" CV="563" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -347,7 +328,6 @@
     <decVal/>
     <label>Volume on Key F18</label>
     <label xml:lang="it">Volume per Tasto F18</label>
-    <label xml:lang="de">Lautstärke von F18</label>
   </variable>
   <variable item="F18 Sound Loop" CV="566" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -365,7 +345,6 @@
     <decVal/>
     <label>Volume on Key F19</label>
     <label xml:lang="it">Volume per Tasto F19</label>
-    <label xml:lang="de">Lautstärke von F19</label>
   </variable>
   <variable item="F19 Sound Loop" CV="569" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -382,144 +361,120 @@
     <decVal/>
     <label>Boiling Sound</label>
     <label xml:lang="it">Suono Caldaia</label>
-    <label xml:lang="de">Siede-Geräusch</label>
   </variable>
   <variable CV="574" item="Zimo Sound Setting 31">
     <decVal/>
     <label>Boiling Sound</label>
     <label xml:lang="it">Suono Caldaia</label>
-    <label xml:lang="de">Siede-Geräusch</label>
   </variable>
   <variable CV="575" item="Change of Direction Sample">
     <decVal/>
     <label>Change of Direction</label>
     <label xml:lang="it">Cambio Direzione</label>
-    <label xml:lang="de">Richtungswechsel</label>
   </variable>
   <variable CV="576" item="Zimo Sound Setting 32">
     <decVal/>
     <label>Change of Direction</label>
     <label xml:lang="it">Cambio Direzione</label>
-    <label xml:lang="de">Richtungswechsel</label>
   </variable>
   <variable CV="577" item="Brake Squeal Sample">
     <decVal/>
     <label>Brake Squeal</label>
     <label xml:lang="it">Stridio Freni</label>
-    <label xml:lang="de">Bremsen-Quietschen</label>
   </variable>
   <variable CV="578" item="Zimo Sound Setting 33">
     <decVal/>
     <label>Brake Squeal</label>
     <label xml:lang="it">Stridio Freni</label>
-    <label xml:lang="de">Bremsen-Quietschen</label>
   </variable>
   <variable CV="579" item="Thyristor Sample">
     <decVal/>
     <label>Thyristor Noise (Electric)</label>
     <label xml:lang="it">Suono Tiristore (elettirco)</label>
-    <label xml:lang="de">Thyristor-Geräusch</label>
   </variable>
   <variable CV="580" item="Zimo Sound Setting 34">
     <decVal/>
     <label>Thyristor Noise (Electric)</label>
     <label xml:lang="it">Suono Tiristore (elettirco)</label>
-    <label xml:lang="de">Thyristor-Geräusch</label>
   </variable>
   <variable CV="581" item="Starting Whistle or Horn Sample">
     <decVal/>
     <label>Starting Whistle or Horn</label>
     <label xml:lang="it">Inizio Fiscio o tromba</label>
-    <label xml:lang="de">Anfahr-Pfiff/Horn</label>
   </variable>
   <variable CV="582" item="Zimo Sound Setting 35">
     <decVal/>
     <label>Starting Whistle or Horn</label>
     <label xml:lang="it">Inizio Fiscio o tromba</label>
-    <label xml:lang="de">Anfahr-Pfiff/Horn</label>
   </variable>
   <variable CV="583" item="Drain Valves Sample">
     <decVal/>
     <label>Drain Valves (Steam)</label>
     <label xml:lang="it">Valvola Spurgo (Vapore)</label>
-    <label xml:lang="de">Entwässerung“</label>
   </variable>
   <variable CV="584" item="Zimo Sound Setting 36">
     <decVal/>
     <label>Drain Valves (Steam)</label>
     <label xml:lang="it">Valvola Spurgo (Vapore)</label>
-    <label xml:lang="de">Entwässerung“</label>
   </variable>
   <variable CV="585" item="Electric Motor Sample">
     <decVal/>
     <label>Electric Motor (Electric)</label>
     <label xml:lang="it">Motore Elettrico</label>
-    <label xml:lang="de">Elektro-Motor</label>
   </variable>
   <variable CV="586" item="Zimo Sound Setting 37">
     <decVal/>
     <label>Electric Motor (Electric)</label>
     <label xml:lang="it">Motore Elettrico</label>
-    <label xml:lang="de">Elektro-Motor</label>
   </variable>
   <variable CV="587" item="Rolling Noise Sample">
     <decVal/>
     <label>Rolling Noise</label>
     <label xml:lang="it">Suono rotolamento</label>
-    <label xml:lang="de">Roll-Geräusche</label>
   </variable>
   <variable CV="588" item="Zimo Sound Setting 38">
     <decVal/>
     <label>Rolling Noise</label>
     <label xml:lang="it">Suono rotolamento</label>
-    <label xml:lang="de">Roll-Geräusche</label>
   </variable>
   <variable CV="589" item="Switchgear Sample">
     <decVal/>
     <label>Switchgear noise (Electric)</label>
     <label xml:lang="it">Suono Cambio (elettrico)</label>
-    <label xml:lang="de">Schaltwerks-Geräusch (Elektro)</label>
   </variable>
   <variable CV="590" item="Zimo Sound Setting 39">
     <decVal/>
     <label>Switchgear noise (Electric)</label>
     <label xml:lang="it">Suono Cambio (elettrico)</label>
-    <label xml:lang="de">Schaltwerks-Geräusch (Elektro)</label>
   </variable>
   <variable CV="591" item="Second Thyristor Sample">
     <decVal/>
     <label>Second Thyrister (Electric)</label>
     <label xml:lang="it">Secondo Tiristore (elettrico)</label>
-    <label xml:lang="de">Zweiter Thyristor (Elektro)</label>
   </variable>
   <variable CV="592" item="Zimo Sound Setting 40">
     <decVal/>
     <label>Second Thyrister (Electric)</label>
     <label xml:lang="it">Secondo Tiristore (elettrico)</label>
-    <label xml:lang="de">Zweiter Thyristor (Elektro)</label>
   </variable>
   <variable CV="599" item="Turbocharger Sample">
     <decVal/>
     <label>Turbocharger (Diesel)</label>
     <label xml:lang="it">Turbocompressore (Diesel)</label>
-    <label xml:lang="de">Turbolader (Diesel)</label>
   </variable>
   <variable CV="600" item="Zimo Sound Setting 41">
     <decVal/>
     <label>Turbocharger (Diesel)</label>
     <label xml:lang="it">Turbocompressore (Diesel)</label>
-    <label xml:lang="de">Turbolader (Diesel)</label>
   </variable>
   <variable CV="601" item="Dynamic Brake Sample">
     <decVal/>
     <label>Dynamic Brake (Electric)</label>
     <label xml:lang="it">Freni Dinamici (elettrico)</label>
-    <label xml:lang="de">Dynamische Bremse (Elektro)</label>
   </variable>
   <variable CV="602" item="Zimo Sound Setting 42">
     <decVal/>
     <label>Dynamic Brake (Electric)</label>
     <label xml:lang="it">Freni Dinamici (elettrico)</label>
-    <label xml:lang="de">Dynamische Bremse (Elektro)</label>
   </variable>
 </variables>

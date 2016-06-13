@@ -6,11 +6,9 @@
   <enumChoice choice="Negative Pulse">
    <choice>Negative Pulse</choice>
    <choice xml:lang="it">Impulso negativo</choice>
-   <choice xml:lang="de">negativer Impuls</choice>
   </enumChoice>
   <enumChoice choice="Positive Pulse">
    <choice>Positive Pulse</choice>
    <choice xml:lang="it">Impulso positivo</choice>
-   <choice xml:lang="de">poitiver Impuls</choice>
   </enumChoice>
 </enumVal>

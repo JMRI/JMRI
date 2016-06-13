@@ -31,7 +31,7 @@ import jmri.util.JmriJFrame;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.extensions.jfcunit.finder.AbstractButtonFinder;
 import junit.extensions.jfcunit.finder.DialogFinder;
-import org.junit.Assert;
+import junit.framework.Assert;
 
 /**
  * Common setup and tear down for operation tests.

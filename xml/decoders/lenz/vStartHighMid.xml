@@ -44,7 +44,7 @@
     <label>Start Volts (0-255)</label>
     <label xml:lang="it">Tensione di partenza (0-255)</label>
     <label xml:lang="fr">V démarr. (0-255)</label>
-    <label xml:lang="de">Anfahrspannung</label>
+    <label xml:lang="de">Anfahrspannung (0-255)</label>
     <comment>Range 0-255</comment>
     <comment xml:lang="it">Valori da 0 a 255</comment>
     <comment xml:lang="de">Wertebereich 0-255</comment>
@@ -53,7 +53,7 @@
     <decVal min="0" max="255"/>
     <label>Max Volts (0-255)</label>
     <label xml:lang="it">Tensione massima (0-255)</label>
-    <label xml:lang="de">Höchstgeschwindigkeit</label>
+    <label xml:lang="de">Vmax (0-255)</label>
     <comment>Sets the maximum voltage at full throttle</comment>
     <comment xml:lang="it">Stabilisce la tensione alla velocità massima</comment>
     <comment xml:lang="de">Legt die Höchstgeschwindigkeit fest</comment>
@@ -62,7 +62,7 @@
     <decVal min="0" max="255"/>
     <label>Vmid (0-255)</label>
     <label xml:lang="it">Tensione intermedia (0-255)</label>
-    <label xml:lang="de">Mittengeschwindigkeit</label>
+    <label xml:lang="de">Vmittel (0-255)</label>
     <comment>Range 0-255</comment>
     <comment xml:lang="it">Valori da 0 a 255</comment>
     <comment xml:lang="de">Wertebereich 0-255</comment>
