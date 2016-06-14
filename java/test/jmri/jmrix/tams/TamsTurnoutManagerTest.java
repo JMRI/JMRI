@@ -26,7 +26,7 @@ public class TamsTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     }
 
     public String getSystemName(int n) {
-        return "TM" + n;
+        return "TMT" + n;
     }
 
     public void testAsAbstractFactory() {
