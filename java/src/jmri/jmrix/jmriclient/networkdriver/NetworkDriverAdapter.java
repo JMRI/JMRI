@@ -1,4 +1,3 @@
-// NetworkDriverAdapter.java
 package jmri.jmrix.jmriclient.networkdriver;
 
 import java.util.ResourceBundle;
@@ -14,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * This connects a JMRI server (daemon) via a telnet connection.
  *
  * @author	Paul Bender Copyright (C) 2010
- * @version	$Revision$
  */
 public class NetworkDriverAdapter extends JMRIClientPortController {
 
@@ -51,17 +49,8 @@ public class NetworkDriverAdapter extends JMRIClientPortController {
     static public NetworkDriverAdapter instance() {
         log.error("Deprecated method instance Called");
         new java.lang.Exception().printStackTrace();
-        if (mInstance == null) {
-            // create a new one and initialize
-            NetworkDriverAdapter m = new NetworkDriverAdapter();
-            m.setManufacturer(jmri.jmrix.DCCManufacturerList.JMRI);
-
-            // and set as instance
-            mInstance = m;
-        }
-        return mInstance;
+        return null;
     }
-    static NetworkDriverAdapter mInstance = null;
 
     private boolean mDNSConfigure = false;
 

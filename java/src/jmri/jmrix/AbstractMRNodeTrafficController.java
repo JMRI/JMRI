@@ -1,4 +1,3 @@
-// AbstractMRNodeTrafficController.java
 package jmri.jmrix;
 
 import org.slf4j.Logger;
@@ -12,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * management services, but no additional protocol.
  *
  * @author jake Copyright 2008
- * @version $Revision$
  */
 public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficController {
 
@@ -80,6 +78,7 @@ public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficC
     /**
      * Public method to register a Serial node
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "VO_VOLATILE_INCREMENT", justification = "Method itself is synchronized to protect numNodes")
     public void registerNode(AbstractNode node) {
         synchronized (this) {
             // no validity checking because at this point the node may not be fully defined
@@ -124,6 +123,7 @@ public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficC
     /**
      * Public method to delete a Serial node by node address
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "VO_VOLATILE_INCREMENT", justification = "Method itself is synchronized to protect numNodes")
     public synchronized void deleteNode(int nodeAddress) {
         // find the serial node
         int index = 0;
@@ -134,6 +134,7 @@ public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficC
         }
         if (index == curSerialNodeIndex) {
             log.warn("Deleting the serial node active in the polling loop");
+            // just a warning, unlikely event and probably OK in any case.
         }
         // Delete the node from the node list
         numNodes--;

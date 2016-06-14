@@ -1,4 +1,3 @@
-// TripleOutputSignalHead.java
 package jmri.implementation;
 
 import jmri.NamedBeanHandle;
@@ -24,15 +23,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author Suzie Tall based on Bob Jacobsen's work
  * @author	Bob Jacobsen Copyright (C) 2003, 2008
- * @version	$Revision: 22821 $
  */
 public class TripleOutputSignalHead extends DoubleTurnoutSignalHead {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -356039905643728496L;
-
     public TripleOutputSignalHead(String sys, String user, NamedBeanHandle<Turnout> green, NamedBeanHandle<Turnout> blue, NamedBeanHandle<Turnout> red) {
         super(sys, user, green, red);
         mBlue = blue;
@@ -44,7 +36,7 @@ public class TripleOutputSignalHead extends DoubleTurnoutSignalHead {
     }
 
     @SuppressWarnings("fallthrough")
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SF_SWITCH_FALLTHROUGH")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     protected void updateOutput() {
         // assumes that writing a turnout to an existing state is cheap!
         if (mLit == false) {
@@ -144,12 +136,12 @@ public class TripleOutputSignalHead extends DoubleTurnoutSignalHead {
         Bundle.getMessage("SignalHeadStateFlashingGreen")
     };
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     public int[] getValidStates() {
         return validStates;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     public String[] getValidStateNames() {
         return validStateNames;
     }
@@ -166,5 +158,3 @@ public class TripleOutputSignalHead extends DoubleTurnoutSignalHead {
 
     private final static Logger log = LoggerFactory.getLogger(TripleOutputSignalHead.class.getName());
 }
-
-/* @(#)TripleOutputSignalHead.java */

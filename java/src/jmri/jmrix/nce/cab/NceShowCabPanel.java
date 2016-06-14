@@ -1,4 +1,40 @@
-// NceShowCabPanel.java
+package jmri.jmrix.nce.cab;
+
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.text.MessageFormat;
+import java.util.Calendar;
+import java.util.ResourceBundle;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+import jmri.jmrix.nce.NceBinaryCommand;
+import jmri.jmrix.nce.NceCmdStationMemory;
+import jmri.jmrix.nce.NceCmdStationMemory.CabMemorySerial;
+import jmri.jmrix.nce.NceCmdStationMemory.CabMemoryUsb;
+import jmri.jmrix.nce.NceMessage;
+import jmri.jmrix.nce.NceReply;
+import jmri.jmrix.nce.NceSystemConnectionMemo;
+import jmri.jmrix.nce.NceTrafficController;
+import jmri.util.table.ButtonEditor;
+import jmri.util.table.ButtonRenderer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Frame to display NCE cabs
  *
@@ -61,9 +97,9 @@
  *
  * ;lower nibble bit 0 =1 if setup advanced consist in process
  *
- * FLAGS2 EQU 93 ;bit 0 = \ ;bit 1 = >Number of recalls for this cab ;bit 2 = /
- * 1-6 valid ;bit 3 = 1=refresh LCD on ProCab ;bit 4 = Do not use ;bit 5 = Do
- * not use ;bit 6 = Do not use ;bit 7 = Do not use
+ * FLAGS2 EQU 93 ;bit 0 = \ ;bit 1 = {@literal >}Number of recalls for this cab
+ * ;bit 2 = / 1-6 valid ;bit 3 = 1=refresh LCD on ProCab ;bit 4 = Do not use
+ * ;bit 5 = Do not use ;bit 6 = Do not use ;bit 7 = Do not use
  *
  * FLAGS1 EQU 101 ;bit0 - 0 = type a or type C cab, 1 = type b or type d ;bit1 -
  * 0 = cab type not determined, 1 = it has ;bit2 - 0 = Do not use ;bit3 - 0 = Do
@@ -73,48 +109,8 @@
  *
  * @author Dan Boudreau Copyright (C) 2009, 2010
  * @author Ken Cameron Copyright (C) 2012, 2013
- * @version $Revision$
  */
-package jmri.jmrix.nce.cab;
-
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
-import java.text.MessageFormat;
-import java.util.Calendar;
-import java.util.ResourceBundle;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
-import jmri.jmrix.nce.NceBinaryCommand;
-import jmri.jmrix.nce.NceCmdStationMemory;
-import jmri.jmrix.nce.NceCmdStationMemory.CabMemorySerial;
-import jmri.jmrix.nce.NceCmdStationMemory.CabMemoryUsb;
-import jmri.jmrix.nce.NceMessage;
-import jmri.jmrix.nce.NceReply;
-import jmri.jmrix.nce.NceSystemConnectionMemo;
-import jmri.jmrix.nce.NceTrafficController;
-import jmri.util.table.ButtonEditor;
-import jmri.util.table.ButtonRenderer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jmri.jmrix.nce.NceListener {
-
-    private static final long serialVersionUID = -6257111644383267721L;
 
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.nce.cab.NceShowCabBundle");
 
@@ -1252,31 +1248,29 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     /**
      * Process for functions F0-F4
      *
-     * @param currCabId
-     * @param c
      */
     private void procFunctions0_4(int currCabId, int c) {
-        if ((c & NceCmdStationMemory.FUNC_L_F0) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_L_F0) != 0) {
             cabData[currCabId].F0 = true;
         } else {
             cabData[currCabId].F0 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_L_F1) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_L_F1) != 0) {
             cabData[currCabId].F1 = true;
         } else {
             cabData[currCabId].F1 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_L_F2) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_L_F2) != 0) {
             cabData[currCabId].F2 = true;
         } else {
             cabData[currCabId].F2 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_L_F3) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_L_F3) != 0) {
             cabData[currCabId].F3 = true;
         } else {
             cabData[currCabId].F3 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_L_F4) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_L_F4) != 0) {
             cabData[currCabId].F4 = true;
         } else {
             cabData[currCabId].F4 = false;
@@ -1286,46 +1280,44 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     /**
      * Process for functions 5 through 12
      *
-     * @param currCabId
-     * @param c
      */
     private void procFunctions5_12(int currCabId, int c) {
-        if ((c & NceCmdStationMemory.FUNC_H_F5) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F5) != 0) {
             cabData[currCabId].F5 = true;
         } else {
             cabData[currCabId].F5 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F6) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F6) != 0) {
             cabData[currCabId].F6 = true;
         } else {
             cabData[currCabId].F6 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F7) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F7) != 0) {
             cabData[currCabId].F7 = true;
         } else {
             cabData[currCabId].F7 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F8) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F8) != 0) {
             cabData[currCabId].F8 = true;
         } else {
             cabData[currCabId].F8 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F9) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F9) != 0) {
             cabData[currCabId].F9 = true;
         } else {
             cabData[currCabId].F9 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F10) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F10) != 0) {
             cabData[currCabId].F10 = true;
         } else {
             cabData[currCabId].F10 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F11) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F11) != 0) {
             cabData[currCabId].F11 = true;
         } else {
             cabData[currCabId].F11 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F12) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F12) != 0) {
             cabData[currCabId].F12 = true;
         } else {
             cabData[currCabId].F12 = false;
@@ -1335,46 +1327,44 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     /**
      * Process char for functions 13-20
      *
-     * @param currCabId
-     * @param c
      */
     private void procFunctions13_20(int currCabId, int c) {
-        if ((c & NceCmdStationMemory.FUNC_H_F13) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F13) != 0) {
             cabData[currCabId].F13 = true;
         } else {
             cabData[currCabId].F13 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F14) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F14) != 0) {
             cabData[currCabId].F14 = true;
         } else {
             cabData[currCabId].F14 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F15) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F15) != 0) {
             cabData[currCabId].F15 = true;
         } else {
             cabData[currCabId].F15 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F16) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F16) != 0) {
             cabData[currCabId].F16 = true;
         } else {
             cabData[currCabId].F16 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F17) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F17) != 0) {
             cabData[currCabId].F17 = true;
         } else {
             cabData[currCabId].F17 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F18) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F18) != 0) {
             cabData[currCabId].F18 = true;
         } else {
             cabData[currCabId].F18 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F19) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F19) != 0) {
             cabData[currCabId].F19 = true;
         } else {
             cabData[currCabId].F19 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F20) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F20) != 0) {
             cabData[currCabId].F20 = true;
         } else {
             cabData[currCabId].F20 = false;
@@ -1384,46 +1374,44 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     /**
      * Process char for functions 21-28
      *
-     * @param currCabId
-     * @param c
      */
     private void procFunctions21_28(int currCabId, int c) {
-        if ((c & NceCmdStationMemory.FUNC_H_F21) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F21) != 0) {
             cabData[currCabId].F21 = true;
         } else {
             cabData[currCabId].F21 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F22) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F22) != 0) {
             cabData[currCabId].F22 = true;
         } else {
             cabData[currCabId].F22 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F23) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F23) != 0) {
             cabData[currCabId].F23 = true;
         } else {
             cabData[currCabId].F23 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F24) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F24) != 0) {
             cabData[currCabId].F24 = true;
         } else {
             cabData[currCabId].F24 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F25) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F25) != 0) {
             cabData[currCabId].F25 = true;
         } else {
             cabData[currCabId].F25 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F26) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F26) != 0) {
             cabData[currCabId].F26 = true;
         } else {
             cabData[currCabId].F26 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F27) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F27) != 0) {
             cabData[currCabId].F27 = true;
         } else {
             cabData[currCabId].F27 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F28) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F28) != 0) {
             cabData[currCabId].F28 = true;
         } else {
             cabData[currCabId].F28 = false;
@@ -1536,7 +1524,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     int recChar = 0;
     int[] recChars = new int[16];
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "NN_NAKED_NOTIFY", justification = "Thread wait from main transfer loop")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NN_NAKED_NOTIFY", justification = "Thread wait from main transfer loop")
     public void reply(NceReply r) {
         if (log.isDebugEnabled()) {
             log.debug("Receive character");
@@ -1738,8 +1726,6 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     }
 
     class nceCabTableModel extends AbstractTableModel {
-
-        private static final long serialVersionUID = 4054769784378853752L;
 
         dataRow[] cabData;
 
@@ -2031,8 +2017,6 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.nce.swing.NceNamedPaneAction {
-
-        private static final long serialVersionUID = 1846279950671843214L;
 
         public Default() {
             super("Open NCE Cabs Monitor",

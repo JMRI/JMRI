@@ -4,7 +4,7 @@
  <title>
       JMRI: Preferences Pane
  </title>
-    <meta name="Author" content="Bob Jacobsen">
+    <meta name="author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI help preferences">
 
 <!-- Style -->
@@ -28,8 +28,8 @@ configure the basic operation of your JMRI application.
 <p>
 The screen is split into two sections: on the left hand side is a list of the Preference groups that can be set. 
 Clicking on each item will then populate the right hand side with the various options that can be configured for that Tab.
-<a href="../../manual/DecoderPro/images/Preferences.png">
-<img src="../../manual/DecoderPro/images/Preferences.png" height="156" width="256" align="right"></a>
+<a href="../../html/setup/images/PrefsConnections_en.png">
+<img src="../../html/setup/images/PrefsConnections_en.png" height="195" width="425" align="right"></a>
 <p>
 <a href="#Connection">Connections</a><br>
 <a href="#Defaults">Defaults</a><br>
@@ -43,8 +43,11 @@ Clicking on each item will then populate the right hand side with the various op
 <img src="images/JMRIPrefsChanges.png" height="112" width="250" align="right" alt="Save? dialog"></a>
 <a href="#WiThrottle">WiThrottle</a><br>
 <a href="#Profiles">Config Profiles</a><br>
+<a href="#RailroadName">Railroad Name</a><br>
 <a href="#JSONServer">JSON Server</a><br>
 <a href="#WebServer">Web Server</a><br>
+<a href="#SRCP Server">SRCP Server</a><br>
+<a href="#Simple Server">Simple Server</a><br>
 <a href="#Warrants">Warrants</a><br>
 <p>Perhaps the most important control is at the bottom of this section:
 The <strong>Save</strong> button!  
@@ -198,8 +201,7 @@ It will also allow you to configure a default responses and the question being d
 <dt>Programmer
 <dd>The DecoderPro programmer allows you to select how much or how little
 to display of the decoder content using configurable "Programmers". You 
-can select one at the same time you 
-<a href="../../manual/Basic_Programming.shtml">select your locomotive decoder</a>,
+can choose the Basic or Comprehensive interface when <a href="../../html/apps/DecoderPro/Roster.shtml">choosing your Locomotive decoder</a>,
 but this provides a convenient place to set a default so you don't
 have to select it each time you open a decoder.
 
@@ -246,7 +248,7 @@ features are available, and which ones can be used.
 
 <dd>If selected,
 listens for a packet to be sent from the connected mobile device.
-If the server does not receive any communication in the
+If WiThrottle Server does not receive any communication in the
 chosen time, the affected JMRI throttle will idle its train.
 
 <p>
@@ -255,11 +257,12 @@ earlier or later.
 
 <dt>Network
 
-<dd>Change the port number to use. Ensure your firewall software allows this port to be used.
+<dd>Change the port number to use. Ensure your firewall software allows this port to be used.<br>
+Only change the Port Number after stopping WiThrottle Server if there is a chance mobile devices are still connected.
 
 <dt>Allowed Controls
 
-<dd>Check boxes to allow specific features to be controlled by mobile devices.
+<dd>Check these boxes to allow specific features to be controlled by mobile devices.
 This will let you to limit what users have the ability to control.
 <ul>
     <li>Track Power - Select whether mobile devices connected through
@@ -275,9 +278,8 @@ This will let you to limit what users have the ability to control.
 </ul>
 </dl>
 
-The "Apply" button puts the current settings into effect, without
-saving them permanently.  For a connected throttle to use the
-new settings, its connection must be closed and reopened.
+The "Save" button at lower left puts any changed settings into effect. For a connected <a href="../jmri/jmrit/withrottle/UserInterface.shtml">throttle</a> to use the
+new settings, you'll have to restart JMRI (and then restart WiThrottle) as instructed by the dialog.
 
 <a name="Profiles">
 <h2>Config Profiles</h2></a>
@@ -285,22 +287,26 @@ new settings, its connection must be closed and reopened.
 JMRI Configuration Profiles make it easy to set up your 
 JMRI applications to work with different setups.  Each profile
 specifies one set of Preferences.  You can then select which one to use.
-
 <p>
 For more information, see the 
 <a href="../../html/setup/profiles.shtml">Configuration Profiles</a> help
 page.
 
+<a name="RailroadName">
+<h2>Railroad Name</h2></a>
+<p>
+The Railroad Name tab lets you specify the name of your model railroad (module), as it is used by several server protocols.</p>
+
 <a name="JSONServer">
 <h2>JSON Server</h2></a>
-
-The JMRI JSON server is used by applications on other computers, 
+<p>
+The JMRI <a href="../../html/web/JsonServlet.shtml">JSON server</a> is used by applications on other computers,
 including tablets and phones, to connect to JMRI to operate your 
-railroad.
+railroad.</p>
 <p>
 On this pane you can specify the port for the connection (usually left at default)
 and how often the server checks for whether the connection has failed via a heartbeat
-message. 
+message.</p>
 
 <a name="WebServer">
 <h2>Web Server</h2></a>
@@ -312,11 +318,27 @@ and work with your railroad.
 This tab lets you control what the web server provides.
 For more information, see the 
 <a href="../../html/web/index.shtml#Configure">Web Server Preferences pane</a> page.
+
+<a name="SRCP Server">
+<h2>SRCP Server</h2></a>
 <p>
+The JMRI <a href="../../html/hardware/SRCP/index.shtml">SRCP server</a> is a standard way of connecting "client" user programs to a "server".</p>
+<p>
+On this pane you can specify the port for the connection (usually left at default).
+</p>
+
+<a name="Simple Server">
+<h2>Simple Server</h2></a>
+<p>
+JMRI Simple Server is part of <a href="../../html/hardware/jmriclient/index.shtml">JMRIClient</a>, a method to remotely connecting one JMRI program to another.</p>
+<p>
+On this pane you can specify the port for the connection (usually left at default).
+</p>
+
 <a name="Warrants">
 <h2>Warrants</h2></a>
 
-This tab sets parameters used in computing routes for Warrants and for
+This tab sets parameters used in computing routes for <a href="../../package/jmri/jmrit/logix/Warrant.shtml">Warrants</a> and for
 controlling the events that warranted trains may encounter.
 
 <h3>Speed Map</h3>

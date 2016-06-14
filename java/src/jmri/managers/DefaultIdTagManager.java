@@ -1,8 +1,8 @@
-// DefaultIdTagManager.java
 package jmri.managers;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,6 +17,7 @@ import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.jdom2.JDOMException;
 import org.jdom2.ProcessingInstruction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,16 +27,15 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  * @since 2.11.4
  */
 public class DefaultIdTagManager extends AbstractManager
         implements IdTagManager {
 
-    private static boolean _initialised = false;
-    private static boolean _loading = false;
-    private static boolean _storeState = false;
-    private static boolean _useFastClock = false;
+    private static boolean initialised = false;
+    private static boolean loading = false;
+    private static boolean storeState = false;
+    private static boolean useFastClock = false;
 
     public DefaultIdTagManager() {
         super();
@@ -48,18 +48,18 @@ public class DefaultIdTagManager extends AbstractManager
 
     @Override
     public boolean isInitialised() {
-        return _initialised;
+        return initialised;
     }
 
     @Override
     public void init() {
         log.debug("init called");
-        if (!_initialised && !_loading) {
+        if (!initialised && !loading) {
             log.debug("Initialising");
             // Load when created
-            _loading = true;
+            loading = true;
             IdTagManagerXml.instance().load();
-            _loading = false;
+            loading = false;
 
             // Create shutdown task to save
             log.debug("Register ShutDown task");
@@ -80,7 +80,7 @@ public class DefaultIdTagManager extends AbstractManager
                             return true;
                         }
                     });
-            _initialised = true;
+            initialised = true;
         }
     }
 
@@ -103,7 +103,7 @@ public class DefaultIdTagManager extends AbstractManager
 
     @Override
     public IdTag provideIdTag(String name) {
-        if (!_initialised && !_loading) {
+        if (!initialised && !loading) {
             init();
         }
         IdTag t = getIdTag(name);
@@ -119,7 +119,7 @@ public class DefaultIdTagManager extends AbstractManager
 
     @Override
     public IdTag getIdTag(String name) {
-        if (!_initialised && !_loading) {
+        if (!initialised && !loading) {
             init();
         }
 
@@ -138,7 +138,7 @@ public class DefaultIdTagManager extends AbstractManager
 
     @Override
     public IdTag getBySystemName(String name) {
-        if (!_initialised && !_loading) {
+        if (!initialised && !loading) {
             init();
         }
         return (IdTag) _tsys.get(name);
@@ -146,7 +146,7 @@ public class DefaultIdTagManager extends AbstractManager
 
     @Override
     public IdTag getByUserName(String key) {
-        if (!_initialised && !_loading) {
+        if (!initialised && !loading) {
             init();
         }
         return (IdTag) _tuser.get(key);
@@ -154,7 +154,7 @@ public class DefaultIdTagManager extends AbstractManager
 
     @Override
     public IdTag getByTagID(String tagID) {
-        if (!_initialised && !_loading) {
+        if (!initialised && !loading) {
             init();
         }
         return getBySystemName(makeSystemName(tagID));
@@ -172,7 +172,7 @@ public class DefaultIdTagManager extends AbstractManager
 
     @Override
     public IdTag newIdTag(String systemName, String userName) {
-        if (!_initialised && !_loading) {
+        if (!initialised && !loading) {
             init();
         }
         if (log.isDebugEnabled()) {
@@ -243,33 +243,33 @@ public class DefaultIdTagManager extends AbstractManager
 
     @Override
     public void setStateStored(boolean state) {
-        if (state != _storeState) {
+        if (state != storeState) {
             IdTagManagerXml.instance().setDirty(true);
         }
-        _storeState = state;
+        storeState = state;
     }
 
     @Override
     public boolean isStateStored() {
-        return _storeState;
+        return storeState;
     }
 
     @Override
     public void setFastClockUsed(boolean fastClock) {
-        if (fastClock != _useFastClock) {
+        if (fastClock != useFastClock) {
             IdTagManagerXml.instance().setDirty(true);
         }
-        _useFastClock = fastClock;
+        useFastClock = fastClock;
     }
 
     @Override
     public boolean isFastClockUsed() {
-        return _useFastClock;
+        return useFastClock;
     }
 
     @Override
     public List<IdTag> getTagsForReporter(Reporter reporter, long threshold) {
-        List<IdTag> out = new ArrayList<IdTag>();
+        List<IdTag> out = new ArrayList<>();
         Date lastWhenLastSeen = new Date(0);
 
         // First create a list of all tags seen by specified reporter
@@ -308,47 +308,47 @@ public class DefaultIdTagManager extends AbstractManager
         /**
          * Record the single instance
          */
-        private static IdTagManagerXml _instance = null;
+        private static IdTagManagerXml instance = null;
 
-        private static boolean _loaded = false;
+        private static boolean loaded = false;
 
-        private boolean _dirty = false;
+        private boolean dirty = false;
 
         public static synchronized IdTagManagerXml instance() {
-            if (_instance == null) {
+            if (instance == null) {
                 if (log.isDebugEnabled()) {
                     log.debug("IdTagManagerXml creating instance");
                 }
 
                 // Create instance and load
-                _instance = new IdTagManagerXml();
-                _instance.load();
+                instance = new IdTagManagerXml();
+                instance.load();
             }
-            return _instance;
+            return instance;
         }
 
         public synchronized void setDirty(boolean dirty) {
-            _dirty = dirty;
+            this.dirty = dirty;
             if (log.isDebugEnabled()) {
-                log.debug("Set dirty to " + (_dirty ? "True" : "False"));
+                log.debug("Set dirty to " + (this.dirty ? "True" : "False"));
             }
         }
 
         protected void load() {
-            if (!_loaded) {
+            if (!loaded) {
                 log.debug("Loading...");
                 try {
                     readFile(getDefaultIdTagFileName());
-                    _loaded = true;
+                    loaded = true;
                     setDirty(false);
-                } catch (Exception ex) {
+                } catch (JDOMException | IOException ex) {
                     log.error("Exception during IdTag file reading: " + ex);
                 }
             }
         }
 
         protected void store() throws java.io.IOException {
-            if (_dirty) {
+            if (dirty) {
                 log.debug("Storing...");
                 log.debug("Using file: " + getDefaultIdTagFileName());
                 createFile(getDefaultIdTagFileName(), true);
@@ -408,7 +408,7 @@ public class DefaultIdTagManager extends AbstractManager
             Document doc = newDocument(root);
 
             // add XSLT processing instruction
-            java.util.Map<String, String> m = new java.util.HashMap<String, String>();
+            java.util.Map<String, String> m = new java.util.HashMap<>();
             m.put("type", "text/xsl");                                                // NOI18N
             m.put("href", xsltLocation + "idtags.xsl");                                 // NOI18N
             ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m); // NOI18N
@@ -419,7 +419,7 @@ public class DefaultIdTagManager extends AbstractManager
             Element values;
 
             // Store configuration
-            root.addContent(values = new Element("configuration"));                                          // NOI18N
+            root.addContent(values = new Element("configuration"));                                              // NOI18N
             values.addContent(new Element("storeState").addContent(manager.isStateStored() ? "yes" : "no"));     // NOI18N
             values.addContent(new Element("useFastClock").addContent(manager.isFastClockUsed() ? "yes" : "no")); // NOI18N
 
@@ -465,10 +465,10 @@ public class DefaultIdTagManager extends AbstractManager
                         log.debug("Configuration " + e.getName() + " value " + e.getValue());
                     }
                     if (e.getName().equals("storeState")) { // NOI18N
-                        manager.setStateStored(e.getValue().equals("yes") ? true : false); // NOI18N
+                        manager.setStateStored(e.getValue().equals("yes")); // NOI18N
                     }
                     if (e.getName().equals("useFastClock")) { // NOI18N
-                        manager.setFastClockUsed(e.getValue().equals("yes") ? true : false); // NOI18N
+                        manager.setFastClockUsed(e.getValue().equals("yes")); // NOI18N
                     }
                 }
             }
@@ -493,16 +493,16 @@ public class DefaultIdTagManager extends AbstractManager
             return getFileLocation() + getIdTagDirectoryName() + File.separator + getIdTagFileName();
         }
 
-        private static String idTagDirectoryName = "idtags"; // NOI18N
+        private static final String IDTAG_DIRECTORY_NAME = "idtags"; // NOI18N
 
         public String getIdTagDirectoryName() {
-            return idTagDirectoryName;
+            return IDTAG_DIRECTORY_NAME;
         }
 
-        private String idTagBaseFileName = "IdTags.xml"; // NOI18N
+        private static final String IDTAG_BASE_FILENAME = "IdTags.xml"; // NOI18N
 
         public String getIdTagFileName() {
-            return Application.getApplicationName() + idTagBaseFileName;
+            return Application.getApplicationName() + IDTAG_BASE_FILENAME;
         }
 
         /**
@@ -511,15 +511,16 @@ public class DefaultIdTagManager extends AbstractManager
          * @return path to location
          */
         public static String getFileLocation() {
-            return fileLocation;
+            return FILE_LOCATION;
         }
 
-        private static String fileLocation = FileUtil.getUserFilesPath();
+        private static final String FILE_LOCATION = FileUtil.getUserFilesPath();
 
         private static final Logger log = LoggerFactory.getLogger(DefaultIdTagManager.IdTagManagerXml.class.getName());
 
     }
 
+    @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameReporter");
     }
@@ -527,5 +528,3 @@ public class DefaultIdTagManager extends AbstractManager
     private static final Logger log = LoggerFactory.getLogger(DefaultIdTagManager.class.getName());
 
 }
-
-/* @(#)DefaultIdTagManager.java */

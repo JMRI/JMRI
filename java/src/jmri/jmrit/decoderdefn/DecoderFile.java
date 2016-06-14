@@ -106,7 +106,6 @@ public class DecoderFile extends XmlFile {
     /**
      * Test for correct decoder version number
      *
-     * @param i
      * @return true if decoder version matches id
      */
     public boolean isVersion(int i) {
@@ -117,7 +116,7 @@ public class DecoderFile extends XmlFile {
      * return array of versions
      *
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     public boolean[] getVersions() {
         return (versions);
     }
@@ -498,7 +497,7 @@ public class DecoderFile extends XmlFile {
         return model + " (" + family + ")";
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "MS_SHOULD_BE_FINAL") // script access
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // script access
     static public String fileLocation = "decoders" + File.separator;
 
     // initialize logging

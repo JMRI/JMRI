@@ -35,7 +35,7 @@ To use these xml files you need to download and install them.
 <p>
 The installation process was simplified in JMRI 2.3.6, where 
 "Import Decoder File" and "Import Decoder URL"
-menu items were added to the Debug menu.
+menu items were added to the Debug menu (in PanelPro or "legacy" DecoderPro) and to the File menu (in DecoderPro "Roster view").
 
 <a name="after236">
 <h2>JMRI v 2.3.6 and later</h2>
@@ -50,7 +50,7 @@ you can directly install the definition.
 
 	<ul>
 	<li>Copy the URL address from your mail etc.
-	<li>Select the "Import Decoder URL" item from the "Debug" menu.
+	<li>Select the "Import Decoder URL" item from the "Debug" menu (in PanelPro or "legacy" DecoderPro) or from the File menu (in DecoderPro "Roster view").
 	<li>You'll be prompted for the URL. Enter it, or paste it in and click OK.
 	</ul>
 
@@ -64,7 +64,7 @@ a web page or received via email,
 you can install that definition in JMRI.
 
 	<ul>
-	<li>Select the "Import Decoder File" item from the "Debug" menu.
+	<li>Select the "Import Decoder File" item from the "Debug" menu (in PanelPro or "legacy" DecoderPro) or from the File menu (in DecoderPro "Roster view").
 	<li>You'll be shown a file selection dialog. 
 	<li>If the file doesn't have a ".xml" extension, you may have to select the "show all files"
 	filter at the bottom of the dialog.

@@ -1,4 +1,3 @@
-// SystemConsole.java
 package apps;
 
 import java.awt.BorderLayout;
@@ -54,14 +53,8 @@ import org.slf4j.LoggerFactory;
  * <p>
  *
  * @author Matthew Harris copyright (c) 2010, 2011, 2012
- * @version $Revision$
  */
 public final class SystemConsole extends JTextArea {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1807853160696208390L;
 
     static final ResourceBundle rbc = ResourceBundle.getBundle("apps.AppsConfigBundle"); // NOI18N
 
@@ -129,7 +122,7 @@ public final class SystemConsole extends JTextArea {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "DM_DEFAULT_ENCODING",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DM_DEFAULT_ENCODING",
             justification = "Can only be called from the same instance so default encoding OK")
     private SystemConsole() {
         // Record current System.out and System.err
@@ -408,7 +401,7 @@ public final class SystemConsole extends JTextArea {
             }
 
             @Override
-            @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "DM_DEFAULT_ENCODING",
+            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DM_DEFAULT_ENCODING",
                     justification = "Can only be called from the same instance so default encoding OK")
             public void write(byte[] b, int off, int len) throws IOException {
                 updateTextArea(new String(b, off, len), which);
@@ -424,7 +417,7 @@ public final class SystemConsole extends JTextArea {
     /**
      * Method to redirect the system streams to the console
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "DM_DEFAULT_ENCODING",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DM_DEFAULT_ENCODING",
             justification = "Can only be called from the same instance so default encoding OK")
     private void redirectSystemStreams() {
         System.setOut(this.getOutputStream());
@@ -655,5 +648,3 @@ public final class SystemConsole extends JTextArea {
     private static final Logger log = LoggerFactory.getLogger(SystemConsole.class.getName());
 
 }
-
-/* @(#)SystemConsole.java */

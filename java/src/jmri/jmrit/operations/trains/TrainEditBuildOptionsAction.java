@@ -13,11 +13,6 @@ import javax.swing.AbstractAction;
  */
 public class TrainEditBuildOptionsAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5533217709531560265L;
-
     public TrainEditBuildOptionsAction(String s, TrainEditFrame frame) {
         super(s);
         this.frame = frame;
@@ -27,6 +22,7 @@ public class TrainEditBuildOptionsAction extends AbstractAction {
 
     TrainEditBuildOptionsFrame f = null;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a train edit option frame
         if (f != null && f.isVisible()) {

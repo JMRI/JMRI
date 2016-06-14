@@ -111,7 +111,6 @@ public class MultiSensorIconAdder extends IconAdder {
     /**
      * Only called from MultiSensorIcon popup
      *
-     * @param icons
      */
     void setMultiIcon(List<MultiSensorIcon.Entry> icons) {
         for (int i = 0; i < icons.size(); i++) {
@@ -130,7 +129,6 @@ public class MultiSensorIconAdder extends IconAdder {
      * Override. First look for a table selection to set the sensor. If not,
      * then look to change the icon image (super).
      */
-    @SuppressWarnings("null")
     protected void doIconPanel() {
         if (log.isDebugEnabled()) {
             log.debug("doIconPanel: Sizes: _iconMap= " + _iconMap.size()

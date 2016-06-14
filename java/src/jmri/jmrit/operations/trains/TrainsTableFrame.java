@@ -33,6 +33,20 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OptionAction;
 import jmri.jmrit.operations.setup.PrintOptionAction;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.excel.SetupExcelProgramFrameAction;
+import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
+import jmri.jmrit.operations.trains.timetable.TrainSchedule;
+import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
+import jmri.jmrit.operations.trains.timetable.TrainsScheduleAction;
+import jmri.jmrit.operations.trains.tools.ChangeDepartureTimesAction;
+import jmri.jmrit.operations.trains.tools.ExportTrainRosterAction;
+import jmri.jmrit.operations.trains.tools.PrintSavedTrainManifestAction;
+import jmri.jmrit.operations.trains.tools.PrintTrainsAction;
+import jmri.jmrit.operations.trains.tools.TrainByCarTypeAction;
+import jmri.jmrit.operations.trains.tools.TrainCopyAction;
+import jmri.jmrit.operations.trains.tools.TrainsByCarTypeAction;
+import jmri.jmrit.operations.trains.tools.TrainsScriptAction;
+import jmri.jmrit.operations.trains.tools.TrainsTableSetColorAction;
 import jmri.util.com.sun.TableSorter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,10 +61,6 @@ import org.slf4j.LoggerFactory;
  */
 public class TrainsTableFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4237149773850338265L;
     public static final String MOVE = Bundle.getMessage("Move");
     public static final String TERMINATE = Bundle.getMessage("Terminate");
     public static final String RESET = Bundle.getMessage("Reset");
@@ -97,7 +107,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     JCheckBox printPreviewBox = new JCheckBox(Bundle.getMessage("Preview"));
     JCheckBox openFileBox = new JCheckBox(Bundle.getMessage("OpenFile"));
     JCheckBox runFileBox = new JCheckBox(Bundle.getMessage("RunFile"));
-    JCheckBox showAllBox = new JCheckBox(Bundle.getMessage("ShowAllTrains"));
+    public JCheckBox showAllBox = new JCheckBox(Bundle.getMessage("ShowAllTrains"));
 
     public TrainsTableFrame() {
         super();
@@ -274,8 +284,8 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         toolMenu.add(new AutomationsTableFrameAction());
         toolMenu.add(new TrainCopyAction(Bundle.getMessage("TitleTrainCopy")));
         toolMenu.add(new TrainsScriptAction(Bundle.getMessage("MenuItemScripts"), this));
-        toolMenu.add(new PrintSavedTrainManifestAction(Bundle.getMessage("MenuItemPrintSavedManifest"), false));
-        toolMenu.add(new PrintSavedTrainManifestAction(Bundle.getMessage("MenuItemPreviewSavedManifest"), true));
+        toolMenu.add(new PrintSavedTrainManifestAction(Bundle.getMessage("MenuItemPrintSavedManifest"), false, null));
+        toolMenu.add(new PrintSavedTrainManifestAction(Bundle.getMessage("MenuItemPreviewSavedManifest"), true, null));
         toolMenu.add(new SetupExcelProgramFrameAction(Bundle.getMessage("MenuItemSetupExcelProgram")));
         toolMenu.add(new ExportTrainRosterAction());
         toolMenu.add(new PrintTrainsAction(Bundle.getMessage("MenuItemPrint"), new Frame(), false, this));
@@ -302,6 +312,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         new AutoSave();
     }
 
+    @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("radio button activated");
         if (ae.getSource() == showId) {
@@ -327,6 +338,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     TrainSwitchListEditFrame tslef;
 
     // add, build, print, switch lists, terminate, and save buttons
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         // log.debug("train button activated");
         if (ae.getSource() == addButton) {
@@ -347,12 +359,8 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
                     if (!train.isBuilt() && trainManager.isBuildMessagesEnabled()) {
                         JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
                                 .getMessage("NeedToBuildBeforeOpenFile"), new Object[]{
-                                    train.getName(),
-                                    (trainManager.isPrintPreviewEnabled() ? Bundle.getMessage("preview") : Bundle
-                                            .getMessage("print"))}), MessageFormat.format(Bundle
-                                        .getMessage("CanNotPrintManifest"),
-                                        new Object[]{trainManager.isPrintPreviewEnabled() ? Bundle.getMessage("preview")
-                                                    : Bundle.getMessage("print")}), JOptionPane.ERROR_MESSAGE);
+                                        train.getName()}),
+                                Bundle.getMessage("Error"), JOptionPane.ERROR_MESSAGE);
                     } else if (train.isBuilt()) {
                         train.openFile();
                     }
@@ -376,12 +384,8 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
                     if (!train.isBuilt() && trainManager.isBuildMessagesEnabled()) {
                         JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
                                 .getMessage("NeedToBuildBeforeRunFile"), new Object[]{
-                                    train.getName(),
-                                    (trainManager.isPrintPreviewEnabled() ? Bundle.getMessage("preview") : Bundle
-                                            .getMessage("print"))}), MessageFormat.format(Bundle
-                                        .getMessage("CanNotPrintManifest"),
-                                        new Object[]{trainManager.isPrintPreviewEnabled() ? Bundle.getMessage("preview")
-                                                    : Bundle.getMessage("print")}), JOptionPane.ERROR_MESSAGE);
+                                        train.getName()}),
+                                Bundle.getMessage("Error"), JOptionPane.ERROR_MESSAGE);
                     } else if (train.isBuilt()) {
                         // Make sure our csv manifest file exists for this Train.
                         File csvFile = train.createCSVManifestFile();
@@ -472,6 +476,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         conductorRB.setSelected(trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.CONDUCTOR));
     }
 
+    @Override
     public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == buildMsgBox) {
             trainManager.setBuildMessagesEnabled(buildMsgBox.isSelected());
@@ -541,21 +546,22 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         }
     }
 
+    @Override
     public void dispose() {
-        /*
-         * all JMRI window position and size are now saved in user preference file
-         * trainManager.setTrainsFrameTableColumnWidths(getCurrentTableColumnWidths()); // save column widths
-         * trainManager.setTrainsFrame(null);
-         */
         trainsModel.dispose();
         trainManager.runShutDownScripts();
         trainManager.removePropertyChangeListener(this);
         Setup.removePropertyChangeListener(this);
         removePropertyChangeLocations();
+        setModifiedFlag(false);
         super.dispose();
     }
 
+    @Override
     protected void handleModified() {
+        if (!getModifiedFlag()) {
+            return;
+        }
         if (Setup.isAutoSaveEnabled()) {
             storeValues();
             return;
@@ -575,13 +581,15 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         }
     }
 
+    @Override
     protected void storeValues() {
         super.storeValues();
         saveTableDetails(trainsTable);
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }

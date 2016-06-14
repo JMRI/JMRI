@@ -1,4 +1,3 @@
-//JsonMemoryServer.java
 package jmri.jmris.json;
 
 import static jmri.jmris.json.JSON.MEMORY;
@@ -13,6 +12,7 @@ import java.util.Locale;
 import jmri.JmriException;
 import jmri.jmris.AbstractMemoryServer;
 import jmri.jmris.JmriConnection;
+import jmri.server.json.JsonException;
 
 /**
  * JSON server interface between the JMRI Memory manager and a network
@@ -25,7 +25,6 @@ import jmri.jmris.JmriConnection;
  *
  * @author mstevetodd Copyright (C) 2012 (copied from JsonSensorServer)
  * @author Randall Wood Copyright (C) 2013
- * @version $Revision: $
  */
 public class JsonMemoryServer extends AbstractMemoryServer {
 

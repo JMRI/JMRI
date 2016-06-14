@@ -1,4 +1,3 @@
-// AbstractCatalogTree.java
 package jmri.jmrit.catalog;
 
 import java.beans.PropertyChangeListener;
@@ -20,21 +19,9 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractCatalogTree extends DefaultTreeModel implements CatalogTree {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6839273293799611575L;
     private String mUserName;
     private String mSystemName;
 
-    // private AbstractCatalogTree() {
-    //      super(new CatalogTreeNode("BAD Ctor!"));
-    //      mSystemName = null;
-    //      mUserName = null;
-    //      log.warn("Unexpected use of null ctor");
-    //      Exception e = new Exception();
-    //      e.printStackTrace();
-    //  }
     public AbstractCatalogTree(String sysname, String username) {
         super(new CatalogTreeNode(username));
         mUserName = username;
@@ -67,12 +54,20 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
      * @param pathToRoot Path to Directory to be scanned
      */
     public void insertNodes(String pathToRoot) {
-        CatalogTreeNode root = (CatalogTreeNode) getRoot();
+        CatalogTreeNode root = getRoot();
         if (log.isDebugEnabled()) {
             log.debug("insertNodes: rootName= " + root.getUserObject()
                     + ", pathToRoot= " + pathToRoot);
         }
         insertNodes((String) root.getUserObject(), pathToRoot, root);
+    }
+
+    /**
+     * Get the root element of the tree as a jmri.CatalogTreeNode object.
+     * (Instead of Object, as parent swing.TreeModel provides)
+     */
+    public CatalogTreeNode getRoot() {
+        return (CatalogTreeNode) super.getRoot();
     }
 
     /**
@@ -144,10 +139,10 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
         return pcs.getPropertyChangeListeners().length;
     }
 
-    Hashtable<java.beans.PropertyChangeListener, String> register = new Hashtable<java.beans.PropertyChangeListener, String>();
-    Hashtable<java.beans.PropertyChangeListener, String> listenerRefs = new Hashtable<java.beans.PropertyChangeListener, String>();
+    Hashtable<java.beans.PropertyChangeListener, String> register = new Hashtable<>();
+    Hashtable<java.beans.PropertyChangeListener, String> listenerRefs = new Hashtable<>();
 
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l, String beanRef, String listenerRef) {
+    public synchronized void addPropertyChangeListener(PropertyChangeListener l, String beanRef, String listenerRef) {
         pcs.addPropertyChangeListener(l);
         if (beanRef != null) {
             register.put(l, beanRef);
@@ -157,31 +152,31 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
         }
     }
 
-    public synchronized ArrayList<java.beans.PropertyChangeListener> getPropertyChangeListeners(String name) {
-        ArrayList<java.beans.PropertyChangeListener> list = new ArrayList<java.beans.PropertyChangeListener>();
-        Enumeration<java.beans.PropertyChangeListener> en = register.keys();
+    public synchronized PropertyChangeListener[] getPropertyChangeListenersByReference(String name) {
+        ArrayList<PropertyChangeListener> list = new ArrayList<>();
+        Enumeration<PropertyChangeListener> en = register.keys();
         while (en.hasMoreElements()) {
-            java.beans.PropertyChangeListener l = en.nextElement();
+            PropertyChangeListener l = en.nextElement();
             if (register.get(l).equals(name)) {
                 list.add(l);
             }
         }
-        return list;
+        return list.toArray(new PropertyChangeListener[list.size()]);
     }
 
     /* This allows a meaning full list of places where the bean is in use!*/
     public synchronized ArrayList<String> getListenerRefs() {
-        ArrayList<String> list = new ArrayList<String>();
-        Enumeration<java.beans.PropertyChangeListener> en = listenerRefs.keys();
+        ArrayList<String> list = new ArrayList<>();
+        Enumeration<PropertyChangeListener> en = listenerRefs.keys();
         while (en.hasMoreElements()) {
-            java.beans.PropertyChangeListener l = en.nextElement();
+            PropertyChangeListener l = en.nextElement();
             list.add(listenerRefs.get(l));
         }
         return list;
     }
 
-    public synchronized void updateListenerRef(java.beans.PropertyChangeListener l, String newName) {
-        if (listenerRefs.contains(l)) {
+    public synchronized void updateListenerRef(PropertyChangeListener l, String newName) {
+        if (listenerRefs.containsKey(l)) {
             listenerRefs.put(l, newName);
         }
     }

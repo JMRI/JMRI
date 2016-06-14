@@ -1,9 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<title>JMRI: Panel Help</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<meta name="Author" content="Pete Cressman">
+<title>JMRI: Warrants Help</title>
+<meta name="author" content="Pete Cressman">
 <meta name="keywords" content="JMRI Warrant Help">
 
 <!-- Style -->
@@ -45,7 +44,7 @@ related to warrants there, that you may wish to change later, but the defaults a
 generally sufficient without change.  See <a href=
 "../../../apps/TabbedPreferences.shtml#Warrants">Warrant Preferences</a>
 for information about configuration.
-<p>
+
 <h2>How To Get Started</h2>
 <ul>
 	<li>Definitions of OBlocks, Portals and OPaths are found at
@@ -143,7 +142,7 @@ it will receive when running over the route.
 <h3>Creating Routes</h3>
 A warrant route is a series of block paths linked together so a train
 may travel over it.  A warrant route is created by first choosing an <b>origin
-block</b>, a starting path and a portal to exit the orginating block.  Then, a
+block</b>, a starting path and a portal to exit the originating block.  Then, a
 <b>destination block</b> is chosen and a path on which to end the route.  Optionally,
 you may also chose a <b>Via</b> block, that is, a block that route <i>must</i> include
 and a <b>Avoid</b> block, that is, a block the the route <i>must not</i> include.  Blocks
@@ -204,7 +203,7 @@ can be added to the script such as triggering or responding to external sensors.
 information about creating and customizing scripts.</p>
 <p>
 <a name="SpeedMap">
-<h2>Warrants and Speed Restrictions</h2>
+<h2>Warrants and Speed Restrictions</h2></a>
 A train running under a warrant must be aware of track conditions ahead. Signals
 may indicate reduced speed or permission to return to normal speed.  Blocks may impose
 yard limit speed restrictions.  Rogue trains may show up unexpectedly in the route.
@@ -224,6 +223,7 @@ also.
 Several parameters are required to make an automatic speed change.  The default settings
 will probably be satisfactory and the following can be deferred until later.  
 </p>
+
 <h2>Throttle Setting Speed Factors</h2>
 To compute how far to look ahead and the time when to modify speed the
 following must be known:
@@ -499,4 +499,3 @@ in a Logix conditional.
 </div> <!-- closes #mBody-->
 </body>
 </html>
-

@@ -25,6 +25,7 @@ public class ManageBackupsAction extends AbstractAction {
         super(s);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         ManageBackupsDialog dlg = new ManageBackupsDialog();
         dlg.setLocationRelativeTo(null);

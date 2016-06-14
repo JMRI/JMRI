@@ -9,8 +9,6 @@ import javax.swing.table.DefaultTableCellRenderer;
  */
 class StartupModelCellRenderer extends DefaultTableCellRenderer {
 
-    private static final long serialVersionUID = 1L;
-
     @Override
     protected void setValue(Object value) {
         if (value != null) {

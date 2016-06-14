@@ -1,4 +1,3 @@
-// TrackingPanelTest.java
 package jmri.jmrix.rps.trackingpanel;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.rps package.
  *
  * @author Bob Jacobsen Copyright 2006
- * @version $Revision$
  */
 public class TrackingPanelTest extends TestCase {
 
@@ -21,7 +19,7 @@ public class TrackingPanelTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {TrackingPanelTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

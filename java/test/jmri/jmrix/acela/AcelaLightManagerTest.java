@@ -55,7 +55,7 @@ public class AcelaLightManagerTest extends jmri.managers.AbstractLightMgrTest {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", AcelaLightManagerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

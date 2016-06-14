@@ -16,11 +16,11 @@
         margin: initial;
         margin-left: 2em;
     }
-    .delimeter1 {
+    .delimiter1 {
         color: red;
         font-weight: bold;
     }
-    .delimeter2 {
+    .delimiter2 {
         color: rgb(145, 188, 122);
         font-weight: bold;
     }
@@ -41,7 +41,7 @@
 </p>
 <p>
     JMRI uses a fairly simple text-based client-server protocol over TCP/IP sockets. Throttles (or other applications)
-    can located JMRI by sending a multi-cast DNS request, using ZeroConf/Bonjour, for the address "_withrottle._tcp.local".
+    can locate JMRI by sending a multi-cast DNS request, using ZeroConf/Bonjour, for the address "_withrottle._tcp.local".
     JMRI won't always reply (it depends on your operating system, firewall settings, and network environment), so your
     application should also allow entering an IP address and port.
 </p>
@@ -62,11 +62,11 @@
     engine has three values:
 </p>
 <pre class="code">
-RL2<span class="delimeter1">]\[</span>RGS 41<span class="delimeter2">}|{</span>41<span class="delimeter2">}|{</span>L<span class="delimeter1">]\[</span>Test Loco<span class="delimeter2">}|{</span>1234<span class="delimeter2">}|{</span>L
+RL2<span class="delimiter1">]\[</span>RGS 41<span class="delimiter2">}|{</span>41<span class="delimiter2">}|{</span>L<span class="delimiter1">]\[</span>Test Loco<span class="delimiter2">}|{</span>1234<span class="delimiter2">}|{</span>L
 </pre>
 <p>
-    Here the delimeters are color-coded to make it easier to see the two different delimeters. The <code class="delimeter1"><b>]\[</b></code> delimeter is used to
-    divide the different roster entries (there are two), while the <code class="delimeter2">}|{</code> delimiter is used to divide the parts
+    Here the delimiters are color-coded to make it easier to see the two different delimiters. The <code class="delimiter1"><b>]\[</b></code> delimiter is used to
+    divide the different roster entries (there are two), while the <code class="delimiter2">}|{</code> delimiter is used to divide the parts
     of each roster entry. The details are described in sections below for each command and response.
 </p>
 
@@ -187,7 +187,7 @@ PRL]\[IR:AUTO:0001}|{Rico Main}|{
 PW12080
 </pre>
 <p>
-    indicates that teh web server port is set to 12080.
+    indicates that the web server port is set to 12080.
 </p>
 
 <h2>Commands</h2>
@@ -268,7 +268,7 @@ NJohn's Throttle
 <h4>MultiThrottle Elements</h4>
 <p>
     The command string after the first two characters is passed to the MultiThrottle for further
-    processing. As in other cases, the commands are arrays, where the "&lt;;&gt;" string is used as the delimeter.
+    processing. As in other cases, the commands are arrays, where the "&lt;;&gt;" string is used as the delimiter.
     For example:
 </p>
 <pre class="code">
@@ -353,8 +353,8 @@ MTAL341&lt;;&gt;s1
     For all except the function lables, see the appropriate throttle commands, such as 'V' below, for details.
 </p>
 <p>
-    The function labels are an array of strings, with ]\[ used as the array delimeter. So in the example above,
-    F0 is called Headlight, F1 Bell, etc. Note that, unlike with other arrays, the array delimeter appears at
+    The function labels are an array of strings, with ]\[ used as the array delimiter. So in the example above,
+    F0 is called Headlight, F1 Bell, etc. Note that, unlike with other arrays, the array delimiter appears at
     the start and end of the array, as well as between elements.
 </p>
 

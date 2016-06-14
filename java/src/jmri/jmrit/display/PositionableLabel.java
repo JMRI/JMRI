@@ -30,11 +30,8 @@ import org.slf4j.LoggerFactory;
  * parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision$
  */
 public class PositionableLabel extends JLabel implements Positionable {
-
-    private static final long serialVersionUID = 2620446240151660560L;
 
     public static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
 
@@ -206,17 +203,6 @@ public class PositionableLabel extends JLabel implements Positionable {
         }
     }
 
-    public Positionable deepClone() {
-        PositionableLabel pos;
-        if (_icon) {
-            NamedIcon icon = new NamedIcon((NamedIcon) getIcon());
-            pos = new PositionableLabel(icon, _editor);
-        } else {
-            pos = new PositionableLabel(getText(), _editor);
-        }
-        return finishClone(pos);
-    }
-
     /**
      * When text is rotated or in an icon mode, the return of getText() may be
      * null or some other value
@@ -230,8 +216,19 @@ public class PositionableLabel extends JLabel implements Positionable {
         _unRotatedText = s;
     }
 
-    public Positionable finishClone(Positionable p) {
-        PositionableLabel pos = (PositionableLabel) p;
+    @Override
+    public Positionable deepClone() {
+        PositionableLabel pos;
+        if (_icon) {
+            NamedIcon icon = new NamedIcon((NamedIcon) getIcon());
+            pos = new PositionableLabel(icon, _editor);
+        } else {
+            pos = new PositionableLabel(getText(), _editor);
+        }
+        return finishClone(pos);
+    }
+
+    protected Positionable finishClone(PositionableLabel pos) {
         pos._text = _text;
         pos._icon = _icon;
         pos._control = _control;
@@ -470,10 +467,6 @@ public class PositionableLabel extends JLabel implements Positionable {
 
         if (isIcon() && _displayLevel > Editor.BKG) {
             popup.add(new AbstractAction(Bundle.getMessage("Rotate")) {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = -3965855672806759644L;
 
                 public void actionPerformed(ActionEvent e) {
                     rotateOrthogonal();
@@ -506,10 +499,6 @@ public class PositionableLabel extends JLabel implements Positionable {
         if (_icon && !_text) {
             String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("Icon"));
             popup.add(new AbstractAction(txt) {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = 1481028540455022L;
 
                 public void actionPerformed(ActionEvent e) {
                     edit();
@@ -690,28 +679,23 @@ public class PositionableLabel extends JLabel implements Positionable {
                 super.setIcon(_namedIcon);
                 setOpaque(false);   // rotations cannot be opaque
             }
-        } else {
-            if (deg != 0) { // first time text or icon is rotated from horizontal
-                if (_text && _icon) {   // text overlays icon  e.g. LocoIcon
-                    _namedIcon = makeTextOverlaidIcon(_unRotatedText, _namedIcon);
-                    super.setText(null);
-                    _rotateText = true;
-                    setOpaque(false);
-                } else if (_text) {
-                    _namedIcon = makeTextIcon(_unRotatedText);
-                    super.setText(null);
-                    _rotateText = true;
-                    setOpaque(false);
-                }
-                if (_popupUtil!=null) {
-                    _popupUtil.setBorder(false);
-                }
-                _namedIcon.rotate(deg, this);
-                super.setIcon(_namedIcon);
-            } else if (_namedIcon != null) {
-                _namedIcon.rotate(deg, this);
-                super.setIcon(_namedIcon);
+        } else {  // first time text or icon is rotated from horizontal
+            if (_text && _icon) {   // text overlays icon  e.g. LocoIcon
+                _namedIcon = makeTextOverlaidIcon(_unRotatedText, _namedIcon);
+                super.setText(null);
+                _rotateText = true;
+                setOpaque(false);
+            } else if (_text) {
+                _namedIcon = makeTextIcon(_unRotatedText);
+                super.setText(null);
+                _rotateText = true;
+                setOpaque(false);
             }
+            if (_popupUtil!=null) {
+                _popupUtil.setBorder(false);
+            }
+            _namedIcon.rotate(deg, this);
+            super.setIcon(_namedIcon);
         }
         updateSize();
     }
@@ -802,8 +786,6 @@ public class PositionableLabel extends JLabel implements Positionable {
     /**
      * create a text image whose bit map can be rotated
      *
-     * @param text
-     * @return
      */
     private NamedIcon makeTextIcon(String text) {
         if (text == null || text.equals("")) {

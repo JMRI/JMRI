@@ -4,7 +4,6 @@
  * Description:	tests for the jmri.jmrix.nce.NceTurnoutManager class
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 package jmri.jmrix.nce;
 
@@ -60,7 +59,7 @@ public class NceTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest 
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {NceTurnoutManager.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

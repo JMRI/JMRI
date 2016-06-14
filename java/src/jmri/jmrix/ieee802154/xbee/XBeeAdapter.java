@@ -1,4 +1,3 @@
-// XBeeAdapter.java
 package jmri.jmrix.ieee802154.xbee;
 
 import com.rapplogic.xbee.XBeeConnection;
@@ -14,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * Provide access to IEEE802.15.4 devices via a serial comm port.
  *
  * @author Paul Bender Copyright (C) 2013
- * @version	$Revision$
  */
 public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriverAdapter implements jmri.jmrix.SerialPortAdapter, XBeeConnection, SerialPortEventListener {
 
@@ -44,12 +42,7 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {
@@ -81,6 +74,10 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
         return null; // normal operation
     }
 
+    /**
+     *
+     */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"NO_NOTIFY_NOT_NOTIFYALL","NN_NAKED_NOTIFY"}, justification="The notify call is notifying the receive thread that data is available.  There is only one receive thead, so no reason to call notifyAll.")
     public void serialEvent(SerialPortEvent e) {
         int type = e.getEventType();
         try {
@@ -155,6 +152,10 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
                 SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
+        // set RTS high, DTR high - done early, so flow control can be configured after
+        activeSerialPort.setRTS(true);          // not connected in some serial ports and adapters
+        activeSerialPort.setDTR(true);          // pin 1 in DIN8; on main connector, this is DTR
+
         // find and configure flow control
         int flow = SerialPort.FLOWCONTROL_NONE; // default
         activeSerialPort.setFlowControlMode(flow);
@@ -216,7 +217,7 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
      * Get an array of valid baud rates. This is currently just a message saying
      * its fixed
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     @Override
     public String[] validBaudRates() {
         return validSpeeds;
@@ -224,13 +225,18 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
 
     @Override
     public XBeeConnectionMemo getSystemConnectionMemo() {
-        return (XBeeConnectionMemo) super.getSystemConnectionMemo();
+        jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo m = super.getSystemConnectionMemo();
+        if (m instanceof XBeeConnectionMemo ) {
+           return (XBeeConnectionMemo) m;
+        } else {
+           throw new java.lang.IllegalArgumentException("System Connection Memo associated with this connection is not the right type.");
+        }
     }
 
-    protected String[] validSpeeds = new String[]{"1,200 baud", "2,400 baud",
+    private String[] validSpeeds = new String[]{"1,200 baud", "2,400 baud",
         "4,800 baud", "9,600 baud", "19,200 baud", "38,400 baud",
         "57,600 baud", "115,200 baud"};
-    protected int[] validSpeedValues = new int[]{1200, 2400, 4800, 9600, 19200,
+    private int[] validSpeedValues = new int[]{1200, 2400, 4800, 9600, 19200,
         38400, 57600, 115200};
 
     // methods for XBeeConnection

@@ -34,9 +34,9 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
     /**
      * builds a csv file containing the switch list for a location
      *
-     * @param location
      * @return File
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "CarManager only provides Car Objects")
     public File buildSwitchList(Location location) {
 
         // create csv switch list file
@@ -112,7 +112,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
                     addLine(fileOut, TN + train.getName());
                     addLine(fileOut, TM + train.getDescription());
 
-                    if (train.isTrainInRoute()) {
+                    if (train.isTrainEnRoute()) {
                         addLine(fileOut, TIR);
                         addLine(fileOut, ETE + expectedArrivalTime);
                     } else {
@@ -140,7 +140,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
                         // if it terminate at this location
 
                         addLine(fileOut, VN + stops);
-                        if (train.isTrainInRoute()) {
+                        if (train.isTrainEnRoute()) {
                             addLine(fileOut, ETE + expectedArrivalTime);
                         } else {
                             addLine(fileOut, ETA + expectedArrivalTime);

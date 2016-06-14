@@ -1,4 +1,3 @@
-// DCCppSensorManagerTest.java
 package jmri.jmrix.dccpp;
 
 import jmri.Sensor;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Paul Bender Copyright (c) 2003
  * @author	Mark Underwood Copyright (c) 2003
- * @version $Revision$
  */
 public class DCCppSensorManagerTest extends TestCase {
 
@@ -24,13 +22,8 @@ public class DCCppSensorManagerTest extends TestCase {
         DCCppInterfaceScaffold xnis = new DCCppInterfaceScaffold(new DCCppCommandStation());
         Assert.assertNotNull("exists", xnis);
 
-        // create and register the manager object in a new instance manager
-        new jmri.InstanceManager() {
-            protected void init() {
-                super.init();
-                root = null;
-            }
-        };
+        jmri.util.JUnitUtil.resetInstanceManager();
+
         DCCppSensorManager l = new DCCppSensorManager(xnis, "DCCPP");
         jmri.InstanceManager.setSensorManager(l);
 
@@ -41,13 +34,8 @@ public class DCCppSensorManagerTest extends TestCase {
         DCCppInterfaceScaffold xnis = new DCCppInterfaceScaffold(new DCCppCommandStation());
         Assert.assertNotNull("exists", xnis);
 
-        // create and register the manager object in a new instance manager
-        new jmri.InstanceManager() {
-            protected void init() {
-                super.init();
-                root = null;
-            }
-        };
+        jmri.util.JUnitUtil.resetInstanceManager();
+
         // create and register the manager object
         DCCppSensorManager l = new DCCppSensorManager(xnis, "DCCPP");
 
@@ -64,13 +52,8 @@ public class DCCppSensorManagerTest extends TestCase {
         DCCppInterfaceScaffold xnis = new DCCppInterfaceScaffold(new DCCppCommandStation());
         Assert.assertNotNull("exists", xnis);
 
-        // create and register the manager object in a new instance manager
-        new jmri.InstanceManager() {
-            protected void init() {
-                super.init();
-                root = null;
-            }
-        };
+        jmri.util.JUnitUtil.resetInstanceManager();
+
         // create and register the manager object
         DCCppSensorManager l = new DCCppSensorManager(xnis, "DCCPP");
 
@@ -87,13 +70,7 @@ public class DCCppSensorManagerTest extends TestCase {
         // prepare an interface, register
         DCCppInterfaceScaffold xnis = new DCCppInterfaceScaffold(new DCCppCommandStation());
 
-        // create and register the manager object in a new instance manager
-        new jmri.InstanceManager() {
-            protected void init() {
-                super.init();
-                root = null;
-            }
-        };
+        jmri.util.JUnitUtil.resetInstanceManager();
         // create and register the manager object
         DCCppSensorManager l = new DCCppSensorManager(xnis, "DCCPP");
 
@@ -114,13 +91,9 @@ public class DCCppSensorManagerTest extends TestCase {
     public void testAsAbstractFactory() {
         // prepare an interface, register
         DCCppInterfaceScaffold xnis = new DCCppInterfaceScaffold(new DCCppCommandStation());
-        // create and register the manager object in a new instance manager
-        new jmri.InstanceManager() {
-            protected void init() {
-                super.init();
-                root = null;
-            }
-        };
+
+        jmri.util.JUnitUtil.resetInstanceManager();
+
         DCCppSensorManager l = new DCCppSensorManager(xnis, "DCCPP");
         jmri.InstanceManager.setSensorManager(l);
 
@@ -155,7 +128,7 @@ public class DCCppSensorManagerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", DCCppSensorManagerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

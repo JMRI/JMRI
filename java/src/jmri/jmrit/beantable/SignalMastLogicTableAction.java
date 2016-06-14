@@ -32,17 +32,12 @@ import org.slf4j.LoggerFactory;
 public class SignalMastLogicTableAction extends AbstractTableAction {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = -6334687600293911353L;
-
-    /**
      * Create an action with a specific title.
      * <P>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
-     * @param s
+     * @param s title of the action
      */
     public SignalMastLogicTableAction(String s) {
         super(s);
@@ -60,14 +55,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
         JTable dataTable = m.makeJTable(sorter);
         sorter.setTableHeader(dataTable.getTableHeader());
         // create the frame
-        f = new jmri.jmrit.beantable.BeanTableFrame(m, helpTarget(), dataTable) {
-
-            /**
-             *
-             */
-            private static final long serialVersionUID = -4359437797962676692L;
-
-        };
+        f = new jmri.jmrit.beantable.BeanTableFrame(m, helpTarget(), dataTable) {};
         setMenuBar(f);
         setTitle();
         addToFrame(f);
@@ -102,11 +90,6 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
 
     protected void createModel() {
         m = new BeanTableDataModel() {
-
-            /**
-             *
-             */
-            private static final long serialVersionUID = 4691632819840510353L;
             static public final int SOURCECOL = 0;
             static public final int SOURCEAPPCOL = 1;
             static public final int DESTCOL = 2;
@@ -264,15 +247,15 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
                     case DESTCOL:
                         return Bundle.getMessage("Destination");
                     case SOURCEAPPCOL:
-                        return Bundle.getMessage("SignalMastAppearance");
+                        return Bundle.getMessage("LabelAspectType");
                     case DESTAPPCOL:
-                        return Bundle.getMessage("SignalMastAppearance");
+                        return Bundle.getMessage("LabelAspectType");
                     case COMCOL:
                         return Bundle.getMessage("Comment");
                     case DELCOL:
-                        return Bundle.getMessage("ButtonDelete");
+                        return ""; // override default, no title for Delete column
                     case EDITLOGICCOL:
-                        return Bundle.getMessage("ButtonEdit");
+                        return ""; // override default, no title for Edit column
                     case ENABLECOL:
                         return Bundle.getMessage("ColumnHeadEnabled");
                     default:
@@ -351,7 +334,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
                     case DESTCOL:
                         return new JTextField(10).getPreferredSize().width;
                     case EDITLOGICCOL: // not actually used due to the configureTable, setColumnToHoldButton, configureButton
-                        return new JTextField(5).getPreferredSize().width;
+                        return new JTextField(6).getPreferredSize().width;
                     case DELCOL: // not actually used due to the configureTable, setColumnToHoldButton, configureButton
                         return new JTextField(5).getPreferredSize().width;
                     case DESTAPPCOL:
@@ -368,7 +351,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
 
             public void configureTable(JTable table) {
                 setColumnToHoldButton(table, EDITLOGICCOL,
-                        new JButton("Edit"));
+                        new JButton(Bundle.getMessage("ButtonEdit")));
                 table.getTableHeader().setReorderingAllowed(true);
 
                 // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
@@ -432,7 +415,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
                         return (b != null) ? b.getComment(getDestMastFromRow(row)) : null;
                     case DELCOL:
                         return Bundle.getMessage("ButtonDelete");
-                    case EDITLOGICCOL:  //
+                    case EDITLOGICCOL:
                         return Bundle.getMessage("ButtonEdit");
                     case ENABLECOL:
                         return (b != null) ? b.isEnabled(getDestMastFromRow(row)) : null;

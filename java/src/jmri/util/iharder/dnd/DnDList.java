@@ -29,6 +29,7 @@ public class DnDList<E>
 
     private static final long serialVersionUID = -2989490853738310931L;
 
+    @SuppressWarnings("unused") // FIXME: Is this really unused? I don't see it used anywhere here, but perhaps it should be.
     private java.awt.dnd.DropTarget dropTarget = null;
     private java.awt.dnd.DragSource dragSource = null;
 
@@ -66,7 +67,7 @@ public class DnDList<E>
      */
     public DnDList(E[] data) {
         this();
-        ((javax.swing.DefaultListModel) getModel()).copyInto(data);
+        ((javax.swing.DefaultListModel<E>) getModel()).copyInto(data);
     }   // end constructor
 
     /**
@@ -79,14 +80,11 @@ public class DnDList<E>
      */
     public DnDList(java.util.Vector<E> data) {
         this();
-        ((javax.swing.DefaultListModel) getModel()).copyInto(data.toArray());
+        ((javax.swing.DefaultListModel<E>) getModel()).copyInto(data.toArray());
     }   // end constructor
 
     private void initComponents() {
         dropTarget = new java.awt.dnd.DropTarget(this, this);
-        if (dropTarget == null) {
-            log.error("Failed to create DropTarget");
-        }
         dragSource = new java.awt.dnd.DragSource();
         dragSource.createDefaultDragGestureRecognizer(this, java.awt.dnd.DnDConstants.ACTION_MOVE, this);
     }   // end initComponents
@@ -103,7 +101,7 @@ public class DnDList<E>
                  * original place in the list.
                  */
                 public E getObject() {
-                    ((javax.swing.DefaultListModel) getModel()).remove(sourceIndex);
+                    ((javax.swing.DefaultListModel<E>) getModel()).remove(sourceIndex);
                     return selected;
                 }   // end getObject
             }); // end fetcher
@@ -111,7 +109,7 @@ public class DnDList<E>
             // as the name suggests, starts the dragging
             dragSource.startDrag(event, java.awt.dnd.DragSource.DefaultLinkDrop, transfer, this);
         } else {
-            //System.out.println( "nothing was selected");   
+            //System.out.println( "nothing was selected");
         }
     }   // end dragGestureRecognized
 
@@ -190,6 +188,7 @@ public class DnDList<E>
         }
     }   // end drop
 
+    @SuppressWarnings("unused") // FIXME: Why is this logger hidden way down here and unused?
     private final static Logger log = LoggerFactory.getLogger(DnDList.class.getName());
 
 }   // end class DnDList

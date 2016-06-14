@@ -23,6 +23,7 @@ public class Consist extends RollingStockGroup {
         log.debug("New Consist ({})", name);
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "getGroup() only provides Engine Objects")
     public List<Engine> getEngines() {
         List<Engine> engines = new ArrayList<Engine>();
         for (RollingStock rs : getGroup()) {
@@ -43,6 +44,7 @@ public class Consist extends RollingStockGroup {
         _consistNumber = number;
     }
 
+    @Override
     public void dispose() {
         while (getGroup().size() > 0) {
             Engine engine = (Engine) getGroup().get(0);

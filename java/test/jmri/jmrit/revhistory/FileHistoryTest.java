@@ -1,4 +1,3 @@
-// FileHistoryTest.java
 package jmri.jmrit.revhistory;
 
 import junit.framework.Assert;
@@ -10,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the jmrit.revhistory package & jmrit.revhistory.FileHistory class.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version $Revision$
  */
 public class FileHistoryTest extends TestCase {
 
@@ -91,7 +89,7 @@ public class FileHistoryTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", FileHistoryTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

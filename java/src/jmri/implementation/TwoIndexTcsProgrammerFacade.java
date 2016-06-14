@@ -1,11 +1,13 @@
-// TwoIndexTcsProgrammerFacade.java
 package jmri.implementation;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.Timer;
 import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.jmrix.AbstractProgrammerFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 /**
  * Programmer facade for single index multi-CV access.
@@ -31,8 +33,7 @@ import org.slf4j.LoggerFactory;
  *
  * @see jmri.implementation.ProgrammerFacadeSelector
  *
- * @author Bob Jacobsen Copyright (C) 2013
- * @version	$Revision: 24246 $
+ * @author Bob Jacobsen Copyright (C) 2013, 2016
  */
 public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implements ProgListener {
 
@@ -164,7 +165,24 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
         if (_usingProgrammer == null) {
             log.error("No listener to notify");
         }
-
+        
+        // Complete processing later so that WOWDecoder will go through a complete power on reset and not brown out between CV read/writes
+        int interval = 150;
+        ActionListener taskPerformer = new ActionListener() {
+            final int myValue = value;
+            final int myStatus = status;
+            public void actionPerformed(ActionEvent evt) {
+                processProgrammingOpReply(myValue, myStatus);
+            }
+        };
+        Timer t = new Timer(interval, taskPerformer );
+        t.setRepeats(false);
+        t.start();
+    }
+    /**
+     * After a Swing delay, this processes the reply
+     */
+    protected void processProgrammingOpReply(int value, int status) {
         switch (state) {
             case DOSIFORREAD:
                 try {

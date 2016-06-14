@@ -9,14 +9,8 @@ import jmri.util.swing.WindowInterface;
  * Create a new PanelPro start window
  *
  * @author	Bob Jacobsen (C) 2014
- * @version $Revision$
  */
 public class PanelProAction extends JmriAbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 702355860636134517L;
 
     public PanelProAction(String s, WindowInterface wi) {
         super(s, wi);

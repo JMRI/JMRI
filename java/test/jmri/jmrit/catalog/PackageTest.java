@@ -4,7 +4,6 @@
  * Description:	tests for the jmri.jmrit.catalog package
  *
  * @author	Bob Jacobsen 2009
- * @version $Revision$
  */
 package jmri.jmrit.catalog;
 
@@ -22,7 +21,7 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -30,6 +29,7 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrit.catalog");   // no tests in this class itself
         suite.addTest(CatalogTreeFSTest.suite());
         suite.addTest(CatalogTreeIndexTest.suite());
+        suite.addTest(BundleTest.suite());
         return suite;
     }
 

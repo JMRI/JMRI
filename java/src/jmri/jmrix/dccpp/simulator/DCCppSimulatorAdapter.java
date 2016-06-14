@@ -1,10 +1,14 @@
-// DCCppSimulatorAdapter.java
 package jmri.jmrix.dccpp.simulator;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.dccpp.DCCppCommandStation;
 import jmri.jmrix.dccpp.DCCppConstants;
@@ -12,13 +16,9 @@ import jmri.jmrix.dccpp.DCCppInitializationManager;
 import jmri.jmrix.dccpp.DCCppMessage;
 import jmri.jmrix.dccpp.DCCppPacketizer;
 import jmri.jmrix.dccpp.DCCppReply;
+import jmri.jmrix.dccpp.DCCppReplyParser;
 import jmri.jmrix.dccpp.DCCppSimulatorPortController;
 import jmri.jmrix.dccpp.DCCppTrafficController;
-import jmri.jmrix.dccpp.DCCppReplyParser;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
-import java.util.Random;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,7 +37,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Paul Bender, Copyright (C) 2009-2010
  * @author	Mark Underwood, Copyright (C) 2015
- * @version	$Revision$
  *
  * Based on jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter
  */
@@ -467,7 +466,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 	Random valueGenerator = new Random();
 	int value = valueGenerator.nextInt(2); // Generate state value betweeon 0 and 1
        
-	String reply = new String((value == 1 ? "Q " : "q ")+ Integer.toString(sensorNum));
+	String reply = (value == 1 ? "Q " : "q ")+ Integer.toString(sensorNum);
 	
 	DCCppReply r = DCCppReplyParser.parseReply(reply);
 	writeReply(r);
@@ -503,7 +502,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
      */
     private DCCppMessage loadChars() throws java.io.IOException {
 	// Spin waiting for start-of-frame '<' character (and toss it)
-	String s = new String();
+	String s = "";
 	byte char1;
 	boolean found_start = false;
 
@@ -531,7 +530,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 	    }
 	}
 	// TODO: Still need to strip leading and trailing whitespace.
-	log.debug("Complete message = {}", s.toString());
+	log.debug("Complete message = {}", s);
 	return(DCCppMessage.parseDCCppMessage(s));
     }
 

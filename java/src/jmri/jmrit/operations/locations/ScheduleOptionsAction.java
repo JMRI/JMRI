@@ -23,6 +23,7 @@ public class ScheduleOptionsAction extends AbstractAction {
         _sef = sef;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         new ScheduleOptionsFrame(_sef);
     }

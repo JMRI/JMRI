@@ -1,13 +1,13 @@
-// SignalSpeedMap.java
-
 package jmri.implementation;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
+import javax.annotation.Nonnull;
 import jmri.util.FileUtil;
 import jmri.util.OrderedHashtable;
 import org.jdom2.Element;
@@ -18,40 +18,33 @@ import org.slf4j.LoggerFactory;
  /**
  * Default implementation to map Signal aspects or appearances to speed requirements.
  * <p>
- * A singleton class for use by all SignalHeads and SignalMasts
+ * The singleton instance is referenced from the InstanceManager by SignalHeads and SignalMasts
  *
  * @author  Pete Cressman Copyright (C) 2010
- * @version     $Revision$
  */
-public class SignalSpeedMap {
+public class SignalSpeedMap 
+            implements jmri.InstanceManagerAutoDefault // auto-initialize in InstanceManager
+        {
 
-    static private SignalSpeedMap _map;
-    static private Hashtable<String, Float> _table;
-    static private Hashtable<String, String> _headTable;
-    static private int _interpretation;
-    static private int _sStepDelay;     // ramp step time interval
-    static private int _numSteps = 4;   // num throttle steps per ramp step - deprecated
+    private Hashtable<String, Float> _table;
+    private Hashtable<String, String> _headTable;
+    private int _interpretation;
+    private int _sStepDelay;     // ramp step time interval
+    private int _numSteps = 4;   // num throttle steps per ramp step - deprecated
     private float _stepIncrement = 0.04f;       // ramp step throttle increment
     private float _throttleFactor = 0.75f;
     private float _scale;
     
-    public static final int PERCENT_NORMAL = 1;
-    public static final int PERCENT_THROTTLE = 2;
-    public static final int SPEED_MPH = 3;
-    public static final int SPEED_KMPH = 4;
+    static public final int PERCENT_NORMAL = 1;
+    static public final int PERCENT_THROTTLE = 2;
+    static public final int SPEED_MPH = 3;
+    static public final int SPEED_KMPH = 4;
         
-    public SignalSpeedMap() {}
-    
-    static public SignalSpeedMap getMap() {
-        if (_map == null) {
-            loadMap();
-        }
-        return _map;
+    public SignalSpeedMap() {
+        loadMap();
     }
-    
-    static void loadMap() {
-        _map = new SignalSpeedMap();
-
+        
+    void loadMap() {
         URL path = FileUtil.findURL("signalSpeeds.xml", new String[] {"", "xml/signals"});
         jmri.jmrit.XmlFile xf = new jmri.jmrit.XmlFile(){};
         try {
@@ -66,7 +59,7 @@ public class SignalSpeedMap {
         }
     }
 
-    static public void loadRoot(Element root) {
+    public void loadRoot(@Nonnull Element root) {
         try {
             Element e = root.getChild("interpretation");
             String sval = e.getText().toUpperCase();
@@ -105,12 +98,12 @@ public class SignalSpeedMap {
             }
 
             List<Element> list = root.getChild("aspectSpeeds").getChildren();
-            _table = new OrderedHashtable<String, Float>();
+            _table = new OrderedHashtable<>();
             for (int i = 0; i < list.size(); i++) {
                 String name = list.get(i).getName();
-                Float speed = Float.valueOf(0f);
+                Float speed;
                 try {
-                    speed = new Float(list.get(i).getText());
+                    speed = Float.valueOf(list.get(i).getText());
                 } catch (NumberFormatException nfe) {
                     log.error("invalid content for "+name+" = "+list.get(i).getText());
                     throw new JDOMException("invalid content for "+name+" = "+list.get(i).getText());
@@ -119,7 +112,7 @@ public class SignalSpeedMap {
                 _table.put(name, speed);
             }
 
-            _headTable = new OrderedHashtable<String, String>();
+            _headTable = new OrderedHashtable<>();
             List<Element>l = root.getChild("appearanceSpeeds").getChildren();
             for (int i = 0; i < l.size(); i++) {
                 String name = l.get(i).getName();
@@ -139,7 +132,7 @@ public class SignalSpeedMap {
     /**
     * @return speed from SignalMast Aspect name
     */
-    public String getAspectSpeed(String aspect, jmri.SignalSystem system) {
+    public String getAspectSpeed(@Nonnull String aspect, @Nonnull jmri.SignalSystem system) {
         if (log.isDebugEnabled()) log.debug("getAspectSpeed: aspect="+aspect+", speed="+
                                             system.getProperty(aspect, "speed"));
         return (String)system.getProperty(aspect, "speed");
@@ -147,7 +140,7 @@ public class SignalSpeedMap {
     /**
     * @return speed from SignalMast Aspect name
     */
-    public String getAspectExitSpeed(String aspect, jmri.SignalSystem system) {
+    public String getAspectExitSpeed(@Nonnull String aspect, @Nonnull jmri.SignalSystem system) {
         if (log.isDebugEnabled()) log.debug("getAspectExitSpeed: aspect="+aspect+", speed2="+
                                             system.getProperty(aspect, "speed2"));
         return (String)system.getProperty(aspect, "speed2");
@@ -155,7 +148,7 @@ public class SignalSpeedMap {
     /**
     * @return speed from SignalHead Appearance name
     */
-    public String getAppearanceSpeed(String name) throws NumberFormatException {
+    public String getAppearanceSpeed(@Nonnull String name) throws NumberFormatException {
         if (log.isDebugEnabled()) log.debug("getAppearanceSpeed Appearance= "+name+
                                             ", speed="+_headTable.get(name));
         return _headTable.get(name); 
@@ -169,17 +162,17 @@ public class SignalSpeedMap {
 
     public java.util.Vector<String> getValidSpeedNames() {
         java.util.Enumeration<String> e = _table.keys();
-        java.util.Vector<String> v = new java.util.Vector<String>();
+        java.util.Vector<String> v = new java.util.Vector<>();
         while (e.hasMoreElements()) {
             v.add(e.nextElement());
         }
         return v;
     }
 
-    public float getSpeed(String name) {
+    public float getSpeed(@Nonnull String name) {
         if ( !checkSpeed(name)) {
             // not a valid aspect
-            log.warn("attempting to set invalid speed: "+name);
+            log.warn("attempting to get speed for invalid name: '{}'", name);
             //java.util.Enumeration<String> e = _table.keys();
             throw new IllegalArgumentException("attempting to get speed from invalid name: \""+name+"\"");
         }
@@ -190,13 +183,16 @@ public class SignalSpeedMap {
         return speed.floatValue();
     }
     
+    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification="want to detect lack of exact match in == speed test")
     public String getNamedSpeed(float speed){
         java.util.Enumeration<String> e = _table.keys();
         while (e.hasMoreElements()) {
             String key = e.nextElement();
-            if(_table.get(key)==Float.valueOf(speed)) {
+            
+            if ( _table.get(key) == speed) {
                 return key;
             }
+
         }
         return null;
     }
@@ -222,16 +218,16 @@ public class SignalSpeedMap {
         return _numSteps;
     }
 
-    public void setAspectTable(Iterator<Entry<String, Float>> iter, int interpretation) {
-        _table = new OrderedHashtable<String, Float>();
+    public void setAspectTable(@Nonnull Iterator<Entry<String, Float>> iter, int interpretation) {
+        _table = new OrderedHashtable<>();
         while (iter.hasNext() ) {
             Entry<String, Float> ent = iter.next();
             _table.put(ent.getKey(), ent.getValue());
         }
         _interpretation = interpretation;
     }
-    public void setAppearanceTable(Iterator<Entry<String, String>> iter) {
-        _headTable = new OrderedHashtable<String, String>();
+    public void setAppearanceTable(@Nonnull Iterator<Entry<String, String>> iter) {
+        _headTable = new OrderedHashtable<>();
         while (iter.hasNext() ) {
             Entry<String, String> ent = iter.next();
             _headTable.put(ent.getKey(), ent.getValue());
@@ -256,10 +252,6 @@ public class SignalSpeedMap {
         return _scale;
     }
 
-    public void setMap(SignalSpeedMap map) {
-        _map = map;
-    }
-    private final static Logger log = LoggerFactory.getLogger(SignalSpeedMap.class.getName());
+    static private final Logger log = LoggerFactory.getLogger(SignalSpeedMap.class.getName());
 }
 
-/* @(#)SignalSpeedMap.java */

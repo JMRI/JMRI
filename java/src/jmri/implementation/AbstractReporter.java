@@ -1,4 +1,3 @@
-// AbstractReporter.java
 package jmri.implementation;
 
 import jmri.Reporter;
@@ -16,14 +15,8 @@ import jmri.Reporter;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Matthew Harris Copyright (C) 2011
- * @version	$Revision$
  */
 public abstract class AbstractReporter extends AbstractNamedBean implements Reporter, java.io.Serializable {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5682753440499282867L;
 
     public AbstractReporter(String systemName) {
         super(systemName.toUpperCase());
@@ -69,5 +62,3 @@ public abstract class AbstractReporter extends AbstractNamedBean implements Repo
     private Object _currentReport = null;
 
 }
-
-/* @(#)AbstractReporter.java */

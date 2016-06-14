@@ -1,4 +1,3 @@
-// AbstractReporterManager.java
 package jmri.managers;
 
 import jmri.Manager;
@@ -11,7 +10,6 @@ import org.slf4j.LoggerFactory;
  * Abstract partial implementation of a ReporterManager.
  *
  * @author	Bob Jacobsen Copyright (C) 2004
- * @version	$Revision$
  */
 public abstract class AbstractReporterManager extends AbstractManager
         implements ReporterManager {
@@ -104,11 +102,6 @@ public abstract class AbstractReporterManager extends AbstractManager
         // save in the maps
         register(r);
 
-        // if that failed, blame it on the input arguements
-        if (r == null) {
-            throw new IllegalArgumentException();
-        }
-
         return r;
     }
 
@@ -116,7 +109,7 @@ public abstract class AbstractReporterManager extends AbstractManager
      * Internal method to invoke the factory, after all the logic for returning
      * an existing method has been invoked.
      *
-     * @return never null
+     * @return Never null
      */
     abstract protected Reporter createNewReporter(String systemName, String userName);
 
@@ -167,4 +160,3 @@ public abstract class AbstractReporterManager extends AbstractManager
     private final static Logger log = LoggerFactory.getLogger(AbstractReporterManager.class.getName());
 }
 
-/* @(#)AbstractReporterManager.java */

@@ -1,4 +1,3 @@
-// SetPhysicalLocationFrame.java
 package jmri.jmrit.beantable;
 
 import java.awt.Frame;
@@ -32,14 +31,8 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
  * @author Mark Underwood Copyright (C) 2011
- * @version $Revision: 18711 $
  */
 public class SetPhysicalLocationAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4814083186968429295L;
 
     Reporter _reporter;
 
@@ -48,8 +41,8 @@ public class SetPhysicalLocationAction extends AbstractAction {
     /**
      * Constructor
      *
-     * @param s
-     * @param reporter
+     * @param s title of the action
+     * @param reporter {@link Reporter} to use
      */
     public SetPhysicalLocationAction(String s, Reporter reporter) {
         super(s);
@@ -61,7 +54,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
     /**
      * Action method
      *
-     * @param e
+     * @param e the associated {@link ActionEvent} that triggered this action
      */
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -81,12 +74,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
      * @author Mark Underwood Copyright (C) 2011
      * @version $Revision: 20246 $
      */
-    class SetPhysicalLocationFrame extends OperationsFrame {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 6749008114407458542L;
+    private static class SetPhysicalLocationFrame extends OperationsFrame {
 
         /**
          * Frame Constructor
@@ -101,12 +89,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
         }
     }
 
-    class SetPhysicalLocationPanel extends OperationsPanel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -5054495048362448275L;
+    private static class SetPhysicalLocationPanel extends OperationsPanel {
 
         Reporter _reporter;
 
@@ -306,5 +289,3 @@ public class SetPhysicalLocationAction extends AbstractAction {
 
     private static final Logger log = LoggerFactory.getLogger(SetPhysicalLocationAction.class);
 }
-
-/* @(#)SetPhysicalLocationAction.java */

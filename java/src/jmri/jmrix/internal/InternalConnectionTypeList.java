@@ -1,4 +1,3 @@
-// InternalConnectionTypeList.java
 package jmri.jmrix.internal;
 
 /**
@@ -6,15 +5,22 @@ package jmri.jmrix.internal;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
- * @version	$Revision$
  *
  */
 public class InternalConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
+    public static final String NONE = "None";
+
+    @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
             "jmri.jmrix.internal.ConnectionConfig"
         };
+    }
+
+    @Override
+    public String[] getManufacturers() {
+        return new String[]{NONE};
     }
 
 }

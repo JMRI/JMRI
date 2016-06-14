@@ -6,6 +6,9 @@ java/docs
 # test artifacts
 junit-results.xml
 junit*.properties
+findbugs.xml
+findbugs.html
+jacoco.exec
 
 # runtime artifacts
 messages.log*
@@ -30,6 +33,7 @@ session.log
 /nbproject/private
 /.idea/workspace.xml
 local.properties
+*.original~
 
 # CATS source, sometimes present for test
 /java/src/cats

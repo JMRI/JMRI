@@ -1,4 +1,3 @@
-// NceMacroGenPanel.java
 package jmri.jmrix.nce.macro;
 
 import java.awt.Dimension;
@@ -20,15 +19,9 @@ import jmri.jmrix.nce.NceTrafficController;
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Dan Boudreau Copyright (C) 2007 Cloned into a Panel by
  * @author kcameron
- * @version $Revision$
  *
  */
 public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements jmri.jmrix.nce.NceListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6258879427292297607L;
 
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.nce.macro.NceMacroBundle");
 
@@ -158,7 +151,7 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
             return null;
         }
 
-        if (macroNum < 0 | macroNum > 255) {
+        if (macroNum < 0 || macroNum > 255) {
             return null;
         }
 
@@ -198,7 +191,7 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
             return null;
         }
 
-        if (macroNum < 0 | macroNum > 255) {
+        if (macroNum < 0 || macroNum > 255) {
             return null;
         }
 
@@ -224,11 +217,6 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.nce.swing.NceNamedPaneAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 2833783324467310500L;
 
         public Default() {
             super("Open NCE Send Macro Window",

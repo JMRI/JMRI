@@ -1,4 +1,3 @@
-// LocoSelPane.java
 package jmri.jmrit.symbolicprog;
 
 /**
@@ -9,14 +8,8 @@ package jmri.jmrit.symbolicprog;
  * in revision 1.3 (JMRI 1.5.3) and later.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version	$Revision$
  */
 public class LocoSelPane extends jmri.util.swing.JmriPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5441744977916596992L;
 
     public LocoSelPane() {
     }

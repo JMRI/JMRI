@@ -1,4 +1,3 @@
-// XNetSensorManagerTest.java
 package jmri.jmrix.lenz;
 
 import jmri.Sensor;
@@ -14,32 +13,17 @@ import org.slf4j.LoggerFactory;
  * Tests for the jmri.jmrix.lenz.XNetSensorManager class.
  *
  * @author	Paul Bender Copyright (c) 2003
- * @version $Revision$
  */
 public class XNetSensorManagerTest extends TestCase {
+        
+    private XNetInterfaceScaffold xnis;
 
-    public void testXNetSensorCreate() {
-        // prepare an interface
-        XNetInterfaceScaffold xnis = new XNetInterfaceScaffold(new LenzCommandStation());
-        Assert.assertNotNull("exists", xnis);
-
-        // create and register the manager object in a new instance manager
-        new jmri.InstanceManager() {
-            protected void init() {
-                super.init();
-                root = null;
-            }
-        };
+    public void testXNetCTor() {
         XNetSensorManager l = new XNetSensorManager(xnis, "X");
-        jmri.InstanceManager.setSensorManager(l);
-
+        Assert.assertNotNull(l);
     }
 
     public void testByAddress() {
-        // prepare an interface
-        XNetInterfaceScaffold xnis = new XNetInterfaceScaffold(new LenzCommandStation());
-        Assert.assertNotNull("exists", xnis);
-
         // create and register the manager object
         XNetSensorManager l = new XNetSensorManager(xnis, "X");
 
@@ -52,10 +36,6 @@ public class XNetSensorManagerTest extends TestCase {
     }
 
     public void testMisses() {
-        // prepare an interface
-        XNetInterfaceScaffold xnis = new XNetInterfaceScaffold(new LenzCommandStation());
-        Assert.assertNotNull("exists", xnis);
-
         // create and register the manager object
         XNetSensorManager l = new XNetSensorManager(xnis, "X");
 
@@ -69,9 +49,6 @@ public class XNetSensorManagerTest extends TestCase {
     }
 
     public void testXNetMessages() {
-        // prepare an interface, register
-        XNetInterfaceScaffold xnis = new XNetInterfaceScaffold(new LenzCommandStation());
-
         // create and register the manager object
         XNetSensorManager l = new XNetSensorManager(xnis, "X");
 
@@ -91,15 +68,6 @@ public class XNetSensorManagerTest extends TestCase {
     }
 
     public void testAsAbstractFactory() {
-        // prepare an interface, register
-        XNetInterfaceScaffold xnis = new XNetInterfaceScaffold(new LenzCommandStation());
-        // create and register the manager object in a new instance manager
-        new jmri.InstanceManager() {
-            protected void init() {
-                super.init();
-                root = null;
-            }
-        };
         XNetSensorManager l = new XNetSensorManager(xnis, "X");
         jmri.InstanceManager.setSensorManager(l);
 
@@ -126,6 +94,17 @@ public class XNetSensorManagerTest extends TestCase {
 
     }
 
+   public void testGetSystemPrefix(){
+        XNetSensorManager l = new XNetSensorManager(xnis, "X");
+        Assert.assertEquals("prefix","X",l.getSystemPrefix());
+    }
+
+    public void testAllowMultipleAdditions(){
+        XNetSensorManager l = new XNetSensorManager(xnis, "X");
+        Assert.assertTrue(l.allowMultipleAdditions("foo"));
+    }
+
+
     // from here down is testing infrastructure
     public XNetSensorManagerTest(String s) {
         super(s);
@@ -134,7 +113,7 @@ public class XNetSensorManagerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", XNetSensorManagerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -148,10 +127,14 @@ public class XNetSensorManagerTest extends TestCase {
     // The minimal setup for log4J
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        // prepare an interface
+        xnis = new XNetInterfaceScaffold(new LenzCommandStation());
     }
 
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.resetInstanceManager();
     }
 
 }

@@ -1,4 +1,3 @@
-// DecoderFileTest.java
 package jmri.jmrit.decoderdefn;
 
 import javax.swing.JLabel;
@@ -18,7 +17,6 @@ import org.jdom2.Element;
  * DecoderFileTest.java
  *
  * @author	Bob Jacobsen, Copyright (C) 2001, 2002
- * @version $Revision$
  */
 public class DecoderFileTest extends TestCase {
 
@@ -365,7 +363,7 @@ public class DecoderFileTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", DecoderFileTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

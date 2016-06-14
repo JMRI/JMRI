@@ -213,6 +213,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         createShutDownTask();
     }
 
+    @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("radio button activated");
         if (ae.getSource() == sortByNumber) {
@@ -262,9 +263,10 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         return enginesModel.getSelectedEngineList();
     }
 
-    EngineEditFrame f = null;
+    EngineEditFrame engineEditFrame = null;
 
     // add, save or find button
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         // log.debug("engine button activated");
         if (ae.getSource() == findButton) {
@@ -282,12 +284,11 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
             return;
         }
         if (ae.getSource() == addButton) {
-            if (f != null) {
-                f.dispose();
+            if (engineEditFrame != null) {
+                engineEditFrame.dispose();
             }
-            f = new EngineEditFrame();
-            f.initComponents();
-            f.setTitle(Bundle.getMessage("TitleEngineAdd"));
+            engineEditFrame = new EngineEditFrame();
+            engineEditFrame.initComponents();
         }
         if (ae.getSource() == saveButton) {
             if (enginesTable.isEditing()) {
@@ -311,17 +312,19 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         return widths;
     }
 
+    @Override
     public void dispose() {
         engineManager.removePropertyChangeListener(this);
         enginesModel.dispose();
-        if (f != null) {
-            f.dispose();
+        if (engineEditFrame != null) {
+            engineEditFrame.dispose();
         }
         super.dispose();
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }

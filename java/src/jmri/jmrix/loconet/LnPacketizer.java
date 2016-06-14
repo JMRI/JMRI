@@ -1,4 +1,3 @@
-// LnPacketizer.java
 package jmri.jmrix.loconet;
 
 import java.io.DataInputStream;
@@ -18,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * listeners in that same thread. Reception and transmission are handled in
  * dedicated threads by RcvHandler and XmtHandler objects. Those are internal
  * classes defined here. The thread priorities are:
- * <P>
  * <UL>
  * <LI> RcvHandler - at highest available priority
  * <LI> XmtHandler - down one, which is assumed to be above the GUI
@@ -32,7 +30,6 @@ import org.slf4j.LoggerFactory;
  * Inc for separate permission.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version $Revision$
  *
  */
 public class LnPacketizer extends LnTrafficController {
@@ -46,7 +43,7 @@ public class LnPacketizer extends LnTrafficController {
      */
     protected boolean echo = false;  // echo messages here, instead of in hardware
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Only used during system initialization")
     public LnPacketizer() {
         self = this;
@@ -55,7 +52,7 @@ public class LnPacketizer extends LnTrafficController {
 
     // The methods to implement the LocoNetInterface
     public boolean status() {
-        return (ostream != null & istream != null);
+        return (ostream != null && istream != null);
     }
 
     /**
@@ -192,7 +189,8 @@ public class LnPacketizer extends LnTrafficController {
      * LnPortController via <code>connectPort</code>. Terminates with the input
      * stream breaking out of the try block.
      */
-    @SuppressWarnings("null")
+    // TODO: This warning is suppressed for now, but there is no way currently to set fulldebug to true
+    @SuppressWarnings("unused")
     public void run() {
         int opCode;
         while (true) {   // loop permanently, program close will exit
@@ -336,7 +334,6 @@ public class LnPacketizer extends LnTrafficController {
             trafficController = lt;
         }
 
-        @SuppressWarnings("null")
         public void run() {
 
             int opCode;
@@ -591,5 +588,3 @@ public class LnPacketizer extends LnTrafficController {
 
     private final static Logger log = LoggerFactory.getLogger(LnPacketizer.class.getName());
 }
-
-/* @(#)LnPacketizer.java */

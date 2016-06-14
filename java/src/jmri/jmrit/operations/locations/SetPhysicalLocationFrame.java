@@ -98,6 +98,7 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
         setVisible(true);
     }
 
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         // check to see if a location has been selected
         if (locationBox.getSelectedItem() == null) {
@@ -123,6 +124,7 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
         }
     }
 
+    @Override
     public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
         if (locationBox.getSelectedItem() == null) {
             resetSpinners();
@@ -132,6 +134,7 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
         }
     }
 
+    @Override
     public void spinnerChangeEvent(javax.swing.event.ChangeEvent ae) {
         if (ae.getSource() == physicalLocation) {
             Location l = (Location) locationBox.getSelectedItem();
@@ -161,6 +164,7 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
         l.setPhysicalLocation(physicalLocation.getValue());
     }
 
+    @Override
     public void dispose() {
         super.dispose();
     }

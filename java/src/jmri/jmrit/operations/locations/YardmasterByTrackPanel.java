@@ -41,11 +41,6 @@ import org.slf4j.LoggerFactory;
  */
 public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -88218348551032298L;
-
     protected static final boolean IS_MANIFEST = false;
 
     protected Track _track = null;
@@ -177,12 +172,14 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
     private void update() {
         // use invokeLater to prevent deadlock
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 runUpdate();
             }
         });
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "CarManager only provides Car Objects")
     private void runUpdate() {
         log.debug("run update");
         removePropertyChangeListerners();
@@ -418,6 +415,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
         trackComboBox.setVisible(true);
     }
 
+    @Override
     public void dispose() {
         if (_location != null)
             _location.removePropertyChangeListener(this);

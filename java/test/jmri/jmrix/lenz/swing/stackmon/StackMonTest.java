@@ -1,4 +1,3 @@
-// StackMonTest.java
 package jmri.jmrix.lenz.swing.stackmon;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.lenz.swing.stackmon package
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class StackMonTest extends TestCase {
 
@@ -21,7 +19,7 @@ public class StackMonTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {StackMonTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

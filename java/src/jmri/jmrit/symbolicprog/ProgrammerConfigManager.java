@@ -7,9 +7,9 @@ import jmri.implementation.FileLocationsPreferences;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
-import jmri.spi.AbstractPreferencesProvider;
-import jmri.spi.InitializationException;
-import jmri.spi.PreferencesProvider;
+import jmri.spi.PreferencesManager;
+import jmri.util.prefs.AbstractPreferencesManager;
+import jmri.util.prefs.InitializationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood (C) 2015
  */
-public class ProgrammerConfigManager extends AbstractPreferencesProvider {
+public class ProgrammerConfigManager extends AbstractPreferencesManager {
 
     private final static Logger log = LoggerFactory.getLogger(ProgrammerConfigManager.class);
     public final static String DEFAULT_FILE = "defaultFile";
@@ -39,13 +39,13 @@ public class ProgrammerConfigManager extends AbstractPreferencesProvider {
             PaneProgFrame.setShowEmptyPanes(this.isShowEmptyPanes());
             this.setShowCvNumbers(preferences.getBoolean(SHOW_CV_NUMBERS, this.isShowCvNumbers()));
             PaneProgFrame.setShowCvNumbers(this.isShowCvNumbers());
-            this.setIsInitialized(profile, true);
+            this.setInitialized(profile, true);
         }
     }
 
     @Override
-    public Set<Class<? extends PreferencesProvider>> getRequires() {
-        Set<Class<? extends PreferencesProvider>> requires = super.getRequires();
+    public Set<Class<? extends PreferencesManager>> getRequires() {
+        Set<Class<? extends PreferencesManager>> requires = super.getRequires();
         requires.add(FileLocationsPreferences.class);
         return requires;
     }
@@ -89,7 +89,7 @@ public class ProgrammerConfigManager extends AbstractPreferencesProvider {
     public void setDefaultFile(String defaultFile) {
         java.lang.String oldDefaultFile = this.defaultFile;
         this.defaultFile = defaultFile;
-        propertyChangeSupport.firePropertyChange(DEFAULT_FILE, oldDefaultFile, defaultFile);
+        firePropertyChange(DEFAULT_FILE, oldDefaultFile, defaultFile);
     }
 
     /**
@@ -105,7 +105,7 @@ public class ProgrammerConfigManager extends AbstractPreferencesProvider {
     public void setShowEmptyPanes(boolean showEmptyPanes) {
         boolean oldShowEmptyPanes = this.showEmptyPanes;
         this.showEmptyPanes = showEmptyPanes;
-        propertyChangeSupport.firePropertyChange(SHOW_EMPTY_PANES, oldShowEmptyPanes, showEmptyPanes);
+        firePropertyChange(SHOW_EMPTY_PANES, oldShowEmptyPanes, showEmptyPanes);
     }
 
     /**
@@ -121,7 +121,7 @@ public class ProgrammerConfigManager extends AbstractPreferencesProvider {
     public void setShowCvNumbers(boolean showCvNumbers) {
         boolean oldShowCvNumbers = this.showCvNumbers;
         this.showCvNumbers = showCvNumbers;
-        propertyChangeSupport.firePropertyChange(SHOW_CV_NUMBERS, oldShowCvNumbers, showCvNumbers);
+        firePropertyChange(SHOW_CV_NUMBERS, oldShowCvNumbers, showCvNumbers);
     }
 
 }

@@ -1,5 +1,8 @@
 package jmri.web.servlet.frameimage;
 
+import static jmri.jmris.json.JSON.NAME;
+import static jmri.jmris.json.JSON.URL;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -11,28 +14,30 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import javax.annotation.Nonnull;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JRadioButton;
 import jmri.jmris.json.JSON;
-import static jmri.jmris.json.JSON.NAME;
-import static jmri.jmris.json.JSON.URL;
 import jmri.jmris.json.JsonUtil;
 import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.Positionable;
 import jmri.util.JmriJFrame;
 import jmri.util.StringUtil;
-import jmri.web.server.WebServerManager;
+import jmri.web.server.WebServerPreferences;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,22 +63,6 @@ import org.slf4j.LoggerFactory;
  */
 public class JmriJFrameServlet extends HttpServlet {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8777952493753632897L;
-    static String clickRetryTime = Integer.toString(WebServerManager.getWebServerPreferences().getClickDelay());
-    static String noclickRetryTime = Integer.toString(WebServerManager.getWebServerPreferences().getRefreshDelay());
-    static List<String> disallowedFrames = WebServerManager.getWebServerPreferences().getDisallowedFrames();
-    boolean useAjax = WebServerManager.getWebServerPreferences().useAjax();
-    boolean plain = WebServerManager.getWebServerPreferences().isPlain();
-    boolean protect = false;
-    protected int maxRequestLines = 50;
-    protected String serverName = "JMRI-JFrameServer";
-    static java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.web.servlet.frameimage.JmriJFrameServlet");
-    // store parameters here because the image clicks are not key=value mapped parameters
-    Map<String, String[]> parameters = new HashMap<>();
-
     void sendClick(String name, Component c, int xg, int yg, Container FrameContentPane) {  // global positions
         int x = xg - c.getLocation().x;
         int y = yg - c.getLocation().y;
@@ -81,12 +70,12 @@ public class JmriJFrameServlet extends HttpServlet {
         log.debug("Local click at {},{}", x, y);
 
         if (c.getClass().equals(JButton.class)) {
-            ((JButton) c).doClick();
+            ((AbstractButton) c).doClick();
         } else if (c.getClass().equals(JCheckBox.class)) {
-            ((JCheckBox) c).doClick();
+            ((AbstractButton) c).doClick();
         } else if (c.getClass().equals(JRadioButton.class)) {
-            ((JRadioButton) c).doClick();
-        } else if (c instanceof MouseListener) {
+            ((AbstractButton) c).doClick();
+        } else if (MouseListener.class.isAssignableFrom(c.getClass())) {
             log.debug("Invoke directly on MouseListener, at {},{}", x, y);
             sendClickSequence((MouseListener) c, c, x, y);
         } else if (c instanceof jmri.jmrit.display.MultiSensorIcon) {
@@ -101,8 +90,8 @@ public class JmriJFrameServlet extends HttpServlet {
                     1, // one click
                     false // not a popup
             );
-            ((jmri.jmrit.display.MultiSensorIcon) c).doMouseClicked(e);
-        } else if (c instanceof jmri.jmrit.display.Positionable) {
+            ((Positionable) c).doMouseClicked(e);
+        } else if (Positionable.class.isAssignableFrom(c.getClass())) {
             if (log.isDebugEnabled()) {
                 log.debug("Invoke Pressed, Released and Clicked on Positionable");
             }
@@ -147,11 +136,11 @@ public class JmriJFrameServlet extends HttpServlet {
              * to adjust the click position for the offset of the Component
              * relative to the frame.
              */
-// was incorrect for zoomed panels, turned off
-//            Point pc = c.getLocationOnScreen();
-//            Point pf = FrameContentPane.getLocationOnScreen();
-//           	x -= (int)(pc.getX() - pf.getX());
-//           	y -= (int)(pc.getY() - pf.getY());
+            // was incorrect for zoomed panels, turned off
+            // Point pc = c.getLocationOnScreen();
+            // Point pf = FrameContentPane.getLocationOnScreen();
+            // x -= (int)(pc.getX() - pf.getX());
+            // y -= (int)(pc.getY() - pf.getY());
             for (MouseListener ml : la) {
                 log.debug("Send click sequence at {},{}", x, y);
                 sendClickSequence(ml, c, x, y);
@@ -213,8 +202,21 @@ public class JmriJFrameServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (WebServerPreferences.getDefault().isDisableFrames()) {
+            if (WebServerPreferences.getDefault().isRedirectFramesToPanels()) {
+                if (JSON.JSON.equals(request.getParameter("format"))) {
+                    response.sendRedirect("/panel?format=json");
+                } else {
+                    response.sendRedirect("/panel");
+                }
+            } else {
+                response.sendError(HttpServletResponse.SC_FORBIDDEN, Bundle.getMessage(request.getLocale(), "FramesAreDisabled"));
+            }
+            return;
+        }
         JmriJFrame frame = null;
         String name = getFrameName(request.getRequestURI());
+        List<String> disallowedFrames = Arrays.asList(WebServerPreferences.getDefault().getDisallowedFrames());
         if (name != null) {
             if (disallowedFrames.contains(name)) {
                 response.sendError(HttpServletResponse.SC_FORBIDDEN, "Frame [" + name + "] not allowed (check Preferences)");
@@ -224,18 +226,20 @@ public class JmriJFrameServlet extends HttpServlet {
             if (frame == null) {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND, "Can not find frame [" + name + "]");
                 return;
+            } else if (!frame.isVisible()) {
+                response.sendError(HttpServletResponse.SC_FORBIDDEN, "Frame [" + name + "] hidden");
             } else if (!frame.getAllowInFrameServlet()) {
                 response.sendError(HttpServletResponse.SC_FORBIDDEN, "Frame [" + name + "] not allowed by design");
                 return;
             }
         }
-        this.populateParameterMap(request.getParameterMap());
-        if (parameters.containsKey("coords") && !(parameters.containsKey("protect") && Boolean.valueOf(parameters.get("protect")[0]))) {
-            this.doClick(frame, parameters.get("coords")[0]);
+        Map<String, String[]> parameters = this.populateParameterMap(request.getParameterMap());
+        if (parameters.containsKey("coords") && !(parameters.containsKey("protect") && Boolean.valueOf(parameters.get("protect")[0]))) { // NOI18N
+            this.doClick(frame, parameters.get("coords")[0]); // NOI18N
         }
-        if (frame != null && request.getRequestURI().contains(".html")) {
-            this.doHtml(frame, request, response);
-        } else if (frame != null && request.getRequestURI().contains(".png")) {
+        if (frame != null && request.getRequestURI().contains(".html")) { // NOI18N
+            this.doHtml(frame, request, response, parameters);
+        } else if (frame != null && request.getRequestURI().contains(".png")) { // NOI18N
             this.doImage(frame, request, response);
         } else {
             this.doList(request, response);
@@ -247,30 +251,35 @@ public class JmriJFrameServlet extends HttpServlet {
         this.doGet(request, response);
     }
 
-    private void doHtml(JmriJFrame frame, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void doHtml(JmriJFrame frame, HttpServletRequest request, HttpServletResponse response, Map<String, String[]> parameters) throws ServletException, IOException {
         Date now = new Date();
-        Boolean click = false;
-        if (parameters.containsKey("coords")) {
+        boolean click = false;
+        boolean useAjax = WebServerPreferences.getDefault().isUseAjax();
+        boolean plain = WebServerPreferences.getDefault().isSimple();
+        String clickRetryTime = Integer.toString(WebServerPreferences.getDefault().getClickDelay());
+        String noclickRetryTime = Integer.toString(WebServerPreferences.getDefault().getRefreshDelay());
+        boolean protect = false;
+        if (parameters.containsKey("coords")) { // NOI18N
             click = true;
         }
-        if (parameters.containsKey("retry")) {
-            noclickRetryTime = parameters.get("retry")[0];
+        if (parameters.containsKey("retry")) { // NOI18N
+            noclickRetryTime = parameters.get("retry")[0]; // NOI18N
         }
-        if (parameters.containsKey("ajax")) {
-            useAjax = Boolean.valueOf(parameters.get("ajax")[0]);
+        if (parameters.containsKey("ajax")) { // NOI18N
+            useAjax = Boolean.valueOf(parameters.get("ajax")[0]); // NOI18N
         }
-        if (parameters.containsKey("plain")) {
-            plain = Boolean.valueOf(parameters.get("plain")[0]);
+        if (parameters.containsKey("plain")) { // NOI18N
+            plain = Boolean.valueOf(parameters.get("plain")[0]); // NOI18N
         }
-        if (parameters.containsKey("protect")) {
-            protect = Boolean.valueOf(parameters.get("protect")[0]);
+        if (parameters.containsKey("protect")) { // NOI18N
+            protect = Boolean.valueOf(parameters.get("protect")[0]); // NOI18N
         }
         response.setStatus(HttpServletResponse.SC_OK);
-        response.setContentType("text/html");
-        response.setHeader("Connection", "Keep-Alive");
-        response.setDateHeader("Date", now.getTime());
-        response.setDateHeader("Last-Modified", now.getTime());
-        response.setDateHeader("Expires", now.getTime());
+        response.setContentType("text/html"); // NOI18N
+        response.setHeader("Connection", "Keep-Alive"); // NOI18N
+        response.setDateHeader("Date", now.getTime()); // NOI18N
+        response.setDateHeader("Last-Modified", now.getTime()); // NOI18N
+        response.setDateHeader("Expires", now.getTime()); // NOI18N
         // 0 is host
         // 1 is frame name  (after escaping special characters)
         // 2 is retry in META tag, click or noclick retry
@@ -279,22 +288,22 @@ public class JmriJFrameServlet extends HttpServlet {
         // 5 is the CSS stylesteet name addition, based on "plain"
         // 6 is ajax preference
         // 7 is protect
-        Object[] args = new String[]{"localhost",
+        Object[] args = new String[]{"localhost", // NOI18N
             StringUtil.escapeString(frame.getTitle()),
             (click ? clickRetryTime : noclickRetryTime),
             noclickRetryTime,
             Boolean.toString(plain),
-            (plain ? "-plain" : ""),
+            (plain ? "-plain" : ""), // NOI18N
             Boolean.toString(useAjax),
             Boolean.toString(protect)};
-        response.getWriter().write(rb.getString("FrameDocType"));
-        response.getWriter().write(MessageFormat.format(rb.getString("FramePart1"), args));
+        response.getWriter().write(Bundle.getMessage(request.getLocale(), "FrameDocType")); // NOI18N
+        response.getWriter().write(MessageFormat.format(Bundle.getMessage(request.getLocale(), "FramePart1"), args)); // NOI18N
         if (useAjax) {
-            response.getWriter().write(MessageFormat.format(rb.getString("FramePart2Ajax"), args));
+            response.getWriter().write(MessageFormat.format(Bundle.getMessage(request.getLocale(), "FramePart2Ajax"), args)); // NOI18N
         } else {
-            response.getWriter().write(MessageFormat.format(rb.getString("FramePart2NonAjax"), args));
+            response.getWriter().write(MessageFormat.format(Bundle.getMessage(request.getLocale(), "FramePart2NonAjax"), args)); // NOI18N
         }
-        response.getWriter().write(MessageFormat.format(rb.getString("FrameFooter"), args));
+        response.getWriter().write(MessageFormat.format(Bundle.getMessage(request.getLocale(), "FrameFooter"), args)); // NOI18N
 
         log.debug("Sent jframe html with click={}", (click ? "True" : "False"));
     }
@@ -302,19 +311,19 @@ public class JmriJFrameServlet extends HttpServlet {
     private void doImage(JmriJFrame frame, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Date now = new Date();
         response.setStatus(HttpServletResponse.SC_OK);
-        response.setContentType("image/png");
-        response.setDateHeader("Date", now.getTime());
-        response.setDateHeader("Last-Modified", now.getTime());
-        response.setHeader("Cache-Control", "no-cache");
-        response.setHeader("Connection", "Keep-Alive");
-        response.setHeader("Keep-Alive", "timeout=5, max=100");
+        response.setContentType("image/png"); // NOI18N
+        response.setDateHeader("Date", now.getTime()); // NOI18N
+        response.setDateHeader("Last-Modified", now.getTime()); // NOI18N
+        response.setHeader("Cache-Control", "no-cache"); // NOI18N
+        response.setHeader("Connection", "Keep-Alive"); // NOI18N
+        response.setHeader("Keep-Alive", "timeout=5, max=100"); // NOI18N
         BufferedImage image = new BufferedImage(frame.getContentPane().getWidth(),
                 frame.getContentPane().getHeight(),
                 BufferedImage.TYPE_INT_RGB);
         frame.getContentPane().paint(image.createGraphics());
         //put it in a temp file to get post-compression size
         ByteArrayOutputStream tmpFile = new ByteArrayOutputStream();
-        ImageIO.write(image, "png", tmpFile);
+        ImageIO.write(image, "png", tmpFile); // NOI18N
         tmpFile.close();
         response.setContentLength(tmpFile.size());
         response.getOutputStream().write(tmpFile.toByteArray());
@@ -322,27 +331,28 @@ public class JmriJFrameServlet extends HttpServlet {
     }
 
     private void doList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String format = request.getParameter("format");
+        List<String> disallowedFrames = Arrays.asList(WebServerPreferences.getDefault().getDisallowedFrames());
+        String format = request.getParameter("format"); // NOI18N
         ObjectMapper mapper = new ObjectMapper();
         Date now = new Date();
         boolean usePanels = Boolean.parseBoolean(request.getParameter(JSON.PANELS));
         response.setStatus(HttpServletResponse.SC_OK);
-        if ("json".equals(format)) {
+        if ("json".equals(format)) { // NOI18N
             response.setContentType("application/json"); // NOI18N
         } else {
-            response.setContentType("text/html");
+            response.setContentType("text/html"); // NOI18N
         }
-        response.setHeader("Connection", "Keep-Alive");
-        response.setDateHeader("Date", now.getTime());
-        response.setDateHeader("Last-Modified", now.getTime());
-        response.setDateHeader("Expires", now.getTime());
+        response.setHeader("Connection", "Keep-Alive"); // NOI18N
+        response.setDateHeader("Date", now.getTime()); // NOI18N
+        response.setDateHeader("Last-Modified", now.getTime()); // NOI18N
+        response.setDateHeader("Expires", now.getTime()); // NOI18N
 
-        if ("json".equals(format)) {
+        if ("json".equals(format)) { // NOI18N
             ArrayNode root = mapper.createArrayNode();
             HashSet<JFrame> frames = new HashSet<>();
             JmriJFrame.getFrameList().stream().forEach((frame) -> {
                 if (usePanels && frame instanceof Editor) {
-                    ObjectNode node = JsonUtil.getPanel(request.getLocale(), (Editor) frame, "xml");
+                    ObjectNode node = JsonUtil.getPanel(request.getLocale(), (Editor) frame, "xml"); // NOI18N
                     if (node != null) {
                         root.add(node);
                         frames.add(((Editor) frame).getTargetFrame());
@@ -352,11 +362,12 @@ public class JmriJFrameServlet extends HttpServlet {
                     if (!title.isEmpty()
                             && frame.getAllowInFrameServlet()
                             && !disallowedFrames.contains(title)
-                            && !frames.contains(frame)) {
+                            && !frames.contains(frame)
+                            && frame.isVisible()) {
                         ObjectNode node = mapper.createObjectNode();
                         node.put(NAME, title);
-                        node.put(URL, "/frame/" + StringUtil.escapeString(title) + ".html");
-                        node.put("png", "/frame/" + StringUtil.escapeString(title) + ".png");
+                        node.put(URL, "/frame/" + StringUtil.escapeString(title) + ".html"); // NOI18N
+                        node.put("png", "/frame/" + StringUtil.escapeString(title) + ".png"); // NOI18N
                         root.add(node);
                         frames.add(frame);
                     }
@@ -364,71 +375,71 @@ public class JmriJFrameServlet extends HttpServlet {
             });
             response.getWriter().write(mapper.writeValueAsString(root));
         } else {
-            response.getWriter().append(rb.getString("FrameDocType"));
-            response.getWriter().append(rb.getString("ListFront"));
-            response.getWriter().write(rb.getString("TableHeader"));
+            response.getWriter().append(Bundle.getMessage(request.getLocale(), "FrameDocType")); // NOI18N
+            response.getWriter().append(Bundle.getMessage(request.getLocale(), "ListFront")); // NOI18N
+            response.getWriter().write(Bundle.getMessage(request.getLocale(), "TableHeader")); // NOI18N
             // list frames, (open JMRI windows)
             for (JmriJFrame frame : JmriJFrame.getFrameList()) {
                 String title = frame.getTitle();
                 //don't add to list if blank or disallowed
-                if (!title.isEmpty() && frame.getAllowInFrameServlet() && !disallowedFrames.contains(title)) {
-                    String link = "/frame/" + StringUtil.escapeString(title) + ".html";
+                if (!title.isEmpty() && frame.getAllowInFrameServlet() && !disallowedFrames.contains(title) && frame.isVisible()) {
+                    String link = "/frame/" + StringUtil.escapeString(title) + ".html"; // NOI18N
                     //format a table row for each valid window (frame)
-                    response.getWriter().append("<tr><td><a href='" + link + "'>");
+                    response.getWriter().append("<tr><td><a href='" + link + "'>"); // NOI18N
                     response.getWriter().append(title);
-                    response.getWriter().append("</a></td>");
+                    response.getWriter().append("</a></td>"); // NOI18N
                     response.getWriter().append("<td><a href='");
                     response.getWriter().append(link);
-                    response.getWriter().append("'><img src='");
-                    response.getWriter().append("/frame/" + StringUtil.escapeString(title) + ".png");
-                    response.getWriter().append("'></a></td></tr>\n");
+                    response.getWriter().append("'><img src='"); // NOI18N
+                    response.getWriter().append("/frame/" + StringUtil.escapeString(title) + ".png"); // NOI18N
+                    response.getWriter().append("'></a></td></tr>\n"); // NOI18N
                 }
             }
-            response.getWriter().append("</table>");
-            response.getWriter().append(rb.getString("ListFooter"));
+            response.getWriter().append("</table>"); // NOI18N
+            response.getWriter().append(Bundle.getMessage(request.getLocale(), "ListFooter")); // NOI18N
         }
     }
 
     // Requests for frames are always /frame/<name>.html or /frame/<name>.png
     private String getFrameName(String URI) {
-        if (!URI.contains(".")) {
-            URI = null;
+        if (!URI.contains(".")) { // NOI18N
+            return null;
         } else {
             // if request contains parameters, strip those off
-            int stop = (URI.contains("?")) ? URI.indexOf("?") : URI.length();
-            URI = URI.substring(URI.lastIndexOf("/"), stop);
+            int stop = (URI.contains("?")) ? URI.indexOf("?") : URI.length(); // NOI18N
+            String name = URI.substring(URI.lastIndexOf("/"), stop); // NOI18N
             // URI contains a leading / at this point
-            URI = URI.substring(1, URI.lastIndexOf("."));
-            URI = StringUtil.unescapeString(URI); //undo escaped characters
-            log.debug("Frame name is {}", URI);
+            name = name.substring(1, name.lastIndexOf(".")); // NOI18N
+            name = StringUtil.unescapeString(name); //undo escaped characters
+            log.debug("Frame name is {}", name); // NOI18N
+            return name;
         }
-        return URI;
     }
 
     // The HttpServeletRequest does not like image maps, so we need to process
     // the parameter names to see if an image map was clicked
-    void populateParameterMap(Map<String, String[]> map) {
-        parameters.clear();
+    protected Map<String, String[]> populateParameterMap(@Nonnull Map<String, String[]> map) {
+        Map<String, String[]> parameters = new HashMap<>();
         map.entrySet().stream().forEach((entry) -> {
             String[] value = entry.getValue();
             String key = entry.getKey();
-            if (value[0].contains("?")) {
+            if (value[0].contains("?")) { // NOI18N
                 // a user's click is in another key's value
-                String[] values = value[0].split("\\?");
+                String[] values = value[0].split("\\?"); // NOI18N
                 if (values[0].contains(",")) {
                     parameters.put(key, new String[]{values[1]});
-                    parameters.put("coords", new String[]{values[0]});
+                    parameters.put("coords", new String[]{values[0]}); // NOI18N
                 } else {
                     parameters.put(key, new String[]{values[0]});
-                    parameters.put("coords", new String[]{values[1]});
+                    parameters.put("coords", new String[]{values[1]}); // NOI18N
                 }
-            } else if (key.contains(",")) {
+            } else if (key.contains(",")) { // NOI18N
                 // we have a user's click
                 String[] coords = new String[1];
-                if (key.contains("?")) {
+                if (key.contains("?")) { // NOI18N
                     // the key is combined
-                    coords[0] = key.substring(key.indexOf("?"));
-                    key = key.substring(0, key.indexOf("?") - 1);
+                    coords[0] = key.substring(key.indexOf("?")); // NOI18N
+                    key = key.substring(0, key.indexOf("?") - 1); // NOI18N
                     parameters.put(key, value);
                 } else {
                     coords[0] = key;
@@ -436,15 +447,16 @@ public class JmriJFrameServlet extends HttpServlet {
                 if (log.isDebugEnabled()) {
                     log.info("Setting click coords to " + coords[0]);
                 }
-                parameters.put("coords", coords);
+                parameters.put("coords", coords); // NOI18N
             } else {
                 parameters.put(key, value);
             }
         });
+        return parameters;
     }
 
     private void doClick(JmriJFrame frame, String coords) {
-        String[] click = coords.split(",");
+        String[] click = coords.split(","); // NOI18N
         int x = Integer.parseInt(click[0]);
         int y = Integer.parseInt(click[1]);
 
@@ -454,7 +466,7 @@ public class JmriJFrameServlet extends HttpServlet {
         sendClick(frame.getTitle(), c, x, y, frame.getContentPane());
 
         //if clicked on background, search for layout editor target pane TODO: simplify id'ing background
-        if (!c.getClass().getName().equals("jmri.jmrit.display.Editor$TargetPane")
+        if (!c.getClass().getName().equals("jmri.jmrit.display.Editor$TargetPane") // NOI18N
                 && (c instanceof jmri.jmrit.display.PositionableLabel)
                 && !(c instanceof jmri.jmrit.display.LightIcon)
                 && !(c instanceof jmri.jmrit.display.LocoIcon)
@@ -472,17 +484,15 @@ public class JmriJFrameServlet extends HttpServlet {
     //recursively search components to find editor target pane, where layout editor paints components
     public void clickOnEditorPane(Component c, int x, int y, JmriJFrame f) {
 
-        if (c.getClass().getName().equals("jmri.jmrit.display.Editor$TargetPane")) {
+        if (c.getClass().getName().equals("jmri.jmrit.display.Editor$TargetPane")) { // NOI18N
             log.debug("Sending additional click to Editor$TargetPane");
             //then click on it
             sendClick(f.getTitle(), c, x, y, f);
 
             //keep looking
-        } else {
-
+        } else if (Container.class.isAssignableFrom(c.getClass())) {
             //check this component's children
-            Container component = (Container) c;
-            for (Component child : component.getComponents()) {
+            for (Component child : ((Container) c).getComponents()) {
                 clickOnEditorPane(child, x, y, f);
             }
         }

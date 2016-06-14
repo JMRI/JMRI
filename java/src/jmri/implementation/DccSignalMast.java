@@ -1,14 +1,3 @@
-// This file is part of JMRI.
-//
-// JMRI is free software; you can redistribute it and/or modify it under
-// the terms of version 2 of the GNU General Public License as published
-// by the Free Software Foundation. See the "COPYING" file for a copy
-// of this license.
-//
-// JMRI is distributed in the hope that it will be useful, but WITHOUT
-// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-// FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
-// for more details.
 package jmri.implementation;
 
 import java.util.HashMap;
@@ -43,14 +32,9 @@ import org.slf4j.LoggerFactory;
  * Based upon {@link jmri.implementation.DccSignalHead} by Alex Shepherd
  *
  * @author Kevin Dickerson Copyright (c) 2012
- * @version $Revision: 19173 $
  */
 public class DccSignalMast extends AbstractSignalMast {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2711857995161461274L;
     private final static Logger log = LoggerFactory.getLogger(DccSignalMast.class);
 
     public DccSignalMast(String sys, String user) {

@@ -1,10 +1,9 @@
 /* EcosProgrammerManager.java */
 package jmri.jmrix.ecos;
 
+import jmri.Programmer;
 import jmri.ProgrammingMode;
 import jmri.managers.DefaultProgrammerManager;
-
-import jmri.Programmer;
 
 /**
  * Extend DefaultProgrammerManager to provide ops mode programmers on LocoNet

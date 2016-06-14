@@ -42,8 +42,7 @@ public class WaitTrainTerminatedAction extends Action implements PropertyChangeL
     /**
      * Wait for train to terminate or if user deselects the train build
      * checkbox.
-     * 
-     * @param evt
+     *
      */
     private void trainUpdate(PropertyChangeEvent evt) {
         if (getAutomationItem() != null) {
@@ -71,7 +70,7 @@ public class WaitTrainTerminatedAction extends Action implements PropertyChangeL
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (Control.showProperty)
+        if (Control.SHOW_PROPERTY)
             log.debug("Property change AutomationItem {}: ({}) old: ({}) new: ({})", getAutomationItem().getId(),
                     evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
         trainUpdate(evt);

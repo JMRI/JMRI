@@ -4,7 +4,9 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Locale;
 import org.eclipse.jetty.websocket.api.Session;
+import org.eclipse.jetty.websocket.api.StatusCode;
 import org.eclipse.jetty.websocket.api.WebSocketException;
+import org.eclipse.jetty.websocket.api.WriteCallback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,13 +22,13 @@ public class JmriConnection {
 
     private Session session = null;
     private DataOutputStream dataOutputStream = null;
-    protected Locale locale = Locale.getDefault();
+    private Locale locale = Locale.getDefault();
     private final static Logger log = LoggerFactory.getLogger(JmriConnection.class);
 
     /**
      * Create a JmriConnection that sends output to a WebSocket.
      *
-     * @param connection
+     * @param connection WebSocket Session to use.
      */
     public JmriConnection(Session connection) {
         this.session = connection;
@@ -35,7 +37,7 @@ public class JmriConnection {
     /**
      * Create a JmriConnection that sends output to a DataOutputStream.
      *
-     * @param output
+     * @param output DataOutputStream to use
      */
     public JmriConnection(DataOutputStream output) {
         this.dataOutputStream = output;
@@ -91,18 +93,29 @@ public class JmriConnection {
      * Send a String to the instantiated connection.
      *
      * This method throws an IOException so the server or servlet holding the
-     * connection open can respond to the exception.
+     * connection open can respond to the exception if there is an immediate
+     * failure. If there is an asynchronous failure, the connection is closed.
      *
-     * @param message
-     * @throws IOException
+     * @param message message to send
+     * @throws IOException if problem sending message
      */
     public void sendMessage(String message) throws IOException {
-        log.debug("Sending {}", message);
         if (this.dataOutputStream != null) {
             this.dataOutputStream.writeBytes(message);
         } else if (this.session != null && this.session.isOpen()) {
             try {
-                this.session.getRemote().sendStringByFuture(message);
+                this.session.getRemote().sendString(message, new WriteCallback() {
+                    @Override
+                    public void writeFailed(Throwable thrwbl) {
+                        log.error("Exception \"{}\" sending {}", thrwbl.getMessage(), message);
+                        JmriConnection.this.getSession().close(StatusCode.NO_CODE, thrwbl.getMessage());
+                    }
+
+                    @Override
+                    public void writeSuccess() {
+                        log.debug("Sent {}", message);
+                    }
+                });
             } catch (WebSocketException ex) {
                 log.debug("Exception sending message", ex);
                 // A WebSocketException is most likely a broken socket,
@@ -120,7 +133,7 @@ public class JmriConnection {
      * <code>getSession().close()</code> since Session.close() does not throw an
      * IOException.
      *
-     * @throws IOException
+     * @throws IOException if problem closing connection
      */
     public void close() throws IOException {
         if (this.dataOutputStream != null) {

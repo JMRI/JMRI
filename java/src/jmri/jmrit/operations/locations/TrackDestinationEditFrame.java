@@ -182,6 +182,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
     }
 
     // Save, Delete, Add
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (_track == null) {
             return;
@@ -208,6 +209,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
         destinationsExclude.setEnabled(enabled);
     }
 
+    @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("radio button activated");
         if (ae.getSource() == destinationsAll) {
@@ -247,6 +249,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
         panelDestinations.revalidate();
     }
 
+    @Override
     public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
         JCheckBox b = (JCheckBox) ae.getSource();
         log.debug("checkbox change {}", b.getText());
@@ -280,6 +283,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
         //      statusFrame.setVisible(true);
 
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 if (checkLocationsLoop())
                     JOptionPane.showMessageDialog(null, Bundle.getMessage("OkayMessage"));
@@ -482,6 +486,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
         return noIssues;
     }
 
+    @Override
     public void dispose() {
         if (_track != null) {
             _track.removePropertyChangeListener(this);
@@ -490,8 +495,9 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
         super.dispose();
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }

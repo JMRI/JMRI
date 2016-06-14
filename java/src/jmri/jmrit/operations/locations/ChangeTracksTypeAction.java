@@ -24,6 +24,7 @@ public class ChangeTracksTypeAction extends AbstractAction {
         _lef = lef;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         new ChangeTracksFrame(_lef);
     }

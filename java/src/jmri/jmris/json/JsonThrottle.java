@@ -1,5 +1,20 @@
 package jmri.jmris.json;
 
+import static jmri.jmris.json.JSON.ADDRESS;
+import static jmri.jmris.json.JSON.CLIENTS;
+import static jmri.jmris.json.JSON.ESTOP;
+import static jmri.jmris.json.JSON.F;
+import static jmri.jmris.json.JSON.FORWARD;
+import static jmri.jmris.json.JSON.ID;
+import static jmri.jmris.json.JSON.IDLE;
+import static jmri.jmris.json.JSON.IS_LONG_ADDRESS;
+import static jmri.jmris.json.JSON.RELEASE;
+import static jmri.jmris.json.JSON.ROSTER_ENTRY;
+import static jmri.jmris.json.JSON.SPEED;
+import static jmri.jmris.json.JSON.SPEED_STEPS;
+import static jmri.jmris.json.JSON.STATUS;
+import static jmri.jmris.json.JSON.THROTTLE;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -18,24 +33,16 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Throttle;
 import jmri.ThrottleListener;
-import static jmri.jmris.json.JSON.ADDRESS;
-import static jmri.jmris.json.JSON.CLIENTS;
-import static jmri.jmris.json.JSON.ESTOP;
-import static jmri.jmris.json.JSON.F;
-import static jmri.jmris.json.JSON.FORWARD;
-import static jmri.jmris.json.JSON.ID;
-import static jmri.jmris.json.JSON.IDLE;
-import static jmri.jmris.json.JSON.IS_LONG_ADDRESS;
-import static jmri.jmris.json.JSON.RELEASE;
-import static jmri.jmris.json.JSON.ROSTER_ENTRY;
-import static jmri.jmris.json.JSON.SPEED;
-import static jmri.jmris.json.JSON.SPEED_STEPS;
-import static jmri.jmris.json.JSON.STATUS;
-import static jmri.jmris.json.JSON.THROTTLE;
 import jmri.jmrit.roster.Roster;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 
+ * @author Randall Wood
+ * @deprecated since 4.3.4
+ */
+@Deprecated
 public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
 
     private final ArrayList<JsonThrottleServer> servers = new ArrayList<>();
@@ -68,8 +75,6 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
      * @param server     The server requesting this throttle on behalf of a
      *                   client
      * @return The throttle
-     * @throws JmriException
-     * @throws IOException
      */
     public static JsonThrottle getThrottle(String throttleId, JsonNode data, JsonThrottleServer server) throws JmriException, IOException {
         DccLocoAddress address = null;

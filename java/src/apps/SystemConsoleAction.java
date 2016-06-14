@@ -1,4 +1,3 @@
-// SystemConsoleAction.java
 package apps;
 
 import java.awt.event.ActionEvent;
@@ -21,14 +20,8 @@ import jmri.util.swing.WindowInterface;
  * <P>
  *
  * @author Matthew Harris copyright (c) 2010
- * @version $Revision$
  */
 public class SystemConsoleAction extends jmri.util.swing.JmriAbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5843920804488337948L;
 
     public SystemConsoleAction(String s, WindowInterface wi) {
         super(s, wi);
@@ -55,5 +48,3 @@ public class SystemConsoleAction extends jmri.util.swing.JmriAbstractAction {
     }
 
 }
-
-/* @(#)SystemConsoleAction.java */

@@ -1,4 +1,3 @@
-// ApplicationTest.java
 package jmri;
 
 import junit.framework.Assert;
@@ -12,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * Tests for the Application class
  *
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  */
 public class ApplicationTest extends TestCase {
 
@@ -48,7 +46,7 @@ public class ApplicationTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {ApplicationTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

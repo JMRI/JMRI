@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * It will not run unless you have your layout fully covered with sensors and
  * signals.
  * 
- * @version $Revision$
  * @author  Karl Johan Lisby Copyright (C) 2016
  */
 public class SCWarrant extends Warrant {
@@ -154,7 +153,7 @@ public class SCWarrant extends Warrant {
             BlockOrder bo = getBlockOrderAt(i);
             if (bo == null) {
                 log.debug(_trainName+" getAndGetNotifiedFromNextSignal could not find a BlockOrder for index "+i);
-            } else if (bo.getEntryName() == "") {
+            } else if (bo.getEntryName().equals("")) {
                 log.debug(_trainName+" getAndGetNotifiedFromNextSignal could not find an entry to Block for index "+i);
             } else {
                 log.debug(_trainName+" getAndGetNotifiedFromNextSignal examines block "+bo.getBlock().getDisplayName()+" with entryname = "+bo.getEntryName());
@@ -180,10 +179,10 @@ public class SCWarrant extends Warrant {
         } else {
             if (_nextSignal instanceof SignalHead) {
                 int appearance = ((SignalHead) _nextSignal).getAppearance();
-                speed = SignalSpeedMap.getMap().getAppearanceSpeed(((SignalHead) _nextSignal).getAppearanceName(appearance));
+                speed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getAppearanceSpeed(((SignalHead) _nextSignal).getAppearanceName(appearance));
             } else {
                 String aspect = ((SignalMast) _nextSignal).getAspect();
-                speed = SignalSpeedMap.getMap().getAspectSpeed(aspect, ((SignalMast) _nextSignal).getSignalSystem());
+                speed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getAspectSpeed(aspect, ((SignalMast) _nextSignal).getSignalSystem());
             }
             if (speed.equals("Stop")) {
                 _engineer.setSpeed(SPEED_STOP);
@@ -209,7 +208,7 @@ public class SCWarrant extends Warrant {
             String pathAlreadySet = block.isPathSet(bo.getPathName());
             if (pathAlreadySet == null) {
                 String message = null;
-                if ((block.getState() & OBlock.OCCUPIED) > 0) {
+                if ((block.getState() & OBlock.OCCUPIED) != 0) {
                     log.info(_trainName+" block allocation failed "+block.getDisplayName() + " not allocated, but Occupied.");
                     message = " block allocation failed ";
                 }
@@ -255,7 +254,7 @@ public class SCWarrant extends Warrant {
             log.debug(_trainName+" ensureRouteConsecutivity for loop #"+i);
             BlockOrder bo = getBlockOrderAt(i);
             OBlock block = bo.getBlock();
-            if (!block.isAllocatedTo(this) || (block.getState() & OBlock.OCCUPIED) > 0) {
+            if (!block.isAllocatedTo(this) || (block.getState() & OBlock.OCCUPIED) != 0) {
                 deAllocateRestOfRoute = true;
             }
             if (deAllocateRestOfRoute) {
@@ -387,6 +386,8 @@ public class SCWarrant extends Warrant {
      *     - it is _nextSignal
      * Do not worry about sensors and blocks. They are handled by goingActive and goingInactive.
      */
+ @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UW_UNCOND_WAIT", justification = "Unconditional wait is give the warrant that now has _stoppingBlock allocated a little time to deallocate it.  This occurs after this method sets _stoppingBlock to null.")
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
         if (!(evt.getSource() instanceof NamedBean)) {
             if (_debug) log.debug(_trainName+" propertyChange \""+evt.getPropertyName()+

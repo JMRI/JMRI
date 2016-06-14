@@ -1,12 +1,20 @@
 package jmri.jmris.json;
 
+import jmri.server.json.JsonException;
+import jmri.server.json.power.JsonPowerServiceFactory;
+import jmri.server.json.roster.JsonRoster;
+import jmri.server.json.sensor.JsonSensorServiceFactory;
+import jmri.server.json.throttle.JsonThrottle;
+import jmri.server.json.time.JsonTimeServiceFactory;
+
 /**
- * Constants used in the JMRI JSON protocol.
+ * Constants used in the JMRI JSON protocol through version 3.0.
  * <p>
  * With the exception of the constants F0-F28 (see {@link #F}), all object names
  * used in the JMRI JSON protocol are constants in this class.
  *
- * @author Randall Wood (C) 2013, 2014
+ * @author Randall Wood (C) 2013, 2014, 2016
+ * @see jmri.server.json.JSON
  */
 public final class JSON {
 
@@ -26,7 +34,7 @@ public final class JSON {
      * <p>
      * {@value #JSON_PROTOCOL_VERSION}
      */
-    public static final String JSON_PROTOCOL_VERSION = "3.0"; // NOI18N
+    public static final String JSON_PROTOCOL_VERSION = jmri.server.json.JSON.JSON_PROTOCOL_VERSION; // NOI18N
 
     /* JSON structure */
     /**
@@ -116,15 +124,15 @@ public final class JSON {
     /**
      * {@value #ERROR}
      */
-    public static final String ERROR = "error"; // NOI18N
+    public static final String ERROR = JsonException.ERROR; // NOI18N
     /**
      * {@value #CODE}
      */
-    public static final String CODE = "code"; // NOI18N
+    public static final String CODE = JsonException.CODE; // NOI18N
     /**
      * {@value #MESSAGE}
      */
-    public static final String MESSAGE = "message"; // NOI18N
+    public static final String MESSAGE = JsonException.MESSAGE; // NOI18N
 
     /* JSON hello and metadata */
     /**
@@ -208,17 +216,17 @@ public final class JSON {
     /**
      * {@value #ROSTER}
      */
-    public static final String ROSTER = "roster"; // NOI18N
+    public static final String ROSTER = JsonRoster.ROSTER; // NOI18N
     /**
      * {@value #ROSTER_GROUP}
      *
      * @since 2.0
      */
-    public static final String ROSTER_GROUP = "rosterGroup"; // NOI18N
+    public static final String ROSTER_GROUP = JsonRoster.ROSTER_GROUP; // NOI18N
     /**
      * {@value #ROSTER_GROUPS}
      */
-    public static final String ROSTER_GROUPS = "rosterGroups"; // NOI18N
+    public static final String ROSTER_GROUPS = JsonRoster.ROSTER_GROUPS; // NOI18N
     /**
      * {@value #ROUTES}
      */
@@ -226,7 +234,7 @@ public final class JSON {
     /**
      * {@value #SENSORS}
      */
-    public static final String SENSORS = "sensors"; // NOI18N
+    public static final String SENSORS = JsonSensorServiceFactory.SENSORS;
     /**
      * {@value #SIGNAL_HEADS}
      */
@@ -290,7 +298,7 @@ public final class JSON {
     /**
      * {@value #POWER}
      */
-    public static final String POWER = "power"; // NOI18N
+    public static final String POWER = JsonPowerServiceFactory.POWER; // NOI18N
     /**
      * {@value #PROGRAMMER}
      */
@@ -302,7 +310,7 @@ public final class JSON {
     /**
      * {@value #SENSOR}
      */
-    public static final String SENSOR = "sensor"; // NOI18N
+    public static final String SENSOR = JsonSensorServiceFactory.SENSOR;
     /**
      * {@value #SIGNAL_HEAD}
      */
@@ -318,15 +326,15 @@ public final class JSON {
     /**
      * {@value #ROSTER_ENTRY}
      */
-    public static final String ROSTER_ENTRY = "rosterEntry"; // NOI18N
+    public static final String ROSTER_ENTRY = JsonRoster.ROSTER_ENTRY; // NOI18N
     /**
      * {@value #THROTTLE}
      */
-    public static final String THROTTLE = "throttle"; // NOI18N
+    public static final String THROTTLE = JsonThrottle.THROTTLE; // NOI18N
     /**
      * {@value #TIME}
      */
-    public static final String TIME = "time"; // NOI18N
+    public static final String TIME = JsonTimeServiceFactory.TIME; // NOI18N
     /**
      * {@value #TRAIN}
      */
@@ -741,37 +749,37 @@ public final class JSON {
     /**
      * {@value #ADDRESS}
      */
-    public static final String ADDRESS = "address"; // NOI18N
+    public static final String ADDRESS = JsonThrottle.ADDRESS;
     /**
      * {@value #FORWARD}
      */
-    public static final String FORWARD = "forward"; // NOI18N
+    public static final String FORWARD = JsonThrottle.FORWARD;
     /**
      * {@value #RELEASE}
      */
-    public static final String RELEASE = "release"; // NOI18N
+    public static final String RELEASE = JsonThrottle.RELEASE;
     /**
      * {@value #ESTOP}
      */
-    public static final String ESTOP = "eStop"; // NOI18N
+    public static final String ESTOP = JsonThrottle.ESTOP;
     /**
      * {@value #IDLE}
      */
-    public static final String IDLE = "idle"; // NOI18N
+    public static final String IDLE = JsonThrottle.IDLE;
     /**
      * {@value #SPEED}
      */
-    public static final String SPEED = "speed"; // NOI18N
+    public static final String SPEED = JsonThrottle.SPEED;
     /**
      * {@value #SPEED_STEPS}
      */
-    public static final String SPEED_STEPS = "speedSteps"; // NOI18N
+    public static final String SPEED_STEPS = JsonThrottle.SPEED_STEPS;
     /**
      * Prefix for the throttle function keys (F0-F28).
      * <p>
      * {@value #F}
      */
-    public static final String F = "F"; // NOI18N
+    public static final String F = JsonThrottle.F;
     /**
      * Used by a {@link jmri.jmris.json.JsonThrottle} to notify clients of the
      * number of clients controlling the same throttle.
@@ -780,7 +788,7 @@ public final class JSON {
      *
      * @since 2.0
      */
-    public static final String CLIENTS = "clients"; // NOI18N
+    public static final String CLIENTS = JsonThrottle.CLIENTS;
 
     /* JSON Sensor and Turnout Tokens */
     /**

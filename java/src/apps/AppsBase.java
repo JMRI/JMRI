@@ -1,4 +1,3 @@
-// AppsBase.java
 package apps;
 
 import apps.gui3.TabbedPreferences;
@@ -21,7 +20,7 @@ import jmri.jmrit.revhistory.FileHistory;
 import jmri.jmrit.signalling.EntryExitPairs;
 import jmri.managers.DefaultIdTagManager;
 import jmri.managers.DefaultShutDownManager;
-import jmri.managers.DefaultUserMessagePreferences;
+import jmri.managers.JmriUserPreferencesManager;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.script.JmriScriptEngineManager;
@@ -44,11 +43,10 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author	Bob Jacobsen Copyright 2009, 2010
- * @version $Revision$
  */
 public abstract class AppsBase {
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "MS_PKGPROTECT",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT",
             justification = "not a library pattern")
     private final static String configFilename = "/JmriConfig3.xml";
     protected boolean configOK;
@@ -80,7 +78,7 @@ public abstract class AppsBase {
     /**
      * Create and initialize the application object.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SC_START_IN_CTOR",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SC_START_IN_CTOR",
             justification = "The thread is only called to help improve user experiance when opening the preferences, it is not critical for it to be run at this stage")
     public AppsBase(String applicationName, String configFileDef, String[] args) {
 
@@ -219,7 +217,7 @@ public abstract class AppsBase {
         InstanceManager.getDefault(FileHistory.class).addOperation("app", Application.getApplicationName(), null);
 
         // Install a user preferences manager
-        InstanceManager.store(DefaultUserMessagePreferences.getInstance(), UserPreferencesManager.class);
+        InstanceManager.store(JmriUserPreferencesManager.getDefault(), UserPreferencesManager.class);
 
         // install the abstract action model that allows items to be added to the, both 
         // CreateButton and Perform Action Model use a common Abstract class
@@ -443,7 +441,7 @@ public abstract class AppsBase {
     /**
      * The application decided to quit, handle that.
      */
-    static public Boolean handleQuit() {
+    static public boolean handleQuit() {
         log.debug("Start handleQuit");
         try {
             return InstanceManager.shutDownManagerInstance().shutdown();
@@ -456,7 +454,7 @@ public abstract class AppsBase {
     /**
      * The application decided to restart, handle that.
      */
-    static public Boolean handleRestart() {
+    static public boolean handleRestart() {
         log.debug("Start handleRestart");
         try {
             return InstanceManager.shutDownManagerInstance().restart();

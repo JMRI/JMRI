@@ -8,11 +8,11 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.LinkedList;
 import jmri.InstanceManager;
-import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
-import jmri.jmrix.dccpp.DCCppTrafficController;
 import jmri.jmrix.dccpp.DCCppListener;
 import jmri.jmrix.dccpp.DCCppMessage;
 import jmri.jmrix.dccpp.DCCppReply;
+import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
+import jmri.jmrix.dccpp.DCCppTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

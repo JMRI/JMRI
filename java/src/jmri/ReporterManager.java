@@ -1,4 +1,3 @@
-// ReporterManager.java
 package jmri;
 
 import java.util.List;
@@ -33,7 +32,6 @@ import java.util.List;
  * <P>
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  * @see jmri.Reporter
  * @see jmri.InstanceManager
  */
@@ -59,7 +57,7 @@ public interface ReporterManager extends Manager {
      * Locate via user name, then system name if needed. If that fails, return
      * null
      *
-     * @param name
+     * @param name User name or system name to match
      * @return null if no match found
      */
     public Reporter getReporter(String name);
@@ -142,6 +140,3 @@ public interface ReporterManager extends Manager {
     public String getNextValidAddress(String curAddress, String prefix);
 
 }
-
-
-/* @(#)ReporterManager.java */

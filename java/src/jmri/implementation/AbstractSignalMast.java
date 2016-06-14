@@ -1,4 +1,3 @@
-// AbstractSignalMast.java
 package jmri.implementation;
 
 import java.util.ArrayList;
@@ -15,15 +14,10 @@ import org.slf4j.LoggerFactory;
  * Abstract class providing the basic logic of the SignalMast interface.
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version $Revision$
  */
 public abstract class AbstractSignalMast extends AbstractNamedBean
         implements SignalMast, java.io.Serializable, java.beans.VetoableChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1520502542242668008L;
     private final static Logger log = LoggerFactory.getLogger(AbstractSignalMast.class);
 
     public AbstractSignalMast(String systemName, String userName) {
@@ -34,7 +28,7 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
         super(systemName);
     }
 
-    @edu.umd.cs.findbugs.annotations.OverrideMustInvoke
+    @javax.annotation.OverridingMethodsMustInvokeSuper
     public void setAspect(String aspect) {
         String oldAspect = this.aspect;
         this.aspect = aspect;
@@ -92,7 +86,7 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
      *
      * This acts on all the SignalHeads included in this SignalMast
      */
-    @edu.umd.cs.findbugs.annotations.OverrideMustInvoke
+    @javax.annotation.OverridingMethodsMustInvokeSuper
     public void setLit(boolean newLit) {
         boolean oldLit = mLit;
         mLit = newLit;
@@ -111,7 +105,7 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
      * held parameter is a local variable which effects the aspect only via
      * higher-level logic.
      */
-    @edu.umd.cs.findbugs.annotations.OverrideMustInvoke
+    @javax.annotation.OverridingMethodsMustInvokeSuper
     public void setHeld(boolean newHeld) {
         boolean oldHeld = mHeld;
         mHeld = newHeld;
@@ -229,5 +223,3 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
     }
 
 }
-
-/* @(#)AbstractSignalMast.java */

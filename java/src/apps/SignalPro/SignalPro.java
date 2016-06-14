@@ -1,4 +1,3 @@
-// SignalPro.java
 package apps.SignalPro;
 
 import apps.Apps;
@@ -35,14 +34,8 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Bob Jacobsen Copyright 2003-2010
- * @version $Revision$
  */
 public class SignalPro extends Apps {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1052727691037666599L;
 
     SignalPro(JFrame p) {
         super(p);
@@ -72,11 +65,6 @@ public class SignalPro extends Apps {
 
         // Buttons
         Action quit = new AbstractAction(Bundle.getMessage("MenuItemQuit")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 715520430782060134L;
-
             public void actionPerformed(ActionEvent e) {
                 Apps.handleQuit();
             }

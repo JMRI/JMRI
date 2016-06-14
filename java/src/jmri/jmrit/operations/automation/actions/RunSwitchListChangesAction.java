@@ -7,15 +7,16 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainCsvSwitchLists;
-import jmri.jmrit.operations.trains.TrainCustomSwitchList;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainSwitchLists;
+import jmri.jmrit.operations.trains.excel.TrainCustomSwitchList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class RunSwitchListChangesAction extends Action {
 
     private static final int _code = ActionCodes.RUN_SWITCHLIST_CHANGES;
+    protected static final boolean IS_CHANGED = true;
 
     @Override
     public int getCode() {
@@ -29,8 +30,20 @@ public class RunSwitchListChangesAction extends Action {
 
     @Override
     public void doAction() {
+        doAction(IS_CHANGED);
+    }
+
+    /**
+     * Creates a custom switch list for each location that is selected and
+     * there's new work for that location.
+     * <p>
+     * common code see RunSwitchListAction.java
+     */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
+            value = {"UC_USELESS_CONDITION", "RpC_REPEATED_CONDITIONAL_TEST"},
+            justification = "isChanged = false when called from RunSwitchListAction")
+    protected void doAction(boolean isChanged) {
         if (getAutomationItem() != null) {
-            boolean isChanged = true;
             if (!Setup.isGenerateCsvSwitchListEnabled()) {
                 log.warn("Generate CSV Switch List isn't enabled!");
                 finishAction(false);
@@ -46,9 +59,10 @@ public class RunSwitchListChangesAction extends Action {
             setRunning(true);
             TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
             TrainCsvSwitchLists trainCsvSwitchLists = new TrainCsvSwitchLists();
+            new TrainCustomSwitchList().checkProcessComplete(); // this can wait thread
             for (Location location : LocationManager.instance().getLocationsByNameList()) {
-                if (location.isSwitchListEnabled()
-                        && (!isChanged || isChanged && location.getStatus().equals(Location.MODIFIED))) {
+                if (location.isSwitchListEnabled() &&
+                        (!isChanged || (isChanged && location.getStatus().equals(Location.MODIFIED)))) {
                     // also build the regular switch lists so they can be used
                     if (!Setup.isSwitchListRealTime()) {
                         trainSwitchLists.buildSwitchList(location);
@@ -72,6 +86,8 @@ public class RunSwitchListChangesAction extends Action {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
+            } else {
+                log.info("No switch list changes found");
             }
             // set trains switch lists printed
             TrainManager.instance().setTrainsSwitchListStatus(Train.PRINTED);

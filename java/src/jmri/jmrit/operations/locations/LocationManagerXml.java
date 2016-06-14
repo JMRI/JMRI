@@ -35,12 +35,13 @@ public class LocationManagerXml extends OperationsXml {
             _instance = new LocationManagerXml();
             _instance.load();
         }
-        if (Control.showInstance) {
+        if (Control.SHOW_INSTANCE) {
             log.debug("LocationManagerXml returns instance {}", _instance);
         }
         return _instance;
     }
 
+    @Override
     public void writeFile(String name) throws java.io.FileNotFoundException, java.io.IOException {
         if (log.isDebugEnabled()) {
             log.debug("writeFile {}", name);
@@ -95,21 +96,23 @@ public class LocationManagerXml extends OperationsXml {
         log.debug("Locations have been loaded!");
     }
 
+    @Override
     public void setOperationsFileName(String name) {
         operationsFileName = name;
     }
 
+    @Override
     public String getOperationsFileName() {
         return operationsFileName;
     }
 
     private String operationsFileName = "OperationsLocationRoster.xml"; // NOI18N
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "For testing")
     public void dispose(){
         _instance = null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocationManagerXml.class
-            .getName());
+    private final static Logger log = LoggerFactory.getLogger(LocationManagerXml.class.getName());
 
 }

@@ -47,7 +47,7 @@ public class EngineManager extends RollingStockManager {
             // create manager to load engines and their attributes
             EngineManagerXml.instance();
         }
-        if (Control.showInstance) {
+        if (Control.SHOW_INSTANCE) {
             log.debug("EngineManager returns instance {}", _instance);
         }
         return _instance;
@@ -56,10 +56,12 @@ public class EngineManager extends RollingStockManager {
     /**
      * @return requested Engine object or null if none exists
      */
+    @Override
     public Engine getById(String id) {
         return (Engine) super.getById(id);
     }
 
+    @Override
     public Engine getByRoadAndNumber(String engineRoad, String engineNumber) {
         String engineId = Engine.createId(engineRoad, engineNumber);
         return getById(engineId);
@@ -69,8 +71,6 @@ public class EngineManager extends RollingStockManager {
      * Finds an existing engine or creates a new engine if needed requires
      * engine's road and number
      *
-     * @param engineRoad
-     * @param engineNumber
      * @return new engine or existing engine
      */
     public Engine newEngine(String engineRoad, String engineNumber) {
@@ -220,7 +220,6 @@ public class EngineManager extends RollingStockManager {
      * return a list available engines (no assigned train) engines are ordered
      * least recently moved to most recently moved.
      *
-     * @param train
      * @return Ordered list of engines not assigned to a train
      */
     public List<Engine> getAvailableTrainList(Train train) {

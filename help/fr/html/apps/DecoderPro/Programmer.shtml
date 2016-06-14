@@ -7,7 +7,7 @@
 <title>JMRI: Create a Custom DecoderPro Programmer</title>
 
 <!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8851-1">
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" TYPE="image/png">
@@ -114,7 +114,7 @@ cela avec d'autres variables sur le m&#234;me volet.
  des noms sp&#233;cifiques, qui sont d&#233;crites sur une <A HREF="FnMapping.shtml"> page s&#233;par&#233;e </a>
 <li><dfn>dccaddress</dfn> - Afficher une variable combin&#233;e pour l'adresse DCC. Il s'agit d'une case &#224; 
 cocher qui permet de s&#233;lectionner l'utilisation de l'adresse courte par rapport &#224; une longue, et un 
-champ de texte simple pour entrer l'adresse. Selon la faÃ§on dont la case est activ&#233;e, le champ de texte
+champ de texte simple pour entrer l'adresse. Selon la façon dont la case est activ&#233;e, le champ de texte
  permet de configurer l'adresse courte dans CV 1  ou adresse longue dans CV 17/18.
 </ul>
 </dd>

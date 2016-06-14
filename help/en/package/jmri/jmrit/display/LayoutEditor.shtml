@@ -1,16 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI: Layout Editor Help
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Dave Duchamp" name=Author>
-    <META name="keywords" content="JMRI help Layout Editor panel">
+ </title>
+    <meta name="author" content="Dave Duchamp">
+    <meta name="keywords" content="JMRI help Layout Editor panel">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -23,7 +21,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>The Layout Editor</H1>
+<h1>The Layout Editor</h1>
 
 <a name="contents"><h2>Contents</h2></a>
 
@@ -56,7 +54,7 @@ sections in detail.</p>
 	<li><a href="#finish">Putting Finishing Touches on your Panel</a>
 </ul>
 
-<a name="intro"><H2>Introduction to Layout Editor Panels</H2>
+<a name="intro"><h2>Introduction to Layout Editor Panels</h2>
 
 
 <b>Layout Editor</b> supports the construction and display of PanelPro panels.
@@ -64,8 +62,8 @@ sections in detail.</p>
 except it supports a drawn track diagram instead of an icon-based track
 diagram.  Because of the way it works, <b>Layout Editor</b> captures the
 full connectivity of your layout as you draw it. Several automated tools are 
-available to make setting up your panel easier.</P>
-<P>
+available to make setting up your panel easier.</p>
+<p>
 <b>Layout Editor</b> is implemented using a tool bar at the top of your panel.  
 This tool bar may be switched on and off using the <b>Edit Mode</b> item in 
 your panel's <b>Options</b> menu. When you create a new Layout Editor panel, your 
@@ -73,8 +71,8 @@ new panel appears with the Edit Mode tool bar displayed at the top of your
 panel, and with a system-specific help bar displayed at the bottom of the panel.
 The help bar describes how to use the <b>Layout Editor</b> user interface. The 
 help bar probably should be turned off (using the Options menu) once you are
-familiar with the user interface.</P>
-<P>
+familiar with the user interface.</p>
+<p>
 <b>Layout Editor</b> supports several options that you may or may not elect to use 
 when you draw your track diagram. Sections of track may be designated as 
 <i>mainline track</i> to differentiate it from <i>side track</i> (the default). 
@@ -86,7 +84,7 @@ and leaves that block. Normally track segments are drawn as solid lines, but you
 can designate chosen segments as <i>dashed</i> to show tunnels or tracks crossing 
 at different grades. You can also designate a track segment as 
 <i>hidden</i> so it is displayed only when the tool bar is shown. These options may
-be set up as you draw your panel, or you may add them later.</P>
+be set up as you draw your panel, or you may add them later.</p>
 <p>
 JMRI supports multiple panels, either Layout Editor type or Panel Editor type. All
 panels that have been created or loaded are listed in the submenu of <b>Show 
@@ -113,34 +111,34 @@ tutorial is available for download as a pdf file on the JMRI web site. See
 JMRI/PanelPro Layout Editor</b></a> 
 and its two associated demonstration .xml files.
 
-<a name="start"><H2>Getting Started with Layout Editor</H2>
-<P>
-To get familiar with the Layout Editor user interface, try the following:</P>
-<P>
+<a name="start"><h2>Getting Started with Layout Editor</h2>
+<p>
+To get familiar with the Layout Editor user interface, try the following:</p>
+<p>
 1. Select <b>New panel...</b>, then <b>Layout Editor</b> in the Panels menu.
 You should see a blank panel window with
-a tool bar at the top, and a help bar at the bottom. </P>
-<P>
+a tool bar at the top, and a help bar at the bottom. </p>
+<p>
 2. Move the cursor around inside the blank panel. Note that as you move, coordinates
 are displayed at the upper left of the tool bar--<i>x</i> (horizontal) and <i>y</i> 
 (vertical). (This is to aid in aligning items as you draw them.) Move the cursor over
-the check boxes and entry fields in the tool bar, noting that each has a tool tip.</P>
-<P>
+the check boxes and entry fields in the tool bar, noting that each has a tool tip.</p>
+<p>
 3. To add a right-handed turnout, first, check RH for Turnout Type in the top row of 
 the tool bar. Then, while depressing the shift key, click the mouse (left click on 
 a two-button mouse) on a point about one third down and one third across from the upper 
 left of your panel. A right-handed turnout should appear. The three red squares at the 
 ends of the throat and the continuing and diverging legs of the turnout are connection 
 points for <b>Track Segments</b>. The round circle at the center of the turnout is 
-where you should point to get the turnout's popup menu.</P>
-<P>
+where you should point to get the turnout's popup menu.</p>
+<p>
 4. To add a left-handed turnout, first, check LH for turnout type. (Note that the
 check is automatically turned off at RH.)  Type "180" in the Rotation box at the 
 upper right of the tool bar, to rotate the new turnout. While pressing the shift
 key, click the mouse on a point at the same height as the other turnout, but to 
 the right about two or three inches. A left-handed turnout should appear with its
-throat facing away from the right-handed turnout.</P>
-<P>
+throat facing away from the right-handed turnout.</p>
+<p>
 5. To add track segments to connect the two turnouts, check Track Segment on the 
 second row of the tool bar. While holding the shift key down the whole time, depress
 the mouse button on the diverging connection point of one turnout, and drag to the 
@@ -149,12 +147,12 @@ the cursor changes shape. You should see a track segment connecting the two turn
 and both connection points should change color to green, indicating they are 
 <i>full</i>, that is they have the maximum number of connections allowed. Similarly 
 press and drag with shift pressed to add a track segment connecting the continuing 
-legs of the two turnouts. You've drawn a passing siding.</P>
-<P>
+legs of the two turnouts. You've drawn a passing siding.</p>
+<p>
 6. To add a turnout for an industry siding, check LH for a left-handed turnout, and
 enter 0 in Rotation. Then with shift pressed, click on a point a couple of inches 
-below and slightly to the right of the turnout on your left.</P>
-<P>
+below and slightly to the right of the turnout on your left.</p>
+<p>
 7. To connect this turnout with the upper passing track and form a simple oval track
 diagram, check Anchor Point on the third row of the tool bar. An <b>Anchor Point</b>
 is a node in a track diagram that can accept two connecting track segments; it's used 
@@ -168,13 +166,13 @@ outlining the left side of the oval.  Connect these four points and the turnout
 throat connection points with track segments--check Track Segment, then with shift 
 pressed, click and drag to create each of the five track segments needed.  Note that 
 the anchor point rectangle will change from red to green when it has two connections.
-Similarly repeat this procedure to draw the right side of the oval.</P>
-<P>
+Similarly repeat this procedure to draw the right side of the oval.</p>
+<p>
 8. Turnout positions and anchor point positions may be adjusted to make the track 
 diagram look nice by holding down the meta key (check the help bar to see which key
 is the meta key), and dragging each anchor point or turnout. To adjust the position 
-of a turnout, drag the center point of the turnout with the meta key pressed.</P>
-<P>
+of a turnout, drag the center point of the turnout with the meta key pressed.</p>
+<p>
 9. Next complete the industry siding. The diverging connection point of the lower 
 turnout should be the only box needing a connection (colored red). Check End Bumper 
 in the tool bar. An <b>End Bumper</b> is a node in a track diagram that can accept 
@@ -182,22 +180,22 @@ only one connection. With shift pressed, click on a point exactly to the right o
 the diverging connection point of the lower turnout. Connect your end bumper to the 
 diverging connection point by holding shift down, while pressing the mouse 
 button on the diverging connection point and dragging to the end bumper. Your track
-diagram should look like the following:</P>
+diagram should look like the following:</p>
 <p>
-<A href="./images/OvalLayoutEditMode.gif"><IMG SRC="./images/OvalLayoutEditMode.gif" 
-ALIGN=CENTER WIDTH="563" HEIGHT="169" HSPACE="0" VSPACE="0"></A>
-<P>
+<a href="./images/OvalLayoutEditMode.gif"><img src="./images/OvalLayoutEditMode.gif" 
+align="center" width="563" height="169" hspace="0" vspace="0"></a>
+<p>
 10. Select <b>Edit Mode</b> in the Options menu to hide the tool bar (and the 
 help bar) and see how your track diagram of a simple oval layout would look in a 
 final panel. You should see connection points and edit circles disappear. Also note
 that, when not in Edit Mode, items may not be repositioned and popup menus are not 
-active.</P>
-<P>
+active.</p>
+<p>
 The above steps demonstrated the basic steps needed to draw a track diagram. You can
 clear this demonstration panel by selecting <b>Delete this panel...</b> in the panel's
 File menu, and begin to construct a track diagram of your layout. Read the items
 below to learn more about how to add content to track diagram items and how to add
-icon items to your panel.</P>
+icon items to your panel.</p>
 <p>
 <b>Note: Layout Editor tools for placing signal heads and automatically configuring
 signal logic require that turnouts and block boundaries (see below) be oriented 
@@ -225,6 +223,7 @@ bar:</p>
 	<li><b>Text Label</b> - selects a label showing the content of the entry field </li>
 	<li><b>Memory Label</b> - selects a label showing the contents of the memory whose name is 
 	entered on the right</li>
+        <li><b>Block Contents</b> - selects a label showing the contents of the block whose name is entered</li>
 	<li><b>Multi-sensor</b> - selects a multi-sensor--A dialog is displayed allowing the 
 	multi-sensor to be defined. Before creating the multi-sensor, a name must be entered 
 	for every sensor to define the multi-sensor completely.</li>
@@ -311,7 +310,13 @@ are optional or required.
 	If the entered name doesn't correspond to a memory variable in the Memory Table, 
 	a new memory variable will be created, using the entered name as the JMRI 
 	system name (with IM prefixed if needed).</li>
-	<li><b>Sensor Icon</b> (field) - applies to Sensor Icon - Entry is required. 
+	<li><b>Block Contents</b> (field) - applies to Block Contents - Entry is required.  
+	If the entered name doesn't correspond to a layout block a new memory layout block
+        will be created, using the entered name as the JMRI 
+	system name (with a prefix added if needed). This new block will be discarded on the
+        next save of the Layout unless it is actually used.</li>
+
+        <li><b>Sensor Icon</b> (field) - applies to Sensor Icon - Entry is required. 
 	If a sensor with the entered name does not exist, it will be created using the 
 	entered name as the JMRI system name (with a suitable prefix if needed).</li>
 	<li><b>Signal Icon</b> (field) - applies to Signal Icon - Entry is required.
@@ -754,7 +759,7 @@ starting the fast clock and changing its rate ratio. Icon-based popup menus show
 the <i>x</i> (horizontal) and <i>y</i> (vertical) location of the icon on the 
 panel. These coordinates give the location of the upper left corner of the icon. 
 A convenient way to change the location of an icon-based item is to select 
-<b>Set x & y</b> in its popup menu. Selecting <b>Set x & y</b> brings up a small 
+<b>Set x &amp; y</b> in its popup menu. Selecting <b>Set x &amp; y</b> brings up a small 
 window that provides for precise adjustment of the icon's position.</p>
 <p>
 With turnouts, level crossings, and track segments, selecting 
@@ -781,7 +786,7 @@ Signals...</b> tools may be accessed via the Tools menu. These tools are briefly
 described above under <a href="#toolsmenu">Using Layout Editor's Tools Menu</a>, 
 and are discussed in detail on the help page of the tool's dialog window.</p>
 
-<a name="turnouts"><H2>Turnouts</H2>
+<a name="turnouts"><h2>Turnouts</h2>
 
 Layout Editor supports six different types of turnouts (track switches): right-
 handed (<b>RH</b>), left-handed (<b>LH</b>), wye (<b>WYE</b>), double 
@@ -795,8 +800,8 @@ type cannot be changed. Changing the type of a turnout requires removing and
 recreating the turnout. Drawn turnout parts may be lengthened, shortened, or 
 repositioned by dragging connection points with the meta key pressed, and 
 the entire turnout may be repositioned by dragging the center circle with the
-meta key pressed.</P>
-<P>
+meta key pressed.</p>
+<p>
 When new turnouts (and crossovers) are created, Layout Editor uses default 
 displacements from the center of the new turnout to "size" the new turnout drawing. 
 Layout Editor maintains two sets of default displacements, one for for regular 
@@ -809,8 +814,8 @@ will change default size parameters so that the next  and subsequent turnouts to
 added will be the same size as the resized turnout. Each <b>Use Size As Default</b> 
 changes one of the two sets of default size parameters. Both sets of default size 
 parameters are saved when the panel is saved. To return to Layout Editor's default 
-turnout sizes select <b>Use Program Default Turnout Size</b> in the Tools menu.</P>
-<P>
+turnout sizes select <b>Use Program Default Turnout Size</b> in the Tools menu.</p>
+<p>
 Turnout drawings in a track diagram are drawn using solid lines for both 
 continuing and diverging legs until the turnout drawings are linked to
 turnouts in the Turnout Table. Once linked to actual turnouts, turnout 
@@ -819,8 +824,8 @@ you can toggle each turnout on your layout by clicking on the center point of it
 drawing (provided <b>Allow Layout Control</b> is checked in the 
 Options menu, and your DCC system supports computer control of turnouts). The
 ability to toggle by clicking can be turned off by checking <b>Disabled</b> in 
-the turnout's popup  menu.</P>
-<P>
+the turnout's popup  menu.</p>
+<p>
 You can link each turnout drawing with an actual turnout (internal or hardware) 
 in the Turnout Table as turnout drawings are created, by entering its Turnout 
 Table name (either system name or user name) in the <b>Turnout: Name</b> field 
@@ -830,14 +835,14 @@ turnout's popup menu to open an <b>Edit Turnout</b> dialog that allows entry of
 the turnout name. Once the name of an actual turnout is entered, the actual 
 turnout can be toggled by clicking the mouse at the center of the turnout. 
 Turnout toggling can be disabled by checking <b>Disabled</b> in the turnout's 
-popup menu.</P>
-<P>
+popup menu.</p>
+<p>
 Optionally, you can designate which <b>Block</b> a turnout is in either by 
 entering a block name in the <b>Block: Name</b> field of the tool bar prior to 
 creating each turnout drawing, or by entering a block name in the Edit Turnout 
 dialog at a later time. The Edit Turnout dialog also allows an Edit Block dialog 
 to be requested, where information for the turnout's block may be entered or 
-changed. (Blocks are discussed more fully below.)</P>
+changed. (Blocks are discussed more fully below.)</p>
 <p>
 When a side track branches from a mainline track at an RH or LH turnout, the 
 mainline normally continues through the turnout by following the straight-through 
@@ -895,8 +900,8 @@ Level crossings have four connection points, each accepting one
 connection. A connection point that can accept a connecting track segment is 
 drawn red.  When a connection point has its capacity of connections, its color 
 is changed to green. When all connection points are green, a track diagram is
-complete, with all connections defined.</P>
-<P>
+complete, with all connections defined.</p>
+<p>
 Track segments are normally drawn as solid lines. but you can designate that a
 track segment be drawn <i>dashed</i> to show tunnels or tracks crossing 
 at different grades. You can request a dashed line for a track segment by 
@@ -907,7 +912,7 @@ track to cover the exact area desired.) You can also designate a track segment
 as <i>hidden</i> so it's displayed only when edit mode is active. <i>Hidden</i> 
 track segments are useful for track diagrams drawn as multiple rows where the 
 end of one row connects to the beginning of the same or another row. To make a 
-track segment hidden, check <b>Hide Track</b> in the Edit Track Segment dialog.</P>
+track segment hidden, check <b>Hide Track</b> in the Edit Track Segment dialog.</p>
 <p>
 Optionally, track segments are used to designate <i>mainline track</i> or <i>side 
 track</i>. The legs of turnouts and level crossings are set to <i>mainline 
@@ -1026,9 +1031,9 @@ background image is placed at the top of the panel and to the right of right-mos
 existing background image. This allows easy implementation of multi-slice 
 background images (see below).  The <i>x, y</i> location of the upper left corner 
 of each background image is shown in it's popup menu. This location may be 
-changed by selecting <b>Set x & y</b> in the popup menu.</p>
+changed by selecting <b>Set x &amp; y</b> in the popup menu.</p>
 <p>
-For users building a classic US&S panel, there are two sets of predefined image 
+For users building a classic US&amp;S panel, there are two sets of predefined image 
 'slices' currently available. One set is 718 pixels high, and the second set is 
 900 pixels high. Choose the set that best fits your display. These 'slices' are 
 located at icons/USS/background/. The 900 pixel high images include a "-9" in 
@@ -1037,7 +1042,7 @@ panel 'slices' are 65 pixels wide. First add the left edge image, then
 add a blank slice or one including switch plate(s) for each turnout on your
 CTC panel, then finish by adding the right edge image. The advantages of 
 building CTC backgrounds with slices are that 1) you can make virtually any 
-length CTC panel, and 2) the plates will be precisely located automatically.</P>
+length CTC panel, and 2) the plates will be precisely located automatically.</p>
 
 <a name="block"><h2>Blocks</h2>
 
@@ -1092,12 +1097,6 @@ set, Layout Editor will use the occupied track color if a block is occupied, the
 if not occupied, will use the alternate unoccupied track color if it has been 
 requested, otherwise it uses the unoccupied track color.</p>
 <p>
-Optionally a Memory Variable may be assigned to a block by entering its name 
-(system name or user name) in the <b>Memory Variable Name:</b> 
-field. This is useful when setting up Train Tracking (<a href="#tracking">see 
-below</a>). Make sure a memory variable is in the Memory Variable Table before 
-it is entered here.
-<p>
 Since blocks are items on the physical layout, the same block may be used in 
 more than one panel. Consequently, block information is saved in the non-panel 
 specific portion of the layout information, when panels are saved to a
@@ -1109,7 +1108,7 @@ and level crossings) that are assigned to a block. This count is displayed in
 the Create/Edit Block dialog as <b>Current Use Count:</b>. When panels are saved to
 disk, only those blocks with a use count greater than zero are saved.</p>
 
-<a name="tracking"><h2>Blocks, Memory Labels, and Train Tracking</h2>
+<a name="tracking"><h2>Train Tracking</h2>
 
 <b>Train Tracking</b> is an animation technique that allows us to display 
 dynamically which train is in an occupied 
@@ -1130,26 +1129,18 @@ automatically performed when blocks are changed and when a Layout Editor panel
 is loaded. Since the initialization is automatic, Layout Editor users don't 
 need to be concerned about Paths and Bean Settings.</p>
 <p>
-Layout Editor allows a Memory Variable to be assigned to each block. When the 
-<b>value</b> of a Block changes, Layout Editor automatically copies the new 
-<i>value</i> of the Block into its assigned Memory Variable (if there is one). 
-So, by using a Memory Label near each block, be can display the name of the train 
-in that block.</p>
+Layout Editor allows the display of the block contents on the panel.</p>
 <p>
 This might sound complicated, but it's very easy to set up because JMRI's Block 
 and Layout Editor software does almost everything automatically. There is even 
-software to automatically save and restore Block <i>values</i> between sessions.
+software to automatically save and restore Block contents <i>values</i> between sessions.
 <p>
 If your panel is blocked and each block has a hardware occupancy sensor, to set 
 up Train Tracking do the following:
 <p>
 <UL> <li>
-1. Create a memory variable in the Memory Variable Table for each block.</li>
-<li>2. Edit each block, adding its memory variable name (<a href="#block">see above
-</a>).</li>
-<li>3. Place a Memory Label for its assigned memory variable near each block 
-in the panel.</li>
-<li>4. Open the Block Table, and enter the name of each train in the "Value" 
+<li>1. Place a Block Contents Label near each block in the panel.</li>
+<li>2. Open the Block Table, and enter the name of each train in the "Value" 
 column of the block it is occupying. <b>Remember to click somewhere outside the 
 value entry box after entering a train name to make Java read what was 
 entered.</b></li>
@@ -1187,12 +1178,12 @@ possibilities and automated tools for setting up signals, train tracking, etc.
 If you would like both worlds, consider building both Panel Editor and Layout 
 Editor panels for your layout. You can switch between them easily using the 
 <b>Panels</b> menu. Since both type of panels share the same configuration items 
-(turnouts, sensors, memory variables, signal heads, etc.), whatever is done in 
+(turnouts, sensors, memory variables, block contents, signal heads, etc.), whatever is done in 
 one panel is reflected in the other if the same items are displayed. After they 
 are loaded, panels continue to function, whether they are displayed or not--
 they just need to show up in the <b>Show Panel</b> submenu. So, for example, if 
 you set up a Layout Editor panel for train tracking as described above, you can 
-track trains in a companion Panel Editor panel just by adding Memory Labels.</p>
+track trains in a companion Panel Editor panel just by adding Block Contents Labels.</p>
 
 <a name="finish"><h2>Putting Finishing Touches on your Panel</h2>
 
@@ -1203,8 +1194,8 @@ in the exact same order presented. The presented order works, but variations are
 possible to get to the same end point. This example is presented to illustrate 
 some of the things what can be done easily using Layout Editor. You may elect 
 to do more or less on your Layout Editor panels.</p>
-<A href="./images/OvalLayoutEditMode.gif"><IMG SRC="./images/EnhancedPanel.gif" 
-ALIGN=CENTER WIDTH="592" HEIGHT="171" HSPACE="0" VSPACE="0"></A>
+<a href="./images/OvalLayoutEditMode.gif"><img src="./images/EnhancedPanel.gif" 
+align="center" width="592" height="171" hspace="0" vspace="0"></a>
 <p>
 <ul>
 	<li>Turnouts from the Turnout Table were assigned to each turnout drawing 
@@ -1272,8 +1263,7 @@ blocks defined and signals placed can help in deciding where blocks and
 signals should be placed before actually installing them on your layout.</p>
 
 <!--#include virtual="/Footer" -->
-</body>
-</html>
-
-
- 	  	 
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ </body>
+</html> 	 

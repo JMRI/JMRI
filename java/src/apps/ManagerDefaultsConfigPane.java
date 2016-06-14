@@ -1,4 +1,3 @@
-// ManagerDefaultsConfigPane.java
 package apps;
 
 import java.awt.event.ActionEvent;
@@ -24,15 +23,10 @@ import jmri.util.swing.JmriPanel;
  * <P>
  *
  * @author Bob Jacobsen Copyright (C) 2010
- * @version	$Revision$
  * @since 2.9.5
  */
 public class ManagerDefaultsConfigPane extends JmriPanel implements PreferencesPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4382220076212974325L;
     private static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
     private boolean dirty = false;
 
@@ -61,13 +55,16 @@ public class ManagerDefaultsConfigPane extends JmriPanel implements PreferencesP
         // this doesn't find non-migrated systems, how do we handle that eventually?
         List<SystemConnectionMemo> connList = InstanceManager.getList(SystemConnectionMemo.class);
         if (connList != null) {
+            log.debug("update of {} connections", connList.size());
             reloadConnections(connList);
         } else {
+            log.debug("update with no new-form system connections configured");
             matrix.add(new JLabel("No new-form system connections configured"));
         }
     }
 
     void reloadConnections(List<SystemConnectionMemo> connList) {
+        log.debug(" reloadConnections");
         ManagerDefaultSelector manager = InstanceManager.getDefault(ManagerDefaultSelector.class);
         matrix.setLayout(new GridLayout2(connList.size() + 1, manager.knownManagers.length + 1));
         matrix.add(new JLabel(""));
@@ -79,18 +76,20 @@ public class ManagerDefaultsConfigPane extends JmriPanel implements PreferencesP
         for (int i = 0; i < manager.knownManagers.length; i++) {
             groups[i] = new ButtonGroup();
         }
-        for (int x = 0; x < connList.size(); x++) {
+        boolean[] selected = new boolean[manager.knownManagers.length];
+        for (int x = 0; x < connList.size(); x++) { // up to down
             jmri.jmrix.SystemConnectionMemo memo = connList.get(x);
             String name = memo.getUserName();
             matrix.add(new JLabel(name));
             int i = 0;
-            for (ManagerDefaultSelector.Item item : manager.knownManagers) {
+            for (ManagerDefaultSelector.Item item : manager.knownManagers) { // left to right
                 if (memo.provides(item.managerClass)) {
                     JRadioButton r = new SelectionButton(name, item.managerClass, this);
                     matrix.add(r);
                     groups[i].add(r);
-                    if (x == connList.size() - 1 && manager.getDefault(item.managerClass) == null) {
+                    if ( !selected[i] && manager.getDefault(item.managerClass) == null) {
                         r.setSelected(true);
+                        selected[i] = true;
                     }
                 } else {
                     // leave a blank
@@ -167,11 +166,6 @@ public class ManagerDefaultsConfigPane extends JmriPanel implements PreferencesP
      */
     static class SelectionButton extends JRadioButton {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -2572336492673634333L;
-
         SelectionButton(String name, Class<?> managerClass, ManagerDefaultsConfigPane pane) {
             super();
             this.managerClass = managerClass;
@@ -200,4 +194,6 @@ public class ManagerDefaultsConfigPane extends JmriPanel implements PreferencesP
             }
         }
     }
+    
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ManagerDefaultsConfigPane.class.getName());
 }

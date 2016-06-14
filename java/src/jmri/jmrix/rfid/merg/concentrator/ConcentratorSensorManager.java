@@ -1,4 +1,3 @@
-// RfidSensorManager.java
 package jmri.jmrix.rfid.merg.concentrator;
 
 import jmri.IdTag;
@@ -20,7 +19,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  * @since 2.11.4
  */
 public class ConcentratorSensorManager extends RfidSensorManager {
@@ -87,5 +85,3 @@ public class ConcentratorSensorManager extends RfidSensorManager {
     private static final Logger log = LoggerFactory.getLogger(ConcentratorSensorManager.class.getName());
 
 }
-
-/* @(#)SpecificSensorManager.java */

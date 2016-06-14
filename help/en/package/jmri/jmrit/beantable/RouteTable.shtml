@@ -62,19 +62,18 @@ Route.
 	included in the Route
 	that can be locked by JMRI will not respond to commands from cabs or
 	pushbuttons to change. For more information see the
-	    <a href="TurnoutTable.shtml#Lock Mode">Lock Mode section</a> 
-	    on the
-	    <a href="TurnoutTable.shtml">Turnout Table page</a> 
-        and the 
-        <a href="#Turnout lock feature">section on the Turnout Lock feature</a>
-	    below.</dd>
+  <a href="TurnoutTable.shtml#Lock Mode">Lock Mode section</a> 
+	on the
+	<a href="TurnoutTable.shtml">Turnout Table help page</a> 
+  and the Route Add/Edit 
+  <a href="RouteAddEdit.shtml#Turnout lock feature">Turnout Lock feature</a>.</dd>
 
 	<dt>Edit</dt>
-	<dd>Push this button to edit the Route. For more information see <a
-		href="RouteAddEdit.shtml">Adding/Editing Routes</a>.</dd>
+	<dd>Push one of these buttons to edit that Route. For more information see
+	<a href="RouteAddEdit.shtml">Adding/Editing Routes</a>.</dd>
 </dl>
 
-<h3>Route Table Controls</h3>
+<h2>Route Table Controls</h2>
 
 There is a button at the bottom of the Route Table:
 
@@ -84,28 +83,10 @@ There is a button at the bottom of the Route Table:
 	<a href="RouteAddEdit.shtml">Adding/Editing Routes</a>.</dd>
 </dl>
 
-<h2><a name="Turnout lock feature">Turnout Lock feature</a></h2>
+<h2><a name="Turnout lock feature">Turnout Lock</a></h2>
+<p>See the
+<a href="RouteAddEdit.shtml#Turnout lock feature">Route Add/Edit help page</a>.</p>
 
-<p>The Turnout Lock feature allows you to selectively disable
-accessory (Turnout) commands from cabs and/or locally-wired pushbuttons. JMRI
-disables pushbuttons by sending pushbutton disable commands to the
-Turnout decoders when the Route is locked, and enables the pushbuttons
-when the Route is unlocked. When locking a Turnout from cab commands,
-the JMRI program will monitor the Turnout's accessory address and if it
-detects a change command from a cab, will cancel the command immediately
-by sending out the opposite command to the Turnout. All Turnouts that
-are being monitored by the JMRI program and are included in the Route
-will be locked.</p>
-<p>To help you select a set of Turnouts to lock or unlock, a Route
-can be locked or unlocked. In the Route edit window, an optional Lock
-Control Turnout is available. You can use the Lock Control Turnout to
-enable or disable the Route Lock function from a Panel Turnout icon, a
-layout turnout or a phantom turnout. A phantom turnout is a turnout that
-can be accessed by your cab but doesn't actually exist on your layout.</p>
-
-<p>For more information on how to set Turnouts to be lockable,
-please see the <a href="TurnoutTable.shtml#Turnout%20lock%20feature">Turnouts
-Table page</a>.</p>
 <p>
 For more information on Routes, see the 
 <a href="../../../../html/tools/Routes.shtml">Routes help page</a>.

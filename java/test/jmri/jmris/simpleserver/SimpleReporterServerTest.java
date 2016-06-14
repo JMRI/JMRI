@@ -10,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmris.simpleserver.SimpleReporterServer class
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class SimpleReporterServerTest extends TestCase {
 
@@ -36,7 +35,7 @@ public class SimpleReporterServerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {SimpleReporterServerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test sending a message.

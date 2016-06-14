@@ -1,4 +1,3 @@
-// PortAdapter.java
 package jmri.jmrix;
 
 import java.io.DataInputStream;
@@ -10,7 +9,6 @@ import java.io.DataOutputStream;
  * This has no e.g. serial-specific information.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2008, 2010
- * @version	$Revision$
  * @see jmri.jmrix.SerialConfigException
  * @since 2.3.1
  */
@@ -32,7 +30,6 @@ public interface PortAdapter {
     /**
      * Open the connection
      *
-     * @throws java.lang.Exception
      */
     public void connect() throws Exception;
 
@@ -56,7 +53,6 @@ public interface PortAdapter {
      * Set the first port option. Only to be used after construction, but before
      * the openPort call
      *
-     * @param value
      */
     public void configureOption1(String value);
 
@@ -64,7 +60,6 @@ public interface PortAdapter {
      * Set the second port option. Only to be used after construction, but
      * before the openPort call
      *
-     * @param value
      */
     public void configureOption2(String value);
 
@@ -72,7 +67,6 @@ public interface PortAdapter {
      * Set the third port option. Only to be used after construction, but before
      * the openPort call
      *
-     * @param value
      */
     public void configureOption3(String value);
 
@@ -80,7 +74,6 @@ public interface PortAdapter {
      * Set the fourth port option. Only to be used after construction, but
      * before the openPort call
      *
-     * @param value
      */
     public void configureOption4(String value);
 
@@ -106,7 +99,6 @@ public interface PortAdapter {
     /**
      * Set the System Manufacturers Name
      *
-     * @param Manufacturer
      */
     public void setManufacturer(String Manufacturer);
 
@@ -120,7 +112,6 @@ public interface PortAdapter {
     /**
      * Sets whether the connection is disabled
      *
-     * @param disabled
      */
     public void setDisabled(boolean disabled);
 
@@ -134,7 +125,6 @@ public interface PortAdapter {
     /**
      * Set the user name for this adapter.
      *
-     * @param userName
      * @throws IllegalArgumentException if another adapter has this user name
      */
     public void setUserName(String userName) throws IllegalArgumentException;
@@ -149,7 +139,6 @@ public interface PortAdapter {
     /**
      * Set the system prefix for this adapter.
      *
-     * @param systemPrefix
      * @throws IllegalArgumentException if another adapter has this system
      *                                  prefix
      */
@@ -164,7 +153,6 @@ public interface PortAdapter {
      * {@link java.lang.NullPointerException} should be thrown if the parameter
      * is null.
      *
-     * @param connectionMemo
      */
     public void setSystemConnectionMemo(SystemConnectionMemo connectionMemo) throws IllegalArgumentException;
 

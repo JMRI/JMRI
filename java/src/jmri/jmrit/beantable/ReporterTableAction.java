@@ -1,4 +1,3 @@
-// ReporterTableAction.java
 package jmri.jmrit.beantable;
 
 import java.awt.event.ActionEvent;
@@ -25,14 +24,8 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a ReporterTable GUI.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version $Revision$
  */
 public class ReporterTableAction extends AbstractTableAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -9217844966853497641L;
 
     /**
      * Create an action with a specific title.
@@ -40,7 +33,7 @@ public class ReporterTableAction extends AbstractTableAction {
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
-     * @param actionName
+     * @param actionName title of the action
      */
     public ReporterTableAction(String actionName) {
         super(actionName);
@@ -58,7 +51,7 @@ public class ReporterTableAction extends AbstractTableAction {
     }
 
     public ReporterTableAction() {
-        this("Reporter Table");
+        this(Bundle.getMessage("TitleReporterTable"));
     }
 
     /**
@@ -67,11 +60,6 @@ public class ReporterTableAction extends AbstractTableAction {
      */
     protected void createModel() {
         m = new BeanTableDataModel() {
-
-            /**
-             *
-             */
-            private static final long serialVersionUID = -6712845607416144730L;
             public static final int LASTREPORTCOL = NUMCOLUMN;
 
             public String getValue(String name) {
@@ -121,10 +109,10 @@ public class ReporterTableAction extends AbstractTableAction {
 
             public String getColumnName(int col) {
                 if (col == VALUECOL) {
-                    return "Report";
+                    return Bundle.getMessage("LabelReport");
                 }
                 if (col == LASTREPORTCOL) {
-                    return "Last Report";
+                    return Bundle.getMessage("LabelLastReport");
                 }
                 return super.getColumnName(col);
             }
@@ -194,7 +182,7 @@ public class ReporterTableAction extends AbstractTableAction {
     JTextField userName = new JTextField(20);
     JComboBox<String> prefixBox = new JComboBox<String>();
     JTextField numberToAdd = new JTextField(10);
-    JCheckBox range = new JCheckBox("Add a range");
+    JCheckBox range = new JCheckBox(Bundle.getMessage("AddRangeBox"));
     JLabel sysNameLabel = new JLabel("Hardware Address");
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
@@ -206,10 +194,13 @@ public class ReporterTableAction extends AbstractTableAction {
         if (addFrame == null) {
             addFrame = new JmriJFrame(Bundle.getMessage("TitleAddReporter"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.ReporterAddEdit", true);
-            ActionListener listener = new ActionListener() {
+            ActionListener okListener = new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     okPressed(e);
                 }
+            };
+            ActionListener cancelListener = new ActionListener() {
+                public void actionPerformed(ActionEvent e) { cancelPressed(e); }
             };
             ActionListener rangeListener = new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -221,7 +212,16 @@ public class ReporterTableAction extends AbstractTableAction {
                 List<Manager> managerList = proxy.getManagerList();
                 for (int x = 0; x < managerList.size(); x++) {
                     String manuName = ConnectionNameFromSystemName.getConnectionName(managerList.get(x).getSystemPrefix());
-                    prefixBox.addItem(manuName);
+                    Boolean addToPrefix = true;
+                    //Simple test not to add a system with a duplicate System prefix
+                    for (int i = 0; i < prefixBox.getItemCount(); i++) {
+                        if ((prefixBox.getItemAt(i)).equals(manuName)) {
+                            addToPrefix = false;
+                        }
+                    }
+                    if (addToPrefix) {
+                        prefixBox.addItem(manuName);
+                    }
                 }
                 if (pref.getComboBoxLastSelection(systemSelectionCombo) != null) {
                     prefixBox.setSelectedItem(pref.getComboBoxLastSelection(systemSelectionCombo));
@@ -232,11 +232,17 @@ public class ReporterTableAction extends AbstractTableAction {
             sysName.setName("sysName");
             userName.setName("userName");
             prefixBox.setName("prefixBox");
-            addFrame.add(new AddNewHardwareDevicePanel(sysName, userName, prefixBox, numberToAdd, range, "ButtonOK", listener, rangeListener));
+            addFrame.add(new AddNewHardwareDevicePanel(sysName, userName, prefixBox, numberToAdd, range, "ButtonOK", okListener, cancelListener, rangeListener));
             canAddRange(null);
         }
         addFrame.pack();
         addFrame.setVisible(true);
+    }
+
+    void cancelPressed(ActionEvent e) {
+        addFrame.setVisible(false);
+        addFrame.dispose();
+        addFrame = null;
     }
 
     void okPressed(ActionEvent e) {
@@ -333,5 +339,3 @@ public class ReporterTableAction extends AbstractTableAction {
 
     private final static Logger log = LoggerFactory.getLogger(ReporterTableAction.class.getName());
 }
-
-/* @(#)ReporterTableAction.java */

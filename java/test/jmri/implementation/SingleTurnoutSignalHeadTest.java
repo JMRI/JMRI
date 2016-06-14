@@ -1,4 +1,3 @@
-// SingleTurnoutSignalHeadTest.java
 package jmri.implementation;
 
 import jmri.InstanceManager;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * Tests for the SingleTurnoutSignalHead implementation
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version $Revision$
  */
 public class SingleTurnoutSignalHeadTest extends TestCase {
 
@@ -120,7 +118,7 @@ public class SingleTurnoutSignalHeadTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {SingleTurnoutSignalHeadTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

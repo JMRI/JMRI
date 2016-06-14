@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -47,7 +48,8 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     private static final int ROUTE_COLUMN = TRAIN_COLUMN + 1;
     private static final int AUTOMATION_COLUMN = ROUTE_COLUMN + 1;
     private static final int STATUS_COLUMN = AUTOMATION_COLUMN + 1;
-    private static final int MESSAGE_COLUMN = STATUS_COLUMN + 1;
+    private static final int HIAF_COLUMN = STATUS_COLUMN + 1;
+    private static final int MESSAGE_COLUMN = HIAF_COLUMN + 1;
     private static final int UP_COLUMN = MESSAGE_COLUMN + 1;
     private static final int DOWN_COLUMN = UP_COLUMN + 1;
     private static final int DELETE_COLUMN = DOWN_COLUMN + 1;
@@ -130,20 +132,24 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         table.getColumnModel().getColumn(ROUTE_COLUMN).setPreferredWidth(200);
         table.getColumnModel().getColumn(AUTOMATION_COLUMN).setPreferredWidth(200);
         table.getColumnModel().getColumn(STATUS_COLUMN).setPreferredWidth(70);
+        table.getColumnModel().getColumn(HIAF_COLUMN).setPreferredWidth(50);
         table.getColumnModel().getColumn(MESSAGE_COLUMN).setPreferredWidth(70);
         table.getColumnModel().getColumn(UP_COLUMN).setPreferredWidth(60);
         table.getColumnModel().getColumn(DOWN_COLUMN).setPreferredWidth(70);
         table.getColumnModel().getColumn(DELETE_COLUMN).setPreferredWidth(70);
     }
 
+    @Override
     public int getRowCount() {
         return _list.size();
     }
 
+    @Override
     public int getColumnCount() {
         return HIGHEST_COLUMN;
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case ID_COLUMN:
@@ -162,6 +168,8 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
                 return Bundle.getMessage("Status");
             case MESSAGE_COLUMN:
                 return Bundle.getMessage("Message");
+            case HIAF_COLUMN:
+                return Bundle.getMessage("HaltIfActionFails");
             case UP_COLUMN:
                 return Bundle.getMessage("Up");
             case DOWN_COLUMN:
@@ -173,6 +181,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         }
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case ID_COLUMN:
@@ -189,6 +198,8 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
                 return JComboBox.class;
             case STATUS_COLUMN:
                 return String.class;
+            case HIAF_COLUMN:
+                return Boolean.class;
             case MESSAGE_COLUMN:
                 return JButton.class;
             case UP_COLUMN:
@@ -202,6 +213,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         }
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
             case ACTION_COLUMN:
@@ -212,8 +224,11 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
             case DOWN_COLUMN:
             case DELETE_COLUMN:
                 return true;
+            case HIAF_COLUMN: {
+                AutomationItem item = _list.get(row);
+                return item.getAction().isMessageFailEnabled();
+            }
             case MESSAGE_COLUMN: {
-                // determine if messages are enabled
                 AutomationItem item = _list.get(row);
                 JComboBox<Action> acb = getActionComboBox(item);
                 return ((Action) acb.getSelectedItem()).isMessageOkEnabled();
@@ -223,6 +238,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         }
     }
 
+    @Override
     public Object getValueAt(int row, int col) {
         if (row >= _list.size()) {
             return "ERROR row " + row; // NOI18N
@@ -246,9 +262,10 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
                 return getAutomationComboBox(item);
             case STATUS_COLUMN:
                 return getStatus(item);
+            case HIAF_COLUMN:
+                return item.isHaltFailureEnabled() & item.getAction().isMessageFailEnabled();
             case MESSAGE_COLUMN:
-                if (item.getMessage().equals(AutomationItem.NONE)
-                        && item.getMessageFail().equals(AutomationItem.NONE))
+                if (item.getMessage().equals(AutomationItem.NONE) && item.getMessageFail().equals(AutomationItem.NONE))
                     return Bundle.getMessage("Add");
                 else
                     return Bundle.getMessage("Edit");
@@ -263,6 +280,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         }
     }
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
         if (value == null) {
             log.debug("Warning automation table row {} still in edit", row);
@@ -281,6 +299,9 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
                 break;
             case AUTOMATION_COLUMN:
                 setAutomationColumn(value, item);
+                break;
+            case HIAF_COLUMN:
+                item.setHaltFailureEnabled(((Boolean) value).booleanValue());
                 break;
             case MESSAGE_COLUMN:
                 setMessage(value, item);
@@ -342,8 +363,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     /**
      * Returns either a comboBox loaded with Automations, or a goto list of
      * AutomationItems, or TrainSchedules.
-     * 
-     * @param item
+     *
      * @return comboBox loaded with automations or a goto automationIem list
      */
     private JComboBox<?> getAutomationComboBox(AutomationItem item) {
@@ -408,10 +428,12 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
             messageFailTextArea.setToolTipText(Bundle.getMessage("TipMessage"));
 
             buttonPane.add(haltCheckBox);
+            buttonPane.add(new JLabel("      ")); // some padding
         }
 
         JButton okayButton = new JButton(Bundle.getMessage("Okay"));
         okayButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent arg0) {
                 item.setMessage(messageTextArea.getText());
                 item.setMessageFail(messageFailTextArea.getText());
@@ -424,6 +446,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
 
         JButton cancelButton = new JButton(Bundle.getMessage("Cancel"));
         cancelButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent arg0) {
                 dialog.dispose();
                 return;
@@ -434,6 +457,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         JButton defaultMessagesButton = new JButton(Bundle.getMessage("DefaultMessages"));
         defaultMessagesButton.setToolTipText(Bundle.getMessage("TipDefaultButton"));
         defaultMessagesButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent arg0) {
                 if (messageTextArea.getText().equals(AutomationItem.NONE)) {
                     messageTextArea.setText(Bundle.getMessage("DefaultMessageOk"));
@@ -467,8 +491,9 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     }
 
     // this table listens for changes to a automation and it's car types
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
-        if (Control.showProperty)
+        if (Control.SHOW_PROPERTY)
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
 
@@ -485,7 +510,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         if (e.getSource().getClass().equals(AutomationItem.class)) {
             AutomationItem item = (AutomationItem) e.getSource();
             int row = _list.indexOf(item);
-            if (Control.showProperty)
+            if (Control.SHOW_PROPERTY)
                 log.debug("Update automation item table row: {}", row);
             if (row >= 0) {
                 fireTableRowsUpdated(row, row);

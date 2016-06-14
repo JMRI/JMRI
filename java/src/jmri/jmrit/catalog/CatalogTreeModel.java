@@ -1,4 +1,3 @@
-// CatalogTreeModel.java
 package jmri.jmrit.catalog;
 
 import java.io.File;
@@ -22,14 +21,8 @@ import jmri.util.FileUtil;
  * directories, or files whose name starts with a "."
  *
  * @author	Bob Jacobsen Copyright 2002
- * @version	$Revision$
  */
 public class CatalogTreeModel extends DefaultTreeModel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2743570810771604153L;
 
     public CatalogTreeModel() {
 
@@ -55,10 +48,6 @@ public class CatalogTreeModel extends DefaultTreeModel {
      *                where in the tree to insert it.
      */
     void insertResourceNodes(String pName, String pPath, DefaultMutableTreeNode pParent) {
-        // the following (commented) line only worked in JBuilder (July 27 2002)
-        // so we switched to storing this info in the resource/ filetree in
-        // the application directory, using the 2nd two lines (uncommented)
-        // File fp = new File(ClassLoader.getSystemResource(pPath).getFile());
         File fp = new File(pPath);
         if (!fp.exists()) {
             return;

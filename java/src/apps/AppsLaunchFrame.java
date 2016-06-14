@@ -1,4 +1,3 @@
-// AppsLaunchFrame.java
 package apps;
 
 import java.awt.Dimension;
@@ -48,14 +47,9 @@ import org.slf4j.LoggerFactory;
  * @author Dennis Miller Copyright 2005
  * @author Giorgio Terdina Copyright 2008
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  */
 public class AppsLaunchFrame extends jmri.util.JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8986597544309635883L;
     static String profileFilename;
 
     public AppsLaunchFrame(AppsLaunchPane containedPane, String name) {
@@ -87,9 +81,6 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
      * Create default menubar.
      * <P>
      * This does not include the development menu.
-     *
-     * @param menuBar
-     * @param wi
      */
     protected void createMenus(JMenuBar menuBar, WindowInterface wi, AppsLaunchPane pane) {
         // the debugging statements in the following are
@@ -192,9 +183,6 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
      * <PRE>
      *    menuBar.add(new jmri.jmrix.SystemsMenu());
      * </PRE>
-     *
-     * @param menuBar
-     * @param wi
      */
     protected void systemsMenu(JMenuBar menuBar, WindowInterface wi) {
         ActiveSystemsMenu.addItems(menuBar);
@@ -213,10 +201,10 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
 
         d.add(new JSeparator());
         try {
-            d.add(new RunJythonScript("RailDriver Throttle", new File(FileUtil.findURL("jython/RailDriver.py").toURI())));
+            d.add(new RunJythonScript(Bundle.getMessage("MenuRailDriverThrottle"), new File(FileUtil.findURL("jython/RailDriver.py").toURI())));
         } catch (URISyntaxException | NullPointerException ex) {
             log.error("Unable to load RailDriver Throttle", ex);
-            JMenuItem i = new JMenuItem("RailDriver Throttle");
+            JMenuItem i = new JMenuItem(Bundle.getMessage("MenuRailDriverThrottle"));
             i.setEnabled(false);
             d.add(i);
         }
@@ -274,7 +262,7 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
      * Provide access to a place where applications can expect the configuration
      * code to build run-time buttons.
      *
-     * @see apps.CreateButtonPanel
+     * @see apps.startup.CreateButtonModelFactory
      * @return null if no such space exists
      */
     static public JComponent buttonSpace() {

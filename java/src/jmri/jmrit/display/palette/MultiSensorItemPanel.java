@@ -32,10 +32,6 @@ import org.slf4j.LoggerFactory;
 
 public class MultiSensorItemPanel extends TableItemPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -743088921159606185L;
     JPanel _multiSensorPanel;
     MultiSensorSelectionModel _selectionModel;
     boolean _upDown = false;
@@ -219,11 +215,6 @@ public class MultiSensorItemPanel extends TableItemPanel {
     }
 
     protected class MultiSensorSelectionModel extends DefaultListSelectionModel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 8448986920160037659L;
         ArrayList<NamedBean> _selections;
         int[] _positions;
         int _nextPosition;
@@ -351,13 +342,9 @@ public class MultiSensorItemPanel extends TableItemPanel {
 
     protected class IconDragJLabel extends DragJLabel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 451205074058595934L;
         HashMap<String, NamedIcon> iconMap;
 
-        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP2") // icon map is within package 
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2") // icon map is within package 
         public IconDragJLabel(DataFlavor flavor, HashMap<String, NamedIcon> map) {
             super(flavor);
             iconMap = map;
@@ -377,7 +364,6 @@ public class MultiSensorItemPanel extends TableItemPanel {
                 log.error("IconDragJLabel.getTransferData: iconMap is null!");
                 return null;
             }
-            _selectionModel.getPositions();
 
             MultiSensorIcon ms = new MultiSensorIcon(_editor);
             ms.setInactiveIcon(new NamedIcon(iconMap.get("SensorStateInactive")));

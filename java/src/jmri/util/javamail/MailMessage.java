@@ -1,4 +1,3 @@
-// MailMessage.java
 package jmri.util.javamail;
 
 /**
@@ -16,7 +15,6 @@ package jmri.util.javamail;
  *
  * @author Bob Jacobsen Copyright 2008, 2009
  * @author kcameron Copyright 2015
- * @version $Revision$
  *
  */
 
@@ -57,6 +55,7 @@ import java.util.Properties;
 import javax.mail.Authenticator;
 import javax.mail.Folder;
 import javax.mail.Message;
+import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Store;
@@ -121,7 +120,6 @@ public class MailMessage {
     /**
      * sets the protocol to be used connecting to the mailhost default smtp
      *
-     * @param p
      */
     public void setProtocol(String p) {
         this.pProtocol = p;
@@ -130,7 +128,6 @@ public class MailMessage {
     /**
      * shows the protocol to be used connecting to the mailhost
      *
-     * @return
      */
     public String getProtocol() {
         return (this.pProtocol);
@@ -140,7 +137,6 @@ public class MailMessage {
      * sets if encryption will used when connecting to the mailhost default is
      * true
      *
-     * @param t
      */
     public void setTls(boolean t) {
         if (t) {
@@ -153,7 +149,6 @@ public class MailMessage {
     /**
      * shows if encryption will be used when connecting to the mailhost
      *
-     * @return
      */
     public boolean isTls() {
         return ((this.pTls.equals("true") ? true : false));
@@ -162,7 +157,6 @@ public class MailMessage {
     /**
      * sets if authorization will be used to the mailhost default is true
      *
-     * @param t
      */
     public void setAuth(boolean t) {
         if (t) {
@@ -175,7 +169,6 @@ public class MailMessage {
     /**
      * shows if authorization will be used to the mailhost
      *
-     * @return
      */
     public boolean isAuth() {
         return ((this.pAuth.equals("true") ? true : false));
@@ -227,7 +220,7 @@ public class MailMessage {
             // We need a multipart message to hold attachment.
             mp = new MimeMultipart();
 
-        } catch (Exception e) {
+        } catch (MessagingException e) {
             log.warn("Exception in prepare", e);
         }
     }
@@ -235,14 +228,13 @@ public class MailMessage {
     /**
      * Adds the text to the message as a separate Mime part
      *
-     * @param text
      */
     public void setText(String text) {
         try {
             MimeBodyPart mbp1 = new MimeBodyPart();
             mbp1.setText(text);
             mp.addBodyPart(mbp1);
-        } catch (Exception e) {
+        } catch (MessagingException e) {
             log.warn("Exception in setText", e);
         }
     }
@@ -250,7 +242,6 @@ public class MailMessage {
     /**
      * Adds the provided file to the message as a separate Mime part.
      *
-     * @param file
      */
     public void setFileAttachment(String file) {
         try {
@@ -259,7 +250,7 @@ public class MailMessage {
             mbp2.attachFile(file);
             mp.addBodyPart(mbp2);
 
-        } catch (Exception e) {
+        } catch (java.io.IOException | MessagingException e) {
             log.error("Exception in setAttachment", e);
         }
     }
@@ -319,7 +310,7 @@ public class MailMessage {
                 }
             }
 
-        } catch (Exception e) {
+        } catch (MessagingException e) {
             e.printStackTrace();
         }
     }

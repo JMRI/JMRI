@@ -1,4 +1,3 @@
-// SRCPPowerManager.java
 package jmri.jmrix.srcp;
 
 import jmri.JmriException;
@@ -10,7 +9,6 @@ import org.slf4j.LoggerFactory;
  * PowerManager implementation for controlling layout power
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @version	$Revision$
  */
 public class SRCPPowerManager implements PowerManager, SRCPListener {
 
@@ -26,6 +24,7 @@ public class SRCPPowerManager implements PowerManager, SRCPListener {
 
     public SRCPPowerManager(SRCPBusConnectionMemo memo, int bus) {
         // connect to the TrafficManager
+        _memo = memo;
         tc = memo.getTrafficController();
         tc.addSRCPListener(this);
         _bus = bus;

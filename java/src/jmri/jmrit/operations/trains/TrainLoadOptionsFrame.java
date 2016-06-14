@@ -32,11 +32,6 @@ import org.slf4j.LoggerFactory;
  */
 public class TrainLoadOptionsFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3409582934081412947L;
-
     private static boolean loadAndType = false;
 
     Train _train = null;
@@ -191,6 +186,7 @@ public class TrainLoadOptionsFrame extends OperationsFrame implements java.beans
     }
 
     // Save
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (_train != null) {
             if (ae.getSource() == saveTrainButton) {
@@ -223,6 +219,7 @@ public class TrainLoadOptionsFrame extends OperationsFrame implements java.beans
         }
     }
 
+    @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("radio button activated");
         if (_train != null) {
@@ -242,6 +239,7 @@ public class TrainLoadOptionsFrame extends OperationsFrame implements java.beans
     }
 
     // Car type combo box has been changed, show loads associated with this car type
+    @Override
     public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == comboBoxTypes) {
             updateLoadComboBoxes();
@@ -301,6 +299,7 @@ public class TrainLoadOptionsFrame extends OperationsFrame implements java.beans
         updateLoadNames();
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
     private void saveTrain() {
         // save the last state of the "Use car type and load" checkbox
         loadAndType = loadAndTypeCheckBox.isSelected();
@@ -326,6 +325,7 @@ public class TrainLoadOptionsFrame extends OperationsFrame implements java.beans
         CarLoads.instance().updateComboBox(carType, comboBoxLoads);
     }
 
+    @Override
     public void dispose() {
         CarTypes.instance().removePropertyChangeListener(this);
         CarLoads.instance().removePropertyChangeListener(this);
@@ -335,8 +335,9 @@ public class TrainLoadOptionsFrame extends OperationsFrame implements java.beans
         super.dispose();
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }

@@ -1,4 +1,3 @@
-// AbstractNetworkPortController.java
 package jmri.jmrix;
 
 import java.io.DataInputStream;
@@ -14,7 +13,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2010
  * @author Based upon work originally done by Paul Bender Copyright (C) 2009
- * @version	$Revision$
  * @see jmri.jmrix.NetworkConfigException
  */
 abstract public class AbstractNetworkPortController extends AbstractPortController implements NetworkPortAdapter {
@@ -93,7 +91,6 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
     /**
      * Remember the associated host name
      *
-     * @param s
      */
     @Override
     public void setHostName(String s) {
@@ -113,7 +110,6 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
      * configuration. Public access to the IP address is through the hostname
      * field.
      *
-     * @param s
      */
     protected void setHostAddress(String s) {
         m_HostAddress = s;
@@ -132,7 +128,6 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
     /**
      * Remember the associated port number
      *
-     * @param p
      *
      */
     @Override
@@ -282,7 +277,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
      * This is called when a connection is initially lost. It closes the client
      * side socket connection, resets the open flag and attempts a reconnection.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "DE_MIGHT_IGNORE",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DE_MIGHT_IGNORE",
             justification = "we are trying to close a failed connection, it doesn't matter if it generates an error")
     @Override
     public void recover() {
@@ -344,7 +339,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
             _status = THREADFAIL;
         }
 
-        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "DE_MIGHT_IGNORE",
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DE_MIGHT_IGNORE",
                 justification = "we are testing for a the ability to re-connect and this is likely to generate an error which can be ignored")
         @Override
         public void run() {

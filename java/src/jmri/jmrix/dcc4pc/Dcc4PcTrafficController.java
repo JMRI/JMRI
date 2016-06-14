@@ -1,4 +1,3 @@
-// Dcc4PcTrafficController.java
 package jmri.jmrix.dcc4pc;
 
 import gnu.io.SerialPort;
@@ -27,7 +26,6 @@ import org.slf4j.LoggerFactory;
  * message.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 17977 $
  */
 public class Dcc4PcTrafficController extends AbstractMRTrafficController implements Dcc4PcInterface, CommandStation/*, SerialPortEventListener*/ {
 
@@ -120,7 +118,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
     protected void addTrailerToOutput(byte[] msg, int offset, AbstractMRMessage m) {
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "MS_PKGPROTECT")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT")
     // FindBugs wants this package protected, but we're removing it when multi-connection
     // migration is complete
     final static protected Dcc4PcTrafficController self = null;
@@ -280,7 +278,6 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
      * <P>
      * (This is public for testing purposes) Runs in the "Receive" thread.
      *
-     * @throws java.io.IOException
      */
     public void handleOneIncomingReply() throws java.io.IOException {
         // we sit in this until the message is complete, relying on
@@ -608,4 +605,3 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
 
     private final static Logger log = LoggerFactory.getLogger(Dcc4PcTrafficController.class.getName());
 }
-/* @(#)Dcc4PcTrafficController.java */

@@ -43,7 +43,6 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 
     /**
      *
-     * @param id
      * @param type car type for schedule
      */
     public ScheduleItem(String id, String type) {
@@ -363,8 +362,9 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
         return e;
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("ScheduleItem ({}) id ({}) sees property change: ({}) old: ({}) new: ({})", getTypeName(),
                     getId(), e.getPropertyName(), e.getOldValue(), e.getNewValue()); // NOI18N
         }

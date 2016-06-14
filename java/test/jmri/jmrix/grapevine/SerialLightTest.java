@@ -1,4 +1,3 @@
-// SerialLightTest.java
 package jmri.jmrix.grapevine;
 
 import jmri.implementation.AbstractLightTest;
@@ -46,7 +45,7 @@ public class SerialLightTest extends AbstractLightTest {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {SerialLightTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

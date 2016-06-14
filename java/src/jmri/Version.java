@@ -37,8 +37,7 @@ import java.util.ResourceBundle;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author Bob Jacobsen Copyright 1997-2014
- * @version $Revision: 17977 $
+ * @author Bob Jacobsen Copyright 1997-2016
  */
 public class Version {
 
@@ -132,7 +131,7 @@ public class Version {
      * version string for a JMRI instance is available using {@link #getCanonicalVersion()
      * }.
      *
-     * @param version
+     * @param version version string to check
      * @return true if version is a canonical version string
      */
     static public boolean isCanonicalVersion(String version) {
@@ -141,7 +140,7 @@ public class Version {
             return false;
         }
         for (String part : parts) {
-            if (Integer.valueOf(part) == null || Integer.valueOf(part) < 0) {
+            if (Integer.parseInt(part) < 0) {
                 return false;
             }
         }
@@ -153,7 +152,7 @@ public class Version {
      * returns an integer indicating if the string is less than, equal to, or
      * greater than the JMRI canonical version.
      *
-     * @param version
+     * @param version version string to compare
      * @return -1, 0, or 1 if version is less than, equal to, or greater than
      *         JMRI canonical version
      * @throws IllegalArgumentException if version is not a canonical version
@@ -222,7 +221,7 @@ public class Version {
      * versionBundle file name, so take care in altering this code to make sure
      * the ant recipes are also suitably modified.
      *
-     * @param args
+     * @param args command-line arguments
      */
     static public void main(String[] args) {
         System.out.println(name());

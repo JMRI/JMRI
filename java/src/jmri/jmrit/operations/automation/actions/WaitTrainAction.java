@@ -43,8 +43,7 @@ public class WaitTrainAction extends Action implements PropertyChangeListener {
     /**
      * Wait for train to build and no location, or train to arrive at location,
      * or train build to be deselected.
-     * 
-     * @param evt
+     *
      */
     private void trainUpdate(PropertyChangeEvent evt) {
         if (getAutomationItem() != null) {
@@ -80,7 +79,7 @@ public class WaitTrainAction extends Action implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (Control.showProperty)
+        if (Control.SHOW_PROPERTY)
             log.debug("Property change AutomationItem {}: ({}) old: ({}) new: ({})", getAutomationItem().getId(),
                     evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
         trainUpdate(evt);

@@ -43,7 +43,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
      * adapter-specific subclass.
      */
     protected AbstractMRReply newReply() {
-        return new XBeeReply(this);
+        return new XBeeReply();
     }
 
     /**
@@ -51,26 +51,30 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
      */
     @Override
     public void connectPort(AbstractPortController p) {
-        //super.connectPort(p);
         // Attach XBee to the port
         if (xbee == null) {
             xbee = new XBee();
         }
         try {
-            xbee.initProviderConnection(((XBeeAdapter) p));
-            xbee.addPacketListener(this);
-            // and start threads
-            xmtThread = new Thread(xmtRunnable = new Runnable() {
-                public void run() {
-                    try {
-                        transmitLoop();
-                    } catch (Throwable e) {
-                        log.error("Transmit thread terminated prematurely by: " + e.toString(), e);
-                    }
-                }
-            });
-            xmtThread.setName("Transmit");
-            xmtThread.start();
+            if( p instanceof XBeeAdapter) {
+               XBeeAdapter xbp = (XBeeAdapter) p;
+               xbee.initProviderConnection(xbp);
+               xbee.addPacketListener(this);
+               // and start threads
+               xmtThread = new Thread(xmtRunnable = new Runnable() {
+                   public void run() {
+                       try {
+                           transmitLoop();
+                       } catch (Throwable e) {
+                           log.error("Transmit thread terminated prematurely by: " + e.toString(), e);
+                       }
+                   }
+               });
+               xmtThread.setName("Transmit");
+               xmtThread.start();
+            } else {
+               throw new java.lang.IllegalArgumentException("Wrong adapter type specified when connecting to the port.");
+            }
 
         } catch (XBeeException xe) {
             log.error("Failed to make XBee connection " + xe);
@@ -164,14 +168,20 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
      */
     @Override
     public void registerNode(jmri.jmrix.AbstractNode node) {
-        super.registerNode(node);
-        ((XBeeNode) node).setTrafficController(this);
+        if(node instanceof XBeeNode) {
+           super.registerNode(node);
+           XBeeNode xbnode= (XBeeNode) node;
+           xbnode.setTrafficController(this);
+        } else {
+           throw new java.lang.IllegalArgumentException("Attempt to register node of incorrect type for this connection");
+        }
     }
 
     // XBee Packet Listener interface methods
     // NOTE: Many of the details of this function are derived
     // from the the handleOneIncomingReply() in 
     // AbstractMRTrafficController.
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = {"NO_NOTIFY_NOT_NOTIFYALL","UW_UNCOND_WAIT","WA_NOT_IN_LOOP"}, justification="There should only be one thread waiting on xmtRunnable. wait() on xmtRunnable is unconditional and not in a loop because it is used to wait for the hardware when switching modes.")
     public void processResponse(XBeeResponse response) {
 
         // before we forward this on to the listeners, handle
@@ -197,7 +207,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
         //    log.error("XBee API Reports error in parsing reply");
         //    return;
         //}
-        XBeeReply reply = new XBeeReply(this, response);
+        XBeeReply reply = new XBeeReply(response);
 
         // message is complete, dispatch it !!
         replyInDispatch = true;

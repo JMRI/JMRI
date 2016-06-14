@@ -114,7 +114,6 @@ public class FullBackupExportAction
      * @param filename the file to copy
      * @param dirname  the zip file "directory" to place this file in
      * @param zipper   the ZipOutputStream
-     * @throws IOException
      */
     private void copyFileToStream(String filename, String dirname, ZipOutputStream zipper, String comment)
             throws IOException {

@@ -10,12 +10,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * ConditionalVariable.java
- *
  * The variable used in the antecedent (the 'if' part) of the Conditional.
  * proposition. The states of ConditionalVariables and logic expression of the
  * antecedent determine the state of the Conditional.
  * <P>
+ * ConditionalVariable objects are fully mutable, so use the default equals()
+ * operator that checks for identical objects, not identical contents.
+ * 
  * This file is part of JMRI.
  * <P>
  * JMRI is free software; you can redistribute it and/or modify it under the
@@ -27,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Pete Cressman Copyright (C) 2009
- * @version	$Revision 1.0 $
+ * @author  Bob Jacobsen  Copyright (C) 2016
  */
 public class ConditionalVariable {
 
@@ -162,39 +163,6 @@ public class ConditionalVariable {
         } catch (java.lang.NumberFormatException ex) {
             //Can be Considered Normal where the logix is loaded prior to any other beans
         }
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-
-        if (!(getClass() == obj.getClass())) {
-            return false;
-        } else {
-            ConditionalVariable c = (ConditionalVariable) obj;
-            if (c._opern != this._opern) return false;
-            if (c._type != this._type) return false;
-            if (c._num1 != this._num1) return false;
-            if (c._num2 != this._num2) return false;
-            
-            if (this._dataString != null && !this._dataString.equals(c._dataString)) return false;
-            if (c._dataString != null && !c._dataString.equals(this._dataString)) return false;
-
-            if (this._name != null && !this._name.equals(c._name)) return false;
-            if (c._name != null && !c._name.equals(this._name)) return false;
-        }
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = _name.hashCode()+1000*_opern+1000+1000*_type+_num1+_num2+_dataString.hashCode();
-        return hash;
     }
 
     public boolean isNegated() {
@@ -479,7 +447,7 @@ public class ConditionalVariable {
                     log.error("invalid signal mast name= \"" + getName() + "\" in state variable");
                     return (false);
                 }
-                switch ((_type)) {
+                switch (_type) {
                     case Conditional.TYPE_SIGNAL_MAST_LIT:
                         result = f.getLit();
                         break;
@@ -494,6 +462,9 @@ public class ConditionalVariable {
                         } else {
                             result = false;
                         }
+                        break;
+                    default:
+                        log.warn("unexpected type {} in ITEM_TYPE_SIGNALMAST", _type);
                 }
                 break;
             case Conditional.ITEM_TYPE_SIGNALHEAD:

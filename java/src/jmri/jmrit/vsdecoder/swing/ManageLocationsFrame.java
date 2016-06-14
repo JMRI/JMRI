@@ -1,23 +1,5 @@
 package jmri.jmrit.vsdecoder.swing;
 
-/*
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
- * for more details.
- * <P>
- *
- * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision: 21510 $
- */
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -61,14 +43,25 @@ import jmri.util.WindowMenu;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/*
+ * <hr>
+ * This file is part of JMRI.
+ * <P>
+ * JMRI is free software; you can redistribute it and/or modify it under 
+ * the terms of version 2 of the GNU General Public License as published 
+ * by the Free Software Foundation. See the "COPYING" file for a copy
+ * of this license.
+ * <P>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * for more details.
+ * <P>
+ *
+ * @author			Mark Underwood Copyright (C) 2011
+ */
 public class ManageLocationsFrame extends JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 9159687443567118015L;
-
-    // Uncomment this when we add labels...
     public static enum PropertyChangeID {
 
         MUTE, VOLUME_CHANGE, ADD_DECODER, REMOVE_DECODER
@@ -119,7 +112,7 @@ public class ManageLocationsFrame extends JmriJFrame {
 
     private List<JMenu> menuList;
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP2",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2",
             justification = "2D array of different types passed as complex parameter. "
             + "Better to switch to passing use-specific objects rather than "
             + "papering this over with a deep copy of the arguments. "
@@ -332,7 +325,7 @@ public class ManageLocationsFrame extends JmriJFrame {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "WMI_WRONG_MAP_ITERATOR", justification = "only in slow debug")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "WMI_WRONG_MAP_ITERATOR", justification = "only in slow debug")
     private void saveTableValues() {
         if ((Boolean) locModel.getValueAt(0, 1)) {
             listenerLoc.setLocation((Double) locModel.getValueAt(0, 2),
@@ -382,10 +375,6 @@ public class ManageLocationsFrame extends JmriJFrame {
      */
     private static class LocationTableModel extends AbstractTableModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -6422871979102501443L;
         // These get internationalized at runtime in the constructor below.
         private String[] columnNames = new String[6];
         private Object[][] rowData;
@@ -415,7 +404,7 @@ public class ManageLocationsFrame extends JmriJFrame {
         }
 
         public String getColumnName(int col) {
-            return columnNames[col].toString();
+            return columnNames[col];
         }
 
         public int getRowCount() {
@@ -458,12 +447,8 @@ public class ManageLocationsFrame extends JmriJFrame {
     /**
      * Private class for use as TableModel for Listener Locations
      */
-    private class ListenerTableModel extends AbstractTableModel {
+    static private class ListenerTableModel extends AbstractTableModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -6375914030167059399L;
         // These get internationalized at runtime in the constructor below.
         private String[] columnNames = new String[7];
         private Object[][] rowData = null;
@@ -499,7 +484,7 @@ public class ManageLocationsFrame extends JmriJFrame {
         }
 
         public String getColumnName(int col) {
-            return columnNames[col].toString();
+            return columnNames[col];
         }
 
         public int getRowCount() {

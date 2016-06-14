@@ -41,7 +41,6 @@ import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
 import jmri.script.JmriScriptEngineManager;
 import jmri.script.ScriptOutput;
-import jmri.util.PythonInterp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -61,15 +60,9 @@ import org.slf4j.LoggerFactory;
  * @author	Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009, 2010, 2011
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public class DefaultConditional extends AbstractNamedBean
         implements Conditional, java.io.Serializable {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7856761914540392475L;
 
     public static final boolean PARKS_DEBUG = false;
 
@@ -585,7 +578,7 @@ public class DefaultConditional extends AbstractNamedBean
      * Conditional
      */
     @SuppressWarnings({"deprecation", "fallthrough"})
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SF_SWITCH_FALLTHROUGH")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     // it's unfortunate that this is such a huge method, because these annotation
     // have to apply to more than 500 lines of code - jake
     private void takeActionIfNeeded() {
@@ -626,7 +619,7 @@ public class DefaultConditional extends AbstractNamedBean
                 int type = action.getType();
                 String devName = getDeviceName(action);
                 if (devName == null) {
-                    errorList.add("invalid memory name in action - " + devName);
+                    errorList.add("invalid memory name in action - " + action);
                     continue;
                 }
                 if (log.isDebugEnabled()) {
@@ -1009,30 +1002,17 @@ public class DefaultConditional extends AbstractNamedBean
                                 case Audio.CMD_RESET_POSITION:
                                     audioListener.resetCurrentPosition();
                                     break;
+                                default: break; // nothing needed for others
                             }
                         }
                         break;
                     case Conditional.ACTION_JYTHON_COMMAND:
                         if (!(getActionString(action).isEmpty())) {
-                            PythonInterp.getPythonInterpreter();
-
-                            String cmd = getActionString(action) + "\n";
-
-                            // The command must end with exactly one \n
-                            while ((cmd.length() > 1) && cmd.charAt(cmd.length() - 2) == '\n') {
-                                cmd = cmd.substring(0, cmd.length() - 1);
-                            }
-
                             // add the text to the output frame
-                            String echo = ">>> " + cmd;
-                            // intermediate \n characters need to be prefixed
-                            echo = echo.replaceAll("\n", "\n... ");
-                            echo = echo.substring(0, echo.length() - 4);
-                            ScriptOutput.getDefault().getOutputArea().append(echo);
-
+                            ScriptOutput.writeScript(getActionString(action));
                             // and execute
                             try {
-                                PythonInterp.execCommand(cmd);
+                                JmriScriptEngineManager.getDefault().eval(getActionString(action), JmriScriptEngineManager.getDefault().getEngine(JmriScriptEngineManager.PYTHON));
                             } catch (ScriptException ex) {
                                 log.error("Error executing script:", ex);
                             }
@@ -1277,10 +1257,6 @@ public class DefaultConditional extends AbstractNamedBean
 
     class ErrorDialog extends JDialog {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -3083184035319691227L;
         JCheckBox rememberSession;
 
         ErrorDialog(List<String> list, Conditional cond) {
@@ -1597,5 +1573,3 @@ public class DefaultConditional extends AbstractNamedBean
 
     private final static Logger log = LoggerFactory.getLogger(DefaultConditional.class.getName());
 }
-
-/* @(#)DefaultConditional.java */

@@ -1,11 +1,10 @@
-// NmraPacket.java
 package jmri;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Utilities for coding/decoding NMRA S&RP DCC packets.
+ * Utilities for coding/decoding NMRA {@literal S&RP} DCC packets.
  * <P>
  * Packets are (now) represented by an array of bytes. Preamble/postamble not
  * included. Note that this is a data representation, _not_ a representation of
@@ -48,7 +47,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
- * @version $Revision$
  */
 public class NmraPacket {
 
@@ -663,10 +661,10 @@ public class NmraPacket {
      * processing of the speed value.
      *
      * @param full     must be true
-     * @param address
-     * @param longAddr
+     * @param address  DCC address
+     * @param longAddr true if DCC address is long; false if short
      * @param speed    speed step value 0 - 31 for insertion into DC packet
-     * @param fwd
+     * @param fwd      true for forward direction; false for reverse
      */
     public static byte[] speedStep28Packet(Boolean full, int address, boolean longAddr, int speed, boolean fwd) {
         if (log.isDebugEnabled()) {
@@ -1155,6 +1153,3 @@ public class NmraPacket {
     }
     private final static Logger log = LoggerFactory.getLogger(NmraPacket.class.getName());
 }
-
-
-/* @(#)NmraPacket.java */

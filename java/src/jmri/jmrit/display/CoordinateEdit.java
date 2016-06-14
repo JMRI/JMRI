@@ -1,4 +1,3 @@
-// CoordinateEdit.java
 package jmri.jmrit.display;
 
 import java.awt.Component;
@@ -17,31 +16,29 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Displays and allows user to modify x & y coordinates of positionable labels
- * This class has been generalized to provide popup edit dialogs for
- * positionable item properties when TextFields are needed to input data.
+ * Displays and allows user to modify {@literal x & y} coordinates of
+ * positionable labels This class has been generalized to provide popup edit
+ * dialogs for positionable item properties when TextFields are needed to input
+ * data.
  * <P>
  * The class name no longer identifies the full purpose of the class, However
  * the name is retained because coordinate editing was the genesis. The current
  * list of properties served for editing is:
- * <LI>
- * modify x & y coordinates modify level modify tooltip modify border size
- * modify margin size modify fixed size modify rotation degrees modify scaling
- * modify text labels modify zoom scaling modify panel name
- * </LI>
+ * <ul>
+ * <li>modify {@literal x & y} coordinates modify level modify tooltip modify
+ * border size</li>
+ * <li>modify margin size modify fixed size modify rotation degrees modify
+ * scaling</li>
+ * <li>modify text labels modify zoom scaling modify panel name</li>
+ * </ul>
  * To use, write a static method that provides the dialog frame. Then write an
  * initX method that customizes the dialog for the property.
  *
  * @author Dan Boudreau Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2010
- * @version $Revision$
  */
 public class CoordinateEdit extends JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 794340836457949878L;
     Positionable pl; 			// positional label tracked by this frame
     int oldX;
     int oldY;
@@ -67,11 +64,6 @@ public class CoordinateEdit extends JmriJFrame {
 
     public static AbstractAction getCoordinateEditAction(final Positionable pos) {
         return new AbstractAction(Bundle.getMessage("SetXY")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 8082567724516174435L;
-
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
                 f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
@@ -86,10 +78,6 @@ public class CoordinateEdit extends JmriJFrame {
 
     public static AbstractAction getLevelEditAction(final Positionable pos) {
         return new AbstractAction(Bundle.getMessage("SetLevel")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 694306246976433012L;
 
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
@@ -105,10 +93,6 @@ public class CoordinateEdit extends JmriJFrame {
 
     public static AbstractAction getTooltipEditAction(final Positionable pos) {
         return new AbstractAction(Bundle.getMessage("SetTooltip")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 6183543089358807842L;
 
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
@@ -124,10 +108,6 @@ public class CoordinateEdit extends JmriJFrame {
 
     public static AbstractAction getBorderEditAction(final Positionable pos) {
         return new AbstractAction(Bundle.getMessage("SetBorderSize")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -4357203067214330581L;
 
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
@@ -143,10 +123,6 @@ public class CoordinateEdit extends JmriJFrame {
 
     public static AbstractAction getMarginEditAction(final Positionable pos) {
         return new AbstractAction(Bundle.getMessage("SetMarginSize")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 496532246034508657L;
 
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
@@ -162,10 +138,6 @@ public class CoordinateEdit extends JmriJFrame {
 
     public static AbstractAction getFixedSizeEditAction(final Positionable pos) {
         return new AbstractAction(Bundle.getMessage("SetFixedSize")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 1542223839677468872L;
 
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
@@ -181,10 +153,6 @@ public class CoordinateEdit extends JmriJFrame {
 
     public static AbstractAction getRotateEditAction(final Positionable pos) {
         return new AbstractAction(Bundle.getMessage("rotate")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -8782499521626157784L;
 
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
@@ -200,10 +168,6 @@ public class CoordinateEdit extends JmriJFrame {
 
     public static AbstractAction getScaleEditAction(final Positionable pos) {
         return new AbstractAction(Bundle.getMessage("scale")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -6953904289508294962L;
 
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
@@ -219,11 +183,6 @@ public class CoordinateEdit extends JmriJFrame {
 
     public static AbstractAction getTextEditAction(final Positionable pos, final String title) {
         return new AbstractAction(Bundle.getMessage(title)) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 8967681558497753837L;
-
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
                 f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
@@ -238,10 +197,6 @@ public class CoordinateEdit extends JmriJFrame {
 
     public static AbstractAction getLinkEditAction(final Positionable pos, final String title) {
         return new AbstractAction(Bundle.getMessage(title)) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 2643377077898153846L;
 
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
@@ -257,10 +212,6 @@ public class CoordinateEdit extends JmriJFrame {
 
     public static AbstractAction getZoomEditAction(final Positionable pos) {
         return new AbstractAction(Bundle.getMessage("Zoom")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -7926499945995568109L;
 
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
@@ -277,10 +228,6 @@ public class CoordinateEdit extends JmriJFrame {
 
     public static AbstractAction getNameEditAction(final Positionable pos) {
         return new AbstractAction(Bundle.getMessage("renamePanelMenu")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -6191436368112266725L;
 
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
@@ -377,6 +324,8 @@ public class CoordinateEdit extends JmriJFrame {
                 dispose();
             }
         });
+        // make large enough to easily move
+        setMinimumSize(new Dimension(250, 175));
         pack();
     }
 
@@ -411,6 +360,7 @@ public class CoordinateEdit extends JmriJFrame {
                 dispose();
             }
         });
+        setMinimumSize(new Dimension(250, 175));
         pack();
     }
 

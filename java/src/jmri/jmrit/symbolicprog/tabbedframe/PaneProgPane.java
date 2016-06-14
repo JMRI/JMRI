@@ -1,4 +1,3 @@
-// PaneProgPane.java
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import java.awt.Color;
@@ -85,6 +84,7 @@ import org.slf4j.LoggerFactory;
  * a variable depending on what has previously happened. It should write every
  * variable (at least) once.
  * <DT>Read All<DD>This should read every variable once.
+ * <img src="doc-files/PaneProgPane-ReadAllSequenceDiagram.png">
  * <DT>Read Changes<DD>This should read every variable that's marked as changed.
  * Currently, we use a common definition of changed with the write operations,
  * and that someday might have to change.
@@ -95,17 +95,91 @@ import org.slf4j.LoggerFactory;
  * @author D Miller Copyright 2003
  * @author Howard G. Penny Copyright (C) 2005
  * @author Dave Heap Copyright (C) 2014
- * @version $Revision$
  * @see jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
+ */
+ /*
+ * @startuml jmri/jmrit/symbolicprog/tabbedframe/doc-files/PaneProgPane-ReadAllSequenceDiagram.png
+ * actor User
+ * box "PaneProgPane"
+ * participant readPaneAll
+ * participant prepReadPane
+ * participant nextRead
+ * participant executeRead
+ * participant propertyChange
+ * participant replyWhileProgrammingVar
+ * participant restartProgramming
+ * end box
+ * box "VariableValue"
+ * participant readAll
+ * participant readChanges
+ * end box
+ *
+ * control Programmer
+ * User -> readPaneAll: Read All Sheets
+ * activate readPaneAll
+ * readPaneAll -> prepReadPane
+ * activate prepReadPane
+ * prepReadPane --> readPaneAll
+ * deactivate prepReadPane
+ * deactivate prepReadPane
+ * readPaneAll -> nextRead
+ * activate nextRead
+ * nextRead -> executeRead
+ * activate executeRead
+ * executeRead -> readAll
+ * activate readAll
+ * readAll -> Programmer
+ * activate Programmer 
+ * readAll --> executeRead
+ * deactivate readAll
+ * executeRead --> nextRead
+ * deactivate executeRead
+ * nextRead --> readPaneAll
+ * deactivate nextRead
+ * deactivate readPaneAll
+ * == Callback after read completes ==
+ * Programmer -> propertyChange
+ * activate propertyChange
+ * note over propertyChange
+ * if the first read failed, 
+ * setup a second read of 
+ * the same value.
+ * otherwise, setup a read of 
+ * the next value.
+ * end note
+ * deactivate Programmer
+ * propertyChange -> User: CV value or error
+ * propertyChange -> replyWhileProgrammingVar
+ * activate replyWhileProgrammingVar
+ * replyWhileProgrammingVar -> restartProgramming
+ * activate restartProgramming
+ * restartProgramming -> nextRead
+ * activate nextRead
+ * nextRead -> executeRead
+ * activate executeRead
+ * executeRead -> readAll
+ * activate readAll
+ * readAll -> Programmer
+ * activate Programmer 
+ * readAll --> executeRead
+ * deactivate readAll
+ * executeRead -> nextRead
+ * deactivate executeRead
+ * nextRead --> restartProgramming
+ * deactivate nextRead
+ * restartProgramming --> replyWhileProgrammingVar
+ * deactivate restartProgramming
+ * replyWhileProgrammingVar --> propertyChange
+ * deactivate replyWhileProgrammingVar
+ * deactivate propertyChange 
+ * deactivate Programmer
+ * == callaback triggered repeat occurs until no more values ==
+ * @enduml 
  */
 public class PaneProgPane extends javax.swing.JPanel
         implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1884950541914044865L;
     static final String LAST_GRIDX = "last_gridx";
     static final String LAST_GRIDY = "last_gridy";
 
@@ -230,7 +304,7 @@ public class PaneProgPane extends javax.swing.JPanel
                     l.setAlignmentX(Component.CENTER_ALIGNMENT);
                     pe.add(l);
                     line++;
-                } catch (Exception e) {
+                } catch (java.util.MissingResourceException e) {  // deliberately runs until exception
                     line = -1;
                 }
             }
@@ -454,7 +528,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * operation. They are stored as a list of Integer objects, each of which is
      * the index of the Variable in the VariableTable.
      */
-    List<Integer> varList = new ArrayList<Integer>();
+    List<Integer> varList = new ArrayList<>();
     int varListIndex;
     /**
      * This remembers the CVs on this pane for the Read/Write sheet operation.
@@ -463,7 +537,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * the CVs that are represented by variables are not entered here. So far
      * (sic), the only use of this is for the cvtable rep.
      */
-    protected TreeSet<Integer> cvList = new TreeSet<Integer>(); //  TreeSet is iterated in order
+    protected TreeSet<Integer> cvList = new TreeSet<>(); //  TreeSet is iterated in order
     protected Iterator<Integer> cvListIterator;
     /**
      * This remembers the indexed CVs on this pane for the Read/Write sheet
@@ -472,7 +546,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * can read/write them as a variable. So far (sic), the only use of this is
      * for the IndexedCvTable rep.
      */
-    List<Integer> indexedCvList = new ArrayList<Integer>();
+    List<Integer> indexedCvList = new ArrayList<>();
     int indexedCvListIndex;
 
     protected JToggleButton readChangesButton = new JToggleButton(SymbolicProgBundle.getMessage("ButtonReadChangesSheet"));
@@ -519,7 +593,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
             // must decide whether this one should be counted
             if (!changes
-                    || (changes && var.isChanged())) {
+                    || var.isChanged()) {
 
                 CvValue[] cvs = var.usesCVs();
                 for (int j = 0; j < cvs.length; j++) {
@@ -557,8 +631,9 @@ public class PaneProgPane extends javax.swing.JPanel
 
     /**
      * Invoked by "Read changes on sheet" button, this sets in motion a
-     * continuing sequence of "read" operations on the variables & CVs in the
-     * Pane. Only variables in states marked as "changed" will be read.
+     * continuing sequence of "read" operations on the variables {@literal &}
+     * CVs in the Pane. Only variables in states marked as "changed" will be
+     * read.
      *
      * @return true is a read has been started, false if the pane is complete.
      */
@@ -610,11 +685,11 @@ public class PaneProgPane extends javax.swing.JPanel
 
     /**
      * Invoked by "Read Full Sheet" button, this sets in motion a continuing
-     * sequence of "read" operations on the variables & CVs in the Pane. The
-     * read mechanism only reads variables in certain states (and needs to do
-     * that to handle error processing right now), so this is implemented by
-     * first setting all variables and CVs on this pane to TOREAD in
-     * prepReadPaneAll, then starting the execution.
+     * sequence of "read" operations on the variables {@literal &} CVs in the
+     * Pane. The read mechanism only reads variables in certain states (and
+     * needs to do that to handle error processing right now), so this is
+     * implemented by first setting all variables and CVs on this pane to TOREAD
+     * in prepReadPaneAll, then starting the execution.
      *
      * @return true is a read has been started, false if the pane is complete.
      */
@@ -798,7 +873,7 @@ public class PaneProgPane extends javax.swing.JPanel
         if (log.isDebugEnabled()) {
             log.debug("nextRead scans " + varList.size() + " variables");
         }
-        while ((varList.size() >= 0) && (varListIndex < varList.size())) {
+        while ((varList.size() > 0) && (varListIndex < varList.size())) {
             int varNum = varList.get(varListIndex).intValue();
             int vState = _varModel.getState(varNum);
             VariableValue var = _varModel.getVariable(varNum);
@@ -856,7 +931,7 @@ public class PaneProgPane extends javax.swing.JPanel
         if (log.isDebugEnabled()) {
             log.debug("nextRead scans " + indexedCvList.size() + " indexed CVs");
         }
-        while ((indexedCvList.size() >= 0) && (indexedCvListIndex < indexedCvList.size())) {
+        while ((indexedCvList.size() > 0) && (indexedCvListIndex < indexedCvList.size())) {
             int indxVarNum = indexedCvList.get(indexedCvListIndex).intValue();
             int indxState = _varModel.getState(indxVarNum);
             if (log.isDebugEnabled()) {
@@ -944,7 +1019,7 @@ public class PaneProgPane extends javax.swing.JPanel
             }
         }
         // found no CVs needing read, try indexed CVs
-        while ((indexedCvList.size() >= 0) && (indexedCvListIndex < indexedCvList.size())) {
+        while ((indexedCvList.size() > 0) && (indexedCvListIndex < indexedCvList.size())) {
             int indxVarNum = indexedCvList.get(indexedCvListIndex).intValue();
             int indxState = _varModel.getState(indxVarNum);
             if (log.isDebugEnabled()) {
@@ -1054,7 +1129,7 @@ public class PaneProgPane extends javax.swing.JPanel
     boolean nextWrite() {
         log.debug("start nextWrite");
         // look for possible variables
-        while ((varList.size() >= 0) && (varListIndex < varList.size())) {
+        while ((varList.size() > 0) && (varListIndex < varList.size())) {
             int varNum = varList.get(varListIndex).intValue();
             int vState = _varModel.getState(varNum);
             VariableValue var = _varModel.getVariable(varNum);
@@ -1104,7 +1179,7 @@ public class PaneProgPane extends javax.swing.JPanel
             }
         }
         // check for Indexed CVs to handle (e.g. for Indexed CV table)
-        while ((indexedCvList.size() >= 0) && (indexedCvListIndex < indexedCvList.size())) {
+        while ((indexedCvList.size() > 0) && (indexedCvListIndex < indexedCvList.size())) {
             int indxVarNum = indexedCvList.get(indexedCvListIndex).intValue();
             int indxState = _varModel.getState(indxVarNum);
             if (log.isDebugEnabled()) {
@@ -1191,8 +1266,9 @@ public class PaneProgPane extends javax.swing.JPanel
 
     /**
      * Invoked by "Compare changes on sheet" button, this sets in motion a
-     * continuing sequence of "confirm" operations on the variables & CVs in the
-     * Pane. Only variables in states marked as "changed" will be checked.
+     * continuing sequence of "confirm" operations on the variables {@literal &}
+     * CVs in the Pane. Only variables in states marked as "changed" will be
+     * checked.
      *
      * @return true is a confirm has been started, false if the pane is
      *         complete.
@@ -1210,11 +1286,11 @@ public class PaneProgPane extends javax.swing.JPanel
 
     /**
      * Invoked by "Compare Full Sheet" button, this sets in motion a continuing
-     * sequence of "confirm" operations on the variables & CVs in the Pane. The
-     * read mechanism only reads variables in certain states (and needs to do
-     * that to handle error processing right now), so this is implemented by
-     * first setting all variables and CVs on this pane to TOREAD in
-     * prepReadPaneAll, then starting the execution.
+     * sequence of "confirm" operations on the variables {@literal &} CVs in the
+     * Pane. The read mechanism only reads variables in certain states (and
+     * needs to do that to handle error processing right now), so this is
+     * implemented by first setting all variables and CVs on this pane to TOREAD
+     * in prepReadPaneAll, then starting the execution.
      *
      * @return true is a confirm has been started, false if the pane is
      *         complete.
@@ -1281,6 +1357,14 @@ public class PaneProgPane extends javax.swing.JPanel
                 if (retry == 0) {
                     varListIndex--;
                     retry++;
+                    if(_read) {
+                       _programmingVar.setToRead(true); // set the variable
+                                                        // to read again.
+                    } else {
+                       _programmingVar.setToWrite(true); // set the variable
+                                                         // to attempt another 
+                                                         // write.
+                    }
                 } else {
                     retry = 0;
                 }
@@ -1945,7 +2029,7 @@ public class PaneProgPane extends javax.swing.JPanel
         return c;
     }
 
-    class GridGlobals {
+    static class GridGlobals {
 
         public int gridxCurrent = -1;
         public int gridyCurrent = -1;
@@ -2297,8 +2381,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
         sorter.setComparator(CvTableModel.NUMCOLUMN, new jmri.util.PreferNumericComparator());
 
-        List<RowSorter.SortKey> sortKeys
-                = new ArrayList<RowSorter.SortKey>();
+        List<RowSorter.SortKey> sortKeys = new ArrayList<>();
         sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
         sorter.setSortKeys(sortKeys);
 
@@ -2340,11 +2423,9 @@ public class PaneProgPane extends javax.swing.JPanel
      * Pick an appropriate function map panel depending on model attribute.
      * <dl>
      * <dt>If attribute extFnsESU="yes":</dt>
-     * <dd>Invoke FnMapPanelESU(VariableTableModel v, List<Integer> varsUsed,
-     * Element model)</dd>
+     * <dd>Invoke {@code FnMapPanelESU(VariableTableModel v, List<Integer> varsUsed, Element model)}</dd>
      * <dt>Otherwise:</dt>
-     * <dd>Invoke FnMapPanel(VariableTableModel v, List<Integer> varsUsed,
-     * Element model)</dd>
+     * <dd>Invoke {@code FnMapPanel(VariableTableModel v, List<Integer> varsUsed, Element model)}</dd>
      * </dl>
      */
     void pickFnMapPanel(JPanel c, GridBagLayout g, GridBagConstraints cs, Element modelElem) {
@@ -2413,9 +2494,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
         // get representation; store into the list to be programmed
         JComponent rep = getRepresentation(name, var);
-        if (i >= 0) {
-            varList.add(Integer.valueOf(i));
-        }
+        varList.add(Integer.valueOf(i));
 
         // create the paired label
         JLabel l = new WatchingLabel(label, rep);
@@ -2557,8 +2636,8 @@ public class PaneProgPane extends javax.swing.JPanel
     /**
      * Appends text to a String possibly in HTML format (as used in many Swing
      * components).
-     *
-     * Ensures any appended text is added prior to the closing </html> tag, if
+     * <p>
+     * Ensures any appended text is added prior to the closing {@code </html>} tag, if
      * there is one.
      *
      * @param baseText  original text
@@ -2583,7 +2662,7 @@ public class PaneProgPane extends javax.swing.JPanel
     /**
      * Optionally add CV numbers and bit numbers to tool tip text based on
      * Roster Preferences setting.
-     *
+     * <p>
      * Needs to be independent of VariableValue methods to allow use by
      * non-standard elements such as SpeedTableVarValue, DccAddressPanel,
      * FnMapPanel.
@@ -2670,12 +2749,12 @@ public class PaneProgPane extends javax.swing.JPanel
     /**
      * list of fnMapping objects to dispose
      */
-    ArrayList<FnMapPanel> fnMapList = new ArrayList<FnMapPanel>();
-    ArrayList<FnMapPanelESU> fnMapListESU = new ArrayList<FnMapPanelESU>();
+    ArrayList<FnMapPanel> fnMapList = new ArrayList<>();
+    ArrayList<FnMapPanelESU> fnMapListESU = new ArrayList<>();
     /**
      * list of JPanel objects to removeAll
      */
-    ArrayList<JPanel> panelList = new ArrayList<JPanel>();
+    ArrayList<JPanel> panelList = new ArrayList<>();
 
     public void dispose() {
         if (log.isDebugEnabled()) {
@@ -2753,7 +2832,7 @@ public class PaneProgPane extends javax.swing.JPanel
     }
     boolean print = false;
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     public void printPane(HardcopyWriter w) {
@@ -2817,7 +2896,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 // Check if variable has been printed.  If not store it and print
                 boolean alreadyPrinted = false;
                 for (int j = 0; j < printedVariables.size(); j++) {
-                    if (printedVariables.elementAt(j).toString() == name) {
+                    if (name.equals(printedVariables.elementAt(j))) {
                         alreadyPrinted = true;
                     }
                 }

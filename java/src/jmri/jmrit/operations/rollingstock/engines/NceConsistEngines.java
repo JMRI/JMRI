@@ -76,6 +76,8 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
         this.tc = tc;
     }
 
+    @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "EngineManager only provides Engine Objects")
     // we use a thread so the status frame will work!
     public void run() {
         if (tc == null) {
@@ -169,6 +171,7 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
         }
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "EngineManager only provides Engine Objects")
     private void syncEngines(int offset, int step) {
         for (int consistNum = 1; consistNum < 128; consistNum++) {
             int engNum = getEngineNumberFromArray(consistNum, offset, step);
@@ -227,16 +230,14 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
         readWait();
     }
 
-    // wait up to 10 sec per read
-    private boolean readWait() {
+    // wait up to 10 seconds per read
+    private synchronized boolean readWait() {
         int waitcount = 10;
         while (waiting > 0) {
-            synchronized (this) {
-                try {
-                    wait(1000);
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt(); // retain if needed later
-                }
+            try {
+                wait(1000); // 10 x 1000mSec = 10 seconds.
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt(); // retain if needed later
             }
             if (waitcount-- < 0) {
                 log.error("read timeout");
@@ -259,10 +260,12 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
         return m;
     }
 
+    @Override
     public void message(NceMessage m) {
     } // ignore replies
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NN_NAKED_NOTIFY")
+    @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"NN_NAKED_NOTIFY", "NO_NOTIFY_NOT_NOTIFYALL"}, justification = "Only want to notify this thread" )
     public void reply(NceReply r) {
 
         if (waiting <= 0) {

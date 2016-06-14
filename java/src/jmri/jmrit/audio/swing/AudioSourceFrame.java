@@ -1,4 +1,3 @@
-// AudioSourceFrame.java
 package jmri.jmrit.audio.swing;
 
 import java.awt.FlowLayout;
@@ -39,14 +38,8 @@ import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
  * <P>
  *
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public class AudioSourceFrame extends AbstractAudioFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -933611748183387484L;
 
     private static int counter = 1;
 
@@ -55,7 +48,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
     private final Object lock = new Object();
 
     // UI components for Add/Edit Source
-    JLabel assignedBufferLabel = new JLabel(Bundle.getMessage("LabelAssignedBuffer"));
+    JLabel assignedBufferLabel = new JLabel(Bundle.getMessage("LabelAssignedBuffer") + ":");
     JComboBox<String> assignedBuffer = new JComboBox<>();
     JLabel loopMinLabel = new JLabel(Bundle.getMessage("LabelLoopMin"));
     JSpinner loopMin = new JSpinner();
@@ -197,7 +190,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         p2.add(refDistanceLabel);
         refDistance.setPreferredSize(new JTextField(8).getPreferredSize());
         refDistance.setModel(
-                new SpinnerNumberModel(new Float(0f), new Float(0f), new Float(Audio.MAX_DISTANCE), new Float(FLT_PRECISION)));
+                new SpinnerNumberModel(Float.valueOf(0f), Float.valueOf(0f), Float.valueOf(Audio.MAX_DISTANCE), Float.valueOf(FLT_PRECISION)));
         refDistance.setEditor(new JSpinner.NumberEditor(refDistance, "0.00"));
         refDistance.addChangeListener((ChangeEvent e) -> {
             maxDistance.setValue(
@@ -211,7 +204,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         p2.add(maxDistanceLabel);
         maxDistance.setPreferredSize(new JTextField(8).getPreferredSize());
         maxDistance.setModel(
-                new SpinnerNumberModel(new Float(0f), new Float(0f), new Float(Audio.MAX_DISTANCE), new Float(FLT_PRECISION)));
+                new SpinnerNumberModel(Float.valueOf(0f), Float.valueOf(0f), Float.valueOf(Audio.MAX_DISTANCE), Float.valueOf(FLT_PRECISION)));
         maxDistance.setEditor(new JSpinner.NumberEditor(maxDistance, "0.00"));
         maxDistance.addChangeListener((ChangeEvent e) -> {
             refDistance.setValue(
@@ -229,7 +222,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         p2.add(rollOffFactorLabel);
         rollOffFactor.setPreferredSize(new JTextField(8).getPreferredSize());
         rollOffFactor.setModel(
-                new SpinnerNumberModel(new Float(0f), new Float(0f), new Float(Audio.MAX_DISTANCE), new Float(FLT_PRECISION)));
+                new SpinnerNumberModel(Float.valueOf(0f), Float.valueOf(0f), Float.valueOf(Audio.MAX_DISTANCE), Float.valueOf(FLT_PRECISION)));
         rollOffFactor.setEditor(new JSpinner.NumberEditor(rollOffFactor, "0.00"));
         p2.add(rollOffFactor);
         p.add(p2);
@@ -256,18 +249,18 @@ public class AudioSourceFrame extends AbstractAudioFrame {
 
         p = new JPanel();
         JButton apply;
-        p.add(apply = new JButton(rb.getString("ButtonApply")));
+        p.add(apply = new JButton(Bundle.getMessage("ButtonApply")));
         apply.addActionListener((ActionEvent e) -> {
             applyPressed(e);
         });
         JButton ok;
-        p.add(ok = new JButton(rb.getString("ButtonOK")));
+        p.add(ok = new JButton(Bundle.getMessage("ButtonOK")));
         ok.addActionListener((ActionEvent e) -> {
             applyPressed(e);
             frame.dispose();
         });
         JButton cancel;
-        p.add(cancel = new JButton(rb.getString("ButtonCancel")));
+        p.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
         cancel.addActionListener((ActionEvent e) -> {
             frame.dispose();
         });
@@ -308,6 +301,9 @@ public class AudioSourceFrame extends AbstractAudioFrame {
      */
     @Override
     public void populateFrame(Audio a) {
+        if (a instanceof AudioSource) {
+            throw new IllegalArgumentException(a.getSystemName() + " is not an AudioSource object");
+        }
         super.populateFrame(a);
         AudioSource s = (AudioSource) a;
         AudioManager am = InstanceManager.audioManagerInstance();
@@ -339,14 +335,14 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         AudioManager am = InstanceManager.audioManagerInstance();
         assignedBuffer.removeAllItems();
         assignedBuffer.addItem("Select buffer from list");
-        for (String s : am.getSystemNameList(Audio.BUFFER)) {
+        am.getSystemNameList(Audio.BUFFER).stream().forEach((s) -> {
             String u = am.getAudio(s).getUserName();
             if (u != null) {
                 assignedBuffer.addItem(u);
             } else {
                 assignedBuffer.addItem(s);
             }
-        }
+        });
     }
 
     void applyPressed(ActionEvent e) {
@@ -364,7 +360,9 @@ public class AudioSourceFrame extends AbstractAudioFrame {
             }
             if (newSource && am.getByUserName(user) != null) {
                 am.deregister(s);
-                counter--;
+                synchronized (lock) {
+                    counter--;
+                }
                 throw new AudioException("Duplicate user name - please modify");
             }
             s.setUserName(user);
@@ -390,11 +388,9 @@ public class AudioSourceFrame extends AbstractAudioFrame {
             // Notify changes
             model.fireTableDataChanged();
         } catch (AudioException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), rb.getString("AudioCreateErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), Bundle.getMessage("AudioCreateErrorTitle"), JOptionPane.ERROR_MESSAGE);
         }
     }
 
     //private static final Logger log = LoggerFactory.getLogger(AudioSourceFrame.class.getName());
 }
-
-/* @(#)AudioSourceFrame.java */

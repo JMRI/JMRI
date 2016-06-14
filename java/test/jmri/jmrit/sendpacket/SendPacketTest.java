@@ -1,4 +1,3 @@
-// SendPacketTest.java
 package jmri.jmrit.sendpacket;
 
 import junit.framework.Assert;
@@ -46,7 +45,7 @@ public class SendPacketTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {SendPacketTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

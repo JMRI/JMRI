@@ -1,4 +1,3 @@
-// EnumVariableValueTest.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.Component;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * Test EnumVariableValue
  *
  * @author	Bob Jacobsen Copyright 2003
- * @version $Revision$
  */
 public class EnumVariableValueTest extends VariableValueTest {
 
@@ -167,7 +165,7 @@ public class EnumVariableValueTest extends VariableValueTest {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", EnumVariableValueTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

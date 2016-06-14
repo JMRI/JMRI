@@ -164,6 +164,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
     }
 
     // add, delete, replace, and save buttons
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == addButton) {
             String addLoad = addTextBox.getText().trim();
@@ -259,6 +260,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
         }
     }
 
+    @Override
     protected void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("Combo box action");
         updateCarQuanity();
@@ -349,13 +351,15 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
         dropCommentTextField.setText(carLoads.getDropComment(_type, (String) loadComboBox.getSelectedItem()));
     }
 
+    @Override
     public void dispose() {
         carLoads.removePropertyChangeListener(this);
         super.dispose();
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }

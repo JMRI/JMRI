@@ -1,9 +1,9 @@
-// LayoutEditorWindowTest.java
 package jmri.jmrit.display.layoutEditor;
 
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import jmri.util.JUnitUtil;
 import junit.extensions.jfcunit.TestHelper;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.extensions.jfcunit.finder.AbstractButtonFinder;
@@ -16,7 +16,6 @@ import junit.framework.TestSuite;
  * Swing jfcUnit tests for the LayoutEditor
  *
  * @author	Bob Jacobsen Copyright 2009, 2010
- * @version $Revision$
  */
 public class LayoutEditorWindowTest extends jmri.util.SwingTestCase {
 
@@ -68,7 +67,7 @@ public class LayoutEditorWindowTest extends jmri.util.SwingTestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {LayoutEditorWindowTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -81,13 +80,19 @@ public class LayoutEditorWindowTest extends jmri.util.SwingTestCase {
     protected void setUp() throws Exception {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initShutDownManager();
+        // dispose of the single PanelMenu instance
+        jmri.jmrit.display.PanelMenu.dispose();
     }
 
     protected void tearDown() throws Exception {
         apps.tests.Log4JFixture.tearDown();
+        // dispose of the single PanelMenu instance
+        jmri.jmrit.display.PanelMenu.dispose();
+        JUnitUtil.resetInstanceManager();
         super.tearDown();
     }
 }

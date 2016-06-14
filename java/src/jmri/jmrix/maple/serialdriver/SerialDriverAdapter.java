@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.maple.serialdriver;
 
 import gnu.io.CommPortIdentifier;
@@ -21,7 +20,6 @@ import org.slf4j.LoggerFactory;
  * maple.serialdriver.SerialDriverFrame class.
  *
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version	$Revision$
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -29,7 +27,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
 
     public SerialDriverAdapter() {
         super(new MapleSystemConnectionMemo());
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.MAPLE;
+        this.manufacturerName = jmri.jmrix.maple.SerialConnectionTypeList.MAPLE;
     }
 
     public String openPort(String portName, String appName) {
@@ -71,12 +69,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {
@@ -251,7 +244,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     /**
      * Get an array of valid baud rates.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] validBaudRates() {
         return validSpeeds;
     }

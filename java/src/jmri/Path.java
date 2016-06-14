@@ -36,7 +36,6 @@ import java.util.List;
  * different lengths in the block.
  *
  * @author	Bob Jacobsen Copyright (C) 2006, 2008
- * @version	$Revision$
  */
 public class Path {
 
@@ -283,6 +282,7 @@ public class Path {
     }
 
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="equals operator should actually check for equality")
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;
@@ -295,7 +295,10 @@ public class Path {
             return false;
         } else {
             Path p = (Path)obj;
+            
+            // next line is the FE_FLOATING_POINT_EQUALITY annotated above
             if (p._length != this._length) return false;
+            
             if (p._toBlockDirection != this._toBlockDirection) return false;
             if (p._fromBlockDirection != this._fromBlockDirection) return false;
 
@@ -311,9 +314,10 @@ public class Path {
         return true;
     }
 
+    // Can't include _toBlockDirection, _fromBlockDirection, or block information as they can change
     @Override
     public int hashCode() {
-        int hash = _toBlockDirection*1000+_fromBlockDirection*1000*1000+(int)(_length)+1000*1000*1000*_beans.size();
+        int hash = 100;
         return hash;
     }
     

@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import jmri.implementation.SignalSpeedMap;
 import jmri.util.PhysicalLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -112,11 +113,6 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copywright (C) 2009
  */
 public class Block extends jmri.implementation.AbstractNamedBean implements PhysicalLocationReporter {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -298646610517375288L;
 
     public Block(String systemName) {
         super(systemName.toUpperCase());
@@ -233,7 +229,8 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
      * {@link Reporter#getLastReport() last report}.
      *
      * @see Reporter
-     * @param reportingCurrent
+     * @param reportingCurrent true if to use current report; false if to use
+     *                         last report
      */
     public void setReportingCurrent(boolean reportingCurrent) {
         _reportingCurrent = reportingCurrent;
@@ -426,12 +423,12 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
         }
 
         try {
-            return new Float(speed);
+            return Float.valueOf(speed);
         } catch (NumberFormatException nx) {
             //considered normal if the speed is not a number.
         }
         try {
-            return jmri.implementation.SignalSpeedMap.getMap().getSpeed(speed);
+            return jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(speed);
         } catch (Exception ex) {
             return -1;
         }
@@ -465,7 +462,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
                 Float.parseFloat(s);
             } catch (NumberFormatException nx) {
                 try {
-                    jmri.implementation.SignalSpeedMap.getMap().getSpeed(s);
+                    jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(s);
                 } catch (Exception ex) {
                     throw new JmriException("Value of requested block speed is not valid");
                 }
@@ -534,11 +531,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
             return false;
         } else {
             Block b = (Block) obj;
-            
-//            if (b._direction != this._direction) return false;
-//            if (b._curvature != this._curvature) return false;
-//            if (b._length != this._length) return false;
-            
+                        
             if (!b.getSystemName().equals(this.getSystemName())) return false;
             
         }
@@ -546,9 +539,9 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
     }
 
     @Override
+    // This can't change, so can't include mutable values
     public int hashCode() {
-        int hash = 100*_direction+1000*_curvature+10000*_current+(int)_length+CntOfPossibleEntrancePaths;
-        return hash;
+        return this.getSystemName().hashCode();
     }
 
     // internal data members
@@ -863,7 +856,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
             // NOTE: This pattern is based on the one defined in jmri.jmrix.loconet.LnReporter
             Pattern ln_p = Pattern.compile("(\\d+) (enter|exits|seen)\\s*(northbound|southbound)?");  // Match a number followed by the word "enter".  This is the LocoNet pattern.
             Matcher m = ln_p.matcher(rep);
-            if ((m != null) && m.find()) {
+            if (m.find()) {
                 log.debug("Parsed address: " + m.group(1));
                 return (new DccLocoAddress(Integer.parseInt(m.group(1)), LocoAddress.Protocol.DCC));
             } else {
@@ -939,7 +932,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
     }
 
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) { //IN18N
+        if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof Sensor) {
                 if (evt.getOldValue().equals(getSensor())) {
                     throw new java.beans.PropertyVetoException(getDisplayName(), evt);
@@ -950,7 +943,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
                     throw new java.beans.PropertyVetoException(getDisplayName(), evt);
                 }
             }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { //IN18N
+        } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof Sensor) {
                 if (evt.getOldValue().equals(getSensor())) {
                     setSensor(null);

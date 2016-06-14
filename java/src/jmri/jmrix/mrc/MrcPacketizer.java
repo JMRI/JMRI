@@ -1,4 +1,3 @@
-// MrcPacketizer.java
 package jmri.jmrix.mrc;
 
 import java.io.DataInputStream;
@@ -32,7 +31,6 @@ import org.slf4j.LoggerFactory;
  * listeners in that same thread. Reception and transmission are handled in
  * dedicated threads by RcvHandler and XmtHandler objects. Those are internal
  * classes defined here. The thread priorities are:
- * <P>
  * <UL>
  * <LI> RcvHandler - at highest available priority
  * <LI> XmtHandler - down one, which is assumed to be above the GUI
@@ -48,7 +46,6 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author	Kevin Dickerson Copyright (C) 2014
  * @author	Ken Cameron Copyright (C) 2014
- * @version $Revision: 23315 $
  *
  */
 public class MrcPacketizer extends MrcTrafficController {
@@ -70,7 +67,7 @@ public class MrcPacketizer extends MrcTrafficController {
 
     // The methods to implement the MrcInterface
     public boolean status() {
-        return (ostream != null & istream != null);
+        return (ostream != null && istream != null);
     }
 
     /**
@@ -771,5 +768,3 @@ public class MrcPacketizer extends MrcTrafficController {
 
     private final static Logger log = LoggerFactory.getLogger(MrcPacketizer.class.getName());
 }
-
-/* @(#)MrcPacketizer.java */

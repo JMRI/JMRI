@@ -1,4 +1,3 @@
-// UnboundBean.java
 package jmri.beans;
 
 import java.util.Set;
@@ -27,8 +26,6 @@ public abstract class UnboundBean implements BeanInterface {
      * since the Java introspection methods provide no reliable way to get the
      * size of the indexed property.
      *
-     * @param key
-     * @param index
      * @return value of element or null
      */
     @Override
@@ -44,7 +41,6 @@ public abstract class UnboundBean implements BeanInterface {
      * property exists.
      * <p>
      *
-     * @param key
      * @return value of key or null.
      * @see BeanInterface#getProperty(java.lang.String)
      */
@@ -67,7 +63,6 @@ public abstract class UnboundBean implements BeanInterface {
     /**
      * Test if a property exists.
      *
-     * @param key
      * @return true if property exists
      * @see BeanInterface#hasProperty(java.lang.String)
      */
@@ -89,9 +84,6 @@ public abstract class UnboundBean implements BeanInterface {
      * that the write method has the following two parameters in order:
      * <code>index</code>, <code>value</code>.
      *
-     * @param key
-     * @param index
-     * @param value
      * @see BeanInterface#setIndexedProperty(java.lang.String, int,
      * java.lang.Object)
      */
@@ -106,8 +98,6 @@ public abstract class UnboundBean implements BeanInterface {
      * This implementation calls a write method for the indexed property using
      * JavaBeans introspection.
      *
-     * @param key
-     * @param value
      * @see BeanInterface#setProperty(java.lang.String, java.lang.Object)
      */
     @Override

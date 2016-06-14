@@ -16,6 +16,7 @@ import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
+import jmri.jmrit.operations.trains.tools.ShowCarsInTrainAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,17 +31,13 @@ import org.slf4j.LoggerFactory;
  */
 public class TrainIcon extends LocoIcon {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8557652717518925827L;
-
     public TrainIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
         super(editor);
     }
 
     // train icon tool tips are always enabled
+    @Override
     public void setShowTooltip(boolean set) {
         _showTooltip = true;
     }
@@ -49,14 +46,14 @@ public class TrainIcon extends LocoIcon {
      * Pop-up only if right click and not dragged return true if a popup item is
      * set
      */
+    @Override
     public boolean showPopUp(JPopupMenu popup) {
         if (_train != null) {
-            popup.add(new AbstractAction(Bundle.getMessage("Move")) {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = 8451701357783453156L;
-
+            // first action is either "Move" or "Terminate" train
+            String actionText = (_train.getCurrentLocation() == _train.getTrainTerminatesRouteLocation())
+                    ? Bundle.getMessage("Terminate") : Bundle.getMessage("Move");
+            popup.add(new AbstractAction(actionText) {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     _train.move();
                 }
@@ -66,11 +63,7 @@ public class TrainIcon extends LocoIcon {
             popup.add(new ShowCarsInTrainAction(Bundle.getMessage("MenuItemShowCarsInTrain"), _train));
             if (!isEditable()) {
                 popup.add(new AbstractAction(Bundle.getMessage("SetX&Y")) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = 4468534003526674824L;
-
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         if (!_train.setTrainIconCoordinates()) {
                             JOptionPane.showMessageDialog(null, Bundle.getMessage("SeeOperationsSettings"), Bundle
@@ -124,6 +117,7 @@ public class TrainIcon extends LocoIcon {
         _tf.toFront();
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "CarManager only provides Car Objects")
     private JMenu makeTrainRouteMenu() {
         JMenu routeMenu = new JMenu(Bundle.getMessage("Route"));
         Route route = _train.getRoute();
@@ -169,12 +163,6 @@ public class TrainIcon extends LocoIcon {
     }
 
     public class ThrottleAction extends AbstractAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 7257772386113407944L;
-
         public ThrottleAction(String actionName) {
             super(actionName);
             if (_entry == null) {
@@ -182,6 +170,7 @@ public class TrainIcon extends LocoIcon {
             }
         }
 
+        @Override
         public void actionPerformed(ActionEvent e) {
             createThrottle();
         }
@@ -192,11 +181,6 @@ public class TrainIcon extends LocoIcon {
      *
      */
     public class RouteAction extends AbstractAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 1452621257414758068L;
         RouteLocation _rl;
 
         public RouteAction(String actionName, RouteLocation rl) {
@@ -204,6 +188,7 @@ public class TrainIcon extends LocoIcon {
             _rl = rl;
         }
 
+        @Override
         public void actionPerformed(ActionEvent e) {
             log.debug("Route location selected " + _rl.getName());
             Route route = _train.getRoute();
@@ -225,7 +210,7 @@ public class TrainIcon extends LocoIcon {
                         } else if (nextRl == _rl) {
                             if (JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle
                                     .getMessage("MoveTrainTo"), new Object[]{_rl.getName()}), MessageFormat.format(
-                                            Bundle.getMessage("MoveTrain"), new Object[]{_train.getIconName()}),
+                                    Bundle.getMessage("MoveTrain"), new Object[]{_train.getIconName()}),
                                     JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                                 while (_train.getCurrentLocation() != _rl) {
                                     _train.move();
@@ -239,24 +224,26 @@ public class TrainIcon extends LocoIcon {
     }
 
     private final int range = 25; // how close the train icon needs to be to the next location coordinates in a train's
+
     // route
 
     /**
      * Determine if user moved the train icon to next location in a train's
      * route.
      */
+    @Override
     public void doMouseDragged(MouseEvent event) {
         log.debug("Mouse dragged, X=" + getX() + " Y=" + getY());
         if (_train != null) {
-            RouteLocation next = _train.getNextLocation(_train.getCurrentLocation());
-            Point nextPoint = null;
-            if (next != null && ((nextPoint = next.getTrainIconCoordinates()) != null)) {
+            RouteLocation next = _train.getNextLocation(_train.getCurrentLocation());         
+            if (next != null) {
+                Point nextPoint = next.getTrainIconCoordinates();
                 log.debug("Next location (" + next.getName() + "), X=" + nextPoint.x + " Y=" + nextPoint.y);
                 if (Math.abs(getX() - nextPoint.x) < range && Math.abs(getY() - nextPoint.y) < range) {
                     log.debug("Train icon (" + _train.getName() + ") within range of (" + next.getName() + ")");
                     if (JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle.getMessage("MoveTrainTo"),
                             new Object[]{next.getName()}), MessageFormat.format(Bundle.getMessage("MoveTrain"),
-                                    new Object[]{_train.getIconName()}), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                            new Object[]{_train.getIconName()}), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                         _train.move();
                     }
                 }

@@ -1,4 +1,3 @@
-// LnOverTcpPacketizer.java
 package jmri.jmrix.loconet.loconetovertcp;
 
 import java.util.NoSuchElementException;
@@ -20,7 +19,6 @@ import org.slf4j.LoggerFactory;
  * listeners in that same thread. Reception and transmission are handled in
  * dedicated threads by RcvHandler and XmtHandler objects. Those are internal
  * classes defined here. The thread priorities are:
- * <P>
  * <UL>
  * <LI> RcvHandler - at highest available priority
  * <LI> XmtHandler - down one, which is assumed to be above the GUI
@@ -35,7 +33,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Alex Shepherd Copyright (C) 2003, 2006
- * @version $Revision$
  *
  */
 public class LnOverTcpPacketizer extends LnPacketizer {
@@ -43,7 +40,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
     static final String RECEIVE_PREFIX = "RECEIVE";
     static final String SEND_PREFIX = "SEND";
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Only used during system initialization")
     public LnOverTcpPacketizer() {
         self = this;
@@ -302,5 +299,3 @@ public class LnOverTcpPacketizer extends LnPacketizer {
 
     private final static Logger log = LoggerFactory.getLogger(LnOverTcpPacketizer.class.getName());
 }
-
-/* @(#)LnOverTcpPacketizer.java */

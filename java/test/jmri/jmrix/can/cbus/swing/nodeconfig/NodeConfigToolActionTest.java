@@ -1,4 +1,3 @@
-// NodeConfigToolActionTest.java
 package jmri.jmrix.can.cbus.swing.nodeconfig;
 
 import jmri.jmrix.can.TestTrafficController;
@@ -10,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.cbus.swing.nodeconfig package.
  *
  * @author Bob Jacobsen Copyright 2008
- * @version $Revision$
  */
 public class NodeConfigToolActionTest extends TestCase {
 
@@ -28,7 +26,7 @@ public class NodeConfigToolActionTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", NodeConfigToolActionTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

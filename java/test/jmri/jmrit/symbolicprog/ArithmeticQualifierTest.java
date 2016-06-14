@@ -1,4 +1,3 @@
-// ArithmeticQualifierTest.java
 package jmri.jmrit.symbolicprog;
 
 import java.util.HashMap;
@@ -12,7 +11,6 @@ import junit.framework.TestSuite;
 /**
  *
  * @author	Bob Jacobsen, Copyright 2014
- * @version $Revision$
  */
 public class ArithmeticQualifierTest extends TestCase {
 
@@ -136,7 +134,7 @@ public class ArithmeticQualifierTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", ArithmeticQualifierTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests, including others in the package

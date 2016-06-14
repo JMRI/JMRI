@@ -40,14 +40,18 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
             // create and load
             _instance = new AutomationManager();
         }
-        if (Control.showInstance) {
+        if (Control.SHOW_INSTANCE) {
             log.debug("AutomationManager returns instance {}", _instance);
         }
         return _instance;
     }
 
+    /**
+     * For tests
+     */
     public void dispose() {
         _automationHashTable.clear();
+        _id = 0;
     }
 
     // stores known Automation instances by id
@@ -83,7 +87,6 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
      * Finds an existing automation or creates a new automation if needed
      * requires automation's name creates a unique id for this automation
      *
-     * @param name
      *
      * @return new automation or existing automation
      */
@@ -244,7 +247,7 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
      * Create an XML element to represent this Entry. This member has to remain
      * synchronized with the detailed DTD in operations-trains.dtd.
      *
-     * @return Contents in a JDOM Element
+     * @param root Contents in a JDOM Element
      */
     public void store(Element root) {
         Element values;
@@ -255,8 +258,9 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
         }
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }

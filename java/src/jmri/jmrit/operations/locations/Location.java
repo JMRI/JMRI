@@ -118,7 +118,6 @@ public class Location implements java.beans.PropertyChangeListener {
     /**
      * Sets the location's name.
      *
-     * @param name
      */
     public void setName(String name) {
         String old = _name;
@@ -129,6 +128,7 @@ public class Location implements java.beans.PropertyChangeListener {
     }
 
     // for combo boxes
+    @Override
     public String toString() {
         return _name;
     }
@@ -189,7 +189,6 @@ public class Location implements java.beans.PropertyChangeListener {
     /**
      * Set total length of all tracks for this location
      *
-     * @param length
      */
     public void setLength(int length) {
         int old = _length;
@@ -282,7 +281,6 @@ public class Location implements java.beans.PropertyChangeListener {
 
     /**
      *
-     * @param trackType
      * @return True if location has the track type specified Track.INTERCHANGE
      *         Track.YARD Track.SPUR Track.Staging
      */
@@ -297,7 +295,7 @@ public class Location implements java.beans.PropertyChangeListener {
         }
         return false;
     }
-
+    
     public int getNumberOfTracks() {
         return _trackHashTable.size();
     }
@@ -330,7 +328,6 @@ public class Location implements java.beans.PropertyChangeListener {
     /**
      * Sets the number of cars and or engines on for this location
      *
-     * @param number
      */
     public void setNumberRS(int number) {
         int old = _numberRS;
@@ -352,7 +349,6 @@ public class Location implements java.beans.PropertyChangeListener {
     /**
      * Sets the number of cars at this location
      *
-     * @param number
      */
     private void setNumberCars(int number) {
         int old = _numberCars;
@@ -374,7 +370,6 @@ public class Location implements java.beans.PropertyChangeListener {
     /**
      * Sets the number of engines at this location
      *
-     * @param number
      */
     private void setNumberEngines(int number) {
         int old = _numberEngines;
@@ -397,7 +392,6 @@ public class Location implements java.beans.PropertyChangeListener {
      * When true, a switchlist is desired for this location. Used for preview
      * and printing a manifest for a single location
      *
-     * @param switchList
      */
     public void setSwitchListEnabled(boolean switchList) {
         boolean old = _switchList;
@@ -430,20 +424,9 @@ public class Location implements java.beans.PropertyChangeListener {
     }
 
     /**
-     * Automatically sets the print status for this location's switch list to
-     * modified if the switch list was printed or CSV generated.
-     *
-     */
-    public void setStatusModified() {
-        if (getStatus().equals(PRINTED) || getStatus().equals(CSV_GENERATED) || !Setup.isSwitchListRealTime()) {
-            setStatus(MODIFIED);
-        }
-    }
-
-    /**
      * Sets the print status for this location's switch list
      *
-     * @param status UNKNOWN PRINTED MODIFIED
+     * @param status UNKNOWN PRINTED MODIFIED UPDATED CSV_GENERATED
      */
     public void setStatus(String status) {
         String old = _status;
@@ -453,6 +436,10 @@ public class Location implements java.beans.PropertyChangeListener {
         }
     }
 
+    /**
+     * The print status for this location's switch list
+     * @return UNKNOWN PRINTED MODIFIED UPDATED CSV_GENERATED
+     */
     public String getStatus() {
         return _status;
     }
@@ -465,7 +452,7 @@ public class Location implements java.beans.PropertyChangeListener {
         int old = _switchListState;
         _switchListState = state;
         if (old != state) {
-            setDirtyAndFirePropertyChange("SwitchListState", old, state); // NOI18N
+            setDirtyAndFirePropertyChange("switchListState", old, state); // NOI18N
         }
     }
 
@@ -527,7 +514,6 @@ public class Location implements java.beans.PropertyChangeListener {
     /**
      * Adds rolling stock to a specific location.
      *
-     * @param rs
      */
     public void addRS(RollingStock rs) {
         setNumberRS(getNumberRS() + 1);
@@ -1098,6 +1084,21 @@ public class Location implements java.beans.PropertyChangeListener {
         }
         return pools;
     }
+    
+    /**
+     * True if this location has a track with pick up or set out restrictions.
+     */
+    public boolean hasServiceRestrictions() {
+        Track track;
+        Enumeration<Track> en = _trackHashTable.elements();
+        while (en.hasMoreElements()) {
+            track = en.nextElement();
+            if (!track.getDropOption().equals(Track.ANY) || !track.getPickupOption().equals(Track.ANY)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * Used to determine if there are Pools at this location.
@@ -1128,7 +1129,7 @@ public class Location implements java.beans.PropertyChangeListener {
      *
      * @return True if there are load restrictions
      */
-    public boolean hasLoadRestrications() {
+    public boolean hasLoadRestrictions() {
         List<Track> tracks = getTrackList();
         for (Track track : tracks) {
             if (!track.getLoadOption().equals(Track.ALL_LOADS)) {
@@ -1144,7 +1145,7 @@ public class Location implements java.beans.PropertyChangeListener {
      *
      * @return True if there are load ship restrictions
      */
-    public boolean hasShipLoadRestrications() {
+    public boolean hasShipLoadRestrictions() {
         List<Track> tracks = getTrackList();
         for (Track track : tracks) {
             if (!track.getShipLoadOption().equals(Track.ALL_LOADS)) {
@@ -1159,7 +1160,7 @@ public class Location implements java.beans.PropertyChangeListener {
      *
      * @return True if there are road restrictions
      */
-    public boolean hasRoadRestrications() {
+    public boolean hasRoadRestrictions() {
         List<Track> tracks = getTrackList();
         for (Track track : tracks) {
             if (!track.getRoadOption().equals(Track.ALL_ROADS)) {
@@ -1174,7 +1175,7 @@ public class Location implements java.beans.PropertyChangeListener {
      *
      * @return True if there are road restrictions
      */
-    public boolean hasDestinationRestrications() {
+    public boolean hasDestinationRestrictions() {
         List<Track> tracks = getTrackList();
         for (Track track : tracks) {
             if (!track.getDestinationOption().equals(Track.ALL_DESTINATIONS)) {
@@ -1506,8 +1507,9 @@ public class Location implements java.beans.PropertyChangeListener {
         }
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }

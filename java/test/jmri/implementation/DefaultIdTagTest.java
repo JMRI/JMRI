@@ -1,4 +1,3 @@
-// DefaultIdTagTest.java
 package jmri.implementation;
 
 import java.util.Calendar;
@@ -14,7 +13,6 @@ import junit.framework.TestSuite;
  * Tests for the DefaultIdTag class
  *
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  */
 public class DefaultIdTagTest extends TestCase {
 
@@ -56,11 +54,6 @@ public class DefaultIdTagTest extends TestCase {
     public void testHasBeenSeen() throws InterruptedException {
         IdTag r = new DefaultIdTag("ID0413276BC1");
         Reporter rep = new AbstractReporter("IR1") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 1544664087163881750L;
-
             public int getState() {
                 return state;
             }
@@ -117,7 +110,7 @@ public class DefaultIdTagTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {DefaultIdTagTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

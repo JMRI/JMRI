@@ -1,4 +1,3 @@
-// pricom.pockettester.DataSource.java
 package jmri.jmrix.pricom.pockettester;
 
 import gnu.io.CommPortIdentifier;
@@ -33,10 +32,6 @@ import org.slf4j.LoggerFactory;
  */
 public class DataSource extends jmri.util.JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6253194020952470551L;
     static DataSource existingInstance;
 
     /**
@@ -189,11 +184,6 @@ public class DataSource extends jmri.util.JmriJFrame {
 
         {
             MonitorAction a = new MonitorAction() {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = -1633077392080446971L;
-
                 public void connect(DataListener l) {
                     DataSource.this.addListener(l);
                 }
@@ -205,11 +195,6 @@ public class DataSource extends jmri.util.JmriJFrame {
 
         {
             PacketTableAction p = new PacketTableAction() {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = 6577986261540429898L;
-
                 public void connect(DataListener l) {
                     DataSource.this.addListener(l);
                     ((PacketTableFrame) l).setSource(DataSource.this);
@@ -222,11 +207,6 @@ public class DataSource extends jmri.util.JmriJFrame {
 
         {
             StatusAction a = new StatusAction() {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = -8975013830132142941L;
-
                 public void connect(StatusFrame l) {
                     DataSource.this.addListener(l);
                     l.setSource(DataSource.this);
@@ -408,7 +388,7 @@ public class DataSource extends jmri.util.JmriJFrame {
 
     DataInputStream serialStream = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "IS2_INCONSISTENT_SYNC",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC",
             justification = "Class is no longer active, no hardware with which to test fix")
     OutputStream ostream = null;
 

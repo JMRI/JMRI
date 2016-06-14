@@ -1,7 +1,11 @@
+package jmri.jmrix.dccpp;
+
+import jmri.implementation.AbstractTurnout;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
- * DCCppTurnout.java
- *
- * Description:	extend jmri.AbstractTurnout for DCCpp layouts
+ * Extends jmri.AbstractTurnout for DCCpp layouts
  * <P>
  * Turnouts on DCC++ are controlled (as of V1.5 Firmware) are controlled
  * with unidirectional Stationary Decoder commands, or with bidirectional
@@ -15,9 +19,11 @@
  * However, to the extent practical, the JMRI code framework for turnout
  * feedback will be preserved.  It is anticipated that soon, either of
  * two things will be done to the DCC++ firmware:
- * (a) state feedback will be added to Stationary Decoder commands
+ * <ul>
+ * <li>(a) state feedback will be added to Stationary Decoder commands
  * or
- * (b) MADC commands will be added to support Predefined Turnouts.
+ * <li>(b) MADC commands will be added to support Predefined Turnouts.
+ * </ul>
  *
  * The DCCppTurnout supports two types of feedback:
  * <ul>
@@ -25,29 +31,21 @@
  *      fakes the response.</li>
  * <li> MONITORING: Uses the Turnout command, lets the Base Station
  *      fake the response :) </li>
- *
+ * </ul>
  *
  * Turnout operation on DCC++ based systems goes through the following
  * sequence:
- * <UL>
- * <LI> set the commanded state, and, Send request to command station to start
- * sending DCC operations packet to track</LI>
- * </UL>
- * <P>
+ * <ul>
+ * <li> set the commanded state, and, Send request to command station to start
+ * sending DCC operations packet to track</li>
+ * </ul>
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author      Paul Bender Copyright (C) 2003-2010
  * @author      Mark Underwood Copyright (C) 2015
- * @version	$Revision$
  *
  * Based on lenz.XNetTurnout by Bob Jacobsen and Paul Bender
  */
-package jmri.jmrix.dccpp;
-
-import jmri.implementation.AbstractTurnout;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
 
     /* State information */
@@ -60,9 +58,9 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
     static String[] modeNames = null;
     static int[] modeValues = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "IS2_INCONSISTENT_SYNC")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     protected int _mThrown = jmri.Turnout.THROWN;
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "IS2_INCONSISTENT_SYNC")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     protected int _mClosed = jmri.Turnout.CLOSED;
 
     protected String _prefix = "DCCPP"; // TODO: Shouldn't this be fetched from the system memo?
@@ -232,7 +230,6 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
      * turnout with respect to whether or not a feedback request was sent. This
      * is used only when the turnout is created by on layout feedback.
      *
-     * @param l
      *
      */
     synchronized void initmessage(DCCppReply l) {
@@ -251,15 +248,16 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
         }
 
         switch (getFeedbackMode()) {
-        case EXACT:
-            handleExactModeFeedback(l);
-	case MONITORING:
-	    handleMonitoringModeFeedback(l);
-	    break;
-	case DIRECT:
-	default:
-	    // Default is direct mode - we should never get here, actually.
-	    handleDirectModeFeedback(l);
+            case EXACT:
+                handleExactModeFeedback(l);
+                // IS THIS FALL THROUGH INTENTIONAL? SEEMS ODD
+            case MONITORING:
+                handleMonitoringModeFeedback(l);
+                break;
+            case DIRECT:
+            default:
+                // Default is direct mode - we should never get here, actually.
+                handleDirectModeFeedback(l);
         }
     }
 
@@ -436,39 +434,43 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
         return (-1);
     }
 
-    synchronized private int parseExactFeedbackMessage(DCCppReply l, int startByte) {
-        // check validity & addressing
-        if (l.getOutputNumInt() == mNumber) {
-	    // is for this object, parse the message
-	    if (log.isDebugEnabled()) {
-                log.debug("Message for turnout " + mNumber);
-            }
-            if (l.getOutputIsHigh()) {
-                synchronized (this) {
-                    newCommandedState(_mThrown);
-                    newKnownState(getCommandedState());
-                }
-                return (0);
-            } else if (l.getOutputIsLow()) {
-                synchronized (this) {
-                    newCommandedState(_mClosed);
-                    newKnownState(getCommandedState());
-                }
-                return (0);
-            } else {
-                // the state is unknown or inconsistent.  If the command state 
-                // does not equal the known state, and the command repeat the 
-                // last command
-		//
-		// This should never happen in the current version of DCC++
-                if (getCommandedState() != getKnownState()) {
-                    forwardCommandChangeToLayout(getCommandedState());
-                }
-                return -1;
-            }
-        }
-        return (-1);
-    }
+    // not used, not tested => commented out
+    // but might be due to odd issues back at line 250
+    //
+    //     synchronized private int parseExactFeedbackMessage(DCCppReply l, int startByte) {
+    //         // check validity & addressing
+    //         if (l.getOutputNumInt() == mNumber) {
+    // 	    // is for this object, parse the message
+    // 	    if (log.isDebugEnabled()) {
+    //                 log.debug("Message for turnout " + mNumber);
+    //             }
+    //             if (l.getOutputIsHigh()) {
+    //                 synchronized (this) {
+    //                     newCommandedState(_mThrown);
+    //                     newKnownState(getCommandedState());
+    //                 }
+    //                 return (0);
+    //             } else if (l.getOutputIsLow()) {
+    //                 synchronized (this) {
+    //                     newCommandedState(_mClosed);
+    //                     newKnownState(getCommandedState());
+    //                 }
+    //                 return (0);
+    //             } else {
+    //                 // the state is unknown or inconsistent.  If the command state 
+    //                 // does not equal the known state, and the command repeat the 
+    //                 // last command
+    // 		//
+    // 		// This should never happen in the current version of DCC++
+    //                 if (getCommandedState() != getKnownState()) {
+    //                     forwardCommandChangeToLayout(getCommandedState());
+    //                 }
+    //                 return -1;
+    //             }
+    //         }
+    //         return (-1);
+    //     }
+
     public void dispose() {
         this.removePropertyChangeListener(_stateListener);
         super.dispose();
@@ -540,6 +542,3 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
     private final static Logger log = LoggerFactory.getLogger(DCCppTurnout.class.getName());
 
 }
-
-
-/* @(#)DCCppTurnout.java */

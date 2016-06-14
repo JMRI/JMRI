@@ -45,11 +45,6 @@ import org.slf4j.LoggerFactory;
  */
 public class ItemPalette extends JmriJFrame implements ChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2199633774956241700L;
-
     public static final int STRUT_SIZE = 10;
 
     static JTabbedPane _tabPane;
@@ -67,6 +62,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         if (_iconMaps == null) {
             return;     // never loaded
         }
+        if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
         CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
         // unfiltered, xml-stored, item palate icon tree
         CatalogTree tree = manager.getBySystemName("NXPI");
@@ -75,7 +71,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
             manager.deregister(tree);
         }
         tree = manager.newCatalogTree("NXPI", "Item Palette");
-        CatalogTreeNode root = (CatalogTreeNode) tree.getRoot();
+        CatalogTreeNode root = tree.getRoot();
 
         Iterator<Entry<String, HashMap<String, HashMap<String, NamedIcon>>>> it = _iconMaps.entrySet().iterator();
         while (it.hasNext()) {
@@ -147,7 +143,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
         CatalogTree tree = manager.getBySystemName("NXPI");
         if (tree != null) {
-            CatalogTreeNode root = (CatalogTreeNode) tree.getRoot();
+            CatalogTreeNode root = tree.getRoot();
             @SuppressWarnings("unchecked") // root.children() is still unchecked in JDOM2
             Enumeration<CatalogTreeNode> e = root.children();
             while (e.hasMoreElements()) {
@@ -370,8 +366,8 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         setLocation(10, 10);
         JScrollPane sp = (JScrollPane) _tabPane.getSelectedComponent();
         _currentItemPanel = (ItemPanel) sp.getViewport().getView();
+        if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
         pack();
-//        System.out.println("Palette built in "+ (System.currentTimeMillis()-t)+ " milliseconds.");
     }
 
     static void buildTabPane(ItemPalette palette, Editor editor) {
@@ -458,6 +454,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
     }
 
     public void stateChanged(ChangeEvent e) {
+        if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
 //        long t = System.currentTimeMillis();
         JTabbedPane tp = (JTabbedPane) e.getSource();
         JScrollPane sp = (JScrollPane) tp.getSelectedComponent();
@@ -474,6 +471,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
     }
 
     private void makeMenus(Editor editor) {
+        if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
         JMenuBar menuBar = new JMenuBar();
         JMenu findIcon = new JMenu(Bundle.getMessage("findIconMenu"));
         menuBar.add(findIcon);
@@ -525,6 +523,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
     }
 
     public void closePanels(java.awt.event.WindowEvent e) {
+        if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
         java.awt.Component[] comps = _tabPane.getComponents();
         if (log.isDebugEnabled()) {
             log.debug("closePanels: tab count= " + _tabPane.getTabCount());

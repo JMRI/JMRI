@@ -1,4 +1,3 @@
-// CombinedLocoSelTreePane.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.BorderLayout;
@@ -25,11 +24,10 @@ import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
+import jmri.jmrit.progsupport.ProgModeSelector;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgPane;
-import jmri.jmrit.progsupport.ProgModeSelector;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,9 +39,9 @@ import org.slf4j.LoggerFactory;
  * manipulation) parts are unchanged.
  * <P>
  * The JComboBox implementation always had to have selected entries, so we added
- * dummy "select from .." items at the top & used those to indicate that there
- * was no selection in that box. Here, the lack of a selection indicates there's
- * no selection.
+ * dummy "select from .." items at the top {@literal &} used those to indicate
+ * that there was no selection in that box. Here, the lack of a selection
+ * indicates there's no selection.
  *
  * Internally, the "filter" is used to only show identified models (leaf nodes).
  * This is implemented in internal InvisibleTreeModel and DecoderTreeNode
@@ -52,14 +50,8 @@ import org.slf4j.LoggerFactory;
  * The decoder definition "Showable" attribute also interacts with those.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2013
- * @version	$Revision$
  */
 public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8012548215648047175L;
 
     public CombinedLocoSelTreePane(JLabel s, ProgModeSelector selector) {
         super(s, selector);
@@ -83,11 +75,6 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
         dRoot = new DecoderTreeNode("Root");
         dModel = new InvisibleTreeModel(dRoot);
         dTree = new JTree(dModel) {
-
-            /**
-             *
-             */
-            private static final long serialVersionUID = -368593183793431097L;
 
             public String getToolTipText(MouseEvent evt) {
                 if (getRowForLocation(evt.getX(), evt.getY()) == -1) {
@@ -496,10 +483,6 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
         // get the decoder type, it has to be there (assumption!),
         String modelString = locoEntry.getDecoderModel();
         String familyString = locoEntry.getDecoderFamily();
-        String titleString = DecoderFile.titleString(modelString, familyString);
-
-        // find the decoder mfg
-        DecoderIndexFile.instance().fileFromTitle(titleString).getMfg();
 
         // close the entire GUI (not currently done, users want left open)
         //collapseAll();
@@ -554,12 +537,8 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
      * with extracts from http://www.codeguru.com/java/articles/143.shtml
      *
      */
-    class InvisibleTreeModel extends DefaultTreeModel {
+    static class InvisibleTreeModel extends DefaultTreeModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 5006838010114081564L;
         protected boolean filterIsActive;
 
         public InvisibleTreeModel(TreeNode root) {
@@ -600,12 +579,8 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
         }
     }
 
-    class DecoderTreeNode extends DefaultMutableTreeNode {
+    static class DecoderTreeNode extends DefaultMutableTreeNode {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -118495487772522124L;
         protected boolean isIdentified;
         private String toolTipText;
         private String title;

@@ -1,4 +1,3 @@
-// XNetTurnoutManager.java
 package jmri.jmrix.lenz;
 
 import jmri.Turnout;
@@ -9,10 +8,10 @@ import org.slf4j.LoggerFactory;
  * Implement turnout manager.
  * <P>
  * System names are "XTnnn", where nnn is the turnout number without padding.
- *
+ * <P>
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author	Paul Bender Copyright (C) 2003-2010
- * @version	$Revision$
+ * @navassoc 1 - 1 jmri.jmrix.lenz.XNetProgrammer
  */
 public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager implements XNetListener {
 

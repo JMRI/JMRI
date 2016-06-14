@@ -1,4 +1,3 @@
-//IndexedComboCheckBox.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.event.ActionListener;
@@ -11,16 +10,10 @@ import org.slf4j.LoggerFactory;
 /* Represents a JComboBox as a JCheckBox for indexed CVs
  *
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision$
  * @deprecated since 3.7.1
  */
 @Deprecated // since 3.7.1
 public class IndexedComboCheckBox extends JCheckBox {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2948204731039652274L;
 
     IndexedComboCheckBox(JComboBox<?> box, IndexedEnumVariableValue var) {
         super();

@@ -1,4 +1,3 @@
-// VariableValueTest.java
 package jmri.jmrit.symbolicprog;
 
 import java.util.List;
@@ -13,7 +12,6 @@ import org.jdom2.Element;
  * Base for tests of classes inheriting from FnMapPanel abstract class
  *
  * @author	Bob Jacobsen, Copyright 2009
- * @version $Revision$
  */
 public class FnMapPanelTest extends TestCase {
 
@@ -54,7 +52,7 @@ public class FnMapPanelTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", FnMapPanelTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests, including others in the package

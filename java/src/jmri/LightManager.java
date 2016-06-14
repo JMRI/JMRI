@@ -1,4 +1,3 @@
-// LightManager.java
 package jmri;
 
 import java.util.List;
@@ -23,7 +22,6 @@ import java.util.List;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author Dave Duchamp Copyright (C) 2004
- * @version	$Revision$
  */
 public interface LightManager extends Manager {
 
@@ -33,7 +31,8 @@ public interface LightManager extends Manager {
      * new Light. Otherwise, the makeSystemName method will attempt to turn it
      * into a valid system name.
      *
-     * @param name
+     * @param name User name, system name, or address which can be promoted to
+     *             system name
      * @return Never null under normal circumstances
      */
     public Light provideLight(String name);
@@ -159,5 +158,3 @@ public interface LightManager extends Manager {
     public boolean allowMultipleAdditions(String systemName);
 
 }
-
-/* @(#)LightManager.java */

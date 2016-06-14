@@ -1,4 +1,3 @@
-// SerialMonTest.java
 package jmri.jmrix.grapevine.serialmon;
 
 import jmri.jmrix.grapevine.SerialMessage;
@@ -11,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.grapevine.serialmon package.
  *
  * @author Bob Jacobsen Copyright 2003, 2007, 2008
- * @version $Revision$
  */
 public class SerialMonTest extends TestCase {
 
@@ -23,11 +21,6 @@ public class SerialMonTest extends TestCase {
     public void testDisplay() throws Exception {
         // create a SerialMonFrame
         SerialMonFrame f = new SerialMonFrame() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -947606339366566391L;
-
             {
                 rawCheckBox.setSelected(true);
             }
@@ -60,7 +53,7 @@ public class SerialMonTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {SerialMonTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

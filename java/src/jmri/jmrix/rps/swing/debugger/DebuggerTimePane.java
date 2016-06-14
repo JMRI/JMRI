@@ -1,4 +1,3 @@
-// DebuggerTimePane.java
 package jmri.jmrix.rps.swing.debugger;
 
 import java.awt.FlowLayout;
@@ -23,15 +22,9 @@ import org.slf4j.LoggerFactory;
  * number.
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version $Revision$
  */
 public class DebuggerTimePane extends JPanel
         implements ReadingListener, MeasurementListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7146556518025256466L;
 
     public DebuggerTimePane() {
         super();

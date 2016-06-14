@@ -54,8 +54,6 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
 
     transient EntryExitPairs manager = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class);
 
-    private static final long serialVersionUID = 1209131245L;
-
     transient jmri.SignalMastLogic sml;
 
     final static int NXMESSAGEBOXCLEARTIMEOUT = 30;
@@ -158,7 +156,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED",
             justification = "No auto serialization")
     transient protected PropertyChangeListener propertyBlockListener;
 
@@ -348,9 +346,6 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                                 ArrayList<LayoutTurnout> turnoutlist;
                                 int nxtBlk = i + 1;
                                 int preBlk = i - 1;
-                                if (i == 0) {
-                                    preBlk = i;
-                                }
                                 if (i < routeDetails.size() - 1) {
                                     turnoutlist = connection.getTurnoutList(routeDetails.get(i).getBlock(), routeDetails.get(preBlk).getBlock(), routeDetails.get(nxtBlk).getBlock());
                                     ArrayList<Integer> throwlist = connection.getTurnoutSettingList();
@@ -876,19 +871,10 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                 log.debug("A disabled entry exit has been called will bomb out");
                 return;
             }
-            if (activeEntryExit) {
-                log.debug(mUserName + "  We have a valid match on our end point so we can clear down");
-                //setRouteTo(false);
-                //src.pd.setRouteFrom(false);
-                setRoute(false);
-            } else {
-                log.debug(mUserName + "  sourceSensor that has gone active doesn't match the active end point so will not clear");
-                if (showMessage) {
-                    JOptionPane.showMessageDialog(null, "A conflicting route has already been set");
-                }
-                src.pd.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
-                point.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
-            }
+            log.debug(mUserName + "  We have a valid match on our end point so we can clear down");
+            //setRouteTo(false);
+            //src.pd.setRouteFrom(false);
+            setRoute(false);
         } else {
             if (isRouteToPointSet()) {
                 log.debug(mUserName + "  route to this point is set therefore can not set another to it " /*+ destPoint.src.getPoint().getID()*/);

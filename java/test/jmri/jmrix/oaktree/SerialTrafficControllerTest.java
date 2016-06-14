@@ -1,4 +1,3 @@
-// SerialTrafficControllerTest.java
 package jmri.jmrix.oaktree;
 
 import java.io.DataInputStream;
@@ -18,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * JUnit tests for the SerialTrafficController class
  *
  * @author	Bob Jacobsen Copyright 2005
- * @version $Revision$
  */
 public class SerialTrafficControllerTest extends TestCase {
 
@@ -183,7 +181,7 @@ public class SerialTrafficControllerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {SerialTrafficControllerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

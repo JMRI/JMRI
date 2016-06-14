@@ -1,4 +1,3 @@
-// SerialTurnoutManagerTest.java
 package jmri.jmrix.powerline;
 
 import jmri.Turnout;
@@ -14,7 +13,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright 2004, 2008 Converted to multiple connection
  * @author kcameron Copyright (C) 2011
- * @version $Revision$
  */
 public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
 
@@ -62,7 +60,7 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {SerialTurnoutManagerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

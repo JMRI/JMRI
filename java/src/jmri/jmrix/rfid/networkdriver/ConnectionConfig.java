@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.rfid.networkdriver;
 
 import java.awt.event.ActionEvent;
@@ -11,7 +10,6 @@ import javax.swing.JPanel;
  * NetworkDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2015
- * @version	$Revision: 28746 $
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig {
 

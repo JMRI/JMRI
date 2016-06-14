@@ -1,4 +1,3 @@
-// FnMapPanelESU.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.Dimension;
@@ -80,18 +79,16 @@ import org.slf4j.LoggerFactory;
  * fly" by this class. Up to 5,120 variables are needed to populate the function
  * map. It is more efficient to create these in code than to use XML in the
  * decoder file. <strong>DO NOT</strong> specify them in the decoder file.</dd>
+ * <dd><br>
+ * The "tooltip" &amp; "label" attributes on a fnmapping variable are ignored.
+ * Expanded internationalized tooltips are generated in the code.
+ * </dd>
  * </dl>
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @author	Dave Heap Copyright (C) 2014
- * @version	$Revision: 24716 $
+ * @author	Dave Heap Copyright (C) 2016
  */
 public class FnMapPanelESU extends JPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5897048084177413562L;
 
     // columns
     final int firstCol = 0;
@@ -142,11 +139,11 @@ public class FnMapPanelESU extends JPanel {
 
     /**
      * <p>
-     * Default column labels.
+     * Default column labels.</p>
      * <dl>
      * <dt>Two rows are available for column labels</dt>
      * <dd>Use the '|' character to designate a row break</dd>
-     * </dl></p>
+     * </dl>
      * <p>
      * Item labels can be overridden by the "output" element of the "model"
      * element from the decoder definition file.</p>
@@ -372,10 +369,11 @@ public class FnMapPanelESU extends JPanel {
                                     itemLabel[item] = rosterEntry.getSoundLabel(Integer.valueOf(itemName[item][0].substring(("Sound slot" + " ").length())));
                                 } catch (Exception e) {
                                 }
-                            } else if (itemName[item][0].startsWith("F")) {
+                            } else if (itemName[item][0].matches("F\\d+")) {
                                 try {
                                     itemLabel[item] = rosterEntry.getFunctionLabel(Integer.valueOf(itemName[item][0].substring(1)));
                                 } catch (Exception e) {
+                                    log.warn("Error for function label \"{}\" in \"{}\"", itemName[item][0], item);
                                 }
                             }
                             if (itemLabel[item] == null) {
@@ -397,7 +395,7 @@ public class FnMapPanelESU extends JPanel {
                                 varComp = (JComponent) (_varModel.getRep(iVar, ""));
                             }
                             VariableValue var = _varModel.getVariable(iVar);
-                            varComp.setToolTipText(PaneProgPane.addCvDescription(("Row " + Integer.toString(iRow + 1) + ", " + fullItemName), var.getCvDescription(), var.getMask()));
+                            varComp.setToolTipText(PaneProgPane.addCvDescription((Bundle.getMessage("FnMapESURow") + " " + Integer.toString(iRow + 1) + ", " + fullItemName), var.getCvDescription(), var.getMask()));
                             if (cvObject == null) {
                                 cvObject = cvModel.allCvMap().get(thisCV); // case of new loco
                             }
@@ -469,7 +467,7 @@ public class FnMapPanelESU extends JPanel {
             saveAt(currentRow++, currentCol, new JLabel(Integer.toString(iRow + 1)));
         }  // end row loop
 
-        saveAt(ROW_LABEL_ROW, currentCol, new JLabel("Row"));
+        saveAt(ROW_LABEL_ROW, currentCol, new JLabel(Bundle.getMessage("FnMapESURow")));
         // tally used columns
         int currentBlock = -1;
         int blockStart = 0;

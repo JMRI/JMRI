@@ -1,14 +1,13 @@
+package jmri;
+
 /**
- * TurnoutAddress.java
- *
- * Description:	Object to handle "user" and "system" turnout addresses
+ * Object to handle "user" and "system" turnout addresses.
  * TurnoutManager is primary consumer of these
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version
+ * @deprecated since 4.3.7
  */
-package jmri;
-
+@Deprecated
 public class TurnoutAddress extends Address {
 
     public TurnoutAddress(String system, String user) {
@@ -22,6 +21,3 @@ public class TurnoutAddress extends Address {
         super(name);
     }
 }
-
-
-/* @(#)TurnoutAddress.java */

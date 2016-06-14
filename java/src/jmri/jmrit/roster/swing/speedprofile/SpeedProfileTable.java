@@ -18,11 +18,9 @@ import jmri.jmrit.roster.RosterSpeedProfile.SpeedStep;
  * Display Speed Profile
  *
  * @author  Pete Cressman Copyright (C) 2015
- * @version $Revision: 1.5 $
  */
 public class SpeedProfileTable extends jmri.util.JmriJFrame {
 
-    private static final long serialVersionUID = 765383251598012193L;
     java.text.DecimalFormat threeDigit = new java.text.DecimalFormat("0.000");
     int interp;
     float scale;
@@ -32,8 +30,8 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
         setTitle(Bundle.getMessage("SpeedTable"));
         getContentPane().setLayout(new BorderLayout(15,15));
         
-        interp = SignalSpeedMap.getMap().getInterpretation();
-        scale = SignalSpeedMap.getMap().getLayoutScale();
+        interp = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getInterpretation();
+        scale = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getLayoutScale();
         SpeedTableModel model = new SpeedTableModel(sp);
         JTable table = new JTable(model);
 //        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -79,7 +77,6 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
         static final int REVERSE_SPEED_COL = 4;
         static final int REVERSE_FACTOR_COL = 5;
         static final int NUMCOLS = 6;
-        private static final long serialVersionUID = 865383251598012193L;
         
         ArrayList<Map.Entry<Integer, SpeedStep>> speedArray = new  ArrayList<Map.Entry<Integer, SpeedStep>>();
         

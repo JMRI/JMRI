@@ -12,7 +12,6 @@ package jmri;
  * function of the current bean setting(s).
  *
  * @author	Bob Jacobsen Copyright (C) 2006, 2008, 2010
- * @version	$Revision$
  */
 @net.jcip.annotations.Immutable
 public class BeanSetting {
@@ -66,6 +65,8 @@ public class BeanSetting {
     private final NamedBeanHandle<NamedBean> _namedBean;
     final private int _setting;
 
+    // include _namedBean and _setting in equals() and hashCode() because they can't 
+    // change after construction
     @Override
     public boolean equals(Object obj) {
         if (obj == this) {

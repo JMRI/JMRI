@@ -37,10 +37,6 @@ import org.slf4j.LoggerFactory;
  */
 public class ResizableImagePanel extends JPanel implements FileDrop.Listener, ComponentListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4576214324220842001L;
     private String _imagePath;
     protected JLabel bgImg = null;
     private BufferedImage image = null;
@@ -104,7 +100,6 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
      * used image path top folder when dnd enabled, also enable contextual menu
      * with remove entry
      *
-     * @param dnd
      */
     public void setDnd(boolean dnd) {
         if (dnd) {
@@ -177,7 +172,6 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
     /**
      * Allows this DnDImagePanel to force resize of its container
      *
-     * @param b
      */
     public void setResizingContainer(boolean b) {
         _resizeContainer = b;
@@ -202,7 +196,6 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
     /**
      * Allow this DnDImagePanel to respect aspect ratio when resizing content
      *
-     * @param b
      */
     public void setRespectAspectRatio(boolean b) {
         _respectAspectRatio = b;
@@ -372,18 +365,21 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
             log.error("failed to make directories to copy file");
         }
         FileInputStream fis = new FileInputStream(in);
-        FileOutputStream fos = new FileOutputStream(out);
         try {
-            byte[] buf = new byte[1024];
-            int i = 0;
-            while ((i = fis.read(buf)) != -1) {
-                fos.write(buf, 0, i);
+            FileOutputStream fos = new FileOutputStream(out);
+            try {
+                byte[] buf = new byte[1024];
+                int i = 0;
+                while ((i = fis.read(buf)) != -1) {
+                    fos.write(buf, 0, i);
+                }
+            } catch (Exception e) {
+                throw e;
+            } finally {
+                fos.close();
             }
-        } catch (Exception e) {
-            throw e;
         } finally {
             fis.close();
-            fos.close();
         }
     }
 

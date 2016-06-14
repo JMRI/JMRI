@@ -1,4 +1,3 @@
-// AbstractAudioListener.java
 package jmri.jmrit.audio;
 
 import javax.vecmath.Vector3f;
@@ -12,29 +11,23 @@ import org.slf4j.LoggerFactory;
  * Base implementation of the AudioListener class.
  * <P>
  * Specific implementations will extend this base class.
- * <P>
- *
+ * <BR>
  * <hr>
  * This file is part of JMRI.
  * <P>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * </P><P>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ * </P>
  *
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public abstract class AbstractAudioListener extends AbstractAudio implements AudioListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7653942390344476939L;
     private Vector3f position = new Vector3f(0.0f, 0.0f, 0.0f);
     private Vector3f currentPosition = new Vector3f(0.0f, 0.0f, 0.0f);
     private Vector3f velocity = new Vector3f(0.0f, 0.0f, 0.0f);
@@ -315,5 +308,3 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
         }
     }
 }
-
-/* $(#)AbstractAudioListener.java */

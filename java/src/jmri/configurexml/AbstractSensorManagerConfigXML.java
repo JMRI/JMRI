@@ -5,11 +5,10 @@ package jmri.configurexml;
  * 2.5.4 files) can still be read by deferring to the present class.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision$
  * @deprecated 2.5.4
  */
 @Deprecated
-@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "duplicate name OK while deprecated, for XML config migration")
 public abstract class AbstractSensorManagerConfigXML
         extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 }

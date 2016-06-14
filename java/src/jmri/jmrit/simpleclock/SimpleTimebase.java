@@ -4,9 +4,9 @@ package jmri.jmrit.simpleclock;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.Date;
-import java.time.Instant;
 import jmri.ClockControl;
 import jmri.Memory;
 import jmri.Sensor;
@@ -53,19 +53,17 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
         pauseTime = null;
         // initialize start/stop sensor for time running
         clockSensor = jmri.InstanceManager.sensorManagerInstance().provideSensor("ISCLOCKRUNNING");
-        if (clockSensor != null) {
-            try {
-                clockSensor.setKnownState(Sensor.ACTIVE);
-            } catch (jmri.JmriException e) {
-                log.warn("Exception setting ISCLOCKRUNNING sensor ACTIVE: " + e);
-            }
-            clockSensor.addPropertyChangeListener(
+        try {
+            clockSensor.setKnownState(Sensor.ACTIVE);
+        } catch (jmri.JmriException e) {
+            log.warn("Exception setting ISCLOCKRUNNING sensor ACTIVE: " + e);
+        }
+        clockSensor.addPropertyChangeListener(
                     new PropertyChangeListener() {
                         public void propertyChange(PropertyChangeEvent e) {
                             clockSensorChanged();
                         }
                     });
-        }
         // initialize rate factor-containing memory
         if (jmri.InstanceManager.memoryManagerInstance() != null) {
             // only try to create memory if memories are supported
@@ -208,7 +206,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
         setTime(now);
         // notify listeners if internal master
         if (internalMaster) {
-            firePropertyChange("rate", new Double(factor), new Double(oldFactor));
+            firePropertyChange("rate", Double.valueOf(factor), Double.valueOf(oldFactor));
         }
         handleAlarm();
     }
@@ -238,7 +236,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
         // update memory
         updateMemory(factor);
         // notify listeners
-        firePropertyChange("rate", new Double(factor), new Double(oldFactor));
+        firePropertyChange("rate", Double.valueOf(factor), Double.valueOf(oldFactor));
         handleAlarm();
     }
 
@@ -412,6 +410,8 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
                         = new jmri.jmrit.lcdclock.LcdClockFrame();
                 h.setVisible(true);
                 break;
+            default:
+                log.debug("initializeClock() called with invalid startClockOption: " + startClockOption);
         }
     }
 
@@ -570,7 +570,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
             // update memory
             updateMemory(date);
             // notify listeners
-            pcMinutes.firePropertyChange("minutes", new Double(oldMinutes), new Double(minutes));
+            pcMinutes.firePropertyChange("minutes", Double.valueOf(oldMinutes), Double.valueOf(minutes));
         }
         oldMinutes = minutes;
 
@@ -590,7 +590,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     }
 
     void updateMemory(double factor) {
-        factorMemory.setValue(new Double(factor));
+        factorMemory.setValue(Double.valueOf(factor));
     }
 
     /**
