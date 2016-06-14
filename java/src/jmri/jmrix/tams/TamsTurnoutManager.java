@@ -130,7 +130,7 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
         //OK. Now how do we get the turnout to update in JMRI?
         //Next line provided via JMRI dev's
         TamsTurnout ttu = provideTurnout(prefix + "T" + turnoutAddress);
-        ttu.setCommandedState(turnoutState);
+        ttu.setCommandedStateFromCS(turnoutState);
 
         /*
          * if (!stopPolling) { synchronized (pollHandler) {
