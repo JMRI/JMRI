@@ -73,8 +73,8 @@ plut&#244;t que la "course compl&#232;te avec la touche de direction s&#233;par&
 <p>Vous pouvez glissez et d&#233;poser des ic&#244;nes dans l'espace r&#233;serv&#233; On ou Off ou dans le volet propri&#233;t&#233;s des Fonctions du R&#233;gulateur.
 </p><p>
 </p><p>Vous pouvez aussi modifier le texte des boutons fonctions dans <strong><a href="Main_Throttle.shtml">R&#233;gulateurr JMRI</a></strong> et sauvegarder ces changement dans l'entr&#233;e de la Liste s&#233;lectionn&#233;e. Pour utiliser ces entr&#233;es chang&#233;es dans le futur, assurez-vous de cliquer sur
-  <input name="button" id="button" value="Save to Roster" type="submit"> 
-  pour sauver ces valeurs dans lentr&#233;e Liste qui est en service.
+  <input name="button" id="button" value="Sauvegarde dans l'inventaire" type="submit"> 
+  pour sauver ces valeurs dans l'entr&#233;e de l'Inventaire qui est en service.
 </p><hr>
 
 <div align="right">
