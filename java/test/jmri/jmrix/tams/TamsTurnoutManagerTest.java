@@ -40,7 +40,7 @@ public class TamsTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
-            log.debug("by system name: " + l.getBySystemName("NT21"));
+            log.debug("by system name: " + l.getBySystemName("TMT21"));
         }
         if (log.isDebugEnabled()) {
             log.debug("by user name:   " + l.getByUserName("my name"));
