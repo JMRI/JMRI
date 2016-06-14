@@ -103,7 +103,7 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
         }
     }
 
-    private static void decodeTurnoutState(TamsReply r, String prefix, TamsTrafficController tc) {
+    void decodeTurnoutState(TamsReply r, String prefix, TamsTrafficController tc) {
         //reply to XEvtSen consists of 2 bytes per turnout
         //1: LSB of turnout address (A0 .. A7)
         //2: MSB of turnout address (A8 .. A10) incl. direction
@@ -125,12 +125,12 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
         if ((upperByte & 0x80) == 0x80) {//Only need bit #7
             turnoutState = Turnout.THROWN;
         }
-        log.info("Turnout Address: " + prefix + "T" + turnoutAddress + ", state: " + turnoutState);
+        log.info("Turnout Address: \"" + prefix + "T" + turnoutAddress + "\", state: " + turnoutState);
 
         //OK. Now how do we get the turnout to update in JMRI?
         //Next line provided via JMRI dev's
-        TamsTurnout ttu = (TamsTurnout) InstanceManager.getDefault(TurnoutManager.class).provideTurnout(prefix + "T" + turnoutAddress);
-        ttu.setCommandedState(turnoutState);
+        TamsTurnout ttu = (TamsTurnout)provideTurnout(prefix + "T" + turnoutAddress);
+        ttu.setCommandedStateFromCS(turnoutState);
 
         /*
          * if (!stopPolling) { synchronized (pollHandler) {
