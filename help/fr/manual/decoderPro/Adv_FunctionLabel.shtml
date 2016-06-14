@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <title>Comprehensive Programmer - Advanced Features Pane</title>
-<!-- translated by Hervé BLOREC <bzh56420@yahoo.fr> on 2016-06-13 -->
+<!-- translated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-06-13 -->
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
@@ -19,67 +19,67 @@
 <div id="mainContent"></div>
 
 <a name="Top"></a>
-<h1>Programmeur Avancé DecoderPro&reg; </h1>
-<h2>Volet Étiquettes de Fonction</h2>
+<h1>Programmeur Avanc&#233; DecoderPro&reg; </h1>
+<h2>Volet &#201;tiquettes de Fonction</h2>
 
 <div align="right">
-<p><a href="Adv_start.shtml">Précedent | </a><a href="Adv_RosterMedia.shtml">Suivant </a></p>
-<p><a href="index.shtml">Retour à l'Index</a></p>
+<p><a href="Adv_start.shtml">Pr&#233;cedent | </a><a href="Adv_RosterMedia.shtml">Suivant </a></p>
+<p><a href="index.shtml">Retour &#225; l'Index</a></p>
 </div>
 
 <hr>
 <p>Ce volet est plus qu'un bloc-notes pour garder une trace de ce qui arrive 
-quand les boutons de fonction sont appuyés.&nbsp; Il interagit aussi avec le  <a href="Main_Throttle.shtml">Régulateur JMRI</a>. </p>
+quand les boutons de fonction sont appuy&#233;s.&nbsp; Il interagit aussi avec le  <a href="Main_Throttle.shtml">R&#233;gulateur JMRI</a>. </p>
 <p style="text-align: center;"><img style="width: 636px; height: 598px;" src="images/Adv_03_FunctionLabels.png" alt="function labels"></p>
-<p>L'Onglet <strong>Étiquette de Fonction </strong> fait les réglages pour le 
-Logiciel Régulateurs au sein de JMRI. Principalement les Régulateurs à l'écran, mais 
-certains paramètres sont en miroir sur les téléphones intelligents ( iPhone, Android )
+<p>L'Onglet <strong>&#201;tiquette de Fonction </strong> fait les r&#233;glages pour le 
+Logiciel R&#233;gulateurs au sein de JMRI. Principalement les R&#233;gulateurs &#225; l'&#233;cran, mais 
+certains param&#232;tres sont en miroir sur les t&#233;l&#233;phones intelligents ( iPhone, Android )
 utlisant l'interface WiThrottle.</p>
-<p>Quand vous utiliser la liste déroulante sur le régulateur JMRI pour sélectionner 
-une loco depuis votre inventaire, les boutons fonctions seront marqués avec les
-descriptions que vous avez entrées pour ces;fonctions dans ce volet. </p>
-<p>Dans cet exemple, les touches Fonctions sur le Régulateur sont libellées
-pour une FP-45 avec un décodeur Son Tsunami avec les fonctions sons et éclairage.
+<p>Quand vous utiliser la liste d&#233;roulante sur le r&#233;gulateur JMRI pour s&#233;lectionner 
+une loco depuis votre inventaire, les boutons fonctions seront marqu&#233;s avec les
+descriptions que vous avez entr&#233;es pour ces;fonctions dans ce volet. </p>
+<p>Dans cet exemple, les touches Fonctions sur le R&#233;gulateur sont libell&#233;es
+pour une FP-45 avec un d&#233;codeur Son Tsunami avec les fonctions sons et &#233;clairage.
 .</p>
 <p style="text-align: center;"><img src="images/Adv_03_FunctionOnThrottle.png" alt="throttle" height="523" width="531"></p>
-<p>L'usage des cases, les images, la définition du type de bouton et le bouton radio à droite de chaque fonction peuvent être définis:
+<p>L'usage des cases, les images, la d&#233;finition du type de bouton et le bouton radio &#225; droite de chaque fonction peuvent &#234;tre d&#233;finis:
 </p><table border="1" cellpadding="2" cellspacing="1" width="80%">
   <tbody><tr>
     <td width="13%"><strong>verrou</strong></td>
-    <td width="87%"><p> Rends le bouton de fonction "verrouillable" ou "non-verrouillable". Quand la case est cochée la fonction est "verrouillée"
-    <p><strong>Fonction Verrouillée </strong>Quand
-présseé restera On(position basse) jusqu'à ce que vous pressiez encore le bouton ex: bouton Fonction
-libelé "Cloche" tintera jusqu'à ce que vous pressiez encore.</p>
-    <p><strong>Fonction Non-Verouillée </strong>quand vous pressez la fonction bascule On etpuis Off. ex: bouton Fonction libélé "corne brève", quand pressé fournit un coup de corne.</p></td>
+    <td width="87%"><p> Rends le bouton de fonction "verrouillable" ou "non-verrouillable". Quand la case est coch&#233;e la fonction est "verrouill&#233;e"
+    <p><strong>Fonction Verrouill&#233;e </strong>Quand
+pr&#233;sse&#233; restera On(position basse) jusqu'&#225; ce que vous pressiez encore le bouton ex: bouton Fonction
+libel&#233; "Cloche" tintera jusqu'&#225; ce que vous pressiez encore.</p>
+    <p><strong>Fonction Non-Verouill&#233;e </strong>quand vous pressez la fonction bascule On etpuis Off. ex: bouton Fonction lib&#233;l&#233; "corne br&#232;ve", quand press&#233; fournit un coup de corne.</p></td>
   </tr>
   <tr>
     <td><strong>off</strong></td>
-    <td>Image pour l'icône qui est affichée sur le Bouton Fonction quand il est à l'état Off.</td>
+    <td>Image pour l'ic&#244;ne qui est affich&#233;e sur le Bouton Fonction quand il est &#225; l'&#233;tat Off.</td>
   </tr>
   <tr>
     <td><strong>on</strong></td>
-    <td>Image pour l'icône qui est affichée sur le Bouton Fonction quand il est à l'état On.</td>
+    <td>Image pour l'ic&#244;ne qui est affich&#233;e sur le Bouton Fonction quand il est &#225; l'&#233;tat On.</td>
   </tr>
   <tr>
     <td><strong>shunt</strong></td>
-    <td>Définit
-une touche de fonction "virtuelle" pour le logiciel JMRI. L'option "verrou" nécessite aussi
-d'être définie simultanément avec l'activation de la touche de fonction 
-virtuelle "shunt". Quand cette touche de Fonction est pressée le curseur de vitesse du régulateur
-sur le logiciel régulateur change pour le style zéro central,
-plutôt que la "course complète avec la touche de direction séparée"</td>
+    <td>D&#233;finit
+une touche de fonction "virtuelle" pour le logiciel JMRI. L'option "verrou" n&#233;cessite aussi
+d'&#234;tre d&#233;finie simultan&#233;ment avec l'activation de la touche de fonction 
+virtuelle "shunt". Quand cette touche de Fonction est press&#233;e le curseur de vitesse du r&#233;gulateur
+sur le logiciel r&#233;gulateur change pour le style z&#233;ro central,
+plut&#244;t que la "course compl&#232;te avec la touche de direction s&#233;par&#233;e"</td>
   </tr>
 </tbody></table>
-<p>You may drag and drop icons into the off or on space holder herer or in the Throttle Function pane properties.
+<p>Vous pouvez glissez et d&#233;poser des ic&#244;nes dans l'espace r&#233;serv&#233; On ou Off ou dans le volet propri&#233;t&#233;s des Fonctions du R&#233;gulateur.
 </p><p>
-</p><p>You  may also edit the function button text in the <strong><a href="Main_Throttle.shtml">JMRI Throttle</a></strong> and save those changes to the selected Roster entry. To use these changed entries in the future, make  sure you click on the
+</p><p>Vous pouvez aussi modifier le texte des boutons fonctions dans <strong><a href="Main_Throttle.shtml">R&#233;gulateurr JMRI</a></strong> et sauvegarder ces changement dans l'entr&#233;e de la Liste s&#233;lectionn&#233;e. Pour utiliser ces entr&#233;es chang&#233;es dans le futur, assurez-vous de cliquer sur
   <input name="button" id="button" value="Save to Roster" type="submit"> 
-  to save these values into the Roster entry that is in use.
+  pour sauver ces valeurs dans lentr&#233;e Liste qui est en service.
 </p><hr>
 
 <div align="right">
-<p><a href="Comp_LightFX.shtml"></a><a href="Adv_start.shtml">Previous | </a><a href="Adv_RosterMedia.shtml">Next </a></p>
-<p><a href="index.shtml">Back to Index</a></p>
+<p><a href="Comp_LightFX.shtml"></a><a href="Adv_start.shtml">Pr&#233;c&#233;dent | </a><a href="Adv_RosterMedia.shtml">Suivant </a></p>
+<p><a href="index.shtml">Retour &#225; l'Index</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
