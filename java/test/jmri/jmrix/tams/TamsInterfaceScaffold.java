@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen
  */
-class NceInterfaceScaffold extends NceTrafficController {
+class TamsInterfaceScaffold extends TamsTrafficController {
 
     public TamsInterfaceScaffold() {
     }

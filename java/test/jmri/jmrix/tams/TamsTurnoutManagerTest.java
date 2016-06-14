@@ -14,17 +14,19 @@ import org.slf4j.LoggerFactory;
 public class TamsTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
 
     private TamsInterfaceScaffold nis = null;
-
+    private TamsSystemConnectionMemo tm = null;
+    
     public void setUp() {
         // prepare an interface, register
         nis = new TamsInterfaceScaffold();
+        tm = new TamsSystemConnectionMemo(nis);
         // create and register the manager object
-        l = new TamsTurnoutManager(nis, "TM");
+        l = new TamsTurnoutManager(tm);
         jmri.InstanceManager.setTurnoutManager(l);
     }
 
     public String getSystemName(int n) {
-        return "NT" + n;
+        return "TM" + n;
     }
 
     public void testAsAbstractFactory() {
