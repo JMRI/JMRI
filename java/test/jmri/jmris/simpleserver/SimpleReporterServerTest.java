@@ -27,6 +27,20 @@ public class SimpleReporterServerTest extends TestCase {
         Assert.assertNotNull(a);
     }
 
+    public void testConnectionCtor() {
+        java.io.DataOutputStream output = new java.io.DataOutputStream(
+                new java.io.OutputStream() {
+                    // null output string drops characters
+                    // could be replaced by one that checks for specific outputs
+                    @Override
+                    public void write(int b) throws java.io.IOException {
+                    }
+                });
+        jmri.jmris.JmriConnectionScaffold jcs = new jmri.jmris.JmriConnectionScaffold(output);
+        SimpleReporterServer a = new SimpleReporterServer(jcs);
+        Assert.assertNotNull(a);
+    }
+
     // from here down is testing infrastructure
     public SimpleReporterServerTest(String s) {
         super(s);
