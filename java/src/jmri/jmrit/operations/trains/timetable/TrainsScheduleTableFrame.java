@@ -212,7 +212,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
-        JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+        JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(new TrainsScheduleEditAction());
         menuBar.add(toolMenu);
         setJMenuBar(menuBar);
