@@ -2,9 +2,9 @@ package apps.startup.configurexml;
 
 import apps.Apps;
 import apps.StartupActionsManager;
-import apps.StartupModel;
 import apps.gui3.Apps3;
 import apps.startup.ScriptButtonModel;
+import apps.startup.StartupModel;
 import java.awt.event.ActionEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;

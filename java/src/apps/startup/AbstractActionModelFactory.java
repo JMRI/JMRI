@@ -1,9 +1,11 @@
 package apps.startup;
 
 import apps.StartupActionsManager;
-import apps.StartupModel;
 import java.awt.Component;
+import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import jmri.InstanceManager;
 
 /**
@@ -35,16 +37,20 @@ abstract public class AbstractActionModelFactory implements StartupModelFactory 
     @Override
     public void editModel(StartupModel model, Component parent) {
         if (this.getModelClass().isInstance(model)) {
-            String name = (String) JOptionPane.showInputDialog(parent,
-                    this.getEditModelMessage(),
+            JList<String> actions = new JList<>(InstanceManager.getDefault(StartupActionModelUtil.class).getNames());
+            actions.setSelectedValue(model.getName(), true);
+            Component connections = new JLabel("FEED ME!");
+            int result = JOptionPane.showConfirmDialog(parent,
+                    this.getDialogMessage(actions, connections),
                     this.getDescription(),
-                    JOptionPane.PLAIN_MESSAGE,
-                    null,
-                    InstanceManager.getDefault(StartupActionModelUtil.class).getNames(),
-                    model.getName());
-            if (name != null && !name.equals(model.getName())) {
-                model.setName(name);
-                InstanceManager.getDefault(StartupActionsManager.class).setRestartRequired();
+                    JOptionPane.OK_CANCEL_OPTION,
+                    JOptionPane.PLAIN_MESSAGE);
+            if (result == JOptionPane.OK_OPTION) {
+                String name = actions.getSelectedValue();
+                if (!name.equals(model.getName())) {
+                    model.setName(name);
+                    InstanceManager.getDefault(StartupActionsManager.class).setRestartRequired();
+                }
             }
         }
     }
@@ -54,5 +60,13 @@ abstract public class AbstractActionModelFactory implements StartupModelFactory 
         if (InstanceManager.getDefault(StartupActionModelUtil.class) == null) {
             InstanceManager.setDefault(StartupActionModelUtil.class, new StartupActionModelUtil());
         }
+    }
+
+    private JPanel getDialogMessage(Component actions, Component connections) {
+        JPanel panel = new JPanel();
+        panel.add(new JLabel(this.getEditModelMessage()));
+        panel.add(actions);
+        panel.add(connections);
+        return panel;
     }
 }
