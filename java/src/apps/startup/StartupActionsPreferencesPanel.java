@@ -6,6 +6,7 @@ import apps.StartupModel;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.beans.IndexedPropertyChangeEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -75,7 +76,17 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
 
         actionsMenu = new JPopupMenu();
         jScrollPane1 = new JScrollPane();
-        actionsTbl = new JTable();
+        actionsTbl = new JTable() {
+            //Implement table cell tool tips.
+            public String getToolTipText(MouseEvent e) {
+                try {
+                    return getValueAt(rowAtPoint(e.getPoint()), -1).toString();
+                } catch (RuntimeException e1) {
+                    //catch null pointer exception if mouse is over an empty line
+                }
+                return null;
+            }
+        };
         addBtn = new JButton();
         removeBtn = new JButton();
         startupLbl = new JLabel();
@@ -295,7 +306,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
             StartupModel model = this.manager.getActions(rowIndex);
             switch (columnIndex) {
                 case -1: // tooltip
-                    return model.getName();
+                    return model.toString();
                 case 0:
                     return model;
                 case 1:
@@ -334,20 +345,6 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
         public boolean isCellEditable(int rowIndex, int columnIndex) {
             return columnIndex == 0;
         }
-//
-//        @Override
-//        public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-//            switch (columnIndex) {
-//                case 1:
-//                    try {
-//                        ProfileManager.defaultManager().setDefaultSearchPath((File) this.getValueAt(rowIndex, 0));
-//                    } catch (IOException ex) {
-//                        log.warn("Unable to write profiles while setting default search path", ex);
-//                    }
-//                    break;
-//                default:
-//            }
-//        }
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
