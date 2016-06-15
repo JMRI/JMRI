@@ -15,6 +15,7 @@ import jmri.jmrit.symbolicprog.ProgrammerConfigManager;
 import jmri.managers.ManagerDefaultSelector;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
+import jmri.spi.PreferencesManager;
 import jmri.util.jdom.JDOMUtil;
 import jmri.util.prefs.AbstractPreferencesManager;
 import jmri.util.prefs.InitializationException;
@@ -22,7 +23,6 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.spi.PreferencesManager;
 
 /**
  * Manager for Startup Actions. Reads preferences at startup and triggers
@@ -35,6 +35,7 @@ public class StartupActionsManager extends AbstractPreferencesManager {
     private final List<StartupModel> actions = new ArrayList<>();
     private final HashMap<Class<? extends StartupModel>, StartupModelFactory> factories = new HashMap<>();
     private boolean isDirty = false;
+    private boolean restartRequired = false;
     public final static String STARTUP = "startup"; // NOI18N
     public final static String NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/startup-4-3-5.xsd"; // NOI18N
     public final static String NAMESPACE_OLD = "http://jmri.org/xml/schema/auxiliary-configuration/startup-2-9-6.xsd"; // NOI18N
@@ -133,24 +134,55 @@ public class StartupActionsManager extends AbstractPreferencesManager {
         return this.actions.get(index);
     }
 
+    /**
+     * Insert a {@link apps.StartupModel} at the given position. Triggers an
+     * {@link java.beans.IndexedPropertyChangeEvent} where the old value is null
+     * and the new value is the inserted model.
+     *
+     * @param index The position where the model will be inserted
+     * @param model The model to be inserted
+     */
     public void setActions(int index, StartupModel model) {
+        this.setActions(index, model, true);
+    }
+
+    private void setActions(int index, StartupModel model, boolean fireChange) {
         if (!this.actions.contains(model)) {
             this.actions.add(index, model);
-            this.isDirty = true;
-            this.fireIndexedPropertyChange(STARTUP, index, null, model);
+            this.setRestartRequired();
+            if (fireChange) {
+                this.fireIndexedPropertyChange(STARTUP, index, null, model);
+            }
         }
     }
 
+    /**
+     * Move a {@link apps.StartupModel} from position start to position end.
+     * Triggers an {@link java.beans.IndexedPropertyChangeEvent} where the index
+     * is end, the old value is start and the new value is the moved model.
+     *
+     * @param start the original position
+     * @param end   the new position
+     */
     public void moveAction(int start, int end) {
         StartupModel model = this.getActions(start);
         this.removeAction(model, false);
-        this.setActions(end, model);
+        this.setActions(end, model, false);
+        this.fireIndexedPropertyChange(STARTUP, end, start, model);
     }
 
     public void addAction(StartupModel model) {
         this.setActions(this.actions.size(), model);
     }
 
+    /**
+     * Remove a {@link apps.StartupModel}. Triggers an
+     * {@link java.beans.IndexedPropertyChangeEvent} where the index is the
+     * position of the removed model, the old value is the model, and the new
+     * value is null.
+     *
+     * @param model The startup action to remove
+     */
     public void removeAction(StartupModel model) {
         this.removeAction(model, true);
     }
@@ -158,7 +190,7 @@ public class StartupActionsManager extends AbstractPreferencesManager {
     private void removeAction(StartupModel model, boolean fireChange) {
         int index = this.actions.indexOf(model);
         this.actions.remove(model);
-        this.isDirty = true;
+        this.setRestartRequired();
         if (fireChange) {
             this.fireIndexedPropertyChange(STARTUP, index, model, null);
         }
@@ -171,8 +203,26 @@ public class StartupActionsManager extends AbstractPreferencesManager {
     public StartupModelFactory getFactories(Class<? extends StartupModel> model) {
         return this.factories.get(model);
     }
-    
+
     public boolean isDirty() {
         return this.isDirty;
+    }
+
+    /**
+     * Mark that a change requires a restart. As a side effect, marks this
+     * manager dirty.
+     */
+    public void setRestartRequired() {
+        this.restartRequired = true;
+        this.isDirty = true;
+    }
+
+    /**
+     * Indicate if a restart is required for preferences to be applied.
+     *
+     * @return true if a restart is required, false otherwise
+     */
+    public boolean isRestartRequired() {
+        return this.isDirty || this.restartRequired;
     }
 }
