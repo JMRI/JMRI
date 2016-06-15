@@ -37,9 +37,16 @@
       <authorinitials>MM</authorinitials>
       <revremark>New file, based on ECO Diesel file + (ALM) Factoring and minor adjustments</revremark>
     </revision>
+    <revision>
+      <revnumber>1.1</revnumber>
+      <date>2016-06-04</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Add Tsunami2 Reset values</revremark>
+    </revision>
   </revhistory>
   <version author="Michael Mosher" version="1" lastUpdated="20160529"/>
   <!-- Version 1:   Based on Tsunami2 Diesel Technical Reference version 1.0    -->
+  <!-- Version 1.1: Add new reset values for Tsunami2                          -->
   <!--                                                                          -->
   <!-- Decoder Model information follows -->
   <decoder>
@@ -210,6 +217,7 @@
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOCV.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2CV.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2CVLightEffect.xml"/>
       <!-- Function Mapping follows -->
       <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -1493,7 +1501,9 @@
       <factReset label="Reset all CVs to factory defaults" CV="8" default="8"/>
       <factReset label="Reset CVs 1-128 to factory defaults" CV="8" default="9"/>
       <factReset label="Reset CVs 129-256 to factory defaults" CV="8" default="10"/>
-      <factReset label="Reset CVs 1.257-1.512 to factory defaults" CV="8" default="12"/>
+      <factReset label="Reset CVs 1.257-1.512 to factory defaults" CV="8" default="11"/>
+      <factReset label="Reset CVs 2.257-2.512 to factory defaults" CV="8" default="12"/>
+      <factReset label="Reset CVs 3.257-3.512 to factory defaults" CV="8" default="13"/>
     </resets>
   </decoder>
   <!-- References to external Pane format definitions below -->

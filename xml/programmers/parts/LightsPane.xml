@@ -8,6 +8,7 @@
   <name>Lights</name>
   <name xml:lang="it">Luci</name>
   <name xml:lang="de">Licht</name>
+  <name xml:lang="da">Lys</name>
   <column>
     <label>
       <text> </text>
