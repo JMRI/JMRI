@@ -28,6 +28,20 @@ public class SimpleSignalHeadServerTest {
         Assert.assertNotNull(a);
     }
 
+    @Test public void testConnectionCtor() {
+        java.io.DataOutputStream output = new java.io.DataOutputStream(
+                new java.io.OutputStream() {
+                    // null output string drops characters
+                    // could be replaced by one that checks for specific outputs
+                    @Override
+                    public void write(int b) throws java.io.IOException {
+                    }
+                });
+        jmri.jmris.JmriConnectionScaffold jcs = new jmri.jmris.JmriConnectionScaffold(output);        
+        SimpleSignalHeadServer a = new SimpleSignalHeadServer(jcs);
+        Assert.assertNotNull(a);
+    }
+
     // test sending a message.
     @Test public void testSendMessage() {
         StringBuilder sb = new StringBuilder();
