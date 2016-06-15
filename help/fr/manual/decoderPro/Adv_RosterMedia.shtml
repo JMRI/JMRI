@@ -94,20 +94,20 @@
 </blockquote>
 <p>
   <input type="submit" name="button" id="button" value="Sauver dans l'Inventaire"> 
-Apr&#232;s ajout des images dans les cadres pour image principale et ic&#244;ne, cliquer cur ce bouton pout enregistrer les images dans votre Inventaire.
+Apr&#232;s ajout des images dans les cadres pour image principale et ic&#244;ne, cliquer sur ce bouton pout enregistrer les images dans votre Inventaire.
 <p><strong>Liens pour ic&#244;nes en format Gif et images de la plupart des Locomotives</strong><strong> sont list&#233;s ci-dessous:</strong>
 <p><a href="http://www.railserve.com/TrainGIFs/" target="_blank">Rail Serve</a>
 <p><a href="http://www.djcooley.com/info/gifs/loco/gifloco.htm" target="_blank">Train GIF Railyard</a>
 <p><a href="http://www.kls2.com/~karl/rr/consists/" target="_blank">Karl's RR Pages</a>
 <p><a href="http://www.bluarcher.com/traingifs/edtraingifsSD40.htm" target="_blank">ED Bindler Train GIF.s</a>
-<p><a href= "http://uxtobirza.free.fr/trains/" target="_blank"> Locomotives Diesels et &#201;lectriques SNCF GIF</a> 
+<p><a href= "http://uxtobirza.free.fr/trains//L2.php" target="_blank"> Locomotives Diesels et &#201;lectriques SNCF GIF</a> 
 <p><a href= "https://fr.wikipedia.org/wiki/Mat&#233;riel_moteur_de_la_SNCF" target="_blank"> Parc Moteur SNCF </a> 
 <p><a href= "http://letraindalain.free.fr/" target="_blank">Machine &#225; Vapeur SNCF </a>
 <hr>
 
 <div align="right">
-<p><a href="Comp_LightFX.shtml"></a><a href="Adv_FunctionLabel.shtml">Previous | </a><a href="Comp_Basic.shtml">Next </a></p>
-<p><a href="index.shtml">Back to Index</a></p>
+<p><a href="Comp_LightFX.shtml"></a><a href="Adv_FunctionLabel.shtml">Pr&#233;c&#233;dent | </a><a href="Comp_Basic.shtml">Suivant </a></p>
+<p><a href="index.shtml">Retour &#225; l'Index.</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
