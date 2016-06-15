@@ -1,11 +1,10 @@
-// XmlTest.java
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.io.IOException;
 import java.util.List;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.rollingstock.RollingStock;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.jdom2.JDOMException;
@@ -20,7 +19,6 @@ import org.jdom2.JDOMException;
  * register/deregister EngineManager: Consists
  *
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision$
  */
 public class XmlTest extends OperationsTestCase {
 
@@ -238,7 +236,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("engine e4 built date", "", e4.getBuilt());
         Assert.assertEquals("engine e4 color", "", e4.getColor());
         Assert.assertEquals("engine e4 comment", "", e4.getComment());
-        Assert.assertEquals("engine e4 length", "", e4.getLength());
+        Assert.assertEquals("engine e4 length", "0", e4.getLength());
         Assert.assertEquals("engine e4 moves", 0, e4.getMoves());
         Assert.assertEquals("engine e4 number", "Test Number 4", e4.getNumber());
         Assert.assertEquals("engine e4 out of service", false, e4.isOutOfService());
@@ -268,7 +266,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("engine e6 built date", "", e6.getBuilt());
         Assert.assertEquals("engine e6 color", "", e6.getColor());
         Assert.assertEquals("engine e6 comment", "", e6.getComment());
-        Assert.assertEquals("engine e6 length", "", e6.getLength());
+        Assert.assertEquals("engine e6 length", "0", e6.getLength());
         Assert.assertEquals("engine e6 moves", 0, e6.getMoves());
         Assert.assertEquals("engine e6 number", "Test Number 6", e6.getNumber());
         Assert.assertEquals("engine e6 out of service", false, e6.isOutOfService());
@@ -382,7 +380,7 @@ public class XmlTest extends OperationsTestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", XmlTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

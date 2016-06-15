@@ -1,4 +1,3 @@
-// BusyGlassPane.java
 package jmri.util;
 
 import java.awt.Component;
@@ -22,14 +21,9 @@ import javax.swing.event.MouseInputAdapter;
  * Used in PaneProgFrame to control cursor operations during programming.
  *
  * @author Howard G. Penny Copyright (C) 2005
- * @version $Revision$
  */
 public class BusyGlassPane extends JComponent {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6832898807706288698L;
     CBListener listener;
 
     public BusyGlassPane(List<JComponent> components, List<Rectangle> rectangles, Container contentPane, JFrame parent) {
@@ -47,7 +41,7 @@ public class BusyGlassPane extends JComponent {
      * Listen for all events that our components are likely to be interested in.
      * Redispatch them to the appropriate component.
      */
-    class CBListener extends MouseInputAdapter {
+    static class CBListener extends MouseInputAdapter {
 
         JFrame parentFrame;
         List<JComponent> liveComponents;
@@ -138,7 +132,7 @@ public class BusyGlassPane extends JComponent {
                 }
             }
 
-            if (inButton || (inButton && inDrag)) {
+            if (inButton || inDrag) {
                 Point componentPoint = SwingUtilities.convertPoint(glassPane,
                         glassPanePoint,
                         component);

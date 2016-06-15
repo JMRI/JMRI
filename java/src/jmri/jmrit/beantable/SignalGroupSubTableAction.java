@@ -1,4 +1,3 @@
-// SignalGroupSubTableAction.java
 package jmri.jmrit.beantable;
 
 import java.awt.BorderLayout;
@@ -45,7 +44,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Kevin Dickerson Copyright (C) 2010
  *
- * @version $Revision$
  */
 public class SignalGroupSubTableAction {
 
@@ -57,7 +55,7 @@ public class SignalGroupSubTableAction {
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
-     * @param s
+     * @param s title of the action
      */
     //BeanTableFrame f;
     public SignalGroupSubTableAction(String s) {
@@ -65,7 +63,7 @@ public class SignalGroupSubTableAction {
     }
 
     public SignalGroupSubTableAction() {
-        this("SignalGroup Head Edit Table");
+        this("Signal Group Head Edit Table");
     }
 
     String helpTarget() {
@@ -86,7 +84,7 @@ public class SignalGroupSubTableAction {
         int result = jmri.util.StringUtil.getStateFromName(mode, operValues, oper);
 
         if (result < 0) {
-            log.warn("unexpected mode string in sensorMode: " + mode);
+            log.warn("unexpected mode string in Sensor Mode: " + mode);
             throw new IllegalArgumentException();
         }
         if (result == 0) {
@@ -104,7 +102,7 @@ public class SignalGroupSubTableAction {
         int result = jmri.util.StringUtil.getStateFromName(mode, sensorInputModeValues, sensorInputModes);
 
         if (result < 0) {
-            log.warn("unexpected mode string in signal Appearance: " + mode);
+            log.warn("unexpected mode string in Signal Appearance: " + mode);
             throw new IllegalArgumentException();
         }
         return result;
@@ -171,14 +169,15 @@ public class SignalGroupSubTableAction {
     JRadioButton allButton = null;
     JRadioButton includedButton = null;
 
-    JLabel nameLabel = new JLabel("Signal Head:");
-    JLabel signalOnStateLabel = new JLabel("State when conditions are met");
-    JLabel signalOffStateLabel = new JLabel("State when conditions are not met");
-    JLabel userLabel = new JLabel("Select the conditions that must be met to set this Signal Head on");
+    JLabel nameLabel = new JLabel(Bundle.getMessage("BeanNameSignalHead") + ":");
+    JLabel signalOnStateLabel = new JLabel(Bundle.getMessage("StateWhenMet") + ":");
+    JLabel signalOffStateLabel = new JLabel(Bundle.getMessage("StateWhenNotMet") + ":");
+    JLabel userLabel = new JLabel(Bundle.getMessage("SelectConditionsOn") + ":");
 
-    JButton updateSubButton = new JButton("Done");
+    JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
+    JButton updateSubButton = new JButton(Bundle.getMessage("ButtonApply"));
 
-    static String updateInst = "To change this SignalGroup, make changes above, then click 'Done'.";
+    static String updateInst = Bundle.getMessage("ClickToApply");
 
     JLabel status1 = new JLabel(updateInst);
 
@@ -223,7 +222,7 @@ public class SignalGroupSubTableAction {
 
         // Set up window
         if (addFrame == null) {
-            addFrame = new JmriJFrame("Add/Edit SignalGroup", false, true);
+            addFrame = new JmriJFrame((Bundle.getMessage("AddEditSignalGroup") + " - " + Bundle.getMessage("BeanNameSignalHead")), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.SignalGroupAddEdit", true);
             addFrame.setLocation(100, 30);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
@@ -260,9 +259,9 @@ public class SignalGroupSubTableAction {
             setSignalStateBox(g.getSignalHeadOffState(curSignalHead), _OffAppearance);
             // add Turnout Display Choice
             JPanel py = new JPanel();
-            py.add(new JLabel("Show "));
+            py.add(new JLabel(Bundle.getMessage("Show")));
             selGroup = new ButtonGroup();
-            allButton = new JRadioButton("All", true);
+            allButton = new JRadioButton(Bundle.getMessage("All"), true);
             selGroup.add(allButton);
             py.add(allButton);
             allButton.addActionListener(new ActionListener() {
@@ -275,7 +274,7 @@ public class SignalGroupSubTableAction {
                     }
                 }
             });
-            includedButton = new JRadioButton("Included", false);
+            includedButton = new JRadioButton(Bundle.getMessage("Included"), false);
             selGroup.add(includedButton);
             py.add(includedButton);
             includedButton.addActionListener(new ActionListener() {
@@ -289,7 +288,7 @@ public class SignalGroupSubTableAction {
                     }
                 }
             });
-            py.add(new JLabel("  Turnouts and Sensors"));
+            py.add(new JLabel("  " + Bundle.getMessage("_and_", Bundle.getMessage("Turnouts"), Bundle.getMessage("Sensors"))));
             contentPane.add(py);
 
             // add turnout table
@@ -301,10 +300,10 @@ public class SignalGroupSubTableAction {
 
             JPanel p21t = new JPanel();
             p21t.setLayout(new BoxLayout(p21t, BoxLayout.Y_AXIS));
-            p21t.add(new JLabel("Please select "));
-            p21t.add(new JLabel("Sensors to be "));
-            p21t.add(new JLabel("included in  "));
-            p21t.add(new JLabel("this Signal Group."));
+            p21t.add(new JLabel(Bundle.getMessage("SelectInGroup", Bundle.getMessage("Turnouts"))));
+            //p21t.add(new JLabel("Sensors to be "));
+            //p21t.add(new JLabel("included in  "));
+            //p21t.add(new JLabel("this Signal Group."));
             p2xt.add(p21t);
             _SignalGroupTurnoutModel = new SignalGroupTurnoutModel();
             JTable SignalGroupTurnoutTable = jmri.util.JTableUtil.sortableDataModel(_SignalGroupTurnoutModel);
@@ -350,7 +349,7 @@ public class SignalGroupSubTableAction {
 
             JPanel po = new JPanel();
             po.setLayout(new FlowLayout());
-            JLabel operLabel = new JLabel("Do either the Sensors OR Turnouts have to match, or do they both have to Match");
+            JLabel operLabel = new JLabel(Bundle.getMessage("ChooseOrAnd", Bundle.getMessage("Turnouts"), Bundle.getMessage("Sensors")));
             po.add(operLabel);
             po.add(_SensorTurnoutOper);
             contentPane.add(po);
@@ -363,10 +362,10 @@ public class SignalGroupSubTableAction {
 
             JPanel p21s = new JPanel();
             p21s.setLayout(new BoxLayout(p21s, BoxLayout.Y_AXIS));
-            p21s.add(new JLabel("Please select "));
-            p21s.add(new JLabel(" Sensors to "));
-            p21s.add(new JLabel(" be included "));
-            p21s.add(new JLabel(" in this SignalGroup."));
+            p21s.add(new JLabel(Bundle.getMessage("SelectInGroup", Bundle.getMessage("Sensors"))));
+            //p21s.add(new JLabel(" Sensors to "));
+            //p21s.add(new JLabel(" be included "));
+            //p21s.add(new JLabel(" in this SignalGroup."));
             p2xs.add(p21s);
             _SignalGroupSensorModel = new SignalGroupSensorModel();
             JTable SignalGroupSensorTable = jmri.util.JTableUtil.sortableDataModel(_SignalGroupSensorModel);
@@ -428,16 +427,22 @@ public class SignalGroupSubTableAction {
             contentPane.add(pa);
             // add buttons - Add SignalGroup button
             JPanel pb = new JPanel();
-            pb.setLayout(new FlowLayout());
-
-            // Update SignalGroup button
+            pb.setLayout(new FlowLayout(FlowLayout.TRAILING));
+            // add Cancel button
+            pb.add(cancelButton);
+            cancelButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    cancelPressed(e);
+                }
+            });
+            // add Update SignalGroup button
             pb.add(updateSubButton);
             updateSubButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     updateSubPressed(e, false);
                 }
             });
-            updateSubButton.setToolTipText("Change this SignalGroup and leave Edit mode");
+            updateSubButton.setToolTipText(Bundle.getMessage("TooltipUpdate"));
 
             p2xtSpace.setVisible(false);
             p2xsSpace.setVisible(false);
@@ -549,6 +554,12 @@ public class SignalGroupSubTableAction {
         return _includedSensorList.size();
     }
 
+    void cancelPressed(ActionEvent e) {
+        addFrame.setVisible(false);
+        addFrame.dispose();
+        addFrame = null;
+    }
+
     /**
      * Responds to the Update button - update to SignalGroup Table
      */
@@ -596,11 +607,6 @@ public class SignalGroupSubTableAction {
      * Base table model for selecting outputs
      */
     public abstract class SignalGroupOutputModel extends AbstractTableModel implements PropertyChangeListener {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -6276559655520465435L;
 
         public Class<?> getColumnClass(int c) {
             if (c == INCLUDE_COLUMN) {
@@ -652,11 +658,6 @@ public class SignalGroupSubTableAction {
      * Table model for selecting Turnouts and Turnout State
      */
     class SignalGroupTurnoutModel extends SignalGroupOutputModel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -2635253900965148562L;
 
         SignalGroupTurnoutModel() {
             InstanceManager.turnoutManagerInstance().addPropertyChangeListener(this);
@@ -721,11 +722,6 @@ public class SignalGroupSubTableAction {
      */
     class SignalGroupSensorModel extends SignalGroupOutputModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 368748896590901351L;
-
         SignalGroupSensorModel() {
             InstanceManager.sensorManagerInstance().addPropertyChangeListener(this);
         }
@@ -788,10 +784,10 @@ public class SignalGroupSubTableAction {
 
     private static int ROW_HEIGHT;
 
-    private static String[] COLUMN_NAMES = {rbx.getString("ColumnLabelSystemName"),
-        rbx.getString("ColumnLabelUserName"),
-        rbx.getString("ColumnLabelInclude"),
-        rbx.getString("ColumnLabelSetState")};
+    private static String[] COLUMN_NAMES = {Bundle.getMessage("ColumnSystemName"),
+            Bundle.getMessage("ColumnUserName"),
+            Bundle.getMessage("Include"),
+            Bundle.getMessage("ColumnLabelSetState")};
     private static String SET_TO_ACTIVE = rbx.getString("SensorActive");
     private static String SET_TO_INACTIVE = rbx.getString("SensorInactive");
     private static String SET_TO_CLOSED = InstanceManager.turnoutManagerInstance().getClosedText();
@@ -917,4 +913,3 @@ public class SignalGroupSubTableAction {
 
     private final static Logger log = LoggerFactory.getLogger(SignalGroupSubTableAction.class.getName());
 }
-/* @(#)SignalGroupSubTableAction.java */

@@ -21,16 +21,10 @@ import org.slf4j.LoggerFactory;
  * Class providing the basic logic of the Logix interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version $Revision$
  * @author Pete Cressman Copyright (C) 2009
  */
 public class DefaultLogix extends AbstractNamedBean
         implements Logix, java.io.Serializable {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4720328516573049659L;
 
     public DefaultLogix(String systemName, String userName) {
         super(systemName, userName);
@@ -66,7 +60,7 @@ public class DefaultLogix extends AbstractNamedBean
 
     /**
      * Move 'row' to 'nextInOrder' and shift all between 'row' and 'nextInOrder'
-     * up one position ( row > nextInOrder )
+     * up one position {@literal ( row > nextInOrder )}
      */
     public void swapConditional(int nextInOrder, int row) {
         if (row <= nextInOrder) {
@@ -932,5 +926,3 @@ public class DefaultLogix extends AbstractNamedBean
 
     private final static Logger log = LoggerFactory.getLogger(DefaultLogix.class.getName());
 }
-
-/* @(#)DefaultLogix.java */

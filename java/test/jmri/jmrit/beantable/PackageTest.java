@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrit.beantable;
 
 import javax.swing.JFrame;
@@ -37,7 +36,7 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -50,8 +49,12 @@ public class PackageTest extends TestCase {
         suite.addTest(SensorTableWindowTest.suite());
         suite.addTest(SignalHeadTableActionTest.suite());
         suite.addTest(TurnoutTableWindowTest.suite());
+        suite.addTest(BundleTest.suite());
 
         suite.addTest(jmri.jmrit.beantable.signalmast.PackageTest.suite());
+        suite.addTest(jmri.jmrit.beantable.sensor.PackageTest.suite());
+        suite.addTest(jmri.jmrit.beantable.oblock.PackageTest.suite());
+        suite.addTest(jmri.jmrit.beantable.beanedit.PackageTest.suite());
         return suite;
     }
 

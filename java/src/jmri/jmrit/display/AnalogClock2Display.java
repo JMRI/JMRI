@@ -1,4 +1,3 @@
-// AnalogClock2Display.java
 package jmri.jmrit.display;
 
 import java.awt.Color;
@@ -27,21 +26,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <p>
- * An Analog Clock for displaying in a panel</p>
- *
+ * An Analog Clock for displaying in a panel
  * <p>
  * Time code copied in part from code for the Nixie clock by Bob Jacobsen </p>
  *
  * @author Howard G. Penny - Copyright (C) 2005
- * @version $Revision$
  */
 public class AnalogClock2Display extends PositionableJComponent implements LinkingObject {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7053647033852039593L;
     Timebase clock;
     double rate;
     double minuteAngle;
@@ -154,9 +146,7 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
         return finishClone(pos);
     }
 
-    @Override
-    public Positionable finishClone(Positionable p) {
-        AnalogClock2Display pos = (AnalogClock2Display) p;
+    protected Positionable finishClone(AnalogClock2Display pos) {
         pos.setScale(getScale());
         return super.finishClone(pos);
     }
@@ -267,6 +257,7 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
         super.setScale(scale);
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="fixed number of possible values")
     void addRateMenuEntry(JMenu menu, final int newrate) {
         JRadioButtonMenuItem button = new JRadioButtonMenuItem("" + newrate + ":1");
         button.addActionListener(new ActionListener() {
@@ -283,6 +274,8 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
             }
         });
         rateButtonGroup.add(button);
+        
+        // next line is the FE_FLOATING_POINT_EQUALITY annotated above
         if (rate == newrate) {
             button.setSelected(true);
         } else {

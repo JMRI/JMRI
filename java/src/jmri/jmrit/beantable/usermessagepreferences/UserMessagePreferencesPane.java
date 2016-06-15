@@ -1,4 +1,3 @@
-// UserMessagePreferencesPane.java
 package jmri.jmrit.beantable.usermessagepreferences;
 
 import java.awt.BorderLayout;
@@ -38,14 +37,9 @@ import jmri.util.swing.JmriPanel;
  * Pane to show User Message Preferences
  *
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision$
  */
 public class UserMessagePreferencesPane extends JmriPanel implements PreferencesPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6892195773335485275L;
     protected static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
     UserPreferencesManager p;
 
@@ -53,7 +47,7 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
         super();
         p = jmri.InstanceManager.getDefault(UserPreferencesManager.class);
         p.addPropertyChangeListener((PropertyChangeEvent e) -> {
-            if (e.getPropertyName().equals("PreferencesUpdated")) {
+            if (e.getPropertyName().equals(UserPreferencesManager.PREFERENCES_UPDATED)) {
                 refreshOptions();
             }
         });
@@ -63,7 +57,7 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
         add(tab);
     }
 
-    private void setMinimumMessagePref() {
+    private synchronized void setMinimumMessagePref() {
         //This ensures that as a minimum that the following items are at least initialised and appear in the preference panel
         p.setClassDescription(AudioTableAction.class.getName());
         p.setClassDescription(BlockTableAction.class.getName());
@@ -92,7 +86,7 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
     private HashMap<JComboBox<Object>, ListItems> _comboBoxes = new HashMap<>();
     private HashMap<JCheckBox, ListItems> _checkBoxes = new HashMap<>();
 
-    private void newMessageTab() {
+    private synchronized void newMessageTab() {
         remove(tab);
         tab = new JTabbedPane();
 
@@ -313,7 +307,7 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
     }
 
     @Override
-    public boolean isDirty() {
+    public synchronized  boolean isDirty() {
         for (JComboBox<Object> key : this._comboBoxes.keySet()) {
             String strClass = _comboBoxes.get(key).getClassName();
             String strItem = _comboBoxes.get(key).getItem();
@@ -371,7 +365,7 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
 
     boolean updating = false;
 
-    public void updateManager() {
+    public synchronized void updateManager() {
         updating = true;
         p.setLoading();
 
@@ -400,5 +394,3 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
         newMessageTab();
     }
 }
-
-/* @(#)UserMessagePreferencesPane.java */

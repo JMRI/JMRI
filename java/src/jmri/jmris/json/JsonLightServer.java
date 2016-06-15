@@ -1,10 +1,4 @@
-//JsonLightServer.java
 package jmri.jmris.json;
-
-import static jmri.jmris.json.JSON.LIGHT;
-import static jmri.jmris.json.JSON.METHOD;
-import static jmri.jmris.json.JSON.NAME;
-import static jmri.jmris.json.JSON.PUT;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,6 +7,11 @@ import java.util.Locale;
 import jmri.JmriException;
 import jmri.jmris.AbstractLightServer;
 import jmri.jmris.JmriConnection;
+import jmri.server.json.JsonException;
+import static jmri.jmris.json.JSON.LIGHT;
+import static jmri.jmris.json.JSON.METHOD;
+import static jmri.jmris.json.JSON.NAME;
+import static jmri.jmris.json.JSON.PUT;
 
 /**
  * JSON Server interface between the JMRI light manager and a network connection
@@ -24,8 +23,9 @@ import jmri.jmris.JmriConnection;
  *
  * @author Paul Bender Copyright (C) 2010
  * @author Randall Wood Copyright (C) 2012, 2013
- * @version $Revision: 21313 $
+ * @deprecated Since 4.3.6; replaced with {@link jmri.server.json.light.JsonLightSocketService}
  */
+@Deprecated
 public class JsonLightServer extends AbstractLightServer {
 
     private final JmriConnection connection;

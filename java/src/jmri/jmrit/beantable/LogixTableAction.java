@@ -1,4 +1,3 @@
-// LogixTableAction.java
 package jmri.jmrit.beantable;
 
 import java.awt.Component;
@@ -82,7 +81,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Most of the text used in this GUI is in LogixTableBundle.properties, accessed
  * via rbx, and the remainder of the text is in BeanTableBundle.properties,
- * accessed via rb.
+ * accessed via rb (the latter can easily be converted to the Bundle.getMessage() method)
  *
  * Methods and Members for 'state variables' and 'actions' removed to become
  * their own objects - 'ConditionalVariable' and 'ConditionalAction' in jmri
@@ -104,15 +103,12 @@ import org.slf4j.LoggerFactory;
  */
 public class LogixTableAction extends AbstractTableAction {
 
-    private static final long serialVersionUID = -6328536222461751495L;
-
     /**
      * Create an action with a specific title.
      * <P>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
-     * @param s
      */
     public LogixTableAction(String s) {
         super(s);
@@ -128,7 +124,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     public LogixTableAction() {
-        this("Logix Table");
+        this(Bundle.getMessage("TitleLogixTable"));
     }
 
     static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
@@ -143,10 +139,6 @@ public class LogixTableAction extends AbstractTableAction {
      */
     protected void createModel() {
         m = new BeanTableDataModel() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 4656524306247345738L;
             // overlay the state column with the edit column
             static public final int ENABLECOL = VALUECOL;
             static public final int EDITCOL = DELETECOL;
@@ -201,7 +193,7 @@ public class LogixTableAction extends AbstractTableAction {
 
             public Object getValueAt(int row, int col) {
                 if (col == EDITCOL) {
-                    return rbx.getString("ButtonSelect");
+                    return Bundle.getMessage("ButtonSelect");
                 } else if (col == ENABLECOL) {
                     Logix logix = (Logix) getBySystemName((String) getValueAt(row, SYSNAMECOL));
                     if (logix == null) {
@@ -217,11 +209,11 @@ public class LogixTableAction extends AbstractTableAction {
                 if (col == EDITCOL) {
                     // set up to edit
                     String sName = (String) getValueAt(row, SYSNAMECOL);
-                    if (rbx.getString("ButtonEdit").equals(value)) {
+                    if (Bundle.getMessage("ButtonEdit").equals(value)) {
                         editPressed(sName);
-                    } else if (rbx.getString("ButtonCopy").equals(value)) {
+                    } else if (Bundle.getMessage("ButtonCopy").equals(value)) {
                         copyPressed(sName);
-                    } else if (rbx.getString("ButtonDelete").equals(value)) {
+                    } else if (Bundle.getMessage("ButtonDelete").equals(value)) {
                         deletePressed(sName);
                     }
                 } else if (col == ENABLECOL) {
@@ -288,10 +280,10 @@ public class LogixTableAction extends AbstractTableAction {
              */
             protected void configDeleteColumn(JTable table) {
                 JComboBox<String> editCombo = new JComboBox<String>();
-                editCombo.addItem(rbx.getString("ButtonSelect"));
-                editCombo.addItem(rbx.getString("ButtonEdit"));
-                editCombo.addItem(rbx.getString("ButtonCopy"));
-                editCombo.addItem(rbx.getString("ButtonDelete"));
+                editCombo.addItem(Bundle.getMessage("ButtonSelect"));
+                editCombo.addItem(Bundle.getMessage("ButtonEdit"));
+                editCombo.addItem(Bundle.getMessage("ButtonCopy"));
+                editCombo.addItem(Bundle.getMessage("ButtonDelete"));
                 TableColumn col = table.getColumnModel().getColumn(BeanTableDataModel.DELETECOL);
                 col.setCellEditor(new DefaultCellEditor(editCombo));
             }
@@ -321,7 +313,7 @@ public class LogixTableAction extends AbstractTableAction {
      }
     
      */ public void setMenuBar(BeanTableFrame f) {
-        JMenu menu = new JMenu(rbx.getString("OptionsMenu"));
+        JMenu menu = new JMenu(Bundle.getMessage("OptionsMenu"));
         menu.setMnemonic(KeyEvent.VK_O);
         javax.swing.JMenuBar menuBar = f.getJMenuBar();
         /*
@@ -349,7 +341,7 @@ public class LogixTableAction extends AbstractTableAction {
         menu.add(r);
         menuBar.add(menu);
 
-        menu = new JMenu(rbx.getString("ToolsMenu"));
+        menu = new JMenu(Bundle.getMessage("MenuTools"));
         menu.setMnemonic(KeyEvent.VK_T);
 
         JMenuItem item = new JMenuItem(rbx.getString("OpenPickListTables"));
@@ -412,7 +404,6 @@ public class LogixTableAction extends AbstractTableAction {
 
     class RefDialog extends JDialog {
 
-        private static final long serialVersionUID = -8265381404736283286L;
         JTextField _devNameField;
         java.awt.Frame _parent;
 
@@ -422,7 +413,7 @@ public class LogixTableAction extends AbstractTableAction {
             JPanel extraPanel = new JPanel();
             extraPanel.setLayout(new BoxLayout(extraPanel, BoxLayout.Y_AXIS));
             _devNameField = new JTextField(30);
-            JPanel panel = makeEditPanel(_devNameField, "ElementName", "ElementNameHint");
+            JPanel panel = makeEditPanel(_devNameField, "ElementName", "ElementNameHint"); //NOI18N
             JButton referenceButton = new JButton(rbx.getString("ReferenceButton"));
             panel.add(referenceButton);
             referenceButton.addActionListener(new ActionListener() {
@@ -477,8 +468,8 @@ public class LogixTableAction extends AbstractTableAction {
     JTextField _systemName = new JTextField(10);
     JTextField _addUserName = new JTextField(10);
     JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
-    JLabel _sysNameLabel = new JLabel(rbx.getString("LogixSystemName"));
-    JLabel _userNameLabel = new JLabel(rbx.getString("LogixUserName"));
+    JLabel _sysNameLabel = new JLabel(Bundle.getMessage("BeanNameLogix") + " " + Bundle.getMessage("ColumnSystemName") + ":");
+    JLabel _userNameLabel = new JLabel(Bundle.getMessage("BeanNameLogix") + " " + Bundle.getMessage("ColumnUserName") + ":");
     jmri.UserPreferencesManager prefMgr = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
     String systemNameAuto = this.getClass().getName() + ".AutoSystemName";
     JButton create;
@@ -617,7 +608,7 @@ public class LogixTableAction extends AbstractTableAction {
         if (addLogixFrame == null) {
             JPanel panel5 = makeAddLogixFrame("TitleAddLogix", "AddLogixMessage");
             // Create Logix
-            create = new JButton(rbx.getString("CreateLogixButton"));
+            create = new JButton(Bundle.getMessage("ButtonCreate"));
             panel5.add(create);
             create.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -694,7 +685,7 @@ public class LogixTableAction extends AbstractTableAction {
         JPanel panel5 = new JPanel();
         panel5.setLayout(new FlowLayout());
         // Cancel
-        JButton cancel = new JButton(rbx.getString("CancelButton"));
+        JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));
         panel5.add(cancel);
         cancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -751,7 +742,7 @@ public class LogixTableAction extends AbstractTableAction {
             public void run() {
                 JPanel panel5 = makeAddLogixFrame("TitleCopyLogix", "CopyLogixMessage");
                 // Create Logix
-                JButton create = new JButton(rbx.getString("ButtonCopy"));
+                JButton create = new JButton(Bundle.getMessage("ButtonCopy"));
                 panel5.add(create);
                 create.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
@@ -888,7 +879,7 @@ public class LogixTableAction extends AbstractTableAction {
             if (x != null) {
                 // Logix with this user name already exists
                 javax.swing.JOptionPane.showMessageDialog(addLogixFrame,
-                        rbx.getString("Error3"), rbx.getString("ErrorTitle"),
+                        rbx.getString("Error3"), Bundle.getMessage("ErrorTitle"),
                         javax.swing.JOptionPane.ERROR_MESSAGE);
                 return false;
             }
@@ -902,7 +893,7 @@ public class LogixTableAction extends AbstractTableAction {
         if ((sName.length() < 1)) {
             // Entered system name is blank or too short
             javax.swing.JOptionPane.showMessageDialog(addLogixFrame,
-                    rbx.getString("Error8"), rbx.getString("ErrorTitle"),
+                    rbx.getString("Error8"), Bundle.getMessage("ErrorTitle"),
                     javax.swing.JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -921,7 +912,7 @@ public class LogixTableAction extends AbstractTableAction {
             // Already editing a Logix, ask for completion of that edit
             javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
                     java.text.MessageFormat.format(rbx.getString("Error32"),
-                            new Object[]{_curLogix.getSystemName()}), rbx.getString("ErrorTitle"),
+                            new Object[]{_curLogix.getSystemName()}), Bundle.getMessage("ErrorTitle"),
                     javax.swing.JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -929,7 +920,7 @@ public class LogixTableAction extends AbstractTableAction {
             // Already editing a Logix, ask for completion of that edit
             javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
                     java.text.MessageFormat.format(rbx.getString("Error31"),
-                            new Object[]{_logixSysName}), rbx.getString("ErrorTitle"),
+                            new Object[]{_logixSysName}), Bundle.getMessage("ErrorTitle"),
                     javax.swing.JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -940,7 +931,7 @@ public class LogixTableAction extends AbstractTableAction {
                 // Logix does not exist, so cannot be edited
                 log.error("No Logix with system name: " + sName);
                 javax.swing.JOptionPane.showMessageDialog(editLogixFrame, rbx
-                        .getString("Error5"), rbx.getString("ErrorTitle"),
+                        .getString("Error5"), Bundle.getMessage("ErrorTitle"),
                         javax.swing.JOptionPane.ERROR_MESSAGE);
                 if (editLogixFrame != null) {
                     editLogixFrame.setVisible(false);
@@ -983,7 +974,7 @@ public class LogixTableAction extends AbstractTableAction {
             if (x != null) {
                 // Logix already exists
                 javax.swing.JOptionPane.showMessageDialog(addLogixFrame, rbx
-                        .getString("Error1"), rbx.getString("ErrorTitle"),
+                        .getString("Error1"), Bundle.getMessage("ErrorTitle"),
                         javax.swing.JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -1057,15 +1048,14 @@ public class LogixTableAction extends AbstractTableAction {
             contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
             JPanel panel1 = new JPanel();
             panel1.setLayout(new FlowLayout());
-            JLabel systemNameLabel = new JLabel(rbx
-                    .getString("LogixSystemName"));
+            JLabel systemNameLabel = new JLabel(Bundle.getMessage("ColumnSystemName") + ":");
             panel1.add(systemNameLabel);
             JLabel fixedSystemName = new JLabel(_curLogix.getSystemName());
             panel1.add(fixedSystemName);
             contentPane.add(panel1);
             JPanel panel2 = new JPanel();
             panel2.setLayout(new FlowLayout());
-            JLabel userNameLabel = new JLabel(rbx.getString("LogixUserName"));
+            JLabel userNameLabel = new JLabel(Bundle.getMessage("ColumnUserName") + ":");
             panel2.add(userNameLabel);
             panel2.add(editUserName);
             editUserName.setToolTipText(rbx.getString("LogixUserNameHint2"));
@@ -1164,7 +1154,7 @@ public class LogixTableAction extends AbstractTableAction {
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
             // Bottom Buttons - Done Logix
-            JButton done = new JButton(rbx.getString("DoneButton"));
+            JButton done = new JButton(Bundle.getMessage("ButtonDone"));
             panel5.add(done);
             done.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -1173,7 +1163,7 @@ public class LogixTableAction extends AbstractTableAction {
             });
             done.setToolTipText(rbx.getString("DoneButtonHint"));
             // Delete Logix
-            JButton delete = new JButton(rbx.getString("DeleteLogixButton"));
+            JButton delete = new JButton(Bundle.getMessage("ButtonDelete"));
             panel5.add(delete);
             delete.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -1210,7 +1200,9 @@ public class LogixTableAction extends AbstractTableAction {
         if (_showReminder) {
             if (InstanceManager.getDefault(jmri.UserPreferencesManager.class) != null) {
                 InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                        showInfoMessage(rbx.getString("ReminderTitle"), rbx.getString("Reminder1"), getClassName(), "remindSaveLogix");
+                        showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString", Bundle.getMessage("MenuItemLogixTable")),
+                                getClassName(),
+                                "remindSaveLogix"); // NOI18N
             }
         }
     }
@@ -1304,8 +1296,7 @@ public class LogixTableAction extends AbstractTableAction {
                     log.error("Failure to update Logix with Duplicate User Name: "
                             + uName);
                     javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
-                            rbx.getString("Error6"), rbx
-                            .getString("ErrorTitle"),
+                            rbx.getString("Error6"), Bundle.getMessage("ErrorTitle"),
                             javax.swing.JOptionPane.ERROR_MESSAGE);
                     return;
                 }
@@ -1372,12 +1363,12 @@ public class LogixTableAction extends AbstractTableAction {
             question.setAlignmentX(Component.CENTER_ALIGNMENT);
             container.add(question);
 
-            final JCheckBox remember = new JCheckBox("Remember this setting for next time?");
+            final JCheckBox remember = new JCheckBox(Bundle.getMessage("MessageRememberSetting"));
             remember.setFont(remember.getFont().deriveFont(10f));
             remember.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-            JButton yesButton = new JButton("Yes");
-            JButton noButton = new JButton("No");
+            JButton yesButton = new JButton(Bundle.getMessage("ButtonYes"));
+            JButton noButton = new JButton(Bundle.getMessage("ButtonNo"));
             JPanel button = new JPanel();
             button.setAlignmentX(Component.CENTER_ALIGNMENT);
             button.add(yesButton);
@@ -1454,7 +1445,7 @@ public class LogixTableAction extends AbstractTableAction {
             javax.swing.JOptionPane.showMessageDialog(
                     editLogixFrame, java.text.MessageFormat.format(rbx.getString("Warn8"),
                             new Object[]{SensorGroupFrame.logixUserName, SensorGroupFrame.logixSysName}),
-                    rbx.getString("WarnTitle"),
+                    Bundle.getMessage("WarningTitle"),
                     javax.swing.JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -1497,7 +1488,7 @@ public class LogixTableAction extends AbstractTableAction {
             javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
                     java.text.MessageFormat.format(rbx.getString("Error34"),
                             new Object[]{_curConditional.getSystemName()}),
-                    rbx.getString("ErrorTitle"),
+                    Bundle.getMessage("ErrorTitle"),
                     javax.swing.JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -1525,7 +1516,7 @@ public class LogixTableAction extends AbstractTableAction {
             javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
                     java.text.MessageFormat.format(rbx.getString("Error35"),
                             new Object[]{_curConditional.getSystemName()}),
-                    rbx.getString("ErrorTitle"),
+                    Bundle.getMessage("ErrorTitle"),
                     javax.swing.JOptionPane.ERROR_MESSAGE);
             return true;
         }
@@ -1540,8 +1531,8 @@ public class LogixTableAction extends AbstractTableAction {
                 log.error("Failure to update Conditional with Duplicate User Name: "
                         + uName);
                 javax.swing.JOptionPane.showMessageDialog(
-                        editConditionalFrame, rbx.getString("Error10"), rbx
-                        .getString("ErrorTitle"),
+                        editConditionalFrame, rbx.getString("Error10"),
+                        Bundle.getMessage("ErrorTitle"),
                         javax.swing.JOptionPane.ERROR_MESSAGE);
                 return false;
             }
@@ -1582,12 +1573,12 @@ public class LogixTableAction extends AbstractTableAction {
             contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
             JPanel panel1 = new JPanel();
             panel1.setLayout(new FlowLayout());
-            panel1.add(new JLabel(rbx.getString("ConditionalSystemName")));
+            panel1.add(new JLabel(Bundle.getMessage("ColumnSystemName") + ":"));
             panel1.add(new JLabel(_curConditional.getSystemName()));
             contentPane.add(panel1);
             JPanel panel2 = new JPanel();
             panel2.setLayout(new FlowLayout());
-            panel2.add(new JLabel(rbx.getString("ConditionalUserName")));
+            panel2.add(new JLabel(Bundle.getMessage("ColumnUserName") + ":"));
             panel2.add(conditionalUserName);
             conditionalUserName.setToolTipText(rbx.getString("ConditionalUserNameHint"));
             contentPane.add(panel2);
@@ -1604,7 +1595,7 @@ public class LogixTableAction extends AbstractTableAction {
             _antecedentField.setText(_antecedent);
             _antecedentPanel = makeEditPanel(_antecedentField, "LabelAntecedent", "LabelAntecedentHint");
 
-            JButton helpButton = new JButton(rbx.getString("HelpButton"));
+            JButton helpButton = new JButton(Bundle.getMessage("MenuHelp"));
             _antecedentPanel.add(helpButton);
             helpButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -1854,7 +1845,7 @@ public class LogixTableAction extends AbstractTableAction {
             });
             updateConditional.setToolTipText(rbx.getString("UpdateConditionalButtonHint"));
             // Cancel
-            JButton cancelConditional = new JButton(rbx.getString("CancelButton"));
+            JButton cancelConditional = new JButton(Bundle.getMessage("ButtonCancel"));
             panel5.add(cancelConditional);
             cancelConditional.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -1863,7 +1854,7 @@ public class LogixTableAction extends AbstractTableAction {
             });
             cancelConditional.setToolTipText(rbx.getString("CancelConditionalButtonHint"));
             // Delete Conditional
-            JButton deleteConditional = new JButton(rbx.getString("DeleteConditionalButton"));
+            JButton deleteConditional = new JButton(Bundle.getMessage("ButtonDelete"));
             panel5.add(deleteConditional);
             deleteConditional.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -1901,7 +1892,7 @@ public class LogixTableAction extends AbstractTableAction {
         }
         if (LRouteTableAction.LOGIX_INITIALIZER.equals(_curLogix.getSystemName())) {
             javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
-                    rbx.getString("Error49"), rbx.getString("ErrorTitle"),
+                    rbx.getString("Error49"), Bundle.getMessage("ErrorTitle"),
                     javax.swing.JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -1998,7 +1989,7 @@ public class LogixTableAction extends AbstractTableAction {
         // Check if reorder is reasonable
         if (_actionList.size() <= 1) {
             javax.swing.JOptionPane.showMessageDialog(editLogixFrame, rbx
-                    .getString("Error46"), rbx.getString("ErrorTitle"),
+                    .getString("Error46"), Bundle.getMessage("ErrorTitle"),
                     javax.swing.JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -2061,7 +2052,7 @@ public class LogixTableAction extends AbstractTableAction {
                             new Object[]{SensorGroupFrame.logixUserName, SensorGroupFrame.logixSysName})
                     + java.text.MessageFormat.format(rbx.getString("Warn11"),
                             new Object[]{_curConditional.getUserName(), _curConditional.getSystemName()}),
-                    rbx.getString("WarnTitle"),
+                    Bundle.getMessage("WarningTitle"),
                     javax.swing.JOptionPane.WARNING_MESSAGE);
             cancelConditionalPressed(null);
             return;
@@ -2081,7 +2072,7 @@ public class LogixTableAction extends AbstractTableAction {
             javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
                     java.text.MessageFormat.format(rbx.getString("Warn5"),
                             new Object[]{_curConditional.getUserName(), _curConditional.getSystemName()}),
-                    rbx.getString("WarnTitle"),
+                    Bundle.getMessage("WarningTitle"),
                     javax.swing.JOptionPane.WARNING_MESSAGE);
         }
 
@@ -2121,7 +2112,7 @@ public class LogixTableAction extends AbstractTableAction {
             //nfe.printStackTrace();
             javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
                     rbx.getString("Error4") + nfe.toString() + rbx.getString("Error7"),
-                    rbx.getString("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);
         }
         // when user uses the escape key and returns to editing, interaction with 
         // window closing event create strange environment
@@ -2160,7 +2151,7 @@ public class LogixTableAction extends AbstractTableAction {
         if (msgs != null) {
             javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
                     java.text.MessageFormat.format(rbx.getString("Error11"), (Object[]) msgs),
-                    rbx.getString("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);
         }
         // complete deletion
         cancelConditionalPressed(null);
@@ -2169,13 +2160,13 @@ public class LogixTableAction extends AbstractTableAction {
         if (numConditionals < 1 && !_suppressReminder) {
             // warning message - last Conditional deleted
             javax.swing.JOptionPane.showMessageDialog(editLogixFrame, rbx
-                    .getString("Warn1"), rbx.getString("WarnTitle"),
+                    .getString("Warn1"), Bundle.getMessage("WarningTitle"),
                     javax.swing.JOptionPane.WARNING_MESSAGE);
         }
     }
 
     @SuppressWarnings("fallthrough")
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SF_SWITCH_FALLTHROUGH")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     boolean logicTypeChanged(ActionEvent e) {
         int type = _operatorBox.getSelectedIndex() + 1;
         if (type == _logicType) {
@@ -2186,7 +2177,7 @@ public class LogixTableAction extends AbstractTableAction {
         switch (type) {
             case Conditional.ALL_AND:
                 oper = Conditional.OPERATOR_AND;
-            // fall through
+            // fall through intended here
             case Conditional.ALL_OR:
                 for (int i = 1; i < _variableList.size(); i++) {
                     _variableList.get(i).setOpern(oper);
@@ -2195,6 +2186,7 @@ public class LogixTableAction extends AbstractTableAction {
                 break;
             case Conditional.MIXED:
                 _antecedentPanel.setVisible(true);
+                break;
             default:
                 break;
         }
@@ -2284,7 +2276,7 @@ public class LogixTableAction extends AbstractTableAction {
         String message = _curConditional.validateAntecedent(_antecedent, _variableList);
         if (message != null) {
             javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
-                    message + rbx.getString("ParseError8"), rbx.getString("ErrorTitle"),
+                    message + rbx.getString("ParseError8"), Bundle.getMessage("ErrorTitle"),
                     javax.swing.JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -2300,7 +2292,7 @@ public class LogixTableAction extends AbstractTableAction {
         if (_editActionFrame != null) {
             // Already editing an Action, ask for completion of that edit
             javax.swing.JOptionPane.showMessageDialog(_editActionFrame,
-                    rbx.getString("Error48"), rbx.getString("ErrorTitle"),
+                    rbx.getString("Error48"), Bundle.getMessage("ErrorTitle"),
                     javax.swing.JOptionPane.ERROR_MESSAGE);
             _editActionFrame.setVisible(true);
             return true;
@@ -2308,7 +2300,7 @@ public class LogixTableAction extends AbstractTableAction {
         if (_editVariableFrame != null) {
             // Already editing a state variable, ask for completion of that edit
             javax.swing.JOptionPane.showMessageDialog(_editVariableFrame,
-                    rbx.getString("Error47"), rbx.getString("ErrorTitle"),
+                    rbx.getString("Error47"), Bundle.getMessage("ErrorTitle"),
                     javax.swing.JOptionPane.ERROR_MESSAGE);
             _editVariableFrame.setVisible(true);
             return true;
@@ -2529,7 +2521,7 @@ public class LogixTableAction extends AbstractTableAction {
         JPanel p = new JPanel();
         p.add(new JLabel(rbx.getString("LabelActionFile")));
         _setPanel.add(p);
-        _actionSetButton = new JButton(rbx.getString("FileButton"));
+        _actionSetButton = new JButton(rbx.getString("FileButton")); // TODO replace by ...
         _actionSetButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 validateAction();
@@ -2647,19 +2639,19 @@ public class LogixTableAction extends AbstractTableAction {
             ActionListener deleteListener) {
         JPanel panel3 = new JPanel();
         panel3.setLayout(new BoxLayout(panel3, BoxLayout.X_AXIS));
-        JButton updateAction = new JButton(rbx.getString("UpdateButton"));
+        JButton updateAction = new JButton(Bundle.getMessage("ButtonUpdate"));
         panel3.add(updateAction);
         panel3.add(Box.createHorizontalStrut(STRUT));
         updateAction.addActionListener(updateListener);
         updateAction.setToolTipText(rbx.getString("UpdateButtonHint"));
 
-        JButton cancelAction = new JButton(rbx.getString("CancelButton"));
+        JButton cancelAction = new JButton(Bundle.getMessage("ButtonCancel"));
         panel3.add(cancelAction);
         panel3.add(Box.createHorizontalStrut(STRUT));
         cancelAction.addActionListener(cancelListener);
         cancelAction.setToolTipText(rbx.getString("CancelButtonHint"));
 
-        JButton deleteAction = new JButton(rbx.getString("DeleteButton"));
+        JButton deleteAction = new JButton(Bundle.getMessage("ButtonDelete"));
         panel3.add(deleteAction);
         deleteAction.addActionListener(deleteListener);
         deleteAction.setToolTipText(rbx.getString("DeleteButtonHint"));
@@ -2795,7 +2787,7 @@ public class LogixTableAction extends AbstractTableAction {
         if (_variableList.size() < 1 && !_suppressReminder) {
             // warning message - last State Variable deleted
             javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
-                    rbx.getString("Warn3"), rbx.getString("WarnTitle"),
+                    rbx.getString("Warn3"), Bundle.getMessage("WarningTitle"),
                     javax.swing.JOptionPane.WARNING_MESSAGE);
         }
         // move remaining state variables if needed
@@ -3109,6 +3101,9 @@ public class LogixTableAction extends AbstractTableAction {
                         case Audio.CMD_RESET_POSITION:
                             _actionBox.setSelectedIndex(9);
                             break;
+                        default:
+                            log.warn("Unexpected _curAction.getActionData() of {}", _curAction.getActionData());
+                            break;
                     }
                 }
                 break;
@@ -3246,16 +3241,16 @@ public class LogixTableAction extends AbstractTableAction {
                         || (actionType == Conditional.ACTION_RESET_DELAYED_TURNOUT)
                         || (actionType == Conditional.ACTION_DELAYED_TURNOUT)) {
                     label.setText(rbx.getString("LabelActionTurnout"));
-                    _actionBox.addItem(rbx.getString("TurnoutClosed"));
-                    _actionBox.addItem(rbx.getString("TurnoutThrown"));
-                    _actionBox.addItem(rbx.getString("Toggle"));
+                    _actionBox.addItem(Bundle.getMessage("TurnoutStateClosed"));
+                    _actionBox.addItem(Bundle.getMessage("TurnoutStateThrown"));
+                    _actionBox.addItem(Bundle.getMessage("Toggle"));
                     _actionPanel.setToolTipText(rbx.getString("TurnoutSetHint"));
                     _actionPanel.setVisible(true);
                 } else if (actionType == Conditional.ACTION_LOCK_TURNOUT) {
                     label.setText(rbx.getString("LabelActionLock"));
                     _actionBox.addItem(rbx.getString("TurnoutUnlock"));
                     _actionBox.addItem(rbx.getString("TurnoutLock"));
-                    _actionBox.addItem(rbx.getString("Toggle"));
+                    _actionBox.addItem(Bundle.getMessage("Toggle"));
                     _actionPanel.setToolTipText(rbx.getString("LockSetHint"));
                     _actionPanel.setVisible(true);
                 }
@@ -3281,9 +3276,9 @@ public class LogixTableAction extends AbstractTableAction {
                     JPanel p = (JPanel) _actionPanel.getComponent(0);
                     JLabel l = (JLabel) p.getComponent(0);
                     l.setText(rbx.getString("LabelActionSensor"));
-                    _actionBox.addItem(rbx.getString("SensorActive"));
-                    _actionBox.addItem(rbx.getString("SensorInactive"));
-                    _actionBox.addItem(rbx.getString("Toggle"));
+                    _actionBox.addItem(Bundle.getMessage("SensorStateActive"));
+                    _actionBox.addItem(Bundle.getMessage("SensorStateInactive"));
+                    _actionBox.addItem(Bundle.getMessage("Toggle"));
                     _actionPanel.setToolTipText(rbx.getString("SensorSetHint"));
                     _actionPanel.setVisible(true);
                 }
@@ -3353,7 +3348,7 @@ public class LogixTableAction extends AbstractTableAction {
                     l.setText(rbx.getString("LabelActionLight"));
                     _actionBox.addItem(rbx.getString("LightOn"));
                     _actionBox.addItem(rbx.getString("LightOff"));
-                    _actionBox.addItem(rbx.getString("Toggle"));
+                    _actionBox.addItem(Bundle.getMessage("Toggle"));
                     _actionPanel.setToolTipText(rbx.getString("LightSetHint"));
                     _actionPanel.setVisible(true);
                 }
@@ -3425,7 +3420,7 @@ public class LogixTableAction extends AbstractTableAction {
                     } else if (actionType == Conditional.ACTION_SET_TRAIN_NAME) {
                         _shortTextPanel.setToolTipText(rbx.getString("DataHintTrainName"));
                         l.setText(rbx.getString("LabelTrainName"));
-                    } else if (actionType == Conditional.ACTION_THROTTLE_FACTOR) {
+                    } else { // must be Conditional.ACTION_THROTTLE_FACTOR, so treat as such
                         _shortTextPanel.setToolTipText(rbx.getString("DataHintThrottleFactor"));
                         l.setText(rbx.getString("LabelThrottleFactor"));
                     }
@@ -3837,7 +3832,7 @@ public class LogixTableAction extends AbstractTableAction {
                 break;
             default:
                 javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
-                        rbx.getString("ErrorVariableType"), rbx.getString("ErrorTitle"),
+                        rbx.getString("ErrorVariableType"), Bundle.getMessage("ErrorTitle"),
                         javax.swing.JOptionPane.ERROR_MESSAGE);
                 return false;
         }
@@ -3912,7 +3907,7 @@ public class LogixTableAction extends AbstractTableAction {
                     int type = ConditionalVariable.stringToVariableTest(appStr);
                     if (type < 0) {
                         javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
-                                rbx.getString("ErrorAppearance"), rbx.getString("ErrorTitle"),
+                                rbx.getString("ErrorAppearance"), Bundle.getMessage("ErrorTitle"),
                                 javax.swing.JOptionPane.ERROR_MESSAGE);
                         return false;
                     }
@@ -3933,7 +3928,7 @@ public class LogixTableAction extends AbstractTableAction {
                 if (testType == Conditional.TYPE_SIGNAL_MAST_ASPECT_EQUALS) {
                     if (_variableSignalBox.getSelectedIndex() < 0) {
                         javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
-                                rbx.getString("ErrorAspect"), rbx.getString("ErrorTitle"),
+                                rbx.getString("ErrorAspect"), Bundle.getMessage("ErrorTitle"),
                                 javax.swing.JOptionPane.ERROR_MESSAGE);
                         return false;
                     }
@@ -3969,7 +3964,7 @@ public class LogixTableAction extends AbstractTableAction {
                 break;
             default:
                 javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
-                        rbx.getString("ErrorVariableType"), rbx.getString("ErrorTitle"),
+                        rbx.getString("ErrorVariableType"), Bundle.getMessage("ErrorTitle"),
                         javax.swing.JOptionPane.ERROR_MESSAGE);
                 return false;
         }
@@ -3982,7 +3977,7 @@ public class LogixTableAction extends AbstractTableAction {
         }
         if (_curVariable.getType() == Conditional.TYPE_NONE) {
             javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
-                    rbx.getString("ErrorVariableState"), rbx.getString("ErrorTitle"),
+                    rbx.getString("ErrorVariableState"), Bundle.getMessage("ErrorTitle"),
                     javax.swing.JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -4007,7 +4002,7 @@ public class LogixTableAction extends AbstractTableAction {
         if (selection == 0) {
             javax.swing.JOptionPane.showMessageDialog(
                     editConditionalFrame, rbx.getString("makeSelection"),
-                    rbx.getString("WarnTitle"), javax.swing.JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("WarningTitle"), javax.swing.JOptionPane.WARNING_MESSAGE);
             return false;
         }
         String name = _actionNameField.getText().trim();
@@ -4111,7 +4106,7 @@ public class LogixTableAction extends AbstractTableAction {
                         javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
                                 java.text.MessageFormat.format(
                                         rbx.getString("Error45"), new Object[]{name}),
-                                rbx.getString("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);
+                                Bundle.getMessage("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);
                         return (false);
                     }
                     if (!validateIntensityReference(actionType, actionString)) {
@@ -4128,7 +4123,7 @@ public class LogixTableAction extends AbstractTableAction {
                         javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
                                 java.text.MessageFormat.format(
                                         rbx.getString("Error40"), new Object[]{name}),
-                                rbx.getString("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);
+                                Bundle.getMessage("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);
                         return (false);
                     }
                     if (!validateTimeReference(actionType, actionString)) {
@@ -4179,7 +4174,7 @@ public class LogixTableAction extends AbstractTableAction {
                 break;
             case Conditional.ITEM_TYPE_MEMORY:
                 if (referenceByMemory) {
-                    javax.swing.JOptionPane.showMessageDialog(_editActionFrame, rbx.getString("Warn6"), rbx.getString("WarnTitle"),
+                    javax.swing.JOptionPane.showMessageDialog(_editActionFrame, rbx.getString("Warn6"), Bundle.getMessage("WarningTitle"),
                             javax.swing.JOptionPane.WARNING_MESSAGE);
                     return false;
                 }
@@ -4301,6 +4296,9 @@ public class LogixTableAction extends AbstractTableAction {
                         case 9:
                             _curAction.setActionData(Audio.CMD_RESET_POSITION);
                             break;
+                        default:
+                            log.warn("Unexpected _actionBox.getSelectedIndex() of {}", _actionBox.getSelectedIndex());
+                            break;
                     }
                 }
                 break;
@@ -4404,7 +4402,7 @@ public class LogixTableAction extends AbstractTableAction {
                 } catch (NumberFormatException ex) {
                     javax.swing.JOptionPane.showMessageDialog(
                             editConditionalFrame, java.text.MessageFormat.format(rbx.getString("Error24"),
-                                    intReference), rbx.getString("WarnTitle"), javax.swing.JOptionPane.WARNING_MESSAGE);
+                                    intReference), Bundle.getMessage("WarningTitle"), javax.swing.JOptionPane.WARNING_MESSAGE);
                 }
                 return true;    // above is a warning to set memory correctly
             }
@@ -4421,7 +4419,7 @@ public class LogixTableAction extends AbstractTableAction {
         if (time < 0 || time > 100) {
             javax.swing.JOptionPane.showMessageDialog(
                     editConditionalFrame, java.text.MessageFormat.format(rbx.getString("Error38"),
-                            time, rbx.getString("Error42")), rbx.getString("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);
+                            time, rbx.getString("Error42")), Bundle.getMessage("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
@@ -4457,7 +4455,7 @@ public class LogixTableAction extends AbstractTableAction {
                 } catch (NumberFormatException ex) {
                     javax.swing.JOptionPane.showMessageDialog(
                             editConditionalFrame, java.text.MessageFormat.format(rbx.getString("Error24"),
-                                    memRef), rbx.getString("WarnTitle"), javax.swing.JOptionPane.WARNING_MESSAGE);
+                                    memRef), Bundle.getMessage("WarningTitle"), javax.swing.JOptionPane.WARNING_MESSAGE);
                 }
                 return true;    // above is a warning to set memory correctly
             }
@@ -4495,7 +4493,7 @@ public class LogixTableAction extends AbstractTableAction {
             }
             javax.swing.JOptionPane.showMessageDialog(
                     editConditionalFrame, java.text.MessageFormat.format(rbx.getString("Error38"),
-                            time, rbx.getString(errorNum)), rbx.getString("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);
+                            time, rbx.getString(errorNum)), Bundle.getMessage("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
@@ -4519,15 +4517,17 @@ public class LogixTableAction extends AbstractTableAction {
             case Conditional.ACTION_SET_LIGHT_INTENSITY:
                 javax.swing.JOptionPane.showMessageDialog(
                         editConditionalFrame, rbx.getString("Error43"),
-                        rbx.getString("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);
                 return;
             case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
                 errorNum = "Error29";
                 break;
+            default:
+                log.warn("Unexpected action type {} in displayBadNumberReference", actionType);
         }
         javax.swing.JOptionPane.showMessageDialog(
                 editConditionalFrame, java.text.MessageFormat.format(rbx.getString("Error9"),
-                        rbx.getString(errorNum)), rbx.getString("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);
+                        rbx.getString(errorNum)), Bundle.getMessage("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);
     }
 
     /**
@@ -4545,7 +4545,7 @@ public class LogixTableAction extends AbstractTableAction {
             m = InstanceManager.memoryManagerInstance().getBySystemName(name);
         }
         if (m == null) {
-            messageInvalidActionItemName(name, "Memory");
+            messageInvalidActionItemName(name, "Memory"); //NOI18N
             return null;
         }
         return name;
@@ -4581,7 +4581,7 @@ public class LogixTableAction extends AbstractTableAction {
             t = InstanceManager.turnoutManagerInstance().getBySystemName(name);
         }
         if (t == null) {
-            messageInvalidActionItemName(name, "Turnout");
+            messageInvalidActionItemName(name, "Turnout"); //NOI18N
             return null;
         }
         return name;
@@ -4602,7 +4602,7 @@ public class LogixTableAction extends AbstractTableAction {
             h = InstanceManager.signalHeadManagerInstance().getBySystemName(name);
         }
         if (h == null) {
-            messageInvalidActionItemName(name, "SignalHead");
+            messageInvalidActionItemName(name, "SignalHead"); //NOI18N
             return null;
         }
         return name;
@@ -4623,7 +4623,7 @@ public class LogixTableAction extends AbstractTableAction {
             h = InstanceManager.signalMastManagerInstance().provideSignalMast(name);
         }
         if (h == null) {
-            messageInvalidActionItemName(name, "SignalMast");
+            messageInvalidActionItemName(name, "SignalMast"); //NOI18N
             return null;
         }
         return name;
@@ -4641,7 +4641,7 @@ public class LogixTableAction extends AbstractTableAction {
             w = InstanceManager.getDefault(WarrantManager.class).getBySystemName(name);
         }
         if (w == null) {
-            messageInvalidActionItemName(name, "Warrant");
+            messageInvalidActionItemName(name, "Warrant"); //NOI18N
             return null;
         }
         return name;
@@ -4659,7 +4659,7 @@ public class LogixTableAction extends AbstractTableAction {
             b = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getBySystemName(name);
         }
         if (b == null) {
-            messageInvalidActionItemName(name, "OBlock");
+            messageInvalidActionItemName(name, "OBlock"); //NOI18N
             return null;
         }
         return name;
@@ -4681,7 +4681,7 @@ public class LogixTableAction extends AbstractTableAction {
         }
         s = InstanceManager.sensorManagerInstance().getBySystemName(name);
         if (s == null) {
-            messageInvalidActionItemName(name, "Sensor");
+            messageInvalidActionItemName(name, "Sensor"); //NOI18N
             return null;
         }
         return name;
@@ -4702,7 +4702,7 @@ public class LogixTableAction extends AbstractTableAction {
             l = InstanceManager.lightManagerInstance().getBySystemName(name);
         }
         if (l == null) {
-            messageInvalidActionItemName(name, "Light");
+            messageInvalidActionItemName(name, "Light"); //NOI18N
             return null;
         }
         return name;
@@ -4723,7 +4723,7 @@ public class LogixTableAction extends AbstractTableAction {
             c = _conditionalManager.getBySystemName(name);
         }
         if (c == null) {
-            messageInvalidActionItemName(name, "Conditional");
+            messageInvalidActionItemName(name, "Conditional"); //NOI18N
             return null;
         }
         return name;
@@ -4744,7 +4744,7 @@ public class LogixTableAction extends AbstractTableAction {
             l = _logixManager.getBySystemName(name);
         }
         if (l == null) {
-            messageInvalidActionItemName(name, "Logix");
+            messageInvalidActionItemName(name, "Logix"); //NOI18N
             return null;
         }
         return name;
@@ -4765,7 +4765,7 @@ public class LogixTableAction extends AbstractTableAction {
             r = InstanceManager.routeManagerInstance().getBySystemName(name);
         }
         if (r == null) {
-            messageInvalidActionItemName(name, "Route");
+            messageInvalidActionItemName(name, "Route"); //NOI18N
             return null;
         }
         return name;
@@ -4783,7 +4783,7 @@ public class LogixTableAction extends AbstractTableAction {
             a = InstanceManager.audioManagerInstance().getBySystemName(name);
         }
         if (a == null || (a.getSubType() != Audio.SOURCE && a.getSubType() != Audio.LISTENER)) {
-            messageInvalidActionItemName(name, "Audio");
+            messageInvalidActionItemName(name, "Audio"); //NOI18N
             return null;
         }
         return name;
@@ -4799,7 +4799,7 @@ public class LogixTableAction extends AbstractTableAction {
                 }
             }
         }
-        messageInvalidActionItemName(name, "Entry Exit");
+        messageInvalidActionItemName(name, "EntryExit"); //NOI18N
         return null;
     }
 
@@ -4819,7 +4819,7 @@ public class LogixTableAction extends AbstractTableAction {
             l = InstanceManager.lightManagerInstance().getBySystemName(name);
         }
         if (l == null) {
-            messageInvalidActionItemName(name, "Light");
+            messageInvalidActionItemName(name, "Light"); //NOI18N
         }
         return l;
     }
@@ -4832,14 +4832,14 @@ public class LogixTableAction extends AbstractTableAction {
         String hour = null;
         String minute = null;
         try {
-            if (index > 0) {
+            if (index > 0) { // : after start
                 hour = s.substring(0, index);
-                if (index >= 1) {
+                if (index+1 < s.length()) { // check for : at end
                     minute = s.substring(index + 1);
                 } else {
                     minute = "0";
                 }
-            } else if (index == 0) {
+            } else if (index == 0) { // : at start
                 hour = "0";
                 minute = s.substring(index + 1);
             } else {
@@ -4867,7 +4867,7 @@ public class LogixTableAction extends AbstractTableAction {
             // if unsuccessful, print error message
             javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
                     java.text.MessageFormat.format(rbx.getString("Error26"),
-                            new Object[]{s}), rbx.getString("ErrorTitle"),
+                            new Object[]{s}), Bundle.getMessage("ErrorTitle"),
                     javax.swing.JOptionPane.ERROR_MESSAGE);
             return (-1);
         }
@@ -4905,14 +4905,14 @@ public class LogixTableAction extends AbstractTableAction {
     void messageInvalidSignalHeadAppearance(String name, String appearance) {
         javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
                 java.text.MessageFormat.format(rbx.getString("Error21"),
-                        new Object[]{name, appearance}), rbx.getString("ErrorTitle"),
+                        new Object[]{name, appearance}), Bundle.getMessage("ErrorTitle"),
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }
 
     void messageInvalidActionItemName(String name, String itemType) {
         javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
                 java.text.MessageFormat.format(rbx.getString("Error22"),
-                        new Object[]{name, rbx.getString(itemType)}), rbx.getString("ErrorTitle"),
+                        new Object[]{name, Bundle.getMessage("BeanName" + itemType)}), Bundle.getMessage("ErrorTitle"),
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }
 
@@ -4922,7 +4922,7 @@ public class LogixTableAction extends AbstractTableAction {
     void messageDuplicateConditionalUserName(String svName) {
         javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
                 java.text.MessageFormat.format(rbx.getString("Error30"),
-                        new Object[]{svName}), rbx.getString("ErrorTitle"),
+                        new Object[]{svName}), Bundle.getMessage("ErrorTitle"),
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }
 
@@ -4932,11 +4932,6 @@ public class LogixTableAction extends AbstractTableAction {
      */
     public class ConditionalTableModel extends AbstractTableModel implements
             PropertyChangeListener {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 5961791138611174353L;
 
         public static final int SNAME_COLUMN = 0;
 
@@ -5026,13 +5021,13 @@ public class LogixTableAction extends AbstractTableAction {
         public String getColumnName(int col) {
             switch (col) {
                 case SNAME_COLUMN:
-                    return rbx.getString("ColumnLabelSystemName");
+                    return Bundle.getMessage("ColumnSystemName");
                 case UNAME_COLUMN:
-                    return rbx.getString("ColumnLabelUserName");
+                    return Bundle.getMessage("ColumnUserName");
                 case BUTTON_COLUMN:
                     return ""; // no label
                 case STATE_COLUMN:
-                    return rbx.getString("ColumnLabelState");
+                    return Bundle.getMessage("ColumnState");
                 default:
                     return "";
             }
@@ -5110,7 +5105,7 @@ public class LogixTableAction extends AbstractTableAction {
                     javax.swing.JOptionPane.showMessageDialog(
                             editConditionalFrame, java.text.MessageFormat.format(rbx.getString("Warn8"),
                                     new Object[]{SensorGroupFrame.logixUserName, SensorGroupFrame.logixSysName}),
-                            rbx.getString("WarnTitle"), javax.swing.JOptionPane.WARNING_MESSAGE);
+                            Bundle.getMessage("WarningTitle"), javax.swing.JOptionPane.WARNING_MESSAGE);
                 } else {
                     // Use separate Runnable so window is created on top
                     class WindowMaker implements Runnable {
@@ -5154,11 +5149,6 @@ public class LogixTableAction extends AbstractTableAction {
      * Table model for State Variables in Edit Conditional window
      */
     public class VariableTableModel extends AbstractTableModel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 5440254470481292065L;
 
         public static final int ROWNUM_COLUMN = 0;
 
@@ -5239,7 +5229,7 @@ public class LogixTableAction extends AbstractTableAction {
                 case DESCRIPTION_COLUMN:
                     return (rbx.getString("ColumnLabelDescription"));
                 case STATE_COLUMN:
-                    return (rbx.getString("ColumnLabelState"));
+                    return (Bundle.getMessage("ColumnState"));
                 case TRIGGERS_COLUMN:
                     return (rbx.getString("ColumnLabelTriggersCalculation"));
                 case EDIT_COLUMN:
@@ -5290,9 +5280,9 @@ public class LogixTableAction extends AbstractTableAction {
                 case TRIGGERS_COLUMN:
                     return Boolean.valueOf(variable.doTriggerActions());
                 case EDIT_COLUMN:
-                    return rbx.getString("ButtonEdit");
+                    return Bundle.getMessage("ButtonEdit");
                 case DELETE_COLUMN:
-                    return rbx.getString("ButtonDelete");
+                    return Bundle.getMessage("ButtonDelete");
                 default:
                     break;
             }
@@ -5327,7 +5317,7 @@ public class LogixTableAction extends AbstractTableAction {
                 case EDIT_COLUMN:
                     if (LRouteTableAction.LOGIX_INITIALIZER.equals(_curLogix.getSystemName())) {
                         javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
-                                rbx.getString("Error49"), rbx.getString("ErrorTitle"),
+                                rbx.getString("Error49"), Bundle.getMessage("ErrorTitle"),
                                 javax.swing.JOptionPane.ERROR_MESSAGE);
                         break;
                     }
@@ -5360,11 +5350,6 @@ public class LogixTableAction extends AbstractTableAction {
      * Table model for Actions in Edit Conditional window
      */
     public class ActionTableModel extends AbstractTableModel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 6959722170203666817L;
 
         public static final int DESCRIPTION_COLUMN = 0;
 
@@ -5420,7 +5405,7 @@ public class LogixTableAction extends AbstractTableAction {
                     ConditionalAction action = _actionList.get(row);
                     return action.description(_triggerOnChangeButton.isSelected());
                 case EDIT_COLUMN:
-                    return rbx.getString("ButtonEdit");
+                    return Bundle.getMessage("ButtonEdit");
                 case DELETE_COLUMN:
                     if (!_inReorderMode) {
                         return Bundle.getMessage("ButtonDelete");
@@ -5471,4 +5456,3 @@ public class LogixTableAction extends AbstractTableAction {
 
     private final static Logger log = LoggerFactory.getLogger(LogixTableAction.class.getName());
 }
-/* @(#)LogixTableAction.java */

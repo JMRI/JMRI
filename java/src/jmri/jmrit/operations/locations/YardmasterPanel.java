@@ -201,6 +201,7 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
         log.debug("queue update");
         // use invokeLater to prevent deadlock
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 log.debug("update, setMode: {}", isSetMode);
                 initialize();
@@ -316,6 +317,7 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
         TrainManager.instance().removePropertyChangeListener(this);
     }
 
+    @Override
     public void dispose() {
         removeTrainListeners();
         removePropertyChangeListerners();
@@ -323,7 +325,7 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }

@@ -14,6 +14,7 @@ import jmri.jmrit.operations.automation.actions.GotoAction;
 import jmri.jmrit.operations.automation.actions.GotoFailureAction;
 import jmri.jmrit.operations.automation.actions.GotoSuccessAction;
 import jmri.jmrit.operations.automation.actions.HaltAction;
+import jmri.jmrit.operations.automation.actions.IsTrainEnRouteAction;
 import jmri.jmrit.operations.automation.actions.MessageYesNoAction;
 import jmri.jmrit.operations.automation.actions.MoveTrainAction;
 import jmri.jmrit.operations.automation.actions.NoAction;
@@ -38,8 +39,8 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManagerXml;
-import jmri.jmrit.operations.trains.TrainSchedule;
-import jmri.jmrit.operations.trains.TrainScheduleManager;
+import jmri.jmrit.operations.trains.timetable.TrainSchedule;
+import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,7 +78,6 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
 
     /**
      *
-     * @param id
      */
     public AutomationItem(String id) {
         log.debug("New automation item id: {}", id);
@@ -89,6 +89,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         return _id;
     }
 
+    @Override
     public String toString() {
         return getId(); // for property changes
     }
@@ -193,8 +194,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
 
     /**
      * The automation for actions, not the automation associated with this item.
-     * 
-     * @param automation
+     *
      */
     public void setAutomationToRun(Automation automation) {
         Automation old = AutomationManager.instance().getAutomationById(_automationIdToRun);
@@ -221,8 +221,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
 
     /**
      * The automation for action GOTO, not this automation item.
-     * 
-     * @param automationItem
+     *
      */
     public void setGotoAutomationItem(AutomationItem automationItem) {
         AutomationItem oldItem = null;
@@ -356,13 +355,13 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         if (getAction() != null)
             return isActionSuccessful() ? getAction().getActionSuccessfulString() : getAction().getActionFailedString();
         else
-            return "unknown";
+            return "unknown"; // NOI18N
 
     }
 
     /**
      * Copies item.
-     * @param The item to copy.
+     * @param item The item to copy.
      */
     public void copyItem(AutomationItem item) {
         setAction(item.getActionByCode(item.getActionCode())); // must create a new action for each item
@@ -393,6 +392,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         list.add(new MoveTrainAction());
         list.add(new TerminateTrainAction());
         list.add(new ResetTrainAction());
+        list.add(new IsTrainEnRouteAction());
         list.add(new WaitTrainAction());
         list.add(new WaitTrainTerminatedAction());
         list.add(new ActivateTimetableAction());
@@ -400,6 +400,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         list.add(new SelectTrainAction());
         list.add(new DeselectTrainAction());
         list.add(new PrintSwitchListAction());
+//        list.add(new PrintSwitchListChangesAction()); // see UpdateSwitchListAction
         list.add(new UpdateSwitchListAction());
         list.add(new WaitSwitchListAction());
         list.add(new RunSwitchListAction());
@@ -496,7 +497,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         e.setAttribute(Xml.ID, getId());
         e.setAttribute(Xml.SEQUENCE_ID, Integer.toString(getSequenceId()));
         e.setAttribute(Xml.NAME, getActionName());
-        e.setAttribute(Xml.ACTION_CODE, "0x" + Integer.toHexString(getActionCode()));
+        e.setAttribute(Xml.ACTION_CODE, "0x" + Integer.toHexString(getActionCode())); // NOI18N
         e.setAttribute(Xml.HALT_FAIL, isHaltFailureEnabled() ? Xml.TRUE : Xml.FALSE);
         e.setAttribute(Xml.ACTION_RAN, isActionRan() ? Xml.TRUE : Xml.FALSE);
         e.setAttribute(Xml.ACTION_SUCCESSFUL, isActionSuccessful() ? Xml.TRUE : Xml.FALSE);
@@ -528,8 +529,9 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         return e;
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("AutomationItem id ({}) sees property change: ({}) old: ({}) new: ({})",
                     getId(), e.getPropertyName(), e.getOldValue(), e.getNewValue()); // NOI18N
         }

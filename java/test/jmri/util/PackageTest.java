@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.util;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Invokes complete set of tests in the jmri.util tree
  *
  * @author	Bob Jacobsen Copyright 2003
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -21,7 +19,7 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -37,7 +35,9 @@ public class PackageTest extends TestCase {
         suite.addTest(OrderedHashtableTest.suite());
         suite.addTest(PreferNumericComparatorTest.suite());
         suite.addTest(StringUtilTest.suite());
+        suite.addTest(ThreadingUtilTest.suite());
         suite.addTest(I18NTest.suite());
+        suite.addTest(ColorUtilTest.suite());
 
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             suite.addTest(SwingTestCaseTest.suite());
@@ -56,6 +56,9 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.util.DateUtilTest.suite());
         suite.addTest(jmri.util.prefs.PackageTest.suite());
 
+        // deliberately at end
+        suite.addTest(jmri.util.Log4JErrorIsErrorTest.suite());
+        
         return suite;
     }
 

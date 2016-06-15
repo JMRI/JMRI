@@ -1,9 +1,10 @@
-// SensorTableAction.java
 package jmri.jmrit.beantable;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import javax.annotation.Nonnull;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -27,14 +28,8 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a SensorTable GUI.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2009
- * @version $Revision$
  */
 public class SensorTableAction extends AbstractTableAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1577021703800089406L;
 
     /**
      * Create an action with a specific title.
@@ -42,7 +37,7 @@ public class SensorTableAction extends AbstractTableAction {
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
-     * @param actionName
+     * @param actionName title of the action
      */
     public SensorTableAction(String actionName) {
         super(actionName);
@@ -54,12 +49,14 @@ public class SensorTableAction extends AbstractTableAction {
     }
 
     public SensorTableAction() {
-        this("Sensor Table");
+        this(Bundle.getMessage("TitleSensorTable"));
     }
 
     protected SensorManager senManager = jmri.InstanceManager.sensorManagerInstance();
 
-    public void setManager(Manager man) {
+    @Override
+    @SuppressFBWarnings("BC_UNCONFIRMED_CAST") // AbstractTableTabAction responsible for getting this right;
+    public void setManager(@Nonnull Manager man) {
         senManager = (SensorManager) man;
         if (m != null) {
             m.setManager(senManager);
@@ -88,8 +85,8 @@ public class SensorTableAction extends AbstractTableAction {
     JTextField userName = new JTextField(40);
     JComboBox<String> prefixBox = new JComboBox<String>();
     JTextField numberToAdd = new JTextField(5);
-    JCheckBox range = new JCheckBox("Add a range");
-    JLabel sysNameLabel = new JLabel("Hardware Address");
+    JCheckBox range = new JCheckBox(Bundle.getMessage("AddRangeBox"));
+    JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelHardwareAddress"));
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
     String userNameError = this.getClass().getName() + ".DuplicateUserName";
@@ -103,12 +100,14 @@ public class SensorTableAction extends AbstractTableAction {
             //addFrame.addHelpMenu("package.jmri.jmrit.beantable.SensorAddEdit", true);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
 
-            ActionListener listener = new ActionListener() {
+            ActionListener okListener = new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     okPressed(e);
                 }
             };
-
+            ActionListener cancelListener = new ActionListener() {
+                public void actionPerformed(ActionEvent e) { cancelPressed(e); }
+            };
             ActionListener rangeListener = new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     canAddRange(e);
@@ -129,7 +128,6 @@ public class SensorTableAction extends AbstractTableAction {
                     if (addToPrefix) {
                         prefixBox.addItem(manuName);
                     }
-
                 }
                 if (p.getComboBoxLastSelection(systemSelectionCombo) != null) {
                     prefixBox.setSelectedItem(p.getComboBoxLastSelection(systemSelectionCombo));
@@ -140,11 +138,17 @@ public class SensorTableAction extends AbstractTableAction {
             sysName.setName("sysName");
             userName.setName("userName");
             prefixBox.setName("prefixBox");
-            addFrame.add(new AddNewHardwareDevicePanel(sysName, userName, prefixBox, numberToAdd, range, "ButtonOK", listener, rangeListener));
+            addFrame.add(new AddNewHardwareDevicePanel(sysName, userName, prefixBox, numberToAdd, range, "ButtonOK", okListener, cancelListener, rangeListener));
             canAddRange(null);
         }
         addFrame.pack();
         addFrame.setVisible(true);
+    }
+
+    void cancelPressed(ActionEvent e) {
+        addFrame.setVisible(false);
+        addFrame.dispose();
+        addFrame = null;
     }
 
     void okPressed(ActionEvent e) {
@@ -205,6 +209,7 @@ public class SensorTableAction extends AbstractTableAction {
                 if (user != null && !user.equals("") && (jmri.InstanceManager.sensorManagerInstance().getByUserName(user) == null)) {
                     s.setUserName(user);
                 } else if (jmri.InstanceManager.sensorManagerInstance().getByUserName(user) != null && !p.getPreferenceState(getClassName(), "duplicateUserName")) {
+                    // I18N TODO
                     jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                             showErrorMessage("Duplicate UserName", "The username " + user + " specified is already in use and therefore will not be set", getClassName(), "duplicateUserName", false, true);
                 }
@@ -256,7 +261,7 @@ public class SensorTableAction extends AbstractTableAction {
         int retval = JOptionPane.showOptionDialog(_who,
                 Bundle.getMessage("SensorGlobalDebounceMessageBox"), Bundle.getMessage("SensorGlobalDebounceMessageTitle"),
                 0, JOptionPane.INFORMATION_MESSAGE, null,
-                new Object[]{"Cancel", "OK", active, inActive}, null);
+                new Object[]{Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), active, inActive}, null);
         if (retval != 1) {
             return;
         }
@@ -266,14 +271,14 @@ public class SensorTableAction extends AbstractTableAction {
             long goingActive = Long.valueOf(activeField.getText());
             senManager.setDefaultSensorDebounceGoingActive(goingActive);
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(_who, Bundle.getMessage("SensorDebounceActError") + "\n" + activeField.getText(), "Input Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(_who, Bundle.getMessage("SensorDebounceActError") + "\n\"" + activeField.getText() + "\"", "Input Error", JOptionPane.ERROR_MESSAGE);
         }
 
         try {
             long goingInActive = Long.valueOf(inActiveField.getText());
             senManager.setDefaultSensorDebounceGoingInActive(goingInActive);
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(_who, Bundle.getMessage("SensorDebounceActError") + "\n" + inActiveField.getText(), "Input Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(_who, Bundle.getMessage("SensorDebounceActError") + "\n\"" + inActiveField.getText() + "\"", "Input Error", JOptionPane.ERROR_MESSAGE);
         }
         m.fireTableDataChanged();
     }
@@ -318,23 +323,34 @@ public class SensorTableAction extends AbstractTableAction {
     public void setMenuBar(BeanTableFrame f) {
         final jmri.util.JmriJFrame finalF = f;			// needed for anonymous ActionListener class
         JMenuBar menuBar = f.getJMenuBar();
-
-        JMenu optionsMenu = new JMenu(Bundle.getMessage("MenuDefaults"));
-        JMenuItem item = new JMenuItem(Bundle.getMessage("GlobalDebounce"));
-        optionsMenu.add(item);
-        item.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                setDefaultDebounce(finalF);
+        // check for menu
+        boolean menuAbsent = true;
+        for(int m = 0; m < menuBar.getMenuCount(); ++m) {
+            String name = menuBar.getMenu(m).getAccessibleContext().getAccessibleName();
+            if(name.equals(Bundle.getMessage("MenuDefaults"))) {
+                // using first menu for check, should be identical to next JMenu Bundle
+                menuAbsent = false;
+                break;
             }
-        });
-        item = new JMenuItem(Bundle.getMessage("InitialSensorState"));
-        optionsMenu.add(item);
-        item.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                setDefaultState(finalF);
-            }
-        });
-        menuBar.add(optionsMenu);
+        }
+        if(menuAbsent) { // create it
+            JMenu optionsMenu = new JMenu(Bundle.getMessage("MenuDefaults"));
+            JMenuItem item = new JMenuItem(Bundle.getMessage("GlobalDebounce"));
+            optionsMenu.add(item);
+            item.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    setDefaultDebounce(finalF);
+                }
+            });
+            item = new JMenuItem(Bundle.getMessage("InitialSensorState"));
+            optionsMenu.add(item);
+            item.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    setDefaultState(finalF);
+                }
+            });
+            menuBar.add(optionsMenu);
+        }
     }
 
     void showDebounceChanged() {
@@ -384,6 +400,3 @@ public class SensorTableAction extends AbstractTableAction {
 
     private final static Logger log = LoggerFactory.getLogger(SensorTableAction.class.getName());
 }
-
-
-/* @(#)SensorTableAction.java */

@@ -42,10 +42,6 @@ import org.slf4j.LoggerFactory;
  */
 public class LocationEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -820196357214001064L;
     YardTableModel yardModel = new YardTableModel();
     JTable yardTable = new JTable(yardModel);
     JScrollPane yardPane;
@@ -334,6 +330,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     StagingEditFrame stef = null;
 
     // Save, Delete, Add
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == addYardButton) {
             yef = new YardEditFrame();
@@ -500,6 +497,13 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
                     .getMessage("CanNotLocation"), new Object[]{s}), JOptionPane.ERROR_MESSAGE);
             return false;
         }
+        if (!OperationsXml.checkFileName(locationNameTextField.getText())) { // NOI18N
+            log.error("location name must not contain reserved characters");
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("LocationNameResChar") + NEW_LINE
+                    + Bundle.getMessage("ReservedChar"), Bundle.getMessage("CanNotLocation"), 
+                    JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
         return true;
     }
 
@@ -544,6 +548,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         readerSelector.setEnabled(enabled && Setup.isRfidEnabled());
     }
 
+    @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         setLocationOps();
         setVisibleLocations();
@@ -667,6 +672,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 
     LocationsByCarTypeFrame lctf = null;
 
+    @Override
     public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
         JCheckBox b = (JCheckBox) ae.getSource();
         log.debug("checkbox change {}", b.getText());
@@ -692,6 +698,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 
     private void addCheckBoxTrainAction(JCheckBox b) {
         b.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 checkBoxActionTrainPerformed(e);
             }
@@ -721,17 +728,18 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     }
 
     private void setTrainDirectionBoxes() {
-        northCheckBox.setVisible((Setup.getTrainDirection() & Setup.NORTH) > 0);
-        southCheckBox.setVisible((Setup.getTrainDirection() & Setup.SOUTH) > 0);
-        eastCheckBox.setVisible((Setup.getTrainDirection() & Setup.EAST) > 0);
-        westCheckBox.setVisible((Setup.getTrainDirection() & Setup.WEST) > 0);
+        northCheckBox.setVisible((Setup.getTrainDirection() & Setup.NORTH) == Setup.NORTH);
+        southCheckBox.setVisible((Setup.getTrainDirection() & Setup.SOUTH) == Setup.SOUTH);
+        eastCheckBox.setVisible((Setup.getTrainDirection() & Setup.EAST) == Setup.EAST);
+        westCheckBox.setVisible((Setup.getTrainDirection() & Setup.WEST) == Setup.WEST);
 
-        northCheckBox.setSelected((_location.getTrainDirections() & Location.NORTH) > 0);
-        southCheckBox.setSelected((_location.getTrainDirections() & Location.SOUTH) > 0);
-        eastCheckBox.setSelected((_location.getTrainDirections() & Location.EAST) > 0);
-        westCheckBox.setSelected((_location.getTrainDirections() & Location.WEST) > 0);
+        northCheckBox.setSelected((_location.getTrainDirections() & Location.NORTH) == Location.NORTH);
+        southCheckBox.setSelected((_location.getTrainDirections() & Location.SOUTH) == Location.SOUTH);
+        eastCheckBox.setSelected((_location.getTrainDirections() & Location.EAST) == Location.EAST);
+        westCheckBox.setSelected((_location.getTrainDirections() & Location.WEST) == Location.WEST);
     }
 
+    @Override
     public void dispose() {
         if (_location != null) {
             _location.removePropertyChangeListener(this);
@@ -748,8 +756,9 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         super.dispose();
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }

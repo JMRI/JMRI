@@ -13,12 +13,12 @@ import java.util.List;
  * a Java program. Any <tt>java.awt.Component</tt> can be dropped onto, but only
  * <tt>javax.swing.JComponent</tt>s will indicate the drop event with a changed
  * border.
- * <p/>
+ * <p>
  * To use this class, construct a new <tt>FileDrop</tt> by passing it the target
  * component and a <tt>Listener</tt> to receive notification when file(s) have
  * been dropped. Here is an example:
- * <p/>
- * <code><pre>
+ * </p>
+ * <pre><code>
  *      JPanel myPanel = new JPanel();
  *      new FileDrop( myPanel, new FileDrop.Listener()
  *      {   public void filesDropped( java.io.File[] files )
@@ -27,17 +27,17 @@ import java.util.List;
  *              ...
  *          }   // end filesDropped
  *      }); // end FileDrop.Listener
- * </pre></code>
- * <p/>
+ * </code></pre>
+ * 
  * You can specify the border that will appear when files are being dragged by
  * calling the constructor with a <tt>javax.swing.border.Border</tt>. Only
  * <tt>JComponent</tt>s will show any indication with a border.
- * <p/>
+ * <p>
  * You can turn on some debugging features by passing a <tt>PrintStream</tt>
  * object (such as <tt>System.out</tt>) into the full constructor. A
  * <tt>null</tt>
  * value will result in no extra debugging information being output.
- * <p/>
+ * 
  *
  * <p>
  * I'm releasing this code into the Public Domain. Enjoy.
@@ -586,7 +586,7 @@ public class FileDrop {
     /* ********  I N N E R   I N T E R F A C E   L I S T E N E R  ******** */
     /**
      * Implement this inner interface to listen for when files are dropped. For
-     * example your class declaration may begin like this:      <code><pre>
+     * example your class declaration may begin like this:      <pre><code>
      *      public class MyClass implements FileDrop.Listener
      *      ...
      *      public void filesDropped( java.io.File[] files )
@@ -594,7 +594,7 @@ public class FileDrop {
      *          ...
      *      }   // end filesDropped
      *      ...
-     * </pre></code>
+     * </code></pre>
      *
      * @since 1.0
      */

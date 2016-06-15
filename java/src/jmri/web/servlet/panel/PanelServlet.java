@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package jmri.web.servlet.panel;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
@@ -9,7 +5,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import java.util.List;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.jmris.json.JSON;
@@ -28,7 +23,6 @@ import org.slf4j.LoggerFactory;
  */
 public class PanelServlet extends AbstractPanelServlet {
 
-    private static final long serialVersionUID = -5898335055123037426L;
     private final static Logger log = LoggerFactory.getLogger(PanelServlet.class);
 
     @Override
@@ -133,7 +127,6 @@ public class PanelServlet extends AbstractPanelServlet {
             // include contents
             log.debug("N elements: {}", editor.getContents().size());
             for (Positionable sub : editor.getContents()) {
-                if (sub != null) {
                     try {
                         // TODO: get all panel contents as JSON
                         // I tried using JavaBean Introspection to simply build the contents using Jackson Databindings,
@@ -142,7 +135,6 @@ public class PanelServlet extends AbstractPanelServlet {
                     } catch (Exception ex) {
                         log.error("Error storing panel element: " + ex, ex);
                     }
-                }
             }
 
             return this.mapper.writeValueAsString(root);
@@ -159,10 +151,5 @@ public class PanelServlet extends AbstractPanelServlet {
             log.error("IOException", e);
             return "ERROR " + e.getLocalizedMessage();
         }
-    }
-
-    @Override
-    protected JComponent getPanel(String name) {
-        return ((PanelEditor) getEditor(name)).getTargetPanel();
     }
 }

@@ -1,4 +1,3 @@
-// LoadAndStoreTest.java
 package jmri.jmrit.display.configurexml;
 
 import jmri.configurexml.LoadAndStoreTestBase;
@@ -17,7 +16,6 @@ import junit.framework.Test;
  *
  * @author Bob Jacobsen Copyright 2009, 2014
  * @since 2.5.5 (renamed & reworked in 3.9 series)
- * @version $Revision$
  */
 public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
 
@@ -31,7 +29,7 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", LoadAndStoreTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     public static Test suite() {

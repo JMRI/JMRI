@@ -83,7 +83,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         new Exception().printStackTrace();
     }
 
-    String manufacturerName = jmri.jmrix.DCCManufacturerList.DIGITRAX;
+    String manufacturerName = jmri.jmrix.loconet.LnConnectionTypeList.DIGITRAX;
 
     public String getManufacturer() {
         return manufacturerName;

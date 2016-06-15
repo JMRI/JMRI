@@ -1,4 +1,3 @@
-// SecurityElementTest.java
 package jmri.jmrix.loconet;
 
 import jmri.Sensor;
@@ -16,7 +15,6 @@ import junit.framework.TestCase;
  * Copyright: Copyright (c) 2002</p>
  *
  * @author Bob Jacobsen
- * @version $Revision$
  */
 public class SecurityElementTest extends TestCase {
 

@@ -1,4 +1,3 @@
-// BackupBase.java
 package jmri.jmrit.operations.setup;
 
 import java.io.File;
@@ -7,7 +6,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.OperationsXml;
 import org.slf4j.Logger;
@@ -22,8 +23,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class BackupBase {
 
-    private final static Logger log = LoggerFactory
-            .getLogger(BackupBase.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BackupBase.class.getName());
 
     // Just for testing......
     // If this is not null, it will be thrown to simulate various IO exceptions
@@ -33,6 +33,10 @@ public abstract class BackupBase {
     // The root directory for all Operations files, usually
     // "user / name / JMRI / operations"
     protected File _operationsRoot = null;
+
+    public File getOperationsRoot() {
+        return _operationsRoot;
+    }
 
     // This will be set to the appropriate backup root directory from the
     // derived
@@ -45,9 +49,9 @@ public abstract class BackupBase {
 
     // These constitute the set of files for a complete backup set.
     private String[] _backupSetFileNames = new String[]{"Operations.xml", // NOI18N
-        "OperationsCarRoster.xml", "OperationsEngineRoster.xml", // NOI18N
-        "OperationsLocationRoster.xml", "OperationsRouteRoster.xml", // NOI18N
-        "OperationsTrainRoster.xml"}; // NOI18N
+            "OperationsCarRoster.xml", "OperationsEngineRoster.xml", // NOI18N
+            "OperationsLocationRoster.xml", "OperationsRouteRoster.xml", // NOI18N
+            "OperationsTrainRoster.xml"}; // NOI18N
 
     private String _demoPanelFileName = "Operations Demo Panel.xml"; // NOI18N
 
@@ -65,17 +69,16 @@ public abstract class BackupBase {
         if (rootName == null) {
             throw new IllegalArgumentException("Backup root name can't be null"); // NOI18N
         }
-        _operationsRoot = new File(OperationsXml.getFileLocation(),
-                OperationsXml.getOperationsDirectoryName());
+        _operationsRoot = new File(OperationsXml.getFileLocation(), OperationsXml.getOperationsDirectoryName());
 
-        _backupRoot = new File(_operationsRoot, rootName);
+        _backupRoot = new File(getOperationsRoot(), rootName);
 
         // Make sure it exists
-        if (!_backupRoot.exists()) {
-            Boolean ok = _backupRoot.mkdirs();
+        if (!getBackupRoot().exists()) {
+            Boolean ok = getBackupRoot().mkdirs();
             if (!ok) {
                 throw new RuntimeException("Unable to make directory: " // NOI18N
-                        + _backupRoot.getAbsolutePath());
+                        + getBackupRoot().getAbsolutePath());
             }
         }
 
@@ -87,12 +90,12 @@ public abstract class BackupBase {
      * directory.
      *
      * @param setName The name of the new backup set
-     * @throws java.io.IOException
+     * @throws java.io.IOException Due to trouble writing files
      */
     public void backupFilesToSetName(String setName) throws IOException {
         validateNotNullOrEmpty(setName);
 
-        copyBackupSet(_operationsRoot, new File(_backupRoot, setName));
+        copyBackupSet(getOperationsRoot(), new File(getBackupRoot(), setName));
     }
 
     private void validateNotNullOrEmpty(String s) {
@@ -110,18 +113,20 @@ public abstract class BackupBase {
      * to be part of the JMRI hierarchy.
      *
      * @param backupDirectory The directory to use for the backup.
-     * @throws java.io.IOException
+     * @throws java.io.IOException Due to trouble writing files
      */
     public void backupFilesToDirectory(File backupDirectory) throws IOException {
-        copyBackupSet(_operationsRoot, backupDirectory);
+        copyBackupSet(getOperationsRoot(), backupDirectory);
     }
 
     /**
      * Returns a sorted list of the Backup Sets under the backup root.
      *
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
+            justification = "not possible")  // NOI18N
     public String[] getBackupSetList() {
-        String[] setList = _backupRoot.list();
+        String[] setList = getBackupRoot().list();
         // no guarantee of order, so we need to sort
         jmri.util.StringUtil.sort(setList);
         return setList;
@@ -132,15 +137,17 @@ public abstract class BackupBase {
         // backup store.
         // Not used at the moment, and can probably be removed in favor of
         // getBackupSets()
-        File[] dirs = _backupRoot.listFiles();
+        File[] dirs = getBackupRoot().listFiles();
 
         return dirs;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
+            justification = "not possible")  // NOI18N
     public BackupSet[] getBackupSets() {
         // This is a bit of a kludge for now, until I learn more about dynamic
         // sets
-        File[] dirs = _backupRoot.listFiles();
+        File[] dirs = getBackupRoot().listFiles();
         BackupSet[] sets = new BackupSet[dirs.length];
 
         for (int i = 0; i < dirs.length; i++) {
@@ -153,7 +160,6 @@ public abstract class BackupBase {
     /**
      * Check to see if the given backup set already exists in the backup store.
      *
-     * @param setName
      * @return true if it exists
      */
     public boolean checkIfBackupSetExists(String setName) {
@@ -161,7 +167,7 @@ public abstract class BackupBase {
         validateNotNullOrEmpty(setName);
 
         try {
-            File file = new File(_backupRoot, setName);
+            File file = new File(getBackupRoot(), setName);
 
             if (file.exists()) {
                 return true;
@@ -175,23 +181,21 @@ public abstract class BackupBase {
     /**
      * Restores a Backup Set with the given name from the backup store.
      *
-     * @param setName
-     * @throws java.io.IOException
+     * @throws java.io.IOException Due to trouble loading files
      */
     public void restoreFilesFromSetName(String setName) throws IOException {
-        copyBackupSet(new File(_backupRoot, setName), _operationsRoot);
+        copyBackupSet(new File(getBackupRoot(), setName), getOperationsRoot());
     }
 
     /**
      * Restores a Backup Set from the given directory.
      *
-     * @param directory
-     * @throws java.io.IOException
+     * @throws java.io.IOException Due to trouble loading files
      */
     public void restoreFilesFromDirectory(File directory) throws IOException {
         log.debug("restoring files from directory {}", directory.getAbsolutePath());
 
-        copyBackupSet(directory, _operationsRoot);
+        copyBackupSet(directory, getOperationsRoot());
     }
 
     /**
@@ -201,9 +205,7 @@ public abstract class BackupBase {
      *
      * Only copies files that are included in the list of Operations files.
      *
-     * @param sourceDir
-     * @param destDir
-     * @throws java.io.IOException
+     * @throws java.io.IOException Due to trouble reading or writing
      */
     public void copyBackupSet(File sourceDir, File destDir) throws IOException {
         log.debug("copying backup set from: {} to: {}", sourceDir, destDir);
@@ -245,8 +247,7 @@ public abstract class BackupBase {
             if (!result) {
                 // This needs to use a better Exception class.....
                 throw new IOException(
-                        destDir.getAbsolutePath()
-                        + " (Could not create all or part of the Backup Set path)"); // NOI18N
+                        destDir.getAbsolutePath() + " (Could not create all or part of the Backup Set path)"); // NOI18N
             }
         }
 
@@ -297,17 +298,17 @@ public abstract class BackupBase {
     /**
      * Reloads the demo Operations files that are distributed with JMRI.
      *
-     * @throws java.io.IOException
+     * @throws java.io.IOException Due to trouble loading files
      */
     public void loadDemoFiles() throws IOException {
         File fromDir = new File(XmlFile.xmlDir(), "demoOperations"); // NOI18N
-        copyBackupSet(fromDir, _operationsRoot);
+        copyBackupSet(fromDir, getOperationsRoot());
 
         // and the demo panel file
         log.debug("copying file: {}", _demoPanelFileName);
 
         File src = new File(fromDir, _demoPanelFileName);
-        File dst = new File(_operationsRoot, _demoPanelFileName);
+        File dst = new File(getOperationsRoot(), _demoPanelFileName);
 
         FileHelper.copy(src.getAbsolutePath(), dst.getAbsolutePath(), true);
 
@@ -328,7 +329,7 @@ public abstract class BackupBase {
         // again.
         String baseName = getDate();
         String fullName = null;
-        String[] dirNames = _backupRoot.list();
+        String[] dirNames = getBackupRoot().list();
 
         // Check for up to 100 backup file names to see if they already exist
         for (int i = 0; i < 99; i++) {
@@ -346,13 +347,13 @@ public abstract class BackupBase {
                 return fullName;
             }
 
-//			This should also work, commented out by D. Boudreau
-//			The Linux problem turned out to be related to the order
-//			files names are returned by list().
-//			File testPath = new File(_backupRoot, fullName);
-//
-//			if (!testPath.exists()) {
-//				return fullName; // Found an unused name
+            //			This should also work, commented out by D. Boudreau
+            //			The Linux problem turned out to be related to the order
+            //			files names are returned by list().
+            //			File testPath = new File(_backupRoot, fullName);
+            //
+            //			if (!testPath.exists()) {
+            //				return fullName; // Found an unused name
             // Otherwise complain and keep trying...
             log.debug("Operations backup directory: {} already exists", fullName); // NOI18N
         }
@@ -367,10 +368,12 @@ public abstract class BackupBase {
      * Reset Operations by deleting XML files, leaves directories and backup
      * files in place.
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
+            justification = "not possible")  // NOI18N
     public void deleteOperationsFiles() {
         // TODO Maybe this should also only delete specific files used by Operations,
         // and not just all XML files.
-        File files = _operationsRoot;
+        File files = getOperationsRoot();
 
         if (!files.exists()) {
             return;
@@ -385,7 +388,7 @@ public abstract class BackupBase {
             }
             //
             log.debug("deleting file: {}", fileName);
-            File file = new File(_operationsRoot + File.separator + fileName);
+            File file = new File(getOperationsRoot() + File.separator + fileName);
             if (!file.delete()) {
                 log.debug("file not deleted");
             }
@@ -397,20 +400,9 @@ public abstract class BackupBase {
      * Returns the current date formatted for use as part of a Backup Set name.
      */
     private String getDate() {
-        // This could use some clean-up.... but works OK for now
-        Calendar now = Calendar.getInstance();
-        int month = now.get(Calendar.MONTH) + 1;
-        String m = Integer.toString(month);
-        if (month < 10) {
-            m = "0" + Integer.toString(month);
-        }
-        int day = now.get(Calendar.DATE);
-        String d = Integer.toString(day);
-        if (day < 10) {
-            d = "0" + Integer.toString(day);
-        }
-        String date = "" + now.get(Calendar.YEAR) + "_" + m + "_" + d;
-        return date;
+        Date date = Calendar.getInstance().getTime();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy_MM_dd");  // NOI18N
+        return simpleDateFormat.format(date);
     }
 
     /**
@@ -429,10 +421,6 @@ public abstract class BackupBase {
          * Copies an existing file to a new file. Overwriting a file of the same
          * name is allowed. The destination directory must exist.
          *
-         * @param sourceFileName
-         * @param destFileName
-         * @param overwrite
-         * @throws IOException
          */
         @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "OBL_UNSATISFIED_OBLIGATION")
         public static void copy(String sourceFileName, String destFileName,
@@ -447,12 +435,8 @@ public abstract class BackupBase {
                 }
             }
 
-            InputStream source = null;
-            OutputStream dest = null;
-
-            try {
-                source = new FileInputStream(sourceFileName);
-                dest = new FileOutputStream(destFileName);
+            try (InputStream source = new FileInputStream(sourceFileName);
+                    OutputStream dest = new FileOutputStream(destFileName)) {
 
                 byte[] buffer = new byte[1024];
 
@@ -461,20 +445,11 @@ public abstract class BackupBase {
                 while ((len = source.read(buffer)) > 0) {
                     dest.write(buffer, 0, len);
                 }
-            } catch (Exception ex) {
-                if (source != null) {
-                    source.close();
-                }
-                if (dest != null) {
-                    dest.close();
-                }
+            } catch (IOException ex) {
                 String msg = String.format("Error copying file: %s to: %s", // NOI18N
                         sourceFileName, destFileName);
                 throw new IOException(msg, ex);
             }
-
-            source.close();
-            dest.close();
 
             // Now update the last modified time to equal the source file.
             File src = new File(sourceFileName);
@@ -484,7 +459,7 @@ public abstract class BackupBase {
             if (!ok) {
                 throw new RuntimeException(
                         "Failed to set modified time on file: " // NOI18N
-                        + dst.getAbsolutePath());
+                                + dst.getAbsolutePath());
             }
         }
     }

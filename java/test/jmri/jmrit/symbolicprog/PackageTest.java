@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrit.symbolicprog;
 
 import jmri.InstanceManager;
@@ -13,7 +12,6 @@ import junit.framework.TestSuite;
  * Test the jmri.jmrix.symbolicprog package.
  *
  * @author	Bob Jacobsen Copyright 2006
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -33,7 +31,7 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests, including others in the package

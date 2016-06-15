@@ -1,4 +1,3 @@
-// TransitManagerXML.java
 package jmri.configurexml;
 
 import java.util.ArrayList;
@@ -18,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2008
- * @version $Revision$
  */
 public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -123,8 +121,8 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
      * Create a TransitManager object of the correct class, then register and
      * fill it.
      *
-     * @param sharedTransits Top level Element to unpack.
-     * @param perNodeTransits
+     * @param sharedTransits  Top level Element to unpack.
+     * @param perNodeTransits Per-node top level Element to unpack.
      * @return true if successful
      */
     @Override
@@ -139,8 +137,9 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
      * additional info needed for a specific Transit type, invoke this with the
      * parent of the set of Transit elements.
      *
-     * @param sharedTransits Element containing the Transit elements to load.
-     * @param perNodeTransits
+     * @param sharedTransits  Element containing the Transit elements to load.
+     * @param perNodeTransits Per-node Element containing the Transit elements
+     *                        to load.
      */
     @SuppressWarnings("null")
     public void loadTransits(Element sharedTransits, Element perNodeTransits) {
@@ -187,39 +186,31 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
                         alt = true;
                     }
                     TransitSection ts = new TransitSection(sectionName, seq, dir, alt);
-                    if (ts == null) {
-                        log.error("Trouble creation TransitSection for Transit - " + sysName);
-                    } else {
-                        x.addTransitSection(ts);
-                        // load transitsectionaction children, if any
-                        List<Element> transitTransitSectionActionList = transitTransitSectionList.get(n).
-                                getChildren("transitsectionaction");
-                        for (int m = 0; m < transitTransitSectionActionList.size(); m++) {
-                            Element elemx = transitTransitSectionActionList.get(m);
-                            int tWhen = 1;
-                            int tWhat = 1;
-                            int tWhenData = 0;
-                            String tWhenString = elemx.getAttribute("whenstring").getValue();
-                            int tWhatData1 = 0;
-                            int tWhatData2 = 0;
-                            String tWhatString = elemx.getAttribute("whatstring").getValue();
-                            try {
-                                tWhen = elemx.getAttribute("whencode").getIntValue();
-                                tWhat = elemx.getAttribute("whatcode").getIntValue();
-                                tWhenData = elemx.getAttribute("whendata").getIntValue();
-                                tWhatData1 = elemx.getAttribute("whatdata1").getIntValue();
-                                tWhatData2 = elemx.getAttribute("whatdata2").getIntValue();
-                            } catch (Exception e) {
-                                log.error("Data Conversion Exception when loading transit section action - " + e);
-                            }
-                            TransitSectionAction tsa = new TransitSectionAction(tWhen, tWhat, tWhenData,
-                                    tWhatData1, tWhatData2, tWhenString, tWhatString);
-                            if (tsa == null) {
-                                log.error("Trouble creating TransitSectionAction for Transit - " + sysName);
-                            } else {
-                                ts.addAction(tsa);
-                            }
+                    x.addTransitSection(ts);
+                    // load transitsectionaction children, if any
+                    List<Element> transitTransitSectionActionList = transitTransitSectionList.get(n).
+                            getChildren("transitsectionaction");
+                    for (int m = 0; m < transitTransitSectionActionList.size(); m++) {
+                        Element elemx = transitTransitSectionActionList.get(m);
+                        int tWhen = 1;
+                        int tWhat = 1;
+                        int tWhenData = 0;
+                        String tWhenString = elemx.getAttribute("whenstring").getValue();
+                        int tWhatData1 = 0;
+                        int tWhatData2 = 0;
+                        String tWhatString = elemx.getAttribute("whatstring").getValue();
+                        try {
+                            tWhen = elemx.getAttribute("whencode").getIntValue();
+                            tWhat = elemx.getAttribute("whatcode").getIntValue();
+                            tWhenData = elemx.getAttribute("whendata").getIntValue();
+                            tWhatData1 = elemx.getAttribute("whatdata1").getIntValue();
+                            tWhatData2 = elemx.getAttribute("whatdata2").getIntValue();
+                        } catch (Exception e) {
+                            log.error("Data Conversion Exception when loading transit section action - " + e);
                         }
+                        TransitSectionAction tsa = new TransitSectionAction(tWhen, tWhat, tWhenData,
+                                tWhatData1, tWhatData2, tWhenString, tWhatString);
+                        ts.addAction(tsa);
                     }
                 }
             }

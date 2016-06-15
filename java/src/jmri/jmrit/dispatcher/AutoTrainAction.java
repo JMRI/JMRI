@@ -100,7 +100,7 @@ public class AutoTrainAction {
                     case TransitSectionAction.TRAINSTART:
                         // when train starts - monitor in separate thread
                         Runnable monTrain = new MonitorTrain(tsa);
-                        Thread tMonTrain = new Thread(monTrain, "Monitor Train Transit Action");
+                        Thread tMonTrain = new Thread(monTrain, "Monitor Train Transit Action " + _activeTrain.getDccAddress());
                         tsa.setWaitingThread(tMonTrain);
                         tMonTrain.start();
                         break;
@@ -308,7 +308,7 @@ public class AutoTrainAction {
     // this method is called to execute the action, when the "When" event has happened.
     // it is "public" because it may be called from a TransitSectionAction.
 // djd debugging - need to check this out - probably useless, but harmless
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SWL_SLEEP_WITH_LOCK_HELD",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SWL_SLEEP_WITH_LOCK_HELD",
             justification = "used only by thread that can be stopped, no conflict with other threads expected")
     public synchronized void executeAction(TransitSectionAction tsa) {
         if (tsa == null) {
@@ -375,6 +375,7 @@ public class AutoTrainAction {
             case TransitSectionAction.SETLIGHT:
                 // set light on or off
                 if (_autoActiveTrain.getAutoEngineer() != null) {
+                    log.debug("{}: setting light (F0) to {}", _activeTrain.getTrainName(), tsa.getStringWhat());
                     if (tsa.getStringWhat().equals("On")) {
                         _autoActiveTrain.getAutoEngineer().setFunction(0, true);
                     } else if (tsa.getStringWhat().equals("Off")) {
@@ -388,6 +389,7 @@ public class AutoTrainAction {
             case TransitSectionAction.STARTBELL:
                 // start bell (only works with sound decoder)
                 if (_autoActiveTrain.getSoundDecoder() && (_autoActiveTrain.getAutoEngineer() != null)) {
+                    log.debug("starting bell (F1)");
                     _autoActiveTrain.getAutoEngineer().setFunction(1, true);
                 }
                 completedAction(tsa);
@@ -395,6 +397,7 @@ public class AutoTrainAction {
             case TransitSectionAction.STOPBELL:
                 // stop bell (only works with sound decoder)
                 if (_autoActiveTrain.getSoundDecoder() && (_autoActiveTrain.getAutoEngineer() != null)) {
+                    log.debug("stopping bell (F1)");
                     _autoActiveTrain.getAutoEngineer().setFunction(1, false);
                 }
                 completedAction(tsa);
@@ -415,6 +418,7 @@ public class AutoTrainAction {
             case TransitSectionAction.LOCOFUNCTION:
                 // execute the specified decoder function
                 if (_autoActiveTrain.getAutoEngineer() != null) {
+                    log.debug("setting function {} to {}", tsa.getDataWhat1(), tsa.getStringWhat());
                     int fun = tsa.getDataWhat1();
                     if (tsa.getStringWhat().equals("On")) {
                         _autoActiveTrain.getAutoEngineer().setFunction(fun, true);

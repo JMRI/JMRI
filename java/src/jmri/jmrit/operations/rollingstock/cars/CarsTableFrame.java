@@ -27,7 +27,7 @@ import jmri.jmrit.operations.locations.ScheduleManager;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.TrainsByCarTypeAction;
+import jmri.jmrit.operations.trains.tools.TrainsByCarTypeAction;
 import jmri.util.com.sun.TableSorter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -272,6 +272,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
         createShutDownTask();
     }
 
+    @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("radio button activated");
         if (ae.getSource() == sortByNumber) {
@@ -342,6 +343,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
     CarEditFrame f = null;
 
     // add, find or save button
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         // log.debug("car button activated");
         if (ae.getSource() == findButton) {
@@ -362,8 +364,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
                 f.dispose();
             }
             f = new CarEditFrame();
-            f.initComponents();
-            f.setTitle(Bundle.getMessage("TitleCarAdd"));
+            f.initComponents(); // default is add car
         }
         if (ae.getSource() == saveButton) {
             if (carsTable.isEditing()) {
@@ -387,6 +388,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
         return widths;
     }
 
+    @Override
     public void dispose() {
         carsTableModel.removeTableModelListener(this);
         carsTableModel.dispose();
@@ -396,8 +398,9 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
         super.dispose();
     }
 
+    @Override
     public void tableChanged(TableModelEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Table changed");
         }
         updateNumCars();

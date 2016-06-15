@@ -28,25 +28,23 @@ import org.slf4j.LoggerFactory;
  * <P>
  * The route can be defined in a form or by mouse clicking on the OBlock
  * IndicatorTrack icons.
- * <P>
+ * <BR>
  * <hr>
  * This file is part of JMRI.
  * <P>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * </P><P>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ * </P>
  *
  * @author  Pete Cressman  Copyright (C) 2009, 2010, 2015
  */
 public class Calibrater extends jmri.util.JmriJFrame {
 
-    private static final long serialVersionUID = 991792418011219112L;
-    
     private int _calibrateIndex;
     private Warrant _warrant;
     private float _maxSpeed;
@@ -158,7 +156,6 @@ public class Calibrater extends jmri.util.JmriJFrame {
                         Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            _warrant.getRosterEntry();
             if (_speedProfile == null) {
                 _speedProfile = new RosterSpeedProfile(ent);
                 ent.setSpeedProfile(_speedProfile);
@@ -224,7 +221,7 @@ public class Calibrater extends jmri.util.JmriJFrame {
         float spFactor = 0.0f;
         float spSpeed = 0.0f;
         DccThrottle throttle = _warrant.getThrottle();
-        float scale = SignalSpeedMap.getMap().getLayoutScale();
+        float scale = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getLayoutScale();
         float scaleSpeed = _rawSpeed*scale;          // prototype m/s
         if (!init) {
             float speedSetting = throttle.getSpeedSetting();
@@ -240,6 +237,9 @@ public class Calibrater extends jmri.util.JmriJFrame {
                     speedStep = java.lang.Math.round(speedSetting * 28);
                     break;
                 case DccThrottle.SpeedStepMode128:
+                default:
+                    // 128 speed step mode is the default in the JMRI
+                    // throttle code.
                     speedStep = java.lang.Math.round(speedSetting * 126);
                     break;
             }
@@ -260,7 +260,7 @@ public class Calibrater extends jmri.util.JmriJFrame {
             _maxSpeed = speedSetting;     // now is the actual setting
         }
         String speedUnits;
-        if ( SignalSpeedMap.getMap().getInterpretation() == SignalSpeedMap.SPEED_KMPH) {
+        if ( jmri.InstanceManager.getDefault(SignalSpeedMap.class).getInterpretation() == SignalSpeedMap.SPEED_KMPH) {
             speedUnits = "kmph";
             scaleSpeed = 3.6f*scaleSpeed;
             spSpeed = spSpeed*scale*3.6f/1000;
@@ -298,7 +298,6 @@ public class Calibrater extends jmri.util.JmriJFrame {
     /**
      * Called from Warrant goingActive
      * Compute actual speed and set throttle factor
-     * @param index
      */
     protected void calibrateAt(int index) {
         if (_calibrateIndex == index) {

@@ -2,26 +2,30 @@ package jmri.jmris.simpleserver;
 
 import java.io.File;
 import jmri.InstanceManager;
-import jmri.jmris.simpleserver.configurexml.SimpleServerPreferences;
 import jmri.util.FileUtil;
 
 public class SimpleServerManager {
 
-    static private SimpleServerManager instance = null;
     private SimpleServerPreferences preferences;
     private SimpleServer server;
+
     private SimpleServerManager() {
         if (InstanceManager.getDefault(SimpleServerPreferences.class) == null) {
-            InstanceManager.store(new SimpleServerPreferences(FileUtil.getUserFilesPath() + "networkServices" + File.separator + "SimpleServer.xml"), SimpleServerPreferences.class); // NOI18N
+            String fileName = FileUtil.getUserFilesPath() + "networkServices" + File.separator + "SimpleServer.xml";
+            if ((new File(fileName)).exists()) {
+                InstanceManager.store(new SimpleServerPreferences(fileName), SimpleServerPreferences.class); // NOI18N
+            } else {
+                InstanceManager.store(new SimpleServerPreferences(), SimpleServerPreferences.class);
+            }
         }
         preferences = InstanceManager.getDefault(SimpleServerPreferences.class);
     }
 
     public static SimpleServerManager getInstance() {
-        if (instance == null) {
-            instance = new SimpleServerManager();
+        if (InstanceManager.getDefault(SimpleServerManager.class) == null) {
+            InstanceManager.store(new SimpleServerManager(), SimpleServerManager.class); // NOI18N
         }
-        return instance;
+        return InstanceManager.getDefault(SimpleServerManager.class);
     }
 
     public SimpleServerPreferences getPreferences() {

@@ -10,7 +10,7 @@ package jmri.jmrix.powerline;
  * @version $Revision$
  */
 @Deprecated
-@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
 public class SystemMenu extends jmri.jmrix.powerline.swing.PowerlineMenu {
 
     /**

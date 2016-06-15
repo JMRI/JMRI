@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.bachrus.serialdriver;
 
 import gnu.io.CommPortIdentifier;
@@ -8,6 +7,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.util.TooManyListenersException;
+import jmri.jmrix.bachrus.SpeedoConnectionTypeList;
 import jmri.jmrix.bachrus.SpeedoPortController;
 import jmri.jmrix.bachrus.SpeedoSystemConnectionMemo;
 import jmri.jmrix.bachrus.SpeedoTrafficController;
@@ -28,15 +28,14 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
  * @author	Andrew Crosland Copyright (C) 2010
- * @version	$Revision$
  */
 public class SerialDriverAdapter extends SpeedoPortController implements jmri.jmrix.SerialPortAdapter {
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     // There can only be one instance
     public SerialDriverAdapter() {
         super(new SpeedoSystemConnectionMemo());
-        setManufacturer(jmri.jmrix.DCCManufacturerList.BACHRUS);
+        setManufacturer(SpeedoConnectionTypeList.BACHRUS);
         mInstance = this;
     }
 
@@ -79,12 +78,7 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {
@@ -103,7 +97,7 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
                 activeSerialPort.addEventListener(SpeedoTrafficController.instance());
             } catch (TooManyListenersException e) {
             }
-            setManufacturer(jmri.jmrix.DCCManufacturerList.BACHRUS);
+            setManufacturer(SpeedoConnectionTypeList.BACHRUS);
 
             // AJB - activate the DATA_AVAILABLE notifier
             activeSerialPort.notifyOnDataAvailable(true);
@@ -185,7 +179,7 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
     static public synchronized SerialDriverAdapter instance() {
         if (mInstance == null) {
             mInstance = new SerialDriverAdapter();
-            mInstance.setManufacturer(jmri.jmrix.DCCManufacturerList.BACHRUS);
+            mInstance.setManufacturer(SpeedoConnectionTypeList.BACHRUS);
         }
         return mInstance;
     }

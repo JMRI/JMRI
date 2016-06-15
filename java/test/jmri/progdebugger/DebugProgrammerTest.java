@@ -1,4 +1,3 @@
-// DebugProgrammerTest.java
 package jmri.progdebugger;
 
 import jmri.ProgListener;
@@ -14,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * Test the DebugProgrammer class.
  *
  * @author	Bob Jacobsen Copyright 2013
- * @version $Revision$
  */
 public class DebugProgrammerTest extends TestCase {
 
@@ -123,7 +121,7 @@ public class DebugProgrammerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {DebugProgrammerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

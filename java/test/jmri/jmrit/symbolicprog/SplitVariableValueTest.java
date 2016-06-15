@@ -1,4 +1,3 @@
-// SplitVariableValueTest.java
 package jmri.jmrit.symbolicprog;
 
 import java.util.ArrayList;
@@ -20,7 +19,6 @@ import jmri.util.JUnitUtil;
  *
  * @todo need a check of the MIXED state model for long address
  * @author	Bob Jacobsen Copyright 2001, 2002, 2015
- * @version $Revision$
  */
 public class SplitVariableValueTest extends VariableValueTest {
 

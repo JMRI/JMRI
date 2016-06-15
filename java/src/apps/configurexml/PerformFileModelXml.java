@@ -15,8 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @author Ken Cameron Copyright: 2014(c)
- * @version $Revision$
- * @see apps.PerformFilePanel
+ * @see apps.startup.PerformFileModelFactory
  */
 public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
 

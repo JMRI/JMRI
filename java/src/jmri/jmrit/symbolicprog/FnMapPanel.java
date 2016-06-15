@@ -1,8 +1,9 @@
-// FnMapPanel.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.swing.JComponent;
@@ -70,43 +71,46 @@ import org.slf4j.LoggerFactory;
  * <dt>Searches the decoder file for variable definitions of the form:</dt>
  * <dd>"Fd controls output n" (where d is a function number in the range 0-28
  * and n is an output number in the range 0-maxOut)</dd>
- * <dd>"Fd(f) controls output n"</dd>
- * <dd>"Fd(r) controls output n"</dd>
  * <dd>"FL controls output n" (L for light)</dd>
- * <dd>"FL(f) controls output n"</dd>
- * <dd>"FL(r) controls output n"</dd>
- * <dd>"Fd controls output n(alt)" (allows an alternate definition for the same
+ * <dd>"Sd controls output n" (where s is a sensor number in the range 0-28
+ * and n is an output number in the range 0-maxOut)</dd>
+ * <dd>"STOP controls output n" (where STOP designates a decoder state)</dd>
+ * <dd>"DRIVE controls output n" (where DRIVE designates a decoder state)</dd>
+ * <dd>"FWD controls output n" (where FWD designates a decoder state)</dd>
+ * <dd>"REV controls output n" (where REV designates a decoder state)</dd>
+ * <dd><br>Directional variants of all the above forms:</dd>
+ * <dd>"xxx(f) controls output n"</dd>
+ * <dd>"xxx(r) controls output n"</dd>
+ * <dd><br>Alternate variants of all the above forms:</dd>
+ * <dd>"xxx controls output n(alt)" (allows an alternate definition for the same
  * variable, such as used by Tsunami decoders)</dd>
- * <dd>"Fd(f) controls output n(alt)"</dd>
- * <dd>"Fd(r) controls output n(alt)"</dd>
- * <dd>"FL controls output n(alt)"</dd>
- * <dd>"FL(f) controls output n(alt)"</dd>
- * <dd>"FL(r) controls output n(alt)"</dd>
+ * <dd>"xxx(f) controls output n(alt)"</dd>
+ * <dd>"xxx(r) controls output n(alt)"</dd>
+ * <dd><br>
+ * The "tooltip" &amp; "label" attributes on a fnmapping variable are ignored.
+ * Expanded internationalized tooltips are generated in the code.
+ * </dd>
  * </dl>
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @author	Dave Heap Copyright (C) 2014
- * @version	$Revision$
+ * @author	Dave Heap Copyright (C) 2016
  */
 public class FnMapPanel extends JPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8500513259142259577L;
     // GridBayLayout column numbers
-    int fnName = 0;
-    int firstOut = 1;
+    int fnNameCol = 0;
+    int firstOutCol = 1;
 
     // GridBayLayout row numbers
-    int outputName = 0;
-    int outputNum = 1;
-    int outputLabel = 2;
-    int firstFn = 3;
+    int outputNameRow = 0;
+    int outputNumRow = 1;
+    int outputLabelRow = 2;
+    int firstFnRow = 3;
 
     // Some limits and defaults
     int highestFn = 28;
-    int numFn = (highestFn + 2) * 3;  // include FL and F0, plus all (f) and (r) variants in the total
+    int highestSensor = 28;
+    int numFn;  // calculated later
     int numOut = 20; // default number of physical outputs
     int maxOut = 40; // maximum number of output columns
 
@@ -114,8 +118,10 @@ public class FnMapPanel extends JPanel {
     final String[] outLabel = new String[maxOut];
     final boolean[] outIsUsed = new boolean[maxOut];
 
-    final String[] fnVarList = new String[]{"", "(f)", "(r)"};
+    final String[] fnExtraList = new String[]{"STOP", "DRIVE", "FWD", "REV", "FL"};
+    final String[] fnVariantList = new String[]{"", "(f)", "(r)"};
 
+    List<String> fnList;
     GridBagLayout gl = null;
     GridBagConstraints cs = null;
     VariableTableModel _varModel;
@@ -126,17 +132,27 @@ public class FnMapPanel extends JPanel {
         }
         _varModel = v;
 
-        // get number of outLabel defaults
-        int outLabelDefs_length = Integer.valueOf(ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FnMapOutLabelDefaults_length"));
+        // Set up fnList array
+        this.fnList = new ArrayList<>();
+        fnList.addAll(Arrays.asList(fnExtraList));
+        for (int i = 0; i <= highestFn; i++) {
+            fnList.add("F" + i);
+        }
+        for (int i = 0; i <= highestSensor; i++) {
+            fnList.add("S" + i);
+        }
+
+        numFn = fnList.size() * fnVariantList.length;
 
         // set up default names and labels
         for (int iOut = 0; iOut < maxOut; iOut++) {
             outName[iOut] = Integer.toString(iOut + 1);
-            outLabel[iOut] = "";
             outIsUsed[iOut] = false;
             // get default labels, if any
-            if (iOut < outLabelDefs_length) {
-                outLabel[iOut] = ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FnMapOutLabelDefault_" + (iOut + 1));
+            try {
+                outLabel[iOut] = Bundle.getMessage("FnMapOutLabelDefault_" + (iOut + 1));
+            } catch (java.util.MissingResourceException e) {
+                outLabel[iOut] = "";  // no default label specified
             }
         }
 
@@ -149,53 +165,61 @@ public class FnMapPanel extends JPanel {
         setLayout(gl);
 
         {
-            JLabel l = new JLabel(ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FnMapOutWireOr"));
-            cs.gridy = outputName;
-            cs.gridx = firstOut;
+            JLabel l = new JLabel(Bundle.getMessage("FnMapOutWireOr"));
+            cs.gridy = outputNameRow;
+            cs.gridx = firstOutCol;
             cs.gridwidth = GridBagConstraints.REMAINDER;
             gl.setConstraints(l, cs);
             add(l);
             cs.gridwidth = 1;
         }
 
-        labelAt(0, fnName, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FnMapDesc"), GridBagConstraints.LINE_START);
+        labelAt(0, fnNameCol, Bundle.getMessage("FnMapDesc"), GridBagConstraints.LINE_START);
 
-        // Loop through function names and output names looking for variables
-        int row = firstFn;
-        for (int iFn = -1; iFn <= highestFn; iFn++) {
-            if ((row - firstFn) >= numFn) {
+// Loop through function names and output names looking for variables
+        int row = firstFnRow;
+        for (String fnNameBase : fnList) {
+            if ((row - firstFnRow) >= numFn) {
                 break; // for compatibility with legacy defintions
             }
-            for (String fnVar : fnVarList) {
-                String fnNameString = "F" + ((iFn == -1) ? "L" : String.valueOf(iFn)) + fnVar;
+            for (String fnDirVariant : fnVariantList) {
+                String fnNameString = fnNameBase + fnDirVariant;
+//                log.info(fnNameString);
                 boolean rowIsUsed = false;
                 for (int iOut = 0; iOut < numOut; iOut++) {
                     // if column is not suppressed by blank headers
                     if (!outName[iOut].equals("") || !outLabel[iOut].equals("")) {
                         // find the variable using the output number or label
                         // include an (alt) variant to enable Tsunami function exchange definitions
-                        String nameBase = fnNameString + " controls output ";
-                        String[] names;
-                        if (outName[iOut].equals(Integer.toString(iOut + 1))) {
-                            names = new String[]{nameBase + outName[iOut], nameBase + outName[iOut] + "(alt)"};
-                        } else {
-                            names = new String[]{nameBase + (iOut + 1), nameBase + (iOut + 1) + "(alt)",
-                                nameBase + outName[iOut], nameBase + outName[iOut] + "(alt)"};
+                        String searchNameBase = fnNameString + " controls output ";
+                        List<String> names = new ArrayList<>();
+                        if (!outName[iOut].equals(Integer.toString(iOut + 1))) {
+                            names.add(searchNameBase + (iOut + 1));
+                            names.add(searchNameBase + (iOut + 1) + "(alt)");
                         }
+                        names.add(searchNameBase + outName[iOut]);
+                        names.add(searchNameBase + outName[iOut] + "(alt)");
                         for (String name : names) {
-//                             log.info("Search name='"+name+"'");
+//                            log.info("Search name='" + name + "'");
                             int iVar = _varModel.findVarIndex(name);
                             if (iVar >= 0) {
                                 if (log.isDebugEnabled()) {
                                     log.debug("Process var: " + name + " as index " + iVar);
                                 }
                                 varsUsed.add(Integer.valueOf(iVar));
-                                JComponent j = (JComponent) (_varModel.getRep(iVar, "checkbox"));
                                 VariableValue var = _varModel.getVariable(iVar);
+                                // Only single-bit (exactly two options) variables should use checkbox
+                                // this really would be better fixed in EnumVariableValue
+                                // done here to avoid side effects elsewhere
+                                String displayFormat = "checkbox";
+                                if ((var.getMask() != null) && (((var.getMask().replace("X", "")).length()) != 1)) {
+                                    displayFormat = "";
+                                }
+                                JComponent j = (JComponent) (_varModel.getRep(iVar, displayFormat));
                                 j.setToolTipText(PaneProgPane.addCvDescription((fnNameString + " "
-                                        + ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FnMapControlsOutput") + " "
+                                        + Bundle.getMessage("FnMapControlsOutput") + " "
                                         + outName[iOut] + " " + outLabel[iOut]), var.getCvDescription(), var.getMask()));
-                                int column = firstOut + iOut;
+                                int column = firstOutCol + iOut;
                                 saveAt(row, column, j);
                                 rowIsUsed = true;
                                 outIsUsed[iOut] = true;
@@ -208,23 +232,31 @@ public class FnMapPanel extends JPanel {
                     }
                 }
                 if (rowIsUsed) {
-                    if (fnNameString.equals("FL(f)")) {
-                        fnNameString = ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FnMapLightFwd");
-                    } else if (fnNameString.equals("FL(r)")) {
-                        fnNameString = ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FnMapLightRev");
-                    } else if (fnNameString.endsWith(fnVarList[1])) {
-                        fnNameString = ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FnMapFunctionPrefix") + " "
-                                + fnNameString.substring(1, fnNameString.length() - fnVarList[1].length())
-                                + ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FnMapSuffixFwd");
-                    } else if (fnNameString.endsWith(fnVarList[2])) {
-                        fnNameString = ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FnMapFunctionPrefix") + " "
-                                + fnNameString.substring(1, fnNameString.length() - fnVarList[2].length())
-                                + ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FnMapSuffixRev");
+                    if (fnNameBase.matches("F\\d+")) {
+                        fnNameString = Bundle.getMessage("FnMap_F") + " " + fnNameBase.substring(1);
+                        if (!fnDirVariant.equals("")) {
+                            fnNameString = fnNameString + Bundle.getMessage("FnMap_" + fnDirVariant);
+                        }
+                    } else if (fnNameBase.matches("S\\d+")) {
+                        fnNameString = Bundle.getMessage("FnMap_S") + " " + fnNameBase.substring(1);
+                        if (!fnDirVariant.equals("")) {
+                            fnNameString = fnNameString + Bundle.getMessage("FnMap_" + fnDirVariant);
+                        }
                     } else {
-                        fnNameString = ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FnMapFunctionPrefix") + " "
-                                + fnNameString.substring(1);
+                        try {  // See if we have a match for whole fnNameString
+                            fnNameString = Bundle.getMessage("FnMap_" + fnNameString);
+                        } catch (java.util.MissingResourceException e) {
+                            try {  // Else see if we have a match for fnNameBase
+                                fnNameString = Bundle.getMessage("FnMap_" + fnNameBase);
+                                if (!fnDirVariant.equals("")) { // Add variant
+                                    fnNameString = fnNameString + Bundle.getMessage("FnMap_" + fnDirVariant);
+                                }
+                            } catch (java.util.MissingResourceException e1) {
+                                // No matches found
+                            }
+                        }
                     }
-                    labelAt(row, fnName, fnNameString, GridBagConstraints.LINE_START);
+                    labelAt(row, fnNameCol, fnNameString, GridBagConstraints.LINE_START);
                     row++;
                 }
 
@@ -237,14 +269,14 @@ public class FnMapPanel extends JPanel {
         // label used outputs only
         for (int iOut = 0; iOut < numOut; iOut++) {
             if (outIsUsed[iOut]) {
-                labelAt(outputNum, firstOut + iOut, outName[iOut]);
-                labelAt(outputLabel, firstOut + iOut, outLabel[iOut]);
+                labelAt(outputNumRow, firstOutCol + iOut, outName[iOut]);
+                labelAt(outputLabelRow, firstOutCol + iOut, outLabel[iOut]);
             }
         }
 
         // padding for the case of few outputs
         cs.gridwidth = GridBagConstraints.REMAINDER;
-        labelAt(outputNum, firstOut + numOut, "");
+        labelAt(outputNumRow, firstOutCol + numOut, "");
     }
 
     void saveAt(int row, int column, JComponent j) {

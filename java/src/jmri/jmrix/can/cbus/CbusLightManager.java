@@ -1,4 +1,3 @@
-// CbusTurnoutManager.java
 package jmri.jmrix.can.cbus;
 
 import jmri.JmriException;
@@ -14,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * Lights must be manually created.
  *
  * @author Matthew Harris Copyright (C) 2015
- * @version $Revision$
  * @since 3.11.7
  */
 public class CbusLightManager extends AbstractLightManager {
@@ -37,8 +35,6 @@ public class CbusLightManager extends AbstractLightManager {
      * Internal method to invoke the factory, after all the logic for returning
      * an existing method has been invoked.
      *
-     * @param systemName
-     * @param userName
      * @return never null
      */
     @Override
@@ -118,5 +114,3 @@ public class CbusLightManager extends AbstractLightManager {
     private static final Logger log = LoggerFactory.getLogger(CbusLightManager.class.getName());
 
 }
-
-/* @(#)CbusTurnoutManager.java */

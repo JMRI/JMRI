@@ -1,14 +1,14 @@
+package jmri;
+
 /**
- * Address.java
- *
- * Description:	Object to handle "user" and "system" addresses Manager classes
+ * Object to handle "user" and "system" addresses. 
+ * Manager classes
  * are primary consumer of these
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version
+ * @deprecated since 4.3.7
  */
-package jmri;
-
+@Deprecated
 public class Address {
 
     public Address(String system, String user) {
@@ -45,6 +45,3 @@ public class Address {
     private String _systemName;
     private String _userName;
 }
-
-
-/* @(#)Address.java */

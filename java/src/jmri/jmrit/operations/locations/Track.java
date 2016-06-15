@@ -18,8 +18,8 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
-import jmri.jmrit.operations.trains.TrainSchedule;
-import jmri.jmrit.operations.trains.TrainScheduleManager;
+import jmri.jmrit.operations.trains.timetable.TrainSchedule;
+import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -51,7 +51,7 @@ public class Track {
     protected int _length = 0; // length of track
     protected int _reserved = 0; // length of track reserved by trains
     protected int _reservedLengthDrops = 0; // length of track reserved for drops
-    protected int _numberCarsInRoute = 0; // number of cars in route to this track
+    protected int _numberCarsEnRoute = 0; // number of cars en route to this track
     protected int _usedLength = 0; // length of track filled by cars and engines
     protected int _ignoreUsedLengthPercentage = 0; // value between 0 and 100, 100 = ignore 100%
     protected int _moves = 0; // count of the drops since creation
@@ -72,8 +72,8 @@ public class Track {
     protected String _scheduleId = NONE; // Schedule id if there's one
     protected String _scheduleItemId = NONE; // the current scheduled item id
     protected int _scheduleCount = 0; // the number of times the item has been delivered
-    protected int _reservedInRoute = 0; // length of cars in route to this track
-    protected int _reservationFactor = 100; // percentage of track space for cars in route
+    protected int _reservedEnRoute = 0; // length of cars en route to this track
+    protected int _reservationFactor = 100; // percentage of track space for cars en route
     protected int _mode = MATCH; // default is match mode
     protected boolean _holdCustomLoads = false; // when true hold cars with custom loads
 
@@ -249,6 +249,7 @@ public class Track {
     }
 
     // for combo boxes
+    @Override
     public String toString() {
         return _name;
     }
@@ -364,22 +365,22 @@ public class Track {
     }
 
     public void addReservedInRoute(Car car) {
-        int old = _reservedInRoute;
-        _numberCarsInRoute++;
-        _reservedInRoute = old + car.getTotalLength();
-        if (old != _reservedInRoute) {
+        int old = _reservedEnRoute;
+        _numberCarsEnRoute++;
+        _reservedEnRoute = old + car.getTotalLength();
+        if (old != _reservedEnRoute) {
             setDirtyAndFirePropertyChange("reservedInRoute", Integer.toString(old), // NOI18N
-                    Integer.toString(_reservedInRoute)); // NOI18N
+                    Integer.toString(_reservedEnRoute)); // NOI18N
         }
     }
 
     public void deleteReservedInRoute(Car car) {
-        int old = _reservedInRoute;
-        _numberCarsInRoute--;
-        _reservedInRoute = old - car.getTotalLength();
-        if (old != _reservedInRoute) {
+        int old = _reservedEnRoute;
+        _numberCarsEnRoute--;
+        _reservedEnRoute = old - car.getTotalLength();
+        if (old != _reservedEnRoute) {
             setDirtyAndFirePropertyChange("reservedInRoute", Integer.toString(old), // NOI18N
-                    Integer.toString(_reservedInRoute)); // NOI18N
+                    Integer.toString(_reservedEnRoute)); // NOI18N
         }
     }
 
@@ -387,14 +388,14 @@ public class Track {
      * Used to determine how much track space is going to be consumed by cars in
      * route to this track. See isSpaceAvailable().
      *
-     * @return The length of all cars in route to this track including couplers.
+     * @return The length of all cars en route to this track including couplers.
      */
     public int getReservedInRoute() {
-        return _reservedInRoute;
+        return _reservedEnRoute;
     }
 
     public int getNumberOfCarsInRoute() {
-        return _numberCarsInRoute;
+        return _numberCarsEnRoute;
     }
 
     /**
@@ -475,7 +476,7 @@ public class Track {
 
     /**
      * Used to determine if there's space available at this track for the car.
-     * Considers cars in route to this track. Used to prevent overloading the
+     * Considers cars en route to this track. Used to prevent overloading the
      * track with cars from staging or cars with custom loads.
      *
      * @param car The car to be set out.
@@ -537,7 +538,6 @@ public class Track {
     /**
      * Sets the number of rolling stock (cars and or engines) on this track
      *
-     * @param number
      */
     private void setNumberRS(int number) {
         int old = _numberRS;
@@ -551,7 +551,6 @@ public class Track {
     /**
      * Sets the number of cars on this track
      *
-     * @param number
      */
     private void setNumberCars(int number) {
         int old = _numberCars;
@@ -565,7 +564,6 @@ public class Track {
     /**
      * Sets the number of engines on this track
      *
-     * @param number
      */
     private void setNumberEngines(int number) {
         int old = _numberEngines;
@@ -603,7 +601,6 @@ public class Track {
     /**
      * Adds rolling stock to a specific track.
      *
-     * @param rs
      */
     public void addRS(RollingStock rs) {
         setNumberRS(getNumberRS() + 1);
@@ -1116,6 +1113,13 @@ public class Track {
         return !_shipLoadList.contains(load) && !_shipLoadList.contains(type + CarLoad.SPLIT_CHAR + load);
     }
 
+    /**
+     * Gets the drop option for this track. ANY means that all trains
+     * and routes can drop cars to this track. The other four options
+     * are used to restrict the track to certain trains or routes.
+     * 
+     * @return ANY, TRAINS, ROUTES, EXCLUDE_TRAINS, or EXCLUDE_ROUTES
+     */
     public String getDropOption() {
         return _dropOption;
     }
@@ -1123,7 +1127,7 @@ public class Track {
     /**
      * Set the car drop option for this track.
      *
-     * @param option ANY, TRAINS, or ROUTES
+     * @param option ANY, TRAINS, ROUTES, EXCLUDE_TRAINS, or EXCLUDE_ROUTES
      */
     public void setDropOption(String option) {
         String old = _dropOption;
@@ -1134,6 +1138,12 @@ public class Track {
         setDirtyAndFirePropertyChange(DROP_CHANGED_PROPERTY, old, option);
     }
 
+    /**
+     * Gets the pickup option for this track. ANY means that all trains
+     * and routes can pull cars from this track. The other four options
+     * are used to restrict the track to certain trains or routes.
+     * @return ANY, TRAINS, ROUTES, EXCLUDE_TRAINS, or EXCLUDE_ROUTES
+     */
     public String getPickupOption() {
         return _pickupOption;
     }
@@ -1141,7 +1151,7 @@ public class Track {
     /**
      * Set the car pick up option for this track.
      *
-     * @param option ANY, TRAINS, or ROUTES
+     * @param option ANY, TRAINS, ROUTES, EXCLUDE_TRAINS, or EXCLUDE_ROUTES
      */
     public void setPickupOption(String option) {
         String old = _pickupOption;
@@ -1189,7 +1199,6 @@ public class Track {
      * Determine if train can set out cars to this track. Based on the train's
      * id or train's route id. See setDropOption(option).
      *
-     * @param train
      * @return true if the train can set out cars to this track.
      */
     public boolean acceptsDropTrain(Train train) {
@@ -1250,7 +1259,6 @@ public class Track {
     /**
      * Add train or route id to this track.
      *
-     * @param id
      */
     public void addPickupId(String id) {
         if (_pickupList.contains(id)) {
@@ -1271,7 +1279,6 @@ public class Track {
      * Determine if train can pick up cars from this track. Based on the train's
      * id or train's route id. See setPickupOption(option).
      *
-     * @param train
      * @return true if the train can pick up cars from this track.
      */
     public boolean acceptsPickupTrain(Train train) {
@@ -1413,7 +1420,6 @@ public class Track {
 
     /**
      *
-     * @param length
      * @return true if the program should ignore some percentage of the car's
      *         length currently consuming track space.
      */
@@ -1736,7 +1742,6 @@ public class Track {
      * Checks to see if car can be placed on this spur using this schedule.
      * Returns OKAY if the schedule can service the car.
      *
-     * @param car
      * @return Track.OKAY track.CUSTOM track.SCHEDULE
      */
     public String checkSchedule(Car car) {
@@ -1841,7 +1846,7 @@ public class Track {
                     return MessageFormat.format(Bundle.getMessage("scheduleRandom"), new Object[]{SCHEDULE,
                         getScheduleName(), si.getId(), value, random});
                 }
-            } catch (Exception NumberFormatException) {
+            } catch (NumberFormatException e) {
                 log.error("Random value {} isn't a number", si.getRandom());
             }
         }
@@ -1853,7 +1858,6 @@ public class Track {
      * item in the list. Load the car with the next schedule load if one exists,
      * and set the car's final destination if there's one in the schedule.
      *
-     * @param car
      * @return Track.OKAY or Track.SCHEDULE
      */
     public String scheduleNext(Car car) {
@@ -1947,8 +1951,6 @@ public class Track {
      * the schedule item. Also sets the next load and wait count that will kick
      * in when the car arrives at the spur with this schedule.
      *
-     * @param scheduleItem
-     * @param car
      */
     private void loadNext(ScheduleItem scheduleItem, Car car) {
         if (scheduleItem == null) {
@@ -2155,7 +2157,6 @@ public class Track {
     /**
      * Returns true if destination is valid from this track.
      *
-     * @param destination
      * @return true if track services the destination
      */
     public boolean acceptsDestination(Location destination) {

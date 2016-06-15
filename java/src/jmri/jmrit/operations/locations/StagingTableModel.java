@@ -29,6 +29,7 @@ public class StagingTableModel extends TrackTableModel {
         super.initTable(table, location, Track.STAGING);
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case NAME_COLUMN:
@@ -37,6 +38,7 @@ public class StagingTableModel extends TrackTableModel {
         return super.getColumnName(col);
     }
 
+    @Override
     protected void editTrack(int row) {
         log.debug("Edit staging");
         if (tef != null) {
@@ -44,6 +46,7 @@ public class StagingTableModel extends TrackTableModel {
         }
         // use invokeLater so new window appears on top
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 tef = new StagingEditFrame();
                 Track staging = tracksList.get(row);
@@ -54,8 +57,9 @@ public class StagingTableModel extends TrackTableModel {
     }
 
     // this table listens for changes to a location and it's staging tracks
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
@@ -64,7 +68,7 @@ public class StagingTableModel extends TrackTableModel {
             Track track = ((Track) e.getSource());
             if (track.getTrackType().equals(Track.STAGING)) {
                 int row = tracksList.indexOf(track);
-                if (Control.showProperty) {
+                if (Control.SHOW_PROPERTY) {
                     log.debug("Update staging table row: {} track: {}", row, track.getName());
                 }
                 if (row >= 0) {

@@ -1,4 +1,3 @@
-// ProxyReporterManager.java
 package jmri.managers;
 
 import jmri.NamedBean;
@@ -10,7 +9,6 @@ import jmri.ReporterManager;
  * system-specific implementations.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2010
- * @version	$Revision$
  */
 public class ProxyReporterManager extends AbstractProxyManager implements ReporterManager {
 
@@ -19,7 +17,7 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
     }
 
     protected AbstractManager makeInternalManager() {
-        return new InternalReporterManager();
+        return jmri.InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class).getReporterManager();
     }
 
     public int getXMLOrder() {
@@ -29,7 +27,6 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
     /**
      * Locate via user name, then system name if needed.
      *
-     * @param name
      * @return Null if nothing by that name exists
      */
     public Reporter getReporter(String name) {
@@ -130,5 +127,3 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
         return Bundle.getMessage("BeanNameReporter");
     }
 }
-
-/* @(#)ProxyReporterManager.java */

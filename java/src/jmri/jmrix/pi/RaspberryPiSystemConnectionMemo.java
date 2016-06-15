@@ -2,10 +2,13 @@
 
 package jmri.jmrix.pi;
 
+import java.util.ResourceBundle;
+import jmri.InstanceManager;
+import jmri.LightManager;
+import jmri.SensorManager;
+import jmri.TurnoutManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.*;
-import java.util.ResourceBundle;
 
 /**
  * Lightweight class to denote that a system is active

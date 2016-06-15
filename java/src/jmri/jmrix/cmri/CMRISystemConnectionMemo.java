@@ -1,7 +1,6 @@
 package jmri.jmrix.cmri;
 
 import java.util.ResourceBundle;
-import jmri.jmrix.DCCManufacturerList;
 import jmri.jmrix.SystemConnectionMemo;
 
 /**
@@ -12,7 +11,9 @@ import jmri.jmrix.SystemConnectionMemo;
 public class CMRISystemConnectionMemo extends SystemConnectionMemo {
 
     public CMRISystemConnectionMemo() {
-        super("C", DCCManufacturerList.CMRI);
+        super("C", CMRIConnectionTypeList.CMRI);
+        register(); // registers general type
+        jmri.InstanceManager.store(this, CMRISystemConnectionMemo.class); // also register as specific type
     }
 
     @Override

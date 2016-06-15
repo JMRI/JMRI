@@ -1,10 +1,8 @@
-// RfidNetworkPortController.java
 package jmri.jmrix.rfid;
 
 /*
  * Identifying class representing a network communications port
  * @author			Bob Jacobsen    Copyright (C) 2001, 2015
- * @version $Revision: 28746 $
  */
 public abstract class RfidNetworkPortController extends jmri.jmrix.AbstractNetworkPortController {
 
@@ -17,6 +15,3 @@ public abstract class RfidNetworkPortController extends jmri.jmrix.AbstractNetwo
         return (RfidSystemConnectionMemo) super.getSystemConnectionMemo();
     }
 }
-
-
-/* @(#)RfidNetworkPortController.java */

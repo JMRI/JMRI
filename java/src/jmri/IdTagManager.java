@@ -1,4 +1,3 @@
-// IdTagManager.java
 package jmri;
 
 import java.util.List;
@@ -34,7 +33,6 @@ import java.util.List;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  * @see jmri.IdTag
  * @see jmri.InstanceManager
  * @since 2.11.4
@@ -125,6 +123,7 @@ public interface IdTagManager extends Manager {
     /**
      * Get a list of all IdTag's system names.
      */
+    @Override
     public List<String> getSystemNameList();
 
     /**
@@ -182,6 +181,3 @@ public interface IdTagManager extends Manager {
     public boolean isInitialised();
 
 }
-
-
-/* @(#)IdTagManager.java */

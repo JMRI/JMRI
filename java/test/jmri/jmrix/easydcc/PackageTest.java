@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.easydcc;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.easydcc package
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -26,7 +24,7 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -42,8 +40,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.easydcc.EasyDccReplyTest.suite());
         suite.addTest(jmri.jmrix.easydcc.EasyDccPowerManagerTest.suite());
         suite.addTest(jmri.jmrix.easydcc.EasyDccConsistManagerTest.suite());
-        suite.addTest(jmri.jmrix.easydcc.EasyDccConsistTest.suite());
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EasyDccConsistTest.class));
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             suite.addTest(jmri.jmrix.easydcc.easydccmon.EasyDccMonFrameTest.suite());
             suite.addTest(jmri.jmrix.easydcc.easydccmon.EasyDccMonActionTest.suite());

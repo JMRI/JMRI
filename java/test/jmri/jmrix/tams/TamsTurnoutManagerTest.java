@@ -17,9 +17,16 @@ public class TamsTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     private TamsSystemConnectionMemo tm = null;
     
     public void setUp() {
+        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initInternalTurnoutManager();
         // prepare an interface, register
         nis = new TamsInterfaceScaffold();
-        tm = new TamsSystemConnectionMemo(nis);
+        tm = new TamsSystemConnectionMemo(nis){
+            {
+                userNames.clear();
+                sysPrefixes.clear();
+            }
+        };
         // create and register the manager object
         l = new TamsTurnoutManager(tm);
         jmri.InstanceManager.setTurnoutManager(l);
@@ -59,7 +66,7 @@ public class TamsTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {TamsTurnoutManagerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

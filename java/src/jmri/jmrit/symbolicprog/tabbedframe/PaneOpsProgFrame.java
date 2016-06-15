@@ -1,15 +1,12 @@
-// PaneOpsProgFrame.java
 package jmri.jmrit.symbolicprog.tabbedframe;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
-import javax.swing.JPanel;
 import java.util.List;
-
+import javax.annotation.Nonnull;
+import javax.swing.JPanel;
 import jmri.Programmer;
 import jmri.ProgrammingMode;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.roster.RosterEntry;
-
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,15 +15,10 @@ import org.slf4j.LoggerFactory;
  * Extend the PaneProgFrame to handle ops mode operations
  *
  * @author	Bob Jacobsen Copyright (C) 2002, 2008
- * @version	$Revision$
  */
 public class PaneOpsProgFrame extends PaneProgFrame
         implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 151719893908045286L;
     JPanel modePane;
 
     /**
@@ -49,8 +41,6 @@ public class PaneOpsProgFrame extends PaneProgFrame
      *
      * @param decoderFile XML file defining the decoder contents
      * @param r           RosterEntry for information on this locomotive
-     * @param name
-     * @param file
      */
     public PaneOpsProgFrame(DecoderFile decoderFile, RosterEntry r,
             String name, String file, Programmer p) {
@@ -66,7 +56,7 @@ public class PaneOpsProgFrame extends PaneProgFrame
         addHelpMenu("package.jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgFrame", true);
     }
 
-    protected void pickProgrammerMode(@NonNull Element programming) {
+    protected void pickProgrammerMode(@Nonnull Element programming) {
         // find an accepted mode to set it to
         List<ProgrammingMode> modes = mProgrammer.getSupportedModes();
 

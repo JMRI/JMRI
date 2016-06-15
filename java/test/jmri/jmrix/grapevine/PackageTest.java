@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.grapevine;
 
 import junit.framework.Assert;
@@ -10,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.grapevine package.
  *
  * @author Bob Jacobsen Copyright 2003, 2007
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -27,7 +25,7 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -47,7 +45,6 @@ public class PackageTest extends TestCase {
         suite.addTest(SerialReplyTest.suite());
         suite.addTest(SerialTrafficControllerTest.suite());
         suite.addTest(SerialAddressTest.suite());
-
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             suite.addTest(jmri.jmrix.grapevine.serialmon.SerialMonTest.suite());
         }

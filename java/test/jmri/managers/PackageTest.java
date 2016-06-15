@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.managers;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Invoke complete set of tests for the jmri.managers
  *
  * @author	Bob Jacobsen, Copyright (C) 2009
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -21,7 +19,7 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -31,12 +29,14 @@ public class PackageTest extends TestCase {
         suite.addTest(DefaultIdTagManagerTest.suite());
         suite.addTest(DefaultLogixManagerTest.suite());
         suite.addTest(DefaultSignalSystemManagerTest.suite());
-        suite.addTest(DefaultUserMessagePreferencesTest.suite());
+        suite.addTest(DefaultUserMessagePreferencesTest.suite()); // no longer used in JMRI - may be used in other applications
         suite.addTest(InternalLightManagerTest.suite());
         suite.addTest(InternalSensorManagerTest.suite());
         suite.addTest(ProxyLightManagerTest.suite());
         suite.addTest(ProxySensorManagerTest.suite());
         suite.addTest(ProxyTurnoutManagerTest.suite());
+        suite.addTest(JmriUserPreferencesManagerTest.suite());
+        suite.addTest(BundleTest.suite());
 
         suite.addTest(jmri.managers.configurexml.PackageTest.suite());
 

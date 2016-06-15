@@ -27,6 +27,7 @@ public class TrainRoadOptionsAction extends AbstractAction {
 
     TrainRoadOptionsFrame f = null;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a train edit option frame
         if (f != null && f.isVisible()) {

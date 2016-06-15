@@ -1,4 +1,3 @@
-// SignalHeadSignalMastTest.java
 package jmri.implementation;
 
 import jmri.InstanceManager;
@@ -16,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * Tests for the SignalHeadSignalMast implementation
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version $Revision$
  */
 public class SignalHeadSignalMastTest extends TestCase {
 
@@ -183,7 +181,7 @@ public class SignalHeadSignalMastTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {SignalHeadSignalMastTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -198,33 +196,18 @@ public class SignalHeadSignalMastTest extends TestCase {
         jmri.util.JUnitUtil.resetInstanceManager();
         InstanceManager.signalHeadManagerInstance().register(
                 new DefaultSignalHead("IH1") {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = -5706753107965832638L;
-
                     protected void updateOutput() {
                     }
                 }
         );
         InstanceManager.signalHeadManagerInstance().register(
                 new DefaultSignalHead("IH2") {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = 4697453950691440840L;
-
                     protected void updateOutput() {
                     }
                 }
         );
         InstanceManager.signalHeadManagerInstance().register(
                 new DefaultSignalHead("IH3") {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = -7226653655530900335L;
-
                     protected void updateOutput() {
                     }
                 }

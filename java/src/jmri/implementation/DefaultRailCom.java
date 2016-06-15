@@ -1,4 +1,3 @@
-// DefaultRailCom.java
 package jmri.implementation;
 
 import java.util.ArrayList;
@@ -26,16 +25,11 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Kevin Dickerson Copyright (C) 2012
- * @version $Revision: 17977 $
  * @since 2.99.3
  */
 public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7822601724014273735L;
-    private int _currentState = 0x00;
+    private int currentState = 0x00;
 
     public DefaultRailCom(String systemName) {
         super(systemName.toUpperCase());
@@ -47,16 +41,19 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
         setWhereLastSeen(null);
     }
 
+    @Override
     public void setState(int s) throws JmriException {
-        this._currentState = s;
+        this.currentState = s;
     }
 
+    @Override
     public int getState() {
-        return this._currentState;
+        return this.currentState;
     }
 
     int orientation = Sensor.UNKNOWN;
 
+    @Override
     public void setOrientation(int type) {
         if (type == orientation) {
             return;
@@ -66,10 +63,12 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
         firePropertyChange("orientation", oldValue, orientation);
     }
 
+    @Override
     public int getOrientation() {
         return orientation;
     }
 
+    @Override
     public String getAddressTypeAsString() {
         switch (addressTypeInt) {
             case SHORT_ADDRESS:
@@ -83,6 +82,7 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
         }
     }
 
+    @Override
     public DccLocoAddress getDccLocoAddress() {
         boolean longAddress = false;
         if (addressTypeInt == LONG_ADDRESS) {
@@ -93,61 +93,70 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
 
     int addressTypeInt = 0;
 
+    @Override
     public void setAddressType(int type) {
         addressTypeInt = type;
     }
 
+    @Override
     public int getAddressType() {
         return addressTypeInt;
     }
 
-    int actual_speed = -1;
+    private int actualSpeed = -1;
 
+    @Override
     public void setActualSpeed(int type) {
-        if (type == actual_speed) {
+        if (type == actualSpeed) {
             return;
         }
-        int oldValue = actual_speed;
-        actual_speed = type;
-        firePropertyChange("actualspeed", oldValue, actual_speed);
+        int oldValue = actualSpeed;
+        actualSpeed = type;
+        firePropertyChange("actualspeed", oldValue, actualSpeed);
     }
 
+    @Override
     public int getActualSpeed() {
-        return actual_speed;
+        return actualSpeed;
     }
 
-    int actual_load = -1;
+    private int actualLoad = -1;
 
+    @Override
     public void setActualLoad(int type) {
-        if (type == actual_load) {
+        if (type == actualLoad) {
             return;
         }
-        int oldValue = actual_load;
-        actual_load = type;
-        firePropertyChange("actualload", oldValue, actual_load);
+        int oldValue = actualLoad;
+        actualLoad = type;
+        firePropertyChange("actualload", oldValue, actualLoad);
     }
 
+    @Override
     public int getActualLoad() {
-        return actual_load;
+        return actualLoad;
     }
 
-    int actual_temperature = -1;
+    private int actualTemperature = -1;
 
+    @Override
     public void setActualTemperature(int type) {
-        if (type == actual_temperature) {
+        if (type == actualTemperature) {
             return;
         }
-        int oldValue = actual_temperature;
-        actual_temperature = type;
-        firePropertyChange("actualtemperature", oldValue, actual_temperature);
+        int oldValue = actualTemperature;
+        actualTemperature = type;
+        firePropertyChange("actualtemperature", oldValue, actualTemperature);
     }
 
+    @Override
     public int getActualTemperature() {
-        return actual_temperature;
+        return actualTemperature;
     }
 
-    int waterLevel = -1;
+    private int waterLevel = -1;
 
+    @Override
     public void setWaterLevel(int type) {
         if (type == waterLevel) {
             return;
@@ -157,12 +166,14 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
         firePropertyChange("waterlevel", oldValue, waterLevel);
     }
 
+    @Override
     public int getWaterLevel() {
         return waterLevel;
     }
 
-    int fuelLevel = -1;
+    private int fuelLevel = -1;
 
+    @Override
     public void setFuelLevel(int type) {
         if (type == fuelLevel) {
             return;
@@ -172,12 +183,14 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
         firePropertyChange("fuellevel", oldValue, fuelLevel);
     }
 
+    @Override
     public int getFuelLevel() {
         return fuelLevel;
     }
 
-    int location = -1;
+    private int location = -1;
 
+    @Override
     public void setLocation(int type) {
         if (type == location) {
             return;
@@ -187,35 +200,41 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
         firePropertyChange("location", oldValue, location);
     }
 
+    @Override
     public int getLocation() {
         return location;
     }
 
-    int routing_no = -1;
+    private int routingNo = -1;
 
+    @Override
     public void setRoutingNo(int type) {
-        if (type == routing_no) {
+        if (type == routingNo) {
             return;
         }
-        int oldValue = routing_no;
-        routing_no = type;
-        firePropertyChange("routing", oldValue, routing_no);
+        int oldValue = routingNo;
+        routingNo = type;
+        firePropertyChange("routing", oldValue, routingNo);
     }
 
+    @Override
     public int getRoutingNo() {
-        return routing_no;
+        return routingNo;
     }
 
-    int expectedCV = -1;
+    private int expectedCV = -1;
 
+    @Override
     public void setExpectedCv(int cv) {
         expectedCV = cv;
     }
 
+    @Override
     public int getExpectedCv() {
         return expectedCV;
     }
 
+    @Override
     public void setCvValue(int value) {
         if (expectedCV == -1) {
             log.debug("set cv value called but no CV is expected");
@@ -226,6 +245,7 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
         setCv(exp, value);
     }
 
+    @Override
     public int getCv(int cv) {
         if (cvValues.containsKey(cv)) {
             return cvValues.get(cv);
@@ -233,6 +253,7 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
         return 0;
     }
 
+    @Override
     public void setCv(int cv, int value) {
         if (cvValues.containsKey(cv)) {
             if (cvValues.get(cv) == value) {
@@ -244,9 +265,10 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
         firePropertyChange("cvvalue", cv, value);
     }
 
+    @Override
     public List<Integer> getCVList() {
         int[] arr = new int[cvValues.size()];
-        List<Integer> out = new ArrayList<Integer>();
+        List<Integer> out = new ArrayList<>();
         Enumeration<Integer> en = cvValues.keys();
         int i = 0;
         while (en.hasMoreElements()) {
@@ -260,24 +282,32 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
         return out;
     }
 
-    Hashtable<Integer, Integer> cvValues = new Hashtable<Integer, Integer>();
+    Hashtable<Integer, Integer> cvValues = new Hashtable<>();
 
+    @Override
     public String toString() {
-        String comment = "";
-        if (getOrientation() == jmri.RailCom.ORIENTA) {
-            comment = "Orientation A ";
-        } else if (getOrientation() == jmri.RailCom.ORIENTB) {
-            comment = "Orientation B ";
-        } else if (getOrientation() == Sensor.UNKNOWN) {
-            comment = "Unknown Orientation ";
+        String comment;
+        switch (getOrientation()) {
+            case ORIENTA:
+                comment = "Orientation A ";
+                break;
+            case ORIENTB:
+                comment = "Orientation B ";
+                break;
+            case UNKNOWN:
+                comment = "Unknown Orientation ";
+                break;
+            default:
+                comment = "Unknown Orientation ";
+                break;
         }
         comment = comment + "Address " + getDccLocoAddress() + " ";
 
         if (getWaterLevel() != -1) {
-            comment = "Water " + getWaterLevel() + " ";
+            comment = comment + "Water " + getWaterLevel() + " ";
         }
         if (getFuelLevel() != -1) {
-            comment = "Fuel " + getFuelLevel() + " ";
+            comment = comment + "Fuel " + getFuelLevel() + " ";
         }
         if ((getLocation() != -1)) {
             comment = comment + "Location : " + getLocation() + " ";
@@ -299,5 +329,3 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
 
     private final static Logger log = LoggerFactory.getLogger(DefaultRailCom.class.getName());
 }
-
-/* @(#)DefaultRailCom.java */

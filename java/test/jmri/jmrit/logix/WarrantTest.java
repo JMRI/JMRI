@@ -1,4 +1,3 @@
-// WarrantTest.java
 package jmri.jmrit.logix;
 
 import java.beans.PropertyChangeEvent;
@@ -23,7 +22,6 @@ import junit.framework.TestSuite;
  * Tests for the Warrant creation
  *
  * @author  Pete Cressman 2015
- * @version $Revision: 00000 $
  * 
  * todo - test error conditions
  */
@@ -191,15 +189,23 @@ public class WarrantTest extends TestCase {
         
         msg = warrant.setRunMode(Warrant.MODE_RUN, null, null, null, false);
         Assert.assertNull("setRunMode - "+msg, msg);
-        try {
-            jmri.util.JUnitUtil.releaseThread(this); // nothing specific to wait for...
-            sWest.setState(Sensor.ACTIVE);
-            jmri.util.JUnitUtil.releaseThread(this);             
-            sSouth.setState(Sensor.ACTIVE);
-            jmri.util.JUnitUtil.releaseThread(this);             
-        } catch (Exception e) {
-            System.out.println(e);            
-        }
+
+        // run the train
+        jmri.util.JUnitUtil.releaseThread(this); // nothing specific to wait for...
+
+        jmri.util.ThreadingUtil.runOnLayout( ()->{
+            try {
+                sWest.setState(Sensor.ACTIVE);
+            } catch (jmri.JmriException e) { Assert.fail("Unexpected Exception: "+e); }
+        });
+        jmri.util.JUnitUtil.releaseThread(this);
+
+        jmri.util.ThreadingUtil.runOnLayout( ()->{
+            try {
+                sSouth.setState(Sensor.ACTIVE);
+            } catch (jmri.JmriException e) { Assert.fail("Unexpected Exception: "+e); }
+        });
+        jmri.util.JUnitUtil.releaseThread(this);
 
         // confirm one message logged
         jmri.util.JUnitAppender.assertWarnMessage("RosterSpeedProfile not found. Using default ThrottleFactor 0.75");
@@ -244,7 +250,7 @@ public class WarrantTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", WarrantTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -260,7 +266,6 @@ public class WarrantTest extends TestCase {
         // set the locale to US English
         Locale.setDefault(Locale.ENGLISH);
         JUnitUtil.resetInstanceManager();
-        JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();

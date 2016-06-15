@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.sprog.serialdriver;
 
 import gnu.io.CommPortIdentifier;
@@ -12,6 +11,7 @@ import jmri.jmrix.sprog.SprogConstants.SprogMode;
 import jmri.jmrix.sprog.SprogPortController;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import jmri.jmrix.sprog.SprogTrafficController;
+import jmri.jmrix.sprog.update.SprogType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,22 +28,37 @@ import org.slf4j.LoggerFactory;
  * with "AJB" indicate changes or observations by me
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version	$Revision$
  */
 public class SerialDriverAdapter extends SprogPortController implements jmri.jmrix.SerialPortAdapter {
 
     public SerialDriverAdapter() {
         super(new SprogSystemConnectionMemo(SprogMode.SERVICE));
         //Set the username to match name, once refactored to handle multiple connections or user setable names/prefixes then this can be removed
-        this.getSystemConnectionMemo().setUserName("SPROG");
+        this.baudRate = 9600;
+        this.getSystemConnectionMemo().setUserName("SPROG Programmer");
     }
 
     public SerialDriverAdapter(SprogMode sm) {
         super(new SprogSystemConnectionMemo(sm));
+        this.baudRate = 9600;
+        this.getSystemConnectionMemo().setUserName("SPROG");
+    }
+
+    public SerialDriverAdapter(SprogMode sm, int baud, SprogType type) {
+        super(new SprogSystemConnectionMemo(sm, type));
+        this.baudRate = baud;
+        this.getSystemConnectionMemo().setUserName("SPROG");
+    }
+
+    public SerialDriverAdapter(SprogMode sm, int baud) {
+        super(new SprogSystemConnectionMemo(sm));
+        this.baudRate = baud;
         this.getSystemConnectionMemo().setUserName("SPROG");
     }
 
     SerialPort activeSerialPort = null;
+    
+    private int baudRate = -1;
 
     public String openPort(String portName, String appName) {
 
@@ -59,7 +74,7 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
 
             // try to set it for comunication via SerialDriver
             try {
-                activeSerialPort.setSerialPortParams(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+                activeSerialPort.setSerialPortParams(baudRate, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (gnu.io.UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
@@ -83,12 +98,7 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {
@@ -157,10 +167,10 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
     }
 
     /**
-     * Get an array of valid baud rates. This is currently only 19,200 bps
+     * Get an array of valid baud rates. This is currently only 9,600 bps
      */
     public String[] validBaudRates() {
-        return new String[]{"9,600 bps", "19,200 bps"};
+        return new String[]{"9,600 bps"};
     }
 
     InputStream serialStream = null;
@@ -168,7 +178,7 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
     static public SerialDriverAdapter instance() {
         if (mInstance == null) {
             SerialDriverAdapter m = new SerialDriverAdapter();
-            m.setManufacturer(jmri.jmrix.DCCManufacturerList.SPROG);
+            m.setManufacturer(jmri.jmrix.sprog.SprogConnectionTypeList.SPROG);
             mInstance = m;
         }
         return mInstance;
@@ -186,16 +196,26 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
         control.connectPort(this);
         control.setAdapterMemo(this.getSystemConnectionMemo());
 
-        this.getSystemConnectionMemo().setSprogMode(SprogMode.SERVICE);
         this.getSystemConnectionMemo().setSprogTrafficController(control);
         this.getSystemConnectionMemo().configureCommandStation();
         this.getSystemConnectionMemo().configureManagers();
 
-        jmri.jmrix.sprog.ActiveFlag.setActive();
-
+        if (this.getSystemConnectionMemo().getSprogMode() == SprogMode.OPS) {
+            jmri.jmrix.sprog.ActiveFlagCS.setActive();
+        } else {
+            jmri.jmrix.sprog.ActiveFlag.setActive();            
+        }
+        
+        if (getOptionState("TrackPowerState") != null && getOptionState("TrackPowerState").equals("Powered On")) {
+            try {
+                this.getSystemConnectionMemo().getPowerManager().setPower(jmri.PowerManager.ON);
+            } catch (jmri.JmriException e) {
+                log.error(e.toString());
+            }
+        }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "temporary until mult-system; only set when disposed")
     @Override
     public void dispose() {

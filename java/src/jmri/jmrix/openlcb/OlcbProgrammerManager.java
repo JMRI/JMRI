@@ -1,8 +1,11 @@
-/* OlcbProgrammerManager.java */
 package jmri.jmrix.openlcb;
 
 import java.util.List;
-import jmri.*;
+import jmri.AddressedProgrammer;
+import jmri.GlobalProgrammerManager;
+import jmri.InstanceManager;
+import jmri.Programmer;
+import jmri.ProgrammingMode;
 
 /**
  * Get access to available {@link Programmer} objects.
@@ -91,22 +94,19 @@ public class OlcbProgrammerManager extends jmri.managers.DefaultProgrammerManage
      * <p>
      * If the order is significant, earlier modes are better.
      */
-    public List<ProgrammingMode> getDefaultModes() { return null; }
+    public List<ProgrammingMode> getDefaultModes() { return new java.util.ArrayList<>(); }
 
     /**
      * Provides the human-readable representation for including
      * ProgrammerManagers directly in e.g. JComboBoxes, so it should return a
      * user-provided name for this particular one.
      */
-    public String getUserName() { return null; }
+    public String getUserName() { return "OpenLCB"; }
 
     /**
      * toString() provides the human-readable representation for including
      * ProgrammerManagers directly in e.g. JComboBoxes, so it should return a
      * user-provided name for this particular one.
      */
-    public String toString() { return null; }
+    public String toString() { return "OlcbProgrammerManager"; }
 }
-
-
-/* @(#)OlcbProgrammerManager.java */

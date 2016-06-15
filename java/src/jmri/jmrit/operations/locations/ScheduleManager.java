@@ -43,7 +43,7 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
             // create and load
             _instance = new ScheduleManager();
         }
-        if (Control.showInstance) {
+        if (Control.SHOW_INSTANCE) {
             log.debug("ScheduleManager returns instance {}", _instance);
         }
         return _instance;
@@ -86,7 +86,6 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
      * Finds an existing schedule or creates a new schedule if needed requires
      * schedule's name creates a unique id for this schedule
      *
-     * @param name
      *
      * @return new schedule or existing schedule
      */
@@ -347,8 +346,9 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
      * Check for car type and road name changes.
      *
      */
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }

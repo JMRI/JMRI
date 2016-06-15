@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrit.consisttool;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Invokes complete set of tests in the jmri.jmrit.consisttool tree
  *
  * @author	Paul Bender Copyright (C) 2015
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -21,7 +19,7 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

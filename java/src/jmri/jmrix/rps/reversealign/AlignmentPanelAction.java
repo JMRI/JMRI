@@ -1,4 +1,3 @@
-// AlignmentPanelAction.java
 package jmri.jmrix.rps.reversealign;
 
 import java.awt.event.ActionEvent;
@@ -9,14 +8,8 @@ import javax.swing.BoxLayout;
  * Swing action to create and register a RpsTrackingFrame object
  *
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version $Revision$
  */
 public class AlignmentPanelAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8498519485972403715L;
 
     public AlignmentPanelAction(String s) {
         super(s);
@@ -43,6 +36,3 @@ public class AlignmentPanelAction extends AbstractAction {
     AlignmentPanel panel;
 
 }
-
-
-/* @(#)AlignmentPanelAction.java */

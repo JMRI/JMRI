@@ -1,4 +1,3 @@
-// AbstractMRMessage.java
 package jmri.jmrix;
 
 import jmri.util.StringUtil;
@@ -11,7 +10,6 @@ import org.slf4j.LoggerFactory;
  * Carries a sequence of characters, with accessors.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version $Revision$
  */
 abstract public class AbstractMRMessage extends AbstractMessage {
 
@@ -27,6 +25,7 @@ abstract public class AbstractMRMessage extends AbstractMessage {
         this();
         if (i < 1) {
             log.error("invalid length in call to ctor");
+            throw new IllegalArgumentException("invalid length in call to ctor");
         }
         _nDataChars = i;
         _dataChars = new int[i];
@@ -34,7 +33,7 @@ abstract public class AbstractMRMessage extends AbstractMessage {
 
     // copy one
     @SuppressWarnings("null")
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "NP_NULL_ON_SOME_PATH",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH",
             justification = "we want to force an exception")
     public AbstractMRMessage(AbstractMRMessage m) {
         this();
@@ -219,6 +218,3 @@ abstract public class AbstractMRMessage extends AbstractMessage {
     }
 
 }
-
-
-/* @(#)AbstractMRMessage.java */

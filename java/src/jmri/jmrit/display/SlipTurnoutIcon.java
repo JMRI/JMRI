@@ -40,14 +40,8 @@ import org.slf4j.LoggerFactory;
  * Based upon the TurnoutIcon by Bob Jacobsen
  *
  * @author Kevin Dickerson Copyright (c) 2010
- * @version $Revision$
  */
 public class SlipTurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4644712323861322600L;
 
     public SlipTurnoutIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
@@ -141,6 +135,8 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
                     getTurnout(LOWEREAST).addPropertyChangeListener(this, namedTurnoutEastLower.getName(), "Panel Editor Turnout");
                 }
                 break;
+            default:
+                log.error("turn value {} should not have appeared", turn);
         }
     }
 
@@ -480,7 +476,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
                 && (getTurnout(WEST).getFeedbackMode() != Turnout.DIRECT)
                 && (e.getPropertyName().equals("CommandedState"))) {
             if ((getTurnout(WEST).getCommandedState() != getTurnout(WEST).getKnownState())
-                    || (getTurnout(WEST).getCommandedState() != getTurnout(WEST).getKnownState())) {
+                    || (getTurnout(EAST).getCommandedState() != getTurnout(EAST).getKnownState())) {
                 int now = Turnout.INCONSISTENT;
                 displayState(now);
             }
@@ -776,6 +772,8 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
                     _iconEditor.setTurnout("lowereast", namedTurnoutEastLower);
                 }
                 break;
+            default:
+                log.error("getTurnoutType() value {} should not have appeared", getTurnoutType());
         }
         _iconEditor.setIcon(0, "BeanStateInconsistent", getInconsistentIcon());
         _iconEditor.setIcon(1, "BeanStateUnknown", getUnknownIcon());
@@ -823,6 +821,8 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
                     setTurnout(_iconEditor.getTurnout("lowereast"), LOWEREAST);
                 }
                 break;
+            default:
+                log.error("_iconEditor.getTurnoutType() value {} should not have appeared", _iconEditor.getTurnoutType());
         }
         setInconsistentIcon(_iconEditor.getIcon("BeanStateInconsistent"));
         setUnknownIcon(_iconEditor.getIcon("BeanStateUnknown"));
@@ -837,7 +837,6 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     /**
      * Throw the turnout when the icon is clicked
      *
-     * @param e
      */
     public void doMouseClicked(java.awt.event.MouseEvent e) {
         if (!_editor.getFlag(Editor.OPTION_CONTROLS, isControlling())) {
@@ -863,6 +862,8 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
             case SCISSOR:
                 doScissorMouseClick();
                 break;
+            default:
+                log.error("turnoutType value {} should not have appeared", turnoutType);
         }
 
     }
@@ -1082,7 +1083,6 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
      * Displays a popup menu to select a given state, rather than cycling
      * through each state
      *
-     * @param popup
      */
     public boolean showPopUp(JPopupMenu popup) {
         if (isEditable()) {
@@ -1178,11 +1178,6 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
             popuptext = Bundle.getMessage("SetScissorText");
         }
         popup.add(new AbstractAction(popuptext) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 1458395650486759302L;
-
             public void actionPerformed(ActionEvent e) {
                 String name = getNameString();
                 slipTurnoutTextEdit(name);
@@ -1282,7 +1277,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         }
 
         //This is used to set the two turnouts, with a delay of 250ms between each one.
-        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "WMI_WRONG_MAP_ITERATOR", justification = "iterator really short, efficiency not as important as clarity here")
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "WMI_WRONG_MAP_ITERATOR", justification = "iterator really short, efficiency not as important as clarity here")
         public void run() {
 
             HashMap<Turnout, Integer> _turnoutSetting = s.getTurnoutSettings();
@@ -1291,7 +1286,9 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
             while (itr.hasNext()) {
                 Turnout t = itr.next();
                 int state = _turnoutSetting.get(t);
-                t.setCommandedState(state);
+                jmri.util.ThreadingUtil.runOnLayout(()->{ // run on layout thread
+                    t.setCommandedState(state);
+                });
                 try {
                     Thread.sleep(250);
                 } catch (InterruptedException e) {

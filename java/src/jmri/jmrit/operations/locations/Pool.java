@@ -52,6 +52,7 @@ public class Pool extends Bean {
     }
 
     // for combo boxes
+    @Override
     public String toString() {
         return _name;
     }

@@ -23,6 +23,7 @@ public class TrackEditCommentsAction extends AbstractAction {
         _tef = tef;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         new TrackEditCommentsFrame(_tef._track);
     }

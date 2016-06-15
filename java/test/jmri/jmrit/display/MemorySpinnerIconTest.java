@@ -37,14 +37,8 @@ public class MemorySpinnerIconTest extends jmri.util.SwingTestCase {
         toi2 = new MemorySpinnerIcon(panel);
         jf.getContentPane().add(toi2);
 
-        jmri.InstanceManager i = new jmri.InstanceManager() {
-            protected void init() {
-                super.init();
-                root = this;
-            }
-        };
-        jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
-        Assert.assertNotNull("Instance exists", i);
+        jmri.util.JUnitUtil.resetInstanceManager();
+
         tos1.setMemory("IM1");
         tos2.setMemory("IM1");
         jmri.InstanceManager.memoryManagerInstance().getMemory("IM1").setValue("4");
@@ -83,7 +77,7 @@ public class MemorySpinnerIconTest extends jmri.util.SwingTestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", MemorySpinnerIconTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

@@ -1,6 +1,12 @@
 // JsonServer.java
 package jmri.jmris.json;
 
+import static jmri.jmris.json.JSON.GOODBYE;
+import static jmri.jmris.json.JSON.JSON;
+import static jmri.jmris.json.JSON.JSON_PROTOCOL_VERSION;
+import static jmri.jmris.json.JSON.TYPE;
+import static jmri.jmris.json.JSON.ZEROCONF_SERVICE_TYPE;
+
 import com.fasterxml.jackson.core.JsonParser.Feature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
@@ -13,11 +19,8 @@ import java.util.concurrent.TimeUnit;
 import jmri.InstanceManager;
 import jmri.implementation.QuietShutDownTask;
 import jmri.jmris.JmriServer;
-import static jmri.jmris.json.JSON.GOODBYE;
-import static jmri.jmris.json.JSON.JSON;
-import static jmri.jmris.json.JSON.JSON_PROTOCOL_VERSION;
-import static jmri.jmris.json.JSON.TYPE;
-import static jmri.jmris.json.JSON.ZEROCONF_SERVICE_TYPE;
+import jmri.server.json.JsonClientHandler;
+import jmri.server.json.JsonConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -86,7 +89,7 @@ public class JsonServer extends JmriServer {
     @Override
     public void handleClient(DataInputStream inStream, DataOutputStream outStream) throws IOException {
         ObjectReader reader = this.mapper.reader();
-        JsonClientHandler handler = new JsonClientHandler(new JsonConnection(outStream), this.mapper);
+        JsonClientHandler handler = new JsonClientHandler(new JsonConnection(outStream));
 
         // Start by sending a welcome message
         handler.sendHello(this.timeout);

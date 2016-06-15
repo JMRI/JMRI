@@ -5,7 +5,6 @@
 package jmri.web.servlet.panel;
 
 import java.util.List;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.jmris.json.JSON;
@@ -104,10 +103,5 @@ public class ControlPanelServlet extends AbstractPanelServlet {
     protected String getJsonPanel(String name) {
         // TODO Auto-generated method stub
         return "ERROR JSON support not implemented";
-    }
-
-    @Override
-    protected JComponent getPanel(String name) {
-        return ((ControlPanelEditor) getEditor(name)).getTargetPanel();
     }
 }

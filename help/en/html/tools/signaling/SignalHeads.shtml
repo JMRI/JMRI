@@ -1,5 +1,4 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
   <title>
@@ -7,7 +6,7 @@
   </title>
 
 <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
-<meta name="Date.Modified" content="20151030"/>
+<meta name="Date.Modified" content="20160323"/>
   <meta name="keywords"
         content="turnout model railroad JMRI decoderpro panelpro">
 
@@ -21,7 +20,6 @@
 </head>
 
 <body>
-  <div id="container">
 
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
@@ -31,14 +29,14 @@
         <h1>
 		JMRI: Signal Heads
         </h1>
-
+		  <p>
 		  Signals Heads are how JMRI represents the individual lights/LEDs in a signal on your layout. JMRI handles Signal Heads as a specific kind of
 		  outputs that can be set to various colors: Red, Yellow, Green, Flashing Yellow, etc. Depending on the hardware used to connect your model signals tot the DCC system, the program deploys a different technique to turn each of these colors on or off. <br/>
 		  Signal Heads may be used to build Signal Masts using the <a href="SignalMasts.shtml">Signal Masts Tool</a>. Depending on the way your signals on the layout are connected to the DCC system, Signal Heads are normally part of a Signal Mast, but <a href="../../../package/jmri/jmrit/beantable/SignalMastAddEdit.shtml">some signal hardware</a> is able to support multiple Aspects directly, and will not require the use of individual Signal Heads.
 
 <a name="table"><h3>The Signal Head Table</h3></a>
 
-	<a href="../../../package/jmri/jmrit/beantable/SignalHeads.png"><img src="../../../package/jmri/jmrit/beantable/SignalHeads.png" ALIGN=RIGHT WIDTH="554" HEIGHT="184" HSPACE="0" VSPACE="0" ALT="Signal Head Table figure"></a>
+	<a href="../../../package/jmri/jmrit/beantable/SignalHeads.png"><img src="../../../package/jmri/jmrit/beantable/SignalHeads.png" align="right" width="554" height="184" hspace="0" vspace="0" alt="Signal Head Table figure"></a>
 <!-- The following section is taken from, and should be kept consistent with -->
 <!-- help/en/package/jmri/jmrit/beantable/SignalHeadTable.html -->
 
@@ -51,7 +49,7 @@ Table, please see the
 	<a href="../../../package/jmri/jmrit/beantable/SignalHeadTable.shtml">Signal Head Table help page</a>.
 
 <a name="add"><h3>Creating a Signal Head</h3></a>
-	<a href="../../../package/jmri/jmrit/beantable/SignalHeadAdd1.png"><IMG SRC="../../../package/jmri/jmrit/beantable/SignalHeadAdd1.png" ALIGN=RIGHT WIDTH="181" HEIGHT="218" HSPACE="0" VSPACE="0" ALT="Add Signal Head window figure"></a>
+	<a href="../../../package/jmri/jmrit/beantable/SignalHeadAdd1.png"><img src="../../../package/jmri/jmrit/beantable/SignalHeadAdd1.png" align="right" width="181" height="218" hspace="0" vspace="0" alt="Add Signal Head window figure"></a>
 
 <p>To define a new Signal Head, click on the 
 	<a href="../../../package/jmri/jmrit/beantable/SignalAddEdit.shtml">Add...</a> button at the bottom of the Signal Head Table. This will prompt you for the Signal Head type and whatever further information is needed for the selected type.
@@ -83,10 +81,7 @@ The Signal Head information is saved as part of the JMRI configuration in an XML
 	
 <!--#include virtual="/Footer" -->
 
-      </div><!-- closes #mainContent-->
-    </div> <!-- closes #mBody-->
-  </div> <!-- closes #container -->
+    </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
 </body>
 </html>
-
-

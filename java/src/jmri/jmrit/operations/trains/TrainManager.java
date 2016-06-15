@@ -18,6 +18,8 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
+import jmri.jmrit.operations.trains.excel.TrainCustomSwitchList;
 import jmri.script.JmriScriptEngineManager;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
@@ -90,7 +92,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
             OperationsSetupXml.instance(); // load setup
             TrainManagerXml.instance(); // load trains
         }
-        if (Control.showInstance) {
+        if (Control.SHOW_INSTANCE) {
             log.debug("TrainManager returns instance " + _instance);
         }
         return _instance;
@@ -287,7 +289,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "for testing")
     public void dispose() {
         _trainHashTable.clear();
         _id = 0;
@@ -328,7 +330,6 @@ public class TrainManager implements java.beans.PropertyChangeListener {
      * Finds an existing train or creates a new train if needed requires train's
      * name creates a unique id for this train
      *
-     * @param name
      *
      * @return new train or existing train
      */
@@ -426,7 +427,6 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 
     /**
      *
-     * @param car
      * @return Train that can service car from its current location to the its
      * destination.
      */
@@ -436,9 +436,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 
     /**
      *
-     * @param car
      * @param excludeTrain The only train not to try.
-     * @param buildReport
      * @return Train that can service car from its current location to the its
      * destination.
      */
@@ -829,16 +827,16 @@ public class TrainManager implements java.beans.PropertyChangeListener {
                         out.add(0, train); // place all trains that have already been serviced at the start
                         arrivalTimes.add(0, expectedArrivalTime);
                     } // if the train is in route, then expected arrival time is in minutes
-                    else if (train.isTrainInRoute()) {
+                    else if (train.isTrainEnRoute()) {
                         for (int j = 0; j < out.size(); j++) {
                             Train t = out.get(j);
                             int time = arrivalTimes.get(j);
-                            if (t.isTrainInRoute() && expectedArrivalTime < time) {
+                            if (t.isTrainEnRoute() && expectedArrivalTime < time) {
                                 out.add(j, train);
                                 arrivalTimes.add(j, expectedArrivalTime);
                                 break;
                             }
-                            if (!t.isTrainInRoute()) {
+                            if (!t.isTrainEnRoute()) {
                                 out.add(j, train);
                                 arrivalTimes.add(j, expectedArrivalTime);
                                 break;
@@ -849,7 +847,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
                         for (int j = 0; j < out.size(); j++) {
                             Train t = out.get(j);
                             int time = arrivalTimes.get(j);
-                            if (!t.isTrainInRoute() && expectedArrivalTime < time) {
+                            if (!t.isTrainEnRoute() && expectedArrivalTime < time) {
                                 out.add(j, train);
                                 arrivalTimes.add(j, expectedArrivalTime);
                                 break;
@@ -895,7 +893,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
      */
     public void setTrainsModified() {
         for (Train train : getTrainsByTimeList()) {
-            if (!train.isBuilt() || train.isTrainInRoute()) {
+            if (!train.isBuilt() || train.isTrainEnRoute()) {
                 continue; // train wasn't built or in route, so skip
             }
             train.setModified(true);
@@ -905,6 +903,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     public void buildSelectedTrains(final List<Train> trains) {
         // use a thread to allow table updates during build
         Thread build = new Thread(new Runnable() {
+            @Override
             public void run() {
                 for (Train train : trains) {
                     train.buildIfSelected();
@@ -1137,6 +1136,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
      * replacement.
      *
      */
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         log.debug("TrainManager sees property change: " + e.getPropertyName() + " old: "
                 + e.getOldValue() + " new " + e.getNewValue()); // NOI18N

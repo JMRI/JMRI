@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.dcc4pc.serialdriver;
 
 import gnu.io.CommPortIdentifier;
@@ -10,6 +9,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.dcc4pc.Dcc4PcConnectionTypeList;
 import jmri.jmrix.dcc4pc.Dcc4PcPortController;
 import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
 import jmri.jmrix.dcc4pc.Dcc4PcTrafficController;
@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author	Kevin Dickerson Copyright (C) 2012
- * @version	$Revision: 18133 $
  */
 public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -31,7 +30,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
         super(new Dcc4PcSystemConnectionMemo());
         option1Name = "Programmer";
         options.put(option1Name, new Option("Programmer : ", validOption1()));
-        setManufacturer(jmri.jmrix.DCCManufacturerList.DCC4PC);
+        setManufacturer(Dcc4PcConnectionTypeList.DCC4PC);
     }
 
     SerialPort activeSerialPort = null;
@@ -55,13 +54,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
                     + " " + activeSerialPort.isReceiveTimeoutEnabled());
 
             // purge contents, if any
-            serialStream = activeSerialPort.getInputStream();
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {
@@ -103,7 +96,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
     /**
      * Option 1 controls the connection used for programming
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] validOption1() {
         List<SystemConnectionMemo> connList = jmri.InstanceManager.getList(SystemConnectionMemo.class);
         if (connList != null) {
@@ -182,7 +175,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
     static public SerialDriverAdapter instance() {
         if (mInstance == null) {
             SerialDriverAdapter m = new SerialDriverAdapter();
-            m.setManufacturer(jmri.jmrix.DCCManufacturerList.DCC4PC);
+            m.setManufacturer(Dcc4PcConnectionTypeList.DCC4PC);
             mInstance = m;
         }
         return mInstance;

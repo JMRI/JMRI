@@ -1,4 +1,3 @@
-// AbstractMemoryManager.java
 package jmri.managers;
 
 import java.text.DecimalFormat;
@@ -12,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * Abstract partial implementation of a MemoryManager.
  *
  * @author	Bob Jacobsen Copyright (C) 2004
- * @version	$Revision$
  */
 public abstract class AbstractMemoryManager extends AbstractManager
         implements MemoryManager {
@@ -75,11 +73,16 @@ public abstract class AbstractMemoryManager extends AbstractManager
             return s;
         }
         if ((s = getBySystemName(systemName)) != null) {
-            if ((s.getUserName() == null) && (userName != null)) {
-                s.setUserName(userName);
-            } else if (userName != null) {
-                log.warn("Found memory via system name (" + systemName
-                        + ") with non-null user name (" + userName + ")");
+            // handle user name from request
+            if (userName != null) {
+                // check if already on set in Object, might be inconsistent
+                if ( !userName.equals(s.getUserName())) {
+                    // this is a problem
+                    log.warn("newMemory request for system name \"{}\" user name \"{}\" found memory with existing user name \"{}\"",
+                                systemName, userName, s.getUserName());
+                } else {
+                    s.setUserName(userName);
+                }
             }
             return s;
         }
@@ -137,5 +140,3 @@ public abstract class AbstractMemoryManager extends AbstractManager
 
     private final static Logger log = LoggerFactory.getLogger(AbstractMemoryManager.class.getName());
 }
-
-/* @(#)AbstractMemoryManager.java */

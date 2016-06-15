@@ -1,4 +1,3 @@
-// CompositeVariableValue.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.Component;
@@ -47,7 +46,6 @@ import org.slf4j.LoggerFactory;
  * </ol>
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001, 2005, 2013
- * @version	$Revision$
  *
  */
 public class CompositeVariableValue extends EnumVariableValue implements ActionListener, PropertyChangeListener {
@@ -133,11 +131,6 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
      */
     static class SettingList extends ArrayList<Setting> {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -931774092092164586L;
-
         public SettingList() {
             super();
             if (log.isDebugEnabled()) {
@@ -211,7 +204,7 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
      * Do end of initialization processing.
      */
     @SuppressWarnings("null")
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "NP_NULL_ON_SOME_PATH",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH",
             justification = "we want to force an exception")
     public void lastItem() {
         // configure the representation object
@@ -278,7 +271,6 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
      * <P>
      * Does this by delegating to the SettingList
      *
-     * @param value
      */
     protected void selectValue(int value) {
         if (log.isDebugEnabled()) {
@@ -317,7 +309,6 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
      * Notify the connected CVs of a state change from above by way of the
      * variables (e.g. not direct to CVs)
      *
-     * @param state
      */
     public void setCvState(int state) {
         Iterator<VariableValue> i = variables.iterator();

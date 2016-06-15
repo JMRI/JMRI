@@ -1,4 +1,3 @@
-// ProgCheckAction.java
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import java.awt.event.ActionEvent;
@@ -14,22 +13,14 @@ import javax.swing.JPanel;
 import jmri.jmrit.XmlFile;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Check the names in an XML programmer file against the names.xml definitions
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2007
- * @version	$Revision$
  * @see jmri.jmrit.XmlFile
  */
 public class ProgCheckAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2266366526574569234L;
 
     public ProgCheckAction(String s, JPanel who) {
         super(s);
@@ -91,7 +82,7 @@ public class ProgCheckAction extends AbstractAction {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     static String checkMissingNames(File file) {
@@ -109,7 +100,7 @@ public class ProgCheckAction extends AbstractAction {
 
             // walk the entire tree of elements, saving a reference
             // to all of the "display" elements
-            List<Element> varList = new ArrayList<Element>();
+            List<Element> varList = new ArrayList<>();
             expandElement(root.getChild("programmer"), varList);
             if (log.isDebugEnabled()) {
                 log.debug("found " + varList.size() + " display elements");
@@ -161,7 +152,7 @@ public class ProgCheckAction extends AbstractAction {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     static String checkIncompleteComprehensive(File file) {
@@ -180,7 +171,7 @@ public class ProgCheckAction extends AbstractAction {
 
             // walk the entire tree of elements, saving a reference
             // to all of the "display" elements
-            List<Element> varList = new ArrayList<Element>();
+            List<Element> varList = new ArrayList<>();
             expandElement(root.getChild("programmer"), varList);
             if (log.isDebugEnabled()) {
                 log.debug("found " + varList.size() + " display elements");
@@ -270,6 +261,6 @@ public class ProgCheckAction extends AbstractAction {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ProgCheckAction.class.getName());
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProgCheckAction.class.getName());
 
 }

@@ -2,7 +2,7 @@ package jmri.jmrit.operations.automation.actions;
 
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainCustomManifest;
+import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

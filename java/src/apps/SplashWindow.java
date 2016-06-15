@@ -1,4 +1,3 @@
-// SplashWindow.java
 package apps;
 
 import java.awt.Dimension;
@@ -18,14 +17,9 @@ import jmri.util.FileUtil;
  *
  * @author	Bob Jacobsen Copyright 2003
  * @author Dennis Miller Copyright 2007
- * @version $Revision$
  */
 public class SplashWindow extends JFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 300950834122464494L;
     Image splashIm;
 
     public SplashWindow() {

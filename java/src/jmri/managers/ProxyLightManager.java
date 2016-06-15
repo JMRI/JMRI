@@ -1,4 +1,3 @@
-// ProxyLightManager.java
 package jmri.managers;
 
 import jmri.Light;
@@ -11,7 +10,6 @@ import jmri.NamedBean;
  *
  * @author	Bob Jacobsen Copyright (C) 2010
  * @author	Dave Duchamp Copyright (C) 2004
- * @version	$Revision$
  */
 public class ProxyLightManager extends AbstractProxyManager
         implements LightManager {
@@ -25,13 +23,12 @@ public class ProxyLightManager extends AbstractProxyManager
     }
 
     protected AbstractManager makeInternalManager() {
-        return new InternalLightManager();
+        return jmri.InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class).getLightManager();
     }
 
     /**
      * Locate via user name, then system name if needed.
      *
-     * @param name
      * @return Null if nothing by that name exists
      */
     public Light getLight(String name) {
@@ -48,7 +45,6 @@ public class ProxyLightManager extends AbstractProxyManager
      * new Light. Otherwise, the makeSystemName method will attempt to turn it
      * into a valid system name.
      *
-     * @param name
      * @return Never null under normal circumstances
      */
     public Light provideLight(String name) {
@@ -201,5 +197,3 @@ public class ProxyLightManager extends AbstractProxyManager
         return Bundle.getMessage("BeanNameLight");
     }
 }
-
-/* @(#)ProxyLightManager.java */

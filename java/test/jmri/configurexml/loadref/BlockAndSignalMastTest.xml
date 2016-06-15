@@ -8,7 +8,7 @@
     <test>0</test>
     <modifier />
   </jmriversion>
-  <turnouts class="jmri.managers.configurexml.InternalTurnoutManagerXml">
+  <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
     <defaultclosedspeed>Normal</defaultclosedspeed>
     <defaultthrownspeed>Restricted</defaultthrownspeed>
     <turnout systemName="IT1" userName="Turnout:1" feedback="DIRECT" inverted="false" automate="Default">

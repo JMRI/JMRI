@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An icon to display a status of a light.<P>
+ * An icon to display a status of a light.
  * <P>
  * A click on the icon will command a state change. Specifically, it will set
  * the state to the opposite (THROWN vs CLOSED) of the current state.
@@ -18,14 +18,8 @@ import org.slf4j.LoggerFactory;
  * traffic.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision$
  */
 public class LightIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7831042733869845309L;
 
     public LightIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
@@ -39,13 +33,13 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
     // the associated Light object
     Light light = null;
 
+    @Override
     public Positionable deepClone() {
         LightIcon pos = new LightIcon(_editor);
         return finishClone(pos);
     }
 
-    public Positionable finishClone(Positionable p) {
-        LightIcon pos = (LightIcon) p;
+    protected Positionable finishClone(LightIcon pos) {
         pos.setLight(getNameString());
         pos.setOffIcon(cloneIcon(getOffIcon(), pos));
         pos.setOnIcon(cloneIcon(getOnIcon(), pos));
@@ -291,7 +285,6 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
     /**
      * Change the light when the icon is clicked
      *
-     * @param e
      */
     // Was mouseClicked, changed to mouseRelease to workaround touch screen driver limitation
     public void doMouseClicked(java.awt.event.MouseEvent e) {

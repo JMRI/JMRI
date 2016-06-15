@@ -1,4 +1,3 @@
-// TamsTurnout.java
 package jmri.jmrix.tams;
 
 import jmri.Turnout;
@@ -17,15 +16,11 @@ import org.slf4j.LoggerFactory;
  * Based on work by Bob Jacobsen & Kevin Dickerson
  *
  * @author	Jan Boen
- * @version	$Revision: 20160606 $
+ * @author	Kevin Dickerson Copyright (C) 2012
  */
 public class TamsTurnout extends AbstractTurnout
         implements TamsListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1921305278634163107L;
     String prefix;
 
     /**
@@ -58,7 +53,7 @@ public class TamsTurnout extends AbstractTurnout
         _validFeedbackModes = modeValues;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Only used during creation of 1st turnout")
     private void initFeedbackModes() {
         if (_validFeedbackNames.length != _validFeedbackModes.length) {
@@ -93,9 +88,9 @@ public class TamsTurnout extends AbstractTurnout
 
         // sort out states
         log.info("Change state from JMRI - 1");
-        if ((s & Turnout.CLOSED) > 0) {
+        if ((s & Turnout.CLOSED) != 0) {
             // first look for the double case, which we can't handle
-            if ((s & Turnout.THROWN) > 0) {
+            if ((s & Turnout.THROWN) != 0) {
                 // this is the disaster case!
                 log.error("Cannot command both CLOSED and THROWN " + s);
                 return;
@@ -252,5 +247,3 @@ public class TamsTurnout extends AbstractTurnout
         
     }
 }
-
-/* @(#)TamsTurnout.java */

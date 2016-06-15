@@ -1,4 +1,3 @@
-// jmri.jmrit.display.LayoutBlock.java
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.Color;
@@ -78,10 +77,6 @@ import org.slf4j.MDC;
  */
 public class LayoutBlock extends AbstractNamedBean implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5133877893672022035L;
     public boolean enableAddRouteLogging = false;
     public boolean enableUpdateRouteLogging = false;
     public boolean enableDeleteRouteLogging = false;
@@ -395,26 +390,25 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 
         //Go through the memory icons on the panel and see if any are linked to this layout block
         if (m != getMemory() && panels.size() > 0) {
-            if (panels.size() > 0) {
-                boolean updateall = false;
-                boolean found = false;
-                for (LayoutEditor panel : panels) {
-                    for (MemoryIcon memIcon : panel.memoryLabelList) {
-                        if (memIcon.getLayoutBlock() == this) {
-                            if (!updateall && !found) {
-                                int n = JOptionPane.showConfirmDialog(
-                                        openFrame,
-                                        "Would you like to update all memory icons on the panel linked to the block to use the new one?",
-                                        "Update Memory Icons",
-                                        JOptionPane.YES_NO_OPTION);
-                                found = true;
-                                if (n == 0) {
-                                    updateall = true;
-                                }
+            boolean updateall = false;
+            boolean found = false;
+            for (LayoutEditor panel : panels) {
+                for (MemoryIcon memIcon : panel.memoryLabelList) {
+                    if (memIcon.getLayoutBlock() == this) {
+                        if (!updateall && !found) {
+                            int n = JOptionPane.showConfirmDialog(
+                                    openFrame,
+                                    "Would you like to update all memory icons on the panel linked to the block to use the new one?",
+                                    "Update Memory Icons",
+                                    JOptionPane.YES_NO_OPTION);
+                                    //TODO I18N in Bundle.properties
+                            found = true;
+                            if (n == 0) {
+                                updateall = true;
                             }
-                            if (updateall) {
-                                memIcon.setMemory(memoryName);
-                            }
+                        }
+                        if (updateall) {
+                            memIcon.setMemory(memoryName);
                         }
                     }
                 }
@@ -861,6 +855,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     JTextField metricField = new JTextField(10);
     JComboBox<String> senseBox = new JComboBox<String>();
     JCheckBox permissiveCheck = new JCheckBox("Permissive Working Allowed");
+    //TODO I18N in Bundle.properties
     int senseActiveIndex;
     int senseInactiveIndex;
     JComboBox<String> trackColorBox = new JComboBox<String>();
@@ -886,6 +881,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     }
 
     String[] working = {"Bi-Directional", "Recieve Only", "Send Only"};
+    //TODO I18N in ManagersBundle.properties
 
     ArrayList<JComboBox<String>> neighbourDir;
 
@@ -1024,11 +1020,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 
     class LayoutBlockEditAction extends jmri.jmrit.beantable.beanedit.BlockEditAction {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 1200243516883528850L;
-
         @Override
         public String helpTarget() {
             return "package.jmri.jmrit.display.EditLayoutBlock";
@@ -1069,10 +1060,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             layout.addItem(new BeanEditItem(extraColorBox, rb.getString("ExtraColor"), rb.getString("ExtraColorHint")));
 
             layout.setSaveItem(new AbstractAction() {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = -8306290479368486226L;
 
                 public void actionPerformed(ActionEvent e) {
                     boolean needsRedraw = false;
@@ -1126,11 +1113,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             });
 
             layout.setResetItem(new AbstractAction() {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = 8424682609335608318L;
-
                 public void actionPerformed(ActionEvent e) {
                     memoryNameField.setText(memoryName);
                     setColorCombo(trackColorBox, blockTrackColor);
@@ -1162,11 +1144,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             }
 
             routing.setResetItem(new AbstractAction() {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = 6583889296784626636L;
-
                 public void actionPerformed(ActionEvent e) {
                     metricField.setText(Integer.toString(metric));
                     for (int i = 0; i < getNumberOfNeighbours(); i++) {
@@ -1184,11 +1161,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             });
 
             routing.setSaveItem(new AbstractAction() {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = 4314794737329205107L;
-
                 public void actionPerformed(ActionEvent e) {
                     int m = Integer.parseInt(metricField.getText().trim());
                     if (m != metric) {
@@ -1255,74 +1227,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 
     private Color getSelectedColor(JComboBox<String> colorCombo) {
         return (colorCode[colorCombo.getSelectedIndex()]);
-    }
-
-    /**
-     * Utility methods for converting between string and color Note: These names
-     * are only used internally, so don't need a resource bundle
-     */
-    public static String colorToString(Color color) {
-        if (color == Color.black) {
-            return "black";
-        } else if (color == Color.darkGray) {
-            return "darkGray";
-        } else if (color == Color.gray) {
-            return "gray";
-        } else if (color == Color.lightGray) {
-            return "lightGray";
-        } else if (color == Color.white) {
-            return "white";
-        } else if (color == Color.red) {
-            return "red";
-        } else if (color == Color.pink) {
-            return "pink";
-        } else if (color == Color.orange) {
-            return "orange";
-        } else if (color == Color.yellow) {
-            return "yellow";
-        } else if (color == Color.green) {
-            return "green";
-        } else if (color == Color.blue) {
-            return "blue";
-        } else if (color == Color.magenta) {
-            return "magenta";
-        } else if (color == Color.cyan) {
-            return "cyan";
-        }
-        log.error("unknown color sent to colorToString");
-        return "black";
-    }
-
-    public static Color stringToColor(String string) {
-        if (string.equals("black")) {
-            return Color.black;
-        } else if (string.equals("darkGray")) {
-            return Color.darkGray;
-        } else if (string.equals("gray")) {
-            return Color.gray;
-        } else if (string.equals("lightGray")) {
-            return Color.lightGray;
-        } else if (string.equals("white")) {
-            return Color.white;
-        } else if (string.equals("red")) {
-            return Color.red;
-        } else if (string.equals("pink")) {
-            return Color.pink;
-        } else if (string.equals("orange")) {
-            return Color.orange;
-        } else if (string.equals("yellow")) {
-            return Color.yellow;
-        } else if (string.equals("green")) {
-            return Color.green;
-        } else if (string.equals("blue")) {
-            return Color.blue;
-        } else if (string.equals("magenta")) {
-            return Color.magenta;
-        } else if (string.equals("cyan")) {
-            return Color.cyan;
-        }
-        log.error("unknown color text '" + string + "' sent to stringToColor");
-        return Color.black;
     }
 
     /**
@@ -1606,6 +1510,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
          through paths table*/
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="handling issue if value isn't still identical")
     boolean informNeighbourOfAttachment(LayoutBlock lBlock, Block block, int workingDirection) {
         Adjacencies adj = getAdjacency(block);
         if (adj == null) {
@@ -1646,6 +1551,8 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                     RoutingPacket update = new RoutingPacket(UPDATE, adj.getBlock(), -1, (adj.getMetric() + metric), -1, -1, getNextPacketID());
                     firePropertyChange("routing", null, update);
                 }
+
+                // next line is the FE_FLOATING_POINT_EQUALITY annotated above
                 if (neighRoute.getMetric() != adj.getLength()) {
                     if (enableAddRouteLogging) {
                         log.info("From " + this.getDisplayName() + " The value of the length we have for this route is not correct " + this.getBlock().getDisplayName() + ", stored " + neighRoute.getMetric() + " v " + adj.getMetric());
@@ -2224,7 +2131,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         if (enableDeleteRouteLogging) {
             log.info(msgPrefix + " finshed check and notifying of removed routes from " + notifyingblk.getDisplayName() + " ===");
         }
-        routesToRemove = null;
     }
 
     void addThroughPath(Adjacencies adj) {
@@ -2322,7 +2228,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
      * if the reverse path is required, then this need to be added seperately.
      */
     //Was public
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "DLS_DEAD_LOCAL_STORE")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE")
     void addThroughPath(Block srcBlock, Block dstBlock, LayoutEditor panel) {
         //Reset connectivity flag.
         layoutConnectivity = true;
@@ -2944,9 +2850,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 
     @Override
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        if (l == null) {
-            throw new java.lang.NullPointerException();
-        }
         if (l == this) {
             if (enableAddRouteLogging) {
                 log.info("adding ourselves as a listener for some strange reason!");
@@ -2975,7 +2878,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getSource() instanceof LayoutBlock) {
             LayoutBlock srcEvent = (LayoutBlock) e.getSource();
-            if (e.getPropertyName().toString().equals("NewRoute")) {
+            if (e.getPropertyName().equals("NewRoute")) {
                 LayoutBlock lbkblock = (LayoutBlock) e.getNewValue();
                 if (enableUpdateRouteLogging) {
                     log.info("==Event type " + e.getPropertyName().toString() + " New " + lbkblock.getDisplayName());
@@ -3096,6 +2999,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     }
 
     //This lot might need changing to only forward on the best route details.
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="checking against a error value of -1; bad practice to use values for errors, but not an FFPE")
     void updateRoutingInfo(LayoutBlock src, RoutingPacket update) {
         if (enableUpdateRouteLogging) {
             log.info("From " + this.getDisplayName() + " src: " + src.getDisplayName() + " block: " + update.getBlock().getDisplayName() + " hopCount " + update.getHopCount() + " metric: " + update.getMetric() + " status: " + update.getBlockState() + " packetID: " + update.getPacketId());
@@ -3181,6 +3085,8 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 hopCount = -1;
             }
         }
+        
+        // next line is the FE_FLOATING_POINT_EQUALITY annotated above - bad to use values as errors, but it's pre-existing code, and code wins
         if (length != -1) {
             //Length is added at source
             float oldLength = ro.getLength();

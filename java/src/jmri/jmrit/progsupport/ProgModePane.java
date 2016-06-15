@@ -27,14 +27,9 @@ import org.slf4j.LoggerFactory;
  * that a ProgModePane object can disconnect its listeners.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  */
 public class ProgModePane extends ProgModeSelector {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -557999704137510315L;
     // GUI member declarations
     ProgOpsModePane mOpsPane;
     ProgServiceModePane mServicePane;

@@ -58,10 +58,13 @@ reverse directions will have consistent meaning for sections on a relative basis
 connection from a Block inside the Section to a Block outside of the Section. Entry 
 Points are set up using Paths of Blocks in the Section--Paths that represent connections 
 to Blocks not contained in the Section. Entry Points are classified in one of two ways:
-<ol><li>Whether entering the Section at that Entry Point will result in a train traveling in the "forward" 
-direction<li>
-<li>whether entering at that Entry Point will result in a train 
-traveling in the "reverse" direction.</li></ol></p>
+	<ol>
+	<li>Whether entering the Section at that Entry Point will result in a train traveling in the "forward" 
+	direction.</li>
+	<li>whether entering at that Entry Point will result in a train 
+	traveling in the "reverse" direction.</li>
+	</ol>
+</p>
 <p> Sections are designed to be allocated to one train at a time. If a portion of 
 connected track is long enough to support multiple trains simultaneously traveling in 
 the same direction, one following the other, that connected track should be divided into 
@@ -117,7 +120,7 @@ has reached the end of its allocation. For automatic running, these Sensors may
 be used to stop a Train before it reaches the end of its allocated Section, and 
 before it overruns a Red signal, if Signals are present.
 
-<h3><a name='SignalMast'>Using Signal Mast Logic With Sections</a></h3>
+<h3><a name='SignalMast'>Using Signal Mast Logic with Sections</a></h3>
 <p>If your signaling is based using <a href="signaling/SignalMasts.shtml">Signal Masts</a>, with the associated logic that has been generated 
 using the Layout Editor, then it is possible to also have Sections automatically generated based 
 upon the logic.
@@ -139,11 +142,11 @@ to use SignalMast Logic via the Dispatcher's <a href="../../package/jmri/jmrit/d
 
 <h2>How to setup Sections</h2>
 
-<h3>Displaying and Creating Sections</h3>
+<h3>Displaying and creating Sections</h3>
 <p>All the Sections that JMRI knows about can be viewed using the <a href="../../package/jmri/jmrit/beantable/SectionTable.shtml">Section Table</a>. 
 Select <b>Sections</b> in the <b>Tables</b> submenu of the <b>Tools</b> menu 
 of the main JMRI program window. Sections can either be created manually from the Section Table pane, 
-or they can be created automatically if you also plan to use <a href="../../package/jmri/jmrit/beantable/SectionTable.shtml#SignalMast">SignalMast Logic</a>.
+or they can be created automatically if you also plan to use <a href="../../package/jmri/jmrit/beantable/SectionTable.shtml#SignalMast">Signal Mast Logic</a>.
 There are eight columns in the Section Table:</p>
 	<ul>
 	<li><b>System Name</b> - The system name is assigned to the Section when it's created, 
@@ -168,10 +171,19 @@ There are eight columns in the Section Table:</p>
 	Since a section may contain only one block, the Last Block may be the same as the First 
 	Block.</li>
 	<li>Click the <b>Edit</b> button in a row to view or change entered information
-	for a Section. System name cannot be changed. User name may be changed, 
-	blocks may be redefined, entry points may be reconfigured, etc. Only one Section 
-	may be edited at a time. A Section may not be edited if another is being created. 
+	for a Section. The System Name cannot be changed but the User Name may be changed, 
+	Blocks may be redefined, entry points may be reconfigured, etc. Only one Section 
+	may be edited at a time. A Section may not be edited if another one is being created. 
 	</li>
+	</ul>
+
+<h3>Section Table Controls</h3>
+<p>Below the Section Table there's an <a href="../../package/jmri/jmrit/beantable/SectionAddEdit.shtml">Add...</a> button.</p>
+<p>The <a href="../../package/jmri/jmrit/beantable/SectionTable.shtml#tools"><b>Tools</b></a> menu gives access to:
+	<ul>
+	<li>Validate All Sections...</li>
+	<li>Set Direction Sensors in Logic...</li>
+	<li>Remove Direction Sensors from Logic...</li>
 	</ul>
 
 <h3>Creating a new Section</h3>

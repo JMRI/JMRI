@@ -1,4 +1,3 @@
-// SE8cSignalHead.java
 package jmri.implementation;
 
 import jmri.InstanceManager;
@@ -32,14 +31,8 @@ import org.slf4j.LoggerFactory;
  * Bob Jacobsen.
  *
  * @author	Bob Jacobsen Copyright (C) 2002, 2010, 2014
- * @version	$Revision$
  */
 public class SE8cSignalHead extends DefaultSignalHead {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7046319284833504499L;
 
     /**
      * Primary ctor
@@ -265,5 +258,3 @@ public class SE8cSignalHead extends DefaultSignalHead {
 
     private final static Logger log = LoggerFactory.getLogger(SE8cSignalHead.class.getName());
 }
-
-/* @(#)SE8cSignalHead.java */

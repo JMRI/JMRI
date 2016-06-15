@@ -1,4 +1,3 @@
-// OPathTest.java
 package jmri.jmrit.logix;
 
 import jmri.Block;
@@ -11,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the OPath class
  *
  * @author	Bob Jacobsen Copyright 2010
- * @version $Revision$
  */
 public class OPathTest extends TestCase {
 
@@ -60,6 +58,21 @@ public class OPathTest extends TestCase {
         Assert.assertEquals("block", null, op.getBlock());
     }
 
+    public void testEquals() {
+        Block b1 = new Block("IB1");
+
+        OPath op1 = new OPath(b1, "name");
+        op1.setBlock(null);
+        OPath op2 = new OPath(b1, "name");
+        op2.setBlock(null);
+        
+        Assert.assertFalse("not equals null", op1.equals(null));
+        Assert.assertFalse("not equals string", op1.equals(""));
+        
+        Assert.assertTrue("equals self", op1.equals(op1));
+        Assert.assertTrue("on contents", op1.equals(op2));
+    }
+    
     // from here down is testing infrastructure
     public OPathTest(String s) {
         super(s);
@@ -68,7 +81,7 @@ public class OPathTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", OPathTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

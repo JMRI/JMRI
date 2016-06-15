@@ -1,15 +1,3 @@
-// MergSD2SignalHead.java
-// This file is part of JMRI.
-//
-// JMRI is free software; you can redistribute it and/or modify it under 
-// the terms of version 2 of the GNU General Public License as published 
-// by the Free Software Foundation. See the "COPYING" file for a copy
-// of this license.
-// 
-// JMRI is distributed in the hope that it will be useful, but WITHOUT 
-// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
-// FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
-// for more details.
 package jmri.implementation;
 
 import jmri.NamedBeanHandle;
@@ -38,11 +26,6 @@ import org.slf4j.LoggerFactory;
  * @author	Kevin Dickerson Copyright (C) 2009
  */
 public class MergSD2SignalHead extends DefaultSignalHead {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4482155949121611404L;
 
     public MergSD2SignalHead(String sys, String user, int aspect, NamedBeanHandle<Turnout> t1, NamedBeanHandle<Turnout> t2, NamedBeanHandle<Turnout> t3, boolean feather, boolean home) {
         super(sys, user);
@@ -231,7 +214,7 @@ public class MergSD2SignalHead extends DefaultSignalHead {
 
     /**
      * Sets the first turnout used on the driver Relates to the section directly
-     * infront of the Signal (2, 3 & 4 aspect Signals)
+     * infront of the Signal {@literal (2, 3 & 4 aspect Signals)}
      */
     public void setInput1(NamedBeanHandle<Turnout> t) {
         mInput1 = t;
@@ -316,7 +299,7 @@ public class MergSD2SignalHead extends DefaultSignalHead {
         Bundle.getMessage("SignalHeadStateGreen")
     };
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     public int[] getValidStates() {
         if (!mHome) {
             return validStates2AspectDistant;
@@ -336,7 +319,7 @@ public class MergSD2SignalHead extends DefaultSignalHead {
 
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     public String[] getValidStateNames() {
         if (!mHome) {
             return validStateNames2AspectDistant;

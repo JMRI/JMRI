@@ -1,4 +1,3 @@
-// RocoConnectionTypeList.java
 package jmri.jmrix.roco;
 
 /**
@@ -7,11 +6,13 @@ package jmri.jmrix.roco;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
- * @version	$Revision$
  *
  */
 public class RocoConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
+    public static final String ROCO = "Roco";
+
+    @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
             "jmri.jmrix.lenz.li100.ConnectionConfig",
@@ -24,9 +25,13 @@ public class RocoConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
             "jmri.jmrix.lenz.liusbserver.ConnectionConfig",
             "jmri.jmrix.lenz.liusbethernet.ConnectionConfig", // experimental
             "jmri.jmrix.roco.z21.ConnectionConfig", // experimental
-            "jmri.jmrix.roco.z21.simulator.ConnectionConfig", // experimental
-            "jmri.jmrix.roco.z21.z21XNetConnectionConfig" // experimental
+            "jmri.jmrix.roco.z21.simulator.ConnectionConfig" // experimental
         };
+    }
+
+    @Override
+    public String[] getManufacturers() {
+        return new String[]{ROCO};
     }
 
 }

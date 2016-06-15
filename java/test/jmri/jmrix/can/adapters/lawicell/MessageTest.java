@@ -1,4 +1,3 @@
-// MessageTest.java
 package jmri.jmrix.can.adapters.lawicell;
 
 import jmri.jmrix.can.CanMessage;
@@ -11,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.adapters.lawicell.Message class
  *
  * @author Bob Jacobsen Copyright 2008, 2009
- * @version $Revision$
  */
 public class MessageTest extends TestCase {
 
@@ -88,7 +86,7 @@ public class MessageTest extends TestCase {
     static public void main(String[] args) {
         apps.tests.AllTest.initLogging();
         String[] testCaseName = {"-noloading", MessageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

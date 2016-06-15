@@ -1,4 +1,3 @@
-// BlockTableAction.java
 package jmri.jmrit.beantable;
 
 import java.awt.GridLayout;
@@ -18,6 +17,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import jmri.Block;
@@ -26,6 +26,7 @@ import jmri.Manager;
 import jmri.NamedBean;
 import jmri.Reporter;
 import jmri.Sensor;
+import jmri.implementation.SignalSpeedMap;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,14 +35,8 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a BlockTable GUI.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2008
- * @version $Revision$
  */
 public class BlockTableAction extends AbstractTableAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6207247759586108823L;
 
     /**
      * Create an action with a specific title.
@@ -49,7 +44,6 @@ public class BlockTableAction extends AbstractTableAction {
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
-     * @param actionName
      */
     public BlockTableAction(String actionName) {
         super(actionName);
@@ -68,7 +62,7 @@ public class BlockTableAction extends AbstractTableAction {
 
         defaultBlockSpeedText = ("Use Global " + jmri.InstanceManager.blockManagerInstance().getDefaultSpeed());
         speedList.add(defaultBlockSpeedText);
-        java.util.Vector<String> _speedMap = jmri.implementation.SignalSpeedMap.getMap().getValidSpeedNames();
+        java.util.Vector<String> _speedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getValidSpeedNames();
         for (int i = 0; i < _speedMap.size(); i++) {
             if (!speedList.contains(_speedMap.get(i))) {
                 speedList.add(_speedMap.get(i));
@@ -78,7 +72,7 @@ public class BlockTableAction extends AbstractTableAction {
     }
 
     public BlockTableAction() {
-        this("Block Table");
+        this(Bundle.getMessage("TitleBlockTable"));
     }
 
     private String noneText = Bundle.getMessage("BlockNone");
@@ -97,10 +91,6 @@ public class BlockTableAction extends AbstractTableAction {
      */
     protected void createModel() {
         m = new BeanTableDataModel() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 7556903687684791477L;
             static public final int EDITCOL = NUMCOLUMN;
             static public final int DIRECTIONCOL = EDITCOL + 1;
             static public final int LENGTHCOL = DIRECTIONCOL + 1;
@@ -284,7 +274,7 @@ public class BlockTableAction extends AbstractTableAction {
                     fireTableRowsUpdated(row, row);
                 } else if (col == REPORTERCOL) {
                     Reporter r = null;
-                    if (value != "" || value != null) {
+                    if (value != null && !value.equals("") ) {
                         r = jmri.InstanceManager.reporterManagerInstance().provideReporter((String) value);
                     }
                     b.setReporter(r);
@@ -321,10 +311,10 @@ public class BlockTableAction extends AbstractTableAction {
 
             public String getColumnName(int col) {
                 if (col == DIRECTIONCOL) {
-                    return "Direction";
+                    return Bundle.getMessage("BlockDirection");
                 }
                 if (col == VALUECOL) {
-                    return "Value";
+                    return Bundle.getMessage("BlockValue");
                 }
                 if (col == CURVECOL) {
                     return Bundle.getMessage("BlockCurveColName");
@@ -535,11 +525,14 @@ public class BlockTableAction extends AbstractTableAction {
         f.setTitle(Bundle.getMessage("TitleBlockTable"));
     }
 
-    JCheckBox inchBox = new JCheckBox(Bundle.getMessage("LengthInches"));
-    JCheckBox centimeterBox = new JCheckBox(Bundle.getMessage("LengthCentimeters"));
+    JRadioButton inchBox = new JRadioButton(Bundle.getMessage("LengthInches"));
+    JRadioButton centimeterBox = new JRadioButton(Bundle.getMessage("LengthCentimeters"));
 
     /**
-     * Add the checkboxes
+     * Add the radiobuttons (only 1 may be selected)
+     * TODO change names from -box to radio-
+     * add radio buttons to a ButtongGroup
+     * delete extra inchBoxChanged() and centimeterBoxChanged() methods
      */
     public void addToFrame(BeanTableFrame f) {
         //final BeanTableFrame finalF = f;	// needed for anonymous ActionListener class
@@ -572,8 +565,8 @@ public class BlockTableAction extends AbstractTableAction {
             }
         });
 
-        JMenu speedMenu = new JMenu("Speeds");
-        item = new JMenuItem("Defaults...");
+        JMenu speedMenu = new JMenu(Bundle.getMessage("SpeedsMenu"));
+        item = new JMenuItem(Bundle.getMessage("SpeedsMenuItemDefaults"));
         speedMenu.add(item);
         item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -589,7 +582,7 @@ public class BlockTableAction extends AbstractTableAction {
         blockSpeedCombo.setEditable(true);
 
         JPanel block = new JPanel();
-        block.add(new JLabel("Block Speed"));
+        block.add(new JLabel(Bundle.getMessage("BlockSpeedLabel")));
         block.add(blockSpeedCombo);
 
         blockSpeedCombo.removeItem(defaultBlockSpeedText);
@@ -597,7 +590,7 @@ public class BlockTableAction extends AbstractTableAction {
         blockSpeedCombo.setSelectedItem(InstanceManager.blockManagerInstance().getDefaultSpeed());
 
         int retval = JOptionPane.showOptionDialog(_who,
-                "Select the default values for the speeds through the blocks\n", "Block Speeds",
+                "Select the default values for the speeds through the blocks\n", Bundle.getMessage("BlockSpeedLabel"),
                 0, JOptionPane.INFORMATION_MESSAGE, null,
                 new Object[]{"Cancel", "OK", block}, null);
         if (retval != 1) {
@@ -640,7 +633,7 @@ public class BlockTableAction extends AbstractTableAction {
     JCheckBox checkPerm = new JCheckBox(Bundle.getMessage("BlockPermColName"));
 
     JTextField numberToAdd = new JTextField(10);
-    JCheckBox range = new JCheckBox(Bundle.getMessage("LabelNumberToAdd"));
+    JCheckBox range = new JCheckBox(Bundle.getMessage("AddRangeBox"));
     JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
     jmri.UserPreferencesManager pref;
 
@@ -650,12 +643,15 @@ public class BlockTableAction extends AbstractTableAction {
             addFrame = new JmriJFrame(Bundle.getMessage("TitleAddBlock"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.BlockAddEdit", true); //IN18N
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
-            ActionListener listener = new ActionListener() {
+            ActionListener oklistener = new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     okPressed(e);
                 }
             };
-            addFrame.add(new AddNewBeanPanel(sysName, userName, numberToAdd, range, _autoSystemName, "ButtonOK", listener));
+            ActionListener cancellistener = new ActionListener() {
+                public void actionPerformed(ActionEvent e) { cancelPressed(e); }
+            };
+            addFrame.add(new AddNewBeanPanel(sysName, userName, numberToAdd, range, _autoSystemName, "ButtonOK", oklistener, cancellistener));
         }
         if (pref.getSimplePreferenceState(systemNameAuto)) {
             _autoSystemName.setSelected(true);
@@ -686,7 +682,7 @@ public class BlockTableAction extends AbstractTableAction {
             speeds.addItem(speedList.get(i));
         }
 
-        mainPanel.add(new JLabel("blockSpeed"));
+        mainPanel.add(new JLabel(Bundle.getMessage("BlockSpeed")));
         mainPanel.add(speeds);
 
         //return displayList;
@@ -720,6 +716,12 @@ public class BlockTableAction extends AbstractTableAction {
             }
         }
         return true;
+    }
+
+    void cancelPressed(ActionEvent e) {
+                addFrame.setVisible(false);
+                addFrame.dispose();
+                addFrame = null;
     }
 
     void okPressed(ActionEvent e) {
@@ -851,5 +853,3 @@ public class BlockTableAction extends AbstractTableAction {
 
     private final static Logger log = LoggerFactory.getLogger(BlockTableAction.class.getName());
 }
-
-/* @(#)BlockTableAction.java */

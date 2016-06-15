@@ -1,4 +1,3 @@
-// SimpleTimebaseTest.java
 package jmri.jmrit.simpleclock;
 
 import java.util.Date;
@@ -12,7 +11,6 @@ import junit.framework.TestSuite;
  * Tests for the SimpleTimebase class
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class SimpleTimebaseTest extends TestCase {
 
@@ -100,7 +98,7 @@ public class SimpleTimebaseTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {SimpleTimebaseTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

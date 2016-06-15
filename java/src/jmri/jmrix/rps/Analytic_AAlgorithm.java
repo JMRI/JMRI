@@ -7,13 +7,14 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of RPS location-finding using GPS equations from Sam Storm van
- * Leeuwen <samsvl@nlr.nl>, ported to Java by Norris Weimer
- * <norris.weimer@ualberta.ca>, and ported to JMRI/RPS by Bob Jacobsen.
+ * Leeuwen {@literal <samsvl@nlr.nl>}, ported to Java by Norris Weimer
+ * {@literal <norris.weimer@ualberta.ca>}, and ported to JMRI/RPS by Bob
+ * Jacobsen.
  *
  * The original Pascal code and documentation is on these web pages
- * <http://callisto.worldonline.nl/~samsvl/stdalone.pas>
- * <http://callisto.worldonline.nl/~samsvl/satpos.htm>
- * <http://callisto.worldonline.nl/~samsvl/stdalone.htm>
+ * <a href="http://callisto.worldonline.nl/~samsvl/stdalone.pas">http://callisto.worldonline.nl/~samsvl/stdalone.pas</a>
+ * <a href="http://callisto.worldonline.nl/~samsvl/satpos.htm">http://callisto.worldonline.nl/~samsvl/satpos.htm</a>
+ * <a href="http://callisto.worldonline.nl/~samsvl/stdalone.htm">http://callisto.worldonline.nl/~samsvl/stdalone.htm</a>
  * There is also a link there to a C port of Sam's programs
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2008
@@ -26,7 +27,7 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
         this.offset = offset;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP2")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2")
     public Analytic_AAlgorithm(Point3d[] sensors, double vsound) {
         this.sensors = sensors;
         this.Vs = vsound;
@@ -331,9 +332,9 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
             this.z = z;
             this.vs = vs;
         }
-        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "URF_UNREAD_FIELD")
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "URF_UNREAD_FIELD")
         int code;
-        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "URF_UNREAD_FIELD")
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "URF_UNREAD_FIELD")
         double x, y, z, vs;
     }
 

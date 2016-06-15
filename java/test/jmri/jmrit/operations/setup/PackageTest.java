@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrit.operations.setup;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmrit.operations.setup package
  *
  * @author	Bob Coleman
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -21,13 +19,14 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.operations.setup.PackageTest"); // no tests in class itself
         suite.addTest(OperationsSetupTest.suite());
+        suite.addTest(BundleTest.suite());
 
         // GUI tests start here
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {

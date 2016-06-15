@@ -16,6 +16,12 @@ import java.util.Locale;
 import jmri.JmriException;
 import jmri.jmris.JmriConnection;
 
+/**
+ * 
+ * @author Randall Wood
+ * @deprecated since 4.3.4
+ */
+@Deprecated
 public class JsonThrottleServer {
 
     private final ObjectMapper mapper;

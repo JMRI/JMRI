@@ -1,4 +1,3 @@
-// BeanTableDataModel.java
 package jmri.jmrit.beantable;
 
 import java.awt.Component;
@@ -50,15 +49,10 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author Dennis Miller Copyright (C) 2006
- * @version	$Revision$
  */
 abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
         implements PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3276184372154591138L;
     static public final int SYSNAMECOL = 0;
     static public final int USERNAMECOL = 1;
     static public final int VALUECOL = 2;
@@ -257,8 +251,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                 NamedBean nB = getByUserName((String) value);
                 if (nB != null) {
                     log.error("User name is not unique " + value);
-                    String msg;
-                    msg = Bundle.getMessage("WarningUserName", new Object[]{("" + value)});
+                    String msg = Bundle.getMessage("WarningUserName", new Object[]{("" + value)});
                     JOptionPane.showMessageDialog(null, msg,
                             Bundle.getMessage("WarningTitle"),
                             JOptionPane.ERROR_MESSAGE);
@@ -335,14 +328,12 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                 doDelete(t);
             } else {
                 final JDialog dialog = new JDialog();
-                String msg;
                 dialog.setTitle(Bundle.getMessage("WarningTitle"));
                 dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
                 JPanel container = new JPanel();
                 container.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
                 container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
                 if (count > 0) { // warn of listeners attached before delete
-                    msg = java.text.MessageFormat.format(Bundle.getMessage("DeletePrompt"), new Object[]{t.getSystemName()});
 
                     JLabel question = new JLabel(Bundle.getMessage("DeletePrompt", t.getFullyFormattedDisplayName()));
                     question.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -375,7 +366,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                         container.add(jScrollPane);
                     }
                 } else {
-                    msg = java.text.MessageFormat.format(
+                    String msg = java.text.MessageFormat.format(
                             Bundle.getMessage("DeletePrompt"),
                             new Object[]{t.getSystemName()});
                     JLabel question = new JLabel(msg);
@@ -383,12 +374,12 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                     container.add(question);
                 }
 
-                final JCheckBox remember = new JCheckBox("Remember this setting for next time?");
+                final JCheckBox remember = new JCheckBox(Bundle.getMessage("MessageRememberSetting"));
                 remember.setFont(remember.getFont().deriveFont(10f));
                 remember.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-                JButton yesButton = new JButton("Yes");
-                JButton noButton = new JButton("No");
+                JButton yesButton = new JButton(Bundle.getMessage("ButtonYes"));
+                JButton noButton = new JButton(Bundle.getMessage("ButtonNo"));
                 JPanel button = new JPanel();
                 button.setAlignmentX(Component.CENTER_ALIGNMENT);
                 button.add(yesButton);
@@ -449,7 +440,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
      * optional, in that other table formats can use this table model. But we
      * put it here to help keep it consistent.
      *
-     * @param table
+     * @param table {@link JTable} to configure
      */
     public void configureTable(JTable table) {
         // allow reordering of the columns
@@ -498,8 +489,8 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
      * Service method to setup a column so that it will hold a button for it's
      * values
      *
-     * @param table
-     * @param column
+     * @param table  {@link JTable} to use
+     * @param column Column to setup
      * @param sample Typical button, used for size
      */
     protected void setColumnToHoldButton(JTable table, int column, JButton sample) {
@@ -533,7 +524,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
      * comboboxes or booleans
      */
     @SuppressWarnings("unchecked")
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     public void printTable(HardcopyWriter w) {
@@ -582,7 +573,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         w.close();
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize) {
@@ -645,11 +636,6 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
 
     public JTable makeJTable(TableSorter sorter) {
         JTable table = new JTable(sorter) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 2511932624004472654L;
-
             public boolean editCellAt(int row, int column, java.util.EventObject e) {
                 boolean res = super.editCellAt(row, column, e);
                 java.awt.Component c = this.getEditorComponent();
@@ -787,8 +773,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
             NamedBean nB = getByUserName(value);
             if (nB != null) {
                 log.error("User name is not unique " + value);
-                String msg;
-                msg = Bundle.getMessage("WarningUserName", new Object[]{("" + value)});
+                String msg = Bundle.getMessage("WarningUserName", new Object[]{("" + value)});
                 JOptionPane.showMessageDialog(null, msg,
                         Bundle.getMessage("WarningTitle"),
                         JOptionPane.ERROR_MESSAGE);
@@ -982,7 +967,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                 //skip empty or blank columns
                 if (columnName != null && !columnName.equals("")) {
                     int index = tcm.getColumnIndex(tc.getIdentifier(), false);
-                    p.setTableColumnPreferences(beantableref, columnName, index, tc.getPreferredWidth(), tmodel.getSortingStatus(tc.getModelIndex()), !tcm.isColumnVisible(tc));
+                    p.setTableColumnPreferences(beantableref, columnName, index, tc.getPreferredWidth(), TableSorter.getSortOrder(tmodel.getSortingStatus(tc.getModelIndex())), !tcm.isColumnVisible(tc));
                 }
             } catch (Exception e) {
                 log.warn("unable to store settings for table column " + tc.getHeaderValue());
@@ -1028,7 +1013,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                 int width = p.getTableColumnWidth(beantableref, columnName);
                 tc.setPreferredWidth(width);
 
-                int sort = p.getTableColumnSort(beantableref, columnName);
+                int sort = TableSorter.getSortStatus(p.getTableColumnSort(beantableref, columnName));
                 tmodel.setSortingStatus(tc.getModelIndex(), sort);
 
                 if (p.getTableColumnHidden(beantableref, columnName)) {

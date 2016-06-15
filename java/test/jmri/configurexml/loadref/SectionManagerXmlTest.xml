@@ -7,7 +7,7 @@
     <test>2</test>
     <modifier>.2</modifier>
   </jmriversion>
-  <sensors class="jmri.managers.configurexml.InternalSensorManagerXml">
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
     <defaultInitialState>unknown</defaultInitialState>
     <sensor systemName="ISBO1" inverted="false" userName="blocknorthwestoccupied">
       <systemName>ISBO1</systemName>
@@ -202,7 +202,7 @@
       <systemName>ISSSTOPR9</systemName>
     </sensor>
   </sensors>
-  <turnouts class="jmri.managers.configurexml.InternalTurnoutManagerXml">
+  <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
     <operations automate="false">
       <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
       <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />

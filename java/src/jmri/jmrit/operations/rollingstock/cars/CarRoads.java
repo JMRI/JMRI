@@ -35,21 +35,24 @@ public class CarRoads extends RollingStockAttribute {
             // create and load
             _instance = new CarRoads();
         }
-        if (Control.showInstance) {
+        if (Control.SHOW_INSTANCE) {
             log.debug("CarRoads returns instance {}", _instance);
         }
         return _instance;
     }
 
+    @Override
     protected String getDefaultNames() {
         return ROADS;
     }
 
+    @Override
     public void addName(String road) {
         super.addName(road);
         setDirtyAndFirePropertyChange(CARROADS_CHANGED_PROPERTY, null, road);
     }
 
+    @Override
     public void deleteName(String road) {
         super.deleteName(road);
         setDirtyAndFirePropertyChange(CARROADS_CHANGED_PROPERTY, road, null);
@@ -70,6 +73,7 @@ public class CarRoads extends RollingStockAttribute {
      *
      * @return the maximum character length of a car type
      */
+    @Override
     public int getMaxNameLength() {
         if (maxNameLengthSubType == 0) {
             String maxName = "";

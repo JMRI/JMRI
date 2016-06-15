@@ -63,8 +63,23 @@ mechanism fires.</p>
 
 <h2>How to setup Lights</h2>
 
-<h3>Switching a Light On or Off</h3>
+<h3>The Light Table</h3>
+<p>Lights are created and edited in the <a href="../../package/jmri/jmrit/beantable/LightTable.shtml">Light Table</a>.<br>
+It contains the following columns:</p>
+	<ul>
+	<li>System Name</li>
+	<li>User Name (optional)</li>
+	<li>State</li>
+	<li>Comment (optional, double click to edit)</li>
+	<li>Enabled</li>
+	<li>Intensity</li>
+	</ul>
 
+<h3>Light Table Controls</h3>
+<p>Below the Light Table there's an <a href="../../package/jmri/jmrit/beantable/LightAddEdit.shtml">Add...</a> button.</p>
+<p>In each line of the table is an Edit and a Delete button.</p>
+
+<h3>Switching a Light On or Off</h3>
 <p>Lights may be turned on or off by clicking the button in the State
 column of the Light Table. A Light may be set up to follow the state of 
 a track switch (Turnout), On when the Turnout is Closed, and Off when it is
@@ -98,8 +113,9 @@ configuration file, they are all enabled.
 <p>To add a new Light, follow this procedure:</p>
 <ol>
 	<li>Click the <b>Tools</b> -&gt; <b>Tables</b> -&gt; <b>Lights</b> menu to bring up
-the Light Table, and click the <b>Add...</b> button at the bottom of the 
-pane to bring up the Add/Edit Light window.</li>
+the <a href="../../package/jmri/jmrit/beantable/LightTable.shtml">Light Table</a>,
+and click the <b>Add...</b> button at the bottom of the pane to bring up the
+<a href="../../package/jmri/jmrit/beantable/LightAddEdit.shtml">Add/Edit Light pane</a>.</li>
 	<li>Enter a System Name, according to the JMRI convention. The first
 letter designates your hardware system ('L' for LocoNet, 'C" for C/MRI,
 etc.), and the second letter must be 'L' for Light. These are followed by
@@ -140,17 +156,18 @@ correct the error and click <b>Create</b> again.
 <ol>
 	<li>Edit of an existing Light may be started in either of two ways:
 		<ul>
-			<li>Click on a Light's <b>Edit</b> button in the Light Table.</li>
-			<li>Enter the system name of the Light to be edited in the 
-		Add/Edit Light window and click the <b>Edit</b> button at 
-		the bottom of the Add/Edit Light window.  This must be the same 
-		as the system name shown in the Light Table.</li>
+			<li>Click on a Light's <b>Edit</b> button in the
+			<a href="../../package/jmri/jmrit/beantable/LightTable.shtml">Light Table</a>.</li>
+			<li>Enter the System Name of the Light to be edited in the 
+		<a href="../../package/jmri/jmrit/beantable/LightAddEdit.shtml">Add/Edit Light pane</a>
+		and click the <b>Edit</b> button at the bottom of the pane.
+		This must be the same as the System Name shown in the Light Table.</li>
 		</ul>
 	The <b>Create</b> and <b>Edit</b> buttons at the bottom of the Add/Edit 
-	Light window will change to <b>Update</b> and <b>Cancel</b>.</li>
+	Light panel will change to <b>Update</b> and <b>Cancel</b>.</li>
 	<li> Make whatever changes or additions you need to the information in
-	the dialog. Note that the system name of the edited Light may not be 
-	changed, but the user name may be changed. Other items are as described 
+	the dialog. Note that the System Name of the edited Light may not be 
+	changed, but the User Name may be changed. Other items are as described 
 	<a href="#addLight">above</a>.</li>
 	<li>After making changes to the Light information, click <b>Update</b> 
 	to change the selected Light. If everything is fine, a 
@@ -159,7 +176,7 @@ correct the error and click <b>Create</b> again.
 	displayed in the notes area, and the update is stopped for you to 
 	correct the error and click <b>Update</b> again.</li>
 	<li>Click <b>Cancel</b> to exit edit mode without changing the 
-	selected Light. If the Add/Edit Light window is dismissed (closed) 
+	selected Light. If the Add/Edit Light panel is dismissed (closed) 
 	while in edit mode, <b>Cancel</b> is automatically selected, and no 
 	changes are made to the selected Light.</li>
 </ol>

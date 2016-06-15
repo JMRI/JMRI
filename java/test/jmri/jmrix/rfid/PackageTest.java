@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.rfid;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * tests for the jmri.jmrix.rfid package
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -26,7 +24,7 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -43,7 +41,6 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.rfid.protocol.olimex.OlimexRfidProtocolTest.suite());
         suite.addTest(jmri.jmrix.rfid.protocol.parallax.ParallaxRfidProtocolTest.suite());
         suite.addTest(jmri.jmrix.rfid.protocol.seeedstudio.SeeedStudioRfidProtocolTest.suite());
-
         return suite;
     }
 

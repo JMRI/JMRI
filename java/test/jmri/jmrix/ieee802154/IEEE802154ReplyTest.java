@@ -11,21 +11,11 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.ieee802154.IEEE802154Reply class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class IEEE802154ReplyTest extends TestCase {
 
     public void testCtor() {
-        IEEE802154TrafficController tc = new IEEE802154TrafficController(){
-           public IEEE802154Node newNode(){
-             return null;
-           }
-
-           public jmri.jmrix.AbstractMRReply newReply(){
-             return null;
-           }
-        };
-        IEEE802154Reply m = new IEEE802154Reply(tc);
+        IEEE802154Reply m = new IEEE802154Reply();
         Assert.assertNotNull(m);
     }
 
@@ -37,7 +27,7 @@ public class IEEE802154ReplyTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", IEEE802154ReplyTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

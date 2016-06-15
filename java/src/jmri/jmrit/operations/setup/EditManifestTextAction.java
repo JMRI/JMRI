@@ -30,6 +30,7 @@ public class EditManifestTextAction extends AbstractAction {
 
     EditManifestTextFrame f = null;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a settings frame
         if (f == null || !f.isVisible()) {

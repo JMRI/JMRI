@@ -5,8 +5,13 @@ import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.util.List;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
@@ -24,27 +29,22 @@ import org.slf4j.LoggerFactory;
  */
 public class EngineAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6682092348083316799L;
-
     EngineManager engineManager = EngineManager.instance();
 
     // labels
-    javax.swing.JLabel textAttribute = new javax.swing.JLabel();
-    javax.swing.JLabel textSep = new javax.swing.JLabel();
+    JLabel textAttribute = new JLabel();
+    JLabel textSep = new JLabel();
 
     // major buttons
-    javax.swing.JButton addButton = new javax.swing.JButton();
-    javax.swing.JButton deleteButton = new javax.swing.JButton();
-    javax.swing.JButton replaceButton = new javax.swing.JButton();
+    JButton addButton = new JButton(Bundle.getMessage("Add"));
+    JButton deleteButton = new JButton(Bundle.getMessage("Delete"));
+    JButton replaceButton = new JButton(Bundle.getMessage("Replace"));
 
     // combo box
-    javax.swing.JComboBox<String> comboBox;
+    JComboBox<String> comboBox;
 
     // text box
-    javax.swing.JTextField addTextBox = new javax.swing.JTextField(Control.max_len_string_attibute);
+    JTextField addTextBox = new JTextField(Control.max_len_string_attibute);
 
     // property change
     public static final String DISPOSE = "dispose"; // NOI18N
@@ -75,13 +75,6 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 
         textAttribute.setText(comboboxName);
 
-        addButton.setText(Bundle.getMessage("Add"));
-        addButton.setVisible(true);
-        deleteButton.setText(Bundle.getMessage("Delete"));
-        deleteButton.setVisible(true);
-        replaceButton.setText(Bundle.getMessage("Replace"));
-        replaceButton.setVisible(true);
-
         // row 1
         addItem(textAttribute, 1, 1);
         // row 2
@@ -107,17 +100,12 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
     }
 
     // add, delete or replace button
+    @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("edit frame button activated");
         if (ae.getSource() == addButton) {
             String addItem = addTextBox.getText();
-            if (addItem.equals("")) {
-                return;
-            }
-            if (addItem.length() > Control.max_len_string_attibute) {
-                JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("engineAttribute"),
-                        new Object[]{Control.max_len_string_attibute}), MessageFormat.format(Bundle
-                                .getMessage("canNotAdd"), new Object[]{_comboboxName}), JOptionPane.ERROR_MESSAGE);
+            if (!checkItemName(addItem, Bundle.getMessage("canNotAdd"))) {
                 return;
             }
             addItemToCombobox(addItem);
@@ -128,18 +116,12 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
         }
         if (ae.getSource() == replaceButton) {
             String newItem = addTextBox.getText();
-            if (newItem.equals("")) {
-                return;
-            }
-            if (newItem.length() > Control.max_len_string_attibute) {
-                JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("engineAttribute"),
-                        new Object[]{Control.max_len_string_attibute}), MessageFormat.format(Bundle
-                                .getMessage("canNotReplace"), new Object[]{_comboboxName}), JOptionPane.ERROR_MESSAGE);
+            if (!checkItemName(newItem, Bundle.getMessage("canNotReplace"))) {
                 return;
             }
             String oldItem = (String) comboBox.getSelectedItem();
             if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("replaceMsg"), new Object[]{
-                oldItem, newItem}), Bundle.getMessage("replaceAll"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+                    oldItem, newItem}), Bundle.getMessage("replaceAll"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
                 return;
             }
             if (newItem.equals(oldItem)) {
@@ -153,39 +135,66 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
         }
     }
 
+    private boolean checkItemName(String itemName, String errorMessage) {
+        if (itemName.equals(NONE)) {
+            return false;
+        }
+        if (_comboboxName.equals(EngineEditFrame.ROAD)) {
+            if (!OperationsXml.checkFileName(itemName)) { // NOI18N
+                log.error("Road name must not contain reserved characters");
+                JOptionPane.showMessageDialog(this, Bundle.getMessage("NameResChar") + NEW_LINE
+                        + Bundle.getMessage("ReservedChar"),
+                        MessageFormat.format(errorMessage, new Object[]{_comboboxName}),
+                        JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+        }
+        String[] item = {itemName};
+        if (_comboboxName.equals(EngineEditFrame.TYPE)) {
+            item = itemName.split("-");
+        }
+        if (item[0].length() > Control.max_len_string_attibute) {
+            JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("engineAttribute"),
+                    new Object[]{Control.max_len_string_attibute}), MessageFormat.format(errorMessage,
+                    new Object[]{_comboboxName}), JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+
     private void deleteItemFromCombobox(String deleteItem) {
-        if (_comboboxName == EngineEditFrame.ROAD) {
+        if (_comboboxName.equals(EngineEditFrame.ROAD)) {
             // purge train and locations by using replace
             CarRoads.instance().replaceName(deleteItem, null);
         }
-        if (_comboboxName == EngineEditFrame.MODEL) {
+        if (_comboboxName.equals(EngineEditFrame.MODEL)) {
             EngineModels.instance().deleteName(deleteItem);
         }
-        if (_comboboxName == EngineEditFrame.TYPE) {
+        if (_comboboxName.equals(EngineEditFrame.TYPE)) {
             EngineTypes.instance().deleteName(deleteItem);
         }
-        if (_comboboxName == EngineEditFrame.LENGTH) {
+        if (_comboboxName.equals(EngineEditFrame.LENGTH)) {
             EngineLengths.instance().deleteName(deleteItem);
         }
-        if (_comboboxName == EngineEditFrame.OWNER) {
+        if (_comboboxName.equals(EngineEditFrame.OWNER)) {
             CarOwners.instance().deleteName(deleteItem);
         }
-        if (_comboboxName == EngineEditFrame.CONSIST) {
+        if (_comboboxName.equals(EngineEditFrame.CONSIST)) {
             engineManager.deleteConsist(deleteItem);
         }
     }
 
     private void addItemToCombobox(String addItem) {
-        if (_comboboxName == EngineEditFrame.ROAD) {
+        if (_comboboxName.equals(EngineEditFrame.ROAD)) {
             CarRoads.instance().addName(addItem);
         }
-        if (_comboboxName == EngineEditFrame.MODEL) {
+        if (_comboboxName.equals(EngineEditFrame.MODEL)) {
             EngineModels.instance().addName(addItem);
         }
-        if (_comboboxName == EngineEditFrame.TYPE) {
+        if (_comboboxName.equals(EngineEditFrame.TYPE)) {
             EngineTypes.instance().addName(addItem);
         }
-        if (_comboboxName == EngineEditFrame.LENGTH) {
+        if (_comboboxName.equals(EngineEditFrame.LENGTH)) {
             // convert from inches to feet if needed
             if (addItem.endsWith("\"")) { // NOI18N
                 addItem = addItem.substring(0, addItem.length() - 1);
@@ -223,7 +232,7 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
                 if (addItem.length() > Control.max_len_string_length_name) {
                     JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("engineAttribute"),
                             new Object[]{Control.max_len_string_length_name}), MessageFormat.format(Bundle
-                                    .getMessage("canNotAdd"), new Object[]{_comboboxName}), JOptionPane.ERROR_MESSAGE);
+                            .getMessage("canNotAdd"), new Object[]{_comboboxName}), JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             } catch (NumberFormatException e) {
@@ -233,10 +242,10 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
             EngineLengths.instance().addName(addItem);
             comboBox.setSelectedItem(addItem);
         }
-        if (_comboboxName == EngineEditFrame.CONSIST) {
+        if (_comboboxName.equals(EngineEditFrame.CONSIST)) {
             engineManager.newConsist(addItem);
         }
-        if (_comboboxName == EngineEditFrame.OWNER) {
+        if (_comboboxName.equals(EngineEditFrame.OWNER)) {
             CarOwners.instance().addName(addItem);
         }
     }
@@ -245,7 +254,7 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
         List<RollingStock> engines = engineManager.getList();
         for (RollingStock rs : engines) {
             Engine engine = (Engine) rs;
-            if (_comboboxName == EngineEditFrame.MODEL) {
+            if (_comboboxName.equals(EngineEditFrame.MODEL)) {
                 // we need to copy the old model attributes, so find an engine.
                 if (engine.getModel().equals(oldItem)) {
                     // Has this model been configured?
@@ -265,54 +274,55 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
                 }
             }
         }
-        if (_comboboxName == EngineEditFrame.CONSIST) {
+        if (_comboboxName.equals(EngineEditFrame.CONSIST)) {
             engineManager.replaceConsistName(oldItem, newItem);
         }
         // now adjust locations and trains
-        if (_comboboxName == EngineEditFrame.TYPE) {
+        if (_comboboxName.equals(EngineEditFrame.TYPE)) {
             EngineTypes.instance().replaceName(oldItem, newItem);
         }
-        if (_comboboxName == EngineEditFrame.ROAD) {
+        if (_comboboxName.equals(EngineEditFrame.ROAD)) {
             CarRoads.instance().replaceName(oldItem, newItem);
         }
-        if (_comboboxName == EngineEditFrame.OWNER) {
+        if (_comboboxName.equals(EngineEditFrame.OWNER)) {
             CarOwners.instance().replaceName(oldItem, newItem);
         }
-        if (_comboboxName == EngineEditFrame.LENGTH) {
+        if (_comboboxName.equals(EngineEditFrame.LENGTH)) {
             EngineLengths.instance().replaceName(oldItem, newItem);
         }
-        if (_comboboxName == EngineEditFrame.MODEL) {
+        if (_comboboxName.equals(EngineEditFrame.MODEL)) {
             EngineModels.instance().replaceName(oldItem, newItem);
         }
     }
 
     private void loadCombobox() {
-        if (_comboboxName == EngineEditFrame.ROAD) {
+        if (_comboboxName.equals(EngineEditFrame.ROAD)) {
             comboBox = CarRoads.instance().getComboBox();
             CarRoads.instance().addPropertyChangeListener(this);
         }
-        if (_comboboxName == EngineEditFrame.MODEL) {
+        if (_comboboxName.equals(EngineEditFrame.MODEL)) {
             comboBox = EngineModels.instance().getComboBox();
             EngineModels.instance().addPropertyChangeListener(this);
         }
-        if (_comboboxName == EngineEditFrame.TYPE) {
+        if (_comboboxName.equals(EngineEditFrame.TYPE)) {
             comboBox = EngineTypes.instance().getComboBox();
             EngineTypes.instance().addPropertyChangeListener(this);
         }
-        if (_comboboxName == EngineEditFrame.LENGTH) {
+        if (_comboboxName.equals(EngineEditFrame.LENGTH)) {
             comboBox = EngineLengths.instance().getComboBox();
             EngineLengths.instance().addPropertyChangeListener(this);
         }
-        if (_comboboxName == EngineEditFrame.OWNER) {
+        if (_comboboxName.equals(EngineEditFrame.OWNER)) {
             comboBox = CarOwners.instance().getComboBox();
             CarOwners.instance().addPropertyChangeListener(this);
         }
-        if (_comboboxName == EngineEditFrame.CONSIST) {
+        if (_comboboxName.equals(EngineEditFrame.CONSIST)) {
             comboBox = engineManager.getConsistComboBox();
             engineManager.addPropertyChangeListener(this);
         }
     }
 
+    @Override
     public void dispose() {
         CarRoads.instance().removePropertyChangeListener(this);
         EngineModels.instance().removePropertyChangeListener(this);
@@ -324,8 +334,9 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
         super.dispose();
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
@@ -351,10 +362,12 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
 
+    @Override
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
 
+    @Override
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }

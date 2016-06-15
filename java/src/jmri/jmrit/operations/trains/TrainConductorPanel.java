@@ -27,11 +27,6 @@ import org.slf4j.LoggerFactory;
  */
 public class TrainConductorPanel extends CommonConductorYardmasterPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7149077790256321679L;
-
     protected static final boolean IS_MANIFEST = true;
 
     // labels
@@ -168,6 +163,7 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
         log.debug("queue update");
         // use invokeLater to prevent deadlock
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 log.debug("update, setMode " + isSetMode);
                 initialize();
@@ -198,6 +194,12 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
                         moveButton.setEnabled(false);
                         setButton.setEnabled(false);
                     }
+                    // adjust move button text
+                    if (rl == _train.getTrainTerminatesRouteLocation()) {
+                        moveButton.setText(Bundle.getMessage("Terminate"));
+                    } else {
+                        moveButton.setText(Bundle.getMessage("Move"));
+                    }
                     updateComplete();
                 }
             }
@@ -214,7 +216,7 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change ({}) for: ({}) old: {} new: {}",
                     e.getPropertyName(), e.getSource().toString(),
                     e.getOldValue(), e.getNewValue());

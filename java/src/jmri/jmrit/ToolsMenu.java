@@ -1,10 +1,6 @@
-/**
- * ToolsMenu.java
- */
 package jmri.jmrit;
 
 import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.JMenu;
 import javax.swing.JSeparator;
 
@@ -16,24 +12,12 @@ import javax.swing.JSeparator;
  *
  * @author	Bob Jacobsen Copyright 2003, 2008
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public class ToolsMenu extends JMenu {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2981121278089960823L;
 
     public ToolsMenu(String name) {
         this();
         setText(name);
-    }
-
-    Action prefsAction;
-
-    protected void doPreferences() {
-        prefsAction.actionPerformed(null);
     }
 
     public ToolsMenu() {

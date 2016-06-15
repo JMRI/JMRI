@@ -1,6 +1,6 @@
-// JythonAutomaton.java
 package jmri.jmrit.automat;
 
+import java.lang.reflect.InvocationTargetException;
 import jmri.InstanceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * code, the "non-reflection" statements are in the comments
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version $Revision$
  */
 public class JythonAutomaton extends AbstractAutomaton {
 
@@ -65,9 +64,8 @@ public class JythonAutomaton extends AbstractAutomaton {
             // execute the init routine in the jython class
             exec.invoke(interp, new Object[]{"init()"});
 
-        } catch (Exception e) {
-            log.error("Exception creating jython system objects: " + e);
-            e.printStackTrace();
+        } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
+            log.error("Exception creating jython system objects", e);
         }
     }
 
@@ -92,9 +90,8 @@ public class JythonAutomaton extends AbstractAutomaton {
                 return true;
             }
             return false;
-        } catch (Exception e) {
-            log.error("Exception invoking jython command: " + e);
-            e.printStackTrace();
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            log.error("Exception during handle routine", e);
             return false;
         }
     }
@@ -105,5 +102,3 @@ public class JythonAutomaton extends AbstractAutomaton {
     private final static Logger log = LoggerFactory.getLogger(JythonAutomaton.class.getName());
 
 }
-
-/* @(#)JythonAutomaton.java */

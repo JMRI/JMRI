@@ -1,4 +1,3 @@
-// AbstractMRTrafficController.java
 package jmri.jmrix;
 
 import java.io.DataInputStream;
@@ -30,7 +29,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Paul Bender Copyright (C) 2004-2010
- * @version $Revision$
  */
 abstract public class AbstractMRTrafficController {
 
@@ -302,7 +300,7 @@ abstract public class AbstractMRTrafficController {
                     if (mCurrentState == WAITMSGREPLYSTATE) {
                         handleTimeout(m, l);
                     } else if (mCurrentState == AUTORETRYSTATE) {
-                        log.error("Message added back to queue: {}", m.toString());
+                        log.info("Message added back to queue: {}", m.toString());
                         msgQueue.addFirst(m);
                         listenerQueue.addFirst(l);
                         synchronized (xmtRunnable) {
@@ -520,7 +518,7 @@ abstract public class AbstractMRTrafficController {
     /**
      * Actually transmits the next message to the port
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = {"TLW_TWO_LOCK_WAIT"},
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"TLW_TWO_LOCK_WAIT"},
             justification = "Two locks needed for synchronization here, this is OK")
     synchronized protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
         log.debug("forwardToPort message: [{}]", m);
@@ -609,7 +607,7 @@ abstract public class AbstractMRTrafficController {
     public AbstractPortController controller = null;
 
     public boolean status() {
-        return (ostream != null & istream != null);
+        return (ostream != null && istream != null);
     }
 
     protected Thread xmtThread = null;
@@ -842,7 +840,6 @@ abstract public class AbstractMRTrafficController {
      * <P>
      * (This is public for testing purposes) Runs in the "Receive" thread.
      *
-     * @throws IOException
      */
     public void handleOneIncomingReply() throws IOException {
             // we sit in this until the message is complete, relying on
@@ -886,12 +883,12 @@ abstract public class AbstractMRTrafficController {
                     // to automatically handle by re-queueing the last sent
                     // message, otherwise go on to the next message
                     if (msg.isRetransmittableErrorMsg()) {
-                        log.debug("Automatic Recovery from Error Message: {}.  Retransmitted {} times.", msg.toString(), retransmitCount);
+                        log.error("Automatic Recovery from Error Message: {}.  Retransmitted {} times.", msg.toString(), retransmitCount);
                         synchronized (xmtRunnable) {
                             mCurrentState = AUTORETRYSTATE;
                             if (retransmitCount > 0) {
                                 try {
-                                    xmtRunnable.wait(retransmitCount * 100);
+                                    xmtRunnable.wait(retransmitCount * 100L);
                                 } catch (InterruptedException e) {
                                     Thread.currentThread().interrupt(); // retain if needed later
                                 }
@@ -1088,6 +1085,3 @@ abstract public class AbstractMRTrafficController {
 
     private final static Logger log = LoggerFactory.getLogger(AbstractMRTrafficController.class.getName());
 }
-
-
-/* @(#)AbstractMRTrafficController.java */

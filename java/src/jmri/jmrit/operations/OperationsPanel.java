@@ -40,10 +40,6 @@ import org.slf4j.LoggerFactory;
  */
 public class OperationsPanel extends JPanel implements AncestorListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4203296733948891651L;
     public static final String NEW_LINE = "\n"; // NOI18N
     public static final String NONE = ""; // NOI18N
 
@@ -226,8 +222,6 @@ public class OperationsPanel extends JPanel implements AncestorListener {
      * Will modify the character column width of a TextArea box to 90% of a
      * panels width. ScrollPane is set to 95% of panel width.
      *
-     * @param scrollPane
-     * @param textArea
      */
     protected void adjustTextAreaColumnWidth(JScrollPane scrollPane, JTextArea textArea) {
         this.adjustTextAreaColumnWidth(scrollPane, textArea, this.getPreferredSize());
@@ -281,7 +275,7 @@ public class OperationsPanel extends JPanel implements AncestorListener {
                 int width = tcm.getColumnByModelIndex(i).getPreferredWidth();
                 int order = table.convertColumnIndexToView(i);
                 // must save with column not hidden
-                p.setTableColumnPreferences(tableref, sorter.getColumnName(i), order, width, sortStatus, false);
+                p.setTableColumnPreferences(tableref, sorter.getColumnName(i), order, width, TableSorter.getSortOrder(sortStatus), false);
             }
             // now restore
             for (int i = 0; i < sorter.getColumnCount(); i++) {
@@ -296,7 +290,7 @@ public class OperationsPanel extends JPanel implements AncestorListener {
                     sortStatus = sorter.getSortingStatus(i);
                 }
                 p.setTableColumnPreferences(tableref, table.getColumnName(i), i, table.getColumnModel().getColumn(i)
-                        .getPreferredWidth(), sortStatus, false);
+                        .getPreferredWidth(), TableSorter.getSortOrder(sortStatus), false);
             }
         }
     }
@@ -329,7 +323,7 @@ public class OperationsPanel extends JPanel implements AncestorListener {
         // Some tables have more than one name, so use the current one for size
         for (int i = 0; i < table.getColumnCount(); i++) {
             String columnName = table.getColumnName(i);
-            int sort = p.getTableColumnSort(tableref, columnName);
+            int sort = TableSorter.getSortStatus(p.getTableColumnSort(tableref, columnName));
             if (sorter != null) {
                 sorter.setSortingStatus(i, sort);
             }
@@ -477,6 +471,7 @@ public class OperationsPanel extends JPanel implements AncestorListener {
         }
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "Checks for instance")
     protected String getWindowFrameRef() {
         if (this.getTopLevelAncestor() instanceof JmriJFrame) {
             return ((JmriJFrame) this.getTopLevelAncestor()).getWindowFrameRef();

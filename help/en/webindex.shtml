@@ -61,13 +61,13 @@
 
   
 <li>
-<a href="html/tools/tracker/index.shtml">Block Tracking </a>
+<a href="package/jmri/jmrit/beantable/BlockTable.shtml">Block Table </a>
 <ul></ul>
 </li>
 
   
 <li>
-<a href="package/jmri/jmrit/beantable/BlockTable.shtml">Block Table </a>
+<a href="html/tools/tracker/index.shtml">Block Tracking </a>
 <ul></ul>
 </li>
 
@@ -981,6 +981,12 @@
 
  
 <li>
+<a href="package/jmri/jmrit/logix/OBlockTable.shtml">Path (in OBlock) </a>
+<ul></ul>
+</li>
+
+ 
+<li>
 <a href="package/apps/TabbedPreferences.shtml">Preferences </a>
 <ul></ul>
 </li>
@@ -1425,12 +1431,6 @@
 
   
 <li>
-<a href="html/doc/Technical/JBuilder.shtml">JBuilder IDE </a>
-<ul></ul>
-</li>
-
-  
-<li>
 <a href="html/doc/Technical/NetBeans.shtml">NetBeans IDE </a>
 <ul></ul>
 </li>
@@ -1438,12 +1438,6 @@
   
 <li>
 <a href="package/jmri/jmrit/automat/monitor/AutomatTableFrame.shtml">Thread Monitor </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="html/doc/Technical/XCode.shtml">XCode IDE </a>
 <ul></ul>
 </li>
 

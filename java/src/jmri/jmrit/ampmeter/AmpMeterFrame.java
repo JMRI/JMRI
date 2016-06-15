@@ -1,4 +1,3 @@
-// AmpMeterFrame.java
 package jmri.jmrit.ampmeter;
 
 import java.awt.Image;
@@ -10,9 +9,9 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import jmri.InstanceManager;
+import jmri.MultiMeter;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.JmriJFrame;
-import jmri.MultiMeter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +25,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Ken Cameron Copyright (C) 2007
  * @author	Mark Underwood Copyright (C) 2007
- * @version	$Revision$
  *
  * This was a direct steal form the LCDClock code by Ken Cameron,
  * which was a direct steal from the Nixie clock code, ver 1.2. 
@@ -209,7 +207,7 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
 
     JButton b;
 
-    private class ButtonListener implements ActionListener {
+    static private class ButtonListener implements ActionListener {
 
         public void actionPerformed(ActionEvent a) {
 	    /*
@@ -225,6 +223,4 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
     }
 
     private final static Logger log = LoggerFactory.getLogger(AmpMeterFrame.class.getName());
-
-
 }

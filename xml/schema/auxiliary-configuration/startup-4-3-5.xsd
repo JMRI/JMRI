@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?>
+
+<!-- $Id$ -->
+
+<!-- This schema is part of JMRI. Copyright 2009, 2010, 2016                -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+
+<!-- Not in Venetian blind form                                       -->
+<!-- 'operation' element not complete                                 -->
+<!-- Need annotations                                                 -->
+<!-- Attributes need to get types right esp. for enumerated           -->
+<!-- Attributes need REQUIRED/IMPLIED                                 -->
+
+<!-- 
+Top Level Elements not brought over from DTD 
+
+securityelements - thought to be obsolete
+aspectgenerator - thought to be obsolete
+
+application - obsolete container element for gui/connection/programmer
+preferences - never fully defined in DTD
+signals - obsolete, EMPTY, never used
+
+-->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:xi="http://www.w3.org/2001/XInclude"
+           xmlns:docbook="http://docbook.org/ns/docbook"
+           xmlns:jmri="http://jmri.org/xml/schema/JMRIschema"
+           xsi:schemaLocation="
+                http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd
+                http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/docbook.xsd
+            "
+>
+
+    <xs:include schemaLocation="http://jmri.org/xml/schema/auxiliary-configuration/perform-4-3-5.xsd"/>
+
+    <xs:annotation>
+        <xs:documentation>
+            This is the schema representing panel files, including
+            both the panels themselves and configuration information.
+            <p/>
+            This version of the schema is for files created by JMRI
+            version 4.3.5 and later.  
+            It is the current development version.
+        </xs:documentation>
+        <xs:appinfo>
+            <jmri:usingclass configurexml="true" />  <!-- too many to list -->
+        </xs:appinfo>
+    </xs:annotation>
+
+    <xs:element name="startup">
+        <xs:complexType>
+            <xs:sequence minOccurs="0" maxOccurs="unbounded" >
+                <xs:element name="perform" type="PerformType" minOccurs="0" maxOccurs="unbounded" />            
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

@@ -1,4 +1,3 @@
-// DccAddressPanel.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.event.ActionEvent;
@@ -32,14 +31,8 @@ import org.slf4j.LoggerFactory;
  * At least one of Short Address and Long Address must be present!
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2012
- * @version	$Revision$
  */
 public class DccAddressPanel extends JPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -310275111701105498L;
 
     JTextField val = new JTextField(6);
 

@@ -1,4 +1,3 @@
-// TieToolFrameTest.java
 package jmri.jmrix.openlcb.swing.tie;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.swing.tie.TieToolFrame class
  *
  * @author Bob Jacobsen Copyright 2008
- * @version $Revision$
  */
 public class TieToolFrameTest extends TestCase {
 
@@ -39,7 +37,7 @@ public class TieToolFrameTest extends TestCase {
     static public void main(String[] args) {
         apps.tests.AllTest.initLogging();
         String[] testCaseName = {"-noloading", TieToolFrameTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

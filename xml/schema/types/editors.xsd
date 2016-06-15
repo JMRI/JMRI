@@ -354,6 +354,7 @@
       <xs:attribute name="redBorder" type="xs:int" />
       <xs:attribute name="greenBorder" type="xs:int" />
       <xs:attribute name="blueBorder" type="xs:int" />
+      <xs:attribute name="hasBackground" type="yesNoType" />
       <xs:attribute name="size" type="xs:string" />
       <xs:attribute name="style" type="xs:string" />
       <xs:attribute name="margin" type="xs:int" />
@@ -679,6 +680,7 @@
       <xs:attribute name="redBorder" type="xs:int" />
       <xs:attribute name="greenBorder" type="xs:int" />
       <xs:attribute name="blueBorder" type="xs:int" />
+      <xs:attribute name="hasBackground" type="yesNoType" />
       <xs:attribute name="redBack" type="xs:int" />
       <xs:attribute name="greenBack" type="xs:int" />
       <xs:attribute name="blueBack" type="xs:int" />

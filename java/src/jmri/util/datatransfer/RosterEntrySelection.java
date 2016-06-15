@@ -94,8 +94,6 @@ public class RosterEntrySelection implements Transferable, ClipboardOwner {
      *
      * @param t - a Transferable object. This should be a RosterEntrySelection,
      *          but for simplicity, will accept any Transferable object.
-     * @throws UnsupportedFlavorException
-     * @throws IOException
      */
     public static ArrayList<RosterEntry> getRosterEntries(Transferable t) throws UnsupportedFlavorException, IOException {
         if (t.isDataFlavorSupported(rosterEntryFlavor)) {

@@ -3,6 +3,7 @@ package jmri.jmrit.throttle;
 import java.awt.event.ActionEvent;
 import javax.swing.Icon;
 import jmri.beans.Beans;
+import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 
@@ -10,14 +11,8 @@ import jmri.util.swing.WindowInterface;
  * Create a new throttle.
  *
  * @author	Glen Oberhauser
- * @version $Revision$
  */
 public class ThrottleCreationAction extends JmriAbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3268542525652376730L;
 
     public ThrottleCreationAction(String s, WindowInterface wi) {
         super(s, wi);
@@ -59,8 +54,8 @@ public class ThrottleCreationAction extends JmriAbstractAction {
      */
     public void actionPerformed(ActionEvent e) {
         String group = null;
-        if (Beans.hasProperty(wi, "selectedRosterGroup")) {
-            group = (String) Beans.getProperty(wi, "selectedRosterGroup");
+        if (Beans.hasProperty(wi, RosterGroupSelector.SELECTED_ROSTER_GROUP)) {
+            group = (String) Beans.getProperty(wi, RosterGroupSelector.SELECTED_ROSTER_GROUP);
         }
         ThrottleFrame tf = ThrottleFrameManager.instance().createThrottleFrame();
         tf.getAddressPanel().getRosterEntrySelector().setSelectedRosterGroup(group);

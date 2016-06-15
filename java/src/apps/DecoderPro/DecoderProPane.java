@@ -1,4 +1,3 @@
-// DecoderProPane.java
 package apps.DecoderPro;
 
 import apps.Apps;
@@ -26,14 +25,8 @@ import javax.swing.JPanel;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Bob Jacobsen Copyright 2003, 2014
- * @version $Revision$
  */
 public class DecoderProPane extends apps.AppsLaunchPane {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4713040816106118873L;
 
     DecoderProPane() {
         super();
@@ -68,11 +61,6 @@ public class DecoderProPane extends apps.AppsLaunchPane {
         Action serviceprog = new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction(Bundle.getMessage("DpButtonUseProgrammingTrack"));
         Action opsprog = new jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction(Bundle.getMessage("DpButtonProgramOnMainTrack"));
         Action quit = new AbstractAction(Bundle.getMessage("MenuItemQuit")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 2382260205232391687L;
-
             public void actionPerformed(ActionEvent e) {
                 Apps.handleQuit();
             }

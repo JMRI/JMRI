@@ -1,4 +1,3 @@
-// AudioListenerFrame.java
 package jmri.jmrit.audio.swing;
 
 import java.awt.FlowLayout;
@@ -35,14 +34,9 @@ import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
  * <P>
  *
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public class AudioListenerFrame extends AbstractAudioFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4006867664747801687L;
     JPanelVector3f position = new JPanelVector3f(Bundle.getMessage("LabelPosition"),
             Bundle.getMessage("UnitUnits"));
     JPanelVector3f velocity = new JPanelVector3f(Bundle.getMessage("LabelVelocity"),
@@ -90,7 +84,7 @@ public class AudioListenerFrame extends AbstractAudioFrame {
                 BorderFactory.createEmptyBorder(5, 5, 5, 5)));
         metersPerUnit.setPreferredSize(new JTextField(8).getPreferredSize());
         metersPerUnit.setModel(
-                new SpinnerNumberModel(new Float(0f), new Float(0f), new Float(65536f), new Float(0.0001f)));
+                new SpinnerNumberModel(Float.valueOf(0f), Float.valueOf(0f), Float.valueOf(65536f), Float.valueOf(0.0001f)));
         metersPerUnit.setEditor(new JSpinner.NumberEditor(metersPerUnit, "0.0000"));
         p.add(metersPerUnit);
         p.add(metersPerUnitLabel);
@@ -98,18 +92,18 @@ public class AudioListenerFrame extends AbstractAudioFrame {
 
         p = new JPanel();
         JButton apply;
-        p.add(apply = new JButton(rb.getString("ButtonApply")));
+        p.add(apply = new JButton(Bundle.getMessage("ButtonApply")));
         apply.addActionListener((ActionEvent e) -> {
             applyPressed(e);
         });
         JButton ok;
-        p.add(ok = new JButton(rb.getString("ButtonOK")));
+        p.add(ok = new JButton(Bundle.getMessage("ButtonOK")));
         ok.addActionListener((ActionEvent e) -> {
             applyPressed(e);
             frame.dispose();
         });
         JButton cancel;
-        p.add(cancel = new JButton(rb.getString("ButtonCancel")));
+        p.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
         cancel.addActionListener((ActionEvent e) -> {
             frame.dispose();
         });
@@ -126,6 +120,9 @@ public class AudioListenerFrame extends AbstractAudioFrame {
      */
     @Override
     public void populateFrame(Audio a) {
+        if (a instanceof AudioListener) {
+            throw new IllegalArgumentException(a.getSystemName() + " is not an AudioListener object");
+        }
         super.populateFrame(a);
         AudioListener l = (AudioListener) a;
         position.setValue(l.getPosition());
@@ -155,11 +152,9 @@ public class AudioListenerFrame extends AbstractAudioFrame {
             // Notify changes
             model.fireTableDataChanged();
         } catch (AudioException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), rb.getString("AudioCreateErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), Bundle.getMessage("AudioCreateErrorTitle"), JOptionPane.ERROR_MESSAGE);
         }
     }
 
     //private static final Logger log = LoggerFactory.getLogger(AudioListenerFrame.class.getName());
 }
-
-/* @(#)AudioListenerFrame.java */

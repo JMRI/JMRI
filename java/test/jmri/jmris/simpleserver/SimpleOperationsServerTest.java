@@ -10,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmris.simpleserver.SimpleOperationsServer class
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class SimpleOperationsServerTest extends TestCase {
 
@@ -36,7 +35,7 @@ public class SimpleOperationsServerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {SimpleOperationsServerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

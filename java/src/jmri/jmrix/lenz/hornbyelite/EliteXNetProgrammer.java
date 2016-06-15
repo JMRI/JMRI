@@ -160,7 +160,7 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
                 // message can trigger a request for service mode
                 // results if progrstate is REQUESTSENT.
                 _service_mode = true;
-            } else if (_service_mode == true) {
+            } else {  // _service_mode == true
                 // Since we get this message as both a broadcast and
                 // a directed message, ignore the message if we're
                 //already in the indicated mode
@@ -174,7 +174,7 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
                 // "OK" message can not trigger a request for service
                 // mode results if progrstate is REQUESTSENT.
                 _service_mode = false;
-            } else if (_service_mode == false) {
+            } else { // _service_mode == false
                 // Since we get this message as both a broadcast and
                 // a directed message, ignore the message if we're
                 //already in the indicated mode

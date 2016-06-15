@@ -1,4 +1,3 @@
-// SerialTurnout.java
 package jmri.jmrix.cmri.serial;
 
 import jmri.Turnout;
@@ -46,14 +45,8 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2003, 2007, 2008
  * @author	David Duchamp Copyright (C) 2004, 2007
  * @author	Dan Boudreau Copyright (C) 2007
- * @version	$Revision$
  */
 public class SerialTurnout extends AbstractTurnout {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8788994513363830083L;
 
     /**
      * Create a Turnout object, with both system and user names.
@@ -82,9 +75,9 @@ public class SerialTurnout extends AbstractTurnout {
         // _once_ if anything has changed state (or set the commanded state directly)
 
         // sort out states
-        if ((newState & Turnout.CLOSED) > 0) {
+        if ((newState & Turnout.CLOSED) != 0) {
             // first look for the double case, which we can't handle
-            if ((newState & Turnout.THROWN) > 0) {
+            if ((newState & Turnout.THROWN) != 0) {
                 // this is the disaster case!
                 log.error("Cannot command both CLOSED and THROWN: " + newState);
                 return;
@@ -149,7 +142,7 @@ public class SerialTurnout extends AbstractTurnout {
                         int kState = getKnownState();
                         if (closed) {
                             // CLOSED is being requested
-                            if ((kState & Turnout.THROWN) > 0) {
+                            if ((kState & Turnout.THROWN) != 0) {
                                 // known state is different from output bit, set output bit to be correct
                                 //     for known state, then start a timer to set it to requested state
                                 tNode.setOutputBit(tBit, false ^ getInverted());
@@ -168,7 +161,7 @@ public class SerialTurnout extends AbstractTurnout {
                             }
                         } else {
                             // THROWN is being requested
-                            if ((kState & Turnout.CLOSED) > 0) {
+                            if ((kState & Turnout.CLOSED) != 0) {
                                 // known state is different from output bit, set output bit to be correct
                                 //     for known state, then start a timer to set it to requested state
                                 tNode.setOutputBit(tBit, true ^ getInverted());
@@ -192,8 +185,8 @@ public class SerialTurnout extends AbstractTurnout {
                     int iTime = tNode.getPulseWidth();
                     // Get current known state of turnout
                     int kState = getKnownState();
-                    if ((closed && ((kState & Turnout.THROWN) > 0))
-                            || (!closed && ((kState & Turnout.CLOSED) > 0))) {
+                    if ((closed && ((kState & Turnout.THROWN) != 0))
+                            || (!closed && ((kState & Turnout.CLOSED) != 0))) {
                         // known and requested are different, a change is requested
                         //   Pulse the line, first turn bit on
                         tNode.setOutputBit(tBit, false ^ getInverted());
@@ -222,7 +215,7 @@ public class SerialTurnout extends AbstractTurnout {
                     int iTime = tNode.getPulseWidth();
                     // Get current known state of turnout
                     int kState = getKnownState();
-                    if (closed && ((kState & Turnout.THROWN) > 0)) {
+                    if (closed && ((kState & Turnout.THROWN) != 0)) {
                         // CLOSED is requested, currently THROWN - Pulse first bit
                         //   Turn bit on
                         tNode.setOutputBit(tBit, false ^ getInverted());
@@ -238,7 +231,7 @@ public class SerialTurnout extends AbstractTurnout {
                         }
                         mPulseTimerOn = true;
                         mPulseClosedTimer.start();
-                    } else if (!closed && ((kState & Turnout.CLOSED) > 0)) {
+                    } else if (!closed && ((kState & Turnout.CLOSED) != 0)) {
                         // THROWN is requested, currently CLOSED - Pulse second bit
                         //   Turn bit on
                         tNode.setOutputBit(tBit + 1, false ^ getInverted());
@@ -262,5 +255,3 @@ public class SerialTurnout extends AbstractTurnout {
 
     private final static Logger log = LoggerFactory.getLogger(SerialTurnout.class.getName());
 }
-
-/* @(#)SerialTurnout.java */

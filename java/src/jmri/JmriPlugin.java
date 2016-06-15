@@ -1,4 +1,3 @@
-// JmriPlugin.java
 package jmri;
 
 import javax.swing.JFrame;
@@ -11,7 +10,6 @@ import javax.swing.JMenuBar;
  * implemention, the user can update configuration, etc at startup time.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2012
- * @version	$Revision$
  */
 public class JmriPlugin {
 
@@ -29,5 +27,3 @@ public class JmriPlugin {
         //menuBar.add(menu);
     }
 }
-
-/* @(#)JmriPlugin.java */

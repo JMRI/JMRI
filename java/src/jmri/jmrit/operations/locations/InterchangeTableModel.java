@@ -29,6 +29,7 @@ public class InterchangeTableModel extends TrackTableModel {
         super.initTable(table, location, Track.INTERCHANGE);
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case NAME_COLUMN:
@@ -37,6 +38,7 @@ public class InterchangeTableModel extends TrackTableModel {
         return super.getColumnName(col);
     }
 
+    @Override
     protected void editTrack(int row) {
         log.debug("Edit interchange");
         if (tef != null) {
@@ -44,6 +46,7 @@ public class InterchangeTableModel extends TrackTableModel {
         }
         // use invokeLater so new window appears on top
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 tef = new InterchangeEditFrame();
                 Track interchange = tracksList.get(row);
@@ -54,8 +57,9 @@ public class InterchangeTableModel extends TrackTableModel {
     }
 
     // this table listens for changes to a location and it's interchanges
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
@@ -64,7 +68,7 @@ public class InterchangeTableModel extends TrackTableModel {
             Track track = ((Track) e.getSource());
             if (track.getTrackType().equals(Track.INTERCHANGE)) {
                 int row = tracksList.indexOf(track);
-                if (Control.showProperty) {
+                if (Control.SHOW_PROPERTY) {
                     log.debug("Update interchange table row: {} track: {}", row, track.getName());
                 }
                 if (row >= 0) {

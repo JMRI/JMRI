@@ -8,6 +8,7 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.tams package.
  *
  * @author Bob Jacobsen Copyright 2003, 2016
+ * @author  Paul Bender	
  */
 public class PackageTest extends TestCase {
 
@@ -19,13 +20,13 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
         apps.tests.AllTest.initLogging();
-        TestSuite suite = new TestSuite("jmri.jmrix.tams.SerialTest");
+        TestSuite suite = new TestSuite("jmri.jmrix.tams.PackageTest");
         suite.addTest(TamsTurnoutManagerTest.suite());
         return suite;
     }

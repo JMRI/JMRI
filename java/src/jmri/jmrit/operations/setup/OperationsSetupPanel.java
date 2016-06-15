@@ -1,4 +1,4 @@
-// OperationsSetupFrame.java
+// OperationsSetupPanel.java
 package jmri.jmrit.operations.setup;
 
 import java.awt.Dimension;
@@ -28,7 +28,7 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.routes.RouteManagerXml;
-import jmri.web.server.WebServerManager;
+import jmri.web.server.WebServerPreferences;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,11 +40,7 @@ import org.slf4j.LoggerFactory;
  */
 public class OperationsSetupPanel extends OperationsPreferencesPanel implements PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7662835134616666932L;
-    private final static Logger log = LoggerFactory.getLogger(OperationsSetupFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OperationsSetupPanel.class.getName());
 
     // labels
     JLabel textIconNorth = new JLabel(Bundle.getMessage("IconNorth"));
@@ -88,7 +84,7 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
     JCheckBox autoBackupCheckBox = new JCheckBox(Bundle.getMessage("AutoBackup"));
     JCheckBox iconCheckBox = new JCheckBox(Bundle.getMessage("trainIcon"));
     JCheckBox appendCheckBox = new JCheckBox(Bundle.getMessage("trainIconAppend"));
-	// JCheckBox rfidCheckBox = new JCheckBox(Bundle.getMessage("EnableRfid"));
+    // JCheckBox rfidCheckBox = new JCheckBox(Bundle.getMessage("EnableRfid"));
 
     // text field
     // JTextField ownerTextField = new JTextField(10);
@@ -383,7 +379,7 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
 
         // now provide the railroad name
         railroadNameTextField.setText(Setup.getRailroadName());
-        if (Setup.getRailroadName().equals(WebServerManager.getWebServerPreferences().getRailRoadName())) {
+        if (Setup.getRailroadName().equals(WebServerPreferences.getDefault().getRailRoadName())) {
             railroadNameTextField.setEnabled(false);
         }
         createShutDownTask();
@@ -410,6 +406,7 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
         }
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "checks for instance of OperationsSetupFrame")
     private void save() {
         // check input fields
         int maxTrainLength;
@@ -560,15 +557,15 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
         if (scaleG.isSelected()) {
             Setup.setScale(Setup.G_SCALE);
         }
-        if (!Setup.getRailroadName().equals(WebServerManager.getWebServerPreferences().getRailRoadName())) {
+        if (!Setup.getRailroadName().equals(WebServerPreferences.getDefault().getRailRoadName())) {
             Setup.setRailroadName(railroadNameTextField.getText());
             int results = JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
                     .getMessage("ChangeRailroadName"), new Object[]{
-                    WebServerManager.getWebServerPreferences().getRailRoadName(), Setup.getRailroadName()}), Bundle
+                WebServerPreferences.getDefault().getRailRoadName(), Setup.getRailroadName()}), Bundle
                     .getMessage("ChangeJMRIRailroadName"), JOptionPane.YES_NO_OPTION);
             if (results == JOptionPane.OK_OPTION) {
-                WebServerManager.getWebServerPreferences().setRailRoadName(Setup.getRailroadName());
-                WebServerManager.getWebServerPreferences().save();
+                WebServerPreferences.getDefault().setRailRoadName(Setup.getRailroadName());
+                WebServerPreferences.getDefault().save();
             }
         }
         // Set Unit of Length
@@ -605,7 +602,7 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
         if (maxLength > Setup.getMaxTrainLength()) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("RouteLengthNotModified"), MessageFormat.format(
                     Bundle.getMessage("MaxTrainLengthIncreased"), new Object[]{maxLength,
-                        Setup.getLengthUnit().toLowerCase()}), JOptionPane.INFORMATION_MESSAGE);
+                Setup.getLengthUnit().toLowerCase()}), JOptionPane.INFORMATION_MESSAGE);
         }
         if (maxLength < Setup.getMaxTrainLength()) {
             StringBuilder sb = new StringBuilder();
@@ -643,8 +640,8 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
                                                     route.getName(), rl.getName(), maxLength); // NOI18N
                                             return rl;
                                         }).forEach((rl) -> {
-                                            rl.setMaxTrainLength(maxLength);
-                                        });
+                                    rl.setMaxTrainLength(maxLength);
+                                });
                             });
                     // save the route changes
                     RouteManagerXml.instance().writeOperationsFile();
@@ -722,16 +719,16 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
     }
 
     private void setDirectionCheckBox(int direction) {
-        eastCheckBox.setSelected((direction & Setup.EAST) > 0);
-        textIconEast.setVisible((direction & Setup.EAST) > 0);
-        eastComboBox.setVisible((direction & Setup.EAST) > 0);
-        textIconWest.setVisible((direction & Setup.EAST) > 0);
-        westComboBox.setVisible((direction & Setup.EAST) > 0);
-        northCheckBox.setSelected((direction & Setup.NORTH) > 0);
-        textIconNorth.setVisible((direction & Setup.NORTH) > 0);
-        northComboBox.setVisible((direction & Setup.NORTH) > 0);
-        textIconSouth.setVisible((direction & Setup.NORTH) > 0);
-        southComboBox.setVisible((direction & Setup.NORTH) > 0);
+        eastCheckBox.setSelected((direction & Setup.EAST) == Setup.EAST);
+        textIconEast.setVisible((direction & Setup.EAST) == Setup.EAST);
+        eastComboBox.setVisible((direction & Setup.EAST) == Setup.EAST);
+        textIconWest.setVisible((direction & Setup.EAST) == Setup.EAST);
+        westComboBox.setVisible((direction & Setup.EAST) == Setup.EAST);
+        northCheckBox.setSelected((direction & Setup.NORTH) == Setup.NORTH);
+        textIconNorth.setVisible((direction & Setup.NORTH) == Setup.NORTH);
+        northComboBox.setVisible((direction & Setup.NORTH) == Setup.NORTH);
+        textIconSouth.setVisible((direction & Setup.NORTH) == Setup.NORTH);
+        southComboBox.setVisible((direction & Setup.NORTH) == Setup.NORTH);
     }
 
     private void setLengthUnit() {

@@ -3,10 +3,12 @@ package jmri.jmrit.operations.setup;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.io.IOException;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import jmri.jmrit.operations.OperationsXml;
+import org.python.jline.internal.Log;
 
 /**
  * Swing action to backup operation files to a directory selected by the user.
@@ -17,16 +19,13 @@ import jmri.jmrit.operations.OperationsXml;
  */
 public class BackupFilesAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2252745243582800660L;
 //    private final static Logger log = LoggerFactory.getLogger(BackupFilesAction.class.getName());
 
     public BackupFilesAction(String s) {
         super(s);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         backUp();
     }
@@ -62,12 +61,14 @@ public class BackupFilesAction extends AbstractAction {
         // Fix this later....... UGH!!
         try {
             backup.backupFilesToDirectory(directory);
-        } catch (Exception ex) {
+        } catch (IOException ex) {
+            Log.error("backup failed");
         }
     }
 
     private static class fileFilter extends javax.swing.filechooser.FileFilter {
 
+        @Override
         public boolean accept(File f) {
             if (f.isDirectory()) {
                 return true;
@@ -81,6 +82,7 @@ public class BackupFilesAction extends AbstractAction {
             }
         }
 
+        @Override
         public String getDescription() {
             return Bundle.getMessage("BackupFolders");
         }

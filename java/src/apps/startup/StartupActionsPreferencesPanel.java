@@ -6,6 +6,7 @@ import apps.StartupModel;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.IndexedPropertyChangeEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -33,9 +34,6 @@ import jmri.swing.PreferencesPanel;
  * @author Randall Wood (C) 2016
  */
 public class StartupActionsPreferencesPanel extends JPanel implements PreferencesPanel {
-
-    private static final long serialVersionUID = 1L;
-    private boolean isRestartRequired = false;
 
     /**
      * Creates new form StartupActionsPreferencesPanel
@@ -248,7 +246,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
 
     @Override
     public boolean isRestartRequired() {
-        return this.isDirty() || this.isRestartRequired;
+        return InstanceManager.getDefault(StartupActionsManager.class).isRestartRequired();
     }
 
     @Override
@@ -272,9 +270,8 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
     JButton upBtn;
     // End of variables declaration//GEN-END:variables
 
-    class TableModel extends AbstractTableModel implements PropertyChangeListener {
+    private class TableModel extends AbstractTableModel implements PropertyChangeListener {
 
-        private static final long serialVersionUID = 1L;
         private final StartupActionsManager manager;
 
         @SuppressWarnings("LeakingThisInConstructor")
@@ -302,7 +299,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
                 case 0:
                     return model;
                 case 1:
-                    return InstanceManager.getDefault(StartupActionsManager.class).getFactories(model.getClass()).getDescription();
+                    return this.manager.getFactories(model.getClass()).getDescription();
                 default:
                     return null;
             }
@@ -354,8 +351,16 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            this.fireTableDataChanged();
-            StartupActionsPreferencesPanel.this.isRestartRequired = true;
+            int index = -1;
+            if (evt instanceof IndexedPropertyChangeEvent) {
+                index = ((IndexedPropertyChangeEvent) evt).getIndex();
+            }
+            if (index != -1 && evt.getOldValue() instanceof Integer) {
+                this.fireTableRowsUpdated((Integer) evt.getOldValue(), index);
+            } else {
+                this.fireTableDataChanged();
+            }
+            this.manager.setRestartRequired();
         }
     }
 }

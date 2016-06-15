@@ -1,4 +1,3 @@
-// CsvExportMeasurementAction.java
 package jmri.jmrix.rps.swing;
 
 import java.awt.event.ActionEvent;
@@ -21,15 +20,9 @@ import org.slf4j.LoggerFactory;
  * Action to export the incoming raw data to a CSV-format file
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version $Revision$
  * @since 2.3.1
  */
 public class CsvExportMeasurementAction extends AbstractAction implements MeasurementListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6932267895252672856L;
 
     public CsvExportMeasurementAction(String actionName) {
         super(actionName);

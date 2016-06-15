@@ -68,6 +68,8 @@
 
 <mapID target="package.jmri.jmrit.ussctc.SignalLeverFrame" url="package/jmri/jmrit/ussctc/SignalLeverFrame.shtml"/>
 
+<mapID target="html.web.index_security" url="html/web/index.shtml#security"/>
+
 <mapID target="package.jmri.jmrit.beantable.TurnoutTable_Turnout Feedback" url="package/jmri/jmrit/beantable/TurnoutTable.shtml#Turnout Feedback"/>
 
 <mapID target="package.jmri.jmrit.dualdecoder.DualDecoderSelectFrame" url="package/jmri/jmrit/dualdecoder/DualDecoderSelectFrame.shtml"/>
@@ -650,8 +652,6 @@
 
 <mapID target="package.jmri.jmrit.operations.Operations_BackupRestore" url="package/jmri/jmrit/operations/Operations.shtml#BackupRestore"/>
 
-<mapID target="html.doc.Technical.JBuilder" url="html/doc/Technical/JBuilder.shtml"/>
-
 <mapID target="html.tools.signaling.AspectSignaling" url="html/tools/signaling/AspectSignaling.shtml"/>
 
 <mapID target="package.jmri.jmrix.sprog.sprogslotmon.SprogSlotMonFrame" url="package/jmri/jmrix/sprog/sprogslotmon/SprogSlotMonFrame.shtml"/>
@@ -875,8 +875,6 @@
 <mapID target="package.jmri.jmrit.dispatcher.Dispatcher_automatic" url="package/jmri/jmrit/dispatcher/Dispatcher.shtml#automatic"/>
 
 <mapID target="html.tools.scripting.AppleScript" url="html/tools/scripting/AppleScript.shtml"/>
-
-<mapID target="html.doc.Technical.XCode" url="html/doc/Technical/XCode.shtml"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_ImportLocomotives" url="package/jmri/jmrit/operations/Operations.shtml#ImportLocomotives"/>
 

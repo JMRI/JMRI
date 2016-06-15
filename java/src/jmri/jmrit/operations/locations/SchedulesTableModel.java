@@ -127,14 +127,17 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         table.getColumnModel().getColumn(DELETE_COLUMN).setPreferredWidth(90);
     }
 
+    @Override
     public int getRowCount() {
         return sysList.size();
     }
 
+    @Override
     public int getColumnCount() {
         return HIGHEST_COLUMN;
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case ID_COLUMN:
@@ -160,6 +163,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         }
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case ID_COLUMN:
@@ -185,6 +189,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         }
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
             case EDIT_COLUMN:
@@ -196,6 +201,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         }
     }
 
+    @Override
     public Object getValueAt(int row, int col) {
         if (row >= sysList.size()) {
             return "ERROR row " + row; // NOI18N
@@ -229,6 +235,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         }
     }
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
         switch (col) {
             case EDIT_COLUMN:
@@ -263,6 +270,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         }
         // use invokeLater so new window appears on top
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 sef = new ScheduleEditFrame(sch, ltp.getTrack());
             }
@@ -393,8 +401,9 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     }
 
     // check for change in number of schedules, or a change in a schedule
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
@@ -404,7 +413,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         } else if (e.getSource().getClass().equals(Schedule.class)) {
             Schedule schedule = (Schedule) e.getSource();
             int row = sysList.indexOf(schedule);
-            if (Control.showProperty) {
+            if (Control.SHOW_PROPERTY) {
                 log.debug("Update schedule table row: {} name: {}", row, schedule.getName());
             }
             if (row >= 0) {

@@ -1,10 +1,8 @@
-/**
- *
- */
 package jmri;
 
 import java.util.Iterator;
 import java.util.List;
+import javax.annotation.Nonnull;
 import jmri.implementation.AbstractTurnout;
 
 /**
@@ -92,7 +90,7 @@ public abstract class TurnoutOperation implements Comparable<Object> {
     int feedbackModes = 0;
     boolean nonce = false;		// created just for one turnout and not reusable 
 
-    TurnoutOperation(String n) {
+    TurnoutOperation(@Nonnull String n) {
         name = n;
         TurnoutOperationManager.getInstance().addOperation(this);
     }
@@ -104,7 +102,7 @@ public abstract class TurnoutOperation implements Comparable<Object> {
      * @param n	name for new copy
      * @return TurnoutOperation of same concrete class as this
      */
-    public abstract TurnoutOperation makeCopy(String n);
+    public abstract TurnoutOperation makeCopy(@Nonnull String n);
 
     /**
      * set feedback modes - part of construction but done separately for
@@ -126,7 +124,7 @@ public abstract class TurnoutOperation implements Comparable<Object> {
     }
 
     /**
-     * ordering so operations can be sorted, using their name
+     * Ordering by name so operations can be sorted on name
      *
      * @param other	other TurnoutOperation object
      * @return usual compareTo return values
@@ -135,6 +133,21 @@ public abstract class TurnoutOperation implements Comparable<Object> {
         return name.compareTo(((TurnoutOperation) other).name);
     }
 
+    /**
+     * The identity of an operation is its name
+     */
+    public boolean equals(Object ro) {
+        if (ro == null) return false;
+        if (ro instanceof TurnoutOperation)
+            return name.equals(((TurnoutOperation)ro).name);
+        else 
+            return false;
+    }
+    
+    public int hashCode() {
+        return name.hashCode();
+    }
+    
     /**
      *
      * @param other another TurnoutOperation
@@ -146,11 +159,11 @@ public abstract class TurnoutOperation implements Comparable<Object> {
     /**
      * rename an operation
      *
-     * @param newName
-     * @return true iff the name was changed to the new value - otherwise name
+     * @param newName new name to use for rename attempt
+     * @return true if the name was changed to the new value - otherwise name
      *         is unchanged
      */
-    public boolean rename(String newName) {
+    public boolean rename(@Nonnull String newName) {
         boolean result = false;
         TurnoutOperationManager mgr = TurnoutOperationManager.getInstance();
         if (!isDefinitive() && mgr.getOperation(newName) == null) {
@@ -195,7 +208,7 @@ public abstract class TurnoutOperation implements Comparable<Object> {
      * @param	t	the turnout to apply the operation to
      * @return	the operator
      */
-    public abstract TurnoutOperator getOperator(AbstractTurnout t);
+    public abstract TurnoutOperator getOperator(@Nonnull AbstractTurnout t);
 
     /**
      * delete all knowledge of this operation. Reset any turnouts using it to

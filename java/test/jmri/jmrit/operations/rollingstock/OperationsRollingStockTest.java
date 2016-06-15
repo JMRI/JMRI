@@ -1,4 +1,3 @@
-// OperationsRollingStockTest.java
 package jmri.jmrit.operations.rollingstock;
 
 import jmri.jmrit.operations.OperationsTestCase;
@@ -6,7 +5,7 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Setup;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -81,6 +80,8 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         } catch(java.lang.NullPointerException npe) {
            Assert.fail("Null Pointer Exception while executing Xml Element Constructor");
         }
+        
+        jmri.util.JUnitAppender.assertErrorMessage("Tag 12345 Not Found");
     }
 
 
@@ -140,8 +141,7 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         RollingStock rs1 = new RollingStock("TESTROAD", "TESTNUMBER1");
         Assert.assertEquals("RollingStock Road", "TESTROAD", rs1.getRoadName());
         Assert.assertEquals("RollingStock Number", "TESTNUMBER1", rs1.getNumber());
-
-        Assert.assertEquals("RollingStock Constant LOCATION_CHANGED_PROPERTY", "rolling stock location", RollingStock.LOCATION_CHANGED_PROPERTY);
+        
         Assert.assertEquals("RollingStock Constant TRACK_CHANGED_PROPERTY", "rolling stock track location", RollingStock.TRACK_CHANGED_PROPERTY);
         Assert.assertEquals("RollingStock Constant DESTINATION_CHANGED_PROPERTY", "rolling stock destination", RollingStock.DESTINATION_CHANGED_PROPERTY);
         Assert.assertEquals("RollingStock Constant DESTINATIONTRACK_CHANGED_PROPERTY", "rolling stock track destination", RollingStock.DESTINATION_TRACK_CHANGED_PROPERTY);
@@ -166,7 +166,7 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         Assert.assertEquals("RollingStock null Location Id", "", rs1.getLocationId());
         Assert.assertEquals("RollingStock null Track Name", "", rs1.getTrackName());
         Assert.assertEquals("RollingStock null Track Id", "", rs1.getTrackId());
-        Assert.assertEquals("RollingStock null car length", "", rs1.getLength());
+        Assert.assertEquals("RollingStock car length", "0", rs1.getLength());
 
         String testresult;
 
@@ -186,6 +186,7 @@ public class OperationsRollingStockTest extends OperationsTestCase {
 
         /* type needs to be valid for Location */
         testlocation1.addTypeName("TESTTYPE");
+        rs1.setLength("");
         testresult = rs1.setLocation(testlocation1, testtrack1);
         Assert.assertEquals("RollingStock null Set Location type", "rolling stock length ()", testresult);
 
@@ -231,11 +232,16 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         testtrack1.deleteRoadName("TESTROAD");
         testresult = rs1.setLocation(testlocation1, testtrack1);
         Assert.assertEquals("RollingStock Set null excluderoads", "okay", testresult);
+        
+        // Normally logged message
+        jmri.util.JUnitAppender.assertErrorMessage("Loco (TESTROAD TESTNUMBER1) length () is not valid");
+        
     }
 
     // Ensure minimal setup for log4J
     @Override
     protected void setUp() throws Exception {
+        apps.tests.Log4JFixture.setUp();
         super.setUp();
     }
 
@@ -246,7 +252,7 @@ public class OperationsRollingStockTest extends OperationsTestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", OperationsRollingStockTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -258,6 +264,7 @@ public class OperationsRollingStockTest extends OperationsTestCase {
     // The minimal setup for log4J
     @Override
     protected void tearDown() throws Exception {
-       super.tearDown();
+        super.tearDown();
+        apps.tests.Log4JFixture.tearDown();
     }
 }

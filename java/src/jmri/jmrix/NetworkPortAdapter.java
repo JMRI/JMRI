@@ -1,4 +1,3 @@
-// NetworkPortAdapter.java
 package jmri.jmrix;
 
 /**
@@ -7,7 +6,6 @@ package jmri.jmrix;
  *
  * @author Kevin Dickerson Copyright (C) 2010
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version	$Revision$
  * @see jmri.jmrix.NetworkConfigException
  */
 public interface NetworkPortAdapter extends PortAdapter {
@@ -31,7 +29,6 @@ public interface NetworkPortAdapter extends PortAdapter {
     /**
      * Remember the associated port name
      *
-     * @param s
      */
     public void setPort(String s);
 

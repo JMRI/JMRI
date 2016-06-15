@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.progdebugger;
 
 import junit.framework.Test;
@@ -12,7 +11,6 @@ import junit.framework.TestSuite;
  * package, but also contains some tests for the ProgDebugger class.
  *
  * @author	Bob Jacobsen, Copyright (C) 2001, 2002
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -26,7 +24,7 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

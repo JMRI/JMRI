@@ -17,8 +17,9 @@
   <!-- Version 1 initial release 10/27/13-->
   <!-- Version 1.1 added delay for inputs 9-16 release 10/27/13-->  
   <decoder>
-    <family name="CSC" mfg="Team Digital" type="stationary" comment="The CSC can be programmed in the usual way">
-      <model model="CSC" lowVersionID="10"/>
+    <family name="CSC Family" mfg="Team Digital" type="stationary" comment="The CSC can be programmed in the usual way">
+      <model model="CSC" lowVersionID="10" comment="Original HW"/>
+      <model model="CSCe" lowVersionID="10" comment="Later HW"/>
     </family>
     <programming direct="no" paged="yes" register="no" ops="yes"/>
     <variables>

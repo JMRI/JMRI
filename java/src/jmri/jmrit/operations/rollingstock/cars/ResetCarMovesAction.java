@@ -27,6 +27,7 @@ public class ResetCarMovesAction extends AbstractAction {
         super(actionName);
     }
 
+    @Override
     public void actionPerformed(ActionEvent ae) {
         if (JOptionPane.showConfirmDialog(null, Bundle.getMessage("carSureResetMoves"),
                 Bundle.getMessage("carResetMovesAll"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {

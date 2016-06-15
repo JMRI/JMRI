@@ -10,10 +10,11 @@
  *    The JSON type is used to send changes to JSON server and to listen for changes made elsewhere.
  *    Drawn widgets are handled by drawing directly on the javascript "canvas" layer.
  *  
- *  TODO: show error notification or grey-out panel when panel and/or server goes away
+ *  TODO: show error dialog while retrying connection
+ *  TODO: add Cancel button to return to home page on errors (not found, etc.)
  *  TODO: handle "&" in usernames (see Indicator Demo 00.xml)
  *  TODO: handle drawn ellipse (see LMRC APB)
- *  TODO: update drawn track on color and width changes
+ *  TODO: update drawn track on color and width changes (would need to create system objects to reflect these chgs)
  *  TODO: research movement of locoicons ("promote" locoicon to system entity in JMRI?, add panel-level listeners?)
  *  TODO: finish layoutturntable (draw rays) (see Mtn RR and CnyMod27)
  *  TODO: address color differences between java panel and javascript panel (e.g. lightGray)
@@ -579,10 +580,6 @@ function processPanelXML($returnedData, $success, $xhr) {
 
     $drawAllDrawnWidgets(); //draw all the drawn widgets once more, to address some bidirectional dependencies in the xml
     $("#activity-alert").addClass("hidden").removeClass("show");
-
-//	window.setTimeout(function(){  //wait three seconds and then redraw icon widgets, to (hopefully) give them a chance to load
-//		$drawAllIconWidgets();  //TODO: not working, as non-FF browsers will scale objects _again_
-//	}, 3000);
 
 }
 
@@ -1189,61 +1186,88 @@ var $setWidgetPosition = function(e) {
     var $widget = $gWidgets[$id];  //look up the widget and get its panel properties
 
     if (typeof $widget !== "undefined") {  //don't bother if widget not found
-
-        var $height = e.height() * $widget.scale;
-        var $width = e.width() * $widget.scale;
+    	
+    	var $height = 0;
+    	var $width  = 0;
+    	//use html5 original sizes if available
+    	if (typeof e[0].naturalHeight !== "undefined") {
+    		$height = e[0].naturalHeight * $widget.scale;
+    	} else {
+    		$height = e.height() * $widget.scale;
+    	}
+    	if (typeof e[0].naturalWidth !== "undefined") {
+    		$width = e[0].naturalWidth * $widget.scale;
+    	} else {
+    		$width = e.width() * $widget.scale;
+    	}
         if ($widget.widgetFamily == "text") {  //special handling to get width of free-floating text
             $width = $getElementWidth(e) * $widget.scale;
         }
 
-        //if image needs rotating or scaling, but is not loaded yet, set callback to do this again when it is loaded
-        if (e.is("img") && ($widget.degrees !== 0 || $widget.scale != 1.0) && $(e).get(0).complete == false) {
-            e.load(function() {
-                $setWidgetPosition($(this));
-                e.unbind('load');  //only do this once
-            });
-        } else {
-            //calculate x and y adjustment needed to keep upper left of bounding box in the same spot
-            //  adapted to match JMRI's NamedIcon.rotate().  Note: transform-origin set in .css file
-            var tx = 0.0;
-            var ty = 0.0;
+        // calculate x and y adjustment needed to keep upper left of bounding box in the same spot
+		// adapted to match JMRI's NamedIcon.rotate(). Note: transform-origin set in .css file
+		var tx = 0.0;
+		var ty = 0.0;
 
-            if ($height > 0 && ($widget.degrees !== 0 || $widget.scale != 1.0)) { //only do this if needed
-                var $rad = $widget.degrees * Math.PI / 180.0;
+		if ($height > 0 && ($widget.degrees !== 0 || $widget.scale != 1.0)) { // only calc offset if needed
 
-                if (0 <= $widget.degrees && $widget.degrees < 90 || -360 < $widget.degrees && $widget.degrees <= -270) {
-                    tx = $height * Math.sin($rad);
-                    ty = 0.0;
-                } else if (90 <= $widget.degrees && $widget.degrees < 180 || -270 < $widget.degrees && $widget.degrees <= -180) {
-                    tx = $height * Math.sin($rad) - $width * Math.cos($rad);
-                    ty = -$height * Math.cos($rad);
-                } else if (180 <= $widget.degrees && $widget.degrees < 270 || -180 < $widget.degrees && $widget.degrees <= -90) {
-                    tx = -$width * Math.cos($rad);
-                    ty = -$width * Math.sin($rad) - $height * Math.cos($rad);
-                } else /*if (270<=$widget.degrees && $widget.degrees<360)*/ {
-                    tx = 0.0;
-                    ty = -$width * Math.sin($rad);
-                }
-            }
-            //position widget to adjusted position, set z-index, then set rotation
-            e.css({position: 'absolute', left: (parseInt($widget.x) + tx) + 'px', top: (parseInt($widget.y) + ty) + 'px', zIndex: $widget.level});
-            if ($widget.degrees !== 0) {
-                var $rot = "rotate(" + $widget.degrees + "deg)";
-                e.css({"transform": $rot});
-            }
-            //set new height and width if scale specified
-            if ($widget.scale != 1 && $height > 0) {
-                e.css({height: $height + 'px', width: $width + 'px'});
-            }
-        } //if height == 0
-    }
+			var $rad = $widget.degrees * Math.PI / 180.0;
+
+			if (0 <= $widget.degrees && $widget.degrees < 90
+					|| -360 < $widget.degrees && $widget.degrees <= -270) {
+				tx = $height * Math.sin($rad);
+				ty = 0.0;
+			} else if (90 <= $widget.degrees && $widget.degrees < 180
+					|| -270 < $widget.degrees && $widget.degrees <= -180) {
+				tx = $height * Math.sin($rad) - $width * Math.cos($rad);
+				ty = -$height * Math.cos($rad);
+			} else if (180 <= $widget.degrees && $widget.degrees < 270
+					|| -180 < $widget.degrees && $widget.degrees <= -90) {
+				tx = -$width * Math.cos($rad);
+				ty = -$width * Math.sin($rad) - $height * Math.cos($rad);
+			} else /* if (270<=$widget.degrees && $widget.degrees<360) */{
+				tx = 0.0;
+				ty = -$width * Math.sin($rad);
+			}
+		}
+		// position widget to adjusted position, set z-index, then set rotation
+		e.css({
+			position : 'absolute',
+			left : (parseInt($widget.x) + tx) + 'px',
+			top : (parseInt($widget.y) + ty) + 'px',
+			zIndex : $widget.level
+		});
+		if ($widget.degrees !== 0) {
+			var $rot = "rotate(" + $widget.degrees + "deg)";
+			e.css({
+				"transform" : $rot
+			});
+		}
+		// set new height and width if scale specified
+		if ($widget.scale != 1 && $height > 0) {
+			e.css({
+				height : $height + 'px',
+				width : $width + 'px'
+			});
+		}
+		// if this is an image that's rotated or scaled, set callback to
+		// reposition on every icon load, as the icons can be different sizes.
+		if (e.is("img") && ($widget.degrees !== 0 || $widget.scale != 1.0)) {
+			e.unbind('load');
+			e.load(function() {
+				$setWidgetPosition($(this));
+			});
+		}
+
+	}
 };
 
-//reDraw an icon-based widget to reflect changes to state or occupancy
+// reDraw an icon-based widget to reflect changes to state or occupancy
 var $reDrawIcon = function($widget) {
-    //additional naming for indicator*icon widgets to reflect occupancy
+    // additional naming for indicator*icon widgets to reflect occupancy
     $indicator = ($widget.occupancysensor && $widget.occupancystate == ACTIVE ? "Occupied" : "");
-    if ($widget['icon' + $indicator + ($widget.state + "")]) { //set image src to requested state's image, if defined
+	// set image src to requested state's image, if defined    
+    if ($widget['icon' + $indicator + ($widget.state + "")]) { 
         $('img#' + $widget.id).attr('src', $widget['icon' + $indicator + ($widget.state + "")]);  
     } else if ($widget['defaulticon']) {  //if state icon not found, use default icon if provided
         $('img#' + $widget.id).attr('src', $widget['defaulticon']); 
@@ -1371,13 +1395,14 @@ var $getNextState = function($widget) {
                         break;
                 }
             case 1 :
-//            getSignalHead().setLit(!getSignalHead().getLit());
-                break;
+            	//TODO: handle lit/unlit toggle
+            	// getSignalHead().setLit(!getSignalHead().getLit());
+            	break;
             case 2 :
-//            getSignalHead().setHeld(!getSignalHead().getHeld());
-                $nextState = ($widget.state * 1 == HELD ? RED : HELD);  //toggle between red and held states
+            	// getSignalHead().setHeld(!getSignalHead().getHeld());
+            	$nextState = ($widget.state * 1 == HELD ? RED : HELD);  //toggle between red and held states
                 break;
-            case 3: //loop through all iconX and get "next one"
+            case 3: //loop through all elements, finding iconX and get "next one", skipping special ones
                 var $firstState = undefined;
                 var $currentState = undefined;
                 for (k in $widget) {
@@ -1398,26 +1423,40 @@ var $getNextState = function($widget) {
         } //end of switch 
 
     } else if ($widget.widgetType == 'signalmasticon') { //special case for signalmasticons
-        //loop through all iconX and get "next one"
-        var $firstState = undefined;
-        var $currentState = undefined;
-        for (k in $widget) {
-            var s = k.substr(4); //extract the state from current icon var
-            //look for next icon value, skipping Held, Dark and Unknown
-            if (k.indexOf('icon') == 0 && typeof $widget[k] !== "undefined" && s != 'Held' && s != 'Dark' && s != 'Unknown') { 
-                if (typeof $firstState == "undefined")
-                    $firstState = s;  //remember the first state (for last one)
-                if (typeof $currentState !== "undefined" && typeof $nextState == "undefined")
-                    $nextState = s; //last one was the current, so this one must be next
-                if (s == $widget.state)
-                    $currentState = s;
-                if (window.console)
-                    console.log('key: ' + k + " first=" + $firstState);
-            }
-        };
-        
-        if (typeof $nextState == "undefined")
-            $nextState = $firstState;  //if still not set, start over
+    	//loop through all elements, finding iconXXX and get next iconXXX, skipping special ones
+    	switch ($widget.clickmode * 1) {          //   logic based on SignalMastIcon.java
+    	case 0 :
+    		var $firstState = undefined;
+    		var $currentState = undefined;
+    		for (k in $widget) {
+    			var s = k.substr(4); //extract the state from current icon var
+    			//look for next icon value, skipping Held, Dark and Unknown
+    			if (k.indexOf('icon') == 0 && typeof $widget[k] !== "undefined" && s != 'Held' && s != 'Dark' 
+              && s !='Unlit' && s !=  'Unknown') { 
+    				if (typeof $firstState == "undefined")
+    					$firstState = s;  //remember the first state (for last one)
+    				if (typeof $currentState !== "undefined" && typeof $nextState == "undefined")
+    					$nextState = s; //last one was the current, so this one must be next
+    				if (s == $widget.state)
+    					$currentState = s;
+    				if (window.console)
+    					console.log('key: ' + k + " first=" + $firstState);
+    			}
+    		};
+    		if (typeof $nextState == "undefined")
+    			$nextState = $firstState;  //if still not set, start over
+    		break;
+    		
+    	case 1 :
+    		//TODO: handle lit/unlit states 
+    		break;
+    		
+    	case 2 :
+    		//toggle between stop and held state
+    		$nextState = ($widget.state == "Held" ? "Stop" : "Held");  
+    		break;
+    		
+    	}; //end of switch clickmode
 
     } else {  //start with INACTIVE, then toggle to ACTIVE and back
         $nextState = ($widget.state == ACTIVE ? INACTIVE : ACTIVE);

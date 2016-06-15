@@ -90,8 +90,8 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
      * Create a SignalHeadManager object of the correct class, then register and
      * fill it.
      *
-     * @param shared
-     * @param perNode
+     * @param shared  Shared top level Element to unpack.
+     * @param perNode Per-node top level Element to unpack.
      * @return true if successful
      */
     @Override

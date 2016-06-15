@@ -19,7 +19,7 @@ public class NetworkDriverAdapter extends SerialNetworkPortController {
 
     public NetworkDriverAdapter() {
         super(new CMRISystemConnectionMemo());
-        setManufacturer(jmri.jmrix.DCCManufacturerList.CMRI);
+        setManufacturer(jmri.jmrix.cmri.CMRIConnectionTypeList.CMRI);
     }
 
     /**

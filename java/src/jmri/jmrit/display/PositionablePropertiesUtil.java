@@ -246,7 +246,7 @@ public class PositionablePropertiesUtil {
         //fontSizeChoice.addActionListener(PreviewActionListener);
         fontSizeChoice.getSelectionModel().addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent e) {
-                fontSizeField.setText((String) fontSizeChoice.getSelectedValue());
+                fontSizeField.setText(fontSizeChoice.getSelectedValue());
                 preview();
             }
         });
@@ -554,7 +554,7 @@ public class PositionablePropertiesUtil {
         }
 
         int deg = _parent.getDegrees();
-        if (deg!=0) {     
+        if (deg!=0) {
             _parent.rotate(0);
         }
         desiredColor = colorFromComboBox(borderColorCombo, null);
@@ -704,7 +704,7 @@ public class PositionablePropertiesUtil {
             pop.setBackgroundColor(txtList.get(0).getOrigBackground());
         }
         int deg = _parent.getDegrees();
-        if (deg!=0) {     
+        if (deg!=0) {
             _parent.rotate(0);
         }
         pop.setJustification(justification);
@@ -782,7 +782,7 @@ public class PositionablePropertiesUtil {
     private JCheckBox italic = new JCheckBox("Italic", false);
     private JCheckBox bold = new JCheckBox("Bold", false);
 
-    protected JList fontSizeChoice;
+    protected JList<String> fontSizeChoice;
 
     protected String fontSizes[] = {"6", "8", "10", "11", "12", "14", "16",
         "20", "24", "28", "32", "36"};
@@ -836,7 +836,7 @@ public class PositionablePropertiesUtil {
         /**
          *
          */
-        private static final long serialVersionUID = 9122150940130201673L;
+        private static final long serialVersionUID = 1L;
 
         public ColorComboBoxRenderer() {
             setOpaque(true);
@@ -844,7 +844,8 @@ public class PositionablePropertiesUtil {
             setVerticalAlignment(CENTER);
         }
 
-        public Component getListCellRendererComponent(JList list, Object value, int index,
+        // FIXME: This still needs the JList typed, but I'm unsure how to type it properly
+        public Component getListCellRendererComponent(@SuppressWarnings("rawtypes") JList list, Object value, int index,
                 boolean isSelected, boolean cellHasFocus) {
             if (value == null) {
                 return this;

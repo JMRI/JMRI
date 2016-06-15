@@ -29,7 +29,6 @@ import org.slf4j.LoggerFactory;
  * that a ProgModePane object can disconnect its listeners.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  */
 public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeListener, ActionListener {
 
@@ -120,11 +119,11 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         setLayout(new BoxLayout(this, direction));
 
         // create the programmer display combo box
-        java.util.Vector<AddressedProgrammerManager> v = new java.util.Vector<AddressedProgrammerManager>();
+        java.util.Vector<AddressedProgrammerManager> v = new java.util.Vector<>();
         for (AddressedProgrammerManager pm : InstanceManager.getList(jmri.AddressedProgrammerManager.class)) {
             v.add(pm);
         }
-        add(progBox = new JComboBox<AddressedProgrammerManager>(v));
+        add(progBox = new JComboBox<>(v));
         // if only one, don't show
         if (progBox.getItemCount() < 2) {
             progBox.setVisible(false);

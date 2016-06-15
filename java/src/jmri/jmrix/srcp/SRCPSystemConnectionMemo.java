@@ -1,4 +1,3 @@
-// SRCPSystemConnectionMemo.java
 package jmri.jmrix.srcp;
 
 import java.util.ResourceBundle;
@@ -12,7 +11,7 @@ import jmri.InstanceManager;
  * activate their particular system.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version $Revision$
+ * @author	Paul Bender Copyright (C) 2015-2016
  */
 public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 

@@ -2,8 +2,9 @@ package jmri.layout;
 
 /**
  * @author Alex Shepherd Copyright (c) 2002
- * @version $Revision$
+ * @deprecated 4.3.5
  */
+@Deprecated
 public class LayoutElement extends javax.swing.tree.DefaultMutableTreeNode implements LayoutEventInterface {
 
     /**

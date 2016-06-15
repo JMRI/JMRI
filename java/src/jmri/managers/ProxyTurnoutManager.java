@@ -1,4 +1,3 @@
-// ProxyTurnoutManager.java
 package jmri.managers;
 
 import java.util.Arrays;
@@ -17,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * system-specific implementations.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2010
- * @version	$Revision$
  */
 public class ProxyTurnoutManager extends AbstractProxyManager implements TurnoutManager {
 
@@ -26,7 +24,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
     }
 
     protected AbstractManager makeInternalManager() {
-        return new InternalTurnoutManager();
+        return jmri.InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class).getTurnoutManager();
     }
 
     /**
@@ -41,7 +39,6 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
     /**
      * Locate via user name, then system name if needed.
      *
-     * @param name
      * @return Null if nothing by that name exists
      */
     public Turnout getTurnout(String name) {
@@ -275,5 +272,3 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(ProxyTurnoutManager.class.getName());
 }
-
-/* @(#)ProxyTurnoutManager.java */

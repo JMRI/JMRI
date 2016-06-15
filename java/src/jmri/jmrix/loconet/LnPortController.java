@@ -18,7 +18,7 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
 
     protected LnPortController(LocoNetSystemConnectionMemo connectionMemo) {
         super(connectionMemo);
-        setManufacturer(jmri.jmrix.DCCManufacturerList.DIGITRAX);
+        setManufacturer(LnConnectionTypeList.DIGITRAX);
     }
 
     // returns the InputStream from the port

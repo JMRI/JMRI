@@ -31,7 +31,6 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
      * A simulated connection needs no extra information, so we reimplement the
      * superclass method to just write the necessary parts.
      *
-     * @param o
      * @return Formatted element containing no attributes except the class name
      */
     public Element store(Object o) {
@@ -102,12 +101,12 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                 }
             }
         }
-        loadOptions(shared.getChild("options"), adapter);
+        loadOptions(shared.getChild("options"), perNode.getChild("options"), adapter);
         // register, so can be picked up next time
         register();
 
         if (adapter.getDisabled()) {
-            unpackElement(shared);
+            unpackElement(shared, perNode);
             return result;
         }
         adapter.configure();

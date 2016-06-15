@@ -1,29 +1,25 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<HTML LANG="en">
-<HEAD>
-<TITLE>JMRI: MultiSensor Icon Editor Help</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<META CONTENT="Pete Cressman" NAME="Author">
-<META NAME="keywords" CONTENT="JMRI help Panel Editor">
+<html lang="en">
+<head>
+<title>JMRI: MultiSensor Icon Editor Help</title>
+<meta name="author" content="Pete Cressman">
+<meta name="keywords" content="JMRI help Panel Editor">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>The MultiSensor Icon Editor</H1>
+<h1>The MultiSensor Icon Editor</h1>
 
 <p>The way icons are changed in the MultiSensor Icon Editor is the same as they are
 changed in the other Icon Editors.  The <b>Change Icon...</b>button and the 
@@ -34,7 +30,7 @@ and the <a href="../catalog/ImageIndex.shtml">Image Index Editor page</a>
 for details on their use.
 
 
-<H2>Contents of the MultiSensor Icon Editor</H2>
+<h2>Contents of the MultiSensor Icon Editor</h2>
 
 <img src="MultiSensorIcon.png" align="right">
 <p>The icons in the MultiSensor Icon Editor differ only in that there are several
@@ -48,11 +44,13 @@ sensor to an icon position, drag a row from the Sensor table to the place
 in the icon position pane labeled "undefined".  When the sensor row is 
 dropped on the label, it will display the sensor name.</p>
 
-<p>Whan all the active icons are assigned sensors, the <b>Add to Panel</b>
+<p>When all the active icons are assigned sensors, the <b>Add to Panel</b>
 button will become active and it can be pressed to install the Multisensor
 into the Panel.
 
 
 <!--#include virtual="/Footer" -->
-</BODY>
-</HTML>
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ </body>
+</html>

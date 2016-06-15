@@ -1,4 +1,3 @@
-// Ash2_0Algorithm.java
 package jmri.jmrix.rps;
 
 import javax.vecmath.Point3d;
@@ -83,7 +82,6 @@ import org.slf4j.LoggerFactory;
  * stop here but it doesn't. Stage 3 runs the All-Together iteration 15 times,
  * also using weights according to distance, to produce a more refined result.
  * <P>
- * <P>
  * The program always runs through all the iterations regardless of how fast or
  * slow the solution converges. Only at the end does it compute the variance of
  * the residuals (differences between measured receiver distances and those from
@@ -125,7 +123,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author	Robert Ashenfelter Copyright (C) 2007
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version	$Revision$
  */
 public class Ash2_0Algorithm extends AbstractCalculator {
 
@@ -134,7 +131,7 @@ public class Ash2_0Algorithm extends AbstractCalculator {
         this.offset = offset;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy
     public Ash2_0Algorithm(Point3d[] sensors, double vsound) {
         this.sensors = sensors;
         this.Vs = vsound;
@@ -249,7 +246,7 @@ public class Ash2_0Algorithm extends AbstractCalculator {
     final static int NMAX = 50;			//  Max. no. of receivers used
 
     //  Compute RPS Position using
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "IP_PARAMETER_IS_DEAD_BUT_OVERWRITTEN") // it's secretly FORTRAN..
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IP_PARAMETER_IS_DEAD_BUT_OVERWRITTEN") // it's secretly FORTRAN..
     RetVal RPSpos(int nr, double Tr[], double Xr[], double Yr[], double Zr[],// many
             double Vs, double Xt, double Yt, double Zt) {//         receivers
 
@@ -422,7 +419,7 @@ public class Ash2_0Algorithm extends AbstractCalculator {
      *
      * More of a struct, really
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "UUF_UNUSED_FIELD") // t not formally needed
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UUF_UNUSED_FIELD") // t not formally needed
     static class RetVal {
 
         RetVal(int code, double x, double y, double z, double vs) {
@@ -438,5 +435,3 @@ public class Ash2_0Algorithm extends AbstractCalculator {
 
     private final static Logger log = LoggerFactory.getLogger(Ash2_0Algorithm.class.getName());
 }
-
-/* @(#)Ash2_0Algorithm.java */

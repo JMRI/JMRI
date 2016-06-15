@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
+<appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year>
+    <year>2010</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Dick</firstname>
+        <surname>Bronson</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Bob</firstname>
+        <surname>Jacobsen</surname>
+      </personname>
+      <email>jake@physics.berkeley.edu</email>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>2.2</revnumber>
+      <date>2016-04-01</date>
+      <authorinitials>MST</authorinitials>
+      <revremark>Add low appearances</revremark>
+    </revision>
+    <revision>
+      <revnumber>2.3</revnumber>
+      <date>2016-05-05</date>
+      <authorinitials>MST</authorinitials>
+      <revremark>Add Held and Dark specific appearances</revremark>
+    </revision>
+  </revhistory>
+  <aspecttable>basic</aspecttable>
+  <name>Double searchlight low signal</name>
+  <reference>(similar to basic signals described in various magazine articles)</reference>
+  <description>A two-headed signal for use at e.g. entrances to sidings</description>
+  <appearances>
+    <appearance>
+      <aspectname>Clear</aspectname>
+      <show>green</show>
+      <show>red</show>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/SL-2-low/rule-287.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Approach</aspectname>
+      <show>yellow</show>
+      <show>red</show>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/SL-2-low/rule-288.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Stop</aspectname>
+      <show>red</show>
+      <show>red</show>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/SL-2-low/rule-292.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Diverging Clear</aspectname>
+      <show>red</show>
+      <show>green</show>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/SL-2-low/rule-283.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Diverging Approach</aspectname>
+      <show>red</show>
+      <show>yellow</show>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/SL-2-low/rule-290.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Unlit</aspectname>
+      <show>dark</show>
+      <imagelink>../../../resources/icons/smallschematics/searchlights/two-low-dark.gif</imagelink>
+    </appearance>
+  </appearances>
+  <specificappearances>
+    <!-- Start of Specific Appearances list -->
+    <danger>
+      <aspect>Stop</aspect>
+    </danger>
+    <held>
+      <aspect>Stop</aspect>
+      <imagelink>../../../resources/icons/smallschematics/searchlights/two-low-held.gif</imagelink>
+    </held>
+    <dark>
+      <aspect>Unlit</aspect>
+    </dark>
+  </specificappearances>
+  <!-- End of Specific Appearances list -->
+  <aspectMappings>
+    <!-- Start of Aspect Mapping -->
+    <aspectMapping>
+      <advancedAspect>Stop</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Diverging Approach</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Approach</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+  </aspectMappings>
+  <!-- End of Aspect Mapping -->
+</appearancetable>

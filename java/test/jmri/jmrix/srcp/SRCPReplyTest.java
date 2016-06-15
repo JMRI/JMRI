@@ -14,7 +14,6 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.srcp.SRCPReply class
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class SRCPReplyTest extends TestCase {
 
@@ -54,7 +53,7 @@ public class SRCPReplyTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", SRCPReplyTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

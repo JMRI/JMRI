@@ -9,7 +9,7 @@ import java.util.Map;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.SignalMast;
-import jmri.jmris.json.JsonException;
+import jmri.server.json.JsonException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,8 +60,13 @@ abstract public class AbstractSignalMastServer {
             if (signalMast == null) {
                 log.error("SignalMast {} is not available.", signalMastName);
             } else {
-                if (signalMast.getAspect() == null || !signalMast.getAspect().equals(signalMastState)) {
-                    signalMast.setAspect(signalMastState);
+                if (signalMast.getAspect() == null || !signalMast.getAspect().equals(signalMastState) || signalMast.getHeld()) {
+                    if (signalMastState.equals("Held")) {
+                        signalMast.setHeld(true);
+                    } else {
+                        if (signalMast.getHeld()) signalMast.setHeld(false);
+                        signalMast.setAspect(signalMastState);
+                    }
                 } else {
                     try {
                         sendStatus(signalMastName, signalMastState);

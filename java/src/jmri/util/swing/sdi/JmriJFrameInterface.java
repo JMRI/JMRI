@@ -1,4 +1,3 @@
-// JmriJFrameInterface.java
 package jmri.util.swing.sdi;
 
 import java.awt.Frame;
@@ -19,7 +18,6 @@ import jmri.util.swing.JmriPanel;
  *
  * @author Bob Jacobsen Copyright 2010
  * @since 2.9.4
- * @version $Revision$
  */
 public class JmriJFrameInterface implements jmri.util.swing.WindowInterface {
 

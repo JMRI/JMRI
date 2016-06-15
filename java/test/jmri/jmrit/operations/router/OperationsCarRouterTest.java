@@ -19,7 +19,7 @@ import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -27,7 +27,6 @@ import junit.framework.TestSuite;
  * Tests for the Operations Router class
  *
  * @author	Daniel Boudreau Copyright (C) 2010, 2011, 2013
- * @version $Revision$
  */
 public class OperationsCarRouterTest extends OperationsTestCase {
 
@@ -2868,7 +2867,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", OperationsCarRouterTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

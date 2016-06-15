@@ -1,4 +1,3 @@
-// SampleAutomaton2.java
 package jmri.jmrit.automat;
 
 import jmri.InstanceManager;
@@ -25,7 +24,6 @@ import org.slf4j.LoggerFactory;
  * Layout Automation in Java page</a>.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version $Revision$
  * @see jmri.jmrit.automat.SampleAutomaton2Action
  */
 public class SampleAutomaton2 extends AbstractAutomaton {
@@ -63,13 +61,9 @@ public class SampleAutomaton2 extends AbstractAutomaton {
         programmer = InstanceManager.programmerManagerInstance()
                 .getAddressedProgrammer(locoLong, locoNumber);
 
-        if (sensor != null) {
-            // set up the initial correlation
-            now = sensor.getKnownState();
-            setMomentum(now);
-        } else {
-            log.error("Failure to provide sensor " + sensorName + " on initialization");
-        }
+        // set up the initial correlation
+        now = sensor.getKnownState();
+        setMomentum(now);
     }
 
     int now;
@@ -117,5 +111,3 @@ public class SampleAutomaton2 extends AbstractAutomaton {
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(SampleAutomaton2.class.getName());
 }
-
-/* @(#)SampleAutomaton2.java */

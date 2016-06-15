@@ -1,5 +1,6 @@
-// Sensor.java
 package jmri;
+
+import javax.annotation.Nullable;
 
 /**
  * General input device representation. Often subclassed for specific types of
@@ -18,7 +19,6 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  */
 public interface Sensor extends NamedBean {
 
@@ -65,12 +65,12 @@ public interface Sensor extends NamedBean {
     /**
      * Request a call-back when the bound KnownState property changes.
      */
-    public void addPropertyChangeListener(java.beans.PropertyChangeListener l);
+    public void addPropertyChangeListener(@Nullable java.beans.PropertyChangeListener l);
 
     /**
      * Remove a request for a call-back when a bound property changes.
      */
-    public void removePropertyChangeListener(java.beans.PropertyChangeListener l);
+    public void removePropertyChangeListener(@Nullable java.beans.PropertyChangeListener l);
 
     /**
      * Remove references to and from this object, so that it can eventually be
@@ -110,12 +110,14 @@ public interface Sensor extends NamedBean {
     public long getSensorDebounceGoingInActiveTimer();
 
     /**
-     * Use the timers specified in the Sensor manager, for the debounce delay
+     * Use the timers specified in the Sensor manager for the debounce delay
+     * @param flag set to current defaults if true now and not previously true
      */
-    public void useDefaultTimerSettings(boolean boo);
+    public void useDefaultTimerSettings(boolean flag);
 
     /**
-     * Does this sensor use the default timers for
+     * Does this sensor use the default timers values?
+     * (A remarkably unfortunate name given the one above)
      */
     public boolean useDefaultTimerSettings();
 
@@ -124,18 +126,13 @@ public interface Sensor extends NamedBean {
      * train identities via such methods as RailCom. The setting and creation of
      * the reporter against the sensor should be done when the sensor is
      * created. This information is not saved.
-     * <p>
-     * returns null if there is no direct reporter.
      */
-    public void setReporter(Reporter re);
+    public void setReporter(@Nullable Reporter re);
 
     /**
      * Retrieve the reporter assocated with this sensor if there is one.
      * <p>
      * returns null if there is no direct reporter.
      */
-    public Reporter getReporter();
+    public @Nullable Reporter getReporter();
 }
-
-
-/* @(#)Sensor.java */

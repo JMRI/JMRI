@@ -1,6 +1,6 @@
-/* DefaultProgrammerManager.java */
 package jmri.managers;
 
+import javax.annotation.Nonnull;
 import jmri.AddressedProgrammer;
 import jmri.Programmer;
 import jmri.ProgrammerManager;
@@ -9,13 +9,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provides a very-basic implementation of ProgrammerManager. You give it a
- * service-mode Programmer at construction time; Ops Mode requests get a null in
- * response.
+ * Provides a very basic implementation of ProgrammerManager. You give it a
+ * service-mode Programmer (perhaps null) at construction time that it returns when requested; 
+ * Ops Mode requests get a null in response to a request, showing there's no programmer
+ * of that type.
+ *<p>
+ * This class also defines basic ProgrammingMode constants for the NMRA-defined modes
  *
  * @see jmri.ProgrammerManager
- * @author	Bob Jacobsen Copyright (C) 2001, 2015
- * @version	$Revision$
+ * @author	Bob Jacobsen Copyright (C) 2001, 2015, 2016
  */
 public class DefaultProgrammerManager implements ProgrammerManager {
 
@@ -55,11 +57,6 @@ public class DefaultProgrammerManager implements ProgrammerManager {
      * "normal", not "extended" addressing.
      */
     public static final ProgrammingMode OPSACCBYTEMODE = new ProgrammingMode("OPSACCBYTEMODE");
-
-    /**
-     * No programming mode available
-     */
-    public static final ProgrammingMode NONE = new ProgrammingMode("NONE");
 
     /**
      * NMRA "Address-only" mode. Often implemented as a proper subset of
@@ -106,13 +103,21 @@ public class DefaultProgrammerManager implements ProgrammerManager {
     //     public static final ProgrammingMode OPSACCBITMODE   = new ProgrammingMode("OPSACCBITMODE", 112);
     //     public static final ProgrammingMode OPSACCEXTBYTEMODE = new ProgrammingMode("OPSACCEXTBYTEMODE", 121);
     //     public static final ProgrammingMode OPSACCEXTBITMODE  = new ProgrammingMode("OPSACCEXTBITMODE", 122);
+    
     private Programmer mProgrammer;
 
-    public DefaultProgrammerManager(Programmer pProgrammer) {
+    /**
+     * For case where no global programmer is available
+     */
+    public DefaultProgrammerManager() {
+        mProgrammer = null;  // indicates not present
+    }
+     
+    public DefaultProgrammerManager(@Nonnull Programmer pProgrammer) {
         mProgrammer = pProgrammer;
     }
 
-    public DefaultProgrammerManager(Programmer pProgrammer, jmri.jmrix.SystemConnectionMemo memo) {
+    public DefaultProgrammerManager(@Nonnull Programmer pProgrammer, @Nonnull jmri.jmrix.SystemConnectionMemo memo) {
         this(pProgrammer);
         this.userName = memo.getUserName();
     }
@@ -150,20 +155,20 @@ public class DefaultProgrammerManager implements ProgrammerManager {
         return mProgrammer;
     }
 
-    public void releaseGlobalProgrammer(Programmer p) {
+    public void releaseGlobalProgrammer(@Nonnull  Programmer p) {
     }
 
     public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
 
-    public void releaseAddressedProgrammer(AddressedProgrammer p) {
+    public void releaseAddressedProgrammer(@Nonnull AddressedProgrammer p) {
     }
 
     /**
      * Default programmer does not provide Ops Mode
      *
-     * @return false if there's no chance of getting one
+     * @return false since there's no chance of getting one
      */
     public boolean isAddressedModePossible() {
         return false;
@@ -172,9 +177,9 @@ public class DefaultProgrammerManager implements ProgrammerManager {
     /**
      * Default programmer doesn't depend on address
      *
-     * @return false if there's no chance of getting one
+     * @return false since there's no chance of getting one
      */
-    public boolean isAddressedModePossible(jmri.LocoAddress l) {
+    public boolean isAddressedModePossible(@Nonnull jmri.LocoAddress l) {
         return isAddressedModePossible();
     }
 
@@ -199,4 +204,4 @@ public class DefaultProgrammerManager implements ProgrammerManager {
 
     private final static Logger log = LoggerFactory.getLogger(DefaultProgrammerManager.class.getName());
 }
-/* @(#)DefaultProgrammerManager.java */
+

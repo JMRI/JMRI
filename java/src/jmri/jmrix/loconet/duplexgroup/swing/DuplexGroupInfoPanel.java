@@ -1,12 +1,5 @@
-// DuplexGroupInfoPanel.java
 package jmri.jmrix.loconet.duplexgroup.swing;
 
-/**
- * Defines a GUI and associated logic to read and update Digitrax Duplex Group
- * identity information.
- *
- * @author B. Milhaupt Copyright 2010, 2011
- */
 import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -34,15 +27,10 @@ import jmri.jmrix.loconet.duplexgroup.LnDplxGrpInfoImplConstants;
  * compatible with this tool.
  *
  * @author B. Milhaupt Copyright 2010, 2011
- * @version	$Revision: 1.0 $
  */
 public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
         implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8260273846859188033L;
     // member declarations
     JButton swingReadButton;
     JButton swingSetButton;
@@ -439,7 +427,6 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
      * ValidatedTextField.VTF_PC_STAT_LN_UPDATE LnDplxGrpInfoImpl -
      * StatusDontBlastError, StatusLineUpdate, NumberOfUr92sUpdate,
      *
-     * @param evt
      */
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
         // these messages can arrive without a complete

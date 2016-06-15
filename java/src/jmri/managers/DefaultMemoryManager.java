@@ -1,4 +1,3 @@
-// DefaultMemoryManager.java
 package jmri.managers;
 
 import jmri.Memory;
@@ -8,7 +7,6 @@ import jmri.implementation.DefaultMemory;
  * Provide the concrete implementation for the Internal Memory Manager.
  *
  * @author	Bob Jacobsen Copyright (C) 2004
- * @version	$Revision$
  */
 public class DefaultMemoryManager extends AbstractMemoryManager {
 
@@ -26,5 +24,3 @@ public class DefaultMemoryManager extends AbstractMemoryManager {
     }
 
 }
-
-/* @(#)DefaultMemoryManager.java */

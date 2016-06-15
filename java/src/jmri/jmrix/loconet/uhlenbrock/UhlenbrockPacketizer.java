@@ -1,4 +1,3 @@
-// UhlenbrockPacketizer.java
 package jmri.jmrix.loconet.uhlenbrock;
 
 import java.util.Calendar;
@@ -21,7 +20,6 @@ import org.slf4j.LoggerFactory;
  * listeners in that same thread. Reception and transmission are handled in
  * dedicated threads by RcvHandler and XmtHandler objects. Those are internal
  * classes defined here. The thread priorities are:
- * <P>
  * <UL>
  * <LI> RcvHandler - at highest available priority
  * <LI> XmtHandler - down one, which is assumed to be above the GUI
@@ -35,12 +33,11 @@ import org.slf4j.LoggerFactory;
  * Inc for separate permission.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2010
- * @version $Revision: 17977 $
  *
  */
 public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterface {
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Only used during system initialization")
     public UhlenbrockPacketizer() {
         super();
@@ -397,5 +394,3 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
 
     private final static Logger log = LoggerFactory.getLogger(UhlenbrockPacketizer.class.getName());
 }
-
-/* @(#)LnPacketizer.java */

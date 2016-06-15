@@ -35,7 +35,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman Copyright (C) 2009, 2010, 2011
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public class DefaultConditionalAction implements ConditionalAction {
 
@@ -120,8 +119,6 @@ public class DefaultConditionalAction implements ConditionalAction {
     /**
      * If this is an indirect reference return the Memory bean
      *
-     * @param devName
-     * @return
      */
     private Memory getIndirectBean(String devName) {
         if (devName != null && devName.length() > 0 && devName.charAt(0) == '@') {
@@ -141,22 +138,22 @@ public class DefaultConditionalAction implements ConditionalAction {
     /**
      * Return the device bean that will do the action
      *
-     * @param devName
-     * @return
      */
     private NamedBean getActionBean(String devName) {
         NamedBean bean = null;
         try {
             switch (Conditional.ACTION_TO_ITEM[_type]) {
                 case Conditional.ITEM_TYPE_SENSOR:
-                    bean = InstanceManager.sensorManagerInstance().provideSensor(devName);
-                    if (bean == null) {
+                    try {
+                        bean = InstanceManager.sensorManagerInstance().provideSensor(devName);
+                    } catch (IllegalArgumentException e) {
                         log.error("invalid sensor name= \"" + _deviceName + "\" in conditional action");
                     }
                     break;
                 case Conditional.ITEM_TYPE_TURNOUT:
-                    bean = InstanceManager.turnoutManagerInstance().provideTurnout(devName);
-                    if (bean == null) {
+                    try {
+                        bean = InstanceManager.turnoutManagerInstance().provideTurnout(devName);
+                    } catch (IllegalArgumentException e) {
                         log.error("invalid turnout name= \"" + _deviceName + "\" in conditional action");
                     }
                     break;
@@ -798,6 +795,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                     str = str + " " + rbx.getString("onWarrant") + " \"" + _deviceName + "\" "
                             + rbx.getString("to") + " " + getActionDataString();
                     break;
+                default: break; // nothing needed for others
             }
         }
         if (_actionString.length() > 0) {
@@ -846,6 +844,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                     str = str + ", \"" + _actionString + "\" " + rbx.getString("onBlock")
                             + " \"" + _deviceName + "\".";
                     break;
+                default: break; // nothing needed for others
             }
         }
         switch (_type) {
@@ -857,6 +856,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                 str = str + " " + rbx.getString("to") + " "
                         + LogixTableAction.formatTime(_actionData / 60, _actionData - ((_actionData / 60) * 60));
                 break;
+                default: break; // nothing needed for others
         }
         return str;
     }

@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * Handle configuration for display.MemoryIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision$
  */
 public class MemoryIconXml extends PositionableLabelXml {
 
@@ -63,7 +62,7 @@ public class MemoryIconXml extends PositionableLabelXml {
 
             while (iterator.hasNext()) {
                 java.util.Map.Entry<String, NamedIcon> mi = iterator.next();
-                String key = mi.getKey().toString();
+                String key = mi.getKey();
                 String value = mi.getValue().getName();
 
                 Element e2 = new Element("memorystate");

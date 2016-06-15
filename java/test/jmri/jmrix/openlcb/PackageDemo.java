@@ -1,4 +1,3 @@
-// PackageDemo.java
 package jmri.jmrix.openlcb;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Demos for the jmri.jmrix.openlcb.swing package.
  *
  * @author Bob Jacobsen Copyright 2012
- * @version $Revision$
  */
 public class PackageDemo extends TestCase {
 
@@ -25,7 +23,7 @@ public class PackageDemo extends TestCase {
     static public void main(String[] args) {
         apps.tests.AllTest.initLogging();
         String[] testCaseName = {"-noloading", PackageDemo.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

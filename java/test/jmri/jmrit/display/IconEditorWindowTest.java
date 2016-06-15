@@ -1,10 +1,6 @@
-// IconEditorWindowTest.java
 package jmri.jmrit.display;
 
-import java.util.List;
-import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JDialog;
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.Memory;
@@ -13,11 +9,10 @@ import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.jmrit.display.panelEditor.PanelEditor;
+import jmri.util.JUnitUtil;
 import junit.extensions.jfcunit.TestHelper;
 import junit.extensions.jfcunit.eventdata.EventDataConstants;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
-import junit.extensions.jfcunit.finder.AbstractButtonFinder;
-import junit.extensions.jfcunit.finder.DialogFinder;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -26,7 +21,6 @@ import junit.framework.TestSuite;
  * Swing jfcUnit tests for the SensorIcon
  *
  * @author	Bob Jacobsen Copyright 2009, 2010
- * @version $Revision$
  */
 public class IconEditorWindowTest extends jmri.util.SwingTestCase {
 
@@ -51,8 +45,11 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
 
         int x = 50;
         int y = 20;
-        icon.setLocation(x, y);
-        _panel.repaint();
+
+        jmri.util.ThreadingUtil.runOnGUI(()->{
+            icon.setLocation(x, y);
+            _panel.repaint();
+        });
 
         java.awt.Point location = new java.awt.Point(x + icon.getSize().width / 2,
                 y + icon.getSize().height / 2);
@@ -94,8 +91,11 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
 
         int x = 30;
         int y = 10;
-        icon.setLocation(x, y);
-        _panel.repaint();
+
+        jmri.util.ThreadingUtil.runOnGUI(()->{
+            icon.setLocation(x, y);
+            _panel.repaint();
+        });
 
         java.awt.Point location = new java.awt.Point(x + icon.getSize().width / 2,
                 y + icon.getSize().height / 2);
@@ -137,8 +137,11 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
 
         int x = 30;
         int y = 10;
-        icon.setLocation(x, y);
-        _panel.repaint();
+
+        jmri.util.ThreadingUtil.runOnGUI(()->{
+            icon.setLocation(x, y);
+            _panel.repaint();
+        });
 
         java.awt.Point location = new java.awt.Point(x + icon.getSize().width / 2,
                 y + icon.getSize().height / 2);
@@ -386,7 +389,7 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", IconEditorWindowTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -399,48 +402,32 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
     protected void setUp() throws Exception {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
-        jmri.util.JUnitUtil.initInternalLightManager();
-        jmri.util.JUnitUtil.initMemoryManager();
-        jmri.util.JUnitUtil.initInternalSignalHeadManager();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalLightManager();
+        JUnitUtil.initMemoryManager();
+        JUnitUtil.initInternalSignalHeadManager();
+        JUnitUtil.initShutDownManager();
 
-        _editor = new PanelEditor("IconEditorTestPanel");
-        Assert.assertNotNull(_editor);
-        _panel = _editor.getTargetPanel();
-        Assert.assertNotNull(_panel);
+        jmri.util.ThreadingUtil.runOnGUI(()->{
+            _editor = new PanelEditor("IconEditorTestPanel");
+            Assert.assertNotNull(_editor);
+            _panel = _editor.getTargetPanel();
+            Assert.assertNotNull(_panel);
+        });
     }
 
-    @SuppressWarnings("unchecked")  // OK in test classes
+    @Override
     protected void tearDown() throws Exception {
 
-        TestHelper.disposeWindow(_editor.getTargetFrame(), this);
+        // Delete the editor by calling dispose(true) defined in PanelEditor
+        // directly instead of closing the window through a WindowClosing()
+        // event - this is the method called to delete a panel if a user
+        // selects that in the Hide/Delete dialog triggered by WindowClosing().
+        _editor.dispose(true);
 
-        // close window that pops dialog, find and press Delete
-        List<JDialog> dialogList = new DialogFinder(null).findAll(_editor.getTargetFrame());
-        JDialog d = dialogList.get(0);
-
-        // Find the button that deletes the panel
-        AbstractButtonFinder bf = new AbstractButtonFinder("Delete Panel");
-        JButton button = (JButton) bf.find(d, 0);
-        Assert.assertNotNull(button);
-
-        // Click button to delete panel and close window
-        getHelper().enterClickAndLeave(new MouseEventData(this, button));
-
-        // that pops dialog, find and press Yes - Delete
-        dialogList = new DialogFinder(null).findAll(_editor.getTargetFrame());
-        d = dialogList.get(0);
-
-        // Find the button that deletes the panel
-        bf = new AbstractButtonFinder("Yes - Dele");
-        button = (JButton) bf.find(d, 0);
-        Assert.assertNotNull(button);
-
-        // Click button to delete panel and close window
-        getHelper().enterClickAndLeave(new MouseEventData(this, button));
-
+        JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
         super.tearDown();
     }

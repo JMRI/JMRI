@@ -1,4 +1,3 @@
-// SystemConsoleConfigPanel.java
 package apps;
 
 import apps.SystemConsole.Scheme;
@@ -34,14 +33,8 @@ import jmri.util.swing.FontComboUtil;
  * <p>
  *
  * @author Matthew Harris copyright (c) 2010, 2011
- * @version $Revision$
  */
 public class SystemConsoleConfigPanel extends JPanel implements PreferencesPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2050602237831555417L;
 
     private static final ResourceBundle rbc = ResourceBundle.getBundle("apps.AppsConfigBundle");
 
@@ -245,4 +238,3 @@ public class SystemConsoleConfigPanel extends JPanel implements PreferencesPanel
         return InstanceManager.getDefault(SystemConsolePreferencesManager.class);
     }
 }
-/* @(#)SystemConsoleConfigPanel.java */

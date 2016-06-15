@@ -1,4 +1,3 @@
-// SignalHeadManager.java
 package jmri;
 
 import java.util.List;
@@ -22,7 +21,6 @@ import java.util.List;
  * <P>
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  */
 public interface SignalHeadManager extends Manager {
 
@@ -33,7 +31,7 @@ public interface SignalHeadManager extends Manager {
      * Locate via user name, then system name if needed. Does not create a new
      * one if nothing found
      *
-     * @param name
+     * @param name User name or system name to match
      * @return null if no match found
      */
     public SignalHead getSignalHead(String name);
@@ -48,6 +46,3 @@ public interface SignalHeadManager extends Manager {
     public List<String> getSystemNameList();
 
 }
-
-
-/* @(#)SignalHeadManager.java */

@@ -1,4 +1,3 @@
-// DiagnosticFrame.java
 package jmri.jmrix.cmri.serial.diagnostic;
 
 import java.awt.Container;
@@ -21,14 +20,9 @@ import jmri.jmrix.cmri.serial.SerialTrafficController;
  * Frame for running CMRI diagnostics
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version	$Revision$
  */
 public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.cmri.serial.SerialListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6464613055016868125L;
     // member declarations
     protected boolean outTest = true;
     protected boolean wrapTest = false;
@@ -59,7 +53,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     protected int nInBytes = 3;    // number of input bytes for all cards of this node
     protected int begInByte = 0;   // numbering from zero, subscript in inBytes
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "IS2_INCONSISTENT_SYNC", justification = "unsync access only during initialization")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC", justification = "unsync access only during initialization")
     protected int endInByte = 2;
 
     protected int numErrors = 0;
@@ -67,7 +61,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     protected javax.swing.Timer outTimer;
     protected javax.swing.Timer wrapTimer;
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "IS2_INCONSISTENT_SYNC", justification = "unsync access only during initialization")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC", justification = "unsync access only during initialization")
     protected boolean waitingOnInput = false;
 
     protected boolean needInputTest = false;
@@ -437,7 +431,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     /**
      * Local Method to run an Output Test
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     protected void runOutputTest() {
@@ -547,7 +541,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     /**
      * Local Method to run a Wraparound Test
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     protected void runWraparoundTest() {

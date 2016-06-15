@@ -1,11 +1,11 @@
-// SampleMinimalProgram.java
 package apps;
 
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.implementation.JmriConfigurationManager;
 import jmri.util.Log4JUtil;
-import jmri.web.server.WebServerManager;
+import jmri.web.server.WebServer;
+import jmri.web.server.WebServerPreferences;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +24,6 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Bob Jacobsen Copyright 2003, 2005, 2007, 2010
- * @version $Revision$
  */
 public class SampleMinimalProgram {
 
@@ -116,8 +115,8 @@ public class SampleMinimalProgram {
 
         // start web server
         final int port = 12080;
-        WebServerManager.getWebServerPreferences().setPort(port);
-        WebServerManager.getWebServer().start();
+        WebServerPreferences.getDefault().setPort(port);
+        WebServer.getDefault().start();
 
         log.info("Up!");
     }

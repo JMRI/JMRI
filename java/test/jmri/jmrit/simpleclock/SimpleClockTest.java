@@ -1,4 +1,3 @@
-// SimpleClockTest.java
 package jmri.jmrit.simpleclock;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmrit.simpleclock package
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class SimpleClockTest extends TestCase {
 
@@ -21,13 +19,14 @@ public class SimpleClockTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {SimpleClockTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.simpleclock.SimpleClockTest"); // no tests in class itself
         suite.addTest(jmri.jmrit.simpleclock.SimpleTimebaseTest.suite());
+        suite.addTest(BundleTest.suite());
         return suite;
     }
 

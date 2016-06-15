@@ -77,7 +77,7 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return null;
         }
         if (programmerManager == null) {
-            programmerManager = new NceProgrammerManager(new NceProgrammer(getNceTrafficController()), this);
+            programmerManager = new NceProgrammerManager(this);
         }
         return programmerManager;
     }
@@ -107,10 +107,10 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return true;
         }
         if (type.equals(jmri.GlobalProgrammerManager.class)) {
-            return getProgrammerManager().isGlobalProgrammerAvailable();
+            return true;
         }
         if (type.equals(jmri.AddressedProgrammerManager.class)) {
-            return getProgrammerManager().isAddressedModePossible();
+            return true;
         }
 
         if (type.equals(jmri.ThrottleManager.class)) {
@@ -200,7 +200,7 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     @SuppressWarnings("deprecation")
     public void configureManagers() {
         powerManager = new jmri.jmrix.nce.NcePowerManager(this);
-        InstanceManager.setPowerManager(powerManager);
+        InstanceManager.store(powerManager, jmri.PowerManager.class);
 
         turnoutManager = new jmri.jmrix.nce.NceTurnoutManager(getNceTrafficController(), getSystemPrefix());
         InstanceManager.setTurnoutManager(turnoutManager);

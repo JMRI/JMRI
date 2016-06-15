@@ -4,9 +4,9 @@
   <title>
  	JMRI: ID Tag Documentation
   </title>
-  <meta content="Matthew Harris" name="Author">
+  <meta name="author" content="Matthew Harris">
   <meta name="keywords"
-        content="rfID tag ID tag model railroad JMRI decoderpro panelpro">
+        content="rfid tag ID tag model railroad JMRI decoderpro panelpro">
 
 <!-- Style -->
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -18,12 +18,11 @@
 </head>
 
 <body>
-  <div ID="container">
 
 <!--#include virtual="/Header" -->
-<!--#include virtual="SIDebar" -->
+<!--#include virtual="Sidebar" -->
 
-      <div ID="mainContent">
+      <div id="mainContent">
       <!-- Page Body -->
         <h1>
 		JMRI: ID Tags Documentation
@@ -46,7 +45,8 @@ automatically entered into the
 <a href="../../package/jmri/jmrit/beantable/IdTagTable.shtml">ID Tag Table</a>.
 <p>
 At system shutdown, the details of all ID Tags known to the system are written
-to a file stored in the "IDtags" sub-directory of user Preferences.  The storage of
+to a file stored in the "idtags" sub-directory of user 
+<a href="../../package/apps/TabbedPreferences.shtml">Preferences</a>.  The storage of
 details when and where a given ID Tag was last seen is configurable by setting
 the option at the bottom of the ID Tag Table.
 <p>
@@ -65,11 +65,19 @@ extending the kit with the additional concentrator components should the
 <h3>ID Tag Table</h3>
 <p>The 
 <a href="../../package/jmri/jmrit/beantable/IdTagTable.shtml">ID Tag Table</a>
-provIDes easy access to the contents of all ID Tags that JMRI knows about.
-There's also an 
+provides easy access to the contents of all ID Tags that JMRI knows about.</p>
+
+<h3>ID Tag Table Controls</h3>
+<p>
+Below the table there's an 
 <a href="../../package/jmri/jmrit/beantable/IdTagAddEdit.shtml">"Add..." button</a>
 for creating your own ID Tags; JMRI automatically creates
 ID Tag objects for tags detected on the layout.</p>
+<p>Next to it, two check boxes let you activate:
+	<ul>
+	<li>Save when and where last seen</li>
+	<li>Use Fast Clock Time</li>
+	</ul>
 
 <h3>Displaying ID Tags on Panels</h3>
 <p>An ID Tag can be displayed on a Panel via the use of the Reporter Icon
@@ -94,6 +102,5 @@ More information about Reporters can be found in the
 
       </div><!-- closes #mainContent-->
     </div> <!-- closes #mBody-->
-  </div> <!-- closes #container -->
 </body>
 </html>
