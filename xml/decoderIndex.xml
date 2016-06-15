@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.3.7ish-201605292027-Alain Le Marchand on Sun May 29 22:27:34 CEST 2016 $Id$-->
-  <decoderIndex version="744">
+  <!--Written by JMRI version 4.3.7ish-201606110831-Matt H-R4bd0b9b on Sat Jun 11 10:31:32 CEST 2016 $Id$-->
+  <decoderIndex version="748">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -507,60 +507,158 @@
       </family>
       <family name="DCX Series (v.66 and higher)" mfg="CT Elektronik" lowVersionID="66" comment="DCX74, DCX75, with variants" file="CT_Elektronik_DCX_V66_plus.xml">
         <model model="DCX74D" numOuts="2" numFns="10" maxMotorCurrent="1.6 A" maxTotalCurrent="0.8 A">
-          <output name="Ra" label="Yard Mode" />
+          <output name="1" label="White">
+            <label xml:lang="de">Weiß</label>
+          </output>
+          <output name="2" label="Yellow">
+            <label xml:lang="de">Gelb</label>
+          </output>
+          <output name="Ra" label="Yard Mode">
+            <label xml:lang="de">Rangiermodus</label>
+          </output>
         </model>
         <model model="DCX74DV" numOuts="4" numFns="10" maxMotorCurrent="1.6 A" maxTotalCurrent="0.8 A">
-          <output name="1" label="White" />
-          <output name="2" label="Yellow" />
-          <output name="3" label="Brown" />
-          <output name="4" label="Brown" />
-          <output name="Ra" label="Yard Mode" />
+          <output name="1" label="White">
+            <label xml:lang="de">Weiß</label>
+          </output>
+          <output name="2" label="Yellow">
+            <label xml:lang="de">Gelb</label>
+          </output>
+          <output name="3" label="Brown">
+            <label xml:lang="de">Braun</label>
+          </output>
+          <output name="4" label="Brown">
+            <label xml:lang="de">Braun</label>
+          </output>
+          <output name="Ra" label="Yard Mode">
+            <label xml:lang="de">Rangiermodus</label>
+          </output>
         </model>
         <model model="DCX74z" numOuts="4" numFns="10" maxMotorCurrent="1 A" maxTotalCurrent="1 A">
-          <output name="1" label="White" />
-          <output name="2" label="Yellow" />
-          <output name="3" label="Green" />
-          <output name="4" label="Violet" />
-          <output name="Ra" label="Yard Mode" />
+          <output name="1" label="White">
+            <label xml:lang="de">Weiß</label>
+          </output>
+          <output name="2" label="Yellow">
+            <label xml:lang="de">Gelb</label>
+          </output>
+          <output name="3" label="Green">
+            <label xml:lang="de">Grün</label>
+          </output>
+          <output name="4" label="Violet">
+            <label xml:lang="de">Violett</label>
+          </output>
+          <output name="Ra" label="Yard Mode">
+            <label xml:lang="de">Rangiermodus</label>
+          </output>
         </model>
         <model model="DCX75" numOuts="2" numFns="10" maxMotorCurrent="1.0A, peak=2A for 3 sec." maxTotalCurrent="1.0A">
-          <output name="Ra" label="Yard Mode" />
+          <output name="Ra" label="Yard Mode">
+            <label xml:lang="de">Rangiermodus</label>
+          </output>
         </model>
         <model model="DCX76" numOuts="4" numFns="10" maxMotorCurrent="0.8 A" maxTotalCurrent="0.8 A">
-          <output name="1" label="White" />
-          <output name="2" label="Yellow" />
+          <output name="1" label="White">
+            <label xml:lang="de">Weiß</label>
+          </output>
+          <output name="2" label="Yellow">
+            <label xml:lang="de">Gelb</label>
+          </output>
           <output name="3" label="Pad F1" />
           <output name="4" label="Pad F2" />
-          <output name="Ra" label="Yard Mode" />
+          <output name="Ra" label="Yard Mode">
+            <label xml:lang="de">Rangiermodus</label>
+          </output>
         </model>
         <model model="DCX76Z" numOuts="4" numFns="10" maxMotorCurrent="0.8 A" maxTotalCurrent="0.8 A">
-          <output name="1" label="White" />
-          <output name="2" label="Yellow" />
+          <output name="1" label="White">
+            <label xml:lang="de">Weiß</label>
+          </output>
+          <output name="2" label="Yellow">
+            <label xml:lang="de">Gelb</label>
+          </output>
           <output name="3" label="Pad F1" />
           <output name="4" label="Pad F2" />
-          <output name="Ra" label="Yard Mode" />
+          <output name="Ra" label="Yard Mode">
+            <label xml:lang="de">Rangiermodus</label>
+          </output>
         </model>
       </family>
       <family name="DCX Series (v.27 and higher)" mfg="CT Elektronik" lowVersionID="27" highVersionID="59" comment="DCX74, DCX75, with variants" file="CT_Elektronik_DCX_new2.xml">
         <model model="DCX74D" numOuts="2" numFns="10" maxMotorCurrent="1.6 A" maxTotalCurrent="0.8 A">
-          <output name="Ra" label="Yard Mode" />
+          <output name="1" label="White">
+            <label xml:lang="de">Weiß</label>
+          </output>
+          <output name="2" label="Yellow">
+            <label xml:lang="de">Gelb</label>
+          </output>
+          <output name="Ra" label="Yard Mode">
+            <label xml:lang="de">Rangiermodus</label>
+          </output>
         </model>
         <model model="DCX74DV" numOuts="4" numFns="10" maxMotorCurrent="1.6 A" maxTotalCurrent="0.8 A">
-          <output name="1" label="White" />
-          <output name="2" label="Yellow" />
-          <output name="3" label="Brown" />
-          <output name="4" label="Brown" />
-          <output name="Ra" label="Yard Mode" />
+          <output name="1" label="White">
+            <label xml:lang="de">Weiß</label>
+          </output>
+          <output name="2" label="Yellow">
+            <label xml:lang="de">Gelb</label>
+          </output>
+          <output name="3" label="Brown">
+            <label xml:lang="de">Braun</label>
+          </output>
+          <output name="4" label="Brown">
+            <label xml:lang="de">Braun</label>
+          </output>
+          <output name="Ra" label="Yard Mode">
+            <label xml:lang="de">Rangiermodus</label>
+          </output>
         </model>
         <model model="DCX74z" numOuts="4" numFns="10" maxMotorCurrent="1 A" maxTotalCurrent="1 A">
-          <output name="1" label="White" />
-          <output name="2" label="Yellow" />
-          <output name="3" label="Green" />
-          <output name="4" label="Violet" />
-          <output name="Ra" label="Yard Mode" />
+          <output name="1" label="White">
+            <label xml:lang="de">Weiß</label>
+          </output>
+          <output name="2" label="Yellow">
+            <label xml:lang="de">Gelb</label>
+          </output>
+          <output name="3" label="Green">
+            <label xml:lang="de">Grün</label>
+          </output>
+          <output name="4" label="Violet">
+            <label xml:lang="de">Violett</label>
+          </output>
+          <output name="Ra" label="Yard Mode">
+            <label xml:lang="de">Rangiermodus</label>
+          </output>
         </model>
         <model model="DCX75" numOuts="2" numFns="10" maxMotorCurrent="1.0A, peak=2A for 3 sec." maxTotalCurrent="1.0A">
-          <output name="Ra" label="Yard Mode" />
+          <output name="Ra" label="Yard Mode">
+            <label xml:lang="de">Rangiermodus</label>
+          </output>
+        </model>
+        <model model="DCX76" numOuts="4" numFns="10" maxMotorCurrent="0.8 A" maxTotalCurrent="0.8 A">
+          <output name="1" label="White">
+            <label xml:lang="de">Weiß</label>
+          </output>
+          <output name="2" label="Yellow">
+            <label xml:lang="de">Gelb</label>
+          </output>
+          <output name="3" label="Pad F1" />
+          <output name="4" label="Pad F2" />
+          <output name="Ra" label="Yard Mode">
+            <label xml:lang="de">Rangiermodus</label>
+          </output>
+        </model>
+        <model model="DCX76Z" numOuts="4" numFns="10" maxMotorCurrent="0.8 A" maxTotalCurrent="0.8 A">
+          <output name="1" label="White">
+            <label xml:lang="de">Weiß</label>
+          </output>
+          <output name="2" label="Yellow">
+            <label xml:lang="de">Gelb</label>
+          </output>
+          <output name="3" label="Pad F1" />
+          <output name="4" label="Pad F2" />
+          <output name="Ra" label="Yard Mode">
+            <label xml:lang="de">Rangiermodus</label>
+          </output>
         </model>
       </family>
       <family name="DCX Series (old)" mfg="CT Elektronik" file="CT_Elektronik_DCX_old.xml">
@@ -5595,14 +5693,50 @@
         <model model="DCC-Fitted Function Only (Unmotored trailers)" options="unmotored" numOuts="2" numFns="1" nmraWarrant="no" formFactor="DCC Fitted" comment="Pendolino trailer" />
       </family>
       <family name="Hornby TTS Sound Decoder" mfg="Hornby" comment="" file="HornbyTTS.xml">
-        <model model="Hornby TTS Duke of Gloucester" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="DoG">
+        <model model="Hornby TTS Duke of Gloucester" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="DoG, 131">
           <versionCV lowVersionID="90" highVersionID="99" />
           <output name="Headlight" label="Wh" maxcurrent="0.1A" />
           <output name="Rear Light" label="Ye" maxcurrent="0.1A" />
           <output name="Aux" label="Gr" maxcurrent="0.1A" />
         </model>
-        <model model="Hornby TTS Class 37 and Class 40" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="Cl37">
+        <model model="Hornby TTS Class 37 and Class 40" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="Cl37, 147, 151">
           <versionCV lowVersionID="120" highVersionID="120" />
+          <output name="Headlight" label="Wh" maxcurrent="0.1A" />
+          <output name="Rear Light" label="Ye" maxcurrent="0.1A" />
+          <output name="Aux" label="Gr" maxcurrent="0.1A" />
+        </model>
+        <model model="Hornby TTS Class 47" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="149">
+          <versionCV lowVersionID="2" highVersionID="120" />
+          <output name="Headlight" label="Wh" maxcurrent="0.1A" />
+          <output name="Rear Light" label="Ye" maxcurrent="0.1A" />
+          <output name="Aux" label="Gr" maxcurrent="0.1A" />
+        </model>
+        <model model="Hornby TTS Class 66" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="153">
+          <versionCV lowVersionID="2" highVersionID="120" />
+          <output name="Headlight" label="Wh" maxcurrent="0.1A" />
+          <output name="Rear Light" label="Ye" maxcurrent="0.1A" />
+          <output name="Aux" label="Gr" maxcurrent="0.1A" />
+        </model>
+        <model model="Hornby TTS Flying Scotsman" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="137">
+          <versionCV lowVersionID="2" highVersionID="120" />
+          <output name="Headlight" label="Wh" maxcurrent="0.1A" />
+          <output name="Rear Light" label="Ye" maxcurrent="0.1A" />
+          <output name="Aux" label="Gr" maxcurrent="0.1A" />
+        </model>
+        <model model="Hornby TTS Fowler 2P 4-4-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="143">
+          <versionCV lowVersionID="2" highVersionID="120" />
+          <output name="Headlight" label="Wh" maxcurrent="0.1A" />
+          <output name="Rear Light" label="Ye" maxcurrent="0.1A" />
+          <output name="Aux" label="Gr" maxcurrent="0.1A" />
+        </model>
+        <model model="Hornby TTS 4F 0-6-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="145">
+          <versionCV lowVersionID="2" highVersionID="120" />
+          <output name="Headlight" label="Wh" maxcurrent="0.1A" />
+          <output name="Rear Light" label="Ye" maxcurrent="0.1A" />
+          <output name="Aux" label="Gr" maxcurrent="0.1A" />
+        </model>
+        <model model="Hornby TTS A4 4-6-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="135">
+          <versionCV lowVersionID="2" highVersionID="120" />
           <output name="Headlight" label="Wh" maxcurrent="0.1A" />
           <output name="Rear Light" label="Ye" maxcurrent="0.1A" />
           <output name="Aux" label="Gr" maxcurrent="0.1A" />
@@ -5631,33 +5765,169 @@
           <versionCV lowVersionID="34" />
           <output name="1" label="White">
             <label xml:lang="it">Bianco</label>
+            <label xml:lang="de">Weiß</label>
           </output>
           <output name="2" label="Yellow">
             <label xml:lang="it">Giallo</label>
+            <label xml:lang="de">Gelb</label>
+          </output>
+        </model>
+        <model model="N025-P" numOuts="2" numFns="10" maxMotorCurrent="0.7 A" maxTotalCurrent="1 A">
+          <versionCV lowVersionID="34" />
+          <output name="1" label="White">
+            <label xml:lang="it">Bianco</label>
+            <label xml:lang="de">Weiß</label>
+          </output>
+          <output name="2" label="Yellow">
+            <label xml:lang="it">Giallo</label>
+            <label xml:lang="de">Gelb</label>
+          </output>
+        </model>
+        <model model="N025-P8" numOuts="2" numFns="10" maxMotorCurrent="0.7 A" maxTotalCurrent="1 A">
+          <versionCV lowVersionID="34" />
+          <output name="1" label="White">
+            <label xml:lang="it">Bianco</label>
+            <label xml:lang="de">Weiß</label>
+          </output>
+          <output name="2" label="Yellow">
+            <label xml:lang="it">Giallo</label>
+            <label xml:lang="de">Gelb</label>
+          </output>
+        </model>
+        <model model="N025-PA" numOuts="2" numFns="10" maxMotorCurrent="0.7 A" maxTotalCurrent="1 A">
+          <versionCV lowVersionID="34" />
+          <output name="1" label="White">
+            <label xml:lang="it">Bianco</label>
+            <label xml:lang="de">Weiß</label>
+          </output>
+          <output name="2" label="Yellow">
+            <label xml:lang="it">Giallo</label>
+            <label xml:lang="de">Gelb</label>
           </output>
         </model>
         <model model="T125" numOuts="2" numFns="10" maxMotorCurrent="1.1 A" maxTotalCurrent="1.4 A">
           <versionCV lowVersionID="34" />
           <output name="1" label="White">
             <label xml:lang="it">Bianco</label>
+            <label xml:lang="de">Weiß</label>
           </output>
           <output name="2" label="Yellow">
             <label xml:lang="it">Giallo</label>
+            <label xml:lang="de">Gelb</label>
+          </output>
+        </model>
+        <model model="T125-8" numOuts="2" numFns="10" maxMotorCurrent="1.1 A" maxTotalCurrent="1.4 A">
+          <versionCV lowVersionID="34" />
+          <output name="1" label="White">
+            <label xml:lang="it">Bianco</label>
+            <label xml:lang="de">Weiß</label>
+          </output>
+          <output name="2" label="Yellow">
+            <label xml:lang="it">Giallo</label>
+            <label xml:lang="de">Gelb</label>
           </output>
         </model>
         <model model="T145" numOuts="4" numFns="10" maxMotorCurrent="1.1 A" maxTotalCurrent="2.0 A">
           <versionCV lowVersionID="34" />
           <output name="1" label="White">
             <label xml:lang="it">Bianco</label>
+            <label xml:lang="de">Weiß</label>
           </output>
           <output name="2" label="Yellow">
             <label xml:lang="it">Giallo</label>
+            <label xml:lang="de">Gelb</label>
           </output>
           <output name="3" label="Green">
             <label xml:lang="it">Verde</label>
+            <label xml:lang="de">Grün</label>
           </output>
           <output name="4" label="Violet">
             <label xml:lang="it">Viola</label>
+            <label xml:lang="de">Violett</label>
+          </output>
+        </model>
+        <model model="T145-8" numOuts="4" numFns="10" maxMotorCurrent="1.1 A" maxTotalCurrent="2.0 A">
+          <versionCV lowVersionID="34" />
+          <output name="1" label="White">
+            <label xml:lang="it">Bianco</label>
+            <label xml:lang="de">Weiß</label>
+          </output>
+          <output name="2" label="Yellow">
+            <label xml:lang="it">Giallo</label>
+            <label xml:lang="de">Gelb</label>
+          </output>
+          <output name="3" label="Green">
+            <label xml:lang="it">Verde</label>
+            <label xml:lang="de">Grün</label>
+          </output>
+          <output name="4" label="Violet">
+            <label xml:lang="it">Viola</label>
+            <label xml:lang="de">Violett</label>
+          </output>
+        </model>
+      </family>
+      <family name="NMRA-DCC/Motorola" mfg="Kuehn Ing." file="Kuehn_N45.xml">
+        <model model="N45" numOuts="6" numFns="14" maxMotorCurrent="0.8 A" maxTotalCurrent="0.8 A">
+          <versionCV lowVersionID="35" highVersionID="35" />
+          <output name="1" label="Front|Light">
+            <label xml:lang="de">Ausgang|A</label>
+          </output>
+          <output name="2" label="Rear|Light">
+            <label xml:lang="de">Ausgang|B</label>
+          </output>
+          <output name="3" label="Output|C">
+            <label xml:lang="de">Ausgang|C</label>
+          </output>
+          <output name="4" label="Output|D">
+            <label xml:lang="de">Ausgang|D</label>
+          </output>
+          <output name="5" label="Output|E">
+            <label xml:lang="de">Ausgang|E</label>
+          </output>
+          <output name="6" label="Output|F">
+            <label xml:lang="de">Ausgang|F</label>
+          </output>
+        </model>
+        <model model="N45-P" numOuts="6" numFns="14" maxMotorCurrent="0.8 A" maxTotalCurrent="0.8 A">
+          <versionCV lowVersionID="35" highVersionID="35" />
+          <output name="1" label="Front|Light">
+            <label xml:lang="de">Ausgang|A</label>
+          </output>
+          <output name="2" label="Rear|Light">
+            <label xml:lang="de">Ausgang|B</label>
+          </output>
+          <output name="3" label="Output|C">
+            <label xml:lang="de">Ausgang|C</label>
+          </output>
+          <output name="4" label="Output|D">
+            <label xml:lang="de">Ausgang|D</label>
+          </output>
+          <output name="5" label="Output|E">
+            <label xml:lang="de">Ausgang|E</label>
+          </output>
+          <output name="6" label="Output|F">
+            <label xml:lang="de">Ausgang|F</label>
+          </output>
+        </model>
+        <model model="N45-P8" numOuts="6" numFns="14" maxMotorCurrent="0.8 A" maxTotalCurrent="0.8 A">
+          <versionCV lowVersionID="35" highVersionID="35" />
+          <output name="1" label="Front|Light">
+            <label xml:lang="de">Ausgang|A</label>
+          </output>
+          <output name="2" label="Rear|Light">
+            <label xml:lang="de">Ausgang|B</label>
+          </output>
+          <output name="3" label="Output|C">
+            <label xml:lang="de">Ausgang|C</label>
+          </output>
+          <output name="4" label="Output|D">
+            <label xml:lang="de">Ausgang|D</label>
+          </output>
+          <output name="5" label="Output|E">
+            <label xml:lang="de">Ausgang|E</label>
+          </output>
+          <output name="6" label="Output|F">
+            <label xml:lang="de">Ausgang|F</label>
           </output>
         </model>
       </family>
@@ -12133,6 +12403,70 @@
           <functionlabel num="15" lockable="true">Handbrake</functionlabel>
           <functionlabel num="16" lockable="true">HEP Mode</functionlabel>
           <functionlabel num="17" lockable="true">Fuel Loading</functionlabel>
+          <functionlabel num="18" lockable="true">General Service</functionlabel>
+          <functionlabel num="20" lockable="true">Steam Generator</functionlabel>
+          <functionlabel num="21" lockable="true">Sander Valve</functionlabel>
+          <functionlabel num="22" lockable="true">Cab Chatter</functionlabel>
+          <functionlabel num="23" lockable="true">All Aboard</functionlabel>
+          <functionlabel num="24" lockable="true">FX3 Output</functionlabel>
+          <functionlabel num="25" lockable="true">FX4 Output</functionlabel>
+          <functionlabel num="26" lockable="true">FX5 Output</functionlabel>
+          <functionlabel num="27" lockable="true">FX6 Output</functionlabel>
+        </functionlabels>
+      </family>
+      <family name="Tsunami2 Electric" mfg="SoundTraxx (Throttle-Up)" comment="These are the -retail- version Tsunami2 Electric decoders" file="SoundTraxx_Tsu2_Electric.xml">
+        <model model="TSU-1100 Electric" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="other" productID="886001" comment="Model 886001">
+          <versionCV lowVersionID="71" />
+          <output name="3" label="  FX3  " />
+          <output name="4" label="  FX4  " />
+          <output name="5" label="Airhorn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Pneum|Doors">
+            <label xml:lang="it">Porte|Pneum</label>
+          </output>
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="Pantograph| ">
+            <label xml:lang="it">Pantografo| </label>
+          </output>
+          <output name="10" label="General|Service" />
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <output name="13" label="Stop|Bell">
+            <label xml:lang="it">Fermare|Campana</label>
+          </output>
+          <output name="14" label="Ind/Train|Brake" />
+          <output name="15" label="Coupler| ">
+            <label xml:lang="it">Accoppiatore| </label>
+          </output>
+          <size length="27" width="10.5" height="5" units="mm" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Short Horn</functionlabel>
+          <functionlabel num="4" lockable="true">Pantograph</functionlabel>
+          <functionlabel num="5" lockable="true">Stop Req. Bell</functionlabel>
+          <functionlabel num="6" lockable="true">Pneum. Doors</functionlabel>
+          <functionlabel num="7" lockable="true">Dimmer</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="true">Xing Signal</functionlabel>
+          <functionlabel num="10" lockable="true">Trolley Bell</functionlabel>
+          <functionlabel num="11" lockable="true">Brake Function</functionlabel>
+          <functionlabel num="12" lockable="true">Brake Select</functionlabel>
+          <functionlabel num="13" lockable="true">Coupler</functionlabel>
+          <functionlabel num="14" lockable="true">Half Speed</functionlabel>
+          <functionlabel num="15" lockable="true">Handbrake</functionlabel>
           <functionlabel num="18" lockable="true">General Service</functionlabel>
           <functionlabel num="20" lockable="true">Steam Generator</functionlabel>
           <functionlabel num="21" lockable="true">Sander Valve</functionlabel>
@@ -22549,39 +22883,87 @@
       </family>
       <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX620v31.xml">
         <model model="MX620 version 31" lowVersionID="31" highVersionID="31" maxInputVolts="20V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="6" numFns="14" productID="201">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3 (+5v)" />
-          <output name="6" label="FO 4 (+5v)" />
+          <output name="1" label="Front Light">
+            <label xml:lang="de">Lvor</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="de">Lrück</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="de">FA1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="de">FA2</label>
+          </output>
+          <output name="5" label="FO 3 (+5v)">
+            <label xml:lang="de">FA3|(+5v)</label>
+          </output>
+          <output name="6" label="FO 4 (+5v)">
+            <label xml:lang="de">FA4|(+5v)</label>
+          </output>
           <size length="14" width="9" height="2.5" units="mm" />
         </model>
         <model model="MX620N version 31" lowVersionID="31" highVersionID="31" maxInputVolts="20V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="201">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3 (+5v)" />
-          <output name="6" label="FO 4 (+5v)" />
+          <output name="1" label="Front Light">
+            <label xml:lang="de">Lvor</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="de">Lrück</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="de">FA1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="de">FA2</label>
+          </output>
+          <output name="5" label="FO 3 (+5v)">
+            <label xml:lang="de">FA3|(+5v)</label>
+          </output>
+          <output name="6" label="FO 4 (+5v)">
+            <label xml:lang="de">FA4|(+5v)</label>
+          </output>
           <size length="14" width="9" height="2.5" units="mm" />
         </model>
         <model model="MX620R version 31" lowVersionID="31" highVersionID="31" maxInputVolts="20V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAmedium" numOuts="6" numFns="14" productID="201">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3 (+5v)" />
-          <output name="6" label="FO 4 (+5v)" />
+          <output name="1" label="Front Light">
+            <label xml:lang="de">Lvor</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="de">Lrück</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="de">FA1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="de">FA2</label>
+          </output>
+          <output name="5" label="FO 3 (+5v)">
+            <label xml:lang="de">FA3|(+5v)</label>
+          </output>
+          <output name="6" label="FO 4 (+5v)">
+            <label xml:lang="de">FA4|(+5v)</label>
+          </output>
           <size length="14" width="9" height="2.5" units="mm" />
         </model>
         <model model="MX620F version 31" lowVersionID="31" highVersionID="31" maxInputVolts="20V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="201">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3 (+5v)" />
-          <output name="6" label="FO 4 (+5v)" />
+          <output name="1" label="Front Light">
+            <label xml:lang="de">Lvor</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="de">Lrück</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="de">FA1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="de">FA2</label>
+          </output>
+          <output name="5" label="FO 3 (+5v)">
+            <label xml:lang="de">FA3|(+5v)</label>
+          </output>
+          <output name="6" label="FO 4 (+5v)">
+            <label xml:lang="de">FA4|(+5v)</label>
+          </output>
           <size length="14" width="9" height="2.5" units="mm" />
         </model>
       </family>
@@ -22701,48 +23083,87 @@
       </family>
       <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX621v31.xml">
         <model model="MX621 version 31" lowVersionID="31" highVersionID="31" maxInputVolts="40V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="4" numFns="14" productID="223">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3 (+5v)" />
-          <output name="6" label="FO 4 (+5v)" />
+          <output name="1" label="Front Light">
+            <label xml:lang="de">Lvor</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="de">Lrück</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="de">FA1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="de">FA2</label>
+          </output>
+          <output name="5" label="FO 3 (+5v)">
+            <label xml:lang="de">FA3|(+5v)</label>
+          </output>
+          <output name="6" label="FO 4 (+5v)">
+            <label xml:lang="de">FA4|(+5v)</label>
+          </output>
           <size length="12" width="8.5" height="2" units="mm" />
         </model>
         <model model="MX621N version 31" lowVersionID="31" highVersionID="31" maxInputVolts="40V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAsmall" numOuts="4" numFns="14" productID="223">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3 (+5v)" />
-          <output name="6" label="FO 4 (+5v)" />
+          <output name="1" label="Front Light">
+            <label xml:lang="de">Lvor</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="de">Lrück</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="de">FA1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="de">FA2</label>
+          </output>
+          <output name="5" label="FO 3 (+5v)">
+            <label xml:lang="de">FA3|(+5v)</label>
+          </output>
+          <output name="6" label="FO 4 (+5v)">
+            <label xml:lang="de">FA4|(+5v)</label>
+          </output>
           <size length="12" width="8.5" height="2" units="mm" />
         </model>
         <model model="MX621R version 31" lowVersionID="31" highVersionID="31" maxInputVolts="40V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAmedium" numOuts="4" numFns="14" productID="223">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3 (+5v)" />
-          <output name="6" label="FO 4 (+5v)" />
+          <output name="1" label="Front Light">
+            <label xml:lang="de">Lvor</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="de">Lrück</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="de">FA1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="de">FA2</label>
+          </output>
+          <output name="5" label="FO 3 (+5v)">
+            <label xml:lang="de">FA3|(+5v)</label>
+          </output>
+          <output name="6" label="FO 4 (+5v)">
+            <label xml:lang="de">FA4|(+5v)</label>
+          </output>
           <size length="12" width="8.5" height="2" units="mm" />
         </model>
         <model model="MX621F version 31" lowVersionID="31" highVersionID="31" maxInputVolts="40V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAsmall" numOuts="4" numFns="14" productID="223">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3 (+5v)" />
-          <output name="6" label="FO 4 (+5v)" />
-          <size length="12" width="8.5" height="2" units="mm" />
-        </model>
-        <model model="MX621 version 31 - Fleischmann" lowVersionID="31" highVersionID="31" maxInputVolts="40V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="4" numFns="14" productID="236">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3 (+5v)" />
-          <output name="6" label="FO 4 (+5v)" />
+          <output name="1" label="Front Light">
+            <label xml:lang="de">Lvor</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="de">Lrück</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="de">FA1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="de">FA2</label>
+          </output>
+          <output name="5" label="FO 3 (+5v)">
+            <label xml:lang="de">FA3|(+5v)</label>
+          </output>
+          <output name="6" label="FO 4 (+5v)">
+            <label xml:lang="de">FA4|(+5v)</label>
+          </output>
           <size length="12" width="8.5" height="2" units="mm" />
         </model>
       </family>
@@ -22969,48 +23390,112 @@
         </model>
       </family>
       <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX630v31.xml">
-        <model model="MX630 version 31" lowVersionID="31" highVersionID="31" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1A" formFactor="HO" numOuts="8" numFns="14" productID="211,218">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5 (+5v)" />
-          <output name="8" label="FO 6 (+5v)" />
+        <model model="MX630 version 31" lowVersionID="31" highVersionID="31" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1A" formFactor="HO" numOuts="8" numFns="14" productID="211">
+          <output name="1" label="Front Light">
+            <label xml:lang="de">Lvor</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="de">Lrück</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="de">FA1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="de">FA2</label>
+          </output>
+          <output name="5" label="FO 3">
+            <label xml:lang="de">FA3</label>
+          </output>
+          <output name="6" label="FO 4">
+            <label xml:lang="de">FA4</label>
+          </output>
+          <output name="7" label="FO 5 (+5v)">
+            <label xml:lang="de">FA5</label>
+          </output>
+          <output name="8" label="FO 6 (+5v)">
+            <label xml:lang="de">FA6</label>
+          </output>
           <size length="20" width="11" height="3.5" units="mm" />
         </model>
-        <model model="MX630R version 31" lowVersionID="31" highVersionID="31" maxInputVolts="30V" maxMotorCurrent="1A, peak=2.5A" maxTotalCurrent="1A" formFactor="HO" connector="NMRAmedium" numOuts="8" numFns="14" productID="211,218">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5 (+5v)" />
-          <output name="8" label="FO 6 (+5v)" />
+        <model model="MX630R version 31" lowVersionID="31" highVersionID="31" maxInputVolts="30V" maxMotorCurrent="1A, peak=2.5A" maxTotalCurrent="1A" formFactor="HO" connector="NMRAmedium" numOuts="8" numFns="14" productID="211">
+          <output name="1" label="Front Light">
+            <label xml:lang="de">Lvor</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="de">Lrück</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="de">FA1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="de">FA2</label>
+          </output>
+          <output name="5" label="FO 3">
+            <label xml:lang="de">FA3</label>
+          </output>
+          <output name="6" label="FO 4">
+            <label xml:lang="de">FA4</label>
+          </output>
+          <output name="7" label="FO 5 (+5v)">
+            <label xml:lang="de">FA5</label>
+          </output>
+          <output name="8" label="FO 6 (+5v)">
+            <label xml:lang="de">FA6</label>
+          </output>
           <size length="20" width="11" height="3.5" units="mm" />
         </model>
-        <model model="MX630F version 31" lowVersionID="31" highVersionID="31" maxInputVolts="30V" maxMotorCurrent="1A, peak=2.5A" maxTotalCurrent="1A" formFactor="HO" connector="NMRAsmall" numOuts="8" numFns="14" productID="211,218">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5 (+5v)" />
-          <output name="8" label="FO 6 (+5v)" />
+        <model model="MX630F version 31" lowVersionID="31" highVersionID="31" maxInputVolts="30V" maxMotorCurrent="1A, peak=2.5A" maxTotalCurrent="1A" formFactor="HO" connector="NMRAsmall" numOuts="8" numFns="14" productID="211">
+          <output name="1" label="Front Light">
+            <label xml:lang="de">Lvor</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="de">Lrück</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="de">FA1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="de">FA2</label>
+          </output>
+          <output name="5" label="FO 3">
+            <label xml:lang="de">FA3</label>
+          </output>
+          <output name="6" label="FO 4">
+            <label xml:lang="de">FA4</label>
+          </output>
+          <output name="7" label="FO 5 (+5v)">
+            <label xml:lang="de">FA5</label>
+          </output>
+          <output name="8" label="FO 6 (+5v)">
+            <label xml:lang="de">FA6</label>
+          </output>
           <size length="20" width="11" height="3.5" units="mm" />
         </model>
-        <model model="MX630P version 31" lowVersionID="31" highVersionID="31" maxInputVolts="30V" maxMotorCurrent="1A, peak=2.5A" maxTotalCurrent="1A" formFactor="HO" connector="PluX16" numOuts="8" numFns="14" productID="211,218">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5 (+5v)" />
-          <output name="8" label="FO 6 (+5v)" />
+        <model model="MX630P version 31" lowVersionID="31" highVersionID="31" maxInputVolts="30V" maxMotorCurrent="1A, peak=2.5A" maxTotalCurrent="1A" formFactor="HO" connector="PluX16" numOuts="8" numFns="14" productID="211">
+          <output name="1" label="Front Light">
+            <label xml:lang="de">Lvor</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="de">Lrück</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="de">FA1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="de">FA2</label>
+          </output>
+          <output name="5" label="FO 3">
+            <label xml:lang="de">FA3</label>
+          </output>
+          <output name="6" label="FO 4">
+            <label xml:lang="de">FA4</label>
+          </output>
+          <output name="7" label="FO 5 (+5v)">
+            <label xml:lang="de">FA5</label>
+          </output>
+          <output name="8" label="FO 6 (+5v)">
+            <label xml:lang="de">FA6</label>
+          </output>
           <size length="20" width="11" height="3.5" units="mm" />
         </model>
       </family>
@@ -25013,48 +25498,112 @@
         </model>
       </family>
       <family name="Zimo Unified software (version 32+)" mfg="Zimo" file="Zimo_Unified_software_v32_MX634.xml">
-        <model show="no" model="MX634 version 32+" replacementModel="MX634 version 25+" replacementFamily="Zimo Unified software (version 25+)" lowVersionID="32" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" numOuts="8" numFns="14" productID="240">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5 (+5v)" />
-          <output name="8" label="FO 6 (+5v)" />
+        <model model="MX634 version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" numOuts="8" numFns="14" productID="240">
+          <output name="1" label="Front Light">
+            <label xml:lang="de">Lvor</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="de">Lrück</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="de">FA1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="de">FA2</label>
+          </output>
+          <output name="5" label="FO 3">
+            <label xml:lang="de">FA3</label>
+          </output>
+          <output name="6" label="FO 4">
+            <label xml:lang="de">FA4</label>
+          </output>
+          <output name="7" label="FO 5 (+5v)">
+            <label xml:lang="de">FA5|(+5v)</label>
+          </output>
+          <output name="8" label="FO 6 (+5v)">
+            <label xml:lang="de">FA6|(+5v)</label>
+          </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
-        <model show="no" model="MX634R version 32+" replacementModel="MX634R version 25+" replacementFamily="Zimo Unified software (version 25+)" lowVersionID="32" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="NMRAmedium" numOuts="8" numFns="14" productID="240">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5 (+5v)" />
-          <output name="8" label="FO 6 (+5v)" />
+        <model model="MX634R version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="NMRAmedium" numOuts="8" numFns="14" productID="240">
+          <output name="1" label="Front Light">
+            <label xml:lang="de">Lvor</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="de">Lrück</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="de">FA1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="de">FA2</label>
+          </output>
+          <output name="5" label="FO 3">
+            <label xml:lang="de">FA3</label>
+          </output>
+          <output name="6" label="FO 4">
+            <label xml:lang="de">FA4</label>
+          </output>
+          <output name="7" label="FO 5 (+5v)">
+            <label xml:lang="de">FA5|(+5v)</label>
+          </output>
+          <output name="8" label="FO 6 (+5v)">
+            <label xml:lang="de">FA6|(+5v)</label>
+          </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
-        <model show="no" model="MX634F version 32+" replacementModel="MX634F version 25+" replacementFamily="Zimo Unified software (version 25+)" lowVersionID="32" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="NMRAsmall" numOuts="8" numFns="14" productID="240">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5 (+5v)" />
-          <output name="8" label="FO 6 (+5v)" />
+        <model model="MX634F version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="NMRAsmall" numOuts="8" numFns="14" productID="240">
+          <output name="1" label="Front Light">
+            <label xml:lang="de">Lvor</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="de">Lrück</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="de">FA1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="de">FA2</label>
+          </output>
+          <output name="5" label="FO 3">
+            <label xml:lang="de">FA3</label>
+          </output>
+          <output name="6" label="FO 4">
+            <label xml:lang="de">FA4</label>
+          </output>
+          <output name="7" label="FO 5 (+5v)">
+            <label xml:lang="de">FA5</label>
+          </output>
+          <output name="8" label="FO 6 (+5v)">
+            <label xml:lang="de">FA6</label>
+          </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
-        <model show="no" model="MX634D version 32+" replacementModel="MX634D version 25+" replacementFamily="Zimo Unified software (version 25+)" lowVersionID="32" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="240">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5 (+5v)" />
-          <output name="8" label="FO 6 (+5v)" />
+        <model model="MX634D version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="240">
+          <output name="1" label="Front Light">
+            <label xml:lang="de">Lvor</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="de">Lrück</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="de">FA1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="de">FA2</label>
+          </output>
+          <output name="5" label="FO 3">
+            <label xml:lang="de">FA3</label>
+          </output>
+          <output name="6" label="FO 4">
+            <label xml:lang="de">FA4</label>
+          </output>
+          <output name="7" label="FO 5 (+5v)">
+            <label xml:lang="de">FA5</label>
+          </output>
+          <output name="8" label="FO 6 (+5v)">
+            <label xml:lang="de">FA6</label>
+          </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
       </family>
@@ -25391,58 +25940,108 @@
       </family>
       <family name="Zimo Unified software (version 32+)" mfg="Zimo" file="Zimo_Unified_software_v32_MX649.xml">
         <model model="MX649 version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="253">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3 (+5v)" />
-          <output name="6" label="FO 4 (+5v)" />
-          <output name="7" label="FO 5 (+5v)" />
-          <output name="8" label="FO 6 (+5v)" />
+          <output name="1" label="Front Light">
+            <label xml:lang="de">Lvor</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="de">Lrück</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="de">FA1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="de">FA2</label>
+          </output>
+          <output name="5" label="FO 3">
+            <label xml:lang="de">FA3</label>
+          </output>
+          <output name="6" label="FO 4">
+            <label xml:lang="de">FA4</label>
+          </output>
           <size length="20" width="11" height="4" units="mm" />
         </model>
         <model model="MX649R version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAmedium" numOuts="6" numFns="14" productID="253">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5 (+5v)" />
-          <output name="8" label="FO 6 (+5v)" />
+          <output name="1" label="Front Light">
+            <label xml:lang="de">Lvor</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="de">Lrück</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="de">FA1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="de">FA2</label>
+          </output>
+          <output name="5" label="FO 3">
+            <label xml:lang="de">FA3</label>
+          </output>
+          <output name="6" label="FO 4">
+            <label xml:lang="de">FA4</label>
+          </output>
           <size length="20" width="11" height="4" units="mm" />
         </model>
         <model model="MX649F version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="253">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5 (+5v)" />
-          <output name="8" label="FO 6 (+5v)" />
+          <output name="1" label="Front Light">
+            <label xml:lang="de">Lvor</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="de">Lrück</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="de">FA1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="de">FA2</label>
+          </output>
+          <output name="5" label="FO 3">
+            <label xml:lang="de">FA3</label>
+          </output>
+          <output name="6" label="FO 4">
+            <label xml:lang="de">FA4</label>
+          </output>
           <size length="28" width="10.5" height="4" units="mm" />
         </model>
         <model model="MX649N version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="253">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5 (+5v)" />
-          <output name="8" label="FO 6 (+5v)" />
+          <output name="1" label="Front Light">
+            <label xml:lang="de">Lvor</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="de">Lrück</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="de">FA1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="de">FA2</label>
+          </output>
+          <output name="5" label="FO 3">
+            <label xml:lang="de">FA3</label>
+          </output>
+          <output name="6" label="FO 4">
+            <label xml:lang="de">FA4</label>
+          </output>
           <size length="28" width="10.5" height="4" units="mm" />
         </model>
         <model model="MX649L version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="253">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5 (+5v)" />
-          <output name="8" label="FO 6 (+5v)" />
+          <output name="1" label="Front Light">
+            <label xml:lang="de">Lvor</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="de">Lrück</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="de">FA1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="de">FA2</label>
+          </output>
+          <output name="5" label="FO 3">
+            <label xml:lang="de">FA3</label>
+          </output>
+          <output name="6" label="FO 4">
+            <label xml:lang="de">FA4</label>
+          </output>
           <size length="28" width="10.5" height="4" units="mm" />
         </model>
       </family>
