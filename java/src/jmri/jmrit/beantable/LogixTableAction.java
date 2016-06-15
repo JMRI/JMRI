@@ -1722,7 +1722,7 @@ public class LogixTableAction extends AbstractTableAction {
 
             Border logicPanelBorder = BorderFactory.createEtchedBorder();
             Border logicPanelTitled = BorderFactory.createTitledBorder(
-                    logicPanelBorder, rbx.getString("TitleLogicalExpression"));
+                    logicPanelBorder, rbx.getString("TitleLogicalExpression") + " ");
             logicPanel.setBorder(logicPanelTitled);
             contentPane.add(logicPanel);
             // End of Logic Expression Section
