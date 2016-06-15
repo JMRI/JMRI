@@ -63,7 +63,7 @@
   </variable>
   <variable CV="124" mask="XXXXXVXX" default="1" item="Sound Option 1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>Delay Prime Mover Startup if Drive Sound Enabled</label>
+    <label>Delay Starting if Drive Sound Enabled</label>
     <label xml:lang="it">="Ritardo accensione Motore se Suono Abilitato"</label>
   </variable>
   <variable CV="133" default="128" item="Sound Volume Faded">

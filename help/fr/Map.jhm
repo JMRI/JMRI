@@ -68,6 +68,8 @@
 
 <mapID target="package.jmri.jmrit.ussctc.SignalLeverFrame" url="package/jmri/jmrit/ussctc/SignalLeverFrame.shtml"/>
 
+<mapID target="html.web.index_security" url="html/web/index.shtml#security"/>
+
 <mapID target="package.jmri.jmrit.beantable.TurnoutTable_Turnout Feedback" url="package/jmri/jmrit/beantable/TurnoutTable.shtml#Turnout Feedback"/>
 
 <mapID target="package.jmri.jmrit.dualdecoder.DualDecoderSelectFrame" url="package/jmri/jmrit/dualdecoder/DualDecoderSelectFrame.shtml"/>
@@ -406,7 +408,7 @@
 
 <mapID target="html.hardware.loconet.Digitrax_Support" url="html/hardware/loconet/Digitrax.shtml#Support"/>
 
-<mapID target="html.web.WebServer" url="html/web/index.shtml"/>
+<mapID target="html.web.WebServer" url="html/web/WebServer.shtml"/>
 
 <mapID target="package.apps.Apps" url="package/apps/Apps.shtml"/>
 

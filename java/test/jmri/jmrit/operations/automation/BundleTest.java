@@ -1,7 +1,7 @@
 package jmri.jmrit.operations.automation;
 
 import java.util.Locale;
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

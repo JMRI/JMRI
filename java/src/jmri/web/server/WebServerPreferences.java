@@ -5,8 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 import jmri.InstanceManager;
@@ -28,7 +26,7 @@ import org.slf4j.LoggerFactory;
  */
 public class WebServerPreferences extends Bean {
 
-    // XML elements
+    // preferences elements
     public static final String DisallowedFrames = "disallowedFrames"; // NOI18N
     public static final String WebServerPreferences = "WebServerPreferences"; // NOI18N
     public static final String Frame = "frame"; // NOI18N
@@ -42,14 +40,19 @@ public class WebServerPreferences extends Bean {
     public static final String ReadonlyPower = "readonlyPower"; // NOI18N
     public static final String DISABLE_FRAME_SERVER = "disableFrames"; // NOI18N
     public static final String REDIRECT_FRAMES = "redirectFramesToPanels"; // NOI18N
+    // properties
+    public static final String DIRTY = "dirty"; // NOI18N
+    public static final String RESTART_REQUIRED = "restartRequired"; // NOI18N
 
-    // Flag that prefs have not been saved:
+    // Flag that prefs have not been saved
     private boolean isDirty = false;
+    // flag that changed prefs cannot be applied before restarting
+    private boolean restartRequired = false;
     // initial defaults if prefs not found
     private int clickDelay = 1;
     private int refreshDelay = 5;
     private boolean useAjax = true;
-    private boolean plain = false;
+    private boolean simple = false;
     private final ArrayList<String> disallowedFrames = new ArrayList<>(Arrays.asList(Bundle.getMessage("DefaultDisallowedFrames").split(";")));
     private String railRoadName = Bundle.getMessage("DefaultRailroadName");
     private boolean allowRemoteConfig = false;
@@ -108,7 +111,7 @@ public class WebServerPreferences extends Bean {
     private void readPreferences(Preferences sharedPreferences) {
         this.allowRemoteConfig = sharedPreferences.getBoolean(AllowRemoteConfig, this.allowRemoteConfig);
         this.clickDelay = sharedPreferences.getInt(ClickDelay, this.clickDelay);
-        this.plain = sharedPreferences.getBoolean(Simple, this.plain);
+        this.simple = sharedPreferences.getBoolean(Simple, this.simple);
         this.railRoadName = sharedPreferences.get(RailRoadName, this.railRoadName);
         this.readonlyPower = sharedPreferences.getBoolean(ReadonlyPower, this.readonlyPower);
         this.refreshDelay = sharedPreferences.getInt(RefreshDelay, this.refreshDelay);
@@ -120,7 +123,10 @@ public class WebServerPreferences extends Bean {
             if (frames.keys().length != 0) {
                 this.disallowedFrames.clear();
                 for (String key : frames.keys()) { // throws BackingStoreException
-                    this.disallowedFrames.add(frames.get(key, null));
+                    String frame = frames.get(key, null);
+                    if (frame != null && !frame.trim().isEmpty()) {
+                        this.disallowedFrames.add(frame);
+                    }
                 }
             }
         } catch (BackingStoreException ex) {
@@ -128,6 +134,7 @@ public class WebServerPreferences extends Bean {
             // so do nothing.
         }
         this.port = sharedPreferences.getInt(Port, this.port);
+        this.setIsDirty(false);
     }
 
     public void load(Element child) {
@@ -154,7 +161,7 @@ public class WebServerPreferences extends Bean {
         }
         a = child.getAttribute(Simple);
         if (a != null) {
-            setPlain(Boolean.parseBoolean(a.getValue()));
+            setSimple(Boolean.parseBoolean(a.getValue()));
         }
         a = child.getAttribute(AllowRemoteConfig);
         if (a != null) {
@@ -181,7 +188,7 @@ public class WebServerPreferences extends Bean {
         if (df != null) {
             this.disallowedFrames.clear();
             df.getChildren(Frame).stream().forEach((f) -> {
-                this.addDisallowedFrame(f.getText().trim());
+                this.disallowedFrames.add(f.getText().trim());
             });
         }
     }
@@ -193,7 +200,7 @@ public class WebServerPreferences extends Bean {
         if (getRefreshDelay() != prefs.getRefreshDelay()) {
             return true;
         }
-        if (useAjax() != prefs.useAjax()) {
+        if (isUseAjax() != prefs.isUseAjax()) {
             return true;
         }
         if (this.allowRemoteConfig() != prefs.allowRemoteConfig()) {
@@ -202,7 +209,7 @@ public class WebServerPreferences extends Bean {
         if (this.isReadonlyPower() != prefs.isReadonlyPower()) {
             return true;
         }
-        if (!(getDisallowedFrames().equals(prefs.getDisallowedFrames()))) {
+        if (!(Arrays.equals(getDisallowedFrames(), prefs.getDisallowedFrames()))) {
             return true;
         }
         if (getPort() != prefs.getPort()) {
@@ -214,7 +221,7 @@ public class WebServerPreferences extends Bean {
     public void apply(WebServerPreferences prefs) {
         setClickDelay(prefs.getClickDelay());
         setRefreshDelay(prefs.getRefreshDelay());
-        setUseAjax(prefs.useAjax());
+        setUseAjax(prefs.isUseAjax());
         this.setAllowRemoteConfig(prefs.allowRemoteConfig());
         this.setReadonlyPower(prefs.isReadonlyPower());
         setDisallowedFrames(prefs.getDisallowedFrames());
@@ -242,26 +249,31 @@ public class WebServerPreferences extends Bean {
 
     public void save() {
         Preferences sharedPreferences = ProfileUtils.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
+        sharedPreferences.putInt(Port, this.getPort());
         sharedPreferences.putInt(ClickDelay, this.getClickDelay());
         sharedPreferences.putInt(RefreshDelay, this.getRefreshDelay());
-        sharedPreferences.putBoolean(UseAjax, this.useAjax());
-        sharedPreferences.putBoolean(Simple, this.isPlain());
+        sharedPreferences.putBoolean(UseAjax, this.isUseAjax());
+        sharedPreferences.putBoolean(Simple, this.isSimple());
         sharedPreferences.putBoolean(AllowRemoteConfig, this.allowRemoteConfig());
         sharedPreferences.putBoolean(ReadonlyPower, this.isReadonlyPower());
         sharedPreferences.put(RailRoadName, getRailRoadName());
         sharedPreferences.putBoolean(DISABLE_FRAME_SERVER, this.isDisableFrames());
         sharedPreferences.putBoolean(REDIRECT_FRAMES, this.redirectFramesToPanels);
-        Preferences node = sharedPreferences.node(DisallowedFrames);
-        this.getDisallowedFrames().stream().forEach((frame) -> {
-            node.put(Integer.toString(this.disallowedFrames.indexOf(frame)), frame);
-        });
-        sharedPreferences.putInt(Port, this.getPort());
         try {
+            Preferences node = sharedPreferences.node(DisallowedFrames);
+            this.disallowedFrames.stream().forEach((frame) -> {
+                node.put(Integer.toString(this.disallowedFrames.indexOf(frame)), frame);
+            });
+            if (this.disallowedFrames.size() < node.keys().length) {
+                for (int i = node.keys().length - 1; i >= this.disallowedFrames.size(); i--) {
+                    node.remove(Integer.toString(i));
+                }
+            }
             sharedPreferences.sync();
+            setIsDirty(false);  //  Resets only when stored
         } catch (BackingStoreException ex) {
             log.error("Exception while saving web server preferences", ex);
         }
-        setIsDirty(false);  //  Resets only when stored
     }
 
     public boolean isDirty() {
@@ -269,7 +281,11 @@ public class WebServerPreferences extends Bean {
     }
 
     public void setIsDirty(boolean value) {
-        isDirty = value;
+        boolean old = this.isDirty;
+        if (old != value) {
+            this.isDirty = value;
+            this.firePropertyChange(DIRTY, old, value);
+        }
     }
 
     public int getClickDelay() {
@@ -277,7 +293,11 @@ public class WebServerPreferences extends Bean {
     }
 
     public void setClickDelay(int value) {
-        clickDelay = value;
+        int old = this.clickDelay;
+        if (old != value) {
+            this.clickDelay = value;
+            this.firePropertyChange(ClickDelay, old, value);
+        }
     }
 
     public int getRefreshDelay() {
@@ -285,27 +305,39 @@ public class WebServerPreferences extends Bean {
     }
 
     public void setRefreshDelay(int value) {
-        refreshDelay = value;
+        int old = this.refreshDelay;
+        if (old != value) {
+            this.refreshDelay = value;
+            this.firePropertyChange(RefreshDelay, old, value);
+        }
     }
 
-    public List<String> getDisallowedFrames() {
-        return Collections.unmodifiableList(disallowedFrames);
+    public String[] getDisallowedFrames() {
+        return this.disallowedFrames.toArray(new String[this.disallowedFrames.size()]);
     }
 
-    public boolean useAjax() {
+    public boolean isUseAjax() {
         return useAjax;
     }
 
-    public void setUseAjax(boolean value) {
-        useAjax = value;
+    public void setUseAjax(boolean useAjax) {
+        boolean old = this.useAjax;
+        if (old != useAjax) {
+            this.useAjax = useAjax;
+            this.firePropertyChange(UseAjax, old, useAjax);
+        }
     }
 
-    public boolean isPlain() {
-        return plain;
+    public boolean isSimple() {
+        return simple;
     }
 
-    public void setPlain(boolean value) {
-        plain = value;
+    public void setSimple(boolean value) {
+        boolean old = this.simple;
+        if (old != value) {
+            this.simple = value;
+            this.firePropertyChange(Simple, old, value);
+        }
     }
 
     public boolean allowRemoteConfig() {
@@ -313,7 +345,11 @@ public class WebServerPreferences extends Bean {
     }
 
     public void setAllowRemoteConfig(boolean value) {
-        this.allowRemoteConfig = value;
+        boolean old = this.allowRemoteConfig;
+        if (old != value) {
+            this.allowRemoteConfig = value;
+            this.firePropertyChange(AllowRemoteConfig, old, value);
+        }
     }
 
     /**
@@ -330,13 +366,13 @@ public class WebServerPreferences extends Bean {
         this.readonlyPower = readonlyPower;
     }
 
-    public void setDisallowedFrames(List<String> value) {
-        this.disallowedFrames.clear();
-        this.disallowedFrames.addAll(value);
-    }
-
-    public void addDisallowedFrame(String frame) {
-        disallowedFrames.add(frame);
+    public void setDisallowedFrames(String[] disallowedFrames) {
+        String[] old = this.getDisallowedFrames();
+        if (!Arrays.equals(old, disallowedFrames)) {
+            this.disallowedFrames.clear();
+            this.disallowedFrames.addAll(Arrays.asList(disallowedFrames));
+            this.firePropertyChange(DisallowedFrames, old, disallowedFrames);
+        }
     }
 
     public int getPort() {
@@ -344,7 +380,12 @@ public class WebServerPreferences extends Bean {
     }
 
     public void setPort(int value) {
-        port = value;
+        int old = this.port;
+        if (old != value) {
+            this.port = value;
+            this.firePropertyChange(Port, old, value);
+            this.setRestartRequired();
+        }
     }
 
     /**
@@ -358,10 +399,14 @@ public class WebServerPreferences extends Bean {
      * @param railRoadName the railRoadName to set
      */
     public void setRailRoadName(String railRoadName) {
-        if (railRoadName != null) {
-            this.railRoadName = railRoadName;
-        } else {
-            this.railRoadName = Bundle.getMessage("DefaultRailroadName");
+        String old = this.railRoadName;
+        if ((old != null && !old.equals(railRoadName)) || railRoadName != null) {
+            if (railRoadName != null) {
+                this.railRoadName = railRoadName;
+            } else {
+                this.railRoadName = Bundle.getMessage("DefaultRailroadName");
+            }
+            this.firePropertyChange(RailRoadName, old, this.railRoadName);
         }
     }
 
@@ -400,7 +445,11 @@ public class WebServerPreferences extends Bean {
      *                      pages
      */
     public void setDisableFrames(boolean disableFrames) {
-        this.disableFrames = disableFrames;
+        boolean old = this.disableFrames;
+        if (old != disableFrames) {
+            this.disableFrames = disableFrames;
+            this.firePropertyChange(DISABLE_FRAME_SERVER, old, disableFrames);
+        }
     }
 
     /**
@@ -420,7 +469,56 @@ public class WebServerPreferences extends Bean {
      *                               panels, false otherwise
      */
     public void setRedirectFramesToPanels(boolean redirectFramesToPanels) {
-        this.redirectFramesToPanels = redirectFramesToPanels;
+        boolean old = this.redirectFramesToPanels;
+        if (old != redirectFramesToPanels) {
+            this.redirectFramesToPanels = redirectFramesToPanels;
+            this.firePropertyChange(REDIRECT_FRAMES, old, this.redirectFramesToPanels);
+        }
+    }
+
+    /**
+     * Check if some preferences cannot be applied without restarting JMRI.
+     *
+     * @return true if JMRI needs to be restarted, false otherwise.
+     */
+    public boolean isRestartRequired() {
+        return this.restartRequired;
+    }
+
+    /**
+     * Set if restart needs to be required for some preferences to take effect.
+     *
+     * @param restartRequired true if JMRI needs to be restarted.
+     */
+    private void setRestartRequired() {
+        if (!this.restartRequired) {
+            this.restartRequired = true;
+            this.firePropertyChange(RESTART_REQUIRED, false, true);
+        }
+    }
+
+    @Override
+    protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
+        this.propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
+        if (!DIRTY.equals(propertyName)) {
+            this.setIsDirty(true);
+        }
+    }
+
+    @Override
+    protected void firePropertyChange(String propertyName, boolean oldValue, boolean newValue) {
+        this.propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
+        if (!DIRTY.equals(propertyName)) {
+            this.setIsDirty(true);
+        }
+    }
+
+    @Override
+    protected void firePropertyChange(String propertyName, int oldValue, int newValue) {
+        this.propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
+        if (!DIRTY.equals(propertyName)) {
+            this.setIsDirty(true);
+        }
     }
 
     private static class WebServerPreferencesXml extends XmlFile {
