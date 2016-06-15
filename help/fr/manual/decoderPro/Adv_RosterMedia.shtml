@@ -27,7 +27,7 @@
 </div>
 
 <hr>
-<p>Le Volet M&#233;dia Inventaire vous permet dajouter une image principale et une ic&#244;ne &#225; votre inventaire machines. L'image principale peut &#234;tre utilis&#233;e comme image de fond si s&#233;lectionn&#233;e dans les pr&#233;f&#233;rences R&#233;gulateurs. L'ic&#244;ne image est utilis&#233;e dans la liste R&#233;gulateur et les diff&#233;rents menus inventaire.</p>
+<p>Le Volet M&#233;dia Inventaire vous permet d'ajouter une image principale et une ic&#244;ne &#225; votre inventaire machines. L'image principale peut &#234;tre utilis&#233;e comme image de fond si elle est s&#233;lectionn&#233;e dans les pr&#233;f&#233;rences R&#233;gulateurs. L'ic&#244;ne image est utilis&#233;e dans la liste R&#233;gulateur et les diff&#233;rents menus inventaires.</p>
 <p align="center"><img src="images/Adv_04_RosterMedia.png" width="780" height="810" alt="roster media"></p>
 <p align="left"><strong>Image qui doit &#234;tre utilis&#233;e comme image principale pour cet inventaire:</strong> La grand cadre noir est l'espace r&#233;serv&#233; pour l'image. L'image est plac&#233;e dans cet emplacement r&#233;serv&#233; en suivant ces instructions. </p>
 <ol>
@@ -36,9 +36,9 @@
       <ol type="a">
         <li>Sources
           <ol>
-            <li>Images t&#233;l&#233;charg&#233;es depuis un siteweb sur votre ordinateur</li>
+            <li>Images t&#233;l&#233;charg&#233;es depuis un site web sur votre ordinateur</li>
             <li>Photos prises avec un appareil digital ou scann&#233;es depuis un film</li>
-            <li>Autres sources CD, DVD etc. sauv&#233;s comme image sur votre ordinateur</li>
+            <li>Autres sources CD, DVD etc. sauv&#233;es comme image sur votre ordinateur</li>
           </ol>
         </li>
         <li>Format
@@ -50,7 +50,7 @@
         </li>
       </ol>
     </li>
-    <li>Apr&#232;s stockage de l'image sur votre ordinateur, ouvrez le Volet M&#233;dia Inventaire puis ouvrez Windows Explorer ou le Gestionnaire de Fichiers de votre syst&#232;me et glissez et d&#233;posez le fichier image dans le grand cadre noir. Vous pouvez aussi sauver l'image sur votre Bureau et le glisse et d&#233;pose dans le M&#233;dia Inventaire depuis l&#225; NE PAS essayer de  glisser et d&#233;poser depuis un site web.</li>
+    <li>Apr&#232;s stockage de l'image sur votre ordinateur, ouvrez le Volet M&#233;dia Inventaire puis ouvrez Windows Explorer ou le Gestionnaire de Fichiers de votre syst&#232;me et glissez et d&#233;posez le fichier image dans le grand cadre noir. Vous pouvez aussi sauver l'image sur votre Bureau et le glisser et d&#233;poser dans le M&#233;dia Inventaire depuis l&#225;. NE PAS essayer de  glisser et d&#233;poser depuis un site web.</li>
     <li></li>
  Les images de l'Inventaire sont stock&#233;es dans le dossier &lt;JMRI Preferences&gt;/resources.  Quand une image est actualis&#233;e ou supprim&#233;e, elle n'est pas supprim&#233;e de ce dossier.
   </ol>
@@ -61,7 +61,7 @@
   </blockquote>
   <p>
  Pour supprimer une image de l'Inventaire, Clic-Droit puis cliquer supprimer dans le menu qui apparait, donc, elle ne sera pas supprim&#233;e du dossier Resources.</p>
-  <p align="left"><strong>L'Image devant &#234;tre utilis&#233;e comme ic&#244;ne dans cet inventaire, doit avoir la t&#234;te &#225; droie:</strong> similairement &#225; l'image, il y a une petit cadre noir qui peut &#234;tre rempli avec l'image &#225; utiliser comme ic&#244;ne pour l'identification de l'ent&#233;e inventaire.&nbsp; Les instructions sont aussi similaires:</p>
+  <p align="left"><strong>L'Image devant &#234;tre utilis&#233;e comme ic&#244;ne dans cet inventaire, doit avoir la t&#234;te &#225; droite:</strong> similairement &#225; l'image, il y a une petit cadre noir qui peut &#234;tre rempli avec l'image &#225; utiliser comme ic&#244;ne pour l'identification de l'entr&#233;e inventaire.&nbsp; Les instructions sont aussi similaires:</p>
 </blockquote>
 <ol>
   <ol>
@@ -72,7 +72,7 @@
             <ol>
               <li>Images t&#233;l&#233;charg&#233;es depuis un siteweb sur votre ordinateur</li>
             <li>Photos prises avec un appareil digital ou scann&#233;es depuis un film</li>
-            <li>Autres sources CD, DVD etc. sauv&#233;s comme image sur votre ordinateur</li>
+            <li>Autres sources CD, DVD etc. sauv&#233;es comme image sur votre ordinateur</li>
             </ol>
           </li>
           <li>Format
@@ -84,7 +84,7 @@
           </li>
         </ol>
       </li>
-      <li>Apr&#232;s stockage de l'ic&#244;ne image dans votre ordinateur, ouvez le Volet M&#233;dia Inventaire, puis ouvrez Windows Explorer ou le Gestionnaire de Fichiers de votre syst&#232;me et glissez et d&#233;posez le fichier image dans le petit cadre noir. Vous pouvez aussi sauver l'image sur votre Bureau et le glisse et d&#233;pose dans le M&#233;dia Inventaire depuis l&#225; NE PAS essayer de  glisser et d&#233;poser depuis un site web.</li>
+      <li>Apr&#232;s stockage de l'ic&#244;ne image dans votre ordinateur, ouvez le Volet M&#233;dia Inventaire, puis ouvrez Windows Explorer ou le Gestionnaire de Fichiers de votre syst&#232;me et glissez et d&#233;posez le fichier image dans le petit cadre noir. Vous pouvez aussi sauver l'image sur votre Bureau et le glisser et d&#233;poser dans le M&#233;dia Inventaire depuis l&#225; NE PAS essayer de  glisser et d&#233;poser depuis un site web.</li>
     </ol>
   </ol>
 </ol>
@@ -100,7 +100,7 @@ Apr&#232;s ajout des images dans les cadres pour image principale et ic&#244;ne,
 <p><a href="http://www.djcooley.com/info/gifs/loco/gifloco.htm" target="_blank">Train GIF Railyard</a>
 <p><a href="http://www.kls2.com/~karl/rr/consists/" target="_blank">Karl's RR Pages</a>
 <p><a href="http://www.bluarcher.com/traingifs/edtraingifsSD40.htm" target="_blank">ED Bindler Train GIF.s</a>
-<p><a href= "http://uxtobirza.free.fr/trains" target="_blank"> Locomotives Diesels et &#201;lectriques SNCF GIF</a> 
+<p><a href= "http://uxtobirza.free.fr/trains/" target="_blank"> Locomotives Diesels et &#201;lectriques SNCF GIF</a> 
 <p><a href= "https://fr.wikipedia.org/wiki/Mat&#233;riel_moteur_de_la_SNCF" target="_blank"> Parc Moteur SNCF </a> 
 <p><a href= "http://letraindalain.free.fr/" target="_blank">Machine &#225; Vapeur SNCF </a>
 <hr>
