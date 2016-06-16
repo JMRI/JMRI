@@ -197,7 +197,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
-        JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+        JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(new EngineRosterMenu(Bundle.getMessage("TitleEngineRoster"), EngineRosterMenu.MAINMENU, this));
         toolMenu.add(new NceConsistEngineAction(Bundle.getMessage("MenuItemNceSync"), this));
         menuBar.add(toolMenu);
