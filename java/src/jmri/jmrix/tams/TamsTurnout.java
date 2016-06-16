@@ -21,6 +21,10 @@ import org.slf4j.LoggerFactory;
 public class TamsTurnout extends AbstractTurnout
         implements TamsListener {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
     String prefix;
 
     /**
@@ -150,11 +154,11 @@ public class TamsTurnout extends AbstractTurnout
      * TurnoutOperator (not required or nothing suitable) then just tell the
      * layout and hope for the best.
      */
-    public synchronized void setCommandedState(int s) {
+    /*public synchronized void setCommandedState(int s) {
         log.info("set commanded state for turnout " + getSystemName() + " to " + s);
         //newCommandedState(s);
         newKnownState(s);
-    }
+    }*/
     
     /**
      * Tams turnouts can be inverted
@@ -184,7 +188,7 @@ public class TamsTurnout extends AbstractTurnout
 
     // to listen for status changes from Tams system
     public void reply(TamsReply m) {
-        log.info("*** TamsTurnout process TamsReply ***");
+       log.info("*** TamsTurnout process TamsReply ***");
        String msg = m.toString();
         if (m.match("T") >= 0) {
             String[] lines = msg.split(" ");

@@ -1,9 +1,7 @@
 // TamsTurnoutManager.java
 package jmri.jmrix.tams;
 
-import jmri.InstanceManager;
 import jmri.Turnout;
-import jmri.TurnoutManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -121,9 +119,9 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
         log.info("Upper Byte: " + upperByte);
         //Core logic to be added here
         int turnoutAddress = (upperByte & 0x07) * 256 + lowerByte;
-        int turnoutState = Turnout.CLOSED;
+        int turnoutState = Turnout.THROWN;
         if ((upperByte & 0x80) == 0x80) {//Only need bit #7
-            turnoutState = Turnout.THROWN;
+            turnoutState = Turnout.CLOSED;
         }
         log.info("Turnout Address: \"" + prefix + "T" + turnoutAddress + "\", state: " + turnoutState);
 

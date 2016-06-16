@@ -346,7 +346,7 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
                     endReached = false;
                 } else {
                     //log.info("One byte binary reply = " + jmri.util.StringUtil.appendTwoHexFromInt(reply.getElement(index) & 0xFF, ""));
-                    //myCounter = 0;
+                    myCounter = 0;
                     endReached = true;
                 }
             } else {// Multi byte reply
@@ -357,9 +357,9 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
                     // BUT 0x00 is also a valid byte in the 2 data bytes (BB CC) of a sensor read
                     log.info("*** Receiving Sensor Reply ***");
                     groupSize = 3;
-                    //log.info("Looking for byte# = " + (groupSize * myCounter + 1) + " and index = " + index + " and expect as last byte = " + tm.getReplyLastByte());
+                    log.info("Looking for byte# = " + (groupSize * myCounter + 1) + " and index = " + index + " and expect as last byte = " + tm.getReplyLastByte());
                     if (reply.getNumDataElements() == (groupSize * myCounter + 1) && reply.getElement(index) == tm.getReplyLastByte()){
-                        //myCounter = 0;
+                        myCounter = 0;
                         endReached = true;
                         log.info("S - End reached!");
                         
@@ -387,6 +387,7 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
                         myCounter++;
                         endReached = false;
                     } else {
+                        myCounter = 0;
                         endReached = true;
                         //log.info("myCounter = " + myCounter);
                         log.info("T - End reached!");
@@ -396,13 +397,15 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
                 // Loco reply
                 if (tm.getReplyType() == 'L'){
                     log.info("*** Receiving Loco Reply ***");
-                    //myCounter = 0;
+                    myCounter = 0;
                     log.info("L - End reached!");
                     endReached = true;
                 }
             }
         } else {// ASCII reply
             if (reply.getNumDataElements() > 0 && reply.getElement(index) != 0x5d) {// Read ASCII reply, last is [
+                log.info("Building ASCII reply = " + reply);
+                myCounter++;
                 endReached = false;
             } else {
                 log.info("ASCII reply = " + reply);
