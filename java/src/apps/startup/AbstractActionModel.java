@@ -1,9 +1,7 @@
 package apps.startup;
 
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
-import jmri.jmrix.SystemConnectionMemo;
 
 /**
  * Provide services for invoking actions during configuration and startup.
@@ -17,7 +15,7 @@ import jmri.jmrix.SystemConnectionMemo;
  */
 public abstract class AbstractActionModel implements StartupModel {
 
-    private SystemConnectionMemo memo = null;
+    private String systemPrefix = "";
     private String className = "";
 
     public String getClassName() {
@@ -38,13 +36,17 @@ public abstract class AbstractActionModel implements StartupModel {
         className = n;
     }
 
-    @CheckForNull
-    public SystemConnectionMemo getSystemConnectionMemo() {
-        return this.memo;
+    @Nonnull
+    public String getSystemPrefix() {
+        return this.systemPrefix;
     }
 
-    public void setSystemConnectionMemo(SystemConnectionMemo memo) {
-        this.memo = memo;
+    public void setSystemPrefix(String name) {
+        if (name == null) {
+            this.systemPrefix = "";
+        } else {
+            this.systemPrefix = name;
+        }
     }
 
     public boolean isSystemConnectionAction() {
