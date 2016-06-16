@@ -200,6 +200,10 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 
 ##### jakarta-regexp-1.5.jar
 
+##### checker-framework directory and contents
+- The Checker Framework 2.0.1 (1-Jun-2016) 
+- From http://types.cs.washington.edu/checker-framework/
+
 ##### ecj.jar
 - Eclipse compiler 3.5.1 from 
     - http://www.eclipse.org/downloads/download.php?file=/eclipse/downloads/drops/R-3.5.1-200909170800/ecj-3.5.1.jar
