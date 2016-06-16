@@ -601,9 +601,9 @@ public class DefaultConditionalAction implements ConditionalAction {
             return Turnout.CLOSED;
         } else if (str.equals(rbx.getString("TurnoutThrown"))) {
             return Turnout.THROWN;
-        } else if (str.equals(rbx.getString("SensorActive"))) {
+        } else if (str.equals(Bundle.getMessage("SensorStateActive"))) {
             return Sensor.ACTIVE;
-        } else if (str.equals(rbx.getString("SensorInactive"))) {
+        } else if (str.equals(Bundle.getMessage("SensorStateInactive"))) {
             return Sensor.INACTIVE;
         } else if (str.equals(rbx.getString("LightOn"))) {
             return Light.ON;
@@ -678,9 +678,9 @@ public class DefaultConditionalAction implements ConditionalAction {
             case Conditional.ACTION_DELAYED_SENSOR:
             case Conditional.ACTION_RESET_DELAYED_SENSOR:
                 if (data == Sensor.ACTIVE) {
-                    return (rbx.getString("SensorActive"));
+                    return (Bundle.getMessage("SensorStateActive"));
                 } else if (data == Sensor.INACTIVE) {
-                    return (rbx.getString("SensorInactive"));
+                    return (Bundle.getMessage("SensorStateInactive"));
                 } else if (data == Route.TOGGLE) {
                     return (rbx.getString("Toggle"));
                 }

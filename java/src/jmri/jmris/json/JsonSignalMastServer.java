@@ -1,4 +1,3 @@
-//JsonSignalMastServer.java
 package jmri.jmris.json;
 
 import static jmri.jmris.json.JSON.ASPECT_DARK;
@@ -23,6 +22,7 @@ import jmri.JmriException;
 import jmri.SignalMast;
 import jmri.jmris.AbstractSignalMastServer;
 import jmri.jmris.JmriConnection;
+import jmri.server.json.JsonException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,7 +31,6 @@ import org.slf4j.LoggerFactory;
  * connection
  *
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision: 21313 $
  */
 public class JsonSignalMastServer extends AbstractSignalMastServer {
 

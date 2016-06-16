@@ -4,7 +4,7 @@
 <html lang="fr">
 <head>
  <title>
-      JMRI Support Tools for LocoNet&reg; Devices
+      JMRI Support Tools for LocoNet Devices
  </title>
 <meta name="Author" content="B. Milhaupt">
 <meta name="keywords" content="Digitrax LocoNet BDL16 BDL162 BDL168 PM4 PM42 
@@ -12,7 +12,6 @@
       Simplex Infrared Monitor Slot FastClock Firmware 'Sound Project'">
 
 <!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">

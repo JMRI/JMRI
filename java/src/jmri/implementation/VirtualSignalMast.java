@@ -1,4 +1,3 @@
-// VirtualSignalMast.javaa
 package jmri.implementation;
 
 import org.slf4j.Logger;
@@ -20,7 +19,6 @@ import org.slf4j.LoggerFactory;
  * </ul>
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version $Revision: 19027 $
  */
 public class VirtualSignalMast extends AbstractSignalMast {
 
@@ -84,5 +82,3 @@ public class VirtualSignalMast extends AbstractSignalMast {
 
     private final static Logger log = LoggerFactory.getLogger(VirtualSignalMast.class.getName());
 }
-
-/* @(#)VirtualSignalMast.java */

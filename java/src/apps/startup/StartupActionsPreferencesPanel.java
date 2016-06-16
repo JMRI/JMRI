@@ -6,6 +6,8 @@ import apps.StartupModel;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.beans.IndexedPropertyChangeEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -33,8 +35,6 @@ import jmri.swing.PreferencesPanel;
  * @author Randall Wood (C) 2016
  */
 public class StartupActionsPreferencesPanel extends JPanel implements PreferencesPanel {
-
-    private boolean isRestartRequired = false;
 
     /**
      * Creates new form StartupActionsPreferencesPanel
@@ -76,7 +76,17 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
 
         actionsMenu = new JPopupMenu();
         jScrollPane1 = new JScrollPane();
-        actionsTbl = new JTable();
+        actionsTbl = new JTable() {
+            //Implement table cell tool tips.
+            public String getToolTipText(MouseEvent e) {
+                try {
+                    return getValueAt(rowAtPoint(e.getPoint()), -1).toString();
+                } catch (RuntimeException e1) {
+                    //catch null pointer exception if mouse is over an empty line
+                }
+                return null;
+            }
+        };
         addBtn = new JButton();
         removeBtn = new JButton();
         startupLbl = new JLabel();
@@ -247,7 +257,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
 
     @Override
     public boolean isRestartRequired() {
-        return this.isDirty() || this.isRestartRequired;
+        return InstanceManager.getDefault(StartupActionsManager.class).isRestartRequired();
     }
 
     @Override
@@ -271,7 +281,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
     JButton upBtn;
     // End of variables declaration//GEN-END:variables
 
-    class TableModel extends AbstractTableModel implements PropertyChangeListener {
+    private class TableModel extends AbstractTableModel implements PropertyChangeListener {
 
         private final StartupActionsManager manager;
 
@@ -296,11 +306,11 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
             StartupModel model = this.manager.getActions(rowIndex);
             switch (columnIndex) {
                 case -1: // tooltip
-                    return model.getName();
+                    return model.toString();
                 case 0:
                     return model;
                 case 1:
-                    return InstanceManager.getDefault(StartupActionsManager.class).getFactories(model.getClass()).getDescription();
+                    return this.manager.getFactories(model.getClass()).getDescription();
                 default:
                     return null;
             }
@@ -335,25 +345,19 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
         public boolean isCellEditable(int rowIndex, int columnIndex) {
             return columnIndex == 0;
         }
-//
-//        @Override
-//        public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-//            switch (columnIndex) {
-//                case 1:
-//                    try {
-//                        ProfileManager.defaultManager().setDefaultSearchPath((File) this.getValueAt(rowIndex, 0));
-//                    } catch (IOException ex) {
-//                        log.warn("Unable to write profiles while setting default search path", ex);
-//                    }
-//                    break;
-//                default:
-//            }
-//        }
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            this.fireTableDataChanged();
-            StartupActionsPreferencesPanel.this.isRestartRequired = true;
+            int index = -1;
+            if (evt instanceof IndexedPropertyChangeEvent) {
+                index = ((IndexedPropertyChangeEvent) evt).getIndex();
+            }
+            if (index != -1 && evt.getOldValue() instanceof Integer) {
+                this.fireTableRowsUpdated((Integer) evt.getOldValue(), index);
+            } else {
+                this.fireTableDataChanged();
+            }
+            this.manager.setRestartRequired();
         }
     }
 }

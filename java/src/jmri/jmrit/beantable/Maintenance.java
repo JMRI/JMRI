@@ -153,7 +153,7 @@ public class Maintenance {
         JList<String> list = new JList<String>(listModel);
         list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
-        JButton button = new JButton(rbm.getString("DeleteButton"));
+        JButton button = new JButton(Bundle.getMessage("ButtonDelete"));
         button.setToolTipText(rbm.getString("OrphanDeleteHint"));
 
         class SearchListener implements ActionListener {
@@ -271,7 +271,7 @@ public class Maintenance {
         JList<String> list = new JList<String>(listModel);
         list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
-        JButton button = new JButton(rbm.getString("DeleteButton"));
+        JButton button = new JButton(Bundle.getMessage("ButtonDelete"));
         button.setToolTipText(rbm.getString("OrphanDeleteHint"));
 
         class EmptyListener implements ActionListener {
@@ -1385,7 +1385,7 @@ public class Maintenance {
 
     static void makeDialog(Component component, Component button, Frame parent, String title) {
         JDialog dialog = new JDialog(parent, title, true);
-        JButton ok = new JButton(rbm.getString("OkButton"));
+        JButton ok = new JButton(Bundle.getMessage("ButtonOK"));
         class myListener implements ActionListener {
 
             java.awt.Window _w;
