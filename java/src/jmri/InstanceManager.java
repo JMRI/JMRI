@@ -74,7 +74,9 @@ public class InstanceManager {
      */
     static public <T> void store(T item, Class<T> type) {
         log.debug("Store item of type {}", type.getName());
-        if (item == null) log.error("Should not store null value of type {}", type.getName(), new Exception("Traceback"));
+        if (item == null) {
+            log.error("Should not store null value of type {}", type.getName(), new Exception("Traceback"));
+        }
         ArrayList<Object> l = managerLists.get(type);
         if (l == null) {
             l = new ArrayList<>();
@@ -124,8 +126,8 @@ public class InstanceManager {
      * Retrieve the last object of type T that was registered with
      * {@link #store}.
      * <p>
-     * Unless specifically set, the default is 
-     * the last object stored, see the {@link #setDefault} method.
+     * Unless specifically set, the default is the last object stored, see the
+     * {@link #setDefault} method.
      */
     @SuppressWarnings("unchecked")   // checked by construction
     static public <T> T getDefault(Class<T> type) {
@@ -143,8 +145,7 @@ public class InstanceManager {
                 try {
                     l.add(type.getConstructor((Class[]) null).newInstance((Object[]) null));
                     log.debug("      auto-created default of {}", type.getName());
-                } catch (NoSuchMethodException | InstantiationException 
-                            | IllegalAccessException | java.lang.reflect.InvocationTargetException e) {
+                } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | java.lang.reflect.InvocationTargetException e) {
                     log.error("Exception creating auto-default object", e); // unexpected
                     return null;
                 }
@@ -493,7 +494,6 @@ public class InstanceManager {
      *
      *                   Migrate JMRI uses of these, then move to next category
      * ****************************************************************************/
-
     /**
      * @deprecated Since 3.7.1, use @{link #store} and @{link #setDefault}
      * directly.
