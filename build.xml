@@ -1642,11 +1642,11 @@
                fork="true"
                deprecation="${deprecation}"
                debug="${java.debugging}">
-            <compilerarg line="-processor org.checkerframework.checker.guieffect.GuiEffectChecker"/>
-            <!-- compilerarg line="-processor org.checkerframework.checker.nullness.NullnessChecker"/ -->
-            <!-- optional, to not check uses of library methods:
-              <compilerarg value="-AskipUses=^(java\.awt\.|javax\.swing\.)"/>
-            -->
+            <compilerarg line="-processor org.checkerframework.checker.nullness.NullnessChecker"/>
+            <!-- compilerarg line="-processor org.checkerframework.checker.guieffect.GuiEffectChecker"/-->
+            <!-- optional, to not check uses of library methods: -->
+                <compilerarg value="-AskipUses=^(java\.awt\.|javax\.swing\.)"/>
+            <!-- -->
             <compilerarg line="-Xmaxerrs 10000"/>
             <classpath refid="compile.class.path"/>
             <compilerarg value="-Xlint:-unchecked"/>  <!-- off during 1.8 migration -->
