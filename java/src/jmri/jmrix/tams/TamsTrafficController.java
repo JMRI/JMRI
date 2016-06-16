@@ -111,7 +111,8 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
         //Only forward messages to the correct listener
         if ((client instanceof TamsPowerManager && tm.getReplyType() == 'P') ||
                 (client instanceof TamsThrottleManager && tm.getReplyType() == 'L') ||
-                (client instanceof TamsTurnoutManager && tm.getReplyType() == 'T') ||
+                (client instanceof TamsTurnout && tm.getReplyType() == 'T' && !tm.isBinary()) ||
+                (client instanceof TamsTurnoutManager && tm.getReplyType() == 'T' && tm.isBinary()) ||
                 (client instanceof TamsSensorManager && tm.getReplyType() == 'S') ||
                 (client instanceof TamsMonPane || client instanceof PacketGenPanel)) {
             ((TamsListener) client).reply((TamsReply) tr);
@@ -312,7 +313,7 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
         }
         if (tm != null){//Only when there is a valid TamsMessage
             if (tm.isBinary()) {//Binary reply so must makes sure the reply get initialized as ArrayList of integers
-                log.info("Using TamsMessage = " + jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(0) & 0xFF, "") + " " + jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(1) & 0xFF, "") + " and replyType = " + tm.getReplyType());
+                log.info("Using TamsMessage = " + jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(0) & 0xFF, "") + " " + jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(1) & 0xFF, "") + " and replyType = " + tm.getReplyType() + " and isBinary = " + tm.isBinary());
                 log.info("Binary TamsReply expected");
                 reply.setBinary(true);;
             } else {//ASCII reply so just return the string
@@ -404,8 +405,8 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
             }
         } else {// ASCII reply
             if (reply.getNumDataElements() > 0 && reply.getElement(index) != 0x5d) {// Read ASCII reply, last is [
-                log.info("Building ASCII reply = " + reply);
-                myCounter++;
+                //log.info("Building ASCII reply = " + reply);
+                //myCounter++;
                 endReached = false;
             } else {
                 log.info("ASCII reply = " + reply);
