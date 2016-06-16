@@ -3,10 +3,13 @@ package jmri;
 import apps.gui3.TabbedPreferences;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import jmri.implementation.DccConsistManager;
 import jmri.implementation.NmraConsistManager;
 import jmri.jmrit.roster.RosterIconFactory;
@@ -58,11 +61,14 @@ import org.slf4j.LoggerFactory;
  */
 public class InstanceManager {
 
-    static final protected HashMap<Class<?>, ArrayList<Object>> managerLists = new HashMap<>();
+    protected static final HashMap<Class<?>, ArrayList<Object>> managerLists = new HashMap<>();
+    private static final InstanceInitializer initializer = new jmri.managers.DefaultInstanceInitializer();
+    // data members to hold contact with the property listeners
+    private static final Vector<PropertyChangeListener> listeners = new Vector<>();
 
     /* properties */
-    public static String CONSIST_MANAGER = "consistmanager"; // NOI18N
-    public static String PROGRAMMER_MANAGER = "programmermanager"; // NOI18N
+    public static final String CONSIST_MANAGER = "consistmanager"; // NOI18N
+    public static final String PROGRAMMER_MANAGER = "programmermanager"; // NOI18N
 
     /**
      * Store an object of a particular type for later retrieval via
@@ -72,7 +78,7 @@ public class InstanceManager {
      * @param type The class Object for the item's type. This will be used as
      *             the key to retrieve the object later.
      */
-    static public <T> void store(T item, Class<T> type) {
+    static public <T> void store(T item, @Nonnull Class<T> type) {
         log.debug("Store item of type {}", type.getName());
         if (item == null) {
             log.error("Should not store null value of type {}", type.getName(), new Exception("Traceback"));
@@ -90,10 +96,16 @@ public class InstanceManager {
      * {@link #store}.
      *
      * @param type The class Object for the items' type.
+     * @return A list of type Objects registered with the manager or an empty
+     *         list.
      */
     @SuppressWarnings("unchecked") // the cast here is protected by the structure of the managerLists
-    static public <T> List<T> getList(Class<T> type) {
+    @Nonnull
+    static public <T> List<T> getList(@Nonnull Class<T> type) {
         log.debug("Get list of type {}", type.getName());
+        if (managerLists.get(type) == null) {
+            managerLists.put(type, new ArrayList<>());
+        }
         return (List<T>) managerLists.get(type);
     }
 
@@ -102,9 +114,9 @@ public class InstanceManager {
      *
      * @param type The class Object for the items to be removed.
      */
-    static public <T> void reset(Class<T> type) {
+    static public <T> void reset(@Nonnull Class<T> type) {
         log.debug("Reset type {}", type.getName());
-        managerLists.put(type, null);
+        managerLists.put(type, new ArrayList<>());
     }
 
     /**
@@ -114,7 +126,7 @@ public class InstanceManager {
      * @param item The object of type T to be deregistered
      * @param type The class Object for the item's type.
      */
-    static public <T> void deregister(T item, Class<T> type) {
+    static public <T> void deregister(T item, @Nonnull Class<T> type) {
         log.debug("Remove item type {}", type.getName());
         ArrayList<Object> l = managerLists.get(type);
         if (l != null) {
@@ -128,46 +140,41 @@ public class InstanceManager {
      * <p>
      * Unless specifically set, the default is the last object stored, see the
      * {@link #setDefault} method.
+     *
+     * @param type The class Object for the item's type.
+     * @return The default object for type.
      */
-    @SuppressWarnings("unchecked")   // checked by construction
-    static public <T> T getDefault(Class<T> type) {
+    @CheckForNull
+    static public <T> T getDefault(@Nonnull Class<T> type) {
         log.trace("getDefault of type {}", type.getName());
-        ArrayList<Object> l = managerLists.get(type);
-        if (l == null || l.size() < 1) {
+        ArrayList<T> l = (ArrayList<T>) getList(type);
+        if (l.isEmpty()) {
             // see if can autocreate
             log.debug("    attempt auto-create of {}", type.getName());
             if (InstanceManagerAutoDefault.class.isAssignableFrom(type)) {
-                // yes, make sure list is present before creating object
-                if (l == null) {
-                    l = new ArrayList<>();
-                    managerLists.put(type, l);
-                }
                 try {
                     l.add(type.getConstructor((Class[]) null).newInstance((Object[]) null));
                     log.debug("      auto-created default of {}", type.getName());
-                } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | java.lang.reflect.InvocationTargetException e) {
+                } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
                     log.error("Exception creating auto-default object", e); // unexpected
                     return null;
                 }
-                return (T) l.get(l.size() - 1);
+                return l.get(l.size() - 1);
             }
             // see if initializer can handle
             log.debug("    attempt initializer create of {}", type.getName());
+            @SuppressWarnings("unchecked")
             T obj = (T) initializer.getDefault(type);
             if (obj != null) {
                 log.debug("      initializer created default of {}", type.getName());
-                if (l == null) {
-                    l = new ArrayList<>();
-                    managerLists.put(type, l);
-                }
                 l.add(obj);
-                return (T) l.get(l.size() - 1);
+                return l.get(l.size() - 1);
             }
 
             // don't have, can't make
             return null;
         }
-        return (T) l.get(l.size() - 1);
+        return l.get(l.size() - 1);
     }
 
     /**
@@ -177,24 +184,26 @@ public class InstanceManager {
      * <p>
      * Now, we do that moving the item to the back of the list; see the
      * {@link #getDefault} method
+     *
+     * @param type The Class object for val
+     * @param item The object to make default for type
      */
-    static public <T> void setDefault(Class<T> type, T val) {
+    static public <T> void setDefault(@Nonnull Class<T> type, T item) {
         log.trace("setDefault for type {}", type.getName());
         List<T> l = getList(type);
-        if (l == null || (l.size() < 1)) {
-            store(val, type);
-            l = getList(type);
-        }
-        l.remove(val);
-        l.add(val);
+        l.remove(item);
+        l.add(item);
     }
 
     /**
      * Dump generic content of InstanceManager by type.
+     *
+     * @return A formatted multiline list of managed objects
      */
+    @Nonnull
     static public String contentsToString() {
 
-        StringBuffer retval = new StringBuffer();
+        StringBuilder retval = new StringBuilder();
         for (Class<?> c : managerLists.keySet()) {
             retval.append("List of ");
             retval.append(c);
@@ -209,8 +218,6 @@ public class InstanceManager {
         }
         return retval.toString();
     }
-
-    static InstanceInitializer initializer = new jmri.managers.DefaultInstanceInitializer();
 
     /**
      * Remove notification on changes to specific types
@@ -244,9 +251,6 @@ public class InstanceManager {
             client.propertyChange(new PropertyChangeEvent(InstanceManager.class, property, oldValue, newValue));
         }
     }
-
-    // data members to hold contact with the property listeners
-    final private static Vector<PropertyChangeListener> listeners = new Vector<>();
 
     // Simplification order - for each type, starting with those not in the jmri package:
     //   1) Remove it from jmri.managers.DefaultInstanceInitializer, get tests to build & run
