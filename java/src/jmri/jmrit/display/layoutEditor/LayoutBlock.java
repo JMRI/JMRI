@@ -1043,9 +1043,9 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             layout.addItem(new BeanEditItem(memoryNameField, rb.getString("MemoryVariable"), rb.getString("MemoryVariableTip")));
 
             senseBox.removeAllItems();
-            senseBox.addItem(rb.getString("SensorActive"));
+            senseBox.addItem(Bundle.getMessage("SensorStateActive"));
             senseActiveIndex = 0;
-            senseBox.addItem(rb.getString("SensorInactive"));
+            senseBox.addItem(Bundle.getMessage("SensorStateInactive"));
             senseInactiveIndex = 1;
 
             layout.addItem(new BeanEditItem(senseBox, rb.getString("OccupiedSense"), rb.getString("OccupiedSenseHint")));

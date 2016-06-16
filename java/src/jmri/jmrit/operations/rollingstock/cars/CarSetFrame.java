@@ -75,7 +75,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
-        JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+        JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(new EnableDestinationAction(Bundle.getMessage("MenuEnableDestination"), this));
         menuBar.add(toolMenu);
         setJMenuBar(menuBar);
