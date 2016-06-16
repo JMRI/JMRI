@@ -78,16 +78,14 @@ public class InstanceManager {
      * @param type The class Object for the item's type. This will be used as
      *             the key to retrieve the object later.
      */
-    static public <T> void store(T item, @Nonnull Class<T> type) {
+    static public <T> void store(@Nonnull T item, @Nonnull Class<T> type) {
         log.debug("Store item of type {}", type.getName());
         if (item == null) {
-            log.error("Should not store null value of type {}", type.getName(), new Exception("Traceback"));
+            NullPointerException npe = new NullPointerException();
+            log.error("Should not store null value of type {}", type.getName());
+            throw npe;
         }
-        ArrayList<Object> l = managerLists.get(type);
-        if (l == null) {
-            l = new ArrayList<>();
-            managerLists.put(type, l);
-        }
+        ArrayList<T> l = (ArrayList<T>) getList(type);
         l.add(item);
     }
 
@@ -126,12 +124,10 @@ public class InstanceManager {
      * @param item The object of type T to be deregistered
      * @param type The class Object for the item's type.
      */
-    static public <T> void deregister(T item, @Nonnull Class<T> type) {
+    static public <T> void deregister(@Nonnull T item, @Nonnull Class<T> type) {
         log.debug("Remove item type {}", type.getName());
-        ArrayList<Object> l = managerLists.get(type);
-        if (l != null) {
-            l.remove(item);
-        }
+        ArrayList<T> l = (ArrayList<T>) getList(type);
+        l.remove(item);
     }
 
     /**
@@ -188,8 +184,13 @@ public class InstanceManager {
      * @param type The Class object for val
      * @param item The object to make default for type
      */
-    static public <T> void setDefault(@Nonnull Class<T> type, T item) {
+    static public <T> void setDefault(@Nonnull Class<T> type, @Nonnull T item) {
         log.trace("setDefault for type {}", type.getName());
+        if (item == null) {
+            NullPointerException npe = new NullPointerException();
+            log.error("Should not set default of type {} to null value", type.getName());
+            throw npe;
+        }
         List<T> l = getList(type);
         l.remove(item);
         l.add(item);
