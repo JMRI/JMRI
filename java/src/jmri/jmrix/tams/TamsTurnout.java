@@ -1,5 +1,7 @@
 package jmri.jmrix.tams;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
 import org.slf4j.Logger;
@@ -27,6 +29,21 @@ public class TamsTurnout extends AbstractTurnout
     private static final long serialVersionUID = 1L;
     String prefix;
 
+    //Create a local TamsMessage Queue which we will use in combination with TamsReplies
+    private Queue<TamsMessage> tmq = new LinkedList<TamsMessage>();
+        
+    //This dummy message is used in case we expect a reply from polling
+    static private TamsMessage myDummy() {
+        //log.info("*** myDummy ***");
+        TamsMessage m = new TamsMessage();
+        m.setBinary(false);
+        m.setReplyType('T');
+        return m;
+    }
+    //A local TamsMessage is held at all time
+    //When no TamsMessage is being generated via the UI this dummy is used which means the TamsReply is a result of polling
+    TamsMessage tm = myDummy();
+
     /**
      * Tams turnouts use the NMRA number (0-2040) as their numerical
      * identification in the system name.
@@ -39,10 +56,11 @@ public class TamsTurnout extends AbstractTurnout
         this.prefix = prefix;
         tc = etc;
         //Request status of turnout
-        TamsMessage m = new TamsMessage("xT " + _number + ",,1");
-        m.setBinary(false);
-        m.setReplyType('T');
-        tc.sendTamsMessage(m, this);
+        tm = new TamsMessage("xT " + _number + ",,1");
+        tm.setBinary(false);
+        tm.setReplyType('T');
+        tc.sendTamsMessage(tm, this);
+        tmq.add(tm);
         //tc.addPollMessage(m, this);
 
         _validFeedbackTypes |= MONITORING;
@@ -179,18 +197,26 @@ public class TamsTurnout extends AbstractTurnout
         }
         // get control
         // added trailing ,1 on observation from Jan Boen 24 Aug 2015
-        TamsMessage m = new TamsMessage("xT " + _number + "," + (closed ? "1" : "0") + ",1");
-        m.setBinary(false);
-        m.setReplyType('T');
-        tc.sendTamsMessage(m, this);
+        tm = new TamsMessage("xT " + _number + "," + (closed ? "1" : "0") + ",1");
+        tm.setBinary(false);
+        tm.setReplyType('T');
+        tc.sendTamsMessage(tm, this);
+        tmq.add(tm);
 
     }
 
     // to listen for status changes from Tams system
-    public void reply(TamsReply m) {
+    public void reply(TamsReply tr) {
        log.info("*** TamsTurnout process TamsReply ***");
-       String msg = m.toString();
-        if (m.match("T") >= 0) {
+       if(tmq.isEmpty()){
+           tm = myDummy();
+       } else
+       {
+           tm = tmq.poll();
+       }
+       String msg = tr.toString();
+       log.info("reply = " +  msg );
+        if (tr.match("T") >= 0) {
             String[] lines = msg.split(" ");
             if (lines[1].equals("" + _number)) {
                 updateReceived = true;
@@ -211,11 +237,12 @@ public class TamsTurnout extends AbstractTurnout
             //if we received an update last time we send a request again, but if we did not we shall skip it once and try again next time.
             if (updateReceived) {
                 updateReceived = false;
-                TamsMessage m = new TamsMessage("xT " + _number + ",,1");
-                m.setBinary(false);
-                m.setReplyType('T');
-                m.setTimeout(TamsMessage.POLLTIMEOUT);
-                tc.sendTamsMessage(m, this);
+                tm = new TamsMessage("xT " + _number + ",,1");
+                tm.setBinary(false);
+                tm.setReplyType('T');
+                tm.setTimeout(TamsMessage.POLLTIMEOUT);
+                tc.sendTamsMessage(tm, this);
+                tmq.add(tm);
             } else {
                 updateReceived = true;
             }
@@ -224,11 +251,11 @@ public class TamsTurnout extends AbstractTurnout
 
     @Override
     public void setFeedbackMode(int mode) throws IllegalArgumentException {
-        TamsMessage m = new TamsMessage("xT " + _number + ",,1");
+        tm = new TamsMessage("xT " + _number + ",,1");
         if (mode == MONITORING) {
-            tc.addPollMessage(m, this);
+            tc.addPollMessage(tm, this);
         } else {
-            tc.removePollMessage(m, this);
+            tc.removePollMessage(tm, this);
         }
         super.setFeedbackMode(mode);
     }
@@ -238,8 +265,8 @@ public class TamsTurnout extends AbstractTurnout
     }
 
     public void dispose() {
-        TamsMessage m = new TamsMessage("xT " + _number + ",,1");
-        tc.removePollMessage(m, this);
+        tm = new TamsMessage("xT " + _number + ",,1");
+        tc.removePollMessage(tm, this);
         super.dispose();
     }
 
