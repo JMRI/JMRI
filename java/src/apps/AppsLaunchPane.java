@@ -7,7 +7,6 @@ import java.awt.FlowLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
-import java.text.MessageFormat;
 import java.util.Enumeration;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -287,50 +286,6 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
         return _buttonSpace;
     }
     static JComponent _buttonSpace = null;
-
-    /**
-     * @deprecated as of 2.13.3, directly access the connection configuration
-     * from the instance list
-     * jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class)
-     */
-    @Deprecated
-    static public String getConnection1() {
-        return MessageFormat.format(Bundle.getMessage("ConnectionCredit"),
-                new Object[]{AppConfigBase.getConnection(0), AppConfigBase.getPort(0), AppConfigBase.getManufacturerName(0)});
-    }
-
-    /**
-     * @deprecated as of 2.13.3, directly access the connection configuration
-     * from the instance list
-     * jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class)
-     */
-    @Deprecated
-    static public String getConnection2() {
-        return MessageFormat.format(Bundle.getMessage("ConnectionCredit"),
-                new Object[]{AppConfigBase.getConnection(1), AppConfigBase.getPort(1), AppConfigBase.getManufacturerName(1)});
-    }
-
-    /**
-     * @deprecated as of 2.13.3, directly access the connection configuration
-     * from the instance list
-     * jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class)
-     */
-    @Deprecated
-    static public String getConnection3() {
-        return MessageFormat.format(Bundle.getMessage("ConnectionCredit"),
-                new Object[]{AppConfigBase.getConnection(2), AppConfigBase.getPort(2), AppConfigBase.getManufacturerName(2)});
-    }
-
-    /**
-     * @deprecated as of 2.13.3, directly access the connection configuration
-     * from the instance list
-     * jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class)
-     */
-    @Deprecated
-    static public String getConnection4() {
-        return MessageFormat.format(Bundle.getMessage("ConnectionCredit"),
-                new Object[]{AppConfigBase.getConnection(3), AppConfigBase.getPort(3), AppConfigBase.getManufacturerName(3)});
-    }
 
     /**
      * Set up the configuration file name at startup.
