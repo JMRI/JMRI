@@ -486,6 +486,12 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
 
     static Logger log = LoggerFactory.getLogger(TamsTrafficController.class.getName());
 
+    @Override
+    protected boolean endOfMessage(AbstractMRReply r) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
 }
 
 /* @(#)TamsTrafficController.java */
