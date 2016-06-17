@@ -66,7 +66,7 @@ public class PowerPane extends javax.swing.JPanel implements java.beans.Property
     private boolean mgrOK() {
         if (p == null) {
             List<SystemConnectionMemo> connList = jmri.InstanceManager.getList(SystemConnectionMemo.class);
-            if (connList == null) {
+            if (connList.isEmpty()) {
                 return false; // nothing to do, no connections are configured
             }
             for (int x = 0; x < connList.size(); x++) {
