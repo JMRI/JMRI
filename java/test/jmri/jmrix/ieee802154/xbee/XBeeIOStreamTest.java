@@ -24,6 +24,36 @@ public class XBeeIOStreamTest {
        Assert.assertNotNull(a);
    }
 
+   @Test
+   public void checkInputStream(){
+       XBeeIOStream a = new XBeeIOStream(node,tc);
+       Assert.assertNotNull(a.getInputStream());
+   }
+
+   @Test
+   public void checkOutputStream(){
+       XBeeIOStream a = new XBeeIOStream(node,tc);
+       Assert.assertNotNull(a.getInputStream());
+   }
+
+   @Test
+   public void checkStatus(){
+       XBeeIOStream a = new XBeeIOStream(node,tc);
+       Assert.assertTrue(a.status());
+   }
+
+   @Test
+   public void checkPortName(){
+       XBeeIOStream a = new XBeeIOStream(node,tc);
+       Assert.assertEquals("NONE",a.getCurrentPortName());
+   }
+
+   @Test
+   public void checkDisabled(){
+       XBeeIOStream a = new XBeeIOStream(node,tc);
+       Assert.assertFalse(a.getDisabled());
+   }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {

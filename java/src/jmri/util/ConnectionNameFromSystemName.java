@@ -1,6 +1,8 @@
 package jmri.util;
 
-import jmri.jmrix.DCCManufacturerList;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+import jmri.InstanceManager;
 import jmri.jmrix.SystemConnectionMemo;
 
 /**
@@ -14,44 +16,65 @@ public class ConnectionNameFromSystemName {
     /**
      * Locates the connected systems name from a given prefix.
      *
-     * @return The Connection System Name
+     * @param prefix the system prefix
+     * @return The Connection System Name or null if no connection has the given
+     *         prefix
      */
-    static public String getConnectionName(String prefix) {
-        java.util.List<SystemConnectionMemo> list
-                = jmri.InstanceManager.getList(SystemConnectionMemo.class);
-        if (list != null) {
-            for (SystemConnectionMemo memo : list) {
-                if (memo.getSystemPrefix().equals(prefix)) {
-                    return memo.getUserName();
-                }
-            }
+    @CheckForNull
+    static public String getConnectionName(@Nonnull String prefix) {
+        SystemConnectionMemo memo = getSystemConnectionMemoFromSystemPrefix(prefix);
+        if (memo != null) {
+            return memo.getUserName();
         }
-        //Fall through if the system isn't using the new SystemConnectionMemo registration
-        return DCCManufacturerList.getDCCSystemFromType(prefix.charAt(0));
-
+        return null;
     }
+
     /**
      * Locates the connected systems prefix from a given System name.
      *
-     * @return The system prefix
+     * @param name The user name
+     * @return The system prefix or null if no connection has the given name
      */
-    static public String getPrefixFromName(String name) {
-        if (name == null) {
-            return null;
+    @CheckForNull
+    static public String getPrefixFromName(@Nonnull String name) {
+        SystemConnectionMemo memo = getSystemConnectionMemoFromUserName(name);
+        if (memo != null) {
+            return memo.getSystemPrefix();
         }
-        java.util.List<SystemConnectionMemo> list
-                = jmri.InstanceManager.getList(SystemConnectionMemo.class);
-        if (list != null) {
-            for (SystemConnectionMemo memo : list) {
-                if (memo.getUserName().equals(name)) {
-                    return memo.getSystemPrefix();
-                }
+        return null;
+    }
+
+    /**
+     * Get the {@link jmri.jmrix.SystemConnectionMemo} for a given system
+     * prefix.
+     *
+     * @param systemPrefix the system prefix
+     * @return the SystemConnectionMemo or null if no memo exists
+     */
+    @CheckForNull
+    static public SystemConnectionMemo getSystemConnectionMemoFromSystemPrefix(@Nonnull String systemPrefix) {
+        for (SystemConnectionMemo memo : InstanceManager.getList(SystemConnectionMemo.class)) {
+            if (memo.getSystemPrefix().equals(systemPrefix)) {
+                return memo;
             }
         }
-        String prefix = Character.toString(DCCManufacturerList.getTypeFromDCCSystem(name));
-        //Fall through if the system isn't using the new SystemConnectionMemo registration
-        return prefix;
+        return null;
+    }
 
+    /**
+     * Get the {@link jmri.jmrix.SystemConnectionMemo} for a given user name.
+     *
+     * @param userName the user name
+     * @return the SystemConnectionMemo or null if no memo exists
+     */
+    @CheckForNull
+    static public SystemConnectionMemo getSystemConnectionMemoFromUserName(@Nonnull String userName) {
+        for (SystemConnectionMemo memo : InstanceManager.getList(SystemConnectionMemo.class)) {
+            if (memo.getUserName().equals(userName)) {
+                return memo;
+            }
+        }
+        return null;
     }
 
 }

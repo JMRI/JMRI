@@ -1,6 +1,5 @@
 package apps.startup;
 
-import apps.StartupModel;
 import java.awt.Component;
 import jmri.spi.JmriServiceProviderInterface;
 
