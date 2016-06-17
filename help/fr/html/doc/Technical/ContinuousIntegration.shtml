@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
+
 <!--Translated by Herv&#233; Blorec le 2013-09-03 -->
 <html lang="fr">
 <head>
@@ -56,7 +56,7 @@ Il y a aussi les pages des
 
 <p>
 <!-- Apparemment liens cass&#233;s au 2013-09-03, except&#233; la page d&#233;veloppement et Jenkings</p><p> -->
-<!-- Liens rï¿½parï¿½s le 30-Mai-2014 - Alain LM -->
+<!-- Liens r&eacute;par&eacute;s le 30-Mai-2014 - Alain LM -->
 Pour plus d'information sur l'usage de FindBugs par JMRI, voir la <a href="FindBugs.shtml">page s&#233;par&#233;e FindBugs</a>.
 </ul>
 
@@ -69,7 +69,7 @@ du code Hudson et supporte le  m&#234;me <a href="http://en.wikipedia.org/wiki/A
 <p>L'int&#233;gration dans NetBeans s'ach&#232;ve en ex&#233;cutant les &#233;tapes suivantes:
 <ol>
 <li>Ouvrir NetBeans
-<li>Basculer sur la fenÃªtre "Services" (Raccourci clavier "Ctrl+5")
+<li>Basculer sur la fenêtre "Services" (Raccourci clavier "Ctrl+5")
 <li>Clic-Droit (Ctrl-clic sur Mac) sur l'entr&#233;e "Constructeurs Hudson" et choisir "Add Hudson Instance..."
     <p><img src="images/NetBeansJenkinsAdd.png" width="342" height="134" alt="Add Hudson Instance...">
 <li>

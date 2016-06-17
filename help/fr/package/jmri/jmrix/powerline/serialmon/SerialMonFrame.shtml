@@ -1,5 +1,4 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -23,15 +22,15 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1> Moniteur de trafic des Ã‰quipement  PowerLine.
+<H1> Moniteur de trafic des Équipement  PowerLine.
 </H1>
     
 Ceci est la page d'aide help/jmri/jmrix/powerline/serialmon/SerialMonFrame 
 
 <p>
 Pour plus d'informations sur les
-diffÃ©rents contrÃ´les et les options, s'il vous plaï¿½&reg;t voir la
-<a href="../../AbstractMonFrame.shtml"> page FenÃªtre du Moniteur de Communication </a>.
+différents contrôles et les options, s'il vous pla&icirc;t voir la
+<a href="../../AbstractMonFrame.shtml"> page Fenêtre du Moniteur de Communication </a>.
 
 <!--#include virtual="/Footer" -->
 </body>
