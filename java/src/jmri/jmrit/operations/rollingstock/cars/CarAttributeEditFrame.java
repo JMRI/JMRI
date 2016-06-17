@@ -104,7 +104,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
-        JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+        JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(new CarAttributeAction(Bundle.getMessage("CarQuanity"), this));
         toolMenu.add(new CarDeleteAttributeAction(Bundle.getMessage("DeleteUnusedAttributes"), this));
         menuBar.add(toolMenu);
