@@ -405,10 +405,10 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
                 //myCounter++;
                 endReached = false;
             } else {
-                //_isBinary = reply.isBinary();
-                _isBinary = false;//force to false for testing purposes. Must still find the root cause for the problem.
+                _isBinary = reply.isBinary();
                 log.info("ASCII reply = " + reply.toString() + " isBinary = " + _isBinary);
-                //log.info("Source = " + reply.getSource());
+                tm = reply.getSource();
+                log.info("Source = " + tm.toString() + " isBinary = " + tm.isBinary());
                 myCounter = 0;
                 endReached = true;
             }
@@ -485,12 +485,6 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
 
 
     static Logger log = LoggerFactory.getLogger(TamsTrafficController.class.getName());
-
-    @Override
-    protected boolean endOfMessage(AbstractMRReply r) {
-        // TODO Auto-generated method stub
-        return false;
-    }
 
 }
 
