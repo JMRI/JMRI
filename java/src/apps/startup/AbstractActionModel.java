@@ -1,6 +1,9 @@
 package apps.startup;
 
+import java.text.MessageFormat;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import jmri.util.ConnectionNameFromSystemName;
 
 /**
  * Provide services for invoking actions during configuration and startup.
@@ -40,7 +43,7 @@ public abstract class AbstractActionModel implements StartupModel {
         return this.systemPrefix;
     }
 
-    public void setSystemPrefix(String name) {
+    public void setSystemPrefix(@Nullable String name) {
         if (name == null) {
             this.systemPrefix = "";
         } else {
@@ -54,6 +57,9 @@ public abstract class AbstractActionModel implements StartupModel {
 
     @Override
     public String toString() {
+        if (!this.systemPrefix.isEmpty()) {
+            return MessageFormat.format("<html>{0}<br>{1}</html>", this.getName(), ConnectionNameFromSystemName.getConnectionName(this.systemPrefix));
+        }
         return this.getName();
     }
 }
