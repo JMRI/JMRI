@@ -1,7 +1,6 @@
 package apps.startup;
 
 import javax.annotation.Nonnull;
-import jmri.InstanceManager;
 
 /**
  * Provide services for invoking actions during configuration and startup.
@@ -24,12 +23,12 @@ public abstract class AbstractActionModel implements StartupModel {
 
     @Override
     public String getName() {
-        return InstanceManager.getDefault(StartupActionModelUtil.class).getActionName(className);
+        return StartupActionModelUtil.getDefault().getActionName(className);
     }
 
     @Override
     public void setName(@Nonnull String n) {
-        this.className = InstanceManager.getDefault(StartupActionModelUtil.class).getClassName(n);
+        this.className = StartupActionModelUtil.getDefault().getClassName(n);
     }
 
     public void setClassName(@Nonnull String n) {
@@ -50,7 +49,7 @@ public abstract class AbstractActionModel implements StartupModel {
     }
 
     public boolean isSystemConnectionAction() {
-        return InstanceManager.getDefault(StartupActionModelUtil.class).isSystemConnectionAction(className);
+        return StartupActionModelUtil.getDefault().isSystemConnectionAction(className);
     }
 
     @Override
