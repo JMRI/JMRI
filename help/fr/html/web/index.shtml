@@ -2,7 +2,7 @@
 <!-- Translated by Blorec Herv&#233; le 2013-10-07-->
 <html lang="fr">
 <head>
-<title>JMRI: Web Access</title>
+<title>JMRI: Acc&#232;s  Web</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -90,11 +90,11 @@ ou quelque chose de similaire)
 Si tout fonctionne, vous devriez voir la fen&#234;tre Commande Alimentation sur votre &#233;cran navigateur.
 Cliquez sur le bouton "On" pour alimenter le r&#233;seau .
 
-id="Configure"><a
-<h2> Configuration </h2>
+<a id="Configure">
+<h2> Configuration </h2></a>
 
 Vous pouvez utiliser les
-"<a Href="../../package/apps/TabbedPreferences.shtml"> Pr&#233;f&#233;rences </a>"
+"<a href="../../package/apps/TabbedPreferences.shtml"> Pr&#233;f&#233;rences</a>"
 pour dire &#224; JMRI de
 d&#233;marrer le serveur &#224; chaque fois que vous d&#233;marrez le programme.
 <p>
@@ -111,7 +111,7 @@ Le port par d&#233;faut MiniServer est 12080, mais cela peut &#234;tre modifi&#2
 la bo&#238;te de dialogue Pr&#233;f&#233;rences MiniServer.
 
 <a id="URLs">
-<h2> Acc&#232;s aux URLs</h2>
+<h2> Acc&#232;s aux URLs</h2></a>
 Vous pouvez cr&#233;er vos propres pages Web en utilisant n'importe quel outil que vous souhaitez.
 Pour acc&#233;der &#224; JMRI depuis ces pages, vous avez 
 besoin de conna&#238;tre les URL correctes pour demander les services que vous souhaitez.
@@ -128,7 +128,7 @@ Plusieurs exemples sont li&#233;s depuis l'index.html (Page d'accueil su Serveur
     <code><pre><a href="http://127.0.0.1:12080/frame">http://127.0.0.1:12080/frame</a></pre></code>
     <p><em>Note:</em> R&#233;gler par d&#233;faut comme d&#233;lai de rafra&#238;chissement, des cadres non autoris&#233;s et l'utilisation ajax dans les Pr&#233;f&#233;rences du serveur Web. </P>
      Vous pouvez remplacer les valeurs par d&#233;faut pour des pages individuelles en utilisant les param&#232;tresms suivants dans votre URL:
-    <ul>
+    <div>
     <li><b>plain</b> (cacher les liens en bas de page)</li>
     <li><b>protect</b> (prot&#233;ger le cadre des clics de l'utilisateur, ex: image en lecture seule, mais avec rafra&#238;chissement)</li>
     <li><b>ajax</b> (utiliser ajax pour les mises &#224; jour)</li>
@@ -177,8 +177,7 @@ Vous pouvez ensuite visualiser, imprimer, enregistrer, etc le fichier au format.
 Par exemple, pour afficher "myFile.xml" &#224; partir du r&#233;pertoire JMRI pr&#233;f&#233;rences, utilisez
 <code> <pre>
 <a href="http://localhost:12080/prefs/MyFile.xml"> http://localhost:12080/prefs/MyFile.xml </a>
-</pre> </code
-
+</pre> </code>
 
 <h3> Pour afficher une liste format&#233;e JMRI </h3>
 
@@ -197,7 +196,8 @@ demandes. Ce n'est pas la s&#233;curit&#233; &#233;tanche &#224; tout, cependant
 attention &#224; ne pas mettre un contenu important dans ces r&#233;pertoires ou les lier
 &#224; d'autres parties de votre ordinateur.</p>
 
-</div>
 <!--#include virtual="/Footer" -->
+        </div>
+    </div>
 </body>
 </html>

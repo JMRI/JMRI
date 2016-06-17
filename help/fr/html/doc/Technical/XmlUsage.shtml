@@ -1,29 +1,28 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- UpDated by Blorec Herv&#233; le 2013-09-09-->
-
 <html lang="fr">
 <head>
     <TITLE>
- 	JMRI: XML Usage
+ 	JMRI: Utilisation XML
     </TITLE>
     <META content="Bob Jacobsen" name=Author>
     <meta name="keywords" content="JMRI technical code xml usage">
 
 <!-- Style -->
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
-
+<body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
 
-<H1>JMRI: Utilisation XML </H1>
+<h1>JMRI: Utilisation XML</h1>
 
 JMRI utilise XML pour un certain nombre d'objectifs:
 de maintenir les d&#233;finitions de d&#233;codeur , pour son
