@@ -321,7 +321,7 @@ public class AddSignalMastPanel extends JPanel {
                 }
             }
             java.util.List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
-            if (connList != null) {
+            if (!connList.isEmpty()) {
                 for (int x = 0; x < connList.size(); x++) {
                     jmri.CommandStation station = connList.get(x);
                     systemPrefixBox.addItem(station.getUserName());
@@ -1052,7 +1052,7 @@ public class AddSignalMastPanel extends JPanel {
         dccAspect = new HashMap<String, DCCAspectPanel>(10);
         java.util.List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
         systemPrefixBox.removeAllItems();
-        if (connList != null) {
+        if (!connList.isEmpty()) {
             for (int x = 0; x < connList.size(); x++) {
                 jmri.CommandStation station = connList.get(x);
                 if (Bundle.getMessage("LNCPMast").equals(signalMastDriver.getSelectedItem())) {
