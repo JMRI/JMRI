@@ -986,8 +986,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
     private boolean showAll = true;   // false indicates show only included items
 
-    private static String SET_TO_ACTIVE = rb.getString("SensorActive");
-    private static String SET_TO_INACTIVE = rb.getString("SensorInactive");
+    private static String SET_TO_ACTIVE = Bundle.getMessage("SensorStateActive");
+    private static String SET_TO_INACTIVE = Bundle.getMessage("SensorStateInactive");
     private static String SET_TO_CLOSED = jmri.InstanceManager.turnoutManagerInstance().getClosedText();
     private static String SET_TO_THROWN = jmri.InstanceManager.turnoutManagerInstance().getThrownText();
 

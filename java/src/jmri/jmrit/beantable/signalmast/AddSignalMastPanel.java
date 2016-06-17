@@ -1,4 +1,3 @@
-// AddSignalMastPanel.java
 package jmri.jmrit.beantable.signalmast;
 
 import java.awt.Color;
@@ -52,11 +51,9 @@ import org.slf4j.LoggerFactory;
  * JPanel to create a new SignalMast
  *
  * @author	Bob Jacobsen Copyright (C) 2009, 2010
- * @version $Revision$
  */
 public class AddSignalMastPanel extends JPanel {
 
-    private static final long serialVersionUID = 2027577182244302143L;
     jmri.UserPreferencesManager prefs = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
     String systemSelectionCombo = this.getClass().getName() + ".SignallingSystemSelected";
     String mastSelectionCombo = this.getClass().getName() + ".SignallingMastSelected";
@@ -324,7 +321,7 @@ public class AddSignalMastPanel extends JPanel {
                 }
             }
             java.util.List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
-            if (connList != null) {
+            if (!connList.isEmpty()) {
                 for (int x = 0; x < connList.size(); x++) {
                     jmri.CommandStation station = connList.get(x);
                     systemPrefixBox.addItem(station.getUserName());
@@ -575,7 +572,7 @@ public class AddSignalMastPanel extends JPanel {
                         + sigsysname
                         + ":" + mastname.substring(11, mastname.length() - 4));
                 for (JmriBeanComboBox head : headList) {
-                    build.append("(" + StringUtil.parenQuote(head.getSelectedDisplayName()) + ")");
+                    if (head !=null && head.getSelectedDisplayName() != null) build.append("(" + StringUtil.parenQuote(head.getSelectedDisplayName()) + ")");
                 }
                 String name = build.toString();
                 log.debug("add signal: " + name);
@@ -1055,7 +1052,7 @@ public class AddSignalMastPanel extends JPanel {
         dccAspect = new HashMap<String, DCCAspectPanel>(10);
         java.util.List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
         systemPrefixBox.removeAllItems();
-        if (connList != null) {
+        if (!connList.isEmpty()) {
             for (int x = 0; x < connList.size(); x++) {
                 jmri.CommandStation station = connList.get(x);
                 if (Bundle.getMessage("LNCPMast").equals(signalMastDriver.getSelectedItem())) {
@@ -1293,5 +1290,3 @@ public class AddSignalMastPanel extends JPanel {
     private final static Logger log = LoggerFactory.getLogger(AddSignalMastPanel.class.getName());
 }
 
-
-/* @(#)SensorTableAction.java */
