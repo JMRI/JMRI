@@ -96,7 +96,9 @@ you need one of the following adapters:</p>
   <li><a title="Digitrax Serial interface" href="MS100.shtml">MS-100</a></li>
   <li><a title="BT LocoBridge" href="BTLocoBridge.shtml">Bluetooth LocoBridge</a></li> 
 </ul>
-(Note: The Digitrax DSC240 has a built-in adapter that's similar to the Digitrax PR3)
+(Note: The Digitrax DSC240 has a built-in adapter that's similar to the Digitrax PR3;
+    if you have a DCS240, configure JMRI for it by selecting a PR3 connection type
+    and a DCS240 command station type)
 
 <p>Generally, any of these can be used with any type of computer to communicate
 with any type of command station. Currently, the LocoBuffer-USB and PR3 are the
