@@ -54,8 +54,8 @@ public class Profile implements Comparable<Profile> {
      *
      * @param name Name of the profile. Will not be used to enforce uniqueness
      *             contraints.
-     * @param id   Id of the profile. Will be used to enforce uniqueness
-     *             constraints.
+     * @param id   Id of the profile. Will be prepended to a random String to
+     *             enforce uniqueness constraints.
      * @param path Location to store the profile
      * @throws java.io.IOException If unable to create the profile at path
      */
