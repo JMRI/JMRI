@@ -13,15 +13,19 @@ import jmri.jmrix.SystemConnectionMemo;
  */
 public interface SystemConnectionAction {
 
+    /**
+     * Get the {@link jmri.jmrix.SystemConnectionMemo} this action is bound to.
+     * 
+     * @return the SystemConnectionMemo or null if not bound.
+     */
     @CheckForNull
     public SystemConnectionMemo getSystemConnectionMemo();
 
     /**
-     * Set the SystemConnectionMemo this action is bound to.
+     * Set the {@link jmri.jmrix.SystemConnectionMemo} this action is bound to.
      * <p>
-     * Implementing classes may throw an IllegalArgumentException if
-     * {@code memo} if the implementing class requires a specific subclass of
-     * SystemConnectionMemo.
+     * Implementing classes may throw an IllegalArgumentException if the
+     * implementing class requires a specific subclass of SystemConnectionMemo.
      *
      * @param memo the SystemConnectionMemo
      * @throws IllegalArgumentException if the SystemConnectionMemo is invalid
