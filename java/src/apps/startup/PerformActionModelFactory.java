@@ -1,7 +1,6 @@
 package apps.startup;
 
 import apps.PerformActionModel;
-import apps.StartupModel;
 
 /**
  *
@@ -25,5 +24,5 @@ public class PerformActionModelFactory extends AbstractActionModelFactory {
     @Override
     public String getEditModelMessage() {
         return Bundle.getMessage("PerformActionModelFactory.editModel.message");
-    }    
+    }
 }

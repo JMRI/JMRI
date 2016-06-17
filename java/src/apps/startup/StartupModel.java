@@ -1,4 +1,4 @@
-package apps;
+package apps.startup;
 
 /**
  * Startup object models all need to implement this interface. This allows the
@@ -6,8 +6,10 @@ package apps;
  * classes.
  *
  * @author Randall Wood (C) 2015
- * @deprecated since 4.5.1; use {@link apps.startup.StartupModel} instead.
  */
-@Deprecated
-public interface StartupModel extends apps.startup.StartupModel {
+public interface StartupModel {
+
+    public String getName();
+
+    public void setName(String name);
 }
