@@ -7,7 +7,7 @@
 <title>JMRI: System Properties</title>
 
 <!-- Style -->
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -15,18 +15,18 @@
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h2> JMRI: Propri&#233;t&#233;s du Syst&#232;me</h2>
+<h1> JMRI: Propri&#233;t&#233;s du Syst&#232;me</h1>
 
 Cette page liste les propri&#233;t&#233;s du syst&#232;me que JMRI utilise.
 
-<h3>Propri&#233;t&#233;s Syst&#232;me d'Exploitation</h3>
+<h2>Propri&#233;t&#233;s Syst&#232;me d'Exploitation</h2>
 <dl>
 
 <dt>
