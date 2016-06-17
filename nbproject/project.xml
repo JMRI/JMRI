@@ -115,6 +115,32 @@
                     <script>${ant.script}</script>
                     <target>ci-test</target>
                 </action>
+                <action name="test.single">
+                    <script>${ant.script}</script>
+                    <target>test-single</target>
+                    <context>
+                        <property>test.includes</property>
+                        <folder>java/src</folder>
+                        <pattern>\.java$</pattern>
+                        <format>java-name</format>
+                        <arity>
+                            <one-file-only/>
+                        </arity>
+                    </context>
+                </action>
+                <action name="test.single">
+                    <script>${ant.script}</script>
+                    <target>test-single</target>
+                    <context>
+                        <property>test.includes</property>
+                        <folder>java/test</folder>
+                        <pattern>\.java$</pattern>
+                        <format>java-name</format>
+                        <arity>
+                            <one-file-only/>
+                        </arity>
+                    </context>
+                </action>
             </ide-actions>
             <export>
                 <type>folder</type>

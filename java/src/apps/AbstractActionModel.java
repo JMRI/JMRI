@@ -39,4 +39,8 @@ public abstract class AbstractActionModel implements StartupModel {
         className = n;
     }
 
+    @Override
+    public String toString() {
+        return this.getName();
+    }
 }
