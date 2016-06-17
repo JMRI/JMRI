@@ -64,7 +64,7 @@ Le paquet
 
 D'abord le 'ctor' s'ex&#233;cute, puis initComponents. Cette deuxi&#232;me
 partie devrait &#234;tre le lieu pour les connexions &#224; d'autres composants,
-où tous les objets de niveau inf&#233;rieur ont &#233;t&#233; cr&#233;&#233;s. (sous-classes pour
+o&ugrave; tous les objets de niveau inf&#233;rieur ont &#233;t&#233; cr&#233;&#233;s. (sous-classes pour
 des syst&#232;mes particuliers peuvent avoir par exemple des m&#233;thodes plus initComponents,
 appel&#233; plus tard)
 <p>
