@@ -1,4 +1,3 @@
-// jmri.jmrit.display.configurexml.LayoutBlockManagerXML.java
 package jmri.jmrit.display.layoutEditor.configurexml;
 
 import java.awt.Color;
@@ -18,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision$
  */
 public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
