@@ -1,43 +1,34 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!--  $Id$ -->
-<!-- UpDated by Blorec Herv&#233; le 2013-09-03--> 
-
+<!-- UpDated by Blorec Herv&#233; le 2013-09-03-->
 <html lang="fr">
 <head>
     <TITLE>
- 	JMRI: Building JMRI with Ant
+ 	JMRI: Construction de JMRI avec Ant
     </TITLE>
     <META content="Bob Jacobsen" name=Author>
     <meta name="keywords" content="JMRI technical code ant">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
-
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
-
+<body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 	<div id="mainContent">
 
-	     <H1>Construction de JMRI avec Ant</H1>
+	     <h1>Construction de JMRI avec Ant</h1>
 
 Pour ceux d'entre vous qui pr&#233;f&#232;rent une approche en ligne de commande il conviendrait d'examiner "Ant", un des
 meilleurs utilitaires pour faire les projets Java. Ant est disponible en
 t&#233;l&#233;chargement &#224;
 <A HREF="http://jakarta.apache.org/ant/index.html"> http://jakarta.apache.org/ant/index.html/ </a>.
 Installez-le, puis:
-<UL>
+<ul>
 <LI> Cr&#233;er un r&#233;pertoire pour contenir votre projet.
 <LI> Dans ce r&#233;pertoire de projet, faire un
 <a href="http://jmri.org/help/en/html/doc/Technical/getgitcode.shtml"> checkout Git </a> de  "All"
@@ -47,7 +38,7 @@ o&#249; Ant s'ex&#233;cute, et le charge avec la source, des tests et des ressou
 Il  cr&#233;era et peuplera aussi les r&#233;pertoires pour les fichiers xml, biblioth&#232;ques, etc dans le
 "project directory".
 <LI> Changer pour le sous-r&#233;pertoire "jmri" nouvellement cr&#233;&#233;. Pour compiler, tapez "ant debug".
-<LI> Pour ex&#233;cuter le programme, tapez "ant DecoderProÂ»ou Â« ant panelpro ", asseyez-vous et regarder ce qui se passe.
+<LI> Pour ex&#233;cuter le programme, tapez "ant DecoderPro»ou « ant panelpro ", asseyez-vous et regarder ce qui se passe.
 <LI> Pour ex&#233;cuter la suite de tests, tapez "ant alltest".
 <LI> Pour cr&#233;er un fichier jmri.jar, type "ant dist".
 Notez que vous n'avez pas &#224; cr&#233;er le fichier "jmri.jar" pour ex&#233;cuter le programme.
@@ -65,6 +56,7 @@ ant alltests
 </pre>
 </code>
 et s'assurer que les tests soient effectu&#233;s proprement.
+
 <!--#include virtual="/Footer" -->
 
 	  </div><!-- closes #mainContent-->
