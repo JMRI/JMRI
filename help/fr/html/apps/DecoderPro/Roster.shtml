@@ -2,10 +2,9 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <!-- UpDated by Blorec Herv&#233; le 2013-08-31-->
 
-<title>JMRI: DecoderPro Rosters</title>
+<title>JMRI: Listes DecoderPro</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -23,8 +22,7 @@
 <div id="mainContent">
 
 <!-- Page Body -->
-<H2>
-Listes JMRI </H2>
+<h1>JMRI:  Listes DecoderPro</h1>
 
 <P>La lecture du contenu d'un d&#233;codeur prend g&#233;n&#233;ralement beaucoup de temps, et avec
 certaines centrales de commande, ce n'est m&#234;me pas possible. La Liste JMRI
@@ -90,9 +88,9 @@ Il est donn&#233; &#224; titre indicatif; vous ne pouvez pas le changer, et vous
 &#224; vous en pr&#233;occuper. Notez que m&#234;me si vous modifiez l'ID de cette entr&#233;e, le fichier 
 d'origine sera toujours utilis&#233;.
 
-</dl></p>
+</dl>
 
-<a id="menu">
+<div id="menu">
 <h3>Menu Liste</h3>
 
 <a href="images/RosterMenu.jpg"><img src="images/RosterMenu.jpg" width="108" height="92" align="right"/></a>
@@ -102,7 +100,7 @@ Les fen&#234;tres de l'application JMRI principal et les fen&#234;tres "D&#233;m
 <dl>
 
 <a id="create">
-<dt>Cr&#233;er ...
+<dt>Cr&#233;er...</dt></a>
 <dd>
 "Cr&#233;er" est utilis&#233; pour cr&#233;er une nouvelle liste d'entr&#233;e, m&#234;me si vous n'avez pas actuellement de connexion &#224; un r&#233;seau.
 Lorsque vous s&#233;lectionnez cette option, vous avez une fen&#234;tre dans laquelle vous pouvez s&#233;lectionner un type de d&#233;codeur.
@@ -111,7 +109,7 @@ DecoderPro pour modifier le contenu de la nouvelle entr&#233;e.
 N'oubliez pas de cliquez sur "Enregistrer" lorsque vous avez termin&#233;!
 
 <a id="edit">
-<dt>Modifier ...
+<dt>Modifier...</dt></dl>
 <dd>
 "Modifier" est utilis&#233; pour mettre &#224; jour le contenu d'une liste d'entr&#233;e, m&#234;me si vous
  n'avez pas une connexion r&#233;seau (normalement, si vous avez une connexion circuit,
@@ -122,7 +120,7 @@ N'oubliez pas de cliquez sur "Enregistrer" lorsque vous avez termin&#233;!
 l'entr&#233;e. N'oubliez pas de cliquez sur "Enregistrer" lorsque vous avez termin&#233;!
 
 <a id="copy">
-<dt>Copier ...
+<dt>Copier...</dt></div>
 <dd>
 "Copier" est utilis&#233; pour cr&#233;er une autre entr&#233;e liste qui est identique &#224; l'originale, sauf
  pour son ID. Si vous avez une configuration standard que vous voulez utiliser pour de nouvelles
@@ -130,7 +128,7 @@ l'entr&#233;e. N'oubliez pas de cliquez sur "Enregistrer" lorsque vous avez term
  copiez - la chaque fois que vous souhaitez programmer une nouvelle locomotive.
 
 <a id="export">
-<dt>Exporter ...
+<dt>Exporter...</dt></div>
 <dd>
 Bien qu'il soit possible de trouver les fichiers XML d&#233;finissant les entr&#233;es liste dans le r&#233;pertoire 
 des pr&#233;f&#233;rences, il vaut mieux ne pas travailler directement avec eux.
@@ -146,7 +144,7 @@ Lorsque vous s&#233;lectionnez "Exporter ...",  il vous sera demander de choisir
  voulez, mais il est pr&#233;f&#233;rable de mettre une extension ".xml" au nom 
 
 <a id="import">
-<dt>Importer ...
+<dt>Importer...</dt></a>
 <dd>
 La combinaison de "Exporter" puis "Importer" vous permet d'apporter une entr&#233;e de liste locomotives lorsque
  vous passez &#224; un autre r&#233;seau, avec sa propre installation DecoderPro.
@@ -156,12 +154,12 @@ Il aurait &#233;t&#233; cr&#233;&#233; par une commande "exportation" . Vous ser
 Cela peut &#234;tre la m&#234;me que ce qu'elle &#233;tait avant qu'elle ait &#233;t&#233; export&#233;e, ou vous pouvez lui donner un nouvel ID.</p>
 
 <a id="delete">
-<dt>Effacement ...
+<dt>Effacement...</dt></a>
 <dd>
 Cela supprime compl&#232;tement une entr&#233;e de liste. Une confirmation vous sera demand&#233;e et une sauvegarde est faite, en cas d'erreurs.
 
 <a id="summary">
-<dt>Impression Sommaire ...
+<dt>Impression Sommaire...</dt></a>
 <dd>
 Ceci affiche un r&#233;sum&#233; de la liste enti&#232;re, la liste des informations primaires
  pour chaque entr&#233;e.
@@ -169,14 +167,15 @@ Ceci affiche un r&#233;sum&#233; de la liste enti&#232;re, la liste des informat
 Pour une liste plus d&#233;taill&#233;e d'un d&#233;codeur sp&#233;cifique, voir le menu "Fichier" sur les &#233;crans programmateur.
 
 <a id="previewsummary">
-<dt>Aper&#231;u avant impression ...
+<dt>Aper&#231;u avant impression...</dt></a>
 <dd>
 Cela montre le contenu du r&#233;sum&#233; imprim&#233; sur votre &#233;cran,
 de sorte que vous pouvez avoir un aper&#231;u avant impression.
 
-
 </dl>
     
 <!--#include virtual="/Footer" -->
+ </div>
+</div>
 </body>
 </html>

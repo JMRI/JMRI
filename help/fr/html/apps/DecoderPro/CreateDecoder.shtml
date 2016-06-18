@@ -2,8 +2,7 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
- <!--Updated et Translated by Herv&#233; Blorec le 2013-08-30 -->
+<!--Updated et Translated by Herv&#233; Blorec le 2013-08-30 -->
 <title>JMRI: DecoderPro User Guide - Creating A Custom Decoder File</title>
 
 <!-- Style -->
@@ -17,12 +16,10 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-
-<H2>Guide Utilisateur DecoderPro-Cr&#233;ation d'un fichier d&#233;codeur personnalis&#233;</h2>
+<h1>Guide Utilisateur DecoderPro-Cr&#233;ation d'un fichier d&#233;codeur personnalis&#233;</h1>
 
 <p>Cette page fournit un peu d'information sur la m&#233;thode de travail des fichiers de configurations pour le Programmateur Symbolique DecoderPro.</p>
 
@@ -130,7 +127,7 @@ Si vous ne connaissez pas le num&#233;ro de version, ne d&#233;finissez pas un d
 vous permettent de lister un nombre de mod&#232;le de d&#233;codeurs diff&#233;rents qui peuvent utiliser ce fichier. Pour un simple d&#233;codeur, enlever tout sauf un et donnez lui le nom du mod&#232;le de d&#233;codeur.  Le numOuts
 et numFns sont d&#233;crit plus tard, mais pour le moment vous pouvez les effacer, laissant quelque chose comme: </p>
 
-<p class=example>
+<p class="example">
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;model model="DH142" /&gt;
 </p>
 
@@ -141,7 +138,7 @@ et numFns sont d&#233;crit plus tard, mais pour le moment vous pouvez les efface
 
 <p>L'&#233;l&#233;ment suivant d&#233;finit quel mode de programmation est comprit par le d&#233;codeur :</p>
 
-<p class=example>
+<p class="example">
 le>
 &lt;programming direct="byteOnly" paged= "yes" <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;register= "yes" ops= "yes"&gt;&lt;/programming&gt;
@@ -152,7 +149,7 @@ peut &#234;tre fix&#233; &#225; "no", "bitOnly", "byteOnly", ou "yes". Le
 programmateur utilise ces informations pour s&#233;lectionner le mode de programmation &#225; utiliser pour travailler avec le d&#233;codeur.</p>
 </dd>
 
-<A name="variable">
+<a name="variable">
 <dt class=left> File contents: Variable names </dt></a>
 <dd>
 <p>La partie suivante du fichier consiste en un jeu d'&#233;l&#233;ments "variable" d&#233;finissant des variables sp&#233;cifiques, imbriqu&#233;es dans un &#233;l&#233;ment "variables"(notez le"s")
@@ -175,12 +172,12 @@ programmateur utilise ces informations pour s&#233;lectionner le mode de program
 
 <p> Les attributs incluent:
 <ul>
-<li><dfn>label</dfn> - Le nom pour cette variable. C'est g&#233;n&#233;ralement comme cela que les fabricants appellent cet &#233;l&#233;ment, m&#234;me si d'a√†utres fabricants ou le NMRA utilisent un nom diff&#233;rent pour les m&#234;mes choses. 
+<li><dfn>label</dfn> - Le nom pour cette variable. C'est g&#233;n&#233;ralement comme cela que les fabricants appellent cet &#233;l&#233;ment, m&#234;me si d'a‡utres fabricants ou le NMRA utilisent un nom diff&#233;rent pour les m&#234;mes choses. 
 <li><dfn>item</dfn> - Un nom alternatif "standard". Voir la 
 <A HREF="Programmer.shtml#id"> discussion sur la page des d&#233;finitions des programmateurs</a> 
 pour plus de d&#233;tails sur ceux-ci.  G&#233;n&#233;ralement, regarder le programmateur Complet pour trouver quelque chose de similaire, et utilisez le "name" attribu&#233;.
 <li><dfn>CV</dfn> - Quel CV contient l'information de configuration pour cette variable.
-<li><dfn>mask</dfn> - Un mod&#232;le√† comme "XXXVVVXX" qui contr&#244;le quels bits dans le CV met la variable up . Chaque "V" est un bit qui est inclut
+<li><dfn>mask</dfn> - Un mod&#232;le‡ comme "XXXVVVXX" qui contr&#244;le quels bits dans le CV met la variable up . Chaque "V" est un bit qui est inclut
 , et "X" sont des bits qui ne sont pas inclus.  Il est mieux d'avoir huit caract&#232;res,comme cela nous savons o&#249; nous allons. Si la variable est un Byte complet, cette attribut peut &#234;tre omit .
 <li><dfn>default</dfn> - la valeur par d&#233;faut pour cette varable. C'est utilis&#233; pour un nouveau d&#233;codeur, ou quand vous voulez remettre le d&#233;codeur &#225; ses r&#233;glages d'usine
 <li><dfn>comment</dfn> - Utilis&#233; pour ce que vous voulez.
@@ -231,8 +228,7 @@ choix".Elles sont repr&#233;sent&#233;es par un &#233;l&#233;ment enumVariable. 
 d&#233;codeurs Digitrax, vous pouvez utiliser jusqu'&#225; 16 &#233;l&#233;ments enumChoice.
 Ils sont affich&#233;s dans l'ordre o&#249; ils ont &#233;t&#233; entr&#233;s dans le fichier, et sont aussi num&#233;rot&#233;s dans cet ordre. Si le premier est choisi, un 0 est entr&#233; dans les bits CV; choisir le second stocke 1; etc.</p>
 
-
-<p> Si vous avez besoin de sp&#233;cifier un nombre sp&#233;cifique pour une option enum, ajoutez un attribut "value":
+<p>Si vous avez besoin de sp&#233;cifier un nombre sp&#233;cifique pour une option enum, ajoutez un attribut "value":
 <p class=example>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;enumChoice choice=&quot;Blue&quot; value=&quot;32&quot;/&gt;
 </p>
@@ -255,7 +251,7 @@ s&#233;lectionnez votre fichier et cliquez  "open".  Si tout est bon, vous obten
 </p>
 </dd>
 </dl>
-<p>F&#233;licitations!  Vous avez fini.  Ensuite, ouvrez l'application  programmateur et essayez la</p>
+<p>F&#233;licitations! Vous avez fini.  Ensuite, ouvrez l'application  programmateur et essayez la.</p>
     
 <!--#include virtual="/Footer" -->
 </div>

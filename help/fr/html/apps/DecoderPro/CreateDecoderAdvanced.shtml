@@ -2,7 +2,6 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
  <!--Translated by Herv&#233; Blorec le 2013-08-30 -->
 <title>JMRI: DecoderPro User Guide - Advanced Decoder Definitions</title>
 
@@ -21,8 +20,7 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-
-<H2>Guide Utilisateur DecoderPro  - D&#233;finitions Avanc&#233;es des D&#233;codeurs </h2>
+<h1>Guide Utilisateur DecoderPro  - D&#233;finitions Avanc&#233;es des D&#233;codeurs </h1>
 
 <p>Cette page fournit des informations sur les fonctionnalit&#233;s avanc&#233;es dans
 les fichiers de d&#233;finiton d&#233;codeur pour le Programmateur Symbolique DecoderPro

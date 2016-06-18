@@ -2,7 +2,6 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!--  $Id$ -->
 <!-- Updated by Blorec Herv&#233; le 2013-09-01-->
 <title>JMRI: Decoder Information</title>
 
@@ -22,7 +21,7 @@
 <div id="mainContent">
 
 <!-- Page Body -->
-<H1>JMRI: Information D&#233;codeur </H1>
+<h1>JMRI: Information D&#233;codeur </h1>
 
 Le projet JMRI a rassembl&#233; une grande quantit&#233; d'informations sur les
 D&#233;codeurs DCC, il les met &#224; la disposition du public de plusieurs fa&#231;ons. Elles
@@ -61,12 +60,13 @@ Pour rendre ces infos plus facile &#224; importer dans un tableur ou un autre pr
 </UL>
 
 
-<h2>Fichierss XML</h2>
+<h2>Fichiers XML</h2>
 
 La version d&#233;finitive des donn&#233;es est dans des fichiers XML. Ceux-ci peuvent &#234;tre obtenus aupr&#232;s de
 toute distribution jmri, ou via le Web &#224; l'adresse
 <A HREF="http://jmri.org/xml"> http://jmri.org/xml</a>.
     
 <!--#include virtual="/Footer" -->
+ </div>
 </body>
 </html>

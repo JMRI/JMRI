@@ -2,7 +2,6 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <!-- UpDated by Blorec Herv&#233; le 2013-08-31-->
 <title>JMRI: Roster File Details</title>
 
@@ -21,8 +20,7 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-
-<H1>Guide Utilisateur DecoderPro - D&#233;tails des Fichiers Liste</H1>
+<h1>Guide Utilisateur DecoderPro - D&#233;tails des Fichiers Liste</h1>
 
 <p>Les informations de liste pr&#233;sent&#233;es dans la boite de s&#233;lection, et utilis&#233;es pour la
 s&#233;lection automatique d'une locomotive, sont stock&#233;es dans le fichier roster.xml et
@@ -40,7 +38,6 @@ Dans le r&#233;pertoire des pr&#233;f&#233;rences, il y aura un fichier nomm&#23
 un r&#233;pertoire appel&#233; "roster". Vous avez besoin de d&#233;placer le fichier "roster.xml", le r&#233;pertoire
 "roster", et tous les contenus qui vont avec.
 
-    
 <!--#include virtual="/Footer" -->
 </div>
 </body>

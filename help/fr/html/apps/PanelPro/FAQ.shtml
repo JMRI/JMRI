@@ -2,9 +2,8 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!--  $Id$ -->
 <!-- UpDated by Blorec Herv&#233; 2013-09-02-->
-<title>JMRI: PanelPro Frequently Asked Questions</title>
+<title>JMRI: PanelPro Questions Fr&#233;quemment Pos&#233;es</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -20,7 +19,6 @@
 
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
-
 
 <h1>JMRI: PanelPro Questions Fr&#233;quemment Pos&#233;es (FAQ)</h1>
 
@@ -58,7 +56,6 @@ de votre support de commande du r&#233;seau. Bien que ce ne soit pas intuitif - 
 que vous utilisez pour la commande des trains et pour la commande des aiguillages et signaux - tout simplement parce 
 que les messages n'ont pas besoin de traverser cette fronti&#232;re. C'est pourquoi certains ont recommand&#233; que vous consid&#233;riez 
 un environnement tel que des NCE pour les trains et C/MRI ou Digitrax pour le mat&#233;riel r&#233;seau (PanelPro).
-.
 
     <li> Parce que Digitrax et C/MRI ont publi&#233; leurs interfaces, il y a plus de produits disponibles pour le contr&#244;le de 
 r&#233;seau pour les deux syst&#232;mes que pour les NCE. Les deux RR-Cirkits et Team num&#233;riques ont sorti d'excellents produits qui 
@@ -69,7 +66,6 @@ qui est/n'est pas disponibles pour Lenz.
 de PanelPro - mais les d&#233;veloppements les plus r&#233;cents qui ont  &#233;t&#233; mis &#224; disposition dans PanelPro rendent son utilisation 
 un peu plus facile que par le pass&#233;. En fait, si vous parlez juste des aiguillages et d'occupation de cantons  alors PanelPro 
 sera utilisable pendant un certain temps.
-.
 
     <li> Lorsque vous commencez &#224; faire de la signalisation alors "tout change". Parce que la signalisation exige que les 
 occupation de cantons et de l'&#233;tat des aiguillages soient utilis&#233;s dans le processus de prise de d&#233;cision :"quel aspect doit 
@@ -120,7 +116,7 @@ Pour ce faire:
 <UL>
 <LI><LI> Aller &#224; l'un des outils de Tableau (par exemple Tableau Itin&#233;raire ) et choisissez "configuration enregistrement du menu "Fichier".
 <LI> Cela vous permettra de s&#233;lectionner un nom de fichier; assurez-vous qu'il n'a _PAS_ le m&#234;me que le nom de fichier du panneau
-. (par exemple l'utilisation "MyConfig.xml"au lieu de "MyPanel.xml")
+ (par exemple l'utilisation "MyConfig.xml"au lieu de "MyPanel.xml").
 <LI> Rappelez-vous le nom et l'emplacement, puis enregistrer.
 </UL> Cela met une information de configuration, mais pas les panneaux, dans les fichier.
 <P>
@@ -152,7 +148,7 @@ Biblioth&#232;que/Pr&#233;f&#233;rences dans votre r&#233;pertoire utilisateur s
 <li> Sur Windows, cela peut &#234;tre dans un certain nombre de places selon la version Windows que vous utilisez et si vous avez configur&#233;
  plusieurs utilisateurs; Recherche d'un r&#233;pertoire "JMRI" .
 </ul>
-Assurez-vous de trouver les pr&#233;f&#233;rences, et <em> pas </em> le dossier d'application d'origine. Ils sont s&#233;par&#233;s pour simplifier la mise &#224; jour de la version du programme.
+Assurez-vous de trouver les pr&#233;f&#233;rences, et <em>pas</em> le dossier d'application d'origine. Ils sont s&#233;par&#233;s pour simplifier la mise &#224; jour de la version du programme.
 
 Vous saurez que vous avez trouv&#233; les bon endroit si vous voyez les fichiers de pr&#233;f&#233;rences qui stockent vos param&#232;tres d'applications:
 <tt> PanelProConfig2.xml </tt>. Vous pouvez &#233;galement rechercher ce fichier pour  trouver ce r&#233;pertoire
@@ -163,27 +159,24 @@ Vous saurez que vous avez trouv&#233; les bon endroit si vous voyez les fichiers
 Si vous avez cr&#233;&#233; des ic&#244;nes et que vous voulez  qu'elles soient utilisable depuis l'&#233;diteur de panneaux, les mettre dans un r&#233;pertoire
  appel&#233;"ressources" dans le r&#233;pertoire des pr&#233;f&#233;rences. Elles vont alors appara&#238tre dans les bo&#238te de s&#233;lection "fichiers" lorsque vous appuyez sur un bouton "Changer ic&#244;ne... " sur le panneau de l'&#233;diteur."
 
-.
-
 <P>Par exemple, si le r&#233;pertoire contient les fichiers pr&#233;f&#233;rences ci-dessous,
 vous obtiendrez l'affichage du fichier affich&#233; &#224; droite.
-<CODE>
+<code>
 <PRE>
 > ls Ressources/icons green.gif decoderpro.gif red.gif tester.gif
 > ls ressources/tester/ic&#244;nes/quelque chose &#224; tester.gif/
 > ls ressources/icons/quelque chose/tester.gif
 </PRE>
-</Code>
+</code>
 "
-<P>
+<p>
 Il est &#233;galement possible de mettre vos fichiers dans le r&#233;pertoire <code>resources</code>
  de la distribution JMRI que vous obtenez lorsque vous installez le programme.
 Ce <em> n'est pas </em> recommand&#233;, car les fichiers qu'il y a seront probablement remplac&#233;s lorsque vous installerez une version future. (Une version plus r&#233;cente d'un fichier, peut-&#234;tre 
-&#233;crasera votre copie, le remplacement est bas&#233; sur la date du fichier)
+&#233;crasera votre copie, le remplacement est bas&#233; sur la date du fichier).</p>
 
-
-    
 <!--#include virtual="/Footer" -->
+    </div>
 </body>
 </html>
 

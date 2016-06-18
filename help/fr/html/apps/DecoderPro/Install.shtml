@@ -2,9 +2,8 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <!-- Translated by Blorec Herv&#233; le 2013-09-25-->
-<title>JMRI: Downloading and Installing DecoderPro</title>
+<title>JMRI: T&#233;l&#233;chargement et installation DP</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -17,13 +16,11 @@
 
 <body>
 <!--#include virtual="/Header" -->
-<!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
 
-<H1>JMRI: T&#233;l&#233;chargement et installation DecoderPro</H1>
+<h1>JMRI: T&#233;l&#233;chargement et installation DecoderPro</h1>
 
 <P>DecoderPro est distribu&#233; dans le cadre des t&#233;l&#233;chargements libres de JMRI.
  Les &#233;tapes &#224; suivre pour ce travail sont:
@@ -38,7 +35,6 @@ vous aider si vous souhaitez l'essayer sur un autre syst&#232;me. Vous avez beso
 port s&#233;rie disponible, soit sur l'ordinateur lui-m&#234;me, ou via un
 <A HREF="../../hardware/USBtoSerial.shtml"> adaptateur USB</a>. 
 </dd>
-
 
 <dt class=left>Assurez-vous que JMRI fonctionne avec votre syst&#232;me DCC
 </dt> <dd class=first> La
@@ -64,11 +60,9 @@ obtenues par la
 vous auront dit comment d&#233;marrer le programme et le configurer. Lorsque c'est fait, vous devriez avoir une installation fonctionnelle DecoderPro.
 </dd>
 
-
 </dl>
 
 <!--#include virtual="/Footer" -->
 </div>
-    
 </body>
 </html>
