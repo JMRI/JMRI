@@ -340,7 +340,7 @@ public class SectionTableAction extends AbstractTableAction {
             addEditPressed();
         } else {
             javax.swing.JOptionPane.showMessageDialog(null, rbx
-                    .getString("Message1"), rbx.getString("ErrorTitle"),
+                    .getString("Message1"), Bundle.getMessage("ErrorTitle"),
                     javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -680,7 +680,7 @@ public class SectionTableAction extends AbstractTableAction {
         }
         if (curSection == null) {
             javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
-                    .getString("Message2"), rbx.getString("ErrorTitle"),
+                    .getString("Message2"), Bundle.getMessage("ErrorTitle"),
                     javax.swing.JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -721,7 +721,7 @@ public class SectionTableAction extends AbstractTableAction {
             Section tSection = sectionManager.getByUserName(uName);
             if (tSection != null) {
                 javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
-                        .getString("Message2"), rbx.getString("ErrorTitle"),
+                        .getString("Message2"), Bundle.getMessage("ErrorTitle"),
                         javax.swing.JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -738,7 +738,7 @@ public class SectionTableAction extends AbstractTableAction {
     private boolean checkSectionInformation() {
         if (blockList.size() == 0) {
             javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
-                    .getString("Message6"), rbx.getString("ErrorTitle"),
+                    .getString("Message6"), Bundle.getMessage("ErrorTitle"),
                     javax.swing.JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -751,7 +751,7 @@ public class SectionTableAction extends AbstractTableAction {
         }
         if (unknownPresent) {
             javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
-                    .getString("Message10"), rbx.getString("ErrorTitle"),
+                    .getString("Message10"), Bundle.getMessage("ErrorTitle"),
                     javax.swing.JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -763,7 +763,7 @@ public class SectionTableAction extends AbstractTableAction {
             fSensor = jmri.InstanceManager.sensorManagerInstance().provideSensor(txt);
             if (fSensor == null) {
                 javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
-                        .getString("Message7"), rbx.getString("ErrorTitle"),
+                        .getString("Message7"), Bundle.getMessage("ErrorTitle"),
                         javax.swing.JOptionPane.ERROR_MESSAGE);
                 return false;
             } else {
@@ -779,7 +779,7 @@ public class SectionTableAction extends AbstractTableAction {
             rSensor = jmri.InstanceManager.sensorManagerInstance().provideSensor(txt);
             if (rSensor == null) {
                 javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
-                        .getString("Message8"), rbx.getString("ErrorTitle"),
+                        .getString("Message8"), Bundle.getMessage("ErrorTitle"),
                         javax.swing.JOptionPane.ERROR_MESSAGE);
                 return false;
             } else {
@@ -790,7 +790,7 @@ public class SectionTableAction extends AbstractTableAction {
         }
         if ((fSensor != null) && (fSensor == rSensor)) {
             javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
-                    .getString("Message9"), rbx.getString("ErrorTitle"),
+                    .getString("Message9"), Bundle.getMessage("ErrorTitle"),
                     javax.swing.JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -802,7 +802,7 @@ public class SectionTableAction extends AbstractTableAction {
             fStopSensor = jmri.InstanceManager.sensorManagerInstance().provideSensor(txt);
             if (fStopSensor == null) {
                 javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
-                        .getString("Message7"), rbx.getString("ErrorTitle"),
+                        .getString("Message7"), Bundle.getMessage("ErrorTitle"),
                         javax.swing.JOptionPane.ERROR_MESSAGE);
                 return false;
             } else {
@@ -818,7 +818,7 @@ public class SectionTableAction extends AbstractTableAction {
             rStopSensor = jmri.InstanceManager.sensorManagerInstance().provideSensor(txt);
             if (rStopSensor == null) {
                 javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
-                        .getString("Message8"), rbx.getString("ErrorTitle"),
+                        .getString("Message8"), Bundle.getMessage("ErrorTitle"),
                         javax.swing.JOptionPane.ERROR_MESSAGE);
                 return false;
             } else {
@@ -835,7 +835,7 @@ public class SectionTableAction extends AbstractTableAction {
         for (int i = 0; i < blockList.size(); i++) {
             if (!curSection.addBlock(blockList.get(i))) {
                 javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
-                        .getString("Message4"), rbx.getString("ErrorTitle"),
+                        .getString("Message4"), Bundle.getMessage("ErrorTitle"),
                         javax.swing.JOptionPane.ERROR_MESSAGE);
             }
         }
@@ -868,7 +868,7 @@ public class SectionTableAction extends AbstractTableAction {
     void addBlockPressed(ActionEvent e) {
         if (blockBoxList.size() == 0) {
             javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
-                    .getString("Message5"), rbx.getString("ErrorTitle"),
+                    .getString("Message5"), Bundle.getMessage("ErrorTitle"),
                     javax.swing.JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -1154,7 +1154,7 @@ public class SectionTableAction extends AbstractTableAction {
     public void setMenuBar(BeanTableFrame f) {
         frame = f;
         JMenuBar menuBar = f.getJMenuBar();
-        JMenu toolsMenu = new JMenu(rbx.getString("Tools"));
+        JMenu toolsMenu = new JMenu(Bundle.getMessage("MenuTools"));
         menuBar.add(toolsMenu);
         JMenuItem validate = new JMenuItem(rbx.getString("ValidateAllSections") + "...");
         toolsMenu.add(validate);
@@ -1166,10 +1166,10 @@ public class SectionTableAction extends AbstractTableAction {
                     if (n > 0) {
                         JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(
                                 rbx.getString("Message14"), new Object[]{"" + n}),
-                                rbx.getString("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     } else if (n == -2) {
                         JOptionPane.showMessageDialog(frame, rbx.getString("Message16"),
-                                rbx.getString("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     } else if (n == 0) {
                         JOptionPane.showMessageDialog(frame, rbx.getString("Message15"),
                                 rbx.getString("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
@@ -1187,10 +1187,10 @@ public class SectionTableAction extends AbstractTableAction {
                         if (n > 0) {
                             JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(
                                     rbx.getString("Message27"), new Object[]{"" + n}),
-                                    rbx.getString("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                         } else if (n == -2) {
                             JOptionPane.showMessageDialog(frame, rbx.getString("Message30"),
-                                    rbx.getString("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                         } else if (n == 0) {
                             JOptionPane.showMessageDialog(frame, rbx.getString("Message28"),
                                     rbx.getString("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
@@ -1209,10 +1209,10 @@ public class SectionTableAction extends AbstractTableAction {
                         if (n > 0) {
                             JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(
                                     rbx.getString("Message33"), new Object[]{"" + n}),
-                                    rbx.getString("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                         } else if (n == -2) {
                             JOptionPane.showMessageDialog(frame, rbx.getString("Message32"),
-                                    rbx.getString("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                         } else if (n == 0) {
                             JOptionPane.showMessageDialog(frame, rbx.getString("Message31"),
                                     rbx.getString("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
