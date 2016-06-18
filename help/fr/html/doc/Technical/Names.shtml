@@ -1,14 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!--  $Id$ -->
-
-<!-- UpDated by Blorec Herv&#233; le 2013-09-07-->  
-
+<!-- UpDated by Blorec Herv&#233; le 2013-09-07-->
 <html lang="fr">
 <head>
     <TITLE>
- 	JMRI: Names and Naming
+ 	JMRI: Noms et D&#233;signations
     </TITLE>
-    <META content="Bob Jacobsen" name=Author>
+    <meta content="Bob Jacobsen" name="Author">
     <meta name="keywords" content="JMRI technical code names user name system name">
 
     <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
@@ -19,20 +16,20 @@
     <!-- or change them to reflect your alternative logo -->
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
-
+<body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
 
-<H1>JMRI: Les Noms et D&#233;signations</H1>
+<h1>JMRI: Les Noms et D&#233;signations</h1>
 
 Cette page explique comment les objets JMRI sont nomm&#233;s, combien de ces noms sont utilis&#233;s
 pour r&#233;f&#233;rencer les objets (mat&#233;riel et logiciel), et combien de noms lisibles par 
@@ -73,13 +70,13 @@ Il y a un certain nombre de choses qui peuvent avoir besoin des noms:
 <LI>logiX
 </UL>
 
-Certains d'entre eux sont associ&#233;s &#224; un p&#233;riph&#233;rique mat&#233;riel sp&#233;cifique, par exemple un aiguillage particulier
-. D'autres sont plus virtuels, par exemple, un itin&#233;raire, qui est une collection de contr&#244;le
+Certains d'entre eux sont associ&#233;s &#224; un p&#233;riph&#233;rique mat&#233;riel sp&#233;cifique, par exemple un
+aiguillage particulier. D'autres sont plus virtuels, par exemple, un itin&#233;raire, qui est une collection de contr&#244;le
 d'information au sein du programme.
 
 <h2>Noms Syst&#232;me et Utilisateur</h2>
 
- JMRI utilisent &#224; la fois les "noms syst&#232;me" et les "noms utilisateur " pour r&#233;f&#233;rencer des choses 
+JMRI utilisent &#224; la fois les "noms syst&#232;me" et les "noms utilisateur " pour r&#233;f&#233;rencer des choses
 
 <P>
 Nous voulons que les utilisateurs puissent appeler les choses comme ils veulent.
@@ -91,7 +88,7 @@ ou "aiguillage 32 " ou "fil vert du contr&#244;leur" ou autre chose.
 
 <p>
 Dans le m&#234;me temps, nous avons besoin d'un nom de raccourci, un identifiant vraiment unique,
-pour nous parler des objets sp&#233;cifiques. Ã‡a ne doit pas &#234;tre commode, mais
+pour nous parler des objets sp&#233;cifiques. Ça ne doit pas &#234;tre commode, mais
 nous devons avoir une cartographie claire de nom pour l'objet et retour. Par exemple,
 nous avons besoin d'une mani&#232;re tr&#232;s sp&#233;cifique pour identifier les "Aiguillage LocoNet 23. Nous appelons ceci
 "noms de syst&#232;me". Le Code JMRI sera la carte de ceux-ci vers et depuis toutes les informations
@@ -210,9 +207,8 @@ correspondance avec certains mat&#233;riels sur le r&#233;seau. Par exemple, si 
 est mise en oeuvre sur trois sorties diff&#233;rentes, LT1, LT2 et LT3, l'objet t&#234;te de signal
 pourrait &#234;tre appel&#233; IH3.
 
-
 <a name="special">
-<H2>Convention de D&#233;signation pour un usage automatique</h2></a>
+<h2>Convention de D&#233;signation pour un usage automatique</h2></a>
 
 Certaines constructions de niveau sup&#233;rieur cr&#233;ent leurs propres &#233;l&#233;ments. Par exemple, un
 "Groupe Capteur"
@@ -253,7 +249,6 @@ Le programmateur DCC est le premier exemple, mais il peut y en avoir d'autres.
 un adaptateur d'un type donn&#233;. Par exemple, si vous &#234;tes connect&#233; &#224; plus d'un LocoNet, ou &#224; plus d'une station de commande d'un seul type, qui alimentent des parties distinctes d'un r&#233;seau unique, comment adressez-vous ceci?
 
 <LI> De m&#234;me, il n'y a aucune disposition pour un seul programme pour faire face &#224; plus d'un r&#233;seau. Si c'est n&#233;cessaire, nous devons comprendre ce que le programme tente de faire
-
 
 </UL>
 
