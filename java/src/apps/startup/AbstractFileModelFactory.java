@@ -1,9 +1,11 @@
 package apps.startup;
 
+import apps.StartupActionsManager;
 import apps.StartupModel;
 import java.awt.Component;
 import java.io.IOException;
 import javax.swing.JFileChooser;
+import jmri.InstanceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,6 +51,7 @@ public abstract class AbstractFileModelFactory implements StartupModelFactory {
                 try {
                     if (model.getName() == null || !model.getName().equals(this.chooser.getSelectedFile().getCanonicalPath())) {
                         model.setName(this.chooser.getSelectedFile().getCanonicalPath());
+                        InstanceManager.getDefault(StartupActionsManager.class).setRestartRequired();
                     }
                 } catch (IOException ex) {
                     log.error("File {} does not exist.", this.chooser.getSelectedFile());
@@ -56,7 +59,7 @@ public abstract class AbstractFileModelFactory implements StartupModelFactory {
             }
         }
     }
-    
+
     @Override
     public void initialize() {
         // nothing to do
