@@ -1,5 +1,4 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!--  $Id$ -->
 <!-- UpDated by Blorec Herv&#233; 2013-09-09-->  
 <html lang="fr">
 <head>
@@ -17,8 +16,7 @@
     <!-- or change them to reflect your alternative logo -->
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1
-">
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -31,7 +29,7 @@
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
-	    <H1>JMRI: Site Web</H1>
+	    <h1>JMRI: Site Web</h1>
 
 Cette page pr&#233;sente les aspects techniques du site web JMRI.
 <p>
