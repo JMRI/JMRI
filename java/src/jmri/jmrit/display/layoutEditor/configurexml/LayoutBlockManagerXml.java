@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provides the functionality for configuring a LayoutBlockManager
- * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
  */
@@ -88,8 +87,7 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
      * @param layoutblocks The top-level element being created
      */
     public void setStoreElementClass(Element layoutblocks) {
-        layoutblocks.setAttribute("class",
-                "jmri.jmrit.display.configurexml.LayoutBlockManagerXml");
+        layoutblocks.setAttribute("class", getClass().getName());
     }
 
     public void load(Element element, Object o) {
