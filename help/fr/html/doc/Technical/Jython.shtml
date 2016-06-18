@@ -80,7 +80,7 @@ toutes les fen&#234;tres et les menus sont pr&#233;sent&#233;s de la m&#234;me f
 
 <BR/>Cela montre aussi certaines des simplifications que Jython et le langage Python apportent &#224; l'utilisation du code JMRI. La fonction de membre de Java:
 <PRE>
-	turnout.SetCommandedState(jmri.Turnout.CLOSED);
+	turnout.setCommandedState(jmri.Turnout.CLOSED);
 </PRE>
 can also be expressed in Jython as:
 <PRE>
@@ -198,7 +198,7 @@ pour appeler ces commandes .
 
 <PRE>
    Turnout t2 = InstanceManager.turnoutManagerInstance().newTurnout("LT2", "turnout 2");
-   t2.SetCommandedState(Turnout.THROWN)(aiguillage D&#201;VI&#201;)
+   t2.setCommandedState(Turnout.THROWN)(aiguillage D&#201;VI&#201;)
 </PRE>
 Jython simplifie ceci, en nous permettant de fournir des variables utiles, et par le raccourcissement des appels &#224; certaines m&#233;thodes.
 <P>
@@ -224,7 +224,7 @@ Notez que la variable t2 n'a pas besoin d'&#234;tre d&#233;clar&#233;e.
 Jython fournit un raccourci pour les param&#232;tres qui ont
 &#233;t&#233; d&#233;finies avec Java-Bean-like les  m&#233;thodes get et set:
 <PRE>
-   t2.SetCommandedState(Turnout.THROWN)(D&#233;vi&#233;)
+   t2.setCommandedState(Turnout.THROWN)(D&#233;vi&#233;)
 </PRE>
 peuvent &#234;tre &#233;crit
 <PRE>
