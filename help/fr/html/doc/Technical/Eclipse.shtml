@@ -1,25 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ --> -->
-<!--UpDated by Herv&#233; Blorec le 2013-09-03 -->
+<!-- UpDated by Herv&#233; Blorec le 2013-09-03 -->
 <html lang="fr">
 <head>
-
   <TITLE>
  	JMRI: Building with Eclipse
     </TITLE>
-    <META content="Bob Jacobsen" name=Author>
-    <meta nameiso-8859-1="keywords" content="JMRI technical code Eclipse">
-
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for Stu req letter grade Psych 199. Letter from instructor in favor; confirmed with instructor. Approved.Stu req letter grade Psych 199. Letter from instructor in favor; confirmed with instructor. Approved.Stu req letter grade Psych 199. Letter from instructor in favor; confirmed with instructor. Approved. the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
+    <META content="Bob Jacobsen" name="Author">
+    <meta name="keywords" content="JMRI technical code Eclipse">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1
-iso-8859-1">
+    <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -27,17 +17,13 @@ iso-8859-1">
 <!-- /Style -->
 </head>
 
-
+<div>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
-	    <!-- -------- -->
-	    <!--  Teaser  --> <!-- Optional -->
-	    <!-- -------- -->
 
-
-	    <H1>JMRI: Construction avec Eclipse</H1>
+	    <h1>JMRI: Construction avec Eclipse</h1>
 
     <p>Eclipse (disponible &#224; <a href="http://www.eclipse.org">  www.eclipse.org </a>) fait une excellente plate-forme pour travailler avec JMRI.</p>
      <p> Eclipse est un environnement complexe. Si vous &#234;tes d&#233;j&#224; familier
@@ -239,14 +225,8 @@ ci-dessous en allant &#224; Window-> Preferences et s&#233;lectionnez "Java-> Co
 </P>
 
 <!--#include virtual="/Footer" -->
-
-      </div>
-      <!-- closes #mainContent-->
-    <!-- closes #mBody-->
-
+      </div><!-- closes #mainContent-->
+    </div><!-- closes #mBody-->
 </body>
-
-</body>
-
 </html>
    
