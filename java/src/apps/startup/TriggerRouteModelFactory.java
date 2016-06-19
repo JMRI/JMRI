@@ -1,6 +1,6 @@
 package apps.startup;
 
-import apps.StartupModel;
+import apps.StartupActionsManager;
 import java.awt.Component;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -54,6 +54,7 @@ public class TriggerRouteModelFactory implements StartupModelFactory {
                     model.getName());
             if (name != null && !name.equals(model.getName())) {
                 model.setName(name);
+                InstanceManager.getDefault(StartupActionsManager.class).setRestartRequired();
             }
         }
     }
