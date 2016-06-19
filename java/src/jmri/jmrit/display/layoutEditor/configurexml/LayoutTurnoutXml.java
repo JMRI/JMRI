@@ -152,7 +152,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         element.setAttribute("xd", "" + coords.getX());
         element.setAttribute("yd", "" + coords.getY());
         element.setAttribute("ver", "" + p.getVersion());
-        element.setAttribute("class", "jmri.jmrit.display.configurexml.LayoutTurnoutXml");
+        element.setAttribute("class", getClass().getName());
         return element;
     }
 
