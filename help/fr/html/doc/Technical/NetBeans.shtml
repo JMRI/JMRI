@@ -1,40 +1,28 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!--  $Id$ -->
 <!-- UpDated by Blorec Herv&#233;  2013-09-07-->
 <html lang="fr">
 <head>
     <TITLE>
- 	JMRI: Building with NetBeans
+ 	JMRI: Construire avec NetBeans
   </TITLE>
-    <META content="Bob Jacobsen" name=Author>
+    <META content="Bob Jacobsen" name="Author">
     <meta name="keywords" content="JMRI technical code NetBeans">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
-
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
-
+<body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
-	    <!-- -------- -->
-	    <!--  Teaser  --> <!-- Optional -->
-	    <!-- -------- -->
 
-
-	    <H1>JMRI: Construire avec NetBeans</H1>
+	    <h1>JMRI: Construire avec NetBeans</h1>
  <ul>
         <li><a href="#intro">Introduction</a>
         <li><a href="#installing">Obtenir et Intaller NetBeans</a>
@@ -152,8 +140,8 @@
          [Team] -> [Subversion] -> [Commander]
 <ul>
             <li> Repository URL: <strong>svn + ssh://svn.code.sf.net/p/jmri/code/trunk/jmri</strong>
-            <li> User:<i><b><le nom utilisateur SourceForge></b></i></li>
-            <li> Password:<i><b><votre mot de passe Sourceforge></b></i></li>
+            <li> User:<i><b>le nom utilisateur SourceForge</b></i></li>
+            <li> Password:<i><b>votre mot de passe Sourceforge</b></i></li>
             <li> Port Number:<em>mettre &#224; 22</em>
             <li> Identity File:<em> Laissez blanc</em></li>
             <li> passphrase:<em>laisser blanc</em></li>
@@ -320,24 +308,9 @@
         <p> <a href="http://sourceforge.net/projects/nsis"> Le site web du projet NSIS</a></p>
         <p> <a href="http://findbugs.sourceforge.net"> Le site web FindBugs</a></p>
 
+        <!--#include virtual="/Footer" -->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+</body>
+</html>

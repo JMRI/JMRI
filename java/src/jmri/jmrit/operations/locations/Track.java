@@ -1837,7 +1837,7 @@ public class Track {
             return SCHEDULE + " (" + getScheduleName() + ") " + Bundle.getMessage("requestCar") + " " + TYPE + " ("
                     + si.getTypeName() + ") " + LOAD + " (" + si.getReceiveLoadName() + ")";
         }
-        if (car.getScheduleItemId().equals(Car.NONE) && !si.getRandom().equals(ScheduleItem.NONE)) {
+        if (!car.getScheduleItemId().equals(si.getId()) && !si.getRandom().equals(ScheduleItem.NONE)) {
             try {
                 int value = Integer.parseInt(si.getRandom());
                 double random = 100 * Math.random();

@@ -1,36 +1,28 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- UpDated by Blorec Herv&#233; 2013-09-07-->  
 <html lang="fr">
 <head>
     <TITLE>
- 	JMRI: Network Access
+ 	JMRI: Acc&#232;s au r&#233;seau
   </TITLE>
-    <META content="Bob Jacobsen" name=Author>
+    <meta content="Bob Jacobsen" name="Author">
     <meta name="keywords" content="JMRI network access">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
-
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
-
+<body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
 
-<H1>JMRI: Acc&#232;s au r&#233;seau (informatique)</H1>
+<h1>JMRI: Acc&#232;s au r&#233;seau (informatique)</h1>
 
 Cette page d&#233;crit les diff&#233;rentes formes d'acc&#232;s au r&#233;seau (informatique) disponible dans
 JMRI. De nouvelles capacit&#233;s sont ajout&#233;s tous le temps, de sorte,s'il vous pla&#238;t, v&#233;rifier aupr&#232;s 
@@ -93,7 +85,7 @@ Dans le reste de cette page, nous fournissons des liens vers les diff&#233;rents
 <li>Int&#233;gr&#233; <a mini href="../../web/index.shtml"> un miniserveur Web</a>
     (<a href="http://jmri.org/JavaDoc/doc/jmri/web/miniserver/package-summary.html">code</a>)
     <p>
-    C'est annonc&#233; sur Bonjour/Zeroconf comme un service Â«_http._tcp.local.".
+    C'est annonc&#233; sur Bonjour/Zeroconf comme un service «_http._tcp.local.".
      En particulier, il contient les
      <a href="http://jmri.org/JavaDoc/doc/jmri/web/xmlio/package-summary.html"> support JMRI XMLIO</a>,
     qui permet aux navigateurs web (avec ou sans AJAX) de
@@ -108,15 +100,15 @@ Dans le reste de cette page, nous fournissons des liens vers les diff&#233;rents
      (<a href="http://withrottle.com"> site web du produit WiThrottle</a>)
      (<a href="../../../package/jmri/jmrit/withrottle/EngineDriverAndroidThrottle.shtml"> page Pilote Android Engine</a>)
      <p>
-     C'est annonc&#233; sur Bonjour/Zeroconf comme un service Â«_withrottle._tcp.local.".
+     C'est annonc&#233; sur Bonjour/Zeroconf comme un service «_withrottle._tcp.local.".
 <li></ul>Via l'ex&#233;cution JMRI comme une
      <a href="http://www.modelrailroadmanager.com/MRRM_Advanced_Edition/Software_Architecture.html"> Enterprise Java Bean</a>
 <li> Via la fourniture d'un  serveur RMI <a href="../../hardware/loconet/LocoNetServer.shtml"> LocoNet</a>.
      <p>
-     C'est annonc&#233; sur Bonjour/Zeroconf comme un  service Â«_jmri-locormi._tcp.local.".
+     C'est annonc&#233; sur Bonjour/Zeroconf comme un  service «_jmri-locormi._tcp.local.".
 <li> Via la fourniture d'une impl&#233;mentation <a href="http://loconetovertcp.sourceforge.net/"> LbServer</a>.
      <p>
-     C'est annonc&#233; sur Bonjour/Zeroconf comme un service Â«_loconetovertcpserver._tcp.local.". (Nom
+     C'est annonc&#233; sur Bonjour/Zeroconf comme un service «_loconetovertcpserver._tcp.local.". (Nom
      en attendant l'approbation &#224; partir de l'&#233;laboration des protocoles d'origine)
 <li>Via la fourniture d'une implantation d'un <a href="http://srcpd.sourceforge.net/">serveur SRCP</a>.
     <p>
@@ -129,12 +121,11 @@ Voir aussi le package d'utilitaires <a href="http://jmri.org/JavaDoc/doc/jmri/ut
 
 <p>
 Voir aussi le
-<a href="http://www.dns-sd.org"> DNS-SD</a> pour plus d'informations sur Zeroconf/Bonjour/"DNS Service Discovery" pour la mise en r&#233;seau.
+<a href="http://www.dns-sd.org"> DNS-SD</a> pour plus d'informations sur Zeroconf/Bonjour/"DNS Service Discovery" pour la mise en
+            r&#233;seau.
 
-<p>
 <p>
 Voir aussi "man dns-sd" pour de plus d'informations sur l'outil DNS-SD de d&#233;bogage en ligne de commande.
-
 
 <!--#include virtual="/Footer" -->
 

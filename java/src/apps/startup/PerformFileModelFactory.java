@@ -1,7 +1,6 @@
 package apps.startup;
 
 import apps.PerformFileModel;
-import apps.StartupModel;
 import javax.swing.JFileChooser;
 import jmri.jmrit.XmlFile;
 

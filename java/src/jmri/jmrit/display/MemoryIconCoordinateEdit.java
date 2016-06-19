@@ -111,6 +111,8 @@ public class MemoryIconCoordinateEdit extends CoordinateEdit {
                 dispose();
             }
         });
+        // make large enough to easily move
+        setMinimumSize(new Dimension(250, 175));
         pack();
     }
 }

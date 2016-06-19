@@ -1,5 +1,6 @@
 package jmri.profile;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -25,6 +26,7 @@ public class PackageTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.profile.PackageTest");  // no tests in this class itself
+        suite.addTest(new JUnit4TestAdapter(ProfileTest.class));
         suite.addTest(new TestSuite(ProfileUtilsTest.class));
         suite.addTest(BundleTest.suite());
         return suite;

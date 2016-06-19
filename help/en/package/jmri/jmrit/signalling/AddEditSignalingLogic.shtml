@@ -1,5 +1,4 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Adding/Editing Signal Mast Logic</TITLE>
@@ -30,8 +29,8 @@
 
 		<p>After clicking on the "Add..." button below the <a href="../beantable/SignalMastLogicTable.shtml">Signal Mast Logic Table</a>, the following window appears:</p>
 		
-	<a href="../beantable/SignalMastLogicAdd.png">
- <img src="../beantable/SignalMastLogicAdd.png" ALIGN=RIGHT WIDTH="340" HEIGHT="300" HSPACE="0" VSPACE="0" ALT="Signal Head Logic Add window">
+	<a href="../beantable/images/SignalMastLogicAdd.png">
+ <img src="../beantable/images/SignalMastLogicAdd.png" ALIGN=RIGHT WIDTH="340" HEIGHT="300" HSPACE="0" VSPACE="0" ALT="Signal Head Logic Add window">
 </a>
 
 <P>The first thing you must do when creating a Signal Mast Logic is to select the

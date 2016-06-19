@@ -1,14 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!--  $Id$ -->
-<!-- UpDated by Blorec Herv&#233; le 2013-09-08--> 
-<p>
-
+<!-- UpDated by Blorec Herv&#233; le 2013-09-08-->
 <html lang="fr">
 <head>
     <TITLE>
- 	JMRI: Adding A New System
+ 	JMRI: Ajouter un Nouveau Syst&#232;me
    </TITLE>
-    <META content="Bob Jacoben" name=Author>
+    <META content="Bob Jacoben" name="Author">
     <meta name="keywords" content="JMRI technical system add">
 
     <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
@@ -16,50 +13,42 @@
     <!-- easily replace the common header/footer code for all the web pages -->
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset= iso-8859-1
-
-">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+    <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+    <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
-
+<body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
-	    <!-- ------------- -->
-	    <!-- Page Contents --><!-- Required -->
-	    <!-- ------------- -->
 
-	    <H1>JMRI: Ajouter un Nouveau Syst&#232;me</H1>
+	    <h1>JMRI: Ajouter un Nouveau Syst&#232;me</h1>
 
-		<div class=para>
 		<p> Cette page d&#233;crit les &#233;tapes pour ajouter un nouveau type de donn&#233;es,
 par exemple, Appareils Powerline (Coupleur Courant Porteur CPL), &#224; JMRI.</P>
 
 <p> Elle utilise comme exemple l'ajout du type 
-du "courant porteur en ligne"  en Janvier 2008.</p>
-</div>
+du "courant porteur en ligne" en Janvier 2008.</p>
 
- <divclass=list><div
+ <div class="list">
 <p> Nous listons les fichiers qui sont modifi&#233;s et cr&#233;&#233;s dans l'
 ordre o&#249; ils ont &#233;t&#233; fait dans ce cas, les autres ordres peuvent aussi travailler,
 et vous ne pourriez pas devoir &#224; faire tout cela.</p>
 <P>
 Dans ce cas particulier, nous avons commenc&#233; par la copie d'une
-réalisation d'un syst&#232;me existant (SECSI).  Comment
+r�alisation d'un syst&#232;me existant (SECSI).  Comment
 nous avons ordonn&#233; ces effets, et fait progresser le processus de base assez
 rapidement.
 
-		
-		<dl>
+<dl>
 
-		<h3>Dupliquer un syst&#232;me existant</h3>
+<h3>Dupliquer un syst&#232;me existant</h3>
 
-		    <dt> Cr&#233;er un double arborescence de fichiers</dt>
+<dt> Cr&#233;er un double arborescence de fichiers</dt>
 <dd>
 <p>En utilisant tous les outils qui vous aident,
 dupliquer l'arborecence src/jmri/jmrix  correspondant
@@ -68,7 +57,7 @@ au syst&#232;me existant que vous souhaitez copier.</p>
 
 <dt> Nettoyer les r&#233;pertoires CVS</dt>
 <dd>
-<p> Il est absolument <u> essentiel</u> que vous retiriez le sous-r&#233;pertoire CVS
+<p>Il est absolument <u> essentiel</u> que vous retiriez le sous-r&#233;pertoire CVS
  de l'arborescence des r&#233;pertoires en double que vous venez de cr&#233;er.
 Si vous ne le faites pas, vous aurez des probl&#232;mes difficiles &#224; diagnostiquer
 lorsque vous essayerez de soumettre ce  CVS. <p> pour v&#233;rifier que vous avez fait cela, utilisez une commande comme: <br/>
@@ -80,12 +69,12 @@ lorsque vous essayerez de soumettre ce  CVS. <p> pour v&#233;rifier que vous ave
 <p>A l'aide de votre &#233;diteur favori, changer tous les noms des paquets
  dans les nouveaux fichiers &#224; leur nouveaux emplacements. Dans cet exemple,
 qui &#233;tait un gros, remplacer des "jmri.jmrix.secsi" par "jmri.jmrix.powerline"</dd>			
-		    <P> A ce stade, assurez-vous que vous pouvez compiler. Ce code
+<P>&Aacute; ce stade, assurez-vous que vous pouvez compiler. Ce code
 n'est pas encore conforme, mais il faut compiler.</P>
 
 <dt>V&#233;rifiez les dates de copyright</dt>
 <dd>
-<p> Parce que vous avez copi&#233; un syst&#232;me qui pourrait ne pas
+<p>Parce que vous avez copi&#233; un syst&#232;me qui pourrait ne pas
 avoir &#233;t&#233; touch&#233; pendant un moment, passer et ajouter
 l'ann&#233;e en cours (et si besoin est, votre nom) &#224; la
 notices de copyright dans tous les fichiers.</p>
@@ -93,7 +82,7 @@ notices de copyright dans tous les fichiers.</p>
 
 <dt> CVS Cr&#233;ation d'une structure</dt>
 <dd>
-<p> Dans cette &#233;tape, nous avons la structure de base CVS en place.</p>
+<p>Dans cette &#233;tape, nous avons la structure de base CVS en place.</p>
 <ul>
 <li> Ajouter tous les r&#233;pertoires que vous avez cr&#233;&#233; &#224; CVS. Dans l'exemple,
 c'&#233;tait: <br/>
@@ -106,9 +95,9 @@ cvs add powerline/configurexml powerline/serialdriver/configurexml</code>
             <li> Enfin, remettre dans ces fichiers (mais seulement les fichiers): <br/>
 <code>cvs  commit-m "usual file" powerlined</code>
 </Ul>
-</Dd>
+</dd>
 
-<P> À ce stade, assurez-vous que vous pouvez compiler.</P>
+<P>&Aacute; ce stade, assurez-vous que vous pouvez compiler.</P>
 					
 		<h3>Faire  une Migration Basique</h3>
 
@@ -121,7 +110,7 @@ occurrences.</p>
 
            </dd>
             
-		    <P>À ce stade, assurez-vous que vous pouvez compiler..</P>
+		    <P>&Aacute; ce stade, assurez-vous que vous pouvez compiler..</P>
 
 		<h3>Cr&#233;er des Tests Basiques</h3>
 
@@ -141,7 +130,7 @@ et de migrer les noms.</p>
 &#224; la fois le code principal (qui n'a pas &#233;t&#233; modifi&#233; dans cette &#233;tape)
 et les tests.</P>
 
-<p> Vous devez &#233;galement &#234;tre en mesure d'ex&#233;cuter avec succ&#232;s le
+<p>Vous devez &#233;galement &#234;tre en mesure d'ex&#233;cuter avec succ&#232;s le
 tests dans votre nouveau syst&#232;me (m&#234;me s'il a &#233;t&#233; cr&#233;&#233;
 pour la fonctionnalit&#233; de l'ancien syst&#232;me):
 tests ant <code> &amp;&amp;./runtest.csh jmri.jmrix.powerline.SerialTest</code>
@@ -159,8 +148,8 @@ tests ant <code> &amp;&amp;./runtest.csh jmri.jmrix.powerline.SerialTest</code>
              <p> N'engagez pas ce CVS encore!</p>
             </dd>
 
-<P> À ce stade, assurez - vous que vous pouvez compiler et ex&#233;cuter DecoderPro, et
-que votre nouveau syst&#232;me appara&#238;t dans le panneau des pr&#233;f&#233;rences.</P>
+<p>&Aacute; ce stade, assurez - vous que vous pouvez compiler et ex&#233;cuter DecoderPro, et
+que votre nouveau syst&#232;me appara&#238;t dans le panneau des pr&#233;f&#233;rences.</p>
             
              <dt> Connectez - vous &#224; test arbre</dt>
              <dd>
@@ -169,7 +158,7 @@ que votre nouveau syst&#232;me appara&#238;t dans le panneau des pr&#233;f&#233;
              <p> N'engagez pas ce CVS encore!</p>
             </dd>
 
-<P> A ce point, lorsque vous faites "ant alltest", votre nouveau syst&#232;me de test
+<P>&Aacute; ce point, lorsque vous faites "ant alltest", votre nouveau syst&#232;me de test
 doit &#234;tre ex&#233;cut&#233;.</p> 
             
 
@@ -213,9 +202,7 @@ les diff&#233;rents cadres</p>
 <p> Modifier help/fr/html/hardware/index.shtml</p>
 <dd>
 
-
-    
-		</dl>
+</dl>
 		</div>
 
 <!--#include virtual="/Footer" -->s'il

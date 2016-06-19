@@ -16,7 +16,6 @@ package jmri.managers;
 
 import java.beans.PropertyChangeListener;
 import jmri.Turnout;
-import jmri.TurnoutAddress;
 import jmri.TurnoutManager;
 import junit.framework.Assert;
 import junit.framework.TestCase;
@@ -86,20 +85,12 @@ public abstract class AbstractTurnoutMgrTest extends TestCase {
     }
 
     public void testMisses() {
-        // sample address object
-        TurnoutAddress a = new TurnoutAddress(getSystemName(getNumToTest2()), "user");
-
-        Assert.assertNotNull("real object returned ", a);
         // try to get nonexistant turnouts
         Assert.assertTrue(null == l.getByUserName("foo"));
         Assert.assertTrue(null == l.getBySystemName("bar"));
     }
 
     public void testUpperLower() {
-        // sample address object
-        TurnoutAddress a = new TurnoutAddress(getSystemName(31), "user");
-        Assert.assertNotNull("real object returned ", a);
-
         Turnout t = l.provideTurnout("" + getNumToTest2());
 
         Assert.assertNull(l.getTurnout(t.getSystemName().toLowerCase()));
