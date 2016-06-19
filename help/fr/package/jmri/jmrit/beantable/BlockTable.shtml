@@ -123,7 +123,7 @@ sur un m&#226;t de signalisation.</li>
 La vitesse est utilis&#233;e avec certains outils d'automatisation et de logique, pour aider &#224;
 d&#233;terminer &#224; quelle vitesse un train peut &#234;tre r&#233;gl&#233; &#224; travers le Canton.
 Elle est &#233;galement utilis&#233; par la logique du m&#226;t de signalisation pour d&#233;terminer quel aspect doit
-&#234;tre affich&#233; dans un signal de chemin  .
+&#234;tre affich&#233; dans un signal de chemin.
 <P> Dans la liste d&#233;roulante, vous sont pr&#233;sent&#233;s un ensemble de vitesses fixes qui 
 ont &#233;t&#233; pr&#233;d&#233;finies dans le fichier signalSpeed.xml, en plus d'une option globale.
 <br> Il est &#233;galement possible d'entrer une valeur num&#233;rique pour repr&#233;senter une vitesse.
