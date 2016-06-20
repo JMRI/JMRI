@@ -10,7 +10,7 @@ package jmri.jmrix.dcc4pc;
  * number of unneeded class loadings.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version $Revision: 17977 $
+ * @Deprecated since 4.5.1
  */
 @Deprecated
 abstract public class ActiveFlag {

@@ -9,7 +9,7 @@ package jmri.jmrix.pricom;
  * number of unneeded class loadings.
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version $Revision$
+ * @deprecated since 4.5.1
  */
 @Deprecated
 abstract public class ActiveFlag {

@@ -9,7 +9,7 @@ package jmri.jmrix.acela;
  * number of unneeded class loading.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version $Revision$
+ * @deprecated since 4.5.1
  *
  * @author	Bob Coleman, Copyright (C) 2007, 2008 Based on mrc example, modified
  * to establish Acela support.
