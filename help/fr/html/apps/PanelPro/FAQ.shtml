@@ -81,7 +81,7 @@ pris sur les listes en ligne comme celle-ci. Je ne dis pas "ne pas utiliser en l
 facilement que possible, vous devriez chercher ceux qui nous ont pr&#233;c&#233;d&#233;s et obtenir leur appui .
 Oui, vous pouvez le faire vous-m&#234;me - non, ce n'est pas les meilleure fa&#231;on de le faire et vous verrez que vous ferez plusieurs
  erreurs qui entra&#238neront des retards consid&#233;rables et des rec&#226;blages. De nombreux projets d'automatisation de r&#233;seaux sont au point 
-mort justement pour cette m&#234;me raison .
+mort justement pour cette m&#234;me raison.
 <p>
 Et juste pour cela soit mentionn&#233;s ...Ajouter des capacit&#233;s telles que la d&#233;tection d'occupation de cantons, aiguillages contr&#244;l&#233;s 
 par ordinateur, et les signaux ne sont pas bon march&#233;s et doivent &#234;tre budg&#233;tis&#233;s. Et vous pouvez constater que vous aurez besoin 
@@ -154,7 +154,7 @@ Vous saurez que vous avez trouv&#233; les bon endroit si vous voyez les fichiers
 <tt> PanelProConfig2.xml </tt>. Vous pouvez &#233;galement rechercher ce fichier pour  trouver ce r&#233;pertoire
 
 <P>
-<IMG SRC ="../../../images /IconFileTree.gif "ALT =" Capture d'&#233;cran de l'arborescence de fichiers "align = "right "WIDTH ="288 "HEIGHT =" 327 "hspace =" 5 "vspace = "0" />
+<IMG SRC ="../../../images/IconFileTree.gif" ALT ="Capture d'&#233;cran de l'arborescence de fichiers" align="right" WIDTH="288 HEIGHT="327" hspace="5" vspace="0">
 
 Si vous avez cr&#233;&#233; des ic&#244;nes et que vous voulez  qu'elles soient utilisable depuis l'&#233;diteur de panneaux, les mettre dans un r&#233;pertoire
  appel&#233;"ressources" dans le r&#233;pertoire des pr&#233;f&#233;rences. Elles vont alors appara&#238tre dans les bo&#238te de s&#233;lection "fichiers" lorsque vous appuyez sur un bouton "Changer ic&#244;ne... " sur le panneau de l'&#233;diteur."
@@ -168,7 +168,7 @@ vous obtiendrez l'affichage du fichier affich&#233; &#224; droite.
 > ls ressources/icons/quelque chose/tester.gif
 </PRE>
 </code>
-"
+
 <p>
 Il est &#233;galement possible de mettre vos fichiers dans le r&#233;pertoire <code>resources</code>
  de la distribution JMRI que vous obtenez lorsque vous installez le programme.

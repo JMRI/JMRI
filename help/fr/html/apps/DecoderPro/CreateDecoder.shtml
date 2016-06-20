@@ -28,13 +28,13 @@
 <p>La meilleur m&#233;thode pour cr&#233;er un fichier de configuration est de modifier un existant. Dans cette section nous allons utiliser cette m&#233;thode.</p>
 
 <dl>
-<dt class=left>Faites une copie d'un fichier existant.</dt>
-<dd class=first>
+<dt class="left">Faites une copie d'un fichier existant.</dt>
+<dd class="first">
 <p>Bien que vous puissiez appeler votre fichier comme bon vous semble, il travaillera mieux si vous utilisez les m&#234;mes conventions que les fichiers fourni.
 C'est <TT>"manufacturer name"_"decoder family".xml</TT>, par exemple:
 <TT>Digitrax_1x2.xml</TT>et <TT>Atlas_DualMode.xml</TT></p>
 
-<p>Pour les fichiers fournis<title>JMRI: Guide Utilisateur DecoderPro -Cr&#233;ation d'un Fichier D&#233;codeur Personnalis&#233;</title, nous utilisons la m&#234;me casse, etc, que celles que les fabricants de d&#233;codeurs utilisent dans leurs documentations. </p>
+<p>Pour les fichiers fourniss&eacute;, nous utilisons la m&#234;me casse, etc, que celles que les fabricants de d&#233;codeurs utilisent dans leurs documentations. </p>
 
 <p>Ce nouveau fichier prendra place dans le sous-r&#233;pertoire <TT>decoders</TT> dans le r&#233;pertoire <TT>JMRI</TT> preferences ainsi le programme pourra le trouver. Le fichier<TT>DecoderProConfig2.xml</TT> se trouve dans le r&#233;pertoire preferences, ainsi vous pouvez chercher ici pour localiser le fichier.
 (Voir la <a HREF="Files.shtml#location"><em> page de configuration des fichiers</em></a>
@@ -46,7 +46,7 @@ pour plus de d&#233;tails sur ce r&#233;pertoire et ce qu'il contient.
 De cette fa&#231;on il ne sera pas difficile de fusionner vos changements avec ceux qui pourrait avoir &#233;t&#233; fait entre temps.
 SVP Ne reformater pas plus que n&#233;cessaire. Si vous changez les donn&#233;es techniques dans les 5 ou 10 lignes du haut, ou reformater le contenu, il sera tr&#232;s difficile de savoir ce qui a &#233;t&#233; chang&#233; et ce qui ne l'a pas &#233;t&#233; .
 
-<dt class=left>&#201;diter le nouveau fichier </dt>
+<dt class="left">&#201;diter le nouveau fichier </dt>
 <dd>
 <p>Ouvrez le nouveau fichier avec votre &#233;diteur de texte favori.</p>
 
@@ -56,7 +56,7 @@ SVP Ne reformater pas plus que n&#233;cessaire. Si vous changez les donn&#233;es
 <dd>
 <p>Vous verrez quelque chose comme ceci en haut du fichier( les exemples viennent d'un fichier <a
 HREF="../../../../../xml/decoders/Digitrax_1x2.xml">Digitrax_1x2.xml</a>):
-<p class=example>
+<p class="example">
 &lt;?xml version="1.0"?&gt;<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;!DOCTYPE decoder-config SYSTEM "decoder-config.dtd"&gt;<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- $Id$ --&gt;<BR>
@@ -66,20 +66,20 @@ HREF="../../../../../xml/decoders/Digitrax_1x2.xml">Digitrax_1x2.xml</a>):
 <p>N'oubliez pas ces lignes; elles d&#233;crivent le format du fichier.
 </dd>
 
-<dt class=left> Contenu du fichier: Auteur </dt>
+<dt class="left"> Contenu du fichier: Auteur </dt>
 <dd>
 <p>L'&#233;l&#233;ment suivant d&#233;crit l'auteur et la version de ce fichier de d&#233;codeur:
-<p class=example>
+<p class="example">
 &lt;version author="jake@physics.berkeley.edu" <br>
 &nbsp;&nbsp;&nbsp;&nbsp;version="1" lastUpdated="20011201"/&gt;
 </p>
 <p>Ces attributs ne sont lus que par les gens, pas par le programme, ainsi leur format exact n'est pas critique. Mais nous vous encourageons &#225; ins&#233;rer votre adresse courriel dans les fichiers que vous cr&#233;ez ou modifiez; ainsi celui qui a une question &#225; poser sait o&#249; vous contacter. La version et les derniers attributs mis &#225; jour fournissent un moyen de d&#233;crire les diff&#233;rentes versions d'une d&#233;finition de d&#233;codeur.  Pour un nouveau fichier, commencer &#225; num&#233;roter &#225; "1" et si vous modifiez un fichier existant incr&#233;menter l'attribut version au num&#233;ro suivant.</p>
 </dd>
 
-<dt class=left> Contenu du fichier: Decoder Family and Model</dt>
+<dt class="left"> Contenu du fichier: Decoder Family and Model</dt>
 <dd>
 Les lignes suivantes identifient la "famille" de d&#233;codeurs que ce fichier d&#233;crit:
-<p class=example>
+<p class="example">
 &lt;decoder&gt;<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;family name="Digitrax 1x2" mfg="Digitrax"<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lowVersionID="240" highVersionID="242"<BR>
@@ -93,7 +93,7 @@ Les lignes suivantes identifient la "famille" de d&#233;codeurs que ce fichier d
 <p>L'espacement n'est pas important, mais il est utilis&#233; pour indent&#233; le fichier et le rendre plus lisible. XML utilise "&#233;l&#233;ments" et "attributs" pour porter les informations. les choses &lt;model&gt; sont des &#233;l&#233;ments; les attributs comme numOuts sont fix&#233;s &#225; des valeurs sp&#233;cifiques &#225; l'int&#233;rieur des &#233;l&#233;ments.
 Dans les lignes 2 &#225; 4 ci-dessus
 
-<p class=example>
+<p class="example">
 &lt;family name="Digitrax 1x2" mfg="Digitrax"<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;lowVersionID="240" highVersionID="242"<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;comment="Digitrax DH142, etc" &gt;
@@ -109,17 +109,18 @@ Dans les lignes 2 &#225; 4 ci-dessus
 <li><dfn>lowVersionID</dfn>, <dfn>highVersionID</dfn> -
 Le fabricant peut charger un num&#233;ro de version dans le CV 7 du d&#233;codeur.
 Tous les fabricants ne le font pas, Mais si un est disponible, le programmateur peut v&#233;rifier si ce fichier est utilis&#233; avec le type de d&#233;codeur attendu. Si une valeur est valide, d&#233;finissez l'attribut LowVersionID, par exemple.
-<p class=example>
+<p class="example">
 &nbsp;&nbsp;&nbsp;&nbsp;lowVersionID="123"
 </p>
 Si le type de d&#233;codeur peut avoir plus d'une rang&#233;e de num&#233;ro,par exemple parce que le fabricant a fait plusieurs mise &#225; jour, d&#233;finissez les deux attributs.
 Si vous ne connaissez pas le num&#233;ro de version, ne d&#233;finissez pas un de ces attributs.
 <li><dfn>comment</dfn> - Ceci est optionnel. Vous pouvez inclure votre nom, ou autre info au sujet du changement dans le fichier.
+    </li>
 </ul>
 
 <p> Les lignes suivantes:</p>
 
-<p class=example>
+<p class="example">
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;model model="DH142" numOuts="4" numFns="2"/&gt;<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;model model="DN142" numOuts="4" numFns="2"/&gt;<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;model model="DH083" numOuts="5" numFns="2"/&gt;
@@ -155,7 +156,7 @@ programmateur utilise ces informations pour s&#233;lectionner le mode de program
 <p>La partie suivante du fichier consiste en un jeu d'&#233;l&#233;ments "variable" d&#233;finissant des variables sp&#233;cifiques, imbriqu&#233;es dans un &#233;l&#233;ment "variables"(notez le"s")
  Un exemple:</p>
 
-<p class=example>
+<p class="example">
 &lt;variables&gt;<BR>
   &nbsp;&nbsp;&lt;variable label="Short Address" CV="1" item="Primary Address" default="03"&gt;<BR>
     &nbsp;&nbsp;&nbsp;&nbsp;&lt;decVal min="1" max="127"/&gt;<BR>
@@ -186,7 +187,7 @@ pour plus de d&#233;tails sur ceux-ci.  G&#233;n&#233;ralement, regarder le prog
 <p>(Il y en a un peu plus,que nous allons quitter pour la section avanc&#233;e ci-dessous)</p>
 </dd>
 
-<dt class=left> File contents: Creating new Variable names </dt>
+<dt class="left">File contents: Creating new Variable names</dt>
 <dd>
 <p>Vous pouvez aussi d&#233;finir de nouvelles variables. Un bon point de d&#233;part est de copier une d&#233;finition similaire, changer son nom pour une nouvelle valeur et &#233;diter son contenu.</p>
 
@@ -196,7 +197,7 @@ pour plus de d&#233;tails sur ceux-ci.  G&#233;n&#233;ralement, regarder le prog
 <li>Si vous pr&#233;f&#233;rez entrer et afficher des valeurs en hexad&#233;cimal, utilisez l'&#233;l&#233;ment "hexVal".c'est le m&#234;me que l'&#233;l&#233;ment "decVal" dont nous avons d&#233;j&#225; discut&#233; mais en hexa.
 <li><p>Si votre d&#233;codeur supporte les adresses longues, vous pouvez ajouter un &#233;l&#233;ment 'longAddress'. C'est peut &#234;tre plus simple de copier depuis un autre fichier, ou depuis cet exemple:</p>
 
-<p class=example>
+<p class="example">
 &lt;variable name=&quot;Long Address&quot; CV=&quot;17&quot;&gt;<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;longAddressVal/&gt;<BR>
 &lt;/variable&gt;
@@ -205,7 +206,7 @@ pour plus de d&#233;tails sur ceux-ci.  G&#233;n&#233;ralement, regarder le prog
 <li><p>Si votre d&#233;codeur le supporte, vous pouvez entrer un &#233;l&#233;ment "speedTableVal"
  pour la table de vitesse.  Le seul attribut est  "entries","min", "max" et"mfx" (quand vrai active le style  M&auml;rklin mfx&reg; de la table de vitesse. Exemple:</p>
 
-<p class=example>
+<p class="example">
 &lt;variable name=&quot;Speed Table&quot; CV=&quot;67&quot;&gt;<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;speedTableVal/&gt;<BR>
 &lt;/variable&gt;
@@ -214,7 +215,7 @@ pour plus de d&#233;tails sur ceux-ci.  G&#233;n&#233;ralement, regarder le prog
 <li>Quelques options de d&#233;codeur sont mieux repr&#233;senter par "choisir un
 choix".Elles sont repr&#233;sent&#233;es par un &#233;l&#233;ment enumVariable. Exemple:
 
-<p class=example>
+<p class="example">
 &lt;variable name=&quot;F6 during DC operation&quot; CV=&quot;13&quot; mask=&quot;XXVXXXXX&quot;&gt;<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;enumVal&gt;<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;enumChoice choice=&quot;Off&quot;/&gt;<BR>
@@ -229,12 +230,14 @@ d&#233;codeurs Digitrax, vous pouvez utiliser jusqu'&#225; 16 &#233;l&#233;ments
 Ils sont affich&#233;s dans l'ordre o&#249; ils ont &#233;t&#233; entr&#233;s dans le fichier, et sont aussi num&#233;rot&#233;s dans cet ordre. Si le premier est choisi, un 0 est entr&#233; dans les bits CV; choisir le second stocke 1; etc.</p>
 
 <p>Si vous avez besoin de sp&#233;cifier un nombre sp&#233;cifique pour une option enum, ajoutez un attribut "value":
-<p class=example>
+<p class="example">
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;enumChoice choice=&quot;Blue&quot; value=&quot;32&quot;/&gt;
 </p>
+    </li>
 </ul>
+</dd>
 
-<dt class=left>Checking for syntax errors </dt>
+<dt class="left">Checking for syntax errors </dt>
 <dd>
 <p>A ce point, vous avez cr&#233;&#233; un nouveau fichier de configuration!</p>
 
@@ -243,7 +246,7 @@ dans le menu "D&#233;bug". Il ouvre un dialogue de s&#233;lection de fichier;
 s&#233;lectionnez votre fichier et cliquez  "open".  Si tout est bon, vous obtenez une boite de dialogue qui dit "OK". Si non , vous obtiendrez un message d'erreur compl&#232;tement incompr&#233;hensible. La seule partie utilisable de ce message est le num&#233;ro de la ligne; ouvrez un &#233;diteur &#225; cette ligne et essayer de trouver le probl&#232;me de syntaxe.
 </dd>
 
-<dt class=left>Add the file to the index</dt>
+<dt class="left">Add the file to the index</dt>
 <dd>
 <p>Tout ce qui reste est d'entrer votre nouveau fichier dans l'index. Cet index est utilis&#233; pour acc&#233;l&#233;rer le d&#233;marrage, quand la liste des d&#233;codeurs disponibles est construite .</p>
 

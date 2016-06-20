@@ -20,16 +20,15 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-
-<H1>Guide Utilisateur DecoderPro - Fichiers de Configuration</H1>
+<h1>Guide Utilisateur DecoderPro - Fichiers de Configuration</h1>
 
 <p>Cette section tente de r&#233;pondre &#224; la question de savoir ce que contiennent les fichiers de configuration et o&#249; sont-ils localis&#233;s?
 </p>
 
 <dl>
-<A name="location">
-<dt class=left>Localisation des fichiers de configuration</dt></a>
-<dd class=first>
+<a name="location">
+<dt class="left">Localisation des fichiers de configuration</dt></a>
+<dd class="first">
 Il y a deux endroits o&#249; les fichiers de configuration peuvent &#234;tre trouv&#233;s:
 <ol>
 <li>Le r&#233;pertoire utilisateur preferences JMRI et ses sous-r&#233;pertoires. A chercher en premier pour n'importe quels fichiers n&#233;cessaires.Vous devez mette ici toutes les versions de fichiers localement modifi&#233;es pour qu'elles ne soient pas &#233;cras&#233;es par une nouvelle version de programme. Tous les fichiers que le programme &#233;crit pour contenir des informations locales, exemple le liste de Fiches, sont aussi &#233;crites ici. 
@@ -62,7 +61,7 @@ Tout ce que vous modifierez ici sera perdu lors d'une mise &#224; jour du progra
 </ol>
 </dd>
 
-<dt class=left>Types de fichiers de configuration.</dt>
+<dt class="left">Types de fichiers de configuration</dt>
 <dd>
 Au sein de ces deux emplacements, il y a un nombre de types de fichiers de configuration:
 <ul>
@@ -72,7 +71,7 @@ Au sein de ces deux emplacements, il y a un nombre de types de fichiers de confi
 </ul>
 </dd>
 
-<dt class=left>Fichier G&#233;neral Config </dt>
+<dt class="left">Fichier G&#233;neral Config</dt>
 <dd>
 il ya aussi quelques fichiers de configuration g&#233;n&#233;rale, qui se trouvent dans le .XML de niveau sup&#233;rieur ou le r&#233;pertoire prefs:
 <ul>
@@ -83,7 +82,6 @@ il ya aussi quelques fichiers de configuration g&#233;n&#233;rale, qui se trouve
 </dd>
 </dl>
 
-    
 <!--#include virtual="/Footer" -->
 </div>
 </body>

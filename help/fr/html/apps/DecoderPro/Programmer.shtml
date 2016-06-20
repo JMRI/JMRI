@@ -42,7 +42,7 @@ standard de la variable.
 <li><dfn>Layout</dfn> -
 O&#249; trouver l'&#233;tiquette en ce qui concerne le domaine &#233;ditable,
 par exemple, la z&#244;ne de texte. Les valeurs possibles sont "gauche", "au-dessus",
-"en dessous", "droit" , par d&#233;faut "droit" .
+"en dessous", "droit", par d&#233;faut "droit".
 <li><dfn>format</dfn> -
 <p>Comment la variable devra &#234;tre pr&#233;sent&#233;e. Les variables num&#233;riques peuvent &#234;tre pr&#233;sent&#233;es comme <ul>
 <li> un champ de texte &#233;ditable, qui est la valeur par d&#233;faut si rien n'est sp&#233;cifi&#233;
@@ -163,10 +163,7 @@ La d&#233;finition d&#233;codeur dispose alors d'un "label" de "Airpump" ou que 
 un "&#233;l&#233;ment" de "l'option 1 Sound". Tout correspond correctement, et
 Airpump" appara&#238;t sur l'&#233;cran de l'ordinateur.
 </ol>
-<P>
 
-
-    
 <!--#include virtual="/Footer" -->
 </div>
 </body>

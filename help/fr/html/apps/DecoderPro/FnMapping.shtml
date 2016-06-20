@@ -47,7 +47,7 @@ une carte fixe est affich&#233;e ci-dessous.
 
 <h2>Exemple de Cartographie</h2>
 Ces exemples sont pris depuis le fichier de d&#233;finition de d&#233;codeur  
-<A HREF="../../xml/decoders/Digitrax_01x3.xml">Digitrax_01x3.xml</a>.
+<a HREF="../../xml/decoders/Digitrax_01x3.xml">Digitrax_01x3.xml</a>.
 <P>
 Le bloc de d&#233;finitions pour la fonction z&#233;ro dans la direction avant est comme suit:
 <PRE>

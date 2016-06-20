@@ -105,22 +105,21 @@ Ce m&#233;canisme doit &#234;tre en mesure de:
 
 CV 16 porte un num&#233;ro de 0 &#224; 7 inclusivement. C'est ce qu'on appelle le «num&#233;ro d'identification". Ce num&#233;ro identifie un seul d&#233;codeur, donc une valeur unique doit &#234;tre attribu&#233; &#224; chaque d&#233;codeur dans une locomotive en particulier. Parce que la plupart des utilisateurs utilisent ce m&#233;canisme avec les d&#233;codeurs qui fournissent des fonctions diff&#233;rentes, le codage recommand&#233; est le suivant:
 <pre>
-   La valeur de r&#233;initialisation, tel que livr&#233;: 0
+   0: La valeur de r&#233;initialisation, tel que livr&#233;
   
    1: d&#233;codeur du Moteur 
   
-   2: d&#233;codeur de son
+   2: d&#233;codeur de Son
   
    3: Fonction d&#233;codeur seule (par exemple pour les feux suppl&#233;mentaires)
 </pre>
 CV 15 est utilis&#233; pour s&#233;lectionner le d&#233;codeur qui va r&#233;pondre. Quand les valeurs de CV 15 et CV 16 sont &#233;gaux, tous les CV dans le d&#233;codeur peuvent &#234;tre lu ou &#233;crit. Quand les valeurs de CV 15 et CV 16 ne sont pas &#233;gaux, CV 15 ne peut &#234;tre &#233;crit.
 <P>
-Certains fabricants veulent offrir un  CV pour activer/d&#233;sactiver cette fonctionnalit&#233;. Si oui, ce devrait &#234;tre dans un CV r&#233;serv&#233; &#224; l'usage des fabricants, car aucun CV NMRA n'a &#233;t&#233; r&#233;serv&#233; &#224; cet effet.
+Certains fabricants veulent offrir un CV pour activer/d&#233;sactiver cette fonctionnalit&#233;. Si oui, ce devrait &#234;tre dans un CV r&#233;serv&#233; &#224; l'usage des fabricants, car aucun CV NMRA n'a &#233;t&#233; r&#233;serv&#233; &#224; cet effet.
 <P>
-Notez qu'une co
-CV 16 est utilis&#233; pour s&#233;lectionner le d&#233;codeur qui va r&#233;pondre. Quand les valeurs de CV 15 et CV 16 sont &#233;gaux, tous les CV dans le d&#233;codeur peuvent &#234;tre lus ou &#233;crits. Quand les valeurs de CV 15 et CV 16 ne sont pas &#233;gaux, CV 15 ne peut &#234;tre &#233;crit.
+Notez qu'une commande pour r&#233;initialisation est seulement accept&eacute; quand les valeurs de CV 15 et CV 16 sont &#233;gaux, tous les CV dans le d&#233;codeur peuvent &#234;tre lus ou &#233;crits. Quand les valeurs de CV 15 et CV 16 ne sont pas &#233;gaux, CV 15 ne peut &#234;tre &#233;crit.
 <P>
-Certains fabricants veulent offrir un  CV pour activer/demander la r&#233;initialisation du d&#233;codeur aux valeurs de CV par d&#233;fauts qui ne doit pas &#234;tre donn&#233;e  &#224; moins que le CV 15 et CV 16 aient des valeurs &#233;gales. Cela emp&#234;che l'utilisateur de r&#233;initialiser accidentellement les d&#233;codeurs multiples en m&#234;me temps, et de perdre la capacit&#233; d'y r&#233;pondre s&#233;par&#233;ment.
+Certains fabricants veulent offrir un CV pour activer/demander la r&#233;initialisation du d&#233;codeur aux valeurs de CV par d&#233;fauts qui ne doit pas &#234;tre donn&#233;e  &#224; moins que le CV 15 et CV 16 aient des valeurs &#233;gales. Cela emp&#234;che l'utilisateur de r&#233;initialiser accidentellement les d&#233;codeurs multiples en m&#234;me temps, et de perdre la capacit&#233; d'y r&#233;pondre s&#233;par&#233;ment.
 <P>
 Pour configurer les d&#233;codeurs &#224; l'installation:
 <P>

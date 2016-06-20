@@ -62,7 +62,7 @@ navigateur "Afficher la source" tableau pourrait vous aider &#231; cet &#233;gar
 Vous verrez cette ligne:
 <br>
 &lt;reporter reportericon = "LR12" x = "10" y = "10" class = "jmri.jmrit.display.configurexml.ReporterIconXml"&gt;
-<br>Le "x"et "y" d&#233;finissent l'endroit o&#249; vous le voulez sur
+<br>Le "x" et "y" d&#233;finissent l'endroit o&#249; vous le voulez sur
 votre panneau. Le "LR12" est le nom de l'objet journal, par exemple, le nom de celui que vous avez vu changer 
 quand vous cherchiez sur la table.
 <LI>

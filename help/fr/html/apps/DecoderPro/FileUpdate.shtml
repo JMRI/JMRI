@@ -3,7 +3,7 @@
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
 <!--Translated by Herv&#233; Blorec le 2013-09-25 -->
-<title>JMRI: DecoderPro User Guide - Mise &#224; jour des D&#233;finitions D&#233;codeur</title>
+<title>JMRI: Guide Utilisateur DecoderPro - Mise &#224; jour des D&#233;finitions D&#233;codeur</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -20,8 +20,7 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-
-<h1> Guide Utilisateur DecoderPro - Mise &#224; jour des D&#233;finitions D&#233;codeur</h1>
+<h1>Guide Utilisateur DecoderPro - Mise &#224; jour des D&#233;finitions D&#233;codeur</h1>
 
 Beaucoup de personnes ont contribu&#233; aux fichiers de d&#233;finitions de d&#233;codeur DecoderPro.  Entre les nouvelles versions JMRI, de nouveaux fichiers peuvent &#234;tre cr&#233;&#233;s et que vous vouliez les utiliser. Les nouveaux peuvent habituellement &#234;tre trouv&#233;s soit sur 
 <a href="http://jmri.org/xml/decoders">le site web JMRI</a>
@@ -35,13 +34,12 @@ Le processus d'installation &#233;tait simplifi&#233; dans la version JMRI 2.3.6
 "Importer fichier D&#233;codeur" et"URL Importation D&#233;codeur" sont ajouter au menu Debug.
 
 <a name="after236">
-<h2>JMRI Version 2.3.6 et Apr&#232;s</h2>
+<h2>JMRI Version 2.3.6 et Apr&#232;s</h2></a>
 
 Cette section d&#233;crit l'addition d'une nouvelle d&#233;finition de d&#233;codeur quand vous &#234;tes utlisateJmriHelp_frTOC.xmlur de JMRI verion 2.3.6 ou suivant.
 
 <h3>Charger une d&#233;finition depuis le web</h3>
-Si vous avez un URL pour une d&#233;finition de d&#233;codeur, elle peut &#234;tre copi&#233;e depuis une page web ou un courriel, et si votre ordinateur a une connexion Internet active , vous pouvez directement installer la d&#233;finition.
-.
+Si vous avez un URL pour une d&#233;finition de d&#233;codeur, elle peut &#234;tre copi&#233;e depuis une page web ou un courriel, et si votre ordinateur a une connexion Internet active , vous pouvez directement installer la d&#233;finition..
 
 <ul>
 <li>S&#233;lectionner l'&#233;l&#233;ment "URL Importation D&#233;codeur URL" depuis le menu "D&#233;bogage".
@@ -65,14 +63,14 @@ Sauf s'il y a des erreurs, le fichier sera copi&#233; dans votre r&#233;pertoire
 
 <h3>Comment tout ceci fonctionne</h3>
 
-Ces deux outils prennent l'information de d&#233;finition de d&#233;codeur depuis la source qui vous est indiqu&#233;e et copi&#233;e sur votre r&#233;pertoire local ""preferences"" JMRI de sorte qu'il serJmriHelp_frTOC.xmla disponible &#224; partir de maintenant.
-. Pour que cela fonctionne ,vous ne devez pas avoir d&#233;j&#224; un fichier de d&#233;finition de d&#233;codeur avec le m&#234;me nom. Si un tel fichier existe, le programme affichera une erreur et ne remplacera pas le fichier.
+Ces deux outils prennent l'information de d&#233;finition de d&#233;codeur depuis la source qui vous est indiqu&#233;e et copi&#233;e sur votre r&#233;pertoire local ""preferences"" JMRI de sorte qu'il serJmriHelp_frTOC.xmla disponible &#224; partir de maintenant..
+    Pour que cela fonctionne ,vous ne devez pas avoir d&#233;j&#224; un fichier de d&#233;finition de d&#233;codeur avec le m&#234;me nom. Si un tel fichier existe, le programme affichera une erreur et ne remplacera pas le fichier.
 
 <p>
 La d&#233;finition est stock&#233;e dans votre fichier "preferences", au lieu du r&#233;pertoire de distribution JMRI, ainsi une nouvelle installation de JMRI ne l'effacera pas.  Notez, toutefois, que si une nouvelle version de JMRI arrive avec une copie de cette d&#233;finition de d&#233;codeur install&#233;e, Le programme donne la priorit&#233; &#224; la version sp&#233;cifique sue vous avez import&#233;e.  JMRI pense que que vous saviez ce que vous faisiez quand vous avez sp&#233;cialement importer cette version sp&#233;cifique. Si vous pr&#233;f&#233;rez utiliser celle de la nouvelle version de JMRI, effacez juste votre version dans le r&#233;pertoire preference et s&#233;lectionnez  "Rebuilt Decoder Index"  dans le menu d&#233;bug.
 
 <a name="before236">
-<h2>JMRI Version 2.3.5 et Avant</h2>
+<h2>JMRI Version 2.3.5 et Avant</h2></a>
 JmriHelp_frTOC.xml
 Cette section d&#233;crit l'addition d'une nouvelle d&#233;finition de d&#233;codeur quand vous utilisez la version JMRI 2.3.5 ou avant.
 

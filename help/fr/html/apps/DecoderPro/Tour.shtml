@@ -25,7 +25,7 @@
 <div class="image100w">
 <table>
 <TR>
-<TD VALIGN=top>
+<TD VALIGN="top">
 <a href="./images/DPStart.gif" ALT="DecoderPro welcome screen">
 <IMG SRC="./images/DPStart.gif" WIDTH="100" HEIGHT="50" ALT="DecoderPro welcome screen"></a>
 </TD>
@@ -39,7 +39,7 @@ Lorsque vous ouvrez le programmateur, vous voyez cette fen&#234;tre. Cliquez sur
 </TR>
 
 <TR>
-<TD VALIGN=top>
+<TD VALIGN="top">
 <a href="./images/SelDecoder.gif" ALT="Decoder Identification">
 <IMG SRC="./images/SelDecoder.gif" WIDTH="100" HEIGHT="100" ALT="Decoder Identification"></a>
 </TD>
@@ -143,7 +143,7 @@ lecture va r&#233;initialiser la valeur &#224; la valeur dans le d&#233;codeur, 
 <TD>
 <H2>Interactions Complexes - Fonction Mapping (Cartographie)</H2>
 <p>
-Bien qu'avoir un nom pour un CV complet est agr&#233;able, où ceci aide r&#233;ellement, c'est avec 
+Bien qu'avoir un nom pour un CV complet est agr&#233;able, o&ugrave; ceci aide r&#233;ellement, c'est avec
 les options compliqu&#233;es de cartographie binaire. L'option Digitrax &#233;clairage FX, par exemple, 
 exiger la configuration de deux ensembles de bits en un seul CV.
 Un autre exemple est la configuration de la cartographie d'un d&#233;codeur de Soundtraxx entre 
@@ -157,7 +157,6 @@ avec le nom ou la description du manuel du d&#233;codeur.
 </p>
 </TD>
 </TR>
-
 
 <TR>
 <TD VALIGN=top>
@@ -178,7 +177,6 @@ nouveau d&#233;codeur. Par exemple, les capacit&#233;s uniques d'une DH142 Digit
 figurent sur une feuille "Digitrax" .</p>
 
 <p>
-
 D'autres variables d&#233;codeur sp&#233;cifiques et des feuilles peuvent &#234;tre ajout&#233;es via des fichiers 
 de configuration. En choisissant un format industriel standard XML pour les informations du 
 d&#233;codeur, nous esp&#233;rons rendre possible la cr&#233;ation d'une biblioth&#232;que compl&#232;te. Peut-&#234;tre que 
@@ -187,7 +185,6 @@ format par exemple.
 </p>
 </TD>
 </TR>
-
 
 <TR>
 <TD VALIGN=top>
@@ -232,7 +229,7 @@ L"ID" dans la partie sup&#233;rieure est le nom que vous utiliserez plus tard po
 </TR>
 
 <TR>
-<TD VALIGN=top>
+<TD VALIGN="top">
 <a href="./images/SelLoco.gif" ALT="SeoderPro/Tour.shtmllecting a roster entry">
 <IMG SRC="./images/SelLoco.gif" WIDTH="100" HEIGHT="100" ALT="Selecting a roster entry"></a>
 </TD>

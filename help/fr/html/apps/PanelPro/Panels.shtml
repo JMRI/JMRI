@@ -22,8 +22,8 @@
 
 <h1>JMRI:Cr&#233;ation Panneaux de Commandes</h1>
 Les librairies JMRI contiennent un syst&#232;me de cr&#233;ation de panneaux de commandes. Il est grandement personnalisable, et vous permet ce commander votre r&#233;seau directement depuis le panneau.
-<h3Contenu d'un panneau</h3>
-<IMG SRC="../../../images/PiecedPanel.gif" ALT="Screen shot of panel" ALIGN=RIGHT WIDTH="292" HEIGHT="107" HSPACE="0" VSPACE="0">
+<h3>Contenu d'un panneau</h3>
+<IMG SRC="../../../images/PiecedPanel.gif" ALT="Screen shot of panel" ALIGN="RIGHT" WIDTH="292" HEIGHT="107" HSPACE="0" VSPACE="0">
 
 <P>
 Cliquer sur un symbole d'aiguillage le basculer de droit &#224; d&#233;vi&#233; et vice-versa.
@@ -36,9 +36,9 @@ Ils sont destin&#233;s &#224; repr&#233;senter un indicateur de panneau allum&#2
 
 <h3>Cr&#233;ation d'un Panneau</h3>
 (Nick Kulp pr&#233;sente un bon tutoriel sur ce sujet durant Mars 2004; ses diapositives sont 
-<A href="http://jmri.org/community/clinics/NickKulpMarch2004/index.html">disponibles sur le site web principal JMRI</a>.
+<a href="http://jmri.org/community/clinics/NickKulpMarch2004/index.html">disponibles sur le site web principal JMRI</a>.
 Dick Bronson a fourni plusieurs introductions anim&#233;es &#224; PanelPro sur
-<A HREF="http://www.rr-cirkits.com/Clinics/Clinics.html">ses propres pages web</a>.
+<a HREF="http://www.rr-cirkits.com/Clinics/Clinics.html">ses propres pages web</a>.
 
 <P>
 Les panneaux sont r&#233;alis&#233;s avec un "&#201;diteur de Panneau" qui vous permet de placer des images repr&#233;sentant les aiguillages, les capteurs ((sur certains syst&#232;mes) et les voies.
