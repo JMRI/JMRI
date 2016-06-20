@@ -1,6 +1,5 @@
 package jmri.jmrix.lenz.swing;
 
-import java.awt.event.ActionEvent;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
