@@ -1,7 +1,6 @@
 // AbstractCanTrafficController.java
 package jmri.jmrix.can;
 
-import java.io.IOException;
 import java.util.Arrays;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;

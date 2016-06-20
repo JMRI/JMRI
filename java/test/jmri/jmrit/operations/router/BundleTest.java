@@ -1,9 +1,6 @@
 package jmri.jmrit.operations.router;
 
-import java.util.Locale;
-import org.junit.Assert;
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
