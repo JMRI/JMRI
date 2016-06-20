@@ -1630,8 +1630,8 @@
     </presetdef>
     
     <target name="ci-checker-nullness"
-                description="Check java/src tree for null pointer dereferences"
-                depends="clean, init, copyfiles, compile-generated-source">
+                description="Check java/src tree for null pointer dereferences; only compiles non-compiles classes, so do 'clean' first to do all"
+                depends="init, copyfiles, compile-generated-source"> 
           <!-- use jsr308.javac instead of javac -->
           <jsr308.javac
                srcdir="${source}"
@@ -1642,13 +1642,16 @@
                fork="true"
                deprecation="${deprecation}"
                debug="${java.debugging}">
-            <compilerarg line="-processor org.checkerframework.checker.nullness.NullnessChecker"/>
-            <!-- compilerarg line="-processor org.checkerframework.checker.guieffect.GuiEffectChecker"/-->
-            <!-- optional, to not check uses of library methods: -->
-                <compilerarg value="-AskipUses=^(java\.awt\.|javax\.swing\.)"/>
-            <!-- -->
-            <compilerarg line="-Xmaxerrs 10000"/>
             <classpath refid="compile.class.path"/>
+            <compilerarg line="-proc:only"/> <!-- just check, don't generate .class files -->
+            <compilerarg value="-AskipUses=^(java\.awt\.|javax\.swing\.)"/> <!-- don't check uses of library methods: -->
+            <compilerarg line="-Xmaxerrs 10000"/>
+            
+            <!-- select the check to run -->
+            <compilerarg line="-processor NullnessChecker"/>
+            <!-- compilerarg line="-processor org.checkerframework.checker.lock.LockChecker"/-->
+            <!-- compilerarg line="-processor org.checkerframework.checker.guieffect.GuiEffectChecker"/-->
+            
             <compilerarg value="-Xlint:-unchecked"/>  <!-- off during 1.8 migration -->
           </jsr308.javac>
     </target>
