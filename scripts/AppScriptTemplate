@@ -28,9 +28,10 @@
 # or
 # - Copy and rename this script.
 #
-# If you rename the script to e.g. JmriNew, it will use "JmriNewConfig.xml"
-# as it's configuration file.  You can then set and save the preferences for
-# the next time you rerun the script.
+# If you rename the script to, for example, JmriNew, it will use
+# "JmriNewConfig.properties" as it's configuration file. Note that configuration
+# files only determine which profile to use, and if the profile selector should
+# be shown at application launch.
 #
 # If you are getting X11 warnings about meta keys, uncomment the next line
 # xprop -root -remove _MOTIF_DEFAULT_BINDINGS
