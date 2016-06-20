@@ -130,7 +130,7 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
         TamsTurnout ttu = (TamsTurnout)provideTurnout(prefix + "T" + turnoutAddress);
         ttu.setCommandedStateFromCS(turnoutState);
 
-        /*
+         /*
          * if (!stopPolling) { synchronized (pollHandler) {
          * pollHandler.notify(); } }
          */

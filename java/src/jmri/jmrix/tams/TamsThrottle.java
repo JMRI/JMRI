@@ -1,5 +1,7 @@
 package jmri.jmrix.tams;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.Throttle;
@@ -10,13 +12,32 @@ import org.slf4j.LoggerFactory;
 /**
  * An implementation of DccThrottle with code specific to a TAMS connection.
  * <P>
- * Based on Glen Oberhauser's original LnThrottle implementation
+ * Based on Glen Oberhauser's original LnThrottle implementation and work by Kevin Dickerson
  *
- * @author	Kevin Dickerson Copyright (C) 2012
- * @version $Revision: 19946 $
+ * @author	Jan Boen
+ * @version $Revision: 20160619 $
  */
 public class TamsThrottle extends AbstractThrottle implements TamsListener {
 
+    //Create a local TamsMessage Queue which we will use in combination with TamsReplies
+    private Queue<TamsMessage> tmq = new LinkedList<TamsMessage>();
+
+    //This dummy message is used in case we expect a reply from polling
+    static private TamsMessage myDummy() {
+        //log.info("*** myDummy ***");
+        TamsMessage m = new TamsMessage(2);
+        m.setElement(0, TamsConstants.POLLMSG & TamsConstants.MASKFF);
+        m.setElement(1, TamsConstants.XEVTLOK & TamsConstants.MASKFF);
+        m.setBinary(true);
+        m.setReplyOneByte(false);
+        m.setReplyType('L');
+        return m;
+    }
+
+    //A local TamsMessage is held at all time
+    //When no TamsMessage is being generated via the UI this dummy is used which means the TamsReply is a result of polling
+    TamsMessage tm = myDummy();
+    
     /**
      * Constructor.
      */
@@ -44,29 +65,37 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
         this.address = address;
         this.isForward = true;
 
-        //get the status if know of the current loco
-        TamsMessage m = new TamsMessage("xL " + address.getNumber());
-        m.setTimeout(10000);
-        m.setBinary(false);
-        m.setReplyType('L');
-        tc.sendTamsMessage(m, this);
+        //get the status if known of the current loco
+        tm = new TamsMessage("xL " + address.getNumber());
+        tm.setTimeout(10000);
+        tm.setBinary(false);
+        tm.setReplyType('L');
+        tc.sendTamsMessage(tm, this);
+        tmq.add(tm);
+        //tc.addPollMessage(m, this);
 
-        tc.addPollMessage(m, this);
+        tm = new TamsMessage("xF " + address.getNumber());
+        tm.setBinary(false);
+        tm.setReplyType('L');
+        tc.sendTamsMessage(tm, this);
+        tmq.add(tm);
+        //tc.addPollMessage(tm, this);
 
-        m = new TamsMessage("xF " + address.getNumber());
-        m.setBinary(false);
-        m.setReplyType('L');
-        tc.sendTamsMessage(m, this);
-        tc.addPollMessage(m, this);
-
-        m = new TamsMessage("xFX " + address.getNumber());
-        m.setBinary(false);
-        m.setReplyType('L');
-        tc.sendTamsMessage(m, this);
-        tc.addPollMessage(m, this);
+        tm = new TamsMessage("xFX " + address.getNumber());
+        tm.setBinary(false);
+        tm.setReplyType('L');
+        tc.sendTamsMessage(tm, this);
+        tmq.add(tm);
+        //tc.addPollMessage(tm, this);
+        
+        //Add binary polling message
+        tm = TamsMessage.getXEvtLok();
+        tc.sendTamsMessage(tm, this);
+        tmq.add(tm);
+        tc.addPollMessage(tm, this);
 
     }
-
+    
     /**
      * Send the message to set the state of functions F0, F1, F2, F3, F4. To
      * send function group 1 we have to also send speed, direction etc.
@@ -88,10 +117,11 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
         sb.append((f3 ? "1" : "0"));
         sb.append(",");
         sb.append((f4 ? "1" : "0"));
-        TamsMessage m = new TamsMessage(sb.toString());
-        m.setBinary(false);
-        m.setReplyType('L');
-        tc.sendTamsMessage(m, this);
+        TamsMessage tm = new TamsMessage(sb.toString());
+        tm.setBinary(false);
+        tm.setReplyType('L');
+        tc.sendTamsMessage(tm, this);
+        tmq.add(tm);
     }
 
     /**
@@ -114,10 +144,11 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
         sb.append(",");
         sb.append((f8 ? "1" : "0"));
 
-        TamsMessage m = new TamsMessage(sb.toString());
-        m.setBinary(false);
-        m.setReplyType('T');
-        tc.sendTamsMessage(m, this);
+        tm = new TamsMessage(sb.toString());
+        tm.setBinary(false);
+        tm.setReplyType('T');
+        tc.sendTamsMessage(tm, this);
+        tmq.add(tm);
     }
 
     protected void sendFunctionGroup3() {
@@ -133,11 +164,11 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
         sb.append(",");
         sb.append((f12 ? "1" : "0"));
 
-        TamsMessage m = new TamsMessage(sb.toString());
-        m.setBinary(false);
-        m.setReplyType('L');
-        tc.sendTamsMessage(m, this);
-
+        tm = new TamsMessage(sb.toString());
+        tm.setBinary(false);
+        tm.setReplyType('L');
+        tc.sendTamsMessage(tm, this);
+        tmq.add(tm);
     }
 
     /**
@@ -175,10 +206,11 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
         sb.append(",");
         sb.append(",");
 
-        TamsMessage m = new TamsMessage(sb.toString());
-        m.setBinary(false);
-        m.setReplyType('L');
-        tc.sendTamsMessage(m, this);
+        tm = new TamsMessage(sb.toString());
+        tm.setBinary(false);
+        tm.setReplyType('L');
+        tc.sendTamsMessage(tm, this);
+        tmq.add(tm);
 
         if (oldSpeed != this.speedSetting) {
             notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
@@ -204,18 +236,15 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
 
     protected void throttleDispose() {
         active = false;
-        TamsMessage m = new TamsMessage("xL " + address.getNumber());
-        tc.removePollMessage(m, this);
-
-        m = new TamsMessage("xF " + address.getNumber());
-        tc.removePollMessage(m, this);
-
-        m = new TamsMessage("xFX " + address.getNumber());
-        tc.removePollMessage(m, this);
+        //A poll message get's added by the first throttle
+        //Duplicates are not put in the queue
+        //We don't stop polling when a throttle closes
+        //Only remove the binary polling message
+        tm = TamsMessage.getXEvtLok();
+        tc.removePollMessage(tm, this);
     }
 
     public void message(TamsMessage m) {
-        //System.out.println("Tams message - "+ m);
         // messages are ignored
     }
 
@@ -234,173 +263,287 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
         }
     }
 
-    public void reply(TamsReply m) {
-        if (m.match("WARNING") >= 0) {
-            return;
+    public void reply(TamsReply tr) {
+        log.info("*** Loco reply ***");
+        if(tmq.isEmpty()){
+            tm = myDummy();
+        } else
+        {
+            tm = tmq.poll();
         }
-        if (m.match("L " + address.getNumber()) >= 0) {
-            try {
-                String[] lines = m.toString().split(" ");
-                Float newSpeed = Float.valueOf(floatSpeed(Integer.parseInt(lines[2])));
-                super.setSpeedSetting(newSpeed);
-                if (lines[3].equals("1") && !this.f0) {
-                    notifyPropertyChangeListener(Throttle.F0, this.f0, true);
-                    this.f0 = true;
-                } else if (lines[3].equals("0") && this.f0) {
-                    notifyPropertyChangeListener(Throttle.F0, this.f0, false);
-                    this.f0 = false;
+        if (tm.isBinary()){//Binary reply
+            //The binary logic as created by Jan
+            //Complete Loco status is given by:
+            //    element(0) = Speed: 0..127, 0 = Stop, 1 = not used, 2 = min. Speed, 127 = max. Speed
+            //    element(1) = F1..F8 (bit #0..7)
+            //    element(2) = low byte of Loco# (A7..A0)
+            //    element(3) = high byte of Loco#, plus Dir and Light status as in:
+            //        bit#   7     6     5     4     3     2     1     0
+            //            +-----+-----+-----+-----+-----+-----+-----+-----+
+            //            | Dir |  FL | A13 | A12 | A11 | A10 | A9  | A8  |
+            //            +-----+-----+-----+-----+-----+-----+-----+-----+
+            //        where:
+            //            Dir Loco direction (1 = forward)
+            //            FL  Light status
+            //            A13..8  high bits of Loco#
+            //    element(4) = 'real' Loco speed (in terms of the Loco type/configuration)
+            //        (please check XLokSts in P50X_LT.TXT for doc on 'real' speed)
+            //Decode address
+            int msb = tr.getElement(3) & 0x3F;
+            int lsb = tr.getElement(2) & 0xFF;
+            int receivedAddress = msb * 256 + lsb;
+            log.info("reply = " + jmri.util.StringUtil.appendTwoHexFromInt(tr.getElement(4) & 0xFF, "") + " " + jmri.util.StringUtil.appendTwoHexFromInt(tr.getElement(3) & 0xFF, "") + " " + jmri.util.StringUtil.appendTwoHexFromInt(tr.getElement(2) & 0xFF, "") + " " + jmri.util.StringUtil.appendTwoHexFromInt(tr.getElement(1) & 0xFF, "") + " " + jmri.util.StringUtil.appendTwoHexFromInt(tr.getElement(0) & 0xFF, ""));
+            if (receivedAddress == address.getNumber()){//If correct address then decode the content
+                //log.info("Is my address");
+                try {
+                    Float newSpeed = Float.valueOf(floatSpeed(tr.getElement(0)));
+                    super.setSpeedSetting(newSpeed);
+                    log.info("f0 = " + (tr.getElement(3) & 0x40 ));
+                    if (((tr.getElement(3) & 0x40 ) == 64) && !this.f0) {
+                        notifyPropertyChangeListener(Throttle.F0, this.f0, true);
+                        this.f0 = true;
+                    } else if (((tr.getElement(3) & 0x40 ) == 0) && this.f0) {
+                        notifyPropertyChangeListener(Throttle.F0, this.f0, false);
+                        this.f0 = false;
+                    }
+                    if (((tr.getElement(3) & 0x80 ) == 0) && isForward) {
+                        notifyPropertyChangeListener("IsForward", isForward, false);
+                        isForward = false;
+                    } else if (((tr.getElement(3) & 0x80 ) == 128) && !isForward) {
+                        notifyPropertyChangeListener("IsForward", isForward, true);
+                        isForward = true;
+                    }
+                    if (((tr.getElement(1) & 0x01 ) == 1) && !this.f1) {
+                        notifyPropertyChangeListener(Throttle.F1, this.f1, true);
+                        this.f1 = true;
+                    } else if (((tr.getElement(1) & 0x01 ) == 0) && this.f1) {
+                        notifyPropertyChangeListener(Throttle.F1, this.f1, false);
+                        this.f1 = false;
+                    }
+                    if (((tr.getElement(1) & 0x02 ) == 2) && !this.f2) {
+                        notifyPropertyChangeListener(Throttle.F2, this.f2, true);
+                        this.f2 = true;
+                    } else if (((tr.getElement(1) & 0x02 ) == 0) && this.f2) {
+                        notifyPropertyChangeListener(Throttle.F2, this.f2, false);
+                        this.f2 = false;
+                    }
+                    if (((tr.getElement(1) & 0x04 ) == 4) && !this.f3) {
+                        notifyPropertyChangeListener(Throttle.F3, this.f3, true);
+                        this.f3 = true;
+                    } else if (((tr.getElement(1) & 0x04 ) == 0) && this.f3) {
+                        notifyPropertyChangeListener(Throttle.F3, this.f3, false);
+                        this.f3 = false;
+                    }
+                    if (((tr.getElement(1) & 0x08 ) == 8) && !this.f4) {
+                        notifyPropertyChangeListener(Throttle.F4, this.f4, true);
+                        this.f4 = true;
+                    } else if (((tr.getElement(1) & 0x08 ) == 0) && this.f4) {
+                        notifyPropertyChangeListener(Throttle.F4, this.f4, false);
+                        this.f4 = false;
+                    }
+                    if (((tr.getElement(1) & 0x10 ) == 16) && !this.f5) {
+                        notifyPropertyChangeListener(Throttle.F5, this.f5, true);
+                        this.f5 = true;
+                    } else if (((tr.getElement(1) & 0x10 ) == 0) && this.f5) {
+                        notifyPropertyChangeListener(Throttle.F5, this.f5, false);
+                        this.f5 = false;
+                    }
+                    if (((tr.getElement(1) & 0x20 ) == 32) && !this.f6) {
+                        notifyPropertyChangeListener(Throttle.F6, this.f6, true);
+                        this.f6 = true;
+                    } else if (((tr.getElement(1) & 0x20 ) == 0) && this.f6) {
+                        notifyPropertyChangeListener(Throttle.F6, this.f6, false);
+                        this.f6 = false;
+                    }
+                    if (((tr.getElement(1) & 0x40 ) == 64) && !this.f7) {
+                        notifyPropertyChangeListener(Throttle.F7, this.f7, true);
+                        this.f7 = true;
+                    } else if (((tr.getElement(1) & 0x40 ) == 0) && this.f7) {
+                        notifyPropertyChangeListener(Throttle.F7, this.f7, false);
+                        this.f7 = false;
+                    }
+                    if (((tr.getElement(1) & 0x80 ) == 128) && !this.f8) {
+                        notifyPropertyChangeListener(Throttle.F8, this.f8, true);
+                        this.f8 = true;
+                    } else if (((tr.getElement(1) & 0x80 ) == 0) && this.f8) {
+                        notifyPropertyChangeListener(Throttle.F8, this.f8, false);
+                        this.f8 = false;
+                    }
+                } catch (Exception ex) {
+                    log.error("Error handling reply from MC " + ex);
                 }
-                if (lines[4].equals("r") && isForward) {
-                    notifyPropertyChangeListener("IsForward", isForward, false);
-                    isForward = false;
-                } else if (lines[4].equals("f") && !isForward) {
-                    notifyPropertyChangeListener("IsForward", isForward, true);
-                    isForward = true;
-                }
-                if (lines[5].equals("1") && !this.f1) {
-                    notifyPropertyChangeListener(Throttle.F1, this.f1, true);
-                    this.f1 = true;
-                } else if (lines[5].equals("0") && this.f1) {
-                    notifyPropertyChangeListener(Throttle.F1, this.f1, false);
-                    this.f1 = false;
-                }
-                if (lines[6].equals("1") && !this.f2) {
-                    notifyPropertyChangeListener(Throttle.F2, this.f2, true);
-                    this.f2 = true;
-                } else if (lines[6].equals("0") && this.f2) {
-                    notifyPropertyChangeListener(Throttle.F2, this.f2, false);
-                    this.f2 = false;
-                }
-                if (lines[7].equals("1") && !this.f3) {
-                    notifyPropertyChangeListener(Throttle.F3, this.f3, true);
-                    this.f3 = true;
-                } else if (lines[7].equals("0") && this.f3) {
-                    notifyPropertyChangeListener(Throttle.F3, this.f3, false);
-                    this.f3 = false;
-                }
-                if (lines[8].equals("1") && !this.f4) {
-                    notifyPropertyChangeListener(Throttle.F4, this.f4, true);
-                    this.f4 = true;
-                } else if (lines[8].equals("0") && this.f4) {
-                    notifyPropertyChangeListener(Throttle.F4, this.f4, false);
-                    this.f4 = false;
-                }
-            } catch (Exception ex) {
-                log.error("Error phrasing reply from MC " + ex);
             }
-        } else if (m.match("FX " + address.getNumber()) >= 0) {
-            String[] lines = m.toString().split(" ");
-            try {
-                if (lines[2].equals("1") && !this.f9) {
-                    notifyPropertyChangeListener(Throttle.F9, this.f9, true);
-                    this.f9 = true;
-                } else if (lines[2].equals("0") && this.f9) {
-                    notifyPropertyChangeListener(Throttle.F9, this.f9, false);
-                    this.f9 = false;
-                }
-                if (lines[3].equals("1") && !this.f10) {
-                    notifyPropertyChangeListener(Throttle.F10, this.f10, true);
-                    this.f10 = true;
-                } else if (lines[3].equals("0") && this.f10) {
-                    notifyPropertyChangeListener(Throttle.F10, this.f10, false);
-                    this.f10 = false;
-                }
-                if (lines[4].equals("1") && !this.f11) {
-                    notifyPropertyChangeListener(Throttle.F11, this.f11, true);
-                    this.f11 = true;
-                } else if (lines[4].equals("0") && this.f11) {
-                    notifyPropertyChangeListener(Throttle.F11, this.f11, false);
-                    this.f11 = false;
-                }
-                if (lines[5].equals("1") && !this.f12) {
-                    notifyPropertyChangeListener(Throttle.F12, this.f12, true);
-                    this.f12 = true;
-                } else if (lines[5].equals("0") && this.f12) {
-                    notifyPropertyChangeListener(Throttle.F12, this.f12, false);
-                    this.f12 = false;
-                }
-                if (lines[6].equals("1") && !this.f13) {
-                    notifyPropertyChangeListener(Throttle.F13, this.f13, true);
-                    this.f13 = true;
-                } else if (lines[6].equals("0") && this.f13) {
-                    notifyPropertyChangeListener(Throttle.F13, this.f13, false);
-                    this.f13 = false;
-                }
-                if (lines[7].equals("1") && !this.f14) {
-                    notifyPropertyChangeListener(Throttle.F14, this.f14, true);
-                    this.f14 = true;
-                } else if (lines[7].equals("0") && this.f14) {
-                    notifyPropertyChangeListener(Throttle.F14, this.f14, false);
-                    this.f14 = false;
-                }
-            } catch (Exception ex) {
-                log.error("Error phrasing reply from MC " + ex);
+            
+        } else {//ASCII reply
+            //The original logic as provided by Kevin
+            if (tr.match("WARNING") >= 0) {
+                return;
             }
-        } else if (m.match("F " + address.getNumber()) >= 0) {
-            String[] lines = m.toString().split(" ");
-            try {
-                if (lines[2].equals("1") && !this.f1) {
-                    notifyPropertyChangeListener(Throttle.F1, this.f1, true);
-                    this.f1 = true;
-                } else if (lines[2].equals("0") && this.f1) {
-                    notifyPropertyChangeListener(Throttle.F1, this.f1, false);
-                    this.f1 = false;
+            if (tr.match("L " + address.getNumber()) >= 0) {
+                try {
+                    log.info("ASCII address = " + address.getNumber());
+                    String[] lines = tr.toString().split(" ");
+                    Float newSpeed = Float.valueOf(floatSpeed(Integer.parseInt(lines[2])));
+                    super.setSpeedSetting(newSpeed);
+                    if (lines[3].equals("1") && !this.f0) {
+                        notifyPropertyChangeListener(Throttle.F0, this.f0, true);
+                        this.f0 = true;
+                    } else if (lines[3].equals("0") && this.f0) {
+                        notifyPropertyChangeListener(Throttle.F0, this.f0, false);
+                        this.f0 = false;
+                    }
+                    if (lines[4].equals("r") && isForward) {
+                        notifyPropertyChangeListener("IsForward", isForward, false);
+                        isForward = false;
+                    } else if (lines[4].equals("f") && !isForward) {
+                        notifyPropertyChangeListener("IsForward", isForward, true);
+                        isForward = true;
+                    }
+                    if (lines[5].equals("1") && !this.f1) {
+                        notifyPropertyChangeListener(Throttle.F1, this.f1, true);
+                        this.f1 = true;
+                    } else if (lines[5].equals("0") && this.f1) {
+                        notifyPropertyChangeListener(Throttle.F1, this.f1, false);
+                        this.f1 = false;
+                    }
+                    if (lines[6].equals("1") && !this.f2) {
+                        notifyPropertyChangeListener(Throttle.F2, this.f2, true);
+                        this.f2 = true;
+                    } else if (lines[6].equals("0") && this.f2) {
+                        notifyPropertyChangeListener(Throttle.F2, this.f2, false);
+                        this.f2 = false;
+                    }
+                    if (lines[7].equals("1") && !this.f3) {
+                        notifyPropertyChangeListener(Throttle.F3, this.f3, true);
+                        this.f3 = true;
+                    } else if (lines[7].equals("0") && this.f3) {
+                        notifyPropertyChangeListener(Throttle.F3, this.f3, false);
+                        this.f3 = false;
+                    }
+                    if (lines[8].equals("1") && !this.f4) {
+                        notifyPropertyChangeListener(Throttle.F4, this.f4, true);
+                        this.f4 = true;
+                    } else if (lines[8].equals("0") && this.f4) {
+                        notifyPropertyChangeListener(Throttle.F4, this.f4, false);
+                        this.f4 = false;
+                    }
+                } catch (Exception ex) {
+                    log.error("Error phrasing reply from MC " + ex);
                 }
-                if (lines[3].equals("1") && !this.f2) {
-                    notifyPropertyChangeListener(Throttle.F2, this.f2, true);
-                    this.f2 = true;
-                } else if (lines[3].equals("0") && this.f2) {
-                    notifyPropertyChangeListener(Throttle.F2, this.f2, false);
-                    this.f2 = false;
+            } else if (tr.match("FX " + address.getNumber()) >= 0) {
+                String[] lines = tr.toString().split(" ");
+                try {
+                    if (lines[2].equals("1") && !this.f9) {
+                        notifyPropertyChangeListener(Throttle.F9, this.f9, true);
+                        this.f9 = true;
+                    } else if (lines[2].equals("0") && this.f9) {
+                        notifyPropertyChangeListener(Throttle.F9, this.f9, false);
+                        this.f9 = false;
+                    }
+                    if (lines[3].equals("1") && !this.f10) {
+                        notifyPropertyChangeListener(Throttle.F10, this.f10, true);
+                        this.f10 = true;
+                    } else if (lines[3].equals("0") && this.f10) {
+                        notifyPropertyChangeListener(Throttle.F10, this.f10, false);
+                        this.f10 = false;
+                    }
+                    if (lines[4].equals("1") && !this.f11) {
+                        notifyPropertyChangeListener(Throttle.F11, this.f11, true);
+                        this.f11 = true;
+                    } else if (lines[4].equals("0") && this.f11) {
+                        notifyPropertyChangeListener(Throttle.F11, this.f11, false);
+                        this.f11 = false;
+                    }
+                    if (lines[5].equals("1") && !this.f12) {
+                        notifyPropertyChangeListener(Throttle.F12, this.f12, true);
+                        this.f12 = true;
+                    } else if (lines[5].equals("0") && this.f12) {
+                        notifyPropertyChangeListener(Throttle.F12, this.f12, false);
+                        this.f12 = false;
+                    }
+                    if (lines[6].equals("1") && !this.f13) {
+                        notifyPropertyChangeListener(Throttle.F13, this.f13, true);
+                        this.f13 = true;
+                    } else if (lines[6].equals("0") && this.f13) {
+                        notifyPropertyChangeListener(Throttle.F13, this.f13, false);
+                        this.f13 = false;
+                    }
+                    if (lines[7].equals("1") && !this.f14) {
+                        notifyPropertyChangeListener(Throttle.F14, this.f14, true);
+                        this.f14 = true;
+                    } else if (lines[7].equals("0") && this.f14) {
+                        notifyPropertyChangeListener(Throttle.F14, this.f14, false);
+                        this.f14 = false;
+                    }
+                } catch (Exception ex) {
+                    log.error("Error phrasing reply from MC " + ex);
                 }
-                if (lines[4].equals("1") && !this.f3) {
-                    notifyPropertyChangeListener(Throttle.F3, this.f3, true);
-                    this.f3 = true;
-                } else if (lines[4].equals("0") && this.f3) {
-                    notifyPropertyChangeListener(Throttle.F3, this.f3, false);
-                    this.f3 = false;
-                }
-                if (lines[5].equals("1") && !this.f4) {
-                    notifyPropertyChangeListener(Throttle.F4, this.f4, true);
-                    this.f4 = true;
-                } else if (lines[5].equals("0") && this.f4) {
-                    notifyPropertyChangeListener(Throttle.F4, this.f4, false);
-                    this.f4 = false;
-                }
+            } else if (tr.match("F " + address.getNumber()) >= 0) {
+                String[] lines = tr.toString().split(" ");
+                try {
+                    if (lines[2].equals("1") && !this.f1) {
+                        notifyPropertyChangeListener(Throttle.F1, this.f1, true);
+                        this.f1 = true;
+                    } else if (lines[2].equals("0") && this.f1) {
+                        notifyPropertyChangeListener(Throttle.F1, this.f1, false);
+                        this.f1 = false;
+                    }
+                    if (lines[3].equals("1") && !this.f2) {
+                        notifyPropertyChangeListener(Throttle.F2, this.f2, true);
+                        this.f2 = true;
+                    } else if (lines[3].equals("0") && this.f2) {
+                        notifyPropertyChangeListener(Throttle.F2, this.f2, false);
+                        this.f2 = false;
+                    }
+                    if (lines[4].equals("1") && !this.f3) {
+                        notifyPropertyChangeListener(Throttle.F3, this.f3, true);
+                        this.f3 = true;
+                    } else if (lines[4].equals("0") && this.f3) {
+                        notifyPropertyChangeListener(Throttle.F3, this.f3, false);
+                        this.f3 = false;
+                    }
+                    if (lines[5].equals("1") && !this.f4) {
+                        notifyPropertyChangeListener(Throttle.F4, this.f4, true);
+                        this.f4 = true;
+                    } else if (lines[5].equals("0") && this.f4) {
+                        notifyPropertyChangeListener(Throttle.F4, this.f4, false);
+                        this.f4 = false;
+                    }
 
-                if (lines[6].equals("1") && !this.f5) {
-                    notifyPropertyChangeListener(Throttle.F5, this.f5, true);
-                    this.f5 = true;
-                } else if (lines[6].equals("0") && this.f5) {
-                    notifyPropertyChangeListener(Throttle.F5, this.f5, false);
-                    this.f5 = false;
+                    if (lines[6].equals("1") && !this.f5) {
+                        notifyPropertyChangeListener(Throttle.F5, this.f5, true);
+                        this.f5 = true;
+                    } else if (lines[6].equals("0") && this.f5) {
+                        notifyPropertyChangeListener(Throttle.F5, this.f5, false);
+                        this.f5 = false;
+                    }
+                    if (lines[7].equals("1") && !this.f6) {
+                        notifyPropertyChangeListener(Throttle.F6, this.f6, true);
+                        this.f6 = true;
+                    } else if (lines[7].equals("0") && this.f6) {
+                        notifyPropertyChangeListener(Throttle.F6, this.f6, false);
+                        this.f6 = false;
+                    }
+                    if (lines[8].equals("1") && !this.f7) {
+                        notifyPropertyChangeListener(Throttle.F7, this.f7, true);
+                        this.f7 = true;
+                    } else if (lines[8].equals("0") && this.f7) {
+                        notifyPropertyChangeListener(Throttle.F7, this.f7, false);
+                        this.f7 = false;
+                    }
+                    if (lines[9].equals("1") && !this.f8) {
+                        notifyPropertyChangeListener(Throttle.F8, this.f8, true);
+                        this.f8 = true;
+                    } else if (lines[9].equals("0") && this.f8) {
+                        notifyPropertyChangeListener(Throttle.F8, this.f8, false);
+                        this.f8 = false;
+                    }
+                } catch (Exception ex) {
+                    log.error("Error phrasing reply from MC " + ex);
                 }
-                if (lines[7].equals("1") && !this.f6) {
-                    notifyPropertyChangeListener(Throttle.F6, this.f6, true);
-                    this.f6 = true;
-                } else if (lines[7].equals("0") && this.f6) {
-                    notifyPropertyChangeListener(Throttle.F6, this.f6, false);
-                    this.f6 = false;
-                }
-                if (lines[8].equals("1") && !this.f7) {
-                    notifyPropertyChangeListener(Throttle.F7, this.f7, true);
-                    this.f7 = true;
-                } else if (lines[8].equals("0") && this.f7) {
-                    notifyPropertyChangeListener(Throttle.F7, this.f7, false);
-                    this.f7 = false;
-                }
-                if (lines[9].equals("1") && !this.f8) {
-                    notifyPropertyChangeListener(Throttle.F8, this.f8, true);
-                    this.f8 = true;
-                } else if (lines[9].equals("0") && this.f8) {
-                    notifyPropertyChangeListener(Throttle.F8, this.f8, false);
-                    this.f8 = false;
-                }
-            } catch (Exception ex) {
-                log.error("Error phrasing reply from MC " + ex);
-            }
-        } else if (m.toString().equals("ERROR: no data.")) {
-            log.debug("Loco has no data");
+            } else if (tr.toString().equals("ERROR: no data.")) {
+                log.debug("Loco has no data");
+            }            
         }
     }
 

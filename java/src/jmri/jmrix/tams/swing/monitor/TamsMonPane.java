@@ -18,6 +18,8 @@ import jmri.jmrix.tams.swing.TamsPanelInterface;
  */
 public class TamsMonPane extends jmri.jmrix.AbstractMonPane implements TamsListener, TamsPanelInterface {
 
+    private static final long serialVersionUID = -504993705019695728L;
+
     private TamsMessage tm; //Keeping a local copy of the latest TamsMessage for helping with decoding
 
     public TamsMonPane() {

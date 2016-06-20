@@ -32,7 +32,7 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     //Extend the class with extra Tams Specific variables
-	private char _replyType = 'X';//C(ommand Station), S(ensor), T(urnout), P(ower), L(oco), X(Undefined)
+	private char _replyType = 'X';//C(ommand Station), S(ensor), T(urnout), P(ower), L(oco), X(Undefined), M(anual) via PacketGen
 
     public char getReplyType() {
         return _replyType;
@@ -172,7 +172,7 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
         m.setReplyOneByte(false);
         m.setReplyLastByte(TamsConstants.EOM80);//No more loco data is following
         m.setReplyType('L');
-        log.info("Preformatted Tams message = " + Integer.toHexString(m.getElement(0)) + " " + Integer.toHexString(m.getElement(1)));
+        //log.info("Preformatted Tams message = " + Integer.toHexString(m.getElement(0)) + " " + Integer.toHexString(m.getElement(1)));
         return m;
     }
     

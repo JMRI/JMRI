@@ -35,7 +35,7 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
         
     //This dummy message is used in case we expect a reply from polling
     static private TamsMessage myDummy() {
-        log.info("*** myDummy ***");
+        //log.info("*** myDummy ***");
         TamsMessage m = new TamsMessage(2);
         m.setElement(0, TamsConstants.POLLMSG & TamsConstants.MASKFF);
         m.setElement(1, TamsConstants.XEVTSEN & TamsConstants.MASKFF);

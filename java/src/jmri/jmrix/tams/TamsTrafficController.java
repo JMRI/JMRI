@@ -10,7 +10,6 @@ import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractMRTrafficController;
 import jmri.jmrix.tams.swing.monitor.TamsMonPane;
-import jmri.jmrix.tams.swing.packetgen.PacketGenPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -110,17 +109,12 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
         //log.info("TamsMessage = " + jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(0) & 0xFF, "") + " " + jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(1) & 0xFF, "") + " and replyType = " + tm.getReplyType());
         //Only forward messages to the correct listener
         if ((client instanceof TamsPowerManager && tm.getReplyType() == 'P') ||
-                (client instanceof TamsThrottleManager && tm.getReplyType() == 'L') ||
+                (client instanceof TamsThrottle && tm.getReplyType() == 'L') ||
                 (client instanceof TamsTurnout && tm.getReplyType() == 'T' && !tm.isBinary()) ||
                 (client instanceof TamsTurnoutManager && tm.getReplyType() == 'T' && tm.isBinary()) ||
-                (client instanceof TamsSensorManager && tm.getReplyType() == 'S') ||
-                (client instanceof TamsMonPane || client instanceof PacketGenPanel)) {
-            ((TamsListener) client).reply((TamsReply) tr);
-        }
-        //Must also forward all messages to TamsMonPane, PachetGenPanel and all ASCII messages
-        if ((tm.getReplyType() == 'C') || (tm.getReplyType() == 'X')) {
-            //For now simply forward all messages in ACSII or unknown format to all listeners
-            ((TamsListener) client).reply((TamsReply) tr);
+                (client instanceof TamsSensorManager && tm.getReplyType() == 'S') || 
+                client instanceof TamsMonPane) {
+            ((TamsListener)client).reply((TamsReply) tr);
         }
     }
 
@@ -168,21 +162,26 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
     public void addPollMessage(TamsMessage tm, TamsListener tl) {
         log.info("*** addPollMessage ***");
         tm.setTimeout(100);
+        boolean found = false;
         for (PollMessage pm : pollQueue) {
+            log.info ("comparing poll messages: " + pm.getMessage().toString() + " " + tm.toString());
             if (pm.getListener() == tl && pm.getMessage().toString().equals(tm.toString())) {
                 log.info("Message is already in the poll queue so will not add");
-                return;
+                found = true;
             }
         }
-        PollMessage pm = new PollMessage(tm, tl);
-        pollQueue.offer(pm);
+        if (!found){
+            log.info("Added to poll queue = " + tm.toString());
+            PollMessage pm = new PollMessage(tm, tl);
+            pollQueue.offer(pm);
+        }
     }
 
     /**
      * Removes a message that is used for polling from the queue
      */
     public void removePollMessage(TamsMessage tm, TamsListener tl) {
-        log.info("*** removePollMessage ***");
+        //log.info("*** removePollMessage ***");
         for (PollMessage pm : pollQueue) {
             if (pm.getListener() == tl && pm.getMessage().toString().equals(tm.toString())) {
                 pollQueue.remove(pm);
@@ -203,7 +202,7 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
         if (!pollQueue.isEmpty()) {
             PollMessage pm = pollQueue.peek();
             if (pm != null) {
-                log.info("PollMessage = " + pm.getMessage().toString());
+                //log.info("PollMessage = " + pm.getMessage().toString());
                 tm = pm.getMessage();
                 return pm.getMessage();
             }
@@ -212,7 +211,7 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
     }
 
     protected AbstractMRListener pollReplyHandler() {
-        log.info("*** pollReplyHandler ***");
+        //log.info("*** pollReplyHandler ***");
         if (disablePoll) {
             return null;
         }
@@ -231,14 +230,14 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
      * Forward a pre-formatted message to the actual interface.
      */
     public void sendTamsMessage(TamsMessage m, TamsListener tl) {
-        log.info("*** TamsMessage ***");
+        //log.info("*** TamsMessage ***");
         tm = m;
         tmq.offer(tm);
-        log.info("Length of TamsMessage Queue: " + tmq.size());
+        //log.info("Length of TamsMessage Queue: " + tmq.size());
         if (tm.isBinary()) {
-            log.info("Binary TamsMessage = " + jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(0) & 0xFF, "") + " " + jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(1) & 0xFF, "") + " and replyType = " + tm.getReplyType());
+            //log.info("Binary TamsMessage = " + jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(0) & 0xFF, "") + " " + jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(1) & 0xFF, "") + " and replyType = " + tm.getReplyType());
         } else {
-            log.info("ASCII TamsMessage = " + tm.toString() + " and replyType = " + tm.getReplyType());
+            //log.info("ASCII TamsMessage = " + tm.toString() + " and replyType = " + tm.getReplyType());
         }
         sendMessage(tm, tl);
     }
@@ -283,7 +282,7 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
      * @return Number of bytes
      */
     protected int lengthOfByteStream(TamsMessage m) {
-        log.info("*** lengthOfByteStream ***");
+        //log.info("*** lengthOfByteStream ***");
         int len = m.getNumDataElements();
         int cr = 0;
         if (!m.isBinary())
@@ -301,29 +300,27 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
     protected int index = 0; //Helper variable used keep track of where we are in the message
     
     protected TamsReply newReply() {
-        log.info("*** TamsReply ***");
+        //log.info("*** TamsReply ***");
+        //log.info("myCounter = " + myCounter);
         TamsReply reply = new TamsReply();
         if (!tmq.isEmpty()){
             tm = tmq.peek();
             if (tm.isBinary()) {
-                log.info("Binary TamsMessage = " + jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(0) & 0xFF, "") + " " + jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(1) & 0xFF, "") + " and replyType = " + tm.getReplyType());
+                //log.info("Binary TamsMessage = " + jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(0) & 0xFF, "") + " " + jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(1) & 0xFF, "") + " and replyType = " + tm.getReplyType());
             } else {
-                log.info("ASCII TamsMessage = " + tm.toString() + " and replyType = " + tm.getReplyType());
+                //log.info("ASCII TamsMessage = " + tm.toString() + " and replyType = " + tm.getReplyType());
             }
         } else {
-            log.info("No TamsMessages in the queue!");
+            //log.info("No TamsMessages in the queue!");
         }
         if (tm != null){//Only when there is a valid TamsMessage
             if (tm.isBinary()) {//Binary reply so must makes sure the reply get initialized as ArrayList of integers
-                log.info("Binary TamsMessage = " + jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(0) & 0xFF, "") + " " + jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(1) & 0xFF, "") + " and replyType = " + tm.getReplyType() + " and isBinary = " + tm.isBinary());
+                //log.info("Binary TamsMessage = " + jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(0) & 0xFF, "") + " " + jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(1) & 0xFF, "") + " and replyType = " + tm.getReplyType() + " and isBinary = " + tm.isBinary());
                 //reply.setBinary(true);;
             } else {//ASCII reply so just return the string
-                log.info("ASCII TamsMessage = " + tm.toString() + " and replyType = " + tm.getReplyType() + " and isBinary = " + tm.isBinary());
+                //log.info("ASCII TamsMessage = " + tm.toString() + " and replyType = " + tm.getReplyType() + " and isBinary = " + tm.isBinary());
                 //reply.setBinary(false);;
             }
-            /*if (reply !=null) {
-                reply.setSource(tm);
-            }*/
         }
         return reply;
     }
@@ -333,10 +330,10 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
     protected boolean endOfMessage(AbstractMRReply reply) {
         TamsReply tr = (TamsReply)reply;
         if (tr.isBinary()) {//Binary reply so must makes sure the reply get initialized as ArrayList of integers
-            log.info("Binary TamsReply");
+            //log.info("Binary TamsReply");
             //reply.setBinary(true);;
         } else {//ASCII reply so just return the string
-            log.info("ASCII TamsReply");
+            //log.info("ASCII TamsReply");
             //reply.setBinary(false);;
         }
         //log.info("*** endOfMessage ***");
@@ -344,13 +341,13 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
             tm = tmq.peek();
             if (tm != null){//Only when there is a valid TamsMessage
                 if (tm.isBinary()) {//Binary reply so must makes sure the reply get initialized as ArrayList of integers
-                    log.info("Binary TamsMessage = " + jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(0) & 0xFF, "") + " " + jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(1) & 0xFF, "") + " and replyType = " + tm.getReplyType() + " and isBinary = " + tm.isBinary());
+                    //log.info("Binary TamsMessage = " + jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(0) & 0xFF, "") + " " + jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(1) & 0xFF, "") + " and replyType = " + tm.getReplyType() + " and isBinary = " + tm.isBinary());
                 } else {//ASCII reply so just return the string
-                    log.info("ASCII TamsMessage = " + tm.toString() + " and replyType = " + tm.getReplyType() + " and isBinary = " + tm.isBinary());
+                    //log.info("ASCII TamsMessage = " + tm.toString() + " and replyType = " + tm.getReplyType() + " and isBinary = " + tm.isBinary());
                 }
             }
         } else {
-            log.info("No TamsMessages in the queue!");
+            //log.info("No TamsMessages in the queue!");
         }
         // Input is a continuous stream of characters and we must chop them up into separate messages
         index = tr.getNumDataElements() - 1;
@@ -370,9 +367,9 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
                 if (tm.getReplyType() == 'S'){
                     // Sensor replies are grouped per 3 (AA BB CC) when a new group has 0x00 as AA then this is the end of the message
                     // BUT 0x00 is also a valid byte in the 2 data bytes (BB CC) of a sensor read
-                    log.info("*** Receiving Sensor Reply ***");
+                    //log.info("*** Receiving Sensor Reply ***");
                     groupSize = 3;
-                    log.info("Looking for byte# = " + (groupSize * myCounter + 1) + " and index = " + index + " and expect as last byte = " + tm.getReplyLastByte());
+                    //log.info("Looking for byte# = " + (groupSize * myCounter + 1) + " and index = " + index + " and expect as last byte = " + tm.getReplyLastByte());
                     if (tr.getNumDataElements() == (groupSize * myCounter + 1) && tr.getElement(index) == tm.getReplyLastByte()){
                         myCounter = 0;
                         endReached = true;
@@ -390,13 +387,13 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
                     // The first byte of a reply can be 0x00 or hold the value of the number messages that will follow
                     // Turnout replies are grouped per 2 (AA BB) 
                     // 0x00 is also a valid byte in the 2 data bytes (AA BB) of a turnout read
-                    log.info("*** Receiving Turnout Reply ***");
+                    //log.info("*** Receiving Turnout Reply ***");
                     numberOfNibbles = tr.getElement(0);
                     if (numberOfNibbles > 50) {
                         numberOfNibbles = 50;
                     }
                     messageLength = numberOfNibbles * 2;
-                    log.info("Number of turnout events# = " + numberOfNibbles);
+                    //log.info("Number of turnout events# = " + numberOfNibbles);
                     if (myCounter < messageLength){
                         //log.info("myCounter = " + myCounter + ", reply length= " + tr.getNumDataElements());
                         myCounter++;
@@ -407,14 +404,28 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
                         //log.info("myCounter = " + myCounter);
                         log.info("T - End reached!");
                     }
-                    //myCounter = 0;
                 }
                 // Loco reply
                 if (tm.getReplyType() == 'L'){
-                    log.info("*** Receiving Loco Reply ***");
-                    myCounter = 0;
-                    log.info("L - End reached!");
-                    endReached = true;
+                    // The first byte of a reply can be 0x80 or if different messages will follow, 0x80 will be the last byte
+                    // Loco replies are grouped per 5 (AA BB CC DD EE) 
+                    // Anything is a valid byte in the 5 data bytes (AA BB CC DD EE) of a Loco read
+                    //log.info("*** Receiving Loco Reply ***");
+                    //log.info("Current byte = " + jmri.util.StringUtil.appendTwoHexFromInt(tr.getElement(index) & 0xFF, ""));
+                    groupSize = 5;
+                    if (((tr.getElement(index) & 0xFF) == TamsConstants.EOM80)){//Condition must be enhanced to not stop in the middle of a reply
+                        myCounter = 0;
+                        endReached = true;
+                        if (index > 1){//OK we have a real message
+                            //log.info("reply = " + jmri.util.StringUtil.appendTwoHexFromInt(tr.getElement(0) & 0xFF, "") + " " + jmri.util.StringUtil.appendTwoHexFromInt(tr.getElement(1) & 0xFF, "") + " " + jmri.util.StringUtil.appendTwoHexFromInt(tr.getElement(2) & 0xFF, "") + " " + jmri.util.StringUtil.appendTwoHexFromInt(tr.getElement(3) & 0xFF, "") + " " + jmri.util.StringUtil.appendTwoHexFromInt(tr.getElement(4) & 0xFF, ""));
+                        }
+                        log.info("L - End reached!");
+                    } else {
+                        if (tr.getNumDataElements() == (groupSize * myCounter + 1)){
+                            myCounter++;
+                        }
+                        endReached = false;
+                    }
                 }
             }
         } else {// ASCII reply
@@ -424,7 +435,7 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
                 endReached = false;
             } else {
                 _isBinary = tr.isBinary();
-                log.info("ASCII reply = " + tr.toString() + " isBinary = " + _isBinary);
+                //log.info("ASCII reply = " + tr.toString() + " isBinary = " + _isBinary);
                 //tm = tr.getSource();
                 //log.info("Source = " + tm.toString() + " isBinary = " + tm.isBinary());
                 myCounter = 0;
@@ -440,7 +451,7 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
             if(!tmq.isEmpty()){
                 log.info("This message is at the head: " + tmq.peek().toString());
             } else {
-                log.info("The queue is empty");
+                //log.info("The queue is empty");
             }
         }
         return endReached;
