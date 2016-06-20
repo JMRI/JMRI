@@ -19,10 +19,7 @@ package apps;
  * completely clear which is being used at each point.  That makes this the
  * code less readable, so it's not recommended for general use.
  * <p>
- * Summary: <ul>
- * <li>
- * <li>
- * </ul>
+ * @see apps.FindBugsCheck
  * @author Bob Jacobsen 2016
  */
 public class CheckerFrameworkCheck {
