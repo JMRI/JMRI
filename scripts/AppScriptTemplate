@@ -69,9 +69,8 @@ function parse_args() {
             --cp:p) pre_classpath="${2}" ; shift ;;
             --cp:p=*) pre_classpath="${1#*=}" ;;
             # use named configuration
-            --config) CONFIGNAME="$2" ; shift ;;
+            -c|--config) CONFIGNAME="$2" ; shift ;;
             --config=*) CONFIGNAME="${1#*=}" ;;
-            -c) CONFIGNAME="$2" ; shift ;;
             # debugging
             -d|--debug) DEBUG="yes" ;;
             # help
@@ -82,9 +81,8 @@ function parse_args() {
             # JVM arguments other than max memory
             -J*) JMRI_OPTIONS="${JMRI_OPTIONS} ${1#-J}" ;;
             # JMRI configuration profile
-            --profile) JMRI_OPTIONS="${JMRI_OPTIONS} -Dorg.jmri.profile=$2" ; shift ;;
+            -p|--profile) JMRI_OPTIONS="${JMRI_OPTIONS} -Dorg.jmri.profile=$2" ; shift ;;
             --profile=*) JMRI_OPTIONS="${JMRI_OPTIONS} -Dorg.jmri.profile=${1#*=}" ;;
-            -p) JMRI_OPTIONS="${JMRI_OPTIONS} -Dorg.jmri.profile=$2" ; shift ;;
             # serial ports
             --serial-ports) JMRI_SERIAL_PORTS="${2}" ;;
             --serial-ports=*) JMRI_SERIAL_PORTS="${1#*=}" ; shift ;;
