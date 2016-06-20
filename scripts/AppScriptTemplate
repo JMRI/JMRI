@@ -93,30 +93,35 @@ function parse_args() {
 
 # get the default heap size for JMRI
 function heap_size() {
-    mem=640
-    case "`uname`" in
-        Linux*)
-            mem=`cat /proc/meminfo | grep MemTotal | tr -d [:space:][:alpha:]:`
-            mem=`expr $mem / 1024`
-            ;;
-        SunOS*)
-            mem=`/usr/sbin/prtconf | grep Memory | /usr/bin/tr -dc '[0-9]'`
-            ;;
-        Darwin*)
-            mem=`/usr/sbin/sysctl hw.memsize | tr -d [:alpha:][:space:].:`
-            mem=`expr $mem / 1048576`
-            ;;
-        *)
-            ;;
-    esac
-    if [ -z "$mem" ] ; then
-        mem=640
-    fi
-    mem=`expr $mem / 2`
-    if [ $mem -gt 768 ] ; then
-        mem=768
-    elif [ $mem -lt 192 ] ; then
-        mem=192
+    # get Java heap size
+    mem=$( java -XX:+PrintFlagsFinal -version 2>/dev/null | grep MaxHeapSize | awk '{print $4}' )
+    mem=$( expr ${mem} / 1048576 ) # bytes to MB
+    # if heap < 768MB, calculate our own
+    if [ ${mem} -lt 768 ] ; then
+        case "$( uname )" in
+            Linux*)
+                mem=$( cat /proc/meminfo | grep MemTotal | tr -d [:space:][:alpha:]: )
+                mem=$( expr $mem / 1024 )
+                ;;
+            SunOS*)
+                mem=$( /usr/sbin/prtconf | grep Memory | /usr/bin/tr -dc '[0-9]' )
+                ;;
+            Darwin*)
+                mem=$( /usr/sbin/sysctl hw.memsize | tr -d [:alpha:][:space:].: )
+                mem=$( expr $mem / 1048576 )
+                ;;
+            *)
+                ;;
+        esac
+        if [ -z "$mem" ] ; then
+            mem=640
+        fi
+        mem=$( expr $mem / 2 )
+        if [ $mem -gt 768 ] ; then
+            mem=768
+        elif [ $mem -lt 192 ] ; then
+            mem=192
+        fi
     fi
     echo $mem
     return 0
@@ -196,7 +201,7 @@ parse_args $@
 
 ## ask the user if they want to install Java, and open the Java web site if yes
 OfferJavaDownload() {
-    x=`/usr/bin/osascript << EOT
+    x=$( /usr/bin/osascript << EOT
     tell application "Finder"
     activate
     set myReply to button returned of (display dialog "No Java can be found on the system.\nWould you like to download Java now?" \
@@ -205,7 +210,7 @@ OfferJavaDownload() {
          with title "JMRI Installation Problem")
     end tell
 EOT
-  `
+    )
     if [ "$x" = "Yes" ] ; then
         open http://java.com/
     fi
@@ -215,7 +220,7 @@ EOT
 
 if [ -z "$OS" ] ; then
     # start finding the architecture specific library directories
-    OS=`uname -s`
+    OS=$( uname -s )
 
     # normalize to match our standard names
     if [ "$OS" = "Linux" ] ; then
@@ -303,7 +308,7 @@ fi
 
 if [ -z "$ARCH" ] ; then
     for cmd in "arch" "uname -i" "uname -p" "uname -m" ; do
-        ARCH=`$cmd 2>/dev/null`
+        ARCH=$( $cmd 2>/dev/null )
         if [ -n "$ARCH" ] ; then
             # canonicalize the architecture names where possible
             # we currently have AMD64 / X86_64
@@ -325,7 +330,7 @@ if [ -z "$ARCH" ] ; then
             if [ "${ARCH:0:3}" = "arm" ] ; then
 
                 #determine arm version & hard vs. soft float using readelf
-                ARCHVERSION=`readelf -A /proc/self/exe | grep Tag_CPU_arch | cut -d : -f2`
+                ARCHVERSION=$( readelf -A /proc/self/exe | grep Tag_CPU_arch | cut -d : -f2 )
                 if [ -z "$ARCHVERSION" -o "${ARCHVERSION:1:2}" = "v5" ] ; then
                     ARCH="armv5"
                 elif [ "${ARCHVERSION:1:2}" = "v6" ] ; then
@@ -356,14 +361,14 @@ fi
 # build classpath dynamically
 CP="${pre_classpath}:.:classes:java/classes"
 # list of jar files in home, not counting jmri.jar
-LOCALJARFILES=`ls ${LIBDIR}/*.jar | grep -v jmri.jar | tr "\n" ":"`
+LOCALJARFILES=$( ls ${LIBDIR}/*.jar | grep -v jmri.jar | tr "\n" ":" )
 if [ ${LOCALJARFILES} ] ; then
     CP="${CP}:${LOCALJARFILES}"
 fi
 # add jmri.jar
 CP="${CP}:jmri.jar"
 # and contents of lib
-CP="${CP}:`ls -m ${LIBDIR}/*.jar | tr -d ' \n' | tr ',' ':'`"
+CP="${CP}:$( ls -m ${LIBDIR}/*.jar | tr -d ' \n' | tr ',' ':' )"
 
 if [ -d /System/Library/Java ] ; then
     CP="${CP}":/System/Library/Java
@@ -380,9 +385,9 @@ CP="${CP}:${post_classpath}"
 # If not provided, build config file name dynamically
 if [ "$OS" = "macosx" ] ; then
     # OS X can have spaces in the application name
-    APPNAME=`basename -s .app "${BUNDLEDIR}"`
+    APPNAME=$( basename -s .app "${BUNDLEDIR}" )
 else
-    APPNAME=`basename "$0"`
+    APPNAME=$( basename "$0" )
 fi
 
 [ -n "${DEBUG}" ] && echo "APPNAME: '${APPNAME}'"
@@ -391,7 +396,7 @@ fi
 # NOT the default one this script was built for.
 if [ "$APPNAME" != "$DEFAULT_APP_NAME" ] ; then
     if [ -z "${CONFIGNAME}" ] ; then
-        CONFIGNAME=`echo $APPNAME | tr -d '[:space:]' | tr -d '=' `
+        CONFIGNAME=$( echo $APPNAME | tr -d '[:space:]' | tr -d '=' )
     fi
     CONFIGFILE="config=${CONFIGNAME}Config.xml"
     [ -n "${DEBUG}" ] && echo "CONFIGFILE: '${CONFIGFILE}'"
@@ -410,7 +415,7 @@ if [ "$OS" = "macosx" ] ; then
     if [ -f "${BUNDLEDIR}/Contents/Resources/@ICON@.icns" ] ; then
         APPICON="${BUNDLEDIR}/Contents/Resources/@ICON@.icns"
     else
-        APPICON=`find "${BUNDLEDIR}" | grep -s -m 1 icns`
+        APPICON=$( find "${BUNDLEDIR}" | grep -s -m 1 icns )
     fi
 fi
 
