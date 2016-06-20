@@ -217,21 +217,6 @@ EOT
     exit 1
 }
 
-
-if [ -z "$OS" ] ; then
-    # start finding the architecture specific library directories
-    OS=$( uname -s )
-
-    # normalize to match our standard names
-    if [ "$OS" = "Linux" ] ; then
-      OS="linux"
-    fi
-
-    if [ "$OS" = "Darwin" ] ; then
-      OS="macosx"
-    fi
-fi
-
 #
 # macOS / OS X has a bewildering array of possibilities these days
 #
