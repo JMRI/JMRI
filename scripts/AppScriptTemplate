@@ -2,22 +2,31 @@
 #
 # Script to start a JMRI @VERSION@ application
 #
-# This script is used for both the Linux command line and in the Mac
-# OS X application bundle
+# This script is used for both all POSIX operating systems including Linux
+# and macOS / OS X application bundles
 #
-# If you need to add any additional Java options or defines,
-# include them in the JMRI_OPTIONS environment variable
+# If you need to add any additional Java options or persistent command line
+# arguments, include them in the "default_options" statement in the file
+# jmri.conf in the settings directory.
 #
-# If your serial ports are not shown in the initial list, you
-# can include them in the environment variable JMRI_SERIAL_PORTS
-# separated by commas:
-#    export JMRI_SERIAL_PORTS="/dev/locobuffer,/dev/cmri"
+# The default location for the settings directory is:
+# - macOS / OS X: ${HOME}/Library/Preferences/JMRI
+# - all other: ${HOME}/.jmri
 #
-# You can run separate instances of the program with their
-# own preferences and setup if you either
-# *) Provide the name of a configuration file as a parameter
+# The settings directory can be set to a non-standard location using the
+# "--settingsdir /path/to/my/settings" command line option (unlike all other
+# options, this one cannot be set in the jmri.conf file, since it determines
+# where the jmri.conf file will be read from).
+#
+# If your serial ports are not in the default list, include them in the
+# command line argument --serial-ports separated by commas:
+#    --serial-ports=/dev/locobuffer,/dev/cmri
+#
+# You can run separate instances of the program with their own preferences
+# if you
+# - Provide the name of a configuration file as a parameter
 # or
-# *) Copy and rename this script.
+# - Copy and rename this script.
 #
 # If you rename the script to e.g. JmriNew, it will use "JmriNewConfig.xml"
 # as it's configuration file.  You can then set and save the preferences for
@@ -28,18 +37,90 @@
 #
 # For more information, please see
 # http://jmri.org/help/en/html/doc/Technical/StartUpScripts.shtml
-#
-# $Revision$ (SVN maintains this line, do not edit please)
-#
 
+# prevent the use of unbound variables
+set -u
+
+# display valid arguments
 function usage() {
-cat <<EOM
+    cat <<EOM
 Usage: $( basename $0 ) [--help] [OPTIONS]
   -c CONFIG, --config=CONFIG     Start JMRI with configuration CONFIG
+  --cp:a=CLASSPATH               Append specified JARs to the classpath
+  --cp:p=CLASSPATH               Prepend specified JARs to the classpath
   -d, --debug                    Add verbose output to this script
   -JOPTION                       Pass the option OPTION to the JVM
   -p PROFILE, --profile=PROFILE  Start JMRI with the profile PROFILE
+  --serial-ports=SERIAL_PORTS    Use the serial ports in SERIAL_PORTS
+  --settingsdir=SETTINGS_DIR     Use SETTINGS_DIR as the settings directory
 EOM
+}
+
+# parse passed in arguments from either default_options or command line
+# except --settingsdir argument
+function parse_args() {
+    while [ $# -gt 0 ] ; do
+        case "${1}" in
+            # append to classpath
+            --cp:a) post_classpath="${2}" ; shift ;;
+            --cp:a=*) post_classpath="${1#*=}" ;;
+            # prepend to classpath
+            --cp:p) pre_classpath="${2}" ; shift ;;
+            --cp:p=*) pre_classpath="${1#*=}" ;;
+            # use named configuration
+            --config) CONFIGNAME="$2" ; shift ;;
+            --config=*) CONFIGNAME="${1#*=}" ;;
+            -c) CONFIGNAME="$2" ; shift ;;
+            # debugging
+            -d|--debug) DEBUG="yes" ;;
+            # help
+            --help) usage ; exit 2 ;;
+            # heap sizes
+            -JXms*) jmri_xms="${1#-J}" ;;
+            -JXmx*) jmri_xmx="${1#-J}" ;;
+            # JVM arguments other than max memory
+            -J*) JMRI_OPTIONS="${JMRI_OPTIONS} ${1#-J}" ;;
+            # JMRI configuration profile
+            --profile) JMRI_OPTIONS="${JMRI_OPTIONS} -Dorg.jmri.profile=$2" ; shift ;;
+            --profile=*) JMRI_OPTIONS="${JMRI_OPTIONS} -Dorg.jmri.profile=${1#*=}" ;;
+            -p) JMRI_OPTIONS="${JMRI_OPTIONS} -Dorg.jmri.profile=$2" ; shift ;;
+            # serial ports
+            --serial-ports) JMRI_SERIAL_PORTS="${2}" ;;
+            --serial-ports=*) JMRI_SERIAL_PORTS="${1#*=}" ; shift ;;
+        esac
+        shift
+    done
+}
+
+# get the default heap size for JMRI
+function heap_size() {
+    mem=640
+    case "`uname`" in
+        Linux*)
+            mem=`cat /proc/meminfo | grep MemTotal | tr -d [:space:][:alpha:]:`
+            mem=`expr $mem / 1024`
+            ;;
+        SunOS*)
+            mem=`/usr/sbin/prtconf | grep Memory | /usr/bin/tr -dc '[0-9]'`
+            ;;
+        Darwin*)
+            mem=`/usr/sbin/sysctl hw.memsize | tr -d [:alpha:][:space:].:`
+            mem=`expr $mem / 1048576`
+            ;;
+        *)
+            ;;
+    esac
+    if [ -z "$mem" ] ; then
+        mem=640
+    fi
+    mem=`expr $mem / 2`
+    if [ $mem -gt 768 ] ; then
+        mem=768
+    elif [ $mem -lt 192 ] ; then
+        mem=192
+    fi
+    echo $mem
+    return 0
 }
 
 # get the script's location as an absolute path
@@ -55,22 +136,64 @@ JMRI_OPTIONS=${JMRI_OPTIONS:-}
 # set default config name
 CONFIGNAME=""
 
-# set DEBUG to any non-empty string to see debugging output
-DEBUG=""
+# default memory values
+jmri_xmx="-Xmx$( heap_size )m"
+jmri_xms="-Xms96m"
 
-# process command line arguments
-while [ $# -gt 0 ] ; do
-    case $1 in
-        -d|--debug) DEBUG="yes" ;;
-        --profile=*) JMRI_OPTIONS="${JMRI_OPTIONS} -Dorg.jmri.profile=${1#*=}" ;;
-        -p) JMRI_OPTIONS="${JMRI_OPTIONS} -Dorg.jmri.profile=$2" ; shift ;;
-        --config=*) CONFIGNAME="${1#*=}" ;;
-        -c) CONFIGNAME="$2" ; shift ;;
-        -J*) JMRI_OPTIONS="${JMRI_OPTIONS} ${1#-J}" ;;
-        --help) usage ; exit 2 ;;
-    esac
-    shift
+# JMRI installation location
+JMRI_HOME=${JMRI_HOME:-}
+
+# set DEBUG to any non-empty string to see debugging output
+DEBUG=${DEBUG:-}
+
+# set the OS (can be overridden in enviroment for debugging and development)
+# this value is used to find OS-specific libraries, so it gets normalized
+# in following case statement
+OS=${OS:$( uname -s )}
+ARCH=${ARCH:-}
+
+# set OS-specific settings
+case "${OS}" in
+    macosx|Darwin*)
+        settingsdir="~/Library/Preferences/JMRI"
+        OS="macosx"
+        ;;
+    Linux*)
+        settingsdir="~/.jmri"
+        OS="linux"
+        ;;
+    *)
+        settingsdir="~/.jmri"
+        ;;
+esac
+
+# get the settings directory if set on command line
+found_settingsdir=""
+for opt in "$@"; do
+    if [ "${found_settingsdir}" = "yes" ]; then
+        # --settingsdir /path/to/... part 2
+        settingsdir="$opt"
+        break
+    elif [ "$opt" = "--settingsdir" ]; then
+        # --settingsdir /path/to/... part 1
+        found_settingsdir="yes"
+    elif [[ "$opt" =~ "--settingsdir=" ]]; then
+        # --settingsdir=/path/to/...
+        settingsdir="${opt#*=}"
+        break;
+    fi
 done
+
+# set default_options from the launcher configuration file
+if [ -f "${settingsdir}/jmri.conf" ] ; then
+    source "${settingsdir}/jmri.conf"
+fi
+# ensure default_options is defined, even if not in the configuration file
+default_options=${default_options:-}
+
+# process arguments, stored arguments first, so CLI arguments can override
+parse_args $default_options
+parse_args $@
 
 ## ask the user if they want to install Java, and open the Java web site if yes
 OfferJavaDownload() {
@@ -106,7 +229,7 @@ if [ -z "$OS" ] ; then
 fi
 
 #
-# Mac OS X has a bewildering array of possibilities these days
+# macOS / OS X has a bewildering array of possibilities these days
 #
 # The Apple Java 6 runtime might be present, and if it is, then using
 # /usr/libexec/java_home will find the correct version, based on the user's
@@ -125,7 +248,7 @@ fi
 #   deal with it.
 
 if [ "$OS" = "macosx" ] ; then
-    # on Mac OS X, we default to logging, since the Console app make it less visible unless you look for it
+    # on OS X, we default to logging, since the Console app make it less visible unless you look for it
     DEBUG=yes
 
     # this is the current (1.7.0_45ish) location of the Oracle installed Java 7 JRE (but not the JDK)
@@ -232,7 +355,7 @@ fi
 
 
 # build classpath dynamically
-CP=".:classes:java/classes"
+CP="${pre_classpath}:.:classes:java/classes"
 # list of jar files in home, not counting jmri.jar
 LOCALJARFILES=`ls ${LIBDIR}/*.jar | grep -v jmri.jar | tr "\n" ":"`
 if [ ${LOCALJARFILES} ] ; then
@@ -246,6 +369,7 @@ CP="${CP}:`ls -m ${LIBDIR}/*.jar | tr -d ' \n' | tr ',' ':'`"
 if [ -d /System/Library/Java ] ; then
     CP="${CP}":/System/Library/Java
 fi
+CP="${CP}:${post_classpath}"
 
 [ -z "${JAVACMD[@]}" ] && JAVACMD=("java")
 
@@ -291,48 +415,13 @@ if [ "$OS" = "macosx" ] ; then
     fi
 fi
 
-#
-# set memory options
-#
-heap_size () {
-    mem=640
-    case "`uname`" in
-        Linux*)
-            mem=`cat /proc/meminfo | grep MemTotal | tr -d [:space:][:alpha:]:`
-            mem=`expr $mem / 1024`
-            ;;
-        SunOS*)
-            mem=`/usr/sbin/prtconf | grep Memory | /usr/bin/tr -dc '[0-9]'`
-            ;;
-        Darwin*)
-            mem=`/usr/sbin/sysctl hw.memsize | tr -d [:alpha:][:space:].:`
-            mem=`expr $mem / 1048576`
-            ;;
-        *)
-            ;;
-    esac
-    if [ -z "$mem" ] ; then
-        mem=640
-    fi
-    mem=`expr $mem / 2`
-    if [ $mem -gt 768 ] ; then
-        mem=768
-    elif [ $mem -lt 192 ] ; then
-        mem=192
-    fi
-    echo $mem
-    return 0
-}
-
-MEMORY_OPTIONS="-Xms96m -Xmx`heap_size`m"
-
 OPTIONS="${JMRI_OPTIONS} -noverify"
 OPTIONS="${OPTIONS} -Djava.security.policy=${LIBDIR}/security.policy"
 OPTIONS="${OPTIONS} -Djava.rmi.server.codebase=file:java/classes/"
 OPTIONS="${OPTIONS} -Djava.library.path=.:$SYSLIBPATH:${LIBDIR}"
 
 # memory start and max limits
-OPTIONS="${OPTIONS} ${OS_OPTIONS} ${MEMORY_OPTIONS}"
+OPTIONS="${OPTIONS} ${OS_OPTIONS} ${jmri_xms} ${jmri_xmx}"
 
 # RXTX options (only works in some versions)
 OPTIONS="${OPTIONS} -Dgnu.io.rxtx.NoVersionOutput=true"
