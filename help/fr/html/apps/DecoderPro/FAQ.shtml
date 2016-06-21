@@ -22,49 +22,60 @@
 <div id="mainContent">
 
 
-<H1>JMRI: DecoderPro Questions Fr&#233;quemment Pos&#233;es</H1>
+<H1>JMRI: Guide utilisateur</H1>
+<H2>DecoderPro Questions Fr&#233;quemment Pos&#233;es</H2>
 
-<p>Cette page est la FAQ de DecoderPro de JMRI. Les &#233;l&#233;ments obtenus list&#233;s ici ont souvent &#233;t&#233; pos&#233;s, ils sont &#233;galement disponibles ailleurs..
+<p>Cette page est la FAQ de DecoderPro de JMRI. Les &#233;l&#233;ments obtenus list&#233;s ici ont souvent &#233;t&#233; 
+pos&#233;s, ils sont &#233;galement disponibles ailleurs..
 </p>
 
 <dl>
 
-<dt class=left><a name="newdecoder"/>Comment puis je obtenire un type de d&#233;codeur d&#233;fini?</dt></a>
-<dd class=first>
-<p>
-Un nouveau d&#233;codeur complet n&#233;cessite un nouveau ou un fichier de configuration mis &#224; jour. Vous pouvez cr&#233;er votre propre fichier
-<a href="CreateDecoder.shtml"></a>
-ou demander sur la mailing list JmriUsers
-<a href="http://groups.yahoo.com/group/jmriusers/">  </a>
-Pour demander &#224; quelqu'un d'en cr&#233;er un pour vous.
-</P>
-<p>
-Dans beaucoup de cas, vous pouvez utiliser un d&#233;codeur existant qui est "suffisamment proche". Par exemple, un d&#233;codeur du m&#234;me fabricant qui a une taille diff&#233;rente ou Notation actuelle pourrait avoir la m&#234;me configuration de CVs, ainsi la d&#233;finition de ce d&#233;codeur va tr&#232;s bien fonctionner. 
-</dd>
+	<dt class=left><a name="newdecoder"/>Comment puis je obtenir un nouveau type de d&#233;codeur d&#233;fini?</dt></a>
+	<dd class=first>
+	<p>
+	Un nouveau d&#233;codeur complet n&#233;cessite un nouveau ou un fichier de configuration mis &#224; jour. Vous 
+	pouvez 
+	cr&#233;er votre propre fichier
+	<a href="CreateDecoder.shtml"></a>
+	ou demander sur la mailing list JmriUsers
+	<a href="http://groups.yahoo.com/group/jmriusers/">  </a>
+	Pour demander &#224; quelqu'un d'en cr&#233;er un pour vous.
+	</P>
+	<p>
+	Dans beaucoup de cas, vous pouvez utiliser un d&#233;codeur existant qui est "suffisamment proche". Par exemple, un 
+	&#233;codeur du m&#234;me fabricant qui a une taille diff&#233;rente ou Notation actuelle pourrait avoir la m&#234;me 
+	configuration de CVs, ainsi la d&#233;finition de ce d&#233;codeur va tr&#232;s bien fonctionner. 
+	</dd>
 
-<dt class=left><a name="newfile"/>Que dois-je faire avec ce nouveau fichier d&#233;codeur?</dt></a>
-<dd class=first>
-<p>
-Pour que DecoderPro utilise la d&#233;finition d'un type de d&#233;codeur dans un nouveau fichier d&#233;codeur, le nouveau fichier doit &#234;tre inclut dans l'index DecoderPro des types de d&#233;codeur. Pour faire ceci:
-<UL>
-<LI>Dans votre R&#233;pertoire d'installation, vous devez trouver un r&#233;pertoire nomm&#233; "xml".
-Sous ce r&#233;pertoire, il doit y en avoir un nomm&#233;  "decoders". Vous devez mettre ce fichier ici.
+	<dt class=left><a name="newfile"/>Que dois-je faire avec ce nouveau fichier d&#233;codeur?</dt></a>
+	<dd class=first>
+	<p>
+	Pour que DecoderPro utilise la d&#233;finition d'un type de d&#233;codeur dans un nouveau fichier d&#233;codeur, le 
+	nouveau 
+	fichier doit &#234;tre inclut dans l'index DecoderPro des types de d&#233;codeur. Pour faire ceci:
+		<UL>
+		<LI>Dans votre R&#233;pertoire d'installation, vous devez trouver un r&#233;pertoire nomm&#233; "xml".
+		Sous ce r&#233;pertoire, il doit y en avoir un nomm&#233;  "decoders". Vous devez mettre ce fichier ici.
+	
+		<LI>Maintenant d&#233;marrer DecoderPro, et ouvrez le menu "Debug".  S&#233;lectionnez l'option
+		"Reconstruire Index D&#233;codeur" .
 
-<LI>Maintenant d&#233;marrer DecoderPro, et ouvrez le menu "Debug".  S&#233;lectionnez l'option
-"Reconstruire Index D&#233;codeur" .
+		<LI>L'ordinateur va fonctionner une minute ou deux avec la s&#233;lection en surbrillance.  
+		Aussit&#244;t qu'elle disparait, la nouvelle d&#233;finition est disponible pour vous.
 
-<LI>L'ordinateur va fonctionner une minute ou deux avec la s&#233;lection en surbrillance.  
-Aussit&#244;t qu'elle disparait, la nouvelle d&#233;finition est disponible pour vous.
+		</UL>
 
-</UL>
+	<P>
+	SVP Soyez s&#251;r que le nouveau fichier de configuration a bien contribu&#233; au projet ainsi il sera inclut dans 
+	les versions futures et vous n'aurez pas &#224; refaire l'index &#224; chaque fois que vous ferez une mise &#224; 
+	jour.
+	</dd>
+	<dt class=left><a name="update"/>Comment Puis je obtenir les derni&#232;res d&#233;finitions du 		
+	D&#233;codeur?	</dt></a>	
 
-<P>
-SVP Soyez s&#251;r que le nouveau fichier de configuration a bien contribu&#233; au projet ainsi il sera inclut dans les versions futures et vous n'aurez pas &#224; refaire l'index &#224; chaque fois que vous ferez une mise &#224; jour.
-</dd>
-
-<dt class=left><a name="update"/>Comment Puis je obtenir les derni&#232;res d&#233;finitions du d&#233;codeur?</dt></a>
-<dd class=first>
-<p>
+	<dd class=first>
+	<p>
 La fa&#231;on la plus ais&#233;e pour mettre &#224; jour est de t&#233;l&#233;charger une nouvelle version du programme.
 Il est peu probable de causer des probl&#232;mes et installe automatiquement les derni&#232;res versions des contributions &#224; d&#233;coderPro.
 <P>
