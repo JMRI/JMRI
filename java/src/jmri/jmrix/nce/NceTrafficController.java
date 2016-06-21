@@ -1,4 +1,3 @@
-// NceTrafficController.java
 package jmri.jmrix.nce;
 
 import jmri.CommandStation;
@@ -610,6 +609,3 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 
     private final static Logger log = LoggerFactory.getLogger(NceTrafficController.class.getName());
 }
-
-
-/* @(#)NceTrafficController.java */
