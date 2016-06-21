@@ -1,4 +1,3 @@
-// DCCppTrafficController.java
 package jmri.jmrix.dccpp;
 
 import java.util.Hashtable;
@@ -18,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2002
  * @author	Paul Bender Copyright (C) 2004-2010
  * @author      Mark Underwood Copyright (C) 2015
- * @version $Revision$
  *
  * Based on XNetTrafficController by Bob Jacobsen and Paul Bender
  */
@@ -365,6 +363,3 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
     }
     private final static Logger log = LoggerFactory.getLogger(DCCppTrafficController.class.getName());
 }
-
-
-/* @(#)DCCppTrafficController.java */
