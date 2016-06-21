@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2005
  * @author Modified by Kevin Dickerson
- * @version $Revision$
  */
 public class EcosDccThrottleManager extends AbstractThrottleManager implements EcosListener {
 

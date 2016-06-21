@@ -1,4 +1,3 @@
-// EcosTrafficController.java
 package jmri.jmrix.ecos;
 
 import java.util.List;
@@ -22,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * message.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  */
 public class EcosTrafficController extends AbstractMRTrafficController implements EcosInterface, CommandStation {
 
@@ -304,5 +302,3 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
     }
     private final static Logger log = LoggerFactory.getLogger(EcosTrafficController.class.getName());
 }
-
-/* @(#)EcosTrafficController.java */
