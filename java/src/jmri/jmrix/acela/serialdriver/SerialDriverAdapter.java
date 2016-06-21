@@ -186,5 +186,3 @@ public class SerialDriverAdapter extends AcelaPortController implements jmri.jmr
 
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 }
-
-/* @(#)SerialDriverAdapter.java */

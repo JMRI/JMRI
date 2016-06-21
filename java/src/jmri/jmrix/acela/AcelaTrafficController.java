@@ -1,4 +1,3 @@
-// AcelaTrafficController.java
 package jmri.jmrix.acela;
 
 import java.io.DataInputStream;

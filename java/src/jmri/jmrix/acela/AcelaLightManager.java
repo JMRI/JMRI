@@ -1,4 +1,3 @@
-// AcelaLightManager.java
 package jmri.jmrix.acela;
 
 import jmri.Light;
@@ -14,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * Based in part on AcelaTurnoutManager.java
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version	$Revision$
  *
  * @author	Bob Coleman Copyright (C) 2007, 2008 Based on CMRI serial example,
  * modified to establish Acela support.
@@ -137,5 +135,3 @@ public class AcelaLightManager extends AbstractLightManager {
 
     private final static Logger log = LoggerFactory.getLogger(AcelaLightManager.class.getName());
 }
-
-/* @(#)AcelaLightManager.java */
