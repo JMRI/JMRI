@@ -198,6 +198,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     /**
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Override
     @Deprecated
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "temporary until mult-system; only set at startup")

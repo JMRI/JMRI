@@ -114,6 +114,7 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
     /**
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Override
     @Deprecated
     //This can be removed once multi-connection is complete
     public void setInstance() {

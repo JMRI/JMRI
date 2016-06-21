@@ -121,6 +121,8 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
     }
 
     //This can be removed once multi-connection is complete
+    @Override
+    @Deprecated
     public void setInstance() {
     }
 

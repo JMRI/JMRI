@@ -491,6 +491,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      * instance use of the traffic controller is no longer used for multiple
      * connections
      */
+    @Override
     @Deprecated
     public void setInstance() {
     }

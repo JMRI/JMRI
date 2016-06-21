@@ -113,6 +113,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "temporary until mult-system; only set at startup")
+    @Override
     protected void setInstance() {
         self = this;
     }

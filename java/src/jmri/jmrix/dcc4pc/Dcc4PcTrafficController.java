@@ -117,6 +117,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
     /**
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Override
     @Deprecated
     public void setInstance() {
     }

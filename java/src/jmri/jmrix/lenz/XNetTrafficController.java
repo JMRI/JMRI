@@ -37,6 +37,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
      * static function setting this object as the TrafficController instance to
      * use.
      */
+    @Override
     @Deprecated
     protected void setInstance() {
         if (self == null) {
