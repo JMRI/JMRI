@@ -147,8 +147,9 @@ default_options=""
 # define empty jmri_options
 jmri_options=""
 
-# ensure JMRI options are always set
+# ensure JMRI environment options are always set
 JMRI_OPTIONS=${JMRI_OPTIONS:-}
+JMRI_SERIAL_PORTS=${JMRI_SERIAL_PORTS:-}
 
 # set default config name
 CONFIGNAME=""
@@ -159,10 +160,17 @@ JMRI_HOME=${JMRI_HOME:-}
 # set DEBUG to any non-empty string to see debugging output
 DEBUG=${DEBUG:-}
 
+# set default classpaths additions
+pre_classpath=""
+post_classpath=""
+
 # set the OS (can be overridden in enviroment for debugging and development)
 # this value is used to find OS-specific libraries, so it gets normalized
 # in following case statement
-OS=${OS:$( uname -s )}
+OS=${OS:-}
+if [ -z "${OS}" ] ; then
+  OS=$( uname -s )
+fi
 ARCH=${ARCH:-}
 
 # set OS-specific settings
@@ -180,13 +188,6 @@ case "${OS}" in
         settingsdir="~/.jmri"
         ;;
 esac
-
-# default memory values
-# if -J-Xmx=... is in options or arguments, that value will be used regardless
-# of the calculations from heap_size
-jmri_xmx="-Xmx$( heap_size )m"
-# initial heap size = default for 6 GB RAM (default = 1/64 installed RAM)
-jmri_xms="-Xms96m"
 
 # get the settings directory if set on command line
 found_settingsdir=""
@@ -216,6 +217,16 @@ fi
 parse_args $default_options
 parse_args $JMRI_OPTIONS # support JMRI_OPTIONS if someone is using it
 parse_args $@
+
+# set if -J-Xmx=... is not in options or arguments
+if [ -z "${jmri_xmx:-}" ] ; then
+    jmri_xmx="-Xmx$( heap_size )m"
+fi
+# set if -J-Xms=... is not in options or arguments
+if [ -z "${jmri_xms:-}" ] ; then
+    # initial heap size = default for 6 GB RAM (default = 1/64 installed RAM)
+    jmri_xms="-Xms96m"
+fi
 
 ## ask the user if they want to install Java, and open the Java web site if yes
 OfferJavaDownload() {
@@ -378,7 +389,7 @@ if [ -d /System/Library/Java ] ; then
 fi
 CP="${CP}:${post_classpath}"
 
-[ -z "${JAVACMD[@]}" ] && JAVACMD=("java")
+[ -z "${JAVACMD[@]-}" ] && JAVACMD=("java")
 
 [ -n "${DEBUG}" ] && echo "CLASSPATH: '${CP}'"
 
@@ -428,7 +439,7 @@ OPTIONS="${OPTIONS} -Djava.rmi.server.codebase=file:java/classes/"
 OPTIONS="${OPTIONS} -Djava.library.path=.:$SYSLIBPATH:${LIBDIR}"
 
 # memory start and max limits
-OPTIONS="${OPTIONS} ${OS_OPTIONS} ${jmri_xms} ${jmri_xmx}"
+OPTIONS="${OPTIONS} ${OS_OPTIONS-} ${jmri_xms} ${jmri_xmx}"
 
 # RXTX options (only works in some versions)
 OPTIONS="${OPTIONS} -Dgnu.io.rxtx.NoVersionOutput=true"
@@ -461,7 +472,7 @@ RESTART_CODE=100
 EXIT_STATUS=${RESTART_CODE}
 while [ "${EXIT_STATUS}" -eq "${RESTART_CODE}" ] ; do
 
-    "${JAVACMD[@]}" "${DOCK_OPTIONS[@]}" ${OPTIONS} ${ALTPORTS} -cp "${CP}" "${CLASSNAME}" ${CONFIGFILE}
+    "${JAVACMD[@]}" "${DOCK_OPTIONS[@]-}" ${OPTIONS} ${ALTPORTS} -cp "${CP}" "${CLASSNAME}" ${CONFIGFILE}
 
     EXIT_STATUS=$?
     [ -n "${DEBUG}" ] && echo Exit Status: "${EXIT_STATUS}"
