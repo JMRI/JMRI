@@ -1,4 +1,3 @@
-// SerialTrafficController.java
 package jmri.jmrix.tmcc;
 
 import java.io.DataInputStream;
@@ -25,7 +24,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006
  * @author Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision$
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
@@ -256,5 +254,3 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
 
     private final static Logger log = LoggerFactory.getLogger(SerialTrafficController.class.getName());
 }
-
-/* @(#)SerialTrafficController.java */

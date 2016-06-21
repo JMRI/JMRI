@@ -1,4 +1,3 @@
-// SerialTurnoutManager.java
 package jmri.jmrix.tmcc;
 
 import jmri.JmriException;
@@ -13,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * System names are "TTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006
- * @version	$Revision$
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
@@ -159,5 +157,3 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class.getName());
 
 }
-
-/* @(#)SerialTurnoutManager.java */
