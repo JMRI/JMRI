@@ -32,7 +32,9 @@ public class TrafficController implements jmri.CommandStation {
      * static function returning the instance to use.
      *
      * @return The registered instance for general use, if need be creating one.
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Deprecated
     static public TrafficController instance() {
         if (self == null) {
             if (log.isDebugEnabled()) {
@@ -43,6 +45,10 @@ public class TrafficController implements jmri.CommandStation {
         return self;
     }
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static TrafficController self = null;
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
