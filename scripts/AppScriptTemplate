@@ -76,13 +76,13 @@ function parse_args() {
             # help
             --help) usage ; exit 2 ;;
             # heap sizes
-            -JXms*) jmri_xms="${1#-J}" ;;
-            -JXmx*) jmri_xmx="${1#-J}" ;;
+            -J-Xms*) jmri_xms="${1#-J}" ;;
+            -J-Xmx*) jmri_xmx="${1#-J}" ;;
             # JVM arguments other than max memory
-            -J*) JMRI_OPTIONS="${JMRI_OPTIONS} ${1#-J}" ;;
+            -J*) jmri_options="${jmri_options} ${1#-J}" ;;
             # JMRI configuration profile
-            -p|--profile) JMRI_OPTIONS="${JMRI_OPTIONS} -Dorg.jmri.profile=$2" ; shift ;;
-            --profile=*) JMRI_OPTIONS="${JMRI_OPTIONS} -Dorg.jmri.profile=${1#*=}" ;;
+            -p|--profile) jmri_options="${jmri_options} -Dorg.jmri.profile=$2" ; shift ;;
+            --profile=*) jmri_options="${jmri_options} -Dorg.jmri.profile=${1#*=}" ;;
             # serial ports
             --serial-ports) JMRI_SERIAL_PORTS="${2}" ;;
             --serial-ports=*) JMRI_SERIAL_PORTS="${1#*=}" ; shift ;;
@@ -91,13 +91,19 @@ function parse_args() {
     done
 }
 
-# get the default heap size for JMRI
+# Get the default heap size for JMRI in MB.
+# Based on total memory size, this is:
+# - 1/4 total memory size on systems with more than 4GB RAM
+# - 1/2 total memory size on systems with 1-4GB RAM
+# - 3/4 total memory size on systems with less than 1GB RAM
+# - with an absolute minimum of 192MB
 function heap_size() {
     # get Java heap size
-    mem=$( java -XX:+PrintFlagsFinal -version 2>/dev/null | grep MaxHeapSize | awk '{print $4}' )
-    mem=$( expr ${mem} / 1048576 ) # bytes to MB
-    # if heap < 768MB, calculate our own
-    if [ ${mem} -lt 768 ] ; then
+    heap=$( java -XX:+PrintFlagsFinal -version 2>/dev/null | grep MaxHeapSize | awk '{print $4}' )
+    heap=$( expr ${heap} / 1048576 ) # bytes to MB
+    # Java heap defaults to 1/4 total memory size
+    # if <= 768MB (1/4 of 3MB), set it ourselves
+    if [ ${heap} -le 768 ] ; then
         case "$( uname )" in
             Linux*)
                 mem=$( cat /proc/meminfo | grep MemTotal | tr -d [:space:][:alpha:]: )
@@ -116,14 +122,16 @@ function heap_size() {
         if [ -z "$mem" ] ; then
             mem=640
         fi
-        mem=$( expr $mem / 2 )
-        if [ $mem -gt 768 ] ; then
-            mem=768
-        elif [ $mem -lt 192 ] ; then
-            mem=192
+        if [ $mem -le 1024 ] ; then
+          heap=$( expr $mem \* 3 / 4 )
+        else
+          heap=$( expr $mem \* 1 / 2 )
+        fi
+        if [ $heap -lt 192 ] ; then
+            heap=192
         fi
     fi
-    echo $mem
+    echo $heap
     return 0
 }
 
@@ -139,10 +147,6 @@ JMRI_OPTIONS=${JMRI_OPTIONS:-}
 
 # set default config name
 CONFIGNAME=""
-
-# default memory values
-jmri_xmx="-Xmx$( heap_size )m"
-jmri_xms="-Xms96m"
 
 # JMRI installation location
 JMRI_HOME=${JMRI_HOME:-}
@@ -161,6 +165,7 @@ case "${OS}" in
     macosx|Darwin*)
         settingsdir="~/Library/Preferences/JMRI"
         OS="macosx"
+        DEBUG="yes" # default to on, so always available in Console.app
         ;;
     Linux*)
         settingsdir="~/.jmri"
@@ -170,6 +175,13 @@ case "${OS}" in
         settingsdir="~/.jmri"
         ;;
 esac
+
+# default memory values
+# if -J-Xmx=... is in options or arguments, that value will be used regardless
+# of the calculations from heap_size
+jmri_xmx="-Xmx$( heap_size )m"
+# initial heap size = default for 6 GB RAM (default = 1/64 installed RAM)
+jmri_xms="-Xms96m"
 
 # get the settings directory if set on command line
 found_settingsdir=""
@@ -194,9 +206,12 @@ if [ -f "${settingsdir}/jmri.conf" ] ; then
 fi
 # ensure default_options is defined, even if not in the configuration file
 default_options=${default_options:-}
+# define empty jmri_options
+jmri_options=
 
 # process arguments, stored arguments first, so CLI arguments can override
 parse_args $default_options
+parse_args $JMRI_OPTIONS # support JMRI_OPTIONS if someone is using it
 parse_args $@
 
 ## ask the user if they want to install Java, and open the Java web site if yes
@@ -404,7 +419,7 @@ if [ "$OS" = "macosx" ] ; then
     fi
 fi
 
-OPTIONS="${JMRI_OPTIONS} -noverify"
+OPTIONS="${jmri_options} -noverify"
 OPTIONS="${OPTIONS} -Djava.security.policy=${LIBDIR}/security.policy"
 OPTIONS="${OPTIONS} -Djava.rmi.server.codebase=file:java/classes/"
 OPTIONS="${OPTIONS} -Djava.library.path=.:$SYSLIBPATH:${LIBDIR}"
