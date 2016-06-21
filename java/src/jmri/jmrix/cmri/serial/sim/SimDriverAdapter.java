@@ -117,6 +117,10 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
     private boolean opened = false;
     InputStream serialStream = null;
 
+    /**
+     * @deprecated JMRI Since 4.5.1 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static public jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter instance() {
         if (mInstance == null) {
             mInstance = new SimDriverAdapter();

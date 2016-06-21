@@ -148,7 +148,9 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      *
      * @return The registered SerialSensorManager instance for general use, if
      *         need be creating one.
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Deprecated
     static public SerialSensorManager instance() {
         if (_instance == null) {
             _instance = new SerialSensorManager();
@@ -156,6 +158,10 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         return _instance;
     }
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static SerialSensorManager _instance = null;
 
     public boolean allowMultipleAdditions(String systemName) {

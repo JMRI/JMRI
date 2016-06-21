@@ -113,6 +113,10 @@ public class LnSecurityElementManager {
 
     static volatile LnSecurityElementManager mInstance = null;
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     public static LnSecurityElementManager instance() {
         if (mInstance == null) {
             mInstance = new LnSecurityElementManager();
