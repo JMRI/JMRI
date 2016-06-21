@@ -1,4 +1,3 @@
-// TrafficController.java
 package jmri.jmrix.direct;
 
 import java.io.DataInputStream;
@@ -22,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * particular, note that transmission is not a threaded operation.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  */
 public class TrafficController implements jmri.CommandStation {
 
@@ -156,6 +154,3 @@ public class TrafficController implements jmri.CommandStation {
 
     private final static Logger log = LoggerFactory.getLogger(TrafficController.class.getName());
 }
-
-
-/* @(#)TrafficController.java */

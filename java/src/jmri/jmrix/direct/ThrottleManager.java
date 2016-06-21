@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * commands; right now it only sends the first group of function packets.
  *
  * @author	Bob Jacobsen Copyright (C) 2004
- * @version $Revision$
  */
 public class ThrottleManager extends AbstractThrottleManager {
 
