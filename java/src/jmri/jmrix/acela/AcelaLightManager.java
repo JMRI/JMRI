@@ -1,4 +1,3 @@
-// AcelaLightManager.java
 package jmri.jmrix.acela;
 
 import jmri.Light;
@@ -14,27 +13,22 @@ import org.slf4j.LoggerFactory;
  * Based in part on AcelaTurnoutManager.java
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version	$Revision$
- *
  * @author	Bob Coleman Copyright (C) 2007, 2008 Based on CMRI serial example,
  * modified to establish Acela support.
  */
 public class AcelaLightManager extends AbstractLightManager {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 854966186258234895L;
+    private AcelaSystemConnectionMemo _memo = null;
 
-    public AcelaLightManager() {
-
+    public AcelaLightManager(AcelaSystemConnectionMemo memo) {
+        _memo = memo;
     }
 
     /**
      * Returns the system letter for Acela
      */
     public String getSystemPrefix() {
-        return "A";
+        return _memo.getSystemPrefix();
     }
 
     /**
@@ -46,7 +40,7 @@ public class AcelaLightManager extends AbstractLightManager {
         Light lgt = null;
         // check if the output bit is available
         int nAddress = -1;
-        nAddress = AcelaAddress.getNodeAddressFromSystemName(systemName);
+        nAddress = AcelaAddress.getNodeAddressFromSystemName(systemName,_memo);
         if (nAddress == -1) {
             return (null);
         }
@@ -57,7 +51,7 @@ public class AcelaLightManager extends AbstractLightManager {
 
 // Bob C: Fix this up		
 /*
-         conflict = AcelaAddress.isOutputBitFree(nAddress,bitNum);
+         conflict = AcelaAddress.isOutputBitFree(nAddress,bitNum,_memo);
          if ( conflict != "" ) {
          log.error("Assignment conflict with "+conflict+".  Light not created.");
          notifyLightCreationError(conflict,bitNum);
@@ -66,8 +60,8 @@ public class AcelaLightManager extends AbstractLightManager {
          */
         // Validate the systemName
         if (AcelaAddress.validSystemNameFormat(systemName, 'L')) {
-            lgt = new AcelaLight(systemName, userName);
-            if (!AcelaAddress.validSystemNameConfig(systemName, 'L')) {
+            lgt = new AcelaLight(systemName, userName,_memo);
+            if (!AcelaAddress.validSystemNameConfig(systemName, 'L',_memo)) {
                 log.warn("Light system Name does not refer to configured hardware: "
                         + systemName);
             }
@@ -101,7 +95,7 @@ public class AcelaLightManager extends AbstractLightManager {
      * 'false'
      */
     public boolean validSystemNameConfig(String systemName) {
-        return (AcelaAddress.validSystemNameConfig(systemName, 'L'));
+        return (AcelaAddress.validSystemNameConfig(systemName, 'L',_memo));
     }
 
     /**
@@ -126,14 +120,12 @@ public class AcelaLightManager extends AbstractLightManager {
 
     /**
      * Allow access to AcelaLightManager
+     * @deprecated since 4.5.1
      */
+    @Deprecated
     static public AcelaLightManager instance() {
-        if (_instance == null) {
-            _instance = new AcelaLightManager();
-        }
-        return _instance;
+        return null; 
     }
-    static AcelaLightManager _instance = null;
 
     private final static Logger log = LoggerFactory.getLogger(AcelaLightManager.class.getName());
 }

@@ -1026,16 +1026,16 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 }
                 if (checkBeforeCreating("AH" + headnumber)) {
                     if (inputusername.length() == 0) {
-                        s = new jmri.jmrix.acela.AcelaSignalHead("AH" + headnumber);
+                        s = new jmri.jmrix.acela.AcelaSignalHead("AH" + headnumber,jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
                     } else {
-                        s = new jmri.jmrix.acela.AcelaSignalHead("AH" + headnumber, inputusername);
+                        s = new jmri.jmrix.acela.AcelaSignalHead("AH" + headnumber, inputusername,jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
                     }
                     InstanceManager.signalHeadManagerInstance().register(s);
                 }
 
                 int st = signalheadTypeFromBox(stBox);
                 //This bit returns null i think, will need to check through
-                AcelaNode sh = AcelaAddress.getNodeFromSystemName("AH" + headnumber);
+                AcelaNode sh = AcelaAddress.getNodeFromSystemName("AH" + headnumber,jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
                 switch (st) {
                     case 1:
                         sh.setOutputSignalHeadType(headnumber, AcelaNode.DOUBLE);
@@ -1912,7 +1912,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
              eto1.setText(curS.getUserName());*/
             evtLabel.setText(Bundle.getMessage("LabelAspectType") + ":");
             etot.setVisible(false);
-            AcelaNode tNode = AcelaAddress.getNodeFromSystemName(curS.getSystemName());
+            AcelaNode tNode = AcelaAddress.getNodeFromSystemName(curS.getSystemName(),jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
             if (tNode == null) {
                 // node does not exist, ignore call
                 log.error("Can't find new Acela Signal with name '" + curS.getSystemName());
@@ -2182,7 +2182,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
              curS.setUserName(nam);
             
              }*/
-            AcelaNode tNode = AcelaAddress.getNodeFromSystemName(curS.getSystemName());
+            AcelaNode tNode = AcelaAddress.getNodeFromSystemName(curS.getSystemName(),jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
             if (tNode == null) {
                 // node does not exist, ignore call
                 log.error("Can't find new Acela Signal with name '" + curS.getSystemName());
