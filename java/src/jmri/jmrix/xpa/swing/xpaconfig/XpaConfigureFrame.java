@@ -11,7 +11,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.jmrix.xpa.XpaMessage;
-import jmri.jmrix.xpa.XpaTrafficController;
 import jmri.jmrix.xpa.XpaSystemConnectionMemo;
 
 public class XpaConfigureFrame extends jmri.util.JmriJFrame implements jmri.jmrix.xpa.XpaListener {

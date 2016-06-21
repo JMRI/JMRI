@@ -1,10 +1,7 @@
 package jmri.jmrix.lenz.swing.li101;
 
 import java.awt.event.ActionEvent;
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
 import jmri.jmrix.lenz.swing.AbstractXPressNetAction;
-import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 
 /**
  * Swing action to create and register an LI101Frame object.
