@@ -24,7 +24,7 @@
 <H1>JMRI:Guide Utilisateur DecoderPro</H1>  -<h2> D&#233;finitions Avanc&#233;es des D&#233;codeurs </h2>
 
 <p>Cette page fournit des informations sur les fonctionnalit&#233;s avanc&#233;es dans
-les fichiers de d&#233;finiton d&#233;codeur pour le Programmeur Symbolique DecoderPro
+les fichiers de d&#233;finiton d&#233;codeur pour le Programmateur Symbolique DecoderPro
 .</p>
 
 <a name="html_formatting" id="html_formatting"></a>
@@ -112,12 +112,12 @@ pour la programmation (voir la section <a href="#conditional">D&#233;finitions C
 
 <a name="pane_considerations" id="pane_considerations"></a>
 <h3>Volet Consid&#233;rations</h3>
-Les volets du programmeur sont utilis&#233;es pour r&#233;partir et organiser les variables du d&#233;codeur dans des cat&#233;gories nomm&#233;es 
+Les volets du programmateur sont utilis&#233;es pour r&#233;partir et organiser les variables du d&#233;codeur dans des cat&#233;gories nomm&#233;es 
 pratiques.
 <ul>
   <li>
     JMRI fournit un jeu standard de volets, d&#233;fini par les &#233;l&#233;ments &lt;pane&gt; inclus dans les &#233;l&#233;ments &lt;programmer&gt; 
-    de chacun des fichiers des Programmeur standard (Basique, Complet, Avanc&#233; etc.) dans le dossier xml/programmers/.
+    de chacun des fichiers des Programmateur standard (Basique, Complet, Avanc&#233; etc.) dans le dossier xml/programmers/.
   </li>
   <li>
     Les fichiers d&#233;finition D&#233;codeur peuvent contenir des volets personnalis&#233;s pour des d&#233;codeurs particuliers ou des familles 
@@ -162,10 +162,11 @@ La visibilit&#233; volet est r&#233;git par un ensemble de r&#232;gles complexes
   <li>
     La visibilit&#233; d'un volet vide est contr&#244;l&#233;e par ce qui suit, par ordre de priorit&#233; croissante:
      <ul>
-      <li>les Pr&#233;f&#233;rences-&gt;Inventaire-&gt;Programmeur-&gt;Montre des Onglets de r&#233;glages Vides.</li>
-      <li>Si pr&#233;sent, un attribut showEmptyPanes dans le fichier programmeur actuel XML.</li>
+      <li>les Pr&#233;f&#233;rences-&gt;Inventaire-&gt;programmateur-&gt;Montre des Onglets de r&#233;glages Vides.</li>
+      <li>Si pr&#233;sent, un attribut showEmptyPanes dans le fichier programmateur actuel XML.</li>
       <li>Si pr&#233;sent, un attribut showEmptyPanes dans le fichier definition d&#233;codeur XML.</li>
     </ul>
+    
   </li>
   <li>
     Le fait qu'un volet vide sp&#233;cifique (tel que d&#233;fini dans Volets vides ci-dessus) indique &#233;galement d&#233;pend du type de volet :
