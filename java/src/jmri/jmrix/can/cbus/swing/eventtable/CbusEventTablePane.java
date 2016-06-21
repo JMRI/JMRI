@@ -1,4 +1,3 @@
-// CbusEventTablePane.java
 package jmri.jmrix.can.cbus.swing.eventtable;
 
 import java.awt.FlowLayout;
@@ -26,7 +25,6 @@ import jmri.util.davidflanagan.HardcopyWriter;
  * @author	Kevin Dickerson (C) 2012
  *
  * @since 2.99.2
- * @version	$Revision: 17977 $
  */
 public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
 
