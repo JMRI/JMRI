@@ -1774,7 +1774,6 @@
                 <exclude name="JMRI/DecoderPro"/>
                 <exclude name="JMRI/PanelPro"/>
                 <exclude name="JMRI/SoundPro"/>
-                <exclude name="JMRI/LocoTools"/>
                 <exclude name="JMRI/InstallTest"/>
                 <exclude name="JMRI/RXTXuninstall.sh"/>
                 <exclude name="JMRI/JmriFaceless"/>
@@ -1783,7 +1782,6 @@
                 <include name="JMRI/DecoderPro"/>
                 <include name="JMRI/PanelPro"/>
                 <include name="JMRI/SoundPro"/>
-                <include name="JMRI/LocoTools"/>
                 <include name="JMRI/InstallTest"/>
                 <include name="JMRI/RXTXuninstall.sh"/>
                 <include name="JMRI/JmriFaceless"/>
@@ -1854,7 +1852,6 @@
     <target name="startup-scripts-linux"> <!-- Internal target to create all of the app specific startup scripts for Linux -->
         <make-startup-script script.name="DecoderPro"   script.class="apps.gui3.dp3.DecoderPro3"/>
         <make-startup-script script.name="PanelPro"      script.class="apps.PanelPro.PanelPro"/>
-        <make-startup-script script.name="LocoTools"     script.class="apps.LocoTools.LocoTools"/>
         <make-startup-script script.name="SoundPro"      script.class="apps.SoundPro.SoundPro"/>
         <make-startup-script script.name="InstallTest"   script.class="apps.InstallTest.InstallTest"/>
         <make-startup-script script.name="JmriFaceless"   script.class="apps.JmriFaceless"/>
@@ -1864,7 +1861,6 @@
         <create-macosx-application-directory script.name="DecoderPro"  script.class="apps.gui3.dp3.DecoderPro3"
                                              script.icon="DecoderPro"/>
         <create-macosx-application-directory script.name="PanelPro"      script.class="apps.PanelPro.PanelPro"/>
-        <create-macosx-application-directory script.name="Loco Tools"    script.class="apps.LocoTools.LocoTools"/>
         <create-macosx-application-directory script.name="SoundPro"      script.class="apps.SoundPro.SoundPro"/>
         <create-macosx-application-directory script.name="InstallTest"   script.class="apps.InstallTest.InstallTest"/>
     </target>
