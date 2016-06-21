@@ -1,4 +1,21 @@
+Work still to be done on multi-connection support
 
-Get the file and project names right.  E.g. jmri.simpleprog, jmrix.loconet.SlotManager,
-etc.  Need this to make sure that no extensions (jmrix) references get into the 
-jmri package itself.
+(June 2016)
+- [] Follow the deprecation report on the various instance() methods and convert calls to those to multi-connection versions
+
+- [] Once not invoked, remove the instance() methods themselves
+
+- These systems might have non-deprecated instance() methods, which means they aren't migrated to multi-connection:
+  - [] easydcc
+  - [ ] grapevine
+  - [ ] maple
+  - [ ] oaktree
+  - [ ] pricom
+  - [ ] qsi
+  - [ ] rps
+  - [ ] secsi
+  - [ ] tams (because under construction when the instance() methods were deprecated
+  
+- [ ] remote setInstance from AbstractMRTrafficController, but first set it 'final' to flush out and remove implementations
+
+
