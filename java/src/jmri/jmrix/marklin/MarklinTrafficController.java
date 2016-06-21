@@ -1,4 +1,3 @@
-// MarklinTrafficController.java
 package jmri.jmrix.marklin;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -24,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * Based on work by Bob Jacobsen
  *
  * @author	Kevin Dickerson Copyright (C) 2012
- * @version	$Revision: 19084 $
  */
 public class MarklinTrafficController extends AbstractMRTrafficController implements MarklinInterface, CommandStation {
 
@@ -241,6 +239,3 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
 
     private final static Logger log = LoggerFactory.getLogger(MarklinTrafficController.class.getName());
 }
-
-
-/* @(#)MarklinTrafficController.java */

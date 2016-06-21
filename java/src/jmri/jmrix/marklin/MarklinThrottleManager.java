@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * Based on work by Bob Jacobsen
  *
  * @author	Kevin Dickerson Copyright (C) 2012
- * @version $Revision: 19121 $
  */
 public class MarklinThrottleManager extends AbstractThrottleManager implements MarklinListener {
 
