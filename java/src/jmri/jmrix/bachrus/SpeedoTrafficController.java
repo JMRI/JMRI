@@ -1,4 +1,3 @@
-// SpeedoTrafficController.java
 package jmri.jmrix.bachrus;
 
 import gnu.io.SerialPortEvent;
@@ -22,7 +21,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author	Andrew Crosland Copyright (C) 2010
- * @version	$Revision$
  */
 public class SpeedoTrafficController implements SpeedoInterface, SerialPortEventListener {
 
@@ -223,6 +221,3 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
         this.reply = new SpeedoReply();
     }
 }
-
-
-/* @(#)SpeedoTrafficController.java */
