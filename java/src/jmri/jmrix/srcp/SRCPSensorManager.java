@@ -37,5 +37,3 @@ public class SRCPSensorManager extends jmri.managers.AbstractSensorManager {
     }
 
 }
-
-/* @(#)SRCPSensorManager.java */
