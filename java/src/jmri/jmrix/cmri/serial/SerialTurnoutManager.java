@@ -1,4 +1,3 @@
-// SerialTurnoutManager.java
 package jmri.jmrix.cmri.serial;
 
 import jmri.JmriException;
@@ -13,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * System names are "CTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision$
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
