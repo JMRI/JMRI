@@ -3,10 +3,7 @@ package jmri.implementation.configurexml;
 
 import java.util.List;
 import jmri.InstanceManager;
-import jmri.SignalMast;
 import jmri.SignalAppearanceMap;
-import jmri.Turnout;
-import jmri.NamedBeanHandle;
 import jmri.implementation.MatrixSignalMast;
 import org.jdom2.Element;
 import org.slf4j.Logger;
