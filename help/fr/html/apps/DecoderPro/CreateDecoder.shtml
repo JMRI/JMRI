@@ -151,7 +151,7 @@ nom de fabricant ici que celui que vous avez utilis&#233; pour le nom de fichier
 <li><dfn>lowVersionID</dfn>, <dfn>highVersionID</dfn> -
 Le fabricant peut charger un num&#233;ro de version dans le CV 7 du d&#233;codeur.
 Tous les fabricants ne le font pas, Mais si un est disponible, 
-le programmeur peut v&#233;rifier si ce fichier est utilis&#233; avec le type de d&#233;codeur attendu. 
+le programmateur peut v&#233;rifier si ce fichier est utilis&#233; avec le type de d&#233;codeur attendu. 
 Si une valeur est valide, d&#233;finissez les attributs 
 lowVersionID and highVersionID avec la m&#234;me valeur par exemple
 
@@ -209,7 +209,7 @@ n'apparait pas, la valeur ( ou sa valeur par d&#233;faut ) de l'&#233;l&#233;men
 
 <p>Pagind, registerer et  ops peuvent &#234;tre r&#233;gler soit &#225; "yes" ou &#225; "no".  Direct
 peut &#234;tre fix&#233; &#225; "no", "bitOnly", "byteOnly", ou "yes". Le 
-programmeur utilise ces informations pour s&#233;lectionner le mode de programmation &#225; 
+programmateur utilise ces informations pour s&#233;lectionner le mode de programmation &#225; 
 utiliser pour travailler avec le d&#233;codeur.</p>
 </dd>
 
@@ -246,8 +246,8 @@ ordre diff&#233;rent.</p>
 <p> Les attributs incluent:
 <ul>
  <li><dfn>item</dfn> - Un nom alternatif "standard" pour cette variable. Voir la 
-<A HREF="Programmer.shtml#id"> discussion sur la page des d&#233;finitions des programmeurs</a> 
-pour plus de d&#233;tails sur ceux-ci.  G&#233;n&#233;ralement, regarder le programmeur Complet 
+<A HREF="Programmer.shtml#id"> discussion sur la page des d&#233;finitions des programmateurs</a> 
+pour plus de d&#233;tails sur ceux-ci.  G&#233;n&#233;ralement, regarder le programmateur Complet 
 pour trouver quelque chose de similaire, et utilisez le "nom" attribu&#233;.
 <li><dfn>CV</dfn> - Quel CV contient l'information de configuration
 pour cette variable.
@@ -362,7 +362,7 @@ d&#233;codeurs disponibles est construite .</p>
 </p>
 </dd>
 </dl>
-<p>F&#233;licitations!  Vous avez fini.  Ensuite, ouvrez l'application  programmeur et essayez le</p>
+<p>F&#233;licitations!  Vous avez fini.  Ensuite, ouvrez l'application  programmateur et essayez le</p>
  <p>Pour des informations plus avanc&#233;es sur le contenu des fichiers, svp voir la page 
 <a href="CreateDecoderAdvanced.shtml">Advanced Decoder Definitions</a>
 
@@ -371,3 +371,4 @@ d&#233;codeurs disponibles est construite .</p>
 </div>
 </body>
 </html>
+
