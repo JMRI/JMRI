@@ -29,8 +29,9 @@ import org.slf4j.LoggerFactory;
  * Inc for separate permission.
  *
  * @author Bob Jacobsen Copyright 2002
- * @version $Revision$
+ * @deprecated as of JMRI 2.13.5 - no subclasses since Se8AlmImplementation removed
  */
+@Deprecated
 public abstract class AbstractAlmImplementation implements LocoNetListener {
 
     // constants for the ATASK value

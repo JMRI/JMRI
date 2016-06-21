@@ -1,4 +1,3 @@
-// SecurityElement.java
 package jmri.jmrix.loconet;
 
 import jmri.Sensor;
@@ -41,7 +40,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version $Revision$
  * @deprecated 2.13.5, Does not work with the multi-connection correctly,
  * believe not to work correctly before hand and that the feature is not used.
  */
@@ -920,5 +918,3 @@ public class SecurityElement implements LocoNetListener {
     private final static Logger log = LoggerFactory.getLogger(SecurityElement.class.getName());
 
 }
-
-/* @(#)SecurityElement.java */

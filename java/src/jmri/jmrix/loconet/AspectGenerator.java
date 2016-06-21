@@ -1,4 +1,3 @@
-// AspectGenerator.java
 package jmri.jmrix.loconet;
 
 import jmri.InstanceManager;
@@ -38,8 +37,9 @@ import org.slf4j.LoggerFactory;
  * Bob Jacobsen. Some of the message formats are copyright Digitrax, Inc.
  *
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version $Revision$
+ * @deprecated  2.13.5 with the removal of Se8AlmImplementation support
  */
+@Deprecated
 public class AspectGenerator implements java.beans.PropertyChangeListener {
 
     protected AspectGenerator(SecurityElement pElement) {
@@ -195,6 +195,3 @@ public class AspectGenerator implements java.beans.PropertyChangeListener {
         }
     }
 }
-
-
-/* @(#)AspectGenerator.java */

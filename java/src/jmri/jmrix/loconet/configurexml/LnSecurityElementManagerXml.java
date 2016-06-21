@@ -15,8 +15,9 @@ import org.slf4j.LoggerFactory;
  * LnSecurityElementManager.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision$
+ * @deprecated 2.13.5 with the removal of Se8AlmImplementation support
  */
+@Deprecated
 public class LnSecurityElementManagerXml extends jmri.configurexml.AbstractXmlAdapter {
 
     public LnSecurityElementManagerXml() {
