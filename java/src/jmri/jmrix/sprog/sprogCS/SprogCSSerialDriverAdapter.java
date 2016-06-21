@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.sprog.sprogCS;
 
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * any other options at configuration time.
  *
  * @author	Andrew Crosland Copyright (C) 2006
- * @version	$Revision$
  */
 public class SprogCSSerialDriverAdapter
         extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
@@ -40,5 +38,3 @@ public class SprogCSSerialDriverAdapter
     private final static Logger log = LoggerFactory.getLogger(SprogCSSerialDriverAdapter.class.getName());
 
 }
-
-/* @(#)SerialdriverAdapter.java */

@@ -1,4 +1,3 @@
-// PiSprogNanoSerialDriverAdapter.java
 package jmri.jmrix.sprog.pi.pisprognano;
 
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * any other options at configuration time.
  *
  * @author	Andrew Crosland Copyright (C) 2016
- * @version	$Revision$
  */
 public class PiSprogNanoSerialDriverAdapter
         extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
@@ -48,5 +46,3 @@ public class PiSprogNanoSerialDriverAdapter
     static Logger log = LoggerFactory.getLogger(PiSprogNanoSerialDriverAdapter.class.getName());
 
 }
-
-/* @(#)PiSprogNanoSerialDriverAdapter.java */

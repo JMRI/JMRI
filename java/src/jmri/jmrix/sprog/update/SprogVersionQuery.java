@@ -1,4 +1,3 @@
-// SprogVersionQuery.java
 package jmri.jmrix.sprog.update;
 
 import java.util.Vector;
@@ -17,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * traffic. Add Pi-SPROG version decoding.
  *
  * @author	Andrew Crosland Copyright (C) 2012, 2016
- * @version	$Revision: $
  */
 public class SprogVersionQuery implements SprogListener {
 

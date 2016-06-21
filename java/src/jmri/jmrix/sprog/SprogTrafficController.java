@@ -1,4 +1,3 @@
-// SprogTrafficController.java
 package jmri.jmrix.sprog;
 
 import gnu.io.SerialPort;
@@ -350,6 +349,3 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 
     }
 }
-
-
-/* @(#)SprogTrafficController.java */

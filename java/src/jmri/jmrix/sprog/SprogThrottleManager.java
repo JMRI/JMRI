@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * Updated by Andrew Crosland February 2012 to enable 28 step speed packets</P>
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version $Revision$
  */
 public class SprogThrottleManager extends AbstractThrottleManager {
 

@@ -1,4 +1,3 @@
-// SprogNanoSerialDriverAdapter.java
 package jmri.jmrix.sprog.sprognano;
 
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * any other options at configuration time.
  *
  * @author	Andrew Crosland Copyright (C) 2016
- * @version	$Revision$
  */
 public class SprogNanoSerialDriverAdapter
         extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
@@ -40,5 +38,3 @@ public class SprogNanoSerialDriverAdapter
     static Logger log = LoggerFactory.getLogger(SprogNanoSerialDriverAdapter.class.getName());
 
 }
-
-/* @(#)SprogNanoSerialDriverAdapter.java */

@@ -1,4 +1,3 @@
-// SprogSlotMonFrame.java
 package jmri.jmrix.sprog.sprogslotmon;
 
 import java.awt.Dimension;
@@ -24,16 +23,10 @@ import org.slf4j.LoggerFactory;
  * Frame providing a command station slot manager.
  * <P>
  *
- * @author	Bob Jacobsen Copyright (C) 2001 Andrew Crosland (C) 2006 ported to
- * SPROG 2008 Use JmriJframe
- * @version	$Revision$
+ * @author	Bob Jacobsen Copyright (C) 2001 
+ * @author  Andrew Crosland (C) 2006 ported to SPROG 2008 Use JmriJframe
  */
 public class SprogSlotMonFrame extends jmri.util.JmriJFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6600658860279143115L;
 
     /**
      * Controls whether not-in-use slots are shown

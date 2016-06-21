@@ -1,4 +1,3 @@
-// PiSprogOneSerialDriverAdapter.java
 package jmri.jmrix.sprog.pi.pisprogone;
 
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * any other options at configuration time.
  *
  * @author	Andrew Crosland Copyright (C) 2016
- * @version	$Revision$
  */
 public class PiSprogOneSerialDriverAdapter
         extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
@@ -46,5 +44,3 @@ public class PiSprogOneSerialDriverAdapter
     static Logger log = LoggerFactory.getLogger(PiSprogOneSerialDriverAdapter.class.getName());
 
 }
-
-/* @(#)PiSprogOneSerialDriverAdapter.java */

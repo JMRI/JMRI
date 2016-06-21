@@ -1,4 +1,3 @@
-// SprogTurnoutManager.java
 package jmri.jmrix.sprog;
 
 import jmri.Turnout;
@@ -45,5 +44,3 @@ public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     static SprogTurnoutManager _instance = null;
 
 }
-
-/* @(#)SprogTurnoutManager.java */
