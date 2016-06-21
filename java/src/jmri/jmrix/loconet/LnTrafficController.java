@@ -1,4 +1,3 @@
-// LnTrafficController.java
 package jmri.jmrix.loconet;
 
 import java.util.Vector;
@@ -12,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * locating the local implementation and some statistics support.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version $Revision$
  *
  */
 public abstract class LnTrafficController implements LocoNetInterface {
@@ -144,6 +142,3 @@ public abstract class LnTrafficController implements LocoNetInterface {
 
     private final static Logger log = LoggerFactory.getLogger(LnTrafficController.class.getName());
 }
-
-
-/* @(#)LnTrafficController.java */
