@@ -153,6 +153,7 @@ JMRI_SERIAL_PORTS=${JMRI_SERIAL_PORTS:-}
 
 # set default config name
 CONFIGNAME=""
+CONFIGFILE=""
 
 # JMRI installation location
 JMRI_HOME=${JMRI_HOME:-}
@@ -176,16 +177,16 @@ ARCH=${ARCH:-}
 # set OS-specific settings
 case "${OS}" in
     macosx|Darwin*)
-        settingsdir="~/Library/Preferences/JMRI"
+        settingsdir="${HOME}/Library/Preferences/JMRI"
         OS="macosx"
         DEBUG="yes" # default to on, so always available in Console.app
         ;;
     Linux*)
-        settingsdir="~/.jmri"
+        settingsdir="${HOME}/.jmri"
         OS="linux"
         ;;
     *)
-        settingsdir="~/.jmri"
+        settingsdir="${HOME}/.jmri"
         ;;
 esac
 
