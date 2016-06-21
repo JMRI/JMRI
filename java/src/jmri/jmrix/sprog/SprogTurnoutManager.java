@@ -35,6 +35,10 @@ public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
         return t;
     }
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static public SprogTurnoutManager instance() {
         if (_instance == null) {
             _instance = new SprogTurnoutManager();

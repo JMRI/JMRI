@@ -119,7 +119,9 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
      *
      * @return The registered SpeedoTrafficController instance for general use,
      *         if need be creating one.
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Deprecated
     static public SpeedoTrafficController instance() {
         if (self == null) {
             self = new SpeedoTrafficController();
@@ -127,6 +129,10 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
         return self;
     }
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static volatile protected SpeedoTrafficController self = null;
 
     // data members to hold the streams

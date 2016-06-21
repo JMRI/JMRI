@@ -181,7 +181,9 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
 
     /**
      * method to find the existing CBUS event table object
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Deprecated
     static public final CbusEventTablePane instance() {
         return self;
     }

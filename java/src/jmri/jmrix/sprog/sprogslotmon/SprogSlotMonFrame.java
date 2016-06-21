@@ -122,10 +122,16 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame {
 
     /**
      * method to find the existing SprogSlotMonFrame object
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Deprecated
     static public final SprogSlotMonFrame instance() {
         return self;
     }
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static private SprogSlotMonFrame self = null;
 
     public void update() {

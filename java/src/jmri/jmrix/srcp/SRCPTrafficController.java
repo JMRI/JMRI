@@ -244,7 +244,9 @@ public class SRCPTrafficController extends AbstractMRTrafficController
      *
      * @return The registered SRCPTrafficController instance for general use, if
      *         need be creating one.
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Deprecated
     static public SRCPTrafficController instance() {
         if (self == null) {
             if (log.isDebugEnabled()) {

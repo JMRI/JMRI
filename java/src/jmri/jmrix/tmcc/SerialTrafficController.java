@@ -92,7 +92,9 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
      *
      * @return The registered SerialTrafficController instance for general use,
      *         if need be creating one.
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Deprecated
     static public SerialTrafficController instance() {
         if (self == null) {
             if (log.isDebugEnabled()) {
@@ -103,6 +105,10 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
         return self;
     }
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static volatile protected SerialTrafficController self = null;
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",

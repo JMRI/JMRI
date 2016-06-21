@@ -54,12 +54,20 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         return t;
     }
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static public SerialTurnoutManager instance() {
         if (_instance == null) {
             _instance = new SerialTurnoutManager();
         }
         return _instance;
     }
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static SerialTurnoutManager _instance = null;
 
     //Turnout address format is more than a simple number.

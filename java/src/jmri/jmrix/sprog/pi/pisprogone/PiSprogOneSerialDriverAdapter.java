@@ -31,6 +31,10 @@ public class PiSprogOneSerialDriverAdapter
         return new String[]{"115,200 bps"};
     }
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static public PiSprogOneSerialDriverAdapter instance() {
         if (mInstance == null) {
             PiSprogOneSerialDriverAdapter m = new PiSprogOneSerialDriverAdapter();
@@ -39,6 +43,10 @@ public class PiSprogOneSerialDriverAdapter
         }
         return mInstance;
     }
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static volatile PiSprogOneSerialDriverAdapter mInstance = null;
 
     static Logger log = LoggerFactory.getLogger(PiSprogOneSerialDriverAdapter.class.getName());

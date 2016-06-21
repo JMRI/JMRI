@@ -26,6 +26,10 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
 
     static private EcosDccThrottleManager mInstance = null;
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static public EcosDccThrottleManager instance() {
         return mInstance;
     }

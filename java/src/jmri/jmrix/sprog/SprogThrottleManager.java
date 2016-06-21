@@ -27,8 +27,16 @@ public class SprogThrottleManager extends AbstractThrottleManager {
         mInstance = this;
     }
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static private SprogThrottleManager mInstance = null;
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static public SprogThrottleManager instance() {
         return mInstance;
     }

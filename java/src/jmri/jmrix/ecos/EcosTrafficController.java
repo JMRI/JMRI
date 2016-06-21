@@ -113,7 +113,9 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
      *
      * @return The registered EcosTrafficController instance for general use, if
      *         need be creating one.
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Deprecated
     static public EcosTrafficController instance() {
         return self;
     }

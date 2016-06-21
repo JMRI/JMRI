@@ -25,6 +25,10 @@ public class SprogNanoSerialDriverAdapter
         this.getSystemConnectionMemo().setUserName("SPROG Nano Command Station");
     }
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static public SprogNanoSerialDriverAdapter instance() {
         if (mInstance == null) {
             SprogNanoSerialDriverAdapter m = new SprogNanoSerialDriverAdapter();
@@ -33,6 +37,10 @@ public class SprogNanoSerialDriverAdapter
         }
         return mInstance;
     }
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static volatile SprogNanoSerialDriverAdapter mInstance = null;
 
     static Logger log = LoggerFactory.getLogger(SprogNanoSerialDriverAdapter.class.getName());

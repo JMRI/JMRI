@@ -25,6 +25,10 @@ public class SprogCSSerialDriverAdapter
         this.getSystemConnectionMemo().setUserName("SPROG Command Station");
     }
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static public SprogCSSerialDriverAdapter instance() {
         if (mInstance == null) {
             SprogCSSerialDriverAdapter m = new SprogCSSerialDriverAdapter();
@@ -33,6 +37,10 @@ public class SprogCSSerialDriverAdapter
         }
         return mInstance;
     }
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static volatile SprogCSSerialDriverAdapter mInstance = null;
 
     private final static Logger log = LoggerFactory.getLogger(SprogCSSerialDriverAdapter.class.getName());
