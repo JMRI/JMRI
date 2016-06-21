@@ -142,6 +142,11 @@ SCRIPTDIR=$(cd "$( dirname "${0}" )" && pwd)
 DEFAULT_APP_NAME="@NAME@"
 CLASSNAME="@CLASS@"
 
+# define empty default_options, if not in the configuration file
+default_options=""
+# define empty jmri_options
+jmri_options=""
+
 # ensure JMRI options are always set
 JMRI_OPTIONS=${JMRI_OPTIONS:-}
 
@@ -189,6 +194,7 @@ for opt in "$@"; do
     if [ "${found_settingsdir}" = "yes" ]; then
         # --settingsdir /path/to/... part 2
         settingsdir="$opt"
+        jmri_options="${jmri_options} -Djmri.prefsdir=${settingsdir}"
         break
     elif [ "$opt" = "--settingsdir" ]; then
         # --settingsdir /path/to/... part 1
@@ -196,6 +202,7 @@ for opt in "$@"; do
     elif [[ "$opt" =~ "--settingsdir=" ]]; then
         # --settingsdir=/path/to/...
         settingsdir="${opt#*=}"
+        jmri_options="${jmri_options} -Djmri.prefsdir=${settingsdir}"
         break;
     fi
 done
@@ -204,10 +211,6 @@ done
 if [ -f "${settingsdir}/jmri.conf" ] ; then
     source "${settingsdir}/jmri.conf"
 fi
-# ensure default_options is defined, even if not in the configuration file
-default_options=${default_options:-}
-# define empty jmri_options
-jmri_options=
 
 # process arguments, stored arguments first, so CLI arguments can override
 parse_args $default_options
