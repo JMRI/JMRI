@@ -1,10 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
 <!-- Translated by Herv&#233; Blorec 2013-09-07 -->
-<title>JMRI: Multi-connection Update</title>
+<title>JMRI: Mise &#224; jour de Multi-connexions</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset= iso-8859-1">
@@ -41,7 +39,7 @@ Dans le m&#234;me temps, nous faisons la mise &#224; jour du mod&#232;le Swing, 
 un couple d'autres nettoyages mineurs sur le code.
 
 
-<h2>Dans le r&#233;pertoire du syst&#232;me principal </h2>
+<h2>Dans le r&#233;pertoire du syst&#232;me principal</h2>
 
 Cr&#233;er une sous-classe sp&#233;cifique de SystemConnectionMemo.
 Ce qui finira par faire tout l'initialisation gestionnaire, et
@@ -151,12 +149,12 @@ connexion du syst&#232;me est alors cr&#233;&#233;z
 via l'utilisation de classes internes, comme
 jmri.jmrix.loconet.locomon.LocoMonPane$Default
 
-<p>
 Cela demande aux gens de r&#233;initialiser leurs pr&#233;f&#233;rences pour les actions de d&#233;marrage
 , boutons, etc Nous n'allons pas les faire migrer pour
 pour eux.
 
-
 <!--#include virtual="/Footer" -->
+    </div>
+    </div>
 </body>
 </html>

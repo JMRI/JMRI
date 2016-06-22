@@ -170,11 +170,11 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                 }
             }
             if (activeText == null) {
-                activeText = Bundle.getMessage("SensorActive");
+                activeText = Bundle.getMessage("SensorStateActive");
                 //textColorActive=Color.red;
             }
             if (inactiveText == null) {
-                inactiveText = Bundle.getMessage("SensorInactive");
+                inactiveText = Bundle.getMessage("SensorStateInactive");
                 //textColorInActive=Color.yellow;
             }
             if (inconsistentText == null) {
@@ -384,8 +384,8 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
             if (isText() && !isIcon()) {
                 JMenu stateColor = new JMenu(Bundle.getMessage("StateColors"));
                 stateColor.add(stateMenu(Bundle.getMessage("Unknown"), UNKOWN_FONT_COLOR)); //Unknown
-                stateColor.add(stateMenu(Bundle.getMessage("SensorActive"), ACTIVE_FONT_COLOR)); //Active
-                stateColor.add(stateMenu(Bundle.getMessage("SensorInactive"), INACTIVE_FONT_COLOR)); //Inactive
+                stateColor.add(stateMenu(Bundle.getMessage("SensorStateActive"), ACTIVE_FONT_COLOR)); //Active
+                stateColor.add(stateMenu(Bundle.getMessage("SensorStateInactive"), INACTIVE_FONT_COLOR)); //Inactive
                 stateColor.add(stateMenu(Bundle.getMessage("Inconsistent"), INCONSISTENT_FONT_COLOR)); //Inconsistent
                 popup.add(stateColor);
             }

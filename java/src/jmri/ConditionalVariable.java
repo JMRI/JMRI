@@ -836,9 +836,9 @@ public class ConditionalVariable {
             case Conditional.TYPE_NONE:
                 return "";
             case Conditional.TYPE_SENSOR_ACTIVE:
-                return (rbx.getString("SensorActive"));
+                return (Bundle.getMessage("SensorStateActive"));
             case Conditional.TYPE_SENSOR_INACTIVE:
-                return (rbx.getString("SensorInactive"));
+                return (Bundle.getMessage("SensorStateInactive"));
             case Conditional.TYPE_TURNOUT_THROWN:
                 return (rbx.getString("TurnoutThrown"));
             case Conditional.TYPE_TURNOUT_CLOSED:
@@ -902,9 +902,9 @@ public class ConditionalVariable {
             case Conditional.TYPE_SIGNAL_MAST_HELD:
                 return (rbx.getString("StateSignalMastHeld"));
             case Conditional.TYPE_ENTRYEXIT_ACTIVE:
-                return (rbx.getString("StateEntryExitActive"));
+                return (Bundle.getMessage("SensorStateActive")); // reuse for EntryExitState active
             case Conditional.TYPE_ENTRYEXIT_INACTIVE:
-                return (rbx.getString("StateEntryExitInactive"));
+                return (Bundle.getMessage("SensorStateInactive")); // reuse for EntryExitState inactive
         }
         return "";
     }

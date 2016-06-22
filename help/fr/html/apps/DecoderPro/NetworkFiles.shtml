@@ -2,7 +2,6 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!--  $Id$ -->
 <!-- UpDated by Blorec Herv&#233; le 2013-08-31-->
 <title>JMRI: Sharing DecoderPro Rosters Across A Network</title>
 
@@ -23,9 +22,9 @@
 
 
 <!-- Page Body -->
-<H2>
+<h1>
 Partage Des fichiers DecoderPro &#224; Travers Un R&#233;seau
-</H2>
+</h1>
 
 Une question commune :
 
@@ -37,23 +36,22 @@ Oui!
 <P>
 Configurer les machines Windows ainsi il y a un r&#233;pertoire partag&#233;, et puis vous pouvez d&#233;finir les "pr&#233;f&#233;rences avanc&#233;es" de JMRI  pour mettre l'information &#224; l'int&#233;rieur de ce fichier.
 
-<OL>
+<ol>
 <LI>Mise en place d'un r&#233;pertoire partag&#233;.
 
 <LI>S&#233;lectionnez le fichier avec lequel  vous voulez commencer (car il peut se s&#233;parer de ceux d&#233;j&#224; pr&#233;sent sur des machines diff&#233;rentes). Sur cette machine, trouver le fichier "roster.xml"  et le r&#233;pertoire "Roster" dans le r&#233;pertoire des pr&#233;f&#233;rences..
 
-<P>
+<br>
 Pour plus d'informations, s'il vous pla&#238;t voir les pages sur DecoderPro 
 the 
 <A HREF="RosterFile.shtml">Fichiers Liste</a>
 et
 <A HREF="Files.shtml#location">Emplacements des fichiers</a>.
-<P>.Copier, _Ne pas d&#233;placer_, le fichier roster.xml et le dossier roster dans le dossier partag&#233;. Vous devez copier le contenu _complet_ du r&#233;pertoire roster!
-
-
+<br>Copier, _Ne pas d&#233;placer_, le fichier roster.xml et le dossier roster dans le dossier partag&#233;. Vous devez copier le contenu _complet_ du r&#233;pertoire roster!
 <LI>Sur chaque machine qui utilise le fichier partag&#233;, d&#233;marrer DecoderPro, s&#233;lectionnez Pr&#233;f&#233;rences  dans le menu Edition, puis cliquez sur "Afficher les Pr&#233;f&#233;rences Avanc&#233;es". La fen&#234;tre sera plus grande. Appuyez sur "Set" sous la  "Liste:" et suivez les instructions.
-</OL>
+</ol>
 
 <!--#include virtual="/Footer" -->
+    </div>
 </body>
 </html>

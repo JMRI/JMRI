@@ -92,7 +92,7 @@ public class ProfileManager extends Bean {
      * InstanceManager is configured.
      *
      * @return the default ProfileManager.
-     * @deprecated Use {@link #getDefault() }.
+     * @deprecated since 3.11.8. Use {@link #getDefault()} instead.
      */
     @Deprecated
     public static ProfileManager defaultManager() {

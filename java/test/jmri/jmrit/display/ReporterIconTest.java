@@ -1,7 +1,6 @@
 package jmri.jmrit.display;
 
 import javax.swing.JFrame;
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 

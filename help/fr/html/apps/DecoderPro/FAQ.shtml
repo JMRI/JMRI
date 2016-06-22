@@ -2,9 +2,8 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
- <!--Translated by Herv&#233; Blorec le 2013-09-25 -->
-<title>JMRI: DecoderPro Frequently Asked Questions</title>
+<!--Translated by Herv&#233; Blorec le 2013-09-25 -->
+<title>JMRI: DecoderPro Questions Fr&#233;quemment Pos&#233;es</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -29,48 +28,43 @@
 
 <dl>
 
-<dt class=left><a name="newdecoder"/>Comment puis je obtenire un type de d&#233;codeur d&#233;fini?</dt></a>
+<dt class=left><a name="newdecoder">Comment puis je obtenire un type de d&#233;codeur d&#233;fini?</dt></a>
 <dd class=first>
 <p>
 Un nouveau d&#233;codeur complet n&#233;cessite un nouveau ou un fichier de configuration mis &#224; jour. Vous pouvez cr&#233;er votre propre fichier
 <a href="CreateDecoder.shtml"></a>
-ou demander sur la mailing list JmriUsers
-<a href="http://groups.yahoo.com/group/jmriusers/">  </a>
+ou demander sur la mailing list <a href="https://groups.yahoo.com/neo/groups/jmriusers/info">JmriUsers</a>
 Pour demander &#224; quelqu'un d'en cr&#233;er un pour vous.
-</P>
+</p>
 <p>
 Dans beaucoup de cas, vous pouvez utiliser un d&#233;codeur existant qui est "suffisamment proche". Par exemple, un d&#233;codeur du m&#234;me fabricant qui a une taille diff&#233;rente ou Notation actuelle pourrait avoir la m&#234;me configuration de CVs, ainsi la d&#233;finition de ce d&#233;codeur va tr&#232;s bien fonctionner. 
 </dd>
 
-<dt class=left><a name="newfile"/>Que dois-je faire avec ce nouveau fichier d&#233;codeur?</dt></a>
-<dd class=first>
+<dt class="left"><a name="newfile">Que dois-je faire avec ce nouveau fichier d&#233;codeur?</dt></a>
+<dd class="first">
 <p>
 Pour que DecoderPro utilise la d&#233;finition d'un type de d&#233;codeur dans un nouveau fichier d&#233;codeur, le nouveau fichier doit &#234;tre inclut dans l'index DecoderPro des types de d&#233;codeur. Pour faire ceci:
-<UL>
-<LI>Dans votre R&#233;pertoire d'installation, vous devez trouver un r&#233;pertoire nomm&#233; "xml".
-Sous ce r&#233;pertoire, il doit y en avoir un nomm&#233;  "decoders". Vous devez mettre ce fichier ici.
-
-<LI>Maintenant d&#233;marrer DecoderPro, et ouvrez le menu "Debug".  S&#233;lectionnez l'option
-"Reconstruire Index D&#233;codeur" .
-
-<LI>L'ordinateur va fonctionner une minute ou deux avec la s&#233;lection en surbrillance.  
-Aussit&#244;t qu'elle disparait, la nouvelle d&#233;finition est disponible pour vous.
-
-</UL>
-
+ <UL>
+ <LI>Dans votre R&#233;pertoire d'installation, vous devez trouver un r&#233;pertoire nomm&#233; "xml".
+ Sous ce r&#233;pertoire, il doit y en avoir un nomm&#233;  "decoders". Vous devez mettre ce fichier ici.
+ <LI>Maintenant d&#233;marrer DecoderPro, et ouvrez le menu "Debug".  S&#233;lectionnez l'option
+ "Reconstruire Index D&#233;codeur" .
+ <LI>L'ordinateur va fonctionner une minute ou deux avec la s&#233;lection en surbrillance.
+ Aussit&#244;t qu'elle disparait, la nouvelle d&#233;finition est disponible pour vous.
+ </UL>
 <P>
 SVP Soyez s&#251;r que le nouveau fichier de configuration a bien contribu&#233; au projet ainsi il sera inclut dans les versions futures et vous n'aurez pas &#224; refaire l'index &#224; chaque fois que vous ferez une mise &#224; jour.
 </dd>
 
-<dt class=left><a name="update"/>Comment Puis je obtenir les derni&#232;res d&#233;finitions du d&#233;codeur?</dt></a>
-<dd class=first>
+<dt class="left"><a name="update">Comment Puis je obtenir les derni&#232;res d&#233;finitions du d&#233;codeur?</a></dt>
+<dd>
 <p>
 La fa&#231;on la plus ais&#233;e pour mettre &#224; jour est de t&#233;l&#233;charger une nouvelle version du programme.
 Il est peu probable de causer des probl&#232;mes et installe automatiquement les derni&#232;res versions des contributions &#224; d&#233;coderPro.
 <P>
 Les mises &#224; jour se produisent en permanence entre les versions du programme.
 Comme les fichiers sont des contributions, nous les rendons disponibles sur notre page web
-<A HREF="http://jmri.org/xml/decoders">D&#233;finitions de d&#233;codeur collect&#233;es</a>
+<A HREF="http://jmri.org/xml/decoders">D&#233;finitions de d&#233;codeur collect&#233;es</a>.
  Vous pouvez les t&#233;l&#233;charger depuis l&#224;, mais notez que la plupart des navigateurs web ne vous permettrons pas de les voir directement; vous devez les t&#233;l&#233;charger.
 <p>
 Bien des gens travaillent sur des d&#233;finitions d&#233;codeur, ils mettent souvent
@@ -82,13 +76,12 @@ Notez que comme mesure anti-spam vous devrez probablement
 <A HREF="http://groups.yahoo.com/group/jmriusers/join">joindre le groupe </a>
 pour pouvoir t&#233;l&#233;charger les fichiers; cela necessite que vous ayez un compte Yahoo (gratuit).
 
-<dt class=left><a name="lb-xp"/>Pourquoi mon LocoBuffer-II ne travaille pas avec Windows XP?</dt></a>
-<dd class=first>
+<dt class="left"><a name="lb-xp">Pourquoi mon LocoBuffer-II ne travaille pas avec Windows XP?</a></dt>
+<dd>
 <p>
 Avec Windows XP, les param&#232;tres de votre port s&#233;rie peuvent ne pas &#234;tre r&#233;gl&#233;s pour un contr&#244;le mat&#233;riel du flux. Pour corriger ceci, Clic-droit sur My computer et s&#233;lectionnez les Propri&#233;t&#233;s. Allez &#224; l'onglet Mat&#233;riel et cliquer sur Device Manager.Ouvrez la section qui dit Ports (COM &amp; LPT). 
 Clic-droit sur le port s&#233;rie attribu&#233; &#224; LocoBuffer et s&#233;lectionnez Propri&#233;t&#233;s. Allez &#224; l'onglet R&#233;glage du Port et param&#233;trer les options &#224; 19200, 8, None,1, Hardware. Cliquer sur OK. Fermer tout. 
-Red&#233;marrer JMRI et v&#233;rifiez vos param&#232;tres de connection. 
-
+Red&#233;marrer JMRI et v&#233;rifiez vos param&#232;tres de connection.
 </dd>
 
 </dl>

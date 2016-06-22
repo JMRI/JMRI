@@ -1,4 +1,3 @@
-// QuadOutputSignalHead.java
 package jmri.implementation;
 
 import jmri.NamedBeanHandle;
@@ -18,7 +17,6 @@ import jmri.Turnout;
  * changed via some other mechanism.
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version	$Revision$
  */
 public class QuadOutputSignalHead extends TripleTurnoutSignalHead {
 
@@ -128,5 +126,3 @@ public class QuadOutputSignalHead extends TripleTurnoutSignalHead {
         return false;
     }
 }
-
-/* @(#)QuadOutputSignalHead.java */

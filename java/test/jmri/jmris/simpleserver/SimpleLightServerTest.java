@@ -4,7 +4,6 @@ package jmri.jmris.simpleserver;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -28,6 +27,20 @@ public class SimpleLightServerTest {
         Assert.assertNotNull(a);
     }
 
+    @Test public void testConnectionCtor() {
+        java.io.DataOutputStream output = new java.io.DataOutputStream(
+                new java.io.OutputStream() {
+                    // null output string drops characters
+                    // could be replaced by one that checks for specific outputs
+                    @Override
+                    public void write(int b) throws java.io.IOException {
+                    }
+                });
+        jmri.jmris.JmriConnectionScaffold jcs = new jmri.jmris.JmriConnectionScaffold(output);
+        SimpleLightServer a = new SimpleLightServer(jcs);
+        Assert.assertNotNull(a);
+    }
+
     // test sending a message.
     @Test public void testSendMessage() {
         StringBuilder sb = new StringBuilder();
@@ -47,8 +60,7 @@ public class SimpleLightServerTest {
         } catch(java.lang.NoSuchMethodException nsm) {
           Assert.fail("Could not find method sendMessage in SimpleLightServer class. " );
         }
-
-        // override the default permissions.
+  
         Assert.assertNotNull(sendMessageMethod);
         sendMessageMethod.setAccessible(true);
         try {
@@ -61,6 +73,42 @@ public class SimpleLightServerTest {
           Assert.fail("sendMessage executon failed reason: " + cause.getMessage());
        }
     }
+
+    // test sending a message.
+    @Test public void testSendMessageWithConnection() {
+        StringBuilder sb = new StringBuilder();
+        java.io.DataOutputStream output = new java.io.DataOutputStream(
+                new java.io.OutputStream() {
+                    @Override
+                    public void write(int b) throws java.io.IOException {
+                        sb.append((char)b);
+                    }
+                });
+        jmri.jmris.JmriConnectionScaffold jcs = new jmri.jmris.JmriConnectionScaffold(output);
+        SimpleLightServer a = new SimpleLightServer(jcs);
+        // NOTE: this test uses reflection to test a private method.
+        java.lang.reflect.Method sendMessageMethod=null;
+        try {
+          sendMessageMethod = a.getClass().getDeclaredMethod("sendMessage", String.class);
+        } catch(java.lang.NoSuchMethodException nsm) {
+          Assert.fail("Could not find method sendMessage in SimpleLightServer class. " );
+        }
+
+        // override the default permissions.
+        Assert.assertNotNull(sendMessageMethod);
+        sendMessageMethod.setAccessible(true);
+        try {
+           sendMessageMethod.invoke(a,"Hello World");
+           Assert.assertEquals("SendMessage Check","Hello World",jcs.getOutput());
+        } catch (java.lang.IllegalAccessException iae) {
+           Assert.fail("Could not access method sendMessage in SimpleLightServer class");
+        } catch (java.lang.reflect.InvocationTargetException ite){
+          Throwable cause = ite.getCause();
+          Assert.fail("sendMessage executon failed reason: " + cause.getMessage());
+       }
+    }
+
+        // override the default permissions.
 
     // test sending an error message.
     @Test public void testSendErrorStatus() {

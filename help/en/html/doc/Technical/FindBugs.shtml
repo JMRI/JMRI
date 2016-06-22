@@ -94,25 +94,27 @@ The basics of annotations are covered in a <a href="https://docs.oracle.com/java
 It can be useful to mark code with one of the following annotations
 so that FindBugs does a good job of reasoning about it:
 <ul>
-<li><a href="http://findbugs.sourceforge.net/manual/annotations.html"><code>javax.annotation.Nonnull</code></a> -
+<li><a href="http://static.javadoc.io/com.google.code.findbugs/jsr305/3.0.1/javax/annotation/Nonnull.html"><code>javax.annotation.Nonnull</code></a> -
     The annotated element must not be null. 
     Annotated fields must not be null after construction has completed. 
     Annotated methods must have non-null return values.
     Use javax.annotation.ParametersAreNonnullByDefault to set it for an entire class.
 
-<li><a href="http://findbugs.sourceforge.net/manual/annotations.html"><code>javax.annotation.CheckForNull</code></a> -
+<li><a href="http://static.javadoc.io/com.google.code.findbugs/jsr305/3.0.1/javax/annotation/CheckForNull.html"><code>javax.annotation.CheckForNull</code></a> -
     the annotated variable, parameter or return value may have a null value, so all uses should appropriately handle that.
     Please put this on method definitions to say that the return value should be checked for null.
 
-<li><a href="http://findbugs.sourceforge.net/manual/annotations.html"><code>edu.umd.cs.findbugs.annotations.OverrideMustInvoke</code></a> -
+<li><a href="http://static.javadoc.io/com.google.code.findbugs/jsr305/3.0.1/javax/annotation/OverridingMethodsMustInvokeSuper.html"><code>javax.annotation.OverridingMethodsMustInvokeSuper</code></a> -
     Used to annotate a method that, if overridden, must (or should) be invoke super in the overriding method. 
     Examples of such methods include finalize() and clone(). 
     The argument to the method indicates when the super invocation should occur: at any time (ANYTIME), at the beginning of the overriding method (FIRST), 
     or at the end of the overriding method (LAST), defaulting to any time, 
     e.g. <code>@OverrideMustInvoke(value=ANYTIME)</code>
+    <p>
+    Note this replaces the deprecated <a href="http://findbugs.sourceforge.net/manual/annotations.html"><code>edu.umd.cs.findbugs.annotations.OverrideMustInvoke</code></a>.
 
-<li><a href="http://findbugs.sourceforge.net/manual/annotations.html"><code>javax.annotation.CheckReturnValue</code></a> -
-    annotates a method to say the method has no side-effects, so there's no point in calling it without checking its return value
+<li><a href="http://static.javadoc.io/com.google.code.findbugs/jsr305/3.0.1/javax/annotation/CheckReturnValue.html"><code>javax.annotation.CheckReturnValue</code></a> -
+    annotates a method to say the method has no side-effects, so there's no point in calling it without checking its return value.
     
 <li><a href="http://jcip.net/annotations/doc/net/jcip/annotations/Immutable.html"><code>net.jcip.annotations.Immutable</code></a> -
     An object of this class can't be changed after it's created.  This allows both better checking
@@ -130,8 +132,12 @@ so that FindBugs does a good job of reasoning about it:
     future developers.
 
 </ul>
-For more information about these annotations, please see the 
-<a href="http://jcip.net/annotations/doc/index.html">page in the Concurrency API</a>.
+For more information about these annotations, please see links above and
+<ul>
+<li>The JSR-305 <a href="http://www.javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.1">code annotations page</a>, 
+<li>the <a href="http://jcip.net/annotations/doc/index.html">Concurrency API annotations page</a>, and
+<li>for some older information, the <a href="http://findbugs.sourceforge.net/manual/annotations.html">FindBugs annotation page</a>.
+</ul>
 
 <p>
 We do not use these annotations:
