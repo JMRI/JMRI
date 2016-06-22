@@ -201,8 +201,9 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 ##### jakarta-regexp-1.5.jar
 
 ##### ecj.jar
-- Eclipse compiler 4.6RC3 from
-    - http://download.eclipse.org/eclipse/downloads/drops4/S-4.6RC3-201605252000/  (via ecj-4.6RC3.jar)
+- Eclipse compiler 4.6 from
+    - http://download.eclipse.org/eclipse/downloads/drops4/R-4.6-201606061100/  (via ecj-4.6.jar) June 22, 2016
+- used in ant warnings target
     
 ##### WinRegistry4-4.jar
 - Version 4.4
