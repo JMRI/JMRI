@@ -155,7 +155,8 @@ JMRI_SERIAL_PORTS=${JMRI_SERIAL_PORTS:-}
 CONFIGNAME=""
 CONFIGFILE=""
 
-# JMRI installation location
+# Installation locations
+JAVA_HOME=${JAVA_HOME:-}
 JMRI_HOME=${JMRI_HOME:-}
 
 # set DEBUG to any non-empty string to see debugging output
@@ -229,68 +230,74 @@ if [ -z "${jmri_xms:-}" ] ; then
     jmri_xms="-Xms96m"
 fi
 
-## Prompt to install Java on OS X, mimicing the built in prompt for the JDK
-OfferJavaDownload() {
-    /usr/bin/osascript << EOT
-    try
-        display alert "To use JMRI you need to install a JRE." \
-            message "Click \"More Info...\" to visit the Java Runtime Environment download website." \
-            buttons {"More Info...", "OK"} \
-            default button "OK" \
-            cancel button "More Info..."
-    on error number -128
-        -- user pressed cancel button
-        open location "https://www.java.com/en/download/mac_download.jsp"
-    end try
-EOT
-    exit 1
-}
-
-#
-# macOS / OS X has a bewildering array of possibilities these days
-#
-# The Apple Java 6 runtime might be present, and if it is, then using
-# /usr/libexec/java_home will find the correct version, based on the user's
-# set preferences.   Note that this also works to find a Java 7 JDK, but
-# not the Java 7 JRE.
-#
-# As 10.8 & 10.9 do not ship with a Java runtime, this command will prompt
-# the user and download a JRE as needed.
-#
-# But if the user already has the Oracle Java 7 JRE installed, we should
-# use that instead of forcing a download of Apple's Java 6.
-#
-# * So look for the Oracle Java 7 JRE and use it if found
-# * Otherwise, use java_home if it's present
-# * As a last resort, use the default 'java' command and let the user
-#   deal with it.
-
-if [ "$OS" = "macosx" ] ; then
-    # on OS X, we default to logging, since the Console app make it less visible unless you look for it
-    DEBUG=yes
-
-    # this is the current (1.7.0_45ish) location of the Oracle installed Java 7 JRE (but not the JDK)
-    PLUGINDIR="/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home"
-    if [ -x "$PLUGINDIR/bin/java" ] ; then
-        JAVA_HOME="$PLUGINDIR"
-        JAVACMD=("$PLUGINDIR/bin/java")
-
-        export JAVA_HOME
-
-    # check for Apple method of directly locating java binaries (may find a Java 6 JRE or a Java 7 JDK)
-    elif [ -x /usr/libexec/java_home ] ; then
-        VERSION=$(/usr/libexec/java_home -exec java -version)
-        if [ $? == 0 ] ; then
-            JAVACMD=("/usr/libexec/java_home" "-exec" "java")
-        else
-            OfferJavaDownload
+# define JAVA_HOME if needed
+if [ -z "${JAVA_HOME}" ] ; then
+    if [ "$OS" = "macosx" ] ; then
+        #
+        # macOS / OS X has a bewildering array of possibilities these days
+        #
+        # /usr/libexec/java_home will find the correct version, if a JDK for the
+        # required version or newer is installed.
+        #
+        # As 10.8 and newer do not ship with a JRE, this command will prompt
+        # the user and download a JRE as needed.
+        #
+        # But if the user already has the Oracle Java 8 JRE installed, we should
+        # use that instead of forcing a download of Apple's Java 6 (10.11 and
+        # newer will always direct the user to Oracle for Java.)
+        #
+        # Look for the Oracle Java 8 JRE and use it if found
+        # Otherwise, use java_home if it's present
+        # Otherwise, prompt the user to install Java
+        #
+        # Default JRE location
+        JAVA_HOME="/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home"
+        if [ -x "${JAVA_HOME}/bin/java" ] ; then
+            JAVACMD="${JAVA_HOME}/bin/java"
+            # Test if java is present and version 1.8 or 1.9
+            if [[ -x "${JAVACMD}" && "$( ${JAVACMD} -version 2>&1 )" =~ 1.[89] ]] ; then
+                JAVA_HOME=""
+            fi
         fi
+        if [[ -z "${JAVA_HOME}" && -x /usr/libexec/java_home ]] ; then
+            # Test for any JDKs of version 1.8 or newer
+            JAVA_HOME=$( /usr/libexec/java_home --version 1.8+ --failfast 2>/dev/null )
+            if [ -n "${JAVA_HOME}" ] ; then
+                JAVACMD="${JAVA_HOME}/bin/java"
+            fi
+        fi
+        if [ -z "${JAVA_HOME}" ] ; then
+            # JAVA_HOME is still not defined, so prompt to install Java for OS X
+            /usr/bin/osascript << EOT
+            try
+                display alert "To use JMRI you need to install a JRE." \
+                    message "Click \"More Info...\" to visit the Java Runtime Environment download website." \
+                    buttons {"More Info...", "OK"} \
+                    default button "OK" \
+                    cancel button "More Info..."
+            on error number -128
+                -- user pressed cancel button
+                open location "https://www.java.com/en/download/mac_download.jsp"
+            end try
+EOT
+            exit 1
+        fi
+    elif [ which java ]; then
+        JAVACMD=$( which java )
+        JAVA_HOME="$( dirname ${JAVACMD} )/.."
     else
-        # this isn't supposed to happen on any Mac that I know of in 2013... but you never know
-        OfferJavaDownload
+        echo "Please install Java 1.8 per your operating system vendor's instructions."
+        exit 1
+    fi
+else
+    JAVACMD="${JAVA_HOME}/bin/java"
+    if [ ! -x "${JAVACMD}" ] ; then
+        echo "Unable to execute java using JAVA_HOME=\"${JAVA_HOME}\"."
+        exit 1
     fi
 fi
-
+# make JAVA_HOME available to spawned processes
+export JAVA_HOME
 
 # define JMRI_HOME if it is not defined
 if [ -z "${JMRI_HOME}" ] ; then
@@ -389,8 +396,6 @@ if [ -d /System/Library/Java ] ; then
 fi
 CP="${CP}:${post_classpath}"
 
-[ -z "${JAVACMD[@]-}" ] && JAVACMD=("java")
-
 [ -n "${DEBUG}" ] && echo "CLASSPATH: '${CP}'"
 
 [ -n "${DEBUG}" ] && echo "Java CMD: '${JAVACMD[@]}'"
@@ -472,7 +477,7 @@ RESTART_CODE=100
 EXIT_STATUS=${RESTART_CODE}
 while [ "${EXIT_STATUS}" -eq "${RESTART_CODE}" ] ; do
 
-    "${JAVACMD[@]}" "${DOCK_OPTIONS[@]-}" ${OPTIONS} ${ALTPORTS} -cp "${CP}" "${CLASSNAME}" ${CONFIGFILE}
+    "${JAVACMD}" "${DOCK_OPTIONS[@]-}" ${OPTIONS} ${ALTPORTS} -cp "${CP}" "${CLASSNAME}" ${CONFIGFILE}
 
     EXIT_STATUS=$?
     [ -n "${DEBUG}" ] && echo Exit Status: "${EXIT_STATUS}"
