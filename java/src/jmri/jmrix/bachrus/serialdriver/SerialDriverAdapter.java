@@ -31,8 +31,6 @@ import org.slf4j.LoggerFactory;
  */
 public class SerialDriverAdapter extends SpeedoPortController implements jmri.jmrix.SerialPortAdapter {
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
-    // There can only be one instance
     public SerialDriverAdapter() {
         super(new SpeedoSystemConnectionMemo());
         setManufacturer(SpeedoConnectionTypeList.BACHRUS);
@@ -92,9 +90,11 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
                 );
             }
 
+            SpeedoTrafficController tc = new SpeedoTrafficController();
+
             //AJB - add Sprog Traffic Controller as event listener
             try {
-                activeSerialPort.addEventListener(SpeedoTrafficController.instance());
+                activeSerialPort.addEventListener(tc);
             } catch (TooManyListenersException e) {
             }
             setManufacturer(SpeedoConnectionTypeList.BACHRUS);
@@ -132,7 +132,9 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
      */
     public void configure() {
         // connect to the traffic controller
-        SpeedoTrafficController control = SpeedoTrafficController.instance();
+        SpeedoTrafficController control = new SpeedoTrafficController();
+
+        this.getSystemConnectionMemo().setSpeedoTrafficController(control);        
         control.connectPort(this);
 
         this.getSystemConnectionMemo().configureManagers();
@@ -176,14 +178,14 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
     private boolean opened = false;
     InputStream serialStream = null;
 
-    static public synchronized SerialDriverAdapter instance() {
+    public synchronized SerialDriverAdapter instance() {
         if (mInstance == null) {
             mInstance = new SerialDriverAdapter();
             mInstance.setManufacturer(SpeedoConnectionTypeList.BACHRUS);
         }
         return mInstance;
     }
-    static SerialDriverAdapter mInstance = null;
+    private SerialDriverAdapter mInstance = null;
 
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 

@@ -111,10 +111,6 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         return p;
     }
 
-    protected void getInstance() {
-        adapter = SerialDriverAdapter.instance();
-    }
-
     @Override
     protected void unpackElement(Element shared, Element perNode) {
         List<Element> l = shared.getChildren("node");
@@ -346,6 +342,18 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             }
         }
         return null;
+    }
+
+    @Override
+    protected void getInstance() {
+        if (adapter == null) {
+            adapter = new SerialDriverAdapter();
+        }
+    }
+
+    @Override
+    protected void getInstance(Object object) {
+        adapter = ((ConnectionConfig) object).getAdapter();
     }
 
     @Override

@@ -52,11 +52,6 @@ public class ActiveSystemsMenu extends JMenu {
             }
         }
 
-        // the following is somewhat brute-force!
-        if (jmri.jmrix.bachrus.ActiveFlag.isActive()) {
-            m.add(getMenu("jmri.jmrix.bachrus.SpeedoMenu"));
-        }
-
         if (jmri.jmrix.cmri.serial.ActiveFlag.isActive()) {
             m.add(getMenu("jmri.jmrix.cmri.CMRIMenu"));
         }

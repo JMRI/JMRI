@@ -1,4 +1,3 @@
-// SpeedoTrafficController.java
 package jmri.jmrix.bachrus;
 
 import gnu.io.SerialPortEvent;
@@ -22,16 +21,12 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author	Andrew Crosland Copyright (C) 2010
- * @version	$Revision$
  */
 public class SpeedoTrafficController implements SpeedoInterface, SerialPortEventListener {
 
     private SpeedoReply reply = new SpeedoReply();
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
-    // Ignore FindBugs warning as we can only have on SPROG instance at this time
     public SpeedoTrafficController() {
-        self = this;
     }
 
     // The methods to implement the SpeedoInterface
@@ -121,15 +116,12 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
      *
      * @return The registered SpeedoTrafficController instance for general use,
      *         if need be creating one.
+     * @deprecated since 4.5.1
      */
+    @Deprecated
     static public SpeedoTrafficController instance() {
-        if (self == null) {
-            self = new SpeedoTrafficController();
-        }
-        return self;
+        return null;
     }
-
-    static volatile protected SpeedoTrafficController self = null;
 
     // data members to hold the streams
     DataInputStream istream = null;
