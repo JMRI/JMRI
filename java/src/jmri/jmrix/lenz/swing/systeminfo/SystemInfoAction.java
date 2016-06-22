@@ -1,8 +1,7 @@
-// SystemInfoAction.java
 package jmri.jmrix.lenz.swing.systeminfo;
 
 import java.awt.event.ActionEvent;
-import javax.swing.AbstractAction;
+import jmri.jmrix.lenz.swing.AbstractXPressNetAction;
 
 /**
  * Swing action to create and register a SystemInfo object.
@@ -11,19 +10,11 @@ import javax.swing.AbstractAction;
  * software versions of the Interface hardware and the command station
  *
  * @author	Paul Bender Copyright (C) 2003
- * @version	$Revision$
  */
-public class SystemInfoAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8341247362856299056L;
-    jmri.jmrix.lenz.XNetSystemConnectionMemo _memo = null;
+public class SystemInfoAction extends AbstractXPressNetAction {
 
     public SystemInfoAction(String s, jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
-        super(s);
-        _memo = memo;
+        super(s,memo);
     }
 
     public SystemInfoAction(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
@@ -37,4 +28,3 @@ public class SystemInfoAction extends AbstractAction {
     }
 }
 
-/* @(#)SystemInfoAction.java */

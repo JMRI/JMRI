@@ -1,7 +1,6 @@
 package apps;
 
 import apps.gui3.TabbedPreferences;
-import apps.startup.StartupActionModelUtil;
 import java.awt.AWTEvent;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -22,10 +21,8 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.Enumeration;
 import java.util.EventObject;
 import java.util.Locale;
-import java.util.ResourceBundle;
 import javax.help.SwingHelpUtilities;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -281,11 +278,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         //   Done after load config file so that connection-system-specific Managers are defined and usable
         InstanceManager.store(new EntryExitPairs(), EntryExitPairs.class);
 
-        // Add actions to abstractActionModel
-        // Done here as initial non-GUI initialisation is completed
-        // and UI L&F has been set
-        addToActionModel();
-
         // populate GUI
         log.debug("Start UI");
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -482,18 +474,12 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         return result;
     }
 
+    /**
+     * @deprecated since 4.5.1
+     */
+    @Deprecated
     protected final void addToActionModel() {
-        StartupActionModelUtil util = InstanceManager.getDefault(StartupActionModelUtil.class);
-        ResourceBundle actionList = ResourceBundle.getBundle("apps.ActionListBundle");
-        Enumeration<String> e = actionList.getKeys();
-        while (e.hasMoreElements()) {
-            String key = e.nextElement();
-            try {
-                util.addAction(key, actionList.getString(key));
-            } catch (ClassNotFoundException ex) {
-                log.error("Did not find class \"{}\"", key);
-            }
-        }
+        // StartupActionModelUtil populates itself, so do nothing
     }
 
     /**
