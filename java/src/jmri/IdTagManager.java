@@ -57,7 +57,7 @@ public interface IdTagManager extends Manager {
      *                                  e.g. an illegal name or name that can't
      *                                  be parsed.
      */
-    public @CheckForNull IdTag provideIdTag(@Nonnull String name);
+    public @Nonnull IdTag provideIdTag(@Nonnull String name);
 
     /**
      * Locate via tag ID, then by user name, and finally system name if needed.
