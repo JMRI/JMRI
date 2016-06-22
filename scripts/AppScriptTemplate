@@ -232,6 +232,11 @@ fi
 
 # define JAVA_HOME if needed
 if [ -z "${JAVA_HOME}" ] ; then
+    #
+    # macOS / OS X get special treatment
+    # all others use which to find java
+    # otherwise error out
+    #
     if [ "$OS" = "macosx" ] ; then
         #
         # macOS / OS X has a bewildering array of possibilities these days
@@ -282,7 +287,7 @@ if [ -z "${JAVA_HOME}" ] ; then
 EOT
             exit 1
         fi
-    elif [ which java ]; then
+    elif which java >/dev/null 2>&1 ; then
         JAVACMD=$( which java )
         JAVA_HOME="$( dirname ${JAVACMD} )/.."
     else
