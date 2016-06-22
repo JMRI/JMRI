@@ -2,9 +2,8 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!--  $Id$ -->
 <!--Translated by Herv&#233; Blorec le 2013-09-01-->
-<title>JMRI: Creating Control Panels </title>
+<title>JMRI: Cr&#233;ation Panneaux de Commandes</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -21,11 +20,10 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-
-<H1>JMRI:Cr&#233;ation Panneaux de Commandes</H1>
+<h1>JMRI:Cr&#233;ation Panneaux de Commandes</h1>
 Les librairies JMRI contiennent un syst&#232;me de cr&#233;ation de panneaux de commandes. Il est grandement personnalisable, et vous permet ce commander votre r&#233;seau directement depuis le panneau.
-<h3Contenu d'un panneau</h3>
-<IMG SRC="../../../images/PiecedPanel.gif" ALT="Screen shot of panel" ALIGN=RIGHT WIDTH="292" HEIGHT="107" HSPACE="0" VSPACE="0">
+<h3>Contenu d'un panneau</h3>
+<IMG SRC="../../../images/PiecedPanel.gif" ALT="Screen shot of panel" ALIGN="RIGHT" WIDTH="292" HEIGHT="107" HSPACE="0" VSPACE="0">
 
 <P>
 Cliquer sur un symbole d'aiguillage le basculer de droit &#224; d&#233;vi&#233; et vice-versa.
@@ -38,9 +36,9 @@ Ils sont destin&#233;s &#224; repr&#233;senter un indicateur de panneau allum&#2
 
 <h3>Cr&#233;ation d'un Panneau</h3>
 (Nick Kulp pr&#233;sente un bon tutoriel sur ce sujet durant Mars 2004; ses diapositives sont 
-<A href="http://jmri.org/community/clinics/NickKulpMarch2004/index.html">disponibles sur le site web principal JMRI</a>.
+<a href="http://jmri.org/community/clinics/NickKulpMarch2004/index.html">disponibles sur le site web principal JMRI</a>.
 Dick Bronson a fourni plusieurs introductions anim&#233;es &#224; PanelPro sur
-<A HREF="http://www.rr-cirkits.com/Clinics/Clinics.html">ses propres pages web</a>.
+<a HREF="http://www.rr-cirkits.com/Clinics/Clinics.html">ses propres pages web</a>.
 
 <P>
 Les panneaux sont r&#233;alis&#233;s avec un "&#201;diteur de Panneau" qui vous permet de placer des images repr&#233;sentant les aiguillages, les capteurs ((sur certains syst&#232;mes) et les voies.
@@ -94,20 +92,21 @@ Nous devons faire un meilleur travail d'organisation de ces...
 
 Parce que c'est &#224; base d'ic&#244;nes, vous pouvez cr&#233;er des panneaux qui ressemblent &#224; ce que vous
 voulez.  Par exemple, au lieu d'utiliser des ic&#244;nes de voie sch&#233;matiques pour les aiguillages, vous pouvez utiliser des petites images, des niveaux et des plaques sur la machine CTC. Ceci vous donnera des leviers "m&#233;caniques" que vous pourrez basculer avec un clic.
-  
 <P>
 Pour rendre ceci r&#233;ellement ais&#233;, nous avons besoin d'avoir un meilleur &#233;diteur. Et faire un vrai panneau CTC demandera de meilleurs signaux logiques pour manipuler les boutons cod&#233;s, etc.  
 Si vous avez des avis sur la mani&#232;re dont cela devrait fonctionner, s'il vous pla&#238;t envoyez vos commentaires!
 
 <h2>Utilisation du panneau</h2>
-
+<p>
 Pour commander le changement d'&#233;tat d'un aiguillage ( exemple droit vers d&#233;vi&#233;), cliquez sur lui.
 <P>
 Pour le d&#233;placer, vous le "meta-glisser". Sur un Mac c'est d'appuyer sur la touche Cmd et de glisser avec le curseur de la souris; sur Windows, ce pourrait &#234;tre la touche Windows ou la touche de Ctrl.  
 Ou ce pourrait &#234;tre un glisser-droit.  D&#233;sol&#233;, je n'ai pas de machine Windows ici pour le tester. Pour Linux Glisser+clic droit.
 <P>
 Il y a aussi un menu d&#233;roulant(ctrl - clic sur un Mac) qui vous permet de pivoter l'ic&#244;ne ainsi que ces points dans la direction que vous voulez.
-    
+    </P>
+
 <!--#include virtual="/Footer" -->
+</div>
 </body>
 </html>

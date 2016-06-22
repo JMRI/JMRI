@@ -58,7 +58,7 @@ pour une t&#234;te de signal. Notes: Nom  syst&#232;me et le type ne peuvent pas
 t&#234;te de signal peut &#234;tre &#233;dit&#233;e &#224; la fois.
 </UL>
 <P> Pour d&#233;finir une nouvelle t&#234;te de signal, cliquez sur le bouton
-<A HREF="SignalAddEdit.shtml">  Ajouter .."</a>.
+<A HREF="SignalAddEdit.shtml">  Ajouter ..."</a>.
 Il vous sera
 demandera le type (sortie triple; Double sortie; SE8c; etc), et
 toutes les informations de configuration  n&#233;cessaire.

@@ -31,10 +31,10 @@ capteur est fix&#233; &#224;.</p>
 <p> Entrez une adresse valide pour ce capteur et si vous le souhaitez saisissez un nom utilisateur qui peut &#234;tre tout ce que vous voulez pour d&#233;crire le capteur.</p>
 
 <H2> Cr&#233;er un nombre de capteurs</H2>
-<p> Il est &#233;galement possible de cr&#233;er un certain nombre de capteurs . <br>
+<p> Il est &#233;galement possible de cr&#233;er un certain nombre de capteurs. <br>
 O&#249; est affich&#233; "Ajouter une plage" cochez la case pour l'activ&#233;e.</P>
 <img src="AddTurnoutNumber.png">
-<p> Lors de la validation de la case "Ajouter Plage", sera ensuite activer le champ "nombre &#224; ajouter" .
+<p> Lors de la validation de la case "Ajouter Plage", sera ensuite activer le champ "nombre &#224; ajouter".
 Ici entrez le nombre de capteurs que vous souhaitez ajouter, ce qui cr&#233;era ensuite un num&#233;ro
  de capteurs s&#233;quentiels.</p>
 Si un nom utilisateur n'a pas &#233;t&#233; entr&#233;, un num&#233;ro sera ajout&#233; &#224; la fin du nom pour garder

@@ -70,7 +70,7 @@ Pour ce faire:
      <li> Le fichier que vous souhaitez afficher doit avoir &#233;t&#233; entrepos&#233;
          dans JMRI 2.9.4 ou version ult&#233;rieure. S'il est plus vieux que cela,
          il suffit de charger dans JMIR 2.9.4 ou version ult&#233;rieure et de le stocker &#224; nouveau.
-     </ ul>
+     </ul>
 <li> D&#233;marrez le serveur web JMRI. Dans le cadre du menu d&#233;bogage
      , s&#233;lectionnez "D&#233;marrer Mini Web Server".
 <li> Ouvrez votre navigateur Web et saisissez l'URL

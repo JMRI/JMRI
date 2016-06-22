@@ -146,7 +146,7 @@ peut &#234;tre &#233;dit&#233;e &#224; la fois. Une Section ne peut pas &#234;tr
 "<A HREF="SectionAddEdit.shtml"> Ajouter .."</a>. Une fen&#234;tre va &#234;tre mise en place
 qui vous permettra de d&#233;finir des cantons inclus dans la nouvelle Section, et si
 n&#233;cessaire, d&#233;signer les points d'entr&#233;e pour avoir comme r&#233;sultat du trajet dans la Section les directions
-AVANT et INVERSE .</P>
+AVANT et INVERSE.</P>
 <p> Actuellement, l'utilisateur doit s&#233;lectionner manuellement <b>AVANT</b> ou <b>INVERSE</b> pour chaque
 Point d'entr&#233;e, apr&#232;s que tous les cantons aient &#233;t&#233; ajout&#233;s &#224; une section. Le programme mettra certaines directions
 automatiquement, mais d'autres sont laiss&#233;s en <b>INCONNU</b>. Un point d'entr&#233;e doit &#234;tre r&#233;gl&#233; en
@@ -170,13 +170,15 @@ lors de l'utilisation de la Section.</b></p>
 <H2> <a Name='SignalMast'> Aide Logique M&#226;t signal avec des sections</a></h2>
 <p> Si la signalisation est bas&#233;e sur l(utilisation de m&#226;ts de signalisation, avec la logique associ&#233;e qui a &#233;t&#233; g&#233;n&#233;r&#233;e en
 utilisant l'&#233;diteur de r&#233;seau, il est possible d'avoir &#233;galement des sections g&#233;n&#233;r&#233;es automatiquement en fonction
-de la logique .
+de la logique.
 <p> L'outil peut &#234;tre trouv&#233; dans le <b>Tableau Logique Mat Signal</b> | <b>Outils</b> | <b>G&#233;n&#233;rer des sections</b>
  L'ex&#233;cution de ceci cr&#233;era imm&#233;diatement des sections qui contiennent chacune tous les cantonss entre des paires de m&#226;t de signaux d&#233;j&#224; d&#233;finis.
  Il sera &#233;galement configurer chaque Section " G&#233;n&#233;r&#233; automatiquement " afin qu'elles comprennent les cantonss dans le bon ordre,
  avec la direction d&#233;finie comme la marche avant, allant du M&#226;t Signal source au M&#226;t Signal destination.
  Veuillez noter que les d&#233;tails des cantonss ne sont pas enregistr&#233;s lorsque le panneau est stock&#233; , mais sont recr&#233;&#233;s lorsque le fichier est charg&#233;.
-<p> L'outil permettra &#233;galement de cr&#233;er automatiquement des capteurs de direction avant et arri&#232;re et les placera dans la Section, cependant actuellement la Logique M&#226;t Signal n'utilise pas ces derniers et leur cr&#233;ation n'est l&#224; que pour permettre la validation de la section ( ou l'utilisation par l'utilisateur dans des Logix ind&#233;pendant si d&#233;sir&#233;) .
+<p> L'outil permettra &#233;galement de cr&#233;er automatiquement des capteurs de direction avant et arri&#232;re et les placera dans la Section,
+     cependant actuellement la Logique M&#226;t Signal n'utilise pas ces derniers et leur cr&#233;ation n'est l&#224; que pour permettre
+     la validation de la section ( ou l'utilisation par l'utilisateur dans des Logix ind&#233;pendant si d&#233;sir&#233;).
 <p> Les Sections g&#233;n&#233;r&#233;s avec l'outil auront seulement une paire de points d'entr&#233;e et suit simplement le chemin entre les deux signaux.
  <p> Les Capteurs de Direction (avant et arri&#232;re) sont cr&#233;&#233;s par l'outil G&#233;n&#233;rer Sections, mais les Capteurs d'Arr&#234;t (Avant et Arri&#232;re)
 doivent &#234;tre ajout&#233;s manuellement par l'utilisateur via la fen&#234;tre d'Edition des Eections pour chaque section, si d&#233;sir&#233;.
@@ -185,13 +187,13 @@ doivent &#234;tre ajout&#233;s manuellement par l'utilisateur via la fen&#234;tr
 vous devrez &#233;galement r&#233;gler le <A HREF="../dispatcher/Dispatcher.shtml"> <b> Dispatcher</b></a>
 pour utiliser la logique M&#226;tSignal via le menu<A de Dispatcher HREF="../dispatcher/Options.shtml"><b> Options</b></a>.
 
-<a name="tools"><H2> Outils Tableau section
-</H2>
+<a name="tools"><h2> Outils Tableau section
+</h2></a>
 <P> Le Tableau Sections a un menu <b>Outils</b> pour faciliter l'utilisation des Sections.
 Normalement, ces outils devraient &#234;tre utilis&#233;s apr&#232;s que toutes les sections aient &#233;t&#233; d&#233;finies.
 Les &#233;l&#233;ments du menu et leur utilisation sont d&#233;crits ci-dessous:</p>
 <ul>
-<p><li> Valider tous les Sections ...</b> - Lorsque cette option est s&#233;lectionn&#233;e, chaque Section
+<li> Valider tous les Sections ...</b> - Lorsque cette option est s&#233;lectionn&#233;e, chaque Section
 est test&#233;e pour voir la coh&#233;rence. Les tests actuels comprennent la v&#233;rification de la connectivit&#233;
 entre plusieurs cantons, en v&#233;rifiant qu'il n'y a pas de Points d'Entr&#233;e manquant ou des
 Points d'Entr&#233;e suppl&#233;mentaires, et, si un panneau TCO est disponible, en v&#233;rifiant que
@@ -212,10 +214,10 @@ INACTIF, la logique permettant au signal de fonctionner normalement pour circule
 la section dans le sens AVANT, mais en gardant  les signaux qui r&#232;glent
 le sens INVERSE mis au ROUGE. De m&#234;me, lorsque la section est allou&#233;e pour les d&#233;placements
 dans le sens INVERSE, le capteur en sens inverse est INACTIF, et le
-capteur de direction avant est fix&#233;e ACTIF, permettant aux signaux de lib&#233;rer le trajet dans la direction INVERSE
-, mais  bloquer les d&#233;placements vers l'AVANT. Le r&#233;glage de l'&#233;tat des
+capteur de direction avant est fix&#233;e ACTIF, permettant aux signaux de lib&#233;rer le trajet dans la direction INVERSE,
+ mais  bloquer les d&#233;placements vers l'AVANT. Le r&#233;glage de l'&#233;tat des
 capteurs de direction se fait automatiquement par le logiciel de
-<A HREF="../dispatcher/Dispatcher.shtml"> Dispatcher</a> qui alloue les 
+<a HREF="../dispatcher/Dispatcher.shtml"> Dispatcher</a> qui alloue les
 Sections.</P>
 <p> Note: Dispatcher peut placer les capteurs de direction dans la logique du signal SSL automatiquement
 quand un train est activ&#233;. Dispatcher placera les capteurs de direction s'ils sont fournis 
@@ -234,10 +236,11 @@ messages d'erreur, le cas &#233;ch&#233;ant, sont plac&#233;s dans le rapport de
 les raisons les plus communes sont: 1) les informations manquantes (signal manquant ou
 signal logique n'est pas mis en place) ou 2) des erreurs dans la mise en place des directions des Point d'Entr&#233;e</p>
 </li>
-<b>Retirer Les Capteurs de Direction depuis la Logique ...</b> - Cet outil rassemble une liste
+<li>Retirer Les Capteurs de Direction depuis la Logique ...</li> - Cet outil rassemble une liste
 de tous les capteurs de direction d&#233;finis dans les Sections actuellement dans le Tableau Sections puis
 supprime tous les capteurs qui sont contenus dans cette liste &#224; partir de la logique simple signal
-(SSL) de tous les signaux. Cet outil annule l'effet de l'outil <b>Orientation D&#233;finie des Capteurs dans la Logique ...</b>, supprime touts les capteurs de direction qui peuvent avoir &#233;t&#233; plac&#233;s
+(SSL) de tous les signaux. Cet outil annule l'effet de l'outil <b>Orientation D&#233;finie des Capteurs dans la Logique ...</b>,
+ supprime touts les capteurs de direction qui peuvent avoir &#233;t&#233; plac&#233;s
 par <a HREF="../dispatcher/Dispatcher.shtml"> Dispatcher</a>, et en plus retire
 les capteurs direction d&#233;finis
 qui pourraient &#234;tre dans une mauvaise SSL. Si des erreurs ont &#233;t&#233; not&#233;es lors de l'&#233;tablissement de l'orientation des 
@@ -245,14 +248,12 @@ capteurs utilisant l'outil ci-dessus, puis corrig&#233;, ex&#233;cuter cet outil
 capteurs de direction est de nouveau parfois utile.</li>
 <p> Un panneau Editeur de R&#233;seau est requis pour ex&#233;cuter cet outil. Apr&#232;s le retrait des capteurs de direction,
 la logique du signal est termin&#233;e, un message est affich&#233; donnant les r&#233;sultats
-d'ex&#233;cution de l'outil.  Les messages d'erreur d&#233;taill&#233;s, le cas &#233;ch&#233;ant, sont plac&#233;s dans le rapport des erreurs JMRI
-.</p>
+d'ex&#233;cution de l'outil.  Les messages d'erreur d&#233;taill&#233;s, le cas &#233;ch&#233;ant, sont plac&#233;s dans le rapport des erreurs JMRI.</p>
 </li>
 </ul>
 
-
-<H2>Sauvegarde Sections sur disque
-</H2>
+<h2>Sauvegarde Sections sur disque
+</h2>
 <P>Utilisez l'&#233;l&#233;ment <b>Stocker</b> dans le menu <b>Fichier</b> du Tableau Sections (ou
 l'&#233;l&#233;ment <b> Stocker Panneaux...</b> dans le menu <b>Panneaux</b> de la fen&#234;tre principales  JMRI
 ) pour enregistrer les informations Section sur le disque. Cette information (et  toute les information modifi&#233;es de 
@@ -260,9 +261,13 @@ la logique signal ) est enregistr&#233;e avec la configuration et les panneaux d
 , ainsi que l'installation du panneau de commande et les choses similaires. Pour stocker vos panneaux dans le
  m&#234;me fichier (recommand&#233;), s&#233;lectionnez Fichier <b>Stocker Configuration et Panneaux</b> dans 
 Fichier ...</b> ou s&#233;lectionnez <b> Panneaux> Stocker Panneaux ...</b> dans la fen&#234;tre principale JMRI.
- 
-*APB Bloc syst&#232;me automatique double sens
-</P>
+ </P>
+<p>
+*APB Bloc syst&#232;me automatique double sens.
+</p>
+
 <!--#include virtual="/Footer" -->
+     </div>
+   </div>
 </body>
 </html>

@@ -1,20 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- UpDated  by Blorec Herv&#233; le 2013-09-21-->
 <html lang="fr">
 <head>
   <TITLE>
  	JMRI: Light Documentation
  </TITLE>
-  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
-
   <META content="Bob Jacobsen" name=Author>
-
-  <meta http-equiv="Content-Type" content="text/html;  charset= iso-8859-1">
-  <meta name="keywords"
-        content="hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
+  <meta name="keywords" content="hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
 
 <!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset= iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" TYPE="image/png">
@@ -28,16 +23,16 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-        <H2>
-		JMRI:Documentation Lumi&#232;re
-       </H2>
+<h1>
+JMRI:Documentation Lumi&#232;re
+</h1>
 
-<h3>Que sont les Lumi&#232;res?</H3>
+<h2>Que sont les Lumi&#232;res?</h2>
 
 <p>Les Lumi&#232;res sont des bits de sortie num&#233;rique qui fonctionnent comme des interrupteurs marche/arr&#234;t. Les Lumi&#232;res
-ont &#233;t&#233; cr&#233;&#233;es pour fournir un contr&#244;le ais&#233; des voyants du panneau de commande et l'&#233;clairage des paysages
-. Les Lumi&#232;res peuvent aussi &#234;tre utilis&#233;es &#224; des fins qui n&#233;cessitent une commutation marche/arr&#234;t
-.Les Lumi&#232;re peuvent &#234;tre utilis&#233;es, par exemple, pour activer un dispositif d&#233;coupleur &#233;lectromagn&#233;tique
+ont &#233;t&#233; cr&#233;&#233;es pour fournir un contr&#244;le ais&#233; des voyants du panneau de commande et l'&#233;clairage des paysages.
+    Les Lumi&#232;res peuvent aussi &#234;tre utilis&#233;es &#224; des fins qui n&#233;cessitent une commutation marche/arr&#234;t.
+    Les Lumi&#232;re peuvent &#234;tre utilis&#233;es, par exemple, pour activer un dispositif d&#233;coupleur &#233;lectromagn&#233;tique
  pour un temps pr&#233;-d&#233;termin&#233; en r&#233;ponse &#224; un bouton du panneau de contr&#244;le.
 Initialement d&#233;velopp&#233; pour une utilisation avec le C/MRI, les Lumi&#232;res actuellement sont &#233;galement
 mises en oeuvre sur LocoNet (Digitrax) et les syst&#232;mes Oaktree.</p>
@@ -57,12 +52,12 @@ peuvent &#233;galement &#234;tre contr&#244;l&#233;es par <a href="Logix.shtml">
  de logique complexe de contr&#244;le est n&#233;cessaire.</p>
 <p>Le Tableau Lumi&#232;re contient une colonne 'Activ&#233;'. Pour qu'une Lumi&#232;re soit
 d&#233;clench&#233;e par son Capteur de commande, l'Horloge rapide, l'Aiguillage de commande,
-elle doit &#234;tre "activ&#233;e", ce qui revient &#224; cocher la case dans la colonne 'Activ&#233;e' 
-. Vous pouvez d&#233;cocher cette case pour d&#233;sactiver le d&#233;clenchement temporaire d'une
-Lumi&#232;re , c'est &#224; dire &#233;viter qu'elle commute lors du contr&#244;le des m&#233;canismes des feux
-.</p>
+elle doit &#234;tre "activ&#233;e", ce qui revient &#224; cocher la case dans la colonne 'Activ&#233;e'.
+    Vous pouvez d&#233;cocher cette case pour d&#233;sactiver le d&#233;clenchement temporaire d'une
+Lumi&#232;re , c'est &#224; dire &#233;viter qu'elle commute lors du contr&#244;le des m&#233;canismes des feux.
+</p>
 
- <h3>Commutation d'une Lumi&#232;re allum&#233;e ou &#233;teinte</h3>
+<h3>Commutation d'une Lumi&#232;re allum&#233;e ou &#233;teinte</h3>
 
 <p>Les Lumi&#232;res peuvent &#234;tre activ&#233;es ou d&#233;sactiv&#233;es en cliquant sur le bouton dans la
 colonne &#201;tat de la Table Lumi&#232;res. La Lumi&#232;re peut &#234;tre configur&#233;e pour suivre l'&#233;tat
@@ -140,15 +135,14 @@ Ajouter/Modifier et cliquez sur le bouton  <b>Modifier</b> Lumi&#232;re au
 le bas de la fen&#234;tre Ajouter/Modifier Lumi&#232;re. Ce doit &#234;tre le m&#234;me
 que le nom syst&#232;me montr&#233; dans le Tableau lumi&#232;re.</li>	</ul>
 
-
 Les boutons  <b>Cr&#233;er</b> et  <b>Modifier</b> au bas de la Fen&#234;tre de Lumi&#232;re Ajouter/Editer
  vont changer pour  <b>Mise &#224; jour</b> et  <b>Annuler</b> .</Li>
 <li>Effectuez les modifications ou les ajouts que vous avez besoin &#224; l'information dans
 la bo&#238;te de dialogue. Notez que le nom syst&#232;me de la Lumi&#232;re &#233;dit&#233;e ne peut pas &#234;tre 
-chang&#233;, mais le nom utilisateur peut &#234;tre chang&#233;. Les autres &#233;l&#233;ments sont d&#233;crits <A HREF="#addLight">ci-dessus</a>.</Li>
+chang&#233;, mais le nom utilisateur peut &#234;tre chang&#233;. Les autres &#233;l&#233;ments sont d&#233;crits <A HREF="#addLight">ci-dessus</a>.</li>
 <li>Apr&#232;s avoir modifi&#233; les informations Lumi&#232;re, cliquez sur  <b>Mise &#224; jours</b> 
 pour changer la lumi&#232;re s&#233;lectionn&#233;e. Si tout va bien, un
-message indiquant "Lumi&#232;re mise &#224; jour ..." sera affich&#233; dans la zone des notes
+message indiquant "Lumi&#232;re mise &#224; jour..." sera affich&#233; dans la zone des notes
  S'il y un probl&#232;me, un message d'avertissement ou d'erreur sera
 affich&#233; dans la zone des notes, et la mise &#224; jour sera arr&#234;t&#233;e pour que vous
 corrigiez l'erreur et cliquez sur  <b>Mise &#224; jours</b> &#224; nouveau.</li>
@@ -157,19 +151,19 @@ s&#233;lectionn&#233;e. Si la fen&#234;tre ajouter/modifier Lumi&#232;re est rej
 alors que dans le mode &#233;dition,  <b>Annuler</b> est automatiquement s&#233;lectionn&#233;, et aucune
 modification ne sera apport&#233;e &#224; la Lumi&#232;re s&#233;lectionn&#233;e.</li>
 	
-	<li>apr&#232;s avoir modifi&#233; les informations de Lumi&#232;re, cliquez  <b>Mise &#224; jour</b> pour changer la lumi&#232;re s&#233;lectionn&#233;e. Si tout va bien, un
-message indiquant "lumi&#232;re mise &#224; jour ..." sera affich&#233; dans la zone des notes
-. S'il y a un probl&#232;me, une erreur ou un message d'avertissement sera
+<li>apr&#232;s avoir modifi&#233; les informations de Lumi&#232;re, cliquez  <b>Mise &#224; jour</b> pour
+    changer la lumi&#232;re s&#233;lectionn&#233;e. Si tout va bien, un
+message indiquant "lumi&#232;re mise &#224; jour ..." sera affich&#233; dans la zone des notes.
+    S'il y a un probl&#232;me, une erreur ou un message d'avertissement sera
 affich&#233; dans la zone des notes, et la mise &#224; jour sera arr&#234;t&#233;e pour vous permettre de
 corriger l'erreur et cliquez sur  <b>Mise &#224; jours</b> &#224; nouveau.</li>
 <li>Cliquez  <b>Annuler</b> pour quitter le mode &#233;dition sans changer la
 Lumi&#232;re s&#233;lectionn&#233;e. Si la fen&#234;tre de lumi&#232;re ajouter/modifier est rejet&#233;e (ferm&#233;e)
 alors que dans le mode &#233;dition,  <b>Annuler</b> est automatiquement s&#233;lectionn&#233;, et aucune
 modification n'est apport&#233;e &#224; la Lumi&#232;re s&#233;lectionn&#233;e.</li>
-</ ol>
+</ol>
 
 <a name="lightcontrol"><H3>Options  de Commande Automatis&#233;e des Lumi&#232;res</h3></a>
-
 
 Le fonctionnement d'une lumi&#232;re peut &#234;tre command&#233;e par les moyens suivants:
 <ul>
@@ -178,16 +172,16 @@ change d'actif ou d'inactif, selon le choix fait dans le
 "Sens pour ON" du menu contextuel, et il sera &#233;teint, lorsque le capteur
 inverse l'&#233;tat. Sp&#233;cifiez le capteur en saisissant son nom
 (nom syst&#232;me ou nom utilisateur) dans le champ "Nom de Capteur". Cette option a
-un certain nombre d'utilisations, y compris l'&#233;tablissement d'une lumi&#232;re du tableau de commande pour suivre l'occupation des cantons
-. C'est utile, par exemple, pour suivre la position du train dans la surveillance
+un certain nombre d'utilisations, y compris l'&#233;tablissement d'une lumi&#232;re du tableau de commande pour suivre l'occupation des cantons.
+    C'est utile, par exemple, pour suivre la position du train dans la surveillance
 d'une coulisse.</p>
-</ li>
+</li>
 <p><li> <b>Par l'Horloge Rapide</b> - La Lumi&#232;re sera allum&#233;e quand l'horloge
  atteint l'heure indiqu&#233;e dans le "Time On" et sera d&#233;sactiv&#233;e lorsque
 l'horloge rapide atteint le temps entr&#233; dans "Time Off". Les temps sont
 entr&#233;s dans le format "hh: mm" , o&#249; "hh" est heures et "mm" est minutes d'une horloge
-24 heures. Une utilisation de cette option est d'activer et de d&#233;sactiver l'&#233;clairage des paysages
-, les lumi&#232;res des rues, lumi&#232;res des maison, etc pour simuler le temps de passage &#224; la nuit sur le
+24 heures. Une utilisation de cette option est d'activer et de d&#233;sactiver l'&#233;clairage des paysages,
+     les lumi&#232;res des rues, lumi&#232;res des maison, etc pour simuler le temps de passage &#224; la nuit sur le
 r&#233;seau.</p>
 	</li>
  	<li><p> <b>Par &#201;tat d'Aiguillage</b> - La Lumi&#232;re sera allum&#233;e quand l'aiguillage passe de droit &#224; d&#233;vi&#233;, selon le choix fait dans le
@@ -198,8 +192,8 @@ inverse son &#233;tat. Sp&#233;cifiez l'aiguillage en saisissant son nom
 C'est utile, par exemple, pour surveiller l'&#233;tat des aiguillages cach&#233;s.
 </p>
 </li>
-<p><li> <b>Par Chronom&#233;trage ON</b> - La Lumi&#232;re sera allum&#233;e lors du changement du capteur d&#233;clencheur actif
-, et il sera &#233;teint, quand le temps pr&#233;cis&#233;
+<p><li> <b>Par Chronom&#233;trage ON</b> - La Lumi&#232;re sera allum&#233;e lors du changement du capteur d&#233;clencheur actif,
+    et il sera &#233;teint, quand le temps pr&#233;cis&#233;
  se sera &#233;coul&#233;. Sp&#233;cifiez le capteur d&#233;clencheur en saisissant son nom
 (nom du syst&#232;me ou nom d'utilisateur) dans le champ "Nom du capteur de d&#233;clenchement. Entrez 
 le temps d'allumage de la Lumi&#232;re  (en millisecondes) dans la "dur&#233;e ON"
@@ -210,7 +204,7 @@ pour contr&#244;ler la sonnerie d'une cloche de passage &#224; niveau quand un t
 </li>
 </ul>
 	
-<a name="variablelight"><H3>Lumi&#232;res Variables </H3></a>
+<a name="variablelight"><H3>Lumi&#232;res Variables</H3></a>
 
 <p>
 Une lumi&#232;re variable permet un niveau variable d'intensit&#233;s entre On et Off.
@@ -285,7 +279,8 @@ Une valeur de z&#233;ro provoquera le passage d'une valeur minimale &#224; une v
  aussi rapidement que l'appareil est en mesure de le faire
 </dd>
 	</dl>
-</p>
+
 <!--#include virtual="/Footer" -->
+    </div>
 </body>
 </html>

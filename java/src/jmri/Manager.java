@@ -41,13 +41,6 @@ import javax.annotation.Nullable;
 public interface Manager {
 
     /**
-     * @return The system-specific prefix letter for a specific implementation
-     * @deprecated 2.9.5 Use getSystemPrefix
-     */
-    @Deprecated
-    public char systemLetter();
-
-    /**
      * Provides access to the system prefix string. This was previously called
      * the "System letter"
      */

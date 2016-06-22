@@ -81,8 +81,7 @@ valeurs.
 
 <p>
 Le bouton "Legacy" &#233;crit un 7 dans CV15, qui est un autre cas particulier
-Beaucoup de d&#233;codeurs, des mod&#232;les surtout les plus &#226;g&#233;s, n'ont pas ce m&#233;canisme actuel de blocage
- . Dans certains cas, plus sp&#233;cifiquement pour un FX3 Digitrax ou un
+Beaucoup de d&#233;codeurs, des mod&#232;les surtout les plus &#226;g&#233;s, n'ont pas ce m&#233;canisme actuel de blocage. Dans certains cas, plus sp&#233;cifiquement pour un FX3 Digitrax ou un
 d&#233;codeur plus ancien et un d&#233;codeur du d&#233;but SoundTraxx, il est possible d'&#233;muler
 la serrure &#224; l'aide d'&#233;criture s&#233;quentielle de CV. Cliquer sur le bouton "Legacy" 
 l'active. Malheureusement, ce n'est pas une m&#233;thode enti&#232;rement fiable.
