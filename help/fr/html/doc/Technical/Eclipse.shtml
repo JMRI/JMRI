@@ -91,7 +91,7 @@ utiliser le JDK.
 <li>Voici un lien pour le site Oracle site qui vous fournira un JDK: 
 <P><a href= "http://www.oracle.com/technetwork/java/javase/downloads/index.html">http://www.oracle.com/technetwork/java/javase/downloads/index.html</a></P></li>
 <li>S&#233;lectionnez le fichier build.xml &#224; l'aide de Package Explorer, puis cliquez-droit et un menu devrait
-appara&#238;tre. </ li>
+appara&#238;tre.</li>
 <li> Maintenant, s&#233;lectionnez "Run As" puis "2 Ant Build".</li>
 <Li>Assurez-vous que sous l'onglet Menu JRE vous avez s&#233;lectionn&#233; un JDK.</Li>
 <!-- <LI>S&#233;lectionnez "Targets", puis s&#233;lectionnez "copy resource files", laissez les autres cibles s&#233;lectionn&#233;es.</LI> -->

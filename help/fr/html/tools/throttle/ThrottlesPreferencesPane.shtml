@@ -52,68 +52,63 @@ fen&#234;tre des pr&#233;f&#233;rences restera ouverte. </li>
 
 Le bouton Enregistrer enregistrera vos pr&#233;f&#233;rences actuelles, et fermerera les fen&#234;tres Pr&#233;f&#233;rences, les r&#233;glages seront
 charg&#233;s automatiquement au prochain d&#233;marrage du JMRI. </li>
-</ ul>
+</ul>
 
-
- <h2>Utilisez le R&#233;gulateur &#233;tendu </h2>
-
-Ce r&#233;glage activera/d&#233;sactivera toutes les fonctionnalit&#233;s &#233;tendues des r&#233;gulateurs. <br>
-
-<br>
+<h2>Utilisez le R&#233;gulateur &#233;tendu </h2>
+<p>
+Ce r&#233;glage activera/d&#233;sactivera toutes les fonctionnalit&#233;s &#233;tendues des r&#233;gulateurs.
+</p>
 
 <h2>R&#233;glez les Commandes transparentes </h2>
-
+<p>
 Mettra le fond de la fen&#234;tre interne du r&#233;gulateur en transparence ou semi-
-transparence. <br>
+transparence.
+    </p>
 
-<br >
-
-<span style="font-style: italic;"> Cette fonctionnalit&#233; est appel&#233;e &#224; bien travailler
+<span style="font-style: italic;">Cette fonctionnalit&#233; est appel&#233;e &#224; bien travailler
  sur OS X, mais Linux et Windows peuvent aussi fonctionner, cela varie compl&#232;tement
 suivant l'interface actuelle Java  (modifiable dans pr&#233;f&#233;rences principales JMRI 
-) </span> <br
+) </span>
 
-<br>
-
- <h2> Utiliser l'image de la Liste comme fond </h2>
-
+<h2> Utiliser l'image de la Liste comme fond </h2>
+<p>
 Quand une liste est s&#233;lectionn&#233;e, l'image d&#233;finie dans son <a href="RostersMediaPane.shtml"> Panneau des m&#233;dias </a> sera
 charg&#233;e comme un fond pour la fen&#234;tre de commande du r&#233;gulateur. <br>
 <br>
-Lorsque cette option est activ&#233;e et l'adresse s&#233;lectionn&#233;e est 0 ou 3, une image par d&#233;faut sera charg&#233;e. <br>
-<br> 
- <h2>Redimensionnez la fen&#234;tre &#224; la taille de l'image </h2>
+Lorsque cette option est activ&#233;e et l'adresse s&#233;lectionn&#233;e est 0 ou 3, une image par d&#233;faut sera charg&#233;e.
+</p>
 
-Quand une image de fond est charg&#233;e pour le r&#233;gulateur actuel, cela va forcer la taille de la Fen&#234;tre du R&#233;gulateur &#224; celle de cette image. <br>
-
-<br>
+<h2>Redimensionnez la fen&#234;tre &#224; la taille de l'image </h2>
+<p>
+Quand une image de fond est charg&#233;e pour le r&#233;gulateur actuel, cela va forcer la taille de la Fen&#234;tre du R&#233;gulateur &#224; celle de cette image.
+</p>
   
-<h2>Rechercher les infos liste  quand l'adresse est indiqu&#233;e </h2>
-Quand une adresse est inscrite  dans<a href="BasicThrottleWindow.shtml"> l'AdressPanel </a>, la base de donn&#233;es JMRI 
+<h2>Rechercher les infos liste  quand l'adresse est indiqu&#233;e</h2>
+<p>
+    Quand une adresse est inscrite  dans<a href="BasicThrottleWindow.shtml"> l'AdressPanel </a>, la base de donn&#233;es JMRI
 recherchera  une entr&#233;e de registre correspondante (et sera donc des options de d&#233;clenchements
-d&#233;crites ci-dessus et ci-dessous si elles sont activ&#233;s). <br>
+d&#233;crites ci-dessus et ci-dessous si elles sont activ&#233;s).
+</p>
 
-<br>
-
-<h2> Chargement automatique de la fen&#234;tre de pr&#233;f&#233;rences r&#233;gulateurs lorsqu'un lien est trouv&#233; avec la Liste </h2>
+<h2>Chargement automatique de la fen&#234;tre de pr&#233;f&#233;rences r&#233;gulateurs lorsqu'un lien est trouv&#233; avec la Liste</h2>
 
 Quand une liste est s&#233;lectionn&#233;e, si un fichier de d&#233;finition r&#233;gulateur correspondant existe,
-JMRI le chargera automatiquement. <br>
+JMRI le chargera automatiquement.<br>
 <br>
 Ces fichiers sont stock&#233;s dans &lt;le R&#233;pertoire Preference JMRI
 &gt;/Throttle/XYZ.xml o&#249; XYZ est dans l'ID de la Liste. <br>
 Utiliser
 Le<a href="ThrottleWindowMenus.shtml"> l'entr&#233;e Enregistrer du
 Menu Fichier </a> dans une fen&#234;tre r&#233;gulateur va cr&#233;er ou mettre &#224; jour ces fichiers. <br>
-
 <br>
-<h2> Ignorer position du cadre R&#233;gulateur </h2>
+
+<h2>Ignorer position du cadre R&#233;gulateur</h2>
 Pour les vieux fichiers r&#233;gulateurs qui contiennent des position de Fen&#234;tre R&#233;gulateur en eux. Faites comme
-d&#233;crit. <br>
+d&#233;crit.
 <br>
-<span style="font-style: italic;"> Remarque: les positions des Fen&#234;tre R&#233;gulateurs sont maintenant sauvegard&#233;es dans le Fichier de Sauvegar<span style="font-weight: bold;"> Configuration R&#233;gulateur</span> (pas dans n'importe quels fichiers de sauvegardes R&#233;gulateurs ) </span> <br
+<span style="font-style: italic;"> Remarque: les positions des Fen&#234;tre R&#233;gulateurs sont maintenant sauvegard&#233;es dans le Fichier de Sauvegar<span style="font-weight: bold;"> Configuration R&#233;gulateur</span> (pas dans n'importe quels fichiers de sauvegardes R&#233;gulateurs )
+</span>
 
-<br> 
 
 <h2>Masquage ind&#233;fini de la Liste Boutons  </h2>
 
@@ -130,9 +125,7 @@ les boutons non d&#233;finis (sans texte) dans PanelPro seront automatiquement c
 Cette option activera une <a  href="ThrottleToolBar.shtml"> barre d'outils qui
 appara&#238;tra dans toutes les Fen&#234;tres R&#233;gulateurs </a>.
 
-
-
-
-
-<!--#include virtual="/Footer" --></div>
-</body></html>
+<!--#include virtual="/Footer" -->
+</div>
+</body>
+</html>

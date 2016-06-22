@@ -30,17 +30,17 @@
 <A Href="SignalMastAdd.png"> <IMG SRC = "SignalMastAdd.png" ALIGN = RIGHT WIDTH = "208" height = "85" hspace = "0" vspace = "0" alt = "Simple Signal Logic panel figure "> </a>
 
 <p>
-Les M&#226;ts de signalisation sont construits sur la base de diff&#233;rents syst&#232;mes de signalisation et les m&#226;ts pris en charge dans les syst&#232;mes .
+Les M&#226;ts de signalisation sont construits sur la base de diff&#233;rents syst&#232;mes de signalisation et les m&#226;ts pris en charge dans les syst&#232;mes.
 <p>
 Dans la fen&#234;tre Ajout, vous devez d'abord s&#233;lectionner le syst&#232;me de signalisation prototypique surlequel le m&#226;t doit &#234;tre bas&#233;, suivi par le m&#226;t &#224; l'int&#233;rieur de ce syst&#232;me.
 <p>
-Le m&#226;t peut alors &#234;tre construit de trois fa&#231;ons diff&#233;rentes selon le mat&#233;riel utilis&#233; .
+Le m&#226;t peut alors &#234;tre construit de trois fa&#231;ons diff&#233;rentes selon le mat&#233;riel utilis&#233;.
 <ul>
 <li> T&#234;tes Signal</li >
-Les T&#234;tes Signal individuelles sont utilis&#233;es pour repr&#233;senter chaque t&#234;te de signal sur le m&#226;t . La t&#234;te de signal sera en accord avec la gestion  des mutation de l'aspect suivant l'&#233;tat du m&#226;t de signalisation .
+Les T&#234;tes Signal individuelles sont utilis&#233;es pour repr&#233;senter chaque t&#234;te de signal sur le m&#226;t. La t&#234;te de signal sera en accord avec la gestion  des mutation de l'aspect suivant l'&#233;tat du m&#226;t de signalisation.
 Si chaque t&#234;te de signal qui a &#233;t&#233; configur&#233;e sur le m&#226;t, une liste d&#233;roulante appara&#238;t pour vous pour choisir la t&#234;te de signal qui va commander la t&#234;te de ce m&#226;t.
 <li>L'aiguillage Pilot&#233; </li>
-C'est pour du mat&#233;riel sp&#233;cifique qui permet de commander tout l'aspect d'un m&#226;t de signalisation bas&#233; sur la position d'un aiguillage. Ce qui sera &#224; r&#233;gler ici d&#233;pendra du mat&#233;riel utilis&#233; .
+C'est pour du mat&#233;riel sp&#233;cifique qui permet de commander tout l'aspect d'un m&#226;t de signalisation bas&#233; sur la position d'un aiguillage. Ce qui sera &#224; r&#233;gler ici d&#233;pendra du mat&#233;riel utilis&#233;.
 <li> virtuel < /li>
 Ce m&#226;t ne commande pas directement tout le mat&#233;riel relatif &#224; un m&#226;t de signalisation. Son utilisation est id&#233;al pour o&#249; un m&#226;t physique ne serait pas pr&#233;sent sur le chemin de fer, comme un heurtoir, ou &#224;
 marquer la fin d'une section de signalisation de la voie et le d&#233;but du territoire sans information.

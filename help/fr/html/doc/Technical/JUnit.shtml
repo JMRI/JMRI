@@ -68,7 +68,7 @@ Chaque nuit, environ &#224; 01h45, heure du Pacifique (et parfois plus souvent),
 <LI> Nettoie toutes les compilations existantes, etc
 <LI> Reconstruit &#224; partir de z&#233;ro avec la cible de d&#233;bogage
 <LI> ex&#233;cute le jmri.HeadLessTest app, qui &#224; son tour ex&#233;cute les tests JUnit.
-</ ol>
+</ol>
 <P>
 Si aucune de ces &#233;tapes n'&#233;choue, y compris  les messages d'avertissement ou d'erreur de la connexion, le rapport est envoy&#233; &#224; la 
 liste "jmri-build" sur SourceForge. Vous pouvez vous

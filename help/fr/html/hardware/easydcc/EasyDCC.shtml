@@ -1,35 +1,31 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!--  $Id$ -->
 <!-- UpDlated  by Blorec Herv&#233; le 2013-09-10-->
 <html lang="fr">
 <head>
  <TITLE>
       JMRI Hardware Guide: EasyDCC
 </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="EasyDCC CVP Products java model railroad JMRI install windows">
 
 <!-- Style -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css" MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css" MEDIA="print">
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-      <H2> 
+      <H1>
      Guide Mat&#233;riel JMRI: EasyDCC
-     </H2>
+     </H1>
 
 	<H3>Mat&#233;riel Support&#233;</H3>
 
@@ -63,9 +59,9 @@ Pour plus d'informations sur la fa&#231;on dont le c&#226;ble est connect&#233;,
 <A HREF="http://www.cvpusa.com/doc_center/6_97_easydcc_manual_web_sec.pdf"> version dans un fichier PDF</a>
  disponible sur le web)
 <P>
-Un moyen facile de le faire est d'acheter un c&#226;ble s&#233;rie &#224; 9 broches et d'un c&#226;ble de t&#233;l&#233;phone
-, puis les couper et les &#233;pissurrer ensemble.
-</ li>
+Un moyen facile de le faire est d'acheter un c&#226;ble s&#233;rie &#224; 9 broches et d'un c&#226;ble de t&#233;l&#233;phone,
+			  puis les couper et les &#233;pissurrer ensemble.
+</li>
 
 <li>Ensuite aller dans le panneau des pr&#233;f&#233;rences d'un programme bas&#233; sur JMRI.
 Celui ci s'ouvre automatiquement la premi&#232;re fois qu'un programme est ex&#233;cut&#233;, ou vous
@@ -85,10 +81,9 @@ respectivement.</li>
 
 <li> Dans la bo&#238;te de s&#233;lection en bas, vous pouvez choisir la valeur par d&#233;faut du
 format programmateur . Vous pouvez le remplacer chaque fois que vous ouvrez le
-programmateur, il s'agit donc ici seulement d'une commodit&#233;.</ li>
+programmateur, il s'agit donc ici seulement d'une commodit&#233;.</li>
 
-<li> Cliquez sur "Enregistrer". Il vous sera demand&#233; si c'est OK pour quitter le programme
-, cliquez sur "Oui".</li>
+<li> Cliquez sur "Enregistrer". Il vous sera demand&#233; si c'est OK pour quitter le programme, cliquez sur "Oui".</li>
 
 <li> Red&#233;marrez le programme. Vous devez &#234;tre op&#233;rationnel.</li>
 
@@ -99,5 +94,7 @@ programmateur, il s'agit donc ici seulement d'une commodit&#233;.</ li>
 	<p><a href="http://www.cvpusa.com/easydcc/default.htm">Manuels CVP EasyDCC</a></p>
 
 <!--#include virtual="/Footer" -->
+		</div>
+	  </div>
 </body>
 </html>
