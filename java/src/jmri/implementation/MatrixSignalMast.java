@@ -183,7 +183,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
      *  @param bitString String for 1-n 1/0 chararacters setting an unlit aspect
      */
     public void setUnLitBits(String bitString) {
-        char[] unLitBits = bitString.toCharArray();
+        setUnLitBits(bitString.toCharArray());
     }
 
     /**
