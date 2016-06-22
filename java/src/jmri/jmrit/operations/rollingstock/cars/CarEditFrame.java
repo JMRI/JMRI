@@ -110,6 +110,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         super(Bundle.getMessage("TitleCarAdd"));
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Checks for null")
     @Override
     public void initComponents() {
         // the following code sets the frame's initial state
@@ -287,7 +288,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
             addItem(pValue, valueTextField, 1, 0);
             pOptional.add(pValue);
         }
-
+    
         // row 22
         if (Setup.isRfidEnabled() && jmri.InstanceManager.getDefault(jmri.IdTagManager.class) != null) {
             JPanel pRfid = new JPanel();
