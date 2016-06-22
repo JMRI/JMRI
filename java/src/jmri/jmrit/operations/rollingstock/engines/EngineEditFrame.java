@@ -92,6 +92,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
         super(Bundle.getMessage("TitleEngineAdd")); // default is add engine
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Checks for null")
     @Override
     public void initComponents() {
         // set tips
