@@ -20,6 +20,8 @@
 	<!-- remove BEMF control and dither -->
 	<version author="Michael Mosher" version="5" lastUpdated="20150814"/>
 	<!-- Add 501 model -->
+	<version author="Michael Mosher" version="6" lastUpdated="20160608"/>
+	<!-- Fix whistle selection -->
 	<decoder>
 		<family name="WOW Sound Set 3" mfg="Train Control Systems" comment="TCS FW Starting Jan 2012">
 			<model model="WOW Sound 101" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="9pin"
@@ -1653,49 +1655,55 @@
 				<label>Waterfill 1</label>
 			</variable>
 			<!-- sound CVs -->
-			<variable item="Sound Option 1" CV="T2CV.4.8" default="0">
+			<variable item="First" CV="222" default="0" infoOnly="yes">
 				<enumVal>
-					<enumChoice choice="Whistle Alamo Michigan Plant"/>
-					<enumChoice choice="Whistle Atchison, Topeka, and Santa Fe 6 Chime Original" />
-					<enumChoice choice="Whistle Atchison, Topeka, and Santa Fe 6 Chime Replica" />
-					<enumChoice choice="Whistle B &amp; O 3 Chime" />
-					<enumChoice choice="Whistle B &amp; M 6 Chime Lykens" />
-					<enumChoice choice="Whistle CNJ 3 Chime" />
-					<enumChoice choice="Whistle CB &amp; Q 3 Chime Lykens" />
-					<enumChoice choice="Whistle Great Northern 5 Chime" />
-					<enumChoice choice="Whistle Hancock 3 Chime Short Bell" />
-					<enumChoice choice="Whistle Kingsly 4 Chime" />
-					<enumChoice choice="Whistle LV Crosby 3 Chime" />
-					<enumChoice choice="Whistle Lunkenheimer Single Note" />
-					<enumChoice choice="Whistle Lunkenheimer 3 Chime" />
-					<enumChoice choice="Whistle Nathan 5 Chime" />
-					<enumChoice choice="Whistle NPR 765" />
-					<enumChoice choice="Whistle NW Single Chime Long Bell" />
-					<enumChoice choice="Whistle NW Single Chime Short Bell" />
-					<enumChoice choice="Whistle NW Nathan 3 Chime" />
-					<enumChoice choice="Whistle PRR Banshee" />
-					<enumChoice choice="Whistle PRR 3 Chime" />
-					<enumChoice choice="Whistle PRR 3 Chime" />
-					<enumChoice choice="Whistle Pennsy K4" />
-					<enumChoice choice="Whistle Reading Hooter" />
-					<enumChoice choice="Whistle Reading #179 G2 6 Chime" />
-					<enumChoice choice="Whistle Reading Pacific G2" />
-					<enumChoice choice="Whistle Reading 6 Chime 2" />
-					<enumChoice choice="Whistle Reading 6 Chime" />
-					<enumChoice choice="Whistle Southern Pacific 5 Chime" />
-					<enumChoice choice="Whistle Southern Single Chime" />
-					<enumChoice choice="Whistle Southern 3 Chime" />
-					<enumChoice choice="Whistle Southern 6 Chime" />
-					<enumChoice choice="Whistle Unknown 1" />
-					<enumChoice choice="Whistle Unknown 3" />
-					<enumChoice choice="Whistle 34 -" />
-					<enumChoice choice="Whistle Unknown Circa 19th Century" />
-					<enumChoice choice="Whistle Hancock 3 Chime" />
-					<enumChoice choice="Whistle Union Pacific 3 Chime" />
-					<enumChoice choice="Whistle Wabash 3 Chime" />
-					<enumChoice choice="Whistle Wabash 6 Chime" />
-					<enumChoice choice="Whistle World War II era 3 Chime" />
-					<enumChoice choice="Horn Nathan K5LA" />
+					<enumChoice choice="Alamo Michigan Plant"/>
+				</enumVal>
+				<label>For steam sound set 3, the first whistle is named</label>
+			</variable>
+			<variable item="Sound Option 1" CV="T2CV.4.8" default="0" tooltip="Rotate whistle function will change this setting">
+				<enumVal>
+					<enumChoice choice="Alamo Michigan Plant"/>
+					<enumChoice choice="AT&amp;SF 6 Chime Original" />
+					<enumChoice choice="AT&amp;SF 6 Chime Replica" />
+					<enumChoice choice="B&amp;O 3 Chime" />
+					<enumChoice choice="B&amp;M 6 Chime Lykens" />
+					<enumChoice choice="CNJ 3 Chime" />
+					<enumChoice choice="CB&amp;Q 3 Chime Lykens" />
+					<enumChoice choice="Great Northern 5 Chime" />
+					<enumChoice choice="Hancock 3 Chime Short Bell" />
+					<enumChoice choice="Kingsly 4 Chime" />
+					<enumChoice choice="LV Crosby 3 Chime" />
+					<enumChoice choice="Lunkenheimer Single Note" />
+					<enumChoice choice="Lunkenheimer 3 Chime" />
+					<enumChoice choice="Nathan 5 Chime" />
+					<enumChoice choice="NPR 765" />
+					<enumChoice choice="NW Single Chime Long Bell" />
+					<enumChoice choice="NW Single Chime Short Bell" />
+					<enumChoice choice="NW Nathan 3 Chime" />
+					<enumChoice choice="PRR Banshee" />
+					<enumChoice choice="PRR 3 Chime" />
+					<enumChoice choice="PRR 3 Chime" />
+					<enumChoice choice="Pennsy K4" />
+					<enumChoice choice="Reading Hooter" />
+					<enumChoice choice="Reading #179 G2 6 Chime" />
+					<enumChoice choice="Reading Pacific G2" />
+					<enumChoice choice="Reading 6 Chime 2" />
+					<enumChoice choice="Reading 6 Chime" />
+					<enumChoice choice="Southern Pacific 5 Chime" />
+					<enumChoice choice="Southern Single Chime" />
+					<enumChoice choice="Southern 3 Chime" />
+					<enumChoice choice="Southern 6 Chime" />
+					<enumChoice choice="Unknown 1" />
+					<enumChoice choice="Unknown 3" />
+					<enumChoice choice="Hamburg 1" />
+					<enumChoice choice="Unknown Circa 19th Century" />
+					<enumChoice choice="Hancock 3 Chime" />
+					<enumChoice choice="Union Pacific 3 Chime" />
+					<enumChoice choice="Wabash 3 Chime" />
+					<enumChoice choice="Wabash 6 Chime" />
+					<enumChoice choice="World War II era 3 Chime" />
+					<enumChoice choice="Nathan K5LA" />
 				</enumVal>
 				<label>Default Whistle Set</label>
 			</variable>
@@ -1712,7 +1720,11 @@
 				</enumVal>
 				<label>Steam locomotive type</label>
 			</variable>
-			<variable item="Sound Option 3" CV="T2CV.4.19" default="0" mask="XXXXXXXXXXXXXXVX" >
+			<variable item="Sound Setting 11" CV="T2CV.4.15" default="1"  tooltip="Divides the BEMF value by n^2, higher the number the lower the chuff volume/change from loads">
+				<decVal max="8"/>
+				<label>BEMF sensitivity</label>
+			</variable>
+			<variable item="Sound Option 3" CV="T2CV.4.19" default="0" mask="XXXXXXXVXXXXXXXX" >
 				<enumVal>
 					<enumChoice choice="Non Articulated"/>
 					<enumChoice choice="Articulated"/>

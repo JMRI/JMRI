@@ -1,6 +1,5 @@
 package jmri.jmrit.beantable;
 
-import java.util.ResourceBundle;
 import jmri.Conditional;
 import jmri.InstanceManager;
 import jmri.Light;

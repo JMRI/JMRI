@@ -40,7 +40,7 @@
  </indexitem>
  <indexitem text="CBUS " target="html.hardware.can.cbus.index"/>
 
- <indexitem text="Codes Erreurs " target="html.Errors"/>
+ <indexitem text="Codes Erreurs " target="html.setup.Errors"/>
 
  <indexitem text="Commande Multi-Decodeur " target="package.jmri.jmrit.dualdecoder.DualDecoderSelectFrame"/>
 
@@ -57,11 +57,7 @@
 
   <indexitem text="Introduction " target="html.apps.DecoderPro.index"/>
 
-  <indexitem text="Manuel " target="manual.Getting_Started"/>
-
   <indexitem text="Messages d'erreurs " target="html.tools.programmer.messages"/>
-
-  <indexitem text="Volet Liste " target="manual.Comp_Setup_Roster"/>
 
  </indexitem>
  <indexitem text="Digitrax ">
@@ -104,7 +100,7 @@
 
  <indexitem text="Envoi Paquet DCC " target="package.jmri.jmrit.sendpacket.SendPacketFrame"/>
 
- <indexitem text="Exemples Europ&#233;ens " target="html.tools.signaling.ldt.output"/>
+ <indexitem text="Exemples Europ&#233;ens " target="html.tools.signaling.index"/>
 
  <indexitem text="Exploitation " target="package.jmri.jmrit.operations.Operations">
   <indexitem text="Coulisse " target="package.jmri.jmrit.operations.Operations_Staging"/>
@@ -164,10 +160,6 @@
 
  <indexitem text="Levier Aiguillage " target="package.jmri.jmrit.ussctc.TurnoutLeverFrame"/>
 
- <indexitem text="Liste " target="manual.Main_Roster">
-  <indexitem text="Groupes " target="manual.Main_RosterGroup"/>
-
- </indexitem>
  <indexitem text="LItin&#233;raire ">
   <indexitem text="Ajouter LItin&#233;raire " target="package.jmri.jmrit.beantable.LRouteAddEdit"/>
 
@@ -212,7 +204,7 @@
   <indexitem text="&#201;diter Lumi&#232;re " target="package.jmri.jmrit.beantable.LightAddEdit"/>
 
  </indexitem>
- <indexitem text="Mandat " target="help.fr.package.jmri.jmrit.logix.Warrant"/>
+ <indexitem text="Mandat " target="package.jmri.jmrit.logix.Warrant"/>
 
  <indexitem text="Mat&#233;riel " target="html.hardware.index">
   <indexitem text="Acela (CTI) " target="html.hardware.acela.index"/>
@@ -317,7 +309,7 @@
  <indexitem text="Programmateurs ">
   <indexitem text="Programmateur CV Simple " target="package.jmri.jmrit.simpleprog.SimpleProgFrame"/>
 
-  <indexitem text="Programmateur DecoderPro " target="manual.Basic_Programming_Basic Programmer"/>
+  <indexitem text="Programmateur DecoderPro " target="html.apps.DecoderPro.index"/>
 
  </indexitem>
  <indexitem text="Pr&#233;f&#233;rences " target="package.apps.TabbedPreferences"/>
@@ -348,12 +340,12 @@
   <indexitem text="R&#233;cepteur de Commande " target="package.jmri.jmrix.rps.aligntable.AligntableFrame"/>
 
  </indexitem>
- <indexitem text="R&#233;gulateur RailDrive " target="html.hardware.raildriver.index"/>
-
  <indexitem text="R&#233;gulateurs " target="html.tools.throttle.ThrottleMain">
   <indexitem text="Android Phone comme R&#233;gulateur " target="package.jmri.jmrit.withrottle.EngineDriverAndroidThrottle"/>
 
   <indexitem text="iPhone/iPod comme R&#233;gulateur " target="html.tools.throttle.AdvancedThrottleControl_iphone"/>
+
+  <indexitem text="R&#233;gulateur RailDrive " target="html.hardware.raildriver.index"/>
 
   <indexitem text="USB Joypad comme R&#233;gulateur " target="html.tools.throttle.AdvancedThrottleControl_joypad"/>
 

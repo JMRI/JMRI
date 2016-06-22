@@ -99,7 +99,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] validOption1() {
         List<SystemConnectionMemo> connList = jmri.InstanceManager.getList(SystemConnectionMemo.class);
-        if (connList != null) {
+        if (!connList.isEmpty()) {
             ArrayList<String> progConn = new ArrayList<String>();
             progConn.add("");
             String userName = "Dcc4Pc";

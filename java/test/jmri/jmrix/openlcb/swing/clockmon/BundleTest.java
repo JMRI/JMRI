@@ -1,9 +1,6 @@
 package jmri.jmrix.openlcb.swing.clockmon;
 
-import java.util.Locale;
-import junit.framework.Assert;
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**

@@ -57,85 +57,15 @@
 
  </tocitem>
  <tocitem text="DecoderPro ">
+  <tocitem text="D&#233;marrer " target="html.apps.DecoderPro.index"/>
+
   <tocitem text="Introduction " target="html.apps.DecoderPro.index">
    <tocitem text="Tour rapide " target="html.apps.DecoderPro.Tour"/>
 
   </tocitem>
-  <tocitem text="DecoderPro Manuel " target="DecoderProManual.index">
-   <tocitem text="D&#233;marrer " target="manual.Getting_Started">
-    <tocitem text="Qu'est ce que DCC? " target="manual.Getting_Started_What is DCC"/>
-
-    <tocitem text="Syst&#232;mes DCC " target="manual.Getting_Started_DCC systems"/>
-
-    <tocitem text="Mat&#233;riel DCC " target="manual.Getting_Started_DCC Hardware"/>
-
-    <tocitem text="R&#233;glage des pr&#233;f&#233;rencesSetting Preferences " target="manual.Getting_Started_Start"/>
-
-   </tocitem>
-   <tocitem text="Utilisation de DecoderPro " target="manual.Basic_Programming">
-    <tocitem text="R&#233;glage " target="manual.Basic_Programming_Setting Up"/>
-
-    <tocitem text="Choisir son d&#233;codeur " target="manual.Basic_Programming_SelectDecoder"/>
-
-    <tocitem text="Modes Programmation " target="manual.Basic_Programming_ProgramModes"/>
-
-   </tocitem>
-   <tocitem text="Programmateur Basique " target="manual.Basic_Programming_Basic Programmer">
-    <tocitem text="Utlisation de la Liste " target="manual.Basic_Programming_Roster"/>
-
-    <tocitem text="Le Programmateur Basique " target="manual.Basic_Programming_Basic 2"/>
-
-    <tocitem text="Lecture de Donn&#233;e " target="manual.Basic_Programming_Read Data"/>
-
-    <tocitem text="Entr&#233;e et &#201;dition de Donn&#233;e " target="manual.Basic_Programming_Enter Edit data"/>
-
-    <tocitem text="&#201;criture dans le D&#233;codeur " target="manual.Basic_Programming_Write Data"/>
-
-    <tocitem text="Enregistrement dans un Fichier " target="manual.Basic_Programming_Save Data"/>
-
-    <tocitem text="Qu'est ce qui suit " target="manual.Basic_Programming_Do More"/>
-
-   </tocitem>
-   <tocitem text="Programmateur Complet ">
-    <tocitem text="Configuration et Volets List " target="manual.Comp_Setup_Roster"/>
-
-    <tocitem text="Volet Basique " target="manual.Comp_Basic"/>
-
-    <tocitem text="Volet Commande Moteur " target="manual.Comp_Motor"/>
-
-    <tocitem text="Volet Commande Vitesse " target="manual.Comp_Speed"/>
-
-    <tocitem text="Volet Catographie Fonctions " target="manual.Comp_FMap"/>
-
-    <tocitem text="Volet FX et Fonctions Lumi&#232;re " target="manual.Comp_LightFX"/>
-
-    <tocitem text="Volet Fonction Couplage " target="manual.Comp_Consist"/>
-
-    <tocitem text="Volet Fonctions Avanc&#233;es " target="manual.Comp_Advanced"/>
-
-    <tocitem text="Volet Son FX " target="manual.Comp_SoundFX"/>
-
-    <tocitem text="Volet Niveau du Son " target="manual.Comp_SoundLevels"/>
-
-    <tocitem text="Volet Liste Global des CVs " target="manual.Comp_GlobalCVs"/>
-
-    <tocitem text="Volet Donn&#233;es Sp&#233;cifiques au fabricant " target="manual.Comp_ManfSpecific"/>
-
-    <tocitem text="Impression des Donn&#233;es D&#233;codeur " target="manual.Comp_PrintData"/>
-
-   </tocitem>
-   <tocitem text="Plus d'Information " target="manual.index"/>
-
-   <tocitem text="D&#233;marrer " target="html.apps.DecoderPro.index"/>
-
-  </tocitem>
-  <tocitem text="Groupes de Liste " target="manual.Main_RosterGroup"/>
-
-  <tocitem text="Installation de Npuvelles D&#233;finitions D&#233;codeur " target="html.apps.DecoderPro.FileUpdate"/>
+  <tocitem text="Installation de Nouvelles D&#233;finitions D&#233;codeur " target="html.apps.DecoderPro.FileUpdate"/>
 
   <tocitem text="Commande Multi-Decodeur " target="package.jmri.jmrit.dualdecoder.DualDecoderSelectFrame"/>
-
-  <tocitem text="Messages d'Erreurs " target="html.tools.programmer.messages"/>
 
  </tocitem>
  <tocitem text="R&#233;gulateurs " target="html.tools.throttle.ThrottleMain">
@@ -392,7 +322,7 @@
   <tocitem text="Nouveau Train " target="package.jmri.jmrit.dispatcher.NewTrain"/>
 
  </tocitem>
- <tocitem text="Codes Erreur " target="html.Errors"/>
+ <tocitem text="Codes Erreur " target="html.setup.Errors"/>
 
  <tocitem text="SoundPro " target="html.apps.SoundPro.SoundPro">
   <tocitem text="Intro " target="html.apps.SoundPro.SoundPro"/>
