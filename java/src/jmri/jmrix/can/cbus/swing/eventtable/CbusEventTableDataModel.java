@@ -45,21 +45,6 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     static public final int NUMCOLUMN = 6;
 
     final JFileChooser fileChooser = new JFileChooser(FileUtil.getUserFilesPath());
-    /*
-     * @deprecated 2.99.2
-     */
-    /*@Deprecated
-     CbusEventTableDataModel(int row, int column) {
-     _id = new int[CbusConstants.MAX_TABLE_EVENTS];
-     _node = new int[CbusConstants.MAX_TABLE_EVENTS];
-     _name = new String[CbusConstants.MAX_TABLE_EVENTS];
-     _event = new int[CbusConstants.MAX_TABLE_EVENTS];
-     _type = new boolean[CbusConstants.MAX_TABLE_EVENTS];
-     _comment = new String[CbusConstants.MAX_TABLE_EVENTS];
-     // connect to the CanInterface
-     tc = TrafficController.instance();
-     tc.addCanListener(this);
-     }*/
 
     CanSystemConnectionMemo memo;
 
