@@ -229,21 +229,20 @@ if [ -z "${jmri_xms:-}" ] ; then
     jmri_xms="-Xms96m"
 fi
 
-## ask the user if they want to install Java, and open the Java web site if yes
+## Prompt to install Java on OS X, mimicing the built in prompt for the JDK
 OfferJavaDownload() {
-    x=$( /usr/bin/osascript << EOT
-    tell application "Finder"
-    activate
-    set myReply to button returned of (display dialog "No Java can be found on the system.\nWould you like to download Java now?" \
-         buttons { "No", "Yes" } \
-         with icon stop  \
-         with title "JMRI Installation Problem")
-    end tell
+    /usr/bin/osascript << EOT
+    try
+        display alert "To use JMRI you need to install a JRE." \
+            message "Click \"More Info...\" to visit the Java Runtime Environment download website." \
+            buttons {"More Info...", "OK"} \
+            default button "OK" \
+            cancel button "More Info..."
+    on error number -128
+        -- user pressed cancel button
+        open location "https://www.java.com/en/download/mac_download.jsp"
+    end try
 EOT
-    )
-    if [ "$x" = "Yes" ] ; then
-        open http://java.com/
-    fi
     exit 1
 }
 
