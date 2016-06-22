@@ -41,7 +41,7 @@ public final class WebServer implements LifeCycle.Listener {
     private ShutDownTask shutDownTask = null;
     private final static Logger log = LoggerFactory.getLogger(WebServer.class.getName());
 
-    protected WebServer() {
+    public WebServer() {
         this(WebServerPreferences.getDefault());
     }
 
