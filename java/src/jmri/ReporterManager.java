@@ -2,6 +2,10 @@ package jmri;
 
 import java.util.List;
 
+import javax.annotation.CheckReturnValue;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+
 /**
  * Locate a Reporter object representing some specific device on the layout.
  * <P>
@@ -51,7 +55,7 @@ public interface ReporterManager extends Manager {
      *                                  due to e.g. an illegal name or name that
      *                                  can't be parsed.
      */
-    public Reporter provideReporter(String name);
+    public @Nonnull Reporter provideReporter(@Nonnull String name);
 
     /**
      * Locate via user name, then system name if needed. If that fails, return
@@ -60,7 +64,7 @@ public interface ReporterManager extends Manager {
      * @param name User name or system name to match
      * @return null if no match found
      */
-    public Reporter getReporter(String name);
+    public @CheckForNull Reporter getReporter(@Nonnull String name);
 
     /**
      * Locate an instance based on a system name. Returns null if no instance
@@ -68,7 +72,7 @@ public interface ReporterManager extends Manager {
      *
      * @return requested Reporter object or null if none exists
      */
-    public Reporter getBySystemName(String systemName);
+    public @CheckForNull Reporter getBySystemName(@Nonnull String systemName);
 
     /**
      * Locate an instance based on a user name. Returns null if no instance
@@ -76,7 +80,7 @@ public interface ReporterManager extends Manager {
      *
      * @return requested Reporter object or null if none exists
      */
-    public Reporter getByUserName(String userName);
+    public @CheckForNull Reporter getByUserName(@Nonnull String userName);
 
     /**
      * Locate an instance based on a user name, or if that fails, by system
@@ -84,7 +88,7 @@ public interface ReporterManager extends Manager {
      *
      * @return requested Reporter object or null if none exists
      */
-    public Reporter getByDisplayName(String userName);
+    public @CheckForNull Reporter getByDisplayName(@Nonnull String userName);
 
     /**
      * Return an instance with the specified system and user names. Note that
@@ -113,12 +117,12 @@ public interface ReporterManager extends Manager {
      *                                  e.g. an illegal name or name that can't
      *                                  be parsed.
      */
-    public Reporter newReporter(String systemName, String userName);
+    public @Nonnull Reporter newReporter(@Nonnull String systemName, String userName);
 
     /**
      * Get a list of all Reporter's system names.
      */
-    public List<String> getSystemNameList();
+    public @Nonnull List<String> getSystemNameList();
 
     /**
      * A method that determines if it is possible to add a range of turnouts in
@@ -126,7 +130,7 @@ public interface ReporterManager extends Manager {
      * format is 1b23 this will return false.
      *
      */
-    public boolean allowMultipleAdditions(String systemName);
+    public boolean allowMultipleAdditions(@Nonnull String systemName);
 
     /**
      * Determine if the address supplied is valid and free, if not then it shall
@@ -137,6 +141,6 @@ public interface ReporterManager extends Manager {
      * @param curAddress - The hardware address of the turnout we which to
      *                   check.
      */
-    public String getNextValidAddress(String curAddress, String prefix);
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix);
 
 }

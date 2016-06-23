@@ -1,41 +1,34 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <head>
-<!-- Copyright Me 2008 -->
-<!-- $Id$ -->
 <!-- Translated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12 -->
-<title>JMRI: Tools Menu</title>
+<title>JMRI: Menu Outils</title>
 
 <!-- Style -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css" MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css" MEDIA="print">
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-
-
-
-<h2>JMRI: Menu Outils</h2>
+<h1>JMRI: Menu Outils</h1>
 
 Le menu Outils permet d'acc&#233;der aux outils de base JMRI :
 <ul>
-<li> programmateurs
+<li>Programmateurs
   <ul>
   <li> <a href="simpleprog/SimpleProgFrame.shtml">Programmateur Simple CV </a>
   <li> <a href="../../../manual/Basic_Programming.shtml">Programmateur DecoderPro sur voie de programmation</a>
   <li> <a href="../../../manual/index.shtml"> Programmateur DecoderPro en exploitation</a>
  </ul>
-<li> tableaux
+<li>Tableaux
   <ul>
   <li> <a href="beantable/TurnoutTable.shtml"> Aiguillages</a>
   <li> <a href="beantable/SensorTable.shtml"> Capteurs</a>
@@ -60,16 +53,19 @@ Le menu Outils permet d'acc&#233;der aux outils de base JMRI :
 <li> <a href="../../../html/tools/speedometer/index.shtml"> Calculateur de Vitesse</a>
 <li> <a href="simplelightctrl/SimpleLightCtrl.shtml"> Commande Lumi&#232;res</a>
 <li> <a href="../../../package/jmri/jmrit/dispatcher/Dispatcher.shtml"> Dispatcheur</a>
-<li> Envoyer message DCC 
-<li> Outils USS CTC 
-<li> <a href="../../../package/jmri/jmrit/operations/Operations.shtml">Exploitation</a>
+<li>Envoyer message DCC
+<li>Outils USS CTC
+<li><a href="../../../package/jmri/jmrit/operations/Operations.shtml">Exploitation</a>
 </ul>
 
+      <p>
 Pour plus d'informations , voir &#233;galement le
-<a href="../../../html/tools/index.shtml"> Index g&#233;n&#233;ral des outils</a> .
-
+<a href="../../../html/tools/index.shtml"> Index g&#233;n&#233;ral des outils</a>.
+      </p>
 
 <!--#include virtual="/Footer" -->
+      </div>
+    </div>
 </body>
 </html>
 

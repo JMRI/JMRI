@@ -55,13 +55,13 @@ mode d'&#233;dition les articles sont les m&#234;mes que les &#233;l&#233;ments 
 avec quelques articles suppl&#233;mentaires. Ils sont les suivants: </P>
 <ul>
         <li><b>Nouveau Panneau</b>.</li>
-        <li> <b>Panneaux Stock&#233;s  ...</b>.</li>
+        <li> <b>Panneaux Stock&#233;s...</b>.</li>
         <li> <b> Stockage Index Images</b>.</li>
         <li> <b> Renommer Panneau</b>.</li>
         <li> <b> Cr&#233;er/Modifier Index des images</b>.</li>
         <li><b> Changement Vue de l'&#233;diteur de Panneau</b>.</li>
         <li> <b>Changer vue du G&#233;n&#233;rateur de Circuit</b>.</li>
-        <li> <b> Supprimer Ce panneau ...</b>.</li>
+        <li> <b> Supprimer Ce panneau...</b>.</li>
         <li> <b> Fermer l'&#233;diteur</b>.</li>
 </Ul>
 <p>
@@ -79,7 +79,7 @@ quelques &#233;l&#233;ments et caract&#233;ristiques suppl&#233;mentaires. Comme
 <p>Les &#233;l&#233;ments <b>Remplacement de la position individuelle et Commande des r&#233;glages</b> active ou d&#233;sactive, les deux &#233;l&#233;ments de menu suivants: 
 (<b>Tous les &#233;l&#233;ments du panneau peuvent &#234;tre repositionn&#233;s</b> et <b> Tous les &#233;l&#233;ments du panneau commande le r&#233;seau</b>).
 Lorsque le <b>Remplacement de la position individuelle et Commande des r&#233;glages</b> n'est pas coch&#233;e, le verrouillage ou d&#233;verrouillage de la position des ic&#244;nes se fait comme dans l'&#233;diteur de Panneau - comme est activ&#233;e ou  d&#233;sactiv&#233;e la commande d'un &#233;l&#233;ment du r&#233;seau. Lorsque le <b>Remplacement de la position individuelle et Commande des r&#233;glages</b> est coch&#233;e, les
-deux prochains articles de menu fonctionnent comme ils le font dans l'&#233;diteur de Panneau . Toutefois, le verrouillage individuel et
+deux prochains articles de menu fonctionnent comme ils le font dans l'&#233;diteur de Panneau. Toutefois, le verrouillage individuel et
 les param&#232;tres de commande pour chaque &#233;l&#233;ment sont m&#233;moris&#233;s.
 <p> D&#233;cocher l'&#233;l&#233;ment <b>Remplacement de la position individuelle et Commande des r&#233;glages</b> 
 r&#233;tablira les param&#232;tres des &#233;l&#233;ment individuel &#224; leurs param&#232;tres pr&#233;c&#233;dents.

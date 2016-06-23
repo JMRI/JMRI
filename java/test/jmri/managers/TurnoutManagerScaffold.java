@@ -76,10 +76,6 @@ public class TurnoutManagerScaffold implements TurnoutManager {
         return -1;
     }
 
-    public char systemLetter() {
-        return ' ';
-    }
-
     public String getSystemPrefix() {
         return " ";
     }

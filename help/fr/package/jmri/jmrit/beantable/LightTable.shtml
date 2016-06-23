@@ -1,12 +1,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- UpDated by Herv&#233; Blorec 2013-10-11-->
 <html lang="fr">
 <head>
  <TITLE>
-      JMRI: Light Table Help
+      JMRI: Le Tableau Lumi&#232;re
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="JMRI help Light Table">
 
@@ -25,16 +23,17 @@
     <div id="mainContent">
 
 
-<H1> Le Tableau Lumi&#232;re</H1>
+<h1>Le Tableau Lumi&#232;re</h1>
 
- <p>Les Lumi&#232;res sont des bits de sortie num&#233;rique qui fonctionnent comme des interrupteurs marche/arr&#234;t. Les Lumi&#232;res
-ont &#233;t&#233; cr&#233;&#233;es pour fournir un commande facile pour des lumi&#232;res des d&#233;cors et '&#233;clairage du TCO. Les lampes peuvent aussi &#234;tre utilis&#233;es &#224; des usage qui n&#233;cessite un commutateur marche/arr&#234;t. La lumi&#232;re peut &#234;tre utilis&#233;e, par exemple, pour activer un dispositif &#233;lectromagn&#233;tique d&#233;coupleur pour un temps pr&#233;-d&#233;termin&#233; en r&#233;ponse &#224; un bouton du TCO ou de jouer un son via un d&#233;codeur stationnaire.</p>
+ <p>Les Lumi&#232;res sont des bits de sortie num&#233;rique qui fonctionnent comme des interrupteurs marche/arr&#234;t.
+     Les Lumi&#232;res ont &#233;t&#233; cr&#233;&#233;es pour fournir un commande facile pour des lumi&#232;res des d&#233;cors
+     et '&#233;clairage du TCO. Les lampes peuvent aussi &#234;tre utilis&#233;es &#224; des usage qui n&#233;cessite un commutateur marche/arr&#234;t. La lumi&#232;re peut &#234;tre utilis&#233;e, par exemple, pour activer un dispositif &#233;lectromagn&#233;tique d&#233;coupleur pour un temps pr&#233;-d&#233;termin&#233; en r&#233;ponse &#224; un bouton du TCO ou de jouer un son via un d&#233;codeur stationnaire.</p>
 
 <p> Les Lumi&#232;res  partagent les bits de sortie num&#233;riques disponibles avec les Aiguillages. Soit une
 Lumi&#232;re ou un Aiguillage, mais pas les deux, peut commander un bit de sortie num&#233;rique sp&#233;cifique.
 Puisque les Lumi&#232;res n'ont pas la structure des commentaires des aiguillages, les Lumi&#232;res  ne devraient pas
 &#234;tre utilis&#233; pour commander les appareils de voie (aiguillages) sur le r&#233;seau; les Aiguillages seuls
-devraient &#234;tre utilis&#233;s pour commander les aiguillages . Pour des raisons historiques, les apparences de la t&#234;te de signal sont d&#233;finies en utilisant les aiguillages, m&#234;me si elles peuvent &#234;tre r&#233;ellement des luminaires physique. Alors les Aiguillages devraient &#234;tre utilis&#233;s pour faire r&#233;f&#233;rence aux bits de sortie num&#233;riques
+devraient &#234;tre utilis&#233;s pour commander les aiguillages. Pour des raisons historiques, les apparences de la t&#234;te de signal sont d&#233;finies en utilisant les aiguillages, m&#234;me si elles peuvent &#234;tre r&#233;ellement des luminaires physique. Alors les Aiguillages devraient &#234;tre utilis&#233;s pour faire r&#233;f&#233;rence aux bits de sortie num&#233;riques
  utilis&#233; avec les T&#234;tes de signal JMRI. L'&#233;clairage doit &#234;tre utilis&#233; si vous avez besoin
 d'un m&#233;canisme simple pour commander l'&#233;clairage des d&#233;cors ou des voyants du TCO, ou pour
 d'autres t&#226;ches on/ff  o&#249; les m&#233;canismes de commande des lumi&#232;res sont adapt&#233;s aux besoins.</p>
@@ -58,7 +57,7 @@ d&#233;clench&#233;e par son capteur de commandee, l'horloge rapide, l'aiguillag
 elle doit &#234;tre "activ&#233;e", c'est &#224; dire que sa case dans la colonne "Activ&#233;"
 doit &#234;tre coch&#233;e. Vous pouvez d&#233;cocher cette case pour d&#233;sactiver temporairement une
 Lumi&#232;re, c'est &#224; dire &#233;viter qu'elle commute lorsque son m&#233;canisme de commande prend feux!
- .</p>
+</p>
 
 <p>
 Une lumi&#232;re peut aussi &#234;tre une variable  lumi&#232;re.
@@ -68,8 +67,8 @@ Cela d&#233;pendra de l'interface et du mat&#233;riel de pilotage de la lumi&#23
 <h2> Commutation d'une Lumi&#232;re Allum&#233;e(On) ou &#233;teinte(Off)</h2>
 
 <p> Les Lumi&#232;res  peuvent &#234;tre activ&#233;es ou d&#233;sactiv&#233;es en cliquant sur le bouton dans la colonne &#233;tat
-du tableau Lumi&#232;re. Une Lumi&#232;re peut &#234;tre mise en place pour suivre l'&#233;tat d'un aiguillage, lorsque l'aiguillage est droit,  et lorsqu'il  est d&#233;vi&#233; ou vice-versa. Une lumi&#232;re peut &#234;tre r&#233;gl&#233;e pour suivre l'&#233;tat d'un capteur d'occupation de canton
-, lorsque le capteur est actif, et d&#233;sactiv&#233; quand il est inactif, ou
+du tableau Lumi&#232;re. Une Lumi&#232;re peut &#234;tre mise en place pour suivre l'&#233;tat d'un aiguillage, lorsque l'aiguillage est droit,  et lorsqu'il  est d&#233;vi&#233; ou vice-versa. Une lumi&#232;re peut &#234;tre r&#233;gl&#233;e pour suivre l'&#233;tat d'un capteur d'occupation de canton,
+    lorsque le capteur est actif, et d&#233;sactiv&#233; quand il est inactif, ou
 vice-versa. Une lumi&#232;re peut &#233;galement &#234;tre r&#233;gl&#233;e par un bouton du TCO, si un capteur pour
 ce bouton est d&#233;fini comme le capteur de commande. Une lumi&#232;re peut &#234;tre configur&#233;e pour
 suivre les horloges rapides JMRI, sur une p&#233;riode de temps sp&#233;cifi&#233;e, puis s'&#233;teint. Une lumi&#232;re
@@ -108,16 +107,17 @@ pour l'ajout ou la modification Lumi&#232;res.
 <h2> Sauvegarde de Lumi&#232;res sur Disque </h2>
 
 <p> Les Lumi&#232;res sont enregistr&#233;s dans votre fichier de configuration r&#233;seau, avec les aiguillages, les
-capteurs, les t&#234;tes de signal, etc .Pour stocker ces informations sur le disque, utilisez  <b>
+capteurs, les t&#234;tes de signal, etc. Pour stocker ces informations sur le disque, utilisez  <b>
 Sauvegarder</b> dans le menu <b>Fichier</b> en haut du tableau Lumi&#232;re
  (ou d'autres tableaux &#224; partir du menu Outils), ou s&#233;lectionnez Panneau  <b>Sauvegarder ...</b>
 dans le <b>Panneau</b>. Notez que l'&#233;tat activ&#233;/d&#233;sactiv&#233; de chaque lumi&#232;re
 n'est pas enregistr&#233; dans le fichier de configuration. Lorsque les Lumi&#232;res sont charg&#233;es &#224; partir d'un
 fichier de configuration, elles sont tous activ&#233;es.
-
-
-
+</p>
 <!--#include virtual="/Footer" -->
+
+        </div>
+      </div>
 </body>
 </html>
 
