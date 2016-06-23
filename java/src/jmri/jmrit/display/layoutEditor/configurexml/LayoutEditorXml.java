@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * Based in part on PanelEditorXml.java
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision$
  */
 public class LayoutEditorXml extends AbstractXmlAdapter {
 
@@ -42,7 +41,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         LayoutEditor p = (LayoutEditor) o;
         Element panel = new Element("LayoutEditor");
 
-        panel.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml");
+        panel.setAttribute("class", getClass().getName());
         panel.setAttribute("name", p.getLayoutName());
         panel.setAttribute("x", "" + p.getUpperLeftX());
         panel.setAttribute("y", "" + p.getUpperLeftY());

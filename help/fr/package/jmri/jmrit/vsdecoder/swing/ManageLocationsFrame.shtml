@@ -1,36 +1,19 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr"><head>
-<!-- $Id$ --><title>JMRI: Virtual Sound Decoder</title>
+<title>JMRI: D&#233;codeur Son Virtuel JMRI</title>
+<meta content="Mark Underwood" name="Author">
+<meta name="keywords" content="JMRI help Virtual Sound Decoder">
 
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
 
-
- 
-    
-  
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-
-    
-  <meta content="Mark Underwood" name="Author">
-
-    
-  <meta name="keywords" content="JMRI help Virtual Sound Decoder"><!-- Style -->
-
-
-
-  
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-
-  
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-
-  
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-
-  
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-
-  
-  <link rel="home" title="Home" href="/"><!-- /Style --></head><body>
+</head>
+<body>
 
 <!--#include virtual="/Header" -->
   
@@ -38,25 +21,26 @@
     
 <div id="mainContent">
 <h1>D&#233;codeur Son Virtuel JMRI</h1>
-Ceci est la page de r&#233;f&#233;rence rapide pour le D&#233;codeur Son Virtuel JMRI
-   outil de Gestion des Lieux VSD. <br>
+<p>Ceci est la page de r&#233;f&#233;rence rapide pour le D&#233;codeur Son Virtuel JMRI
+   outil de Gestion des Lieux VSD.</p>
 
 <h2>Onglets</h2>
    <ul>
      <li> Onglet Rapporteur: d&#233;finir des emplacements pour les Rapporteurs JMRI </li>
      <li> Op&#233;rations Emplacements Tab: d&#233;finir des emplacements pour les Lieux des op&#233;rations JMRI
-    </ li>
+    </li>
    <li> Auditeurs Tab: D&#233;finir l'emplacement et l'orientation de L'Auditeur</li>
-   </ ul>
+   </ul>
 
-   <h2>Bugs, notes et autres bizarreries</ht>
+   <h2>Bugs, notes et autres bizarreries</h2>
    <ul>
      <li> Si vous ajoutez de nouveaux rapporteurs, vous devez fermer et rouvrir le gestionnaire de la fen&#234;tres des Emplacements DSV pour les faire appara&#238;tre. </li>
-   </ ul>
+   </ul>
 
-<a id="prefs"> (Ceci est la page d'aide jmri.jmrit.vsdecoder.ManageLocationsFrame)
+<p>(Ceci est la page d'aide jmri.jmrit.vsdecoder.ManageLocationsFrame)</p>
+
 <!--#include virtual="/Footer" -->
-</a></p>
 </div>
 </div>
-</body></html>
+</body>
+</html>

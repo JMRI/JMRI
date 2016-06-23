@@ -4,7 +4,6 @@ package jmri.implementation;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 import javax.annotation.Nonnull;
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
@@ -184,7 +183,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
      *  @param bitString String for 1-n 1/0 chararacters setting an unlit aspect
      */
     public void setUnLitBits(String bitString) {
-        char[] unLitBits = bitString.toCharArray();
+        setUnLitBits(bitString.toCharArray());
     }
 
     /**

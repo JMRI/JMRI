@@ -340,17 +340,6 @@ abstract public class AbstractProxyManager implements Manager {
     }
 
     /**
-     * Provide 1st char of systemPrefix for now
-     *
-     * @deprecated
-     */
-    @Deprecated
-    @Override
-    public char systemLetter() {
-        return getSystemPrefix().charAt(0);
-    }
-
-    /**
      * @return The type letter for turnouts
      */
     @Override

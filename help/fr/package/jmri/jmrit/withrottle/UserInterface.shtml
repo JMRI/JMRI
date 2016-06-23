@@ -1,8 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
 <!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-13--> 
 <title>JMRI: WiFi Throttle</title>
 
@@ -15,9 +13,9 @@
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -37,7 +35,7 @@ par exemple un IPhone, IPod Touch, ou t&#233;l&#233;phone Android, et JMRI.
 Il peut &#234;tre configur&#233; pour d&#233;marrer automatiquement avec le
 "<a href="../../../apps/TabbedPreferences.shtml#Startup"> D&#233;marrage </a>" dans la section
 "<a href="../../../apps/TabbedPreferences.shtml"> JMRI Pr&#233;f&#233;rences </a>"
-section Pr&#233;f&#233;rences JMRI sous la rubrique �Actions�.
+section Pr&#233;f&#233;rences JMRI sous la rubrique 'Actions'.
 
 <p>
 <a href="../../../apps/TabbedPreferences.shtml#WiThrottle"> Les Pr&#233;f&#233;rences </a>
@@ -97,8 +95,8 @@ Pour entrer des &#233;tiquettes de fonction, le format du programmateur doit &#2
 Itin&#233;raires et Aiguillages
 
 </h3>
-L'application peut commander tous les aiguillages (et itin&#233;raires) que JMRI commande. S'is sont disponibless dans le tableau aiguillage (ou itin&#233;raire) de JMRI,
-ils sont automatiquement disponibles dans les r&#233;gulateurs WiFi.�
+L'application peut commander tous les aiguillages (et itin&#233;raires) que JMRI commande. S'ils sont disponibles dans le tableau Aiguillage (ou Itin&#233;raire) de JMRI,
+ils sont automatiquement disponibles dans les r&#233;gulateurs WiFi.
 S'il n'y a pas d'aiguillages (ou itin&#233;raires dans le tableau(x) alors l'&#233;cran de commande pour eux n'apparaitra pas dans l'application.
 Par d&#233;faut,il peut faire tout ceci.
 Toutefois, si JMRI n'est pas capable de les commander, les r&#233;gulateurs ne seront pas capables de le faire.
@@ -108,14 +106,13 @@ En suppl&#233;ment, vous pouvez limiter quels aiguillages apparaissent.
 Dans JMRI avec la fen&#234;tre Withrottle active, il y a un menu Withrottle.
 Il y a un &#233;l&#233;ment appel&#233; "Filtre de Commandes"
 qui vous permet de dire quels aiguillages afficher sur l'&#233;cran ou le cacher.
-<p>
-<h3>Couplage Avanc&#233;</h3>
 
+<h3>Couplage Avanc&#233;</h3>
+<p>
 Il ya maintenant deux options pour manipule le Couplage Assist&#233; (ou D&#233;codeur Assist&#233;) Compos&#233;e.
 Cela peut &#234;tre choisi parmi le <a href="../../../apps/TabbedPreferences.shtml#WiThrottle"> WiThrottle</a> partie des pr&#233;f&#233;rences JMRI.
 
 <p>
-
 La valeur par d&#233;faut est <b>Format NMRA</b>. Cela va construire une couplage en utilisant les commandes de couplages NMRA.
 Il n'utilise pas de techniques sp&#233;cifiques pour le syst&#232;me DCC connect&#233;.
 Cela permet aux manettes WiFi de travailler dans un syst&#232;me DCC de mani&#232;re ind&#233;pendante.

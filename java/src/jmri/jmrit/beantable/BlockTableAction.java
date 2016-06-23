@@ -601,7 +601,7 @@ public class BlockTableAction extends AbstractTableAction {
         //We will allow the turnout manager to handle checking if the values have changed
         try {
             InstanceManager.blockManagerInstance().setDefaultSpeed(speedValue);
-        } catch (jmri.JmriException ex) {
+        } catch (IllegalArgumentException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + speedValue);
             return;
         }
@@ -829,10 +829,10 @@ public class BlockTableAction extends AbstractTableAction {
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
         if (retval != 0) {
-            InstanceManager.blockManagerInstance().savePathInfo(true);
+            InstanceManager.blockManagerInstance().setSavedPathInfo(true);
             log.info("Requested to save path information via Block Menu.");
         } else {
-            InstanceManager.blockManagerInstance().savePathInfo(false);
+            InstanceManager.blockManagerInstance().setSavedPathInfo(false);
             log.info("Requested not to save path information via Block Menu.");
         }
     }

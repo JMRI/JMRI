@@ -62,19 +62,18 @@ Il ya trois panneaux (ou sous-fen&#234;tres) associ&#233;s &#224; chacune des fe
 . Ils sont identifi&#233;s comme &#233;tant: <br>
 
 <ul>
-
  <li>Le panneau de configuration &#8212; contient un curseur d'acc&#233;l&#233;rateur pour contr&#244;ler la vitesse
 de la locomotive, d'un s&#233;lecteur de marche avant et arri&#232;re, une bouton d'arr&#234;t d'urgence
- et un bouton Arr&#234;t (principalement utilis&#233; pour les d&#233;codeurs son
-). </li>
+ et un bouton Arr&#234;t (principalement utilis&#233; pour les d&#233;codeurs son).
+ </li>
  <li> Le panneau Fonction  &#8212; est utilis&#233; pour associer les touches de fonction avec
 les fonctions de sortie active du d&#233;codeur. </li>
   <li>Le panneau Adresse &#8212; est utilis&#233; pour identifier l'adresse du d&#233;codeur, et d'
 exp&#233;dition ou de lib&#233;rationr de l'adresse identifi&#233;e. </li>
-</ ul>
+</ul>
 
-Notez que ces trois panneaux sont en fait des fen&#234;tres d&#233;finies au sein d'une fen&#234;tre globale
-, chacun de ces panneaux contient ses propres boutons "minimiser" et
+Notez que ces trois panneaux sont en fait des fen&#234;tres d&#233;finies au sein d'une fen&#234;tre globale,
+    chacun de ces panneaux contient ses propres boutons "minimiser" et
 "fermer" &#8212; ainsi ils peuvent &#234;tre redimensionn&#233;s. Vous pouvez effectivement
 minimiser un ou plusieurs de ces panneaux dans la fen&#234;tre du r&#233;gulateur. Lorsque
 une de ces sous-fen&#234;tres est ferm&#233;e, elle peut &#234;tre r&#233;ouverte par le biais<a  href="ThrottleWindowMenus.shtml"> du menu Affichage </a>.<br>
@@ -98,9 +97,8 @@ la fen&#234;tre devient active, est d'assigner l'adresse d'un d&#233;codeur dans
 <br>
 
 Saisissez manuellement l'adresse du d&#233;codeur dans la grande zone de texte ou s&#233;lectionnez une
-entr&#233;e Liste (Roster) existante par l'interm&#233;diaire du menu COMBOX, puis cliquez sur le bouton "D&#233;finir"(Set)
-. <br>
-
+entr&#233;e Liste (Roster) existante par l'interm&#233;diaire du menu COMBOX, puis cliquez sur le bouton "D&#233;finir"(Set).
+    <br>
 Lorsque vous saisissez manuellement une adresse, n'oubliez pas de cliquer sur le bouton Validation (Set).
 Sans cette &#233;tape, toutes les actions du r&#233;gulateurs sont d&#233;sactiv&#233;es.<br>
 <br>
@@ -123,9 +121,8 @@ d&#233;sactiv&#233;es jusqu'&#224; ce qu'une autre adresse soit "D&#233;finie"(S
 pour la locomotive s&#233;lectionn&#233;e. Il est seulement actif quand
 une entr&#233;e de registre a &#233;t&#233; s&#233;lectionn&#233;e sur le r&#233;gulateur. </li>
 </ul>
-<br>
 
- <h2>Panneau de configuration &#8212; Faisons circuler un train </h2>
+<h2>Panneau de configuration &#8212; Faisons circuler un train </h2>
 
 Maintenant que vous avez cr&#233;&#233; une adresse pour le r&#233;gulateur, vous devriez
 &#234;tre capable de faire circuler le train sur votre r&#233;seau (si votre r&#233;seau est actif et que
@@ -147,37 +144,34 @@ Si vous cliquez n'importe o&#249; &#224; proximit&#233; du curseur, votre loco p
 inattendue (voir plus bas). Si vous cliquez n'importe o&#249; sur les mots
 "Avant" ou "Arri&#232;re", vous pouvez changer la direction du train
 </ul>
-<br>
 
-e <h3>Configuration du volet Panneau de Contr&#244;le </h3>
+<h3>Configuration du volet Panneau de Contr&#244;le</h3>
 
 <img src="images/ControlPanelPreferences.png" alt="ControlPanelPreferences.png"> <br>
 
 Ce volet accessible par un clic droit dans le volet Panneau de configuration et
 l'ouverture entr&#233;e du menu Propri&#233;t&#233;s<br> 
 
-<br>
 
 <h2> Le Groupe Fonction </h2>
-
+<p>
 Le Groupe dispose de 28 touches de Fonctions disponibles par R&#233;gulateur.
 La plupart des d&#233;codeurs actuellement ne traitent pas les 28 fonctions. Le panneau de fonction
 affiche les boutons en deux groupes, appuyez sur la touche "*" dans le coin gauche dans la partie inf&#233;rieure
-pour voir la deuxi&#232;me s&#233;rie de boutons de fonction. <br>
-
-<br>
-
+pour voir la deuxi&#232;me s&#233;rie de boutons de fonction.
+    </p>
+<p>
 Cliquer sur les boutons de fonctions en corr&#233;lation avec l'apui sur les m&#234;mes
 boutons de fonction sur un r&#233;gulateur &#224; main. La fonction F0 est normalement
-utilis&#233; pour les feux.<br> 
-
-<br>
-
+utilis&#233; pour les feux.
+    </p>
+<p>
 Il s'agit de la fonctionnalit&#233; de base du Groupe de fonction. Tous les boutons
 fonctionnent comme une bascule marche/arr&#234;t &#8212;  cliquez une fois pour activer "Marche" et cliquez de nouveau
-pour basculer sur "Arr&#234;t". <br>
+pour basculer sur "Arr&#234;t".
+    </p>
 
-Fonction <h3> bouton configuration volet</h3>
+<h3>Fonction bouton configuration volet</h3>
 
 <img src="images/FunctionButtonProperties.png" alt="FunctionButtonProperties.png"> <br>
 

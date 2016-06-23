@@ -1,4 +1,3 @@
-// RosterServlet.java
 package jmri.web.servlet.roster;
 
 import static jmri.jmris.json.JSON.ADDRESS;
@@ -260,7 +259,7 @@ public class RosterServlet extends HttpServlet {
                     this.doImage(request, response, FileUtil.getFile(re.getFunctionSelectedImage(function)));
                 }
             } else if (type.equals("file")) {
-                ServletUtil.getInstance().writeFile(response, new File(Roster.getFileLocation(), "roster" + File.separator + re.getFileName()), ServletUtil.UTF8_APPLICATION_XML); // NOI18N
+                ServletUtil.getInstance().writeFile(response, new File(Roster.getDefault().getRosterLocation(), "roster" + File.separator + re.getFileName()), ServletUtil.UTF8_APPLICATION_XML); // NOI18N
             } else if (type.equals("throttle")) {
                 ServletUtil.getInstance().writeFile(response, new File(FileUtil.getUserFilesPath(), "throttle" + File.separator + id + ".xml"), ServletUtil.UTF8_APPLICATION_XML); // NOI18N
             } else {
@@ -292,9 +291,9 @@ public class RosterServlet extends HttpServlet {
             response.getWriter().print(JsonUtil.getRoster(request.getLocale(), filter));
         } else if (JSON.XML.equals(request.getParameter("format"))) { // NOI18N
             response.setContentType(UTF8_APPLICATION_XML);
-            File roster = new File(Roster.defaultRosterFilename());
+            File roster = new File(Roster.getDefault().getRosterIndexPath());
             if (roster.exists()) {
-                response.getWriter().print(FileUtil.readFile(new File(Roster.defaultRosterFilename())));
+                response.getWriter().print(FileUtil.readFile(roster));
             }
         } else if (("html").equals(request.getParameter("format"))) {
             String row;
