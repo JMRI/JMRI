@@ -2002,7 +2002,7 @@ public class AddSignalMastPanel extends JPanel {
          * @param panelBits char[] of up to 5 1's and 0's
          */
         MatrixAspectPanel(String aspect, char[] panelBits) {
-            if (panelBits == null || panelBits.equals("")) {
+            if (panelBits == null || panelBits.length == 0) {
                 return;
             }
             this.aspect = aspect;
