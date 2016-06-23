@@ -1,28 +1,20 @@
-package jmri.jmrix.cmri.serial;
+package jmri.jmrix.cmri;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-
-/**
- * Tests for the jmri.jmrix.cmri.serial package.
- *
- * @author Bob Jacobsen Copyright 2003
- * @author Paul Bender Copyright (C) 2016
- */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   jmri.jmrix.cmri.serial.SerialTurnoutTest.class,
-   jmri.jmrix.cmri.serial.SerialTurnoutManagerTest.class,
-   jmri.jmrix.cmri.serial.SerialSensorManagerTest.class,
-   jmri.jmrix.cmri.serial.SerialNodeTest.class,
-   jmri.jmrix.cmri.serial.SerialMessageTest.class,
-   jmri.jmrix.cmri.serial.SerialTrafficControllerTest.class,
-   jmri.jmrix.cmri.serial.SerialAddressTest.class})
+   CMRISystemConnectionMemoTest.class,
+   jmri.jmrix.cmri.serial.PackageTest.class})
 
+/**
+ * Tests for the jmri.jmrix.cmri package
+ *
+ * @author  Paul Bender	Copyright (C) 2016
+ */
 public class PackageTest{
 
     // Main entry point
