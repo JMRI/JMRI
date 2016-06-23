@@ -1,4 +1,3 @@
-// ConfigToolPane.java
 package jmri.jmrix.can.cbus.swing.configtool;
 
 import java.awt.GridBagConstraints;
@@ -25,15 +24,9 @@ import jmri.jmrix.can.cbus.CbusMessage;
  * events.
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
  * @since 2.3.1
  */
 public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements CanListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6189931385951469812L;
 
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.can.cbus.swing.configtool.ConfigToolBundle");
 
