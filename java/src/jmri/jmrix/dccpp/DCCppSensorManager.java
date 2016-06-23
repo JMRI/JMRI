@@ -1,4 +1,3 @@
-// DCCppSensorManager.java
 package jmri.jmrix.dccpp;
 
 import jmri.JmriException;
@@ -13,7 +12,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Paul Bender Copyright (C) 2003-2010
  * @author	Mark Underwood Copyright (C) 2015
- * @version	$Revision$
  */
 public class DCCppSensorManager extends jmri.managers.AbstractSensorManager implements DCCppListener {
 
@@ -163,5 +161,3 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
     private final static Logger log = LoggerFactory.getLogger(DCCppSensorManager.class.getName());
 
 }
-
-/* @(#)DCCppSensorManager.java */

@@ -318,17 +318,6 @@ public class MatrixSignalMast extends AbstractSignalMast {
 
     protected HashMap<String, NamedBeanHandle<Turnout>> outputsToBeans = new HashMap<String, NamedBeanHandle<Turnout>>(5); // output# - bean pairs
 
-/*    //looks a lot like the next method, removed
-    NamedBeanHandle<Turnout> TurnoutNameToHandle (String turnoutName) {
-        if (turnoutName != null && !turnoutName.equals("")) {
-            Turnout turn = jmri.InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
-            NamedBeanHandle<Turnout> namedTurnout = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(turnoutName, turn);
-            return namedTurnout;
-        }
-        log.error("Trying to create an empty output");
-        return null;
-    }*/
-
     /**
      * Receive properties from xml, convert name to NamedBeanHandle, store in hashmap outputsToBeans
      * @param colname String describing the name of the corresponding output, like "output1"
