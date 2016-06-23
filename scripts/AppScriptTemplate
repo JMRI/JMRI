@@ -482,7 +482,11 @@ RESTART_CODE=100
 EXIT_STATUS=${RESTART_CODE}
 while [ "${EXIT_STATUS}" -eq "${RESTART_CODE}" ] ; do
 
-    "${JAVACMD}" "${DOCK_OPTIONS[@]-}" ${OPTIONS} ${ALTPORTS} -cp "${CP}" "${CLASSNAME}" ${CONFIGFILE}
+    if [ "$OS" = "macosx" ] ; then
+        "${JAVACMD}" "${DOCK_OPTIONS[@]}" ${OPTIONS} ${ALTPORTS} -cp "${CP}" "${CLASSNAME}" ${CONFIGFILE}
+    else
+        "${JAVACMD}" ${OPTIONS} ${ALTPORTS} -cp "${CP}" "${CLASSNAME}" ${CONFIGFILE}
+    fi
 
     EXIT_STATUS=$?
     [ -n "${DEBUG}" ] && echo Exit Status: "${EXIT_STATUS}"
