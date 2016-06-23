@@ -1,11 +1,11 @@
 <!-- Sidebar -->
 <!-- This is the common sidebar definition for main (root) pages -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<!-- info only: <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1"> -->
 <!-- UpDated  by Blorec Herv&#233; le 2013-09-25--> 
 	  <hr class="hide">
 	  <div id="mBody">
 	  <div id="side"> <!-- Block of text on left side of page -->
-	    <div style="text-align: center">JMRI&reg; is...</div>
+	    <div style="text-align: center">JMRI&reg; c'est...</div>
 	    <dl>
 		<dt><h3><a href="DecoderPro/index.shtml">DecoderPro&reg;</a></h3></dt>
 		<dd>

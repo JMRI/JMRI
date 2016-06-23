@@ -2,9 +2,8 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!--  $Id$ -->
 <!--Updated by Herv&#233; Blorec le 2013-08-31 -->
-<title>JMRI: Function Mapping in Programmer Files</title>
+<title>JMRI: Fonction Mapping dans les Fichiers Programmateur</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -21,7 +20,7 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<H1>JMRI: Guide Utilisateur DecoderPro  - Fonction Mapping dans les Fichiers Programmateur</H1>
+<h1>JMRI: Guide Utilisateur DecoderPro  - Fonction Mapping dans les Fichiers Programmateur</h1>
 
 L'&#233;l&#233;ment "fnmapping" fournit un moyen pratique pour afficher les bits CV utilis&#233;s pour la fonction Map et sorties dans un d&#233;codeur .  
 <P>
@@ -45,9 +44,10 @@ Dans le contexte d'un &#233;l&#233;ment fnmapping, les variables ont plusieurs a
 <LI>constant - c'est un &#233;l&#233;ment, pas un attribut, qui vous permet de d&#233;finir une variable comme ayant une valeur constante que l'utilisateur ne peut pas changer. Un exemple d'utilisation de cette option pour afficher
 une carte fixe est affich&#233;e ci-dessous.
 </ul>
+
 <h2>Exemple de Cartographie</h2>
 Ces exemples sont pris depuis le fichier de d&#233;finition de d&#233;codeur  
-<A HREF="../../xml/decoders/Digitrax_01x3.xml">Digitrax_01x3.xml</a>.
+<a HREF="../../xml/decoders/Digitrax_01x3.xml">Digitrax_01x3.xml</a>.
 <P>
 Le bloc de d&#233;finitions pour la fonction z&#233;ro dans la direction avant est comme suit:
 <PRE>
@@ -115,8 +115,8 @@ Comme vous allez vers les num&#233;ros de fonctions plus &#233;l&#233;v&#233;s, 
 
 <h2>Exemple de Cartographie Fixe</h2>
 
-Vous pourriez encore vouloir inclure les valeurs de cartographie dans un fichier de configuration, m&#234;me si le d&#233;codeur n'a pas la possibilit&#233; de les changer
-.  C'est un exemple de cartographie constante:
+Vous pourriez encore vouloir inclure les valeurs de cartographie dans un fichier de configuration, m&#234;me si le d&#233;codeur n'a pas la possibilit&#233; de les changer.
+	C'est un exemple de cartographie constante:
 <PRE>
 	&lt;!-- Define the fixed Function-Output mapping --&gt;
 	&lt;constant label="FL(f) controls output 1" minOut="1" default="1" /&gt; 
@@ -133,5 +133,6 @@ Vous pourriez encore vouloir inclure les valeurs de cartographie dans un fichier
 Elle sera affich&#233;e de la m&#234;me mani&#232;re que les autres cartographies, except&#233;es les cases individuelles qui seront inactives (gris&#233;es).
     
 <!--#include virtual="/Footer" -->
+	</div>
 </body>
 </html>

@@ -74,7 +74,7 @@ y a &#224; la fois un train en A et aussi un train en C. Lorsque B va d'inactif 
 actif (inoccup&#233; au occup&#233;), quel train a p&#233;n&#233;tr&#233; dans B? Celui de
 A, ou celui de C?
 <P>
-Une partie de cette ambiguÃ¯t&#233; peut &#234;tre enlev&#233; par un arrangement soigneux de la d&#233;tection des cantons qui doivent &#234;tre courts
+Une partie de cette ambiguït&#233; peut &#234;tre enlev&#233; par un arrangement soigneux de la d&#233;tection des cantons qui doivent &#234;tre courts
 , et en utilisant une logique plus intelligente qui 
 pense &#224; la direction et la priorit&#233; des trains. Mais il est clair que
 m&#234;me la voie droite pose quelques probl&#232;mes.
@@ -122,7 +122,7 @@ Questions <P>:
       <LI> Lorsque le deuxi&#232;me train arrive, le capteur est d&#233;j&#224; actif, la valeur est inchang&#233;e (mais la valeur ne peut
           &#234;tre un simple objet de toute fa&#231;on)
      <LI> Quand le 1er train quitte le canton, le capteur reste actif, donc la valeur demeure celle du 1er train
-      </ UL>
+      </UL>
 <LI> L'hypoth&#232;se est que le train va seulement passer par un aiguillage d&#233;fini. Par exemple, un train peut
       venir dans le canton de l'aiguillage de la voie principale, m&#234;me si l'aiguillage est dirig&#233; vers l'&#233;vitement.
 <LI> Ne g&#232;re pas les trains se suivant &#233;troitement o&#249; il n'y a qu'un seul
