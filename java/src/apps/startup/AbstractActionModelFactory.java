@@ -40,7 +40,7 @@ abstract public class AbstractActionModelFactory implements StartupModelFactory 
 
     /**
      * Get the message text for the dialog created in
-     * {@link #editModel(apps.StartupModel, java.awt.Component)}.
+     * {@link #editModel(apps.startup.StartupModel, java.awt.Component)}.
      *
      * @return the message text
      */
