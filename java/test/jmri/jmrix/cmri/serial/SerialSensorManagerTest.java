@@ -68,6 +68,11 @@ public class SerialSensorManagerTest extends TestCase {
         Assert.assertTrue("3rd UA 2", n0.getSensorsActive());
     }
 
+    public void testDefinitions() {
+        Assert.assertEquals("Node definitions match", SerialSensorManager.SENSORSPERUA,
+                SerialNode.MAXSENSORS + 1);
+    }
+
     // from here down is testing infrastructure
     public SerialSensorManagerTest(String s) {
         super(s);
