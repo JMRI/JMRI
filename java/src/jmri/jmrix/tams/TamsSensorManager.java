@@ -226,6 +226,15 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
         sb.append(portNo);
     }
 
+    /**
+     * Determine if it is possible to add a range of sensors in
+     * numerical order eg 1 to 16, primarily used to enable/disable the add
+     * range box in the add sensor panel
+     */
+    public boolean allowMultipleAdditions(String systemName) {
+        return true;
+    }
+
     // to listen for status changes from Tams system
     public void reply(TamsReply r) {
         log.info("*** TamsReply ***");

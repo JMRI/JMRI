@@ -1,7 +1,6 @@
+// TamsTurnout.java
 package jmri.jmrix.tams;
 
-import java.util.LinkedList;
-import java.util.Queue;
 import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
 import org.slf4j.Logger;
@@ -13,36 +12,20 @@ import org.slf4j.LoggerFactory;
  * This object doesn't listen to the Tams communications. This is because it
  * should be the only object that is sending messages for this turnout; more
  * than one Turnout object pointing to a single device is not allowed.
- * Reworked to support binary messages
  *
- * Based on work by Bob Jacobsen & Kevin Dickerson
+ * Based on work by Bob Jacobsen and Kevin Dickerson Copyright
  *
  * @author	Jan Boen
- * @author	Kevin Dickerson Copyright (C) 2012
+ * @version	$Revision: 20160622 $
  */
 public class TamsTurnout extends AbstractTurnout
         implements TamsListener {
 
     /**
-     * 
+     *
      */
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1921305278634163107L;
     String prefix;
-
-    //Create a local TamsMessage Queue which we will use in combination with TamsReplies
-    private Queue<TamsMessage> tmq = new LinkedList<TamsMessage>();
-        
-    //This dummy message is used in case we expect a reply from polling
-    static private TamsMessage myDummy() {
-        //log.info("*** myDummy ***");
-        TamsMessage m = new TamsMessage();
-        m.setBinary(false);
-        m.setReplyType('T');
-        return m;
-    }
-    //A local TamsMessage is held at all time
-    //When no TamsMessage is being generated via the UI this dummy is used which means the TamsReply is a result of polling
-    TamsMessage tm = myDummy();
 
     /**
      * Tams turnouts use the NMRA number (0-2040) as their numerical
@@ -56,12 +39,11 @@ public class TamsTurnout extends AbstractTurnout
         this.prefix = prefix;
         tc = etc;
         //Request status of turnout
-        tm = new TamsMessage("xT " + _number + ",,1");
-        tm.setBinary(false);
-        tm.setReplyType('T');
-        tc.sendTamsMessage(tm, this);
-        tmq.add(tm);
-        //tc.addPollMessage(m, this);
+        TamsMessage m = new TamsMessage("xT " + _number + ",,1");
+        m.setBinary(false);
+        m.setReplyType('T');
+        tc.sendTamsMessage(m, this);
+        //tc.addPollMessage(m, this);//Not adding a poll message as status updates will come via TamsTurnoutManager
 
         _validFeedbackTypes |= MONITORING;
         _activeFeedbackType = MONITORING;
@@ -78,6 +60,7 @@ public class TamsTurnout extends AbstractTurnout
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Only used during creation of 1st turnout")
     private void initFeedbackModes() {
+        log.info("*** initFeedbackModes ***");
         if (_validFeedbackNames.length != _validFeedbackModes.length) {
             log.error("int and string feedback arrays different length");
         }
@@ -99,8 +82,24 @@ public class TamsTurnout extends AbstractTurnout
 
     TamsTrafficController tc;
 
+    // to hear of changes - copied from PowerManager
+    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
+
+    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
+        pcs.addPropertyChangeListener(l);
+    }
+
+    protected void firePropertyChange(String p, Object old, Object n) {
+        pcs.firePropertyChange(p, old, n);
+    }
+
+    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
+        pcs.removePropertyChangeListener(l);
+    }
+
     // Handle a request to change state by sending a turnout command
     protected void forwardCommandChangeToLayout(int s) {
+        log.info("*** forwardCommandChangeToLayout ***");
         // implementing classes will typically have a function/listener to get
         // updates from the layout, which will then call
         //		public void firePropertyChange(String propertyName,
@@ -109,7 +108,6 @@ public class TamsTurnout extends AbstractTurnout
         // _once_ if anything has changed state (or set the commanded state directly)
 
         // sort out states
-        log.info("Change state from JMRI - 1");
         if ((s & Turnout.CLOSED) != 0) {
             // first look for the double case, which we can't handle
             if ((s & Turnout.THROWN) != 0) {
@@ -140,7 +138,7 @@ public class TamsTurnout extends AbstractTurnout
      * @param state Observed state, updated state from command station
      */
     synchronized void setCommandedStateFromCS(int state) {
-        log.info("Processing turnout state as received from TamsTurnoutManager, state= " + state);
+        log.info("*** setCommandedStateFromCS ***");
         if ((getFeedbackMode() != MONITORING)) {
             return;
         }
@@ -157,27 +155,18 @@ public class TamsTurnout extends AbstractTurnout
      * <P>
      * @param state Observed state, updated state from command station
      */
-    /*synchronized void setKnownStateFromCS(int state) {
-        log.info("Processing turnout state as received from TamsTurnoutManager, state= " + state);
+    synchronized void setKnownStateFromCS(int state) {
+        log.info("*** setKnownStateFromCS ***");
         if ((getFeedbackMode() != MONITORING)) {
             return;
         }
 
         newKnownState(state);
-    }*/
+    }
 
-    /**
-     * Public access to changing turnout state. Sets the commanded state and, if
-     * appropriate starts a TurnoutOperator to do its thing. If there is no
-     * TurnoutOperator (not required or nothing suitable) then just tell the
-     * layout and hope for the best.
-     */
-    /*public synchronized void setCommandedState(int s) {
-        log.info("set commanded state for turnout " + getSystemName() + " to " + s);
-        //newCommandedState(s);
-        newKnownState(s);
-    }*/
-    
+    public void turnoutPushbuttonLockout(boolean b) {
+    }
+
     /**
      * Tams turnouts can be inverted
      */
@@ -192,31 +181,23 @@ public class TamsTurnout extends AbstractTurnout
      * @param closed State of the turnout to be sent to the command station
      */
     protected void sendMessage(boolean closed) {
+        log.info("*** sendMessage ***");
         if (getInverted()) {
             closed = !closed;
         }
         // get control
-        // added trailing ,1 on observation from Jan Boen 24 Aug 2015
-        tm = new TamsMessage("xT " + _number + "," + (closed ? "1" : "0") + ",1");
-        tm.setBinary(false);
-        tm.setReplyType('T');
-        tc.sendTamsMessage(tm, this);
-        tmq.add(tm);
+        TamsMessage m = new TamsMessage("xT " + _number + "," + (closed ? "r" : "g"));
+        tc.sendTamsMessage(m, this);
 
     }
 
     // to listen for status changes from Tams system
-    public void reply(TamsReply tr) {
-       log.info("*** TamsTurnout process TamsReply ***");
-       if(tmq.isEmpty()){
-           tm = myDummy();
-       } else
-       {
-           tm = tmq.poll();
-       }
-       String msg = tr.toString();
-       log.info("reply = " +  msg );
-        if (tr.match("T") >= 0) {
+    public void reply(TamsReply m) {
+        log.info("*** TamsReply ***");
+        log.info(Integer.toString(m.match("T")));
+        log.info(Integer.toString(m.match("ERROR")));
+        String msg = m.toString();
+        if (m.match("T") == 0) {
             String[] lines = msg.split(" ");
             if (lines[1].equals("" + _number)) {
                 updateReceived = true;
@@ -234,15 +215,13 @@ public class TamsTurnout extends AbstractTurnout
 
     protected void pollForStatus() {
         if (_activeFeedbackType == MONITORING) {
+            log.info("*** pollForStatus ***");
             //if we received an update last time we send a request again, but if we did not we shall skip it once and try again next time.
             if (updateReceived) {
                 updateReceived = false;
-                tm = new TamsMessage("xT " + _number + ",,1");
-                tm.setBinary(false);
-                tm.setReplyType('T');
-                tm.setTimeout(TamsMessage.POLLTIMEOUT);
-                tc.sendTamsMessage(tm, this);
-                tmq.add(tm);
+                TamsMessage m = new TamsMessage("xT " + _number + ",,1");
+                m.setTimeout(TamsMessage.POLLTIMEOUT);
+                tc.sendTamsMessage(m, this);
             } else {
                 updateReceived = true;
             }
@@ -251,30 +230,29 @@ public class TamsTurnout extends AbstractTurnout
 
     @Override
     public void setFeedbackMode(int mode) throws IllegalArgumentException {
-        tm = new TamsMessage("xT " + _number + ",,1");
+        log.info("*** setFeedbackMode ***");
+        TamsMessage m = new TamsMessage("xT " + _number + ",,1");
         if (mode == MONITORING) {
-            tc.addPollMessage(tm, this);
+            tc.addPollMessage(m, this);
         } else {
-            tc.removePollMessage(tm, this);
+            tc.removePollMessage(m, this);
         }
         super.setFeedbackMode(mode);
     }
 
     public void message(TamsMessage m) {
+        log.info("*** message ***");
         // messages are ignored
     }
 
     public void dispose() {
-        tm = new TamsMessage("xT " + _number + ",,1");
-        tc.removePollMessage(tm, this);
+        log.info("*** dispose ***");
+        TamsMessage m = new TamsMessage("xT " + _number + ",,1");
+        tc.removePollMessage(m, this);
         super.dispose();
     }
 
     private final static Logger log = LoggerFactory.getLogger(TamsTurnout.class.getName());
-
-    @Override
-    protected void turnoutPushbuttonLockout(boolean locked) {
-        // TODO Auto-generated method stub
-        
-    }
 }
+
+/* @(#)TamsTurnout.java */
