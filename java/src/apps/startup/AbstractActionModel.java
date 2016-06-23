@@ -1,6 +1,5 @@
 package apps.startup;
 
-import java.text.MessageFormat;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import jmri.util.ConnectionNameFromSystemName;
@@ -58,7 +57,7 @@ public abstract class AbstractActionModel implements StartupModel {
     @Override
     public String toString() {
         if (!this.systemPrefix.isEmpty()) {
-            return MessageFormat.format("<html>{0}<br>{1}</html>", this.getName(), ConnectionNameFromSystemName.getConnectionName(this.systemPrefix));
+            return Bundle.getMessage("AbstractActionModel.ToolTip", this.getName(), ConnectionNameFromSystemName.getConnectionName(this.systemPrefix)); // NOI18N
         }
         return this.getName();
     }

@@ -38,7 +38,7 @@ de faire plus que simplement circuler autour du r&#233;seau. Par exemple, des se
 <p> Les Sections  suppl&#233;mentaire sont allou&#233;es manuellement via le panneau de Dispatcher, en utilisant cette
 fen&#234;tre pour s&#233;lectionner le train actif et la Section qui doit &#234;tre affect&#233;e. Une fois attribu&#233;es,
 Les Sections suppl&#233;mentaires seront montr&#233;es dans la table <b>Sections Allou&#233;es</b> dans la fen&#234;tre
-<b> <a href="Dispatcher.shtml"> Dispatcher</a></b> . Le bouton <b>Lib&#233;ration</b>
+<b> <a href="Dispatcher.shtml"> Dispatcher</a></b>. Le bouton <b>Lib&#233;ration</b>
 dans le tableau Sections Allou&#233;es  devrait &#234;tre utilis&#233; pour lib&#233;rer les Sections Suppl&#233;mentaires quand
 elles ne sont plus n&#233;cessaires. L'option <b>Lib&#233;ration Auto</b> ne lib&#232;re pas les Sections Suppl&#233;mentaires
 ; les Sections suppl&#233;mentaires doivent &#234;tre lib&#233;r&#233;es manuellement</p>

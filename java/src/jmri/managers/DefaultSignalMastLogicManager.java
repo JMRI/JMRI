@@ -254,11 +254,6 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Deprecated
-    public char systemLetter() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
     public String getSystemPrefix() {
         throw new UnsupportedOperationException("Not supported yet.");
     }

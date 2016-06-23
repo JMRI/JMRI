@@ -40,23 +40,6 @@ public class LoadAndCheckTest extends LoadAndStoreTestBase {
 
     }
 
-    public void testLoadFileTest277() throws Exception {
-        // load file
-        InstanceManager.configureManagerInstance()
-                .load(new java.io.File("java/test/jmri/configurexml/load/LoadFileTest277.xml"));
-
-        // check existance of a few objects
-        Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("IS1"));
-        Assert.assertNull(InstanceManager.sensorManagerInstance().getSensor("no sensor"));
-
-        Assert.assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT1"));
-        Assert.assertNull(InstanceManager.turnoutManagerInstance().getTurnout("no sensor"));
-
-        Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM1"));
-        Assert.assertNull(InstanceManager.memoryManagerInstance().getMemory("no memory"));
-
-    }
-
     public void testLoadMultipleSystems() throws Exception {
         // load file
         InstanceManager.configureManagerInstance()

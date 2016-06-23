@@ -1,23 +1,19 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
 <!-- Translated by Herv&#233; Blorec 2013-10-09 -->
-<title>JMRI: DecoderPro 3 Status and To Do List</title>
+<title>JMRI: Statut DecoderPro 3 et Liste des t&#226;ches</title>
 
 <!-- Style -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css" MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css" MEDIA="print">
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -25,10 +21,9 @@
 <h1> 
 JMRI: Statut DecoderPro 3 et Liste des t&#226;ches
 </h1>
-
+<p>
 DecoderPro 3 est un travail en cours.
-Cette page enregistre les choses qui fonctionnent, celle qui ne fonctionnent pas, celles qui restent &#224; faire, etc.
-
+Cette page enregistre les choses qui fonctionnent, celle qui ne fonctionnent pas, celles qui restent &#224; faire, etc.</p>
 
 <h2>Devrait fonctionner OK</h2>
 
@@ -44,7 +39,8 @@ La Programmation des boutons n'est pas encore connect&#233;e.
 
 <h2>Bugs &amp; Questions</h2>
 
-Le fichier rosterIndex.xml est &#233;crit automatiquement lorsque la table est modifi&#233;, mais cela ne va pas &#233;crire le contenu redondant dans les fichiers individuels de la locomotive .
+Le fichier rosterIndex.xml est &#233;crit automatiquement lorsque la table est modifi&#233;, mais cela ne va pas &#233;crire
+        le contenu redondant dans les fichiers individuels de la locomotive .
 
 <p>
 La mise &#224; jour de l'adresse DCC dans la section du volet ne modifie pas le tableau correctement.
@@ -54,10 +50,10 @@ La mise &#224; jour de l'adresse DCC dans la section du volet ne modifie pas le 
 Le tableau du haut &#224; besoin de plus de colonnes, mais lesquelles?
 
 <p>
-Devrait choisir la 1&#232;re entr&#233;e au d&#233;marrage.
-
-
+Devrait choisir la 1&#232;re entr&#233;e au d&#233;marrage.</p>
     
 <!--#include virtual="/Footer" -->
+        </div>
+      </div>
 </body>
 </html>
