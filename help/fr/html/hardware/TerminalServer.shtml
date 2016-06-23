@@ -59,7 +59,7 @@ Pour configurer JMRI:
 <LI> Entrez l'adresse IP et le num&#233;ro de port de connexion
 correspondant au port s&#233;rie sur le serveur terminal
 <LI> Cliquez sur enregistrer, puis quittez le programme
-</ UL>
+</uL>
 <LI>
 Configurer le serveur Terminal  pour se connecter &#224; la station de commande:
  9600 bauds, sans parit&#233;, 8 bits.

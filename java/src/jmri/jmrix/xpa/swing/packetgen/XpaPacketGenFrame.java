@@ -8,7 +8,6 @@ package jmri.jmrix.xpa.swing.packetgen;
 import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import jmri.jmrix.xpa.XpaMessage;
-import jmri.jmrix.xpa.XpaTrafficController;
 
 public class XpaPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.xpa.XpaListener {
 

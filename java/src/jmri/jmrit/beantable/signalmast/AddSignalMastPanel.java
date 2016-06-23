@@ -16,11 +16,8 @@ import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -2010,7 +2007,7 @@ public class AddSignalMastPanel extends JPanel {
          * @param panelBits char[] of up to 5 1's and 0's
          */
         MatrixAspectPanel(String aspect, char[] panelBits) {
-            if (panelBits == null || panelBits.equals("")) {
+            if (panelBits == null || panelBits.length == 0) {
                 return;
             }
             this.aspect = aspect;

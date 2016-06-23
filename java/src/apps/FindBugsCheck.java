@@ -21,6 +21,13 @@ package apps;
  * completely clear which is being used at each point.  That makes this the
  * code less readable, so it's not recommended for general use.
  *
+ * Conclusions:
+ * <ul>
+ * <li>The javax.annotation and edu.umd.cs.findbugs.annotations versions flag the same constructs; we can use either.
+ * <li>Parameter passing isn't always being checked.
+ * <li>
+ * </ul>
+ *
  * @author Bob Jacobsen 2016
  */
 public class FindBugsCheck {
@@ -29,7 +36,7 @@ public class FindBugsCheck {
         System.out.println("test "+this.getClass());
     }
 
-/*  commenting out the rest of the file to avoid FindBugs counting the deliberate warnings
+//  commenting out the rest of the file to avoid FindBugs counting the deliberate warnings
 
 
     public FindBugsCheck noAnnotationReturn() {
@@ -167,6 +174,6 @@ public class FindBugsCheck {
         fbCheckForNullParm(fbCheckForNullReturn());
     }
 
-    end of commenting out file */
+    //end of commenting out file */
 
 }

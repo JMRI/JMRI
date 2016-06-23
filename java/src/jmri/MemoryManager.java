@@ -2,6 +2,10 @@ package jmri;
 
 import java.util.List;
 
+import javax.annotation.CheckReturnValue;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+
 /**
  * Locate a Memory object representing some specific information.
  * <P>
@@ -55,7 +59,7 @@ public interface MemoryManager extends Manager {
      *                                  e.g. an illegal name or name that can't
      *                                  be parsed.
      */
-    public Memory provideMemory(String name);
+    public @Nonnull Memory provideMemory(@Nonnull String name);
 
     /**
      * Locate via user name, then system name if needed. If that fails, return
@@ -64,7 +68,7 @@ public interface MemoryManager extends Manager {
      * @param name User name or system name to match
      * @return null if no match found
      */
-    public Memory getMemory(String name);
+    public @CheckForNull Memory getMemory(@Nonnull String name);
 
     /**
      * Locate an instance based on a system name. Returns null if no instance
@@ -72,7 +76,7 @@ public interface MemoryManager extends Manager {
      *
      * @return requested Memory object or null if none exists
      */
-    public Memory getBySystemName(String systemName);
+    public @CheckForNull Memory getBySystemName(@Nonnull String systemName);
 
     /**
      * Locate an instance based on a user name. Returns null if no instance
@@ -80,7 +84,7 @@ public interface MemoryManager extends Manager {
      *
      * @return requested Memory object or null if none exists
      */
-    public Memory getByUserName(String userName);
+    public @CheckForNull Memory getByUserName(@Nonnull String userName);
 
     /**
      * Return an instance with the specified system and user names. Note that
@@ -109,7 +113,7 @@ public interface MemoryManager extends Manager {
      *                                  an illegal name or name that can't be
      *                                  parsed.
      */
-    public Memory newMemory(String systemName, String userName);
+    public @Nonnull Memory newMemory(@Nonnull String systemName, String userName);
 
     /**
      * For use with User GUI, to allow the auto generation of systemNames, where
@@ -130,11 +134,11 @@ public interface MemoryManager extends Manager {
      *                                  an illegal name or name that can't be
      *                                  parsed.
      */
-    public Memory newMemory(String userName);
+    public @Nonnull Memory newMemory(@Nonnull String userName);
 
     /**
      * Get a list of all Memory objects' system names.
      */
-    public List<String> getSystemNameList();
+    public @Nonnull List<String> getSystemNameList();
 
 }
