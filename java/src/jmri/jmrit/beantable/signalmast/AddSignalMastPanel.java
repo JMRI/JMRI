@@ -1695,14 +1695,12 @@ public class AddSignalMastPanel extends JPanel {
         output5panel.setBorder(border5);
         turnoutpanel.add(output5panel);
 
-        if (output2panel != null) {
-            output2panel.setVisible(bitNum > 1);}
-        if (output3panel != null) {
-            output3panel.setVisible(bitNum > 2);}
-        if (output4panel != null) {
-            output4panel.setVisible(bitNum > 3);}
-        if (output5panel != null) {
-            output5panel.setVisible(bitNum > 4);}
+        // output1panel always on
+        output2panel.setVisible(bitNum > 1);
+        output3panel.setVisible(bitNum > 2);
+        output4panel.setVisible(bitNum > 3);
+        output5panel.setVisible(bitNum > 4);
+
         matrixMastPanel.add(turnoutpanel);
 
         UnLitCheck2.setVisible(bitNum > 1);
@@ -1983,10 +1981,10 @@ public class AddSignalMastPanel extends JPanel {
         JCheckBox bitCheck4 = new JCheckBox();
         JCheckBox bitCheck5 = new JCheckBox();
         JTextField aspectBitsField = new JTextField(5); // for debug
-        char[] aspectBits;
         String aspect = "";
         String emptyChars = "00000";
         char[] emptyBits = emptyChars.toCharArray();
+        char[] aspectBits = emptyBits;
 
         /**
          * Build new aspect matrix panel
@@ -1994,9 +1992,6 @@ public class AddSignalMastPanel extends JPanel {
          * @param aspect String like "Clear"
          */
         MatrixAspectPanel(String aspect) {
-            if (aspectBits == null) {
-                aspectBits = emptyBits;
-            }
             this.aspect = aspect;
         }
 
