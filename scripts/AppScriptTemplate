@@ -385,7 +385,11 @@ fi
 
 
 # build classpath dynamically
-CP="${pre_classpath}:.:classes:java/classes"
+CP=""
+if [ -n "${pre_classpath}" ] ; then
+    CP="${pre_classpath}:"
+fi
+CP="${CP}.:classes:java/classes"
 # list of jar files in home, not counting jmri.jar
 LOCALJARFILES=$( ls ${LIBDIR}/*.jar | grep -v jmri.jar | tr "\n" ":" )
 if [ ${LOCALJARFILES} ] ; then
@@ -399,7 +403,9 @@ CP="${CP}:$( ls -m ${LIBDIR}/*.jar | tr -d ' \n' | tr ',' ':' )"
 if [ -d /System/Library/Java ] ; then
     CP="${CP}":/System/Library/Java
 fi
-CP="${CP}:${post_classpath}"
+if [ -n "${post_classpath}" ] ; then
+    CP="${CP}:${post_classpath}"
+fi
 
 [ -n "${DEBUG}" ] && echo "CLASSPATH: '${CP}'"
 
