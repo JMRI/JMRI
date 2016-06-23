@@ -179,8 +179,9 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
             watchSensor1 = null;
             return;
         }
-        watchSensor1 = nbhm.getNamedBeanHandle(name, InstanceManager.sensorManagerInstance().provideSensor(name));
-        if (watchSensor1.getBean() == null) {
+        try {
+            watchSensor1 = nbhm.getNamedBeanHandle(name, InstanceManager.sensorManagerInstance().provideSensor(name));
+        } catch (IllegalArgumentException ex) {
             log.warn(rb.getString("Sensor1_") + name + rb.getString("_was_not_found!"));
         }
     }
@@ -190,8 +191,9 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
             watchSensor2 = null;
             return;
         }
-        watchSensor2 = nbhm.getNamedBeanHandle(name, InstanceManager.sensorManagerInstance().provideSensor(name));
-        if (watchSensor2.getBean() == null) {
+        try {
+            watchSensor2 = nbhm.getNamedBeanHandle(name, InstanceManager.sensorManagerInstance().provideSensor(name));
+        } catch (IllegalArgumentException ex) {
             log.warn(rb.getString("Sensor2_") + name + rb.getString("_was_not_found!"));
         }
     }
@@ -201,8 +203,9 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
             watchSensor3 = null;
             return;
         }
-        watchSensor3 = nbhm.getNamedBeanHandle(name, InstanceManager.sensorManagerInstance().provideSensor(name));
-        if (watchSensor3.getBean() == null) {
+        try {
+            watchSensor3 = nbhm.getNamedBeanHandle(name, InstanceManager.sensorManagerInstance().provideSensor(name));
+        } catch (IllegalArgumentException ex) {
             log.warn(rb.getString("Sensor3_") + name + rb.getString("_was_not_found!"));
         }
     }
@@ -212,8 +215,9 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
             watchSensor4 = null;
             return;
         }
-        watchSensor4 = nbhm.getNamedBeanHandle(name, InstanceManager.sensorManagerInstance().provideSensor(name));
-        if (watchSensor4.getBean() == null) {
+        try {
+            watchSensor4 = nbhm.getNamedBeanHandle(name, InstanceManager.sensorManagerInstance().provideSensor(name));
+        } catch (IllegalArgumentException ex) {
             log.warn(rb.getString("Sensor4_") + name + rb.getString("_was_not_found!"));
         }
     }
@@ -223,8 +227,9 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
             watchSensor5 = null;
             return;
         }
-        watchSensor5 = nbhm.getNamedBeanHandle(name, InstanceManager.sensorManagerInstance().provideSensor(name));
-        if (watchSensor5.getBean() == null) {
+        try {
+            watchSensor5 = nbhm.getNamedBeanHandle(name, InstanceManager.sensorManagerInstance().provideSensor(name));
+        } catch (IllegalArgumentException ex) {
             log.warn(rb.getString("Sensor5_") + name + rb.getString("_was_not_found!"));
         }
     }
@@ -274,8 +279,9 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
             watchTurnout = null;
             return;
         }
-        watchTurnout = nbhm.getNamedBeanHandle(name, InstanceManager.turnoutManagerInstance().provideTurnout(name));
-        if (watchTurnout.getBean() == null) {
+        try {
+            watchTurnout = nbhm.getNamedBeanHandle(name, InstanceManager.turnoutManagerInstance().provideTurnout(name));
+        } catch (IllegalArgumentException ex) {
             log.warn(rb.getString("Turnout_") + name + rb.getString("_was_not_found!"));
         }
     }
@@ -410,8 +416,9 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
             watchedSensor1 = null;
             return;
         }
-        watchedSensor1 = nbhm.getNamedBeanHandle(name, InstanceManager.sensorManagerInstance().provideSensor(name));
-        if (watchedSensor1.getBean() == null) {
+        try {
+            watchedSensor1 = nbhm.getNamedBeanHandle(name, InstanceManager.sensorManagerInstance().provideSensor(name));
+        } catch (IllegalArgumentException ex) {
             log.warn(rb.getString("Sensor1_") + name + rb.getString("_was_not_found!"));
         }
 
@@ -434,8 +441,9 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
             watchedSensor1Alt = null;
             return;
         }
-        watchedSensor1Alt = nbhm.getNamedBeanHandle(name, InstanceManager.sensorManagerInstance().provideSensor(name));
-        if (watchedSensor1Alt.getBean() == null) {
+        try {
+            watchedSensor1Alt = nbhm.getNamedBeanHandle(name, InstanceManager.sensorManagerInstance().provideSensor(name));
+        } catch (IllegalArgumentException ex) {
             log.warn(rb.getString("Sensor1Alt_") + name + rb.getString("_was_not_found!"));
         }
 
@@ -458,8 +466,9 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
             watchedSensor2 = null;
             return;
         }
-        watchedSensor2 = nbhm.getNamedBeanHandle(name, InstanceManager.sensorManagerInstance().provideSensor(name));
-        if (watchedSensor2.getBean() == null) {
+        try {
+            watchedSensor2 = nbhm.getNamedBeanHandle(name, InstanceManager.sensorManagerInstance().provideSensor(name));
+        } catch (IllegalArgumentException ex) {
             log.warn(rb.getString("Sensor2_") + name + rb.getString("_was_not_found!"));
         }
 
@@ -482,8 +491,9 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
             watchedSensor2Alt = null;
             return;
         }
-        watchedSensor2Alt = nbhm.getNamedBeanHandle(name, InstanceManager.sensorManagerInstance().provideSensor(name));
-        if (watchedSensor2Alt.getBean() == null) {
+        try {
+            watchedSensor2Alt = nbhm.getNamedBeanHandle(name, InstanceManager.sensorManagerInstance().provideSensor(name));
+        } catch (IllegalArgumentException ex) {
             log.warn(rb.getString("Sensor2Alt_") + name + rb.getString("_was_not_found!"));
         }
 

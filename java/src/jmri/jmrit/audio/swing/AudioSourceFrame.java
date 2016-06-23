@@ -354,8 +354,9 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         AudioSource s;
         try {
             AudioManager am = InstanceManager.audioManagerInstance();
-            s = (AudioSource) am.provideAudio(sName);
-            if (s == null) {
+            try {
+                s = (AudioSource) am.provideAudio(sName);
+            } catch (IllegalArgumentException ex) {
                 throw new AudioException("Problem creating source");
             }
             if (newSource && am.getByUserName(user) != null) {
