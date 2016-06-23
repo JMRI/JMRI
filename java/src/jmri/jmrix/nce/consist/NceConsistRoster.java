@@ -55,7 +55,9 @@ public class NceConsistRoster extends XmlFile {
      * Locate the single instance of Roster, loading it if need be
      *
      * @return The valid Roster object
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Deprecated
     public static synchronized NceConsistRoster instance() {
         if (_instance == null) {
             if (log.isDebugEnabled()) {
