@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2010
  * @see apps.GuiLafConfigPane
- * @see jmri.GuiLafConfigPane
  * @since 2.9.5
  */
 public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
