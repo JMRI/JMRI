@@ -1,4 +1,3 @@
-// AbstractLightManagerConfigXML.java
 package jmri.managers.configurexml;
 
 import java.util.ArrayList;
@@ -23,7 +22,6 @@ import org.slf4j.LoggerFactory;
  * Based on AbstractSensorManagerConfigXML.java
  *
  * @author Dave Duchamp Copyright (c) 2004, 2008, 2010
- * @version $Revision$
  */
 public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -54,6 +52,7 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
                 String sname = iter.next();
                 if (sname == null) {
                     log.error("System name null during store");
+                    break;
                 }
                 log.debug("system name is " + sname);
                 Light lgt = tm.getBySystemName(sname);
