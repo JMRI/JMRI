@@ -12,8 +12,8 @@ import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.DecimalFormat;
-import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -37,10 +37,10 @@ import jmri.SignalSystem;
 import jmri.SignalSystemManager;
 import jmri.Turnout;
 import jmri.implementation.DccSignalMast;
+import jmri.implementation.MatrixSignalMast;
 import jmri.implementation.SignalHeadSignalMast;
 import jmri.implementation.TurnoutSignalMast;
 import jmri.implementation.VirtualSignalMast;
-import jmri.implementation.MatrixSignalMast;
 import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.FileUtil;
 import jmri.util.StringUtil;
@@ -2084,7 +2084,8 @@ public class AddSignalMastPanel extends JPanel {
          * Sends the on/off positions for an Aspect to mast
          * @return A char[] of '1' and '0' elements with a length between 1 and 5
          * corresponding with the number of outputs for this mast
-         * @see MatrixSignalMast#AddSignalMastPanel#okPressed(ActionEvent)
+         * @see jmri.implementation.MatrixSignalMast
+         * @see #okPressed(java.awt.event.ActionEvent) 
          */
         char[] trimAspectBits() {
             try {

@@ -16,7 +16,6 @@ package jmri.jmrit.vsdecoder;
  * <P>
  *
  * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision$
  */
 import java.util.ArrayList;
 import jmri.AudioException;
@@ -113,7 +112,7 @@ class SoundBite extends VSDSound {
                     sound_src.setAssignedBuffer(sound_buf);
                     setLength();
                 }
-            } catch (AudioException ex) {
+            } catch (AudioException | IllegalArgumentException ex) {
                 log.warn("Problem creating SoundBite: " + ex);
             }
         }

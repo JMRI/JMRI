@@ -75,12 +75,13 @@ public class BlockManager extends AbstractManager
     }
 
     /**
-     * Method to create a new Block if it does not exist 
+     * Method to create a new Block only if it does not exist 
      * @return null if a Block
      * with the same systemName or userName already exists, or if there is
      * trouble creating a new Block.
      */
-    public @CheckForNull Block createNewBlock(@Nonnull String systemName, @CheckForNull String userName) {
+    public @CheckForNull Block createNewBlock(@Nonnull String systemName, @CheckForNull String userName) 
+                throws IllegalArgumentException {
         // Check that Block does not already exist
         Block r;
         if (userName != null && !userName.equals("")) {
@@ -119,7 +120,14 @@ public class BlockManager extends AbstractManager
         return r;
     }
 
-    public @Nonnull Block createNewBlock(@Nonnull String userName) {
+    /**
+     * Method to create a new Block using an automatically incrementing
+     * system name.
+     * @return null if a Block
+     * with the same systemName or userName already exists, or if there is
+     * trouble creating a new Block.
+     */
+    public @CheckForNull Block createNewBlock(@Nonnull String userName) {
         int nextAutoBlockRef = lastAutoBlockRef + 1;
         StringBuilder b = new StringBuilder("IB:AUTO:");
         String nextNumber = paddedNumber.format(nextAutoBlockRef);
@@ -127,16 +135,24 @@ public class BlockManager extends AbstractManager
         return createNewBlock(b.toString(), userName);
     }
 
-    public @Nonnull Block provideBlock(@Nonnull String name) {
+    /**
+     * If the Block exists, return it, otherwise create a new one and return it.
+     * If the argument starts with the system prefix and type letter, usually "IB",
+     * then the argument is considered a system name, otherwise it's considered
+     * a user name and a system name is automatically created.
+     * @returns never null
+     */
+    public @Nonnull Block provideBlock(@Nonnull String name)  {
         Block b = getBlock(name);
         if (b != null) {
             return b;
         }
         if (name.startsWith(getSystemPrefix() + typeLetter())) {
-            return createNewBlock(name, null);
+            b = createNewBlock(name, null);
         } else {
-            return createNewBlock(makeSystemName(name), null);
+            b = createNewBlock(makeSystemName(name), null);
         }
+        return b;
     }
 
     DecimalFormat paddedNumber = new DecimalFormat("0000");

@@ -32,9 +32,9 @@ import org.slf4j.LoggerFactory;
  */
 public class MatrixSignalMast extends AbstractSignalMast {
     /**
-     *  Number of columns in logix matrix, default to 5, set in Matrix Mast panel & on loading xml
+     *  Number of columns in logix matrix, default to 5, set in Matrix Mast panel &amp; on loading xml
      *  Used to set size of char[] bitString
-    */
+     */
     protected int mastBitNum = 5;
 
     static String errorChars = "nnnnn";
@@ -236,7 +236,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
 
     /**
      *  Fetch output from outputsToBeans hashmap and provide to xml
-     *  @see configurexml.MatrixSignalMastXml#store()
+     *  @see jmri.implementation.configurexml.MatrixSignalMastXml#store(java.lang.Object)
      *  @param colnum int index (1 up to 5) for the column of the desired output
      *  @return String with the desplay name of the configured turnout output
      */
@@ -251,7 +251,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
 
     /**
      *  Receive aspect name from xml and store matching setting in outputsToBeans hashmap
-     *  @see configurexml.MatrixSignalMastXml#load()
+     *  @see jmri.implementation.configurexml.MatrixSignalMastXml#load(org.jdom2.Element, org.jdom2.Element)
      *  @param aspect String describing (valid) signal mast aspect, like "Clear"
      *  @param bitString String of 1/0 digits representing on/off outputs per aspect, like "00010"
      */
