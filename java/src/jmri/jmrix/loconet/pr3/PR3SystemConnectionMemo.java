@@ -1,4 +1,3 @@
-// PR3SystemConnectionMemo.java
 package jmri.jmrix.loconet.pr3;
 
 import jmri.InstanceManager;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * Lightweight class to denote that a PR3 is active
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version $Revision$
  */
 public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
 

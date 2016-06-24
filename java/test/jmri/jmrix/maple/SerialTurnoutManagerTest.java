@@ -15,7 +15,15 @@ import org.slf4j.LoggerFactory;
  */
 public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
 
-    public void setUp() {
+    protected void tearDown() throws Exception {
+        apps.tests.Log4JFixture.tearDown();
+        super.tearDown();
+    }
+
+    @Override
+    public void setUp() throws Exception {
+        super.setUp();
+        apps.tests.Log4JFixture.setUp();
         // replace the SerialTrafficController
         SerialTrafficController t = new SerialTrafficController() {
             SerialTrafficController test() {

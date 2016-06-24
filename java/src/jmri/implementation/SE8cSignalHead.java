@@ -129,7 +129,7 @@ public class SE8cSignalHead extends DefaultSignalHead {
      * Create a handle from a raw number. Static, so can be referenced before
      * ctor complete.
      */
-    static NamedBeanHandle<Turnout> makeHandle(int i) {
+    static NamedBeanHandle<Turnout> makeHandle(int i) throws IllegalArgumentException {
         String number = "" + i;
         return jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(
                 number,

@@ -141,11 +141,11 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
             return false;
         }
         if (InstanceManager.sensorManagerInstance() != null) {
-            Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
-            if (sensor != null) {
+            try {
+                Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
                 setNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));
                 return true;
-            } else {
+            } catch (IllegalArgumentException ex) {
                 setNamedSensor(null);
                 log.error("Sensor '" + pName + "' not available");
             }

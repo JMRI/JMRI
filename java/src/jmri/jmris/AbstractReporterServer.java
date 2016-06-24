@@ -1,4 +1,3 @@
-//AbstractReporterServer.java
 package jmri.jmris;
 
 import java.beans.PropertyChangeEvent;
@@ -17,7 +16,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2010
  * @author Randall Wood Copyright (C) 2013
- * @version $Revision$
  */
 abstract public class AbstractReporterServer {
 
@@ -51,7 +49,7 @@ abstract public class AbstractReporterServer {
         }
     }
 
-    public Reporter initReporter(String reporterName) {
+    public Reporter initReporter(String reporterName) throws IllegalArgumentException {
         Reporter reporter = InstanceManager.reporterManagerInstance().provideReporter(reporterName);
         this.addReporterToList(reporterName);
         return reporter;

@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * Instead, this interacts directly with Swing and the default Locale.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2010
- * @see jmri.GuiLafConfigPane
+ * @see apps.GuiLafConfigPane
  * @since 2.9.5
  */
 public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
