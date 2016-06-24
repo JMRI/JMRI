@@ -389,15 +389,8 @@ CP=""
 if [ -n "${pre_classpath}" ] ; then
     CP="${pre_classpath}:"
 fi
-CP="${CP}.:classes:java/classes"
-# list of jar files in home, not counting jmri.jar
-LOCALJARFILES=$( ls ${LIBDIR}/*.jar | grep -v jmri.jar | tr "\n" ":" )
-if [ ${LOCALJARFILES} ] ; then
-    CP="${CP}:${LOCALJARFILES}"
-fi
-# add jmri.jar
-CP="${CP}:jmri.jar"
-# and contents of lib
+CP="${CP}.:classes:java/classes:jmri.jar"
+# add contents of lib
 CP="${CP}:$( ls -m ${LIBDIR}/*.jar | tr -d ' \n' | tr ',' ':' )"
 
 if [ -d /System/Library/Java ] ; then
