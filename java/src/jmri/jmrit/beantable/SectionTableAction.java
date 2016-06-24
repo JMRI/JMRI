@@ -760,32 +760,32 @@ public class SectionTableAction extends AbstractTableAction {
         if ((txt == null) || (txt.equals(""))) {
             fSensor = null;
         } else {
-            fSensor = jmri.InstanceManager.sensorManagerInstance().provideSensor(txt);
-            if (fSensor == null) {
+            try {
+                fSensor = jmri.InstanceManager.sensorManagerInstance().provideSensor(txt);
+                if (!txt.equals(fSensor.getUserName())) {
+                    forwardSensorField.setText(fSensor.getSystemName());
+                }
+            } catch (IllegalArgumentException ex) {
                 javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
                         .getString("Message7"), Bundle.getMessage("ErrorTitle"),
                         javax.swing.JOptionPane.ERROR_MESSAGE);
                 return false;
-            } else {
-                if (!txt.equals(fSensor.getUserName())) {
-                    forwardSensorField.setText(fSensor.getSystemName());
-                }
             }
         }
         txt = reverseSensorField.getText();
         if ((txt == null) || (txt.equals(""))) {
             rSensor = null;
         } else {
-            rSensor = jmri.InstanceManager.sensorManagerInstance().provideSensor(txt);
-            if (rSensor == null) {
+            try { 
+                rSensor = jmri.InstanceManager.sensorManagerInstance().provideSensor(txt);
+                if (!txt.equals(rSensor.getUserName())) {
+                    reverseSensorField.setText(rSensor.getSystemName());
+                }
+            } catch (IllegalArgumentException ex) {
                 javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
                         .getString("Message8"), Bundle.getMessage("ErrorTitle"),
                         javax.swing.JOptionPane.ERROR_MESSAGE);
                 return false;
-            } else {
-                if (!txt.equals(rSensor.getUserName())) {
-                    reverseSensorField.setText(rSensor.getSystemName());
-                }
             }
         }
         if ((fSensor != null) && (fSensor == rSensor)) {
@@ -799,32 +799,32 @@ public class SectionTableAction extends AbstractTableAction {
         if ((txt == null) || (txt.equals(""))) {
             fStopSensor = null;
         } else {
-            fStopSensor = jmri.InstanceManager.sensorManagerInstance().provideSensor(txt);
-            if (fStopSensor == null) {
+            try {
+                fStopSensor = jmri.InstanceManager.sensorManagerInstance().provideSensor(txt);
+                if (!txt.equals(fStopSensor.getUserName())) {
+                    forwardStopSensorField.setText(fStopSensor.getSystemName());
+                }
+            } catch (IllegalArgumentException ex) {
                 javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
                         .getString("Message7"), Bundle.getMessage("ErrorTitle"),
                         javax.swing.JOptionPane.ERROR_MESSAGE);
                 return false;
-            } else {
-                if (!txt.equals(fStopSensor.getUserName())) {
-                    forwardStopSensorField.setText(fStopSensor.getSystemName());
-                }
             }
         }
         txt = reverseStopSensorField.getText();
         if ((txt == null) || (txt.equals(""))) {
             rStopSensor = null;
         } else {
-            rStopSensor = jmri.InstanceManager.sensorManagerInstance().provideSensor(txt);
-            if (rStopSensor == null) {
+            try {
+                rStopSensor = jmri.InstanceManager.sensorManagerInstance().provideSensor(txt);
+                if (!txt.equals(rStopSensor.getUserName())) {
+                    reverseStopSensorField.setText(rStopSensor.getSystemName());
+                }
+            } catch (IllegalArgumentException ex) {
                 javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
                         .getString("Message8"), Bundle.getMessage("ErrorTitle"),
                         javax.swing.JOptionPane.ERROR_MESSAGE);
                 return false;
-            } else {
-                if (!txt.equals(rStopSensor.getUserName())) {
-                    reverseStopSensorField.setText(rStopSensor.getSystemName());
-                }
             }
         }
         return true;

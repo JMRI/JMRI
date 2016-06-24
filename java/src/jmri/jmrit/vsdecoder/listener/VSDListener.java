@@ -30,8 +30,8 @@ public class VSDListener {
         try {
             _listener = (AudioListener) am.provideAudio(ListenerSysNamePrefix + _sysname);
             log.debug("Listener Created: " + _listener);
-        } catch (AudioException ae) {
-            log.debug("AudioException creating Listener: " + ae);
+        } catch (AudioException | IllegalArgumentException ae) {
+            log.warn("Exception creating Listener: " + ae);
             // Do nothing?
         }
     }

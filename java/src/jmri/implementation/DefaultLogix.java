@@ -476,18 +476,19 @@ public class DefaultLogix extends AbstractNamedBean
                                 variable.getDataString());
                         if (positionOfListener == -1) {
                             String name = variable.getDataString();
-                            Memory my = InstanceManager.memoryManagerInstance().provideMemory(name);
-                            if (my == null) {
+                            try {
+                                Memory my = InstanceManager.memoryManagerInstance().provideMemory(name);
+                                NamedBeanHandle<?> nb = jmri.InstanceManager.getDefault(
+                                        jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, my);
+
+                                listener = new JmriTwoStatePropertyListener("value", LISTENER_TYPE_MEMORY,
+                                        nb, varType,
+                                        conditional);
+                                _listeners.add(listener);
+                            } catch (IllegalArgumentException ex) {
                                 log.error("invalid memory name= \"" + name + "\" in state variable");
                                 break;
-                            }
-                            NamedBeanHandle<?> nb = jmri.InstanceManager.getDefault(
-                                    jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, my);
-
-                            listener = new JmriTwoStatePropertyListener("value", LISTENER_TYPE_MEMORY,
-                                    nb, varType,
-                                    conditional);
-                            _listeners.add(listener);
+                            }                        
                         } else {
                             listener = _listeners.get(positionOfListener);
                             listener.addConditional(conditional);

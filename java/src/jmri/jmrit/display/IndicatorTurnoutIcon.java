@@ -116,10 +116,10 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
             return;
         }
         if (InstanceManager.sensorManagerInstance() != null) {
-            Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
-            if (sensor != null) {
+            try {
+                Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
                 setOccSensorHandle(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));
-            } else {
+            } catch (IllegalArgumentException ex) {
                 log.error("Occupancy Sensor '" + pName + "' not available, icon won't see changes");
             }
         } else {
