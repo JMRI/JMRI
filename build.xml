@@ -1415,7 +1415,7 @@
             <packageset dir="${tmptarget}" defaultexcludes="yes">
                 <include name="jmri/**"/>
             </packageset>
-            <arg value="-Xdoclint:all,-missing,-accessibility"/> <!-- dropping some 1.8 warnings -->
+            <arg value="-Xdoclint:all,-missing"/> <!-- dropping some 1.8 warnings -->
             <arg value="-Xmaxwarns"/>
             <arg value="500"/><!-- change from default 100 warnings -->
             <arg value="-Xmaxerrs"/>
@@ -1550,6 +1550,7 @@
 
     <taskdef name="plantuml" classname="net.sourceforge.plantuml.ant.PlantUmlTask" classpath="${libdir}/plantuml.jar" />
 
+    <!-- Requires Graphviz from http://www.graphviz.org -->
     <target name="plantuml">
         <plantuml output="${doctarget}" >
         <fileset dir="${source}">
