@@ -1,4 +1,3 @@
-// AcelaTurnoutManager.java
 package jmri.jmrix.acela;
 
 import jmri.Turnout;
@@ -14,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * Based in part on AcelaTurnoutManager.java
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version	$Revision$
  *
  * @author	Bob Coleman Copyright (C) 2008 Based on CMRI serial example, modified
  * to establish Acela support.
@@ -121,16 +119,20 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
 
     /**
      * Allow access to AcelaLightManager
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Deprecated
     static public AcelaTurnoutManager instance() {
         if (_instance == null) {
             _instance = new AcelaTurnoutManager();
         }
         return _instance;
     }
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static AcelaTurnoutManager _instance = null;
 
     private final static Logger log = LoggerFactory.getLogger(AcelaTurnoutManager.class.getName());
 }
-
-/* @(#)AcelaTurnoutManager.java */

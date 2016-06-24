@@ -43,7 +43,6 @@ import org.slf4j.LoggerFactory;
  * TrackSegments may be hidden when the panel is not in EditMode.
  *
  * @author Dave Duchamp Copyright (c) 2004-2009
- * @version $Revision$
  */
 public class TrackSegment {
 
@@ -237,8 +236,6 @@ public class TrackSegment {
     public void trackRedrawn() {
         changed = false;
     }
-    //public int getRadius() {return radius;}
-    //public void setRadius(int x) {radius = x;} 
 
     public LayoutBlock getLayoutBlock() {
         if ((block == null) && (blockName != null) && (blockName != "")) {
@@ -682,8 +679,9 @@ public class TrackSegment {
             }
             // get new block, or null if block has been removed
             blockName = blockNameField.getText().trim();
-            block = layoutEditor.provideLayoutBlock(blockName);
-            if (block == null) {
+            try {
+                block = layoutEditor.provideLayoutBlock(blockName);
+            } catch (IllegalArgumentException ex) {
                 blockName = "";
             }
             needsRedraw = true;
@@ -743,8 +741,9 @@ public class TrackSegment {
             }
             // get new block, or null if block has been removed
             blockName = blockNameField.getText().trim();
-            block = layoutEditor.provideLayoutBlock(blockName);
-            if (block == null) {
+            try {
+                block = layoutEditor.provideLayoutBlock(blockName);
+            } catch (IllegalArgumentException ex) {
                 blockName = "";
             }
             needsRedraw = true;

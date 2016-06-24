@@ -46,8 +46,10 @@ public abstract class AbstractLightManager extends AbstractManager
         }
         if (name.startsWith(getSystemPrefix() + typeLetter())) {
             return newLight(name, null);
-        } else {
+        } else if (name.length() > 0) {
             return newLight(makeSystemName(name), null);
+        } else {
+            throw new IllegalArgumentException("Name must have non-full length");
         }
     }
 

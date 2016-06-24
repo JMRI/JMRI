@@ -1,4 +1,3 @@
-// EasyDccTrafficController.java
 package jmri.jmrix.easydcc;
 
 import jmri.jmrix.AbstractMRListener;
@@ -20,7 +19,6 @@ import org.slf4j.LoggerFactory;
  * message.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  */
 public class EasyDccTrafficController extends AbstractMRTrafficController
         implements EasyDccInterface {
@@ -98,6 +96,8 @@ public class EasyDccTrafficController extends AbstractMRTrafficController
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "temporary until mult-system; only set at startup")
+    @Override
+    @Deprecated
     protected void setInstance() {
         self = this;
     }
@@ -126,6 +126,3 @@ public class EasyDccTrafficController extends AbstractMRTrafficController
 
     private final static Logger log = LoggerFactory.getLogger(EasyDccTrafficController.class.getName());
 }
-
-
-/* @(#)EasyDccTrafficController.java */
