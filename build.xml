@@ -1416,11 +1416,9 @@
             <packageset dir="${tmptarget}" defaultexcludes="yes">
                 <include name="jmri/**"/>
             </packageset>
-            <arg value="-Xdoclint:all,-missing"/> <!-- dropping some 1.8 warnings -->
+            <arg value="-Xdoclint:all"/>
             <arg value="-Xmaxwarns"/>
-            <arg value="500"/><!-- change from default 100 warnings -->
-            <arg value="-Xmaxerrs"/>
-            <arg value="500"/><!-- change from default 100 errors -->
+            <arg value="6000"/><!-- change from default 100 warnings -->
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
             <tag name="navassoc" enabled="false"/>
 
