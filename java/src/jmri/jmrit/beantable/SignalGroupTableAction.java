@@ -724,12 +724,14 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             javax.swing.JOptionPane.showMessageDialog(null, "Please enter a System Name and User Name.", "Error", javax.swing.JOptionPane.WARNING_MESSAGE);
             return null;
         }
-        SignalGroup g = jmri.InstanceManager.signalGroupManagerInstance().provideSignalGroup(sName, uName);
-        if (g == null) {
+        try {
+            SignalGroup g = jmri.InstanceManager.signalGroupManagerInstance().provideSignalGroup(sName, uName);
+            return g;
+        } catch (IllegalArgumentException ex) {
             // should never get here
             log.error("Unknown failure to create SignalGroup with System Name: " + sName);
-        }
-        return g;
+            throw ex;
+        }   
     }
 
     int setSignalInformation(SignalGroup g) {

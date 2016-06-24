@@ -1,4 +1,3 @@
-// AbstractCanTrafficController.java
 package jmri.jmrix.can;
 
 import java.util.Arrays;
@@ -18,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * layout.
  *
  * @author	Andrew Crosland Copyright (C) 2008
- * @version	$Revision$
  */
 abstract public class AbstractCanTrafficController
         extends AbstractMRTrafficController
@@ -29,6 +27,8 @@ abstract public class AbstractCanTrafficController
         allowUnexpectedReply = true;
     }
 
+    @Override
+    @Deprecated
     protected void setInstance() {
 
     }
@@ -303,5 +303,3 @@ abstract public class AbstractCanTrafficController
     private final static Logger log = LoggerFactory.getLogger(AbstractCanTrafficController.class.getName());
 
 }
-
-/* @(#)AbstractCanTrafficController.java */

@@ -1,4 +1,3 @@
-//AbstractMemoryServer.java
 package jmri.jmris;
 
 import java.beans.PropertyChangeEvent;
@@ -17,7 +16,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author mstevetodd Copyright (C) 2012 (copied from AbstractSensorServer)
  * @author Randall Wood Copyright (C) 2013, 2014
- * @version $Revision: $
  */
 abstract public class AbstractMemoryServer {
 
@@ -51,7 +49,7 @@ abstract public class AbstractMemoryServer {
         }
     }
 
-    public Memory initMemory(String memoryName) {
+    public Memory initMemory(String memoryName) throws IllegalArgumentException {
         Memory memory = InstanceManager.memoryManagerInstance().provideMemory(memoryName);
         this.addMemoryToList(memoryName);
         return memory;

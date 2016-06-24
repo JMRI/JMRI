@@ -123,9 +123,11 @@ public class RouteController extends AbstractController implements PropertyChang
             list.append("}|{");
             String turnoutsAlignedSensor = r.getTurnoutsAlignedSensor();
             if (!turnoutsAlignedSensor.equals("")) {  //only set if found
-                Sensor routeAligned = InstanceManager.sensorManagerInstance().provideSensor(turnoutsAlignedSensor);
-                if (routeAligned != null) {
+                try {
+                    Sensor routeAligned = InstanceManager.sensorManagerInstance().provideSensor(turnoutsAlignedSensor);
                     list.append(routeAligned.getKnownState());
+                } catch (IllegalArgumentException ex) {
+                    log.warn("Failed to provide turnoutsAlignedSensor \"{}\" in sendList", turnoutsAlignedSensor);
                 }
             }
 

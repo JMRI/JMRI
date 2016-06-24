@@ -33,10 +33,6 @@ import org.slf4j.LoggerFactory;
  */
 public class SensorIcon extends PositionableIcon implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6172183103608993048L;
     static final public int UNKOWN_FONT_COLOR = 0x03;
     static final public int UNKOWN_BACKGROUND_COLOR = 0x04;
     static final public int ACTIVE_FONT_COLOR = 0x05;
@@ -114,10 +110,10 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
      */
     public void setSensor(String pName) {
         if (InstanceManager.sensorManagerInstance() != null) {
-            Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
-            if (sensor != null) {
+            try {
+                Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
                 setSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));
-            } else {
+            } catch (IllegalArgumentException ex) {
                 log.error("Sensor '" + pName + "' not available, icon won't see changes");
             }
         } else {

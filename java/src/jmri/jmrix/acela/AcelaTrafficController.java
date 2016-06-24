@@ -1,4 +1,3 @@
-// AcelaTrafficController.java
 package jmri.jmrix.acela;
 
 import java.io.DataInputStream;
@@ -394,7 +393,9 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
      *
      * @return The registered AcelaTrafficController instance for general use,
      *         if need be creating one.
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Deprecated
     static public AcelaTrafficController instance() {
         // Bob C: This seems wrong
         if (self == null) {
@@ -409,10 +410,16 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
         return self;
     }
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static volatile protected AcelaTrafficController self = null;
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "temporary until mult-system; only set at startup")
+    @Override
+    @Deprecated
     protected void setInstance() {
         self = this;
     }

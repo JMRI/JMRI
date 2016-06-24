@@ -1,4 +1,3 @@
-// UsbNode.java
 package jmri.jmrix.jinput;
 
 import java.util.HashMap;
@@ -18,14 +17,9 @@ import org.slf4j.LoggerFactory;
  * Can be connected to a JMRI Sensor or Memory.
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version	$Revision$
  */
 public class UsbNode extends DefaultMutableTreeNode {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8201606725792217137L;
     String name;
     Controller controller;
     Component component;
