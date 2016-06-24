@@ -58,6 +58,13 @@ public class BlockManagerTest extends TestCase {
         Assert.assertEquals("user name 1", "", b1.getUserName());
     }
 
+    public void testProvideWorksTwice() {
+        // original create with no systemname and an empty username
+        Block b1 = InstanceManager.blockManagerInstance().provideBlock("IB12");
+        b1 = InstanceManager.blockManagerInstance().provideBlock("!!");
+        Assert.assertNotNull(b1);
+    }
+    
     public void testGet1() {
         // original create with no systemname and a username
         Block b1 = InstanceManager.blockManagerInstance().createNewBlock("UserName4");

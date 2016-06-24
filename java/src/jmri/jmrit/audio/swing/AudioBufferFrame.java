@@ -263,8 +263,9 @@ public class AudioBufferFrame extends AbstractAudioFrame {
         AudioBuffer b;
         try {
             AudioManager am = InstanceManager.audioManagerInstance();
-            b = (AudioBuffer) am.provideAudio(sName);
-            if (b == null) {
+            try {
+                b = (AudioBuffer) am.provideAudio(sName);
+            } catch (IllegalArgumentException ex) {
                 throw new AudioException("Problem creating buffer");
             }
             if (newBuffer && am.getByUserName(user) != null) {
