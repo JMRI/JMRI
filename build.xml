@@ -1407,6 +1407,8 @@
            version="false"
            package="yes"
            use="true"
+           failonerror="true"
+           failonwarning="false"
            windowtitle="JMRI API">
             <packageset dir="${source}" defaultexcludes="yes">
                 <include name="jmri/**"/>
