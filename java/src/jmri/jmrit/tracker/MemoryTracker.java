@@ -10,14 +10,13 @@ import org.slf4j.LoggerFactory;
  * Tracks train into memory object
  *
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version	$Revision$
  */
 public class MemoryTracker {
 
     /**
      * Create a Tracker object, providing a list of blocks to watch
      */
-    public MemoryTracker(Block b, String namePrefix) {
+    public MemoryTracker(Block b, String namePrefix) throws IllegalArgumentException {
         block = b;
 
         // make sure Memory objects exist & remember it

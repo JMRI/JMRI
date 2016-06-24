@@ -31,11 +31,12 @@ public class ProxySensorManager extends AbstractProxyManager
         return (Sensor) super.getNamedBean(name);
     }
 
-    protected Sensor makeBean(int i, String systemName, String userName) {
+    protected Sensor makeBean(int i, String systemName, String userName) throws IllegalArgumentException {
+        log.debug("makeBean({}, \"{}\", \"{}\"", i, systemName, userName);
         return ((SensorManager) getMgr(i)).newSensor(systemName, userName);
     }
 
-    public Sensor provideSensor(String sName) {
+    public Sensor provideSensor(String sName) throws IllegalArgumentException {
         return (Sensor) super.provideNamedBean(sName);
     }
 

@@ -162,6 +162,9 @@ public class ConditionalVariable {
             }
         } catch (java.lang.NumberFormatException ex) {
             //Can be Considered Normal where the logix is loaded prior to any other beans
+        } catch (IllegalArgumentException ex) {
+            log.warn("could not provide \"{}\" in constructor", _name);
+            _namedBean = null;
         }
     }
 
@@ -213,50 +216,52 @@ public class ConditionalVariable {
         NamedBean bean = null;
         int itemType = Conditional.TEST_TO_ITEM[_type];
 
-        switch (itemType) {
-            case Conditional.TYPE_NONE:
-                break;
-            case Conditional.ITEM_TYPE_CLOCK:
-                break;	/* no beans for these, at least that I know of */
+        try {
+            switch (itemType) {
+                case Conditional.TYPE_NONE:
+                    break;
+                case Conditional.ITEM_TYPE_CLOCK:
+                    break;	/* no beans for these, at least that I know of */
 
-            case Conditional.ITEM_TYPE_SENSOR:
-                bean = InstanceManager.sensorManagerInstance().provideSensor(_name);
-                break;
-            case Conditional.ITEM_TYPE_TURNOUT:
-                bean = InstanceManager.turnoutManagerInstance().provideTurnout(_name);
-                break;
-            case Conditional.ITEM_TYPE_LIGHT:
-                bean = InstanceManager.lightManagerInstance().getLight(_name);
-                break;
-            case Conditional.ITEM_TYPE_MEMORY:
-                bean = InstanceManager.memoryManagerInstance().provideMemory(_name);
-                break;
-            case Conditional.ITEM_TYPE_SIGNALMAST:
-                bean = InstanceManager.signalMastManagerInstance().provideSignalMast(_name);
-                break;
-            case Conditional.ITEM_TYPE_SIGNALHEAD:
-                bean = InstanceManager.signalHeadManagerInstance().getSignalHead(_name);
-                break;
-            case Conditional.ITEM_TYPE_CONDITIONAL:
-                bean = InstanceManager.conditionalManagerInstance().getConditional(_name);
-                break;
-            case Conditional.ITEM_TYPE_WARRANT:
-                bean = InstanceManager.getDefault(WarrantManager.class).getWarrant(_name);
-                break;
-            case Conditional.ITEM_TYPE_OBLOCK:
-                bean = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(_name);
-                break;
-            case Conditional.ITEM_TYPE_ENTRYEXIT:
-                bean = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class).getBySystemName(_name);
-                break;
-            default:
-                log.error("Type " + itemType + " not set for " + _name);
-        }
+                case Conditional.ITEM_TYPE_SENSOR:
+                    bean = InstanceManager.sensorManagerInstance().provideSensor(_name);
+                    break;
+                case Conditional.ITEM_TYPE_TURNOUT:
+                    bean = InstanceManager.turnoutManagerInstance().provideTurnout(_name);
+                    break;
+                case Conditional.ITEM_TYPE_LIGHT:
+                    bean = InstanceManager.lightManagerInstance().getLight(_name);
+                    break;
+                case Conditional.ITEM_TYPE_MEMORY:
+                    bean = InstanceManager.memoryManagerInstance().provideMemory(_name);
+                    break;
+                case Conditional.ITEM_TYPE_SIGNALMAST:
+                    bean = InstanceManager.signalMastManagerInstance().provideSignalMast(_name);
+                    break;
+                case Conditional.ITEM_TYPE_SIGNALHEAD:
+                    bean = InstanceManager.signalHeadManagerInstance().getSignalHead(_name);
+                    break;
+                case Conditional.ITEM_TYPE_CONDITIONAL:
+                    bean = InstanceManager.conditionalManagerInstance().getConditional(_name);
+                    break;
+                case Conditional.ITEM_TYPE_WARRANT:
+                    bean = InstanceManager.getDefault(WarrantManager.class).getWarrant(_name);
+                    break;
+                case Conditional.ITEM_TYPE_OBLOCK:
+                    bean = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(_name);
+                    break;
+                case Conditional.ITEM_TYPE_ENTRYEXIT:
+                    bean = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class).getBySystemName(_name);
+                    break;
+                default:
+                    log.error("Type " + itemType + " not set for " + _name);
+            }
 
-        //Once all refactored, we should probably register an error if the bean is returned null.
-        if (bean != null) {
+            //Once all refactored, we should probably register an error if the bean is returned null.
             _namedBean = nbhm.getNamedBeanHandle(_name, bean);
-        } else {
+            
+        } catch (IllegalArgumentException ex) {
+            log.warn("Did not have or create \"{}\" in setName", _name);
             _namedBean = null;
         }
     }
@@ -287,8 +292,13 @@ public class ConditionalVariable {
     public void setDataString(String data) {
         _dataString = data;
         if (data != null && !data.equals("") && Conditional.TEST_TO_ITEM[_type] == Conditional.ITEM_TYPE_MEMORY) {
-            NamedBean bean = InstanceManager.memoryManagerInstance().provideMemory(data);
-            _namedBeanData = nbhm.getNamedBeanHandle(data, bean);
+            try {
+                NamedBean bean = InstanceManager.memoryManagerInstance().provideMemory(data);
+                _namedBeanData = nbhm.getNamedBeanHandle(data, bean);
+            } catch (IllegalArgumentException ex) {
+                log.warn("Failed to provide memory \"{}\" in setDataString", data);
+                _namedBeanData = null;
+            }
         }
     }
 
@@ -566,11 +576,12 @@ public class ConditionalVariable {
                     if (_namedBeanData != null) {
                         m2 = (Memory) _namedBeanData.getBean();
                     } else {
-                        m2 = InstanceManager.memoryManagerInstance().provideMemory(_dataString);
-                    }
-                    if (m2 == null) {
-                        log.error("invalid data memory name= \"" + _dataString + "\" in state variable");
-                        return (false);
+                        try {
+                            m2 = InstanceManager.memoryManagerInstance().provideMemory(_dataString);
+                        } catch (IllegalArgumentException ex) {
+                            log.error("invalid data memory name= \"" + _dataString + "\" in state variable");
+                            return (false);
+                        }
                     }
                     if (m2.getValue() != null) {
                         value2 = m2.getValue().toString();

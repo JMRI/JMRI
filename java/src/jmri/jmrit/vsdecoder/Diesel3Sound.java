@@ -529,7 +529,7 @@ class Diesel3Sound extends EngineSound {
                         return (null);
                     }
                 }
-            } catch (AudioException ex) {
+            } catch (AudioException | IllegalArgumentException ex) {
                 log.error("Problem creating SoundBite: " + ex);
                 return (null);
             }

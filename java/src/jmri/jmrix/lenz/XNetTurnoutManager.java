@@ -134,5 +134,3 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
     private final static Logger log = LoggerFactory.getLogger(XNetTurnoutManager.class.getName());
 
 }
-
-/* @(#)XNetTurnoutManager.java */

@@ -52,20 +52,19 @@ public class MatrixSignalMastXml
         List<String> outputs = p.getOutputs();
         // convert char[] to xml-storable simple String
         // max. 5 outputs (either: turnouts (bean names) [or ToDo: DCC addresses (numbers)]
-        if (outputs != null) {
-            Element outps = new Element("outputs");
-            int i = 1;
-            for (String _output : outputs) {
-                String key = ("output" + i);
-                Element outp = new Element("output");
-                outp.setAttribute("matrixCol", key);
-                outp.addContent(p.getOutputName(i)); // get name (Turnout)
-                outps.addContent(outp);
-                i++;
-            }
-            if (outputs.size() != 0) {
-                e.addContent(outps);
-            }
+        // spotted by FindBugs as to never be null (check on creation of MatrixMast)
+        Element outps = new Element("outputs");
+        int i = 1;
+        for (String _output : outputs) {
+            String key = ("output" + i);
+            Element outp = new Element("output");
+            outp.setAttribute("matrixCol", key);
+            outp.addContent(p.getOutputName(i)); // get name (Turnout)
+            outps.addContent(outp);
+            i++;
+        }
+        if (outputs.size() != 0) {
+            e.addContent(outps);
         }
 
         // string of max. 5 chars "00101" describing matrix row per aspect
@@ -77,14 +76,13 @@ public class MatrixSignalMastXml
                 String key = aspects.nextElement();
                 Element bs = new Element("bitString");
                 bs.setAttribute("aspect", key);
-                if (p.getBitstring(key) != null) {
-                    bs.addContent(p.getBitstring(key));
-                    bss.addContent(bs);
+                if (p.getBitstring(key) == null) {
+                    throw new IllegalStateException("Aspect key" + key + " missing from MatrixMast " + p.getSystemName());
                 }
+                bs.addContent(p.getBitstring(key));
+                bss.addContent(bs);
             }
-            //if (aspects.size() != 0) {
                 e.addContent(bss);
-            //}
 
         }
         List<String> disabledAspects = p.getDisabledAspects();
