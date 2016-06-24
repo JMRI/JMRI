@@ -1819,7 +1819,7 @@
         <attribute name="script.icon" default="use script.name"/> <!-- if set to JMRI, app-specifc icons will not be used -->
         <sequential>
             <copy todir="${dist.apps}/@{script.name}.app">
-                <fileset dir="${scriptdir}/MacOSXapps/V2/TemplateApp.app"/>
+                <fileset dir="${scriptdir}/MacOSXapps/TemplateApp.app"/>
                 <filterset>
                     <filter token="NAME" value="@{script.name}"/>
                     <filter token="CLASS" value="@{script.class}"/>
@@ -1831,9 +1831,9 @@
                 <first>
                     <restrict>
                         <filelist>
-                            <file name="${scriptdir}/MacOSXapps/V2/icons/@{script.icon}.icns"/>
-                            <file name="${scriptdir}/MacOSXapps/V2/icons/@{script.name}.icns"/>
-                            <file name="${scriptdir}/MacOSXapps/V2/icons/JMRI.icns"/>
+                            <file name="${scriptdir}/MacOSXapps/icons/@{script.icon}.icns"/>
+                            <file name="${scriptdir}/MacOSXapps/icons/@{script.name}.icns"/>
+                            <file name="${scriptdir}/MacOSXapps/icons/JMRI.icns"/>
                         </filelist>
                         <exists/>
                     </restrict>
