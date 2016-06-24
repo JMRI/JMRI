@@ -1,4 +1,3 @@
-// NceTrafficController.java
 package jmri.jmrix.nce;
 
 import jmri.CommandStation;
@@ -492,6 +491,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      * instance use of the traffic controller is no longer used for multiple
      * connections
      */
+    @Override
     @Deprecated
     public void setInstance() {
     }
@@ -610,6 +610,3 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 
     private final static Logger log = LoggerFactory.getLogger(NceTrafficController.class.getName());
 }
-
-
-/* @(#)NceTrafficController.java */

@@ -118,7 +118,7 @@ public class SerialLightManager extends AbstractLightManager {
 
     /**
      * Allow access to SerialLightManager
-     * @deprecated since 4.5.10
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
     @Deprecated
     static public SerialLightManager instance() {

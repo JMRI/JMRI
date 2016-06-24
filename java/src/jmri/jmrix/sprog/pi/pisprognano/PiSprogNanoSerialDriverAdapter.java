@@ -1,4 +1,3 @@
-// PiSprogNanoSerialDriverAdapter.java
 package jmri.jmrix.sprog.pi.pisprognano;
 
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * any other options at configuration time.
  *
  * @author	Andrew Crosland Copyright (C) 2016
- * @version	$Revision$
  */
 public class PiSprogNanoSerialDriverAdapter
         extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
@@ -35,6 +33,10 @@ public class PiSprogNanoSerialDriverAdapter
         return new String[]{"115,200 bps"};
     }
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static public PiSprogNanoSerialDriverAdapter instance() {
         if (mInstance == null) {
             PiSprogNanoSerialDriverAdapter m = new PiSprogNanoSerialDriverAdapter();
@@ -43,10 +45,12 @@ public class PiSprogNanoSerialDriverAdapter
         }
         return mInstance;
     }
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static volatile PiSprogNanoSerialDriverAdapter mInstance = null;
 
     static Logger log = LoggerFactory.getLogger(PiSprogNanoSerialDriverAdapter.class.getName());
 
 }
-
-/* @(#)PiSprogNanoSerialDriverAdapter.java */

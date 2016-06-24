@@ -120,7 +120,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
 
     /**
      * Allow access to AcelaLightManager
-     * @deprecated since 4.5.1
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
     @Deprecated
     static public AcelaTurnoutManager instance() {

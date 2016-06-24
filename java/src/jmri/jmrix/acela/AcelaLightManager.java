@@ -120,7 +120,7 @@ public class AcelaLightManager extends AbstractLightManager {
 
     /**
      * Allow access to AcelaLightManager
-     * @deprecated since 4.5.1
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
     @Deprecated
     static public AcelaLightManager instance() {
@@ -129,5 +129,3 @@ public class AcelaLightManager extends AbstractLightManager {
 
     private final static Logger log = LoggerFactory.getLogger(AcelaLightManager.class.getName());
 }
-
-/* @(#)AcelaLightManager.java */

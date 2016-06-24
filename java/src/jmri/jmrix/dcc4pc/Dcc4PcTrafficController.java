@@ -106,18 +106,29 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
      *
      * @return The registered Dcc4PcTrafficController instance for general use,
      *         if need be creating one.
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Deprecated
     static public Dcc4PcTrafficController instance() {
         return self;
     }
 
     //This can be removed once multi-connection is complete
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Override
+    @Deprecated
     public void setInstance() {
     }
 
     protected void addTrailerToOutput(byte[] msg, int offset, AbstractMRMessage m) {
     }
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT")
     // FindBugs wants this package protected, but we're removing it when multi-connection
     // migration is complete

@@ -223,7 +223,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
      *
      * @return The registered AcelaSensorManager instance for general use, if
      *         need be creating one.
-     * @deprecated since 4.5.1
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
     @Deprecated
     static public AcelaSensorManager instance() {

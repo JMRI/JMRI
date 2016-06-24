@@ -116,7 +116,7 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
      *
      * @return The registered SpeedoTrafficController instance for general use,
      *         if need be creating one.
-     * @deprecated since 4.5.1
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
     @Deprecated
     static public SpeedoTrafficController instance() {
@@ -215,6 +215,3 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
         this.reply = new SpeedoReply();
     }
 }
-
-
-/* @(#)SpeedoTrafficController.java */

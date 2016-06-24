@@ -178,7 +178,11 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
     private boolean opened = false;
     InputStream serialStream = null;
 
-    public synchronized SerialDriverAdapter instance() {
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
+    static public synchronized SerialDriverAdapter instance() {
         if (mInstance == null) {
             mInstance = new SerialDriverAdapter();
             mInstance.setManufacturer(SpeedoConnectionTypeList.BACHRUS);

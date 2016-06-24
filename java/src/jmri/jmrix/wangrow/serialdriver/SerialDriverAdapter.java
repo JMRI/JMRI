@@ -146,13 +146,6 @@ public class SerialDriverAdapter extends NcePortController implements jmri.jmrix
     private boolean opened = false;
     InputStream serialStream = null;
 
-    /*
-     static public SerialDriverAdapter instance() {
-     if (mInstance == null) mInstance = new SerialDriverAdapter();
-     return mInstance;
-     }
-     static SerialDriverAdapter mInstance = null;
-     */
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 
 }
