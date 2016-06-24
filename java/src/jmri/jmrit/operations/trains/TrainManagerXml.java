@@ -276,7 +276,6 @@ public class TrainManagerXml extends OperationsXml {
     /**
      * Save previous manifest file in a separate directory called manifestBackups.
      * Each train manifest is saved in a unique directory using the train's name.
-     * @param name
      */
     private void savePreviousManifestFile(String name) {
         if (Setup.isSaveTrainManifestsEnabled()) {

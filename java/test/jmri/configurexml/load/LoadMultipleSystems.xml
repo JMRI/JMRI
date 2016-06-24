@@ -11,8 +11,8 @@
     <operations automate="false">
       <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
     </operations>
-    <turnout systemName="IT" feedback="DIRECT" inverted="false" automate="Default">
-      <systemName>IT</systemName>
+    <turnout systemName="IT0" feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT0</systemName>
     </turnout>
     <turnout systemName="IT1" feedback="DIRECT" inverted="false" automate="Default">
       <systemName>IT1</systemName>
@@ -83,13 +83,13 @@
     <signalhead class="jmri.implementation.configurexml.LsDecSignalHeadXml" systemName="IH2" userName="LDT">
       <systemName>IH2</systemName>
       <userName>LDT</userName>
-      <turnout systemName="IT" state="CLOSED" />
-      <turnout systemName="IT" state="CLOSED" />
-      <turnout systemName="IT" state="CLOSED" />
-      <turnout systemName="IT" state="CLOSED" />
-      <turnout systemName="IT" state="CLOSED" />
-      <turnout systemName="IT" state="CLOSED" />
-      <turnout systemName="IT" state="CLOSED" />
+      <turnout systemName="IT0" state="CLOSED" />
+      <turnout systemName="IT0" state="CLOSED" />
+      <turnout systemName="IT0" state="CLOSED" />
+      <turnout systemName="IT0" state="CLOSED" />
+      <turnout systemName="IT0" state="CLOSED" />
+      <turnout systemName="IT0" state="CLOSED" />
+      <turnout systemName="IT0" state="CLOSED" />
     </signalhead>
     <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IH20" userName="upper">
       <systemName>IH20</systemName>
@@ -106,20 +106,20 @@
     <signalhead class="jmri.implementation.configurexml.MergSD2SignalHeadXml" systemName="IH3" aspects="2" userName="Merg">
       <systemName>IH3</systemName>
       <userName>Merg</userName>
-      <turnoutname defines="input1">IT</turnoutname>
+      <turnoutname defines="input1">IT0</turnoutname>
     </signalhead>
     <signalhead class="jmri.implementation.configurexml.MergSD2SignalHeadXml" systemName="IH4" aspects="3" userName="Merg3">
       <systemName>IH4</systemName>
       <userName>Merg3</userName>
-      <turnoutname defines="input1">IT</turnoutname>
-      <turnoutname defines="input2">IT</turnoutname>
+      <turnoutname defines="input1">IT0</turnoutname>
+      <turnoutname defines="input2">IT0</turnoutname>
     </signalhead>
     <signalhead class="jmri.implementation.configurexml.MergSD2SignalHeadXml" systemName="IH5" aspects="4" userName="Merg4">
       <systemName>IH5</systemName>
       <userName>Merg4</userName>
-      <turnoutname defines="input1">IT</turnoutname>
-      <turnoutname defines="input2">IT</turnoutname>
-      <turnoutname defines="input3">IT</turnoutname>
+      <turnoutname defines="input1">IT0</turnoutname>
+      <turnoutname defines="input2">IT0</turnoutname>
+      <turnoutname defines="input3">IT0</turnoutname>
     </signalhead> 
     <signalhead class="jmri.implementation.configurexml.QuadOutputSignalHeadXml" systemName="IH6" userName="Quad">
       <systemName>IH6</systemName>

@@ -1,4 +1,3 @@
-// SpjFile.java
 package jmri.jmrix.loconet.spjfile;
 
 import java.io.File;
@@ -16,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * Four-byte quantities in SPJ files are little-endian.
  *
  * @author	Bob Jacobsen Copyright (C) 2006, 2009
- * @version $Revision$
  */
 public class SpjFile {
 
@@ -726,5 +724,3 @@ public class SpjFile {
     private final static Logger log = LoggerFactory.getLogger(SpjFile.class.getName());
 
 }
-
-/* @(#)SpjFile.java */

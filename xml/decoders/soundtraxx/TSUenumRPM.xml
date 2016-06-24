@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2016 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new include file for SoundTraxx Tsunami -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <enumChoice choice="Traction motor sound disabled">
+    <choice>Traction motor sound disabled</choice>
+  </enumChoice>
+  <enumChoice choice="RPM rate 1 (Highest)">
+    <choice>RPM rate 1 (Highest)</choice>
+  </enumChoice>
+  <enumChoice choice="RPM rate 2">
+    <choice>RPM rate 2</choice>
+  </enumChoice>
+  <enumChoice choice="RPM rate 3">
+    <choice>RPM rate 3</choice>
+  </enumChoice>
+  <enumChoice choice="RPM rate 4">
+    <choice>RPM rate 4</choice>
+  </enumChoice>
+  <enumChoice choice="RPM rate 5">
+    <choice>RPM rate 5</choice>
+  </enumChoice>
+  <enumChoice choice="RPM rate 6">
+    <choice>RPM rate 6</choice>
+  </enumChoice>
+  <enumChoice choice="RPM rate 7">
+    <choice>RPM rate 7</choice>
+  </enumChoice>
+  <enumChoice choice="RPM rate 8">
+    <choice>RPM rate 8</choice>
+  </enumChoice>
+  <enumChoice choice="RPM rate 9">
+    <choice>RPM rate 9</choice>
+  </enumChoice>
+  <enumChoice choice="RPM rate 10">
+    <choice>RPM rate 10</choice>
+  </enumChoice>
+  <enumChoice choice="RPM rate 11">
+    <choice>RPM rate 11</choice>
+  </enumChoice>
+  <enumChoice choice="RPM rate 12">
+    <choice>RPM rate 12</choice>
+  </enumChoice>
+  <enumChoice choice="RPM rate 13">
+    <choice>RPM rate 13</choice>
+  </enumChoice>
+  <enumChoice choice="RPM rate 14">
+    <choice>RPM rate 14</choice>
+  </enumChoice>
+  <enumChoice choice="RPM rate 15 (Lowest)">
+    <choice>RPM rate 15 (Lowest)</choice>
+  </enumChoice>
+</enumVal>

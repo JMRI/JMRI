@@ -316,11 +316,13 @@ public class Setup {
 
     private static boolean printCabooseLoad = false; // when true print caboose load
     private static boolean printPassengerLoad = false; // when true print passenger car load
+    private static boolean showTrackMoves = false; // when true show track moves in table
 
     // property changes
     public static final String SWITCH_LIST_CSV_PROPERTY_CHANGE = "setupSwitchListCSVChange"; //  NOI18N
     public static final String MANIFEST_CSV_PROPERTY_CHANGE = "setupManifestCSVChange"; //  NOI18N
     public static final String REAL_TIME_PROPERTY_CHANGE = "setupSwitchListRealTime"; //  NOI18N
+    public static final String SHOW_TRACK_MOVES_PROPERTY_CHANGE = "setupShowTrackMoves"; //  NOI18N
 
     public static boolean isMainMenuEnabled() {
         OperationsSetupXml.instance(); // load file
@@ -891,6 +893,16 @@ public class Setup {
 
     public static boolean isPrintPassengerLoadEnabled() {
         return printPassengerLoad;
+    }
+    
+    public static void setShowTrackMovesEnabled(boolean enable) {
+        boolean old = showTrackMoves;
+        showTrackMoves = enable;
+        setDirtyAndFirePropertyChange(SHOW_TRACK_MOVES_PROPERTY_CHANGE, old, enable);
+    }
+    
+    public static boolean isShowTrackMovesEnabled() {
+        return showTrackMoves;
     }
 
     public static void setSwitchTime(int minutes) {
@@ -1983,6 +1995,9 @@ public class Setup {
 
         e.addContent(values = new Element(Xml.COMMENTS));
         values.setAttribute(Xml.MISPLACED_CARS, getMiaComment());
+        
+        e.addContent(values = new Element(Xml.DISPLAY));
+        values.setAttribute(Xml.SHOW_TRACK_MOVES, isShowTrackMovesEnabled() ? Xml.TRUE : Xml.FALSE);
 
         if (isVsdPhysicalLocationEnabled()) {
             e.addContent(values = new Element(Xml.VSD));
@@ -2967,6 +2982,16 @@ public class Setup {
                 setMiaComment(comment);
             }
         }
+        
+        if (operations.getChild(Xml.DISPLAY) != null) {
+            if ((a = operations.getChild(Xml.DISPLAY).getAttribute(Xml.SHOW_TRACK_MOVES)) != null) {
+                String enable = a.getValue();
+                if (log.isDebugEnabled()) {
+                    log.debug("show track moves: " + enable);
+                }
+                setShowTrackMovesEnabled(enable.equals(Xml.TRUE));
+            }
+        }
 
         if (operations.getChild(Xml.VSD) != null) {
             if ((a = operations.getChild(Xml.VSD).getAttribute(Xml.ENABLE_PHYSICAL_LOCATIONS)) != null) {
@@ -3076,7 +3101,6 @@ public class Setup {
     /**
      * Converts the xml key to the proper locale text
      *
-     * @param keys
      */
     private static void keyToStringConversion(String[] keys) {
         for (int i = 0; i < keys.length; i++) {
@@ -3098,7 +3122,6 @@ public class Setup {
     /**
      * Converts the strings into English tags for xml storage
      *
-     * @param strings
      */
     private static void stringToKeyConversion(String[] strings) {
         Locale locale = Locale.ROOT;

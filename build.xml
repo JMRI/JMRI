@@ -145,7 +145,7 @@
         <pathelement location="${libdir}/jython.jar"/>
         <pathelement location="${libdir}/log4j-1.2.17.jar"/>
         <pathelement location="${libdir}/javax.servlet-api-3.1.0.jar"/>
-        <pathelement location="${libdir}/vecmath.jar"/>
+        <pathelement location="${libdir}/vecmath-1.5.2.jar"/>
         <pathelement location="${libdir}/mailapi.jar"/>
         <pathelement location="${libdir}/smtp.jar"/>
         <pathelement location="${libdir}/xAPlib.jar"/>
@@ -155,17 +155,17 @@
         <pathelement location="${libdir}/jackson-core-2.0.6.jar"/>
         <pathelement location="${libdir}/jackson-annotations-2.0.6.jar"/>
         <pathelement location="${libdir}/jackson-databind-2.0.6.jar"/>
-        <pathelement location="${libdir}/jetty-http-9.3.6.v20151106.jar"/>
-        <pathelement location="${libdir}/jetty-security-9.3.6.v20151106.jar"/>
-        <pathelement location="${libdir}/jetty-server-9.3.6.v20151106.jar"/>
-        <pathelement location="${libdir}/jetty-servlet-9.3.6.v20151106.jar"/>
-        <pathelement location="${libdir}/jetty-util-9.3.6.v20151106.jar"/>
-        <pathelement location="${libdir}/jetty-io-9.3.6.v20151106.jar"/>
-        <pathelement location="${libdir}/websocket-api-9.3.6.v20151106.jar"/>
-        <pathelement location="${libdir}/websocket-client-9.3.6.v20151106.jar"/>
-        <pathelement location="${libdir}/websocket-common-9.3.6.v20151106.jar"/>
-        <pathelement location="${libdir}/websocket-server-9.3.6.v20151106.jar"/>
-        <pathelement location="${libdir}/websocket-servlet-9.3.6.v20151106.jar"/>
+        <pathelement location="${libdir}/jetty-http-9.3.9.v20160517.jar"/>
+        <pathelement location="${libdir}/jetty-security-9.3.9.v20160517.jar"/>
+        <pathelement location="${libdir}/jetty-server-9.3.9.v20160517.jar"/>
+        <pathelement location="${libdir}/jetty-servlet-9.3.9.v20160517.jar"/>
+        <pathelement location="${libdir}/jetty-util-9.3.9.v20160517.jar"/>
+        <pathelement location="${libdir}/jetty-io-9.3.9.v20160517.jar"/>
+        <pathelement location="${libdir}/websocket-api-9.3.9.v20160517.jar"/>
+        <pathelement location="${libdir}/websocket-client-9.3.9.v20160517.jar"/>
+        <pathelement location="${libdir}/websocket-common-9.3.9.v20160517.jar"/>
+        <pathelement location="${libdir}/websocket-server-9.3.9.v20160517.jar"/>
+        <pathelement location="${libdir}/websocket-servlet-9.3.9.v20160517.jar"/>
         <pathelement location="${libdir}/slf4j-api-1.7.13.jar"/>
         <pathelement location="${libdir}/slf4j-log4j12-1.7.13.jar"/>
         <pathelement location="${libdir}/jul-to-slf4j-1.7.13.jar"/>
@@ -179,6 +179,7 @@
         <pathelement location="${libdir}/bluecove-bluez-2.1.1-SNAPSHOT.jar"/>
         <pathelement location="${libdir}/bluecove-gpl-2.1.1-SNAPSHOT.jar"/>
         <pathelement location="${libdir}/jhidrawplugin.jar"/>
+        <pathelement location="${libdir}/beansbinding-1.2.1.jar"/>
     </path>
     <pathconvert property="runtime.class.jars" refid="runtime.class.path"/>
    
@@ -493,7 +494,29 @@
         <!-- Compile the java code from ${source} into ${target} -->
         <antcall target="-java-compile-internal">
             <param name="java.source.directory" value="${source}"/>
+            <param name="deprecation" value="${deprecation}"/>
         </antcall>
+    </target>
+
+    <target name="ci-compile-deprecations"
+            description="compile source, omitting tests, warning on deprecations - for Jenkins CI"
+            depends="init, copyfiles, compile-generated-source">
+        <!-- Compile the java code from ${source} into ${target} allowing lots of deprecations!-->
+        <!-- The following is copied from the -java-compile-internal target -->
+        <!-- Eventually, we want to turn deprecation warnings "on" and remove this target's Xmax parameters -->
+        <javac compiler="modern" 
+               srcdir="${source}"
+               destdir="${target}"
+               source="${source_version}"
+               target="${jre_version}"
+               includeantruntime="false"
+               fork="true"
+               deprecation="on"
+               debug="${java.debugging}">
+            <classpath refid="compile.class.path"/>
+            <compilerarg value="-Xlint:-unchecked"/> 
+            <compilerarg value="-Xmaxwarns"/><compilerarg value="2000"/><!-- change from default 100 warnings -->
+        </javac>
     </target>
 
 
@@ -521,6 +544,38 @@
         </copy>
     </target>
 
+    <target name="-pre-single-test">
+        <fail unless="test.includes">Must select some files in the IDE or set test.includes</fail>
+        <condition property="test.isTest">
+            <matches pattern=".*Test$" string="${test.includes}" /> 
+        </condition>
+    </target>
+    <target depends="-pre-single-test" if="test.isTest" name="-test-single-test">
+        <property name="test.test" value="${test.includes}"/>
+    </target>
+    <target depends="-pre-single-test" unless="test.isTest" name="-test-single-src">
+        <property name="test.test" value="${test.includes}Test"/>
+    </target>
+    <target depends="-test-single-src,-test-single-test,tests" description="Run single unit test." name="test-single">
+        <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
+            <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+            <sysproperty key="log4j.ignoreTCL" path="true/"/>
+            <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+
+            <classpath refid="test.class.path"/>
+
+            <test name="${test.test}">
+                <formatter usefile="no" type="brief"/>
+            </test>
+        </junit>
+        <fail>
+            <condition>
+                <istrue value="${test.failed}" />
+            </condition>
+        </fail>
+    </target>
 
     <!-- the next target requires Ant 1.8 or later, which can be obtained from -->
     <!-- http://ant.apache.org/bindownload.cgi  -->
@@ -1751,7 +1806,6 @@
                 <exclude name="JMRI/DecoderPro"/>
                 <exclude name="JMRI/PanelPro"/>
                 <exclude name="JMRI/SoundPro"/>
-                <exclude name="JMRI/LocoTools"/>
                 <exclude name="JMRI/InstallTest"/>
                 <exclude name="JMRI/RXTXuninstall.sh"/>
                 <exclude name="JMRI/JmriFaceless"/>
@@ -1760,7 +1814,6 @@
                 <include name="JMRI/DecoderPro"/>
                 <include name="JMRI/PanelPro"/>
                 <include name="JMRI/SoundPro"/>
-                <include name="JMRI/LocoTools"/>
                 <include name="JMRI/InstallTest"/>
                 <include name="JMRI/RXTXuninstall.sh"/>
                 <include name="JMRI/JmriFaceless"/>
@@ -1831,7 +1884,6 @@
     <target name="startup-scripts-linux"> <!-- Internal target to create all of the app specific startup scripts for Linux -->
         <make-startup-script script.name="DecoderPro"   script.class="apps.gui3.dp3.DecoderPro3"/>
         <make-startup-script script.name="PanelPro"      script.class="apps.PanelPro.PanelPro"/>
-        <make-startup-script script.name="LocoTools"     script.class="apps.LocoTools.LocoTools"/>
         <make-startup-script script.name="SoundPro"      script.class="apps.SoundPro.SoundPro"/>
         <make-startup-script script.name="InstallTest"   script.class="apps.InstallTest.InstallTest"/>
         <make-startup-script script.name="JmriFaceless"   script.class="apps.JmriFaceless"/>
@@ -1841,7 +1893,6 @@
         <create-macosx-application-directory script.name="DecoderPro"  script.class="apps.gui3.dp3.DecoderPro3"
                                              script.icon="DecoderPro"/>
         <create-macosx-application-directory script.name="PanelPro"      script.class="apps.PanelPro.PanelPro"/>
-        <create-macosx-application-directory script.name="Loco Tools"    script.class="apps.LocoTools.LocoTools"/>
         <create-macosx-application-directory script.name="SoundPro"      script.class="apps.SoundPro.SoundPro"/>
         <create-macosx-application-directory script.name="InstallTest"   script.class="apps.InstallTest.InstallTest"/>
     </target>

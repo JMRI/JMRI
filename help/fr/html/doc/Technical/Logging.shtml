@@ -1,38 +1,28 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- UpDated by Blorec Herv&#233; le 2013-09-06-->
   <html lang="fr">
 <head>
     <TITLE>
- 	JMRI: How to Use the Logging Facilities
+ 	JMRI: Comment faire pour utiliser le Rapport
     </TITLE>
    <meta name="Author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI log4j logging log">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1>
+    <meta http-equiv="Content-Type" content="text/html; charset= iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
 <!-- /Style -->rapport
 </head>
-
+<body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
 
-	    <!-- ------------- -->
-	    <!-- Page Contents --> <!-- Required -->
-	    <!-- ------------- -->
-
-	    <H1>JMRI: Comment faire pour utiliser le Rapport</H1>
-
+	    <h1>JMRI: Comment faire pour utiliser le Rapport</h1>
 
 Cette page fournit un peu d'information sur la fa&#231;on dont
 JMRI enregistre les erreur, l'&#233;tat et les informations de d&#233;bogage.
@@ -123,8 +113,8 @@ cas, appeler numberEntries () et concat&#233;ner les cha&#238;nes): </p>
         }Par convention, les applications JMRI va tenter d'initialiser
 Log4J l'aide d'un fichier "default.lcf". Les distributions JMRI
 contenir une version de ce fichier avec
-commentaires détaillés. (Ce fichier doit être dans le répertoire "Program",
-qui peut être trouvé en sélectionnant l'option «Lieux» dans le menu principal de l'aide)
+commentaires d&eacute;taill&eacute;s. (Ce fichier doit &ecirc;tre dans le r&eacute;pertoire &quot;Program&quot;,
+qui peut &ecirc;tre trouv&eacute; en s&eacute;lectionnant l&apos;option 'Lieux' dans le menu principal de l&apos;aide)
 </code></pre>
 <p>Les exceptions doivent être Rapport&#233;es sous cette forme:</p>
 <pre><code>
@@ -140,8 +130,8 @@ qui peut être trouvé en sélectionnant l'option «Lieux» dans le menu princip
 <tr><td>ERROR</td><td>log.error(..)</td><td>Indique que l'op&#233;ration souhait&#233;e ne va pas se produire, et explique pourquoi</td></tr>Par convention, les applications JMRI va tenter d'initialiser
 Log4J l'aide d'un fichier "default.lcf". Les distributions JMRI
 contenir une version de ce fichier avec
-commentaires détaillés. (Ce fichier doit être dans le répertoire "Program",
-qui peut être trouvé en sélectionnant l'option «Lieux» dans le menu principal de l'aide)
+commentaires d&eacute;taill&eacute;s. (Ce fichier doit &ecirc;tre dans le r&eacute;pertoire "Program",
+qui peut &ecirc;tre trouv&eacute; en s&eacute;lectionnant l'option 'Lieux' dans le menu principal de l'aide)
 </table>
 
 <!--#include virtual="/Footer" -->

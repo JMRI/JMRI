@@ -1,39 +1,28 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- UpDated by Blorec Herv&#233;  2013-09-06--> 
 <html lang="fr">
 <head>
     <TITLE>
- 	JMRI: Technical Info
+ 	JMRI: Infos Techniques
     </TITLE>
-    <META content="Bob Jacobsen" name=Author>
+    <META content="Bob Jacobsen" name="Author">
     <meta name="keywords" content="JMRI technical code ">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
-
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset= ISO-8859-1">
+    <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
-
+<body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
-	    <!-- -------- -->
-	    <!--  Teaser  --> <!-- Optional -->
-	    <!-- -------- -->
 
-	    <H1>JMRI: Infos Techniques </H1>
+	    <h1>JMRI: Infos Techniques</h1>
 
 Vous n'avez pas besoin pour travailler avec votre propre copie du code source JMRI, des compilateurs,
 etc, si vous voulez juste ex&#233;cuter les programmes. Vous pouvez t&#233;l&#233;charger des copies enti&#232;rement construites par les
@@ -68,7 +57,7 @@ syst&#232;me &#224; partir de z&#233;ro. </p>
 
 <p> &#224; court terme, nous avons cr&#233;&#233; plusieurs programmes bas&#233;s sur les biblioth&#232;ques JMRI pour faire avancer le projet et  d&#233;montrer ainsi ses capacit&#233;s.
 (<a href="http://jmri.org/releasenotes/history.html"> Pourquoi tant de programmes ?...</a>)
-</ p>
+</p>
 
 <p> Le plus populaire est
 <a href="../../apps/DecoderPro"> DecoderPro </a>, un outil de programmation pour les d&#233;codeurs. Il simplifie le travail
@@ -107,7 +96,8 @@ C'est l&#224; que nous essayons de documenter la structure du code et comment el
 (Il s'agit d'un effort exp&#233;rimental, pas encore vraiment de travail, mais nous continuons &#224; essayer ...)
 
 <p>
-SourceForge.net fournit l'h&#233;bergement de projets: <ul>
+SourceForge.net fournit l'h&#233;bergement de projets:
+<ul>
 <li> <A HREF="http://sourceforge.net/projects/jmri/"> page du projet JMRI  </A> et
 <A HREF="http://sourceforge.net/export/projhtml.php?group_id=26788"> projet de statistiques </A>.
  <li>Trackers pour les
@@ -116,7 +106,7 @@ SourceForge.net fournit l'h&#233;bergement de projets: <ul>
 <A HREF="http://sourceforge.net/tracker/?group_id=26788&atid=388315"> Correctifs </A>.
 <li> SourceForge h&#233;berge le <A HREF="http://jmri.cvs.sourceforge.net/"> d&#233;p&#244;t Subversion </A>
 que vous pouvez <A HREF="http://jmri.cvs.sourceforge.net/"> parcourir </a>.
-</ ul>
+</ul>
 
 <h2> Code </h2>
 Tout le code JMRI est disponible &#224; partir de Subversion. Voir pour <a href="getgitcode.shtml"> "Obtenir le code via Git" </a> et les pages
@@ -124,7 +114,7 @@ Tout le code JMRI est disponible &#224; partir de Subversion. Voir pour <a href=
 <p>
 Si vous voulez juste regarder le contenu de quelques fichiers, vous pouvez
 <a href="http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/">parcourir le d&#233;p&#244;t
-Subversion </a> sur le web.</ul>
+Subversion </a> sur le web.
 
 
 <h2>Construire Votre Propre Copie</h2>
@@ -147,7 +137,7 @@ Sinon, si vous souhaitez &#233;diter le code avec votre &#233;diteur de texte fa
 <a  href="Ant.shtml"> construire avec Ant </a>.
 
 
-<h2><A name="contributing">Contribution</h2></a>
+<h2><a name="contributing">Contribution</a></h2>
 
 Nous encourageons les contributions de code, les d&#233;finitions d&#233;codeur, l'am&#233;lioration de
 pages web, etc, pour le projet JMRI de sorte que
@@ -177,7 +167,7 @@ Lorsque vous particpez avec votre code de JMRI pour la premi&#232;re fois, nous 
 Si d'autres personnes ont &#233;galement contribu&#233; &#224; la contribution, s'il vous pla&#238;t faites nous savoir si
 nous pouvons les ajouter &#224; la <A HREF="../../../Acknowledgements.shtml"> page de remerciements </a>
 
-<h2><A Href name="use">Licences</h2></a>
+<h2><A Href name="use">Licences</a></h2>
 Nous encourageons les gens &#224; construire leurs propres projets JMRI. C'est les raison initiales du lancement du projet!
 
 <P>
@@ -214,7 +204,7 @@ arrangements sp&#233;ciaux avec nous.
 <P>
 Cela inclut les fichiers de d&#233;finition d&#233;codeur: Vous &#234;tes invit&#233;s &#224; les utiliser, y compris reformater leur contenu sous une 
 autre forme, mais vous devez donner cr&#233;dit pour JMRI leur contenu.
-</ UL>
+</UL>
 
 Si vous avez des questions &#224; ce sujet, s'il vous pla&#238;t
 <A HREF="mailto:jmri@pacbell.net"> nous contacter </a>

@@ -1,4 +1,3 @@
-//JsonReporterServer.java
 package jmri.jmris.json;
 
 import static jmri.jmris.json.JSON.DATA;
@@ -17,6 +16,7 @@ import java.util.Locale;
 import jmri.JmriException;
 import jmri.jmris.AbstractReporterServer;
 import jmri.jmris.JmriConnection;
+import jmri.server.json.JsonException;
 
 /**
  * JSON Server interface between the JMRI reporter manager and a network
@@ -29,7 +29,6 @@ import jmri.jmris.JmriConnection;
  *
  * @author Paul Bender Copyright (C) 2011
  * @author Randall Wood Copyright (C) 2013
- * @version $Revision: 21313 $
  */
 public class JsonReporterServer extends AbstractReporterServer {
 

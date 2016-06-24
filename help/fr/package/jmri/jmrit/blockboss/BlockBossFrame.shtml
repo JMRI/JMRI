@@ -109,7 +109,7 @@ et ne peut pas &#234;tre chang&#233;.
 , vous pouvez cliquer dans la colonne "Nom Utilisateur" et modifier ces informations, 
 mettez ce que vous voulez.
 <LI>Quand un signal change, pour une raison quelconque, 
-l'apparence courante est montr&#233;e dans le tableau dans la colonne "Etat" . Vous pouvez &#233;galement cliquer sur le
+l'apparence courante est montr&#233;e dans le tableau dans la colonne "Etat". Vous pouvez &#233;galement cliquer sur le
 bouton apparence pour faire d&#233;filer les apparences disponibles:
 rouge, jaune, vert, rouge clignotant, clignotant jaune, vert clignotant, et sombre.
 <LI>La colonne "Commentaire" est pour votre usage pour enregistrer tout commentaire que vous jugerez peut-&#234;tre utile pour garder une trace de vos signaux. Il est &#224; titre d' information seulement.
@@ -170,7 +170,7 @@ avec toutes les informations de commande qui sont d&#233;j&#224; pr&#233;sentes.
 imm&#233;diatement apr&#232;s le signal. Lorsque l'un de ces capteurs se montre "actif" le
 signal sera mis au rouge.</li>
 <li> <b>Rouge Quand Aiguillage</b> Si le Canton contient un aiguillage,
-configurer le nom de l'aiguillage et utiliser le bouton de s&#233;lection pour choisir si vous entrez sur la branche directe ou d&#233;vi&#233;e. Le signal sera mis au rouge lorsqurigthe l'aiguillage est bascul&#233; sur l'autre voie .</li>
+configurer le nom de l'aiguillage et utiliser le bouton de s&#233;lection pour choisir si vous entrez sur la branche directe ou d&#233;vi&#233;e. Le signal sera mis au rouge lorsqurigthe l'aiguillage est bascul&#233; sur l'autre voie.</li>
 <li> <b>Signal Prot&#233;g&#233;</b> Le prochain signal auquel le train va arriver;
 ce signal sera mis en jaune si le prochain signal est
 rouge.</li>
@@ -212,7 +212,7 @@ pour plus d'informations sur la fa&#231;on de configurer votre signal r&#233;el.
 </P> <ol>
 </Li> <li> S&#233;lectionnez <b>Tableau T&#234;te Signal</b> dans les <b>Outils</b>.
 </Li> <li> Dans la fen&#234;tre Tableau T&#234;te Signal qui appara&#238;t, cliquez sur <b>Ajouter</b> pour commencer &#224; d&#233;finir un nouveau signal.
-</Li> <li> Dans la fen&#234;tre Ajouter Nouveau Signal qui appara&#238;t choisissez le type du "signal virtuel" .
+</Li> <li> Dans la fen&#234;tre Ajouter Nouveau Signal qui appara&#238;t choisissez le type du "signal virtuel".
 </Li> <li> Entrez un nom de syst&#232;me tels que IH1000.
 </Li> <li> Cliquez <b>OK</b> pour entrer signal dans la Table T&#234;te Signal.
 </Li> <li> Entrez tous les signaux que vous allez utiliser pour ce test, en utilisant des noms diff&#233;rents.
@@ -220,7 +220,7 @@ Le nom r&#233;el n'est pas grave, ils ont juste &#224; &#234;tre diff&#233;rents
 Maintenant, s&#233;lectionnez <li> <b>Logique Simple Signal</b> dans le menu <b>Outils</b>.
 </Li>
 <li> Remplissez les diff&#233;rentes rubriques pour r&#233;pondre &#224; vos exigences de signaux
-d&#233;j&#224; montr&#233; dans la section<a href="#SSL"> SSL</a> .
+d&#233;j&#224; montr&#233; dans la section<a href="#SSL"> SSL</a>.
 </Li> <li> Cliquez <b>Appliquer</b> pour rendre cette entr&#233;e active.</Li>
 <li> N'oubliez pas de sauvegarder votre travail.
 </Ol>
@@ -228,9 +228,12 @@ d&#233;j&#224; montr&#233; dans la section<a href="#SSL"> SSL</a> .
 simple que cela. Il vous a fallu
 plus de temps pour lire ce tutoriel que pour cr&#233;er l'entr&#233;e SSL.</p>
 
-*ABS: Bloc automatique
-**CTC: commande manuelle des signaux et aiguillages    
-    
+        <p>
+*ABS: Bloc automatique<br>
+**CTC: commande manuelle des signaux et aiguillages
+        </p>
 <!--#include virtual="/Footer" -->
+        </div>
+      </div>
 </body>
 </html>

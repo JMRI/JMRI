@@ -1,4 +1,3 @@
-// AddSensorPanel.java
 package jmri.jmrit.beantable.sensor;
 
 import java.awt.event.ActionEvent;
@@ -21,17 +20,11 @@ import org.slf4j.LoggerFactory;
  * JPanel to create a new Sensor
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version $Revision$
  * @deprecated Replaced by
  * {@link jmri.jmrit.beantable.AddNewHardwareDevicePanel}
  */
 @Deprecated
 public class AddSensorPanel extends jmri.util.swing.JmriPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4498057881822875833L;
 
     public AddSensorPanel() {
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
@@ -158,18 +151,6 @@ public class AddSensorPanel extends jmri.util.swing.JmriPanel {
         //p = null;
     }
 
-    /*void okPressed(ActionEvent e) {
-     String user = userName.getText();
-     Sensor s = null;
-     try {
-     s = InstanceManager.sensorManagerInstance().provideSensor(sysName.getText());
-     } catch (IllegalArgumentException ex) {
-     // user input no good
-     handleCreateException(sysName.getText());
-     return; // without creating       
-     }
-     if (user!= null && !user.equals("")) s.setUserName(user);
-     }*/
     void okPressed(ActionEvent e) {
         /*String user = userName.getText();
          if (user.equals("")) user=null;*/

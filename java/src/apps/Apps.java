@@ -1,7 +1,6 @@
 package apps;
 
 import apps.gui3.TabbedPreferences;
-import apps.startup.StartupActionModelUtil;
 import java.awt.AWTEvent;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -22,11 +21,8 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.text.MessageFormat;
-import java.util.Enumeration;
 import java.util.EventObject;
 import java.util.Locale;
-import java.util.ResourceBundle;
 import javax.help.SwingHelpUtilities;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -117,7 +113,8 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
     static String profileFilename;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings({"ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", "SC_START_IN_CTOR"})//"only one application at a time. The thread is only called to help improve user experiance when opening the preferences, it is not critical for it to be run at this stage"
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", "SC_START_IN_CTOR"},
+            justification = "only one application at a time. The thread is only called to help improve user experiance when opening the preferences, it is not critical for it to be run at this stage")
     public Apps(JFrame frame) {
 
         super(true);
@@ -280,11 +277,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         //Install Entry Exit Pairs Manager
         //   Done after load config file so that connection-system-specific Managers are defined and usable
         InstanceManager.store(new EntryExitPairs(), EntryExitPairs.class);
-
-        // Add actions to abstractActionModel
-        // Done here as initial non-GUI initialisation is completed
-        // and UI L&F has been set
-        addToActionModel();
 
         // populate GUI
         log.debug("Start UI");
@@ -482,18 +474,12 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         return result;
     }
 
+    /**
+     * @deprecated since 4.5.1
+     */
+    @Deprecated
     protected final void addToActionModel() {
-        StartupActionModelUtil util = InstanceManager.getDefault(StartupActionModelUtil.class);
-        ResourceBundle actionList = ResourceBundle.getBundle("apps.ActionListBundle");
-        Enumeration<String> e = actionList.getKeys();
-        while (e.hasMoreElements()) {
-            String key = e.nextElement();
-            try {
-                util.addAction(key, actionList.getString(key));
-            } catch (ClassNotFoundException ex) {
-                log.error("Did not find class \"{}\"", key);
-            }
-        }
+        // StartupActionModelUtil populates itself, so do nothing
     }
 
     /**
@@ -965,50 +951,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         return _buttonSpace;
     }
     static JComponent _buttonSpace = null;
-
-    /**
-     * @deprecated as of 2.13.3, directly access the connection configuration
-     * from the instance list
-     * jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class)
-     */
-    @Deprecated
-    static public String getConnection1() {
-        return MessageFormat.format(Bundle.getMessage("ConnectionCredit"),
-                new Object[]{AppConfigBase.getConnection(0), AppConfigBase.getPort(0), AppConfigBase.getManufacturerName(0)});
-    }
-
-    /**
-     * @deprecated as of 2.13.3, directly access the connection configuration
-     * from the instance list
-     * jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class)
-     */
-    @Deprecated
-    static public String getConnection2() {
-        return MessageFormat.format(Bundle.getMessage("ConnectionCredit"),
-                new Object[]{AppConfigBase.getConnection(1), AppConfigBase.getPort(1), AppConfigBase.getManufacturerName(1)});
-    }
-
-    /**
-     * @deprecated as of 2.13.3, directly access the connection configuration
-     * from the instance list
-     * jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class)
-     */
-    @Deprecated
-    static public String getConnection3() {
-        return MessageFormat.format(Bundle.getMessage("ConnectionCredit"),
-                new Object[]{AppConfigBase.getConnection(2), AppConfigBase.getPort(2), AppConfigBase.getManufacturerName(2)});
-    }
-
-    /**
-     * @deprecated as of 2.13.3, directly access the connection configuration
-     * from the instance list
-     * jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class)
-     */
-    @Deprecated
-    static public String getConnection4() {
-        return MessageFormat.format(Bundle.getMessage("ConnectionCredit"),
-                new Object[]{AppConfigBase.getConnection(3), AppConfigBase.getPort(3), AppConfigBase.getManufacturerName(3)});
-    }
     static SplashWindow sp = null;
     static AWTEventListener debugListener = null;
     

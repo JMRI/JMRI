@@ -44,7 +44,7 @@ si chacun des segments de voie reli&#233;s aux voies de la travers&#233;e est as
 canton diff&#233;rent, mais ce n'est pas n&#233;cessaire. </p>
 <p>
 Lorsque cette option est s&#233;lectionn&#233;e, une bo&#238;te de dialogue s'affiche avec une liste d&#233;roulante pour choisir la travers&#233;e qui est sur le panneau actuel et les noms (syst&#232;me ou utilisateur) de six &#224; huit
-T&#234;tes de signal &#224; affecter aux deux aiguillages .
+T&#234;tes de signal &#224; affecter aux deux aiguillages.
 <p>
 Pour chaque t&#234;te de signal, des cases &#224; cocher sont disponibles pour s&#233;lectionionner
 si l'ic&#244;ne doit &#234;tre plac&#233;e sur le panneau, et que la logique de commande
@@ -61,13 +61,13 @@ affect&#233;s cette information sera automatiquement pr&#233;-rempli.
 <p>
 L'outil fournit &#224; l'entr&#233;e un ou deux signaux au niveau de chaque voie de la travers&#233;e, en fonction du
 type de travers&#233;e et de la branche s&#233;lectionn&#233;e. <br>
-Ces t&#234;tes de signaux indiquent l'&#233;tat de se d&#233;placer dans le chemin direct ou d&#233;vi&#233; &#224; travers la travers&#233;e .
-D'abord les t&#234;tes signalisation situ&#233;es &#224; <b>  Aiguillage 1 - voie droite</b> sont entr&#233;es . La T&#234;te de signalisation <b>  voie droite </b> est n&#233;cessaire, mais l'entr&#233;e <b>  voie d&#233;vi&#233;e</b> est facultative. Si seulement la T&#234;te de signalisation <b>   Voie directe</b> est entr&#233;e, l'outil suppose que la t&#234;te signale aussi
+Ces t&#234;tes de signaux indiquent l'&#233;tat de se d&#233;placer dans le chemin direct ou d&#233;vi&#233; &#224; travers la travers&#233;e.
+D'abord les t&#234;tes signalisation situ&#233;es &#224; <b>  Aiguillage 1 - voie droite</b> sont entr&#233;es. La T&#234;te de signalisation <b>  voie droite </b> est n&#233;cessaire, mais l'entr&#233;e <b>  voie d&#233;vi&#233;e</b> est facultative. Si seulement la T&#234;te de signalisation <b>   Voie directe</b> est entr&#233;e, l'outil suppose que la t&#234;te signale aussi
 les voies de l'autre aiguillage , similaire &#224; lorsque seule une t&#234;te de signal est plac&#233; &#224;
 la pointe d'un seul aiguillage.</p>
 <p>
-Ensuite les t&#234;tes signalisation situ&#233;es &#224; <b>  Aiguillage 1 - voie d&#233;vi&#233;e</b> sont entr&#233;es .
-Rappelez-vous que c'est pour quand le chemin &#224; travers la travers&#233;e  est pr&#234;t &#224; &#234;tre d&#233;vi&#233; .
+Ensuite les t&#234;tes signalisation situ&#233;es &#224; <b>  Aiguillage 1 - voie d&#233;vi&#233;e</b> sont entr&#233;es.
+Rappelez-vous que c'est pour quand le chemin &#224; travers la travers&#233;e  est pr&#234;t &#224; &#234;tre d&#233;vi&#233;.
 Lorsque les deux t&#234;tes sont entr&#233;es, la t&#234;te la plus proche de la travers&#233;e signale l'
 &#233;tat de la voie directe. <br>
 De m&#234;me, les t&#234;tes signal situ&#233;es &#224; <b>  Aiguillage 2 - voie droite</b> et 
@@ -78,12 +78,12 @@ position et que vous entrez une <i>t&#234;te de signal</i> diff&#233;rente dans 
 la nouvelle t&#234;te de signal va remplacer la t&#234;te de signal pr&#233;c&#233;dente , et l'ic&#244;ne de
 la t&#234;te de signal pr&#233;c&#233;dente (s'il y en a une) sera supprim&#233;e &#224; partir du
 panneau. De m&#234;me, si vous remplacez une t&#234;te de signal <b>  Divergente</b > avec une entr&#233;e vide (pas de t&#234;te de signal), l'entr&#233;e pr&#233;c&#233;dente est supprim&#233;e et il n'y aura pas de t&#234;te de signal &#224; cette position. <b>  Si une t&#234;te signal
-est modifi&#233;, vous devez refaire la logique qui la concerne .</b> En particulier,
+est modifi&#233;, vous devez refaire la logique qui la concerne.</b> En particulier,
 si vous supprimez une t&#234;te de signal divergente, vous devez refaire la logique de l'
-t&#234;te de signal voie droite situ&#233;e sur la m&#234;me voie .</p>
+t&#234;te de signal voie droite situ&#233;e sur la m&#234;me voie.</p>
 <p>
 V&#233;rifiez <b>Ajouter Ic&#244;ne de Signal au Tableau de Bord</b> pour demander qu'une ic&#244;ne t&#234;te signal
-soit plac&#233;e sur le panneau &#224; la position de l'aiguillage indiqu&#233; .</p>
+soit plac&#233;e sur le panneau &#224; la position de l'aiguillage indiqu&#233;.</p>
 <p>
 Cochez <b>Mettre en place Logique</b >pour demander que l'outil mette en place une logique de commande signal
 pour une t&#234;te de signal. Pour chacune de ces t&#234;tes de signal, l'outil cr&#233;e une Logique Simple Signal pour la t&#234;te, et en plus cr&#233;e un Logix qui assure que le signal plac&#233; surl'aiguillage n'est pas d&#233;vi&#233; contre la voie o&#249; est plac&#233; le signal. L'outil va tenter de configurer la logique et de remplir automatiquement les entr&#233;es avec l'information disponible. Si l'outil n'a pas assez
@@ -95,7 +95,7 @@ d'informations disponibles pour mettre en place la logique, un message en r&#233
 
 <p>
 L'outil mettra en place la logique Simple signal pour d&#233;finir tous les signaux au
-rouge si la travers&#233;e est occup&#233;e . Si ce n'est pas ce que vous voulez ,
+rouge si la travers&#233;e est occup&#233;e. Si ce n'est pas ce que vous voulez ,
 vous devez modifier la logique simple signal 
 en supprimant le capteur d'occupation de ce canton.</p>
 <p>
@@ -107,7 +107,7 @@ correctement, vous pourriez &#234;tre amen&#233; &#224; cr&#233;er et assigner u
 ne correspond pas &#224; un signal actif sur le r&#233;seau) &#224; la fin d'un canton non signal&#233;
  qui connecte une voie qui est signal&#233;e &#224; une voie qui n'est pas signal&#233;e.
 (Vous n'avez pas besoin d'ajouter une ic&#244;ne pour le signal virtuel &#224; votre panneau, mais il
-doit exister dans votre tableau de t&#234;te de signal, et doit &#234;tre affect&#233; &#224; un aiguillage ou &#224; une limite de canton  en utilisant l'outil D&#233;finir Signaux ... . ) Si un canton se termine par un
+doit exister dans votre tableau de t&#234;te de signal, et doit &#234;tre affect&#233; &#224; un aiguillage ou &#224; une limite de canton  en utilisant l'outil D&#233;finir Signaux...). Si un canton se termine par un
 butoir, aucun signal virtuel n'est n&#233;cessaire &#224; l' extr&#233;mit&#233; c&#244;t&#233; heurtoir.</p>
 <p>
 Si un canton a un aiguillage interne (l'aiguillage, et les segments de voie de la pointe et les voies font partie du canton), le programme pr&#233;voit des signaux
@@ -122,7 +122,7 @@ mal r&#233;gl&#233;, si un aiguillage interne non signal&#233; n'est pas r&#233;
 Lorsque vous configurez le Logix utilis&#233; dans la logique de commande, l'outil cr&#233;e 
 un capteur interne pour communiquer avec la logique simple du signal. Le Logix
 apparait dans votre tableau Logix , et le capteur interne appara&#238;tra dans votre
-Tableau de capteur . Les noms syst&#232;me du capteur Logix et internes seront, IX ou
+Tableau de capteur. Les noms syst&#232;me du capteur Logix et internes seront, IX ou
 IS suivie par TTT_HHH, o&#249; TTT est le nom  syst&#232;me de l'aiguillage o&#249; l'
 t&#234;te de signal est localis&#233;e et HHH est le nom syst&#232;me de la t&#234;te de signal.
 Le but de ce Logix est de s'assurer que l'aspect de la t&#234;te de signal sera rouge si l'aiguillage o&#249;
@@ -132,7 +132,7 @@ Cet outil met en place la signalisation de trois aspects. Quand une t&#234;te de
 &#233;tat lors du passage &#224; une voie d'&#233;vitement, l'outil sera mis en place pour limit&#233; la
 vitesse (l'aspect le moins restrictif n'est pas vert , mais jaune), et le signal
 montrera jaune quand il serait contraire au vert. Vous pouvez changer cela avec
-une simple modification (voir ci-dessous) .</p>
+une simple modification (voir ci-dessous).</p>
 <p>
 Si vous avez une situation particuli&#232;re &#224; un signal, vous pouvez avoir &#224; modifier les
 informations saisies par cet outil dans la logique simple signal. Si vous
@@ -140,7 +140,7 @@ vouliez la signalisation de quatre aspects, vous pouvez modifier facilement manu
 pour atteindre cet objectif. De m&#234;me avec des  modifications manuelles simples de la logique , vous pouvez
 ajouter de l'&#233;clairage d'approche. Si vous ne voulez pas jaune lors du passage &#224; l'itin&#233;raire divergent
 , mais pr&#233;f&#232;rez le vert, ouvrez la logique simple signal pour la t&#234;te que vous voulez
-changer et d&#233;cochez <b>  Vitesse limit&#233;e</b> . La bo&#238;te de dialogue logique simple signal est
+changer et d&#233;cochez <b>  Vitesse limit&#233;e</b>. La bo&#238;te de dialogue logique simple signal est
 accessible &#224; partir du menu contextuel de chaque ic&#244;ne de signal. Si votre
 situation sp&#233;ciale ne peut pas &#234;tre manipul&#233;e par une logique simple signal, vous devez vous r&#233;f&#233;rer
 &#224; Logix pour adapter la logique du signal &#224; vos besoins.</p>

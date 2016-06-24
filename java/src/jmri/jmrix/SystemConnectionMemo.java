@@ -55,7 +55,7 @@ abstract public class SystemConnectionMemo {
         this.userNameAsLoaded = null;
     }
 
-    private static boolean initialised = false;
+    // private static boolean initialised = false;
 
     /**
      * Provides a method to reserve System Names and prefixes at creation
@@ -77,7 +77,7 @@ abstract public class SystemConnectionMemo {
         sysPrefixes = new ArrayList<>();
         listeners = new HashSet<>();
         
-        initialised = false;
+        //initialised = false;
     }
     
     protected static ArrayList<String> userNames = new ArrayList<>();

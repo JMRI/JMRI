@@ -56,6 +56,18 @@ public class ProxyReporterManagerTest extends TestCase {
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest3())));
     }
 
+    public void testProvideFailure() {
+        boolean correct = false;
+        try {
+            Reporter t = l.provideReporter("");
+            Assert.fail("didn't throw");
+        } catch (IllegalArgumentException ex) {
+            correct = true;
+        }
+        Assert.assertTrue("Exception thrown properly", correct);
+        
+    }
+
     public void testSingleObject() {
         // test that you always get the same representation
         Reporter t1 = l.newReporter(getSystemName(getNumToTest1()), "mine");

@@ -167,7 +167,6 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
     /**
      * Set the train length departing this location when building a train
      *
-     * @param length
      */
     public void setTrainLength(int length) {
         int old = _trainLength;
@@ -184,7 +183,6 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
     /**
      * Set the train weight departing this location when building a train
      *
-     * @param weight
      */
     public void setTrainWeight(int weight) {
         int old = _trainWeight;
@@ -264,7 +262,6 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
     /**
      * Set the number of moves that this location has when building a train
      *
-     * @param moves
      */
     public void setCarMoves(int moves) {
         int old = _carMoves;

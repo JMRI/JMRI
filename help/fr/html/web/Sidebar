@@ -1,7 +1,5 @@
 <!-- Sidebar -->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!-- UpDated by Blorec Herv&#233; le 2013-10-08-->
-<html lang="fr">
 
 	  <hr class="hide">
 	  <div id="mBody">
@@ -19,7 +17,7 @@
 		</dd>
 
 		<dt><h3>Serlets</h3></dt>
-		<dd> D&#233;tails des composants web de JMRI .
+		<dd> D&#233;tails des composants web de JMRI.
 		 <UL>
 		    <LI><dfn><a href="FrameServlet.shtml">Frame servlet</a></dfn></li>
 		    <LI><dfn><a href="RosterServlet.shtml">Liste servlet</a></dfn></li>
@@ -30,7 +28,6 @@
 		</dd>
 
 	    </dl>
-   
 
 	</div> <!-- closes #side -->
 

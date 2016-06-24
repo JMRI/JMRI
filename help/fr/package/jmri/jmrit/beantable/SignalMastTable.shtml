@@ -1,13 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- UpDated by Herv&#233; Blorec 2013-10-12-->
 <html lang="fr">
 <head>
  <TITLE>
-      JMRI: Signal Mast Table Help
+      JMRI: Le Tableau M&#226;t Signal
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
+    <META content="Bob Jacobsen" name="Author">
     <META name="keywords" content="JMRI help Signal Mast Table">
 
 <!-- Style -->
@@ -37,7 +35,7 @@ Pour plus d'informations sur les M&#226;ts de Signaux et les aspect de la signal
 voir la
 <a href="../../../../html/tools/signaling/AspectSignaling.shtml"> page  introduction</a>.
 
-<P> Pour d&#233;finir un nouveau m&#226;t de signal, cliquez sur le bouton" <a HREF="SignalMastAddEdit.shtml"> Ajouter .." </a>.
+<P> Pour d&#233;finir un nouveau m&#226;t de signal, cliquez sur le bouton" <a HREF="SignalMastAddEdit.shtml"> Ajouter ..." </a>.
 Il  vous sera demand&#233; toutes les informations de configuration n&#233;cessaires.
 
 <P> Utilisez l'option Stocker dans le menu Fichier pour enregistrer les informations de signalisation sur le disque.
@@ -47,11 +45,11 @@ fichier (recommand&#233;), s&#233;lectionnez <b> Fichier> Stocker > Stocker Conf
 Fichier ...</b> ou s&#233;lectionnez <b> Panneaux...</b> dans la fen&#234;tre principale JMRI.
 <P> Pour plus d'informations sur la cr&#233;ation et l'affichage des panneaux, y compris la mani&#232;re de
 montrer les signaux sur vos panneaux, s'il vous pla&#238;t voir les
-<A HREF="../../../../html/apps/PanelPro/Panels.shtml"> pages Panneaux</a>.
-
-
+<A HREF="../../../../html/apps/PanelPro/Panels.shtml"> pages Panneaux</a>.</P>
 
 <!--#include virtual="/Footer" -->
+        </div>
+      </div>
 </body>
 </html>
 

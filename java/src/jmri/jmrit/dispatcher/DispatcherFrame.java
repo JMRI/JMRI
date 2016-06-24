@@ -1,4 +1,3 @@
-// DispatcherFrame.java
 package jmri.jmrit.dispatcher;
 
 import java.awt.BorderLayout;
@@ -69,14 +68,8 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author	Dave Duchamp Copyright (C) 2008-2011
- * @version	$Revision$
  */
 public class DispatcherFrame extends jmri.util.JmriJFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8419164039506787803L;
 
     /**
      * Get a DispatcherFrame through the instance() method
