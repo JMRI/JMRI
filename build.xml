@@ -1629,7 +1629,7 @@
         </javac>
     </presetdef>
     
-    <target name="ci-checker-nullness"
+    <target name="ci-checker-framework"
                 description="Check java/src tree for null pointer dereferences; only compiles non-compiles classes, so do 'clean' first to do all"
                 depends="init, copyfiles, compile-generated-source"> 
           <!-- use jsr308.javac instead of javac -->
@@ -1645,7 +1645,7 @@
             <classpath refid="compile.class.path"/>
             <compilerarg line="-proc:only"/> <!-- just check, don't generate .class files -->
             <compilerarg value="-AskipUses=^(java\.awt\.|javax\.swing\.)"/> <!-- don't check uses of library methods: -->
-            <compilerarg line="-Xmaxerrs 10000"/>
+            <compilerarg line="-Xmaxerrs 5000"/>
             
             <!-- select the check to run -->
             <compilerarg line="-processor NullnessChecker"/>
