@@ -876,15 +876,6 @@
         </antcall>
     </target>
 
-    <target name="locotools"
-            depends="debug"
-            description="build and run build and run LocoTools app">
-        <antcall target="-run-jmri-application">
-            <param name="application.classname" value="apps.LocoTools.LocoTools"/>
-            <param name="antargline" value="LocoToolsConfig2.xml"/>
-        </antcall>
-    </target>
-
     <target name="SampleMinimalProgram"
             depends="debug"
             description="build and run build and run SampleMinimalProgram class">
@@ -1724,7 +1715,7 @@
                      excludes="help/en/manual/**" />
             <!-- use question marks for spaces in filename; Ant will split the list on commas and spaces -->
             <fileset dir="${dist.apps}"
-                     includes="DecoderPro.app/,PanelPro.app/,SoundPro.app/,JMRI?Demo.app/,Loco?Tools.app/"/>
+                     includes="DecoderPro.app/,PanelPro.app/,SoundPro.app/,JMRI?Demo.app/"/>
             <fileset dir="scripts"
                      includes="default.lcf,COPYING"/>
             <fileset dir="."
@@ -1746,7 +1737,6 @@
             <fileset dir="${dist.macosx}/JMRI">
                 <include name="DecoderPro.app/Contents/MacOS/StartJMRI"/>
                 <include name="JMRI Demo.app/Contents/MacOS/StartJMRI"/>
-                <include name="Loco Tools.app/Contents/MacOS/StartJMRI"/>
                 <include name="PanelPro.app/Contents/MacOS/StartJMRI"/>
                 <include name="SoundPro.app/Contents/MacOS/StartJMRI"/>
             </fileset>
