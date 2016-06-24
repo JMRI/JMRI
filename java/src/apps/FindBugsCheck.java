@@ -36,7 +36,7 @@ public class FindBugsCheck {
         System.out.println("test "+this.getClass());
     }
 
-//  commenting out the rest of the file to avoid FindBugs counting the deliberate warnings
+/* //  commenting out the rest of the file to avoid FindBugs counting the deliberate warnings
 
 
     public FindBugsCheck noAnnotationReturn() {
@@ -174,6 +174,6 @@ public class FindBugsCheck {
         fbCheckForNullParm(fbCheckForNullReturn());
     }
 
-    //end of commenting out file */
+    */ //end of commenting out file
 
 }
