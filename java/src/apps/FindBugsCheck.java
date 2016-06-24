@@ -20,14 +20,14 @@ package apps;
  * Types are explicitly qualified (instead of using 'import') to make it 
  * completely clear which is being used at each point.  That makes this the
  * code less readable, so it's not recommended for general use.
- *
- * Conclusions:
- * <ul>
- * <li>The javax.annotation and edu.umd.cs.findbugs.annotations versions flag the same constructs; we can use either.
- * <li>Parameter passing isn't always being checked.
- * <li>
+ * <p>
+ * Summary: <ul>
+ * <li>The javax.annotation and edu.umd.cs.findbugs.annotations versions work the same
+ *          (So we should use the javax.annotation ones as they're the future standard)
+ * <li>Nullable doesn't detect the errors that CheckForNull does flag
+ * <li>Parameter passing isn't always being checked by FindBugs
  * </ul>
- *
+ * @see apps.CheckerFrameworkCheck
  * @author Bob Jacobsen 2016
  */
 public class FindBugsCheck {
