@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * Swing action to create and register a NodeConfigFrame object
@@ -12,16 +13,19 @@ import org.slf4j.LoggerFactory;
  */
 public class NodeConfigAction extends AbstractAction {
 
-    public NodeConfigAction(String s) {
+    CMRISystemConnectionMemo _memo = null;
+
+    public NodeConfigAction(String s,CMRISystemConnectionMemo memo) {
         super(s);
+        _memo = memo;
     }
 
-    public NodeConfigAction() {
-        this("Configure C/MRI Nodes");
+    public NodeConfigAction(CMRISystemConnectionMemo memo) {
+        this("Configure C/MRI Nodes",memo);
     }
 
     public void actionPerformed(ActionEvent e) {
-        NodeConfigFrame f = new NodeConfigFrame();
+        NodeConfigFrame f = new NodeConfigFrame(_memo);
         try {
             f.initComponents();
         } catch (Exception ex) {

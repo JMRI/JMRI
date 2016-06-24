@@ -52,10 +52,6 @@ public class ActiveSystemsMenu extends JMenu {
             }
         }
 
-        if (jmri.jmrix.cmri.serial.ActiveFlag.isActive()) {
-            m.add(getMenu("jmri.jmrix.cmri.CMRIMenu"));
-        }
-
         if (jmri.jmrix.easydcc.ActiveFlag.isActive()) {
             m.add(getMenu("jmri.jmrix.easydcc.EasyDCCMenu"));
         }

@@ -14,6 +14,9 @@ import junit.framework.TestSuite;
  */
 public class SerialAddressTest extends TestCase {
 
+    private jmri.jmrix.cmri.CMRISystemConnectionMemo memo = null;
+    private SerialTrafficControlScaffold stcs = null;
+
     SerialNode n10;
     SerialNode n18;
 
@@ -23,31 +26,29 @@ public class SerialAddressTest extends TestCase {
         apps.tests.Log4JFixture.setUp();
         super.setUp();
 
-        // replace the SerialTrafficController
-        new SerialTrafficController() {
-            SerialTrafficController test() {
-                setInstance();
-                return this;
-            }
-        }.test();
-
-        n10 = new SerialNode(10, SerialNode.SMINI);
-        n18 = new SerialNode(18, SerialNode.SMINI);
-
-        // create and register the manager objects
         jmri.util.JUnitUtil.resetInstanceManager();
+
+        // replace the SerialTrafficController
+        stcs = new SerialTrafficControlScaffold();
+        memo = new jmri.jmrix.cmri.CMRISystemConnectionMemo();
+        memo.setTrafficController(stcs);
+
+        n10 = new SerialNode(10, SerialNode.SMINI,stcs);
+        n18 = new SerialNode(18, SerialNode.SMINI,stcs);
+
         
-        jmri.TurnoutManager l = new SerialTurnoutManager() {
+        // create and register the manager objects
+        jmri.TurnoutManager l = new SerialTurnoutManager(memo) {
             public void notifyTurnoutCreationError(String conflict, int bitNum) {}
         };
         jmri.InstanceManager.setTurnoutManager(l);
 
-        jmri.LightManager lgt = new SerialLightManager() {
+        jmri.LightManager lgt = new SerialLightManager(memo) {
             public void notifyLightCreationError(String conflict, int bitNum) {}
         };
         jmri.InstanceManager.setLightManager(lgt);
 
-        jmri.SensorManager s = new SerialSensorManager();
+        jmri.SensorManager s = new SerialSensorManager(memo);
         jmri.InstanceManager.setSensorManager(s);
 
     }
@@ -57,7 +58,11 @@ public class SerialAddressTest extends TestCase {
     protected void tearDown() throws Exception {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        stcs = null;
+        memo = null;
     }
+
 
     public void testValidateSystemNameFormat() {
         Assert.assertTrue("valid format - CL2", SerialAddress.validSystemNameFormat("CL2", 'L'));
@@ -138,9 +143,9 @@ public class SerialAddressTest extends TestCase {
 
 
     public void testGetNodeFromSystemName() {
-        SerialNode d = new SerialNode(14, SerialNode.USIC_SUSIC);
-        SerialNode c = new SerialNode(17, SerialNode.SMINI);
-        SerialNode b = new SerialNode(127, SerialNode.SMINI);
+        SerialNode d = new SerialNode(14, SerialNode.USIC_SUSIC,stcs);
+        SerialNode c = new SerialNode(17, SerialNode.SMINI,stcs);
+        SerialNode b = new SerialNode(127, SerialNode.SMINI,stcs);
         Assert.assertEquals("node of CL14007", d, SerialAddress.getNodeFromSystemName("CL14007"));
         Assert.assertEquals("node of CL14B7", d, SerialAddress.getNodeFromSystemName("CL14B7"));
         Assert.assertEquals("node of CL127007", b, SerialAddress.getNodeFromSystemName("CL127007"));
@@ -167,7 +172,7 @@ public class SerialAddressTest extends TestCase {
     }
 
     public void testValidSystemNameConfig() {
-        SerialNode d = new SerialNode(4, SerialNode.USIC_SUSIC);
+        SerialNode d = new SerialNode(4, SerialNode.USIC_SUSIC,stcs);
         d.setNumBitsPerCard(32);
         d.setCardTypeByAddress(0, SerialNode.INPUT_CARD);
         d.setCardTypeByAddress(1, SerialNode.OUTPUT_CARD);
@@ -176,7 +181,7 @@ public class SerialAddressTest extends TestCase {
         d.setCardTypeByAddress(4, SerialNode.INPUT_CARD);
         d.setCardTypeByAddress(5, SerialNode.OUTPUT_CARD);
         
-        SerialNode c = new SerialNode(10, SerialNode.SMINI);
+        SerialNode c = new SerialNode(10, SerialNode.SMINI,stcs);
         Assert.assertNotNull("exists", c);
         Assert.assertTrue("valid config CL4007", SerialAddress.validSystemNameConfig("CL4007", 'L'));
         Assert.assertTrue("valid config CL4B7", SerialAddress.validSystemNameConfig("CL4B7", 'L'));
