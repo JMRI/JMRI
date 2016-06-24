@@ -3,6 +3,11 @@ language: java
 # The next line forces Travis out of the containerized servers, fixing JMRI/JMRI #773
 sudo: true
 
+addons:
+  apt:
+    packages:
+    - graphviz
+
 before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
