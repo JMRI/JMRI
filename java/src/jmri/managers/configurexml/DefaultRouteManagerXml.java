@@ -47,6 +47,7 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                 String sname = iter.next();
                 if (sname == null) {
                     log.error("System name null during store");
+                    break;
                 }
                 log.debug("system name is " + sname);
                 Route r = tm.getBySystemName(sname);
