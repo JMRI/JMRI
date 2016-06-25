@@ -3,7 +3,7 @@
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
 <!-- $Id$ -->
- <!--Translated by Herv&#233; Blorec le 2013-08-30 -->
+<!-- Translated by Herv&#233. BLOREC <bzh56420@yahoo.fr> on 2016-06-24 -->
 <title>JMRI: DecoderPro User Guide - Configuration Files</title>
 
 <!-- Style -->
@@ -22,69 +22,98 @@
 <div id="mainContent">
 
 
-<H1>Guide Utilisateur DecoderPro - Fichiers de Configuration</H1>
+<H1>JMRI: Guide Utilisateur DecoderPro</H1> 
+<H2>Fichiers de Configuration</H2>
 
-<p>Cette section tente de r&#233;pondre &#224; la question de savoir ce que contiennent les fichiers de configuration et o&#249; sont-ils localis&#233;s?
+<p>Cette section tente de r&#233;pondre &#224; la question de savoir ce que contiennent les fichiers de configuration et 
+o&#249; sont-ils localis&#233;s?
 </p>
 
 <dl>
-<A name="location">
-<dt class=left>Localisation des fichiers de configuration</dt></a>
-<dd class=first>
-Il y a deux endroits o&#249; les fichiers de configuration peuvent &#234;tre trouv&#233;s:
-<ol>
-<li>Le r&#233;pertoire utilisateur preferences JMRI et ses sous-r&#233;pertoires. A chercher en premier pour n'importe quels fichiers n&#233;cessaires.Vous devez mette ici toutes les versions de fichiers localement modifi&#233;es pour qu'elles ne soient pas &#233;cras&#233;es par une nouvelle version de programme. Tous les fichiers que le programme &#233;crit pour contenir des informations locales, exemple le liste de Fiches, sont aussi &#233;crites ici. 
-<p>
-La localisation varie suivant le type d'ordinateur.  
-La mani&#232;re la plus ais&#233;e pour la trouver est de d&#233;marrer un programme JMRI, exemple DecoderPro ou PanelPro et s&#233;lectionner "Localisation....." depuis le menu "Aide.
+	<A name="location">
+	<dt class=left>Localisation des Fichiers de Configuration</dt></a>
+	<dd class=first>
+	Il y a deux endroits o&#249; les fichiers de configuration peuvent &#234;tre trouv&#233;s:
+		<ol>
+		<li>Les versions initialement distribu&#233;es des Fichiers de Configuration de JMRI sont dans un 
+		r&#233;pertoire "xml" dans la paquet de l'application JMRI et ses sous-r&#233;pertoires. Notez que ce que 
+		vous modidifirez ici sera perdu lors d'une actualisation de JMRI vers une version plus r&#233;cente.<br>
+		L'application JMRI est install&#233; dans votre dossier Programmes par d&#233;faut.
 
-<p>
-Un petit cadeau pour les utilisateurs Windows, si vous allez dans le Menu de D&#233;marrage Windows, dans la section JMRI, vous pouvez s&#233;lectionner "Preferences" pour qu'il ouvre le r&#233;pertoire pour vous.
+			<li> Le r&#233;pertoire utilisateur JMRI Preferences et ses sous r&#233;pertoires a aussi son 
+			importance.
+			JMRI regarde d'abord ici pour tous les fichiers dont il a besoin.<br>
+			Vous popurrez mettre les versions des fichiers
+			modifi&#233;es localement et elles ne seront pas &#233;cras&#233;es lors d'une actualisation de JMRI.
+			Les fichiers que le programme &#233;crit pour contenir localement
+			les informations, exemple: les fichiers des entr&#233;es Inventaire et Panneaux sont aussi &#233;crit 
+			ici.
+			<br>
+			L'emplacement par d&#233;faut des Preferences utilisateur, il d&#233;pend du syst&#232;me 
+			d'exploitation.
+			Normalement, il est localis&#233;:
+				<ul>
+				<li> sur une machine Linux, chercher un r&#233;pertoire .jmri dans votre 
+				r&#233;pertoire home.
+				</li>
+				<li> Sur un Mac OS X, les Preferences sont stock&#233;es desn un 
+				dossier "JMRI" dans le dossier /User/me/Libairy/Preferences/.
+				<li> Sur Windows, il peut &#234;tre dans des endroits d&#233;pendant 
+				de la version de windows que vous utilisez et si vous avez 
+				de multiples utilisateurs configur&#233;s. Commencez par regarder 
+				dans "Documents" ou "Users Documents" ou "Users and Documents". 
+				Recherchez un dossier appel&#233; "JMRI".
+				</li>
+				</ul>		
+			
+			<p> La m&#233;thode la plus facile pour le trouver est de d&#233;marrer un programme JMRI, 
+			ex: DecoderPro ou PanelPro et de s&#233;lectionner "Emplacements.." dans le menu "Aide".
+			Un petit cadeau pour les utilisateurs de Windows: si vous allez dans le menu D&#233;marrer,
+			dans la section JMRI, vous pouvez s&#233;lectionner "Preferences" pour le voir ouvrir
+			le repertoire pour vous.
+			<p>Vous pouvez d&#233;finir ou changerl'emplacement des scripts et les fichiers utilisateurs dans le
+			panneau	<a href="../../../package/apps/TabbedPreferences.shtml#FileLocations">
+			Preferences... -&gt; File Locations</a> . Notez que le changement de "User Files Location"
+			changera aussi l'emplacement par d&#233;faut pour Panels, Rosters, etc.
+			</li>
+			</0l>
 
-<p>
-Normalement, il est localis&#233;.
-<ul>
-<li>Sur une machine Linux, regarder pour avoir un r&#233;pertoire .jmri dans votre r&#233;pertoire home.
+		</dd>
+		<dt class="left">Types de fichiers de Configuration</dt>
+		<dd>
+		&#192; l'int&#233;rieur de votre dossier Preferences JMRI il y a un nombre de types de fichiers
+		de configuration utilis&#233; par DecoderPro:
+			<ul>
+			<li> Decoder definitions - Stock&#233; dans le sous-r&#233;pertoire <strong>decoder</strong> un 
+			pour tous les d&#233;codereurs personnalis&#233;s; d&#233;finit comment est configur&#233;e une 
+			famille sp&#233;cifique de d&#233;codeurs.
+			<li> Locomotive configurations - Stock&#233; dans le sous-r&#233;pertoire <strong>roster</strong>, un 
+			pour chaque locomotive; ceux-ci enregistrent la configuration sp&#233;cifique de chaque locomotive 
+			dans votre Inventaire.
+			<li> Programmer definitions- Stock&#233; dans le sous- r&#233;pertoire <strong>Programmer
+			</strong> quand vous avez utilis&#233; au moins un programmateur; ceux-ci d&#233;finissent 
+			les formats pour les feuilles de programmations vari&#233;es qui sont disponibles dans DecoderPro
+			<li>Le Dossier DecoderPro, contient vos profils.
+			</ul>
+		</dd>
 
-<li>Sur Mac OS X, les preferences sont stock&#233;es dans un r&#233;pertoire "JMRI" dans le dossier Library/Preferences dans votre r&#233;pertoire utilisateur.
+		<dt class="left">Fichiers de Configuration G&#233;n&#233;rale</dt>
+		<dd>
+		Il y a beaucoup plus de fichiers de configuration JMRI, quelques'uns partag&#233;s par des applications, qui 
+		se trouvent dans r&#233;pertoire Preferences utilisateur: 
+			<ul>
+			<li><tt>roster.xml</tt> - un index de vos Locomotives
+			<li><tt>decoderIndex.xml</tt> - un index des fichiers de d&#233;finitions de d&#233;codeurs 
+			disponibles. Il contient aussi les informations sur quel mod&#232;le de d&#233;codeur sp&#233;cifique 
+			qui utilise quel fichier, comment les identifier, et quelles options ils mettent en &#339;uvre.
+			<li><tt>names.xml</tt> - non utilis&#233; durant les op&#233;rations normales, c'est une liste de 
+			noms standards de variables pour &#234;tre utilis&#233;s dans un programmateur de d&#233;finitions .
+			</ul>
+		</dd>
+</dl>			
 
-<li>Sur Windows, ce peut &#234;tre un nombre de places d&#233;pendant de la version de Windows que vous utilisez et si vous avez plusieurs utilisateurs de configur&#233;s. D&#233;marrer en regardant sous "Documents"
-ou "User Documents" ou "Users and Documents".  Vous devez chercher un dossier appel&#233; "JMRI".
-
-</ul>
-Si vous l'avez chercher vous-m&#234;me, en opposition de la recherche par le programme, Assurez vous de trouver le r&#233;pertoire pr&#233;f&#233;rence , <em>et non</em> le package de l'application originale. Ils sont garder s&#233;par&#233;s pour simplifier la mise &#224; jour des versions du programme.
-
-Vous saurez si vous avez trouv&#233; le bon emplacement si vous voyez les fichiers preference qui stockent les r&#233;glages de vos applications:
-<tt>DecoderProConfig2.xml</tt>, <tt>JmriDemoConfig2.xml</tt> et/ou
-<tt>LocoToolsConfig2.xml</tt>. Vous pouvez aussi chercher un de ces fichiers pour trouver ce r&#233;pertoire
-
-<li>Les versions originales distribu&#233;es de ces fichiers sont contenues dans un r&#233;pertoire 'xml' dans le package application et ses sous-r&#233;pertoires.
-Tout ce que vous modifierez ici sera perdu lors d'une mise &#224; jour du programme vers une nouvelle version.
-</ol>
-</dd>
-
-<dt class=left>Types de fichiers de configuration.</dt>
-<dd>
-Au sein de ces deux emplacements, il y a un nombre de types de fichiers de configuration:
-<ul>
-<li>Decoder definitions - Stock&#233;s dans le sous-r&#233;pertoire "decoders",ils d&#233;finissent comment est configur&#233; une famille de d&#233;codeurs.
-<li>Programmer definitions - Stock&#233;s dans le sous-r&#233;pertoire 'programmers', ils d&#233;finissent le format pour les feuilles vari&#233;es de programmations qui sont disponibles dans Decoder Pro.
-<li>Locomotive configurations - Stock&#233;s dans le sous-r&#233;pertoire "roster", ils enregistrent les configurations sp&#233;cifiques de chaque locomotive dans votre liste.
-</ul>
-</dd>
-
-<dt class=left>Fichier G&#233;neral Config </dt>
-<dd>
-il ya aussi quelques fichiers de configuration g&#233;n&#233;rale, qui se trouvent dans le .XML de niveau sup&#233;rieur ou le r&#233;pertoire prefs:
-<ul>
-<li><tt>roster.xml</tt> - un index de vos locomotives
-<li><tt>decoderIndex.xml</tt> - un index des fichiers de d&#233;finitions de d&#233;codeurs disponibles. Il contient aussi les informations sur le mod&#232;le de d&#233;codeur sp&#233;cifique qui utilise ce fichier, comment les identifier, et quelles options ils mettent en œuvre.
-<li><tt>names.xml</tt> - non utilis&#233; durant les op&#233;rations normales, c'est une liste de noms standards de variables pour &#234;tre utilis&#233;s dans un programmateur de d&#233;finitions .
-</ul>
-</dd>
-</dl>
-
-    
+Plus d'information au sujet des Fichiers de Configuration JMRI <a href="../../setup/Files.shtml">Fichiers de Configuration 
+JMRI</a>      
 <!--#include virtual="/Footer" -->
 </div>
 </body>
