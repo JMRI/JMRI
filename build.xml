@@ -1398,6 +1398,7 @@
            version="false"
            package="yes"
            use="true"
+           failonerror="true"
            windowtitle="JMRI API">
             <packageset dir="${source}" defaultexcludes="yes">
                 <include name="jmri/**"/>
@@ -1406,11 +1407,9 @@
             <packageset dir="${tmptarget}" defaultexcludes="yes">
                 <include name="jmri/**"/>
             </packageset>
-            <arg value="-Xdoclint:all,-missing,-accessibility"/> <!-- dropping some 1.8 warnings -->
+            <arg value="-Xdoclint:all,-missing"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
-            <arg value="500"/><!-- change from default 100 warnings -->
-            <arg value="-Xmaxerrs"/>
-            <arg value="500"/><!-- change from default 100 errors -->
+            <arg value="6000"/><!-- change from default 100 warnings -->
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
             <tag name="navassoc" enabled="false"/>
 
@@ -1541,6 +1540,7 @@
 
     <taskdef name="plantuml" classname="net.sourceforge.plantuml.ant.PlantUmlTask" classpath="${libdir}/plantuml.jar" />
 
+    <!-- Requires Graphviz from http://www.graphviz.org -->
     <target name="plantuml">
         <plantuml output="${doctarget}" >
         <fileset dir="${source}">
