@@ -88,10 +88,6 @@ public class ActiveSystemsMenu extends JMenu {
             m.add(getMenu("jmri.jmrix.sprog.SPROGCSMenu"));
         }
 
-        if (jmri.jmrix.srcp.ActiveFlag.isActive()) {
-            m.add(getMenu("jmri.jmrix.srcp.SystemMenu"));
-        }
-
         if (jmri.jmrix.tmcc.ActiveFlag.isActive()) {
             m.add(getMenu("jmri.jmrix.tmcc.TMCCMenu"));
         }
