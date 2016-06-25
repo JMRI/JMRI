@@ -1,34 +1,31 @@
-// PacketGenAction.java
-package jmri.jmrix.srcp.packetgen;
+package jmri.jmrix.srcp.swing.packetgen;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.jmrix.srcp.SRCPSystemConnectionMemo;
 
 /**
  * Swing action to create and register a PacketGenFrame object
  *
  * @author Bob Jacobsen Copyright (C) 2008
- * @version $Revision$
  */
 public class PacketGenAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1418153814604159539L;
+    private SRCPSystemConnectionMemo _memo = null;
 
-    public PacketGenAction(String s) {
+    public PacketGenAction(String s,SRCPSystemConnectionMemo memo) {
         super(s);
+        _memo = memo;
     }
 
-    public PacketGenAction() {
-        this("Generate SRCP message");
+    public PacketGenAction(SRCPSystemConnectionMemo memo) {
+        this("Generate SRCP message",memo);
     }
 
     public void actionPerformed(ActionEvent e) {
-        PacketGenFrame f = new PacketGenFrame();
+        PacketGenFrame f = new PacketGenFrame(_memo);
         try {
             f.initComponents();
         } catch (Exception ex) {
@@ -38,6 +35,3 @@ public class PacketGenAction extends AbstractAction {
     }
     private final static Logger log = LoggerFactory.getLogger(PacketGenAction.class.getName());
 }
-
-
-/* @(#)PacketGenAction.java */
