@@ -39,7 +39,7 @@ met une nouvelle série de valeurs dans l'affichage
 en demandant à Java d'exécuter un nettoyage de cMemory Monitor Toolollection
 <li> "Test" - Exécuter un test de l'allocation de mémoire et processus de collecte (pas nécessaire
 pour les utilisateurs réguliers)
-</ ul>
+</ul>
     
 <p>
 La partie supérieure affiche des informations sur la mémoire.

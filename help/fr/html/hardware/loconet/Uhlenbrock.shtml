@@ -1,5 +1,4 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- UpDated  by Blorec Herv&#233;  2013-09-14-->
 <html lang="fr">
 <head>
@@ -32,7 +31,6 @@
       Guide Installation JMRI: Uhlenbrock Intellibox via Port S&#233;rie
       </H1>
 
-
 <P>DecoderPro peut communiquer avec une
 <a href="http://www.uhlenbrock.de/3/index.htm"> Uhlenbrock Intellibox </a>
 via le port s&#233;rie int&#233;gr&#233; et le protocole LocoNet&reg;.
@@ -43,8 +41,6 @@ Configurer les options de votre Intellibox Uhlenbrock &#224;:
 <LI> SO 2 de valeur 4 (S&#233;lectionner LocoNet protocole dans l'interface)
 <LI> SO 5 valeur 1 (Utilisation 1 bit d'arr&#234;t sur le port s&#233;rie)
 <LI> SO 6 valeur 255 (CTS jamais mis erreurs dues &#224; un appui sur un bouton d'arr&#234;t)
-
-
 <LI>Vitesse de transmission: 19200
 </UL>
 
@@ -56,25 +52,24 @@ Ensuite, d&#233;marrez le programme JMRI et le configurer pour:
 <LI> S&#233;lectionnez 19200 bauds
 <LI> S&#233;lectionnez mat&#233;riels Handshaking 
 </UL>
+
 <H1>
-       JMRI Guide d'installation: Uhlenbrock Intellibox II et IB-COM via l'interface USB
-       </H1>
+JMRI Guide d'installation: Uhlenbrock Intellibox II et IB-COM via l'interface USB
+</H1>
 <P> JMRI peut communiquer avec une centrale Intellibox II Uhlenbrock et IB-COM
 via l'interface int&#233;gr&#233;e USB en utilisant le protocole LocoNet.
-
-<p>
-<UL>
-<LI>D&#233;marrer JMRI ou un autre programme et le configurer pour:
-<UL>
-<LI> <b> Fabricant: </b> Uhlenbrock,
-<li> <b> Syst&#232;me: </b> Uhlenbrock LocoNet Implementation
-<LI> Choisissez votre port
-</ Ul>
-</ Ul>
-<p> LocoNet&reg; est une marque d&#233;pos&#233;e de <a href="http://www.digitrax.com"> Digitrax, Inc. </ a> </ p>
-     </ div>
-   </ div>
+    <ul>
+    <LI>D&#233;marrer JMRI ou un autre programme et le configurer pour:
+        <ul>
+        <LI> <b> Fabricant: </b> Uhlenbrock,
+        <li> <b> Syst&#232;me: </b> Uhlenbrock LocoNet Implementation
+        <LI> Choisissez votre port
+        </ul>
+    </ul>
+<p>LocoNet&reg; est une marque d&#233;pos&#233;e de <a href="http://www.digitrax.com"> Digitrax, Inc. </ a> </ p>
 
 <!--#include virtual="/Footer" -->
+</div>
+</div>
 </body>
 </html>

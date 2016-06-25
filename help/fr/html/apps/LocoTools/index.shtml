@@ -1,10 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- UpDated by Blorec Herv&#233; le 2013-09-01; et Egbert Broerse; le 2015-10-19 -->
 <html lang="fr">
 <head>
     <title>
- 	JMRI: LocoNet Tools
+ 	JMRI: LocoNet&trade; Outils
     </title>
     <meta name="Author"content="Bob Jacobsen">
     <meta name="keywords" content="Digitrax LocoNet Tools JMRI decoderpro dcc nmra">
@@ -17,6 +16,7 @@
   <link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
+
 <body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->

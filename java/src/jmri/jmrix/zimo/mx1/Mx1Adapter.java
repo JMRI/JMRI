@@ -265,6 +265,10 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
     private boolean opened = false;
     InputStream serialStream = null;
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static public Mx1Adapter instance() {
         if (mInstance == null) {
             mInstance = new Mx1Adapter();

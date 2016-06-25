@@ -40,7 +40,7 @@ abstract public class AbstractActionModelFactory implements StartupModelFactory 
 
     /**
      * Get the message text for the dialog created in
-     * {@link #editModel(apps.StartupModel, java.awt.Component)}.
+     * {@link #editModel(apps.startup.StartupModel, java.awt.Component)}.
      *
      * @return the message text
      */
@@ -94,36 +94,43 @@ abstract public class AbstractActionModelFactory implements StartupModelFactory 
     }
 
     private JPanel getDialogMessage(JList<String> actions, JComboBox<String> connections) {
+        JLabel connectionsLabel = new JLabel(Bundle.getMessage("AbstractActionModelFactory.getDialogMessage.connectionsLabel", JLabel.LEADING)); // NOI18N
         actions.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
-            connections.removeAllItems();
-            connections.setEnabled(false);
-            String name = StartupActionModelUtil.getDefault().getNames()[e.getFirstIndex()];
-            if (name != null) {
-                String className = StartupActionModelUtil.getDefault().getClassName(name);
-                if (className != null && StartupActionModelUtil.getDefault().isSystemConnectionAction(className)) {
-                    try {
-                        Action action = (Action) Class.forName(className).newInstance();
-                        if (SystemConnectionAction.class.isAssignableFrom(action.getClass())) {
-                            ((SystemConnectionAction) action).getSystemConnectionMemoClasses().stream().forEach((clazz) -> {
-                                InstanceManager.getList(SystemConnectionMemo.class).stream().forEach((memo) -> {
-                                    if (clazz.isAssignableFrom(memo.getClass())) {
-                                        connections.addItem(memo.getUserName());
-                                        connections.setEnabled(true);
-                                    }
+            if (!e.getValueIsAdjusting()) {
+                connections.removeAllItems();
+                connections.setEnabled(false);
+                connectionsLabel.setEnabled(false);
+                String name = actions.getSelectedValue();
+                if (name != null) {
+                    String className = StartupActionModelUtil.getDefault().getClassName(name);
+                    if (className != null && StartupActionModelUtil.getDefault().isSystemConnectionAction(className)) {
+                        try {
+                            Action action = (Action) Class.forName(className).newInstance();
+                            if (SystemConnectionAction.class.isAssignableFrom(action.getClass())) {
+                                ((SystemConnectionAction) action).getSystemConnectionMemoClasses().stream().forEach((clazz) -> {
+                                    InstanceManager.getList(SystemConnectionMemo.class).stream().forEach((memo) -> {
+                                        if (clazz.isAssignableFrom(memo.getClass())) {
+                                            connections.addItem(memo.getUserName());
+                                            connections.setEnabled(true);
+                                            connectionsLabel.setEnabled(true);
+                                        }
+                                    });
                                 });
-                            });
+                            }
+                        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+                            log.error("Unable to create Action", ex);
                         }
-                    } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
-                        log.error("Unable to create Action", ex);
                     }
                 }
             }
         });
         connections.setEnabled(false);
+        connectionsLabel.setEnabled(false);
         JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.add(new JLabel(this.getEditModelMessage()));
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        panel.add(new JLabel(this.getEditModelMessage(), JLabel.LEADING));
         panel.add(new JScrollPane(actions));
+        panel.add(connectionsLabel);
         panel.add(connections);
         return panel;
     }

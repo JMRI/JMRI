@@ -28,7 +28,6 @@ import org.slf4j.LoggerFactory;
  * Represents a location on the layout
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2012, 2013
- * @version $Revision$
  */
 public class Location implements java.beans.PropertyChangeListener {
 

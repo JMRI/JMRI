@@ -960,7 +960,11 @@ public class RouteTableAction extends AbstractTableAction {
                 status1.setText(Bundle.getMessage("RouteAddStatusEnter"));
                 return null;
             }
-            g = jmri.InstanceManager.routeManagerInstance().provideRoute(sName, uName);
+            try {
+                g = jmri.InstanceManager.routeManagerInstance().provideRoute(sName, uName);
+            } catch (IllegalArgumentException ex) {
+                g = null; // for later check
+            }
         }
         if (g == null) {
             // should never get here

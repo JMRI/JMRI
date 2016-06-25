@@ -2,7 +2,8 @@ package jmri;
 
 import java.util.ArrayList;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.CheckForNull;
 
 /**
  * Provides common services for classes representing objects on the layout, and
@@ -48,9 +49,10 @@ public interface NamedBean {
      * User's identification for the item. Bound parameter so manager(s) can listen
      * @return null if not set
      */
-    public @Nullable String getUserName();
+    @CheckReturnValue
+    public @CheckForNull String getUserName();
 
-    public void setUserName(@Nullable String s);
+    public void setUserName(@CheckForNull String s);
 
     /**
      * Get a system-specific name. This encodes the hardware addressing
@@ -58,6 +60,7 @@ public interface NamedBean {
      * 
      * @return the system-specific name.
      */
+    @CheckReturnValue
     public @Nonnull String getSystemName();
 
     /**
@@ -65,6 +68,7 @@ public interface NamedBean {
      * 
      * @return the user name or system-specific name
      */
+    @CheckReturnValue
     public @Nonnull String getDisplayName();
 
     /**
@@ -73,6 +77,7 @@ public interface NamedBean {
      * 
      * @return <code>UserName (SystemName)</code> or <code>SystemName</code>
      */
+    @CheckReturnValue
     public @Nonnull String getFullyFormattedDisplayName();
 
     /**
@@ -93,12 +98,12 @@ public interface NamedBean {
      */
     public void addPropertyChangeListener(@Nonnull java.beans.PropertyChangeListener l, String name, String listenerRef);
 
-    public void addPropertyChangeListener(@Nullable java.beans.PropertyChangeListener l);
+    public void addPropertyChangeListener(@CheckForNull java.beans.PropertyChangeListener l);
 
     /**
      * Remove a request for a call-back when a bound property changes.
      */
-    public void removePropertyChangeListener(@Nullable java.beans.PropertyChangeListener l);
+    public void removePropertyChangeListener(@CheckForNull java.beans.PropertyChangeListener l);
 
     public void updateListenerRef(@Nonnull java.beans.PropertyChangeListener l, String newName);
 
@@ -110,6 +115,7 @@ public interface NamedBean {
      * @param l the listener of interest
      * @return the textual reference
      */
+    @CheckReturnValue
     public String getListenerRef(@Nonnull java.beans.PropertyChangeListener l);
 
     /**
@@ -117,6 +123,7 @@ public interface NamedBean {
      * 
      * @return a list of textual references
      */
+    @CheckReturnValue
     public ArrayList<String> getListenerRefs();
 
     /**
@@ -125,6 +132,7 @@ public interface NamedBean {
      * 
      * @return the number of listeners.
      */
+    @CheckReturnValue
     public int getNumPropertyChangeListeners();
 
     /**
@@ -135,6 +143,7 @@ public interface NamedBean {
      *             registered as referencing this namedBean
      * @return empty list if none
      */
+    @CheckReturnValue
     public @Nonnull java.beans.PropertyChangeListener[] getPropertyChangeListenersByReference(@Nonnull String name);
 
     /**
@@ -177,13 +186,15 @@ public interface NamedBean {
      * 
      * @return the state
      */
+    @CheckReturnValue
     public int getState();
 
     /**
      * Get associated comment text.
      * @return null if no comment
      */
-    public @Nullable String getComment();
+    @CheckReturnValue
+    public @CheckForNull String getComment();
 
     /**
      * Set associated comment text.
@@ -192,7 +203,7 @@ public interface NamedBean {
      *
      * @param comment Null means no comment associated.
      */
-    public void setComment(@Nullable String comment);
+    public void setComment(@CheckForNull String comment);
 
     /**
      * Attach a key/value pair to the NamedBean, which can be retrieved later.
@@ -209,7 +220,8 @@ public interface NamedBean {
      * that key, returns null.
      * @return The value of the property or null.
      */
-    public @Nullable Object getProperty(@Nonnull String key);
+    @CheckReturnValue
+    public @CheckForNull Object getProperty(@Nonnull String key);
 
     /**
      * Remove the key/value pair against the NamedBean.
@@ -220,6 +232,7 @@ public interface NamedBean {
      * Retrieve the complete current set of keys.
      * @return empty set if none
      */
+    @CheckReturnValue
     public @Nonnull java.util.Set<String> getPropertyKeys();
 
     /**
@@ -228,6 +241,7 @@ public interface NamedBean {
      *
      * @return a string of the bean type, eg Turnout, Sensor etc; never null
      */
+    @CheckReturnValue
     public @Nonnull String getBeanType();
 }
 

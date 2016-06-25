@@ -4621,7 +4621,11 @@ public class LogixTableAction extends AbstractTableAction {
                     return name;
                 }
             }
-            h = InstanceManager.signalMastManagerInstance().provideSignalMast(name);
+            try {
+                h = InstanceManager.signalMastManagerInstance().provideSignalMast(name);
+            } catch (IllegalArgumentException ex) {
+                h = null; // tested below
+            }
         }
         if (h == null) {
             messageInvalidActionItemName(name, "SignalMast"); //NOI18N

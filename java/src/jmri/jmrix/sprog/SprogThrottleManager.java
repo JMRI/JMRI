@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * Updated by Andrew Crosland February 2012 to enable 28 step speed packets</P>
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version $Revision$
  */
 public class SprogThrottleManager extends AbstractThrottleManager {
 
@@ -28,8 +27,16 @@ public class SprogThrottleManager extends AbstractThrottleManager {
         mInstance = this;
     }
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static private SprogThrottleManager mInstance = null;
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static public SprogThrottleManager instance() {
         return mInstance;
     }

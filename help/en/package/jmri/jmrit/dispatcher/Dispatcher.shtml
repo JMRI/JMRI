@@ -228,8 +228,7 @@ created or edited in the
 <H2>The Dispatcher Window</H2>
 
 <p>The <b>Dispatcher</b> window is opened when <b>Dispatcher...</b> is selected 
-in the JMRI <b>Tools</b> menu. It is also accessible from the LocoTools "Dispatcher" menu:<br>
-<img src="images/DispatcherMenu413.png" height="76" width="609"></p>
+in the JMRI <b>Tools</b> menu.</p>
 <p>
 It displays a table of <b>Active Trains</b> and 
 their status, and a table of pending <b>Allocation Requests</b>. It provides 

@@ -154,7 +154,7 @@ Pour v&#233;rifier votre travail:
 <LI> Choisissez votre langue dans la zone "Locale" de la liste d&#233;roulante,
 <LI> Cliquez sur "Enregistrer", quitter et red&#233;marrer
 <li> Vous devez imm&#233;diatement voir les articles que vous avez traduit.
-</ OL>
+</OL>
 <P>
 S'il ya un probl&#232;me &#224; ce stade, v&#233;rifier pour voir quel est le langage
 figurant sur l'&#233;cran de d&#233;marrage de l'application.
@@ -228,10 +228,10 @@ Pour que l' internationalisation fonctionne, vous devez faire quelques choses da
 vous &#233;crivez.
 <p>
 Quelques r&#233;f&#233;rences Web sur la fa&#231;on de le faire:
-<UL>
+<ul>
 <li> <a HREF="http://java.sun.com/docs/books/tutorial/i18n/index.html"> Sun internationalisation tutoriel </a> (fortement recommand&#233;)
 <li> <a HREF="http://java.sun.com/j2se/1.3/docs/guide/intl/faq.html"> Sun internationalisation FAQ </a>
-</ Ul>
+</ul>
 
 <P>
 JMRI se dirige vers un ensemble de conventions sur la fa&#231;on de structurer et
