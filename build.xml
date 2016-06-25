@@ -1416,7 +1416,7 @@
             <packageset dir="${tmptarget}" defaultexcludes="yes">
                 <include name="jmri/**"/>
             </packageset>
-            <arg value="-Xdoclint:all"/>
+            <arg value="-Xdoclint:all,-missing"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
             <arg value="6000"/><!-- change from default 100 warnings -->
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
