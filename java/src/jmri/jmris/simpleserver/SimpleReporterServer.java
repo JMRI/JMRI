@@ -66,9 +66,13 @@ public class SimpleReporterServer extends AbstractReporterServer {
             // setReporterReport ALSO triggers sending the status report, so 
             // no further action is required to echo the status to the client.
         } else {
-           // send the current status if the report
-           Reporter reporter = InstanceManager.reporterManagerInstance().provideReporter(reporterName);
-           sendReport(reporterName, reporter.getCurrentReport());
+            // send the current status if the report
+            try {
+               Reporter reporter = InstanceManager.reporterManagerInstance().provideReporter(reporterName);
+               sendReport(reporterName, reporter.getCurrentReport());
+            } catch (IllegalArgumentException ex) {
+                log.warn("Failed to provide Reporter \"{}\" in parseStatus", reporterName);
+            }
         }
     }
 
@@ -79,4 +83,6 @@ public class SimpleReporterServer extends AbstractReporterServer {
             this.connection.sendMessage(message);
         }
     }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SimpleReporterServer.class.getName());
 }

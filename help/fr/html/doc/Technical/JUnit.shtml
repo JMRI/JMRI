@@ -142,11 +142,13 @@ tests JUnit puissent les regarder avant de les transmettre dans le rapport. Il y
 faire en sorte que log4j soit bien initialis&#233;, et que l'appender personnalis&#233; dialogue quand un test commence et se termine.
 <CODE> <PRE>
      // La configuration minimale pour log4j
-    protected void  setUp() throws Exception {
-         apps.tests.Log4JFixture.setUp ();
+     @Override
+     protected void  setUp() throws Exception {
          super.setUp ();
+         apps.tests.Log4JFixture.setUp ();
      }
-      protected void tearDown () throws Exception {
+     @Override
+     protected void tearDown () throws Exception {
          super.tearDown ();
          apps.tests.Log4JFixture.tearDown ();
      }
