@@ -60,7 +60,7 @@ public class TamsTurnout extends AbstractTurnout
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Only used during creation of 1st turnout")
     private void initFeedbackModes() {
-        log.info("*** initFeedbackModes ***");
+        //log.info("*** initFeedbackModes ***");
         if (_validFeedbackNames.length != _validFeedbackModes.length) {
             log.error("int and string feedback arrays different length");
         }
@@ -99,7 +99,7 @@ public class TamsTurnout extends AbstractTurnout
 
     // Handle a request to change state by sending a turnout command
     protected void forwardCommandChangeToLayout(int s) {
-        log.info("*** forwardCommandChangeToLayout ***");
+        //log.info("*** forwardCommandChangeToLayout ***");
         // implementing classes will typically have a function/listener to get
         // updates from the layout, which will then call
         //		public void firePropertyChange(String propertyName,
@@ -181,7 +181,7 @@ public class TamsTurnout extends AbstractTurnout
      * @param closed State of the turnout to be sent to the command station
      */
     protected void sendMessage(boolean closed) {
-        log.info("*** sendMessage ***");
+        //log.info("*** sendMessage ***");
         if (getInverted()) {
             closed = !closed;
         }
@@ -193,7 +193,7 @@ public class TamsTurnout extends AbstractTurnout
 
     // to listen for status changes from Tams system
     public void reply(TamsReply m) {
-        log.info("*** TamsReply ***");
+        //log.info("*** TamsReply ***");
         log.info(Integer.toString(m.match("T")));
         log.info(Integer.toString(m.match("ERROR")));
         String msg = m.toString();
@@ -215,7 +215,7 @@ public class TamsTurnout extends AbstractTurnout
 
     protected void pollForStatus() {
         if (_activeFeedbackType == MONITORING) {
-            log.info("*** pollForStatus ***");
+            //log.info("*** pollForStatus ***");
             //if we received an update last time we send a request again, but if we did not we shall skip it once and try again next time.
             if (updateReceived) {
                 updateReceived = false;
@@ -230,7 +230,7 @@ public class TamsTurnout extends AbstractTurnout
 
     @Override
     public void setFeedbackMode(int mode) throws IllegalArgumentException {
-        log.info("*** setFeedbackMode ***");
+        //log.info("*** setFeedbackMode ***");
         TamsMessage m = new TamsMessage("xT " + _number + ",,1");
         if (mode == MONITORING) {
             tc.addPollMessage(m, this);
@@ -241,12 +241,12 @@ public class TamsTurnout extends AbstractTurnout
     }
 
     public void message(TamsMessage m) {
-        log.info("*** message ***");
+        //log.info("*** message ***");
         // messages are ignored
     }
 
     public void dispose() {
-        log.info("*** dispose ***");
+        //log.info("*** dispose ***");
         TamsMessage m = new TamsMessage("xT " + _number + ",,1");
         tc.removePollMessage(m, this);
         super.dispose();

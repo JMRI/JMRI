@@ -236,10 +236,6 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
 
     protected void throttleDispose() {
         active = false;
-        //A poll message get's added by the first throttle
-        //Duplicates are not put in the queue
-        //We don't stop polling when a throttle closes
-        //Only remove the binary polling message
         tm = TamsMessage.getXEvtLok();
         tc.removePollMessage(tm, this);
     }
@@ -264,7 +260,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
     }
 
     public void reply(TamsReply tr) {
-        log.info("*** Loco reply ***");
+        //log.info("*** Loco reply ***");
         if(tmq.isEmpty()){
             tm = myDummy();
         } else
@@ -292,83 +288,114 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
             int msb = tr.getElement(3) & 0x3F;
             int lsb = tr.getElement(2) & 0xFF;
             int receivedAddress = msb * 256 + lsb;
-            log.info("reply = " + jmri.util.StringUtil.appendTwoHexFromInt(tr.getElement(4) & 0xFF, "") + " " + jmri.util.StringUtil.appendTwoHexFromInt(tr.getElement(3) & 0xFF, "") + " " + jmri.util.StringUtil.appendTwoHexFromInt(tr.getElement(2) & 0xFF, "") + " " + jmri.util.StringUtil.appendTwoHexFromInt(tr.getElement(1) & 0xFF, "") + " " + jmri.util.StringUtil.appendTwoHexFromInt(tr.getElement(0) & 0xFF, ""));
+            //log.info("reply for loco = " + receivedAddress);
+            //log.info("reply = " + jmri.util.StringUtil.appendTwoHexFromInt(tr.getElement(4) & 0xFF, "") + " " + jmri.util.StringUtil.appendTwoHexFromInt(tr.getElement(3) & 0xFF, "") + " " + jmri.util.StringUtil.appendTwoHexFromInt(tr.getElement(2) & 0xFF, "") + " " + jmri.util.StringUtil.appendTwoHexFromInt(tr.getElement(1) & 0xFF, "") + " " + jmri.util.StringUtil.appendTwoHexFromInt(tr.getElement(0) & 0xFF, ""));
             if (receivedAddress == address.getNumber()){//If correct address then decode the content
                 //log.info("Is my address");
                 try {
+                    StringBuilder sb = new StringBuilder();
                     Float newSpeed = Float.valueOf(floatSpeed(tr.getElement(0)));
                     super.setSpeedSetting(newSpeed);
-                    log.info("f0 = " + (tr.getElement(3) & 0x40 ));
-                    if (((tr.getElement(3) & 0x40 ) == 64) && !this.f0) {
+                    //log.info("f0 = " + (tr.getElement(3) & 0x40 ));
+                    if ((((tr.getElement(3) & 0x40 ) == 64)) && !this.f0) {
                         notifyPropertyChangeListener(Throttle.F0, this.f0, true);
+                        sb.append("f0 ");
                         this.f0 = true;
-                    } else if (((tr.getElement(3) & 0x40 ) == 0) && this.f0) {
+                    }
+                    if (((tr.getElement(3) & 0x40 ) == 0) && this.f0) {
                         notifyPropertyChangeListener(Throttle.F0, this.f0, false);
+                        sb.append("0f ");
                         this.f0 = false;
                     }
-                    if (((tr.getElement(3) & 0x80 ) == 0) && isForward) {
+                    if (((tr.getElement(3) & 0x80 ) == 0)&& isForward) {
                         notifyPropertyChangeListener("IsForward", isForward, false);
                         isForward = false;
-                    } else if (((tr.getElement(3) & 0x80 ) == 128) && !isForward) {
+                    }
+                    if (((tr.getElement(3) & 0x80 ) == 128)&& !isForward) {
                         notifyPropertyChangeListener("IsForward", isForward, true);
                         isForward = true;
                     }
                     if (((tr.getElement(1) & 0x01 ) == 1) && !this.f1) {
                         notifyPropertyChangeListener(Throttle.F1, this.f1, true);
+                        sb.append("f1 ");
                         this.f1 = true;
-                    } else if (((tr.getElement(1) & 0x01 ) == 0) && this.f1) {
+                    }
+                    if (((tr.getElement(1) & 0x01 ) == 0) && this.f1) {
                         notifyPropertyChangeListener(Throttle.F1, this.f1, false);
+                        sb.append("1f ");
                         this.f1 = false;
                     }
                     if (((tr.getElement(1) & 0x02 ) == 2) && !this.f2) {
                         notifyPropertyChangeListener(Throttle.F2, this.f2, true);
+                        sb.append("f2 ");
                         this.f2 = true;
-                    } else if (((tr.getElement(1) & 0x02 ) == 0) && this.f2) {
+                    }
+                    if (((tr.getElement(1) & 0x02 ) == 0) && this.f2) {
                         notifyPropertyChangeListener(Throttle.F2, this.f2, false);
+                        sb.append("2f ");
                         this.f2 = false;
                     }
-                    if (((tr.getElement(1) & 0x04 ) == 4) && !this.f3) {
+                    if (((tr.getElement(1) & 0x04 ) == 4) && !this.f3){
                         notifyPropertyChangeListener(Throttle.F3, this.f3, true);
+                        sb.append("f3 ");
                         this.f3 = true;
-                    } else if (((tr.getElement(1) & 0x04 ) == 0) && this.f3) {
+                    }
+                    if (((tr.getElement(1) & 0x04 ) == 0) && this.f3) {
                         notifyPropertyChangeListener(Throttle.F3, this.f3, false);
+                        sb.append("3f ");
                         this.f3 = false;
                     }
                     if (((tr.getElement(1) & 0x08 ) == 8) && !this.f4) {
                         notifyPropertyChangeListener(Throttle.F4, this.f4, true);
+                        sb.append("f4 ");
                         this.f4 = true;
-                    } else if (((tr.getElement(1) & 0x08 ) == 0) && this.f4) {
+                    }
+                    if (((tr.getElement(1) & 0x08 ) == 0) && this.f4) {
                         notifyPropertyChangeListener(Throttle.F4, this.f4, false);
+                        sb.append("4f ");
                         this.f4 = false;
                     }
                     if (((tr.getElement(1) & 0x10 ) == 16) && !this.f5) {
                         notifyPropertyChangeListener(Throttle.F5, this.f5, true);
+                        sb.append("f5 ");
                         this.f5 = true;
-                    } else if (((tr.getElement(1) & 0x10 ) == 0) && this.f5) {
+                    }
+                    if (((tr.getElement(1) & 0x10 ) == 0) && this.f5) {
                         notifyPropertyChangeListener(Throttle.F5, this.f5, false);
+                        sb.append("5f ");
                         this.f5 = false;
                     }
                     if (((tr.getElement(1) & 0x20 ) == 32) && !this.f6) {
                         notifyPropertyChangeListener(Throttle.F6, this.f6, true);
+                        sb.append("f6 ");
                         this.f6 = true;
-                    } else if (((tr.getElement(1) & 0x20 ) == 0) && this.f6) {
+                    }
+                    if (((tr.getElement(1) & 0x20 ) == 0) && this.f6) {
                         notifyPropertyChangeListener(Throttle.F6, this.f6, false);
+                        sb.append("6f ");
                         this.f6 = false;
                     }
                     if (((tr.getElement(1) & 0x40 ) == 64) && !this.f7) {
                         notifyPropertyChangeListener(Throttle.F7, this.f7, true);
+                        sb.append("f7 ");
                         this.f7 = true;
-                    } else if (((tr.getElement(1) & 0x40 ) == 0) && this.f7) {
+                    }
+                    if (((tr.getElement(1) & 0x40 ) == 0) && this.f7) {
                         notifyPropertyChangeListener(Throttle.F7, this.f7, false);
+                        sb.append("7f ");
                         this.f7 = false;
                     }
                     if (((tr.getElement(1) & 0x80 ) == 128) && !this.f8) {
                         notifyPropertyChangeListener(Throttle.F8, this.f8, true);
+                        sb.append("f8");
                         this.f8 = true;
-                    } else if (((tr.getElement(1) & 0x80 ) == 0) && this.f8) {
+                    }
+                    if (((tr.getElement(1) & 0x80 ) == 0) && this.f8) {
                         notifyPropertyChangeListener(Throttle.F8, this.f8, false);
+                        sb.append("8f");
                         this.f8 = false;
                     }
+                    //log.info(sb.toString());
                 } catch (Exception ex) {
                     log.error("Error handling reply from MC " + ex);
                 }
@@ -381,7 +408,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
             }
             if (tr.match("L " + address.getNumber()) >= 0) {
                 try {
-                    log.info("ASCII address = " + address.getNumber());
+                    //log.info("ASCII address = " + address.getNumber());
                     String[] lines = tr.toString().split(" ");
                     Float newSpeed = Float.valueOf(floatSpeed(Integer.parseInt(lines[2])));
                     super.setSpeedSetting(newSpeed);

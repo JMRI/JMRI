@@ -101,7 +101,7 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
         if (this.getElement(1) == (TamsConstants.XEVTLOK & TamsConstants.MASKFF)){
             setReplyLastByte(TamsConstants.EOM80);
         }
-        log.info(jmri.util.StringUtil.appendTwoHexFromInt(this.getElement(1),""));
+        //log.info(jmri.util.StringUtil.appendTwoHexFromInt(this.getElement(1),""));
         //setRetries(1);
     	//log.info("Binary reply will be: one byte= " + getReplyOneByte() + ", last byte= " + getReplyLastByte());
     }
@@ -143,7 +143,7 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
         m.setBinary(true);
         m.setReplyOneByte(true);
         m.setReplyType('P');
-        log.info("Preformatted Tams getXStatus = " + Integer.toHexString(m.getElement(0)) + " " + Integer.toHexString(m.getElement(1)));
+        //log.info("Preformatted Tams getXStatus = " + Integer.toHexString(m.getElement(0)) + " " + Integer.toHexString(m.getElement(1)));
         //log.info("isBinary= " + m.isBinary() + ", one byte reply " + m.getReplyOneByte() +  ", reply type " + m.getReplyType());
         return m;
     }

@@ -71,9 +71,9 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
     }
 
     public void reply(TamsReply r) {//To listen for Turnout status changes
-        log.info("*** TamsReply ***");
+        //log.info("*** TamsReply ***");
         TamsMessage tm = TamsMessage.getXEvtTrn();
-        log.info("ReplyType = " +
+        log.debug("ReplyType = " +
                 tm.getReplyType() +
                 ", Binary? = " +
                 tm.isBinary() +
@@ -96,7 +96,7 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
                 }
             } else {//xSR is an ASCII message
                 //Nothing to do really
-                log.info("Reply to ACSII command = " + r.toString());
+                //log.info("Reply to ACSII command = " + r.toString());
             }
         }
     }
@@ -114,9 +114,9 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
         //A10..A8 MSBs of turnout address
         int lowerByte = r.getElement(0) & 0xff;
         int upperByte = r.getElement(1) & 0xff;
-        log.info("Decoding turnout");
-        log.info("Lower Byte: " + lowerByte);
-        log.info("Upper Byte: " + upperByte);
+        //log.info("Decoding turnout");
+        //log.info("Lower Byte: " + lowerByte);
+        //log.info("Upper Byte: " + upperByte);
         //Core logic to be added here
         int turnoutAddress = (upperByte & 0x07) * 256 + lowerByte;
         int turnoutState = Turnout.THROWN;
@@ -129,11 +129,7 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
         //Next line provided via JMRI dev's
         TamsTurnout ttu = (TamsTurnout)provideTurnout(prefix + "T" + turnoutAddress);
         ttu.setCommandedStateFromCS(turnoutState);
-
-         /*
-         * if (!stopPolling) { synchronized (pollHandler) {
-         * pollHandler.notify(); } }
-         */
+        //ttu.setKnownStateFromCS(turnoutState);
     }
 
     private final static Logger log = LoggerFactory.getLogger(TamsTurnoutManager.class.getName());
