@@ -220,7 +220,9 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
      *
      * @return The registered AcelaSensorManager instance for general use, if
      *         need be creating one.
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Deprecated
     static public AcelaSensorManager instance() {
         if (_instance == null) {
             _instance = new AcelaSensorManager();
@@ -228,6 +230,10 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
         return _instance;
     }
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static volatile AcelaSensorManager _instance = null;
 
     private final static Logger log = LoggerFactory.getLogger(AcelaSensorManager.class.getName());

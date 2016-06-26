@@ -1,4 +1,3 @@
-// XNetTrafficController.java
 package jmri.jmrix.lenz;
 
 import java.util.Hashtable;
@@ -17,7 +16,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2002
  * @author	Paul Bender Copyright (C) 2004-2010
- * @version $Revision$
  *
  */
 public abstract class XNetTrafficController extends AbstractMRTrafficController implements XNetInterface {
@@ -39,6 +37,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
      * static function setting this object as the TrafficController instance to
      * use.
      */
+    @Override
     @Deprecated
     protected void setInstance() {
         if (self == null) {
@@ -341,6 +340,3 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
 
     private final static Logger log = LoggerFactory.getLogger(XNetTrafficController.class.getName());
 }
-
-
-/* @(#)XNetTrafficController.java */

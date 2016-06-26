@@ -2186,21 +2186,21 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
      */
     public void setStabilisedSensor(String pName) throws jmri.JmriException {
         if (InstanceManager.sensorManagerInstance() != null) {
-            Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
-            if (sensor != null) {
+            try {
+                Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
                 namedStabilisedIndicator = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor);
-            } else {
+                try {
+                    if (stabilised) {
+                        sensor.setState(Sensor.ACTIVE);
+                    } else {
+                        sensor.setState(Sensor.INACTIVE);
+                    }
+                } catch (jmri.JmriException ex) {
+                    log.error("Error setting stablilty indicator sensor");
+                }
+            } catch (IllegalArgumentException ex) {
                 log.error("Sensor '" + pName + "' not available");
                 throw new jmri.JmriException("Sensor '" + pName + "' not available");
-            }
-            try {
-                if (stabilised) {
-                    sensor.setState(Sensor.ACTIVE);
-                } else {
-                    sensor.setState(Sensor.INACTIVE);
-                }
-            } catch (jmri.JmriException ex) {
-                log.error("Error setting stablilty indicator sensor");
             }
         } else {
             log.error("No SensorManager for this protocol");

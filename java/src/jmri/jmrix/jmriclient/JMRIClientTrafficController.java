@@ -1,4 +1,3 @@
-// JMRIClientTrafficController.java
 package jmri.jmrix.jmriclient;
 
 import jmri.jmrix.AbstractMRListener;
@@ -18,7 +17,6 @@ import jmri.jmrix.AbstractMRTrafficController;
  * message.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision$
  */
 public class JMRIClientTrafficController extends AbstractMRTrafficController
         implements JMRIClientInterface {
@@ -92,11 +90,11 @@ public class JMRIClientTrafficController extends AbstractMRTrafficController
         }
     }
 
+    @Override
+    @Deprecated
     protected void setInstance() { /*do nothing*/ }
 
     public JMRIClientTrafficController instance() {
         return this;
     }
 }
-
-/* @(#)JMRIClientTrafficController.java */

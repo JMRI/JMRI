@@ -147,6 +147,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                     try {
                         bean = InstanceManager.sensorManagerInstance().provideSensor(devName);
                     } catch (IllegalArgumentException e) {
+                        bean = null;
                         log.error("invalid sensor name= \"" + _deviceName + "\" in conditional action");
                     }
                     break;
@@ -154,49 +155,64 @@ public class DefaultConditionalAction implements ConditionalAction {
                     try {
                         bean = InstanceManager.turnoutManagerInstance().provideTurnout(devName);
                     } catch (IllegalArgumentException e) {
+                        bean = null;
                         log.error("invalid turnout name= \"" + _deviceName + "\" in conditional action");
                     }
                     break;
                 case Conditional.ITEM_TYPE_MEMORY:
-                    bean = InstanceManager.memoryManagerInstance().provideMemory(devName);
-                    if (bean == null) {
+                    try {
+                        bean = InstanceManager.memoryManagerInstance().provideMemory(devName);
+                    } catch (IllegalArgumentException e) {
+                        bean = null;
                         log.error("invalid memory name= \"" + _deviceName + "\" in conditional action");
                     }
                     break;
                 case Conditional.ITEM_TYPE_LIGHT:
-                    bean = InstanceManager.lightManagerInstance().getLight(devName);
-                    if (bean == null) {
+                    try {
+                        bean = InstanceManager.lightManagerInstance().getLight(devName);
+                    } catch (IllegalArgumentException e) {
+                        bean = null;
                         log.error("invalid light name= \"" + _deviceName + "\" in conditional action");
                     }
                     break;
                 case Conditional.ITEM_TYPE_SIGNALMAST:
-                    bean = InstanceManager.signalMastManagerInstance().provideSignalMast(devName);
-                    if (bean == null) {
+                    try {
+                        bean = InstanceManager.signalMastManagerInstance().provideSignalMast(devName);
+                    } catch (IllegalArgumentException e) {
+                        bean = null;
                         log.error("invalid signal mast name= \"" + _deviceName + "\" in conditional action");
                     }
                     break;
                 case Conditional.ITEM_TYPE_SIGNALHEAD:
-                    bean = InstanceManager.signalHeadManagerInstance().getSignalHead(devName);
-                    if (bean == null) {
+                    try {
+                        bean = InstanceManager.signalHeadManagerInstance().getSignalHead(devName);
+                    } catch (IllegalArgumentException e) {
+                        bean = null;
                         log.error("invalid signal head name= \"" + _deviceName + "\" in conditional action");
                     }
                     break;
                 case Conditional.ITEM_TYPE_WARRANT:
-                    bean = InstanceManager.getDefault(WarrantManager.class).getWarrant(devName);
-                    if (bean == null) {
+                    try {
+                        bean = InstanceManager.getDefault(WarrantManager.class).getWarrant(devName);
+                    } catch (IllegalArgumentException e) {
+                        bean = null;
                         log.error("invalid Warrant name= \"" + _deviceName + "\" in conditional action");
                     }
                     break;
                 case Conditional.ITEM_TYPE_OBLOCK:
-                    bean = InstanceManager.getDefault(OBlockManager.class).getOBlock(devName);
-                    if (bean == null) {
+                    try {
+                        bean = InstanceManager.getDefault(OBlockManager.class).getOBlock(devName);
+                    } catch (IllegalArgumentException e) {
+                        bean = null;
                         log.error("invalid OBlock name= \"" + _deviceName + "\" in conditional action");
                     }
                     break;
                 default:
                     if (getType() == Conditional.ACTION_TRIGGER_ROUTE) {
-                        bean = InstanceManager.getDefault(RouteManager.class).getRoute(devName);
-                        if (bean == null) {
+                        try {
+                            bean = InstanceManager.getDefault(RouteManager.class).getRoute(devName);
+                        } catch (IllegalArgumentException e) {
+                            bean = null;
                             log.error("invalid Route name= \"" + _deviceName + "\" in conditional action");
                         }
                     }

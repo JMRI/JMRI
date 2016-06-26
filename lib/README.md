@@ -22,9 +22,9 @@ Note that Windows installers don't necessarily remove existing library versions.
 
 ### Specific components:
 
-##### vecmath.jar
-- from Java3D 1.3.2
-- from <https://java3d.dev.java.net/binary-builds-old.html>
+##### vecmath-1.5.2.jar
+- from Java3D 1.5.2
+- from http://search.maven.org/#search%7Cga%7C1%7Cg%3Ajavax.vecmath
 
 ##### Serialio.jar
 - from <http://serialio.com>
@@ -199,6 +199,10 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 - from http://sourceforge.net/projects/jmdns
 
 ##### jakarta-regexp-1.5.jar
+
+##### checker-framework directory and contents
+- The Checker Framework 2.0.1 (1-Jun-2016) 
+- From http://types.cs.washington.edu/checker-framework/
 
 ##### ecj.jar
 - Eclipse compiler 4.6 from

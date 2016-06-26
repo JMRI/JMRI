@@ -1,4 +1,3 @@
-// PiSprogOneSerialDriverAdapter.java
 package jmri.jmrix.sprog.pi.pisprogone;
 
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * any other options at configuration time.
  *
  * @author	Andrew Crosland Copyright (C) 2016
- * @version	$Revision$
  */
 public class PiSprogOneSerialDriverAdapter
         extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
@@ -33,6 +31,10 @@ public class PiSprogOneSerialDriverAdapter
         return new String[]{"115,200 bps"};
     }
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static public PiSprogOneSerialDriverAdapter instance() {
         if (mInstance == null) {
             PiSprogOneSerialDriverAdapter m = new PiSprogOneSerialDriverAdapter();
@@ -41,10 +43,12 @@ public class PiSprogOneSerialDriverAdapter
         }
         return mInstance;
     }
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static volatile PiSprogOneSerialDriverAdapter mInstance = null;
 
     static Logger log = LoggerFactory.getLogger(PiSprogOneSerialDriverAdapter.class.getName());
 
 }
-
-/* @(#)PiSprogOneSerialDriverAdapter.java */

@@ -22,6 +22,12 @@
       <authorinitials>ST</authorinitials>
       <revremark>Initial version</revremark>
     </revision>
+    <revision>
+      <revnumber>1.01</revnumber>
+      <date>2016-06-24</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Corrected spelling in mapping</revremark>
+    </revision>
   </revhistory>
   <aspecttable>B&amp;O-2009 (CSX)</aspecttable>
   <name>B&amp;O fast to slow Colour Position Light signal</name>
@@ -155,12 +161,12 @@
     <aspectMapping>
       <advancedAspect>Medium Approach Medium</advancedAspect>
       <ourAspect>Slow Approach Slow</ourAspect>
-      <ourAspect>Restrting</ourAspect>
+      <ourAspect>Restricting</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Medium Approach Slow</advancedAspect>
       <ourAspect>Slow Approach Slow</ourAspect>
-      <ourAspect>Restrting</ourAspect>
+      <ourAspect>Restricting</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Approach Slow</advancedAspect>
