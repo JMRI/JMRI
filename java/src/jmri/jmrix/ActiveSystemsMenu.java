@@ -64,10 +64,6 @@ public class ActiveSystemsMenu extends JMenu {
             m.add(getMenu("jmri.jmrix.oaktree.OakTreeMenu"));
         }
 
-        if (jmri.jmrix.pricom.ActiveFlag.isActive()) {
-            m.add(getMenu("jmri.jmrix.pricom.PricomMenu"));
-        }
-
         if (jmri.jmrix.qsi.ActiveFlag.isActive()) {
             m.add(getMenu("jmri.jmrix.qsi.QSIMenu"));
         }
@@ -109,16 +105,19 @@ public class ActiveSystemsMenu extends JMenu {
     static public void addItems(JMenu m) {
         //ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle");
 
-        // the following is somewhat brute-force!
-        if (jmri.jmrix.acela.ActiveFlag.isActive()) {
-            m.add(getMenu("jmri.jmrix.acela.AcelaMenu"));
+        // get ComponentFactory objects and create menus
+        java.util.List<ComponentFactory> list
+                = jmri.InstanceManager.getList(ComponentFactory.class);
+        if (list != null) {
+            for (ComponentFactory memo : list) {
+                JMenu menu = memo.getMenu();
+                if (menu != null) {
+                    m.add(menu);
+                }
+            }
         }
-        if (jmri.jmrix.bachrus.ActiveFlag.isActive()) {
-            m.add(getMenu("jmri.jmrix.bachrus.SpeedoMenu"));
-        }
-        if (jmri.jmrix.cmri.serial.ActiveFlag.isActive()) {
-            m.add(getMenu("jmri.jmrix.cmri.CMRIMenu"));
-        }
+
+
         if (jmri.jmrix.easydcc.ActiveFlag.isActive()) {
             m.add(getMenu("jmri.jmrix.easydcc.EasyDCCMenu"));
         }
@@ -127,9 +126,6 @@ public class ActiveSystemsMenu extends JMenu {
         }
         if (jmri.jmrix.oaktree.ActiveFlag.isActive()) {
             m.add(getMenu("jmri.jmrix.oaktree.OakTreeMenu"));
-        }
-        if (jmri.jmrix.pricom.ActiveFlag.isActive()) {
-            m.add(getMenu("jmri.jmrix.pricom.PricomMenu"));
         }
         if (jmri.jmrix.qsi.ActiveFlag.isActive()) {
             m.add(getMenu("jmri.jmrix.qsi.QSIMenu"));
@@ -154,8 +150,6 @@ public class ActiveSystemsMenu extends JMenu {
         }
         /*if (jmri.jmrix.wangrow.ActiveFlag.isActive())
          m.add(getMenu("jmri.jmrix.wangrow.WangrowMenu"));*/
-
-        m.add(new javax.swing.JSeparator());
 
         m.add(new javax.swing.JSeparator());
 
