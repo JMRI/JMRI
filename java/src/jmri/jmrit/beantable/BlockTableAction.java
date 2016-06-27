@@ -60,7 +60,7 @@ public class BlockTableAction extends AbstractTableAction {
             centimeterBox.setSelected(true);
         }
 
-        defaultBlockSpeedText = ("Use Global " + jmri.InstanceManager.blockManagerInstance().getDefaultSpeed());
+        defaultBlockSpeedText = ("Use Global " + jmri.InstanceManager.blockManagerInstance().getDefaultSpeed()); // first entry in drop down list
         speedList.add(defaultBlockSpeedText);
         java.util.Vector<String> _speedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getValidSpeedNames();
         for (int i = 0; i < _speedMap.size(); i++) {
@@ -268,7 +268,7 @@ public class BlockTableAction extends AbstractTableAction {
                         JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + speed);
                         return;
                     }
-                    if (!speedList.contains(speed) && !speed.contains("Global")) {
+                    if (!speedList.contains(speed) && !speed.contains("Global")) { // I18N TODO
                         speedList.add(speed);
                     }
                     fireTableRowsUpdated(row, row);
@@ -555,9 +555,9 @@ public class BlockTableAction extends AbstractTableAction {
     public void setMenuBar(BeanTableFrame f) {
         final jmri.util.JmriJFrame finalF = f;			// needed for anonymous ActionListener class
         JMenuBar menuBar = f.getJMenuBar();
-        JMenu pathMenu = new JMenu("Paths");
+        JMenu pathMenu = new JMenu(Bundle.getMessage("MenuPaths"));
         menuBar.add(pathMenu);
-        JMenuItem item = new JMenuItem("Delete Paths...");
+        JMenuItem item = new JMenuItem(Bundle.getMessage("MenuItemDeletePaths"));
         pathMenu.add(item);
         item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -590,9 +590,9 @@ public class BlockTableAction extends AbstractTableAction {
         blockSpeedCombo.setSelectedItem(InstanceManager.blockManagerInstance().getDefaultSpeed());
 
         int retval = JOptionPane.showOptionDialog(_who,
-                "Select the default values for the speeds through the blocks\n", Bundle.getMessage("BlockSpeedLabel"),
+                Bundle.getMessage("BlockSpeedSelectDialog"), Bundle.getMessage("BlockSpeedLabel"),
                 0, JOptionPane.INFORMATION_MESSAGE, null,
-                new Object[]{"Cancel", "OK", block}, null);
+                new Object[]{Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), block}, null);
         if (retval != 1) {
             return;
         }
@@ -601,7 +601,7 @@ public class BlockTableAction extends AbstractTableAction {
         //We will allow the turnout manager to handle checking if the values have changed
         try {
             InstanceManager.blockManagerInstance().setDefaultSpeed(speedValue);
-        } catch (jmri.JmriException ex) {
+        } catch (IllegalArgumentException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + speedValue);
             return;
         }
@@ -822,17 +822,17 @@ public class BlockTableAction extends AbstractTableAction {
     void deletePaths(jmri.util.JmriJFrame f) {
         // Set option to prevent the path information from being saved.
 
-        Object[] options = {"Remove",
-            "Keep"};
+        Object[] options = {Bundle.getMessage("ButtonRemove"),
+                Bundle.getMessage("ButtonKeep")};
 
         int retval = JOptionPane.showOptionDialog(f, Bundle.getMessage("BlockPathMessage"), Bundle.getMessage("BlockPathSaveTitle"),
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
         if (retval != 0) {
-            InstanceManager.blockManagerInstance().savePathInfo(true);
+            InstanceManager.blockManagerInstance().setSavedPathInfo(true);
             log.info("Requested to save path information via Block Menu.");
         } else {
-            InstanceManager.blockManagerInstance().savePathInfo(false);
+            InstanceManager.blockManagerInstance().setSavedPathInfo(false);
             log.info("Requested not to save path information via Block Menu.");
         }
     }

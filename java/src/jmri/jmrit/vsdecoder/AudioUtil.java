@@ -139,7 +139,7 @@ public class AudioUtil {
                 }
 
                 rlist.add(buf);
-            } catch (AudioException e) {
+            } catch (AudioException | IllegalArgumentException e) {
                 log.warn("Error on provideAudio! " + e.toString());
                 if (log.isDebugEnabled()) {
                     jmri.InstanceManager.audioManagerInstance().getSystemNameList(Audio.BUFFER).stream().forEach((s) -> {

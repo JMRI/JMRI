@@ -1271,7 +1271,7 @@ public class LRouteTableAction extends AbstractTableAction {
     void showMessage(String msg) {
 
         javax.swing.JOptionPane.showMessageDialog(
-                _addFrame, rbx.getString(msg), rbx.getString("Warn"),
+                _addFrame, rbx.getString(msg), Bundle.getMessage("WarningTitle"),
                 javax.swing.JOptionPane.WARNING_MESSAGE);
     }
 
@@ -1744,7 +1744,7 @@ public class LRouteTableAction extends AbstractTableAction {
                 javax.swing.JOptionPane.showMessageDialog(
                         _addFrame, java.text.MessageFormat.format(rbx.getString("NoAlign"),
                                 new Object[]{name, sensor.getAlignType()}),
-                        rbx.getString("Warn"), javax.swing.JOptionPane.WARNING_MESSAGE);
+                        Bundle.getMessage("WarningTitle"), javax.swing.JOptionPane.WARNING_MESSAGE);
             }
         }
         ///////////////// Make Lock Conditional //////////////////////////

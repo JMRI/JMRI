@@ -1,4 +1,3 @@
-// Timebase.java
 package jmri.jmrit.simpleclock;
 
 import java.beans.PropertyChangeEvent;
@@ -30,48 +29,42 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2004, 2007 Dave Duchamp - 2007
  * additions/revisions for handling one hardware clock
- * @version	$Revision$
  */
 public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implements Timebase {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5893225952525687431L;
 
     public SimpleTimebase() {
         super("SIMPLECLOCK");
         // initialize time-containing memory
-        clockMemory = jmri.InstanceManager.memoryManagerInstance().provideMemory("IMCURRENTTIME");
-        if (clockMemory == null) {
-            log.warn("Unable to create IMCURRENTTIME time memory variable");
-        } else {
+        try {
+            clockMemory = jmri.InstanceManager.memoryManagerInstance().provideMemory("IMCURRENTTIME");
             clockMemory.setValue("--");
+        } catch (IllegalArgumentException ex) {
+            log.warn("Unable to create IMCURRENTTIME time memory variable");
         }
         // set to start counting from now
         setTime(new Date());
         pauseTime = null;
         // initialize start/stop sensor for time running
-        clockSensor = jmri.InstanceManager.sensorManagerInstance().provideSensor("ISCLOCKRUNNING");
         try {
+            clockSensor = jmri.InstanceManager.sensorManagerInstance().provideSensor("ISCLOCKRUNNING");
             clockSensor.setKnownState(Sensor.ACTIVE);
-        } catch (jmri.JmriException e) {
-            log.warn("Exception setting ISCLOCKRUNNING sensor ACTIVE: " + e);
-        }
-        clockSensor.addPropertyChangeListener(
+            clockSensor.addPropertyChangeListener(
                     new PropertyChangeListener() {
                         public void propertyChange(PropertyChangeEvent e) {
                             clockSensorChanged();
                         }
                     });
+        } catch (jmri.JmriException e) {
+            log.warn("Exception setting ISCLOCKRUNNING sensor ACTIVE: " + e);
+        }
         // initialize rate factor-containing memory
         if (jmri.InstanceManager.memoryManagerInstance() != null) {
             // only try to create memory if memories are supported
-            factorMemory = jmri.InstanceManager.memoryManagerInstance().provideMemory("IMRATEFACTOR");
-            if (factorMemory == null) {
-                log.warn("Unable to create IMRATEFACTOR time memory variable");
-            } else {
+            try {
+                factorMemory = jmri.InstanceManager.memoryManagerInstance().provideMemory("IMRATEFACTOR");
                 factorMemory.setValue(userGetRate());
+            } catch (IllegalArgumentException ex) {
+                log.warn("Unable to create IMRATEFACTOR time memory variable");
             }
         }
     }

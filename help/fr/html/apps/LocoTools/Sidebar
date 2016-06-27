@@ -7,10 +7,10 @@
  <div id="side">
     <h2>Outils LocoNet</h2>
 	<ul>
-	<li><A href="index.shtml#locomon">Moniteur LocoNet</a>
-	<li><A href="index.shtml#slotmon">Moniteur de Slot</a>
-	<li><A href="index.shtml#sendpkt">Source de Paquet</a>
-	<li><A href="index.shtml#pm4">Programmateurs BDL16, BDL162, BDL168 et PM4</a>
+	<li><a href="index.shtml#locomon">Moniteur LocoNet</a>
+	<li><a href="index.shtml#slotmon">Moniteur de Slot</a>
+	<li><a href="index.shtml#sendpkt">Source de Paquet</a>
+	<li><a href="index.shtml#pm4">Programmateurs BDL16, BDL162, BDL168 et PM4</a>
 	</ul>
 
  </div> <!-- closes #side -->

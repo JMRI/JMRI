@@ -2,9 +2,8 @@
 <html lang="fr">
 <head>
 <!-- <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <!--Translated by Herv&#233; Blorec le 2013-09-25 -->
-<title>JMRI: Intro to XML</title>
+<title>JMRI: Introduction &#224; XML</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -24,7 +23,8 @@
 <!-- Page Body -->
 
 <div class="list">
-<H1>Guide Utilisateur DecoderPro - Introduction &#224; XML</H1>
+<h1>Guide Utilisateur DecoderPro - Introduction &#224; XML</h1>
+
 <p>Tous les fichiers de configuration JMRI utilisent le format XML. Cette section est une br&#232;ve explication de ce format pour le rendre un peu plus facile &#224; comprendre.</p>
 
 <h3>&#201;l&#233;ments et Balises</h3>
@@ -32,20 +32,20 @@
 <p>Les fichier XML sont faits d'"&#233;l&#233;ments", qui sont d&#233;limit&#233;s par des &#233;tiquettes.  C'est un peu comme le HTML, si vous &#234;tes familier avec lui.
 Une &#233;tiquette est enferm&#233;e dans les crochets, pour par exemple &lt;decoder&gt;. Un &#233;l&#233;ment peut soit commencer et finir avec un tag:
 
-<p class=example>
+<p class="example">
 &lt;decoder&gt;<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;d'autres trucs ici<BR>
 &lt;/decoder&gt;<BR>
 </p>
 ou avoir au d&#233;but et &#224; la fin des &#233;tiquettes combin&#233;es:
-<p class=example>
+<p class="example">
 &lt;decoder/&gt;
 </p>
 
 <p>Notez le caract&#232;re anti-slash. Il marque la fin de l'&#233;l&#233;ment.
 La balise de d&#233;part d'un &#233;l&#233;ment peut &#233;galement effectuer des attributs:</p>
 
-<p class=example>
+<p class="example">
 &lt;decoder name="foo"&gt;<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;d'autres trucs ici<BR>
 &lt;/decoder&gt;<BR>
@@ -63,7 +63,7 @@ la lecture du fichier original, nous utilisons souvent l'indentation pour montre
 &#233;l&#233;ments sont &#224; l'int&#233;rieur de l'autre. Chaque fois que nous commen&#231;ons un nouvel &#233;l&#233;ment,
 bous indentons son contenu par quatre espaces. Un exemple pourrait
 &#234;tre:
-<p class=example>
+<p class="example">
 &lt;decoder&gt;<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;variable&gt;<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;le truc est dans la 1iere variable &#233;l&#233;ment<BR>
@@ -74,10 +74,9 @@ bous indentons son contenu par quatre espaces. Un exemple pourrait
 &lt;/decoder&gt;
 </p>
 
-
 Vous pouvez rompre le contenu d'un &#233;l&#233;ment sur une ligne, si celle-ci
  est plus facile &#224; lire:</p>
-<p class=example>
+<p class="example">
 &lt;tagWithLotsOfAttributes<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;firstAttribute="foo"<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;secondAttribute="bar"<BR>
@@ -86,5 +85,6 @@ Vous pouvez rompre le contenu d'un &#233;l&#233;ment sur une ligne, si celle-ci
 </p>
     
 <!--#include virtual="/Footer" -->
+ </div>
 </body>
 </html>

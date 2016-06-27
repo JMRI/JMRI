@@ -197,7 +197,7 @@ public class LayoutEditorFindItems {
 
     }
 
-    public LayoutTurnout findLayoutTurnoutBySignalMast(String signalMastName) {
+    public LayoutTurnout findLayoutTurnoutBySignalMast(String signalMastName) throws IllegalArgumentException {
         return findLayoutTurnoutByBean(jmri.InstanceManager.signalMastManagerInstance().provideSignalMast(signalMastName));
     }
 
@@ -271,15 +271,15 @@ public class LayoutEditorFindItems {
         return null;
     }
 
-    public LayoutTurnout findLayoutTurnoutBySensor(String sensorName) {
+    public LayoutTurnout findLayoutTurnoutBySensor(String sensorName) throws IllegalArgumentException {
         return findLayoutTurnoutByBean(jmri.InstanceManager.sensorManagerInstance().provideSensor(sensorName));
     }
 
-    public LevelXing findLevelXingBySignalMast(String signalMastName) {
+    public LevelXing findLevelXingBySignalMast(String signalMastName) throws IllegalArgumentException {
         return findLevelXingByBean(jmri.InstanceManager.signalMastManagerInstance().provideSignalMast(signalMastName));
     }
 
-    public LevelXing findLevelXingBySensor(String sensorName) {
+    public LevelXing findLevelXingBySensor(String sensorName) throws IllegalArgumentException {
         return findLevelXingByBean(jmri.InstanceManager.sensorManagerInstance().provideSensor(sensorName));
     }
 
@@ -394,11 +394,11 @@ public class LayoutEditorFindItems {
         return null;
     }
 
-    public LayoutSlip findLayoutSlipBySignalMast(String signalMastName) {
+    public LayoutSlip findLayoutSlipBySignalMast(String signalMastName) throws IllegalArgumentException {
         return findLayoutSlipByBean(jmri.InstanceManager.signalMastManagerInstance().provideSignalMast(signalMastName));
     }
 
-    public LayoutSlip findLayoutSlipBySensor(String sensorName) {
+    public LayoutSlip findLayoutSlipBySensor(String sensorName) throws IllegalArgumentException {
         return findLayoutSlipByBean(jmri.InstanceManager.sensorManagerInstance().provideSensor(sensorName));
     }
 

@@ -1,9 +1,8 @@
 <!-- Sidebar -->
-<!-- This is the common sidebar definition for Technical (developer) pages -->
+<!-- This is the French common sidebar definition for Technical (developer) pages -->
     <hr class="hide">
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
 
-<!-- UpDated  by Blorec Hervé le 2013-09-08--> 
+<!-- UpDated  by Blorec Herv&eacute; le 2013-09-08-->
     <div id="mBody">
 
 	<div id="side"> <!-- Block of text on left side of page -->
@@ -17,7 +16,7 @@
 			<LI><a href="GitFAQ.shtml">Git FAQs</a>
 			<LI><a href="Ant.shtml">Assembler avec Ant</a>
 			<LI><a href="NetBeans.shtml">Assembler avec NetBeans</a>
-			<LI><a href="Eclipse.shtml">Assembler avec  Eclipse</a>
+			<LI><a href="Eclipse.shtml">Assembler avec Eclipse</a>
 			</ul>
 		</dd>
 
@@ -26,8 +25,8 @@
 			<ul>
 			<LI><a href="IntroStructure.shtml">Introduction</a>
 			<LI><a href="AppStructure.shtml">Application Structure</a>
-			<LI><a href="Names.shtml">Noms et Désignation</a>
-			<li><a href="Patterns.shtml">Modèles de Structure du code</a>
+			<LI><a href="Names.shtml">Noms et D&eacute;signation</a>
+			<li><a href="Patterns.shtml">Mod&egrave;les de Structure du code</a>
 			<li><a href="Swing.shtml">Structure Swing </a>
 			<li><a href="SystemStructure.shtml">Structure de Connexion Externe</a>
 			<LI><a href="Threads.shtml">Liens</a>
@@ -37,7 +36,7 @@
 			<LI><a href="/JavaDoc/doc">JavaDocs</a><ul>
 				<LI><a href="/JavaDoc/doc/index-all.html">Index des Noms</a>
 				<LI><A HREF="/JavaDoc/doc/index.html">Paquets</A>
-				<LI><A HREF="/JavaDoc/doc/allclasses-frame.html">Hiérarchie des Class</A>
+				<LI><A HREF="/JavaDoc/doc/allclasses-frame.html">Hi&eacute;rarchie des Class</A>
 				</UL>
 			</ul>
 		</dd>
@@ -45,15 +44,15 @@
 		<dt>Techniqueser Standards</dt>
 		<dd>
 			<ul>
-			<LI><a href="RP.shtml">Pratiques Recommandées</a>
-			<LI><a href="ContinuousIntegration.shtml">Intégration Continue</a>
+			<LI><a href="RP.shtml">Pratiques Recommand&eacute;es</a>
+			<LI><a href="ContinuousIntegration.shtml">Int&eacute;gration Continue</a>
 			<LI><a href="I8N.shtml">Internationalisation</a>
 			<LI><a href="Logging.shtml">ConnexionLogging &amp; Gestion des erreurs</a>
 			<LI><a href="JUnit.shtml">Unit tester avec JUnit</a>
 			<LI><a href="JavaDoc.shtml">Documentation avec JavaDoc et UML</a>
-			<LI><a href="FindBugs.shtml">Exécutez l'outil d'analyse statistique FindBug</a>
+			<LI><a href="FindBugs.shtml">Ex&eacute;cutez l'outil d'analyse statistique FindBug</a>
 			<LI><a href="Help.shtml">Fournir de l'aide avec Java</a>
-			<LI><a href="FileNames.shtml">Méthode Nom Portable</a>
+			<LI><a href="FileNames.shtml">M&eacute;thode Nom Portable</a>
 			<LI><a href="XmlPersistance.shtml">XML Persistance</a>
 			</ul>
 		</dd>
@@ -63,24 +62,24 @@
 			<ul>
 			<LI><a href="plugins.shtml">Etendre avec des Plugins</a>
 			<LI><a href="NewType.shtml">Ajouter un Nouveau Type</a>
-			<LI><a href="NewSystem.shtml">Ajouter un Nouveau Système</a>
+			<LI><a href="NewSystem.shtml">Ajouter un Nouveau Syst&egrave;me</a>
 			</ul>
 		</dd>
 
 		<dt>Infos Fonctionnelles</dt>
 		<dd>
 			<ul>
-			<LI><a href="TurnoutFeedback.shtml">Rétroaction Aiguillage</a>
-			<LI><a href="Networking.shtml">Connexions Réseau</a>
-			<LI><a href="StartUpScripts.shtml">Comment les Scripts de Démarrage Travaillent</a>
+			<LI><a href="TurnoutFeedback.shtml">R&eacute;troaction Aiguillage</a>
+			<LI><a href="Networking.shtml">Connexions R&eacute;seau</a>
+			<LI><a href="StartUpScripts.shtml">Comment les Scripts de D&eacute;marrage Travaillent</a>
 			</ul>
 		</dd>
 
 		<dt>Contexte Infos </dt>
 		<dd>
 			<ul>
-			<LI><a href="TechRoadMap.shtml">Technologie Carte Routière </a>
-			<LI><a href="JVMCapabilities.shtml">Enquête sur les Capacités de JVM</a>
+			<LI><a href="TechRoadMap.shtml">Technologie Carte Routi&egrave;re </a>
+			<LI><a href="JVMCapabilities.shtml">Enqu&ecirc;te sur les Capacit&eacute;s de JVM</a>
 			<LI><a href="Poll2007.shtml">Sondage Utilisateur, Printemps 2007</a>
 			</ul>
 		</dd>

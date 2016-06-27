@@ -2,11 +2,12 @@
 <hr class="hide">
 <div id="mBody">
 <div id="side"> <!-- Block of text on left side of page -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<!-- info only: <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1"> -->
 <!-- Updated  by Blorec Herv&#233; 2013-09-02--> 
-<dl class=toc>
+<dl class="toc">
 
-<dt><h3>Informations PanelPro</h3></dt><DD><UL>
+<dt><h3>Informations PanelPro</h3></dt><DD>
+<UL>
 <LI><a href="../../../package/jmri/jmrit/display/PanelEditor.shtml">Editeur de Panneau</A>
 <LI><a href="../../../package/jmri/jmrit/display/LayoutEditor.shtml">Editeur de R&#233;seau</A>
 <LI><a href="FAQ.shtml">FAQ</A>
@@ -16,9 +17,8 @@
 <LI><A HREF="AdvIcons.shtml">Ic&#244;nes Avanc&#233;es</a>
 </UL>
 
-
-<dt><h3>Autres Infos Utiles</h3></dt><DD><UL>
-
+<dt><h3>Autres Infos Utiles</h3></dt><DD>
+<UL>
 <LI><a HREF="../../tools/Sensors.shtml">Capteurs</a>
 <LI><A HREF="../../tools/Signalling/index.shtml">Signaux</a>
 <LI><A HREF="../../tools/Routes.shtml">Itin&#233;raires</a>

@@ -110,7 +110,7 @@ command line from which you can directly manipulate things.
 Jython and the Python language brings to using JMRI code.  The
 Java member function:
 <PRE>
-	turnout.SetCommandedState(jmri.Turnout.CLOSED);
+	turnout.setCommandedState(jmri.Turnout.CLOSED);
 </PRE>
 can also be expressed in Jython as:
 <PRE>
@@ -249,7 +249,7 @@ JMRI uses the factory-pattern extensively to get access to
 objects.  In Java this results in verbose code like
 <PRE>
    Turnout t2 = InstanceManager.turnoutManagerInstance().newTurnout("LT2", "turnout 2");
-   t2.SetCommandedState(Turnout.THROWN)
+   t2.setCommandedState(Turnout.THROWN)
 </PRE>
 Jython simplifies that by allowing us to provide useful variables,
 and by shortening certain method calls.
@@ -278,7 +278,7 @@ Note that the variable t2 did not need to be declared.
 Juthon provides a shortcut for parameters that have 
 been defined with Java-Bean-like get and set methods:
 <PRE>
-   t2.SetCommandedState(Turnout.THROWN)
+   t2.setCommandedState(Turnout.THROWN)
 </PRE>
 can be written as
 <PRE>

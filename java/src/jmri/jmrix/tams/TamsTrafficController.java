@@ -252,7 +252,8 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
         return null;
     }
 
-    // This can be removed once multi-connection is complete
+    //This can be removed once multi-connection is complete
+    @Override
     public void setInstance() {
     }
 

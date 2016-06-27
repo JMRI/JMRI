@@ -1,4 +1,3 @@
-// DCCppTurnoutManager.java
 package jmri.jmrix.dccpp;
 
 import jmri.Turnout;
@@ -13,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author	Paul Bender Copyright (C) 2003-2010
  * @author	Mark Underwood Copyright (C) 2015
- * @version	$Revision$
  */
 public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager implements DCCppListener {
 
@@ -111,5 +109,3 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
     private final static Logger log = LoggerFactory.getLogger(DCCppTurnoutManager.class.getName());
 
 }
-
-/* @(#)DCCppTurnoutManager.java */
