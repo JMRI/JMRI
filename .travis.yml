@@ -8,13 +8,17 @@ addons:
     packages:
     - graphviz
 
+# prevent travis default mvn install behavior
+install:
+  - mvn validate --quiet --batch-mode --show-version
+ 
 before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - sleep 3 # give xvfb some time to start
 
 script: 
- - travis_wait mvn test -P travis --quiet --batch-mode
+  - travis_wait mvn test -P travis --quiet --batch-mode
 
 jdk:
   - oraclejdk8
