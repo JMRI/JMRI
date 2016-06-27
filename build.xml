@@ -351,6 +351,7 @@
             <fileset dir="${genjavasrcdir}"/>
             <fileset file="${javadir}/manifest"/>
             <fileset dir="${tempdir}"/>
+            <fileset file="findbugs.html"/>
             <fileset file="findbugs.xml"/>
             <fileset file="junit-results.xml"/>
             <fileset file="jmri-fb.html"/>
