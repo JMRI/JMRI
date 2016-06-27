@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * Based on work by Bob Jacobsen and Kevin Dickerson Copyright
  *
  * @author	Jan Boen
- * @version	$Revision: 20160622 $
+ * @version	$Revision: 20160627 $
  */
 public class TamsTurnout extends AbstractTurnout
         implements TamsListener {
@@ -60,7 +60,7 @@ public class TamsTurnout extends AbstractTurnout
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Only used during creation of 1st turnout")
     private void initFeedbackModes() {
-        //log.info("*** initFeedbackModes ***");
+        log.debug("*** initFeedbackModes ***");
         if (_validFeedbackNames.length != _validFeedbackModes.length) {
             log.error("int and string feedback arrays different length");
         }
@@ -82,31 +82,9 @@ public class TamsTurnout extends AbstractTurnout
 
     TamsTrafficController tc;
 
-    // to hear of changes - copied from PowerManager
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    protected void firePropertyChange(String p, Object old, Object n) {
-        pcs.firePropertyChange(p, old, n);
-    }
-
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
     // Handle a request to change state by sending a turnout command
     protected void forwardCommandChangeToLayout(int s) {
-        //log.info("*** forwardCommandChangeToLayout ***");
-        // implementing classes will typically have a function/listener to get
-        // updates from the layout, which will then call
-        //		public void firePropertyChange(String propertyName,
-        //										Object oldValue,
-        //										Object newValue)
-        // _once_ if anything has changed state (or set the commanded state directly)
-
+        log.debug("*** forwardCommandChangeToLayout ***");
         // sort out states
         if ((s & Turnout.CLOSED) != 0) {
             // first look for the double case, which we can't handle
@@ -138,11 +116,11 @@ public class TamsTurnout extends AbstractTurnout
      * @param state Observed state, updated state from command station
      */
     synchronized void setCommandedStateFromCS(int state) {
-        log.info("*** setCommandedStateFromCS ***");
+        log.debug("*** setCommandedStateFromCS ***");
         if ((getFeedbackMode() != MONITORING)) {
             return;
         }
-
+        log.debug(this + ", setting to state " + state);
         newCommandedState(state);
     }
 
@@ -156,11 +134,10 @@ public class TamsTurnout extends AbstractTurnout
      * @param state Observed state, updated state from command station
      */
     synchronized void setKnownStateFromCS(int state) {
-        log.info("*** setKnownStateFromCS ***");
+        log.debug("*** setKnownStateFromCS ***");
         if ((getFeedbackMode() != MONITORING)) {
             return;
         }
-
         newKnownState(state);
     }
 
@@ -181,7 +158,7 @@ public class TamsTurnout extends AbstractTurnout
      * @param closed State of the turnout to be sent to the command station
      */
     protected void sendMessage(boolean closed) {
-        //log.info("*** sendMessage ***");
+        log.debug("*** sendMessage ***");
         if (getInverted()) {
             closed = !closed;
         }
@@ -193,9 +170,9 @@ public class TamsTurnout extends AbstractTurnout
 
     // to listen for status changes from Tams system
     public void reply(TamsReply m) {
-        //log.info("*** TamsReply ***");
-        log.info(Integer.toString(m.match("T")));
-        log.info(Integer.toString(m.match("ERROR")));
+        log.debug("*** TamsReply ***");
+        log.debug(Integer.toString(m.match("T")));
+        log.debug(Integer.toString(m.match("ERROR")));
         String msg = m.toString();
         if (m.match("T") == 0) {
             String[] lines = msg.split(" ");
@@ -215,7 +192,7 @@ public class TamsTurnout extends AbstractTurnout
 
     protected void pollForStatus() {
         if (_activeFeedbackType == MONITORING) {
-            //log.info("*** pollForStatus ***");
+            log.debug("*** pollForStatus ***");
             //if we received an update last time we send a request again, but if we did not we shall skip it once and try again next time.
             if (updateReceived) {
                 updateReceived = false;
@@ -230,23 +207,23 @@ public class TamsTurnout extends AbstractTurnout
 
     @Override
     public void setFeedbackMode(int mode) throws IllegalArgumentException {
-        //log.info("*** setFeedbackMode ***");
-        TamsMessage m = new TamsMessage("xT " + _number + ",,1");
+        log.debug("*** setFeedbackMode ***");
+        //TamsMessage m = new TamsMessage("xT " + _number + ",,1");
         if (mode == MONITORING) {
-            tc.addPollMessage(m, this);
+            //tc.addPollMessage(m, this);//The actual polling is done from TamsTurnoutManager
         } else {
-            tc.removePollMessage(m, this);
+            //tc.removePollMessage(m, this);//Since we don't poll from here there is no need to remove the message either
         }
         super.setFeedbackMode(mode);
     }
 
     public void message(TamsMessage m) {
-        //log.info("*** message ***");
+        log.debug("*** message ***");
         // messages are ignored
     }
 
     public void dispose() {
-        //log.info("*** dispose ***");
+        log.debug("*** dispose ***");
         TamsMessage m = new TamsMessage("xT " + _number + ",,1");
         tc.removePollMessage(m, this);
         super.dispose();

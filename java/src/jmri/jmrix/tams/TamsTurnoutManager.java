@@ -71,14 +71,8 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
     }
 
     public void reply(TamsReply r) {//To listen for Turnout status changes
-        //log.info("*** TamsReply ***");
+        //log.debug("*** TamsReply ***");
         TamsMessage tm = TamsMessage.getXEvtTrn();
-        log.debug("ReplyType = " +
-                tm.getReplyType() +
-                ", Binary? = " +
-                tm.isBinary() +
-                ", OneByteReply = " +
-                tm.getReplyOneByte());
         if (tm.getReplyType() == 'T') {//Only handle Turnout events
             if (tm.isBinary() == true) {//Typical polling message
                 if ((r.getNumDataElements() > 1) && (r.getElement(0) > 0x00) && (r.getElement(0) != 'T')) {
@@ -89,14 +83,14 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
                         tr.setBinary(r.isBinary());
                         tr.setElement(0, r.getElement(i));
                         tr.setElement(1, r.getElement(i + 1));
-                        log.info("Going to pass this to the decoder = " + tr.toString());
+                        log.debug("Going to pass this to the decoder = " + tr.toString());
                         //The decodeTurnoutState will do the actual decoding of each individual turnout
                         decodeTurnoutState(tr, prefix, tc);
                     }
                 }
             } else {//xSR is an ASCII message
                 //Nothing to do really
-                //log.info("Reply to ACSII command = " + r.toString());
+                log.debug("Reply to ACSII command = " + r.toString());
             }
         }
     }
@@ -114,20 +108,21 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
         //A10..A8 MSBs of turnout address
         int lowerByte = r.getElement(0) & 0xff;
         int upperByte = r.getElement(1) & 0xff;
-        //log.info("Decoding turnout");
-        //log.info("Lower Byte: " + lowerByte);
-        //log.info("Upper Byte: " + upperByte);
+        log.debug("Decoding turnout");
+        log.debug("Lower Byte: " + lowerByte);
+        log.debug("Upper Byte: " + upperByte);
         //Core logic to be added here
         int turnoutAddress = (upperByte & 0x07) * 256 + lowerByte;
+        String turnoutName = prefix + "T" + Integer.toString(turnoutAddress);
         int turnoutState = Turnout.THROWN;
         if ((upperByte & 0x80) == 0x80) {//Only need bit #7
             turnoutState = Turnout.CLOSED;
         }
-        log.info("Turnout Address: \"" + prefix + "T" + turnoutAddress + "\", state: " + turnoutState);
+        log.debug("Turnout Address: -" + turnoutName + "-, state: " + turnoutState);
 
         //OK. Now how do we get the turnout to update in JMRI?
         //Next line provided via JMRI dev's
-        TamsTurnout ttu = (TamsTurnout)provideTurnout(prefix + "T" + turnoutAddress);
+        TamsTurnout ttu = (TamsTurnout)provideTurnout(turnoutName);
         ttu.setCommandedStateFromCS(turnoutState);
         //ttu.setKnownStateFromCS(turnoutState);
     }
