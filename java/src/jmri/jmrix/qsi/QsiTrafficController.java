@@ -23,13 +23,7 @@ import org.slf4j.LoggerFactory;
  */
 public class QsiTrafficController implements QsiInterface, Runnable {
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "temporary until mult-system; only set at startup")
     public QsiTrafficController() {
-        if (log.isDebugEnabled()) {
-            log.debug("setting instance: " + this);
-        }
-        self = this;
     }
 
 // The methods to implement the QsiInterface
@@ -247,18 +241,12 @@ public class QsiTrafficController implements QsiInterface, Runnable {
      *
      * @return The registered QsiTrafficController instance for general use, if
      *         need be creating one.
+     * deprecated since 4.5.1
      */
+    @Deprecated
     static public QsiTrafficController instance() {
-        if (self == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("creating a new QsiTrafficController object");
-            }
-            self = new QsiTrafficController();
-        }
-        return self;
+        return null;
     }
-
-    static volatile protected QsiTrafficController self = null;
 
     // data members to hold the streams
     DataInputStream istream = null;
