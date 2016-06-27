@@ -1,7 +1,7 @@
 version: '{build}'
 clone_depth: 50
 install:
-  - choco install maven -y -f --version 3.3.3
+  - choco install maven -y --version 3.3.3
   - refreshenv
   - SET JAVA_HOME=C:\Program Files\Java\jdk1.8.0
   - SET PATH=%JAVA_HOME%\bin;%PATH%
@@ -14,7 +14,7 @@ build: off
 # AppVeyor's YAML processing
 test_script:
 - ps: >-
-    mvn test -P appveyor
+    mvn test -P appveyor --quiet --batch-mode
 
 on_finish:
 - ps: >-
