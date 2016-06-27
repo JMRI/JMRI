@@ -91,18 +91,20 @@ public class QsiTrafficController implements QsiInterface, Runnable {
 
     public void setQsiState(int s) {
         qsiState = s;
-        if (s == V4BOOTMODE) {
-            // enable flow control - required for QSI v4 bootloader
-            SerialDriverAdapter.instance().setHandshake(SerialPort.FLOWCONTROL_RTSCTS_IN
-                    | SerialPort.FLOWCONTROL_RTSCTS_OUT);
+        if(controller instanceof SerialDriverAdapter) {
+           if (s == V4BOOTMODE) {
+               // enable flow control - required for QSI v4 bootloader
+               ((SerialDriverAdapter)controller).setHandshake(SerialPort.FLOWCONTROL_RTSCTS_IN
+                       | SerialPort.FLOWCONTROL_RTSCTS_OUT);
 
-        } else {
-            // disable flow control
-            SerialDriverAdapter.instance().setHandshake(0);
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("Setting qsiState " + s);
-        }
+           } else {
+               // disable flow control
+               ((SerialDriverAdapter)controller).setHandshake(0);
+           }
+           if (log.isDebugEnabled()) {
+               log.debug("Setting qsiState " + s);
+           }
+       }
     }
 
     public boolean isNormalMode() {
