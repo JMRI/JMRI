@@ -74,6 +74,7 @@ public class InstanceManager {
      * Store an object of a particular type for later retrieval via
      * {@link #getDefault} or {@link #getList}.
      *
+     * @param <T>  The type of the class
      * @param item The object of type T to be stored
      * @param type The class Object for the item's type. This will be used as
      *             the key to retrieve the object later.
@@ -93,6 +94,7 @@ public class InstanceManager {
      * Retrieve a list of all objects of type T that were registered with
      * {@link #store}.
      *
+     * @param <T>  The type of the class
      * @param type The class Object for the items' type.
      * @return A list of type Objects registered with the manager or an empty
      *         list.
@@ -110,6 +112,7 @@ public class InstanceManager {
     /**
      * Deregister all objects of a particular type.
      *
+     * @param <T>  The type of the class
      * @param type The class Object for the items to be removed.
      */
     static public <T> void reset(@Nonnull Class<T> type) {
@@ -121,6 +124,7 @@ public class InstanceManager {
      * Remove an object of a particular type that had earlier been registered
      * with {@link #store}.
      *
+     * @param <T>  The type of the class
      * @param item The object of type T to be deregistered
      * @param type The class Object for the item's type.
      */
@@ -137,6 +141,7 @@ public class InstanceManager {
      * Unless specifically set, the default is the last object stored, see the
      * {@link #setDefault} method.
      *
+     * @param <T>  The type of the class
      * @param type The class Object for the item's type.
      * @return The default object for type.
      */
@@ -181,6 +186,7 @@ public class InstanceManager {
      * Now, we do that moving the item to the back of the list; see the
      * {@link #getDefault} method
      *
+     * @param <T>  The type of the class
      * @param type The Class object for val
      * @param item The object to make default for type
      */
@@ -222,6 +228,8 @@ public class InstanceManager {
 
     /**
      * Remove notification on changes to specific types
+     *
+     * @param l The listener to remove.
      */
     public static synchronized void removePropertyChangeListener(PropertyChangeListener l) {
         if (listeners.contains(l)) {
@@ -231,6 +239,8 @@ public class InstanceManager {
 
     /**
      * Register for notification on changes to specific types
+     *
+     * @param l The listener to add.
      */
     public static synchronized void addPropertyChangeListener(PropertyChangeListener l) {
         // add only if not already registered
@@ -263,6 +273,8 @@ public class InstanceManager {
      * ****************************************************************************/
     /**
      * Will eventually be deprecated, use @{link #getDefault} directly.
+     *
+     * @return the default command station. May not be the only instance.
      */
     static public CommandStation commandStationInstance() {
         return getDefault(CommandStation.class);
@@ -270,6 +282,8 @@ public class InstanceManager {
 
     /**
      * Will eventually be deprecated, use @{link #getDefault} directly.
+     *
+     * @return the default light manager. May not be the only instance.
      */
     static public LightManager lightManagerInstance() {
         return getDefault(LightManager.class);
@@ -277,6 +291,8 @@ public class InstanceManager {
 
     /**
      * Will eventually be deprecated, use @{link #getDefault} directly.
+     *
+     * @return the default memory manager. May not be the only instance.
      */
     static public MemoryManager memoryManagerInstance() {
         return getDefault(MemoryManager.class);
@@ -284,6 +300,8 @@ public class InstanceManager {
 
     /**
      * Will eventually be deprecated, use @{link #getDefault} directly.
+     *
+     * @return the default sensor manager. May not be the only instance.
      */
     static public SensorManager sensorManagerInstance() {
         return getDefault(SensorManager.class);
@@ -291,6 +309,8 @@ public class InstanceManager {
 
     /**
      * Will eventually be deprecated, use @{link #getDefault} directly.
+     *
+     * @return the default turnout manager. May not be the only instance.
      */
     static public TurnoutManager turnoutManagerInstance() {
         return getDefault(TurnoutManager.class);
@@ -298,6 +318,8 @@ public class InstanceManager {
 
     /**
      * Will eventually be deprecated, use @{link #getDefault} directly.
+     *
+     * @return the default audio manager. May not be the only instance.
      */
     static public AudioManager audioManagerInstance() {
         return getDefault(AudioManager.class);
@@ -305,6 +327,8 @@ public class InstanceManager {
 
     /**
      * Will eventually be deprecated, use @{link #getDefault} directly.
+     *
+     * @return the default block manager. May not be the only instance.
      */
     static public BlockManager blockManagerInstance() {
         return getDefault(BlockManager.class);
@@ -312,6 +336,8 @@ public class InstanceManager {
 
     /**
      * Will eventually be deprecated, use @{link #getDefault} directly.
+     *
+     * @return the default catalog tree manager. May not be the only instance.
      */
     static public CatalogTreeManager catalogTreeManagerInstance() {
         return getDefault(CatalogTreeManager.class);
@@ -319,6 +345,8 @@ public class InstanceManager {
 
     /**
      * Will eventually be deprecated, use @{link #getDefault} directly.
+     *
+     * @return the default clock control instance. May not be the only instance.
      */
     static public ClockControl clockControlInstance() {
         return getDefault(ClockControl.class);
@@ -326,6 +354,8 @@ public class InstanceManager {
 
     /**
      * Will eventually be deprecated, use @{link #getDefault} directly.
+     *
+     * @return the default conditional manager. May not be the only instance.
      */
     static public ConditionalManager conditionalManagerInstance() {
         return getDefault(ConditionalManager.class);
@@ -333,6 +363,8 @@ public class InstanceManager {
 
     /**
      * Will eventually be deprecated, use @{link #getDefault} directly.
+     *
+     * @return the default configure manager. May not be the only instance.
      */
     static public ConfigureManager configureManagerInstance() {
         return getDefault(ConfigureManager.class);
@@ -340,6 +372,8 @@ public class InstanceManager {
 
     /**
      * Will eventually be deprecated, use @{link #getDefault} directly.
+     *
+     * @return the default consist manager. May not be the only instance.
      */
     static public ConsistManager consistManagerInstance() {
         return getDefault(ConsistManager.class);
@@ -347,6 +381,8 @@ public class InstanceManager {
 
     /**
      * Will eventually be deprecated, use @{link #getDefault} directly.
+     *
+     * @return the default logix manager. May not be the only instance.
      */
     static public LogixManager logixManagerInstance() {
         return getDefault(LogixManager.class);
@@ -354,12 +390,15 @@ public class InstanceManager {
 
     /**
      * Will eventually be deprecated, use @{link #getDefault} directly.
+     *
+     * @return the default power manager. May not be the only instance.
      */
     static public PowerManager powerManagerInstance() {
         return getDefault(PowerManager.class);
     }
 
     /**
+     * @return the default programmer manager. May not be the only instance.
      * @deprecated Since 3.11.1, use @{link #getDefault} for either
      * GlobalProgrammerManager or AddressedProgrammerManager directly
      */
@@ -370,6 +409,8 @@ public class InstanceManager {
 
     /**
      * Will eventually be deprecated, use @{link #getDefault} directly.
+     *
+     * @return the default reporter manager. May not be the only instance.
      */
     static public ReporterManager reporterManagerInstance() {
         return getDefault(ReporterManager.class);
@@ -377,6 +418,8 @@ public class InstanceManager {
 
     /**
      * Will eventually be deprecated, use @{link #getDefault} directly.
+     *
+     * @return the default roster icon factory. May not be the only instance.
      */
     static public RosterIconFactory rosterIconFactoryInstance() {
         return getDefault(RosterIconFactory.class);
@@ -384,6 +427,8 @@ public class InstanceManager {
 
     /**
      * Will eventually be deprecated, use @{link #getDefault} directly.
+     *
+     * @return the default route manager. May not be the only instance.
      */
     static public RouteManager routeManagerInstance() {
         return getDefault(RouteManager.class);
@@ -391,6 +436,8 @@ public class InstanceManager {
 
     /**
      * Will eventually be deprecated, use @{link #getDefault} directly.
+     *
+     * @return the default section manager. May not be the only instance.
      */
     static public SectionManager sectionManagerInstance() {
         return getDefault(SectionManager.class);
@@ -398,6 +445,8 @@ public class InstanceManager {
 
     /**
      * Will eventually be deprecated, use @{link #getDefault} directly.
+     *
+     * @return the default shutdown manager. May not be the only instance.
      */
     static public ShutDownManager shutDownManagerInstance() {
         return getDefault(ShutDownManager.class);
@@ -405,6 +454,8 @@ public class InstanceManager {
 
     /**
      * Will eventually be deprecated, use @{link #getDefault} directly.
+     *
+     * @return the default signal group manager. May not be the only instance.
      */
     static public SignalGroupManager signalGroupManagerInstance() {
         return getDefault(SignalGroupManager.class);
@@ -412,6 +463,8 @@ public class InstanceManager {
 
     /**
      * Will eventually be deprecated, use @{link #getDefault} directly.
+     *
+     * @return the default signal head manager. May not be the only instance.
      */
     static public SignalHeadManager signalHeadManagerInstance() {
         return getDefault(SignalHeadManager.class);
@@ -419,6 +472,8 @@ public class InstanceManager {
 
     /**
      * Will eventually be deprecated, use @{link #getDefault} directly.
+     *
+     * @return the default signal mast manager. May not be the only instance.
      */
     static public SignalMastManager signalMastManagerInstance() {
         return getDefault(SignalMastManager.class);
@@ -426,6 +481,8 @@ public class InstanceManager {
 
     /**
      * Will eventually be deprecated, use @{link #getDefault} directly.
+     *
+     * @return the default signal system manager. May not be the only instance.
      */
     static public SignalSystemManager signalSystemManagerInstance() {
         return getDefault(SignalSystemManager.class);
@@ -433,6 +490,9 @@ public class InstanceManager {
 
     /**
      * Will eventually be deprecated, use @{link #getDefault} directly.
+     *
+     * @return the default signal mast logic manager. May not be the only
+     *         instance.
      */
     static public SignalMastLogicManager signalMastLogicManagerInstance() {
         return getDefault(SignalMastLogicManager.class);
@@ -440,6 +500,8 @@ public class InstanceManager {
 
     /**
      * Will eventually be deprecated, use @{link #getDefault} directly.
+     *
+     * @return the default preferences panel. May not be the only instance.
      */
     static public TabbedPreferences tabbedPreferencesInstance() {
         return getDefault(TabbedPreferences.class);
@@ -447,6 +509,8 @@ public class InstanceManager {
 
     /**
      * Will eventually be deprecated, use @{link #getDefault} directly.
+     *
+     * @return the default throttle manager. May not be the only instance.
      */
     static public ThrottleManager throttleManagerInstance() {
         return getDefault(ThrottleManager.class);
@@ -454,6 +518,8 @@ public class InstanceManager {
 
     /**
      * Will eventually be deprecated, use @{link #getDefault} directly.
+     *
+     * @return the default timebase. May not be the only instance.
      */
     static public Timebase timebaseInstance() {
         return getDefault(Timebase.class);
@@ -461,6 +527,8 @@ public class InstanceManager {
 
     /**
      * Will eventually be deprecated, use @{link #getDefault} directly.
+     *
+     * @return the default transit manager. May not be the only instance.
      */
     static public TransitManager transitManagerInstance() {
         return getDefault(TransitManager.class);
@@ -500,8 +568,9 @@ public class InstanceManager {
      *                   Migrate JMRI uses of these, then move to next category
      * ****************************************************************************/
     /**
-     * @deprecated Since 3.7.1, use @{link #store} and @{link #setDefault}
-     * directly.
+     * @param p clock control to make default
+     * @deprecated Since 3.7.1, use
+     * {@link #setDefault(java.lang.Class, java.lang.Object)} directly.
      */
     @Deprecated
     static public void addClockControl(ClockControl p) {
@@ -520,7 +589,9 @@ public class InstanceManager {
     }
 
     /**
-     * @deprecated Since 3.7.4, use @{link #store} directly.
+     * @param p shutdown manager to make default
+     * @deprecated Since 3.7.4, use
+     * {@link #setDefault(java.lang.Class, java.lang.Object)} directly.
      */
     @Deprecated
     static public void setShutDownManager(ShutDownManager p) {
@@ -533,7 +604,9 @@ public class InstanceManager {
     }
 
     /**
-     * @deprecated Since 3.7.4, use @{link #store} directly.
+     * @param p signal head manager to make default
+     * @deprecated Since 3.7.4, use
+     * {@link #setDefault(java.lang.Class, java.lang.Object)} directly.
      */
     @Deprecated
     static public void setSignalHeadManager(SignalHeadManager p) {
@@ -559,8 +632,9 @@ public class InstanceManager {
     }
 
     /**
-     * @deprecated Since 3.7.4, use @{link #store} and {@link #setDefault}
-     * directly.
+     * @param p configure manager to make default
+     * @deprecated Since 3.7.4, use
+     * {@link #setDefault(java.lang.Class, java.lang.Object)} directly.
      */
     @Deprecated
     static public void setConfigureManager(ConfigureManager p) {
