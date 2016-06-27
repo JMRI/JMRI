@@ -4,7 +4,7 @@
 <html lang="fr">
 <head>
  <title>
-      jmri hardware guide: chubb c/mri
+      JMRI Hardware guide: chubb c/mri
 </title>
     <meta http-equiv=content-type content="text/html; charset=iso-8859-1">
     <meta content="bob jacobsen" name=author>
@@ -257,7 +257,7 @@ d'affectation pour ses bits.)
  <LI> L'&#233;tat de votre capteur dans le tableau capteur sera initialement
         "Inconnu", mais passera rapidement &#224; "Inactif"  lorsque la scrutation
         commence (en supposant que rien n'est raccord&#233; &#224; la broche d'entr&#233;e 1).
-  </ UL>
+  </ul>
     La LED d'&#233;mission et de r&#233;ception sur votre carte SMINI devrait maintenant
     clignoter, indiquant que l'ordinateur et lA SMINI dialoguent.
 <li> Pour v&#233;rifier que le bit d'entr&#233;e (capteur) que vous avez attribu&#233; est au travail,
@@ -349,7 +349,7 @@ la scrutation. S&#233;lectionnez <b>Tableau Capteur</b> dans le menu Outils, et 
 L'&#233;tat de votre capteur dans le tableau capteur sera initialement
 "Inconnu", mais passera rapidement &#224; "inactif"  lorsque la scrutation
 commence (en supposant que rien n'est raccord&#233; &#224; la broche d'entr&#233;e 1).
-</ UL>
+</ul>
 La LED d'&#233;mission et de r&#233;ception sur votre carte contr&#238;leur SUSIC devrait 
 maintenant clignoter, indiquant que l'ordinateur et la SUSIC dialoguent.
 <li> Pour v&#233;rifier que le bit d'entr&#233;e (capteur) que vous avez attribu&#233; est au travail,
@@ -450,7 +450,7 @@ entr&#233;es et les sorties sur ce noeud seront num&#233;rot&#233;es &#224; part
      <LI> CT2048 est la derni&#232;re broche de sortie
      <LI> CS2001 est la premi&#232;re broche d'entr&#233;e
      <LI> CS2024 est la derni&#232;re broche d'entr&#233;ee 
-   </ UL>
+   </ul>
 <LI> Si vous avez une USIC avec ses commutateurs adresse  r&#233;gl&#233; sur "1", elle aurra
  toutes les entr&#233;es et les sorties num&#233;rot&#233;s &#224; partir de 1001. Si elle a
 trois cartes d'entr&#233;e 24-bit, et deux cartes de sortie 24-bit, leur adresse sera:

@@ -2,44 +2,137 @@
 #
 # Script to start a JMRI @VERSION@ application
 #
-# This script is used for both the Linux command line and in the Mac
-# OS X application bundle
+# This script is used for both all POSIX operating systems including Linux
+# and macOS / OS X application bundles
 #
-# If you need to add any additional Java options or defines,
-# include them in the JMRI_OPTIONS environment variable
+# If you need to add any additional Java options or persistent command line
+# arguments, include them in the "default_options" statement in the file
+# jmri.conf in the settings directory.
 #
-# If your serial ports are not shown in the initial list, you
-# can include them in the environment variable JMRI_SERIAL_PORTS
-# separated by commas:
-#    export JMRI_SERIAL_PORTS="/dev/locobuffer,/dev/cmri"
+# The default location for the settings directory is:
+# - macOS / OS X: ${HOME}/Library/Preferences/JMRI
+# - all other: ${HOME}/.jmri
 #
-# You can run separate instances of the program with their
-# own preferences and setup if you either
-# *) Provide the name of a configuration file as a parameter
+# The settings directory can be set to a non-standard location using the
+# "--settingsdir /path/to/my/settings" command line option (unlike all other
+# options, this one cannot be set in the jmri.conf file, since it determines
+# where the jmri.conf file will be read from).
+#
+# If your serial ports are not in the default list, include them in the
+# command line argument --serial-ports separated by commas:
+#    --serial-ports=/dev/locobuffer,/dev/cmri
+#
+# You can run separate instances of the program with their own preferences
+# if you
+# - Provide the name of a configuration file as a parameter
 # or
-# *) Copy and rename this script.
+# - Copy and rename this script.
 #
-# If you rename the script to e.g. JmriNew, it will use "JmriNewConfig.xml"
-# as it's configuration file.  You can then set and save the preferences for
-# the next time you rerun the script.
+# If you rename the script to, for example, JmriNew, it will use
+# "JmriNewConfig.properties" as it's configuration file. Note that configuration
+# files only determine which profile to use, and if the profile selector should
+# be shown at application launch.
 #
 # If you are getting X11 warnings about meta keys, uncomment the next line
 # xprop -root -remove _MOTIF_DEFAULT_BINDINGS
 #
 # For more information, please see
 # http://jmri.org/help/en/html/doc/Technical/StartUpScripts.shtml
-#
-# $Revision$ (SVN maintains this line, do not edit please)
-#
 
+# prevent the use of unbound variables
+set -u
+
+# display valid arguments
 function usage() {
-cat <<EOM
+    cat <<EOM
 Usage: $( basename $0 ) [--help] [OPTIONS]
   -c CONFIG, --config=CONFIG     Start JMRI with configuration CONFIG
+  --cp:a=CLASSPATH               Append specified JARs to the classpath
+  --cp:p=CLASSPATH               Prepend specified JARs to the classpath
   -d, --debug                    Add verbose output to this script
   -JOPTION                       Pass the option OPTION to the JVM
   -p PROFILE, --profile=PROFILE  Start JMRI with the profile PROFILE
+  --serial-ports=SERIAL_PORTS    Use the serial ports in SERIAL_PORTS
+  --settingsdir=SETTINGS_DIR     Use SETTINGS_DIR as the settings directory
 EOM
+}
+
+# parse passed in arguments from either default_options or command line
+# except --settingsdir argument
+function parse_args() {
+    while [ $# -gt 0 ] ; do
+        case "${1}" in
+            # append to classpath
+            --cp:a) post_classpath="${2}" ; shift ;;
+            --cp:a=*) post_classpath="${1#*=}" ;;
+            # prepend to classpath
+            --cp:p) pre_classpath="${2}" ; shift ;;
+            --cp:p=*) pre_classpath="${1#*=}" ;;
+            # use named configuration
+            -c|--config) CONFIGNAME="$2" ; shift ;;
+            --config=*) CONFIGNAME="${1#*=}" ;;
+            # debugging
+            -d|--debug) DEBUG="yes" ;;
+            # help
+            --help) usage ; exit 2 ;;
+            # heap sizes
+            -J-Xms*) jmri_xms="${1#-J}" ;;
+            -J-Xmx*) jmri_xmx="${1#-J}" ;;
+            # JVM arguments other than max memory
+            -J*) jmri_options="${jmri_options} ${1#-J}" ;;
+            # JMRI configuration profile
+            -p|--profile) jmri_options="${jmri_options} -Dorg.jmri.profile=$2" ; shift ;;
+            --profile=*) jmri_options="${jmri_options} -Dorg.jmri.profile=${1#*=}" ;;
+            # serial ports
+            --serial-ports) JMRI_SERIAL_PORTS="${2}" ;;
+            --serial-ports=*) JMRI_SERIAL_PORTS="${1#*=}" ; shift ;;
+        esac
+        shift
+    done
+}
+
+# Get the default heap size for JMRI in MB.
+# Based on total memory size, this is:
+# - 1/4 total memory size on systems with more than 4GB RAM
+# - 1/2 total memory size on systems with 1-4GB RAM
+# - 3/4 total memory size on systems with less than 1GB RAM
+# - with an absolute minimum of 192MB
+function heap_size() {
+    # get Java heap size
+    heap=$( java -XX:+PrintFlagsFinal -version 2>/dev/null | grep MaxHeapSize | awk '{print $4}' )
+    heap=$( expr ${heap} / 1048576 ) # bytes to MB
+    # Java heap defaults to 1/4 total memory size
+    # if <= 768MB (1/4 of 3MB), set it ourselves
+    if [ ${heap} -le 768 ] ; then
+        case "$( uname )" in
+            Linux*)
+                mem=$( cat /proc/meminfo | grep MemTotal | tr -d [:space:][:alpha:]: )
+                mem=$( expr $mem / 1024 )
+                ;;
+            SunOS*)
+                mem=$( /usr/sbin/prtconf | grep Memory | /usr/bin/tr -dc '[0-9]' )
+                ;;
+            Darwin*)
+                mem=$( /usr/sbin/sysctl hw.memsize | tr -d [:alpha:][:space:].: )
+                mem=$( expr $mem / 1048576 )
+                ;;
+            *)
+                ;;
+        esac
+        if [ -z "$mem" ] ; then
+            mem=640
+        fi
+        if [ $mem -le 1024 ] ; then
+          heap=$( expr $mem \* 3 / 4 )
+        else
+          heap=$( expr $mem \* 1 / 2 )
+        fi
+        if [ $heap -lt 192 ] ; then
+            heap=192
+        fi
+    fi
+    echo $heap
+    return 0
 }
 
 # get the script's location as an absolute path
@@ -49,107 +142,167 @@ SCRIPTDIR=$(cd "$( dirname "${0}" )" && pwd)
 DEFAULT_APP_NAME="@NAME@"
 CLASSNAME="@CLASS@"
 
-# ensure JMRI options are always set
+# define empty default_options, if not in the configuration file
+default_options=""
+# define empty jmri_options
+jmri_options=""
+
+# ensure JMRI environment options are always set
 JMRI_OPTIONS=${JMRI_OPTIONS:-}
+JMRI_SERIAL_PORTS=${JMRI_SERIAL_PORTS:-}
 
 # set default config name
 CONFIGNAME=""
+CONFIGFILE=""
 
-# set DEBUG to anything to see debugging output
-# DEBUG=yes
+# Installation locations
+JAVA_HOME=${JAVA_HOME:-}
+JMRI_HOME=${JMRI_HOME:-}
 
-# process command line arguments
-while [ $# -gt 0 ] ; do
-    case $1 in
-        -d|--debug) DEBUG="yes" ;;
-        --profile=*) JMRI_OPTIONS="${JMRI_OPTIONS} -Dorg.jmri.profile=${1#*=}" ;;
-        -p) JMRI_OPTIONS="${JMRI_OPTIONS} -Dorg.jmri.profile=$2" ; shift ;;
-        --config=*) CONFIGNAME="${1#*=}" ;;
-        -c) CONFIGNAME="$2" ; shift ;;
-        -J*) JMRI_OPTIONS="${JMRI_OPTIONS} ${1#-J}" ;;
-        --help) usage ; exit 2 ;;
-    esac
-    shift
+# set DEBUG to any non-empty string to see debugging output
+DEBUG=${DEBUG:-}
+
+# set default classpaths additions
+pre_classpath=""
+post_classpath=""
+
+# set the OS (can be overridden in enviroment for debugging and development)
+# this value is used to find OS-specific libraries, so it gets normalized
+# in following case statement
+OS=${OS:-}
+if [ -z "${OS}" ] ; then
+  OS=$( uname -s )
+fi
+ARCH=${ARCH:-}
+
+# set OS-specific settings
+case "${OS}" in
+    macosx|Darwin*)
+        settingsdir="${HOME}/Library/Preferences/JMRI"
+        OS="macosx"
+        DEBUG="yes" # default to on, so always available in Console.app
+        ;;
+    Linux*)
+        settingsdir="${HOME}/.jmri"
+        OS="linux"
+        ;;
+    *)
+        settingsdir="${HOME}/.jmri"
+        ;;
+esac
+
+# get the settings directory if set on command line
+found_settingsdir=""
+for opt in "$@"; do
+    if [ "${found_settingsdir}" = "yes" ]; then
+        # --settingsdir /path/to/... part 2
+        settingsdir="$opt"
+        jmri_options="${jmri_options} -Djmri.prefsdir=${settingsdir}"
+        break
+    elif [ "$opt" = "--settingsdir" ]; then
+        # --settingsdir /path/to/... part 1
+        found_settingsdir="yes"
+    elif [[ "$opt" =~ "--settingsdir=" ]]; then
+        # --settingsdir=/path/to/...
+        settingsdir="${opt#*=}"
+        jmri_options="${jmri_options} -Djmri.prefsdir=${settingsdir}"
+        break;
+    fi
 done
 
-## ask the user if they want to install Java, and open the Java web site if yes
-OfferJavaDownload() {
-    x=`/usr/bin/osascript << EOT
-    tell application "Finder"
-    activate
-    set myReply to button returned of (display dialog "No Java can be found on the system.\nWould you like to download Java now?" \
-         buttons { "No", "Yes" } \
-         with icon stop  \
-         with title "JMRI Installation Problem")
-    end tell
-EOT
-  `
-    if [ "$x" = "Yes" ] ; then
-        open http://java.com/
-    fi
-    exit 1
-}
-
-
-if [ -z "$OS" ] ; then
-    # start finding the architecture specific library directories
-    OS=`uname -s`
-
-    # normalize to match our standard names
-    if [ "$OS" = "Linux" ] ; then
-      OS="linux"
-    fi
-
-    if [ "$OS" = "Darwin" ] ; then
-      OS="macosx"
-    fi
+# set default_options from the launcher configuration file
+if [ -f "${settingsdir}/jmri.conf" ] ; then
+    source "${settingsdir}/jmri.conf"
 fi
 
-#
-# Mac OS X has a bewildering array of possibilities these days
-#
-# The Apple Java 6 runtime might be present, and if it is, then using
-# /usr/libexec/java_home will find the correct version, based on the user's
-# set preferences.   Note that this also works to find a Java 7 JDK, but
-# not the Java 7 JRE.
-#
-# As 10.8 & 10.9 do not ship with a Java runtime, this command will prompt
-# the user and download a JRE as needed.
-#
-# But if the user already has the Oracle Java 7 JRE installed, we should
-# use that instead of forcing a download of Apple's Java 6.
-#
-# * So look for the Oracle Java 7 JRE and use it if found
-# * Otherwise, use java_home if it's present
-# * As a last resort, use the default 'java' command and let the user 
-#   deal with it.  
+# process arguments, stored arguments first, so CLI arguments can override
+parse_args $default_options
+parse_args $JMRI_OPTIONS # support JMRI_OPTIONS if someone is using it
+parse_args $@
 
-if [ "$OS" = "macosx" ] ; then
-    # on Mac OS X, we default to logging, since the Console app make it less visible unless you look for it
-    DEBUG=yes
+# set if -J-Xmx=... is not in options or arguments
+if [ -z "${jmri_xmx:-}" ] ; then
+    jmri_xmx="-Xmx$( heap_size )m"
+fi
+# set if -J-Xms=... is not in options or arguments
+if [ -z "${jmri_xms:-}" ] ; then
+    # initial heap size = default for 6 GB RAM (default = 1/64 installed RAM)
+    jmri_xms="-Xms96m"
+fi
 
-    # this is the current (1.7.0_45ish) location of the Oracle installed Java 7 JRE (but not the JDK)
-    PLUGINDIR="/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home"
-    if [ -x "$PLUGINDIR/bin/java" ] ; then
-        JAVA_HOME="$PLUGINDIR"
-        JAVACMD=("$PLUGINDIR/bin/java")
-
-        export JAVA_HOME
-
-    # check for Apple method of directly locating java binaries (may find a Java 6 JRE or a Java 7 JDK)
-    elif [ -x /usr/libexec/java_home ] ; then
-        VERSION=$(/usr/libexec/java_home -exec java -version)
-        if [ $? == 0 ] ; then
-            JAVACMD=("/usr/libexec/java_home" "-exec" "java")
-        else
-            OfferJavaDownload
+# define JAVA_HOME if needed
+if [ -z "${JAVA_HOME}" ] ; then
+    #
+    # macOS / OS X get special treatment
+    # all others use which to find java
+    # otherwise error out
+    #
+    if [ "$OS" = "macosx" ] ; then
+        #
+        # macOS / OS X has a bewildering array of possibilities these days
+        #
+        # /usr/libexec/java_home will find the correct version, if a JDK for the
+        # required version or newer is installed.
+        #
+        # As 10.8 and newer do not ship with a JRE, this command will prompt
+        # the user and download a JRE as needed.
+        #
+        # But if the user already has the Oracle Java 8 JRE installed, we should
+        # use that instead of forcing a download of Apple's Java 6 (10.11 and
+        # newer will always direct the user to Oracle for Java.)
+        #
+        # Look for the Oracle Java 8 JRE and use it if found
+        # Otherwise, use java_home if it's present
+        # Otherwise, prompt the user to install Java
+        #
+        # Default JRE location
+        JAVA_HOME="/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home"
+        if [ -x "${JAVA_HOME}/bin/java" ] ; then
+            JAVACMD="${JAVA_HOME}/bin/java"
+            # Test if java is present and version 1.8 or 1.9
+            if [[ -x "${JAVACMD}" && "$( ${JAVACMD} -version 2>&1 )" =~ 1.[89] ]] ; then
+                JAVA_HOME=""
+            fi
         fi
+        if [[ -z "${JAVA_HOME}" && -x /usr/libexec/java_home ]] ; then
+            # Test for any JDKs of version 1.8 or newer
+            JAVA_HOME=$( /usr/libexec/java_home --version 1.8+ --failfast 2>/dev/null )
+            if [ -n "${JAVA_HOME}" ] ; then
+                JAVACMD="${JAVA_HOME}/bin/java"
+            fi
+        fi
+        if [ -z "${JAVA_HOME}" ] ; then
+            # JAVA_HOME is still not defined, so prompt to install Java for OS X
+            /usr/bin/osascript << EOT
+            try
+                display alert "To use JMRI you need to install a JRE." \
+                    message "Click \"More Info...\" to visit the Java Runtime Environment download website." \
+                    buttons {"More Info...", "OK"} \
+                    default button "OK" \
+                    cancel button "More Info..."
+            on error number -128
+                -- user pressed cancel button
+                open location "https://www.java.com/en/download/mac_download.jsp"
+            end try
+EOT
+            exit 1
+        fi
+    elif which java >/dev/null 2>&1 ; then
+        JAVACMD=$( which java )
+        JAVA_HOME="$( dirname ${JAVACMD} )/.."
     else
-        # this isn't supposed to happen on any Mac that I know of in 2013... but you never know
-        OfferJavaDownload
+        echo "Please install Java 1.8 per your operating system vendor's instructions."
+        exit 1
+    fi
+else
+    JAVACMD="${JAVA_HOME}/bin/java"
+    if [ ! -x "${JAVACMD}" ] ; then
+        echo "Unable to execute java using JAVA_HOME=\"${JAVA_HOME}\"."
+        exit 1
     fi
 fi
-
+# make JAVA_HOME available to spawned processes
+export JAVA_HOME
 
 # define JMRI_HOME if it is not defined
 if [ -z "${JMRI_HOME}" ] ; then
@@ -181,7 +334,7 @@ fi
 
 if [ -z "$ARCH" ] ; then
     for cmd in "arch" "uname -i" "uname -p" "uname -m" ; do
-        ARCH=`$cmd 2>/dev/null`
+        ARCH=$( $cmd 2>/dev/null )
         if [ -n "$ARCH" ] ; then
             # canonicalize the architecture names where possible
             # we currently have AMD64 / X86_64
@@ -203,7 +356,7 @@ if [ -z "$ARCH" ] ; then
             if [ "${ARCH:0:3}" = "arm" ] ; then
 
                 #determine arm version & hard vs. soft float using readelf
-                ARCHVERSION=`readelf -A /proc/self/exe | grep Tag_CPU_arch | cut -d : -f2`  
+                ARCHVERSION=$( readelf -A /proc/self/exe | grep Tag_CPU_arch | cut -d : -f2 )
                 if [ -z "$ARCHVERSION" -o "${ARCHVERSION:1:2}" = "v5" ] ; then
                     ARCH="armv5"
                 elif [ "${ARCHVERSION:1:2}" = "v6" ] ; then
@@ -232,22 +385,20 @@ fi
 
 
 # build classpath dynamically
-CP=".:classes:java/classes"
-# list of jar files in home, not counting jmri.jar
-LOCALJARFILES=`ls ${LIBDIR}/*.jar | grep -v jmri.jar | tr "\n" ":"`
-if [ ${LOCALJARFILES} ] ; then
-    CP="${CP}:${LOCALJARFILES}"
+CP=""
+if [ -n "${pre_classpath}" ] ; then
+    CP="${pre_classpath}:"
 fi
-# add jmri.jar
-CP="${CP}:jmri.jar"
-# and contents of lib
-CP="${CP}:`ls -m ${LIBDIR}/*.jar | tr -d ' \n' | tr ',' ':'`"
+CP="${CP}.:classes:java/classes:jmri.jar"
+# add contents of lib
+CP="${CP}:$( ls -m ${LIBDIR}/*.jar | tr -d ' \n' | tr ',' ':' )"
 
 if [ -d /System/Library/Java ] ; then
     CP="${CP}":/System/Library/Java
 fi
-
-[ -z "${JAVACMD[@]}" ] && JAVACMD=("java")
+if [ -n "${post_classpath}" ] ; then
+    CP="${CP}:${post_classpath}"
+fi
 
 [ -n "${DEBUG}" ] && echo "CLASSPATH: '${CP}'"
 
@@ -257,9 +408,9 @@ fi
 # If not provided, build config file name dynamically
 if [ "$OS" = "macosx" ] ; then
     # OS X can have spaces in the application name
-    APPNAME=`basename -s .app "${BUNDLEDIR}"`
+    APPNAME=$( basename -s .app "${BUNDLEDIR}" )
 else
-    APPNAME=`basename "$0"`
+    APPNAME=$( basename "$0" )
 fi
 
 [ -n "${DEBUG}" ] && echo "APPNAME: '${APPNAME}'"
@@ -268,7 +419,7 @@ fi
 # NOT the default one this script was built for.
 if [ "$APPNAME" != "$DEFAULT_APP_NAME" ] ; then
     if [ -z "${CONFIGNAME}" ] ; then
-        CONFIGNAME=`echo $APPNAME | tr -d '[:space:]' | tr -d '=' `
+        CONFIGNAME=$( echo $APPNAME | tr -d '[:space:]' | tr -d '=' )
     fi
     CONFIGFILE="config=${CONFIGNAME}Config.xml"
     [ -n "${DEBUG}" ] && echo "CONFIGFILE: '${CONFIGFILE}'"
@@ -287,52 +438,17 @@ if [ "$OS" = "macosx" ] ; then
     if [ -f "${BUNDLEDIR}/Contents/Resources/@ICON@.icns" ] ; then
         APPICON="${BUNDLEDIR}/Contents/Resources/@ICON@.icns"
     else
-        APPICON=`find "${BUNDLEDIR}" | grep -s -m 1 icns`
+        APPICON=$( find "${BUNDLEDIR}" | grep -s -m 1 icns )
     fi
 fi
 
-#
-# set memory options
-#
-heap_size () {
-    mem=640
-    case "`uname`" in
-        Linux*)
-            mem=`cat /proc/meminfo | grep MemTotal | tr -d [:space:][:alpha:]:`
-            mem=`expr $mem / 1024`
-            ;;
-        SunOS*)
-            mem=`/usr/sbin/prtconf | grep Memory | /usr/bin/tr -dc '[0-9]'`
-            ;;
-        Darwin*)
-            mem=`/usr/sbin/sysctl hw.memsize | tr -d [:alpha:][:space:].:`
-            mem=`expr $mem / 1048576`
-            ;;
-        *)
-            ;;
-    esac
-    if [ -z "$mem" ] ; then
-        mem=640
-    fi
-    mem=`expr $mem / 2`
-    if [ $mem -gt 768 ] ; then
-        mem=768
-    elif [ $mem -lt 192 ] ; then
-        mem=192
-    fi
-    echo $mem
-    return 0
-}
-
-MEMORY_OPTIONS="-Xms96m -Xmx`heap_size`m"
-
-OPTIONS="${JMRI_OPTIONS} -noverify"
+OPTIONS="${jmri_options} -noverify"
 OPTIONS="${OPTIONS} -Djava.security.policy=${LIBDIR}/security.policy"
 OPTIONS="${OPTIONS} -Djava.rmi.server.codebase=file:java/classes/"
 OPTIONS="${OPTIONS} -Djava.library.path=.:$SYSLIBPATH:${LIBDIR}"
 
 # memory start and max limits
-OPTIONS="${OPTIONS} ${OS_OPTIONS} ${MEMORY_OPTIONS}"
+OPTIONS="${OPTIONS} ${OS_OPTIONS-} ${jmri_xms} ${jmri_xmx}"
 
 # RXTX options (only works in some versions)
 OPTIONS="${OPTIONS} -Dgnu.io.rxtx.NoVersionOutput=true"
@@ -365,7 +481,11 @@ RESTART_CODE=100
 EXIT_STATUS=${RESTART_CODE}
 while [ "${EXIT_STATUS}" -eq "${RESTART_CODE}" ] ; do
 
-    "${JAVACMD[@]}" "${DOCK_OPTIONS[@]}" ${OPTIONS} ${ALTPORTS} -cp "${CP}" "${CLASSNAME}" ${CONFIGFILE}
+    if [ "$OS" = "macosx" ] ; then
+        "${JAVACMD}" "${DOCK_OPTIONS[@]}" ${OPTIONS} ${ALTPORTS} -cp "${CP}" "${CLASSNAME}" ${CONFIGFILE}
+    else
+        "${JAVACMD}" ${OPTIONS} ${ALTPORTS} -cp "${CP}" "${CLASSNAME}" ${CONFIGFILE}
+    fi
 
     EXIT_STATUS=$?
     [ -n "${DEBUG}" ] && echo Exit Status: "${EXIT_STATUS}"

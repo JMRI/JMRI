@@ -147,7 +147,7 @@ to do the accounting. It provides detailed reports at multiple levels:
 <li><href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/">summary by file</a> (e.g. class). Click on a class to see a</li>
 <li><href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/BlockBossLogic/">summary by method</a>. Click on a method to see</li>
 <li><href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/BlockBossLogic/defineIO()/">how each part of the code was covered</a> (may require scrolling down).</li>
-
+</ul>
 
 <h2><a name="write">Writing Tests</a></h2>
 
@@ -230,12 +230,12 @@ the custom appender is told when a test is beginning and ending.
 <CODE><PRE>
     // The minimal setup for log4J<br/>
     protected void setUp() throws Exception { <br/>
-        apps.tests.Log4JFixture.setUp(); <br/>
         super.setUp();<br/>
+        apps.tests.Log4JFixture.setUp(); <br/>
     }<br/>
     protected void tearDown() throws Exception { <br/>
-        super.tearDown();<br/>
         apps.tests.Log4JFixture.tearDown(); <br/>
+        super.tearDown();<br/>
     }<br/>
 </PRE></code>
 <LI>When a test is deliberately invoking a message, it should then
@@ -276,6 +276,7 @@ clear and reset it to ensure you get reproducible results.
 Depending on what managers your code uses, your <code>setUp()</code> implementation should start with:
 <p><CODE><PRE>
     super.setUp();<br/>
+    apps.tests.Log4JFixture.setUp(); <br/>
     jmri.util.JUnitUtil.resetInstanceManager();<br/>
     jmri.util.JUnitUtil.initInternalTurnoutManager();<br/>
     jmri.util.JUnitUtil.initInternalLightManager();<br/>
@@ -290,7 +291,8 @@ Your <code>tearDown()</code> should end with:
 <p>
 <CODE><PRE>
     jmri.util.JUnitUtil.resetInstanceManager();<br/>
-    super.tearDown();
+    apps.tests.Log4JFixture.tearDown(); <br/>
+    super.tearDown();<br/>
 </PRE></code>
 
 <h3><a name="RunningListeners">Working with Listeners</a></h3>
@@ -531,13 +533,13 @@ simple tests for those to ensure they keep working.
 
 <h3><a id="sampleJythonScriptTesting" name="sampleJythonScriptTesting"></a>Testing Jython sample scripts</h3>
 
-Test scripts can be placed in <code>jython</code> and invoked by 
+Test scripts can be placed in <code>jython/test</code> are automatically invoked by
 <code><a href="https://github.com/JMRI/JMRI/blob/master/java/test/jmri/jmrit/jython/SampleScriptTest.java">java/test/jmri/jmrit/jython/SampleScriptTest.java</a></code>.
 <p>
 See the <code><a href="https://github.com/JMRI/JMRI/blob/master/jython/test/jmri_bindings_test.py">jmri_bindings_test.py</a></code> 
-sample for syntax.
+sample for syntax, including examples of how to signal test failures.
 <p>
-The <code>SampleScriptTest</code> class is a placeholder, and should (eventually) be extended to pick up files automatically, 
+In the future, this could be extended to pick up files automatically, 
 to support xUnit testing, etc.
 <p>
 

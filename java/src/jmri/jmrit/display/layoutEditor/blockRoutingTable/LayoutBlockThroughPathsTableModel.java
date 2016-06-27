@@ -55,7 +55,7 @@ public class LayoutBlockThroughPathsTableModel extends javax.swing.table.Abstrac
             case DESTINATIONCOL:
                 return rb.getString("Destination");
             case ACTIVECOL:
-                return rb.getString("Active");
+                return Bundle.getMessage("SensorStateActive");
 
             default:
                 return "<UNKNOWN>";

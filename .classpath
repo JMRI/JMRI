@@ -22,7 +22,7 @@
 	<classpathentry kind="lib" path="lib/jmdns.jar"/>
 	<classpathentry kind="lib" path="lib/joal.jar"/>
 	<classpathentry kind="lib" path="lib/jsr305.jar"/>
-	<classpathentry kind="lib" path="lib/junit.jar"/>
+	<classpathentry kind="lib" path="lib/junit-4.12.jar"/>
 	<classpathentry kind="lib" path="lib/jython.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-1.2.17.jar"/>
 	<classpathentry kind="lib" path="lib/mailapi.jar"/>
@@ -37,7 +37,7 @@
 	<classpathentry kind="lib" path="lib/jul-to-slf4j-1.7.13.jar"/>
 	<classpathentry kind="lib" path="lib/smtp.jar"/>
 	<classpathentry kind="lib" path="lib/UmlGraph-5.7.jar"/>
-	<classpathentry kind="lib" path="lib/vecmath.jar"/>
+	<classpathentry kind="lib" path="lib/vecmath-1.5.2.jar"/>
 	<classpathentry kind="lib" path="lib/WinRegistry-4.4.jar"/>
 	<classpathentry kind="lib" path="lib/xAPlib.jar"/>
 	<classpathentry kind="lib" path="lib/xercesImpl.jar"/>
@@ -51,20 +51,21 @@
 	<classpathentry kind="lib" path="lib/bluecove-gpl-2.1.1-SNAPSHOT.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/javax.servlet-api-3.1.0.jar"/>
-	<classpathentry kind="lib" path="lib/jetty-http-9.3.6.v20151106.jar"/>
-	<classpathentry kind="lib" path="lib/jetty-io-9.3.6.v20151106.jar"/>
-	<classpathentry kind="lib" path="lib/jetty-security-9.3.6.v20151106.jar"/>
-	<classpathentry kind="lib" path="lib/jetty-server-9.3.6.v20151106.jar"/>
-	<classpathentry kind="lib" path="lib/jetty-servlet-9.3.6.v20151106.jar"/>
-	<classpathentry kind="lib" path="lib/jetty-util-9.3.6.v20151106.jar"/>
-	<classpathentry kind="lib" path="lib/websocket-api-9.3.6.v20151106.jar"/>
-	<classpathentry kind="lib" path="lib/websocket-client-9.3.6.v20151106.jar"/>
-	<classpathentry kind="lib" path="lib/websocket-common-9.3.6.v20151106.jar"/>
-	<classpathentry kind="lib" path="lib/websocket-server-9.3.6.v20151106.jar"/>
-	<classpathentry kind="lib" path="lib/websocket-servlet-9.3.6.v20151106.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-http-9.3.9.v20160517.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-io-9.3.9.v20160517.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-security-9.3.9.v20160517.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-server-9.3.9.v20160517.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-servlet-9.3.9.v20160517.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-util-9.3.9.v20160517.jar"/>
+	<classpathentry kind="lib" path="lib/websocket-api-9.3.9.v20160517.jar"/>
+	<classpathentry kind="lib" path="lib/websocket-client-9.3.9.v20160517.jar"/>
+	<classpathentry kind="lib" path="lib/websocket-common-9.3.9.v20160517.jar"/>
+	<classpathentry kind="lib" path="lib/websocket-server-9.3.9.v20160517.jar"/>
+	<classpathentry kind="lib" path="lib/websocket-servlet-9.3.9.v20160517.jar"/>
 	<classpathentry kind="lib" path="lib/pi4j-core.jar"/>
 	<classpathentry kind="lib" path="lib/pi4j-device.jar"/>
 	<classpathentry kind="lib" path="lib/pi4j-gpio-extension.jar"/>
 	<classpathentry kind="lib" path="lib/pi4j-service.jar"/>
+	<classpathentry kind="lib" path="lib/beansbinding-1.2.1.jar"/>
 	<classpathentry kind="output" path="java/classes"/>
 </classpath>

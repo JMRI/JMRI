@@ -50,16 +50,6 @@ abstract public class AbstractManager
         return getSystemPrefix() + typeLetter() + s;
     }
 
-    /**
-     * Provide access to deprecated method temporarilly
-     *
-     * @deprecated 2.9.5 Use getSystemPrefix
-     */
-    @Deprecated
-    public char systemLetter() {
-        return getSystemPrefix().charAt(0);
-    }
-
     // abstract methods to be extended by subclasses
     // to free resources when no longer used
     public void dispose() {

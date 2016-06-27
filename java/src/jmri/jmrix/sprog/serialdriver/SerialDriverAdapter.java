@@ -175,6 +175,10 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
 
     InputStream serialStream = null;
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static public SerialDriverAdapter instance() {
         if (mInstance == null) {
             SerialDriverAdapter m = new SerialDriverAdapter();
@@ -184,6 +188,10 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
         return mInstance;
     }
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static volatile SerialDriverAdapter mInstance = null;
 
     /**

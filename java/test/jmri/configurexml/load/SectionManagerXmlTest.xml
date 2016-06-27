@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="/xml/XSLT/panelfile-2-9-6.xsl"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
   <jmriversion>
-    <major>2</major>
-    <minor>99</minor>
-    <test>3</test>
-    <modifier>.3</modifier>
+    <major>3</major>
+    <minor>8</minor>
+    <test>0</test>
+    <modifier />
   </jmriversion>
   <sensors class="jmri.managers.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
     <sensor systemName="ISBO1" inverted="false" userName="blocknorthwestoccupied">
       <systemName>ISBO1</systemName>
       <userName>blocknorthwestoccupied</userName>
@@ -55,6 +56,9 @@
     <sensor systemName="ISBO9" inverted="false" userName="blocksouthsidingoccupied">
       <systemName>ISBO9</systemName>
       <userName>blocksouthsidingoccupied</userName>
+    </sensor>
+    <sensor systemName="ISCLOCKRUNNING" inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
     </sensor>
     <sensor systemName="ISSDIRF1" inverted="false">
       <systemName>ISSDIRF1</systemName>
@@ -204,6 +208,8 @@
   <turnouts class="jmri.managers.configurexml.InternalTurnoutManagerXml">
     <operations automate="false">
       <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
     </operations>
     <defaultclosedspeed>Normal</defaultclosedspeed>
     <defaultthrownspeed>Restricted</defaultthrownspeed>
@@ -280,6 +286,12 @@
     <memory systemName="IM:AUTO:0012" userName="blockwestsidingmemory">
       <systemName>IM:AUTO:0012</systemName>
       <userName>blockwestsidingmemory</userName>
+    </memory>
+    <memory systemName="IMCURRENTTIME" value="10:25 PM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory systemName="IMRATEFACTOR" value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
     </memory>
   </memories>
   <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
@@ -567,58 +579,9 @@
       </path>
     </block>
   </blocks>
-  <layoutblocks class="jmri.jmrit.display.configurexml.LayoutBlockManagerXml">
-    <layoutblock systemName="ILB1" userName="blocknorthwest" occupancysensor="blocknorthwestoccupied" occupiedsense="2" trackcolor="darkGray" occupiedcolor="blue" extracolor="yellow" memory="blocknorthwestmemory">
-      <systemName>ILB1</systemName>
-      <userName>blocknorthwest</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB10" userName="blocksouthwest" occupancysensor="blocksouthwestoccupied" occupiedsense="2" trackcolor="black" occupiedcolor="black" extracolor="black" memory="blocksouthwestmemory">
-      <systemName>ILB10</systemName>
-      <userName>blocksouthwest</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB11" userName="blockwest" occupancysensor="blockwestoccupied" occupiedsense="2" trackcolor="black" occupiedcolor="black" extracolor="black" memory="blockwestmemory">
-      <systemName>ILB11</systemName>
-      <userName>blockwest</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB12" userName="blockwestsiding" occupancysensor="blockwestsidingoccupied" occupiedsense="2" trackcolor="black" occupiedcolor="black" extracolor="black" memory="blockwestsidingmemory">
-      <systemName>ILB12</systemName>
-      <userName>blockwestsiding</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB2" userName="blocknorth" occupancysensor="blocknorthoccupied" occupiedsense="2" trackcolor="darkGray" occupiedcolor="blue" extracolor="yellow" memory="blocknorthmemory">
-      <systemName>ILB2</systemName>
-      <userName>blocknorth</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB3" userName="blocknorthsiding" occupancysensor="blocknorthsidingoccupied" occupiedsense="2" trackcolor="darkGray" occupiedcolor="blue" extracolor="yellow" memory="blocknorthsidingmemory">
-      <systemName>ILB3</systemName>
-      <userName>blocknorthsiding</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB4" userName="blocknortheast" occupancysensor="blocknortheastoccupied" occupiedsense="2" trackcolor="darkGray" occupiedcolor="blue" extracolor="yellow" memory="blocknortheastmemory">
-      <systemName>ILB4</systemName>
-      <userName>blocknortheast</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB5" userName="blockeast" occupancysensor="blockeastoccupied" occupiedsense="2" trackcolor="darkGray" occupiedcolor="blue" extracolor="yellow" memory="blockeastmemory">
-      <systemName>ILB5</systemName>
-      <userName>blockeast</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB6" userName="blockeastsiding" occupancysensor="blockeastsidingoccupied" occupiedsense="2" trackcolor="black" occupiedcolor="black" extracolor="black" memory="blockeastmemory">
-      <systemName>ILB6</systemName>
-      <userName>blockeastsiding</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB7" userName="blocksoutheast" occupancysensor="blocksoutheastoccupied" occupiedsense="2" trackcolor="black" occupiedcolor="black" extracolor="black" memory="blocksoutheastmemory">
-      <systemName>ILB7</systemName>
-      <userName>blocksoutheast</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB8" userName="blocksouth" occupancysensor="blocksouthoccupied" occupiedsense="2" trackcolor="darkGray" occupiedcolor="blue" extracolor="yellow" memory="blocksouthmemory">
-      <systemName>ILB8</systemName>
-      <userName>blocksouth</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB9" userName="blocksouthsiding" occupancysensor="blocksouthsidingoccupied" occupiedsense="2" trackcolor="darkGray" occupiedcolor="blue" extracolor="yellow" memory="blocksouthsidingmemory">
-      <systemName>ILB9</systemName>
-      <userName>blocksouthsiding</userName>
-    </layoutblock>
-  </layoutblocks>
+  <layoutblocks class="jmri.jmrit.display.configurexml.LayoutBlockManagerXml" />
   <sections class="jmri.configurexml.SectionManagerXml">
-    <section systemName="IY:AUTO:0001" userName="NorthWest" fsensorname="ISSDIRF1" rsensorname="ISSDIRR1" fstopsensorname="ISSSTOPF1" rstopsensorname="ISSSTOPR1">
+    <section systemName="IY:AUTO:0001" userName="NorthWest" creationtype="userdefined" fstopsensorname="ISSSTOPF1" rstopsensorname="ISSSTOPR1" fsensorname="ISSDIRF1" rsensorname="ISSDIRR1">
       <userName>NorthWest</userName>
       <blockentry sName="IB1" order="0" />
       <entrypoint fromblock="IB11" toblock="IB1" direction="4" fixed="no" fromblockdirection="North" />
@@ -626,19 +589,19 @@
       <entrypoint fromblock="IB2" toblock="IB1" direction="8" fixed="no" fromblockdirection="West" />
       <entrypoint fromblock="IB3" toblock="IB1" direction="8" fixed="no" fromblockdirection="West" />
     </section>
-    <section systemName="IY:AUTO:0002" userName="North" fsensorname="ISSDIRF2" rsensorname="ISSDIRR2" fstopsensorname="ISSSTOPF2" rstopsensorname="ISSSTOPR2">
+    <section systemName="IY:AUTO:0002" userName="North" creationtype="userdefined" fstopsensorname="ISSSTOPF2" rstopsensorname="ISSSTOPR2" fsensorname="ISSDIRF2" rsensorname="ISSDIRR2">
       <userName>North</userName>
       <blockentry sName="IB2" order="0" />
       <entrypoint fromblock="IB1" toblock="IB2" direction="4" fixed="no" fromblockdirection="East" />
       <entrypoint fromblock="IB4" toblock="IB2" direction="8" fixed="no" fromblockdirection="West" />
     </section>
-    <section systemName="IY:AUTO:0003" userName="NorthSiding" fsensorname="ISSDIRF3" rsensorname="ISSDIRR3" fstopsensorname="ISSSTOPF3" rstopsensorname="ISSSTOPR3">
+    <section systemName="IY:AUTO:0003" userName="NorthSiding" creationtype="userdefined" fstopsensorname="ISSSTOPF3" rstopsensorname="ISSSTOPR3" fsensorname="ISSDIRF3" rsensorname="ISSDIRR3">
       <userName>NorthSiding</userName>
       <blockentry sName="IB3" order="0" />
       <entrypoint fromblock="IB1" toblock="IB3" direction="4" fixed="no" fromblockdirection="East" />
       <entrypoint fromblock="IB4" toblock="IB3" direction="8" fixed="no" fromblockdirection="West" />
     </section>
-    <section systemName="IY:AUTO:0004" userName="NorthEast" fsensorname="ISSDIRF4" rsensorname="ISSDIRR4" fstopsensorname="ISSSTOPF4" rstopsensorname="ISSSTOPR4">
+    <section systemName="IY:AUTO:0004" userName="NorthEast" creationtype="userdefined" fstopsensorname="ISSSTOPF4" rstopsensorname="ISSSTOPR4" fsensorname="ISSDIRF4" rsensorname="ISSDIRR4">
       <userName>NorthEast</userName>
       <blockentry sName="IB4" order="0" />
       <entrypoint fromblock="IB2" toblock="IB4" direction="4" fixed="no" fromblockdirection="East" />
@@ -646,19 +609,19 @@
       <entrypoint fromblock="IB5" toblock="IB4" direction="8" fixed="no" fromblockdirection="North" />
       <entrypoint fromblock="IB6" toblock="IB4" direction="8" fixed="no" fromblockdirection="North" />
     </section>
-    <section systemName="IY:AUTO:0005" userName="East" fsensorname="ISSDIRF5" rsensorname="ISSDIRR5" fstopsensorname="ISSSTOPF5" rstopsensorname="ISSSTOPR5">
+    <section systemName="IY:AUTO:0005" userName="East" creationtype="userdefined" fstopsensorname="ISSSTOPF5" rstopsensorname="ISSSTOPR5" fsensorname="ISSDIRF5" rsensorname="ISSDIRR5">
       <userName>East</userName>
       <blockentry sName="IB5" order="0" />
       <entrypoint fromblock="IB4" toblock="IB5" direction="4" fixed="no" fromblockdirection="South" />
       <entrypoint fromblock="IB7" toblock="IB5" direction="8" fixed="no" fromblockdirection="North" />
     </section>
-    <section systemName="IY:AUTO:0006" userName="EastSiding" fsensorname="ISSDIRF6" rsensorname="ISSDIRR6" fstopsensorname="ISSSTOPF6" rstopsensorname="ISSSTOPR6">
+    <section systemName="IY:AUTO:0006" userName="EastSiding" creationtype="userdefined" fstopsensorname="ISSSTOPF6" rstopsensorname="ISSSTOPR6" fsensorname="ISSDIRF6" rsensorname="ISSDIRR6">
       <userName>EastSiding</userName>
       <blockentry sName="IB6" order="0" />
       <entrypoint fromblock="IB4" toblock="IB6" direction="4" fixed="no" fromblockdirection="South" />
       <entrypoint fromblock="IB7" toblock="IB6" direction="8" fixed="no" fromblockdirection="North" />
     </section>
-    <section systemName="IY:AUTO:0007" userName="SouthEast" fsensorname="ISSDIRF7" rsensorname="ISSDIRR7" fstopsensorname="ISSSTOPF7" rstopsensorname="ISSSTOPR7">
+    <section systemName="IY:AUTO:0007" userName="SouthEast" creationtype="userdefined" fstopsensorname="ISSSTOPF7" rstopsensorname="ISSSTOPR7" fsensorname="ISSDIRF7" rsensorname="ISSDIRR7">
       <userName>SouthEast</userName>
       <blockentry sName="IB7" order="0" />
       <entrypoint fromblock="IB5" toblock="IB7" direction="4" fixed="no" fromblockdirection="South" />
@@ -666,19 +629,19 @@
       <entrypoint fromblock="IB8" toblock="IB7" direction="8" fixed="no" fromblockdirection="East" />
       <entrypoint fromblock="IB9" toblock="IB7" direction="8" fixed="no" fromblockdirection="East" />
     </section>
-    <section systemName="IY:AUTO:0008" userName="South" fsensorname="ISSDIRF8" rsensorname="ISSDIRR8" fstopsensorname="ISSSTOPF8" rstopsensorname="ISSSTOPR8">
+    <section systemName="IY:AUTO:0008" userName="South" creationtype="userdefined" fstopsensorname="ISSSTOPF8" rstopsensorname="ISSSTOPR8" fsensorname="ISSDIRF8" rsensorname="ISSDIRR8">
       <userName>South</userName>
       <blockentry sName="IB8" order="0" />
       <entrypoint fromblock="IB7" toblock="IB8" direction="4" fixed="no" fromblockdirection="West" />
       <entrypoint fromblock="IB10" toblock="IB8" direction="8" fixed="no" fromblockdirection="East" />
     </section>
-    <section systemName="IY:AUTO:0009" userName="SouthSiding" fsensorname="ISSDIRF9" rsensorname="ISSDIRR9" fstopsensorname="ISSSTOPF9" rstopsensorname="ISSSTOPR9">
+    <section systemName="IY:AUTO:0009" userName="SouthSiding" creationtype="userdefined" fstopsensorname="ISSSTOPF9" rstopsensorname="ISSSTOPR9" fsensorname="ISSDIRF9" rsensorname="ISSDIRR9">
       <userName>SouthSiding</userName>
       <blockentry sName="IB9" order="0" />
       <entrypoint fromblock="IB7" toblock="IB9" direction="4" fixed="no" fromblockdirection="West" />
       <entrypoint fromblock="IB10" toblock="IB9" direction="8" fixed="no" fromblockdirection="East" />
     </section>
-    <section systemName="IY:AUTO:0010" userName="SouthWest" fsensorname="ISSDIRF10" rsensorname="ISSDIRR10" fstopsensorname="ISSSTOPF10" rstopsensorname="ISSSTOPR10">
+    <section systemName="IY:AUTO:0010" userName="SouthWest" creationtype="userdefined" fstopsensorname="ISSSTOPF10" rstopsensorname="ISSSTOPR10" fsensorname="ISSDIRF10" rsensorname="ISSDIRR10">
       <userName>SouthWest</userName>
       <blockentry sName="IB10" order="0" />
       <entrypoint fromblock="IB8" toblock="IB10" direction="4" fixed="no" fromblockdirection="West" />
@@ -686,13 +649,13 @@
       <entrypoint fromblock="IB11" toblock="IB10" direction="8" fixed="no" fromblockdirection="South" />
       <entrypoint fromblock="IB12" toblock="IB10" direction="8" fixed="no" fromblockdirection="South" />
     </section>
-    <section systemName="IY:AUTO:0011" userName="West" fsensorname="ISSDIRF11" rsensorname="ISSDIRR11" fstopsensorname="ISSSTOPF11" rstopsensorname="ISSSTOPR11">
+    <section systemName="IY:AUTO:0011" userName="West" creationtype="userdefined" fstopsensorname="ISSSTOPF11" rstopsensorname="ISSSTOPR11" fsensorname="ISSDIRF11" rsensorname="ISSDIRR11">
       <userName>West</userName>
       <blockentry sName="IB11" order="0" />
       <entrypoint fromblock="IB10" toblock="IB11" direction="4" fixed="no" fromblockdirection="North" />
       <entrypoint fromblock="IB1" toblock="IB11" direction="8" fixed="no" fromblockdirection="South" />
     </section>
-    <section systemName="IY:AUTO:0012" userName="WestSiding" fsensorname="ISSDIRF12" rsensorname="ISSDIRR12" fstopsensorname="ISSSTOPF12" rstopsensorname="ISSSTOPR12">
+    <section systemName="IY:AUTO:0012" userName="WestSiding" creationtype="userdefined" fstopsensorname="ISSSTOPF12" rstopsensorname="ISSSTOPR12" fsensorname="ISSDIRF12" rsensorname="ISSDIRR12">
       <userName>WestSiding</userName>
       <blockentry sName="IB12" order="0" />
       <entrypoint fromblock="IB10" toblock="IB12" direction="4" fixed="no" fromblockdirection="North" />
@@ -701,7 +664,6 @@
   </sections>
   <transits class="jmri.configurexml.TransitManagerXml">
     <transit systemName="IZ:AUTO:0001" userName="gocw1">
-      <systemName>IZ:AUTO:0001</systemName>
       <userName>gocw1</userName>
       <transitsection sectionname="IY:AUTO:0003" sequence="1" direction="4" alternate="no" />
       <transitsection sectionname="IY:AUTO:0004" sequence="2" direction="4" alternate="no" />
@@ -714,14 +676,12 @@
       <transitsection sectionname="IY:AUTO:0012" sequence="7" direction="4" alternate="no" />
     </transit>
     <transit systemName="IZ:AUTO:0002" userName="gocw2">
-      <systemName>IZ:AUTO:0002</systemName>
       <userName>gocw2</userName>
       <transitsection sectionname="IY:AUTO:0012" sequence="1" direction="4" alternate="no" />
       <transitsection sectionname="IY:AUTO:0001" sequence="2" direction="4" alternate="no" />
       <transitsection sectionname="IY:AUTO:0003" sequence="3" direction="4" alternate="no" />
     </transit>
     <transit systemName="IZ:AUTO:0003" userName="goccw1">
-      <systemName>IZ:AUTO:0003</systemName>
       <userName>goccw1</userName>
       <transitsection sectionname="IY:AUTO:0009" sequence="1" direction="8" alternate="no" />
       <transitsection sectionname="IY:AUTO:0007" sequence="2" direction="8" alternate="no" />
@@ -734,7 +694,6 @@
       <transitsection sectionname="IY:AUTO:0011" sequence="7" direction="8" alternate="no" />
     </transit>
     <transit systemName="IZ:AUTO:0004" userName="goccw2">
-      <systemName>IZ:AUTO:0004</systemName>
       <userName>goccw2</userName>
       <transitsection sectionname="IY:AUTO:0011" sequence="1" direction="8" alternate="no" />
       <transitsection sectionname="IY:AUTO:0010" sequence="2" direction="8" alternate="no" />
@@ -744,129 +703,35 @@
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
-<!--
-  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="Block Manager Test Layout" x="0" y="0" height="680" width="1260" windowheight="742" windowwidth="1279" panelheight="680" panelwidth="1260" sliders="yes" scrollable="both" editable="yes" positionable="yes" controlling="yes" animating="yes" showhelpbar="yes" drawgrid="no" snaponadd="no" snaponmove="no" antialiasing="no" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="black" defaulttextcolor="black" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0">
-    <layoutturnout ident="TO1" turnoutname="IT1" blockname="blocknorthwest" type="2" connectaname="T120" connectbname="T200" connectcname="T250" continuing="2" disabled="no" disableWhenOccupied="no" xcen="200.0" ycen="50.0" xb="220.0" yb="50.0" xc="220.0" yc="40.0" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
-    <layoutturnout ident="TO2" turnoutname="IT2" blockname="blocknortheast" type="1" connectaname="T300" connectbname="T220" connectcname="T270" continuing="2" disabled="no" disableWhenOccupied="no" xcen="500.0" ycen="50.0" xb="480.0" yb="50.0" xc="480.0" yc="40.0" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
-    <layoutturnout ident="TO3" turnoutname="IT3" blockname="blocknortheast" type="2" connectaname="T320" connectbname="T400" connectcname="T450" continuing="2" disabled="no" disableWhenOccupied="no" xcen="600.0" ycen="140.0" xb="600.0" yb="160.0" xc="610.0" yc="160.0" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
-    <layoutturnout ident="TO4" turnoutname="IT4" blockname="blocksoutheast" type="1" connectaname="T500" connectbname="T420" connectcname="T470" continuing="2" disabled="no" disableWhenOccupied="no" xcen="600.0" ycen="310.0" xb="600.0" yb="290.0" xc="610.0" yc="290.0" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
-    <layoutturnout ident="TO5" turnoutname="IT5" blockname="blocksoutheast" type="2" connectaname="T520" connectbname="T600" connectcname="T650" continuing="2" disabled="no" disableWhenOccupied="no" xcen="500.0" ycen="400.0" xb="480.0" yb="400.0" xc="480.0" yc="410.0" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
-    <layoutturnout ident="TO6" turnoutname="IT6" blockname="blocksouthwest" type="1" connectaname="T700" connectbname="T620" connectcname="T670" continuing="2" disabled="no" disableWhenOccupied="no" xcen="200.0" ycen="400.0" xb="220.0" yb="400.0" xc="220.0" yc="410.0" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
-    <layoutturnout ident="TO7" turnoutname="IT7" blockname="blocksouthwest" type="2" connectaname="T720" connectbname="T800" connectcname="T850" continuing="2" disabled="no" disableWhenOccupied="no" xcen="100.0" ycen="310.0" xb="100.0" yb="290.0" xc="91.0" yc="290.0" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
-    <layoutturnout ident="TO8" turnoutname="IT8" blockname="blocknorthwest" type="1" connectaname="T100" connectbname="T820" connectcname="T870" continuing="2" disabled="no" disableWhenOccupied="no" xcen="100.0" ycen="140.0" xb="100.0" yb="160.0" xc="90.0" yc="160.0" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
-    <tracksegment ident="T100" blockname="blocknorthwest" connect1name="TO8" type1="2" connect2name="A110" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T110" blockname="blocknorthwest" connect1name="A110" type1="1" connect2name="A120" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T120" blockname="blocknorthwest" connect1name="A120" type1="1" connect2name="TO1" type2="2" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T200" blockname="blocknorth" connect1name="TO1" type1="3" connect2name="A200" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T210" blockname="blocknorth" connect1name="A200" type1="1" connect2name="A210" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T220" blockname="blocknorth" connect1name="A210" type1="1" connect2name="TO2" type2="3" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T250" blockname="blocknorthsiding" connect1name="TO1" type1="4" connect2name="A250" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T260" blockname="blocknorthsiding" connect1name="A250" type1="1" connect2name="A260" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T270" blockname="blocknorthsiding" connect1name="A260" type1="1" connect2name="TO2" type2="4" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T300" blockname="blocknortheast" connect1name="TO2" type1="2" connect2name="A300" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T310" blockname="blocknortheast" connect1name="A300" type1="1" connect2name="A310" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T320" blockname="blocknortheast" connect1name="A310" type1="1" connect2name="TO3" type2="2" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T400" blockname="blockeast" connect1name="TO3" type1="3" connect2name="A400" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T410" blockname="blockeast" connect1name="A400" type1="1" connect2name="A410" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T420" blockname="blockeast" connect1name="A410" type1="1" connect2name="TO4" type2="3" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T450" blockname="blockeastsiding" connect1name="TO3" type1="4" connect2name="A450" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T460" blockname="blockeastsiding" connect1name="A450" type1="1" connect2name="A460" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T470" blockname="blockeastsiding" connect1name="A460" type1="1" connect2name="TO4" type2="4" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T500" blockname="blocksoutheast" connect1name="TO4" type1="2" connect2name="A500" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T510" blockname="blocksoutheast" connect1name="A500" type1="1" connect2name="A510" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T520" blockname="blocksoutheast" connect1name="A510" type1="1" connect2name="TO5" type2="2" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T600" blockname="blocksouth" connect1name="TO5" type1="3" connect2name="A600" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T610" blockname="blocksouth" connect1name="A600" type1="1" connect2name="A610" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T620" blockname="blocksouth" connect1name="A610" type1="1" connect2name="TO6" type2="3" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T650" blockname="blocksouthsiding" connect1name="TO5" type1="4" connect2name="A650" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T660" blockname="blocksouthsiding" connect1name="A650" type1="1" connect2name="A660" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T670" blockname="blocksouthsiding" connect1name="A660" type1="1" connect2name="TO6" type2="4" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T700" blockname="blocksouthwest" connect1name="TO6" type1="2" connect2name="A700" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T710" blockname="blocksouthwest" connect1name="A700" type1="1" connect2name="A710" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T720" blockname="blocksouthwest" connect1name="A710" type1="1" connect2name="TO7" type2="2" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T800" blockname="blockwest" connect1name="TO7" type1="3" connect2name="A800" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T810" blockname="blockwest" connect1name="A800" type1="1" connect2name="A810" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T820" blockname="blockwest" connect1name="A810" type1="1" connect2name="TO8" type2="3" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T850" blockname="blockwestsiding" connect1name="TO7" type1="4" connect2name="A850" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T860" blockname="blockwestsiding" connect1name="A850" type1="1" connect2name="A860" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T870" blockname="blockwestsiding" connect1name="A860" type1="1" connect2name="TO8" type2="4" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
-    <positionablepoint ident="A110" type="1" x="115.0" y="100.0" connect1name="T100" connect2name="T110" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
-    <positionablepoint ident="A120" type="1" x="160.0" y="60.0" connect1name="T110" connect2name="T120" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
-    <positionablepoint ident="A200" type="1" x="240.0" y="50.0" connect1name="T200" connect2name="T210" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
-    <positionablepoint ident="A210" type="1" x="460.0" y="50.0" connect1name="T210" connect2name="T220" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
-    <positionablepoint ident="A250" type="1" x="240.0" y="41.0" connect1name="T250" connect2name="T260" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
-    <positionablepoint ident="A260" type="1" x="460.0" y="41.0" connect1name="T260" connect2name="T270" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
-    <positionablepoint ident="A300" type="1" x="540.0" y="60.0" connect1name="T300" connect2name="T310" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
-    <positionablepoint ident="A310" type="1" x="590.0" y="100.0" connect1name="T310" connect2name="T320" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
-    <positionablepoint ident="A400" type="1" x="600.0" y="180.0" connect1name="T400" connect2name="T410" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
-    <positionablepoint ident="A410" type="1" x="600.0" y="270.0" connect1name="T410" connect2name="T420" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
-    <positionablepoint ident="A450" type="1" x="610.0" y="180.0" connect1name="T450" connect2name="T460" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
-    <positionablepoint ident="A460" type="1" x="610.0" y="270.0" connect1name="T460" connect2name="T470" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
-    <positionablepoint ident="A500" type="1" x="590.0" y="350.0" connect1name="T500" connect2name="T510" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
-    <positionablepoint ident="A510" type="1" x="540.0" y="390.0" connect1name="T510" connect2name="T520" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
-    <positionablepoint ident="A600" type="1" x="460.0" y="400.0" connect1name="T600" connect2name="T610" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
-    <positionablepoint ident="A610" type="1" x="240.0" y="400.0" connect1name="T610" connect2name="T620" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
-    <positionablepoint ident="A650" type="1" x="460.0" y="410.0" connect1name="T650" connect2name="T660" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
-    <positionablepoint ident="A660" type="1" x="240.0" y="410.0" connect1name="T660" connect2name="T670" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
-    <positionablepoint ident="A700" type="1" x="160.0" y="390.0" connect1name="T700" connect2name="T710" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
-    <positionablepoint ident="A710" type="1" x="110.0" y="350.0" connect1name="T710" connect2name="T720" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
-    <positionablepoint ident="A800" type="1" x="100.0" y="270.0" connect1name="T800" connect2name="T810" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
-    <positionablepoint ident="A810" type="1" x="100.0" y="180.0" connect1name="T810" connect2name="T820" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
-    <positionablepoint ident="A850" type="1" x="90.0" y="270.0" connect1name="T860" connect2name="T850" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
-    <positionablepoint ident="A860" type="1" x="90.0" y="180.0" connect1name="T870" connect2name="T860" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
-  </LayoutEditor>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Jun 17 22:25:15 PDT 2016" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" />
+  <entryexitpairs class="jmri.jmrit.signalling.configurexml.EntryExitPairsXml" />
   <filehistory>
     <operation>
       <type>app</type>
-      <date>Sun Jan 22 14:45:24 EST 2012</date>
-      <filename>DecoderPro version 20120122-1945-Bob starts under Java 1.6.0_22 at Sun Jan 22 14:45:24 EST 2012</filename>
+      <date>Fri Jun 17 22:25:15 PDT 2016</date>
+      <filename>JMRI program</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Sun Jan 22 14:45:24 EST 2012</date>
-      <filename>UserPrefsDecoderProConfig2.xml</filename>
+      <date>Fri Jun 17 22:25:15 PDT 2016</date>
+      <filename>/Users/jake/Library/Preferences/JMRI/LocoNet_Simulator/UserPrefsProfileConfig.xml</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Sun Jan 22 14:45:46 EST 2012</date>
-      <filename>aaaae12.xml</filename>
-      <filehistory>
-        <operation>
-          <type>app</type>
-          <date>Sun Jan 22 14:34:10 EST 2012</date>
-          <filename>DecoderPro version 20120122-1933-Bob starts under Java 1.6.0_22 at Sun Jan 22 14:34:10 EST 2012</filename>
-        </operation>
-        <operation>
-          <type>Load OK</type>
-          <date>Sun Jan 22 14:34:10 EST 2012</date>
-          <filename>UserPrefsDecoderProConfig2.xml</filename>
-        </operation>
-        <operation>
-          <type>Load OK</type>
-          <date>Sun Jan 22 14:34:34 EST 2012</date>
-          <filename>aaaae10.xml</filename>
-          <filehistory>
-            <operation>
-              <type>Store</type>
-              <date>Sun Jan 22 13:33:02 EST 2012</date>
-              <filename />
-            </operation>
-          </filehistory>
-        </operation>
-        <operation>
-          <type>Store</type>
-          <date>Sun Jan 22 14:36:43 EST 2012</date>
-          <filename />
-        </operation>
-      </filehistory>
+      <date>Fri Jun 17 22:25:16 PDT 2016</date>
+      <filename>/Users/jake/Library/Preferences/JMRI/LocoNet_Simulator/ProfileConfig.xml</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Fri Jun 17 22:25:37 PDT 2016</date>
+      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/SectionManagerXmlTest.xml</filename>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Sun Jan 22 14:59:13 EST 2012</date>
+      <date>Fri Jun 17 22:25:46 PDT 2016</date>
       <filename />
     </operation>
   </filehistory>
--->
-  <!--Written by JMRI version 20120122-1945-Bob on Sun Jan 22 14:59:13 EST 2012 $Id$-->
+  <!--Written by JMRI version 3.8-r26527 on Fri Jun 17 22:25:46 PDT 2016 $Id: XmlFile.java 26283 2014-06-12 04:24:18Z jacobsen $-->
 </layout-config>
 

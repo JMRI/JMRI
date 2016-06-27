@@ -29,7 +29,6 @@ import org.slf4j.LoggerFactory;
  * </ul>
  *
  * @author Brett Hoffman Copyright (C) 2011
- * @version $Revision$
  */
 public class MultiThrottle {
 
@@ -132,7 +131,6 @@ public class MultiThrottle {
         mtc.shutdownThrottle();
         mtc.removeControllerListener(parentController);
         mtc.removeThrottleControllerListener(parentTCL);
-        mtc = null;
         throttles.remove(key);
         if (log.isDebugEnabled()) {
             log.debug("Throttle: " + key + " removed from MultiThrottle.");

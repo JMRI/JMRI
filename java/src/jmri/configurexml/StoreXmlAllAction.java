@@ -29,7 +29,7 @@ public class StoreXmlAllAction extends StoreXmlConfigAction {
     }
 
     public void actionPerformed(ActionEvent e) {
-        java.io.File file = getFileName(this.getAllFileChooser());
+        java.io.File file = getFileName(getAllFileChooser());
         if (file == null) {
             return;
         }

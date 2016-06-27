@@ -1,35 +1,28 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<!-- UpDated by Blorec Herv&#233; le 2013-09-05--> <html lang="fr">
+<!-- UpDated by Blorec Herv&#233; le 2013-09-05-->
+<html lang="fr">
 <head>
     <TITLE>
- 	JMRI: Internationalization
+ 	JMRI: Internationalisation
     </TITLE>
-    <META content="Bob Jacobsen" name=Author>
+    <META content="Bob Jacobsen" name="Author">
     <meta name="keywords" content="JMRI technical code I8N internationalization">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
-
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
-
+<body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
 
-	    <H1>JMRI: Internationalisation</H1>
+<h1>JMRI: Internationalisation</h1>
 	    	    
 Cette page explique comment les biblioth&#232;ques JMRI g&#233;rent l'internationalisation.
 
@@ -64,7 +57,7 @@ Et si cela &#233;choue, il va &#224; la valeur par d&#233;faut sans suffixe: foo
 <P>
 En installant les fichiers appropri&#233;s et en permettant &#224; l'utilisateur de s&#233;lectionner
 la locale par d&#233;faut (dans le cadre des 
-<a href="../../../package/apps/TabbedPreferences.shtml#locale"> pr&#233;f&#233;rences avanc&#233;es </a>),
+<a href="../../../package/apps/TabbedPreferences.shtml#locale"> pr&#233;f&#233;rences avanc&#233;es</a>),
 nous pouvons adapter le programme aux diff&#233;rents pays et langues.
 
 <h2> Utilisation des Regroupements de Ressources </h2>
@@ -161,7 +154,7 @@ Pour v&#233;rifier votre travail:
 <LI> Choisissez votre langue dans la zone "Locale" de la liste d&#233;roulante,
 <LI> Cliquez sur "Enregistrer", quitter et red&#233;marrer
 <li> Vous devez imm&#233;diatement voir les articles que vous avez traduit.
-</ OL>
+</OL>
 <P>
 S'il ya un probl&#232;me &#224; ce stade, v&#233;rifier pour voir quel est le langage
 figurant sur l'&#233;cran de d&#233;marrage de l'application.
@@ -223,7 +216,7 @@ Si vous voulez cr&#233;er un ensemble complet de fichiers:
 code de votre langue, par exemple help/fr. (S'il vous pla&#238;t soyez prudent de faire
 ceci dans SVN, et demandez &#224; un d&#233;veloppeur de l'aide si n&#233;cessaire)
 <li> Renommer l'help/fr/JmriHelp_en.hs fichier que vous venez de cr&#233;er pour help/fr/JmriHelp_fr.hs
-<li> Modifier l'help/fr/format.xsl pour cr&#233;er un<code> <HTML lang="fr"> </code>.
+<li> Modifier l'help/fr/format.xsl pour cr&#233;er un <code>&lt;html lang="fr"&gt;</code>.
 <li> Traduire les fichiers .shtml ci-dessous &#224; r&#233;pertoire help/fr. Ne  traduire aucun
 fichiers .xml, .JHM  ou le web*.shtml dans le r&#233;pertoire racine, car ils
 sont produit automatiquement.
@@ -235,10 +228,10 @@ Pour que l' internationalisation fonctionne, vous devez faire quelques choses da
 vous &#233;crivez.
 <p>
 Quelques r&#233;f&#233;rences Web sur la fa&#231;on de le faire:
-<UL>
+<ul>
 <li> <a HREF="http://java.sun.com/docs/books/tutorial/i18n/index.html"> Sun internationalisation tutoriel </a> (fortement recommand&#233;)
 <li> <a HREF="http://java.sun.com/j2se/1.3/docs/guide/intl/faq.html"> Sun internationalisation FAQ </a>
-</ Ul>
+</ul>
 
 <P>
 JMRI se dirige vers un ensemble de conventions sur la fa&#231;on de structurer et
@@ -258,9 +251,8 @@ R&#233;f&#233;rences crois&#233;es-paquet, par exemple  entre jmri.jmrit et jmri
 et celles qui existent sont supprim&#233;es.
 <p>
 L'acc&#232;s se fait via une classe Bundle locale pour enseigner le paquet. Une caract&#233;ristique est une
-<href="http://jmri.org/JavaDoc/doc/jmri/jmrit/Bundle.html"> jmri.jmrit.Bundle </a>.
-Il propose deux m&#233;thodes cl&#233;s que vous utilisez pour acc&#233;der (traduit) &#224; la chaine ressource
-:
+<a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/Bundle.html"> jmri.jmrit.Bundle</a>.
+Il propose deux m&#233;thodes cl&#233;s que vous utilisez pour acc&#233;der (traduit) &#224; la chaine ressource:
 
 <PRE>
 static String <B> getMessage </B> (String key)
@@ -317,10 +309,10 @@ Si votre paquet ne poss&#232;de pas d&#233;j&#224; une classe Bundle, vous pouve
 <br/> <code> svn cp java/src/jmri/jmrit/Bundle.java java/src/jmri/mypackage/ </code>
 <li> modifier ce nouveau fichier dans trois endroits:
 <ul>
-<li> d&#233;claration Le Â«paquetÂ» en haut devrait inscrire votre package
+<li> d&#233;claration Le «paquet» en haut devrait inscrire votre package
 <li> La "class ... extends "devrait se r&#233;f&#233;rer &#224; la classe Bundle directement au-dessus de votre package
 <li> L'affectation de la variable "name" doit &#234;tre le nom de votre bundle locale, par convention "jmri/mypackage.Bundle".
-</ ul>
+</ul>
 <li> Cr&#233;er un nouveau fichier de Bundle.properties dans votre r&#233;pertoire package
      pour tenir vos propri&#233;t&#233;s de chaines.
 <li> Id&#233;alement, vous allez ajouter une copie de java/test/jmri/jmrit/BundleTest.java &#224; votre

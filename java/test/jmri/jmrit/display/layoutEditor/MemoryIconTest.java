@@ -1,6 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.geom.Point2D;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -25,7 +24,7 @@ public class MemoryIconTest extends TestCase {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
         // dispose of the single PanelMenu instance
-        jmri.jmrit.display.PanelMenu.instance().dispose();
+        jmri.jmrit.display.PanelMenu.dispose();
         // reset the instance manager.
         JUnitUtil.resetInstanceManager();
     }
@@ -34,7 +33,7 @@ public class MemoryIconTest extends TestCase {
     protected void tearDown() throws Exception {
         super.tearDown();
         // dispose of the single PanelMenu instance
-        jmri.jmrit.display.PanelMenu.instance().dispose();
+        jmri.jmrit.display.PanelMenu.dispose();
         JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
@@ -48,7 +47,7 @@ public class MemoryIconTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", MemoryIconTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

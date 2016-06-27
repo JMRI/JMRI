@@ -1,8 +1,6 @@
 package jmri.jmrit.progsupport;
 
-import junit.framework.Assert;
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
@@ -23,7 +21,7 @@ public class BundleTest extends jmri.BundleTest{
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {BundleTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

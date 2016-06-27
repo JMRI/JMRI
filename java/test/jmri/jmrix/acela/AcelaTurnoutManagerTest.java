@@ -55,7 +55,7 @@ public class AcelaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTes
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", AcelaTurnoutManagerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -66,8 +66,15 @@ public class AcelaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTes
 
     AcelaNode a0, a1, a2, a3;
 
-    // The minimal setup for log4J
-    protected void setUp() {
+    @Override
+    protected void tearDown() throws Exception {
+        apps.tests.Log4JFixture.tearDown();
+        super.tearDown();
+    }
+
+    @Override
+    public void setUp() throws Exception {
+        super.setUp();
         apps.tests.Log4JFixture.setUp();
 
         // We need to delete the nodes so we can re-allocate them
@@ -104,11 +111,6 @@ public class AcelaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTes
         // create and register the manager object
         l = new AcelaTurnoutManager();
         jmri.InstanceManager.setTurnoutManager(l);
-    }
-
-    @Override
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(AcelaTurnoutManagerTest.class.getName());

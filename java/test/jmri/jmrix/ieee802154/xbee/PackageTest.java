@@ -20,7 +20,7 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -29,14 +29,17 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(XBeeMessageTest.class));
         suite.addTest(new TestSuite(XBeeReplyTest.class));
         suite.addTest(new TestSuite(XBeeConnectionMemoTest.class));
-        suite.addTest(new TestSuite(XBeeTrafficControllerTest.class));
-        suite.addTest(new TestSuite(XBeeNodeTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(XBeeTrafficControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(XBeeNodeTest.class));
         suite.addTest(new TestSuite(XBeeSensorManagerTest.class));
         suite.addTest(new TestSuite(XBeeSensorTest.class));
         suite.addTest(new TestSuite(XBeeLightManagerTest.class));
         suite.addTest(new TestSuite(XBeeLightTest.class));
         suite.addTest(new TestSuite(XBeeTurnoutManagerTest.class));
         suite.addTest(new TestSuite(XBeeTurnoutTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(XBeeAdapterTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(XBeeNodeManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(XBeeIOStreamTest.class));
         return suite;
     }
 

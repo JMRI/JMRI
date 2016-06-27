@@ -56,6 +56,18 @@ public class ProxyReporterManagerTest extends TestCase {
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest3())));
     }
 
+    public void testProvideFailure() {
+        boolean correct = false;
+        try {
+            Reporter t = l.provideReporter("");
+            Assert.fail("didn't throw");
+        } catch (IllegalArgumentException ex) {
+            correct = true;
+        }
+        Assert.assertTrue("Exception thrown properly", correct);
+        
+    }
+
     public void testSingleObject() {
         // test that you always get the same representation
         Reporter t1 = l.newReporter(getSystemName(getNumToTest1()), "mine");
@@ -171,7 +183,7 @@ public class ProxyReporterManagerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", ProxyReporterManagerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

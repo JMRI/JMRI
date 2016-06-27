@@ -1,9 +1,9 @@
 package jmri.jmrix.ieee802154.xbee;
 
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * XBeeTrafficControllerTest.java
@@ -13,20 +13,69 @@ import junit.framework.TestSuite;
  *
  * @author	Paul Bender
  */
-public class XBeeTrafficControllerTest extends TestCase {
+public class XBeeTrafficControllerTest{
 
     XBeeTrafficController m;
 
+    @Test
     public void testCtor() {
         Assert.assertNotNull("exists", m);
     }
 
+    @Test
     public void testCreateNode() {
         // test the code to get an new XBee 
         XBeeNode node = (XBeeNode) m.newNode();
         Assert.assertNotNull("node create failed", node);
     }
 
+    @Test
+    public void testGetIEEE802154Messge() {
+        Assert.assertNull("IEEE802154Message", m.getIEEE802154Message(5));
+    }
+
+    @Test
+    public void testGetPollReplyHandler() {
+        Assert.assertNull("pollReplyHandler", m.pollReplyHandler());
+    }
+
+    @Test
+    public void testGetNewReply() {
+        Assert.assertNotNull("New Reply", m.newReply());
+        Assert.assertTrue("New Reply class", m.newReply() instanceof jmri.jmrix.ieee802154.xbee.XBeeReply );
+    }
+
+    @Test
+    public void checkPollMessageNoNodes() {
+        // no nodes, should return null.
+        Assert.assertNull("pollMessage", m.pollMessage());
+    }
+
+    @Test
+    public void checkPollReplyHandler() {
+        // always returns null.
+        Assert.assertNull("pollReplyHandler", m.pollReplyHandler());
+    }
+
+    @Test
+    public void checkEnterProgMode() {
+        // No Programming Mode, returns null.
+        Assert.assertNull("enterProgMode", m.enterProgMode());
+    }
+
+    @Test
+    public void checkExitProgMode() {
+        // No Programming Mode, returns null.
+        Assert.assertNull("enterNormalMode", m.enterNormalMode());
+    }
+
+
+    @Test(expected=java.lang.IllegalArgumentException.class)
+    public void registerNonXBeeNode(){
+        m.registerNode(new jmri.jmrix.ieee802154.serialdriver.SerialNode());
+    }
+
+    @Test
     public void testGetNodeFromAddressTest() {
         // test the code to get an XBee node from its address
         // specified as a string to make sure it returns null on failure.
@@ -42,6 +91,7 @@ public class XBeeTrafficControllerTest extends TestCase {
         Assert.assertNull("node found", n);
     }
 
+    @Test
     public void testGetNodeFromUserAddressIntTest() {
         // test the code to get an XBee node from its User address
         // specified as an integer array.
@@ -57,6 +107,7 @@ public class XBeeTrafficControllerTest extends TestCase {
         Assert.assertNotNull("node not found", n);
     }
 
+    @Test
     public void testGetNodeFromUserAddressByteTest() {
         // test the code to get an XBee node from its User address
         // specified as a byte array.
@@ -71,6 +122,7 @@ public class XBeeTrafficControllerTest extends TestCase {
         Assert.assertNotNull("node not found", n);
     }
 
+    @Test
     public void testGetNodeFromUserAddressTest() {
         // test the code to get an XBee node from its User address
         // specified as a string.
@@ -86,6 +138,7 @@ public class XBeeTrafficControllerTest extends TestCase {
         Assert.assertNotNull("node not found", n);
     }
 
+    @Test
     public void testGetNodeFromAddressGlobalByteTest() {
         // test the code to get an IEEE802154 node from its Global address
         // specified as a byte array.
@@ -102,6 +155,7 @@ public class XBeeTrafficControllerTest extends TestCase {
         Assert.assertNotNull("node not found", n);
     }
 
+    @Test
     public void testGetNodeFromAddressGlobalIntTest() {
         // test the code to get an IEEE802154 node from its Global address
         // specified as an intger array.
@@ -119,6 +173,7 @@ public class XBeeTrafficControllerTest extends TestCase {
         Assert.assertNotNull("node not found", n);
     }
 
+    @Test
     public void testGetNodeFromAddressGlobalTest() {
         // test the code to get an IEEE802154 node from its Global address
         // specified as a string.
@@ -134,26 +189,9 @@ public class XBeeTrafficControllerTest extends TestCase {
         Assert.assertNotNull("node not found", n);
     }
 
-    // from here down is testing infrastructure
-    public XBeeTrafficControllerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", XBeeTrafficControllerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(XBeeTrafficControllerTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
         m = new XBeeTrafficController() {
             public void setInstance() {
@@ -161,8 +199,8 @@ public class XBeeTrafficControllerTest extends TestCase {
         };
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
 

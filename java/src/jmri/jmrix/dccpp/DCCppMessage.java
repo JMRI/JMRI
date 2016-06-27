@@ -365,7 +365,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
     
     public String getValueString(int idx) {
-        Matcher m = this.match(myMessage.toString(), myRegex, "gvs");
+        Matcher m = match(myMessage.toString(), myRegex, "gvs");
         if ((m != null) && (idx <= m.groupCount())) {
             return(m.group(idx));
         } else {
@@ -375,7 +375,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
     
     public int getValueInt(int idx) {
-        Matcher m = this.match(myMessage.toString(), myRegex, "gvi");
+        Matcher m = match(myMessage.toString(), myRegex, "gvi");
         if ((m != null) && (idx <= m.groupCount())) {
             return(Integer.parseInt(m.group(idx)));
         } else {
@@ -385,7 +385,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
     
     public boolean getValueBool(int idx) {
-        Matcher m = this.match(myMessage.toString(), myRegex, "gvi");
+        Matcher m = match(myMessage.toString(), myRegex, "gvi");
         if ((m != null) && (idx <= m.groupCount())) {
             return(!m.group(idx).equals("0"));
         } else {

@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * Handle XML configuration for a DefaultSignalMastManager objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision$
  */
 public class DefaultSignalMastManagerXml
         extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
@@ -97,14 +96,18 @@ public class DefaultSignalMastManagerXml
             if (e.getAttribute("class") == null) {
                 SignalMast m;
                 String sys = getSystemName(e);
-                m = InstanceManager.signalMastManagerInstance()
-                        .provideSignalMast(sys);
+                try {
+                    m = InstanceManager.signalMastManagerInstance()
+                            .provideSignalMast(sys);
 
-                if (getUserName(e) != null) {
-                    m.setUserName(getUserName(e));
+                    if (getUserName(e) != null) {
+                        m.setUserName(getUserName(e));
+                    }
+
+                    loadCommon(m, e);
+                } catch (IllegalArgumentException ex) {
+                    log.warn("Failed to provide SignalMast \"{}\" in load", sys);
                 }
-
-                loadCommon(m, e);
             } else {
                 String adapterName = e.getAttribute("class").getValue();
                 log.debug("load via " + adapterName);

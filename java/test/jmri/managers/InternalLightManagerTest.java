@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Tests for the jmri.managers.InternalTurnoutManager class.
+ * Tests for the jmri.managers.InternalLightManager class.
  *
  * @author	Bob Jacobsen Copyright 2009
  */
@@ -67,7 +67,7 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", InternalLightManagerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

@@ -254,11 +254,6 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Deprecated
-    public char systemLetter() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
     public String getSystemPrefix() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -481,14 +476,18 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
                             }
                         } else {
                             sec.setSectionType(Section.SIGNALMASTLOGIC);
-                            //Auto running requires forward/reverse sensors, but at this stage SML does not support that, so just create dummy internal ones for now.
-                            Sensor sen = InstanceManager.sensorManagerInstance().provideSensor("IS:" + sec.getSystemName() + ":forward");
-                            sen.setUserName(sec.getSystemName() + ":forward");
+                            try {
+                                //Auto running requires forward/reverse sensors, but at this stage SML does not support that, so just create dummy internal ones for now.
+                                Sensor sen = InstanceManager.sensorManagerInstance().provideSensor("IS:" + sec.getSystemName() + ":forward");
+                                sen.setUserName(sec.getSystemName() + ":forward");
 
-                            sen = InstanceManager.sensorManagerInstance().provideSensor("IS:" + sec.getSystemName() + ":reverse");
-                            sen.setUserName(sec.getSystemName() + ":reverse");
-                            sec.setForwardBlockingSensorName(sec.getSystemName() + ":forward");
-                            sec.setReverseBlockingSensorName(sec.getSystemName() + ":reverse");
+                                sen = InstanceManager.sensorManagerInstance().provideSensor("IS:" + sec.getSystemName() + ":reverse");
+                                sen.setUserName(sec.getSystemName() + ":reverse");
+                                sec.setForwardBlockingSensorName(sec.getSystemName() + ":forward");
+                                sec.setReverseBlockingSensorName(sec.getSystemName() + ":reverse");
+                            } catch (IllegalArgumentException ex) {
+                                log.warn("Failed to provide Sensor in generateSection");
+                            }
                         }
                         sml.setAssociatedSection(sec, destMast);
                         sec.setProperty("forwardMast", destMast.getDisplayName());

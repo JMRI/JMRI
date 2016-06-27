@@ -31,13 +31,11 @@ public class NceConsistEngineAction extends AbstractAction {
         // disable if NCE USB selected
         // get NceTrafficContoller if there's one
         List<NceSystemConnectionMemo> memos = InstanceManager.getList(NceSystemConnectionMemo.class);
-        if (memos != null) {
-            // find NceConnection that is serial
-            for (int i = 0; i < memos.size(); i++) {
-                NceSystemConnectionMemo memo = memos.get(i);
-                if (memo.getNceUsbSystem() == NceTrafficController.USB_SYSTEM_NONE) {
-                    tc = memo.getNceTrafficController();
-                }
+        // find NceConnection that is serial
+        for (int i = 0; i < memos.size(); i++) {
+            NceSystemConnectionMemo memo = memos.get(i);
+            if (memo.getNceUsbSystem() == NceTrafficController.USB_SYSTEM_NONE) {
+                tc = memo.getNceTrafficController();
             }
         }
         if (ActiveFlag.isActive() && tc != null) {

@@ -46,6 +46,7 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
      * connections
      */
     @Deprecated
+    @Override
     public void setInstance() {
     }
 
