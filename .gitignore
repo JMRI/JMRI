@@ -42,3 +42,7 @@ local.properties
 [Tt]humbs.db
 *.DS_Store
 /jmri-fb.html
+
+# Added by Jan upon recommendations by Randall Wood
+.metadata
+RemoteSystemsTempFiles
