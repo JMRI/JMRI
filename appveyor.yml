@@ -2,9 +2,7 @@ version: '{build}'
 clone_depth: 50
 install:
   - SET MAVEN_HOME=C:\tools\apache-maven-3.3.3
-  - if not exist %MAVEN_HOME% (
-      choco install maven -y --version 3.3.3
-    )
+  - choco install maven -y --version 3.3.3
   - refreshenv
   - SET JAVA_HOME=C:\Program Files\Java\jdk1.8.0
   - SET PATH=%MAVEN_HOME%\bin;%JAVA_HOME%\bin;%PATH%
@@ -29,5 +27,6 @@ on_finish:
 deploy: off
 
 cache:
-  - C:\tools\apache-maven-3.3.3
-  - C:\Users\appveyor\.m2
+  - C:\ProgramData\chocolatey\bin -> appveyor.yml
+  - C:\ProgramData\chocolatey\lib -> appveyor.yml
+  - C:\Users\appveyor\.m2 -> pom.xml
