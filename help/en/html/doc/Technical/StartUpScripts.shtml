@@ -164,7 +164,7 @@ JMRI has registered five application signatures:
 <dl>
 <dt>JMRD<dd>DecoderPro
 <dt>JMRP<dd>PanelPro
-<dt>JMRI<dd>(generic JMRI, was JMRIdemo)
+<dt>JMRI<dd>(generic JMRI, was JMRIdemo; no longer used)
 <dt>JMRL<dd>LocoTools (no longer used)
 <dt>JMRC<dd>Cornwall demo (no longer used)
 </dl>
