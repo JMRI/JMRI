@@ -1,17 +1,12 @@
 version: '{build}'
 clone_depth: 50
 install:
-#  - echo JAVA_HOME %JAVA_HOME%
-  - choco install ant --limit-output --ignore-dependencies
-#  - echo JAVA_HOME %JAVA_HOME%
+  - choco install maven -y -f --version 3.3.3
+  - refreshenv
   - SET JAVA_HOME=C:\Program Files\Java\jdk1.8.0
   - SET PATH=%JAVA_HOME%\bin;%PATH%
-#  - echo PATH %PATH%
-#  - echo JAVA_HOME %JAVA_HOME%
-#  - echo ANT_HOME %ANT_HOME%
   - java -version
-#  - javac -version
-  - ant -version
+  - mvn -version
 build: off
 
 # note that PowerShell scripts need an empty line between each command
@@ -19,7 +14,7 @@ build: off
 # AppVeyor's YAML processing
 test_script:
 - ps: >-
-    ant checkPropertiesFiles ci-test-appveyor
+    mvn test -P appveyor
 
 on_finish:
 - ps: >-
@@ -28,3 +23,7 @@ on_finish:
     $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$env:APPVEYOR_JOB_ID", (Resolve-Path .\junit-results.xml))
 
 deploy: off
+
+cache:
+  - C:\tools\apache-maven-3.3.3\bin
+  - C:\Users\appveyor\.m2
