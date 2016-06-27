@@ -1,7 +1,7 @@
 version: '{build}'
 clone_depth: 50
 install:
-  - SET MAVEN_HOME=C:\ProgramData\chocolatey\lib
+  - SET MAVEN_HOME=C:\ProgramData\chocolatey\lib\chocolatey
   - if not exist %MAVEN_HOME% (
       choco install maven -y --version 3.3.3
     )
