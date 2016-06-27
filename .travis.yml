@@ -9,8 +9,7 @@ addons:
     - graphviz
 
 # prevent travis default mvn install behavior
-install:
-  - mvn validate --quiet --batch-mode --show-version
+install: true
  
 before_script:
   - "export DISPLAY=:99.0"
