@@ -1,4 +1,3 @@
-// TamsSensorManager.java
 package jmri.jmrix.tams;
 
 import java.util.Hashtable;
@@ -17,8 +16,7 @@ import org.slf4j.LoggerFactory;
  * S88 Bus Module and yy is the port on that module.
  *
  * @author Kevin Dickerson Copyright (C) 2009
- * @author Jan Boen & Sergiu Costan
- * @version $Revision: 20820 $
+ * @author Jan Boen and Sergiu Costan
  * 
  *          Rework Poll for status using binary commands send xEvtSen (78 CB)h
  *          this returns multiple bytes first byte address of the S88 sensor,
@@ -387,5 +385,3 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
 
     private final static Logger log = LoggerFactory.getLogger(TamsSensorManager.class);
 }
-
-/* @(#)TamsSensorManager.java */

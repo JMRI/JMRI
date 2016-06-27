@@ -1,14 +1,10 @@
-// TamsConstants.java
 package jmri.jmrix.tams;
 
 /**
- * TamsConstants.java
- *
- * Description: Constants to represent values seen in Tams traffic
+ * Constants to represent values seen in Tams traffic
  *
  * @author  Jan Boen 151216
- * @Based on work from Kevin Dickerson
- * @version $Revision: 19265 $
+ * @author Based on work from Kevin Dickerson
  */
 public final class TamsConstants {
 
@@ -34,5 +30,3 @@ public final class TamsConstants {
     public final static int XPWROFF = 0xA6;
     public final static int XPWRON = 0xA7;
 }
-
-/* @(#)TamsConstants.java */
