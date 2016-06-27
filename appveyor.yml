@@ -25,5 +25,5 @@ on_finish:
 deploy: off
 
 cache:
-  - C:\tools\apache-maven-3.3.3\bin
+  - C:\tools\apache-maven-3.3.3
   - C:\Users\appveyor\.m2
