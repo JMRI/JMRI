@@ -19,12 +19,13 @@
 </head>
 
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 <div id="mainContent">
-	    <!-- ------------- -->
+	    <!-- ============= -->
 	    <!-- Page Contents --> <!-- Required -->
-	    <!-- ------------- -->
+	    <!-- ============= -->
 
   <h1>JMRI: Getting the old SVN Code</h1>
 

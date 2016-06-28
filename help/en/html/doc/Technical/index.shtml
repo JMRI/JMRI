@@ -11,6 +11,7 @@
 </head>
 <body>
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
@@ -117,9 +118,9 @@ SourceForge.net provides project support:
 <li><a href="http://sourceforge.net/projects/jmri/">JMRI project page</a> and 
 <a href="http://sourceforge.net/export/projhtml.php?group_id=26788">project statistics</a>.
 <li>Trackers for 
-<a href="http://sourceforge.net/tracker/?group_id=26788&atid=388313">Bugs</a>,
-<a href="http://sourceforge.net/tracker/?group_id=26788&atid=388316">Feature Requests</a>, and
-<a href="http://sourceforge.net/tracker/?group_id=26788&atid=388315">Patches</a>.
+<a href='http://sourceforge.net/tracker/?group_id=26788&atid=388313'>Bugs</a>,
+<a href='http://sourceforge.net/tracker/?group_id=26788&atid=388316'>Feature Requests</a>, and
+<a href='http://sourceforge.net/tracker/?group_id=26788&atid=388315'>Patches</a>.
 </ul>
 
 <h2>Code</h2>
