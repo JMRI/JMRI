@@ -335,23 +335,37 @@
     <label>Set sound program</label>
     <label xml:lang="it">Programma serie suoni</label>
     <label xml:lang="de">Sound Collection</label>
+<<<<<<< HEAD
     <tooltip>See manual!</tooltip>
     <tooltip xml:lang="de">Handbuch beachten!</tooltip>
+=======
+	<tooltip>See manual!</tooltip>
+	<tooltip xml:lang="de">Handbuch beachten!</tooltip>
+>>>>>>> JMRI/master
   </variable>
   <variable item="Total volume" CV="266" default="64">
     <decVal min="0" max="255"/>
     <label>Total volume</label>
     <label xml:lang="it">Volume generale</label>
     <label xml:lang="de">Gesamtlautstärke</label>
+<<<<<<< HEAD
     <tooltip>64 is highest distortion-free play back, INC=5</tooltip>
     <tooltip xml:lang="de">Der Wert „64“ ergibt rechnerisch die lautest-mögliche verzerrungsfreie Wiedergabe.</tooltip>
+=======
+	<tooltip>64 is highest distortion-free play back, INC=5</tooltip>
+	<tooltip xml:lang="de">Der Wert „64“ ergibt rechnerisch die lautest-mögliche verzerrungsfreie Wiedergabe.</tooltip>
+>>>>>>> JMRI/master
   </variable>
   <variable item="Virtual cam chuff frequency" CV="267" default="70">
     <decVal min="0" max="255"/>
     <label>Virtual cam chuff frequency</label>
     <label xml:lang="it">Frequenza Chuff Camma Virtuale</label>
     <label xml:lang="de">virtuelle Dampfschlag-Häufigkeit</label>
+<<<<<<< HEAD
     <tooltip>The lower the value the higher the chuff frequency and vice versa, INC=1</tooltip>
+=======
+	<tooltip>The lower the value the higher the chuff frequency and vice versa, INC=1</tooltip>
+>>>>>>> JMRI/master
   </variable>
   <variable item="Real cam sensor chuff rate 1" CV="268" default="0">
         <qualifier>
@@ -363,7 +377,11 @@
     <label>Real cam sensor chuff rate 1</label>
     <label xml:lang="it">Frequenza Chuff Camma reale</label>
     <label xml:lang="de">Umschaltung Achsdetektor 1</label>
+<<<<<<< HEAD
     <tooltip>0 = virtual sensor, triggers/chuff, INC=1</tooltip>
+=======
+	<tooltip>0 = virtual sensor, triggers/chuff, INC=1</tooltip>
+>>>>>>> JMRI/master
   </variable>
   <variable item="Real cam sensor chuff rate 2" CV="268" mask="XVVVVVVV" default="0">
         <qualifier>
@@ -375,7 +393,11 @@
     <label>Real cam sensor chuff rate</label>
     <label xml:lang="it">Frequenza Chuff Camma reale</label>
     <label xml:lang="de">Umschaltung Achsdetektor</label>
+<<<<<<< HEAD
     <tooltip>0 = virtual sensor, triggers/chuff (0-127), INC=1</tooltip>
+=======
+	<tooltip>0 = virtual sensor, triggers/chuff (0-127), INC=1</tooltip>
+>>>>>>> JMRI/master
   </variable>
   <variable item="Chuff for Articulated Locomotives" CV="268" mask="VXXXXXXX" default="0" tooltip="With and without axle sensor on 2 channels with 2 sets">
         <qualifier>
@@ -1167,7 +1189,11 @@
         <choice>Moving only</choice>
         <choice xml:lang="de">auch bei Standsound</choice>
       </enumChoice>
+<<<<<<< HEAD
         <enumChoice choice="Stop and moving">
+=======
+	    <enumChoice choice="Stop and moving">
+>>>>>>> JMRI/master
         <choice>bei Stand- und Fahrtsound</choice>
       </enumChoice>
     </enumVal>

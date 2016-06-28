@@ -1043,9 +1043,9 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             layout.addItem(new BeanEditItem(memoryNameField, rb.getString("MemoryVariable"), rb.getString("MemoryVariableTip")));
 
             senseBox.removeAllItems();
-            senseBox.addItem(rb.getString("SensorActive"));
+            senseBox.addItem(Bundle.getMessage("SensorStateActive"));
             senseActiveIndex = 0;
-            senseBox.addItem(rb.getString("SensorInactive"));
+            senseBox.addItem(Bundle.getMessage("SensorStateInactive"));
             senseInactiveIndex = 1;
 
             layout.addItem(new BeanEditItem(senseBox, rb.getString("OccupiedSense"), rb.getString("OccupiedSenseHint")));
@@ -2883,15 +2883,15 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 if (enableUpdateRouteLogging) {
                     log.info("==Event type " + e.getPropertyName().toString() + " New " + lbkblock.getDisplayName());
                 }
-            } else if (e.getPropertyName().toString().equals("through-path-added")) {
+            } else if (e.getPropertyName().equals("through-path-added")) {
                 if (enableUpdateRouteLogging) {
                     log.info("neighbour has new through path");
                 }
-            } else if (e.getPropertyName().toString().equals("through-path-removed")) {
+            } else if (e.getPropertyName().equals("through-path-removed")) {
                 if (enableUpdateRouteLogging) {
                     log.info("neighbour has through removed");
                 }
-            } else if (e.getPropertyName().toString().equals("routing")) {
+            } else if (e.getPropertyName().equals("routing")) {
                 if (enableUpdateRouteLogging) {
                     log.info("From " + this.getDisplayName() + " we have a routing packet update from neighbor " + srcEvent.getDisplayName());
                 }

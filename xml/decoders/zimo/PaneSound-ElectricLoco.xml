@@ -88,6 +88,7 @@
       <!--label>Dependence of the pitch on speed</label-->
       <!--label xml:lang="it">Dipendenza del pitch da velocità</label-->
     </display>
+<<<<<<< HEAD
     
     <display item="Volume dependent on Speed">
     </display>
@@ -119,6 +120,39 @@
       <!--label>Electric brake loop time interval</label-->
     </display>
     <display item="Electric brake loop cutoff">
+=======
+	
+	<display item="Volume dependent on Speed">
+	</display>
+	<display item="Volume dependent on Braking">
+	</display>
+	
+	<label>
+      <text> </text>
+    </label>
+	<display item="Electric brake function key">
+      <!--label>Electric brake function key</label-->
+    </display>
+	<display item="Electric brake minimum speed">
+      <!--label>Electric brake minimum speed</label-->
+    </display>
+	<display item="Electric brake maximum speed">
+      <!--label>Electric brake maximum speed</label-->
+    </display>
+	<display item="Electric brake pitch">
+      <!--label>Electric brake pitch</label-->
+    </display>
+	<display item="Electric brake deceleration threshold">
+      <!--label>Electric brake deceleration threshold</label-->
+    </display>
+	<display item="Electric brake downhill">
+      <!--label>Electric brake downhill</label-->
+    </display>
+	<display item="Electric brake loop time interval">
+      <!--label>Electric brake loop time interval</label-->
+    </display>
+	<display item="Electric brake loop cutoff">
+>>>>>>> JMRI/master
       <!--label>Electric brake loop cutoff</label-->
     </display>
   </column>
@@ -152,11 +186,19 @@
       <!--label>Switchgear noise Distribution of speed in Switching stages</label-->
       <!--label xml:lang="it">Distribuzione Marce nelle velocità di manovra</label-->
     </display>
+<<<<<<< HEAD
     
     <display item="Likeihood of switchgear sparks">
       <!--label>Likeihood of switchgear sparks</label-->
     </display>
     <display item="Lights flash with switchgear sound">
+=======
+	
+	<display item="Likeihood of switchgear sparks">
+      <!--label>Likeihood of switchgear sparks</label-->
+    </display>
+	<display item="Lights flash with switchgear sound">
+>>>>>>> JMRI/master
       <!--label>Lights flash with switchgear sound</label-->
     </display>
   </column>

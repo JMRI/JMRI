@@ -7,6 +7,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Interface for classes that wish to get notification when the connection to
  * the layout changes.
+ * <p>
+ * Maintains a single instance, as there is only one set of connections for 
+ * the running program.
  *
  * @author Daniel Boudreau Copyright (C) 2007
  */

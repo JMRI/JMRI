@@ -70,6 +70,7 @@ public class JsonClientTrafficController extends AbstractMRTrafficController imp
     }
 
     @Override
+    @Deprecated
     protected void setInstance() {
         // nothing to do
     }

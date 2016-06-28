@@ -18,7 +18,6 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version $Revision$
  */
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -39,7 +38,6 @@ import org.slf4j.LoggerFactory;
 
 public class BlockPathTableModel extends AbstractTableModel implements PropertyChangeListener {
 
-    private static final long serialVersionUID = -2472819814795605641L;
     public static final int FROM_PORTAL_COLUMN = 0;
     public static final int NAME_COLUMN = 1;
     public static final int TO_PORTAL_COLUMN = 2;

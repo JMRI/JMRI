@@ -1,14 +1,3 @@
-// This file is part of JMRI.
-//
-// JMRI is free software; you can redistribute it and/or modify it under
-// the terms of version 2 of the GNU General Public License as published
-// by the Free Software Foundation. See the "COPYING" file for a copy
-// of this license.
-//
-// JMRI is distributed in the hope that it will be useful, but WITHOUT
-// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-// FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
-// for more details.
 package jmri.implementation;
 
 import java.util.HashMap;
@@ -43,11 +32,8 @@ import org.slf4j.LoggerFactory;
  * Based upon {@link jmri.implementation.DccSignalHead} by Alex Shepherd
  *
  * @author Kevin Dickerson Copyright (c) 2012
- * @version $Revision: 19173 $
  */
 public class DccSignalMast extends AbstractSignalMast {
-
-    private final static Logger log = LoggerFactory.getLogger(DccSignalMast.class);
 
     public DccSignalMast(String sys, String user) {
         super(sys, user);
@@ -75,7 +61,7 @@ public class DccSignalMast extends AbstractSignalMast {
             throw new IllegalArgumentException("System name needs at least three parts: " + systemName);
         }
         if (!parts[0].endsWith(mastType)) {
-            log.warn("First part of signal mast is incorrect " + systemName + " : " + mastType);
+            log.warn("First part of SignalMast system name is incorrect " + systemName + " : " + mastType);
         } else {
             String commandStationPrefix = parts[0].substring(0, parts[0].indexOf("$") - 1);
             java.util.List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
@@ -215,4 +201,9 @@ public class DccSignalMast extends AbstractSignalMast {
         }
         return null;
     }
+
+    private final static Logger log = LoggerFactory.getLogger(DccSignalMast.class);
+
 }
+
+/* @(#)DccSignalMast.java */

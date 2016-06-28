@@ -6,7 +6,7 @@
  </title>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
     <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
-    <meta name="Date.Modified" content="20140420"/>
+    <meta name="Date.Modified" content="20160602"/>
     <meta name="keywords" content="JMRI help Signal Mast Table">
 
 <!--#include virtual="/Style" -->
@@ -19,8 +19,8 @@
 
 <h1>The Signal Mast Table</h1>
 
-<a href="SignalMasts-num.png">
-   <img src="SignalMasts-num.png" 
+<a href="images/SignalMasts-num.png">
+   <img src="images/SignalMasts-num.png"
         width="619" height="166" align="right">
 </a>
 		<p>JMRI Signals Masts are managed in the Signal Mast Table. You access this tool from the <b>Tools > Tables > Signal Masts</b> menu.</p>
@@ -31,10 +31,10 @@
 			<li>Aspect, this column shows the current Aspect of a Signal Mast. You can change it manually by selecting a value from the pop up list
 			<li>Comment, double click this field to enter text about the location of the Signal Mast or other notes
 			<li>Delete, click on this button to delete a Signal Mast. Use with care!
-			<li>Edit, clicking on one of these buttons opens a panel where you can disable some of the available Aspects and the Lit status for this Signal Mast. Note: The System Name, Signal Mast type and driver cannot be changed once a Signal Mast has been created.
-			<a href="SignalMastEdit.png">
-			<img src="SignalMastEdit.png" 
-			width="231" height="207" align="right">
+			<li><a href="SignalMastAddEdit.shtml">Edit</a>, clicking on one of these buttons opens a panel where you can disable some of the available Aspects and the Lit status for this Signal Mast. Note: The System Name, Signal Mast type and driver cannot be changed once a Signal Mast has been created.
+			<a href="images/VirtMastPanelApply.png">
+			<img src="images/VirtMastPanelApply.png" 
+			width="239" height="159" align="right">
 			</a>
 			<li>Edit Logic, this button opens the Signaling Pairs panel showing the lines for this Signal Mast, from which you can access the <a href="../../../../html/tools/signaling/SignalMastLogic.shtml">Signal Mast Logic</a>
 			<li>Lit, shows whether this Signal Mast is Lit, which can be changed by clicking on the checkbox, via Signal Mast Logic or by Logix
@@ -45,10 +45,11 @@
 "<a href="SignalMastAddEdit.shtml">Add..</a>" button below the Signal Mast Table.
 	  The window that opens next will prompt you for whatever setup information is needed.</p>
 
-	<a href="SignalingPairs.png">
- <img src="SignalingPairs.png" align="right" width="303" height="122" hspace="0" vspace="0" alt="Signaling Pairs window">
+	<a href="images/SignalingPairs.png">
+ <img src="images/SignalingPairs.png" align="right" width="303" height="122" hspace="0" vspace="0" alt="Signaling Pairs window">
 </a>
-		<p>After you clicked on one of the "Edit Logic" buttons in the Signal Mast Table, the Signaling Pairs window appears. Choose one of the displayed lines and click the "Edit" button to open the Edit window.</p>
+		<p>After you clicked on one of the "Edit Logic" buttons in the Signal Mast Table, the Signaling Pairs window appears.
+		Choose one of the displayed lines and click the "Edit" button to open the Edit window.</p>
 		
 		<p> Use the <b>Store</b> item in the File menu to save signal information to disk. 
 This information is saved with the configuration in an XML file, along

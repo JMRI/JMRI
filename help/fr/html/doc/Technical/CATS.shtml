@@ -1,23 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!--  $Id$ -->
 <!-- Updated by Blorec Herv&#233;  2013-09-03--> 
 <html lang="fr">
 <head>
     <TITLE>
  	JMRI: Integration with CATS
     </TITLE>
-    <META content="Bob Jacobsen" name=Author>
+    <META content="Bob Jacobsen" name="Author">
     <meta name="keywords" content="JMRI technical code Java CATS ">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
-
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset= iso-8859-1">
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -25,13 +17,13 @@
 <!-- /Style -->
 </head>
 
-
+<body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
 
-<H1>Integration avec CATS</H1>
+<h1>Integration avec CATS</h1>
 
 Le Crandic Automated Traffic System (CATS) est une application bas&#233;e sur JMRI cr&#233;e
 par Rodney Black pour le contr&#244;le et l'exploitation d'un chemin de fer miniature.
@@ -45,7 +37,7 @@ CATS doit continuer &#224; travailler pour ses utilisateurs, avec un minimum d'
 effort pour les d&#233;veloppeurs de CATS!
 
 <H3>Integration pour test</h3>
-
+<p>
 CATS a deux ensemble d'arbres, "cats.*" et "developper.*", correspondant &#224; peu pr&#232;s
  aux deux applications CATS.
 
@@ -62,7 +54,6 @@ A partir de cette base, nous voulons garder les compilation CATS
 durant le d&#233;veloppement de JMRI.
 
 
-
 <h3>Compiler CATS avec JMRI</h3>
 
 <p>
@@ -71,8 +62,6 @@ l'arbre des sources "test".
 
 <p>
 Pour simplifier le travail CVS, le deux r&#233;pertoires CATS sont ignor&#233;s ...
-
-
 
 <!--#include virtual="/Footer" -->
 

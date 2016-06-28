@@ -152,10 +152,13 @@ public class SignalSystemTest extends jmri.configurexml.SchemaTestBase {
     
     void checkAspect(String mastName, String aspect) {
         SignalMast mast = InstanceManager.signalMastManagerInstance().getSignalMast(mastName);
-        if (mast == null) Assert.fail("Mast "+mastName+" not found");
-        // wait present or error
-        jmri.util.JUnitUtil.waitFor(()->{return mast.getAspect().equals(aspect);},
-            "mast " + mastName + " aspect \""+aspect+"\" expected, currently showing \""+mast.getAspect()+"\"");
+        if (mast != null) {
+            // wait present or error
+            jmri.util.JUnitUtil.waitFor(()->{return mast.getAspect().equals(aspect);},
+                "mast " + mastName + " aspect \""+aspect+"\" expected, currently showing \""+mast.getAspect()+"\"");
+        } else {
+            Assert.fail("Mast "+mastName+" not found");
+        }
     }
         
     // from here down is testing infrastructure

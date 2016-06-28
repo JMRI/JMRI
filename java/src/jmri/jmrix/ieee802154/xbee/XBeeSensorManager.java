@@ -1,4 +1,3 @@
-// XBeeSensorManager.java
 package jmri.jmrix.ieee802154.xbee;
 
 import com.rapplogic.xbee.api.ApiId;
@@ -16,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * "ZSstring:pin", where string is a node address and pin is the io pin used.
  *
  * @author	Paul Bender Copyright (C) 2003-2010
- * @version	$Revision$
  */
 public class XBeeSensorManager extends jmri.managers.AbstractSensorManager implements XBeeListener {
 
@@ -31,6 +29,7 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
     static public XBeeSensorManager instance() {
         return mInstance;
     }
+    @Deprecated
     static private XBeeSensorManager mInstance = null;
 
     // to free resources when no longer used
@@ -259,5 +258,3 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
     private final static Logger log = LoggerFactory.getLogger(XBeeSensorManager.class.getName());
 
 }
-
-/* @(#)XBeeSensorManager.java */

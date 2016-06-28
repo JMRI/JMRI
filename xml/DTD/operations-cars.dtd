@@ -84,6 +84,8 @@
 <!ATTLIST car selected				(true | false ) "false">
 <!ATTLIST car rweLoad				CDATA #IMPLIED>
 <!ATTLIST car blocking				CDATA #IMPLIED>
+<!ATTLIST car pickupId				CDATA #IMPLIED>
+<!ATTLIST car nextPickupId			CDATA #IMPLIED>
 
 <!ELEMENT loads (defaults | load*)*>
 <!ELEMENT defaults EMPTY>

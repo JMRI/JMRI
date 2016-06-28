@@ -611,11 +611,19 @@
       <label>
         <text> </text>
       </label>
+<<<<<<< HEAD
       <display item="Maximum Volume"/>
       <display item="Function Key to Increase Volume"/>
       <display item="Function Key to Reduce Volume"/>
       
       <label>
+=======
+	  <display item="Maximum Volume"/>
+	  <display item="Function Key to Increase Volume"/>
+	  <display item="Function Key to Reduce Volume"/>
+	  
+	  <label>
+>>>>>>> JMRI/master
         <text> </text>
       </label>
       <label>
