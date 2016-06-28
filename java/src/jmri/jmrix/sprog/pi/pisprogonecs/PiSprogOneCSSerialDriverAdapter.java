@@ -1,8 +1,6 @@
-// PiSprogOneCSSerialDriverAdapter.java
 package jmri.jmrix.sprog.pi.pisprogonecs;
 
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
-import jmri.jmrix.sprog.SprogTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * any other options at configuration time.
  *
  * @author	Andrew Crosland Copyright (C) 2016
- * @version	$Revision$
  */
 public class PiSprogOneCSSerialDriverAdapter
         extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
@@ -35,7 +32,10 @@ public class PiSprogOneCSSerialDriverAdapter
         return new String[]{"115,200 bps"};
     }
 
-    //private Thread slotThread;
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static public PiSprogOneCSSerialDriverAdapter instance() {
         if (mInstance == null) {
             PiSprogOneCSSerialDriverAdapter m = new PiSprogOneCSSerialDriverAdapter();
@@ -44,10 +44,12 @@ public class PiSprogOneCSSerialDriverAdapter
         }
         return mInstance;
     }
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static volatile PiSprogOneCSSerialDriverAdapter mInstance = null;
 
     static Logger log = LoggerFactory.getLogger(PiSprogOneCSSerialDriverAdapter.class.getName());
 
 }
-
-/* @(#)PiSprogOneCSSerialDriverAdapter.java */

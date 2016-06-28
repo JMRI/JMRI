@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Vector;
 import jmri.CommandStation;
 import jmri.ProgListener;
-import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
 import jmri.managers.DefaultProgrammerManager;

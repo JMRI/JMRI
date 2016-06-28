@@ -3,7 +3,7 @@
 <head>
   <title>JMRI Hardware Support - Digitrax LocoNet</title>
     <meta name="keywords" content="Digitrax LocoNet LocoBuffer LocoBuffer-II
-          LocoBuffer-USB MS100 PR2 PR3 DCS100 DCS50 DCS51 DB150 JMRI">
+          LocoBuffer-USB MS100 PR2 PR3 DCS100 DCS240 DCS50 DCS51 DB150 JMRI">
 
   <!-- Style -->
   <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
@@ -72,6 +72,7 @@ station over the LocoNet&reg; using one of several types of <a href="#adapters">
   <li>DB150 Command Station/Booster</li>
   <li>DCS100 Command Station/Booster</li>
   <li>DCS200 Command Station/Booster</li>
+  <li>DCS240 Advanced Command Station/Booster</li>
   <li><a href="Uhlenbrock.shtml">Intellibox: The Uhlenbrock Central Unit</a></li>
   <li><a href="Uhlenbrock.shtml">Intellibox II or IB-Com</a></li>
   <li>DCC-Mux: DCC data combiner with built-in LocoNet command station </li>
@@ -95,6 +96,9 @@ you need one of the following adapters:</p>
   <li><a title="Digitrax Serial interface" href="MS100.shtml">MS-100</a></li>
   <li><a title="BT LocoBridge" href="BTLocoBridge.shtml">Bluetooth LocoBridge</a></li> 
 </ul>
+(Note: The Digitrax DSC240 has a built-in adapter that's similar to the Digitrax PR3;
+    if you have a DCS240, configure JMRI for it by selecting a PR3 connection type
+    and a DCS240 command station type)
 
 <p>Generally, any of these can be used with any type of computer to communicate
 with any type of command station. Currently, the LocoBuffer-USB and PR3 are the

@@ -58,6 +58,13 @@ public class BlockManagerTest extends TestCase {
         Assert.assertEquals("user name 1", "", b1.getUserName());
     }
 
+    public void testProvideWorksTwice() {
+        // original create with no systemname and an empty username
+        Block b1 = InstanceManager.blockManagerInstance().provideBlock("IB12");
+        b1 = InstanceManager.blockManagerInstance().provideBlock("!!");
+        Assert.assertNotNull(b1);
+    }
+    
     public void testGet1() {
         // original create with no systemname and a username
         Block b1 = InstanceManager.blockManagerInstance().createNewBlock("UserName4");
@@ -122,8 +129,8 @@ public class BlockManagerTest extends TestCase {
         boolean threw = false;
         try {
             InstanceManager.blockManagerInstance().setDefaultSpeed("Faster");
-        } catch (JmriException ex) {
-            if (ex.getMessage().startsWith("Value of requested default block speed is not valid")) {
+        } catch (IllegalArgumentException ex) {
+            if (ex.getMessage().startsWith("Value of requested default block speed ")) {
                 threw = true;
             } else {
                 Assert.fail("failed to set speed due to wrong reason: " + ex);
@@ -136,7 +143,7 @@ public class BlockManagerTest extends TestCase {
 
         try {
             InstanceManager.blockManagerInstance().setDefaultSpeed("Normal");
-        } catch (JmriException ex) {
+        } catch (IllegalArgumentException ex) {
             Assert.fail("failed to reset speed due to: " + ex);
         }
         Assert.assertEquals("block speed back to normal", "Normal", InstanceManager.blockManagerInstance().getDefaultSpeed());

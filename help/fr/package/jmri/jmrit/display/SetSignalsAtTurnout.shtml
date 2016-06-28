@@ -67,7 +67,7 @@ Si un signal est entr&#233; pour la <b>Pointe - Divergente</b>, puis <b>Pointe -
 Directe</b> signale  la voie continue et  <b>Pointe - Divergente</b>
 signale la voie d&#233;vi&#233;e. Si aucun signal n'est entr&#233;e pour
  <b>Pointe - Divergente</b>, le signal <b>Pointe - Continue</b> refl&#232;te
-l'&#233;tat de la voie selon la commutation de l'aiguillage . Dans ce cas, le
+l'&#233;tat de la voie selon la commutation de l'aiguillage. Dans ce cas, le
 Type de logique pour le signal <b>Pointe - Continue</b>  est
 <b> Aiguillage en Pointe</b>.</p>
 <p>
@@ -104,7 +104,7 @@ correctement, vous pourriez avoir &#224; placer un signal virtuel (un signal qui
 correspond pas &#224; un signal r&#233;el sur le r&#233;seau) 
 non signal&#233; &#224; la fin du canton qui relie un tron&#231;on de voie qui est
 signal&#233;e avec une voie qui n'est pas signal&#233;e. Si un canton se termine par un
-Heurtoir, aucun signal n'est requis .</p>
+Heurtoir, aucun signal n'est requis.</p>
 <p>
 Si un canton a un aiguillage interne (l'aiguillage, et ses tron&#231;ons de voie &#224; sa
 la pointe et les jambes font partie du canton), le programme va attendre les signaux
@@ -132,7 +132,7 @@ Logix pour adapter le signal logique &#224; vos besoins.</p>
 Si vous utilisez deux aiguillages pour repr&#233;senter une Travers&#233;e Jonction Double, ou si
 vous utilisez deux aiguillages pour repr&#233;senter un aiguillage triple, la logique
 mise en place par cet outil ne fonctionnera pas correctement. Pour ces deux cas, vous devriez
-utiliser les  outils pour <b>D&#233;finir les Signaux des Aiguillages Pointe-&#224;-Pointe </b> ou  pour <b>D&#233;finir le Signal d'un Aiguillage Triple</b> qui sont disponibles dans le menu <b>Outils</b> de l'&#201;diteur de TCO .
+utiliser les  outils pour <b>D&#233;finir les Signaux des Aiguillages Pointe-&#224;-Pointe </b> ou  pour <b>D&#233;finir le Signal d'un Aiguillage Triple</b> qui sont disponibles dans le menu <b>Outils</b> de l'&#201;diteur de TCO.
 </p>
 <p>
 <b>S'il vous pla&#238;t rappelez vous de sauver votre TCO apr&#232;s l'utilisation de cet outil.</b></p> 

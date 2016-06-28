@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<title>JMRI Hardware Support - Digirails/Digikeijs</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1>Hardware Support: Digirails/Digikeijs</h1>
+
+<a name="hardware"></a><h2>Supported Hardware</h2>
+<h3>Command Station</h3>
+<p>JMRI can connect to a Digirails DR5000 Digicentral command station
+via a network connection.</p>
+
+<a name="limitations"></a><h2>Limitations</h2>
+<p>Please report your results.</p>
+
+<a name="connecting"></a><h2>Connecting</h2>
+<h3>Settings</h3>
+<p>To configure the connection:
+<ul>
+<li>Open the JMRI "Preferences" under the "Edit" menu (or the PanelPro menu on OS X)
+<li>Select "ESU" as the System Manufacturer 
+<li>Select "ECoS via network" as the System Connection
+<li>Enter the IP address for your DR5000 unit
+<li>You may optionally change the connection name to "Digirails"</li>
+<li>Leave the port number at 15471
+<li>Click "Save" &amp; restart
+</ul>
+
+<p>
+Turnout, Sensor, Signal and Throttle support is available for
+a JMRI-connected DR5000 unit.
+<p>
+
+<h3>Throttles</h3>
+
+<h3>Sensors</h3>
+
+<h3>Turnouts</h3>
+        <p>The Digirails DR4018 decoder can drive turnouts with several protocols.<br>
+        </p>
+
+<a name="dr4018"><h3>Signals</h3></a>
+  <p>The Digirails DR4018 decoder can be configured for signaling using DecoderPro.<br>
+  To configure the signal Masts, use the <a href="../../../package/jmri/jmrit/beantable/SignalMastAddEdit.shtml#matrixCtl">Matrix Signal Mast</a> driver.<br>
+  The Add Mast settings are:<br>
+  <a href="matrixPanelProrailCreate.png"><img src="matrixPanelProrailCreate.png" width="381" height="489" hspace="0" vspace="0" alt="DCC Decoder panel"></a></p>
+
+<a name="tools"></a><h2>JMRI Digirails Tools</h2>
+<ul>
+<li>None</li>
+</ul>
+
+<h3>Third Party info</h3>
+For more information on how to connect and use a DR5000, refer to the following:
+  <ul>
+  <li><a href="http://www.digikeijs.com/dr5000-dcc-multi-bus-centrale.html">Digirails DR5000 documentation</a></li>
+  </ul>
+
+    <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+</body>
+</html>

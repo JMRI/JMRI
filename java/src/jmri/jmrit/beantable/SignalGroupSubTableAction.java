@@ -788,8 +788,8 @@ public class SignalGroupSubTableAction {
             Bundle.getMessage("ColumnUserName"),
             Bundle.getMessage("Include"),
             Bundle.getMessage("ColumnLabelSetState")};
-    private static String SET_TO_ACTIVE = rbx.getString("SensorActive");
-    private static String SET_TO_INACTIVE = rbx.getString("SensorInactive");
+    private static String SET_TO_ACTIVE = Bundle.getMessage("SensorStateActive");
+    private static String SET_TO_INACTIVE = Bundle.getMessage("SensorStateInactive");
     private static String SET_TO_CLOSED = InstanceManager.turnoutManagerInstance().getClosedText();
     private static String SET_TO_THROWN = InstanceManager.turnoutManagerInstance().getThrownText();
 

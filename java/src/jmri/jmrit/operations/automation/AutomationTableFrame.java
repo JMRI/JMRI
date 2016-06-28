@@ -187,7 +187,7 @@ public class AutomationTableFrame extends OperationsFrame implements java.beans.
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
-        JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+        JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         menuBar.add(toolMenu);
         toolMenu.add(new AutomationResetAction(this));
         toolMenu.add(new AutomationCopyAction(automation));

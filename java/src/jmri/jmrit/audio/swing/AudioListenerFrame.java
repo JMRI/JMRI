@@ -151,7 +151,7 @@ public class AudioListenerFrame extends AbstractAudioFrame {
 
             // Notify changes
             model.fireTableDataChanged();
-        } catch (AudioException ex) {
+        } catch (AudioException | IllegalArgumentException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), Bundle.getMessage("AudioCreateErrorTitle"), JOptionPane.ERROR_MESSAGE);
         }
     }
