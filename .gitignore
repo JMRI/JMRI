@@ -34,6 +34,8 @@ session.log
 /.idea/workspace.xml
 local.properties
 *.original~
+.metadata
+RemoteSystemsTempFiles
 
 # CATS source, sometimes present for test
 /java/src/cats
@@ -43,6 +45,5 @@ local.properties
 *.DS_Store
 /jmri-fb.html
 
-# Added by Jan upon recommendations by Randall Wood
 .metadata
 RemoteSystemsTempFiles
