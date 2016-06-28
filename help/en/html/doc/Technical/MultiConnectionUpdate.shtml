@@ -16,7 +16,7 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
@@ -59,13 +59,13 @@ and record a reference to a SerialPortAdapter object,
 and to return it from the getAdapter() method.
 Also, remove the instance() method and its 
 implementation.
-<code><pre>
+<pre><code>
     protected void setInstance() { 
         if (adapter == null) {
             adapter = new PR3Adapter();
         }
     }
-</pre></code>
+</code></pre>
 
 <p>
 Edit the adapter class (e.g. PR3Adapter) to remove
@@ -74,11 +74,11 @@ the instance() method and its implementation.
 <p>
 The configurexml/ConnectionConfigXml class 
 needs to have a method added:
-<code><pre>
+<pre><code>
     protected void getInstance(Object object) {
         adapter = ((ConnectionConfig)object).getAdapter();
     }
-</pre></code>
+</code></pre>
 We should probably refactor this later, but this
 is the current form to make sure the correct
 ConnectionConfig class is used.
@@ -88,17 +88,17 @@ serial/network refactoring.
 
 <p>
 Also, change this
-<code><pre>
+<pre><code>
     protected void getInstance() {
         adapter = LnHexFilePort.instance();
     }
-</pre></code>
+</code></pre>
 to this
-<code><pre>
+<pre><code>
     protected void getInstance() {
         adapter = new LnHexFilePort();
     }
-</pre></code>
+</code></pre>
 
 <h3>Managers and Beans</h3>
 

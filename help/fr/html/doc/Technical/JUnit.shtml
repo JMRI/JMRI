@@ -186,7 +186,7 @@ Votre <code>configuration ()</code> de  mise en œuvre doit commencer par:
 Votre <code>tearDown(d&#233;montage) () </code> doit se terminer par:
 <code> <pre>
 jmri.util.JUnitUtil.resetInstanceManager ();
-super.tearDown ()</pre></code>
+super.tearDown ()</code></pre>
 
 <h4>Ex&#233;cution des Auditeurs</h4>
 

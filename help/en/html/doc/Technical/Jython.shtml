@@ -24,6 +24,7 @@
 </head>
 
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
@@ -44,7 +45,7 @@ may not be current.
 
 <h2>Introduction</h2>
 
-<A HREF="http://www.python.org">Python<a/> is a widely used scripting language that's
+<A HREF="http://www.python.org">Python</a> is a widely used scripting language that's
 available on many types of computers.  A Java-based varient, called
 <A HREF="http://www.jython.org">Jython</a>,
 has been integrated with JMRI to make it easy to control a model railroad
@@ -344,7 +345,7 @@ convenience methods are all in the JmriDemo namespace:
 <PRE>
   >>> turnouts.newTurnout("LT1","")
   Traceback (innermost last):
-    File "<console>", line 1, in ?
+    File &amp;&lt;console&gt;&amp;, line 1, in ?
   NameError: turnouts
 
   >>> JmriDemo.turnouts.newTurnout("LT1","")
@@ -387,5 +388,7 @@ It would be good to understand what's preventing the program
 from stopping when it gets the ^D.
 
 <!--#include virtual="/Footer" -->
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
 </body>
 </html>
