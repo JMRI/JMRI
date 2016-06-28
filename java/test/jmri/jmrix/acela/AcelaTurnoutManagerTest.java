@@ -15,15 +15,22 @@ import org.slf4j.LoggerFactory;
  */
 public class AcelaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
 
+    private AcelaTrafficControlScaffold tcis = null; 
+    private AcelaSystemConnectionMemo memo = null; 
+
     public String getSystemName(int i) {
         return "AT" + i;
     }
 
-    public void testAsAbstractFactory() {
+    public void testConstructor() {
         // create and register the manager object
-        AcelaTurnoutManager atm = new AcelaTurnoutManager();
-        jmri.InstanceManager.setTurnoutManager(atm);
+        AcelaTurnoutManager atm = new AcelaTurnoutManager(new AcelaSystemConnectionMemo(tcis) );
+        Assert.assertNotNull("Acela Turnout Manager creation",atm);
+    }
 
+
+    public void testAsAbstractFactory() {
+        // a Turnout Manager object is created and registered in setUp.
         // ask for a Turnout, and check type
         TurnoutManager t = jmri.InstanceManager.turnoutManagerInstance();
 
@@ -66,51 +73,54 @@ public class AcelaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTes
 
     AcelaNode a0, a1, a2, a3;
 
-    @Override
-    protected void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
-        super.tearDown();
-    }
-
-    @Override
-    public void setUp() throws Exception {
-        super.setUp();
+    // The minimal setup for log4J
+    protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+ 
+        tcis = new AcelaTrafficControlScaffold();
+        memo = new AcelaSystemConnectionMemo(tcis);
 
         // We need to delete the nodes so we can re-allocate them
         // otherwise we get another set of nodes for each test case
         // which really messes up the addresses.
         // We also seem to need to explicitly init each node.
-        if (AcelaTrafficController.instance().getNumNodes() > 0) {
-            //    AcelaTrafficController.instance().deleteNode(3);
-            //    AcelaTrafficController.instance().deleteNode(2);
-            //    AcelaTrafficController.instance().deleteNode(1);
-            //    AcelaTrafficController.instance().deleteNode(0);
-            AcelaTrafficController.instance().resetStartingAddresses();
+        if ( tcis.getNumNodes() > 0) {
+            //    tcis.deleteNode(3);
+            //    tcis.deleteNode(2);
+            //    tcis.deleteNode(1);
+            //    tcis.deleteNode(0);
+            tcis.resetStartingAddresses();
         }
-        if (AcelaTrafficController.instance().getNumNodes() <= 0) {
-            a0 = new AcelaNode(0, AcelaNode.AC);
+        if (tcis.getNumNodes() <= 0) {
+            a0 = new AcelaNode(0, AcelaNode.AC,tcis);
             a0.initNode();
-            a1 = new AcelaNode(1, AcelaNode.TB);
+            a1 = new AcelaNode(1, AcelaNode.TB,tcis);
             a1.initNode();
-            a2 = new AcelaNode(2, AcelaNode.D8);
+            a2 = new AcelaNode(2, AcelaNode.D8,tcis);
             a2.initNode();
-            a3 = new AcelaNode(3, AcelaNode.SY);
+            a3 = new AcelaNode(3, AcelaNode.SY,tcis);
             a3.initNode();
         } else {
-            a0 = (AcelaNode) (AcelaTrafficController.instance().getNode(0));
-            AcelaTrafficController.instance().initializeAcelaNode(a0);
-            a1 = (AcelaNode) (AcelaTrafficController.instance().getNode(1));
-            AcelaTrafficController.instance().initializeAcelaNode(a1);
-            a2 = (AcelaNode) (AcelaTrafficController.instance().getNode(2));
-            AcelaTrafficController.instance().initializeAcelaNode(a2);
-            a3 = (AcelaNode) (AcelaTrafficController.instance().getNode(3));
-            AcelaTrafficController.instance().initializeAcelaNode(a3);
+            a0 = (AcelaNode) (tcis.getNode(0));
+            tcis.initializeAcelaNode(a0);
+            a1 = (AcelaNode) (tcis.getNode(1));
+            tcis.initializeAcelaNode(a1);
+            a2 = (AcelaNode) (tcis.getNode(2));
+            tcis.initializeAcelaNode(a2);
+            a3 = (AcelaNode) (tcis.getNode(3));
+            tcis.initializeAcelaNode(a3);
         }
 
         // create and register the manager object
-        l = new AcelaTurnoutManager();
+        l = new AcelaTurnoutManager(memo);
         jmri.InstanceManager.setTurnoutManager(l);
+    }
+
+    @Override
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.resetInstanceManager();
     }
 
     private final static Logger log = LoggerFactory.getLogger(AcelaTurnoutManagerTest.class.getName());

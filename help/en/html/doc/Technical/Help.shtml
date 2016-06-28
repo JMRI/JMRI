@@ -18,6 +18,7 @@
 
 <body>
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
@@ -81,14 +82,14 @@ In particular, there are a couple things to watch for.
 <ul>
 <li>Anchor tags need a specific format. 
 Specifically, they should be written
-<code><pre>
+<pre><code>
 &lt;a name="pull" id="pull"&gt;&lt;/a&gt;
-</pre></code>
+</code></pre>
 
 For example, to put an anchor on a heading, do
-<code><pre>
+<pre><code>
 &lt;a name="foo" id="foo"&gt;&lt;/a&gt;&lt;h2&gt;Foo!&lt;/h2&gt;
-</pre></code>
+</code></pre>
 
 <p>
 Note: Incorrectly structured anchor tags (not like the above)

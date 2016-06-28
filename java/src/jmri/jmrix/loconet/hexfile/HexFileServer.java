@@ -63,9 +63,6 @@ public class HexFileServer {
         packets.startThreads();
         sourceThread = new Thread(port);
         sourceThread.start();
-
-        jmri.jmrix.loconet.ActiveFlag.setActive();
-
     }
 
     private Thread sourceThread;

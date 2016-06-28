@@ -26,10 +26,7 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
 
     private SpeedoReply reply = new SpeedoReply();
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
-    // Ignore FindBugs warning as we can only have on SPROG instance at this time
     public SpeedoTrafficController() {
-        self = this;
     }
 
     // The methods to implement the SpeedoInterface
@@ -123,17 +120,8 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
      */
     @Deprecated
     static public SpeedoTrafficController instance() {
-        if (self == null) {
-            self = new SpeedoTrafficController();
-        }
-        return self;
+        return null;
     }
-
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static volatile protected SpeedoTrafficController self = null;
 
     // data members to hold the streams
     DataInputStream istream = null;

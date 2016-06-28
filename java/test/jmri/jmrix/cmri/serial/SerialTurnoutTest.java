@@ -14,12 +14,12 @@ import junit.framework.TestSuite;
 public class SerialTurnoutTest extends AbstractTurnoutTest {
 
     private SerialTrafficControlScaffold tcis = null;
-    private SerialNode n = new SerialNode();
+    private SerialNode n = null;
 
     public void setUp() {
         // prepare an interface
         tcis = new SerialTrafficControlScaffold();
-        n = new SerialNode(0, SerialNode.SMINI);
+        n = new SerialNode(0, SerialNode.SMINI,tcis);
         t = new SerialTurnout("CT4", "t4");
         Assert.assertNotNull("exists", n);
     }
