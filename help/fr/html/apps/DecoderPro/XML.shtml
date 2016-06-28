@@ -2,7 +2,6 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!--  $Id$ -->
 <!-- Updated by Blorec Herv&#233; le 2013-09-01-->
 <title>JMRI: Decoder Information</title>
 
@@ -22,7 +21,7 @@
 <div id="mainContent">
 
 <!-- Page Body -->
-<H1>JMRI: Information D&#233;codeur </H1>
+<h1>JMRI: Information D&#233;codeur</h1>
 
 Le projet JMRI a rassembl&#233; une grande quantit&#233; d'informations sur les
 D&#233;codeurs DCC, il les met &#224; la disposition du public de plusieurs fa&#231;ons. Elles
@@ -34,17 +33,17 @@ Les pages Web sont automatiquement cr&#233;&#233;es &#224; partir des fichiers d
 dans le cadre de chaque version. Celles-ci contiennent:
 <UL>
 <LI>
-<A HREF="../../xml/XSLT/pages/DecoderId.html"> Identification des valeurs des CV du D&#233;codeur  </a>
+<a HREF="../../xml/XSLT/pages/DecoderId.html"> Identification des valeurs des CV du D&#233;codeur</a>
 utilis&#233;e par DecoderPro pour identifier le fabricant et le
 type d'un d&#233;codeur inconnu.
 <LI>
-<A HREF="../../xml/XSLT/pages/decoderIndex.html">Index des pages individuelles d&#233;codeur </a>,
+<a HREF="../../xml/XSLT/pages/decoderIndex.html">Index des pages individuelles d&#233;codeur </a>,
 &#233;num&#233;r&#233;es par le fabricant. Cela fournit une page sommaire des caract&#233;ristiques
 et CV contenu des d&#233;codeurs.
 <LI>La s&#233;lection des listes de guides
 <A HREF="../../xml/XSLT/pages/SelectionGuide.html#size"> la taille d&#233;codeur </a>, et par
 <A HREF="../../xml/XSLT/pages/SelectionGuide.html#electrical"> Caract&#233;ristiques &#233;lectriques des d&#233;codeurs </a>.
-<LI> <A HREF="../../xml/XSLT/pages/CVSummary.html"> R&#233;sum&#233; combin&#233; des CV pour tous les d&#233;codeurs </a>.
+<LI><A HREF="../../xml/XSLT/pages/CVSummary.html"> R&#233;sum&#233; combin&#233; des CV pour tous les d&#233;codeurs </a>.
  Notez que c'est une <I>tr&#232;s </i> grande page!
 </UL>
 
@@ -60,13 +59,13 @@ Pour rendre ces infos plus facile &#224; importer dans un tableur ou un autre pr
  </a> 
 </UL>
 
-
-<h2>Fichierss XML</h2>
+<h2>Fichiers XML</h2>
 
 La version d&#233;finitive des donn&#233;es est dans des fichiers XML. Ceux-ci peuvent &#234;tre obtenus aupr&#232;s de
 toute distribution jmri, ou via le Web &#224; l'adresse
-<A HREF="http://jmri.org/xml"> http://jmri.org/xml</a>.
+<a HREF="http://jmri.org/xml"> http://jmri.org/xml</a>.
     
 <!--#include virtual="/Footer" -->
+ </div>
 </body>
 </html>

@@ -1,13 +1,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- UpDated by Herv&#233; Blorec  2013-10-13-->
-
 <html lang="fr">
 <head>
  <TITLE>
       JMRI: ViewSpecialActions
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="JMRI help Transit Special Actions">
 
@@ -25,7 +22,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Actions</H1>
+<h1>Actions</h1>
     
 <H2> Qu'est ce que les actions?</H2>
 <p>Les <b>Actions</b> sont des t&#226;ches qui peuvent &#234;tre d&#233;clench&#233;es automatiquement comme un train avec un trajet en
@@ -94,7 +91,7 @@ capteurs internes il peut fournir un lien vers Logix.</li>
 <li><b>Sur Capteur INACTIF</b> - Lorsque le capteur sp&#233;cifi&#233; se d&#233;place vers l'
 &#233;tat inactif. C'est la m&#234;me chose que ci-dessus, mais avec l'&#233;tat du capteur oppos&#233;.
 Utilisez celui qui correspond le mieux &#224; votre mat&#233;riel ou &#224; Logix.</Li>
-</ Ul></p>
+</ul></p>
 <p> Un temporisation optionnelle, sp&#233;cifi&#233;e en millisecondes, est disponible pour chaque &#233;v&#233;nement <i>Quand</i>
 . Aucun retard par d&#233;faut. Si aucun d&#233;lai optionnel n'est entr&#233; (ou un
 temporisation de z&#233;ro est entr&#233;e), l'action sera effectu&#233;e imm&#233;diatement apr&#232;s que l'&#233;v&#233;nement
@@ -145,11 +142,11 @@ mettra la fonction 1 du r&#233;gulateur sur Off.</li>
 temps sp&#233;cifi&#233;.</li>
 <li><b>Mod&#232;le Sonore Corne</b> - Son de Trompe (sifflet) d'une  mani&#232;re sp&#233;cifi&#233;e par
 un mod&#232;le entr&#233; par l'utilisateur. Le mod&#232;le se compose de sons brefs et longs, sp&#233;cifi&#233; comme
-Â«SÂ» et Â«lÂ» dans le mod&#232;le. Par exemple un mod&#232;le de Â«lSlÂ» pr&#233;cise long-court-long.
+«S» et «l» dans le mod&#232;le. Par exemple un mod&#232;le de «lSl» pr&#233;cise long-court-long.
 L'utilisateur d&#233;finit la dur&#233;e des coups courts et longs. Le coups de dur&#233;e courte
 est utilis&#233; comme  temps d'attente entre les coups. Les dur&#233;es r&#233;elles r&#233;alis&#233;es seront
 d&#233;pendantes du d&#233;codeur de son et comment l'ordinateur est occup&#233;. La corne/sifflet est
-suppos&#233; &#234;tre la fonction 2 du r&#233;gulateur .</li>
+suppos&#233; &#234;tre la fonction 2 du r&#233;gulateur.</li>
 <li><b>R&#233;gler Fonction D&#233;codeur</b> - D&#233;finit la fonction sp&#233;cifi&#233;e du d&#233;codeur soit
 <i>On</i> ou <i>Off</i> comme s&#233;lectionn&#233;e. Cela fonctionne pour les d&#233;codeurs sonores et les
 d&#233;codeurs sans le son.</li>
@@ -163,7 +160,7 @@ incluses ici, tels que l'ex&#233;cution de scripts ou de jouer des sons.</li>
  doit &#234;tre dans le Tableau  Capteur. Si le capteur sp&#233;cifi&#233; est d&#233;j&#224; dans l'
 &#233;tat inactif, il est d'abord bascul&#233; &#224; l'&#233;tat actif, puis r&#233;glez &#224; inactif. Ceci
 est &#233;quivalent &#224; l'action ci-dessus, sauf avec un &#233;tat du Capteur cible diff&#233;rente.</li>
-</ Ul></p>
+</ul></p>
 
 <h2> Fen&#234;tre Voir Actions </h2>
 <p>La fen&#234;tre <b>Afficher Actions</b> affiche les Actions qui sont
@@ -182,8 +179,8 @@ L'ordre des actions n'est pas important.</P>
 <p> lorsque les actions sont compl&#232;tement d&#233;finies, cliquez sur le bouton<b>Termin&#233;</b>.
 </P>
 
-
 <!--#include virtual="/Footer" -->
+      </div>
 </body>
 </html>
 

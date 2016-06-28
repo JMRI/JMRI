@@ -1,4 +1,3 @@
-// SerialSensorManager.java
 package jmri.jmrix.cmri.serial;
 
 import jmri.JmriException;
@@ -20,7 +19,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003, 2007
  * @author Dave Duchamp, multi node extensions, 2004
- * @version	$Revision$
  */
 public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         implements SerialListener {
@@ -150,7 +148,9 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      *
      * @return The registered SerialSensorManager instance for general use, if
      *         need be creating one.
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Deprecated
     static public SerialSensorManager instance() {
         if (_instance == null) {
             _instance = new SerialSensorManager();
@@ -158,6 +158,10 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         return _instance;
     }
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static SerialSensorManager _instance = null;
 
     public boolean allowMultipleAdditions(String systemName) {
@@ -249,5 +253,3 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
 
     private final static Logger log = LoggerFactory.getLogger(SerialSensorManager.class.getName());
 }
-
-/* @(#)SerialSensorManager.java */

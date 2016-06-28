@@ -50,6 +50,9 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.22.6
+; - Remove outmoded vecmath files
+; -------------------------------------------------------------------------
 ; - Version 0.1.22.5
 ; - Remove more outmoded jetty files
 ; -------------------------------------------------------------------------
@@ -441,6 +444,9 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$OUTDIR\jh.1.1.2.jar"
     Delete "$OUTDIR\jh.jar"
     Delete "$OUTDIR\jdom-jdk11.jar"
+
+    ; -- Delete old vecmath.jar files as of JMRI 4.5.1
+    Delete "$OUTDIR\lib\vecmath.jar"
 
     ; -- Delete older outmoded jetty .jar and outmoded servlet files, as of
     ;    JMRI 3.11.3 (added for version 0.1.21.5 of Windows installer)

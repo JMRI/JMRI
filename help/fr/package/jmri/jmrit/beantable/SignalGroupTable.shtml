@@ -27,10 +27,10 @@ Groupes de Signaux.
 
 Les Groupes de signaux sont utilis&#233;s pour d&#233;finir un certain nombre de t&#234;tes de signal, o&#249; une seule t&#234;te de signal peut &#234;tre &#233;clair&#233;e &#224; un moment donn&#233;, en fonction de l'&#233;tat du m&#226;t de signal associ&#233; et un ensemble de conditions. <br>
 
-Les Groupes de signaux seront utilis&#233;s lorsque des indicateurs suppl&#233;mentaires sont utilis&#233;s pour compl&#233;ter le m&#226;t du signal principal, tels que les &#233;crans de Direction, Itin&#233;raire ou la Vitesse. Ces indicateurs fournissent des informations suppl&#233;mentaires pour le conducteur qui ne sont pas donn&#233;es par le m&#226;t du signal principal. Ces indicateurs sont fr&#233;quemment observ&#233;s en Europe et au Royaume-Uni . <br>
+Les Groupes de signaux seront utilis&#233;s lorsque des indicateurs suppl&#233;mentaires sont utilis&#233;s pour compl&#233;ter le m&#226;t du signal principal, tels que les &#233;crans de Direction, Itin&#233;raire ou la Vitesse. Ces indicateurs fournissent des informations suppl&#233;mentaires pour le conducteur qui ne sont pas donn&#233;es par le m&#226;t du signal principal. Ces indicateurs sont fr&#233;quemment observ&#233;s en Europe et au Royaume-Uni. <br>
 
  <h2>Indicateurs de Directions</h2>
-Un indicateur de Direction peut &#234;tre configur&#233; pour afficher n'importe quelle voie divergente entre 1 &#224; 6 . Un seul indicateur sera souvent trouv&#233; o&#249; un aiguillage. diverge hors d'une ligne principale. Plusieurs indicateurs se trouvent dans des domaines plus complexes tels que l'approche des gares et les triages, o&#249; plusieurs routes peuvent &#234;tre prises. L'indicateur de direction informe le conducteur qu'il est en train de prendre un itin&#233;raire diff&#233;rent et doit donc adapter sa vitesse en fonction de la signalisation. <br>
+Un indicateur de Direction peut &#234;tre configur&#233; pour afficher n'importe quelle voie divergente entre 1 &#224; 6. Un seul indicateur sera souvent trouv&#233; o&#249; un aiguillage. diverge hors d'une ligne principale. Plusieurs indicateurs se trouvent dans des domaines plus complexes tels que l'approche des gares et les triages, o&#249; plusieurs routes peuvent &#234;tre prises. L'indicateur de direction informe le conducteur qu'il est en train de prendre un itin&#233;raire diff&#233;rent et doit donc adapter sa vitesse en fonction de la signalisation. <br>
 
 Les indicateurs de direction eux m&#234;mes seront en accord avec un ensemble de donn&#233; d'aiguillage pour cette jonction. <br>
 
@@ -59,11 +59,11 @@ height = "318" width = "266">
 <p> Alors chaque t&#234;te de signal a un ensemble de crit&#232;res qui doivent &#234;tre remplis avant que la t&#234;te de signal soit allum&#233;e. Il est constitu&#233; d'aiguillages et/ou des &#233;tats du capteur. <br>
 
 <h2> Exemple - Indicateur de Direction </h2>
-Consid&#233;rons le sch&#233;ma de voies suivants, vous avez ici six directions de sortie possibles  de la voie principale . <br>
+Consid&#233;rons le sch&#233;ma de voies suivants, vous avez ici six directions de sortie possibles  de la voie principale. <br>
 
 <a href="SignalGroupTrackDiagram.png">
 <Img src = "SignalGroupTrackDiagram.png"
-Â height = "90" width = "233">
+ height = "90" width = "233">
 </A>
 
 <p>Le signal  face &#224;  cette jonction aura un indicateur de jonction fix&#233;, chaque voie possible aura sa propre indication. Lorsque l'itin&#233;raire est fix&#233; pour tout droit, alors aucun indicateur n'est indiqu&#233;. Si l'itin&#233;raire est fix&#233; pour la position 1, alors l'indicateur position 1 sera affich&#233;. <br>
@@ -86,7 +86,7 @@ Consid&#233;rons le sch&#233;ma de voies suivants, vous avez ici six directions 
 <p>  Position 2  - R&#233;glages Aiguillages</p>
 <p>  IT1 <p> mis D&#233;vi&#233;,</p>
 <p> IT2 mis Droit,</p>
-<p> IT3 mis D&#233;vi&#233; .</p>
+<p> IT3 mis D&#233;vi&#233;.</p>
 </td>
 <td width=200>
 <p>  Position 3  - R&#233;glages Aiguillages</p>

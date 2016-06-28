@@ -50,6 +50,7 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
                 String sname = iter.next();
                 if (sname == null) {
                     log.error("System name null during store");
+                    break;
                 }
                 log.debug("system name is " + sname);
                 Reporter r = tm.getBySystemName(sname);

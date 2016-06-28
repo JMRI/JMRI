@@ -230,11 +230,6 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
         return getBeanBySystemName(name);
     }
 
-    @Deprecated
-    public char systemLetter() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
     public String getSystemPrefix() {
         throw new UnsupportedOperationException("Not supported yet.");
     }

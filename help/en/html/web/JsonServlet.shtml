@@ -88,7 +88,7 @@
                 <tr><td>consits</td>          <td>*</td>   <td></td>    <td></td>     <td>DecoderPro</td></tr>
                 <tr><td>engines</td>          <td>*</td>   <td></td>    <td></td>     <td>OperationsPro</td></tr>
                 <tr><td>hello</td>            <td>*</td>   <td></td>    <td></td>     <td>DecoderPro</td></tr>
-                <tr><td>lights</td>           <td>*</td>   <td></td>    <td></td>     <td>LocoTools</td></tr>
+                <tr><td>lights</td>           <td>*</td>   <td></td>    <td></td>     <td>PanelPro</td></tr>
                 <tr><td>locations</td>        <td>*</td>   <td></td>    <td></td>     <td>OperationsPro</td></tr>
                 <tr><td>panels</td>           <td>*</td>   <td></td>    <td></td>     <td>PanelPro</td></tr>
                 <tr><td>memories</td>         <td>*</td>   <td></td>    <td></td>     <td>DecoderPro</td></tr>
@@ -103,12 +103,12 @@
                 <tr><td>systemConnections</td><td>*</td>   <td></td>    <td></td>     <td>DecoderPro</td></tr>
                 <tr><td>time</td>             <td>*</td>   <td></td>    <td></td>     <td>DecoderPro</td></tr>
                 <tr><td>trains</td>           <td>*</td>   <td></td>    <td></td>     <td>OperationsPro</td></tr>
-                <tr><td>reporters</td>        <td>*</td>   <td></td>    <td></td>     <td>LocoTools</td></tr>
-                <tr><td>routes</td>           <td>*</td>   <td></td>    <td></td>     <td>LocoTools</td></tr>
-                <tr><td>signalHeads</td>      <td>*</td>   <td></td>    <td></td>     <td>LocoTools</td></tr>
-                <tr><td>signalMasts</td>      <td>*</td>   <td></td>    <td></td>     <td>LocoTools</td></tr>
-                <tr><td>sensors</td>          <td>*</td>   <td></td>    <td></td>     <td>LocoTools</td></tr>
-                <tr><td>turnouts</td>         <td>*</td>   <td></td>    <td></td>     <td>LocoTools</td></tr>
+                <tr><td>reporters</td>        <td>*</td>   <td></td>    <td></td>     <td>PanelPro</td></tr>
+                <tr><td>routes</td>           <td>*</td>   <td></td>    <td></td>     <td>PanelPro</td></tr>
+                <tr><td>signalHeads</td>      <td>*</td>   <td></td>    <td></td>     <td>PanelPro</td></tr>
+                <tr><td>signalMasts</td>      <td>*</td>   <td></td>    <td></td>     <td>PanelPro</td></tr>
+                <tr><td>sensors</td>          <td>*</td>   <td></td>    <td></td>     <td>PanelPro</td></tr>
+                <tr><td>turnouts</td>         <td>*</td>   <td></td>    <td></td>     <td>PanelPro</td></tr>
             </table>
 
             <p>Note that these names are case sensitive, so you must supply them as shown above. As an example, let's say you issued the following GET command:</p>
@@ -149,20 +149,20 @@
                 <tr><td>car</td>         <td>*</td>     <td></td>       <td></td>       <td></td><td>OperationsPro</td></tr>
                 <tr><td>consit</td>      <td>*</td>     <td>*</td>      <td>*</td>      <td>*</td><td>DecoderPro</td></tr>
                 <tr><td>engine</td>      <td>*</td>     <td></td>       <td></td>       <td></td><td>OperationsPro</td></tr>
-                <tr><td>light</td>       <td>*</td>     <td>*</td>      <td>*</td>      <td></td><td>LocoTools</td></tr>
+                <tr><td>light</td>       <td>*</td>     <td>*</td>      <td>*</td>      <td></td><td>PanelPro</td></tr>
                 <tr><td>location</td>    <td>*</td>     <td></td>       <td></td>       <td></td><td>OperationsPro</td></tr>
                 <tr><td>memory</td>      <td>*</td>     <td>*</td>      <td>*</td>      <td></td><td>DecoderPro</td></tr>
                 <tr><td>metadata</td>    <td>*</td>     <td></td>       <td></td>       <td></td><td>DecoderPro</td></tr>
-                <tr><td>reporter</td>    <td>*</td>     <td>*</td>      <td>*</td>      <td></td><td>LocoTools</td></tr>
+                <tr><td>reporter</td>    <td>*</td>     <td>*</td>      <td>*</td>      <td></td><td>PanelPro</td></tr>
                 <tr><td>roster</td>      <td>*</td>     <td></td>       <td></td>       <td></td><td>DecoderPro</td></tr>
                 <tr><td>rosterEntry</td> <td>*</td>     <td></td>       <td></td>       <td></td><td>DecoderPro</td></tr>
                 <tr><td>rosterGroup</td> <td>*</td>     <td></td>       <td></td>       <td></td><td>DecoderPro</td></tr>
                 <tr><td>route</td>       <td>*</td>     <td></td>       <td>*</td>      <td></td><td>OperationsPro</td></tr>
-                <tr><td>sensor</td>      <td>*</td>     <td>*</td>      <td>*</td>      <td></td><td>LocoTools</td></tr>
-                <tr><td>signalHead</td>  <td>*</td>     <td></td>       <td>*</td>      <td></td><td>LocoTools</td></tr>
-                <tr><td>signalMast</td>  <td>*</td>     <td></td>       <td>*</td>      <td></td><td>LocoTools</td></tr>
+                <tr><td>sensor</td>      <td>*</td>     <td>*</td>      <td>*</td>      <td></td><td>PanelPro</td></tr>
+                <tr><td>signalHead</td>  <td>*</td>     <td></td>       <td>*</td>      <td></td><td>PanelPro</td></tr>
+                <tr><td>signalMast</td>  <td>*</td>     <td></td>       <td>*</td>      <td></td><td>PanelPro</td></tr>
                 <tr><td>train</td>       <td>*</td>     <td></td>       <td>*</td>      <td></td><td>OperationsPro</td></tr>
-                <tr><td>turnout</td>     <td>*</td>     <td>*</td>      <td>*</td>      <td></td><td>LocoTools</td></tr>
+                <tr><td>turnout</td>     <td>*</td>     <td>*</td>      <td>*</td>      <td></td><td>PanelPro</td></tr>
             </table>
 
             <h2>Using HTTP JSON POST/PUT/DELETE</h2>

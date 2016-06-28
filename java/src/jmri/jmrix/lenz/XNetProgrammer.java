@@ -20,8 +20,8 @@ import org.slf4j.LoggerFactory;
  * <LI>Send Resume Operations request
  * <LI>Wait for Normal Operations Resumed broadcast
  * </UL>
- * <img src="doc-files/XPressNetProgrammer-StateDiagram.png">
- * <img src="doc-files/XPressNetProgrammer-SequenceDiagram.png">
+ * <img src="doc-files/XPressNetProgrammer-StateDiagram.png" alt="UML State diagram">
+ * <img src="doc-files/XPressNetProgrammer-SequenceDiagram.png" alt="UML Sequence diagram">
  *
  * @author Bob Jacobsen Copyright (c) 2002, 2007
  * @author Paul Bender Copyright (c) 2003-2010

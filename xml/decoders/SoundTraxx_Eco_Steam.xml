@@ -86,6 +86,12 @@
       <authorinitials>ALM</authorinitials>
       <revremark>Separate ECO CVs for Light Effects</revremark>
     </revision>
+    <revision>
+    <revnumber>2.2</revnumber>
+      <date>2016-06-12</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Use TSUPaneASCdiesel instead of TSUPaneASCsteam, and change CV197, 198 and 199 item accordingly</revremark>
+    </revision>
   </revhistory>
   <version author="Michael Mosher" version="1" lastUpdated="20150725"/>
   <version author="Alain Le Marchand" version="1.1" lastUpdated="20150726"/>
@@ -96,6 +102,7 @@
   <version author="Michael Mosher" version="1.6" lastUpdated="20160202"/>
   <version author="Michael Mosher" version="2" lastUpdated="20160529"/>
   <version author="Alain Le Marchand" version="2.1" lastUpdated="20160604"/>
+  <version author="Alain Le Marchand" version="2.2" lastUpdated="20160612"/>
   <!-- Decoder Model information follows -->
   <decoder>
     <family name="Econami Steam" mfg="SoundTraxx (Throttle-Up)" comment="These are the -retail- version Econami Steam decoders">
@@ -1019,15 +1026,15 @@
         <label>Water Stop Volume</label>
       </variable>
       <!-- Automatic Sound Controls (ASC) follow -->
-      <variable item="Automatic Grade Crossing Whistle Enable (Analog Mode)" CV="197" mask="XXXXVXXX" default="0" tooltip="Enables the Automatic Cylinder Cocks in Analog Mode">
+      <variable item="Automatic Grade Crossing Horn Enable (Analog Mode)" CV="197" mask="XXXXVXXX" default="0" tooltip="Enables the Automatic Cylinder Cocks in Analog Mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Automatic Cylinder Cocks Enable (Analog Mode)</label>
       </variable>
-      <variable item="Automatic Grade Crossing Whistle Enable" CV="198" mask="XXXXVXXX" default="0" tooltip="Enables the Automatic Cylinder Cocks in Digital Mode">
+      <variable item="Automatic Grade Crossing Horn Enable" CV="198" mask="XXXXVXXX" default="0" tooltip="Enables the Automatic Cylinder Cocks in Digital Mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Automatic Cylinder Cocks Enable</label>
       </variable>
-      <variable item="Grade Crossing Whistle Sensitivity" CV="199" mask="VVVVVVVV" default="5" tooltip="Duration that elapses from the time the engine is started and the auto-cylinder cocks sound effect is automatically turned on to the time it is automatically turned off.">
+      <variable item="Grade Crossing Airhorn Sensitivity" CV="199" mask="VVVVVVVV" default="5" tooltip="Duration that elapses from the time the engine is started and the auto-cylinder cocks sound effect is automatically turned on to the time it is automatically turned off.">
         <decVal/>
         <label>Cylinder Cocks On Time</label>
       </variable>
@@ -1320,7 +1327,7 @@
   <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneLighting.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneEqualizer.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneDDE.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneASCsteam.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneASCdiesel.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOPaneFnMap.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOlegacyPaneFnMap.xml"/>
   <xi:include  href="http://jmri.org/xml/decoders/soundtraxx/ECOSoundPane.xml"/>

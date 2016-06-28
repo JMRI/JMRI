@@ -16,7 +16,16 @@ public class TamsTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     private TamsInterfaceScaffold nis = null;
     private TamsSystemConnectionMemo tm = null;
     
-    public void setUp() {
+    @Override
+    protected void tearDown() throws Exception {
+        apps.tests.Log4JFixture.tearDown();
+        super.tearDown();
+    }
+
+    @Override
+    public void setUp() throws Exception {
+        super.setUp();
+        apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         // prepare an interface, register

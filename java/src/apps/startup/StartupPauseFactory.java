@@ -1,7 +1,6 @@
 package apps.startup;
 
 import apps.StartupActionsManager;
-import apps.StartupModel;
 import java.awt.Component;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
