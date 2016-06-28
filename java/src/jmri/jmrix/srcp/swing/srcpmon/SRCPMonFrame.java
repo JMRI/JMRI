@@ -1,10 +1,10 @@
-// SRCPMonFrame.java
-package jmri.jmrix.srcp.srcpmon;
+package jmri.jmrix.srcp.swing.srcpmon;
 
 import jmri.jmrix.srcp.SRCPListener;
 import jmri.jmrix.srcp.SRCPMessage;
 import jmri.jmrix.srcp.SRCPReply;
 import jmri.jmrix.srcp.SRCPTrafficController;
+import jmri.jmrix.srcp.SRCPSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,17 +12,16 @@ import org.slf4j.LoggerFactory;
  * Frame displaying (and logging) SRCP command messages
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
  */
 public class SRCPMonFrame extends jmri.jmrix.AbstractMonFrame implements SRCPListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7256002301176725810L;
+    private SRCPSystemConnectionMemo _memo = null;
+    private SRCPTrafficController tc = null;
 
-    public SRCPMonFrame() {
+    public SRCPMonFrame(SRCPSystemConnectionMemo memo) {
         super();
+        _memo = memo;
+        tc = _memo.getTrafficController();
     }
 
     protected String title() {
@@ -31,7 +30,7 @@ public class SRCPMonFrame extends jmri.jmrix.AbstractMonFrame implements SRCPLis
 
     protected void init() {
         // connect to TrafficController
-        SRCPTrafficController.instance().addSRCPListener(this);
+        tc.addSRCPListener(this);
     }
 
     public void dispose() {

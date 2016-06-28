@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.util.List;
 import javax.swing.AbstractAction;
 import jmri.InstanceManager;
-import jmri.jmrix.nce.ActiveFlag;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.NceTrafficController;
 
@@ -31,15 +30,17 @@ public class NceConsistEngineAction extends AbstractAction {
         // disable if NCE USB selected
         // get NceTrafficContoller if there's one
         List<NceSystemConnectionMemo> memos = InstanceManager.getList(NceSystemConnectionMemo.class);
-        // find NceConnection that is serial
-        for (int i = 0; i < memos.size(); i++) {
-            NceSystemConnectionMemo memo = memos.get(i);
-            if (memo.getNceUsbSystem() == NceTrafficController.USB_SYSTEM_NONE) {
-                tc = memo.getNceTrafficController();
+        if (memos != null) {
+            // find NceConnection that is serial
+            for (int i = 0; i < memos.size(); i++) {
+                NceSystemConnectionMemo memo = memos.get(i);
+                if (memo.getNceUsbSystem() == NceTrafficController.USB_SYSTEM_NONE) {
+                    tc = memo.getNceTrafficController();
+                    if (!memo.getDisabled()) {
+                        setEnabled(true);
+                    }
+                }
             }
-        }
-        if (ActiveFlag.isActive() && tc != null) {
-            setEnabled(true);
         }
     }
 

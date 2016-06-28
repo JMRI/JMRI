@@ -1,6 +1,7 @@
 package jmri.jmrix.cmri.serial.networkdriver.configurexml;
 
 import java.util.List;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialNode;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.jmrix.cmri.serial.networkdriver.ConnectionConfig;
@@ -102,7 +103,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
             String ctl = findParmValue(n, "cardtypelocation");
 
             // create node (they register themselves)
-            SerialNode node = new SerialNode(addr, type);
+            SerialNode node = new SerialNode(addr, type,((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()).getTrafficController());
             node.setNumBitsPerCard(bpc);
             node.setTransmissionDelay(delay);
             node.setNum2LSearchLights(num2l);

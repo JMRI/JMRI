@@ -20,18 +20,16 @@ import org.slf4j.LoggerFactory;
  */
 public class AcelaLight extends AbstractLight {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2275150502965932412L;
+    AcelaSystemConnectionMemo _memo = null;
 
     /**
      * Create a Light object, with only system name.
      * <P>
      * 'systemName' was previously validated in AcelaLightManager
      */
-    public AcelaLight(String systemName) {
+    public AcelaLight(String systemName,AcelaSystemConnectionMemo memo) {
         super(systemName);
+        _memo = memo;
         initializeLight(systemName);
     }
 
@@ -40,8 +38,9 @@ public class AcelaLight extends AbstractLight {
      * <P>
      * 'systemName' was previously validated in AcelaLightManager
      */
-    public AcelaLight(String systemName, String userName) {
+    public AcelaLight(String systemName, String userName,AcelaSystemConnectionMemo memo) {
         super(systemName, userName);
+        _memo = memo;
         initializeLight(systemName);
     }
 
@@ -56,7 +55,7 @@ public class AcelaLight extends AbstractLight {
         // Extract the Bit from the name
         mBit = AcelaAddress.getBitFromSystemName(systemName);
         // Set initial state
-        AcelaNode mNode = AcelaAddress.getNodeFromSystemName(mSystemName);
+        AcelaNode mNode = AcelaAddress.getNodeFromSystemName(mSystemName,_memo);
 
         if (mNode != null) {
             int initstate;
@@ -91,7 +90,7 @@ public class AcelaLight extends AbstractLight {
      * polled.
      */
     public void setState(int newState) {
-        AcelaNode mNode = AcelaAddress.getNodeFromSystemName(mSystemName);
+        AcelaNode mNode = AcelaAddress.getNodeFromSystemName(mSystemName,_memo);
 
         if (mNode != null) {
             if (newState == ON) {
