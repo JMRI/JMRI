@@ -28,6 +28,8 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         sprogVersion = new SprogVersion(new SprogType(SprogType.UNKNOWN));
         register();
         InstanceManager.store(this, SprogSystemConnectionMemo.class); // also register as specific type
+        InstanceManager.store(cf = new jmri.jmrix.sprog.swing.SprogComponentFactory(this), 
+         jmri.jmrix.swing.ComponentFactory.class);
     }
 
     public SprogSystemConnectionMemo(SprogMode sm) {
@@ -36,6 +38,8 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         sprogVersion = new SprogVersion(new SprogType(SprogType.UNKNOWN));
         register();
         InstanceManager.store(this, SprogSystemConnectionMemo.class); // also register as specific type
+        InstanceManager.store(cf = new jmri.jmrix.sprog.swing.SprogComponentFactory(this), 
+         jmri.jmrix.swing.ComponentFactory.class);
     }
 
     public SprogSystemConnectionMemo(SprogMode sm, SprogType type) {
@@ -44,6 +48,8 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         sprogVersion = new SprogVersion(type);
         register();
         InstanceManager.store(this, SprogSystemConnectionMemo.class); // also register as specific type
+        InstanceManager.store(cf = new jmri.jmrix.sprog.swing.SprogComponentFactory(this), 
+         jmri.jmrix.swing.ComponentFactory.class);
     }
 
     public SprogSystemConnectionMemo() {
@@ -51,10 +57,8 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         register(); // registers general type
         sprogVersion = new SprogVersion(new SprogType(SprogType.UNKNOWN));
         InstanceManager.store(this, SprogSystemConnectionMemo.class); // also register as specific type
-
-        //Needs to be implemented
-        /*InstanceManager.store(cf = new jmri.jmrix.ecos.swing.ComponentFactory(this), 
-         jmri.jmrix.swing.ComponentFactory.class);*/
+        InstanceManager.store(cf = new jmri.jmrix.sprog.swing.SprogComponentFactory(this), 
+         jmri.jmrix.swing.ComponentFactory.class);
     }
 
     /**
@@ -115,6 +119,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         this.st = st;
     }
     private SprogTrafficController st;
+    private SprogCommandStation commandStation;
 
     private Thread slotThread;
 
@@ -125,14 +130,22 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         switch (sprogMode) {
             case OPS:
                 log.debug("start command station queuing thread");
-                slotThread = new Thread(jmri.jmrix.sprog.SprogCommandStation.instance());
-                SprogCommandStation.instance().setSystemConnectionMemo(this);
+                commandStation = new jmri.jmrix.sprog.SprogCommandStation(st);
+                slotThread = new Thread(commandStation);
+                commandStation.setSystemConnectionMemo(this);
                 slotThread.start();
-                jmri.InstanceManager.setCommandStation(SprogCommandStation.instance());
+                jmri.InstanceManager.setCommandStation(commandStation);
                 break;
             case SERVICE:
                 break;
         }
+    }
+
+    /*
+     * Get the command station object associated with this connection
+     */
+    public SprogCommandStation getCommandStation(){
+         return commandStation;
     }
 
     @Override

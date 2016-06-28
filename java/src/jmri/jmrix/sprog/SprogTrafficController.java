@@ -35,13 +35,11 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 
     private SprogState sprogState = SprogState.NORMAL;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
-    // Ignore FindBugs warnings as there can only be one instance at present
     public SprogTrafficController() {
-        if (log.isDebugEnabled()) {
-            log.debug("setting instance: " + this);
-        }
-        self = this;
+    }
+
+    public SprogTrafficController(SprogSystemConnectionMemo adaptermemo) {
+       memo = adptermemo;
     }
 
 // The methods to implement the SprogInterface
@@ -231,13 +229,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
      */
     @Deprecated
     static public SprogTrafficController instance() {
-        if (self == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("creating a new SprogTrafficController object");
-            }
-            self = new SprogTrafficController();
-        }
-        return self;
+        return null;
     }
 
     static volatile protected SprogTrafficController self = null;

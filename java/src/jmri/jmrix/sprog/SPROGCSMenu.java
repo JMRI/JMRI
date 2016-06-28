@@ -1,6 +1,3 @@
-/**
- * SPROGCSMenu.java
- */
 package jmri.jmrix.sprog;
 
 import java.util.ResourceBundle;
@@ -10,40 +7,26 @@ import javax.swing.JMenu;
  * Create a "Systems" menu containing the Jmri SPROG-specific tools
  *
  * @author	Andrew Crosland Copyright 2006
- * @version $Revision$
  */
 public class SPROGCSMenu extends JMenu {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6206995194993926789L;
+    private SprogSystemConnectionMemo _memo = null;
 
     public SPROGCSMenu(SprogSystemConnectionMemo memo) {
-        this();
-        setText(memo.getUserName());
-    }
-
-    public SPROGCSMenu() {
 
         super();
-
+        _memo = memo;
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle");
 
-        // setText(rb.getString("MenuSystems"));
-        setText("SPROG");
+        setText(memo.getUserName());
 
-        add(new jmri.jmrix.sprog.sprogslotmon.SprogSlotMonAction(rb.getString("MenuItemSlotMonitor")));
-        add(new jmri.jmrix.sprog.sprogmon.SprogMonAction(rb.getString("MenuItemCommandMonitor")));
-        add(new jmri.jmrix.sprog.packetgen.SprogPacketGenAction(rb.getString("MenuItemSendCommand")));
-        add(new jmri.jmrix.sprog.console.SprogConsoleAction(rb.getString("MenuItemConsole")));
-        add(new jmri.jmrix.sprog.update.SprogVersionAction("Get SPROG Firmware Version"));
-        add(new jmri.jmrix.sprog.update.Sprogv4UpdateAction("SPROG v3/v4 Firmware Update"));
-        add(new jmri.jmrix.sprog.update.SprogIIUpdateAction("SPROG II Firmware Update"));
-        add(new jmri.jmrix.sprog.swing.PowerPanelAction("SPROG Power Control"));
-
+        add(new jmri.jmrix.sprog.sprogslotmon.SprogSlotMonAction(rb.getString("MenuItemSlotMonitor"),_memo));
+        add(new jmri.jmrix.sprog.sprogmon.SprogMonAction(rb.getString("MenuItemCommandMonitor"),_memo));
+        add(new jmri.jmrix.sprog.packetgen.SprogPacketGenAction(rb.getString("MenuItemSendCommand"),_memo));
+        add(new jmri.jmrix.sprog.console.SprogConsoleAction(rb.getString("MenuItemConsole"),_memo));
+        add(new jmri.jmrix.sprog.update.SprogVersionAction("Get SPROG Firmware Version",_memo));
+        add(new jmri.jmrix.sprog.update.Sprogv4UpdateAction("SPROG v3/v4 Firmware Update",_memo));
+        add(new jmri.jmrix.sprog.update.SprogIIUpdateAction("SPROG II Firmware Update",_memo));
+        add(new jmri.jmrix.sprog.swing.PowerPanelAction("SPROG Power Control",_memo));
     }
-
 }
-
-/* @(#)SprogCSMenu.java */
