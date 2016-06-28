@@ -2,9 +2,8 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!--  $Id$ -->
 <!-- UpDated by Blorec Herv&#233;  2013-08-31-->
-<title>JMRI: Create a Custom DecoderPro Programmer</title>
+<title>JMRI: Cr&#233;er un Programmateur Personnalis&#233;</title>
 
 <!-- Style -->
 <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
@@ -21,7 +20,7 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<H1>Guide Utilisateur DecoderPro - Cr&#233;er un Programmateur Personnalis&#233;</H1>
+<h1>Guide Utilisateur DecoderPro - Cr&#233;er un Programmateur Personnalis&#233;</h1>
 
 <p>Comment puis-je cr&#233;er mon propre programmateur personnalis&#233;?</p>
 
@@ -30,8 +29,8 @@
 contenu du fichier est d&#233;crit ci-dessous.</p>
 
 <dl>
-<dt class=left>Sp&#233;cifier les &#233;l&#233;ments &#224; afficher</dt>
-<dd class=first>
+<dt class="left">Sp&#233;cifier les &#233;l&#233;ments &#224; afficher</dt>
+<dd class="first">
 <p>L'&#233;l&#233;ment de base d'un volet de programmation est un "affichage". Cela signifie que
  le programmateur ne pr&#233;sente qu'une seule variable. Les attributs sont:
 <ul>
@@ -43,13 +42,13 @@ standard de la variable.
 <li><dfn>Layout</dfn> -
 O&#249; trouver l'&#233;tiquette en ce qui concerne le domaine &#233;ditable,
 par exemple, la z&#244;ne de texte. Les valeurs possibles sont "gauche", "au-dessus",
-"en dessous", "droit" , par d&#233;faut "droit" .
+"en dessous", "droit", par d&#233;faut "droit".
 <li><dfn>format</dfn> -
 <p>Comment la variable devra &#234;tre pr&#233;sent&#233;e. Les variables num&#233;riques peuvent &#234;tre pr&#233;sent&#233;es comme <ul>
 <li> un champ de texte &#233;ditable, qui est la valeur par d&#233;faut si rien n'est sp&#233;cifi&#233;
 <li><dfn>hslider</dfn> - un curseur horizontal
 <li><dfn>vslider</dfn> - un curseur vertical
-</ul></p>
+</ul>
 <p>Enum variables peuvent &#234;tre pr&#233;sent&#233;es comme
 <ul>
 <li> une z&#244;ne de s&#233;lection, qui est la valeur par d&#233;faut si rien n'est
@@ -59,7 +58,7 @@ sp&#233;cifi&#233;
 &#234;tre pr&#233;sent&#233;e comme une case &#224; cocher
 <li><dfn>offradiobutton</dfn> - Un seul bouton qui donne le choix 0 pour la variable lorsqu'il est s&#233;lectionn&#233;
 <li><dfn>onradiobutton</dfn> - Un seul bouton qui donne le choix 1 pour la variable lorsqu'il est s&#233;lectionn&#233;
-</ul></p>
+</ul>
 <p>Ces deux derniers peuvent &#234;tre utiles pour indiquer quelles parties d'une configuration sont actives, voir 
 le volet  "Speed Table" de Comprehensive.xml comme exemple.</p>
 <li><dfn>tooltip</dfn> -
@@ -69,10 +68,9 @@ Vous permet de sp&#233;cifier une info-bulle qui sera pr&#233;sent&#233;e lorsqu
 ils travailleront bient&#244;t)
 </ul>
 
-<A name="display">
+<a name="display">
 <p> Quel nom &#224; afficher est command&#233; par le volet de l'attribut "nameFmt  et l'attribut 'label' sur 
-chaque &#233;l&#233;ment d'affichage (variable)
-.</p></a>
+chaque &#233;l&#233;ment d'affichage (variable)</p></a>
 
 <p>Les choix sont:
 <ul><li>Si une &#233;tiquette est sp&#233;cifi&#233;e, elle sera utilis&#233;e. Utilisez une &#233;tiquette si
@@ -85,10 +83,10 @@ ind&#233;pendamment de ce que le fichier d&#233;codeur appelle la variable. Util
 <li> Si le volet attribut nnameFmt est autoris&#233; par d&#233;faut, ou contient "mfg", le nom du fichier
  de d&#233;finition de d&#233;codeur sera utilis&#233;. Il s'agit de la forme normale, car il permet au fabricant
  d'indiquer en d&#233;tail ce qu'une variable d&#233;finit.
-</ul></p>
+</ul>
 </dd>
 
-<dt class=left>Formatage</dt>
+<dt class="left">Formatage</dt>
 <dd>
 <p>Chaque volet du programmateur se compose de lignes et/ou des colonnes (imbriqu&#233;es) .
 Les colonnes exposent les variables de haut en bas. Les rang&#233;es exposent les variables 
@@ -99,7 +97,7 @@ Il a deux colonnes, la gauche de chacune utilise une ligne pour mettre des curse
 </p>
 </dd>
 
-<dt class=left>&#201;l&#233;ments sp&#233;ciaux</dt>
+<dt class="left">&#201;l&#233;ments sp&#233;ciaux</dt>
 <dd>
 Il y a un certain nombre d'&#233;l&#233;ments que vous pouvez utiliser pour obtenir le programmateur
  format&#233; exactement comme vous le souhaitez:
@@ -119,7 +117,7 @@ champ de texte simple pour entrer l'adresse. Selon la façon dont la case est act
 </ul>
 </dd>
 
-<dt class=left>Installation de votre nouveau programmateur</dt>
+<dt class="left">Installation de votre nouveau programmateur</dt>
 <dd>
 <p>
 Tous les fichiers .xml dans le sous-r&#233;pertoire "programmers"  appara&#238;tront dans la bo&#238;te de s&#233;lection
@@ -134,11 +132,11 @@ Tous les fichiers .xml dans le sous-r&#233;pertoire "programmers"  appara&#238;t
 
 </dl>
 
-<A name="id">
+<a name="id">
 <h3>Comment les variables dans un fichier d&#233;codeur correspondent avec le fichier programmateur</h3></a>
 
 Chaque fichier d&#233;codeur d&#233;finit
-<A HREF="CreateDecoder.shtml#variable"> les variables </a> qui d&#233;crivent des contr&#244;les sp&#233;cifiques dans
+<a HREF="CreateDecoder.shtml#variable"> les variables </a> qui d&#233;crivent des contr&#244;les sp&#233;cifiques dans
  le d&#233;codeur. Le fichier programmateur d&#233;crit ensuite comment les placer sur ces panneaux, de telle sorte
  que l'utilisateur puisse les trouver et les manipuler
 <P>
@@ -148,7 +146,7 @@ Mais laquel? C'est contr&#244;l&#233; par l'attribut "name" de l'&#233;l&#233;me
 m&#234;me attribut "label".
 <P>
 Cela a des effets tr&#232;s int&#233;ressants:
-<OL>
+<ol>
 <LI>Le "nom" dans l'&#233;l&#233;ment "display"  est effectivement un "nom standard", qui peut &#234;tre utilis&#233; dans
  les fichiers de d&#233;finition d&#233;codeur provenant de diff&#233;rents constructeurs. Comme il est distinct du "label"
  sur la variable d&#233;codeur, il est possible d'avoir un fichier programmateur g&#233;n&#233;rique qui fonctionne pour de
@@ -160,15 +158,12 @@ Il vous permet d'utiliser des noms tr&#232;s g&#233;n&#233;riques pour contr&#24
  qu'un autre n'a pas du tout ceci, et a au lieu "Crissement de frein". Nous ne voulons pas avoir les fichiers
  programmateur contenant des milliards d'&#233;l&#233;ments "display" &#224; ma&#238;triser avec toutes les options possibles.
  Au lieu de cela, nous utilisons des &#233;l&#233;ments avec des noms plus g&#233;n&#233;riques, comme "Option 1 Sound", pour le nom d'affichage.
-<P>
+<br>
 La d&#233;finition d&#233;codeur dispose alors d'un "label" de "Airpump" ou que ce soit, et
 un "&#233;l&#233;ment" de "l'option 1 Sound". Tout correspond correctement, et
 Airpump" appara&#238;t sur l'&#233;cran de l'ordinateur.
-</OL>
-<P>
+</ol>
 
-
-    
 <!--#include virtual="/Footer" -->
 </div>
 </body>

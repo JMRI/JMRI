@@ -29,7 +29,7 @@
           <text>   </text>
         </label>
         <label>
-          <text>To Write 4 CV value:</text>
+          <text>&lt;html&gt;&lt;strong&gt;To Write 4 CV value:&lt;/strong&gt;&lt;/html&gt;</text>
         </label>
         <label>
           <text>Set each of the four CV to desired value</text>
@@ -41,7 +41,7 @@
           <text>   </text>
         </label>
         <label>
-          <text>To Read 4 CV value (except for sound volumes):</text>
+          <text>&lt;html&gt;&lt;strong&gt;To Read 4 CV value (except for sound volumes):&lt;/strong&gt;&lt;/html&gt;</text>
         </label>
         <label>
           <text>Set CV201 to desired primary index value of 101, 103, 104 or 105</text>
@@ -62,7 +62,7 @@
           <text>   </text>
         </label>
         <label>
-          <text>To Read 4 CV for sound volumes:</text>
+          <text>&lt;html&gt;&lt;strong&gt;To Read 4 CV value for sound volumes:&lt;/strong&gt;&lt;/html&gt;</text>
         </label>
         <label>
           <text>Set CV201 to primary index value of 102 or 106</text>
@@ -95,7 +95,7 @@
     <row>
       <column>
         <label>
-          <text>CV201 (write)</text>
+          <text>&lt;html&gt;&lt;strong&gt;CV201 (write)&lt;/strong&gt;&lt;/html&gt;</text>
         </label>
         <label>
           <text>1</text>
@@ -121,7 +121,7 @@
 	  </label>
       <column>
         <label>
-          <text>CV201 (read)</text>
+          <text>&lt;html&gt;&lt;strong&gt;CV201 (read)&lt;/strong&gt;&lt;/html&gt;</text>
         </label>
         <label>
           <text>101</text>
@@ -147,7 +147,7 @@
 	  </label>
       <column>
         <label>
-          <text>CV202</text>
+          <text>&lt;html&gt;&lt;strong&gt;CV202&lt;/strong&gt;&lt;/html&gt;</text>
         </label>
         <label>
           <text>Button #</text>
@@ -173,7 +173,7 @@
 	  </label>
       <column>
         <label>
-          <text>CV203</text>
+          <text>&lt;html&gt;&lt;strong&gt;CV203&lt;/strong&gt;&lt;/html&gt;</text>
         </label>
         <label>
           <text>Sound # High</text>
@@ -199,7 +199,7 @@
 	  </label>
       <column>
         <label>
-          <text>CV204</text>
+          <text>&lt;html&gt;&lt;strong&gt;CV204&lt;/strong&gt;&lt;/html&gt;</text>
         </label>
         <label>
           <text>Sound # Low</text>
@@ -225,7 +225,7 @@
 	  </label>
       <column>
         <label>
-          <text>Action</text>
+          <text>&lt;html&gt;&lt;strong&gt;Action&lt;/strong&gt;&lt;/html&gt;</text>
         </label>
         <label>
           <text>Assign sound to function buttons</text>

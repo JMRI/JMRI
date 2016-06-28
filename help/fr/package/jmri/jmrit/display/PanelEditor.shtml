@@ -1,10 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- UpDated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-11-01--> 
 <HTML LANG="fr">
 <HEAD>
-<TITLE>JMRI: Panel Editor Help</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<TITLE>JMRI: L'&#201;diteur de Panneaux</TITLE>
 <META CONTENT="Pete Cressman" NAME="Author">
 <META NAME="keywords" CONTENT="JMRI help Panel Editor">
 
@@ -24,15 +22,15 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>L'&#201;diteur de Panneaux </H1>
+<h1>L'&#201;diteur de Panneaux</h1>
 
 <img src="PanelEditor.png" align="right">
-
+<p>
 Un panneau  est un ensemble d'ic&#244;nes repr&#233;sentant les diff&#233;rentes composantes d'un r&#233;seau.
 Certaines des ic&#244;nes disponibles dans JMRI comprennent les aiguillages, signaux, et
 capteurs. Vous pouvez inclure une ic&#244;ne de fond pour votre panneau et ajouter le
 contenu de la m&#233;moire et/ou variables rapport.
-
+        </p>
 <p>
 Les contr&#244;les sur le panneau lui-m&#234;me comme
 d&#233;crits sur un
@@ -47,8 +45,8 @@ pour repr&#233;senter les aiguillages, les t&#234;tes de signal, capteurs, m&#22
 Page Bronson cliniques </A>. </P>
 
 
-<H2>Contenu  de l'&#201;diteur de Panneaux</H2>
-
+<h2>Contenu  de l'&#201;diteur de Panneaux</h2>
+<p>
 L'&#233;diteur de panneau se compose des &#233;l&#233;ments suivants: </P>
 <UL>
 Deux champs <LI> texte, <b> x: </b> et <b> y: </b>, en pr&#233;cisant o&#249; seront ins&#233;r&#233;s (en pixels) de nouveaux composants
@@ -63,7 +61,7 @@ ins&#233;rer, mais vous ne pouvez pas actuellement modifier le texte ult&#233;ri
     
     <img src="PanelEditor2.png" align="right">
 <LI> Un menu d&#233;roulant o&#249; vous pouvez choisir le type d'ic&#244;ne ou de
-        donn&#233;es que vous pouvez mettre dans la panneau .
+        donn&#233;es que vous pouvez mettre dans la panneau.
         <UL>
         <LI>Ajouter  Ic&#244;ne Aiguillage Droit</LI>
         <LI>Ajouter  Ic&#244;ne Aiguillage gauche</LI>
@@ -86,10 +84,10 @@ ins&#233;rer, mais vous ne pouvez pas actuellement modifier le texte ult&#233;ri
         la valeur de l'&#233;l&#233;ment dans la panneau. L'&#233;l&#233;ment de fond fournit des images
         pour le fond du panneau. De plus amples d&#233;tails sur l'utilisation de ces
          fen&#234;tres sont d&#233;crites sur la page de <a href="IconAdder.shtml"> Ic&#244;nes</a>.
-       </P>
-        <p> Les deux choix pour les ic&#244;nes qui n'ouvrent pas les fen&#234;tres sont le Journal RPS
+
+        <br> Les deux choix pour les ic&#244;nes qui n'ouvrent pas les fen&#234;tres sont le Journal RPS
         et l'Horloge Rapide. Ces &#233;l&#233;ments installent eux - m&#234;mes leurs ic&#244;nes directement dans le
-        panneau.</p></li>
+        panneau.</li>
 
 <LI> Une case &#224; cocher pour rendre les menus contextuels actifs. Quand elle est coch&#233;e, un petit menu contextuel
 appara&#238;tra lorsque vous cliquez - droit sur une ic&#244;ne. La plupart des ic&#244;nes vous permettent de
@@ -104,7 +102,7 @@ disponibles pour un aiguillage. Normalement, lorsque vous cliquez d'abord sur un
 elle commande au r&#233;seau de changer l'&#233;tat de l'aiguillage. Si vous
 utilisez une r&#233;trosignalisation, l'affichage de l'ic&#244;ne va attendre la 
 r&#233;ponse du r&#233;seau  avant de modifier l'ic&#244;ne de l'aiguillage en position directe ou
-d&#233;vi&#233;s . En utilisant Tristate, l'ic&#244;ne va changer imm&#233;diatement &#224; l'
+d&#233;vi&#233;s. En utilisant Tristate, l'ic&#244;ne va changer imm&#233;diatement &#224; l'
 ic&#244;ne incoh&#233;rente lorsque l'aiguillage est cliqu&#233;. L'incoh&#233;rence dans ce
 cas signifie que j'ai command&#233; le changement de l'aiguillage  et nous sommes maintenant dans l'attente de la r&#233;ponse du r&#233;seau
 . Si et quand le r&#233;seau retourne "l'&#233;tat connu" ou r&#233;el l'aiguillage, l'ic&#244;ne va changer pour cet &#233;tat
@@ -118,7 +116,7 @@ l'article dans votre panneau en le s&#233;lectionnant et en le faisant glisser a
 Les utilisateurs de Linux et Windows peuvent tenir le clic droit enfonc&#233; et le faire glisser. Par d&#233;faut de nouveaux
 &#233;l&#233;ments peuvent &#234;tre repositionn&#233;s m&#234;me si cette case n'est pas coch&#233;e.</LI>
 <LI>Voir le point de coordonn&#233;es des articles dans un menu contextuel. Quand elle est coch&#233;e, le
-menu contextuel des objet va inclure l'&#233;l&#233;ment coordonn&#233;es X et Y . Cela peut
+menu contextuel des objet va inclure l'&#233;l&#233;ment coordonn&#233;es X et Y. Cela peut
 vous aider &#224; mieux positionner vos ic&#244;nes dans la panneau.</LI>
 
 <LI>Le Panneau de commande de la disposition des articles. Normalement vous voulez commander votre
@@ -132,7 +130,7 @@ panneau et trouver Menu panneau = "no" et  changez "no" &#224; "yes" et enregist
 fichier. La panneau affichera maintenant le menu la prochaine fois que vous chargerez le panneau
 dans PanelPro.</LI>
 
-<LI>Barre de D&#233;filement de la panneau . (JMRI 2.5.2 et versions ult&#233;rieures). Vous permet de choisir quelles
+<LI>Barre de D&#233;filement de la panneau. (JMRI 2.5.2 et versions ult&#233;rieures). Vous permet de choisir quelles
 barres de d&#233;filement choisir pour afficher.</LI>
 </UL>
 
@@ -235,7 +233,7 @@ et compl&#233;tez le panneau avec des icons/USS/background/Panel-right.gif.</P>
 cochez d'abord dans la fen&#234;tre de l'&#233;diteur "Montrer les coordonn&#233;es de l'&#233;l&#233;ment dans le menu contextuel". Ensuite, clic droit dans une zone vierge de
 l'ancienne  tranche pour &#233;lever le  contextuel des informations, y compris les coordonn&#233;es de cette tranche. Mettez ces num&#233;ros
 dans les coordonn&#233;es de l'&#233;diteur, puis retirez la tranche. Enfin, choisissez une nouvelle tranche et elle 
-apparait l&#224; o&#249; &#233;tait l'ancienne .</P>
+apparait l&#224; o&#249; &#233;tait l'ancienne.</P>
 
 <H2> Communiquer avec de Multiples Syst&#232;mes</H2>
 
@@ -249,6 +247,9 @@ Pr&#233;f&#233;rences Avanc&#233;es "et sous" connexion Auxiliaire r&#233;seau: 
 nombre, par exemple "23", il sera attribu&#233; au premier syst&#232;me sur le
 panneau de pr&#233;f&#233;rences. Pour acc&#233;der au deuxi&#232;me syst&#232;me, vous devez utiliser JMRI <a
 HREF="../../../../html/doc/Technical/Names.shtml">noms de syst&#232;me</A>. Par exemple, si la seconde connexion est pour un syst&#232;me LocoNet, r&#233;f&#233;rerez vous  au aiguillage Loconet LTnn; ou un capteur Loconet LSnn, etc (ou nn est le num&#233;ro de l'&#233;l&#233;ment)</p>
-<!--#include virtual="/Footer" -->
+
+        <!--#include virtual="/Footer" -->
+        </div>
+      </div>
 </BODY>
 </HTML>

@@ -25,6 +25,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
     }
 
     // set the instance variable
+    @Override
     protected void setInstance() {
     } // do nothing; do we still need the
     // instance variable?

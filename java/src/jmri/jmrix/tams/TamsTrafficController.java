@@ -26,8 +26,7 @@ import org.slf4j.LoggerFactory;
  *
  * Based on work by Bob Jacobsen and Kevin Dickerson
  *
- * @authors Jan Boen
- * @version $Revision: 160524 $
+ * @author Jan Boen
  */
 public class TamsTrafficController extends AbstractMRTrafficController implements TamsInterface, CommandStation {
 
@@ -252,7 +251,8 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
         return null;
     }
 
-    // This can be removed once multi-connection is complete
+    //This can be removed once multi-connection is complete
+    @Override
     public void setInstance() {
     }
 

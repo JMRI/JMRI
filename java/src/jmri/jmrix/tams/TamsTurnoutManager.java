@@ -1,4 +1,3 @@
-// TamsTurnoutManager.java
 package jmri.jmrix.tams;
 
 import jmri.Turnout;
@@ -10,10 +9,9 @@ import org.slf4j.LoggerFactory;
  * commands and polling of command station
  * <P>
  *
- * Based on work by Bob Jacobsen & Kevin Dickerson
+ * Based on work by Bob Jacobsen and Kevin Dickerson
  *
  * @author Jan Boen
- * @version $Revision: 20160607 $
  */
 public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager implements TamsListener {
 
@@ -130,5 +128,3 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
     private final static Logger log = LoggerFactory.getLogger(TamsTurnoutManager.class.getName());
 
 }
-
-/* @(#)TamsTurnoutManager.java */

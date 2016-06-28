@@ -2,9 +2,8 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <!-- UpDated by Blorec Herv&#233; le 2013-09-02-->
-<title>JMRI: Displaying Colored Trackwork</title>
+<title>JMRI: Affichage des Voies en couleurs</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -20,7 +19,6 @@
 
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
-
 
 <h1>JMRI: Affichage des Voies en couleurs</h1>
 
@@ -61,11 +59,9 @@ parce que le programme vient de d&#233;marrer et n'a pas encore vu son message
 Pour un "SensorIcon" particulier &#224; un certain endroit sur l'&#233;cran, PanelPro associe une image diff&#233;rente &#224; chacun 
 de ces &#233;tats. Lors des changements d'&#233;tat, la bonne image est plac&#233;e sur l'&#233;cran.
 <P>
-Donc, le probl&#232;me de base est d'avoir les bonnes images &#224; mettre sur l'&#233;cran
-<P>
+Donc, le probl&#232;me de base est d'avoir les bonnes images &#224; mettre sur l'&#233;cran.
 
-
-<H3>Les Instructions pas &#224; pas</h3>
+<h3>Les Instructions pas &#224; pas</h3>
 
 <OL>
 <LI>
@@ -167,8 +163,8 @@ fa&#231;on transparente sur l'&#233;cran.
 Maintenant le panneau doit afficher les ic&#244;nes pour le capteur d'occupation et l'aiguillage qui fonctionnent ind&#233;pendamment 
 et montrer &#224; la fois les position (en suivant les ligne) et les occupation (gr&#226;ce &#224; la couleur) de cet aiguillage.  
 
-    
 <!--#include virtual="/Footer" -->
+    </div>
 </body>
 </html>
 

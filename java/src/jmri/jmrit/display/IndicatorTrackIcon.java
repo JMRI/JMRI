@@ -34,7 +34,6 @@ import org.slf4j.LoggerFactory;
 public class IndicatorTrackIcon extends PositionableIcon
         implements java.beans.PropertyChangeListener, IndicatorTrack {
 
-    private static final long serialVersionUID = 3651878897031870004L;
     private NamedBeanHandle<Sensor> namedOccSensor = null;
     private NamedBeanHandle<OBlock> namedOccBlock = null;
 
@@ -81,10 +80,10 @@ public class IndicatorTrackIcon extends PositionableIcon
             return;
         }
         if (InstanceManager.sensorManagerInstance() != null) {
-            Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
-            if (sensor != null) {
+            try {
+                Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
                 setOccSensorHandle(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));
-            } else {
+            } catch (IllegalArgumentException ex) {
                 log.error("Occupancy Sensor '" + pName + "' not available, icon won't see changes");
             }
         } else {

@@ -27,7 +27,7 @@
 <H1>Translater s&#233;lection
 </H1>
 <p>
-La bo&#238;te de dialogue  Translater S&#233;lection fournit pour Translater une partie d'un panneau s&#233;lectionn&#233;e par l'utilisateur cr&#233;&#233; en utilisant l'&#201;diteur de R&#233;seau. Avant de s&#233;lectionner <b>Translater S&#233;lection ...</b>
+La bo&#238;te de dialogue  Translater S&#233;lection fournit pour Translater une partie d'un panneau s&#233;lectionn&#233;e par l'utilisateur cr&#233;&#233; en utilisant l'&#201;diteur de R&#233;seau. Avant de s&#233;lectionner <b>Translater S&#233;lection...</b>
 dans le menu Options, une zone du panneau doit &#234;tre "s&#233;lectionn&#233;e". Pour s&#233;lectionner une zone,
 Appuyez et maintenez enfonc&#233; la souris en haut &#224; gauche de la zone, et faites glisser la souris
 en bas &#224; droite de la zone. La zone s&#233;lectionn&#233;e est d&#233;crite par un rectangle. Pour les
@@ -47,7 +47,7 @@ Apr&#232;s avoir entr&#233; les montants &#224; Translater, cliquez sur  <b>D&#2
 la zone s&#233;lectionn&#233;e. <b> Attention: </b> Translater trop loin peut d&#233;placer une ic&#244;ne en dehors du coin sup&#233;rieur gauche
  du bord du panneau, o&#249; elle ne peut pas &#234;tre s&#233;lectionn&#233;e, et peut dispara&#238;tre
 pour toujours. Heureusement, si vous faites cette erreur, vous pouvez annuler une Translation en s&#233;lectionnant imm&#233;diatement <b> Annuler Translation </b> dans le menu Options. <b> Annuler
-Translation </b> ne fonctionne que pour la derni&#232;re <b> S&#233;lection Translater ...</b> effectu&#233;e.
+Translation </b> ne fonctionne que pour la derni&#232;re <b> S&#233;lection Translater...</b> effectu&#233;e.
 N'oubliez pas de v&#233;rifier les r&#233;sultats imm&#233;diatement apr&#232;s la Translation d'une s&#233;lection en annulant
 l'op&#233;ration est si n&#233;cessaire. </p>
 <p>

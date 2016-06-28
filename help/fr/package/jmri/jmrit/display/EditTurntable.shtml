@@ -1,12 +1,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- UpDated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-23 --> 
 <html lang="fr">
 <head>
  <TITLE>
-      JMRI: Edit Turntable Help
+      JMRI: &#233;diter Pont Tournant
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Dave Duchamp" name=Author>
     <META name="keywords" content="JMRI help Layout Editor turntable">
 
@@ -25,11 +23,11 @@
     <div id="mainContent">
 
 
-<H1> &#233;diter Pont Tournant</H1>
+<h1> &#233;diter Pont Tournant</h1>
 
 Un Dessin de pont tournant est une repr&#233;sentation sch&#233;matique d'un pont tournant sur le
-r&#233;seau. Un pont tournant est dessin&#233; comme un cercle avec un nombre variable de connexions de voies
-, appel&#233; <i> voies rayonnantes</i>. Chaque <i>voie rayonnante</i> est dessin&#233;e
+r&#233;seau. Un pont tournant est dessin&#233; comme un cercle avec un nombre variable de connexions de voies,
+        appel&#233; <i> voies rayonnantes</i>. Chaque <i>voie rayonnante</i> est dessin&#233;e
 comme une voie courte rayonnante en talon &#224; partir du pont tournant. Un segment de voie
 doit se connecter &#224; chaque voie rayonnante. La plupart de ces segments de voies relieront
 une voie rayonnante &#224; un butoir. La distance de chaque point de connexion de voie rayonnante
@@ -42,23 +40,24 @@ Un pont est ajout&#233; &#224; un panneau en s&#233;lectionnant l'option <b>Ajou
 menu panneau. Les nouveaux pont sont plac&#233;s au centre du
 panneau, et doivent &#234;tre d&#233;plac&#233;s aux endroits souhait&#233;s en d&#233;pla&#231;ant son centre
  avec la touche enfonc&#233;e m&#233;ta (glisser bouton droit sur Windows et Linux). Quand un pont 
-est ajout&#233;, il a quatre voies rayonnantes situ&#233;es en haut, en bas, &#224; gauche et &#224; droite
-. Le menu contextuel du pont dispose de deux &#233;l&#233;ments. La s&#233;lection
-<b>Modifier ...</b> fait appara&#238;tre une bo&#238;te de dialogue Modifier Pont, et  <b>Supprimer</b>
+est ajout&#233;, il a quatre voies rayonnantes situ&#233;es en haut, en bas, &#224; gauche et &#224; droite.
+    Le menu contextuel du pont dispose de deux &#233;l&#233;ments. La s&#233;lection
+<b>Modifier...</b> fait appara&#238;tre une bo&#238;te de dialogue Modifier Pont, et  <b>Supprimer</b>
 supprime le pont et tous les segments de voie qui lui sont connect&#233;s. Avant qu'un
 pont tournant soit effectivement supprim&#233;, le programme demande confirmation de cette
 action.</p>
 <p>
 <img src="images/EditTurntable.png" align="RIGHT">
 Le dialogue Modifier la plaque tournante permet de:
-<ul>
-<li>Modifier Rayon du cercle de plaque tournante </li>
-<li>Ajouter de Nouvelle Voie Rayonnante </li>
-<li>Modifir les angles des Voies Rayonnantes</li>
-<li>Enlever des Voies Rayonnantes</li>
-<li>Configurer Automatisme </ li>
-<p>
+    <ul>
+    <li>Modifier Rayon du cercle de plaque tournante </li>
+    <li>Ajouter de Nouvelle Voie Rayonnante </li>
+    <li>Modifir les angles des Voies Rayonnantes</li>
+    <li>Enlever des Voies Rayonnantes</li>
+    <li>Configurer Automatisme </li>
+    </ul>
 
+        <p>
 Les angles des voie Rayonnantes sont mesur&#233;s &#224; partir de
 la verticale dans le sens horaire. Ainsi, pensez &#224; une horloge analogique, un
 angle de 0 degr&#233;s est exactement &#224; la verticale (position 12 heures). De la m&#234;me
@@ -72,14 +71,18 @@ la nouvelle voie rayonnante imm&#233;diatement. Pour supprimer une voie rayonnan
 sa position actuelle dans <b>l'Angle Voie Rayonnante</b>et cliquez sur <b> Supprimer Voie Rayonnante
 </b>. La voie rayonnante, et tous les segments de voie connect&#233;s sont imm&#233;diatement 
 supprim&#233;s du panneau. La voie rayonnante qui est supprim&#233;e est celle qui est la 
-plus proche de l'angle entr&#233;. 
-<b>. Attention: Il n'y a pas d'annulation possible pour ces op&#233;rations</b></p>
-<p><b>Pnt Tournant command&#233; par DCC</b><br><p>
+plus proche de l'angle entr&#233;.</p>
+
+<p class="important">Attention: Il n'y a pas d'annulation possible pour ces op&#233;rations.</p>
+
+<p><b>Pnt Tournant command&#233; par DCC</b>
+<p>
 Lorsque cette option est s&#233;lectionn&#233;e, elle permet une commande des ponts tournants (et les pilotes)
- qui utilisent lles adresses DCC d'aiguillage pour d&#233;terminer les diff&#233;rentes positions du pont tournant .
+ qui utilisent lles adresses DCC d'aiguillage pour d&#233;terminer les diff&#233;rentes positions du pont tournant.
 De tels exemples sont le LDT TT-DEC ou le Pont Tournant DCC Heljean.
 Pour chaque voie Rayonnantes, s&#233;lectionnez ou cr&#233;ez l'adresse DCC de l'aiguillage et la position
-n&#233;cessaire pour le d&#233;terminer.<br>
+n&#233;cessaire pour le d&#233;terminer.</p>
+<p>
 <b>Remarque:</b>Une proc&#233;dure rapide est possible pour aligner avec pr&#233;cision les points de connexion des voies rayonnantes
 et les butoirs  de sorte que chaque segment de voie soit align&#233; avec
 le centre du pont. Apr&#232;s le positionnement du centre du pont, et
@@ -90,6 +93,8 @@ derni&#232;re valeur, ajouter des segments voie. Les segments de voie seront ali
 pr&#233;cis&#233;ment avec le centre du pont.</p>
 
 <!--#include virtual="/Footer" -->
+        </div>
+      </div>
 </body>
 </html>
 
