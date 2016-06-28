@@ -143,11 +143,11 @@ code was executed, called the "code coverage".  We use the
 <a href="http://eclemma.org/jacoco/">JaCoCo tool</a>
 to do the accounting. It provides detailed reports at multiple levels:
 <ul>
-<li><href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/jacoco/">A plot of coverage as a whole</a>. Click on the graph to see a</li>
-<li><href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/">summary by Java package</a>. Click on a package to see a</li>
-<li><href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/">summary by file</a> (e.g. class). Click on a class to see a</li>
-<li><href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/BlockBossLogic/">summary by method</a>. Click on a method to see</li>
-<li><href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/BlockBossLogic/defineIO()/">how each part of the code was covered</a> (may require scrolling down).</li>
+<li><a href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/jacoco/">A plot of coverage as a whole</a>. Click on the graph to see a</li>
+<li><a href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/">summary by Java package</a>. Click on a package to see a</li>
+<li><a href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/">summary by file</a> (e.g. class). Click on a class to see a</li>
+<li><a href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/BlockBossLogic/">summary by method</a>. Click on a method to see</li>
+<li><a href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/BlockBossLogic/defineIO()/">how each part of the code was covered</a> (may require scrolling down).</li>
 </ul>
 
 <h2><a name="write">Writing Tests</a></h2>
@@ -332,9 +332,9 @@ Use the JUnitUtil and JFCUtil support for those instead.
 <h3><a name="threads">Working with Threads</a></h3>
 
 (See a 
-<a href="#testSwingCode">following section<a/>
+<a href="#testSwingCode">following section</a>
 for how to work with 
-<a href="#testSwingCode">Swing (GUI) objects<a/>
+<a href="#testSwingCode">Swing (GUI) objects</a>
 and the
 <a href="#testSwingCode">Swing/AWT thread</a>)
 <p>
