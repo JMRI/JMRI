@@ -14,9 +14,11 @@ install:
       }
   - SET JAVA_HOME=C:\Program Files\Java\jdk1.8.0
   - SET PATH=%MAVEN_HOME%\bin;%JAVA_HOME%\bin;%PATH%
-  - dir %MAVEN_HOME%
-  - echo PATH %PATH%
+#  - echo PATH %PATH%
+#  - echo JAVA_HOME %JAVA_HOME%
+#  - echo MAVEN_HOME %MAVEN_HOME%
   - java -version
+#  - javac -version
   - mvn -version
 build: off
 
@@ -24,14 +26,15 @@ build: off
 # this is not normal for PowerShell and is likely a side effect of
 # AppVeyor's YAML processing
 test_script:
-- ps: >-
+- ps: |
     mvn test -P appveyor --quiet --batch-mode
 
 on_finish:
-- ps: >-
-    $wc = New-Object 'System.Net.WebClient'
-
-    $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$env:APPVEYOR_JOB_ID", (Resolve-Path .\junit-results.xml))
+- ps: |
+    (new-object System.Net.WebClient).UploadFile(
+      "https://ci.appveyor.com/api/testresults/junit/$env:APPVEYOR_JOB_ID",
+      (Resolve-Path .\junit-results.xml)
+    )
 
 deploy: off
 
