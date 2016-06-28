@@ -248,10 +248,10 @@ Routes
 that implements the sensor group logic; there is no specific object in the
 program that implements the sensor group. Instead, when the user
 creates sensor group "my group", a series of routes with system names like:
-<code><pre>
+<pre><code>
 SENSOR GROUP:my group:LS1
 SENSOR GROUP:my group:LS2
-</pre></code>
+</code></pre>
 are created which implements the group. The sensor group tool knows to look
 for routes of this name.
 <P>

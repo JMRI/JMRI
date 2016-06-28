@@ -36,10 +36,10 @@ source code, you should use the detailed instructions below.</p>
 <h2>Quickstart</h2>
 
 <p>You can download the JMRI source code via CVS using:
-<code><pre>
+<pre><code>
 cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri login
 cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri co all 
-</pre></code>
+</code></pre>
 (If asked for a password, just hit return)
 
 

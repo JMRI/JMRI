@@ -241,7 +241,7 @@ commenting out the body of extendElement(Element e) and unpackElement(Element e)
 <li>Another problem with C/MRI as a prototype is that it still has an 
 instance() call in NetworkDriverAdapter.  Go to the RFID (multi-system capable)
 SerialDriverAdapter and copy the structure there.
-<code><pre>
+<pre><code>
         // connect to the traffic controller
         this.getSystemConnectionMemo().setRfidTrafficController(control);
         control.setAdapterMemo(this.getSystemConnectionMemo());

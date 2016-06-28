@@ -34,14 +34,14 @@ info on preferred patterns and organization, see
 
 <h2>Element with just text content, no attributes</h2>
 
-<code><pre>
+<pre><code>
 &lt;xs:element name="someData" minOccurs="0" maxOccurs="1"&gt;
-</pre></code>
+</code></pre>
 
 That doesn't specify any typing.  If you want e.g. to enforce
 integer:
 
-<code><pre>
+<pre><code>
 &lt;xs:element name="someIntThing" &gt;
   &lt;xs:complexType&gt;
     &lt;xs:simpleContent&gt;
@@ -49,13 +49,13 @@ integer:
     &lt;/xs:simpleContent&gt;
   &lt;/xs:complexType&gt;
 &lt;/xs:element&gt;
-</pre></code>
+</code></pre>
 
 <h2>Element with just attributes, no content</h2>
 
 Preferred Venetion-blind form:
 
-<code><pre>
+<pre><code>
 &lt;xs:element name="sample" type="SampleType" 
     minOccurs="0" maxOccurs="unbounded" /&gt;
 
@@ -63,12 +63,12 @@ Preferred Venetion-blind form:
   &lt;xs:attribute name="foo" /&gt;
   &lt;xs:attribute name="bar" /&gt;
 &lt;/xs:complexType&gt;
-</pre></code>
+</code></pre>
 
 Can also be combined if you think it's unlikely to be
 used elsewhere:
 
-<code><pre>
+<pre><code>
 &lt;xs:element name="sample" 
     minOccurs="0" maxOccurs="unbounded" /&gt;
   &lt;xs:complexType&gt;
@@ -76,12 +76,12 @@ used elsewhere:
     &lt;xs:attribute name="bar" /&gt;
   &lt;/xs:complexType&gt;
 &lt;/xs:element&gt;
-</pre></code>
+</code></pre>
 
 <h2>Element with text content and attributes</h2>
 
 Restricting the content of the element to just an integer:
-<code><pre>
+<pre><code>
 &lt;xs:element name="someIntThing" &gt;
   &lt;xs:complexType&gt;
     &lt;xs:simpleContent&gt;
@@ -92,14 +92,14 @@ Restricting the content of the element to just an integer:
     &lt;/xs:simpleContent&gt;
   &lt;/xs:complexType&gt;
 &lt;/xs:element&gt;
-</pre></code>
+</code></pre>
 
 <h2>Limiting an attribute to some specific values</h2>
 
 If you want to do this, it's worth it to define a general
 type that can be reused.  These live in xml/schema/types/general.xsd.
 
-<code><pre>
+<pre><code>
 &lt;xs:simpleType name="yesNoType"&gt;
   &lt;xs:annotation&gt;
     &lt;xs:documentation&gt;
@@ -111,19 +111,19 @@ type that can be reused.  These live in xml/schema/types/general.xsd.
     &lt;xs:enumeration value="no"/&gt;
   &lt;/xs:restriction&gt;
 &lt;/xs:simpleType&gt;
-</pre></code>
+</code></pre>
 
 Then putting it on an attribute is simple:
 
-<code><pre>
+<pre><code>
 &lt;xs:attribute name="opsOnly" type="yesNoType"/&gt;
-</pre></code>
+</code></pre>
 
 <h2>Element with restricted text content</h2>
 
 Not an attribute, an element:
 
-<code><pre>
+<pre><code>
 &lt;xs:element name="relation"&gt;
   &lt;xs:simpleType&gt;
     &lt;xs:restriction base="xs:string"&gt;
@@ -134,7 +134,7 @@ Not an attribute, an element:
     &lt;/xs:restriction&gt;
   &lt;/xs:simpleType&gt;
 &lt;/xs:element&gt;
-</pre></code>
+</code></pre>
 
 <h2>Attribute Groups</h2>
 
@@ -142,7 +142,7 @@ Attribute Groups are good for representing a set of attributes
 read and written together by a common service routine.  
 Example definition:
 
-<code><pre>
+<pre><code>
 &lt;xs:attributeGroup name="EditorCommonAttributesGroup"&gt;
   &lt;xs:annotation&gt;
     &lt;xs:documentation&gt;
@@ -157,13 +157,13 @@ Example definition:
   &lt;xs:attribute name="level" type="xs:int" /&gt;
   &lt;xs:attribute name="forcecontroloff" type="trueFalseType" default="false" /&gt;
 &lt;/xs:attributeGroup&gt;
-</pre></code>
+</code></pre>
 
 and example use in some later type:
 
-<code><pre>
+<pre><code>
 &lt;xs:attributeGroup ref="EditorCommonAttributesGroup" /&gt;
-</pre></code>
+</code></pre>
 
 <!--#include virtual="/Footer" -->
 

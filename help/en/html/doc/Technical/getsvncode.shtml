@@ -38,9 +38,9 @@ source code, you should use the detailed instructions below.</p>
   <h2>Quickstart</h2>
 
   <p>You can download the JMRI source code from Subversion using:
-  <code><pre>
+  <pre><code>
     svn checkout https://svn.code.sf.net/p/jmri/code/trunk/jmri
-  </pre></code>
+  </code></pre>
   </p>
 
   <h2>Details</h2>
