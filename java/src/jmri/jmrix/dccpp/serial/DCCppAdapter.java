@@ -217,8 +217,6 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
         this.getSystemConnectionMemo().setDCCppTrafficController(packets);
 
         new DCCppInitializationManager(this.getSystemConnectionMemo());
-
-        jmri.jmrix.dccpp.ActiveFlag.setActive();
     }
 
     // base class methods for the XNetSerialPortController interface

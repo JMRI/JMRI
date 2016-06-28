@@ -23,133 +23,91 @@
 
 <H1>JMRI Startup Scripts</H1>
 
-Although JMRI itself is constructed to "run anywhere",
+<p>Although JMRI itself is constructed to "run anywhere",
 starting a JMRI application requires commands that are
 specific to the particular type of computer used.
-With each JMRI distribution, we provide
-scripts, application bundles or batch files that
-handle the details for you.
-Of course, you can modify these or create your own.
+With each JMRI distribution, we provide application launchers that
+handle the details for you.</p>
 <p>
 This page provides information on the tools provided with
-JMRI distributions on:
+JMRI distributions on:</p>
 <ul>
-<li><a href="#linux">Linux</a>
-<li><a href="#macosx">Mac OS X</a>
-<li><a href="#windows">Windows</a>
+<li><a href="#linux">Linux</a></li>
+<li><a href="#macosx">OS X</a></li>
+<li><a href="#windows">Windows</a></li>
 </ul>
 
-If you update any of these, please consider either
+<p>If you modify any of these, please consider either
 making your change on the other machines (and testing it!)
 or at least putting a comment in the others
-to describe how they now differ.
+to describe how they now differ.</p>
 
 <p>
-During startup, JMRI gets additional information from several sources:
+During startup, JMRI pulls configuration from several sources:
 <ul>
-<li>If present, a "python.properties" file configures the Jython interpreter environment
-<li>JMRI's own <a href="../../profiles.shtml">profiles and configuration information</a>.
+<li>The active <a href="../../profiles.shtml">configuration profiles</a></li>
+<li>The file <em>jmri.conf</em> in the settings directory</a></li>
+<li>The file <em>python.properties</em> to configure the Jython interpreter</li>
 </ul>
 
-<a name="linux">
-<h2 id="linux">Linux</h2></a>
+<a name="linux"><h2 id="linux">Linux</h2></a>
 
-JMRI distributions for Linux contain shell (bash) scripts
-for each of the main applications:  DecoderPro, PanelPro, etc.
-These are all structured the same way.
+<p>JMRI distributions for Linux contain bash shell scripts
+for each of the main applications: DecoderPro, PanelPro, etc. These are all identical except for application name and main Java class.</p>
 
-<h3>Details</h3>
+<h3>Parameters</h3>
 
-In this section, we briefly describe what each section of the script does.
+<p>The JMRI shell scripts take the following parameters:</p>
 <dl>
-<dt>CLASSNAME
-<dd>To make the script easier to maintain, the name of the main
-class is defined near the beginning.
-
-<dt>Debug setting
-<dd>
-If the DEBUG symbol is set to anything, the script will produce
-debugging output after each section.
-
-<dt>Directory
-<dd>
-To run, JMRI needs to be able to find things in the current directory.
-This step attempts to set that directory automatically.
-<p>
-If the JMRI_HOME environment variable is defined
-and pointing to a directory that contains a jmri.jar file,
-change the current directory to there.
-<p>
-Otherwise, change the current directory to where the script file
-is located.
-
-<dt>Library Files
-<dd>
-The RXTX Serial library requires some platform specific native libraries
-in order to interface to the serial port drivers.  JMRI applications need
-to use the version of the library that is correct for the operating system
-and the CPU architecture.
-<p>
-The two most common architectures at this time are <tt>i386</tt> and <tt>x86_64</tt>,
-respectively the 32 bit Intel and the 64 bit AMD/Intel systems.
-<p>
-The startup scripts will use some common applications (<tt>arch</tt>, <tt>uname</tt>)
-to determine the current operating system and architecture, and then set up the
-correct library paths for Java to find the right shared library files.
-
-<dt>Classpath
-<dd>
-The script builds the Java classpath automatically to contain,
-in order:
-<ul>
-<li>class files in the current directory
-<li>class files in the class subdirectory of the current directory
-<li>class files in the java/class subdirectory of the current directory
-<li>all jar files in the current directory, except jmri.jar
-<li>jmri.jar in the current directory
-<li>all jar files in the lib subdirectory of the current directory
-</ul>
-<p>
-This allows you to drop jar files into the
-JMRI install directory for the
-<a href="plugins.shtml">JMRI plug-in mechanism</a>.
-
-<dt>Configuration File
-<dd>
-If there's an argument to the script, it will be used as the name of the preferences
-file used to configure the program at startup.  If the user saves the preferences
-from the program, they'll go to this file too.
-<p>
-If no argument is provided, the configuration file name is made
-from the name of the script, followed by "Config2.xml".  For example,
-the DecoderPro script uses DecoderProConfig2.xml as a preferences file.
-If a copy of that script is named MyJmriApp, it will use a preferences
-file named MyJmriAppConfig2.xml.
-<p>
-This lets you create as many specialized configurations you'd like by just
-copying and renaming a startup script.
-
-<dt>Java options
-<dd>
-The program sets a number of options for the JVM.  This includes
-the necessary program settings, setting memory limits, and various
-symbols to control operation.
-
-<dt>Alternate port names
-<dd>
-RXTX does not know about certain names for serial ports connected
-via USB.  This section looks for a few known names and adds them
-to the program if present.  If you have a device file name that JMRI
-cannot find, you can set the environment variable <tt>JMRI_SERIAL_PORTS</tt>
-to be comma-separated list of the names.
-
-<dt>Java command
-<dd>Finally, the script puts all this together into a java command, which it executes.
-
+	<dt><code>-c <em>CONFIG</em></code></dt>
+	<dt><code>--config=<em>CONFIG</em></code></dt>
+	<dd>Starts JMRI with the configuration named <em>CONFIG</em>. A configuration
+		determines which configuration profile to use and how the configuration
+		profile selector is displayed at application start.</dd>
+	<dt><code>--cp:a=<em>CLASSPATH</em></code></dt>
+	<dd>Append the JARs and directories in <em>CLASSPATH</em> to the end of the
+		standard JMRI classpath. This is the recommended way to add additional Java
+		classes to JMRI.</dd>
+	<dt><code>--cp:p=<em>CLASSPATH</em></code></dt>
+	<dd>Prepend the JARs and directories in <em>CLASSPATH</em> to the beginning of
+		the standard JMRI classpath. This is the recommended way to override
+		existing Java classes in JMRI.</dd>
+	<dt><code>-d</code></dt>
+	<dt><code>--debug</code></dt>
+	<dd>Print debugging statements within the launcher script itself to the
+		console. On OS X, this is always on, and debugging output is available
+		through the Console.app.</dd>
+	<dt><code>-J<em>OPTION</em></code></dt>
+	<dd>Pass a complete Java option to the Java Virtual Machine. The most commonly
+		useful option is the maximum memory JMRI is allowed to use, passed as
+		<em>-J-Xmx2048m</em> (in this example, set to 2 GB).</dd>
+	<dt><code>-p <em>PROFILE</em></code></dt>
+	<dt><code>--profile=<em>PROFILE</em></code></dt>
+	<dd>Start JMRI with the configuration profile <em>PROFILE</em>.</dd>
+	<dt><code>--serial-ports=<em>SERIAL_PORTS</em></code></dt>
+	<dd>Set the names of usable serial ports to the comma separated list of ports
+		in <em>SERIAL_PORTS</em>. This is ignored on OS X.</dd>
+	<dt><code>--settingsdir=<em>SETTINGS_DIR</em></code></dt>
+	<dd>Set the directory that JMRI uses to find its initial configuration to the
+		directory specified in <em>SETTINGS_DIR</em>. It is generally recommended
+	  not to set this manually, but to let JMRI determine this on its own. This
+		defaults to:
+		<dl>
+			<dt>Linux</dt>
+			<dd><code>${HOME}/.jmri</code></dd>
+			<dt>OS X</dt>
+			<dd><code>${HOME}/Library/Preferences/JMRI</code></dd>
+		</dl>
+	</dd>
 </dl>
 
-<a name="macosx">
-<h2>Mac OS X</h2></a>
+<p>If you need to set one or more of these parameters persistently, set them
+	in the default_options variable in the file <em>jmri.conf</em> in the settings
+	directory, with the exception of the <code>--settingsdir=<em>PATH</em></code>
+	parameter. An example is:</p>
+<p><code>default_options="-J-Xmx2048m"</code></p>
+
+<a name="macosx"><h2>Mac OS X</h2></a>
 JMRI distributions for Mac OS X contain application bundles
 for each of the main applications:  DecoderPro, PanelPro, etc.
 These provide familiar application icons for the user.
@@ -164,24 +122,20 @@ JMRI has registered five application signatures:
 <dl>
 <dt>JMRD<dd>DecoderPro
 <dt>JMRP<dd>PanelPro
-<dt>JMRI<dd>(generic JMRI, was JMRIdemo)
+<dt>JMRI<dd>(generic JMRI, was JMRIdemo; no longer used)
 <dt>JMRL<dd>LocoTools (no longer used)
 <dt>JMRC<dd>Cornwall demo (no longer used)
 </dl>
 
 <h3>Script Details</h3>
 
-Each bundle has a startup shell (Bash) script in the Contents/MacOSX
+Each bundle has a startup bash shell script in the Contents/MacOSX
 directory what does the actual startup.
 This is the same script as used for Linux,
 see please see <a href="#linux">that section</a>
 for details.
 
-</dl>
-
-
-<a name="windows">
-<h2>Windows</h2></a>
+<a name="windows"><h2>Windows</h2></a>
 
 Upto and including JMRI version 2.3.2, the Windows .bat files just create a fixed java command and executed it.
 <p>From JMRI version 2.3.3, the individual Windows .bat files now call a small launcher application, LaunchJMRI.exe.
