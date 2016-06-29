@@ -69,7 +69,6 @@ public class SimulatorAdapter extends MrcPortController implements
 
         this.getSystemConnectionMemo().configureManagers();
         tc.setCabNumber(2);
-        jmri.jmrix.mrc.ActiveFlag.setActive();
 
         // start the simulator
         sourceThread = new Thread(this);

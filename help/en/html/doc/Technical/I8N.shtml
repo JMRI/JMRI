@@ -24,6 +24,7 @@
 </head>
 
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
@@ -181,13 +182,13 @@ XML files can also be internationalized.  There are examples in the
 decoder definition directories.  Look for elements with an xml:lang
 attribute. Basically, you create additional elements with that attribute to 
 specify the language used:
-<code><pre>
+<pre><code>
       &lt;variable CV="6" default="22" item="Vmid"&gt;
         &lt;decVal max="64"/&gt;
         &lt;label&gt;Vmid&lt;/label&gt;
         &lt;label xml:lang="fr"&gt;Vmoy&lt;/label&gt;
       &lt;/variable&gt;
-</pre></code>
+</code></pre>
 <p>
 In the XML files, the 'item' attributes have to stay untranslated, as 
 does the entire xml/names.xml file.
@@ -350,9 +351,9 @@ The jmri.util.jdom.LocaleSelector provides a getAttribute(...) method
 that replaces the JDOM getAttribute element when the content of the 
 attribute might have been internationalized. You use it like this:
 
-<code><pre>
+<pre><code>
 String choice = LocaleSelector.getAttribute(choiceElement, "choice")
-</pre></code>
+</code></pre>
 where "choiceElement" is a JDOM Element object containing a (possibly translated)
 "choice" attribute.  &quot;Null&quot; will be returned if nothing is found.
 
@@ -365,10 +366,10 @@ where "choiceElement" is a JDOM Element object containing a (possibly translated
 <p>
 JMRI provides a helpful utility for handling this on input:
 
-<code><pre>
+<pre><code>
    double d = jmri.util.IntlUtilities.doubleValue("1,002.3");
    float  f = jmri.util.IntlUtilities.floatValue("1,002.3");
-</pre></code>
+</code></pre>
 
 Note that this can throw a <code>java.text.ParseException</code> if the input is unparsable, so 
 handling that is part of your user-error handling.

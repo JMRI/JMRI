@@ -1,31 +1,31 @@
-// SRCPPacketGenFrame.java
-package jmri.jmrix.srcp.packetgen;
+package jmri.jmrix.srcp.swing.packetgen;
 
 import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import jmri.jmrix.srcp.SRCPMessage;
 import jmri.jmrix.srcp.SRCPReply;
 import jmri.jmrix.srcp.SRCPTrafficController;
+import jmri.jmrix.srcp.SRCPSystemConnectionMemo;
 
 /**
  * Description:	Frame for user input of SRCP messages
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
  */
 public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.srcp.SRCPListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6069575872393573541L;
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
 
-    public PacketGenFrame() {
+    private SRCPSystemConnectionMemo _memo = null;
+    private SRCPTrafficController tc = null;
+
+    public PacketGenFrame(SRCPSystemConnectionMemo memo) {
         super();
+        _memo = memo;
+        tc = memo.getTrafficController();
     }
 
     public void initComponents() throws Exception {
@@ -37,7 +37,6 @@ public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.s
         sendButton.setText("Send");
         sendButton.setVisible(true);
         sendButton.setToolTipText("Send packet");
-
         packetTextField.setText("");
         packetTextField.setToolTipText("Enter command as ASCII string (hex not yet available)");
         packetTextField.setMaximumSize(
@@ -70,7 +69,7 @@ public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.s
         }
 
         m.setElement(packetTextField.getText().length(), '\n');
-        SRCPTrafficController.instance().sendSRCPMessage(m, this);
+        tc.sendSRCPMessage(m, this);
     }
 
     public void message(SRCPMessage m) {

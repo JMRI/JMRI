@@ -1,4 +1,3 @@
-// SpeedoConsoleFrame.java
 package jmri.jmrix.bachrus;
 
 import java.awt.BorderLayout;
@@ -54,7 +53,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Andrew Crosland Copyright (C) 2010
  * @author	Dennis Miller Copyright (C) 2015
- * @version	$Revision$
  */
 public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         ThrottleListener,
@@ -247,8 +245,11 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     SpeedoTrafficController tc = null;
     String replyString;
 
-    public SpeedoConsoleFrame() {
+    private SpeedoSystemConnectionMemo _memo = null;
+
+    public SpeedoConsoleFrame(SpeedoSystemConnectionMemo memo) {
         super();
+        _memo = memo;
     }
 
     protected String title() {
@@ -256,7 +257,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     }
 
     public void dispose() {
-        SpeedoTrafficController.instance().removeSpeedoListener(this);
+        _memo.getTrafficController().removeSpeedoListener(this);
         super.dispose();
     }
 
@@ -681,7 +682,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         }
 
         // connect to TrafficController
-        tc = SpeedoTrafficController.instance();
+        tc = _memo.getTrafficController();
         tc.addSpeedoListener(this);
 
         // add help menu to window

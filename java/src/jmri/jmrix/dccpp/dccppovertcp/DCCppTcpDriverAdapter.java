@@ -54,8 +54,6 @@ public class DCCppTcpDriverAdapter extends DCCppNetworkPortController implements
 
         // start operation
         packets.startThreads();
-        jmri.jmrix.dccpp.ActiveFlag.setActive();
-
     }
 
     public boolean status() {
