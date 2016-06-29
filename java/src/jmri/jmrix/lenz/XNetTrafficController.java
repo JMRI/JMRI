@@ -250,6 +250,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
         }
     }
 
+    @Override
     protected AbstractMRReply newReply() {
         return new XNetReply();
     }
@@ -280,6 +281,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
         }
     }
 
+    @Override
     protected void handleTimeout(AbstractMRMessage msg, AbstractMRListener l) {
         super.handleTimeout(msg, l);
         if (l != null) {
