@@ -308,9 +308,13 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
      * @param value The new Object resident in this block, or null if none.
      */
     public void setValue(Object value) {
-        Object old = _value;
-        _value = value;
-        firePropertyChange("value", old, _value);
+        //ignore if unchanged
+        if (value != _value) {
+            log.debug("Block {} value changed from '{}' to '{}'",getSystemName(), _value, value);
+            Object old = _value;
+            _value = value;
+            firePropertyChange("value", old, _value);
+        }
     }
 
     public Object getValue() {
@@ -318,10 +322,14 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
     }
 
     public void setDirection(int direction) {
-        int oldDirection = _direction;
-        _direction = direction;
-        // this is a bound parameter
-        firePropertyChange("direction", Integer.valueOf(oldDirection), Integer.valueOf(direction));
+        //ignore if unchanged
+        if (direction != _direction) {
+            log.debug("Block {} direction changed from {} to {}",getSystemName(), Path.decodeDirection(_direction), Path.decodeDirection(direction));
+            int oldDirection = _direction;
+            _direction = direction;
+            // this is a bound parameter
+            firePropertyChange("direction", Integer.valueOf(oldDirection), Integer.valueOf(direction));
+        }
     }
 
     public int getDirection() {
@@ -640,6 +648,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
         if (getState() == OCCUPIED) {
             return;
         }
+        log.debug("Block {} goes OCCUPIED", getSystemName());
         ResetCandidateEntrancePaths();
         // index through the paths, counting
         int count = 0;
@@ -684,63 +693,126 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
                 // normal case, transfer value object 
                 setValue(next.getBlock().getValue());
                 setDirection(next.getFromBlockDirection());
-                if (log.isDebugEnabled()) {
-                    log.debug("Block " + getSystemName() + " gets new value from " + next.getBlock().getSystemName() + ", direction=" + Path.decodeDirection(getDirection()));
-                }
+                log.debug("Block {} gets new value '{}' from {}, direction={}",
+                        getSystemName(), 
+                        next.getBlock().getValue(),
+                        next.getBlock().getSystemName(),
+                        Path.decodeDirection(getDirection()));
             } else if (next == null) {
-                log.error("unexpected next==null processing signal in block " + getSystemName());
+                log.error("unexpected next==null processing block " + getSystemName());
             } else if (next.getBlock() == null) {
-                log.error("unexpected next.getBlock()=null processing signal in block " + getSystemName());
+                log.error("unexpected next.getBlock()=null processing block " + getSystemName());
             }
         } else {  // count > 1, check for one with proper direction
             // this time, count ones with proper direction
-            if (log.isDebugEnabled()) {
-                log.debug("Block " + getSystemName() + "- count of active linked blocks = " + count);
-            }
+            log.debug("Block {} has {} active linked blocks, comparing directions" , getSystemName(), count);
             next = null;
             count = 0;
             for (int i = 0; i < currPathCnt; i++) {
-                if (isSet[i] && isActive[i] && (pDir[i] == pFromDir[i])) {
-                    count++;
-                    next = pList[i];
-                }
-            }
-            if (next == null) {
-                if (log.isDebugEnabled()) {
-                    log.debug("next is null!");
+                if (isSet[i] && isActive[i]) {  //only consider active reachable blocks
+                    log.debug("comparing {} ({}) to {} ({})", 
+                            pList[i].getBlock().getDisplayName(),Path.decodeDirection(pDir[i]),
+                            getSystemName(),Path.decodeDirection(pFromDir[i]));
+                    if (comparePdir(pDir[i] , pFromDir[i])) { //use special comparison which handles combination directions
+                        count++;
+                        next = pList[i];
+                    }
                 }
             }
             if (next == null) {
                 for (int i = 0; i < currPathCnt; i++) {
-                   if (isSet[i] && isActive[i]) {
-                       count++;
-                       next = pList[i];
-                   }  
+                    if (isSet[i] && isActive[i]) {
+                        count++;
+                        next = pList[i];
+                    }  
                 }
             }
             if (next != null && count == 1) {
-                // found one block with proper direction, assume that
+                // found one block with proper direction, use it
                 setValue(next.getBlock().getValue());
                 setDirection(next.getFromBlockDirection());
-                if (log.isDebugEnabled()) {
-                    log.debug("Block " + getSystemName() + " with direction " + Path.decodeDirection(getDirection()) + " gets new value from " + next.getBlock().getSystemName() + ", direction=" + Path.decodeDirection(getDirection()));
-                }
+                log.debug("Block {} gets new value '{}' from {}, direction {}", 
+                		getSystemName(), next.getBlock().getValue(),
+                		next.getBlock().getSystemName(), Path.decodeDirection(getDirection()));
             } else {
                 // no unique path with correct direction - this happens frequently from noise in block detectors!!
                 log.warn("count of " + count + " ACTIVE neightbors with proper direction can't be handled for block " + getSystemName() 
-                                + " but maybe it can be determined when an other block becomes free");
+                        + " but maybe it can be determined when another block becomes free");
                 pListOfPossibleEntrancePaths = new Path[currPathCnt];
                 CntOfPossibleEntrancePaths = 0;
                 for (int i = 0; i < currPathCnt; i++) {
                     if (isSet[i] && isActive[i]) {
                         pListOfPossibleEntrancePaths[CntOfPossibleEntrancePaths] = pList[i];
                         CntOfPossibleEntrancePaths++;
-            }
-        }
+                    }
+                }
             }
         }
         setState(OCCUPIED);
     }
+    /** Compare directions 
+    * The 'direction' of a Block can be one of eight values (nine if you count
+    * no direction). The horizontal and vertical directions are North, South, East and 
+    * West.  These are valued as constants in Path.java.  However, Blocks are allowed 
+    * to have a direction which consists of a combination of the North, South, East, 
+    * West constants. There are four such combinations North-East, South-East, 
+    * South-West, and North-West. In order to provide for turnouts diverging in an
+    * angular direction and for straight track to 'curve' into a different direction
+    * in the Layout Editor, a straight one to one equality of directions is not sufficient
+    * to determine if a train is moving in the 'same' direction through any series of blocks.
+    * The two part directions must match either of the composing single part directions. 
+    * That is for example North-East must match not only North-East but also North and East.
+    * 
+    * This routine converts a direction given by t or f, into a 4 bit value each bit 
+    * representing a direction North, South, East, and West. Then the logical AND
+    * of the two such conversions identifies any common component (N,S,E,or W) between
+    * the two directions. If there is at least one common component the directions
+    * are equal.
+    * 
+    * Jay Janzen
+    */
+    public Boolean comparePdir(int t, int f) {
+        int tc = 0;
+        int fc = 0;
+        if (t == f) return true; /* Math not needed */
+       
+        if (t>=Path.WEST){
+           tc = tc + 1;
+           t = t%Path.WEST;
+        }
+        if (t>=Path.EAST) {
+            tc = tc + 2;
+            t = t%Path.EAST;
+        }
+        if (t>=Path.SOUTH){
+            tc = tc + 4;
+            t = t%Path.SOUTH;
+        }
+        if (t>=Path.NORTH){
+            tc = tc + 8;
+        }
+        if (f>=Path.WEST){
+            fc = fc + 1;
+            f = f%Path.WEST;
+        }
+        if (f>=Path.EAST){
+           fc = fc + 2;
+           f = f%Path.EAST;
+        }
+        if (f>=Path.SOUTH){
+           fc = fc + 4;
+           f = f%Path.SOUTH;
+        }
+        if (f>=Path.NORTH){
+            fc = fc + 8;
+        }
+     
+     
+        if ((fc & tc)>0) {
+            return true;
+        }
+        return false;
+     }
 
     /**
      * Find which path this Block became Active, without actually modifying the
@@ -749,6 +821,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
      * (this is largely a copy of the 'Search' part of the logic from
      * goingActive())
      */
+    
     public Path findFromPath() {
         // index through the paths, counting
         int count = 0;
@@ -793,9 +866,14 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
             next = null;
             count = 0;
             for (int i = 0; i < currPathCnt; i++) {
-                if (isSet[i] && isActive[i] && (pDir[i] == pFromDir[i])) {
-                    count++;
-                    next = pList[i];
+                if (isSet[i] && isActive[i]) {  //only consider active reachable blocks
+                    log.debug("comparing {} ({}) to {} ({})", 
+                            pList[i].getBlock().getDisplayName(),Path.decodeDirection(pDir[i]),
+                            getSystemName(),Path.decodeDirection(pFromDir[i]));
+                    if (comparePdir(pDir[i] , pFromDir[i])) { //use special comparison which handles combination directions
+                        count++;
+                        next = pList[i];
+                    }
                 }
             }
             if (next == null) {
@@ -816,9 +894,9 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
         }
         return (next);
     }
-
+    
     /*
-     * This allows the layout block to inform any listerners to the block that the higher level layout block has been set to "useExtraColor" which is an 
+     * This allows the layout block to inform any listeners to the block that the higher level layout block has been set to "useExtraColor" which is an 
      * indication that it has been allocated to a section by the AutoDispatcher.  The value set is not retained in any form by the block, it is purely to
      * trigger a propertyChangeEvent.
      */
@@ -834,7 +912,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
     /**
      * Parse a given string and return the LocoAddress value that is presumed
      * stored within it based on this object's protocol. The Class Block
-     * implementationd defers to its associated Reporter, if it exists.
+     * implementation defers to its associated Reporter, if it exists.
      *
      * @param rep String to be parsed
      * @return LocoAddress address parsed from string, or null if this Block
