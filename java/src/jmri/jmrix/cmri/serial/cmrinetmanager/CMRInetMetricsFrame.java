@@ -1,5 +1,3 @@
-// CMRInetMetricsFrame.java
-
 package jmri.jmrix.cmri.serial.cmrinetmanager;
 
 import java.awt.BorderLayout;
@@ -27,11 +25,11 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import javax.swing.border.TitledBorder;
 import jmri.jmrix.cmri.serial.cmrinetmetrics.CMRInetMetricsData;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * Frame for CMRInet Network Metrics.
  * @author	 Chuck Catania   Copyright (C) 2016
- * @version	 $Revision: 17977 $
  */
 public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
 
@@ -61,8 +59,11 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
 
     final JFileChooser metricsSaveChooser = jmri.jmrit.XmlFile.userFileChooser();
 
-    public CMRInetMetricsFrame() {
+    private CMRISystemConnectionMemo _memo = null;
+
+    public CMRInetMetricsFrame(CMRISystemConnectionMemo memo) {
         super();
+        _memo = memo;
     }
     
    public void initComponents() throws Exception

@@ -1,4 +1,3 @@
-// SerialSensorManager.java
 package jmri.jmrix.cmri.serial;
 
 import jmri.JmriException;
@@ -6,6 +5,7 @@ import jmri.Sensor;
 import jmri.jmrix.AbstractNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * Manage the C/MRI serial-specific Sensor implementation.
@@ -20,7 +20,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003, 2007
  * @author Dave Duchamp, multi node extensions, 2004
- * @version	$Revision$
  */
 public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         implements SerialListener {
@@ -37,15 +36,18 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      */
     static final int SENSORSPERUA = 1000;
 
-    public SerialSensorManager() {
+    private CMRISystemConnectionMemo _memo = null;
+
+    public SerialSensorManager(CMRISystemConnectionMemo memo) {
         super();
+        _memo = memo;
     }
 
     /**
      * Return the C/MRI system letter
      */
     public String getSystemPrefix() {
-        return "C";
+        return _memo.getSystemPrefix();
     }
 
     /**
@@ -111,7 +113,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      */
     public void reply(SerialReply r) {
         // determine which node
-        SerialNode node = (SerialNode)SerialTrafficController.instance().getNodeFromAddress(r.getUA());
+        SerialNode node = (SerialNode) _memo.getTrafficController().getNodeFromAddress(r.getUA());
         if (node!=null) {
          // Response 'R'  input bytes
            if (r.isRcv())
@@ -194,15 +196,13 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      *
      * @return The registered SerialSensorManager instance for general use, if
      *         need be creating one.
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Deprecated
     static public SerialSensorManager instance() {
-        if (_instance == null) {
-            _instance = new SerialSensorManager();
-        }
-        return _instance;
+        return null;
     }
 
-    static SerialSensorManager _instance = null;
 
     public boolean allowMultipleAdditions(String systemName) {
         return true;
@@ -293,5 +293,3 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
 
     private final static Logger log = LoggerFactory.getLogger(SerialSensorManager.class.getName());
 }
-
-/* @(#)SerialSensorManager.java */

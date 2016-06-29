@@ -209,15 +209,14 @@ public class OBlockManagerXml // extends XmlFile
     OBlock getBlock(String sysName) {
         OBlock block = _blockMap.get(sysName);
         if (block == null) {
-            block = _manager.provideOBlock(sysName);
-            if (block == null) {
+            try {
+                block = _manager.provideOBlock(sysName);
+                log.debug("found OBlock: ({}) {}", sysName, block);
+            } catch (IllegalArgumentException ex) {
                 block = _manager.createNewOBlock(sysName, null);
-                if (log.isDebugEnabled()) {
-                    log.debug("create OBlock: (" + sysName + ")");
-                }
-            } else {
-                _blockMap.put(sysName, block);
+                log.debug("create OBlock: ({})", sysName);
             }
+            _blockMap.put(sysName, block);
         }
         return block;
     }
@@ -320,14 +319,12 @@ public class OBlockManagerXml // extends XmlFile
         if (errSensor != null) {
             // sensor
             String name = errSensor.getAttribute("systemName").getValue();
-            //Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(name);
             block.setErrorSensor(name);
         }
         Element reporter = elem.getChild("reporter");
         if (reporter != null) {
             // sensor
             String name = reporter.getAttribute("systemName").getValue();
-            //Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(name);
             try {
                 Reporter rep = InstanceManager.reporterManagerInstance().getReporter(name);
                 if (rep != null) {

@@ -2,9 +2,7 @@
 <!-- Translated by Blorec Herv&#233; le 2013-10-06-->
 <html lang="fr">
 <head>
-<!-- Copyright 2008 -->
-<!-- $Id$ -->
-<title>JMRI: Frame Servlet</title>
+<title>JMRI: Trame Servlet</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -17,7 +15,6 @@
 
 <body>
 <!--#include virtual="/Header" -->
-Cadre
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
@@ -50,7 +47,6 @@ Le fichier jmri/web/servlet/frameimage/JmriJFrameServlet.properties
  peut &#234;tre utilis&#233; pour configurer le code HTML qui est renvoy&#233; lorsque
 une trame est demand&#233;e.
 
-<p>
 S'il vous pla&#238;t noter que ce servlet a seulement &#233;t&#233; utilis&#233; avec
 le
 <a href="MiniServer.shtml"> mini-serveur JMRI  </a>, et peut
@@ -59,5 +55,7 @@ le faire fonctionner, cependant,simplement entrer en contact avec
 les d&#233;veloppeurs JMRI si vous rencontrez des probl&#232;mes.
 
 <!--#include virtual="/Footer" -->
+ </div>
+ </div>
 </body>
 </html>

@@ -84,11 +84,7 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
      * @return empty list if none
      */
     protected List<GlobalProgrammerManager> getMgrList() {
-        List<GlobalProgrammerManager> retval;
-        
-        retval = InstanceManager.getList(jmri.GlobalProgrammerManager.class);
-        if (retval!=null) return retval;
-        return new ArrayList<>();
+        return InstanceManager.getList(jmri.GlobalProgrammerManager.class);
     }
 
     public ProgServiceModeComboBox(int direction) {

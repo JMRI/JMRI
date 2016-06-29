@@ -37,11 +37,6 @@ import org.slf4j.LoggerFactory;
  */
 public class LocationsByCarLoadFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 968602554445596299L;
-
     LocationManager locationManager;
 
     // checkboxes track id as the checkbox name
@@ -139,7 +134,7 @@ public class LocationsByCarLoadFrame extends OperationsFrame implements java.bea
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
-        JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+        JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(new PrintLocationsByCarTypesAction(Bundle.getMessage("MenuItemPrintByType"), new Frame(), false,
                 this));
         toolMenu.add(new PrintLocationsByCarTypesAction(Bundle.getMessage("MenuItemPreviewByType"), new Frame(), true,

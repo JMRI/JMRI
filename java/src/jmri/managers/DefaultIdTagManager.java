@@ -102,7 +102,7 @@ public class DefaultIdTagManager extends AbstractManager
     }
 
     @Override
-    public IdTag provideIdTag(String name) {
+    public IdTag provideIdTag(String name) throws IllegalArgumentException {
         if (!initialised && !loading) {
             init();
         }
@@ -436,7 +436,7 @@ public class DefaultIdTagManager extends AbstractManager
             writeXML(file, doc);
         }
 
-        private void readFile(String fileName) throws org.jdom2.JDOMException, java.io.IOException {
+        private void readFile(String fileName) throws org.jdom2.JDOMException, java.io.IOException, IllegalArgumentException {
             // Check file exists
             if (findFile(fileName) == null) {
                 log.debug(fileName + " file could not be found");

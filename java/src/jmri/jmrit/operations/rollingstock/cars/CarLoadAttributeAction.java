@@ -14,11 +14,6 @@ import org.slf4j.LoggerFactory;
  */
 final class CarLoadAttributeAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8136064419213869243L;
-
     public CarLoadAttributeAction(String actionName, CarLoadEditFrame clef) {
         super(actionName);
         this.clef = clef;

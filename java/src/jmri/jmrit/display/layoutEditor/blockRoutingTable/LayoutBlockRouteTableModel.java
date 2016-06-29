@@ -99,7 +99,7 @@ public class LayoutBlockRouteTableModel extends javax.swing.table.AbstractTableM
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("length")) {
             fireTableDataChanged();
-        } else if (e.getPropertyName().toString().equals("routing")) {
+        } else if (e.getPropertyName().equals("routing")) {
             fireTableDataChanged();
         } else if (matchPropertyName(e)) {
             // a value changed.  Find it, to avoid complete redraw

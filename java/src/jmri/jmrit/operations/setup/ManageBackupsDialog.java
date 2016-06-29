@@ -24,10 +24,6 @@ import javax.swing.event.ListSelectionListener;
 
 public class ManageBackupsDialog extends JDialog {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -149145687905176236L;
     private final JPanel contentPanel = new JPanel();
     private JLabel selectBackupSetsLabel;
     private JButton selectAllButton;

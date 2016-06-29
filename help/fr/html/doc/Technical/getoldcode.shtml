@@ -1,39 +1,28 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- Translated by Herv&#233; Blorec 2013/09/04 -->
 <html lang="fr">
 <head>
     <TITLE>
- 	JMRI: Getting the OLD Code
+ 	JMRI: Obtenir le Code Ancien
     </TITLE>
-    <META content="Bob Jacobsen" name=Author>
+    <META content="Bob Jacobsen" name="Author">
     <meta name="keywords" content="JMRI technical code CVS download">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
-
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
-
+<body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
-	    <!-- ------------- -->
-	    <!-- Page Contents --> <!-- Required -->
-	    <!-- ------------- -->
 
-	    <H1>JMRI: Obtenir le Code</H1>
+	    <h1>JMRI: Obtenir le Code Ancien</h1>
 
 <h2>Cette page est conserv&#233;e dans un but historique seulement!</h2>
 
@@ -49,10 +38,10 @@ code source, vous devez utiliser les instructions d&#233;taill&#233;es ci-dessou
 <h2>D&#233;marrage Rapide</h2>
 
 Vous pouvez t&#233;l&#233;charger les plus r&#233;cents code souce via CVS en utilisant:
-<code><PRE>
+<pre><code>
 cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri login
 cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri co all 
-</PRE></code>
+</code></pre>
 (Si un mode de passe est demand&#233;, tapez juste sur retour)
 
 
@@ -122,19 +111,18 @@ Pour obtenir une v&#233;rification initiale de CVS pour votre propre usage apr&#
 http://www.tortoisecvs.org/. Cr&#233;ez un nouveau r&#233;pertoire pour le projet, par
 la cr&#233;ation d'un dossier nomm&#233; "JMRISourceCode". Clic droit (Ctrl + clic) sur
 ce dossier et s&#233;lectionnez CVS CVS Checkout ".
-Dans le volet qui s'ouvre pour le CVSROOT entrer <:pserver:jmri.cvs.sourceforge.net:/cvsroot/jmri>
-Pour le serveur, entrez <jmri.cvs.sourceforge.net>.
+Dans le volet qui s'ouvre pour le CVSROOT entrer &lt;:pserver:jmri.cvs.sourceforge.net:/cvsroot/jmri&gt;
+Pour le serveur, entrez &lt;jmri.cvs.sourceforge.net&gt;.
 En bas &#224; droite de l'&#233;cran est une "Fetch List" Cliquez dessus et une liste s'affiche, cliquez sur le "all".
 Cliquez ensuite sur le bouton OK en bas de la fen&#234;tre.
 Une nouvelle fen&#234;tre s'ouvre et les fichiers seront t&#233;l&#233;charg&#233;s sur le bas de ce volet il y a une case &#224;  appel&#233;e "Close on Completion", cochez la.
 Quand il se ferme, le dossier que vous avez cr&#233;er aura des dossiers qui ont tous les &#233;l&#233;ments JMRI.
-</ p>
+</p>
 <p>
 Une fois que vous avez effectu&#233; la v&#233;rification initiale de CVS dans le dossier, les
 mettre &#224; jour les s&#233;lectionnera tous, puis faites un Clic-Droit et
 s&#233;lectionner "CVS Update". Vous pouvez aussi mettre &#224; jour un seul dossier en le s&#233;lectionnant.
-</ p>
-
+</p>
 
 <!--#include virtual="/Footer" -->
 

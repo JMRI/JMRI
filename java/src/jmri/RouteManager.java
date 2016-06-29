@@ -2,6 +2,10 @@ package jmri;
 
 import java.util.List;
 
+import javax.annotation.CheckReturnValue;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+
 /**
  * Interface for obtaining Routes
  * <P>
@@ -32,7 +36,7 @@ public interface RouteManager extends Manager {
      * a Route with the same systemName or userName already exists, or if there
      * is trouble creating a new Route.
      */
-    public Route provideRoute(String systemName, String userName);
+    public @Nonnull Route provideRoute(@Nonnull String systemName, String userName);
 
     /**
      * For use with User GUI, to allow the auto generation of systemNames, where
@@ -40,7 +44,7 @@ public interface RouteManager extends Manager {
      * if the route does not exist Returns null if a Route with the same
      * userName already exists, or if there is trouble creating a new Route.
      */
-    public Route newRoute(String userName);
+    public @Nonnull Route newRoute(@Nonnull String userName);
 
     /**
      * Locate via user name, then system name if needed. Does not create a new
@@ -49,20 +53,20 @@ public interface RouteManager extends Manager {
      * @param name User name or system name to match
      * @return null if no match found
      */
-    public Route getRoute(String name);
+    public @CheckForNull Route getRoute(@Nonnull String name);
 
-    public Route getByUserName(String s);
+    public @CheckForNull Route getByUserName(@Nonnull String s);
 
-    public Route getBySystemName(String s);
+    public @CheckForNull Route getBySystemName(@Nonnull String s);
 
     /**
      * Get a list of all Route system names.
      */
-    public List<String> getSystemNameList();
+    public @Nonnull List<String> getSystemNameList();
 
     /**
      * Delete Route by removing it from the manager. The Route must first be
      * deactivated so it stops processing.
      */
-    void deleteRoute(Route r);
+    void deleteRoute(@Nonnull Route r);
 }

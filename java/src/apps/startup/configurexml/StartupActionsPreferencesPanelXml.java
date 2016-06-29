@@ -1,7 +1,7 @@
 package apps.startup.configurexml;
 
 import apps.StartupActionsManager;
-import apps.StartupModel;
+import apps.startup.StartupModel;
 import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter;
 import org.jdom2.Element;

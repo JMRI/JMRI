@@ -4,6 +4,7 @@ import jmri.Light;
 import jmri.managers.AbstractLightManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * Implement light manager for CMRI serial systems
@@ -16,15 +17,17 @@ import org.slf4j.LoggerFactory;
  */
 public class SerialLightManager extends AbstractLightManager {
 
-    public SerialLightManager() {
+    private CMRISystemConnectionMemo _memo = null;
 
+    public SerialLightManager(CMRISystemConnectionMemo memo) {
+        _memo = memo;
     }
 
     /**
      * Returns the system letter for CMRI
      */
     public String getSystemPrefix() {
-        return "C";
+        return _memo.getSystemPrefix();
     }
 
     /**
@@ -115,14 +118,12 @@ public class SerialLightManager extends AbstractLightManager {
 
     /**
      * Allow access to SerialLightManager
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Deprecated
     static public SerialLightManager instance() {
-        if (_instance == null) {
-            _instance = new SerialLightManager();
-        }
-        return _instance;
+        return null;
     }
-    static SerialLightManager _instance = null;
 
     private final static Logger log = LoggerFactory.getLogger(SerialLightManager.class.getName());
 

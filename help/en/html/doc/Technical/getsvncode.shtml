@@ -19,12 +19,13 @@
 </head>
 
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 <div id="mainContent">
-	    <!-- ------------- -->
+	    <!-- ============= -->
 	    <!-- Page Contents --> <!-- Required -->
-	    <!-- ------------- -->
+	    <!-- ============= -->
 
   <h1>JMRI: Getting the old SVN Code</h1>
 
@@ -37,9 +38,9 @@ source code, you should use the detailed instructions below.</p>
   <h2>Quickstart</h2>
 
   <p>You can download the JMRI source code from Subversion using:
-  <code><pre>
+  <pre><code>
     svn checkout https://svn.code.sf.net/p/jmri/code/trunk/jmri
-  </pre></code>
+  </code></pre>
   </p>
 
   <h2>Details</h2>

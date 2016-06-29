@@ -1,10 +1,8 @@
-// CMRInetMetricsAction.java
-
 package jmri.jmrix.cmri.serial.cmrinetmanager;
 import java.awt.event.ActionEvent;
-
 import javax.swing.AbstractAction;
 
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 /**
  * CMRInet Network Metrics
  * 
@@ -13,15 +11,20 @@ import javax.swing.AbstractAction;
  */
 public class CMRInetMetricsAction extends AbstractAction {
 
-	public CMRInetMetricsAction(String s) { super(s);}
+    private CMRISystemConnectionMemo _memo = null;
 
-    public CMRInetMetricsAction() {
-        this("CMRInet Network Metrics");
+    public CMRInetMetricsAction(String s,CMRISystemConnectionMemo memo){ 
+        super(s);
+        _memo = memo;
+    }
+
+    public CMRInetMetricsAction(CMRISystemConnectionMemo memo) {
+        this("CMRInet Network Metrics",memo);
     }
 
     public void actionPerformed(ActionEvent e) {
 		// create a CMRInetMetricsAction
-		CMRInetMetricsFrame f = new CMRInetMetricsFrame();
+		CMRInetMetricsFrame f = new CMRInetMetricsFrame(_memo);
 		try {
 			f.initComponents();
 			}

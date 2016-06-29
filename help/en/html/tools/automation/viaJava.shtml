@@ -15,7 +15,7 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+<div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
@@ -147,21 +147,21 @@ place that in the "lib" directory in the JMRI program directory.
 Alternately, you can create a "classes" directory, and compile your Java class into that. 
 In that case, it should end up in:
 
-<code><pre>
+<pre><code>
 classes/MyCode.class
-</pre></code>
+</code></pre>
 
 if you've specified no code in your package, or 
 
-<code><pre>
+<pre><code>
 classes/MyCode.class
-</pre></code>
+</code></pre>
 
 or
 
-<code><pre>
+<pre><code>
 classes/jmri/jmrit/automat/SampleAutomaton.class
-</pre></code>
+</code></pre>
 
 as an example of how code in a specific package gets stored.
 <p>
@@ -169,16 +169,16 @@ The easiest way to invoke your code is to use JMRI's scripting support.
 Open a Script Output window (so you can see errors) from the Panels menu, 
 then a Script Entry window, enter:
 
-<code><pre>
+<pre><code>
 MyCode().start()
-</pre></code>
+</code></pre>
 
 or
 
-<code><pre>
+<pre><code>
 import jmri.jmrit.automat
 jmri.jmrit.automat.SampleAutomaton().start()
-</pre></code>
+</code></pre>
 
 and hit Execute. The 2nd line creates an instance of your class and tells it to start running. 
 <p>

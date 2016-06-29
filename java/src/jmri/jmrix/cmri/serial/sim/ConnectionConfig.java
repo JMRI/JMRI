@@ -4,6 +4,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * Definition of objects to handle configuring a layout connection via an C/MRI
@@ -42,7 +43,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
 
         details.add(b);
 
-        b.addActionListener(new NodeConfigAction());
+        b.addActionListener(new NodeConfigAction((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()));
 
     }
 

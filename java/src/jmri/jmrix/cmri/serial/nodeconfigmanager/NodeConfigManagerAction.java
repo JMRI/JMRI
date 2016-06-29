@@ -1,28 +1,31 @@
-// NodeConfigurationMgr.java
-
 package jmri.jmrix.cmri.serial.nodeconfigmanager;
 
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * Swing action to create and register a
  * NodeTableAction object
  *
  * @author	Chuck Catania    Copyright (C) 2014
- * @version	$Revision: 17977 $
  */
 
 public class NodeConfigManagerAction extends AbstractAction {
 
-    public NodeConfigManagerAction(String s) { super(s);}
+    CMRISystemConnectionMemo _memo = null;
 
-    public NodeConfigManagerAction() {
-        this("CMRInet Node Configuration Manager");
+    public NodeConfigManagerAction(String s,CMRISystemConnectionMemo memo){ 
+       super(s);
+       _memo = memo;
+    }
+
+    public NodeConfigManagerAction(CMRISystemConnectionMemo memo) {
+        this("CMRInet Node Configuration Manager",memo);
     }
 
     public void actionPerformed(ActionEvent e) {
-        NodeConfigManagerFrame f = new NodeConfigManagerFrame();
+        NodeConfigManagerFrame f = new NodeConfigManagerFrame(_memo);
         try {
               f.initComponents();
             }
