@@ -1,27 +1,30 @@
-// CMRInetManagerAction.java
-
 package jmri.jmrix.cmri.serial.cmrinetmanager;
 
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * Swing action to create and register a
  * CMRInetManagerAction object
  *
  * @author	Chuck Catania    Copyright (C) 2014, 2015, 2016
- * @version	$Revision: 17977 $
  */
 public class CMRInetManagerAction extends AbstractAction {
 
-	public CMRInetManagerAction(String s) { super(s);}
+    private CMRISystemConnectionMemo _memo = null;
 
-    public CMRInetManagerAction() {
-        this("CMRInet Network Manager");
+    public CMRInetManagerAction(String s,CMRISystemConnectionMemo memo) { 
+        super(s); 
+        _memo = memo;
+    }
+
+    public CMRInetManagerAction(CMRISystemConnectionMemo memo) {
+        this("CMRInet Network Manager",memo);
     }
 
     public void actionPerformed(ActionEvent e) {
-        CMRInetManagerFrame f = new CMRInetManagerFrame();
+        CMRInetManagerFrame f = new CMRInetManagerFrame(_memo);
         try {
             f.initComponents();
             }

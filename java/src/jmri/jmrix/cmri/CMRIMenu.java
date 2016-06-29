@@ -26,26 +26,18 @@ public class CMRIMenu extends JMenu {
 
         setText(rb.getString("MenuCMRI"));
 
+        add(new jmri.jmrix.cmri.serial.nodeconfigmanager.NodeConfigManagerAction(rb.getString("MenuItemNodeManager"),_memo));  //c2
+        add(new javax.swing.JSeparator());
+        add(new jmri.jmrix.cmri.serial.cmrinetmanager.CMRInetManagerAction(rb.getString("MenuItemCMRInetManager"),_memo));  //c2
+        add(new jmri.jmrix.cmri.serial.cmrinetmanager.CMRInetMetricsAction(rb.getString("MenuItemCMRInetMetrics"),_memo));  //c2
         add(new jmri.jmrix.cmri.serial.serialmon.SerialMonAction(rb.getString("MenuItemCommandMonitor"),_memo));
-        add(new jmri.jmrix.cmri.serial.packetgen.SerialPacketGenAction(rb.getString("MenuItemSendCommand"),_memo));
-        add(new jmri.jmrix.cmri.serial.nodeconfigmanager.NodeConfigManagerAction(rb.getString("MenuItemNodeManager")));  //c2
-        add(new javax.swing.JSeparator());
-        add(new jmri.jmrix.cmri.serial.cmrinetmanager.CMRInetManagerAction(rb.getString("MenuItemCMRInetManager")));  //c2
-        add(new jmri.jmrix.cmri.serial.cmrinetmanager.CMRInetMetricsAction(rb.getString("MenuItemCMRInetMetrics")));  //c2
-        add(new javax.swing.JSeparator());
-        add(new jmri.jmrix.cmri.serial.diagnostic.DiagnosticAction(rb.getString("MenuItemDiagnostics"),_memo));
-        add(new jmri.jmrix.cmri.serial.serialmon.SerialMonAction(rb.getString("MenuItemCommandMonitor")));
-        add(new javax.swing.JSeparator());
-        add(new jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction(_memo));
-        add(new jmri.jmrix.cmri.serial.assignment.ListAction(rb.getString("MenuItemAssignments")));
         add(new javax.swing.JSeparator());
         add(new jmri.jmrix.cmri.serial.assignment.ListAction(rb.getString("MenuItemAssignments"),_memo));
+        add(new javax.swing.JSeparator());
+        add(new jmri.jmrix.cmri.serial.diagnostic.DiagnosticAction(rb.getString("MenuItemDiagnostics"),_memo));
+        add(new jmri.jmrix.cmri.serial.packetgen.SerialPacketGenAction(rb.getString("MenuItemSendCommand"),_memo));
+        //add(new javax.swing.JSeparator());
+        //add(new jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction(_memo));
     }
-        add(new jmri.jmrix.cmri.serial.diagnostic.DiagnosticAction(rb.getString("MenuItemDiagnostics")));
-        add(new jmri.jmrix.cmri.serial.packetgen.SerialPacketGenAction(rb.getString("MenuItemSendCommand")));
-//        add(new javax.swing.JSeparator());
-//        add(new jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction(rb.getString("MenuItemConfigureNodes")));  //c2
-
-}
 
 }

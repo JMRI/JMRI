@@ -2,6 +2,7 @@
 
 package jmri.jmrix.cmri.serial.cmrinetmanager;
 
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.jmrix.cmri.serial.SerialNode;
 import jmri.jmrix.cmri.serial.nodeiolist.NodeIOListFrame;
@@ -76,8 +77,11 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
     JButton haltPollButton = new JButton(rb.getString("HaltPollButtonText") );
     JButton netStatsButton = new JButton(rb.getString("NetStatsButtonText") );
    
-    public CMRInetManagerFrame() {
+    private CMRISystemConnectionMemo _memo = null;
+
+    public CMRInetManagerFrame(CMRISystemConnectionMemo memo) {
         super();
+        _memo = memo;
     }
 
     protected javax.swing.JTextField pollIntervalField = new javax.swing.JTextField();
@@ -247,7 +251,7 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
 	String str = "";
         
     // get all configured nodes
-	SerialNode node = (SerialNode) SerialTrafficController.instance().getNode(0);
+	SerialNode node = (SerialNode) _memo.getTrafficController().getNode(0);
         int index = 1;
         while (node != null)
         {
@@ -256,7 +260,7 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
             if (cmriNode.get(index-1).getPollListPosition() == 0) {
                 cmriNode.get(index-1).setPollListPosition(index);
             }
-            node = (SerialNode) SerialTrafficController.instance().getNode(index);
+            node = (SerialNode) _memo.getTrafficController().getNode(index);
             index ++;
                         
 	}
@@ -281,7 +285,7 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
     // CMRInet Monitor button handler
     // ------------------------------
     public void monitorButtonActionPerformed(ActionEvent e) {
-        SerialMonAction f = new SerialMonAction();
+        SerialMonAction f = new SerialMonAction(_memo);
         try {
                 f.actionPerformed(e);
             }
@@ -295,7 +299,7 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
     // CMRInet Statistics button handler
     // ---------------------------------
     public void netStatsButtonActionPerformed(ActionEvent e) {
-        CMRInetMetricsAction f = new CMRInetMetricsAction();
+        CMRInetMetricsAction f = new CMRInetMetricsAction(_memo);
         try {
                 f.actionPerformed(e);
                 netStatsButton.setEnabled(false);
@@ -310,7 +314,7 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
     // Halt Poll button handler
     // ------------------------
     public void haltpollButtonActionPerformed(ActionEvent e) {
-         SerialTrafficController stc = SerialTrafficController.instance();
+         SerialTrafficController stc = _memo.getTrafficController();
          stc.setPollNetwork(!stc.getPollNetwork());
          if (stc.getPollNetwork())
              haltPollButton.setText(rb.getString("HaltPollButtonText"));

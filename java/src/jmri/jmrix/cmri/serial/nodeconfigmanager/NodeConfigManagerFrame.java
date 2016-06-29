@@ -1,12 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package jmri.jmrix.cmri.serial.nodeconfigmanager;
 
 import apps.AppConfigBase;
 import apps.gui3.TabbedPreferences;
 import jmri.util.davidflanagan.HardcopyWriter;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.jmrix.cmri.serial.SerialNode;
 import jmri.jmrix.cmri.serial.nodeiolist.NodeIOListFrame;
@@ -42,7 +39,6 @@ import jmri.jmrix.cmri.serial.SerialSensorManager;
  * @author	 Bob Jacobsen   Copyright (C) 2004
  * @author	 Dave Duchamp   Copyright (C) 2004
  * @author	 Chuck Catania  Copyright (C) 2013, 2014, 2015, 2016
- * @version	 $Revision: 17977 $
  */
 
 public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
@@ -164,11 +160,14 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     protected JCheckBox cbx_cpnodeopt_BIT8 = new JCheckBox(rbx.getString("cpnodeOpt8"));
     protected JCheckBox cbx_cpnodeopt_BIT15 = new JCheckBox(rbx.getString("cpnodeOpt15"));
 
-    
-    public NodeConfigManagerFrame() {
+
+    CMRISystemConnectionMemo _memo = null;
+   
+    public NodeConfigManagerFrame(CMRISystemConnectionMemo memo) {
         super();
         curFrame = this;
 //        prepareListeners();
+        _memo = memo;
     }
 /*
    public void prepareListeners(){
@@ -388,7 +387,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     }
 
     public void addButtonActionPerformed(ActionEvent e) {
-        NodeConfigManagerFrame f = new NodeConfigManagerFrame();
+        NodeConfigManagerFrame f = new NodeConfigManagerFrame(_memo);
         try {
                 f.initNodeConfigWindow();
             }
@@ -450,7 +449,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     public void editActionSelected() {
         selectedNodeAddr = getSelectedNodeAddr();
         
-        NodeConfigManagerFrame f = new NodeConfigManagerFrame();
+        NodeConfigManagerFrame f = new NodeConfigManagerFrame(_memo);
         f.nodeTableModel = nodeTableModel; 
         f.selectedTableRow = nodeTable.convertRowIndexToModel(nodeTable.getSelectedRow());
 
@@ -474,7 +473,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     public void deleteActionSelected() {
         selectedNodeAddr = getSelectedNodeAddr();
         
-        NodeConfigManagerFrame f = new NodeConfigManagerFrame();
+        NodeConfigManagerFrame f = new NodeConfigManagerFrame(_memo);
         f.nodeTableModel = nodeTableModel; 
         f.selectedTableRow = nodeTable.convertRowIndexToModel(nodeTable.getSelectedRow());
         try {
@@ -524,12 +523,12 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             cmriNode.clear();
         }
             
-	SerialNode node = (SerialNode) SerialTrafficController.instance().getNode(0);
+	SerialNode node = (SerialNode) _memo.getTrafficController().getNode(0);
         int index = 1;
         while (node != null)
         {
             cmriNode.add(node);
-            node = (SerialNode) SerialTrafficController.instance().getNode(index);
+            node = (SerialNode) _memo.getTrafficController().getNode(index);
             index ++;                        
 	}
         
@@ -1349,7 +1348,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         /**         
          * get a SerialNode corresponding to this node address if one exists
          */
-        curNode = (SerialNode) SerialTrafficController.instance().getNodeFromAddress(nodeAddress);
+        curNode = (SerialNode) _memo.getTrafficController().getNodeFromAddress(nodeAddress);
         if (curNode != null) {
             JOptionPane.showMessageDialog(this,rbx.getString("Error1")+Integer.toString(nodeAddress)+
 								rbx.getString("Error2"),"",JOptionPane.ERROR_MESSAGE); 
@@ -1374,7 +1373,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         * all ready, create the new node
         * ------------------------------
         */
-        curNode = new SerialNode(nodeAddress,nodeType);
+        curNode = new SerialNode(nodeAddress,nodeType,_memo.getTrafficController());
         if (curNode == null) {
             statusText1.setText(rbx.getString("Error3"));
             statusText1.setVisible(true);
@@ -1392,7 +1391,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         
         // register any orphan sensors that this node may have
         //----------------------------------------------------
-        SerialSensorManager.instance().registerSensorsForNode(curNode);
+        ((SerialSensorManager)_memo.getSensorManager()).registerSensorsForNode(curNode);
         
         // reset text displays after succefully adding node
         //-------------------------------------------------
@@ -1420,7 +1419,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         
         // get the SerialNode corresponding to this node address
         //------------------------------------------------------
-        curNode = (SerialNode) SerialTrafficController.instance().getNodeFromAddress(nodeAddress);
+        curNode = (SerialNode) _memo.getTrafficController().getNodeFromAddress(nodeAddress);
         if (curNode == null) {
             statusText1.setText(rbx.getString("Error4"));
             statusText1.setVisible(true);
@@ -1628,7 +1627,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             JOptionPane.WARNING_MESSAGE) ) {
 
             // delete this node
-            SerialTrafficController.instance().deleteNode(deleteNodeAddress);  
+            _memo.getTrafficController().deleteNode(deleteNodeAddress);  
             nodeTableModel.removeRow(selectedTableRow);
             
             // provide user feedback
@@ -1665,7 +1664,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         }
         
         // get the node corresponding to this node address
-        curNode = (SerialNode) SerialTrafficController.instance().getNodeFromAddress(nodeAddress);
+        curNode = (SerialNode) _memo.getTrafficController().getNodeFromAddress(nodeAddress);
         if (curNode == null) {
             statusText1.setText(rbx.getString("Error4"));
             statusText1.setVisible(true);
@@ -1929,7 +1928,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
          * Cause reinitialization of this Node to reflect these parameters
          * ---------------------------------------------------------------
          */
-        SerialTrafficController.instance().initializeSerialNode(curNode);
+        _memo.getTrafficController().initializeSerialNode(curNode);
     }
     
     /**

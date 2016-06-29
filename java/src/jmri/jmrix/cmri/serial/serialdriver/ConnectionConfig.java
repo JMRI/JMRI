@@ -1,11 +1,11 @@
-// ConnectionConfig.java
 package jmri.jmrix.cmri.serial.serialdriver;
 
 import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction;
+// import jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction;
+import jmri.jmrix.cmri.serial.nodeconfigmanager.NodeConfigManagerAction;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
@@ -14,7 +14,6 @@ import jmri.jmrix.cmri.CMRISystemConnectionMemo;
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
  * @author	Chuck Catania  Copyright (C) 2014
- * @version	$Revision: 18323 $
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
@@ -33,33 +32,21 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         super();
     }
 
-    JButton b = new JButton("Configure C/MRI nodes");
-
     public void loadDetails(JPanel details) {
     	// have to embed the usual one in a new JPanel
     	
     	JPanel p = new JPanel();
         super.loadDetails(p);
-
-		details.setLayout(new BoxLayout(details,BoxLayout.Y_AXIS));
-		details.add(p);
-
-		// add another button
-		JButton b = new JButton("Configure CMRInet nodes");
-
-		details.add(b);
-						
-//		b.addActionListener(new NodeConfigAction());  //c2		
-//		b.addActionListener(new NodeTableAction());		
-		b.addActionListener(new NodeConfigManagerAction());		
         
+        details.setLayout(new BoxLayout(details,BoxLayout.Y_AXIS));
+        details.add(p);
 
-        b.addActionListener(new NodeConfigAction((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()));
-        if (!additionalItems.contains(b)) {
-            additionalItems.add(b);
-        }
-        super.loadDetails(details);
+        // add another button
+        JButton b = new JButton("Configure CMRInet nodes");
+        details.add(b);
 
+//      b.addActionListener(new NodeConfigAction((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()));					
+        b.addActionListener(new NodeConfigManagerAction((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()));
     }
 
     @Override

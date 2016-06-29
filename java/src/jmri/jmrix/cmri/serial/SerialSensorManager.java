@@ -113,7 +113,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      */
     public void reply(SerialReply r) {
         // determine which node
-        SerialNode node = (SerialNode)SerialTrafficController.instance().getNodeFromAddress(r.getUA());
+        SerialNode node = (SerialNode) _memo.getTrafficController().getNodeFromAddress(r.getUA());
         if (node!=null) {
          // Response 'R'  input bytes
            if (r.isRcv())
