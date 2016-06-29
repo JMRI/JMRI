@@ -3,7 +3,6 @@
 <!-- UpDated by Blorec Herv&#233; le 2013-09-27-->
 <html lang="fr"> 
 	  <hr class="hide">
-	  <div id="mBody">
 	  <div id="side"> <!-- Block of text on left side of page -->
 	    <div style="text-align: center">JMRI est...</div>
 	    <dl>

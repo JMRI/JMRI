@@ -17,7 +17,7 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
@@ -86,7 +86,7 @@ Le
 aura plus d'info sur ce qui sera disponible.
 
 <P>
-<a name="contents"><h3>Contenus</h3></a>
+<a name="contents"></a><h3>Contenus</h3>
 
 
 	<p> La documentation ci-dessous d&#233;crit la signalisation avec JMRI, et discute de la configuration
@@ -105,7 +105,7 @@ et suivez ces instructions. Revenez ici pour lire ce que vous avez fait.
 <li><a href="#action"> Actions disponible dans Logix </a></li>
 <li><a href="#automat"> Les classes d'automatisation </a></li></ul>
 
-<a name="terms"><h3>Vocabulaire</h3></a></dt>
+<a name="terms"></a><h3>Vocabulaire</h3></dt>
 
 <p><b>certains termes du signal de base:</b><br>
 <ul>
@@ -167,8 +167,8 @@ la direction et l'itin&#233;raire du voyage. La "protection" est d'emp&#234;cher
 pour commander le signal. Cela varie en fonction de votre mat&#233;riel, et doit correspondre &#224; votre syst&#232;me.
 </ul>
 
-<A name="Tableau">
-<h3>Tableau T&#234;te de Signal</h3></a>
+<A name="Tableau"></a>
+<h3>Tableau T&#234;te de Signal</h3>
 
 <A href="../../../images/SigTableau.gif"><IMG SRC="../../../images/SigTableau.gif" ALIGN=RIGHT WIDTH="296" HEIGHT="355" HSPACE="0" VSPACE="0"></A>
 Toutes les t&#234;tes de signal que JMRI conna&#238;t peuvent &#234;tre r&#233;f&#233;renc&#233;es
@@ -208,7 +208,7 @@ sur vos panneaux, s'il vous pla&#238;t voir le
 et les pages web sur le
 <A HREF="http://jmri.org/community/examples/Panels-Cornwall/Cornwall.html">  panneau de commande de chemin de fer Cornwall </a>.
 <A name="logic"> 
-<a name="intro"><h3> Introduction &#224; la simple logique signal </h3></a></a></dt>
+<a name="intro"></a><h3> Introduction &#224; la simple logique signal </h3></a></dt>
 
 Simple Logique Signal (SSL)
 est un outil JMRI pour permettre l'installation rapide de la signalisation de base de style ABS.
@@ -282,7 +282,7 @@ SSL peuvent &#234;tre utilis&#233;es
 pour cr&#233;er un panneau de la CTC, comme Bob Bucklew le montre sur
 <A HREF="http://www.quaker-valley.com/CTC/QV_CTCnew.html"> son site web </a>.
 
-<A name="start"><h3> D&#233;buter avec Simple Logique Signal</h3></a>
+<A name="start"></a><h3> D&#233;buter avec Simple Logique Signal</h3>
 
 <p> Suivez les &#233;tapes suivantes pour cr&#233;er un signal et se familiariser
 avec la fa&#231;on dont l'interface utilisateur SSL fonctionne.
@@ -318,7 +318,7 @@ Un
 <A HREF="SimpleSignalExample.shtml"> exemple de mise au point </a>
 est &#233;galement disponible.
 
-<A Name="logix"><h3> Support de Signal dans Logix </h3></a>
+<A Name="logix"></a><h3> Support de Signal dans Logix </h3>
 
 Un <A HREF="../Logix.shtml"> Logix </a> JMRI
 fournit des capacit&#233;s de logique et de contr&#244;le pour les objets JMRI, y compris les
@@ -327,7 +327,7 @@ qui ont lieu en fonction de l'&#233;tat de la logique.
 Les sous-sections suivantes vont parler de la fa&#231;on dont Logix
 peut examiner et contr&#244;ler les signaux.
 
-<a name="variable"><h3> Variables d'&#201;tat Disponibles du Signal dans Logix </h3></a></dt>
+<a name="variable"></a><h3> Variables d'&#201;tat Disponibles du Signal dans Logix </h3></dt>
 
 <p>Les variables d'&#233;tat li&#233;s &#224; des signaux qui sont actuellement disponibles pour une utilisation
 dans les conditions Logix
@@ -389,7 +389,7 @@ Pr&#233;cisez la t&#234;te du signal en entrant son nom syst&#232;me ou nom util
 par exemple des clics relais de la CTC)
  </li><li><b>Ex&#233;cuter le script</b>: D&#233;marre le script sp&#233;cifi&#233;.
 
-<A Les classes name="automat"><h3> Classe d'Automatisation</h3></a>
+<A Les classes name="automat"></a><h3> Classe d'Automatisation</h3>
 
 JMRI fournit des classes pour vous aider &#224; &#233;crire du code Java pour contr&#244;ler
 votre r&#233;seau. Les plus puissants d'entre eux sont destin&#233;s
@@ -408,7 +408,7 @@ Retour au r&#233;seau, et m&#234;me les d&#233;tails de "quelle sortie dois-je
 mettre pour obtenir que le signal de l'Evitement Apple Est soit montrer jaune? ". Vous pouvez
 vous concentrer uniquement sur la logique du signal dans le code que vous &#233;crivez.
 
-<A name="widgets"><h3>Boite &#224; Outils</h3></a>
+<A name="widgets"><h3>Boite &#224; Outils</h3>
 
 L'ensemble de la
 <A HREF="../../doc/Technical/index.shtml"> boite &#224; Outils JMRI</A>
