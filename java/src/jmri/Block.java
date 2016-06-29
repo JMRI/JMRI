@@ -680,6 +680,9 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
                 count++;
                 next = pList[i];
             }
+            log.debug("\n{} is {}\n{} is {}",
+                    Path.decodeDirection(pDir[i]), String.format("%16s", Integer.toBinaryString(pDir[i])).replace(' ', '0'),
+                    Path.decodeDirection(pFromDir[i]), String.format("%16s", Integer.toBinaryString(pFromDir[i])).replace(' ', '0'));
         }
         // sort on number of neighbors
         if (count == 0) {
@@ -712,8 +715,8 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
                 if (isSet[i] && isActive[i]) {  //only consider active reachable blocks
                     log.debug("comparing {} ({}) to {} ({})", 
                             pList[i].getBlock().getDisplayName(),Path.decodeDirection(pDir[i]),
-                            getSystemName(),Path.decodeDirection(pFromDir[i]));
-                    if (comparePdir(pDir[i] , pFromDir[i])) { //use special comparison which handles combination directions
+                            getSystemName(),Path.decodeDirection(pFromDir[i]));                    
+                    if ((pDir[i] & pFromDir[i])>0) { //use bitwise comparison to support combination directions such as "North, West"
                         count++;
                         next = pList[i];
                     }
@@ -750,69 +753,6 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
         }
         setState(OCCUPIED);
     }
-    /** Compare directions 
-    * The 'direction' of a Block can be one of eight values (nine if you count
-    * no direction). The horizontal and vertical directions are North, South, East and 
-    * West.  These are valued as constants in Path.java.  However, Blocks are allowed 
-    * to have a direction which consists of a combination of the North, South, East, 
-    * West constants. There are four such combinations North-East, South-East, 
-    * South-West, and North-West. In order to provide for turnouts diverging in an
-    * angular direction and for straight track to 'curve' into a different direction
-    * in the Layout Editor, a straight one to one equality of directions is not sufficient
-    * to determine if a train is moving in the 'same' direction through any series of blocks.
-    * The two part directions must match either of the composing single part directions. 
-    * That is for example North-East must match not only North-East but also North and East.
-    * 
-    * This routine converts a direction given by t or f, into a 4 bit value each bit 
-    * representing a direction North, South, East, and West. Then the logical AND
-    * of the two such conversions identifies any common component (N,S,E,or W) between
-    * the two directions. If there is at least one common component the directions
-    * are equal.
-    * 
-    * Jay Janzen
-    */
-    public Boolean comparePdir(int t, int f) {
-        int tc = 0;
-        int fc = 0;
-        if (t == f) return true; /* Math not needed */
-       
-        if (t>=Path.WEST){
-           tc = tc + 1;
-           t = t%Path.WEST;
-        }
-        if (t>=Path.EAST) {
-            tc = tc + 2;
-            t = t%Path.EAST;
-        }
-        if (t>=Path.SOUTH){
-            tc = tc + 4;
-            t = t%Path.SOUTH;
-        }
-        if (t>=Path.NORTH){
-            tc = tc + 8;
-        }
-        if (f>=Path.WEST){
-            fc = fc + 1;
-            f = f%Path.WEST;
-        }
-        if (f>=Path.EAST){
-           fc = fc + 2;
-           f = f%Path.EAST;
-        }
-        if (f>=Path.SOUTH){
-           fc = fc + 4;
-           f = f%Path.SOUTH;
-        }
-        if (f>=Path.NORTH){
-            fc = fc + 8;
-        }
-     
-     
-        if ((fc & tc)>0) {
-            return true;
-        }
-        return false;
-     }
 
     /**
      * Find which path this Block became Active, without actually modifying the
@@ -870,7 +810,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
                     log.debug("comparing {} ({}) to {} ({})", 
                             pList[i].getBlock().getDisplayName(),Path.decodeDirection(pDir[i]),
                             getSystemName(),Path.decodeDirection(pFromDir[i]));
-                    if (comparePdir(pDir[i] , pFromDir[i])) { //use special comparison which handles combination directions
+                    if ((pDir[i] & pFromDir[i])>0) { //use bitwise comparison to support combination directions such as "North, West"
                         count++;
                         next = pList[i];
                     }
