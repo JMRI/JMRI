@@ -33,11 +33,6 @@ import org.slf4j.LoggerFactory;
  */
 public class CarLoadEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8066884161999922218L;
-
     public static final String NONE = "";
 
     CarLoads carLoads = CarLoads.instance();
