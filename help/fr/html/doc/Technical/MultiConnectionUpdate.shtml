@@ -15,7 +15,7 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
@@ -53,13 +53,13 @@ Ajouter toute ces choses
      
 <p>
 Modifier la classe ConnectionConfig pour prendre et enregistrer une r&#233;f&#233;rence &#224; un objet SerialPortAdapter, et le retourner depuis la m&#233;thode getAdapter(). Aussi enlevez la m&#233;tode() en instance et sa mise en œuvre.
-<code><pre>
+<pre><code>
     protected void setIntrucsstance() { 
         if (adapter == null) {
             adapter = new PR3Adapter();
         }
     }
-</pre></code>
+</code></pre>
 
 <p>
 Modifier la classe d'adaptateur (exemple: PR3Adapter) pour &#233;liminer
@@ -68,11 +68,11 @@ l'exemple () et sa mise en œuvre.
 <p>
 La classe configurexml/ConnectionConfigXml
 doit avoir une proc&#233;dure ajout&#233;e:
-<code><pre>
+<pre><code>
     protected void getInstance(Object object) {
         adapter = ((ConnectionConfig)object).getAdapter();
     }
-</pre></code>
+</code></pre>
 
 Nous devrions sans doute le remanier plus tard, mais ceci
 est la forme actuelle pour veiller &#224; ce que la bonne classe 
@@ -81,28 +81,28 @@ Nous le laissons inchang&#233; pour le moment pour
 &#233;viter la concurrence avec les serial/network refactoring
 <p>
 Aussi, changez ceci
-<code><pre>
+<pre><code>
     protected void getInstance() {
       	 adapter= new PR3Adapter();
 	}
-</pre></code>
+</code></pre>
 pour ceci:
-<code><pre>
+<pre><code>
     protected void getInstance() {
         adapter = new LnHexFilePort();
     }
-</pre></code>
+</code></pre>
 <p>
 Modifier la classe d'adaptateur (par exemple PR3Adapter) pour enlever
 l'exemple() de proc&#233;dure et son application.
 <p>
 La classe configurexml / ConnectionConfigXml
 a besoin d'avoir une proc&#233;dure ajout&#233;e:
-<code><pre>
+<pre><code>
     protected void getInstance(Object object) {
         adapter = ((ConnectionConfig)object).getAdapter();
     }
-</pre></code>
+</code></pre>
 
 <h3>Gestionnaire et Composants JavaBeans</h3>
 Pour chaque gestionnaire et  combinaison de Composants JavaBeans, vous devez

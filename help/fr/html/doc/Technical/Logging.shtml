@@ -18,6 +18,7 @@
 </head>
 <body>
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
@@ -66,9 +67,9 @@ par "A 1 ", et un fichier par "R".
 <P>
 Le fichier "default.lcf" d&#233;termine la destination et le format des messages enregistr&#233;s. Par d&#233;faut, vous obtenez des lignes qui ressemblent &#224;:
 
-<CODE><PRE>
+<pre><code>
 514668 [AWT-EventQueue-0] WARN jmri.jmrit.powerpanel.PowerPane  -Aucune instance du gestionnaire de puissance trouv&#233;s, panneau non actif 
-</PRE></CODE>
+</code></pre>
 Les colonnes sont:
 <ul>
 <li><CODE>514668 - temps en millisecondes depuis le d&#233;marrage du programme</CODE>
@@ -85,7 +86,7 @@ Pour Rapporter
 	private static final Logger log = LoggerFactory.getLogger(MyClass.class());
 </code></pre>
 <p>et ajouter des importations pour org.slf4j.Logger et org.slf4j.LoggerFactory dans votre section importations:</p>
-<code><PRE>
+<pre><code>
   import org.slf4j.Logger;
   import org.slf4j.LoggerFactory;
 </code></PRE>
@@ -101,7 +102,7 @@ cette forme &#224; la place:</p>
 	log.debug("message");
 </code></pre>
 <p>Les messages qui ne sont pas juste une cha&#238;ne explicite devrait utiliser ce formulaire &#224; la place de variables:</p>
-<code><pre>
+<pre><code>
 	log.debug("Found {}", numberEntries);
 </code></pre>	
 <p> Au cas o&#249; il serait co&#251;teux en calcul de passer un param&#232;tre dans le Rapport, utilisez le formulaire ci-dessous

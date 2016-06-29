@@ -22,11 +22,6 @@ import org.slf4j.LoggerFactory;
  */
 public class RouteCopyFrame extends OperationsFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4478401682355496019L;
-
     RouteManager routeManager = RouteManager.instance();
 
     // labels

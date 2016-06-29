@@ -19,6 +19,7 @@
 </head>
 
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
@@ -197,26 +198,26 @@ Using the JMRI "Validate XML File" tool in the "Debug" menu to
 validate a .xml file ("instance file") that uses your new or 
 updated schema is an important check of both. Use it often during
 development. You can also use it from the command line via e.g.:
-<code><pre>
+<pre><code>
 ./runtest.csh jmri/jmrit/XmlFileValidateAction xml/decoders/0NMRA.xml 
-</pre></code>
+</code></pre>
 
 <p>
 For a quick file check, Linux and Mac OS X users can validate from the
 command line with e.g. 
-<code><pre>
+<pre><code>
  cd xml
  xmllint -schema schema/aspecttable.xsd -noout signals/sample-aspects.xml
-</pre></code>
+</code></pre>
 <code>xmllint</code> can't check schema files themselves, unfortunately, because
 their schema isn't something it can handle.
 
 <p>
 Your schema docs should point to our standard stylesheet in 
 their head matter:
-<code><pre>
+<pre><code>
 &lt;?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?&gt;
-</pre></code>
+</code></pre>
 Stylesheets turn XML code, like this schema, into a human-readable form
 when the XML is parsed and displayed by a browser.
 For an example of that, click on this link to the 
@@ -460,7 +461,7 @@ files (instance files).
 
 <p>
 Sample XML:
-<code><pre>
+<pre><code>
   &lt;db:copyright&gt;
         &lt;db:year&gt;2009&lt;/db:year&gt;
         &lt;db:year&gt;2010&lt;/db:year&gt;&lt;
@@ -480,11 +481,11 @@ Sample XML:
         &lt;db:authorinitials&gt;initials&lt;/db:authorinitials&gt;
     &lt;/db:revision&gt;    
   &lt;/db:revhistory&gt;
-</pre></code>
+</code></pre>
 
 <p>
 Sample schema description: (But see the real one, which is provided in schema/docbook)
-<code><pre>
+<pre><code>
     &lt;xs:element ref="docbook:copyright" minOccurs="1" maxOccurs="1" &gt;
       &lt;xs:annotation&gt;&lt;xs:documentation&gt;
       DocBook element(s) providing copyright information in standard form.
@@ -503,7 +504,7 @@ Sample schema description: (But see the real one, which is provided in schema/do
       DocBook element(s) describing the revision history in standard form
       &lt;/xs:documentation&gt;&lt;/xs:annotation&gt;
     &lt;/xs:element&gt;
-</pre></code>
+</code></pre>
 
 
 <!--#include virtual="/Footer" -->

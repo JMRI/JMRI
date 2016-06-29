@@ -12,7 +12,7 @@
 <link rel="home" title="Home" href="/"><!-- /Style --></head>
 <body>
 <!--#include virtual="/Header" -->
-
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 

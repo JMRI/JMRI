@@ -19,13 +19,10 @@
 </head>
 
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
-	    <!-- ------------- -->
-	    <!-- Page Contents --> <!-- Required -->
-	    <!-- ------------- -->
-
 	    <h1>JMRI: Getting the old CVS Code</h1>
 
 <h2>This page is kept for historical purposes only!</h2>
@@ -39,10 +36,10 @@ source code, you should use the detailed instructions below.</p>
 <h2>Quickstart</h2>
 
 <p>You can download the JMRI source code via CVS using:
-<code><pre>
+<pre><code>
 cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri login
 cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri co all 
-</pre></code>
+</code></pre>
 (If asked for a password, just hit return)
 
 

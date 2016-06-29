@@ -34,11 +34,6 @@ import org.slf4j.LoggerFactory;
 
 public class RestoreDialog extends JDialog {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6808252535357802460L;
-
     private final static Logger log = LoggerFactory.getLogger(RestoreDialog.class
             .getName());
 

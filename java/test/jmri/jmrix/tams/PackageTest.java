@@ -5,8 +5,9 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Tests for the jmri.jmrix.tams package
+ * Tests for the jmri.jmrix.tams package.
  *
+ * @author Bob Jacobsen Copyright 2003, 2016
  * @author  Paul Bender	
  */
 public class PackageTest extends TestCase {
@@ -18,13 +19,24 @@ public class PackageTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {PackageTest.class.getName()};
+        String[] testCaseName = {"-noloading", PackageTest.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrix.tams.PackageTest");  // no tests in this class itself
+        apps.tests.AllTest.initLogging();
+        TestSuite suite = new TestSuite("jmri.jmrix.tams.PackageTest");
+        suite.addTest(TamsTurnoutManagerTest.suite());
         return suite;
+    }
+
+    // The minimal setup for log4J
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
     }
 }

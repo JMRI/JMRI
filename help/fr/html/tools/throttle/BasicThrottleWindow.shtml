@@ -50,6 +50,7 @@
 <!-- /Style -->
 </head><body>
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 <h1>L'utilisation de la Fen&#234;tre R&#233;gulateur  </h1>
