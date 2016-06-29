@@ -42,10 +42,6 @@ import org.slf4j.LoggerFactory;
  */
 public class CarsTableFrame extends OperationsFrame implements TableModelListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5469624100056817632L;
     CarsTableModel carsTableModel;
     JTable carsTable;
     boolean showAllCars;

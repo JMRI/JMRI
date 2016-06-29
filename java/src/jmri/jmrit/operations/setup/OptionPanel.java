@@ -25,11 +25,6 @@ import org.slf4j.LoggerFactory;
  */
 public class OptionPanel extends OperationsPreferencesPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5466426954499681092L;
-
     // labels
     // major buttons
     JButton saveButton = new JButton(Bundle.getMessage("Save"));

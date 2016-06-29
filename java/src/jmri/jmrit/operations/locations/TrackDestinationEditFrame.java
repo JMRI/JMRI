@@ -39,11 +39,6 @@ import org.slf4j.LoggerFactory;
  */
 public class TrackDestinationEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -962898724870308907L;
-
     Track _track = null;
 
     LocationManager locationManager = LocationManager.instance();

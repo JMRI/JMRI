@@ -27,10 +27,6 @@ import org.slf4j.LoggerFactory;
  */
 public class LocationTrackBlockingOrderFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -820196357214001064L;
     LocationTrackBlockingOrderTableModel trackModel = new LocationTrackBlockingOrderTableModel();
     JTable trackTable = new JTable(trackModel);
     JScrollPane trackPane = new JScrollPane(trackTable);
