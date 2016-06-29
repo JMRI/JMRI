@@ -18,12 +18,14 @@
 </head>
 
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
+
 <div id="mainContent">
-	    <!-- ------------- -->
+	    <!-- ============= -->
 	    <!-- Page Contents --> <!-- Required -->
-	    <!-- ------------- -->
+	    <!-- ============= -->
 
   <h1>JMRI: Getting the Code</h1>
 

@@ -4,6 +4,7 @@ package jmri.jmrix.tams;
 import java.util.ResourceBundle;
 import jmri.InstanceManager;
 import jmri.ProgrammerManager;
+//import jmri.ProgrammerManager;
 
 /**
  * Lightweight class to denote that a system is active, and provide general

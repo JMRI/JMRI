@@ -13,10 +13,6 @@ import javax.swing.AbstractAction;
  */
 public class PoolTrackAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -9167674151000147867L;
     private TrackEditFrame _tef;
     private PoolTrackFrame _ptf;
 

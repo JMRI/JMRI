@@ -11,11 +11,6 @@ import javax.swing.BorderFactory;
  */
 public class YardEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3353058611424628644L;
-
     public YardEditFrame() {
         super();
     }

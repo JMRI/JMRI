@@ -12,11 +12,6 @@ import javax.swing.BorderFactory;
  */
 public class InterchangeEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5077272536994978975L;
-
     public InterchangeEditFrame() {
         super();
     }

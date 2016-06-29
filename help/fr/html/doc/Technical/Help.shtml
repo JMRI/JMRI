@@ -18,6 +18,7 @@
 </head>
 <body>
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
@@ -74,17 +75,17 @@ sucre syntaxique fourni par de nombreux navigateurs pour permettre de pauvres re
 En particulier, il y a quelques choses &#224; surveiller.
 <ul>
 <li>Les balises d'ancrage ne sont pas XML. Plus pr&#233;cis&#233;ment,
-<code><pre>
+<pre><code>
 &lt;a id="foo"/&gt;Foo!
-</pre></code>
+</code></pre>
 demande d'&#234;tre remplac&#233; par
-<code><pre>
+<pre><code>
 &lt;a id="foo"&gt;Foo!
-</pre></code>
+</code></pre>
 or
-<code><pre>
+<pre><code>
 &lt;a name="foo"&gt;Foo!&lt;/a&gt;
-</pre></code>
+</code></pre>
 L'indicateur que vous avez pour faire ceci c'est un &lt;
 caract&#232;re apparaissant juste par lui-m&#234;me sur la page rendue>.
 

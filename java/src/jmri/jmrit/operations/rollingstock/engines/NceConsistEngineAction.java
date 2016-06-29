@@ -17,10 +17,6 @@ import jmri.jmrix.nce.NceTrafficController;
  */
 public class NceConsistEngineAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5434949149698630276L;
     NceTrafficController tc;
 
     public NceConsistEngineAction(String actionName, Component frame) {

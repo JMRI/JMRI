@@ -28,11 +28,6 @@ import org.slf4j.LoggerFactory;
  */
 public class SetPhysicalLocationFrame extends OperationsFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2053469308243548335L;
-
     LocationManager locationManager = LocationManager.instance();
 
     Location _location;
