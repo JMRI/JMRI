@@ -16,11 +16,6 @@ import org.slf4j.LoggerFactory;
  */
 public class SpurTableModel extends TrackTableModel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8498399811366483939L;
-
     public SpurTableModel() {
         super();
     }
