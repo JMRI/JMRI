@@ -81,7 +81,7 @@ public class FullBackupExportAction
             }
 
             // Now the full roster entry
-            copyFileToStream(Roster.defaultRosterFilename(), null, zipper, null);
+            copyFileToStream(Roster.getDefault().getRosterIndexPath(), null, zipper, null);
 
             zipper.setComment("Roster file saved from DecoderPro " + jmri.Version.name());
 

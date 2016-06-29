@@ -73,6 +73,7 @@ import org.slf4j.LoggerFactory;
  *
  * This server responds to HTTP requests for objects in following manner:
  * <table>
+ * <caption>HTTP methods handled by this servlet.</caption>
  * <tr><th>Method</th><th>List</th><th>Object</th></tr>
  * <tr><th>GET</th><td>Returns the list</td><td>Returns the object <em>if it
  * already exists</em></td></tr>

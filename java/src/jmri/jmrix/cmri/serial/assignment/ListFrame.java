@@ -23,6 +23,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialAddress;
 import jmri.jmrix.cmri.serial.SerialNode;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
@@ -77,9 +78,12 @@ public class ListFrame extends jmri.util.JmriJFrame {
 
     ListFrame curFrame;
 
-    public ListFrame() {
+    private CMRISystemConnectionMemo _memo = null;
+
+    public ListFrame(CMRISystemConnectionMemo memo) {
         super();
         curFrame = this;
+        _memo = memo;
     }
 
     public void initComponents() throws Exception {
@@ -221,7 +225,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
             configNodes[i] = null;
         }
         // get all configured nodes
-        SerialNode node = (SerialNode) SerialTrafficController.instance().getNode(0);
+        SerialNode node = (SerialNode) _memo.getTrafficController().getNode(0);
         int index = 1;
         while (node != null) {
             configNodes[numConfigNodes] = node;
@@ -235,7 +239,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
             }
             numConfigNodes++;
             // go to next node
-            node = (SerialNode) SerialTrafficController.instance().getNode(index);
+            node = (SerialNode) _memo.getTrafficController().getNode(index);
             index++;
         }
     }

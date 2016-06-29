@@ -13,11 +13,6 @@ import javax.swing.AbstractAction;
  */
 public class ImportCarRosterAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8894977271081874448L;
-
     public ImportCarRosterAction(String actionName, Component frame) {
         super(actionName);
     }

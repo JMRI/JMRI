@@ -5,8 +5,8 @@ import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-// import jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction;
-import jmri.jmrix.cmri.serial.nodeconfigmanager.NodeConfigManagerAction;
+import jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * Definition of objects to handle configuring a layout connection via an C/MRI
@@ -33,6 +33,8 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         super();
     }
 
+    JButton b = new JButton("Configure C/MRI nodes");
+
     public void loadDetails(JPanel details) {
     	// have to embed the usual one in a new JPanel
     	
@@ -51,6 +53,13 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 //		b.addActionListener(new NodeTableAction());		
 		b.addActionListener(new NodeConfigManagerAction());		
         
+
+        b.addActionListener(new NodeConfigAction((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()));
+        if (!additionalItems.contains(b)) {
+            additionalItems.add(b);
+        }
+        super.loadDetails(details);
+
     }
 
     @Override

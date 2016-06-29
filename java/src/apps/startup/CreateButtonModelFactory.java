@@ -1,7 +1,6 @@
 package apps.startup;
 
 import apps.CreateButtonModel;
-import apps.StartupModel;
 
 /**
  *

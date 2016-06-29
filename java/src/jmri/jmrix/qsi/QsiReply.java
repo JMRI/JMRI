@@ -104,8 +104,13 @@ public class QsiReply extends jmri.jmrix.AbstractMessage {
 
     // display format
     public String toString() {
+       QsiSystemConnectionMemo memo = jmri.InstanceManager.getDefault(jmri.jmrix.qsi.QsiSystemConnectionMemo.class);
+       return toString(memo.getQsiTrafficController());
+    }
+
+    public String toString(QsiTrafficController controller) {
         StringBuilder s = new StringBuilder();
-        if (!QsiTrafficController.instance().isSIIBootMode()) {
+        if (controller.isSIIBootMode()) {
             for (int i = 0; i < _nDataChars; i++) {
                 s.append(jmri.util.StringUtil.twoHexFromInt(_dataChars[i]));
                 s.append(" ");

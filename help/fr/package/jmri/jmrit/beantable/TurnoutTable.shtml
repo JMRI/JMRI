@@ -1,10 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- UpDated by Herv&#233; Blorec  2013-10-13-->
 <HTML LANG="fr">
 <HEAD>
-<TITLE>JMRI: Turnout TableauHelp</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<TITLE>JMRI: Le Tableau Aiguillage</TITLE>
 <META CONTENT="Bob Jacobsen" NAME="Author">
 <META NAME="keywords" CONTENT="JMRI help Turnout Table">
 
@@ -24,13 +22,13 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H2> Le Tableau Aiguillage</H2>
+<h1>Le Tableau Aiguillage</h1>
 
 <P> Ce Tableau contient une liste de tous les aiguillages existant pour ce
 panneau. Depuis ce tableau, vous pouvez changer l'&#233;tat d'un des aiguillage, changer le
 mode de r&#233;tro-signalisation, entrez descapteurs de r&#233;tro-signalisation, l'inverser, le verrouiller, et le supprimer.
 
-<H3>Colonnes du Tableau Aiguillage</H3>
+<h2>Colonnes du Tableau Aiguillage</h2>
 
 <DL>
 <DT>Nom Syst&#232;me</DT>
@@ -115,9 +113,9 @@ aiguillage en inscrivant une commande de verrouillage dans un CV. Vous devez d&#
 avant d'arr&#234;ter le programme JMRI si vous voulez restaurer 
 le fonctionnement des boutons poussoirs. Le verrouillage cesse automatiquement pour le pupitre lorsque
 le programme JMRI est arr&#234;t&#233;. Pour plus d'informations &#224; ce sujet, <A
-Href= "# Turnout lock feature"> voir ci-dessous <A/></dd>
+Href= "# Turnout lock feature"> voir ci-dessous <A/></DD>
 
-<DT><a Name="decodercol"> D&#233;codeur</A></dt>
+<DT><a Name="decodercol"> D&#233;codeur</A></DT>
 <DD> Lorsque vous utilisez la fonction de verrouillage, le programme a besoin de savoir
 quel type de d&#233;codeur DCC est utilis&#233; de sorte qu'il puisse le manipuler correctement. Si
 vous n'utilisez pas la fonction de verrouillage, ne vous emb&#234;tez pas avec ce domaine; JMRI
@@ -131,7 +129,7 @@ boutons. Nous vous recommandons d'entrer les quatre aiguillages CVP par d&#233;c
 dans Le Tableauaiguillage, m&#234;me si vous n'en verrouillez qu'un. Vous n'avez pas
 besoin de sp&#233;cifier le nombre de boutons poussoirs pour les NCE. Malheureusement, les d&#233;codeurs d'accessoires NCE
 r&#233;visions A et B ne supportent pas les verrouillage de bouton-poussoirs.</P>
-</Dd>
+</DD>
 <DT><a Name="speeds"> Vitesse Droit et D&#233;vi&#233;</A></dt>
 <DD>La vitesse Droit et D&#233;vi&#233; est utilis&#233; avec certains outils d'automatisation et de logique,
      pour aider &#224; d&#233;terminer la vitesse &#224; laquelle un train peut &#234;tre r&#233;gl&#233; par l'aiguillage
@@ -139,22 +137,24 @@ r&#233;visions A et B ne supportent pas les verrouillage de bouton-poussoirs.</P
      d&#233;terminer quel aspect doit &#234;tre affich&#233; sur un m&#226;t de signalisation.
      <P> Dans la liste d&#233;roulante, vous sont pr&#233;sent&#233;s un ensemble de vitesses fixes qui
      ont &#233;t&#233; pr&#233;d&#233;finies dans le fichier signalSpeed.xml, en plus d'une vitesse globale et
-     Utiliser les options de vitesse du canton . <br> En outre, il est &#233;galement possible d'entrer une
+     Utiliser les options de vitesse du canton. <br>
+         En outre, il est &#233;galement possible d'entrer une
      valeur num&#233;rique pour repr&#233;senter une vitesse.
      <p> La valeur globale est d&#233;finie par les option de menu <b>Vitesses</b>.
      <p> Lorsque "Utiliser la vitesse du Canton" est s&#233;lectionn&#233; ceci en effet indique &#224; l'outil d'automatisation
     d'ignorer le param&#233;trage de la vitesse &#224; travers cet aiguillage, l'outil doit alors
      seulement envisager des vitesses qui sont fix&#233;es sur les cantons.
-.
- 
+</p>
+    </DD>
+    </DL>
 
- <H3> Tableau de Commande Aiguillage </H3>
+<h3> Tableau de Commande Aiguillage </h3>
 
 Il y a quelques boutons et cases &#224; cocher en bas du
 Tableau Aiguillage qui commande son fonctionnement.
 <DL>
-Â Â Â Â <DT> Ajouter</DT>
-<DD> Appuyer sur ce bouton ouvre une fen&#234;tre oÃ¹ vous pouvez
+    <DT> Ajouter</DT>
+<DD> Appuyer sur ce bouton ouvre une fen&#234;tre où vous pouvez
 <a href="TurnoutAddEdit.shtml"> Ajouter de Nouveaux Aiguillages</a>.</dd>
 
 <DT> Montrer Informations R&#233;tro Signalisation </DT>
@@ -167,7 +167,7 @@ Tableau Aiguillage qui commande son fonctionnement.
 <DD> Quand elle est coch&#233;e, permet d'automatiser le r&#233;glage globale par d&#233;faut pour les 
 aiguillages. Actuellement, le global par d&#233;faut ne provoque pas de tentatives pour les
 aiguillages. Voir la section sur l'<A HREF="#automation">
-Automatisation des Aiguillages </a>  ci-dessous pour plus d'informations.</Dd>
+Automatisation des Aiguillages </a>  ci-dessous pour plus d'informations.</DD>
 
 </DL>
 
@@ -213,7 +213,7 @@ colonne  vous montre ce que le programme pense qu'il est.</dd>
 <DT> "Mode"</DT>
 <DD> C'est la m&#233;thode utilis&#233;e par cette r&#233;tro signalisation aiguillage. (Vous pouvez
 la changer pour chaque aiguillage individuellement, mais il faut noter que les changements ne
-prendront effet qu'&#224; partir du moment oÃ¹ vous aurez cliqu&#233; ailleurs, et vous pourriez avoir besoin d'ajouter
+prendront effet qu'&#224; partir du moment où vous aurez cliqu&#233; ailleurs, et vous pourriez avoir besoin d'ajouter
 certains noms de capteur dans la colonne suivante (s))</dd>
 
 <DT> "Capteur 1", "Capteur 2"</DT>
@@ -261,8 +261,7 @@ micro-contact attach&#233; &#224; la t&#234;te de commutation. Pour plus d'infor
 le programme que l'aiguillage est pilot&#233; par une DS54 Digitrax avec
 deux micro-contacts li&#233;s &#224; l'interrupteur et  aux fils. Pour de plus amples
 informations, consultez la page d'exemples sur le site JMRI
-<A HREF="../../../../html/hardware/loconet/DS54.shtml"> DS54</A>
-.</dd>
+<A HREF="../../../../html/hardware/loconet/DS54.shtml"> DS54</A>.</DD>
 
 </DL>
 
@@ -289,8 +288,9 @@ entre les composants de DCC.
  s'appuie sur le syst&#232;me de messages sp&#233;cifiques qui ne sont pas utilis&#233;s dans ce mode.
 Il n'est &#233;galement pas disponible pour les syst&#232;mes qui ne disposent pas d'une station de commande DCC 
 pour envoyer les messages bruts)
+</dd>
+</DL>
 
-</Dl>
 <p>
 Normalement, les aiguillages d&#233;vient seulement une fois, qui est le r&#233;glage "Off"
 sous la rubrique "Automatiser". Vous pouvez d&#233;finir un  aiguillage pour
@@ -333,17 +333,17 @@ besoin de savoir quel type de d&#233;codeur accessoire fonctionne sur chaque aig
 des messages pour d&#233;placer l'aiguillage en avant et en arri&#232;re, nous devons donc
  cr&#233;er les bons messages personnalis&#233;s pour chaque type) Les diff&#233;rents types sont
 s&#233;lectionn&#233; dans la
-<A HREF="#decodercol"> "colonne D&#233;codeur"</A> du TableauAiguillage.
-
+<a HREF="#decodercol">"colonne D&#233;codeur"</a> du TableauAiguillage.
 
 <H4> Verrouillage Itin&#233;raires</H4>
 Pour vous aider &#224; s&#233;lectionner un ensemble d'appareils de voie &#224; verrouiller, un itin&#233;raire peut &#234;tre
 verrouill&#233;. Tous les aiguillages qui sont supervis&#233;s par le programme JMRI et qui
-sont inclus dans l'itin&#233;raire seront verrouill&#233;s. Voir la <A HREF= "RouteTable.shtml"> page itin&#233;raire></A>
+sont inclus dans l'itin&#233;raire seront verrouill&#233;s. Voir la <A HREF= "RouteTable.shtml">page Itin&#233;raire</A>
  pour plus d'informations &#224; ce sujet.
 
-
 <!--#include virtual="/Footer" -->
+    </div>
+  </div>
 </BODY>
 </HTML>
 

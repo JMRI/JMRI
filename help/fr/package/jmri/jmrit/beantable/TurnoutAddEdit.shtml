@@ -1,39 +1,35 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- UpDated by Herv&#233; Blorec 2013-10-13-->
-<HTML LANG="fr">
-<HEAD>
-<TITLE>JMRI: Adding/Editing Turnouts</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<html LANG="fr">
+<head>
+<TITLE>JMRI: Ajout/&#201;dition Aiguillages</TITLE>
 <META CONTENT="Bob Jacobsen" NAME="Author">
 <META NAME="keywords" CONTENT="JMRI help Turnout Add Edit">
 
 <!-- Style -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1"
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css" MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css" MEDIA="print">
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1> Ajout/&#201;dition Aiguillages</H1>
+<h1>Ajout/&#201;dition Aiguillages</h1>
 
 <p> Lorsque vous ajoutez un Aiguillage, vous s&#233;lectionnez dans la liste d&#233;roulante le syst&#232;me auquel l'
 aiguillage est rattach&#233;.</p>
 <img src="AddTurnout.png" >
 <p> Entrez  une adresse valide pour l'Aiguillage et, si d&#233;sir&#233; entrer un nom utilisateur.</p>
 
-<H2> Cr&#233;ation d'un  Nombre d'Aiguillage</H2>
+<h2>Cr&#233;ation d'un  Nombre d'Aiguillage</h2>
 
-<p> Il est &#233;galement possible de cr&#233;er un certain nombre d'Aiguillage . <br>
+<p> Il est &#233;galement possible de cr&#233;er un certain nombre d'Aiguillage.<br>
 La case "Ajouter une plage" sera activ&#233;e.</P>
 <img src="AddTurnoutNumber.png">
 <p> Apr&#232;s l'activation de la boite "Ajouter  Plage", il faudra ensuite activer le champ "nombre &#224; ajouter".
@@ -44,6 +40,8 @@ chaque nom utilisateur unique. <br>
 Voir aide g&#233;n&#233;rale pour plus d'informations"sur les <A HREF="../../../../html/doc/Technical/Names.shtml"> Noms</A>".
 
 <!--#include virtual="/Footer" -->
-</BODY>
-</HTML>
+        </div>
+      </div>
+</body>
+</html>
 

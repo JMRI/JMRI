@@ -5,6 +5,7 @@ import jmri.jmrix.cmri.serial.SerialMessage;
 import jmri.jmrix.cmri.serial.SerialNode;
 import jmri.jmrix.cmri.serial.SerialReply;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.cmrinetmetrics.CMRInetMetricsData;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,10 +23,12 @@ import org.slf4j.LoggerFactory;
  */
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
 
+    private CMRISystemConnectionMemo _memo = null;
     protected JButton packetFilterButton = new JButton();  //c2
 
-    public SerialMonFrame() {
+    public SerialMonFrame(CMRISystemConnectionMemo memo) {
         super();
+        _memo = memo;
     }
 
     @Override
@@ -33,15 +36,14 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         return "CMRI Serial Command Monitor";
     }
 
-    @Override
     protected void init() {
         // connect to TrafficController
-        SerialTrafficController.instance().addSerialListener(this);
+        _memo.getTrafficController().addSerialListener(this);
     }
 
     @Override
     public void dispose() {
-        SerialTrafficController.instance().removeSerialListener(this);
+        _memo.getTrafficController().removeSerialListener(this);
         super.dispose();
     }
 

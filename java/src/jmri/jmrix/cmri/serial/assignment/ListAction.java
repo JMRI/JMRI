@@ -1,10 +1,10 @@
 package jmri.jmrix.cmri.serial.assignment;
 
+import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import javax.swing.AbstractAction;
-import java.awt.event.ActionEvent;
-import jmri.jmrix.cmri.serial.nodeiolist.NodeIOListFrame;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * Swing action to create and register a ListFrame object
@@ -13,16 +13,19 @@ import jmri.jmrix.cmri.serial.nodeiolist.NodeIOListFrame;
  */
 public class ListAction extends AbstractAction {
 
-    public ListAction(String s) {
+    private CMRISystemConnectionMemo _memo = null;
+
+    public ListAction(String s,CMRISystemConnectionMemo memo) {
         super(s);
+        _memo = memo;
     }
 
-    public ListAction() {
-        this("List C/MRI Assignments");
+    public ListAction(CMRISystemConnectionMemo memo) {
+        this("List C/MRI Assignments",memo);
     }
 
     public void actionPerformed(ActionEvent e) {
-        ListFrame f = new ListFrame();
+        ListFrame f = new ListFrame(_memo);
         try {
             f.initComponents();
         } catch (Exception ex) {

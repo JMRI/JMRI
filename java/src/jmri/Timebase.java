@@ -156,12 +156,12 @@ public interface Timebase extends NamedBean {
     /**
      * Request a call-back when the bound Rate or Run property changes.
      */
-    public void addPropertyChangeListener(@Nonnull PropertyChangeListener l);
+    public void addPropertyChangeListener(PropertyChangeListener l);
 
     /**
      * Remove a request for a call-back when a bound property changes.
      */
-    public void removePropertyChangeListener(@Nonnull PropertyChangeListener l);
+    public void removePropertyChangeListener(PropertyChangeListener l);
 
     /**
      * Request a call-back when the minutes place of the time changes.

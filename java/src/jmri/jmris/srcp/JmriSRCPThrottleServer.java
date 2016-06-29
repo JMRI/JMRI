@@ -10,7 +10,6 @@ import jmri.DccThrottle;
 import jmri.JmriException;
 import jmri.LocoAddress;
 import jmri.Throttle;
-import jmri.ThrottleListener;
 import jmri.ThrottleManager;
 import jmri.jmris.AbstractThrottleServer;
 import jmri.jmrix.SystemConnectionMemo;

@@ -1,10 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
 <!-- Translated by Herv&#233; Blorec 2013-09-07 -->
-<title>JMRI: Multi-connection Update</title>
+<title>JMRI: Mise &#224; jour de Multi-connexions</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset= iso-8859-1">
@@ -41,7 +39,7 @@ Dans le m&#234;me temps, nous faisons la mise &#224; jour du mod&#232;le Swing, 
 un couple d'autres nettoyages mineurs sur le code.
 
 
-<h2>Dans le r&#233;pertoire du syst&#232;me principal </h2>
+<h2>Dans le r&#233;pertoire du syst&#232;me principal</h2>
 
 Cr&#233;er une sous-classe sp&#233;cifique de SystemConnectionMemo.
 Ce qui finira par faire tout l'initialisation gestionnaire, et
@@ -55,13 +53,13 @@ Ajouter toute ces choses
      
 <p>
 Modifier la classe ConnectionConfig pour prendre et enregistrer une r&#233;f&#233;rence &#224; un objet SerialPortAdapter, et le retourner depuis la m&#233;thode getAdapter(). Aussi enlevez la m&#233;tode() en instance et sa mise en œuvre.
-<code><pre>
+<pre><code>
     protected void setIntrucsstance() { 
         if (adapter == null) {
             adapter = new PR3Adapter();
         }
     }
-</pre></code>
+</code></pre>
 
 <p>
 Modifier la classe d'adaptateur (exemple: PR3Adapter) pour &#233;liminer
@@ -70,11 +68,11 @@ l'exemple () et sa mise en œuvre.
 <p>
 La classe configurexml/ConnectionConfigXml
 doit avoir une proc&#233;dure ajout&#233;e:
-<code><pre>
+<pre><code>
     protected void getInstance(Object object) {
         adapter = ((ConnectionConfig)object).getAdapter();
     }
-</pre></code>
+</code></pre>
 
 Nous devrions sans doute le remanier plus tard, mais ceci
 est la forme actuelle pour veiller &#224; ce que la bonne classe 
@@ -83,28 +81,28 @@ Nous le laissons inchang&#233; pour le moment pour
 &#233;viter la concurrence avec les serial/network refactoring
 <p>
 Aussi, changez ceci
-<code><pre>
+<pre><code>
     protected void getInstance() {
       	 adapter= new PR3Adapter();
 	}
-</pre></code>
+</code></pre>
 pour ceci:
-<code><pre>
+<pre><code>
     protected void getInstance() {
         adapter = new LnHexFilePort();
     }
-</pre></code>
+</code></pre>
 <p>
 Modifier la classe d'adaptateur (par exemple PR3Adapter) pour enlever
 l'exemple() de proc&#233;dure et son application.
 <p>
 La classe configurexml / ConnectionConfigXml
 a besoin d'avoir une proc&#233;dure ajout&#233;e:
-<code><pre>
+<pre><code>
     protected void getInstance(Object object) {
         adapter = ((ConnectionConfig)object).getAdapter();
     }
-</pre></code>
+</code></pre>
 
 <h3>Gestionnaire et Composants JavaBeans</h3>
 Pour chaque gestionnaire et  combinaison de Composants JavaBeans, vous devez
@@ -151,12 +149,12 @@ connexion du syst&#232;me est alors cr&#233;&#233;z
 via l'utilisation de classes internes, comme
 jmri.jmrix.loconet.locomon.LocoMonPane$Default
 
-<p>
 Cela demande aux gens de r&#233;initialiser leurs pr&#233;f&#233;rences pour les actions de d&#233;marrage
 , boutons, etc Nous n'allons pas les faire migrer pour
 pour eux.
 
-
 <!--#include virtual="/Footer" -->
+    </div>
+    </div>
 </body>
 </html>
