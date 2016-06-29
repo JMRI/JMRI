@@ -680,9 +680,6 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
                 count++;
                 next = pList[i];
             }
-            log.debug("\n{} is {}\n{} is {}",
-                    Path.decodeDirection(pDir[i]), String.format("%16s", Integer.toBinaryString(pDir[i])).replace(' ', '0'),
-                    Path.decodeDirection(pFromDir[i]), String.format("%16s", Integer.toBinaryString(pFromDir[i])).replace(' ', '0'));
         }
         // sort on number of neighbors
         if (count == 0) {
