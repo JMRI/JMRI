@@ -22,9 +22,6 @@ install:
   - mvn -version
 build: off
 
-# note that PowerShell scripts need an empty line between each command
-# this is not normal for PowerShell and is likely a side effect of
-# AppVeyor's YAML processing
 test_script:
 - ps: |
     mvn test -P appveyor --quiet --batch-mode
