@@ -36,9 +36,10 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.ConnectionConfigManagerTest.suite());
 
         suite.addTest(jmri.jmrix.acela.PackageTest.suite());
-        suite.addTest(jmri.jmrix.bachrus.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.bachrus.PackageTest.class));
         suite.addTest(jmri.jmrix.can.PackageTest.suite());
-        suite.addTest(jmri.jmrix.cmri.serial.PackageTest.suite());
+        //suite.addTest(jmri.jmrix.cmri.serial.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.cmri.PackageTest.class));
         suite.addTest(jmri.jmrix.dcc.PackageTest.suite());
         suite.addTest(jmri.jmrix.dcc4pc.PackageTest.suite());
         suite.addTest(jmri.jmrix.direct.PackageTest.suite());

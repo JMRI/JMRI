@@ -35,7 +35,6 @@ public class NetworkDriverAdapter extends EcosPortController implements jmri.jmr
         control.setAdapterMemo(this.getSystemConnectionMemo());
         this.getSystemConnectionMemo().setEcosTrafficController(control);
         this.getSystemConnectionMemo().configureManagers();
-        jmri.jmrix.ecos.ActiveFlag.setActive();
     }
 
     @Override

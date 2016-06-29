@@ -14,11 +14,6 @@ import jmri.jmrit.operations.trains.TrainSwitchLists;
  */
 public class PrintSwitchListAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -686196539645588273L;
-
     public PrintSwitchListAction(String actionName, Location location, boolean isPreview) {
         super(actionName);
         this.location = location;

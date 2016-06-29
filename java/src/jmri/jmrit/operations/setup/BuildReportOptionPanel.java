@@ -22,7 +22,6 @@ import javax.swing.JRadioButton;
  */
 public class BuildReportOptionPanel extends OperationsPreferencesPanel {
 
-    private static final long serialVersionUID = 755494379884398257L;
 //    private static final Logger log = LoggerFactory.getLogger(OperationsSetupPanel.class);
 
     // major buttons

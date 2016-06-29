@@ -12,10 +12,6 @@ import javax.swing.AbstractAction;
  */
 public class ScheduleResetHitsAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8633992345767664436L;
     Schedule _schedule;
 
     public ScheduleResetHitsAction(Schedule schedule) {

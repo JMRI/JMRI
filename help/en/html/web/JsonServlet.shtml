@@ -31,9 +31,9 @@
     </head>
 
     <body>
-        <!--#include virtual="/Header" -->
-
-        <!--#include virtual="Sidebar" -->
+    <!--#include virtual="/Header" -->
+    <div id="mBody">
+    <!--#include virtual="Sidebar" -->
         <div id="mainContent">
 
             <h1>JMRI JSON Protocol</h1>

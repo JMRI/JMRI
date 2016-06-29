@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * Swing action to create and register a DiagnosticFrame object
@@ -12,16 +13,19 @@ import org.slf4j.LoggerFactory;
  */
 public class DiagnosticAction extends AbstractAction {
 
-    public DiagnosticAction(String s) {
+    CMRISystemConnectionMemo _memo = null;
+
+    public DiagnosticAction(String s,CMRISystemConnectionMemo memo) {
         super(s);
+        _memo = memo;
     }
 
-    public DiagnosticAction() {
-        this("Run C/MRI Diagnostic");
+    public DiagnosticAction(CMRISystemConnectionMemo memo) {
+        this("Run C/MRI Diagnostic",memo);
     }
 
     public void actionPerformed(ActionEvent e) {
-        DiagnosticFrame f = new DiagnosticFrame();
+        DiagnosticFrame f = new DiagnosticFrame(_memo);
         try {
             f.initComponents();
         } catch (Exception ex) {

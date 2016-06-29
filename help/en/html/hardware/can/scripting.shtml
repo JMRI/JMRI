@@ -43,13 +43,13 @@ CAN frames are created as objects, then queued for
 transmission.  The header (ID) and data are handled 
 separately.
 
-<code><pre>
+<pre><code>
 frame = jmri.jmrix.can.CanMessage(2)  # will load 2 bytes
 frame.setId(0x123)
 frame.setElement(0, 0x45)
 frame.setElement(1, 0x67)
 jmri.jmrix.can.TrafficController.instance().sendCanMessage(frame, None)
-</pre></code>
+</code></pre>
 
 <h3>Receiving CAN Frames</h3>
 <p>
@@ -59,7 +59,7 @@ transmitted on the bus by JMRI.
 The CanListener interface provides these separately
 via "reply" and "message" procedures, respectively.
 
-<code><pre>
+<pre><code>
 class MyCanListener (jmri.jmrix.can.CanListener) :
     def message(self, msg) :
         # handle transmitted CAN frames by ignoring them
@@ -72,7 +72,7 @@ class MyCanListener (jmri.jmrix.can.CanListener) :
         return
     
 jmri.jmrix.can.TrafficController.instance().addCanListener(MyCanListener())
-</pre></code>
+</code></pre>
 
 <a name="documentation"></a><h2>Documentation</h2>
 <h3>JMRI Help</h3>

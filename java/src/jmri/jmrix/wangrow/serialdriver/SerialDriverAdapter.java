@@ -9,7 +9,6 @@ import java.io.InputStream;
 import jmri.jmrix.nce.NcePortController;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.NceTrafficController;
-import jmri.jmrix.wangrow.ActiveFlag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -109,9 +108,6 @@ public class SerialDriverAdapter extends NcePortController implements jmri.jmrix
         tc.connectPort(this);
 
         this.getSystemConnectionMemo().configureManagers();
-
-        ActiveFlag.setActive();
-
     }
 
     // base class methods for the NcePortController interface
