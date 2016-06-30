@@ -8,17 +8,24 @@ addons:
     packages:
     - graphviz
 
+# prevent travis default mvn install behavior
+install: true
+ 
 before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - sleep 3 # give xvfb some time to start
 
 script: 
- - travis_wait ant checklineends checknonascii javadoc ci-test-travis
+  - travis_wait mvn test -P travis --quiet --batch-mode
 
 jdk:
   - oraclejdk8
-  
+
+cache:
+  directories:
+  - $HOME/.m2
+
 os:
   - linux
 #  - osx # Travis OS X support does not include Java
