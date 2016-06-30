@@ -30,6 +30,7 @@ public class PackageTest extends TestCase {
 //		Something wrong in the xsd files?  maybe using -2-9-6 version?
         suite.addTest(SchemaTest.suite());
         suite.addTest(OBlockTest.suite());
+        suite.addTest(OBlockManagerTest.suite());
         suite.addTest(OPathTest.suite());
         suite.addTest(WarrantTest.suite());
         suite.addTest(LogixActionTest.suite());

@@ -1,17 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- UpDated by Hervé Blorec <bzh56420@yahoo.fr> 2013-10-20-->
 <html lang="fr">
 <head>
- <TITLE>
-      JMRI: New Train Help
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=utf-8">
-    <META content="Dave Duchamp" name=Author>
-    <META name="keywords" content="JMRI help Dispatcher New Train">
+ <title>
+      JMRI: Fen&ecirc;tre Activer Nouveau Train
+ </title>
+    <meta content="Dave Duchamp" name="Author">
+    <meta name="keywords" content="JMRI help Dispatcher New Train">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv=Content-Type content="text/html; charset=utf-8">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -24,9 +22,9 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1> Fenêtre Activer Nouveau Train </H1>
+<h1>Fen&ecirc;tre Activer Nouveau Train</h1>
 
-<H2> Introduction</h2>
+<h2> Introduction</h2>
 
 <p> La fenêtre <b>Activer Nouveau Train</b> prend en charge la création d'un nouveau <b>Train Actif</b>. Pour créer un Train Actif le répartiteur utilise cette fenêtre pour attribuer un
 <b><a href="../beantable/TransitTable.shtml"> Transit</a></b>, assigner un train,
@@ -35,15 +33,16 @@ lorsque le transit sur le réseau est terminée). Les Options pour les nouveaux 
 <p>Les Transits sont choisis parmi les Transits définis dans le tableau Transit. Dispatcheur
 listera tous les Transits qui ne sont pas actuellement en Train Actif.</p>
 <p>Les Trains peuvent provenir de n'importe laquelle des trois sources:</p>
-<ul>
-<li> <b>Trains à partir de la liste</b> - Dispatcheur va lister tous les trains dans la Liste JMRI
-qui ne sont pas actuellement Actif</Li>
-<li> <b>Trains depuis trains</b> - Dispatcheur va lister tous les trains disponibles
-depuis les Opérations qui ne sont pas Actif.</li>
-<li> <b>Trains depuis l'Entrée utilisateur</b> - Dispatcher va remplacer la
-boîte de sélection  de train dans la fenêtre Activer Nouveau Train par deux champs de saisie
-permettant à l'utilisateur d'entrer un nom de train et une adresse de dcc.
-</ Li></ul>
+    <ul>
+    <li><b>Trains à partir de la liste</b> - Dispatcheur va lister tous les trains dans la Liste JMRI
+    qui ne sont pas actuellement Actif</Li>
+    <li><b>Trains depuis trains</b> - Dispatcheur va lister tous les trains disponibles
+    depuis les Opérations qui ne sont pas Actif.</li>
+    <li><b>Trains depuis l'Entrée utilisateur</b> - Dispatcher va remplacer la
+    boîte de sélection  de train dans la fenêtre Activer Nouveau Train par deux champs de saisie
+    permettant à l'utilisateur d'entrer un nom de train et une adresse de dcc.
+    </li>
+    </ul>
 <p> La source de formation des trains de Dispatcheur est définie en sélectionnant l'une de celle ci - dessus dans les
 <b><a href="Options.shtml"> Options</a></b> accessibles depuis la fenêtre <b>Options</b> de Dispatcher.
 </p>
@@ -81,44 +80,47 @@ puis sélectionnez le fichier d'information de train devant être supprimé.</p>
 
 <p> Pour créer un nouveau <b>Train Actif</b>, utilisez la procédure suivante:
 <ol>
-<p> <li> Cliquez sur le bouton <b>Nouveau Train...</b> dans la fenêtre
-<b><a href="Dispatcher.shtml"> Dispatcher</a></b> pour faire apparaître la fenêtre ci-dessous.</p>
+<li> Cliquez sur le bouton <b>Nouveau Train...</b> dans la fenêtre
+<b><a href="Dispatcher.shtml"> Dispatcher</a></b> pour faire apparaître la fenêtre ci-dessous.
 <img src="NewTrainWindow.jpg" height="399" width="480">
-</ Li>
-<p> <li> Si vous souhaitez utiliser des informations sur les trains enregistrés, cliquez sur Charger <b>Train Info</b>.
-Voir <a href="#loadsave"> Ci-dessus</a> pour plus d'informations sur le chargement des infos du train.</P>
-</ Li>
-<p> <li> Sélectionner un Transit depuis  la boîte de sélection de Transit. Les Transits sélectionnés
-précisent l'itinéraire que leTrain Actif suivra pendant sa circulation sur le réseau
-. Les Transits sont affichés et les NouveauxTransits sont créés à
+</li>
+<li> Si vous souhaitez utiliser des informations sur les trains enregistrés, cliquez sur Charger <b>Train Info</b>.
+Voir <a href="#loadsave"> Ci-dessus</a> pour plus d'informations sur le chargement des infos du train.
+</li>
+<li> Sélectionner un Transit depuis  la boîte de sélection de Transit. Les Transits sélectionnés
+précisent l'itinéraire que leTrain Actif suivra pendant sa circulation sur le réseau.
+    Les Transits sont affichés et les NouveauxTransits sont créés à
 l'aide de la <b><a href="../beantable/TransitTable.shtml"> table Transit</a></b>
-accessibles à partir des <b>tables</b> sous-menu du menu <b>Outils</b> de JMRI . Cette
+accessibles à partir des <b>tables</b> sous-menu du menu <b>Outils</b> de JMRI. Cette
 Boîte de sélection de Transit permettra la sélection de tout Transit dans la table de Transit
-qui n'est pas utilisé par un Train Actif.</p>
-</ Li>
-<p> <li> Si la fenêtre ci-dessus est affichée, sélectionnez un Train depuis la 
+qui n'est pas utilisé par un Train Actif.
+</li>
+<li> Si la fenêtre ci-dessus est affichée, sélectionnez un Train depuis la
 boîte de sélection. Cette fenêtre est affichée si les options <b>Trains à partir de la Liste</b> ou
-<b>Trains depuis les Trains</b> sont sélectionnées comme la source de train pour Dispatcher
-.</p>
-<p> - OU -</p>
-</ Li>
-<p> <li> Si la fenêtre ci-dessous est affiché,</p>
+<b>Trains depuis les Trains</b> sont sélectionnées comme la source de train pour Dispatcher.
+</li>
+</ol>
+
+<p>- OU -</p>
+
+<ol>
+<li> Si la fenêtre ci-dessous est affiché,<br><br>
 <img src="NewTrainAltWindow.jpg" height="418" width="407">
-<p> entrez un nom de train dans le champ <b>Train:</b>, et entrez une adresse numérique
+<br>entrez un nom de train dans le champ <b>Train:</b>, et entrez une adresse numérique
 dans le champ <b>adresse DCC:</b>. Tout nom court qui identifie
-le train peut être utilisé à condition que le nom ne soit pas utilisé par un autre Train Actif
-. L'adresse Dcc doit être un nombre dans la gamme 1 - 9999. Remarque: Si le
+le train peut être utilisé à condition que le nom ne soit pas utilisé par un autre Train Actif.
+    L'adresse Dcc doit être un nombre dans la gamme 1 - 9999. Remarque: Si le
 Train n'est pas exécuté automatiquement, l'adresse DCC ne doit pas être exacte. Cette
-fenêtre est affichée si les  <b>Trains depuis l'Entrée Utilisateur</b> est sélectionné comme source de train Dispatcher.</p>
-</ Li>
-<p> <li> Si l'emplacement de départ du Train Actif est un Canton au sein du Transit 
+fenêtre est affichée si les  <b>Trains depuis l'Entrée Utilisateur</b> est sélectionné comme source de train Dispatcher.</br>
+</li>
+<li> Si l'emplacement de départ du Train Actif est un Canton au sein du Transit
 sélectionné, consultez la boite <b>Train dans Transit sélectionné</b>. Si l'emplacement
 de départ du Train Actif est en dehors du Transit sélectionné, (dans un Canton
 reliée à un Canton au sein du Transit sélectionné) décochez cette case.
 Cochez et décochez cette case ces boites de résultats dans différentes sélections dans la boite sélectionné
-<b>Position Démarrage du Train:.</b> </p>
-</ Li>
-<p> <li> Choisir un <b>Lieu de Départ du Train :</b> depuis la boîte de sélection. Cette
+<b>Position Démarrage du Train:.</b>
+</li>
+<li>Choisir un <b>Lieu de Départ du Train:</b> depuis la boîte de sélection. Cette
 boîte sélectionnée  liste tous les Cantons compatibles avec la case à cocher ci-dessus et le
 Transit sélectionné. Pour identifier chaque Canton uniquement, l'identification du Canton
 est constitué du nom système du Canton, suivie par le nom utilisateur du Canton (entre
@@ -126,18 +128,18 @@ parenthèses) suivi du numéro de séquence d'une Section dans la définition du
 Si le Train est situé dans le Transit, ce numéro de séquence identifie la Section où se trouve le train. Si 
 le train est situé dans un Canton connecté, le numéro de séquence identifie la
 Section qui sera entré lorsque le train entre dans le Transit. Si le train
-s'étend sur deux Cantons, sélectionnez le Canton où la locomotive est située .</p>
+s'étend sur deux Cantons, sélectionnez le Canton où la locomotive est située.
 </li>
-<p> <li> Sélectionnez un <b>Emplacement de Destination du Train:</b> dans la boîte de sélection. Cette
+<li> Sélectionnez un <b>Emplacement de Destination du Train:</b> dans la boîte de sélection. Cette
 boîte de sélectionne liste tous les cantons cohérents avec le Transit sélectionné qui peut être
 accessible depuis l'emplacement sélectionné commençant par le trajet en direction du 
-Transit. L'identifiant du Canton dans la boîte de sélection se compose du nom système du Canton
-, suivi par le nom utilisateur  (entre parenthèses). Si une Section est dans le
+Transit. L'identifiant du Canton dans la boîte de sélection se compose du nom système du Canton,
+    suivi par le nom utilisateur  (entre parenthèses). Si une Section est dans le
 Transit plus d'une fois, le numéro de séquence de la Section de destination est
 annexée à l'identifiant du Canton pour identifier le Canton de destination
-uniquement.</P>
-</ Li>
-<p> <li>Cochez <b>Réinitialiser Lorsque Terminé</b> pour mettre en place le Train Actif pour continuer
+uniquement.
+</li>
+<li>Cochez <b>Réinitialiser Lorsque Terminé</b> pour mettre en place le Train Actif pour continuer
 son exécution. Avec un fonctionnement continu, quand un Train Actif a terminé l'exécution
 à travers son Transit, il est immédiatement remis en circulation autour de son transit à nouveau.
 Le Fonctionnement continu exige que le Transit sélectionné soit mis en place d'une certaine
@@ -145,26 +147,25 @@ manière - la première Section et la dernière Section doit être la même.
 Si le Transit sélectionné n'est pas capable de fonctionner en continu, l'utilisateur
 est averti et <b>Réinitialiser Lorsque Fait</b> est décochée. Pour plus d'informations
 sur la mise en place d'un Transit pour une marche continue  voir le fichier d'aide
-<b><a href="../beantable/TransitTable.shtml"> table Transit</a></b>
-.</p>
-</ Li>
-<p> <li> Cochez<b>Inverser A La Fin</b> pour permettre au Train Actif  d'aller en avant et en arrière en
+<b><a href="../beantable/TransitTable.shtml">table Transit</a></b>.
+</li>
+<li> Cochez<b>Inverser A La Fin</b> pour permettre au Train Actif  d'aller en avant et en arrière en
 cours d'exécution. Avec <b>Inverse A La  Fin</b> sélectionné, quand un Train Actif a atteint
 la fin de son Transit, la direction de Transit est inversée, et le Train retourne
 à travers le Transit à son point de départ. Pour aller en arrière, le Transit
 doit avoir au moins trois Sections, une à chaque extrémité et au moins une dans le
 milieu, et le train actif devrait convenir à chacune des Sections d'extrémité. La course continue en 
 avant et en arrière  est accomplie en cochant également  <b>Réinitialiser Quand Terminé</b>.
-</ P></li>
-<li> Entrez une <b>priorité</b> pour le Train Actif par rapport à d'autres Trains Actifs
-. Les grands nombres sont une priorité plus élevée. La priorité est utilisé par le répartiteur
+</li>
+<li> Entrez une <b>priorité</b> pour le Train Actif par rapport à d'autres Trains Actifs.
+Les grands nombres sont une priorité plus élevée. La priorité est utilisé par le répartiteur
 et/ou des fonctions automatisées pour arbitrer entre les Trains Actif si
-plusieurs Trains Actifs sont demandeur des mêmes ressources.</p>
-</ Li>
-<p> <li> Sélectionner un <b></b> à partir du menu contextuel <b>Type de Train:</b>.  Le
-type de train sélectionné est affiché dans la fenêtre de Dispatcher afin d'aider aux décisions d'allocation
-.</p>
-<p> <li> Si le train démarre à une heure rapide spécifiée, cochez la boite
+plusieurs Trains Actifs sont demandeur des mêmes ressources.
+</li>
+<li> Sélectionner un <b></b> à partir du menu contextuel <b>Type de Train:</b>.  Le
+type de train sélectionné est affiché dans la fenêtre de Dispatcher afin d'aider aux décisions d'allocation.
+</li>
+<li>Si le train démarre à une heure rapide spécifiée, cochez la boite
 <b>épart Différé</b>, et entrez l'heure de début dans le champs heure et
 minute de l'entrée <b>Heure de Départ:</b>. Si l'horloge rapide n'a pas
 atteint l'heure de départ indiquée sur un Train Actif, l'heure de départ prévue est affichée dans l'entrée de ce Train Actif dans la table Trains Actifs de la fenêtre Dispatcher.
@@ -174,39 +175,39 @@ répartiteur a une chance de passer outre cette restriction. Si un Train Actif e
 lancé automatiquement par l'ordinateur (voir ci-dessous), le Train Actif
 démarrer automatiquement à l'heure d'horloge rapide spécifiée. Cette option permet
 au répartiteur de mettre en place un certain nombre de Trains Actifs qui débuteront à diverse
-moments au cours d'une session.</p>
-<p> <li> Cochez<b>Exécution Automatique du Train</b> pour demander que le Train Actif
+moments au cours d'une session.
+<li> Cochez<b>Exécution Automatique du Train</b> pour demander que le Train Actif
 soit exécuté automatiquement par l'ordinateur. Si le Train Actif doit être exécuté manuellement
 par un opérateur humain, sauter les étapes à venir; aller directement du troisième point au dernier
 point de ces instructions. Demander <b>Exécution Automatique du Train</b> étendra
 cette fenêtre (voir ci-dessous) pour afficher les options qui ne sont liés qu'aux circulation automatiques
-des trains.</p>
-
+des trains.
+<br>
 <img src="NewTrainAutoWindow.jpg" height="528" width="480">
-<p><b>Note: </b> Les exigences pour l'exécution automatique ne sont validées que lorsque la création
+<br>
+<b>Note:</b> Les exigences pour l'exécution automatique ne sont validées que lorsque la création
 d'un Train Actif est demandée. Plus d'informations sur l'exécution automatique des
-Trains Actifs peuvent être trouvés dans le fichier d'aide <b><a  href="Dispatcher.shtml">Dispatcher </a> </b>
-. </p>
-</Li>
-<p> <li> Dans le <b>Facteur de Vitesse: </b>, entrez un facteur (0,1 - 1,5) pour modifier tous les 
+Trains Actifs peuvent être trouvés dans le fichier d'aide <b><a href="Dispatcher.shtml">Dispatcher</a></b>.
+</li>
+<li> Dans le <b>Facteur de Vitesse: </b>, entrez un facteur (0,1 - 1,5) pour modifier tous les
 réglages de vitesse du train. Si la locomotive roule <i> normalement </i>, entrez 1.0. Si les
 locomotive roule plus lentement que la normale, entrez un facteur compris entre 1,0 et 1,5. Si les
 locomotive roule plus vite que la normale, entrez un facteur inférieur à 1,0. Ce facteur
 est conçu pour permettre à l'utilisateur de compenser les différences entre les locomotives.
 Le facteur de vitesse est entré multiplie tous les réglages de vitesse immédiatement
-avant que la vitesse soit envoyée à la locomotive. </p>
-</Li>
-<p> <li>Dans le champ  <b>Vitesse Maximale par Défaut : </b>, entrez un numéro de (0,1 - 1,0) pour limiter
-limiter la vitesse maximale du train Actif . Par exemple, entrer 0.6 
+avant que la vitesse soit envoyée à la locomotive.
+</li>
+<li>Dans le champ <b>Vitesse Maximale par Défaut:</b> entrez un numéro de (0,1 - 1,0) pour limiter
+limiter la vitesse maximale du train Actif. Par exemple, entrer 0.6
 limitera la vitesse maximale à 60% du réglage de la vitesse possible. La Vitesse Maximale peut être
 utilisé pour fabriquer certains Trains Actifs, par exemple un train de fret local, afin de fonctionner plus lentement
 que les signaux à eux pourrait déterminer. La Vitesse Maximale
 entrée ici est la valeur de départ de la Vitesse Maximale. La Vitesse Maximum peut
 être changée pendant la course automatique du train en mettant en place des<b><a href="../beantable/ViewSpecialActions.shtml"> Actions </a> </b> dans le Transit.
 <b>Actions </b> que le changement de la vitesse maximale peut utilisé, par exemple, pour ralentir
-un Train Actif en exécution automatique quand il passe à travers une ville sur le réseau. </p>
-</Li>
-<p> <li> Sélectionnez <b>Un taux de Rampe </b>. Quand un train en marche automatique
+un Train Actif en exécution automatique quand il passe à travers une ville sur le réseau.
+</li>
+<li> Sélectionnez <b>Un taux de Rampe </b>. Quand un train en marche automatique
 a besoin de changer la vitesse, l'ordinateur peut envoyer la nouvelle vitesse à la locomotive
 immédiatement (RAMP_NONE), ou il peut <b>Ramper </b> la vitesse à sa nouvelle valeur
 (Changer la vitesse progressivement) amenant le train à sa nouvelle vitesse sur une période
@@ -214,17 +215,17 @@ de temps. Le taux de rampe à utiliser dépend du décodeur dans la locomotive
 et comment le décodeur est mis en place. Certains décodeurs ont des caractéristiques qui peuvent modifier la vitesse
 progressivement (cette option décodeur est nommée différemment pour différents décodeurs). Si
 le décodeur  fait le travail souhaité, sélectionnez RAMP_NONE. Sinon, sélectionnez l'un des
-taux de la rampe proposés. </p>
-</Li>
-<li> <p>Cochez <b>Loco a un décodeur sonore. </b> si la locomotive a un décodeur sonore.
+taux de la rampe proposés.
+</li>
+<li>Cochez <b>Loco a un décodeur sonore. </b> si la locomotive a un décodeur sonore.
 Si cet élément n'est pas coché, les <b>Actions </b> qui nécessitent un décodeur sonore, tels que
-sonner la cloche ou le klaxon seront inhibées. </p>
-</Li>
-<li>  <p>Cochez<b> Exécuter en sens inverse </b> si la locomotive est à exécuter en arrière sur
+sonner la cloche ou le klaxon seront inhibées.
+</li>
+<li>Cochez<b> Exécuter en sens inverse </b> si la locomotive est à exécuter en arrière sur
 le Transit. Cela ne devrait pas être confondu avec la direction à travers le transit,
 qui est toujours en AVANT quand le Train Actif  démarre. Cochez cet élément est
-équivalent au  paramètre inverse sur un régulateur à main. </p>
-<p> Cette option permet à une locomotive de reculer à travers le transit. Pour
+équivalent au  paramètre inverse sur un régulateur à main.<br>
+Cette option permet à une locomotive de reculer à travers le transit. Pour
 Par exemple, un mouvement  local d'un triage automatiquement dans la direction en avant d'
 une voie de garage, les voitures sont décrochées manuellement, puis la locomotive a besoin de reculer
 automatiquement dans le triage. Ceci pourrait être accompli en utilisant deux Trains Actifs,
@@ -232,9 +233,9 @@ les deux s'exécutant automatiquement. On pourrait déplacer le train du triage 
 avec la locomotive se déplacant en avant et en utilisant un second,différent , mais avec un
 Transit similaire serait le retour de la voie de garage au triage avec le Train Actif
 en sens inverse. Cela devrait également couvrir la situation où <i> avant </i> et
-<i> inverse </i> sont en arrière dans la locomotive. </p>
-</Li>
-<li> <p> Cochez<b>Toutes les voitures ont des roues avec résistance </b> si le train est entièrement
+<i> inverse </i> sont en arrière dans la locomotive.
+</li>
+<li>Cochez<b>Toutes les voitures ont des roues avec résistance</b> si le train est entièrement
 détectable par des détecteurs d'occupation de tous les cantons dans les Sections dans le Transit. Il
 ne doivent pas y avoir de lacunes dans la détection si cette option est cochée. Cela signifie généralement que
 tous les wagons dans le train aura des roues avec résistance. Ceci est particulièrement important
@@ -245,31 +246,33 @@ utilisera un Capteur Arrêt s'il est présent. Si aucun Capteur Arrêt n'est con
 et si le train va convenir dans la section (voir ci-dessous), et si cette option est
 cochée, le train s'arrêtera lorsque la section précédente devient inoccupée. Si
 cette option n'est pas cochée, ou si le train ne rentre pas, le train est
-arrêté quand il entre dans la section. </p>
-
+arrêté quand il entre dans la section.
 </li>
-<li><p>Entrer la longueur maximale que les train peuvent avoir en traversant les
+<li>Entrer la longueur maximale que les train peuvent avoir en traversant les
 Transit dans le champ  <b>Longueur Maximale des Trains : </b>. La longueur doit être saisie
-en pieds ou mètres à l'échelle  , en fonction de la sélection de dimension dans la fenêtre
-<b><a href="Options.shtml"> Options </a> </b> accessibles depuis le menu  <b>Options </b> de Dispatcher
-. Saisie d'une valeur raisonnable de la longueur maximale du
+en pieds ou mètres à l'échelle, en fonction de la sélection de dimension dans la fenêtre
+<b><a href="Options.shtml"> Options </a> </b> accessibles depuis le menu  <b>Options </b> de Dispatcher.
+    Saisie d'une valeur raisonnable de la longueur maximale du
  train est importante pour décider si un train rentre dans un Section lors de l'arrêt
-du train (voir ci-dessus). </p>
+du train (voir ci-dessus).
 </li>
-<p> <li> Si vous souhaitez enregistrer vos informations entrées du train pour une utilisation ultérieure, cliquez sur
+<li> Si vous souhaitez enregistrer vos informations entrées du train pour une utilisation ultérieure, cliquez sur
 <b>Enregistrer Infos Train</b>. Voir <a href="#loadsave"> Ci-dessus</a> pour plus d'informations
 sur la sauvegarde d'informations sur les trains. </li>
 <p> <li> Cliquez <b>Ajouter Nouveau Train </b> après tout  ci-dessus ont été mis pour créer
 et activer le nouveau Train Actif. Le nouveau Train Actif  apparaîtra immédiatement
-dans la fenêtre Dispatcher, et cette fenêtre sera fermée. </p>
-<p> - OU - </p>
+dans la fenêtre Dispatcher, et cette fenêtre sera fermée.
 </li>
-</li>
-<li> <p> Cliquez <b>Annuler </b> pour quitter cette fenêtre sans créer un nouveau Train Actif
-. </P>
+</ol>
 
+<p>- OU -</p>
+<ol>
+<li>Cliquez <b>Annuler </b> pour quitter cette fenêtre sans créer un nouveau Train Actif.
 </li>
+</ol>
 
 <!--#include virtual="/Footer" -->
+        </div>
+      </div>
 </body>
 </html>

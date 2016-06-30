@@ -150,31 +150,12 @@ abstract public class RfidTrafficController extends AbstractMRTrafficController 
         return null;
     }
 
-//    /**
-//     * static function returning the RfidTrafficController instance to use.
-//     * @return The registered RfidTrafficController instance for general use,
-//     *         if need be creating one.
-//     */
-//    static public RfidTrafficController instance() {
-//        if (self == null) {
-//            if (log.isDebugEnabled()) log.debug("Creating default SerialTrafficController instance");
-//            self = new RfidTrafficController();
-//        }
-//        return self;
-//    }
-//    static volatile RfidTrafficController self;
     @Deprecated
     @Override
     protected void setInstance() {
 //        self = this;
     }
 
-//    static public void checkInstance(RfidTrafficController tc) {
-//        if (self != tc) {
-//            log.error("mismatched TrafficController instance");
-//            new Exception("").printStackTrace();
-//        }
-//    }
     boolean sendInterlock = false; // send the 00 interlock when CRC received
     boolean expectLength = false;  // next byte is length of read
     boolean countingBytes = false; // counting remainingBytes into reply buffer

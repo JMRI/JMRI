@@ -16,7 +16,7 @@ DecoderPro&reg; Comprehensive Programmer
 
 <body>
 <!--#include virtual="/Header" -->
-
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 

@@ -2,7 +2,6 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2003-2008 -->
-<!-- $Id$ -->
 <!-- Updated by Blorec Herv&#233; le 2013-08-31; Egbert Broerse (html markup); le 2015-10-18 -->
 <title>JMRI: DecoderPro Symbolic Programmer</title>
 
@@ -17,7 +16,7 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 

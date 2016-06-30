@@ -14,11 +14,11 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<a NAME="Top"></a>
+<a name="Top"></a>
 
 <h1>DecoderPro&reg; Comprehensive Programmer</h1>
 <h2>Consisting Functions Pane</h2>
@@ -31,15 +31,15 @@
 
 <hr>
 
-<p>Consisting is a means to have two or more locomotives respond to orders from the command station, and do it together in unison.  There are a number of terms used to describe consisting, and the manufacturers don�t agree what those terms should be.  The NMRA has adopted terminology, so that is what will be used in this discussion.</p>
+<p>Consisting is a means to have two or more locomotives respond to orders from the command station, and do it together in unison.  There are a number of terms used to describe consisting, and the manufacturers don't agree what those terms should be.  The NMRA has adopted terminology, so that is what will be used in this discussion.</p>
 
-<p>Address Consisting.  You merely set the address of every locomotive to be the same, and we can use the Basic Programmer pane to do this.  Then a DCC instruction sent to a locomotive with address XX will cause all the locomotives with address XX to respond.  It works well for locomotives that are always run together, and is portable from one layout to the other.  The disadvantage is that it�s a pain to keep re-addressing your locomotives if you don�t always run them together.  </p>
+<p>Address Consisting.  You merely set the address of every locomotive to be the same, and we can use the Basic Programmer pane to do this.  Then a DCC instruction sent to a locomotive with address XX will cause all the locomotives with address XX to respond.  It works well for locomotives that are always run together, and is portable from one layout to the other.  The disadvantage is that it's a pain to keep re-addressing your locomotives if you don't always run them together.  </p>
 
 <p>So, the NMRA came up with two additional means of consisting.  One is set up in, and remembered by the command station, and the other is set in the decoders.</p>
 
-<p>The NMRA calls the command station based system Basic Consisting.  The command station keeps a list of all the locos in the consist. When an action is needed the command station sends an individual packet to every locomotive in the consist, which causes them to then act together.  Since this method is command station based the consist is not portable to another system.  Also, since it does not need to be programmed into the decoders, DecoderPro doesn�t need to deal with it.</p>
+<p>The NMRA calls the command station based system Basic Consisting.  The command station keeps a list of all the locos in the consist. When an action is needed the command station sends an individual packet to every locomotive in the consist, which causes them to then act together.  Since this method is command station based the consist is not portable to another system.  Also, since it does not need to be programmed into the decoders, DecoderPro doesn't need to deal with it.</p>
 
-<p>The NMRA calls the decoder based system Advanced Consisting. To implement this system the decoder has to have a special memory space (CV19) which is used to store a consist address.  This type of consisting is portable between layouts, since the information that the loco is part of a consist, and the address information for that consist is carried in the decoder.  The disadvantage is that once the locomotive is assigned to a consist it will only respond to the consist address.  If you forget to �break� the consist at the end of an operation, you will be puzzled as to why your locomotive won�t respond to requests for motion, even though it will respond to some of the lighting functions.</p>
+<p>The NMRA calls the decoder based system Advanced Consisting. To implement this system the decoder has to have a special memory space (CV19) which is used to store a consist address.  This type of consisting is portable between layouts, since the information that the loco is part of a consist, and the address information for that consist is carried in the decoder.  The disadvantage is that once the locomotive is assigned to a consist it will only respond to the consist address.  If you forget to 'break' the consist at the end of an operation, you will be puzzled as to why your locomotive won't respond to requests for motion, even though it will respond to some of the lighting functions.</p>
 
 
 <p>DecoderPro utilizes the Consisting Pane to set up NMRA Advanced Consists and the response of the locomotive to function requests sent to the consist address.

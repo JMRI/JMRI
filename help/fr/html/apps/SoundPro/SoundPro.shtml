@@ -1,17 +1,16 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!--  $Id$ --
 <!-- UpDated by Blorec Herv&#233; le 2013-09-02-->
  <html lang="fr">
 <head>
  <TITLE>
-      JMRI: SoundPro Main Window
+      JMRI: Fen&#234;tre Principale SoundPro
  </TITLE>
     <META content="Bob Jacobsen" name=Author>
     <META content="Matthew Harris" name=Author>
     <META name="keywords" content="JMRI help preferences">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset= iso-8859-1">
+  <meta http-equiv="Content-Type" content="text/html; charset= iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -21,10 +20,11 @@
 
 <body>
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
     <div id="mainContent">
 
-<H1>JMRI: Fen&#234;tre Principale SoundPro</H1>
+<h1>JMRI: Fen&#234;tre Principale SoundPro</h1>
 
 <img src="../../../../../resources/SoundPro.gif" align="right" height="100" width="100">
 Le fen&#234;tre principale SoundPro vous donne acc&#232;s &#224; toutes les
@@ -39,9 +39,8 @@ Aide sur les menus sp&#233;cifiques:
 <li><a href="../../../html/tools/Audio.shtml">Audio</a>
 </ul>
 
-<p>
-
 <!--#include virtual="/Footer" -->
+        </div>
 </body>
 </html>
 

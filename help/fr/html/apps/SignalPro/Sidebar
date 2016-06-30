@@ -1,22 +1,21 @@
 <!-- Sidebar -->
 <hr class="hide">
-<div id="mBody">
 <div id="side"> <!-- Block of text on left side of page -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<!-- info only: <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1"> -->
 <!-- UpDated  by Blorec Herv&#233; le 2013-9-02 --> 
-<dl class=toc>
+<dl class="toc">
 
-<dt><h3>Information SignalPro </h3></dt><DD><UL>
-<LI><A HREF="../../tools/Signalling/index.shtml">Signaux</a>
+<dt><h3>Information SignalPro </h3></dt><DD>
+<UL>
+<LI><a HREF="../../tools/Signalling/index.shtml">Signaux</a>
 </UL>
 
-
-<dt><h3>Autres Infos utiles</h3></dt><DD><UL>
-
+<dt><h3>Autres Infos utiles</h3></dt><DD>
+<UL>
 <LI><a HREF="../../tools/Sensors.shtml">Capteurs</a>
-<LI><A HREF="../../tools/Routes.shtml">Itin&#233;raires</a>
-<LI><A HREF="../../tools/fastclock/index.shtml">Horloges Rapides</a>
-<LI><A HREF="../../doc/Technical/TurnoutFeedback.shtml">R&#233;troaction Aiguillage</a>
+<LI><a HREF="../../tools/Routes.shtml">Itin&#233;raires</a>
+<LI><a HREF="../../tools/fastclock/index.shtml">Horloges Rapides</a>
+<LI><a HREF="../../doc/Technical/TurnoutFeedback.shtml">R&#233;troaction Aiguillage</a>
 </UL>
 
 </dl>

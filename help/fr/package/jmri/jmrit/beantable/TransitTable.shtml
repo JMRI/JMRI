@@ -41,11 +41,11 @@ Les Train voyagent depuis les Sections avec des num&#233;ros de s&#233;quence pl
 <p> Dans les zones de Transit sp&#233;cifi&#233;es par l'utilisateur, des Sections de <i>substitution</i> peuvent &#234;tre d&#233;sign&#233;es.
 Par exemple, pour se d&#233;placer entre les "2nd" et "4&#232;me" Sections dans un transit, il peut y
 avoir de multiples "3&#232;me" Sections, n'importe laquelle pourrait &#234;tre utilis&#233;e pour voyager entre la 2e et la
-4&#232;me Section . Les Sections Alternatives pr&#233;voient des voies de passages et des voies d'&#233;vitements. 
+4&#232;me Section. Les Sections Alternatives pr&#233;voient des voies de passages et des voies d'&#233;vitements.
 Les Transits &#233;galement pr&#233;voient des boucles de retournement. Pour fournir des va-et-vient. Par exemple
 pour les tramways, une option est pr&#233;vue dans le Dispatcher pour inverser automatiquement la
 direction de la course gr&#226;ce &#224; un Transit lorsque le train arrive &#224; la fin de son
-Transit, et ex&#233;cute le train en sens inverse pour le d&#233;but de son Transit.</P>
+Transit, et ex&#233;cute le train en sens inverse pour le d&#233;but de son Transit.</p>
 <p>Les Transits acceptent &#224; la fois des trains en manuel et automatique. Quand un train
 fonctionne en mode automatique, le Transit pr&#233;voit l'activation d'<b>Actions</b>
  quand un train arrive dans une Section d&#233;sign&#233;e dans le Transit. Une

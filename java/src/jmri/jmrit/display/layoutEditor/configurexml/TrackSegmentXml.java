@@ -54,7 +54,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
                 element.setAttribute("hideConLines", "" + (p.hideConstructionLines() ? "yes" : "no"));
             }
         }
-        element.setAttribute("class", "jmri.jmrit.display.configurexml.TrackSegmentXml");
+        element.setAttribute("class", getClass().getName());
         return element;
     }
 

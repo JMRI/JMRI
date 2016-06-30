@@ -1,36 +1,29 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- UpDated by Blorec Herv&#233; le 2013-09-08-->
 <html lang="fr">
 <head>
     <TITLE>
- 	JMRI: Recommended Practices
+ 	JMRI: Pratiques Recommand&#233;es
    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
+    <META content="Bob Jacobsen" name="Author">
     <meta name="keywords" content="JMRI technical code standards recommendation Swing">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
-
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
-
+<body>
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
 
-	    <H1>JMRI: Pratiques Recommand&#233;es</H1>
+	    <h1>JMRI: Pratiques Recommand&#233;es</h1>
 
 Voici la page d'infos diverses et des pointeurs pour les d&#233;veloppeurs JMRI.
 
@@ -82,7 +75,7 @@ et probablement l'utiliser plus. Si cela ne donne pas
 suffisamment de fonctionnalit&#233;s, nous pourrions &#233;ventuellement passer &#224; l'
 <A HREF="http://opencsv.sourceforge.net/api/au/com/bytecode/opencsv/"> API opencsv</a>, mais comme nous voulons n'en utiliser qu'un
 la conversion demandera beaucoup de travail.
-</UL>
+</ul>
 
 <h2>Format du Code</h2>
 Les
@@ -108,9 +101,9 @@ de sorte qu'il serait bon de coder ailleurs, pendant que &#231;a fonctionne touj
 <p>
 Vous pouvez travailler avec les contr&#244;les relatifs &#224; l'obsolescence "on" lors de la compilation.
 Pour ce faire, changez cette ligne de build.xml:
-<code><pre>
+<pre><code>
 &lt;property name="deprecation" value="on" /&gt;
-</pre></code>
+</code></pre>
 
 Cela vous permet d'&#234;tre attentif aux nouveaux avertissements de d&#233;sapprobation que vous code.
 
@@ -126,7 +119,7 @@ Nous les utilisons de cette fa&#231;on:
 * @ Deprecated 2.7.8
 
 @ Deprecated // 2.7.8
-</ pre> </ code>
+</pre> </code>
 
 o&#249; la ligne contenant la version dans laquelle la d&#233;valorisation est appliqu&#233;e.
 Cela vous permet de savoir facilement depuis combien de temps elle a &#233;t&#233; d&#233;sapprouv&#233;e.

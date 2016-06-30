@@ -37,11 +37,6 @@ import org.slf4j.LoggerFactory;
  */
 public class SetTrainIconPositionFrame extends OperationsFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6408476815508585050L;
-
     RouteManager routeManager = RouteManager.instance();
 
     // labels

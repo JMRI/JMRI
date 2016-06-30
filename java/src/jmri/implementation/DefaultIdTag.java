@@ -115,10 +115,14 @@ public class DefaultIdTag extends AbstractIdTag {
                 this.setComment(e.getChild("comment").getText()); //NOI18N
             }
             if (e.getChild("whereLastSeen") != null) { //NOI18N
-                this.setWhereLastSeen(
-                        InstanceManager.reporterManagerInstance().provideReporter(
-                                e.getChild("whereLastSeen").getText())); //NOI18N
-                this.whenLastSeen = null;
+                try {
+                    Reporter r = InstanceManager.reporterManagerInstance()
+                                    .provideReporter(e.getChild("whereLastSeen").getText()); //NOI18N
+                    this.setWhereLastSeen(r);
+                    this.whenLastSeen = null;
+                } catch (IllegalArgumentException ex) {
+                    log.warn("Failed to provide Turnout \"{}\" in load", e.getChild("whereLastSeen").getText());
+                }
             }
             if (e.getChild("whenLastSeen") != null) { //NOI18N
                 log.debug("When Last Seen: " + e.getChild("whenLastSeen").getText());

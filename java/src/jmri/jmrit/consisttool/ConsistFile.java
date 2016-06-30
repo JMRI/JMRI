@@ -40,7 +40,7 @@ public class ConsistFile extends XmlFile {
         consistMan = InstanceManager.getDefault(jmri.ConsistManager.class);
         // set the location to a subdirectory of the defined roster
         // directory
-        setFileLocation(Roster.getFileLocation() + "roster" + File.separator + "consist");
+        setFileLocation(Roster.getDefault().getRosterLocation() + "roster" + File.separator + "consist");
     }
 
     /**

@@ -93,7 +93,8 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
     public void addEntry(String pName, NamedIcon icon) {
         NamedBeanHandle<Sensor> sensor;
         if (InstanceManager.sensorManagerInstance() != null) {
-            sensor = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, InstanceManager.sensorManagerInstance().provideSensor(pName));
+            sensor = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class)
+                        .getNamedBeanHandle(pName, InstanceManager.sensorManagerInstance().provideSensor(pName));
             addEntry(sensor, icon);
         } else {
             log.error("No SensorManager for this protocol, icon won't see changes");

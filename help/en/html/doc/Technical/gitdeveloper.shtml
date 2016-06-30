@@ -19,12 +19,13 @@
 </head>
 
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 <div id="mainContent">
-	    <!-- ------------- -->
+	    <!-- ============= -->
 	    <!-- Page Contents --> <!-- Required -->
-	    <!-- ------------- -->
+	    <!-- ============= -->
 
   <h1>JMRI: Developing with JMRI Code</h1>
 
@@ -78,7 +79,7 @@ To create a new branch:
   git checkout -b my-new-feature-or-fix<br/>
   </code></pre>
 <p>
-The first two "git checkout master" & "git pull" lines makes sure that you are starting
+The first two "git checkout master" &amp; "git pull" lines makes sure that you are starting
 from the most recent "master" branch contents.  The master branch is where we
 do development between test releases.
 <p>
@@ -140,11 +141,11 @@ because that helps your friends and colleagues understand what you've done.
   repository so that you can get the most recent updates from others.  To
   check this, do a &quot;git remote -v&quot; which should show:
   
-<code><pre>
+<pre><code>
    % git remote -v<br/>
    origin	https://github.com/JMRI/JMRI.git (fetch)<br/>
    origin	https://github.com/yourname/JMRI.git (push)
-</pre></code>
+</code></pre>
   
 
  <a name="push" id="push"></a><h3>Push Your Changes to Your GitHub Repository</h3>

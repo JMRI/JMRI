@@ -12,15 +12,12 @@ import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.DecimalFormat;
-import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -40,10 +37,10 @@ import jmri.SignalSystem;
 import jmri.SignalSystemManager;
 import jmri.Turnout;
 import jmri.implementation.DccSignalMast;
+import jmri.implementation.MatrixSignalMast;
 import jmri.implementation.SignalHeadSignalMast;
 import jmri.implementation.TurnoutSignalMast;
 import jmri.implementation.VirtualSignalMast;
-import jmri.implementation.MatrixSignalMast;
 import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.FileUtil;
 import jmri.util.StringUtil;
@@ -1698,14 +1695,12 @@ public class AddSignalMastPanel extends JPanel {
         output5panel.setBorder(border5);
         turnoutpanel.add(output5panel);
 
-        if (output2panel != null) {
-            output2panel.setVisible(bitNum > 1);}
-        if (output3panel != null) {
-            output3panel.setVisible(bitNum > 2);}
-        if (output4panel != null) {
-            output4panel.setVisible(bitNum > 3);}
-        if (output5panel != null) {
-            output5panel.setVisible(bitNum > 4);}
+        // output1panel always on
+        output2panel.setVisible(bitNum > 1);
+        output3panel.setVisible(bitNum > 2);
+        output4panel.setVisible(bitNum > 3);
+        output5panel.setVisible(bitNum > 4);
+
         matrixMastPanel.add(turnoutpanel);
 
         UnLitCheck2.setVisible(bitNum > 1);
@@ -1986,10 +1981,10 @@ public class AddSignalMastPanel extends JPanel {
         JCheckBox bitCheck4 = new JCheckBox();
         JCheckBox bitCheck5 = new JCheckBox();
         JTextField aspectBitsField = new JTextField(5); // for debug
-        char[] aspectBits;
         String aspect = "";
         String emptyChars = "00000";
         char[] emptyBits = emptyChars.toCharArray();
+        char[] aspectBits = emptyBits;
 
         /**
          * Build new aspect matrix panel
@@ -1997,9 +1992,6 @@ public class AddSignalMastPanel extends JPanel {
          * @param aspect String like "Clear"
          */
         MatrixAspectPanel(String aspect) {
-            if (aspectBits == null) {
-                aspectBits = emptyBits;
-            }
             this.aspect = aspect;
         }
 
@@ -2010,7 +2002,7 @@ public class AddSignalMastPanel extends JPanel {
          * @param panelBits char[] of up to 5 1's and 0's
          */
         MatrixAspectPanel(String aspect, char[] panelBits) {
-            if (panelBits == null || panelBits.equals("")) {
+            if (panelBits == null || panelBits.length == 0) {
                 return;
             }
             this.aspect = aspect;
@@ -2092,7 +2084,8 @@ public class AddSignalMastPanel extends JPanel {
          * Sends the on/off positions for an Aspect to mast
          * @return A char[] of '1' and '0' elements with a length between 1 and 5
          * corresponding with the number of outputs for this mast
-         * @see MatrixSignalMast#AddSignalMastPanel#okPressed(ActionEvent)
+         * @see jmri.implementation.MatrixSignalMast
+         * @see #okPressed(java.awt.event.ActionEvent) 
          */
         char[] trimAspectBits() {
             try {
