@@ -16,18 +16,24 @@
 <!ELEMENT dispatcheroptions (options)>
 
 <!ELEMENT options EMPTY >
-    <!ATTLIST options lename                  CDATA #REQUIRED>  
+    <!ATTLIST options lename                  CDATA #IMPLIED>  
     <!ATTLIST options useconnectivity         CDATA #REQUIRED>
     <!ATTLIST options trainsfromroster        CDATA #REQUIRED>
     <!ATTLIST options trainsfromtrains        CDATA #REQUIRED>
     <!ATTLIST options trainsfromuser          CDATA #REQUIRED>
     <!ATTLIST options autoallocate            CDATA #REQUIRED>
     <!ATTLIST options autoturnouts            CDATA #REQUIRED>
+    <!ATTLIST options trustknownturnouts      CDATA #REQUIRED>
     <!ATTLIST options hasoccupancydetection   CDATA #REQUIRED>
     <!ATTLIST options shortactivetrainnames   CDATA #REQUIRED>
     <!ATTLIST options shortnameinblock        CDATA #REQUIRED>
     <!ATTLIST options extracolorforallocated  CDATA #REQUIRED>
     <!ATTLIST options nameinallocatedblock    CDATA #REQUIRED>
+    <!ATTLIST options supportvsdecoder        CDATA #REQUIRED>
     <!ATTLIST options layoutscale             CDATA #REQUIRED>
     <!ATTLIST options usescalemeters          CDATA #REQUIRED>
+    <!ATTLIST options userosterentryinblock   CDATA #REQUIRED>
+    <!ATTLIST options usesignaltype           CDATA #REQUIRED>
+    <!ATTLIST options minthrottleinterval     CDATA #REQUIRED>
+    <!ATTLIST options fullramptime            CDATA #REQUIRED>
 

@@ -5,66 +5,80 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Carries the reply to an TamsMessage.
+ * Carries the reply to a TamsMessage
  * <P>
- * Some rudimentary support is provided for the "binary" option.
  *
- * Based on work by Bob Jacobsen
+ * Based on work by Bob Jacobsen and Kevin Dickerson
  *
- * @author	Kevin Dickerson Copyright (C) 2012
+ * @author  Jan Boen - version 151220 - 1211
+ * 
  * @version $Revision: 18574 $
  */
 public class TamsReply extends jmri.jmrix.AbstractMRReply {
 
     // create a new one
-    public TamsReply() {
-        super();
+	public TamsReply() {
+		super();
+	}
+	
+	//Do we need Tams source message?
+	private TamsMessage source;
+	
+	public TamsMessage getSource() {
+        return source;
+    }
+	
+	public void setSource(TamsMessage source) {
+        this.source = source;
     }
 
-    public TamsReply(String s) {
-        super(s);
-    }
+	public TamsReply(String s) {
+		super(s);
+	}
+	
 
-    public TamsReply(TamsReply l) {
-        super(l);
-    }
+	// Maximum size of a reply packet is 157 bytes.
+	// At least for 52 S88 modules each generating 3 bytes + a last byte 00
+	public int maxSize() {
+		return 157;
+	}
 
-    // these can be very large
-    public int maxSize() {
-        return 1024;
-    }
+	// no need to do anything
+	protected int skipPrefix(int index) {
+		return index;
+	}
 
-    // no need to do anything
-    protected int skipPrefix(int index) {
-        return index;
-    }
+	public int value() {
+		if (isBinary()) {
+			return getElement(0);//Jan thinks this should return the whole binary reply and not just element(0)
+		} else {
+			// Tams reply for a CV value, returns the decimal, hex then binary
+			// value.
+			// 15 = $0F = %00001111
+			int index = 0;
+			String s = "" + (char) getElement(index);
+			if ((char) getElement(index++) != ' ') {
+				s = s + (char) getElement(index);
+			}
+			if ((char) getElement(index++) != ' ') {
+				s = s + (char) getElement(index);
+			}
+			s = s.trim();
+			int val = -1;
+			try {
+				val = Integer.parseInt(s);
+			} catch (Exception e) {
+				log.error("Unable to get number from reply: \"" + s
+						+ "\" index: " + index + " message: \"" + toString()
+						+ "\"");
+			}
+			log.info(Integer.toString(val));
+			return val;
+		}
+	}
 
-    //tams reply for a cv value, returns the decimal, hex then binary value.
-    // 15 = $0F = %00001111
-    public int value() {
-        int index = 0;
-        String s = "" + (char) getElement(index);
-        if ((char) getElement(index++) != ' ') {
-            s = s + (char) getElement(index);
-        }
-        if ((char) getElement(index++) != ' ') {
-            s = s + (char) getElement(index);
-        }
-        s = s.trim();
-        int val = -1;
-        try {
-            val = Integer.parseInt(s);
-        } catch (Exception e) {
-            log.error("Unable to get number from reply: \"" + s + "\" index: " + index
-                    + " message: \"" + toString() + "\"");
-        }
-        log.info(Integer.toString(val));
-        return val;
-    }
-
-    private final static Logger log = LoggerFactory.getLogger(TamsReply.class.getName());
+	static Logger log = LoggerFactory.getLogger(TamsReply.class.getName());
 
 }
-
 
 /* @(#)TamsReply.java */
