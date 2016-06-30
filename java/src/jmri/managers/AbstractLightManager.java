@@ -49,7 +49,7 @@ public abstract class AbstractLightManager extends AbstractManager
         } else if (name.length() > 0) {
             return newLight(makeSystemName(name), null);
         } else {
-            throw new IllegalArgumentException("Name must have non-full length");
+            throw new IllegalArgumentException("\""+name+"\" is invalid");
         }
     }
 
@@ -115,12 +115,12 @@ public abstract class AbstractLightManager extends AbstractManager
         if (systemName == null) {
             log.error("SystemName cannot be null. UserName was "
                     + ((userName == null) ? "null" : userName));
-            return null;
+            throw new IllegalArgumentException("Non-null systemName required");
         }
         // is system name in correct format?
         if (!validSystemNameFormat(systemName)) {
             log.error("Invalid system name for newLight: " + systemName);
-            return null;
+            throw new IllegalArgumentException("\""+systemName+"\" is invalid");
         }
 
         // return existing if there is one

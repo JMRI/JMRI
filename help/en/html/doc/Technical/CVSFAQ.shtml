@@ -25,11 +25,12 @@
 </head>
 
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
 
-	    <H1>JMRI: CVS FAQ</H1>
+<H1>JMRI: CVS FAQ</H1>
 This is a list of Frequently Asked Questions for CVS, particularly regarding how
 we use it with JMRI.
 

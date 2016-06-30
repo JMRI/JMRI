@@ -31,10 +31,6 @@ import org.slf4j.LoggerFactory;
  */
 public class ScheduleTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2920410151470878120L;
     // Defines the columns
     private static final int ID_COLUMN = 0;
     private static final int CURRENT_COLUMN = ID_COLUMN + 1;

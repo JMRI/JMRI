@@ -35,23 +35,33 @@ public class RunTrainAction extends Action {
                 return;
             }
             Train train = getAutomationItem().getTrain();
-            if (train != null  && train.getRoute() != null && train.isBuilt() && TrainCustomManifest.manifestCreatorFileExists()) {
-                setRunning(true);
-                new TrainCustomManifest().checkProcessComplete(); // this will wait thread
-                TrainCustomManifest.addCVSFile(train.createCSVManifestFile());
-                boolean status = TrainCustomManifest.process();
-                if (status) {
-                    try {
-                        TrainCustomManifest.waitForProcessToComplete(); // wait up to 60 seconds
-                    } catch (InterruptedException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                }
-                finishAction(status);
-            } else {
+            if (train == null) {
+                log.warn("No train selected for custom manifest");
                 finishAction(false);
+                return;
             }
+            // a train needs a route in order to be built
+            if (train.getRoute() == null || !train.isBuilt()) {
+                log.warn("Train ({}) needs to be built before creating a custom manifest", train.getName());
+                finishAction(false);
+                return;
+            }
+            setRunning(true);
+            new TrainCustomManifest().checkProcessComplete(); // this will wait thread
+            TrainCustomManifest.addCVSFile(train.createCSVManifestFile());
+            boolean status = TrainCustomManifest.process();
+            if (status) {
+                try {
+                    status = TrainCustomManifest.waitForProcessToComplete(); // wait for process to complete or timeout
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                if (!status) {
+                    log.warn("Timeout when creating custom manifest for train ({})", train.getName());
+                }
+            }
+            finishAction(status);
         }
     }
 
@@ -59,5 +69,6 @@ public class RunTrainAction extends Action {
     public void cancelAction() {
         // no cancel for this action     
     }
+
     private final static Logger log = LoggerFactory.getLogger(RunTrainAction.class.getName());
 }

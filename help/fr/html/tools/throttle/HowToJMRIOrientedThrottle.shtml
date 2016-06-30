@@ -30,7 +30,7 @@
 <link rel="icon" href="/images/jmri.ico" type="image/png" />
 <link rel="home" title="Home" href="/" /><!-- /Style --></head><body>
 <!--#include virtual="/Header" -->
-
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 <h1>Comment Construire une Interface R&#233;gulateur Orient&#233;e JMRI </h1> Fort de son historique nous supposons que vous &#234;tes un utilisateur d&#233;j&#224; exp&#233;riment&#233; des JMRI. <br/>

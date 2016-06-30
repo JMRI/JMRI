@@ -103,7 +103,7 @@ public class SerialDriverAdapter extends AcelaPortController implements jmri.jmr
      */
     public void configure() {
         // connect to the traffic controller
-        AcelaTrafficController control = AcelaTrafficController.instance();
+        AcelaTrafficController control = new AcelaTrafficController();
         control.connectPort(this);
 
         this.getSystemConnectionMemo().setAcelaTrafficController(control);
@@ -119,14 +119,13 @@ public class SerialDriverAdapter extends AcelaPortController implements jmri.jmr
 
          AcelaSensorManager s;
          jmri.InstanceManager.setSensorManager(s = new jmri.jmrix.acela.AcelaSensorManager());
-         AcelaTrafficController.instance().setSensorManager(s);	
+         this.getSystemConnectionMemo().getTrafficController().setSensorManager(s);	
 
          AcelaTurnoutManager t;
          jmri.InstanceManager.setTurnoutManager(t = new jmri.jmrix.acela.AcelaTurnoutManager());
-         AcelaTrafficController.instance().setTurnoutManager(t);	*/
+         this.getSystemConnectionMemo().getTrafficController().setTurnoutManager(t);	*/
         // start operation
         // packets.startThreads();
-        jmri.jmrix.acela.ActiveFlag.setActive();
     }
 
     // base class methods for the AcelaPortController interface

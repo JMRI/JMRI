@@ -16,7 +16,7 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
@@ -53,8 +53,8 @@ ou "User Documents" ou "Users and Documents".  Vous devez chercher un dossier ap
 Si vous l'avez chercher vous-m&#234;me, en opposition de la recherche par le programme, Assurez vous de trouver le r&#233;pertoire pr&#233;f&#233;rence , <em>et non</em> le package de l'application originale. Ils sont garder s&#233;par&#233;s pour simplifier la mise &#224; jour des versions du programme.
 
 Vous saurez si vous avez trouv&#233; le bon emplacement si vous voyez les fichiers preference qui stockent les r&#233;glages de vos applications:
-<tt>DecoderProConfig2.xml</tt>, <tt>JmriDemoConfig2.xml</tt> et/ou
-<tt>LocoToolsConfig2.xml</tt>. Vous pouvez aussi chercher un de ces fichiers pour trouver ce r&#233;pertoire
+<tt>DecoderProConfig3.xml</tt>, <tt>JmriDemoConfig2.xml</tt> et/ou
+<tt>PanelProConfig2.xml</tt>. Vous pouvez aussi chercher un de ces fichiers pour trouver ce r&#233;pertoire
 
 <li>Les versions originales distribu&#233;es de ces fichiers sont contenues dans un r&#233;pertoire 'xml' dans le package application et ses sous-r&#233;pertoires.
 Tout ce que vous modifierez ici sera perdu lors d'une mise &#224; jour du programme vers une nouvelle version.

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<title>JMRI Hardware Support - TAMs MasterControl</title>
+<title>JMRI Hardware Support - Tams MasterControl</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -17,34 +17,53 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>Hardware Support: TAMs MasterControl</h1>
+<h1>Hardware Support: Tams MasterControl</h1>
 
 <p>
-Turnout, Programming, Throttle and power support is available for a JMRI-connected TAMs unit.
+The following functionality is available for a JMRI-connected Tams unit:
+1- Support for controlling and programming loco's
+2- Defining and controlling turnouts connected via DCC
+3- Defining and getting feedback from S88 connected sensors
+4- Monitor Tams commands
+5- Send Tams commands
+6- Power Control
+7- Read the Tams Loco database
+8- Read Tams Command Station firmware version and serial number
+9- Tams Simulator connection
 <p>
-Support for TAMS MC was first available in 
+Support for Tams MC was first available in 
 <a href="http://jmri.org/releasenotes/jmri2.99.7.shtml">JMRI 2.99.7</a>.
 
 <a name="limitations"></a><h2>Limitations</h2>
 <p>
-Consisting, Sensors and RailCom are not yet support.
+Known limitations:
+1- Only one Tams MasterControl can be connected
+2- Throttles
+  Due to technical limitations in the old P50 protocol JMRI can only control and display 14 functions and it can only capture status changes coming from outside JMRI for f1 to f8.
+  After the first JMRI throttle changes all 14 functions will be displayed correctly again in case of discrepancy.
+  Speed, direction and light work as should.
+  An enhancement to the P50 protocol has been done so functions f15 to f24 can also be properly controlled but this is not yet implemented in this version.
+3- Tams Command Monitor
+  The binary messages are not really human readable
+4- Send Tams Commands
+  Only a limited set of command replies are interpreted by JMRI although all are correctly displayed in the Command Monitor
 <p>
-<b>This interface is still under development if you find any issues then please raise a issue on the JMRI users Yahoo group.</b>
+<b>This interface will still be enhanced if you find any issues then please raise a issue on the JMRI users Yahoo group.</b>
 
 <a name="connecting"></a><h2>Connecting</h2>
 <h3>Wiring</h3>
-<p>JMRI can connect to a TAMS MasterControl (MC) Command Station using the built in USB and/or serial interface.<br>
+<p>JMRI can connect to a Tams MasterControl (MC) Command Station using the built in USB and/or serial interface.<br>
 Both USB and serial interface can be used at the same time.</p>
 <p>The USB interface comes with drivers to emulate a serial port.<br>
 The USB port works under Linux and Windows - both have been tested.
 
 <h3>Settings</h3>
-<p>The TAMS MC uses the (Uhlenbrock/M&auml;rklin) P50X protocol.
+<p>The Tams MC uses the (Uhlenbrock/M&auml;rklin) P50X protocol.
 
 <p>To configure the connection:
 <ul>
 	<li>Open the JMRI "Preferences" under the "Edit" menu
-	<li>Select "TAMS" as the Manufacturer
+	<li>Select "Tams" as the Manufacturer
 	<li>Select the appropriate serial interface as the Connection type
 	<li>The baud rate configured in the MC on the USB port is fixed at 57600 bps (8n1: 8bit, no parity, 1 stop bit)
 	<li>On the serial port the default speed is set at 2400 bps. This can be changed on the MC in the usual steps between 1200 and 57600 bps
@@ -53,7 +72,8 @@ The USB port works under Linux and Windows - both have been tested.
 
 <a name="documentation"></a><h2>Documentation</h2>
 <h3>Third Party info</h3>
-<p>The <a href="http://tams-online.de/MasterControl">TAMs.de manufacturer's website</a>
+<p>Web site and info mainly in German, user manuals also in English (and other languages) for download</p>
+<p>The <a href="http://Tams-online.de/MasterControl">Tams MasterControl web page </a></p>
     
 <!--#include virtual="/Footer" -->
  </div><!-- closes #mainContent-->

@@ -25,6 +25,7 @@
 </head>
 
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 <div id="mainContent">
@@ -142,11 +143,11 @@ code was executed, called the "code coverage".  We use the
 <a href="http://eclemma.org/jacoco/">JaCoCo tool</a>
 to do the accounting. It provides detailed reports at multiple levels:
 <ul>
-<li><href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/jacoco/">A plot of coverage as a whole</a>. Click on the graph to see a</li>
-<li><href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/">summary by Java package</a>. Click on a package to see a</li>
-<li><href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/">summary by file</a> (e.g. class). Click on a class to see a</li>
-<li><href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/BlockBossLogic/">summary by method</a>. Click on a method to see</li>
-<li><href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/BlockBossLogic/defineIO()/">how each part of the code was covered</a> (may require scrolling down).</li>
+<li><a href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/jacoco/">A plot of coverage as a whole</a>. Click on the graph to see a</li>
+<li><a href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/">summary by Java package</a>. Click on a package to see a</li>
+<li><a href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/">summary by file</a> (e.g. class). Click on a class to see a</li>
+<li><a href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/BlockBossLogic/">summary by method</a>. Click on a method to see</li>
+<li><a href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/BlockBossLogic/defineIO()/">how each part of the code was covered</a> (may require scrolling down).</li>
 </ul>
 
 <h2><a name="write">Writing Tests</a></h2>
@@ -227,7 +228,7 @@ to the log.  There are two aspects to making this work:
 <LI>All the test classes should include common code in their setup()
 and teardown() code to ensure that log4j is properly initiated, and that
 the custom appender is told when a test is beginning and ending.
-<CODE><PRE>
+<pre><code>
     // The minimal setup for log4J<br/>
     protected void setUp() throws Exception { <br/>
         super.setUp();<br/>
@@ -237,13 +238,13 @@ the custom appender is told when a test is beginning and ending.
         apps.tests.Log4JFixture.tearDown(); <br/>
         super.tearDown();<br/>
     }<br/>
-</PRE></code>
+</code></pre>
 <LI>When a test is deliberately invoking a message, it should then
 use the check to see that the message was created.  
 For example, if the class under test is expected to do
-<BR><CODE><PRE>
+<BR><pre><code>
     log.warn("Provoked message");
-</PRE></CODE>
+</code></pre>
 the invoking test case should follow that with the line:
 <BR><PRE><CODE>
     jmri.util.JUnitAppender.assertWarnMessage("Provoked message");
@@ -274,14 +275,14 @@ you should
 clear and reset it to ensure you get reproducible results.
 <p>
 Depending on what managers your code uses, your <code>setUp()</code> implementation should start with:
-<p><CODE><PRE>
+<p><pre><code>
     super.setUp();<br/>
     apps.tests.Log4JFixture.setUp(); <br/>
     jmri.util.JUnitUtil.resetInstanceManager();<br/>
     jmri.util.JUnitUtil.initInternalTurnoutManager();<br/>
     jmri.util.JUnitUtil.initInternalLightManager();<br/>
     jmri.util.JUnitUtil.initInternalSensorManager();<br/>
-</PRE></code>
+</code></pre>
 (You can omit the initialization managers you don't need)
 See the jmri.util.JUnitUtil class for the full list of available ones, and please add 
 more if you need one that's not there yet.
@@ -289,11 +290,11 @@ more if you need one that's not there yet.
 <p>
 Your <code>tearDown()</code> should end with:
 <p>
-<CODE><PRE>
+<pre><code>
     jmri.util.JUnitUtil.resetInstanceManager();<br/>
     apps.tests.Log4JFixture.tearDown(); <br/>
     super.tearDown();<br/>
-</PRE></code>
+</code></pre>
 
 <h3><a name="RunningListeners">Working with Listeners</a></h3>
 
@@ -331,9 +332,9 @@ Use the JUnitUtil and JFCUtil support for those instead.
 <h3><a name="threads">Working with Threads</a></h3>
 
 (See a 
-<a href="#testSwingCode">following section<a/>
+<a href="#testSwingCode">following section</a>
 for how to work with 
-<a href="#testSwingCode">Swing (GUI) objects<a/>
+<a href="#testSwingCode">Swing (GUI) objects</a>
 and the
 <a href="#testSwingCode">Swing/AWT thread</a>)
 <p>
@@ -393,26 +394,26 @@ Here are some ideas which can help avoid these types of problems.
         created by a particular test.  Be sure that the directory exists before 
         creating files in the directory, and create the directory if necessary.
         An example is shown here:
-<CODE><PRE>
+<pre><code>
     String tempDirectoryName = "temp";<br/>
     if ( <strong>! (new File(tempDirectoryName).isDirectory())</strong>) {<br/>
         // create the temp directory if it does not exist<br/>
         <strong>FileUtil.createDirectory(tempDirectoryName);</strong><br/>
     }<br/>
-</PRE></code>
+</code></pre>
     </li>
     <li>Allow the JRE to define the directory hierarchy separator character 
         automatically:
-<CODE><PRE>
+<pre><code>
     String filename = tempDirectoryName + <strong>File.separator</strong> + "testcaseFile.txt";
-</PRE></code>
+</code></pre>
     </li>
     <li>Code the testcase in a way that will not break if the file already exists
         before the testcase is run.  One way to do this is to code the testcase to
         check for existence of the testcase temporary file(s), and delete if 
         necessary, before writing to the file(s).  The following example will 
         delete the previous file if it exists:
-<CODE><PRE>
+<pre><code>
     String filename = tempDirectoryName + File.separator + "testcaseFile.txt";<br/>
     File file = new File(filename);<br/>
     <strong>if (file.exists())</strong> {<br/>
@@ -426,7 +427,7 @@ Here are some ideas which can help avoid these types of problems.
             // perform some appropriate action in this case<br/>
         }</strong><br/>
     }<br/>
-</PRE></code>
+</code></pre>
     </li>
     <li>Make sure to "close" the temporary file after it has been written.</li>
     <li>Delete the temporary file(s) as part of the test once it is no longer 
@@ -434,20 +435,20 @@ Here are some ideas which can help avoid these types of problems.
         convenient to display the path and filename when logging debug messages 
         (without deleting the temporary file), and to perform the delete only 
         when debug logging is not enabled, such as:
-<CODE><PRE>
+<pre><code>
     <strong>if (log.isDebugEnabled()) {</strong><br/>
         log.debug("Path to written hex file is: "+filename);<br/>
     <strong>}<br/>
     else {<br/>
         file.delete();<br/>
     }</strong><br/>
-</PRE></code>
+</code></pre>
     </li>
     <li>It is unclear whether native Java library routines which create temporary
         files in an operating-system-specific way such as: 
-<CODE><PRE>
+<pre><code>
     java.io.File.createTempFile("testcasefile","txt")
-</PRE></code>
+</code></pre>
         will work reliably within the <a href="ContinuousIntegration.shtml">
             continuous integration build</a> environment.</li>
 </ul>
@@ -480,22 +481,22 @@ Because we run tests in "headless" mode during the
 <a href="ContinuousIntegration.shtml">continuous integration builds</a>,
 it's important that Swing (and AWT) access in tests
 be enclosed within a mode check:
-<p><CODE><PRE>
+<p><pre><code>
         if (!System.getProperty("jmri.headlesstest","false").equals("true")) {<br/>
             suite.addTest(myTest.suite());<br/>
         }<br/>
-</PRE></code>
+</code></pre>
 <p>This will run the myTest suite of tests only when a display is available.
 
 <p>GUI tests should close windows when they're done, and in general clean up after themselves.
 If you want to keep windows around so you can manipulate them, e.g. for manual testing or debugging, 
 you can use the jmri.demo system parameter to control that:
-<p><CODE><PRE>
+<p><pre><code>
         if (!System.getProperty("jmri.demo", "false").equals("false")) {<br/>
             myFrame.setVisible(false);<br/>
             myFrame.dispose();<br/>
         }
-</PRE></code>
+</code></pre>
 
 <p>
 For many tests, you'll both make testing reliable and improve the structure 
@@ -553,12 +554,12 @@ the test/junit/runner/excluded.properties file would fix it.
 <p>
 <u>As a test only</u>, you can try setting the "-noloading" option in the
 <code>main</code> of whichever test class you're having trouble with:
-<CODE><PRE>
+<pre><code>
     static public void main(String[] args) {<br/>
         String[] testCaseName = {"-noloading", LogixTableActionTest.class.getName()};<br/>
         junit.swingui.TestRunner.main(testCaseName);<br/>
     }<br/>
-</PRE></code>
+</code></pre>
 
 <p>
 Please don't leave "-noloading" in place, as it prevents people from rerunning the test

@@ -17,12 +17,10 @@
 </head>
 <body>
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
-	    <!-- -------- -->
-	    <!--  Teaser  --> <!-- Optional -->
-	    <!-- -------- -->
 
 <h1>JMRI: Patterns and Organization</h1>
 <p>

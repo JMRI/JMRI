@@ -125,8 +125,6 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         sourceThread.start();
 
         new DCCppInitializationManager(this.getSystemConnectionMemo());
-
-        jmri.jmrix.dccpp.ActiveFlag.setActive();
     }
 
     // base class methods for the DCCppSimulatorPortController interface

@@ -34,10 +34,6 @@ import org.slf4j.LoggerFactory;
  */
 public class TrackLoadEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5231003531264725867L;
     private static boolean loadAndType = false;
     private static boolean shipLoadAndType = false;
 
