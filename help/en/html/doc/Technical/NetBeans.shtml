@@ -188,7 +188,6 @@
           but basically you go to the 
           <a href="https://github.com/JMRI/JMRI">JMRI repository page</a>
           and click the "fork" button in the upper right.
-   
           </ul>
 
         This gives you your own repository, which you can then work with freely.
@@ -223,6 +222,8 @@
     <h2><a id="buildandrun">Building and running JMRI</a></h2>
     <p>    To build and run DecoderPro, all you have to do is select
            "Run Project (JMRI)" from the Run menu, or click the Run icon in the tool bar.
+           <br>
+		If an ant build fails with an error like "method getX() not found", this may indicate that an older version of a specific java library installed on your system prevents the IDE from finding the proper parts. Depending on your operating system, <a href="../../setup/Faq.shtml#updatejar">copy the newer jar library</a> to the User Java Extensions folder.</p>
     </p>
 
     <ul>

@@ -187,7 +187,8 @@
 		Click "OK" and save your JMRI Project (Cmd-S/Ctrl-S).</li>
 		<li>Select the &lt;Default target&gt; file in the Ant Build list, right click, and select "Run", or click the green triangle "Run" button at the top of the pane.
 		This should start the ant build. Follow any messages in the Event Log that pops up from the bottom edge of the Project window.</li>
-		</ol>
+		<li>If an ant build fails with an error like "method getX() not found", this may indicate that an older version of a specific java library installed on your system prevents the IDE from finding the parts it needs. Depending on your operating system, <a href="../../setup/Faq.shtml#updatejar">copy the newer jar library</a> to the User Java Extensions folder.</li>
+	 </ol>
 
 	<p>If the ant build is successful, you can launch any of the JMRI
 		applications from the Ant Build tab.</p>

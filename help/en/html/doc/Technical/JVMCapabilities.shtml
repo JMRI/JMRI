@@ -216,7 +216,7 @@ one is JComboBox.  This Java 1.6 line:
 <pre><code>
     JComboBox box = new JComboBox();
 </code></pre>
-describes the creation of a JComboBox that selects generic (Object) items.
+describes the creation of a JComboBox that selects generic (Object) items.<br>
 In Java 1.8, the JComboBox holds and selects objects of a specific type, usually
 String. It's written:
 <pre><code>
@@ -226,8 +226,8 @@ The most common code for getting the selected item still includes a cast:
 <pre><code>
     String result = (String)box.getSelectedItem();
 </code></pre>
-because the JComboBox can actually contain objects of other types. (How can this 
-happen? If the box is editable, and somebody enters some other type)
+because the JComboBox can actually contain objects of other types (How can this 
+happen? If the box is editable, and somebody enters some other type).<br>
 To avoid the case, a more robust idiom is:
 <pre><code>
     String result = box.getItemAt(progBox.getSelectedIndex());

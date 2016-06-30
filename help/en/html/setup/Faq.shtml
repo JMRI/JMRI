@@ -30,15 +30,16 @@ JMRI Setup: Frequently Asked Questions
 
 <!-- From JMRI users Yahoo group forum -->
 <hr>
-<p>Here are some tips from fellow JMRI Users:</p>
+<p>Tips from fellow JMRI Users:</p>
 
 	<dl class="faq">
 
 	<dt id="install" class="on">Is JMRI fun?</dt>
-	<dd>Yes</dd>
+	<dd>Sure</dd>
 	
-	<dt id="install">Is it complicated to set up?</dt>
-	<dd>Sometimes</dd>
+	<dt id="updatejar">Why does ant stop with a getX() error? (advanced)</dt>
+	<dd>When you try to build JMRI using an IDE or ant and a build fails with an error like "method getX() not found", this may indicate that an older version of a specific java library installed on your system prevents ant from finding the proper parts. Ant uses the <a href="../doc/Technical/JVMCapabilities.shtml">JDK</a> (Java Development Kit) installed on your computer to build parts of JMRI. When developers add new parts to JMRI, anyone wishing to build de JMRI code should also install the matching parts, called Java Archives (.jar libraries) on their system. An example of this is the vecmath package that was updated to version 1.5.2 in 2016 with JMRI 4.5.1.<br>
+		Depending on your operating system, copy the new jar library to the User Java Extensions folder: On OS X create a folder named "Extensions" inside a folder named "Java" in the (hidden) Library folder of your user folder (~/Library/Java/Extensions/) and will be picked up by the JDK. On Windows, place the new file anywhere you prefer and add the full path to your CLASSPATH environment variable. On Ubuntu in Terminal type <code>apt-get install libvecmath-java</code> which adds it to <code>/usr/share/java/</code>. Next, on either Windows or Linux add the new jar to your class path (see <a href="http://www.java3d.org/suninstructions.html">third party help</a>).<!-- provided by Egbert Broerse June 2016 --></dd>
 
 	</dl>
 

@@ -15,7 +15,7 @@
     <!-- or change them to reflect your alternative logo -->
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -43,7 +43,7 @@ Install it, then:
 	<a href="http://jmri.org/help/en/html/doc/Technical/getgitcode.shtml">get the code from GitHub</a>. 
 	This will create a <tt>jmri</tt> subdirectory 
 	where Ant will run, and load it with source, tests and resources.
-	It will also create and populate directories for xml, libraries, etc in the 
+	It will also create and populate directories for xml, libraries, etc. in the 
 	project directory.
 	<li>Change to the newly created <tt>jmri</tt> subdirectory. To compile, type <tt>ant debug</tt>. 
 	<li>To run the program, type <tt>ant decoderpro</tt> or <tt>ant panelpro</tt>, and sit back to watch it go.
@@ -63,7 +63,10 @@ do:
    ant alltest
 </pre>
 </code>
-and make sure the tests run cleanly.
+and make sure the tests run cleanly.</p>
+<p>
+If an ant build fails with an error like "method getX() not found", this may indicate that an older version of a specific java library installed on your system prevents the IDE from finding the proper parts. Depending on your operating system, <a href="../../setup/Faq.shtml#updatejar">copy the newer jar library</a> to the User Java Extensions folder.
+</p>
 
   <!--#include virtual="/Footer" -->
 

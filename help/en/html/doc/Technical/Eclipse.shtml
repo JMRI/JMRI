@@ -117,10 +117,9 @@
 		<li>Select the build.xml file using the Package Explorer, then
 			right click, and a menu should appear.</li>
 		<li>Now select "Run As" then "2 Ant Build".</li>
-		<li>Confirm that under the menu tab JRE that you've selected a
+		<li>Confirm under the menu tab "JRE" that you've selected a
 			JDK, not a JRE.</li>
 		<li>Now press the "Run" button, this should start the ant build.</li>
-
 	</ol>
 
 	<p>If the ant build fails, most likely it is because you need a JDK
@@ -129,7 +128,8 @@
 		and a new window should appear. Select the "JRE" tab. The change the
 		JRE, select the "Separate JRE:" radio button, and then press the
 		"Installed JREs" button. If you don't see a JDK, you need to add one
-		(from site above).</p>
+		(from site above).<br>
+		If an ant build fails with an error like "method getX() not found", this may indicate that an older version of a specific java library installed on your system prevents the IDE from finding the proper parts. Depending on your operating system, <a href="../../setup/Faq.shtml#updatejar">copy the newer jar library</a> to the User Java Extensions folder.</p>
 
 	<p>If the ant build succeeds, you can now launch any of the JMRI
 		applications from ant, and create a jmri.jar file if you wish. Use the
