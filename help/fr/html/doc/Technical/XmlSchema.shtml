@@ -1,12 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!--UpDated by Herv&#233; Blorec  2013/9/09-->
 <html lang="fr">
 <head>
     <TITLE>
- 	JMRI: Xml Schema Usage
+ 	JMRI: Utilisation de Sch&#233;ma XML
    </TITLE> 
-    <META content="Bob Jacobsen" name=Author>
+    <meta content="Bob Jacobsen" name="Author">
     <meta name="keywords" content="JMRI technical code xml schema usage">
 
     <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
@@ -17,7 +16,7 @@
     <!-- or change them to reflect your alternative logo -->
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -25,12 +24,14 @@
 <!-- /Style -->
 </head>
 
+<body>
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
 
-<H1>JMRI: Utilisation de Sch&#233;ma XML</H1>
+<h1>JMRI: Utilisation de Sch&#233;ma XML</h1>
 
 JMRI utilise XML pour un certain nombre d'objectifs:
  tenir les d&#233;finitions d&#233;codeur, pour son
@@ -209,26 +210,26 @@ test/jmri/configurexml/SchemaTest.java
  jmri.configurexml.LoadFileTestBase, et puis appelez <code>validate(File f)</code>
 dans un fichier test. Le fichier test XML peut &#234;tre mis avec
 le fichier de test Java dans l'arborescence de fichier "test/" 
-<code><pre>
+<pre><code>
     public void testValidateRoster() {
         validate(new java.io.File("java/test/jmri/configurexml/RosterSchemaTest.xml"));
     }
-</pre></code>
+</code></pre>
 
 <p>
 Pour une v&#233;rification rapide de fichiers,les utilisateurs de Linux et Mac OS X peuvent valider &#224; partir de la ligne de commande avec par exemple 
-<code><pre>
+<pre><code>
  cd xml
  xmllint -schema schema/aspecttable.xsd -noout signals/sample-aspects.xml
-</pre></code>
+</code></pre>
 <code>xmllint</code> ne peut pas v&#233;rifier les fichiers de sch&#233;ma eux-m&#234;mes, malheureusement, parce que leur sch&#233;ma n'est pas quelque chose qu'il peut g&#233;rer
 
 <p>
 Votre docs sch&#233;ma doit pointer sur notre feuille de style standard dans
 leur en-t&#234;te:
-<code><pre>
+<pre><code>
 &lt;?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?&gt;
-</pre></code>
+</code></pre>
 C'est un style assez basique, vraiment suffisant pour
 montrer la structure de base. Pour un exemple de la sortie qu'il
 produit, cliquez sur ce lien vers le fichier de sch&#233;mas <a href="http://jmri.org/xml/schema/aspecttable.xsd">aspecttable.xsd</a>  e.
@@ -311,7 +312,7 @@ pour les informations de copyright, l'auteur et des versions dans notre XML
 
 <p>
 Exemple XML:
-<code><pre>
+<pre><code>
   &lt;db:copyright&gt;
         &lt;db:year&gt;2009&lt;/db:year&gt;
         &lt;db:year&gt;2010&lt;/db:year&gt;&lt;
@@ -331,11 +332,11 @@ Exemple XML:
         &lt;db:authorinitials&gt;initials&lt;/db:authorinitials&gt;
     &lt;/db:revision&gt;    
   &lt;/db:revhistory&gt;
-</pre></code>
+</code></pre>
 
 <p>
 Exemple de description de sch&#233;ma: (Mais voir le vrai, qui est fourni dans le sch&#233;ma/docbookok)
-<code><pre>
+<pre><code>
     &lt;xs:element ref="docbook:copyright" minOccurs="1" maxOccurs="1" &gt;
       &lt;xs:annotation&gt;&lt;xs:documentation&gt;
       DocBook element(s) providing copyright information in standard form.
@@ -354,7 +355,7 @@ Exemple de description de sch&#233;ma: (Mais voir le vrai, qui est fourni dans l
       DocBook element(s) describing the revision history in standard form
       &lt;/xs:documentation&gt;&lt;/xs:annotation&gt;
     &lt;/xs:element&gt;
-</pre></code>
+</code></pre>
 
 
 <!--#include virtual="/Footer" -->

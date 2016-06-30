@@ -43,7 +43,6 @@ public class BlockTest extends TestCase {
 
     public void testHashCode() {
         Block b1 = new Block("SystemName1");
-        Block b2 = new Block("SystemName2");
         
         //multiple Block objects with same SystemName are really the same
         Block b1a = new Block("SystemName1");
@@ -208,7 +207,7 @@ public class BlockTest extends TestCase {
         p23.setFromBlockDirection(Path.LEFT);
         p23.setToBlockDirection(Path.RIGHT);
         b2.addPath(p23);
-
+        
         // actual test
         b2.goingActive();
         Assert.assertEquals("State", Block.OCCUPIED, b2.getState());
@@ -217,6 +216,50 @@ public class BlockTest extends TestCase {
 
     }
 
+    // Test going active with two neighbors, both active, where FROM is a combination direction.
+    // b2 is between b1 and b3. 
+    public void testTwoOfTwoGoesActiveCombination() throws JmriException {
+        SensorManager sm = new jmri.managers.InternalSensorManager();
+
+        Block b1 = new Block("SystemName1");
+        Block b2 = new Block("SystemName2");
+        Block b3 = new Block("SystemName3");
+
+        Sensor s1 = sm.provideSensor("IS1");
+        b1.setNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle("IS1", s1));
+        s1.setState(Sensor.ACTIVE);
+        b1.setValue("b1 contents");
+        b1.setDirection(Path.NORTH | Path.WEST); //combination direction
+
+        Sensor s2 = sm.provideSensor("IS2");
+        b2.setNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle("IS2", s2));
+        s2.setState(Sensor.INACTIVE);
+
+        Sensor s3 = sm.provideSensor("IS3");
+        b3.setNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle("IS3", s3));
+        s3.setState(Sensor.ACTIVE);
+        b3.setValue("b3 contents");
+        b3.setDirection(Path.NORTH);
+
+        Path p21 = new Path();
+        p21.setBlock(b1);
+        p21.setFromBlockDirection(Path.NORTH);
+        p21.setToBlockDirection(Path.SOUTH);
+        b2.addPath(p21);
+
+        Path p23 = new Path();
+        p23.setBlock(b3);
+        p23.setFromBlockDirection(Path.EAST);
+        p23.setToBlockDirection(Path.NORTH);
+        b2.addPath(p23);
+        
+        // actual test
+        b2.goingActive();
+        Assert.assertEquals("State", Block.OCCUPIED, b2.getState());
+        Assert.assertEquals("Value transferred", "b1 contents", b2.getValue());
+        Assert.assertEquals("Direction", Path.NORTH, b2.getDirection());
+
+    }
     public void testReporterAdd() {
         ReporterManager rm = new jmri.managers.InternalReporterManager();
         Block b = new Block("SystemName");
@@ -289,7 +332,7 @@ public class BlockTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {BlockTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

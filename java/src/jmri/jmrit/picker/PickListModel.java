@@ -35,7 +35,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Abstract class to make pick lists for NamedBeans.
+ * Abstract class to make pick lists for NamedBeans; Table model for pick lists in IconAdder
  * <P>
  * Concrete pick list class for many beans are include at the end of this file.
  * This class also has instantiation methods serve as a factory for those
@@ -56,17 +56,9 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Pete Cressman Copyright (C) 2009, 2010
- * @version
- */
-/**
- * Table model for pick lists in IconAdder
  */
 public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataModel implements PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4174669657476555432L;
     protected ArrayList<NamedBean> _pickList;
     protected String _name;
     private JTable _table;       // table using this model
@@ -488,7 +480,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
             return manager;
         }
 
-        public NamedBean addBean(String name) {
+        public NamedBean addBean(String name) throws IllegalArgumentException {
             return manager.provideTurnout(name);
         }
 
@@ -518,7 +510,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
             return manager;
         }
 
-        public NamedBean addBean(String name) {
+        public NamedBean addBean(String name) throws IllegalArgumentException {
             return manager.provideSensor(name);
         }
 
@@ -608,11 +600,11 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
             return manager;
         }
 
-        public NamedBean addBean(String name) {
+        public NamedBean addBean(String name) throws IllegalArgumentException {
             return manager.provideSignalMast(name);
         }
 
-        public NamedBean addBean(String sysName, String userName) {
+        public NamedBean addBean(String sysName, String userName) throws IllegalArgumentException {
             SignalMast sm = manager.getSignalMast(userName);
             if (sm == null) {
                 sm = manager.provideSignalMast(sysName);
@@ -642,7 +634,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
             return manager;
         }
 
-        public NamedBean addBean(String name) {
+        public NamedBean addBean(String name) throws IllegalArgumentException {
             return manager.provideMemory(name);
         }
 
@@ -672,7 +664,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
             return manager;
         }
 
-        public NamedBean addBean(String name) {
+        public NamedBean addBean(String name) throws IllegalArgumentException {
             return manager.provideBlock(name);
         }
 
@@ -702,7 +694,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
             return manager;
         }
 
-        public NamedBean addBean(String name) {
+        public NamedBean addBean(String name) throws IllegalArgumentException {
             return manager.provideReporter(name);
         }
 
@@ -732,7 +724,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
             return manager;
         }
 
-        public NamedBean addBean(String name) {
+        public NamedBean addBean(String name) throws IllegalArgumentException {
             return manager.provideLight(name);
         }
 
@@ -762,7 +754,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
             return manager;
         }
 
-        public NamedBean addBean(String name) {
+        public NamedBean addBean(String name) throws IllegalArgumentException {
             return manager.provideOBlock(name);
         }
 
@@ -792,7 +784,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
             return manager;
         }
 
-        public NamedBean addBean(String name) {
+        public NamedBean addBean(String name) throws IllegalArgumentException {
             return manager.provideWarrant(name);
         }
 

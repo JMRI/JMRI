@@ -1,4 +1,3 @@
-// ConfigurationManager.java
 package jmri.jmrix.can.cbus;
 
 import java.util.ResourceBundle;
@@ -25,7 +24,6 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
  * <P>
  *
  * @author Bob Jacobsen Copyright (C) 2009
- * @version $Revision$
  */
 public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManager {
 
@@ -61,8 +59,6 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         jmri.InstanceManager.setReporterManager(getReporterManager());
 
         jmri.InstanceManager.setLightManager(getLightManager());
-
-        jmri.jmrix.can.cbus.ActiveFlag.setActive();
     }
 
     /**
@@ -255,5 +251,3 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     }
 
 }
-
-/* @(#)ConfigurationManager.java */

@@ -17,6 +17,7 @@
 </head>
 <body>
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 <div id="mainContent">
@@ -76,7 +77,7 @@ For example, you have to properly handle &amp; and &lt; character, e.g. to show 
 To do that, place the test in {@literal ...} or {@code ...} blocks.
 <p>
 You also have to (sometimes) end your paragraph tags to start another type of element, e.g. lists: 
-<code><pre>
+<pre><code>
  * Some text that forms a paragraph
  * &lt;p&gt;
  * Some more text. 
@@ -85,7 +86,7 @@ You also have to (sometimes) end your paragraph tags to start another type of el
  * &lt;/p&gt;&lt;ul&gt;
  *    &lt;li&gt;List item
  * &lt;/ul&gt;
-</pre></code>
+</code></pre>
 Note that HTML 4.01 wants paragraph tags to be ended with &lt;/p&gt;, and that you can't have a list inside a paragraph.
 <p>
 Some error messages and their translations:
@@ -95,13 +96,13 @@ Some error messages and their translations:
 </dl>
 
 Finally, note that this JavaDoc line is malformed:
-<code><pre>
+<pre><code>
  * @param foo
-</pre></code>
+</code></pre>
 because it doesn't include any explanatory text. The line should be more like:
-<code><pre>
+<pre><code>
  * @param foo Holds the latest Bar instance
-</pre></code>
+</code></pre>
 or just omitted.
 
 <p>
@@ -109,6 +110,10 @@ We are currently suppressing the "accessibility" class of JavaDoc errors, which 
 mostly about providing extra information on tables and images, and the "missing" class of 
 errors, which tags it if an @param or @return isn't provided in any places that could have 
 received comments.  There are so many of these that it's not practical to tag them.
+
+<p>
+For a summary of current JavaDoc errors in the code, see 
+<a href="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/lastBuild/warnings3Result/">Builds Jenkins job</a>.
 
 <h2>UML and UmlGraph for Developers</h2>
 

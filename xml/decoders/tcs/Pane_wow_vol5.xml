@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2013 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - for Unified Software -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Individual Volume 5</name>
+  <name xml:lang="it">Volume Livello 5</name>
+  <column>
+    <row>
+      <column>
+        <label>
+          <text>   </text>
+        </label>
+        <label>
+          <text>Must have JMRI 3.9.5 or later.</text>
+          <text xml:lang="it">Dovete avere JMRI 3.9.5 o successivo.</text>
+        </label>
+        <label>
+          <text>Recommend to change volume groups, if available, rather than these</text>
+        </label>
+        <label>
+          <text>   </text>
+        </label>
+		</column>
+    </row>
+    <row>
+      <column>
+        <display item="Volume 5-0"/>
+        <display item="Volume 5-1"/>
+        <display item="Volume 5-2"/>
+        <display item="Volume 5-3"/>
+        <display item="Volume 5-4"/>
+        <display item="Volume 5-5"/>
+        <display item="Volume 5-6"/>
+        <display item="Volume 5-7"/>
+        <display item="Volume 5-8"/>
+        <display item="Volume 5-9"/>
+        <display item="Volume 5-10"/>
+        <display item="Volume 5-11"/>
+        <display item="Volume 5-12"/>
+        <display item="Volume 5-13"/>
+        <display item="Volume 5-14"/>
+        <display item="Volume 5-15"/>
+        <display item="Volume 5-16"/>
+        <display item="Volume 5-17"/>
+        <display item="Volume 5-18"/>
+        <display item="Volume 5-19"/>
+        <display item="Volume 5-20"/>
+        <display item="Volume 5-21"/>
+        <display item="Volume 5-22"/>
+        <display item="Volume 5-23"/>
+        <display item="Volume 5-24"/>
+        <display item="Volume 5-25"/>
+        <display item="Volume 5-26"/>
+        <display item="Volume 5-27"/>
+        <display item="Volume 5-28"/>
+        <display item="Volume 5-29"/>
+        <display item="Volume 5-30"/>
+        <display item="Volume 5-31"/>
+        <display item="Volume 5-32"/>
+        <display item="Volume 5-33"/>
+        <display item="Volume 5-34"/>
+        <display item="Volume 5-35"/>
+        <display item="Volume 5-36"/>
+        <display item="Volume 5-37"/>
+        <display item="Volume 5-38"/>
+        <display item="Volume 5-39"/>
+        <display item="Volume 5-40"/>
+        <display item="Volume 5-41"/>
+        <display item="Volume 5-42"/>
+        <display item="Volume 5-43"/>
+        <display item="Volume 5-44"/>
+        <display item="Volume 5-45"/>
+        <display item="Volume 5-46"/>
+        <display item="Volume 5-47"/>
+        <display item="Volume 5-48"/>
+        <display item="Volume 5-49"/>
+        <display item="Volume 5-50"/>
+        <display item="Volume 5-51"/>
+        <display item="Volume 5-52"/>
+        <display item="Volume 5-53"/>
+        <display item="Volume 5-54"/>
+        <display item="Volume 5-55"/>
+        <display item="Volume 5-56"/>
+        <display item="Volume 5-57"/>
+        <display item="Volume 5-58"/>
+        <display item="Volume 5-59"/>
+        <display item="Volume 5-60"/>
+        <display item="Volume 5-61"/>
+        <display item="Volume 5-62"/>
+        <display item="Volume 5-63"/>
+      </column>               
+      <column>                
+        <display item="Volume 5-64"/>
+        <display item="Volume 5-65"/>
+        <display item="Volume 5-66"/>
+        <display item="Volume 5-67"/>
+        <display item="Volume 5-68"/>
+        <display item="Volume 5-69"/>
+        <display item="Volume 5-70"/>
+        <display item="Volume 5-71"/>
+        <display item="Volume 5-72"/>
+        <display item="Volume 5-73"/>
+        <display item="Volume 5-74"/>
+        <display item="Volume 5-75"/>
+        <display item="Volume 5-76"/>
+        <display item="Volume 5-77"/>
+        <display item="Volume 5-78"/>
+        <display item="Volume 5-79"/>
+        <display item="Volume 5-80"/>
+        <display item="Volume 5-81"/>
+        <display item="Volume 5-82"/>
+        <display item="Volume 5-83"/>
+        <display item="Volume 5-84"/>
+        <display item="Volume 5-85"/>
+        <display item="Volume 5-86"/>
+        <display item="Volume 5-87"/>
+        <display item="Volume 5-88"/>
+        <display item="Volume 5-89"/>
+        <display item="Volume 5-90"/>
+        <display item="Volume 5-91"/>
+        <display item="Volume 5-92"/>
+        <display item="Volume 5-93"/>
+        <display item="Volume 5-94"/>
+        <display item="Volume 5-95"/>
+        <display item="Volume 5-96"/>
+        <display item="Volume 5-97"/>
+        <display item="Volume 5-98"/>
+        <display item="Volume 5-99"/>
+        <display item="Volume 5-100"/>
+        <display item="Volume 5-101"/>
+        <display item="Volume 5-102"/>
+        <display item="Volume 5-103"/>
+        <display item="Volume 5-104"/>
+        <display item="Volume 5-105"/>
+        <display item="Volume 5-106"/>
+        <display item="Volume 5-107"/>
+        <display item="Volume 5-108"/>
+        <display item="Volume 5-109"/>
+        <display item="Volume 5-110"/>
+        <display item="Volume 5-111"/>
+        <display item="Volume 5-112"/>
+        <display item="Volume 5-113"/>
+        <display item="Volume 5-114"/>
+        <display item="Volume 5-115"/>
+        <display item="Volume 5-116"/>
+        <display item="Volume 5-117"/>
+        <display item="Volume 5-118"/>
+        <display item="Volume 5-119"/>
+        <display item="Volume 5-120"/>
+        <display item="Volume 5-121"/>
+        <display item="Volume 5-122"/>
+        <display item="Volume 5-123"/>
+        <display item="Volume 5-124"/>
+        <display item="Volume 5-125"/>
+        <display item="Volume 5-126"/>
+        <display item="Volume 5-127"/>
+      </column>               
+      <column>                
+        <display item="Volume 5-128"/>
+        <display item="Volume 5-129"/>
+        <display item="Volume 5-130"/>
+        <display item="Volume 5-131"/>
+        <display item="Volume 5-132"/>
+        <display item="Volume 5-133"/>
+        <display item="Volume 5-134"/>
+        <display item="Volume 5-135"/>
+        <display item="Volume 5-136"/>
+        <display item="Volume 5-137"/>
+        <display item="Volume 5-138"/>
+        <display item="Volume 5-139"/>
+        <display item="Volume 5-140"/>
+        <display item="Volume 5-141"/>
+        <display item="Volume 5-142"/>
+        <display item="Volume 5-143"/>
+        <display item="Volume 5-144"/>
+        <display item="Volume 5-145"/>
+        <display item="Volume 5-146"/>
+        <display item="Volume 5-147"/>
+        <display item="Volume 5-148"/>
+        <display item="Volume 5-149"/>
+        <display item="Volume 5-150"/>
+        <display item="Volume 5-151"/>
+        <display item="Volume 5-152"/>
+        <display item="Volume 5-153"/>
+        <display item="Volume 5-154"/>
+        <display item="Volume 5-155"/>
+        <display item="Volume 5-156"/>
+        <display item="Volume 5-157"/>
+        <display item="Volume 5-158"/>
+        <display item="Volume 5-159"/>
+        <display item="Volume 5-160"/>
+        <display item="Volume 5-161"/>
+        <display item="Volume 5-162"/>
+        <display item="Volume 5-163"/>
+        <display item="Volume 5-164"/>
+        <display item="Volume 5-165"/>
+        <display item="Volume 5-166"/>
+        <display item="Volume 5-167"/>
+        <display item="Volume 5-168"/>
+        <display item="Volume 5-169"/>
+        <display item="Volume 5-170"/>
+        <display item="Volume 5-171"/>
+        <display item="Volume 5-172"/>
+        <display item="Volume 5-173"/>
+        <display item="Volume 5-174"/>
+        <display item="Volume 5-175"/>
+        <display item="Volume 5-176"/>
+        <display item="Volume 5-177"/>
+        <display item="Volume 5-178"/>
+        <display item="Volume 5-179"/>
+        <display item="Volume 5-180"/>
+        <display item="Volume 5-181"/>
+        <display item="Volume 5-182"/>
+        <display item="Volume 5-183"/>
+        <display item="Volume 5-184"/>
+        <display item="Volume 5-185"/>
+        <display item="Volume 5-186"/>
+        <display item="Volume 5-187"/>
+        <display item="Volume 5-188"/>
+        <display item="Volume 5-189"/>
+        <display item="Volume 5-190"/>
+        <display item="Volume 5-191"/>
+      </column>               
+      <column>                
+        <display item="Volume 5-192"/>
+        <display item="Volume 5-193"/>
+        <display item="Volume 5-194"/>
+        <display item="Volume 5-195"/>
+        <display item="Volume 5-196"/>
+        <display item="Volume 5-197"/>
+        <display item="Volume 5-198"/>
+        <display item="Volume 5-199"/>
+        <display item="Volume 5-200"/>
+        <display item="Volume 5-201"/>
+        <display item="Volume 5-202"/>
+        <display item="Volume 5-203"/>
+        <display item="Volume 5-204"/>
+        <display item="Volume 5-205"/>
+        <display item="Volume 5-206"/>
+        <display item="Volume 5-207"/>
+        <display item="Volume 5-208"/>
+        <display item="Volume 5-209"/>
+        <display item="Volume 5-210"/>
+        <display item="Volume 5-211"/>
+        <display item="Volume 5-212"/>
+        <display item="Volume 5-213"/>
+        <display item="Volume 5-214"/>
+        <display item="Volume 5-215"/>
+        <display item="Volume 5-216"/>
+        <display item="Volume 5-217"/>
+        <display item="Volume 5-218"/>
+        <display item="Volume 5-219"/>
+        <display item="Volume 5-220"/>
+        <display item="Volume 5-221"/>
+        <display item="Volume 5-222"/>
+        <display item="Volume 5-223"/>
+        <display item="Volume 5-224"/>
+        <display item="Volume 5-225"/>
+        <display item="Volume 5-226"/>
+        <display item="Volume 5-227"/>
+        <display item="Volume 5-228"/>
+        <display item="Volume 5-229"/>
+        <display item="Volume 5-230"/>
+        <display item="Volume 5-231"/>
+        <display item="Volume 5-232"/>
+        <display item="Volume 5-233"/>
+        <display item="Volume 5-234"/>
+        <display item="Volume 5-235"/>
+        <display item="Volume 5-236"/>
+        <display item="Volume 5-237"/>
+        <display item="Volume 5-238"/>
+        <display item="Volume 5-239"/>
+        <display item="Volume 5-240"/>
+        <display item="Volume 5-241"/>
+        <display item="Volume 5-242"/>
+        <display item="Volume 5-243"/>
+        <display item="Volume 5-244"/>
+        <display item="Volume 5-245"/>
+        <display item="Volume 5-246"/>
+        <display item="Volume 5-247"/>
+        <display item="Volume 5-248"/>
+        <display item="Volume 5-249"/>
+        <display item="Volume 5-250"/>
+        <display item="Volume 5-251"/>
+        <display item="Volume 5-252"/>
+        <display item="Volume 5-253"/>
+        <display item="Volume 5-254"/>
+        <display item="Volume 5-255"/>
+      </column>
+    </row>
+  </column>
+</pane>

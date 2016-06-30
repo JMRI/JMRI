@@ -1,4 +1,3 @@
-// AcelaTurnoutManager.java
 package jmri.jmrix.acela;
 
 import jmri.Turnout;
@@ -14,22 +13,22 @@ import org.slf4j.LoggerFactory;
  * Based in part on AcelaTurnoutManager.java
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version	$Revision$
- *
  * @author	Bob Coleman Copyright (C) 2008 Based on CMRI serial example, modified
  * to establish Acela support.
  */
 public class AcelaTurnoutManager extends AbstractTurnoutManager {
+ 
+    AcelaSystemConnectionMemo _memo = null;
 
-    public AcelaTurnoutManager() {
-
+    public AcelaTurnoutManager(AcelaSystemConnectionMemo memo) {
+       _memo = memo;
     }
 
     /**
      * Returns the system letter for Acela
      */
     public String getSystemPrefix() {
-        return "A";
+        return _memo.getSystemPrefix();
     }
 
     /**
@@ -41,7 +40,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
         Turnout trn = null;
         // check if the output bit is available
         int nAddress = -1;
-        nAddress = AcelaAddress.getNodeAddressFromSystemName(systemName);
+        nAddress = AcelaAddress.getNodeAddressFromSystemName(systemName,_memo);
         if (nAddress == -1) {
             return (null);
         }
@@ -61,8 +60,8 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
          */
         // Validate the systemName
         if (AcelaAddress.validSystemNameFormat(systemName, 'T')) {
-            trn = new AcelaTurnout(systemName, userName);
-            if (!AcelaAddress.validSystemNameConfig(systemName, 'T')) {
+            trn = new AcelaTurnout(systemName, userName,_memo);
+            if (!AcelaAddress.validSystemNameConfig(systemName, 'T',_memo)) {
                 log.warn("Turnout system Name does not refer to configured hardware: "
                         + systemName);
             }
@@ -96,7 +95,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
      * 'false'
      */
     public boolean validSystemNameConfig(String systemName) {
-        return (AcelaAddress.validSystemNameConfig(systemName, 'T'));
+        return (AcelaAddress.validSystemNameConfig(systemName, 'T',_memo));
     }
 
     /**
@@ -121,16 +120,12 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
 
     /**
      * Allow access to AcelaLightManager
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Deprecated
     static public AcelaTurnoutManager instance() {
-        if (_instance == null) {
-            _instance = new AcelaTurnoutManager();
-        }
-        return _instance;
+        return null;
     }
-    static AcelaTurnoutManager _instance = null;
 
     private final static Logger log = LoggerFactory.getLogger(AcelaTurnoutManager.class.getName());
 }
-
-/* @(#)AcelaTurnoutManager.java */

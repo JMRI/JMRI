@@ -1,12 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id$ -->
-<!-- UpDated by Blorec Herv&#233; le 2013-09-01 et Egbert Broerse (desapprouve); le 2015-10-19-->
+<!-- UpDated by Blorec Herv&#233; le 2013-09-01 et Egbert Broerse (Note "desapprouve"); le 2015-10-19-->
 <html lang="fr">
 <head>
 	<title>JMRI Outils Programmateur LocoIO (d&#233;sapprouv&#233;)</title>
 
 <!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=&#231;iso-8859-1">
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -16,6 +15,7 @@
 </head>
 <body>
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">

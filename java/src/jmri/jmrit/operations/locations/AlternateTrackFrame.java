@@ -23,11 +23,6 @@ import org.slf4j.LoggerFactory;
  */
 class AlternateTrackFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -9027155799954540567L;
-
     // combo boxes
     JComboBox<Track> trackBox = new JComboBox<>();
 

@@ -1,38 +1,31 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<!-- UpDated by Blorec Herv&#233; le 2013-09-04--> 
+<!-- UpDated by Blorec Herv&#233; le 2013-09-04-->
 <html lang="fr">
 <head>
     <TITLE>
  	JMRI: Portable File Access
     </TITLE>
-    <META content="Bob Jacobsen" name=Author>
+    <META content="Bob Jacobsen" name="Author">
     <meta name="keywords" content="JMRI technical code ">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
-
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset= utf-8">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+    <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+    <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
 <!-- /Style -->ci-dess
 </head>
-
+<body>
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 <div id="mainContent">
 
-<H1>JMRI: Acc&#232;s aux fichiers Portables</H1>
+<h1>JMRI: Acc&#232;s aux fichiers Portables</h1>
 
-JMRI utilise des fichiers pour les icÃ´nes, images, fichiers de panneau, scripts, et
+JMRI utilise des fichiers pour les icônes, images, fichiers de panneau, scripts, et
 beaucoup d'autres choses. Les r&#233;f&#233;rences &#224; ceux-ci sont couramment utilis&#233;es ci-dessus
 par des codes diff&#233;rents, et stock&#233;es dans des fichiers XML. Certains de ces fichiers
 sont distribu&#233;s avec JMRI, et certains sont cr&#233;&#233;s en dehors du r&#233;pertoire de distribution JMRI par l'utilisateur local.
@@ -44,21 +37,21 @@ En outre, JMRI est une application multi-plateforme, et nous voulons &#234;tre e
 Pour ce faire, nous avons cr&#233;&#233; un syst&#232;me de pseudo - URLs pour acc&#233;der &#224; l'emplacement des fichiers. Les noms de fichiers sont utilis&#233;s en interne et stock&#233;s dans des fichiers XML avec des pr&#233;fixes qui identifient l'emplacement du fichier qui se trouve d'une mani&#232;re ind&#233;pendante du syst&#232;me.
 <p>
 Si le nom
-<UL>
+<ul>
 <LI> commence par "program", traiter le reste comme
              chemin relatif du r&#233;pertoire du programme
-<LI> commence avec une Â«preference:",  traiter le reste comme
+<LI> commence avec une «preference:",  traiter le reste comme
              chemin d'acc&#232;s relatif du r&#233;pertoire des pr&#233;f&#233;rences
-<LI> commence par "homeÂ«, traiter le reste comme
+<LI> commence par "home«, traiter le reste comme
              chemin d'acc&#232;s relatif du r&#233;pertoire dans la propri&#233;t&#233; user.home, l'id&#233;e de Java dans le r&#233;pertoire home de l'utilisateur
 <LI> commence par "resource", traiter le reste comme
              chemin relatif au r&#233;pertoire du programme
-                  (obsol&#232;te, voir Â«programme:" ci-dessus)
+                  (obsol&#232;te, voir «programme:" ci-dessus)
 <LI> commence par "file: ", traiter le reste comme
              un chemin relatif au r&#233;pertoire des ressources ci-dessous
              dans le r&#233;pertoire des preferences
-                  (obsol&#232;te, voir la Â«pr&#233;f&#233;rence:" ci-dessus)
-</ ul>
+                  (obsol&#232;te, voir la «pr&#233;f&#233;rence:" ci-dessus)
+</ul>
 Sinon, traiter le nom comme un chemin relatif ci-dessous le r&#233;pertoire du programme pour fournir
 la compatibilit&#233; descendante. Dans tous les cas, les chemins absolus fonctionnent, mais
 ne seront pas compatibles multi - plateforme . Les deux cas obsol&#232;tes 
@@ -80,9 +73,6 @@ Convertir un fichier ou une chaine filename dans une cha&#238;ne nom avec le pr&
 </dl>
 
 Vous devriez appeler getExternalFilename () avant de passer le nom du fichier pour les Java communs , et getPortableFilename () lorsque vous recevez un fichier ou le nom d'une classe Java. C'est OK pour appeler l'une ou l'autre plusieurs fois, comme ils vont juste passer &#224; travers, dans ce cas. En particulier, appelez getPortableFilename () avant de sauvegarder dans un fichier XML..
-
-
-
 
 <!--#include virtual="/Footer" -->
 

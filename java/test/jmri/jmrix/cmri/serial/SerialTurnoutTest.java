@@ -14,12 +14,12 @@ import junit.framework.TestSuite;
 public class SerialTurnoutTest extends AbstractTurnoutTest {
 
     private SerialTrafficControlScaffold tcis = null;
-    private SerialNode n = new SerialNode();
+    private SerialNode n = null;
 
     public void setUp() {
         // prepare an interface
         tcis = new SerialTrafficControlScaffold();
-        n = new SerialNode(0, SerialNode.SMINI);
+        n = new SerialNode(0, SerialNode.SMINI,tcis);
         t = new SerialTurnout("CT4", "t4");
         Assert.assertNotNull("exists", n);
     }
@@ -49,7 +49,7 @@ public class SerialTurnoutTest extends AbstractTurnoutTest {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", SerialTurnoutTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

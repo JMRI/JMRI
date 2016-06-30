@@ -13,21 +13,16 @@ import junit.framework.TestSuite;
  */
 public class SerialSensorManagerTest extends TestCase {
 
+    private jmri.jmrix.cmri.CMRISystemConnectionMemo memo = null;
+    private SerialTrafficControlScaffold stcs = null;
+
     public void testSensorCreationAndRegistration() {
 
-        // replace SerialTurnoutManager to make sure nodes start
-        // at the beginning
-        new SerialTrafficController() {
-            void reset() {
-                self = null;
-            }
-        }.reset();
+        SerialSensorManager s = new SerialSensorManager(memo);
 
-        SerialSensorManager s = new SerialSensorManager();
-
-        SerialNode n0 = new SerialNode();
-        SerialNode n1 = new SerialNode(1, SerialNode.SMINI);
-        SerialNode n2 = new SerialNode(2, SerialNode.USIC_SUSIC);
+        SerialNode n0 = new SerialNode(stcs);
+        SerialNode n1 = new SerialNode(1, SerialNode.SMINI,stcs);
+        SerialNode n2 = new SerialNode(2, SerialNode.USIC_SUSIC,stcs);
         n2.setNumBitsPerCard(24);
         n2.setCardTypeByAddress(0, SerialNode.INPUT_CARD);
         n2.setCardTypeByAddress(1, SerialNode.OUTPUT_CARD);
@@ -68,6 +63,11 @@ public class SerialSensorManagerTest extends TestCase {
         Assert.assertTrue("3rd UA 2", n0.getSensorsActive());
     }
 
+    public void testDefinitions() {
+        Assert.assertEquals("Node definitions match", SerialSensorManager.SENSORSPERUA,
+                SerialNode.MAXSENSORS + 1);
+    }
+
     // from here down is testing infrastructure
     public SerialSensorManagerTest(String s) {
         super(s);
@@ -76,7 +76,7 @@ public class SerialSensorManagerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", SerialSensorManagerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -88,10 +88,18 @@ public class SerialSensorManagerTest extends TestCase {
     // The minimal setup for log4J
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        // replace the SerialTrafficController
+        stcs = new SerialTrafficControlScaffold();
+        memo = new jmri.jmrix.cmri.CMRISystemConnectionMemo();
+        memo.setTrafficController(stcs);
     }
 
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        stcs = null;
+        memo = null;
     }
 
 }

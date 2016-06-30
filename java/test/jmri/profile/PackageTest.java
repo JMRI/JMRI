@@ -1,5 +1,6 @@
 package jmri.profile;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -19,12 +20,13 @@ public class PackageTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.profile.PackageTest");  // no tests in this class itself
+        suite.addTest(new JUnit4TestAdapter(ProfileTest.class));
         suite.addTest(new TestSuite(ProfileUtilsTest.class));
         suite.addTest(BundleTest.suite());
         return suite;

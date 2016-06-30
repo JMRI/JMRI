@@ -1,54 +1,47 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- UpDated by Blorec Herv&#233; 2013-09-25-->  
 <html lang="fr">
 <head>
     <TITLE>
- 	JMRI: CVS FAQhttps://ixquick.com/do/search
+ 	JMRI: FAQ CVS
     </TITLE>
-    <META content="Bob Jacobsen" name=Author>
+    <META content="Bob Jacobsen" name="Author">
     <meta name="keywords" content="JMRI technical code CVS FAQ">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
-
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1
-">
+    <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
-
+<body>
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
 
-	    <H1>JMRI:Foire Aux Questions CVS (FAQ)</H1>
+	    <h1>JMRI: Foire Aux Questions CVS (FAQ)</h1>
+ <p>
 Ceci est une liste de questions fr&#233;quemment pos&#233;es sur CVS, en particulier sur la fa&#231;on dont nous l'utilisons avec JMRI.
 
 <P>
 Voir aussi l'
-<A HREF="index.shtml"> Index Technique </a>
+<a HREF="index.shtml"> Index Technique </a>
 pour plus d'informations sur la maintenance du code JMRI.
 
 
-<A name="cvstool"><h3>Comment puis-je obtenir une copie de CVS?</h3></a>
+<a name="cvstool"><h3>Comment puis-je obtenir une copie de CVS?</h3></a>
 
 De nombreux ordinateurs sont livr&#233;s avec CVS install&#233;, y compris Linux et Mac OS X.
 Si vous utilisez Windows, vous aurez besoin d'installer un  programme CVS "client" comme
-<A HREF="http://sourceforge.net/project/showfiles.php?group_id=10072&release_id=24467"> WinCVS </a>.
+<a HREF="http://sourceforge.net/project/showfiles.php?group_id=10072&release_id=24467">WinCVS</a>.
 Une version r&#233;cente peut &#234;tre t&#233;l&#233;charg&#233;e &#224; partir de:
 <a href="http://prdownloads.sourceforge.net/cvsgui/WinCvs120.zip">WinCvs120.zip</a>.
 
-<A name="jmrisource">
+<a name="jmrisource">
 <h3>Comment puis-je obtenir ma propre copie du code JMRI?</h3></a>
 
 Pour obtenir une copie de la source pour votre propre usage, vous pouvez utiliser "checkout anonyme".
@@ -71,9 +64,9 @@ Sur d'autres ordinateurs, vous pouvez taper directement sur la ligne de commande
 
 <P>
 Pour plus d'information voir la page pour  
-<A HREF="getcvscode.shtml">obtenir sa propre copie du code source</a>.
+<a HREF="getcvscode.shtml">obtenir sa propre copie du code source</a>.
 
-<A name="update">
+<a name="update">
 <h3>Comment puis-je mettre &#224; jour ma copie du code JMRI ?</h3></a>
 Les gens contribuent &#224; la mises &#224; jour du code JMRI presque chaque semaine.
 Votre copie locale ne re&#231;oit pas ces changements jusqu'&#224; ce que vous les demandiez,
@@ -91,7 +84,7 @@ L'option "-A ", ici combin&#233; avec "-d", signifie que vous voulez le contenu 
 <A name="release">
 <h3>Comment puis-je obtenir le code pour une version particuli&#232;re?</h3></a>
 
-CVS utilise des Â«balisesÂ» pour faire des ensembles de contenu sp&#233;cifique.
+CVS utilise des «balises» pour faire des ensembles de contenu sp&#233;cifique.
 Nous les utilisons pour marquer le code pour chaque version que nous construisons.
 Pour obtenir le code pour une version, vous pouvez la demander avec une commande comme ceci:
 <PRE>
@@ -135,20 +128,20 @@ de ". DS_Store"  (sans les guillemets). CVS va ignorer tous les . DS_Store dans 
 
 En r&#232;gle g&#233;n&#233;rale, trois types de noms de balises sont utilis&#233;s:
 <OL>
-<LI> "Release-1-5-4 Â» - la balise d&#233;finissant une version sp&#233;cifique du code publi&#233;.
+<LI> "Release-1-5-4 » - la balise d&#233;finissant une version sp&#233;cifique du code publi&#233;.
 Elles sont cr&#233;&#233;es lors de la lib&#233;ration de la version, et ne devrait pas &#234;tre chang&#233;es.
 <LI> "Release-1-5-4-branch" - c'est la branche-balise d&#233;finissant une "branche patch" pour une version sp&#233;cifique. C'est la seule fois que nous font usage de branches CVS, s'il vous pla&#238;t noter que nous n'utilisons pas de branches pour le d&#233;veloppement normal.
 <LI> "rgj20050603a" - de la forme "initiales" "date" "quelque lettre", ne peut &#234;tre utilis&#233; que par des d&#233;veloppeurs individuels pour garder une trace de ce qu'ils font. Tout ce que nous demandons, c'est que vous commenciez une &#233;tiquette avec vos initiales.
 </OL>
 
-<A name="structure">
-<h3>Comment JMRI est sauvegarder dans CVS?</h3>
+<a name="structure">
+<h3>Comment JMRI est sauvegarder dans CVS?</h3></a>
 
 JMRI se compose de deux grandes arborescences de code, et un certain nombre de r&#233;pertoires auxiliaires.
 Le code est divis&#233; en "jmri", le code principal JMRI, et "test", l'ensemble des
  tests est automatis&#233;s. Ils sont s&#233;par&#233;s de sorte qu'il est facile de construire tout
 le logiciel distribu&#233;, sans y inclure le code de test.
-(Si vous regardez directement le d&#233;p&#244;t CVS, vous verrez aussi les r&#233;pertoires "jmritÂ» et
+(Si vous regardez directement le d&#233;p&#244;t CVS, vous verrez aussi les r&#233;pertoires "jmrit» et
 "jmrix" , qui sont obsol&#232;tes, et conserv&#233;s exclusivement pour des raisons historiques).
 <p>
 De m&#234;me, l'information auxiliaire est gard&#233;s dans "lib", "xml",
@@ -164,8 +157,8 @@ Pour simplifier l'extraction d'un arbre de d&#233;veloppement, nous offrons un m
 CVS nomm&#233; "all". Cela v&#233;rifie les r&#233;pertoires n&#233;cessaires et les met
 dans les endroits n&#233;cessaires pour construire en ligne droite.
 
-<A name="lcok">
-<h3>Certains fichiers semblent &#234;tre en lecture seule, pourquoi ceci?</h3>
+<a name="lcok">
+<h3>Certains fichiers semblent &#234;tre en lecture seule, pourquoi ceci?</h3></a>
 
 Comme le logiciel &#233;volue, les fichiers deviennent parfois obsol&#232;tes.
 S'ils ne sont pas tous n&#233;cessaires, CVS nous permet de les supprimer

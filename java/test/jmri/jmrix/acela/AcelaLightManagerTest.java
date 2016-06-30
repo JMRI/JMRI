@@ -15,15 +15,19 @@ import org.slf4j.LoggerFactory;
  */
 public class AcelaLightManagerTest extends jmri.managers.AbstractLightMgrTest {
 
+    private jmri.jmrix.acela.AcelaSystemConnectionMemo _memo = null;
+    private AcelaTrafficControlScaffold tcis = null;
+
     public String getSystemName(int i) {
         return "AL" + i;
     }
 
-    public void testAsAbstractFactory() {
-        // create and register the manager object
-        AcelaLightManager alm = new AcelaLightManager();
-        jmri.InstanceManager.setLightManager(alm);
+    public void testConstructor(){
+        AcelaLightManager alm = new AcelaLightManager(_memo);
+        Assert.assertNotNull("Light Manager Creation",alm);
+    }
 
+    public void testAsAbstractFactory() {
         // ask for a Light, and check type
         LightManager lm = jmri.InstanceManager.lightManagerInstance();
 
@@ -55,7 +59,7 @@ public class AcelaLightManagerTest extends jmri.managers.AbstractLightMgrTest {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", AcelaLightManagerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -67,8 +71,10 @@ public class AcelaLightManagerTest extends jmri.managers.AbstractLightMgrTest {
     // The minimal setup for log4J
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        tcis = new AcelaTrafficControlScaffold();
+        _memo = new jmri.jmrix.acela.AcelaSystemConnectionMemo(tcis);
         // create and register the manager object
-        l = new AcelaLightManager();
+        l = new AcelaLightManager(_memo);
         jmri.InstanceManager.setLightManager(l);
     }
 

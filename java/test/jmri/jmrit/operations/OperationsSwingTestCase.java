@@ -4,6 +4,7 @@ package jmri.jmrit.operations;
 import java.io.File;
 import java.util.List;
 import java.util.Locale;
+import jmri.jmrit.operations.automation.AutomationManager;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.locations.ScheduleManager;
@@ -30,7 +31,7 @@ import jmri.util.JmriJFrame;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.extensions.jfcunit.finder.AbstractButtonFinder;
 import junit.extensions.jfcunit.finder.DialogFinder;
-import junit.framework.Assert;
+import org.junit.Assert;
 
 /**
  * Common setup and tear down for operation tests.
@@ -118,6 +119,7 @@ public class OperationsSwingTestCase extends jmri.util.SwingTestCase {
         CarLoads.instance().dispose();
         CarRoads.instance().dispose();
         CarManager.instance().dispose();
+        AutomationManager.instance().dispose();
         
         // delete file and log directory before testing
         file = new File(RollingStockLogger.instance().getFullLoggerFileName());

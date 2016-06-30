@@ -2,7 +2,6 @@
 <!-- This is the common sidebar definition for html/apps pages -->
 
 	  <hr class="hide">
-	  <div id="mBody">
 	  <div id="side"> <!-- Block of text on left side of page -->
 	    <div style="text-align: center">JMRI&reg; is...</div>
 	    <dl class="toc">

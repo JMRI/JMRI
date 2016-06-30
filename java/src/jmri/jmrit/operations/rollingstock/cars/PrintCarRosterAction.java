@@ -317,10 +317,6 @@ public class PrintCarRosterAction extends AbstractAction {
 
     public class CarPrintOptionFrame extends OperationsFrame {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -7320807344781148331L;
         PrintCarRosterAction pcr;
 
         public CarPrintOptionFrame(PrintCarRosterAction pcr) {

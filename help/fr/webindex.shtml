@@ -132,7 +132,7 @@
 
  
 <li>
-<a href="">Codes Erreurs </a>
+<a href="html/setup/Errors.shtml">Codes Erreurs </a>
 <ul></ul>
 </li>
 
@@ -184,19 +184,7 @@
 
   
 <li>
-<a href="">Manuel </a>
-<ul></ul>
-</li>
-
-  
-<li>
 <a href="html/tools/programmer/messages.shtml">Messages d'erreurs </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="">Volet Liste </a>
 <ul></ul>
 </li>
 
@@ -324,7 +312,7 @@
 
  
 <li>
-<a href="">Exemples Europ&eacute;ens </a>
+<a href="html/tools/signaling/index.shtml">Exemples Europ&eacute;ens </a>
 <ul></ul>
 </li>
 
@@ -502,19 +490,6 @@
 </li>
 
  
-<li>
-<a href="">Liste </a>
-<ul>
-  
-<li>
-<a href="">Groupes </a>
-<ul></ul>
-</li>
-
- 
-</ul>
-</li>
- 
 <li>LItin&eacute;raire <ul>
   
 <li>
@@ -646,7 +621,7 @@
 </li>
  
 <li>
-<a href="">Mandat </a>
+<a href="package/jmri/jmrit/logix/Warrant.shtml">Mandat </a>
 <ul></ul>
 </li>
 
@@ -966,7 +941,7 @@
 
   
 <li>
-<a href="">Programmateur DecoderPro </a>
+<a href="html/apps/DecoderPro/index.shtml">Programmateur DecoderPro </a>
 <ul></ul>
 </li>
 
@@ -1061,12 +1036,6 @@
 </li>
  
 <li>
-<a href="html/hardware/raildriver/index.shtml">R&eacute;gulateur RailDrive </a>
-<ul></ul>
-</li>
-
- 
-<li>
 <a href="html/tools/throttle/ThrottleMain.shtml">R&eacute;gulateurs </a>
 <ul>
   
@@ -1078,6 +1047,12 @@
   
 <li>
 <a href="html/tools/throttle/AdvancedThrottleControl.shtml#iphone">iPhone/iPod comme R&eacute;gulateur </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="html/hardware/raildriver/index.shtml">R&eacute;gulateur RailDrive </a>
 <ul></ul>
 </li>
 

@@ -2,7 +2,6 @@ package jmri.util.node;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
@@ -200,7 +199,6 @@ public class NodeIdentity {
      * Save the current node identity and all former identities to file.
      */
     private void saveIdentity() {
-        FileWriter fw = null;
         Document doc = new Document();
         doc.setRootElement(new Element(ROOT_ELEMENT));
         Element identityElement = new Element(NODE_IDENTITY);

@@ -1,12 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$Id: Threads.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
 <!-- UpDated by Blorec Herv&#233;  2013-09-09-->
   <html lang="fr">
 <head>
     <TITLE>
  	JMRI: Liaison
     </TITLE>
-    <META content="Bob Jacobsen" name=Author>
+    <META content="Bob Jacobsen" name="Author">
     <meta name="keywords" content="JMRI technical code threading">
 
     <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
@@ -17,7 +16,7 @@
     <!-- or change them to reflect your alternative logo -->
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=  .iso-8859-1">
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -26,17 +25,18 @@
 </head>
 
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
-	    <H1>JMRI: Liaison</H1>
+	    <h1>JMRI: Liaison</h1>
 Le mod&#232;le initial des liens pour JMRI est assez simple: Tout ce
 qui se passe dans
 le lien d'interface graphique est int&#233;ressant. 
 Une fois qu'un "message", par exemple: un paquet LocoNet,
 est accumul&#233; dans un lien s&#233;par&#233;, le message est trait&#233; dans le
 Lien interface graphique via:
-.  
+
 <PRE>
 	// message is complete, dispatch it !!
 	{ 

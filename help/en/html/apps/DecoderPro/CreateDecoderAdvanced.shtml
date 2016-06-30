@@ -15,7 +15,7 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+<div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
@@ -98,7 +98,7 @@ Three pieces:
                     </dd>
 </dl>
 For example:
-<code><pre>
+<pre><code>
   &lt;decoder&gt;
     &lt;family name="My Decoder Family" mfg="NMRA"&gt;
       &lt;model model="Model A" lowVersionID="16" highVersionID="19" productID="400" /&gt;
@@ -106,7 +106,7 @@ For example:
       &lt;model model="Model B" lowVersionID="21" highVersionID="22" productID="401" /&gt;
       &lt;/model&gt;
   &lt;/decoder&gt;
-</pre></code>
+</code></pre>
 
 If the user selects a decoder model manually, that selection sets
 all three values for use by when the decoder definition is expanded
@@ -258,9 +258,9 @@ By convention, we these fragment files in subdirectories:
 <dt>xml/decoders/(mfg)<dd>Manufacturer-specific variables, for example xml/decoders/esu
 </dl>
 The format for an include is:
-<code><pre>
+<pre><code>
      &lt;xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/&gt;
-</pre></code>
+</code></pre>
 
 The program searches for those fragment files first in the preferences directory,
 then in the program directory.  The full path must be present, e.g.
@@ -276,9 +276,9 @@ Sometimes, we replace a decoder definition with a better one.  The old one is in
 but we'd like to move those users to the new one eventually.  There are model-level
 attributes that can be added to the old (not the new) definition to facilitate that:
 
-<code><pre>
+<pre><code>
 &lt;model show="no" model="A4X" replacementModel="A4X" replacementFamily="Jan 2012"&gt;
-</pre></code>
+</code></pre>
 
 When the user selects "Update Decoder Definitions" from the Debug menu on PanelPro window
 or the Action menu in DecoderPro,
@@ -322,7 +322,7 @@ Certain command stations can only access up to CV 256 or CV512.  Some
 decoder manufacturers have built in mechanisms to bypass this.  For example,
 some ESU decoders can use writes to various CVs to access high-address CVs.
 To tell DecoderPro that a decoder can do this, use an element like:
-<code><pre>
+<pre><code>
     &lt;capability&gt;
         &lt;name&gt;High Access via Double Index&lt;/name&gt;
         &lt;parameter name="Max Regular CV address"&gt;256&lt;/parameter&gt;
@@ -331,7 +331,7 @@ To tell DecoderPro that a decoder can do this, use an element like:
         &lt;parameter name="Access Register CV"&gt;99&lt;/parameter&gt;
         &lt;parameter name="Modulo"&gt;100&lt;/parameter&gt;
     &lt;/capability&gt;
-</pre></code>
+</code></pre>
 <p>
 The parameters must appear in the order shown. They mean:
 	<ul>
@@ -369,7 +369,7 @@ For example, to write 21 to CV614 with one of these, you need to:
 	<li>Write 21 to CV 14 (614 mod 100) to do the actual CV write
 	</ul>
 This capability element will do that:
-<code><pre>
+<pre><code>
         &lt;capability&gt;
             &lt;name&gt;High Access via Partial Index&lt;/name&gt;
             &lt;parameter name="Max Regular CV address"&gt;100&lt;/parameter&gt;
@@ -377,7 +377,7 @@ This capability element will do that:
             &lt;parameter name="High Address Multiplier"&gt;10&lt;/parameter&gt;
             &lt;parameter name="Modulo"&gt;100&lt;/parameter&gt;
         &lt;/capability&gt;
-</pre></code>
+</code></pre>
 Note that it has a different "name" value. That's what selects the
 different algorithm needed here.
 <p>
@@ -409,7 +409,7 @@ For example, to write 21 to CV614 with one of these, you need to:
 	<li>Write 0 back to CV7 to reset the indexing.
 	</ul>
 This capability element will do that:
-<code><pre>
+<pre><code>
         &lt;capability&gt;
             &lt;name&gt;High Access via Partial Index with Reset&lt;/name&gt;
             &lt;parameter name="Max Regular CV address"&gt;100&lt;/parameter&gt;
@@ -418,7 +418,7 @@ This capability element will do that:
             &lt;parameter name="Modulo"&gt;100&lt;/parameter&gt;
             &lt;parameter name="Indicator"&gt;200&lt;/parameter&gt;
         &lt;/capability&gt;
-</pre></code>
+</code></pre>
 <p>
 The parameters must appear in the order shown. They mean:
 	<ul>
@@ -443,11 +443,11 @@ The parameters must appear in the order shown. They mean:
 Special programming packets are used by certain accessory decoders
 to configure their CVs from the DCC track signal.
 The capability to do that is written:
-<code><pre>
+<pre><code>
         &lt;capability&gt;
             &lt;name&gt;Ops Mode Accessory Programming&lt;/name&gt;
         &lt;/capability&gt;
-</pre></code>
+</code></pre>
 There are no parameters.  Note that this only works for ops-mode writes; these
 particular NMRA DCC packets do not perform read operations, nor do they work
 in the service mode (programming track).
@@ -455,14 +455,14 @@ in the service mode (programming track).
 <h4>Indexed CV Access</h4>
 
 To access indexed CVs, include this capability element:
-<code><pre>
+<pre><code>
         &lt;capability&gt;
             &lt;name&gt;Indexed CV access&lt;/name&gt;
             &lt;parameter name="PI"&gt;31&lt;/parameter&gt;
             &lt;parameter name="SI"&gt;32&lt;/parameter&gt;
             &lt;parameter name="cvFirst"&gt;false&lt;/parameter&gt;
         &lt;/capability&gt;
-</pre></code>
+</code></pre>
 If cvFirst is true, the format is CV.PI or CV.PI.SI as used by QSI.
 If it's false, the format is PI.CV or PI.SI.CV as used by ESU.
 <p>
@@ -478,11 +478,11 @@ For an example of where to position it etc., see the
 The TCS WOW decoders use several unique (to say the least) CV access methods.
 JMRI accommodates them via a special capability element:
 
-<code><pre>
+<pre><code>
         &lt;capability&gt;
             &lt;name&gt;TCS 4 CV access&lt;/name&gt;
         &lt;/capability&gt;
-</pre></code>
+</code></pre>
 
 This provides two custom CV formats:
 	<ul>
@@ -500,12 +500,12 @@ For examples of how to use these, see the TCS WOW decoder definition.
 
 <p>Long addresses can be accessed via "splitVal" type, as in the following example:</p>
 
-<code><pre>
+<pre><code>
     &lt;variable CV="1" item="Accessory Address" default="1" minOut="1"&gt;
         &lt;splitVal highCV="9" upperMask="XXXXXVVV"/&gt;
         &lt;label&gt;Accessory Address&lt;/label&gt;
     &lt;/variable&gt;
-</pre></code>
+</code></pre>
 
 <p>The first declared CV is the LSB (Least Significant Byte) whereas the "high CV" is the MSB (Most Significant Byte).</p>
 
@@ -514,9 +514,9 @@ For examples of how to use these, see the TCS WOW decoder definition.
 	<li>Value to put in CVs = ((value in text field) - Offset)/Factor</li>
 	<li>Value to put in text field = ((value in CVs) * Factor) + Offset</li>
 	</ul>
-<code><pre>
+<pre><code>
     &lt;splitVal highCV="9" factor="4" offset="-3"/&gt;
-</pre></code>
+</code></pre>
 
 <p>For an example, see the <a href="https://github.com/JMRI/JMRI/blob/master/xml/decoders/SPROG_DCC_Servo6." target="_blank">xml/decoders/SPROG_DCC_Servo6.xml</a> file.</p>
 

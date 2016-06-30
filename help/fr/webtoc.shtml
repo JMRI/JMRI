@@ -180,6 +180,12 @@
 <li>DecoderPro <ul>
   
 <li>
+<a href="html/apps/DecoderPro/index.shtml">D&eacute;marrer </a>
+<ul></ul>
+</li>
+
+  
+<li>
 <a href="html/apps/DecoderPro/index.shtml">Introduction </a>
 <ul>
    
@@ -193,232 +199,13 @@
 </li>
   
 <li>
-<a href="">DecoderPro Manuel </a>
-<ul>
-   
-<li>
-<a href="">D&eacute;marrer </a>
-<ul>
-    
-<li>
-<a href="">Qu'est ce que DCC? </a>
-<ul></ul>
-</li>
-
-    
-<li>
-<a href="">Syst&egrave;mes DCC </a>
-<ul></ul>
-</li>
-
-    
-<li>
-<a href="">Mat&eacute;riel DCC </a>
-<ul></ul>
-</li>
-
-    
-<li>
-<a href="">R&eacute;glage des pr&eacute;f&eacute;rencesSetting Preferences </a>
-<ul></ul>
-</li>
-
-   
-</ul>
-</li>
-   
-<li>
-<a href="">Utilisation de DecoderPro </a>
-<ul>
-    
-<li>
-<a href="">R&eacute;glage </a>
-<ul></ul>
-</li>
-
-    
-<li>
-<a href="">Choisir son d&eacute;codeur </a>
-<ul></ul>
-</li>
-
-    
-<li>
-<a href="">Modes Programmation </a>
-<ul></ul>
-</li>
-
-   
-</ul>
-</li>
-   
-<li>
-<a href="">Programmateur Basique </a>
-<ul>
-    
-<li>
-<a href="">Utlisation de la Liste </a>
-<ul></ul>
-</li>
-
-    
-<li>
-<a href="">Le Programmateur Basique </a>
-<ul></ul>
-</li>
-
-    
-<li>
-<a href="">Lecture de Donn&eacute;e </a>
-<ul></ul>
-</li>
-
-    
-<li>
-<a href="">Entr&eacute;e et &Eacute;dition de Donn&eacute;e </a>
-<ul></ul>
-</li>
-
-    
-<li>
-<a href="">&Eacute;criture dans le D&eacute;codeur </a>
-<ul></ul>
-</li>
-
-    
-<li>
-<a href="">Enregistrement dans un Fichier </a>
-<ul></ul>
-</li>
-
-    
-<li>
-<a href="">Qu'est ce qui suit </a>
-<ul></ul>
-</li>
-
-   
-</ul>
-</li>
-   
-<li>Programmateur Complet <ul>
-    
-<li>
-<a href="">Configuration et Volets List </a>
-<ul></ul>
-</li>
-
-    
-<li>
-<a href="">Volet Basique </a>
-<ul></ul>
-</li>
-
-    
-<li>
-<a href="">Volet Commande Moteur </a>
-<ul></ul>
-</li>
-
-    
-<li>
-<a href="">Volet Commande Vitesse </a>
-<ul></ul>
-</li>
-
-    
-<li>
-<a href="">Volet Catographie Fonctions </a>
-<ul></ul>
-</li>
-
-    
-<li>
-<a href="">Volet FX et Fonctions Lumi&egrave;re </a>
-<ul></ul>
-</li>
-
-    
-<li>
-<a href="">Volet Fonction Couplage </a>
-<ul></ul>
-</li>
-
-    
-<li>
-<a href="">Volet Fonctions Avanc&eacute;es </a>
-<ul></ul>
-</li>
-
-    
-<li>
-<a href="">Volet Son FX </a>
-<ul></ul>
-</li>
-
-    
-<li>
-<a href="">Volet Niveau du Son </a>
-<ul></ul>
-</li>
-
-    
-<li>
-<a href="">Volet Liste Global des CVs </a>
-<ul></ul>
-</li>
-
-    
-<li>
-<a href="">Volet Donn&eacute;es Sp&eacute;cifiques au fabricant </a>
-<ul></ul>
-</li>
-
-    
-<li>
-<a href="">Impression des Donn&eacute;es D&eacute;codeur </a>
-<ul></ul>
-</li>
-
-   
-</ul>
-</li>
-   
-<li>
-<a href="">Plus d'Information </a>
-<ul></ul>
-</li>
-
-   
-<li>
-<a href="html/apps/DecoderPro/index.shtml">D&eacute;marrer </a>
-<ul></ul>
-</li>
-
-  
-</ul>
-</li>
-  
-<li>
-<a href="">Groupes de Liste </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="html/apps/DecoderPro/FileUpdate.shtml">Installation de Npuvelles D&eacute;finitions D&eacute;codeur </a>
+<a href="html/apps/DecoderPro/FileUpdate.shtml">Installation de Nouvelles D&eacute;finitions D&eacute;codeur </a>
 <ul></ul>
 </li>
 
   
 <li>
 <a href="package/jmri/jmrit/dualdecoder/DualDecoderSelectFrame.shtml">Commande Multi-Decodeur </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="html/tools/programmer/messages.shtml">Messages d'Erreurs </a>
 <ul></ul>
 </li>
 
@@ -1208,7 +995,7 @@
 </li>
  
 <li>
-<a href="">Codes Erreur </a>
+<a href="html/setup/Errors.shtml">Codes Erreur </a>
 <ul></ul>
 </li>
 

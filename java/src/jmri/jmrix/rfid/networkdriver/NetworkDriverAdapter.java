@@ -130,9 +130,6 @@ public class NetworkDriverAdapter extends RfidNetworkPortController {
         control.setAdapterMemo(this.getSystemConnectionMemo());
         control.connectPort(this);
         control.sendInitString();
-
-        // declare up
-        jmri.jmrix.rfid.ActiveFlag.setActive();
     }
 
 

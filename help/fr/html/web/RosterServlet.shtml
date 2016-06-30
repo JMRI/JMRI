@@ -1,8 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright 2012 -->
-<!-- $Id$ -->
 <!-- Translated by Herv&#233; Blorec 2013-10-08 -->
 <title>JMRI: Roster Servlet</title>
 
@@ -17,7 +15,7 @@
 
 <body>
 <!--#include virtual="/Header" -->
-5132683101821190
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
@@ -27,16 +25,16 @@ JMRI: Liste Servlet
 
 La Liste Servlet JMRI fournit un acc&#232;s Web &#224; des informations sur les entr&#233;es liste JMRI.
 
-Ce servlet r&#233;pond aux mod&#232;les d'URL suivants: <ul>: <ul>
+Ce servlet r&#233;pond aux mod&#232;les d'URL suivants:
+    <ul>
     <li>/roster/</li> <li>/roster/list</li>
-    <li>/roster/list?filter=filter[&filter=filter]</li> 
-    
+    <li>/roster/list?filter=filter[&filter=filter]</li>
     <li>/roster/&lt;ID&gt;</li> <li>/roster/entry/&lt;ID&gt;</li>
-     <li>/roster/&lt;ID&gt;/image</li> <li>/roster/&lt;ID&gt;/icon</li>
-     
-     </ul>
-</div>
+        <li>/roster/&lt;ID&gt;/image</li> <li>/roster/&lt;ID&gt;/icon</li>
+    </ul>
 
 <!--#include virtual="/Footer" -->
+   </div>
+</div>
 </body>
 </html>

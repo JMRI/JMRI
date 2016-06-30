@@ -26,11 +26,6 @@ import org.slf4j.LoggerFactory;
  */
 public class EnginesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6804454611283948123L;
-
     EngineManager manager = EngineManager.instance(); // There is only one manager
 
     // Defines the columns
@@ -119,7 +114,6 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     /**
      * Search for engine by road number
      *
-     * @param roadNumber
      * @return -1 if not found, table row number if found
      */
     public int findEngineByRoadNumber(String roadNumber) {

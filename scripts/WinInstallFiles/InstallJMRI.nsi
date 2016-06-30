@@ -50,6 +50,12 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.22.6
+; - Remove outmoded vecmath files
+; -------------------------------------------------------------------------
+; - Version 0.1.22.5
+; - Remove more outmoded jetty files
+; -------------------------------------------------------------------------
 ; - Version 0.1.22.4
 ; - Remove more outmoded jetty files
 ; -------------------------------------------------------------------------
@@ -251,7 +257,7 @@
   ; -- usually, this will be determined by the build.xml ant script
   !define JMRI_COPY  "by"                       ; Copyright dates
 !endif
-!define COPYRIGHT "© ${JMRI_COPY} JMRI Community"  ; Copyright string
+!define COPYRIGHT "(c) ${JMRI_COPY} JMRI Community"  ; Copyright string
 !ifndef JMRI_VER
   ; -- usually, this will be determined by the build.xml ant script
   !define JMRI_VER  "unknown"                   ; Application version
@@ -264,7 +270,7 @@
   ; -- usually, this will be determined by the build.xml ant script
   !define JRE_VER   "1.8"                       ; Required JRE version
 !endif
-!define INST_VER  "0.1.22.4"                    ; Installer version
+!define INST_VER  "0.1.22.5"                    ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
@@ -439,6 +445,9 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$OUTDIR\jh.jar"
     Delete "$OUTDIR\jdom-jdk11.jar"
 
+    ; -- Delete old vecmath.jar files as of JMRI 4.5.1
+    Delete "$OUTDIR\lib\vecmath.jar"
+
     ; -- Delete older outmoded jetty .jar and outmoded servlet files, as of
     ;    JMRI 3.11.3 (added for version 0.1.21.5 of Windows installer)
     Delete "$OUTDIR\lib\jetty-continuation-8.1.0.v20120127.jar"
@@ -475,6 +484,19 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$OUTDIR\lib\websocket-common-9.2.7.v20150116.jar"
     Delete "$OUTDIR\lib\websocket-server-9.2.7.v20150116.jar"
     Delete "$OUTDIR\lib\websocket-servlet-9.2.7.v20150116.jar"
+
+    ; -- Delete outmoded jetty .jar and outmoded servlet files, as of JMRI 4.3.7
+    Delete "$OUTDIR\lib\jetty-http-9.3.6.v20151106.jar"
+    Delete "$OUTDIR\lib\jetty-io-9.3.6.v20151106.jar"
+    Delete "$OUTDIR\lib\jetty-security-9.3.6.v20151106.jar"
+    Delete "$OUTDIR\lib\jetty-server-9.3.6.v20151106.jar"
+    Delete "$OUTDIR\lib\jetty-servlet-9.3.6.v20151106.jar"
+    Delete "$OUTDIR\lib\jetty-util-9.3.6.v20151106.jar"
+    Delete "$OUTDIR\lib\websocket-api-9.3.6.v20151106.jar"
+    Delete "$OUTDIR\lib\websocket-client-9.3.6.v20151106.jar"
+    Delete "$OUTDIR\lib\websocket-common-9.3.6.v20151106.jar"
+    Delete "$OUTDIR\lib\websocket-server-9.3.6.v20151106.jar"
+    Delete "$OUTDIR\lib\websocket-servlet-9.3.6.v20151106.jar"
 
     ; -- Delete XmlIO-related files, as of JMRI 3.11.3
     Delete "$OUTDIR\help\en\package\jmri\jmrit\inControl\images\2Throttles.png"

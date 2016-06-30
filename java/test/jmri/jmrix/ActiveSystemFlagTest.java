@@ -19,8 +19,8 @@ public class ActiveSystemFlagTest extends TestCase {
     }
 
     public void testActive() throws Exception {
-        jmri.jmrix.loconet.ActiveFlag.setActive();
-        Assert.assertTrue(ActiveSystemFlag.isActive("jmri.jmrix.loconet"));
+        jmri.jmrix.grapevine.ActiveFlag.setActive();
+        Assert.assertTrue(ActiveSystemFlag.isActive("jmri.jmrix.grapevine"));
     }
 
     public void testNoSystem() throws Exception {
@@ -39,7 +39,7 @@ public class ActiveSystemFlagTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {ActiveSystemFlagTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

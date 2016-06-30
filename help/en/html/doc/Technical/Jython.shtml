@@ -24,6 +24,7 @@
 </head>
 
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
@@ -44,7 +45,7 @@ may not be current.
 
 <h2>Introduction</h2>
 
-<A HREF="http://www.python.org">Python<a/> is a widely used scripting language that's
+<A HREF="http://www.python.org">Python</a> is a widely used scripting language that's
 available on many types of computers.  A Java-based varient, called
 <A HREF="http://www.jython.org">Jython</a>,
 has been integrated with JMRI to make it easy to control a model railroad
@@ -110,7 +111,7 @@ command line from which you can directly manipulate things.
 Jython and the Python language brings to using JMRI code.  The
 Java member function:
 <PRE>
-	turnout.SetCommandedState(jmri.Turnout.CLOSED);
+	turnout.setCommandedState(jmri.Turnout.CLOSED);
 </PRE>
 can also be expressed in Jython as:
 <PRE>
@@ -249,7 +250,7 @@ JMRI uses the factory-pattern extensively to get access to
 objects.  In Java this results in verbose code like
 <PRE>
    Turnout t2 = InstanceManager.turnoutManagerInstance().newTurnout("LT2", "turnout 2");
-   t2.SetCommandedState(Turnout.THROWN)
+   t2.setCommandedState(Turnout.THROWN)
 </PRE>
 Jython simplifies that by allowing us to provide useful variables,
 and by shortening certain method calls.
@@ -278,7 +279,7 @@ Note that the variable t2 did not need to be declared.
 Juthon provides a shortcut for parameters that have 
 been defined with Java-Bean-like get and set methods:
 <PRE>
-   t2.SetCommandedState(Turnout.THROWN)
+   t2.setCommandedState(Turnout.THROWN)
 </PRE>
 can be written as
 <PRE>
@@ -344,7 +345,7 @@ convenience methods are all in the JmriDemo namespace:
 <PRE>
   >>> turnouts.newTurnout("LT1","")
   Traceback (innermost last):
-    File "<console>", line 1, in ?
+    File &amp;&lt;console&gt;&amp;, line 1, in ?
   NameError: turnouts
 
   >>> JmriDemo.turnouts.newTurnout("LT1","")
@@ -387,5 +388,7 @@ It would be good to understand what's preventing the program
 from stopping when it gets the ^D.
 
 <!--#include virtual="/Footer" -->
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
 </body>
 </html>

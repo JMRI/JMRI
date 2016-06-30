@@ -5,7 +5,6 @@ import java.awt.GridBagLayout;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.ResourceBundle;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -71,22 +70,29 @@ import org.slf4j.LoggerFactory;
  * <dt>Searches the decoder file for variable definitions of the form:</dt>
  * <dd>"Fd controls output n" (where d is a function number in the range 0-28
  * and n is an output number in the range 0-maxOut)</dd>
- * <dd>"Fd(f) controls output n"</dd>
- * <dd>"Fd(r) controls output n"</dd>
  * <dd>"FL controls output n" (L for light)</dd>
- * <dd>"FL(f) controls output n"</dd>
- * <dd>"FL(r) controls output n"</dd>
- * <dd>"Fd controls output n(alt)" (allows an alternate definition for the same
+ * <dd>"Sd controls output n" (where s is a sensor number in the range 0-28
+ * and n is an output number in the range 0-maxOut)</dd>
+ * <dd>"STOP controls output n" (where STOP designates a decoder state)</dd>
+ * <dd>"DRIVE controls output n" (where DRIVE designates a decoder state)</dd>
+ * <dd>"FWD controls output n" (where FWD designates a decoder state)</dd>
+ * <dd>"REV controls output n" (where REV designates a decoder state)</dd>
+ * <dd><br>Directional variants of all the above forms:</dd>
+ * <dd>"xxx(f) controls output n"</dd>
+ * <dd>"xxx(r) controls output n"</dd>
+ * <dd><br>Alternate variants of all the above forms:</dd>
+ * <dd>"xxx controls output n(alt)" (allows an alternate definition for the same
  * variable, such as used by Tsunami decoders)</dd>
- * <dd>"Fd(f) controls output n(alt)"</dd>
- * <dd>"Fd(r) controls output n(alt)"</dd>
- * <dd>"FL controls output n(alt)"</dd>
- * <dd>"FL(f) controls output n(alt)"</dd>
- * <dd>"FL(r) controls output n(alt)"</dd>
+ * <dd>"xxx(f) controls output n(alt)"</dd>
+ * <dd>"xxx(r) controls output n(alt)"</dd>
+ * <dd><br>
+ * The "tooltip" &amp; "label" attributes on a fnmapping variable are ignored.
+ * Expanded internationalized tooltips are generated in the code.
+ * </dd>
  * </dl>
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @author	Dave Heap Copyright (C) 2014
+ * @author	Dave Heap Copyright (C) 2016
  */
 public class FnMapPanel extends JPanel {
 

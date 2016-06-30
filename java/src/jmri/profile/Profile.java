@@ -37,6 +37,7 @@ public class Profile implements Comparable<Profile> {
      * in storage on the computer.
      *
      * @param path The Profile's directory
+     * @throws java.io.IOException If unable to read the Profile from path
      */
     public Profile(File path) throws IOException {
         this(path, true);
@@ -51,6 +52,12 @@ public class Profile implements Comparable<Profile> {
      * read-only property of the Profile. The {@link ProfileManager} will only
      * load a single profile with a given id.
      *
+     * @param name Name of the profile. Will not be used to enforce uniqueness
+     *             contraints.
+     * @param id   Id of the profile. Will be prepended to a random String to
+     *             enforce uniqueness constraints.
+     * @param path Location to store the profile
+     * @throws java.io.IOException If unable to create the profile at path
      */
     public Profile(String name, String id, File path) throws IOException, IllegalArgumentException {
         if (!path.getName().equals(id)) {
@@ -87,6 +94,10 @@ public class Profile implements Comparable<Profile> {
      * This method exists purely to support subclasses.
      *
      * @param path       The Profile's directory
+     * @param isReadable True if the profile has storage. See
+     *                   {@link jmri.profile.NullProfile} for a Profile subclass
+     *                   where this is not true.
+     * @throws java.io.IOException If the profile's preferences cannot be read.
      */
     protected Profile(File path, boolean isReadable) throws IOException {
         this.path = path;
@@ -130,7 +141,7 @@ public class Profile implements Comparable<Profile> {
     }
 
     private void readProfile() throws IOException {
-        ProfileProperties p = new ProfileProperties(this);
+        ProfileProperties p = new ProfileProperties(this.path);
         this.id = p.get(ID, true);
         this.name = p.get(NAME, true);
         if (this.id == null) {
@@ -139,8 +150,9 @@ public class Profile implements Comparable<Profile> {
         }
     }
 
-    /*
-     * Remove sometime after the new profiles get entrenched (JMRI 5.0, 6.0?)
+    /**
+     * @deprecated since 4.1.1; Remove sometime after the new profiles get
+     * entrenched (JMRI 5.0, 6.0?)
      */
     @Deprecated
     private void readProfileXml() throws IOException {
@@ -211,6 +223,7 @@ public class Profile implements Comparable<Profile> {
     /**
      * Test if the given path or subdirectories contains a Profile.
      *
+     * @param path Path to test.
      * @return true if path or subdirectories contains a Profile.
      * @since 3.9.4
      */
@@ -233,6 +246,7 @@ public class Profile implements Comparable<Profile> {
     /**
      * Test if the given path is within a directory that is a Profile.
      *
+     * @param path Path to test.
      * @return true if path or parent directories is a Profile.
      * @since 3.9.4
      */
@@ -249,6 +263,7 @@ public class Profile implements Comparable<Profile> {
     /**
      * Test if the given path is a Profile.
      *
+     * @param path Path to test.
      * @return true if path is a Profile.
      * @since 3.9.4
      */

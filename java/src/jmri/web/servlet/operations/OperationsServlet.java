@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jmri.jmris.json.JSON;
-import jmri.jmris.json.JsonException;
+import jmri.server.json.JsonException;
 import jmri.jmris.json.JsonUtil;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;

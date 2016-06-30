@@ -1,18 +1,20 @@
 //SimpleTurnoutServerTest.java
 package jmri.jmris.simpleserver;
 
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
 
 /**
  * Tests for the jmri.jmris.simpleserver.SimpleTurnoutServer class
  *
  * @author Paul Bender
  */
-public class SimpleTurnoutServerTest extends TestCase {
+public class SimpleTurnoutServerTest{
 
+    @Test
     public void testCtor() {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
@@ -27,6 +29,22 @@ public class SimpleTurnoutServerTest extends TestCase {
         Assert.assertNotNull(a);
     }
 
+    @Test
+    public void testConnectionCtor() {
+        java.io.DataOutputStream output = new java.io.DataOutputStream(
+                new java.io.OutputStream() {
+                    // null output string drops characters
+                    // could be replaced by one that checks for specific outputs
+                    @Override
+                    public void write(int b) throws java.io.IOException {
+                    }
+                });
+        jmri.jmris.JmriConnectionScaffold jcs = new jmri.jmris.JmriConnectionScaffold(output);
+        SimpleTurnoutServer a = new SimpleTurnoutServer(jcs);
+        Assert.assertNotNull(a);
+    }
+
+    @Test
     // test sending a message.
     public void testSendMessage() {
         StringBuilder sb = new StringBuilder();
@@ -61,6 +79,43 @@ public class SimpleTurnoutServerTest extends TestCase {
        } 
     }
 
+    @Test
+    // test sending a message.
+    public void testSendMessageWithConnection() {
+        StringBuilder sb = new StringBuilder();
+        java.io.DataOutputStream output = new java.io.DataOutputStream(
+                new java.io.OutputStream() {
+                    @Override
+                    public void write(int b) throws java.io.IOException {
+                        sb.append((char)b);
+                    }
+                });
+        jmri.jmris.JmriConnectionScaffold jcs = new jmri.jmris.JmriConnectionScaffold(output);
+        SimpleTurnoutServer a = new SimpleTurnoutServer(jcs);
+        // NOTE: this test uses reflection to test a private method.
+        java.lang.reflect.Method sendMessageMethod=null;
+        try {
+          sendMessageMethod = a.getClass().getDeclaredMethod("sendMessage", String.class);
+        } catch(java.lang.NoSuchMethodException nsm) {
+          Assert.fail("Could not find method sendMessage in SimpleTurnoutServer class. " );
+        }
+
+        // override the default permissions.
+        Assert.assertNotNull(sendMessageMethod);
+        sendMessageMethod.setAccessible(true);
+        try {
+           sendMessageMethod.invoke(a,"Hello World");
+           Assert.assertEquals("SendMessage Check","Hello World",jcs.getOutput());
+        } catch (java.lang.IllegalAccessException iae) {
+           Assert.fail("Could not access method sendMessage in SimpleTurnoutServer class");
+        } catch (java.lang.reflect.InvocationTargetException ite){
+          Throwable cause = ite.getCause();
+          Assert.fail("sendMessage executon failed reason: " + cause.getMessage());
+       } 
+    }
+
+
+    @Test
     // test sending an error message.
     public void testSendErrorStatus() {
         StringBuilder sb = new StringBuilder();
@@ -81,28 +136,10 @@ public class SimpleTurnoutServerTest extends TestCase {
         }
     }
 
-    // from here down is testing infrastructure
-    public SimpleTurnoutServerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SimpleTurnoutServerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(jmri.jmris.simpleserver.SimpleTurnoutServerTest.class);
-
-        return suite;
-    }
-
     // The minimal setup for log4J
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
-        super.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initInternalLightManager();
@@ -110,9 +147,9 @@ public class SimpleTurnoutServerTest extends TestCase {
         jmri.util.JUnitUtil.initDebugThrottleManager();
     }
 
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         jmri.util.JUnitUtil.resetInstanceManager();
-        super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
 

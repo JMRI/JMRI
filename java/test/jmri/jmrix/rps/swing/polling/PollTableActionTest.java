@@ -1,7 +1,6 @@
 package jmri.jmrix.rps.swing.polling;
 
 import javax.swing.JFrame;
-import jmri.util.JUnitUtil;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -31,7 +30,7 @@ public class PollTableActionTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {PollTableActionTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

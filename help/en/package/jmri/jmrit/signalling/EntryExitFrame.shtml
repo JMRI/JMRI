@@ -19,7 +19,7 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 <h1>JMRI: Entry/Exit (NX)</h1>
 <h2>Overview</h2>

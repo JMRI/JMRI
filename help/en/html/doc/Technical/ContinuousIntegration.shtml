@@ -25,12 +25,10 @@
 </head>
 
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
-	    <!-- -------- -->
-	    <!--  Teaser  --> <!-- Optional -->
-	    <!-- -------- -->
 
 <H1>JMRI: Continuous Integration</H1>
 
@@ -103,23 +101,26 @@ building installer packages from development builds,
 and building final releases.
 <p>
 Our primary Jenkins engine is at 
-<a href="http://builds.jmri.org/jenkins/">http://builds.jmri.org/jenkins/</a>, with 
-a secondary engine being built at 
-<a href="http://jmri.tagadab.com/jenkins/">http://jmri.tagadab.com/jenkins/</a>.
+<a href="http://jmri.tagadab.com/jenkins/">http://jmri.tagadab.com/jenkins/</a>, with 
+the original engine at 
+<a href="http://builds.jmri.org/jenkins/">http://builds.jmri.org/jenkins/</a>
+and a secondary engine at
+<a href="https://jmri.ci.cloudbees.com">https://jmri.ci.cloudbees.com</a>.
 <p>
 Specific Jenkins results of interest:
 <ul>
-<li><a href="http://builds.jmri.org/jenkins/">Dashboard</a> page that gives one-line status
-<li><a href="http://builds.jmri.org/jenkins/job/Development/">Development</a> page, 
+
+<li><a href="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/">Builds</a> page, 
 showing status of the builds done after every series of commits.
+Successful builds are followed by builds installers via the 
+<a href="http://jmri.tagadab.com/jenkins/view/All/job/Development/job/Packages">Packages<a> job.
+
+<li><a href="http://jmri.tagadab.com/jenkins/job/Development/job/Findbugs/">FindBugs</a> page, 
+showing status of the more-extensive 
+<a href="FindBugs.shtml">FindBugs</a> tests done periodically.
 There are also pages of the 
-<a href="http://builds.jmri.org/jenkins/view/All/job/Development/job/Packages/changes">most recent changes<a> and the
-<a href="http://builds.jmri.org/jenkins/job/Development/job/Builds/lastBuild/">most results<a>.
-<li><a href="https://jmri.ci.cloudbees.com/job/Development/job/FindBugs/">FindBugs</a> page, 
-showing status of the more-extensive tests done periodically.
-There are also pages of the 
-<a href="https://jmri.ci.cloudbees.com/job/Development/job/FindBugs/changes">most recent changes<a> and the
-<a href="https://jmri.ci.cloudbees.com/job/Development/job/FindBugs/lastBuild/">most recent results<a>.
+<a href="http://jmri.tagadab.com/jenkins/job/Development/job/Findbugs/changes">most recent changes<a> and the
+<a href="http://jmri.tagadab.com/jenkins/job/Development/job/Findbugs/lastBuild/">most recent results<a>.
 <p>
 For more information on JMRI's use of FindBugs, see the
 <a href="FindBugs.shtml">separate FindBugs page</a>.

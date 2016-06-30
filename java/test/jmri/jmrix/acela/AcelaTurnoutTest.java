@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 public class AcelaTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
 
     private AcelaTrafficControlScaffold tcis = null;
+    private AcelaSystemConnectionMemo memo = null;
 
     public int numListeners() {
         return tcis.numListeners();
@@ -85,7 +86,7 @@ public class AcelaTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", AcelaTurnoutTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -101,40 +102,41 @@ public class AcelaTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
         apps.tests.Log4JFixture.setUp();
 
         tcis = new AcelaTrafficControlScaffold();
+        memo = new AcelaSystemConnectionMemo(tcis);
 
         // We need to delete the nodes so we can re-allocate them
         // otherwise we get another set of nodes for each test case
         // which really messes up the addresses.
         // We also seem to need to explicitly init each node.
-        if (AcelaTrafficController.instance().getNumNodes() > 0) {
-            //    AcelaTrafficController.instance().deleteNode(3);
-            //    AcelaTrafficController.instance().deleteNode(2);
-            //    AcelaTrafficController.instance().deleteNode(1);
-            //    AcelaTrafficController.instance().deleteNode(0);
-            AcelaTrafficController.instance().resetStartingAddresses();
+        if (tcis.getNumNodes() > 0) {
+            //    tcis.deleteNode(3);
+            //    tcis.deleteNode(2);
+            //    tcis.deleteNode(1);
+            //    tcis.deleteNode(0);
+            tcis.resetStartingAddresses();
         }
-        if (AcelaTrafficController.instance().getNumNodes() <= 0) {
-            a0 = new AcelaNode(0, AcelaNode.AC);
+        if (tcis.getNumNodes() <= 0) {
+            a0 = new AcelaNode(0, AcelaNode.AC,tcis);
             a0.initNode();
-            a1 = new AcelaNode(1, AcelaNode.TB);
+            a1 = new AcelaNode(1, AcelaNode.TB,tcis);
             a1.initNode();
-            a2 = new AcelaNode(2, AcelaNode.D8);
+            a2 = new AcelaNode(2, AcelaNode.D8,tcis);
             a2.initNode();
-            a3 = new AcelaNode(3, AcelaNode.SY);
+            a3 = new AcelaNode(3, AcelaNode.SY,tcis);
             a3.initNode();
         } else {
-            a0 = (AcelaNode) (AcelaTrafficController.instance().getNode(0));
-            AcelaTrafficController.instance().initializeAcelaNode(a0);
-            a1 = (AcelaNode) (AcelaTrafficController.instance().getNode(1));
-            AcelaTrafficController.instance().initializeAcelaNode(a1);
-            a2 = (AcelaNode) (AcelaTrafficController.instance().getNode(2));
-            AcelaTrafficController.instance().initializeAcelaNode(a2);
-            a3 = (AcelaNode) (AcelaTrafficController.instance().getNode(3));
-            AcelaTrafficController.instance().initializeAcelaNode(a3);
+            a0 = (AcelaNode) (tcis.getNode(0));
+            tcis.initializeAcelaNode(a0);
+            a1 = (AcelaNode) (tcis.getNode(1));
+            tcis.initializeAcelaNode(a1);
+            a2 = (AcelaNode) (tcis.getNode(2));
+            tcis.initializeAcelaNode(a2);
+            a3 = (AcelaNode) (tcis.getNode(3));
+            tcis.initializeAcelaNode(a3);
         }
 
         // Must allocate a valid turnout t for abstract tests
-        t = new AcelaTurnout("AT11");
+        t = new AcelaTurnout("AT11",memo);
     }
 
     @Override

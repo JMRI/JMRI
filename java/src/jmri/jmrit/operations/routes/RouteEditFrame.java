@@ -37,10 +37,6 @@ import org.slf4j.LoggerFactory;
  */
 public class RouteEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8328598758571366786L;
     RouteEditTableModel routeModel = new RouteEditTableModel();
     JTable routeTable = new JTable(routeModel);
     JScrollPane routePane;
@@ -203,7 +199,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
-        JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+        JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(new RouteCopyAction(Bundle.getMessage("MenuItemCopy"), routeName));
         toolMenu.add(new SetTrainIconRouteAction(Bundle.getMessage("MenuSetTrainIconRoute"), routeName));
         toolMenu.add(new PrintRouteAction(Bundle.getMessage("MenuItemPrint"), false, _route));

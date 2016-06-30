@@ -1,12 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- UpDated by Blorec Herv&#233; le 2013-09-08-->
 <html lang="fr">
 <head>
     <TITLE>
- 	JMRI: Technology Road Map
+ 	JMRI: Cartographie Technologique
     </TITLE>
-    <META content="Bob Jacobsen" name=Author>
+    <meta content="Bob Jacobsen" name="Author">
     <meta name="keywords" content="JMRI technical code road map">
 
     <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
@@ -17,7 +16,7 @@
     <!-- or change them to reflect your alternative logo -->
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=.iso-8859-1">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -27,11 +26,12 @@
 
 
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
 
-	    <H1>JMRI: Cartographie Technologique</H1>
+	    <h1>JMRI: Cartographie Technologique</h1>
 
 Cette page est la feuille de route pour l'avenir du d&#233;veloppement de JMRI, les
 changements, y compris l'utilisation de Technologies Java. Il est maintenu et mis &#224; jour par le biais
@@ -167,8 +167,7 @@ Plus d'informations sur les versions de Java et les syst&#232;mes d'exploitation
 qui les supportent est sur une
 <a href="JVMCapabilities.shtml"> page s&#233;par&#233;e </a>.
 
-<P>
- <h3> Questions restantes </h3>
+<h3> Questions restantes </h3>
 
 Nous utilisons actuellement  Log4J pour le reportage . A un certain point dans l'avenir, il
 pourra y avoir de bonnes raisons de migrer vers Java API de Reportage. Il a &#233;t&#233; introduit

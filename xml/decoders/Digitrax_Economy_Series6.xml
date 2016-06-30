@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2002, 2005, 2007, 2014 All rights reserved -->
+<!-- Copyright (C) JMRI 2002, 2005, 2007, 2014, 2016 All rights reserved -->
 <!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -14,6 +14,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Alain Le Marchand" version="1" lastUpdated="20150315"/>
+  <version author="Alain Le Marchand" version="2" lastUpdated="20160618"/>
   <!-- Created from version 0 of the Digitrax_01x6 file -->
   <!-- Sole difference is absence of BEMF tuning (bemf.xml file) -->
   <!-- Version 0 - New Series 6 Econmy Digitrax decoders (Alain Le Marchand) -->
@@ -21,13 +22,19 @@
                    New definition of CV61 bit0 as per Digitrax manual 2nd edition 01/14     -->
   <!-- Version 1 - CV7 reported equal to 51 by a user - from Bug Report #515 (Alain Le Marchand)    -->
   <!--             Changed Low Version from 52 to 51                                                -->
+  <!-- Version 2 - Add DH126MT (Alain Le Marchand)    -->
   <!-- WARNING :   High Version of decoders (CV07) unknown (by me) - to be adjusted after users feed back  -->
   <decoder>
-    <family name="Economy Series 6 with FX3, silent" mfg="Digitrax" lowVersionID="51" highVersionID="64">
+    <family name="Economy Series 6 with FX3, silent" mfg="Digitrax" lowVersionID="51" highVersionID="64" comment="Economy series do NOT have Scaleable Speed Stabilization (Back EMF)">
       <model model="DH126D" numOuts="2" numFns="5" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin" comment="HO-Scale, wired">
         <output name="1" label="White" connection="wire"/>
         <output name="2" label="Yellow" connection="wire"/>
         <size length="1.074" width="0.672" height="0.259" units="inches"/>
+      </model>
+      <model model="DH126MT" numOuts="2" numFns="5" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="21MTC" comment="HO-Scale, with NMRA 21MTC interface">
+        <output name="1" label="White" connection="plug"/>
+        <output name="2" label="Yellow" connection="plug"/>
+        <size length="0.805" width="0.640" height="0.170" units="inches"/>
       </model>
       <model model="DH126P" numOuts="2" numFns="5" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="NMRAmedium" comment="HO-Scale, with Medium Plug on Long Harness">
         <output name="1" label="White" connection="plug"/>

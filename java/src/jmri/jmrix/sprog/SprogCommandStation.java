@@ -339,7 +339,9 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
      * method to find the existing SlotManager object, if need be creating one
      *
      * @return the SlotManager object
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Deprecated
     static public final SprogCommandStation instance() {
         if (self == null) {
             log.debug("creating a new SprogSlotManager object");
@@ -347,6 +349,10 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
         }
         return self;
     }
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static volatile private SprogCommandStation self = null;
 
     // data members to hold contact with the slot listeners

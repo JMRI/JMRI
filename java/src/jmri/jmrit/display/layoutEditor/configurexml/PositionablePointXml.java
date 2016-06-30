@@ -71,7 +71,7 @@ public class PositionablePointXml extends AbstractXmlAdapter {
             element.setAttribute("linkpointid", p.getLinkedPointId());
         }
 
-        element.setAttribute("class", "jmri.jmrit.display.configurexml.PositionablePointXml");
+        element.setAttribute("class", getClass().getName());
         return element;
     }
 

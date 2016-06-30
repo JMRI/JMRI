@@ -27,10 +27,10 @@ public class SerialTrafficControllerTest extends TestCase {
 
     public void testSerialNodeEnumeration() {
         SerialTrafficController c = new SerialTrafficController();
-        SerialNode b = new SerialNode(1, SerialNode.USIC_SUSIC);
-        SerialNode f = new SerialNode(3, SerialNode.SMINI);
-        SerialNode d = new SerialNode(2, SerialNode.SMINI);
-        SerialNode e = new SerialNode(6, SerialNode.USIC_SUSIC);
+        SerialNode b = new SerialNode(1, SerialNode.USIC_SUSIC,c);
+        SerialNode f = new SerialNode(3, SerialNode.SMINI,c);
+        SerialNode d = new SerialNode(2, SerialNode.SMINI,c);
+        SerialNode e = new SerialNode(6, SerialNode.USIC_SUSIC,c);
         Assert.assertEquals("1st Node", b, c.getNode(0));
         Assert.assertEquals("2nd Node", f, c.getNode(1));
         Assert.assertEquals("3rd Node", d, c.getNode(2));
@@ -155,7 +155,7 @@ public class SerialTrafficControllerTest extends TestCase {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", SerialTrafficControllerTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests

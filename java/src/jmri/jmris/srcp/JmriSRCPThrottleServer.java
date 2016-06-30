@@ -10,7 +10,6 @@ import jmri.DccThrottle;
 import jmri.JmriException;
 import jmri.LocoAddress;
 import jmri.Throttle;
-import jmri.ThrottleListener;
 import jmri.ThrottleManager;
 import jmri.jmris.AbstractThrottleServer;
 import jmri.jmrix.SystemConnectionMemo;
@@ -173,7 +172,7 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
     public void sendThrottleFound(jmri.LocoAddress address) throws IOException{
         Integer bus;
         if(addressList.contains(address)){
-           bus = (Integer)busList.get(addressList.indexOf(address));
+           bus = busList.get(addressList.indexOf(address));
         } else {
            // we didn't request this address.
            return;
@@ -190,7 +189,7 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
     public void sendThrottleReleased(jmri.LocoAddress address) throws IOException{
         Integer bus;
         if(addressList.contains(address)){
-           bus = (Integer)busList.get(addressList.indexOf(address));
+           bus = busList.get(addressList.indexOf(address));
         } else {
            // we didn't request this address.
            return;
@@ -226,7 +225,7 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
            DccLocoAddress addr = new DccLocoAddress(address,isLong);
            busList.add(Integer.valueOf(bus));
            addressList.add(addr);
-           t.requestThrottle(addr,(ThrottleListener)this);
+           t.requestThrottle(addr, this);
         }
     }
 
@@ -291,7 +290,7 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
            // get the throttle for the address.
            if(addressList.contains(addr)){
                log.debug("Throttle in throttle list");
-               Throttle t = (Throttle)throttleList.get(addressList.indexOf(addr));
+               Throttle t = throttleList.get(addressList.indexOf(addr));
                // set the speed and direction.
                t.setSpeedSetting(speed);
                t.setIsForward(isForward);
@@ -334,12 +333,12 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
            // get the throttle for the address.
            if(addressList.contains(addr)){
                log.debug("Throttle in throttle list");
-               Throttle t = (Throttle)throttleList.get(addressList.indexOf(addr));
+               Throttle t = throttleList.get(addressList.indexOf(addr));
                for(int i=0;i< fList.size();i++){
                   try {
                      java.lang.reflect.Method setter = t.getClass()
                                       .getMethod("setF"+i,boolean.class);
-                     setter.invoke(t,(Boolean) fList.get(i));
+                     setter.invoke(t, fList.get(i));
                   } catch (java.lang.NoSuchMethodException|
                           java.lang.IllegalAccessException|
                           java.lang.reflect.InvocationTargetException ex1) {
@@ -365,7 +364,7 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
        throttleList.add(t);
        try{
           sendThrottleFound(t.getLocoAddress());
-          t.addPropertyChangeListener(new srcpThrottlePropertyChangeListener(this,t, (Integer)busList.get(addressList.indexOf(t.getLocoAddress()))));
+          t.addPropertyChangeListener(new srcpThrottlePropertyChangeListener(this, t, busList.get(addressList.indexOf(t.getLocoAddress()))));
        } catch(java.io.IOException ioe){
            //Something failed writing data to the port.
        }
