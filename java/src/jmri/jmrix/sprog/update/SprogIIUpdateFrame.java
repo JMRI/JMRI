@@ -3,6 +3,7 @@ package jmri.jmrix.sprog.update;
 import javax.swing.JOptionPane;
 import jmri.jmrix.sprog.SprogConstants.SprogState;
 import jmri.jmrix.sprog.SprogMessage;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,13 +18,8 @@ public class SprogIIUpdateFrame
         extends SprogUpdateFrame
         implements SprogVersionListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4424302689786420208L;
-
-    public SprogIIUpdateFrame() {
-        super();
+    public SprogIIUpdateFrame(SprogSystemConnectionMemo memo) {
+        super(memo);
     }
 
     /**

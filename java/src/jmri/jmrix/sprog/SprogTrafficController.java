@@ -39,7 +39,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     }
 
     public SprogTrafficController(SprogSystemConnectionMemo adaptermemo) {
-       memo = adptermemo;
+       memo = adaptermemo;
     }
 
 // The methods to implement the SprogInterface

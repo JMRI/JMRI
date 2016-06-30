@@ -5,6 +5,7 @@ import jmri.jmrix.sprog.SprogListener;
 import jmri.jmrix.sprog.SprogMessage;
 import jmri.jmrix.sprog.SprogReply;
 import jmri.jmrix.sprog.SprogTrafficController;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,14 +37,14 @@ public class SprogVersionQuery implements SprogListener {
     static final protected int LONG_TIMEOUT = 2000;
     static javax.swing.Timer timer = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
-    // Ignore FindBugs warnings as there can only be one instance at present
-    public SprogVersionQuery() {
+    private SprogSystemConnectionMemo _memo = null;
+
+    public SprogVersionQuery(SprogSystemConnectionMemo memo) {
         if (log.isDebugEnabled()) {
             log.debug("setting instance: " + this);
         }
-        self = this;
-        tc = SprogTrafficController.instance();
+        _memo = memo;
+        tc = _memo.getSprogTrafficController();
         state = QueryState.IDLE;
     }
 
@@ -79,15 +80,8 @@ public class SprogVersionQuery implements SprogListener {
      */
     @Deprecated
     static public SprogVersionQuery instance() {
-        if (self == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("creating a new SprogVersionQuery object");
-            }
-            self = new SprogVersionQuery();
-        }
-        return self;
+        return null;
     }
-    static volatile protected SprogVersionQuery self = null;
 
     static synchronized public void requestVersion(SprogVersionListener l) {
         SprogMessage m;

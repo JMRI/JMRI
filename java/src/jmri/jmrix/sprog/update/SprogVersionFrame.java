@@ -1,25 +1,22 @@
-// SprogVersionFrame.java
 package jmri.jmrix.sprog.update;
 
 import javax.swing.JOptionPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 
 /**
  * Get the firmware version of the attached SPROG hardware
  *
  * @author	Andrew Crosland Copyright (C) 2008
- * @version	$Revision$
  */
 public class SprogVersionFrame extends jmri.util.JmriJFrame implements SprogVersionListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8607639215087566190L;
+    private SprogSystemConnectionMemo _memo = null;
 
-    public SprogVersionFrame() {
+    public SprogVersionFrame(SprogSystemConnectionMemo memo) {
         super();
+        _memo = memo;
     }
 
     synchronized public void initComponents() throws Exception {
@@ -29,7 +26,8 @@ public class SprogVersionFrame extends jmri.util.JmriJFrame implements SprogVers
         addHelpMenu("package.jmri.jmrix.sprog.update.SprogVersionFrame", true);
 
         // Start the query
-        SprogVersionQuery.requestVersion(this);
+        SprogVersionQuery query = new SprogVersionQuery(_memo);
+        query.requestVersion(this);
     }
 
     synchronized public void notifyVersion(SprogVersion v) {

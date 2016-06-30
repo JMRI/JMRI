@@ -93,8 +93,8 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
         }
     }
 
-    public void setElement(int n, int v) {
-        if (!SprogTrafficController.instance().isSIIBootMode()) {
+    public void setElement(int n, int v,boolean isSIIBootMode) {
+        if (!isSIIBootMode) {
             v &= 0x7f;
         }
         _dataChars[n] = v;
@@ -212,9 +212,9 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     // display format
-    public String toString() {
+    public String toString(boolean isSIIBootMode) {
         StringBuffer buf = new StringBuffer();
-        if (!SprogTrafficController.instance().isSIIBootMode()) {
+        if (isSIIBootMode) {
             for (int i = 0; i < _nDataChars; i++) {
                 buf.append((char) _dataChars[i]);
             }

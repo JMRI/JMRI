@@ -4,6 +4,7 @@ import java.util.ResourceBundle;
 import jmri.InstanceManager;
 import jmri.ProgrammerManager;
 import jmri.ThrottleManager;
+import jmri.TurnoutManager;
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
 import jmri.jmrix.sprog.update.SprogType;
 import jmri.jmrix.sprog.update.SprogVersion;
@@ -169,6 +170,9 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (type.equals(jmri.ThrottleManager.class)) {
             return true;
         }
+        if (type.equals(jmri.TurnoutManager.class)) {
+            return true;
+        }
         if ((type.equals(jmri.CommandStation.class))) {
             if (sprogMode == null) {
                 return false;
@@ -205,8 +209,11 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (T.equals(jmri.ThrottleManager.class)) {
             return (T) getThrottleManager();
         }
+        if (T.equals(jmri.TurnoutManager.class)) {
+            return (T) getTurnoutManager();
+        }
         if (T.equals(jmri.CommandStation.class)) {
-            return (T) SprogCommandStation.instance();
+            return (T) getCommandStation();
         }
         return null; // nothing, by default
     }
@@ -225,7 +232,8 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         powerManager = new jmri.jmrix.sprog.SprogPowerManager(this);
         jmri.InstanceManager.store(powerManager, jmri.PowerManager.class);
 
-        jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.sprog.SprogTurnoutManager());
+        sprogTurnoutManager = new jmri.jmrix.sprog.SprogTurnoutManager(this);
+        jmri.InstanceManager.setTurnoutManager(sprogTurnoutManager);
 
         switch (sprogMode) {
             case OPS:
@@ -244,11 +252,12 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     private ProgrammerManager programmerManager;
     private SprogCSThrottleManager sprogCSThrottleManager;
     private SprogThrottleManager sprogThrottleManager;
+    private SprogTurnoutManager sprogTurnoutManager;
     private SprogPowerManager powerManager;
 
     public ProgrammerManager getProgrammerManager() {
         if (programmerManager == null) {
-            programmerManager = new SprogProgrammerManager(new SprogProgrammer(), sprogMode, this);
+            programmerManager = new SprogProgrammerManager(new SprogProgrammer(this), sprogMode, this);
         }
         return programmerManager;
     }
@@ -273,6 +282,10 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
                 return sprogThrottleManager;
         }
         return null;
+    }
+
+    public TurnoutManager getTurnoutManager() {
+        return sprogTurnoutManager;
     }
 
     protected ResourceBundle getActionModelResourceBundle() {

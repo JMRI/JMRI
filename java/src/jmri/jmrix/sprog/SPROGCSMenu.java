@@ -27,6 +27,5 @@ public class SPROGCSMenu extends JMenu {
         add(new jmri.jmrix.sprog.update.SprogVersionAction("Get SPROG Firmware Version",_memo));
         add(new jmri.jmrix.sprog.update.Sprogv4UpdateAction("SPROG v3/v4 Firmware Update",_memo));
         add(new jmri.jmrix.sprog.update.SprogIIUpdateAction("SPROG II Firmware Update",_memo));
-        add(new jmri.jmrix.sprog.swing.PowerPanelAction("SPROG Power Control",_memo));
     }
 }

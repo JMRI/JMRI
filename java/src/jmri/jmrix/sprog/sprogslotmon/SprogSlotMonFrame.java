@@ -15,6 +15,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import jmri.jmrix.sprog.SprogCommandStation;
 import jmri.jmrix.sprog.SprogConstants;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import jmri.util.JTableUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,16 +35,19 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame {
     javax.swing.JCheckBox showAllCheckBox = new javax.swing.JCheckBox();
 
     JButton estopAllButton = new JButton("estop all");
-    SprogSlotMonDataModel slotModel = new SprogSlotMonDataModel(SprogConstants.MAX_SLOTS, 8);
+    SprogSlotMonDataModel slotModel = null;
+
     JTable slotTable;
     JScrollPane slotScroll;
 
     JTextArea status = new JTextArea("Track Current: ---A");
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
-    // Ignore FindBugs warnings as there can only be one instance at present
-    public SprogSlotMonFrame() {
+    SprogSystemConnectionMemo _memo = null;
+
+    public SprogSlotMonFrame(SprogSystemConnectionMemo memo) {
         super();
+        _memo = memo;
+        slotModel = new SprogSlotMonDataModel(SprogConstants.MAX_SLOTS, 8,_memo);
 
         slotTable = JTableUtil.sortableDataModel(slotModel);
         slotScroll = new JScrollPane(slotTable);
@@ -68,13 +72,13 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame {
         estopAllButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 log.debug("Estop all button pressed");
-                SprogCommandStation.instance().estopAll();
+                _memo.getCommandStation().estopAll();
             }
         });
 
         estopAllButton.addMouseListener(new MouseListener() {
             public void mousePressed(MouseEvent e) {
-                SprogCommandStation.instance().estopAll();
+                _memo.getCommandStation().estopAll();
             }
 
             public void mouseExited(MouseEvent e) {
@@ -112,7 +116,6 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame {
         pane1.setMaximumSize(pane1.getSize());
         pack();
 
-        self = this;
     }
 
     public void initComponents() {
@@ -126,13 +129,8 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame {
      */
     @Deprecated
     static public final SprogSlotMonFrame instance() {
-        return self;
+        return null;
     }
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static private SprogSlotMonFrame self = null;
 
     public void update() {
         slotModel.fireTableDataChanged();
