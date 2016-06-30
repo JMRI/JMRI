@@ -1,8 +1,5 @@
 language: java
 
-# The next line forces Travis out of the containerized servers, fixing JMRI/JMRI #773
-sudo: true
-
 addons:
   apt:
     packages:
