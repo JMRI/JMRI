@@ -116,7 +116,7 @@
     <property name="templatedir"  value="${javadir}/template"/>
     <property name="tmptarget"    value="${javadir}/tmp"/>
     <property name="lineendtmp"   value="${tmptarget}/lineend"/>
-    <property name="tempdir"      value="${basedir}/tempdir"/>    <!-- actual tmp files -->
+    <property name="tempdir"      value="${basedir}/temp"/>    <!-- actual tmp files -->
     <property name="java.debugging" value="yes" />
 
     <!-- location for all generated java code -->
@@ -562,6 +562,7 @@
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <classpath refid="test.class.path"/>
@@ -1122,6 +1123,7 @@
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
             <sysproperty key="jmri.headlesstest" value="true"/>
             <arg value="${antargline}"/>
@@ -1135,6 +1137,7 @@
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <sysproperty key="java.awt.headless" value="true"/>
@@ -1174,6 +1177,7 @@
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <classpath refid="test.class.path"/>
@@ -1195,6 +1199,7 @@
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <classpath refid="test.class.path"/>
@@ -1217,6 +1222,7 @@
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <classpath refid="test.class.path"/>
@@ -1246,6 +1252,7 @@
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
             <arg value="${antargline}"/>
         </java>
@@ -1259,6 +1266,7 @@
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <classpath refid="test.class.path"/>
