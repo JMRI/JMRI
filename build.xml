@@ -33,6 +33,8 @@
     <!-- Things you might want to set:                                                   -->
     <!--    # Your SourceForge ID (used for JavaDocs, distribution) if different         -->
     <!--    sourceforge.userid=                                                          -->
+    <!--    # JVM arguments to pass to the JVM running the JMRI application              -->
+    <!--    jvm.args=                                                                    -->
     <!--    # The directory where Findbugs is installed                                  -->
     <!--    findbugs.home=                                                               -->
     <!--    # You can specify a DecoderPro/PanelPro config file at runtime               -->
@@ -99,6 +101,12 @@
 
     <condition property="nsis.home" value="">
         <not><isset property="nsis.home"/></not>
+    </condition>
+
+    <condition property="jvm.args" value="">
+        <not>
+            <isset property="jvm.args"/>
+        </not>
     </condition>
 
     <!-- set global properties for this build -->
@@ -351,6 +359,7 @@
             <fileset dir="${genjavasrcdir}"/>
             <fileset file="${javadir}/manifest"/>
             <fileset dir="${tempdir}"/>
+            <fileset file="findbugs.html"/>
             <fileset file="findbugs.xml"/>
             <fileset file="junit-results.xml"/>
             <fileset file="jmri-fb.html"/>
@@ -766,6 +775,7 @@
             <!-- <jvmarg value="-verbose"/> -->
             <!-- <jvmarg value="-verbosegc"/> -->
             <!-- <jvmarg value="-Xloggc:memory.vgc"/> --><!-- for JTune -->
+            <jvmarg line="${jvm.args}"/>
             <arg value="${antargline}"/>
         </java>
     </target>
@@ -798,6 +808,7 @@
             <!-- <jvmarg value="-verbosegc"/> -->
             <!-- <jvmarg value="-Xloggc:memory.vgc"/> -->
             <!-- for JTune -->
+            <jvmarg line="${jvm.args}"/>
             <arg value="${antargline}"/>
         </java>
     </target>
@@ -991,6 +1002,7 @@
        <!-- <jvmarg value="-verbose"/> -->
        <!-- <jvmarg value="-verbosegc"/> -->
        <!-- <jvmarg value="-Xloggc:memory.vgc"/> --> <!-- for JTune -->
+            <jvmarg line="${jvm.args}"/>
             <arg value="${antargline}"/>
         </java>
     </target>
@@ -1011,6 +1023,7 @@
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+            <jvmarg line="${jvm.args}"/>
             <arg value="${antargline}"/>
         </java>
     </target>
@@ -1126,6 +1139,7 @@
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
             <sysproperty key="jmri.headlesstest" value="true"/>
+            <jvmarg line="${jvm.args}"/>
             <arg value="${antargline}"/>
         </java>
     </target>
@@ -1204,6 +1218,8 @@
 
             <classpath refid="test.class.path"/>
 
+            <jvmarg value="-Xmx640m"/>
+
             <test name="apps.tests.AllTest">
                 <formatter usefile="no" type="brief"/>
             </test>
@@ -1254,6 +1270,7 @@
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+            <jvmarg line="${jvm.args}"/>
             <arg value="${antargline}"/>
         </java>
 
