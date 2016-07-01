@@ -10,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.util.StringUtil class.
  *
  * @author	Bob Jacobsen Copyright 2003
- * @version	$Revision: 24569 $
  */
 public class PreferNumericComparatorTest extends TestCase {
 
