@@ -83,12 +83,12 @@ public class LRouteTableAction extends AbstractTableAction {
     }
 
     public LRouteTableAction() {
-        this(rbx.getString("Title"));
+        this(Bundle.getMessage("TitleLRouteTable"));
     }
 
     /**
      * Create the JTable DataModel, along with the changes for the specific case
-     * of Road Condtionals
+     * of Road Conditionals
      */
     protected void createModel() {
         m = new LBeanTableDataModel();
@@ -285,7 +285,7 @@ public class LRouteTableAction extends AbstractTableAction {
     }
 
     protected void setTitle() {
-        f.setTitle(rbx.getString("Title"));
+        f.setTitle(Bundle.getMessage("TitleLRouteTable"));
     }
 
     protected String helpTarget() {
@@ -909,7 +909,7 @@ public class LRouteTableAction extends AbstractTableAction {
                     _systemName.setText(LOGIX_INITIALIZER);
                 }
             });
-            _typePanel = makeShowButtons(_newRouteButton, oldRoute, _initializeButton, "LRouteType");
+            _typePanel = makeShowButtons(_newRouteButton, oldRoute, _initializeButton, rbx.getString("LRouteType") + ":");
             _typePanel.setBorder(BorderFactory.createEtchedBorder());
             tab1.add(_typePanel);
             tab1.add(Box.createVerticalGlue());
@@ -967,7 +967,7 @@ public class LRouteTableAction extends AbstractTableAction {
             //////////////////////////////////// Tab 2 /////////////////////////////
             JPanel tab2 = new JPanel();
             tab2.setLayout(new BoxLayout(tab2, BoxLayout.Y_AXIS));
-            tab2.add(new JLabel(rbx.getString("OutputTitle")));
+            tab2.add(new JLabel(rbx.getString("OutputTitle") + ":"));
             _outputAllButton = new JRadioButton(Bundle.getMessage("All"), true);
             JRadioButton includedOutputButton = new JRadioButton(Bundle.getMessage("Included"), false);
             tab2.add(makeShowButtons(_outputAllButton, includedOutputButton, null, Bundle.getMessage("Show")));
@@ -1002,7 +1002,7 @@ public class LRouteTableAction extends AbstractTableAction {
             //////////////////////////////////// Tab 3 /////////////////////////////
             JPanel tab3 = new JPanel();
             tab3.setLayout(new BoxLayout(tab3, BoxLayout.Y_AXIS));
-            tab3.add(new JLabel(rbx.getString("InputTitle")));
+            tab3.add(new JLabel(rbx.getString("InputTitle") + ":"));
             _inputAllButton = new JRadioButton(Bundle.getMessage("All"), true);
             JRadioButton includedInputButton = new JRadioButton(Bundle.getMessage("Included"), false);
             tab3.add(makeShowButtons(_inputAllButton, includedInputButton, null, Bundle.getMessage("Show")));
@@ -1042,7 +1042,7 @@ public class LRouteTableAction extends AbstractTableAction {
             // Enter filenames for sound, script
             JPanel p25 = new JPanel();
             p25.setLayout(new FlowLayout());
-            p25.add(new JLabel(rbx.getString("PlaySound")));
+            p25.add(new JLabel(Bundle.getMessage("LabelPlaySound")));
             JButton ss = new JButton("...");
             ss.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -1055,7 +1055,7 @@ public class LRouteTableAction extends AbstractTableAction {
 
             p25 = new JPanel();
             p25.setLayout(new FlowLayout());
-            p25.add(new JLabel(rbx.getString("RunScript")));
+            p25.add(new JLabel(Bundle.getMessage("LabelRunScript")));
             ss = new JButton("...");
             ss.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -1068,7 +1068,7 @@ public class LRouteTableAction extends AbstractTableAction {
 
             p25 = new JPanel();
             p25.setLayout(new FlowLayout());
-            p25.add(new JLabel(rbx.getString("SetLocks")));
+            p25.add(new JLabel(rbx.getString("SetLocks") + ":"));
             _lockCheckBox = new JCheckBox(rbx.getString("Lock"), true);
             _lockCheckBox.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -1132,7 +1132,7 @@ public class LRouteTableAction extends AbstractTableAction {
                     // remind to save, if Route was created or edited
                     if (routeDirty) {
                         InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString", "LRoute"),
+                                showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString", Bundle.getMessage("BeanNameLRoute")),
                                         getClassName(),
                                         "remindSaveRoute"); // NOI18N
                         routeDirty = false;
@@ -1164,7 +1164,7 @@ public class LRouteTableAction extends AbstractTableAction {
     JPanel makeShowButtons(JRadioButton allButton, JRadioButton includeButton,
             JRadioButton extraButton, String msg) {
         JPanel panel = new JPanel();
-        panel.add(new JLabel(rbx.getString(msg)));
+        panel.add(new JLabel(msg));
         panel.add(allButton);
         panel.add(includeButton);
         ButtonGroup selGroup = new ButtonGroup();
@@ -2920,7 +2920,7 @@ public class LRouteTableAction extends AbstractTableAction {
     }
 
     public String getClassDescription() {
-        return rbx.getString("Title");
+        return Bundle.getMessage("TitleLRouteTable");
     }
 
     private final static Logger log = LoggerFactory.getLogger(LRouteTableAction.class.getName());
