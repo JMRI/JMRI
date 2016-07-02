@@ -35,6 +35,10 @@
     <!--    sourceforge.userid=                                                          -->
     <!--    # JVM arguments to pass to the JVM running the JMRI application              -->
     <!--    jvm.args=                                                                    -->
+    <!--    # paths to append to the classpath                                           -->
+    <!--    cp.append=                                                                    -->
+    <!--    # paths to prepend to the classpath                                           -->
+    <!--    cp.prepend=                                                                    -->
     <!--    # The directory where Findbugs is installed                                  -->
     <!--    findbugs.home=                                                               -->
     <!--    # You can specify a DecoderPro/PanelPro config file at runtime               -->
@@ -106,6 +110,16 @@
     <condition property="jvm.args" value="">
         <not>
             <isset property="jvm.args"/>
+        </not>
+    </condition>
+    <condition property="cp.append" value="">
+        <not>
+            <isset property="cp.append"/>
+        </not>
+    </condition>
+    <condition property="cp.prepend" value="">
+        <not>
+            <isset property="cp.prepend"/>
         </not>
     </condition>
 
@@ -213,9 +227,11 @@
 
     <!-- path to run regular executables -->
     <path id="project.class.path">
+        <pathelement path="${cp.prepend}"/>   <!-- prepended by user -->
         <pathelement location="${jartarget}"/>
         <path        refid="runtime.class.path"/>
         <pathelement location="${target}/"/>  <!-- last to check for name collisions -->
+        <pathelement path="${cp.append}"/>    <!-- appended by user -->
     </path>
 
     <!-- path to run tests -->
