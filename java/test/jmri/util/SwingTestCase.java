@@ -18,7 +18,6 @@ import junit.framework.Assert;
  * leave windows open, so that's been bypassed for now.
  *
  * @author	Bob Jacobsen - Copyright 2009
- * @version	$Revision$
  * @since 2.5.3
  */
 public class SwingTestCase extends JFCTestCase {

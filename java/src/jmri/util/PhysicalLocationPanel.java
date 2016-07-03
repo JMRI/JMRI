@@ -33,10 +33,6 @@ import org.slf4j.LoggerFactory;
  */
 public class PhysicalLocationPanel extends JPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
     TitledBorder tb;
     JSpinner xs, ys, zs;
     SpinnerNumberModel spinnerModel;
