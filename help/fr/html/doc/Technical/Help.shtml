@@ -68,7 +68,7 @@ atteindre le contenu. La deuxi&#232;me partie de l'arbre devrait &#233;galement 
 comme "une page, un th&#232;me", avec des liens pour les connecter au besoin
 
 <a name="limitations">
-<h3>Limitations de JavaHelp HTML</h3></a>
+</a><h3>Limitations de JavaHelp HTML</h3>
 
 JavaHelp affiche " un bon vieux HTML 4.0", sans fournir certains des
 sucre syntaxique fourni par de nombreux navigateurs pour permettre de pauvres rendus HTML.

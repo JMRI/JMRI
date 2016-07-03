@@ -166,7 +166,7 @@
 	Supply a name i.e. <code>my-dialog-2</code> and click OK.<br>
 	Note: Starting your Branch name with a unique two letter combination will make it stand out from the long list much better than a name like <code>patch-1</code>.</p>
 
-<a name="setant"><h2>Building and running JMRI using Ant</h2></a>
+<a name="setant"></a><h2>Building and running JMRI using Ant</h2>
   <p>
 	We recommend that before you try to build and run one of the
 	applications within IntelliJ, you run the Ant Build -&gt; &lt;Default target&gt; first. This will create the necessary working directories, load some resource

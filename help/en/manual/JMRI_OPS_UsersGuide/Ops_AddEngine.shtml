@@ -112,7 +112,7 @@ which opens the<br>
 <br>
 <img src="images/Ops_AddEngine_consist.png" width="275" height="151" alt="consist">     where you may enter a new Consist Name. Then select the Consist Name from the drop-down list.</p>
 
-<a name="NCE" id="NCE"><h4>Synchronize with NCE Consists</h4></a>
+<a name="NCE" id="NCE"></a><h4>Synchronize with NCE Consists</h4>
 If you are using NCE as your DCC command station, you can have the program synchronize your consist numbers with your locomotives. The program  will read all of the consists out of your NCE system and then will search for matching locomotives in your OperationsPro Roster. The program will assign the Consist Name <code>nce_xxx</code> where xxx is the NCE consist number. To synchronize your consists, select "Synchronize with NCE Consists" under the "Tools" menu (dimmed when no NCE Connection is set).<br>&nbsp;
 </td>
   </tr>

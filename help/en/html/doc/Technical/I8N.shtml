@@ -60,7 +60,7 @@ a default Locale (as part of the
 <a href="../../../package/apps/TabbedPreferences.shtml#locale">Advanced Preferences</a>), 
 we can customize the JMRI&reg; program to different countries and languages.
 
-<a name="resourcebundles"><h2>Use of Resource Bundles</h2></a>
+<a name="resourcebundles"></a><h2>Use of Resource Bundles</h2>
 The text for menus, buttons and similiar controls is for the most part contained in
 <strong>property files</strong>, which are accessed via the Resource Bundle mechanism
 of java.util.

@@ -91,7 +91,7 @@ Si tout fonctionne, vous devriez voir la fen&#234;tre Commande Alimentation sur 
 Cliquez sur le bouton "On" pour alimenter le r&#233;seau .
 
 <a id="Configure">
-<h2> Configuration </h2></a>
+</a><h2> Configuration </h2>
 
 Vous pouvez utiliser les
 "<a href="../../package/apps/TabbedPreferences.shtml"> Pr&#233;f&#233;rences</a>"
@@ -111,7 +111,7 @@ Le port par d&#233;faut MiniServer est 12080, mais cela peut &#234;tre modifi&#2
 la bo&#238;te de dialogue Pr&#233;f&#233;rences MiniServer.
 
 <a id="URLs">
-<h2> Acc&#232;s aux URLs</h2></a>
+</a><h2> Acc&#232;s aux URLs</h2>
 Vous pouvez cr&#233;er vos propres pages Web en utilisant n'importe quel outil que vous souhaitez.
 Pour acc&#233;der &#224; JMRI depuis ces pages, vous avez 
 besoin de conna&#238;tre les URL correctes pour demander les services que vous souhaitez.

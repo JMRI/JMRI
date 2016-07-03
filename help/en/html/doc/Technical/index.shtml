@@ -27,7 +27,7 @@ that contains updates since the last downloadable version was published,
 this section of the web site will help you get started.
 
 <a id="moreinfo">
-<h2>Technical background info on the JMRI project</h2></a>
+</a><h2>Technical background info on the JMRI project</h2>
 <p>JMRI is intended as a
 jumping-off point for hobbyists who want to control their
 layouts from a computer without having to create an entire
@@ -77,7 +77,7 @@ type. Both the programming screens and decoder information are
 stored in text files, so you can make up new ones as
 desired.</p>
 
-<a name="writecode"><h2>How can you change how JMRI does things?</h2></a>
+<a name="writecode"></a><h2>How can you change how JMRI does things?</h2>
 
 There are several different ways to modify JMRI:
 <ol>
@@ -135,7 +135,7 @@ and
 <a href="https://github.com/JMRI/website">web site source code</a> 
 over the web.
 
-<a name="buildyourcopy"><h2>Building Your Own Copy</h2></a>
+<a name="buildyourcopy"></a><h2>Building Your Own Copy</h2>
 <p>
 In addition to getting a copy of the JMRI source code and reading it,
 you can also compile your own version of the program to run. You can
@@ -160,7 +160,7 @@ Alternately, if you'd like to edit code with your favorite text editor
 and compile it from a command line, please see the page of instructions for
 <a href="Ant.shtml">building with Ant</a>.
 
-<h2><a name="contributing">Contributing</h2></a>
+</a><h2><a name="contributing">Contributing</h2>
 <p>
 We encourage contributions of code, decoder definitions, improvements to 
 web pages, etc, to the JMRI project so that 
@@ -209,7 +209,7 @@ helped with the contribution, please let us know so
 we can add them to the 
 <a href="../../../Acknowledgements.shtml">acknowledgements page</a>.
 
-<h2><a name="use">Licensing</h2></a>
+</a><h2><a name="use">Licensing</h2>
 We encourage people to build their own projects on top of JMRI. That's the original reason
 that the JMRI&reg; project was started!
 

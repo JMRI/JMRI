@@ -33,7 +33,7 @@ Voir aussi l'
 pour plus d'informations sur la maintenance du code JMRI.
 
 
-<a name="cvstool"><h3>Comment puis-je obtenir une copie de CVS?</h3></a>
+<a name="cvstool"></a><h3>Comment puis-je obtenir une copie de CVS?</h3>
 
 De nombreux ordinateurs sont livr&#233;s avec CVS install&#233;, y compris Linux et Mac OS X.
 Si vous utilisez Windows, vous aurez besoin d'installer un  programme CVS "client" comme
@@ -42,7 +42,7 @@ Une version r&#233;cente peut &#234;tre t&#233;l&#233;charg&#233;e &#224; partir
 <a href="http://prdownloads.sourceforge.net/cvsgui/WinCvs120.zip">WinCvs120.zip</a>.
 
 <a name="jmrisource">
-<h3>Comment puis-je obtenir ma propre copie du code JMRI?</h3></a>
+</a><h3>Comment puis-je obtenir ma propre copie du code JMRI?</h3>
 
 Pour obtenir une copie de la source pour votre propre usage, vous pouvez utiliser "checkout anonyme".
 Pour un client en ligne de commande cvs, cr&#233;ez un nouveau r&#233;pertoire pour le projet,
@@ -67,7 +67,7 @@ Pour plus d'information voir la page pour
 <a HREF="getcvscode.shtml">obtenir sa propre copie du code source</a>.
 
 <a name="update">
-<h3>Comment puis-je mettre &#224; jour ma copie du code JMRI ?</h3></a>
+</a><h3>Comment puis-je mettre &#224; jour ma copie du code JMRI ?</h3>
 Les gens contribuent &#224; la mises &#224; jour du code JMRI presque chaque semaine.
 Votre copie locale ne re&#231;oit pas ces changements jusqu'&#224; ce que vous les demandiez,
 de sorte que vous avez quelque chose de stable pour travailler avec.
@@ -82,7 +82,7 @@ L'option "-q" supprime un grand nombre de messages de routine. L'option
 L'option "-A ", ici combin&#233; avec "-d", signifie que vous voulez le contenu le plus r&#233;cent.
 
 <A name="release">
-<h3>Comment puis-je obtenir le code pour une version particuli&#232;re?</h3></a>
+</a><h3>Comment puis-je obtenir le code pour une version particuli&#232;re?</h3>
 
 CVS utilise des «balises» pour faire des ensembles de contenu sp&#233;cifique.
 Nous les utilisons pour marquer le code pour chaque version que nous construisons.
@@ -135,7 +135,7 @@ Elles sont cr&#233;&#233;es lors de la lib&#233;ration de la version, et ne devr
 </OL>
 
 <a name="structure">
-<h3>Comment JMRI est sauvegarder dans CVS?</h3></a>
+</a><h3>Comment JMRI est sauvegarder dans CVS?</h3>
 
 JMRI se compose de deux grandes arborescences de code, et un certain nombre de r&#233;pertoires auxiliaires.
 Le code est divis&#233; en "jmri", le code principal JMRI, et "test", l'ensemble des
@@ -158,7 +158,7 @@ CVS nomm&#233; "all". Cela v&#233;rifie les r&#233;pertoires n&#233;cessaires et
 dans les endroits n&#233;cessaires pour construire en ligne droite.
 
 <a name="lcok">
-<h3>Certains fichiers semblent &#234;tre en lecture seule, pourquoi ceci?</h3></a>
+</a><h3>Certains fichiers semblent &#234;tre en lecture seule, pourquoi ceci?</h3>
 
 Comme le logiciel &#233;volue, les fichiers deviennent parfois obsol&#232;tes.
 S'ils ne sont pas tous n&#233;cessaires, CVS nous permet de les supprimer
