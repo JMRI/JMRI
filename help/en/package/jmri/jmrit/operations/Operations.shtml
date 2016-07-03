@@ -82,6 +82,7 @@
        <ul>
         <li><a href="#CopyTrack">Copy Track</a></li>
         <li><a href="#ChangeTrackTypeLocation">Change Track Type</a></li>
+        <li><a href="#ShowTrackMoves">Show Track Moves</a></li>
         <li><a href="#ModifyLocationByCarType">Modify Location by Car Type</a></li>
         <li><a href="#ModifyLocationByCarLoad">Modify Location by Car Load</a></li>
         <li><a href="#TrackBlockingOrder">Track Blocking Order</a></li>
