@@ -223,8 +223,6 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
 
         // start operation
         packets.startThreads();
-        jmri.jmrix.loconet.ActiveFlag.setActive();
-
     }
 
     // base class methods for the LnPortController interface

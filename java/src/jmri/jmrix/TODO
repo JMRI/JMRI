@@ -1,4 +1,0 @@
-
-Get the file and project names right.  E.g. jmri.simpleprog, jmrix.loconet.SlotManager,
-etc.  Need this to make sure that no extensions (jmrix) references get into the 
-jmri package itself.

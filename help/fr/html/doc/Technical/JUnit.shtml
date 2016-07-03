@@ -1,37 +1,29 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- UpDated by Blorec Herv&#233;  2013-09-06--> 
  <html lang="fr">
 <head>
     <TITLE>
- 	JMRI:tUnit testing with JUnit
+ 	JMRI:Les tests unitaires avec JUnit
     </TITLE>
     <META content="Bob Jacobsen" name=Author>
     <meta name="keywords" content="JMRI technical code ">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or c Les tests unitaires avec JUnihange them to reflect your alternative logo -->
-
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1
-">
+    <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
-
+<body>
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 <div id="mainContent">
 
-<H1>JMRI: Les tests unitaires avec JUnit</H1>
+<h1>JMRI: Les tests unitaires avec JUnit</h1>
 
 JJUnit est un syst&#232;me de construction "tests unitaires" du logiciel.
 Les tests unitaires sont de petits tests qui vous assurent que les parties individuelles du logiciel font ce qu'elles sont cens&#233;es faire.
@@ -45,8 +37,6 @@ Un exemple tr&#232;s int&#233;ressant du d&#233;veloppement bas&#233;e sur les t
 Certaines classes ont des tests JUnit disponibles. C'est une bonne chose d'ajouter des tests JUnit quand vous apportez des modifications 
 (tester vos nouvelles fonctionnalit&#233;s pour s'assurer qu'il est au travail, et continue &#224; travailler), lorsque vous devez comprendre le 
 code que quelqu'un a fait (les tests documentent exactement ce qui doit arriver!), et quand vous traquer un bug (assurez-vous qu'il ne revient pas).
-
-.
 
 <a name="run">
 <h2>Ex&#233;cutez les Tests</h2></a>
@@ -79,7 +69,7 @@ Chaque nuit, environ &#224; 01h45, heure du Pacifique (et parfois plus souvent),
 <LI> Nettoie toutes les compilations existantes, etc
 <LI> Reconstruit &#224; partir de z&#233;ro avec la cible de d&#233;bogage
 <LI> ex&#233;cute le jmri.HeadLessTest app, qui &#224; son tour ex&#233;cute les tests JUnit.
-</ ol>
+</ol>
 <P>
 Si aucune de ces &#233;tapes n'&#233;choue, y compris  les messages d'avertissement ou d'erreur de la connexion, le rapport est envoy&#233; &#224; la 
 liste "jmri-build" sur SourceForge. Vous pouvez vous
@@ -153,11 +143,13 @@ tests JUnit puissent les regarder avant de les transmettre dans le rapport. Il y
 faire en sorte que log4j soit bien initialis&#233;, et que l'appender personnalis&#233; dialogue quand un test commence et se termine.
 <CODE> <PRE>
      // La configuration minimale pour log4j
-    protected void  setUp() throws Exception {
-         apps.tests.Log4JFixture.setUp ();
+     @Override
+     protected void  setUp() throws Exception {
          super.setUp ();
+         apps.tests.Log4JFixture.setUp ();
      }
-      protected void tearDown () throws Exception {
+     @Override
+     protected void tearDown () throws Exception {
          super.tearDown ();
          apps.tests.Log4JFixture.tearDown ();
      }
@@ -195,7 +187,7 @@ Votre <code>configuration ()</code> de  mise en œuvre doit commencer par:
 Votre <code>tearDown(d&#233;montage) () </code> doit se terminer par:
 <code> <pre>
 jmri.util.JUnitUtil.resetInstanceManager ();
-super.tearDown ()</pre></code>
+super.tearDown ()</code></pre>
 
 <h4>Ex&#233;cution des Auditeurs</h4>
 
@@ -276,7 +268,6 @@ Comme test, vous pouvez essayer de configurer l'option "-noloading" dans le test
 <p>
 Le droit fixe &#224; long terme est d'avoir toutes les classes avec chargeur incluent dans le fichier
 <code>test/junit/ruunner/excluded.properties</code>. JUnit utilise ces propri&#233;t&#233;s pour d&#233;cider comment g&#233;rer le chargement et le rechargement des classe.
-
 
 <!--#include virtual="/Footer" -->
 

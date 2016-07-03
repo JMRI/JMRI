@@ -40,7 +40,7 @@ public final class WebServer implements LifeCycle.Listener {
     private ShutDownTask shutDownTask = null;
     private final static Logger log = LoggerFactory.getLogger(WebServer.class.getName());
 
-    protected WebServer() {
+    public WebServer() {
         this(WebServerPreferences.getDefault());
     }
 
@@ -148,6 +148,7 @@ public final class WebServer implements LifeCycle.Listener {
      * is actually sane. Note that this refuses to return portable paths that
      * are outside of program: and preference:
      *
+     * @param path the JMRI portable path
      * @return The servable URI or null
      * @see jmri.util.FileUtil#getPortableFilename(java.io.File)
      */

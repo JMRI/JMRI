@@ -1,10 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
     <head>
-        <!-- Copyright 2012 -->
-        <!-- $Id$ -->
-	<!-- $Id$ -->
-        <title>JMRI: Json Servlet</title>
+        <title>JMRI: Servlet Json</title>
 
         <!-- Style -->
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -29,7 +26,7 @@
 
     <body>
         <!--#include virtual="/Header" -->
-
+            <div id="mBody">
         <!--#include virtual="Sidebar" -->
         <div id="mainContent">
 
@@ -56,7 +53,7 @@
                 <li>status individuelle des &#233;l&#233;ments requis dans le formulaire<code>{"type":"turnout","data":{"name":"LT14"}}</code>
                     qui sont transmises aux gestionnaires sp&#233;cifiques. Ces demandes initieront les "auditeurs" qui enverront r&#233;ponses mises &#224; jour &#224; chaque changement d'&#233;tat de l'&#233;l&#233;ment.
                     <ul>
-                        <li>l'&#233;tat d'un &#233;l&#233;ment peut &#234;tre r&#233;gl&#233; par l'ajout d'un n&#339;ud  d'<strong>&#233;tat</strong> au n&#339;ud <em>donn&#233;es</ em> dans une requ&#234;te HTTP POST:
+                        <li>l'&#233;tat d'un &#233;l&#233;ment peut &#234;tre r&#233;gl&#233; par l'ajout d'un n&#339;ud  d'<strong>&#233;tat</strong> au n&#339;ud <em>donn&#233;es</em> dans une requ&#234;te HTTP POST:
                             <code>{"type":"turnout","data":{"name":"LT14","state":4}}</code>
                         <li>Des types diff&#233;rents peuvent &#234;tre cr&#233;&#233;s si la requ&#234;te est une requ&#234;te HTTP PU.Notez que tous les types supportent ceci</li>
                     </ul>
@@ -81,7 +78,8 @@
                             "userName":"Waccamaw Coast Line","type":"Layout"}]}</code></td><td>requi&#232;re une liste de panneaux, r&#233;pond avec un ensemble des d&#233;tails de deux panneaux</td></tr>
 
             </table>
+            <!--#include virtual="/Footer" -->
         </div>
-        <!--#include virtual="/Footer" -->
+        </div>
     </body>
 </html>

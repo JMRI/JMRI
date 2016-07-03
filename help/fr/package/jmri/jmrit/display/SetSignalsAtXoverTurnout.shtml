@@ -42,7 +42,7 @@ sont affect&#233;s &#224; des cantons diff&#233;rents.</p>
 <p>
 Lorsque cet &#233;l&#233;ment est s&#233;lectionn&#233; dans le menu <b> Outils</b>, une petite bo&#238;te de dialogue est affich&#233;e pour
 l'inscription du nom d'aiguillage (syst&#232;me ou utilisateur) de la bretelle. Si cet outil
-est entr&#233; en s&#233;lectionnant <b>D&#233;finir Signaux ...</b> dans le menu contextuel de la bretelle, le nom de l'aiguillage est automatiquement inscrit. Apr&#232;s que le nom de la bretelle
+est entr&#233; en s&#233;lectionnant <b>D&#233;finir Signaux...</b> dans le menu contextuel de la bretelle, le nom de l'aiguillage est automatiquement inscrit. Apr&#232;s que le nom de la bretelle
 ait &#233;t&#233; saisi et v&#233;rifi&#233;,une boite de dialogue est montr&#233;e pour la saisie des noms (syst&#232;me
 ou utilisateur) de quatre &#224; huit signaux &#224; affecter &#224; la bretelle.</p>
 <p>
@@ -161,7 +161,7 @@ la bretelle est dans l'&#233;tat crois&#233;, la vitesse limit&#233;e (le feu le
 restrictive n'est pas vert, mais jaune) est mise en place (voir le sch&#233;ma quatre - aiguillages
  ci-dessus). Si vous pr&#233;f&#233;rez ne pas avoir de limitation de vitesse lorsque le
 l'aiguillage est orient&#233; vers le croisement, modifier le signal logique simple en s&#233;lectionnant
-<b> Modifier Logique ...</b> dans le menu contextuel de l'aiguillage, <b>D&#233;cocher Vitesse limit&#233;e </b>,
+<b> Modifier Logique...</b> dans le menu contextuel de l'aiguillage, <b>D&#233;cocher Vitesse limit&#233;e </b>,
 et cliquez sur  <b>Appliquer </b>.</p>
 
 <p>
@@ -170,7 +170,7 @@ d'informations saisies par cet outil que dans la Logique Simple Signal. Si vous
 aimeriez avoir quatre aspects de signalisation, vous pouvez facilement modifier manuellement la logique
 pour y parvenir. De m&#234;me, par une simple modification manuelle de la logique, vous pouvez
 ajouter un balisage lumineux d'approche. La bo&#238;te de dialogue Logique Simple Signal peut
-Ã¢tre accessible depuis le menu contextuel de chaque ic&#244;ne de signal. Si votre situation sp&#233;ciale
+âtre accessible depuis le menu contextuel de chaque ic&#244;ne de signal. Si votre situation sp&#233;ciale
  ne peut pas &#234;tre manipul&#233;e par un logique simple signal, vous devez vous r&#233;f&#233;rer &#224;
 Logix pour adapter la logique signal &#224; vos besoins. </p>
 <p>

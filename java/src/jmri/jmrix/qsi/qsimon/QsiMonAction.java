@@ -1,36 +1,33 @@
-// QsiMonAction.java
 package jmri.jmrix.qsi.qsimon;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.jmrix.qsi.QsiSystemConnectionMemo;
 
 /**
  * Swing action to create and register a QsiMonFrame object
  *
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version	$Revision$
  */
 public class QsiMonAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6725018075130721947L;
+    private QsiSystemConnectionMemo _memo = null;
 
-    public QsiMonAction(String s) {
+    public QsiMonAction(String s,QsiSystemConnectionMemo memo) {
         super(s);
+        _memo = memo;
     }
 
-    public QsiMonAction() {
+    public QsiMonAction(QsiSystemConnectionMemo memo) {
         this(java.util.ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle")
-                .getString("MenuItemCommandMonitor"));
+                .getString("MenuItemCommandMonitor"),memo);
     }
 
     public void actionPerformed(ActionEvent e) {
         // create a QsiMonFrame
-        QsiMonFrame f = new QsiMonFrame();
+        QsiMonFrame f = new QsiMonFrame(_memo);
         try {
             f.initComponents();
         } catch (Exception ex) {

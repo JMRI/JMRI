@@ -36,7 +36,7 @@ Pour ajouter une nouvelle lumi&#232;re, suivez cette proc&#233;dure:
 <b>Outils</b>  pour faire appara&#238;tre
 le Tableau <b><a href="Lights.shtml"> Lumi&#232;re</a></b> et cliquez sur le bouton 
 <b>Ajouter ...</b> au bas du <b>Tableau lumi&#232;re</b> pour mettre en place la version
-"Ajouter" de la fen&#234;tre <b>Ajouter/&#233;diter Lumi&#232;re</b> .</p>
+"Ajouter" de la fen&#234;tre <b>Ajouter/&#233;diter Lumi&#232;re</b>.</p>
 <img src="LightAddFrame.jpg" height="399" width="575">
 <p><li> S&#233;lectionnez un <b>Syst&#232;me:</b> si votre r&#233;seau est connect&#233;e &#224; plus
 d'un syst&#232;me ou si cr&#233;ation d'une lumi&#232;re interne. Ensuite, entrez l'<b>Adresse Mat&#233;rielle :</b> de votre nouvelle Lumi&#232;re (g&#233;n&#233;ralement un certain nombre). Ceci est
@@ -197,15 +197,15 @@ d'un pont, un bruit de  grondement  peut &#234;tre jou&#233; pendant que le trai
 <a name="cautions"><H2> Pr&#233;cautions pour le commande des Lumi&#232;res </H2></a>
 <ul>
 <p><li> Si vous avez besoin d'entrer un nom de capteur ou un nom d'aiguillage, vous devez entrer le nom
-(Nom  syst&#232;me ou nom utilisateur) d'un capteur existant ou d'un aiguillage . Le capteur ou
+(Nom  syst&#232;me ou nom utilisateur) d'un capteur existant ou d'un aiguillage. Le capteur ou
 l'aiguillage doivent &#234;tre soit dans le tableau Capteur ou dans le tableau Aiguillage.</p>
 </Li>
-<p><li> Si vous entrez un nom utilisateur pour sp&#233;cifier un capteur ou un aiguillage, soyez tr&#232;s prudent &#224; propos du changement du  nom utilisateur de votre capteur ou de votre aiguillage . Un simple
+<p><li> Si vous entrez un nom utilisateur pour sp&#233;cifier un capteur ou un aiguillage, soyez tr&#232;s prudent &#224; propos du changement du  nom utilisateur de votre capteur ou de votre aiguillage. Un simple
 changement de nom utilisateur pourrait casser vos d&#233;finitions de commande de la lumi&#232;re.</p>
 </Li>
 <p><li> Si vous entrez plusieurs commandes de lumi&#232;re pour la m&#234;me lumi&#232;re, il est possible
 que les commandes lumi&#232;re puissent entrer en conflit ou se chevaucher les uns avec les autres, produisant
-des r&#233;sultats &#233;tranges.  <b>L'utilisateur est doit s'assurer que les commandes d'&#233;clairage
+des r&#233;sultats &#233;tranges. <b>L'utilisateur est doit s'assurer que les commandes d'&#233;clairage
 n'entrent pas en conflit.</b> </p>
 </Li>
 </Ul>

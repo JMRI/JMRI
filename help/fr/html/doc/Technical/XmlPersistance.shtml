@@ -1,16 +1,16 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- UpDated by Blorec Herv&#233; le 2013-09-09--> 
 <html lang="fr">
 <!-- Copyright Bob Jacobsen 2004, 2007, 2008 -->
 <head>
     <TITLE>
- 	JMRI:  XML Persistance
+ 	JMRI: Persistence XML
     </TITLE>
-    <META content="Bob Jacobsen" name=Author>
+    <META content="Bob Jacobsen" name="Author">
     <meta name="keywords" content="JMRI technical code xml persistance">
 
 <!-- Style -->
+    <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -18,13 +18,14 @@
 <!-- /Style -->
 </head>
 
+<body>
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
 
-	    <H1>JMRI: Persistence XML </H1>
-
+	    <h1>JMRI: Persistence XML </h1>
 
 <P>
 JMRI utilise XML pour la persistance des structures internes, en particulier lors du stockage
@@ -48,7 +49,7 @@ duplication de code, mais peut-&#234;tre parce qu'il vient d'un C + + de base et
 le d&#233;veloppeur souhaite le garder pour des mod&#232;les et classes mixin. Mais il marche!
 
 
-<h3>Exmple</h3>
+<h3>Exemple</h3>
 
 Un LightManager conna&#238;t Lights.
 <p>

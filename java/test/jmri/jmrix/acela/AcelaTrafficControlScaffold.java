@@ -12,10 +12,6 @@ import org.slf4j.LoggerFactory;
 public class AcelaTrafficControlScaffold extends AcelaTrafficController {
 
     public AcelaTrafficControlScaffold() {
-        if (log.isDebugEnabled()) {
-            log.debug("setting instance: " + this);
-        }
-        self = this;
     }
 
     // override some AcelaTrafficController methods for test purposes

@@ -1,39 +1,29 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!--Translated by Herv&#233; Blorec le 2013-09-03 -->
 <html lang="fr">
 <head>
     <TITLE>
- 	JMRI: Continuous Integration
+ 	JMRI: Int&#233;gration Continue
     </TITLE>
-    <META content="Bob Jacobsen" name=Author>
+    <meta content="Bob Jacobsen" name="Author">
     <meta name="keywords" content="JMRI technical code Continuous Integration jenkins CVS">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
-
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
-
+<body>
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
-	    <!-- -------- -->
-	    <!--  Teaser  --> <!-- Optional -->
-	    <!-- -------- -->
 
-<H1>JMRI: Int&#233;gration Continue</H1>
+<h1>JMRI: Int&#233;gration Continue</h1>
 
 L'"Int&#233;gration Continue" est le proc&#233;d&#233; de reconstruction d'un syst&#232;me &#224; chaque fois qu'il change, de sorte que vous d&#233;couvrez rapidement les nouveaux probl&#232;mes et &#234;tes motiv&#233;s pour supprimer ceux existants
 <p>
@@ -43,7 +33,8 @@ pour ceci.
 <p>
 
 Les r&#233;sultats sp&#233;cifiques int&#233;ressants:
-<ul><li><a href="http://builds.jmri.org/jenkins/job/Development/">Page D&#233;veloppement</a> page qui donne une ligne de statut
+<ul>
+    <li><a href="http://builds.jmri.org/jenkins/job/Development/">Page D&#233;veloppement</a> page qui donne une ligne de statut
  montrant l'&#233;tat des constructions fait apr&#232;s chaque s&#233;rie de validations.
 Il y aussi les pages des 
 <a href="http://builds.jmri.org/jenkins/view/All/job/Development/job/Packages/changes">plus r&#233;cents changements</a>, 
@@ -53,12 +44,11 @@ de <a href="http://builds.jmri.org/jenkins/job/Development/job/Builds/lastBuild/
 Il y a aussi les pages des 
 <a href="https://jmri.ci.cloudbees.com/job/Development/job/FindBugs/changes">plus r&#233;cents changements<a> et les
 <a href="https://jmri.ci.cloudbees.com/job/Development/job/FindBugs/lastBuild/">r&#233;sultats les plus r&#233;cents<a>.
-
-<p>
-<!-- Apparemment liens cass&#233;s au 2013-09-03, except&#233; la page d&#233;veloppement et Jenkings</p><p> -->
-<!-- Liens r�par�s le 30-Mai-2014 - Alain LM -->
+    </ul>
+<!-- Apparemment liens cass&#233;s au 2013-09-03, except&#233; la page d&#233;veloppement et Jenkins</p><p> -->
+<!-- Liens r&eacute;par&eacute;s le 30-Mai-2014 - Alain LM -->
 Pour plus d'information sur l'usage de FindBugs par JMRI, voir la <a href="FindBugs.shtml">page s&#233;par&#233;e FindBugs</a>.
-</ul>
+
 
 <h2>Int&#233;gration avec NetBeans</h2>
 <p>Si vous d&#233;veloppez dans un environnement <a href="NetBeans.shtml">NetBeans 7.0</a> ,
@@ -69,7 +59,7 @@ du code Hudson et supporte le  m&#234;me <a href="http://en.wikipedia.org/wiki/A
 <p>L'int&#233;gration dans NetBeans s'ach&#232;ve en ex&#233;cutant les &#233;tapes suivantes:
 <ol>
 <li>Ouvrir NetBeans
-<li>Basculer sur la fenêtre "Services" (Raccourci clavier "Ctrl+5")
+<li>Basculer sur la fen&ecirc;tre "Services" (Raccourci clavier "Ctrl+5")
 <li>Clic-Droit (Ctrl-clic sur Mac) sur l'entr&#233;e "Constructeurs Hudson" et choisir "Add Hudson Instance..."
     <p><img src="images/NetBeansJenkinsAdd.png" width="342" height="134" alt="Add Hudson Instance...">
 <li>

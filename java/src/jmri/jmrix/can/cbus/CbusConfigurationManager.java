@@ -59,8 +59,6 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         jmri.InstanceManager.setReporterManager(getReporterManager());
 
         jmri.InstanceManager.setLightManager(getLightManager());
-
-        jmri.jmrix.can.cbus.ActiveFlag.setActive();
     }
 
     /**

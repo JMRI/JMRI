@@ -1,11 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <head>
-<!-- Copyright Me 2008 -->
-<!--  $Id$ -->
 <!-- UpDated by Blorec Herv&#233;  2013-09-01-->
 
-<title>JMRI: Advanced Icons in PanelPro</title>
+<title>JMRI: Ic&#244;nes Avanc&#233;es dans PanelPro</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -18,7 +16,7 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
@@ -54,33 +52,33 @@ et le d&#233;part. Afficher l'&#233;tat sur une des lignes dans la table.
 
 <LI>
 Ensuite, vous devez ajouter la "ReporterIcon" qui affiche directement ceci dans le fichier du panneau.
-<P>
+<br>
 Rechercher dans le r&#233;pertoire "xml/samples" dans JMRI un fichier appel&#233; "ReporterIconExample.xml".
-<P>
+<br>
 (Il est &#233;galement disponible <a href="http://jmri.org/xml/samples/ReporterIconExample.xml"> sur le Web </a>
 mais de nombreux navigateurs vont essayer de l'interpr&#233;ter au lieu de vous montrer le texte, (votre option 
 navigateur "Afficher la source" tableau pourrait vous aider &#231; cet &#233;gard)
-<P>
+<br>
 Vous verrez cette ligne:
-<P>
+<br>
 &lt;reporter reportericon = "LR12" x = "10" y = "10" class = "jmri.jmrit.display.configurexml.ReporterIconXml"&gt;
-<P> Le "x"et "y" d&#233;finissent l'endroit o&#249; vous le voulez sur 
+<br>Le "x" et "y" d&#233;finissent l'endroit o&#249; vous le voulez sur
 votre panneau. Le "LR12" est le nom de l'objet journal, par exemple, le nom de celui que vous avez vu changer 
 quand vous cherchiez sur la table.
 <LI>
 Ouvrez votre fichier de panneau avec votre &#233;diteur favori (WordPad, si vous n'avez rien de mieux), et ins&#233;rer 
 une ligne comme celle ci juste au-dessus _apr&#232;s_ la ligne qui commence par
-<P>
+<br>
   &lt;classe paneleditor = "jmri.jmrit.display.configxml.PanelEditorXml"&gt;
-<P>
+<br>
 (La ligne "paneleditor" commence sur un nouveau panneau. Si vous avez plus d'un panneau dans le fichier, vous devrez chercher le titre du panneau pour voir
 o&#249; ins&#233;rer la nouvelle ligne)
 </UL>
-En r&#233;alit&#233; ce n''est  pas aussi difficile qu'il y para&#238;t
-
-	    </div> <!-- closes .list -->
+<p>
+En r&#233;alit&#233; ce n''est pas aussi difficile qu'il y para&#238;t.</p>
 
 <!--#include virtual="/Footer" -->
+</div>
 </body>
 </html>
 

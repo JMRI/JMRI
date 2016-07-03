@@ -73,12 +73,12 @@ Les &#233;tapes sont les suivantes:
 <li> Faites glisser l'ic&#244;ne jusqu'&#224; ce qu'elle soit sur la position qui
 correspond &#224; l'origine de votre installation 0,0 RPS.
 <li> Faites un clic droit ou option-clic sur l'ic&#244;ne pour
-obtenir le menu contextuel, et s&#233;lectionnez "D&#233;finir OrigineÂ».<li> D&#233;placer la locomotive r&#233;elle &#224; un autre point sur le r&#233;seau
+obtenir le menu contextuel, et s&#233;lectionnez "D&#233;finir Origine».<li> D&#233;placer la locomotive r&#233;elle &#224; un autre point sur le r&#233;seau
 , et commencer l'interrogation du syst&#232;me RPS &#224; nouveau. Obtenez une
 bonne mesure de la position. Arr&#234;ter le syst&#232;me RPS.
 <li> Faites glisser l'ic&#244;ne &#224; l'endroit o&#249; vous voulez qu'elle soit sur le TCO
 lorsque l'&#233;metteur est &#224; cet endroit.
-<li> Depuis le menu contextuel de l'ic&#244;ne, s&#233;lectionnez "D&#233;finir emplacement actuelÂ».
+<li> Depuis le menu contextuel de l'ic&#244;ne, s&#233;lectionnez "D&#233;finir emplacement actuel».
 <li> Obtenir &#224; nouveau le menu contextuel. Il ne devrait plus dire
 "Non calibr&#233;", et devrait plut&#244;t vous montrer la position actuelle.
 </UL>
@@ -116,14 +116,14 @@ dans cette position.
 <dt> Pas &#233;talonn&#233;
 <dd> Un message d'&#233;tat, pas un contr&#244;le, cela apparait quand l'ic&#244;ne n'a pas &#233;t&#233; &#233;talonn&#233;e.
 Le calibrage assure correctement la position de l'ic&#244;ne sur l'&#233;cran 
-refl&#233;tant l'emplacement que RPS a mesur&#233; .
+refl&#233;tant l'emplacement que RPS a mesur&#233;.
 
 <dt> A (x), (y)
 <dd>Une fois l'ic&#244;ne calibr&#233;e, le menu contextuel affiche
 la mesure RPS du positionnement le plus r&#233;cent 
 
 <dt> Afficher ID
-<dd> Si elle est coch&#233;e, l'ic&#244;ne aura des informations ID affich&#233;es &#224; cot&#233; d'elle .
+<dd> Si elle est coch&#233;e, l'ic&#244;ne aura des informations ID affich&#233;es &#224; cot&#233; d'elle.
 
 <dt> D&#233;finir le filtre
 <dd> Ouvre une fen&#234;tre qui vous permet d'entrer une valeur de filtre pour cette
@@ -176,7 +176,7 @@ d'une locomotive sp&#233;cifique) &#224; l'ic&#244;ne sp&#233;cifique qui repr&#
 Lorsque vous ouvrez le TCO, les ic&#244;nes sont remise &#224; la m&#234;me
 position sur l'&#233;cran qu'elles occupaient lorsque le TCO a &#233;t&#233; sauvegard&#233; dans le fichier.
 <p>
-Vous pouvez l'utiliser pour par exemple mettre les ic&#244;nes hors de la voie .
+Vous pouvez l'utiliser pour par exemple mettre les ic&#244;nes hors de la voie.
 Elles restent dans cette position jusqu'&#224; ce qu'une lecture valide les d&#233;place, donc
 Vous pouvez l'utiliser pour "parquer" les locomotives qui ne sont pas sur la bonne voie
 hors de la partie active du TCO.
@@ -193,7 +193,7 @@ Format XML, que nous utilisons
 <li> Cr&#233;er une ic&#244;ne sur l'&#233;diteur de TCO, et sauver le TCO dans un fichier.
 <li> Faites une copie de sauvegarde du fichier, au cas o&#249; quelque chose tourne mal.
 <li> A l'aide d'un &#233;diteur de texte, ouvrez le fichier pour le modifier.
-<li> Trouvez la ligne qui d&#233;finit l'ic&#244;ne. Il contiendra la cha&#238;ne "RpsPositionIconXmlÂ»,
+<li> Trouvez la ligne qui d&#233;finit l'ic&#244;ne. Il contiendra la cha&#238;ne "RpsPositionIconXml»,
 ainsi une approche est de rechercher cela. Il va ressembler &#224; (il sera probablement sur une seule ligne):
 <code> <pre>
     &lt;Sensoricon x = "95" y = "150" level = "10"
@@ -203,8 +203,8 @@ ainsi une approche est de rechercher cela. Il va ressembler &#224; (il sera prob
             sxscale = "11.849106591612951" syscale = "-11,889381744148094"
             sxorigin = "41" syorigin = "768"
             class = "jmri.jmrit.display.configurexml.RpsPositionIconXml" /&gt;
-</Pre></code>
-<li> Pour que l'ic&#244;ne suive d'un &#233;metteur sp&#233;cifique, entrez l'ID de l'&#233;metteur en tant qu'attribut "filtre" . Par exemple, pour
+</code></pre>
+<li> Pour que l'ic&#244;ne suive d'un &#233;metteur sp&#233;cifique, entrez l'ID de l'&#233;metteur en tant qu'attribut "filtre". Par exemple, pour
 suivre l'&#233;metteur 5510, modifiez la ligne:
 <code> <pre>
     &lt;Sensoricon filter = "5510" x = "95" y = "150" level = "10"
@@ -214,7 +214,7 @@ suivre l'&#233;metteur 5510, modifiez la ligne:
             xscale = "11.849106591612951" syscale = "-11,889381744148094"
             sxorigin = "41" syorigin = "768"
             class = "jmri.jmrit.display.configurexml.RpsPositionIconXml" /&gt;
-</Pre></code>
+</code></pre>
 <li> Les attributs "actif" et "erreur" sont les ic&#244;nes &#224; afficher lorsque le syst&#232;me 
 obtiennent des r&#233;sultats fiables et n'obtiennent pas de bonnes lectures, respectivement.
 Vous pouvez modifier celle ci &#224; l'emplacement de n'importe quel fichier d'ic&#244;ne que vous souhaitez.

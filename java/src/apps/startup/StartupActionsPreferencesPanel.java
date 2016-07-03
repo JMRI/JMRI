@@ -2,7 +2,6 @@ package apps.startup;
 
 import apps.ConfigBundle;
 import apps.StartupActionsManager;
-import apps.StartupModel;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

@@ -1,28 +1,24 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
 <!-- Translated  by Blorec Herv&#233; le 2011-11-3--> 
-<title>JMRI: Debug Menu</title>
+<title>JMRI: Menu D&#233;bogage</title>
 
 <!-- Style -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css" MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css" MEDIA="print">
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>Menu D&#233;bogage</h1>
+<h1>JMRI: Menu D&#233;bogage</h1>
 
 Le menu JMRI "D&#233;boger" contient les &#233;l&#233;ments suivants:
 <ul>
@@ -70,10 +66,12 @@ Le menu JMRI "D&#233;boger" contient les &#233;l&#233;ments suivants:
 <hr>
 <ul>
    <li> <a href="../../../html/web/index.shtml">D&#233;marrer Mini Serveur Web </a></li>
-   
+</ul>
 
-<p> Ceci est la page d'aide help/en/package/jmri/jmrit.DebugMenu . </p>
+<p> Ceci est la page d'aide help/en/package/jmri/jmrit.DebugMenu. </p>
 
 <!--#include virtual="/Footer" -->
+    </div>
+    </div>
 </body>
 </html>

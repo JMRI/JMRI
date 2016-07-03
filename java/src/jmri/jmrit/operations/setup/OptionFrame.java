@@ -11,11 +11,6 @@ import jmri.jmrit.operations.OperationsFrame;
  */
 public class OptionFrame extends OperationsFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6966221440054475425L;
-
     public OptionFrame() {
         super(Bundle.getMessage("TitleOptions"), new OptionPanel());
     }

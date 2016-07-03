@@ -1,8 +1,10 @@
 package jmri;
 
 import java.util.List;
+
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
 
 /**
  * Basic interface for access to named, managed objects.
@@ -44,15 +46,18 @@ public interface Manager {
      * Provides access to the system prefix string. This was previously called
      * the "System letter"
      */
+    @CheckReturnValue
     public @Nonnull String getSystemPrefix();
 
     /**
      * @return The type letter for a specific implementation
      */
+    @CheckReturnValue 
     public char typeLetter();
 
     /**
      * @return A system name from a user input, typically a number.
+     * @throws IllegalArgumentException if a valid name can't be created
      */
     public @Nonnull String makeSystemName(@Nonnull String s);
 
@@ -62,10 +67,13 @@ public interface Manager {
      */
     public void dispose();
 
+    @CheckReturnValue
     public @Nonnull String[] getSystemNameArray();
 
+    @CheckReturnValue
     public @Nonnull List<String> getSystemNameList();
 
+    @CheckReturnValue
     public @Nonnull List<NamedBean> getNamedBeanList();
 
     /**
@@ -74,8 +82,10 @@ public interface Manager {
      *
      * @param systemName System Name of the required NamedBean
      * @return requested NamedBean object or null if none exists
+     * @throws IllegalArgumentException if provided name is invalid
      */
-    public @Nullable NamedBean getBeanBySystemName(@Nonnull String systemName);
+    @CheckReturnValue
+    public @CheckForNull NamedBean getBeanBySystemName(@Nonnull String systemName);
 
     /**
      * Locate an instance based on a user name. Returns null if no instance
@@ -84,7 +94,8 @@ public interface Manager {
      * @param userName System Name of the required NamedBean
      * @return requested NamedBean object or null if none exists
      */
-    public @Nullable NamedBean getBeanByUserName(@Nonnull String userName);
+    @CheckReturnValue
+    public @CheckForNull NamedBean getBeanByUserName(@Nonnull String userName);
 
     /**
      * Locate an instance based on a name. Returns null if no instance already
@@ -93,29 +104,30 @@ public interface Manager {
      * @param name System Name of the required NamedBean
      * @return requested NamedBean object or null if none exists
      */
-    public @Nullable NamedBean getNamedBean(@Nonnull String name);
+    @CheckReturnValue
+    public @CheckForNull NamedBean getNamedBean(@Nonnull String name);
 
     /**
      * At a minimum, subclasses must notify of changes to the list of available
      * NamedBeans; they may have other properties that will also notify.
      */
-    public void addPropertyChangeListener(@Nullable  java.beans.PropertyChangeListener l);
+    public void addPropertyChangeListener(@CheckForNull  java.beans.PropertyChangeListener l);
 
     /**
      * At a minimum, subclasses must notify of changes to the list of available
      * NamedBeans; they may have other properties that will also notify.
      */
-    public void removePropertyChangeListener(@Nullable  java.beans.PropertyChangeListener l);
+    public void removePropertyChangeListener(@CheckForNull  java.beans.PropertyChangeListener l);
 
     /**
      * Add a VetoableChangeListener to the listener list.
      */
-    public void addVetoableChangeListener(@Nullable  java.beans.VetoableChangeListener l);
+    public void addVetoableChangeListener(@CheckForNull  java.beans.VetoableChangeListener l);
 
     /**
      * Remove a VetoableChangeListener to the listener list.
      */
-    public void removeVetoableChangeListener(@Nullable  java.beans.VetoableChangeListener l);
+    public void removeVetoableChangeListener(@CheckForNull  java.beans.VetoableChangeListener l);
 
     /**
      * Method for a UI to delete a bean, the UI should first request a
@@ -181,6 +193,7 @@ public interface Manager {
     public static final int PANELFILES = TIMEBASE + 10;
     public static final int ENTRYEXIT = PANELFILES + 10;
 
+    @CheckReturnValue
     public int getXMLOrder();
 
     /**
@@ -190,5 +203,6 @@ public interface Manager {
      * @return a string of the bean type that the manager handles, eg Turnout,
      *         Sensor etc
      */
+    @CheckReturnValue
     public @Nonnull String getBeanTypeHandled();
 }

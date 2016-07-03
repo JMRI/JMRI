@@ -1,30 +1,26 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- UpDated by Herv&#233; Blorec  2013-10-11-->
-<HTML LANG="fr">
-<HEAD>
-<TITLE>JMRI: LRoute Table Help</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<html LANG="fr">
+<head>
+<TITLE>JMRI: Le Tableau L-Itin&#233;raire</TITLE>
 <META CONTENT="Bob Jacobsen" NAME="Author">
 <META NAME="keywords" CONTENT="JMRI help LRoute Table">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1"
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css" MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css" MEDIA="print">
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Le Tableau L-Itin&#233;raire</H1>
+<h1>JMRI: Le Tableau L-Itin&#233;raire</h1>
 
 <P>Un L-Itin&#233;raire est une version plus g&#233;n&#233;ralis&#233;e d'un itin&#233;raire mis en &#399;uvre en tant que Logix.
 Il est destin&#233; &#224; &#234;tre utilis&#233; dans des situations o&#249; des d&#233;clenchements suppl&#233;mentaires ou actions sont
@@ -45,7 +41,7 @@ Logix &#233;dition ne peut pas &#234;tre capable d'afficher
 ces capacit&#233;s additionnelles pour l'&#233;dition de L-Itin&#233;raire. Une fois que l'&#233;dition Logix est faite pour un
 L-Itin&#233;raire il est recommand&#233; que les autre &#233;ditions soient faites &#224; partir du tableau Logix.</p>
 
-<H2>Colonnes  Tableau L-Itin&#233;raire</H2>
+<h2>Colonnes  Tableau L-Itin&#233;raire</h2>
 
 <DL>
 <DT>Nom Syst&#232;me </DT>
@@ -54,31 +50,32 @@ Le bouton <b>Ajouter</b> situ&#233; dans le coin inf&#233;rieur gauche du Tablea
 vous permet d'ajouter un nouvel L- Itin&#233;raire au Tableau.</dd>
 
 <DT>Nom Utilisateur </DT>
-<DD> Vous pouvez directement saisir ou modifier le champ "Nom Utilisateur" pour un
-itin&#233;raire Logix existant</.dd>
+<dd> Vous pouvez directement saisir ou modifier le champ "Nom Utilisateur" pour un
+itin&#233;raire Logix existant</dd>
 
 <DT> Activ&#233;</DT>
 <DD> Pour d&#233;sactiver un L-Itin&#233;raire &#224; partir de d&#233;clenchement, d&#233;cochez la case "Activ&#233;" 
 pour l'itin&#233;raire. Ceci d&#233;finit son Logix &#224; un &#233;tat d&#233;sactiv&#233;. Le L-Itin&#233;raire  peut
 &#234;tre activ&#233; ou d&#233;sactiv&#233; soit &#224; partir du Tableau ou du tableau L-Itin&#233;raire Logix.</dd>
-Â 
+ 
 <DT> Modifier</DT>
-<DD> Appuyez sur ce bouton pour modifier le L-Itin&#233;raire . Pour plus d'informations, voir: <a
-HREF = "LRouteAddEdit.shtml"> Ajout/Edition Litin&#233;raires</A>.</Dd>
+<DD> Appuyez sur ce bouton pour modifier le L-Itin&#233;raire. Pour plus d'informations, voir: <a
+HREF = "LRouteAddEdit.shtml"> Ajout/Edition Litin&#233;raires</a>.</DD>
 </DL>
 
-<H3>Commandes du Tableau L-Itin&#233;raire</H3>
-
+<h3>Commandes du Tableau L-Itin&#233;raire</h3>
+<p>
 Il y a un bouton au bas du Tableau L-Itin&#233;raire
-
+</p>
 <DL>
 <DT> Ajouter</DT>
 <DD> Appuyez sur ce bouton pour ajouter un nouvel itin&#233;raire Logix. Pour plus d'informations, voir
-<A  HREF="LRouteAddEdit.shtml"> Ajouter/Editer L-Itin&#233;raires</A>.</Dd>
-
-
+<a  HREF="LRouteAddEdit.shtml"> Ajouter/Editer L-Itin&#233;raires</a>.</DD>
+</DL>
 
 <!--#include virtual="/Footer" -->
-</BODY>
-</HTML>
+        </div>
+      </div>
+</body>
+</html>
 

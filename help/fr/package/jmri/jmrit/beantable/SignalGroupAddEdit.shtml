@@ -1,10 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
 <!-- UpDated by Herv&#233; Blorec  2013-10-12-->
-<title>JMRI: Signal Group Table</title>
+<title>JMRI: Tableau de Groupe Signaux</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -17,22 +15,22 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
 <h1> 
 JMRI: Tableau de Groupe Signaux
-</H1>
+</h1>
 Groupes de Signaux.
 
 Les groupes de signaux sont utilis&#233;s pour d&#233;finir un certain nombre de t&#234;tes de signal, o&#249; une seule t&#234;te de signal peut &#234;tre &#233;clair&#233;e &#224; un moment donn&#233;, en fonction de l'&#233;tat du m&#226;t de signal associ&#233; et un ensemble de conditions. <br>
 
-Les groupes de signaux seront utilis&#233;s lorsque des indicateurs suppl&#233;mentaires sont utilis&#233;s pour compl&#233;ter le m&#226;t du signal principal, tels que les affichages Direction, Itin&#233;raire ou Vitesse. Ces indicateurs fournissent des informations suppl&#233;mentaires pour le conducteur qui ne sont pas donn&#233;es par le m&#226;t du signal principal. Ces indicateurs sont fr&#233;quemment observ&#233;s sur la signalisation en Europe et au Royaume-Uni .  <br>
+Les groupes de signaux seront utilis&#233;s lorsque des indicateurs suppl&#233;mentaires sont utilis&#233;s pour compl&#233;ter le m&#226;t du signal principal, tels que les affichages Direction, Itin&#233;raire ou Vitesse. Ces indicateurs fournissent des informations suppl&#233;mentaires pour le conducteur qui ne sont pas donn&#233;es par le m&#226;t du signal principal. Ces indicateurs sont fr&#233;quemment observ&#233;s sur la signalisation en Europe et au Royaume-Uni.  <br>
 
 <h2>Indicateurs de Direction</h2>
 
-Un indicateur de Direction peut &#234;tre configur&#233; pour afficher n'importe laquelles des voies divergentes 1 &#224; 6 . Un seul indicateur sera souvent trouv&#233; o&#249; un embranchement diverge hors d'une ligne principale. Plusieurs indicateurs se trouvent dans des domaines plus complexes tels que l'approche des stations et les gares de triage, o&#249; plusieurs routes peuvent &#234;tre prises. L'indicateur de direction informe le conducteur qu'il est en train de prendre un itin&#233;raire diff&#233;rent et doit donc adapter sa vitesse en fonction de la signalisation. <br>
+Un indicateur de Direction peut &#234;tre configur&#233; pour afficher n'importe laquelles des voies divergentes 1 &#224; 6. Un seul indicateur sera souvent trouv&#233; o&#249; un embranchement diverge hors d'une ligne principale. Plusieurs indicateurs se trouvent dans des domaines plus complexes tels que l'approche des stations et les gares de triage, o&#249; plusieurs routes peuvent &#234;tre prises. L'indicateur de direction informe le conducteur qu'il est en train de prendre un itin&#233;raire diff&#233;rent et doit donc adapter sa vitesse en fonction de la signalisation. <br>
 
 Les indicateurs de direction seront fix&#233;s en fonction d'un ensemble de donn&#233;es d'aiguillage pour cette direction <br>
 
@@ -51,7 +49,7 @@ height = "274" width = "306">
 
 Un m&#226;t de signal -. Auquel ce groupe est attach&#233; <br>
 Une liste des apparences qui peuvent &#234;tre valables pour le groupe de signaux devienne actif. <br>
-par exempleÂ : le M&#226;t de Signal, doit &#234;tre configur&#233; pour Proc&#233;der ou Prudence, mais pas Danger. <br>
+par exemple : le M&#226;t de Signal, doit &#234;tre configur&#233; pour Proc&#233;der ou Prudence, mais pas Danger. <br>
 
 <p>Les T&#234;tes de signal  qui composent chacune des indications du groupe.
 Les T&#234;tes de signaux au sein du groupe sont constitu&#233;s &#224; partir de t&#234;te de signal cr&#233;&#233;e en utilisant le type de sortie unique, &#224; partir du Tableau T&#234;tes de signal. <br>
@@ -75,7 +73,7 @@ Consid&#233;rons le sch&#233;ma piste suivant, vous avez ici six Directions poss
  height = "90" width = "262">
 </a>
 
-<p> Avec cette configuration, vous devez cr&#233;er une simple t&#234;te de signal d'aiguillage pour chaque position, configur&#233; avec une apparence &#233;teinte et lunaire. Vous pouvez utiliser deux combinaisons de couleurs que vous aimez, si &#233;teinte et lunaire sont plus adapt&#233;s &#224; cette situation.
+<p>Avec cette configuration, vous devez cr&#233;er une simple t&#234;te de signal d'aiguillage pour chaque position, configur&#233; avec une apparence &#233;teinte et lunaire. Vous pouvez utiliser deux combinaisons de couleurs que vous aimez, si &#233;teinte et lunaire sont plus adapt&#233;s &#224; cette situation.
 
 <p> Dans le Groupe Signal, vous s&#233;lectionnez chacune des T&#234;tes de Signal qui sont utilis&#233;es pour cr&#233;er l'indicateur de direction. La logique pour chaque T&#234;te de Signal est alors configur&#233; comme suit.
 <table>
@@ -122,5 +120,6 @@ Consid&#233;rons le sch&#233;ma piste suivant, vous avez ici six Directions poss
 </table>
 
 <!--#include virtual="/Footer" -->
+ </div>
 </body>
 </html>

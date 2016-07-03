@@ -58,7 +58,7 @@ commande "actif" du capteur, il devient "inactif" pour JMRI.</dd>
 
  <DT>Utilisez Retard Global</DT>
 <DD> Quand elle est coch&#233;e, le capteur va utiliser les valeurs sp&#233;cifi&#233;es dans le syst&#232;me de
- "AntiRebond&#166; d&#233;faut .." option de menu pour toute la dur&#233;e o&#249; le syst&#232;me attend
+ "AntiRebond&#166; d&#233;faut" option de menu pour toute la dur&#233;e o&#249; le syst&#232;me attend
  avant d'enregistre le changement d'&#233;tat.
 <a HREF="#Debounce"><p> Voir le Capteur AntiRebond ci-dessous</A>
 </Dd>

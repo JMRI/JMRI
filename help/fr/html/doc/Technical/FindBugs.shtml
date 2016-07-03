@@ -1,40 +1,30 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!--  $Id$ -->
 <!-- UpDated by Blorec Herv&#233; le 2013-09-04-->  
 <html lang="fr">
 <head>
     <TITLE>
- 	JMRI: Static Analysis with FindBugs
+ 	JMRI: Analyse statique avec FindBugs
     </TITLE>
-    <META content="Bob Jacobsen" name=Author>
+    <META content="Bob Jacobsen" name="Author">
     <meta name="keywords" content="JMRI technical code ">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
-
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+    <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
 <!-- /Style -->
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 
 </head>
-
+<body>
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 <div id="mainContent">
 
-<H1>JMRI: Analyse statique avec FindBugs</H1>
+<h1>JMRI: Analyse statique avec FindBugs</h1>
 
 FindBugs est un outil qui peut examiner le code pour trouver d'&#233;ventuels probl&#232;mes. Il fait un "analyse statique", en regardant &#224; travers le
 code pour trouver certaines "mauvaises id&#233;es connues ":
@@ -79,6 +69,7 @@ Pour plus d'information sur ceci, voir la
 <a href="http://findbugs.sourceforge.net/manual/annotations.html">page des annotations Findbugs </a>.
 
 Elle peut &#233;tre utile pour marquer les classes avec une des annotations suivantes de telle sorte que FindBugs fasse un bon travail de raisonnement &#224; ce sujet:
+<ul>
 <li><a href="http://findbugs.sourceforge.net/manual/annotations.html">edu.umd.cs.findbugs.annotations.CheckForNull</a> -
    une variable ou un param&#232;tre peut avoir une valeur nulle ,donc toutes les utilisations devraient convenablement g&#233;rer cela.
 <li><a href="http://findbugs.sourceforge.net/manual/annotations.html">edu.umd.cs.findbugs.annotations.CheckReturnValue</a> -
@@ -87,10 +78,11 @@ Elle peut &#233;tre utile pour marquer les classes avec une des annotations suiv
     Un objet de cette classe ne peut pas &#233;tre modifi&#233; apr&#232;s sa cr&#233;ation. Cela permet &#224; la fois la une meilleure v&#233;rification de la logique, et de simplifier &#233;galement l'utilisation par vos coll&#232;gues, il est donc bon de marquer les classes avec cette propri&#233;t&#233;.
 <li><a href="http://jcip.net/annotations/doc/net/jcip/annotations/NotThreadSafe.html">net.jcip.annotations.NotThreadSafe</a> - 
    une classe qui n'est pas un lien de s&#233;curit&#233;,ne devrait donc pas &#233;tre v&#233;rifi&#233;e pour les probl&#232;mes de simultan&#233;it&#233;. Souvent utilis&#233; pour les classes Swing , mais il faut noter que certains composants Swing (par exemple, les fen&#233;tres moniteur, les classes avec les auditeurs) ne doivent pas accepter l'entr&#233;e d'autres liens.
-   <li><a href="http://jcip.net/annotations/doc/net/jcip/annotations/ThreadSafe.html">net.jcip.annotations.ThreadSafe</a> -
+<li><a href="http://jcip.net/annotations/doc/net/jcip/annotations/ThreadSafe.html">net.jcip.annotations.ThreadSafe</a> -
 Les classes qui ne doivent &#233;tre utilisables pour de multiples liens. FindBugs l'assumes g&#233;n&#233;ralement, mais il est bon de le mettre sur une classe qui est destin&#233;e &#224; &#233;tre un lien de s&#233;curit&#233; comme un rappel pour les d&#233;veloppeurs futurs.</ul>
 Pour de plus ample informations au sujet de ces annotations, svp voir la 
 <a href="http://jcip.net/annotations/doc/index.html">page dans l'API Concurrency</a>.
+</div>
 
 <p>
 Simon White a ajout&#233; le support FindBugs &#224; notre Chaine de construction bas&#233;e sur Ant pendant le d&#233;veloppement du JMRI 2.5.5. Sa note sur ceci suit...
@@ -149,12 +141,9 @@ leur codage sans avoir &#224; ex&#233;cuter findbugs eux-m&#233;mes.</p>
 s'il vous pla&#238;t v&#233;rifier le serveur CI et assurez-vous que vos modifications ne vont pas
 introduire de nouvelles erreurs.</p>
 
-
-
 <!--#include virtual="/Footer" -->
 
 	  </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->
 </body>
 </html>
-

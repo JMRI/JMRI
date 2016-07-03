@@ -14,7 +14,7 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 <h1>Using JMRI&reg; to Operate Trains</h1>

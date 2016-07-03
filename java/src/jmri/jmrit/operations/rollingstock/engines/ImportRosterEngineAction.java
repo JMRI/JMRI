@@ -13,11 +13,6 @@ import javax.swing.AbstractAction;
  */
 public class ImportRosterEngineAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2868823519457819338L;
-
     public ImportRosterEngineAction(String actionName, Component frame) {
         super(actionName);
     }

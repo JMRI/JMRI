@@ -37,12 +37,12 @@ Signal pour les signaux sp&#233;cifi&#233;s. Avant d'acc&#233;der &#224; cet out
 les cantons doivent &#234;tre d&#233;finies pour les r&#233;gions de la voie signal&#233;e sur le TCO, et
 les signaux requis doivent &#234;tre dans le tableau Signal. Cet outil ne fonctionne
 correctement que lorsque la voie &#224; travers le point d'ancrage est verticale ou horizontale (ou
-essentiellement verticale ou horizontale), alors le trac&#233; de votre TCO est en accord .</p>
+essentiellement verticale ou horizontale), alors le trac&#233; de votre TCO est en accord.</p>
 <p>
 Lorsque cet &#233;l&#233;ment est s&#233;lectionn&#233;, une bo&#238;te de dialogue est affich&#233;e pour l'entr&#233;e des
 noms des deux cantons dont la limite doit &#234;tre signal&#233;e, et pour l'entr&#233;e des
 noms (syst&#232;me ou utilisateur) d'un ou deux signaux pour &#234;tre affect&#233;s &#224; la fronti&#232;re du
-canton . Pour chaque signal, des cases &#224; cocher sont disponibles pour
+canton. Pour chaque signal, des cases &#224; cocher sont disponibles pour
 s&#233;lection si une ic&#244;ne doit &#234;tre plac&#233;e sur le TCO, et si une Logique Simple
 Signal doit &#234;tre cr&#233;&#233;e pour le signal. Peu importe si les ic&#244;nes
 sont plac&#233;es ou si la logique est cr&#233;&#233;e, l'&#233;diteur de TCO va enregistrer que les entr&#233;es
@@ -65,7 +65,7 @@ r&#233;cup&#233;rer les noms des signaux pr&#233;c&#233;demment saisis. L'entr&#
 fronti&#232;re. De m&#234;me, "au sud" se r&#233;f&#232;re &#224; un train allant du haut vers le
  en bas<i> sur le TCO</i>. De m&#234;me, l'entr&#233;e du second signal,
 <b>Limite Ouest (ou nord)</b>, c'est pour un signal vu par un train vers l'ouest,
-(Ou Limite Nord) . Parce que les ic&#244;nes de signal sont correctes pour des voie
+(Ou Limite Nord). Parce que les ic&#244;nes de signal sont correctes pour des voie
 horizontales ou verticales, vous devez configurer votre TCO de sorte que les cantons
 fronti&#232;res apparaissent sur une voie qui est presque horizontale ou presque &#224; la verticale.
 </ P>
@@ -105,7 +105,7 @@ Si un canton a un aiguillage interne (l'aiguillage et les tron&#231;ons de voie 
 pointe et les les deux voies D&#233;vi&#233;e et Directe font partie du canton ), le programme va attendre les signaux de cet aiguillage, m&#234;me si ce n'est pas &#224; la fin du canton. Cependant, parfois
  l'utilisateur peut ne pas vouloir signaler un aiguillage rarement utilis&#233; dans un canton.
 En suivant la voie &#224; travers un canton, le programme va sauter l'aiguillage interne  non signal&#233; si <b> Passer Aiguillage Interne Non Signal&#233;</b> est coch&#233; dans le menu <b>Outils</b> de
-l'&#233;diteur de TCO .
+l'&#233;diteur de TCO.
 Il avertira toujours, de ce qu'il fait. <b> Utilisez cette option avec
 prudence.</b> Il n'y a pas de signal de protection contre un aiguillage ignor&#233;
 mal r&#233;gl&#233;, si un aiguillage interne non signal&#233; n'est pas r&#233;gl&#233;e correctement,

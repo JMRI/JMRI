@@ -23,7 +23,7 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
 
         // ask for a Sensor, and check type
         SensorManager lm = jmri.InstanceManager.sensorManagerInstance();
-
+        
         Sensor tl = lm.newSensor("IS21", "my name");
 
         if (log.isDebugEnabled()) {

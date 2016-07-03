@@ -1,4 +1,3 @@
-//AbstractSensorServer.java
 package jmri.jmris;
 
 import java.beans.PropertyChangeEvent;
@@ -16,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * Abstract interface between the a JMRI sensor and a network connection
  *
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision$
  */
 abstract public class AbstractSensorServer {
 
@@ -50,7 +48,7 @@ abstract public class AbstractSensorServer {
         }
     }
 
-    public Sensor initSensor(String sensorName) {
+    public Sensor initSensor(String sensorName) throws IllegalArgumentException {
         Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
         this.addSensorToList(sensorName);
         return sensor;

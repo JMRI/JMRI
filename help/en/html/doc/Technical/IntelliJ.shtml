@@ -9,14 +9,10 @@
 </head>
 
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 <div id="mainContent">
-	<!-- -------- -->
-	<!--  Teaser  -->
-	<!-- Optional -->
-	<!-- -------- -->
-
 
 <h1>JMRI: Building with IntelliJ IDEA</h1>
 

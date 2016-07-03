@@ -1,6 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.geom.Point2D;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
