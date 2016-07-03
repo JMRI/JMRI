@@ -108,7 +108,7 @@ for each of the main applications: DecoderPro, PanelPro, etc. These are all iden
 	parameter. An example is:</p>
 <p><code>default_options="-J-Xmx2048m"</code></p>
 
-<a name="macosx"><h2>Mac OS X</h2></a>
+<a name="macosx"></a><h2>Mac OS X</h2>
 JMRI distributions for Mac OS X contain application bundles
 for each of the main applications:  DecoderPro, PanelPro, etc.
 These provide familiar application icons for the user.
@@ -136,7 +136,7 @@ This is the same script as used for Linux,
 see please see <a href="#linux">that section</a>
 for details.
 
-<a name="windows"><h2>Windows</h2></a>
+<a name="windows"></a><h2>Windows</h2>
 
 Upto and including JMRI version 2.3.2, the Windows .bat files just create a fixed java command and executed it.
 <p>From JMRI version 2.3.3, the individual Windows .bat files now call a small launcher application, LaunchJMRI.exe.

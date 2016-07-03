@@ -110,7 +110,7 @@ in the <b>Panel</b> menu. Note that the enabled/disabled state of each Light
 is not saved in the configuration file.  When Lights are loaded from a
 configuration file, they are all enabled.
 
-<a name="addLight"><h3>Adding a new Light</h3></a>
+<a name="addLight"></a><h3>Adding a new Light</h3>
 <p>To add a new Light, follow this procedure:</p>
 <ol>
 	<li>Click the <b>Tools</b> -&gt; <b>Tables</b> -&gt; <b>Lights</b> menu to bring up
@@ -182,7 +182,7 @@ correct the error and click <b>Create</b> again.
 	changes are made to the selected Light.</li>
 </ol>
 
-<a name="lightcontrol"><h3>Automated Control Options for Lights</h3></a>
+<a name="lightcontrol"></a><h3>Automated Control Options for Lights</h3>
 
 The operation of a Light can be controlled in the following ways:
 	<ul>
@@ -224,7 +224,7 @@ The operation of a Light can be controlled in the following ways:
 	</li>
 	</ul>
 
-<a name="variablelight"><h3>Variable Lights</h3></a>
+<a name="variablelight"></a><h3>Variable Lights</h3>
 
 <p>
 	A variable Light allows for a variable number of intensities between on and off.
@@ -275,7 +275,7 @@ The operation of a Light can be controlled in the following ways:
     </dl>
 </p>
 
-<a name="VariableLightSettings"><h4>Variable Light Settings</h4></a>
+<a name="VariableLightSettings"></a><h4>Variable Light Settings</h4>
 <p>
 	These settings adjust how the 'set intensity' command is used.
 	<dl>

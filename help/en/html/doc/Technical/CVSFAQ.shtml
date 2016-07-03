@@ -45,7 +45,7 @@ See also the
 for more information on maintaining JMRI code.
 
 
-<A name="cvstool"><h3>How do I get a copy of CVS?</h3></a>
+<A name="cvstool"></a><h3>How do I get a copy of CVS?</h3>
 
 Many computers come with CVS installed, including Linux and Mac OS X.
 If you're using Windows, you will need to install a CVS "client" program like
@@ -54,7 +54,7 @@ A recent version can be downloaded from:
 <a href="http://prdownloads.sourceforge.net/cvsgui/WinCvs120.zip">http://prdownloads.sourceforge.net/cvsgui/WinCvs120.zip</a>.
 
 <A name="jmrisource">
-<h3>How can I get my own copy of the JMRI code?</h3></a>
+</a><h3>How can I get my own copy of the JMRI code?</h3>
 
 To get a copy of the source for your own use, you can use "anonymous checkout".
 For a command line cvs client, make a new directory for the project,
@@ -76,7 +76,7 @@ On other computers, you can type them directly on the command line.
 
 
 <A name="update">
-<h3>How can I bring my copy of the JMRI code up to date?</h3></a>
+</a><h3>How can I bring my copy of the JMRI code up to date?</h3>
 People contribute updates to the JMRI code almost every week.
 Your local copy doesn't get these changes until you ask for them,
 so that you've got something stable to work with.
@@ -92,7 +92,7 @@ The "-A" option, here combined with "-d", means you want the most recent
 contents.
 
 <A name="release">
-<h3>How can I get the code for a particular release?</h3></a>
+</a><h3>How can I get the code for a particular release?</h3>
 
 CVS uses "tags" to make specific sets of content.
 We use these to mark the code for each release as we build it.

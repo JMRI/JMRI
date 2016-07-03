@@ -87,7 +87,7 @@ This covers the basic workings in a very high level overview. (Thanks to Dave Sa
 	<img src="images/Panel1Stop.png" width="185" height="135" border="1"> <img src="images/Panel2Approach.png" width="185" height="135" border="1"><br/>
 Signal 4B showing the "Stop" Aspect when sensor OD1 is Active (at left) and "Approach Diverging" when the block is empty (at right).
 	
-<a id="systems"><h2>Available Signaling Systems</h2></a>
+<a id="systems"></a><h2>Available Signaling Systems</h2>
 <!-- checked for JMRI version 3.6, April 2014 -->
 JMRI users have provided the following pre-defined Aspect Signaling Systems:
 <dl>
@@ -195,7 +195,7 @@ or Action, you have to type the Signal Mast name and hit enter/return
 so that the program can look up the available Aspects for that particular
 Signal Mast.
 		
-		<a name="mastscripting"><h3>Scripting</h3></a>	
+		<a name="mastscripting"></a><h3>Scripting</h3>	
 <p>
 	A program (in Java or Python) can get access to 
 Aspect information in two ways.  If the code has a reference to a specific Signal Mast &quot;m&quot;, it can use

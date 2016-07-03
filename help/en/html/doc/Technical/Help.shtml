@@ -74,7 +74,7 @@ it to reach content.  The second part of the tree should also be organized
 as "one page, one topic", with links to connect them as needed.
 
 <a name="limitations">
-<h3>Limitations of JavaHelp HTML</h3></a>
+</a><h3>Limitations of JavaHelp HTML</h3>
 
 JavaHelp displays "plain old HTML 4.0", without providing some of the
 syntactic sugar provided by many browsers to allow poor HTML to render.

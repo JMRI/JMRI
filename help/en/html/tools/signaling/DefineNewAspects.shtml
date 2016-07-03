@@ -160,7 +160,7 @@ appearance files, e.g.:
 Create this part as you create the appearance files (see next section),
 so the program can locate all of them and display them to the user.
 
-<a name="appearances"><h3>Create appearance-*.xml files</h3></a>
+<a name="appearances"></a><h3>Create appearance-*.xml files</h3>
 
 For each kind of signal on the layout (single head searchlight,
 double searchlight, dwarf, semaphore, etc.) you need to

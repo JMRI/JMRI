@@ -207,7 +207,7 @@ to add the Track.</p>
 <p>The <strong>Add Location</strong> window shows one siding track at the Tank Facility in Red Rock Oil.</p>
 <p><img src="images/Ops_AddLocation03.png" alt="location" height="479" width="768"></p>
 
-<a name="editspur"><h3>Edit a Spur Track</h3></a>
+<a name="editspur"></a><h3>Edit a Spur Track</h3>
 <p>If you want to change information for any Track entry, press  
   <input name="button14" id="button14" value="Edit" type="submit"> 
 in the Tracks table on the Location pane to open the <strong>Edit Spur Track</strong> window.</p>

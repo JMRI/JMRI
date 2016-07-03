@@ -30,7 +30,7 @@ input/output/controller board. This tool was greatly updated by John Plocher for
 The <a href="#older">second part</a> of the page
 contains instructions for the older programmer, which is still available.
 
-<a name="current"><h2>Using the second LocoIO Programmer</h2></a>
+<a name="current"></a><h2>Using the second LocoIO Programmer</h2>
 <p>
 The second version <strong>(no longer supported)</strong> <em>only</em> dealt with SV1 &amp; SV2 (address/subaddress) and
 SV3-SV50 (primary mode, value1 and value2 for ports 1-16).
@@ -80,7 +80,7 @@ To-Do list:
 
 <a name="older">
 
-        <h2>Using the first LocoIO Programmer</h2></a>
+        </a><h2>Using the first LocoIO Programmer</h2>
 			<a href="images/locoio.gif">
 			    <img src="images/locoio.gif"
 			         width=100 height=50></a>
