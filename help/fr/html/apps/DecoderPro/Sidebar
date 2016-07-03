@@ -1,34 +1,85 @@
 <!-- Sidebar -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<!-- Translated  by Blorec Herv&#233; le 2013-09-25--> 
+<!-- Updated  by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-03 -->
 <hr class="hide">
 <div id="mBody">
 <div id="side"> <!-- Block of text on left side of page -->
 
 <dl class=toc>
 
-<h3>guide Utilisateur</h3></dt><DD><UL>
-<LI><a href="./Tour.shtml">Aper&#231;u rapide</A>
-<LI><a href="./MoreInfo.shtml">D&#233;tails</A>
-<LI><a HREF="./Files.shtml">Fichiers de Configuration</a>
-<LI><a HREF="./Roster.shtml">Travailler avec la Liste</a>
-<LI><a HREF="./FAQ.shtml">FAQ</a>
-<LI><a HREF="./Install.shtml">T&#233;l&#233;charger et installer DecoderPro</a>
-</UL>
+<h3>DecoderPro&reg;</h3></dt>
+<dd><ul>
+<li><a href="./Tour.shtml">Aper&#231;u rapide</a>
+<li><a href="./MoreInfo.shtml">D&#233;tails</a>
+<li><a HREF="./Files.shtml">Fichiers de Configuration</a>
+<li><a HREF="./Roster.shtml">Travailler avec l'Inventaire</a>
+<li><a HREF="./FAQ.shtml">FAQ</a>
+<li><a HREF="./Install.shtml">Configuration JMRI</a>
+</ul>
 
-<dt><h3>MPlus d'Informations Avanc&#233;es</h3></dt><DD><UL>
+<dt><h3> Avanc&#233;es</h3></dt><dd><ul>
 
-<LI><a HREF="./IntroXML.shtml">Introduction aux fichiers XML </a>
-<LI><a href="./CreateDecoder.shtml">Cr&#233;er votre propre d&#233;&finition de d&#233;codeur</a>
-<LI><a href="./Programmer.shtml">Cr&#233;er un programmateur personnalis&#233; de d&#233;finition </a>
-<LI><a HREF="./RosterFile.shtml">Comment la Liste est stock&#233;e; mise &#224; jour manuelle</a>
-<LI><a HREF="./LocoFile.shtml">Fichiers Locomotive (Liste)</a>
-<LI><a HREF="./Debug.shtml">Debogage</a>
-<LI><a HREF="./NetworkFiles.shtml">Partage des fichiers avec l'Ordinateur</a>
-<LI><a HREF="./FileUpdate.shtml">Mettre &#224; jour les d&#233;finitions D&#233;codeur</a>
-</UL>
+<li><a HREF="./IntroXML.shtml">Introduction aux fichiers XML </a>
+<li><a href="./CreateDecoder.shtml">Cr&#233;er votre propre d&#233;finition de d&#233;codeur</a>
+<li><a href="./Programmer.shtml">Cr&#233;er un programmateur personnalis&#233; de d&#233;finition </a>
+<li><a href="./RosterFile.shtml">Stocker/actualiser un Inventaire</a>
+<li><a HREF="./LocoFile.shtml">Fichiers Locomotive (Inventaire)</a>
+<li><a HREF="./Debug.shtml">Debogage</a>
+<li><a HREF="./NetworkFiles.shtml">Partager les Inventaire entre les Ordinateurs</a>
+<li><a HREF="./FileUpdate.shtml">Actualiser les d&#233;finitions D&#233;codeur</a>
+</ul>
 
+</dd>
+
+<dt><h3>Autres Applications</h3></dt>
+<dd>
+		<ul>
+		<!-- <li><a href="../DecoderPro/index.shtml">DecoderPro&reg;</a></li> -->
+		<li><a href="../PanelPro/PanelPro.shtml">PanelPro&trade;</a></li>
+		<li><a href="../DispatcherPro/index.shtml">DispatcherPro&trade;</a></li>
+    <li><a href="../../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></li>
+		<li><a href="../SoundPro/SoundPro.shtml">SoundPro</a></li>
+		</ul>
+</dd>
+
+<dt><h3><a href="../../tools/index.shtml">Outils</a></h3></dt>
+<dd>JMRI fournit des outils puissants pour travailler avec
+r&#233;seau.
+	<ul>
+		<li><dfn><a href="../../tools/Turnouts.shtml">Aiguillages</a></dfn>
+		<li><dfn><a href="../../tools/Lights.shtml">Lumi&#232;res</a></dfn>
+		<li><dfn><a href="../../tools/Sensors.shtml">Capteurs</a></dfn>
+		<li><dfn><a href="../../tools/throttle/ThrottleMain.shtml">R&#233;gulateurs</a></dfn>
+		<li><dfn><a href="../../tools/consisttool/ConsistTool.shtml">Couplage</a></dfn>
+		<li><dfn><a href="../../tools/Blocks.shtml">Cantons</a></dfn>
+		<li><dfn><a href="../../tools/Reporters.shtml">Rapports</a></dfn>
+		<li><dfn><a href="../../tools/Memories.shtml">Variables de M&#233;moire</a></dfn>
+		<li><dfn><a href="../../tools/Routes.shtml">Itin&#233;raires</a></dfn>
+		<li><dfn><a href="../../tools/LRoutes.shtml">LIn&#233;raires</a></dfn>
+    <li><dfn><a href="../../tools/Sections.shtml">Sections</a></dfn>
+		<li><dfn><a href="../../tools/Logix.shtml">Logix</a></dfn>
+		<li><dfn><a href="../../tools/fastclock/index.shtml">Horloges Rapides</a></dfn>
+		<li><dfn><a href="../../tools/speedometer/index.shtml">Mesureur de Vitesse</a></dfn>
+		<li><dfn><a href="../../tools/Audio.shtml">Audio</a></dfn>
+		<li><dfn><a href="../../tools/IdTags.shtml">&#201;tiquettes ID</a></dfn>
+		
+		<li><dfn><a href="../../tools/index.shtml#systemSpecificTools">Syst&#232;me sp&#233;cifique...</a></dfn>
+	</ul>
+</dd>
+
+<dt><h3><a href="automation">Automatisation du R&#233;seau</a></h3></dt>
+<dd>JMRI peut &#234;tre utilis&#233; pour automatiser des parties 
+de votre r&#233;seau, depuis un simple contr&#244;le d'un croisement
+&#224; la commande des trains en to&#238;le de fond.
+    <ul>
+    <li><dfn><a href="../../tools/signaling/index.shtml">Signalisation</a></dfn>
+    <li><dfn><a href="../../tools/EntryExit.shtml">Entr&#233;e Sortie (NX)</a></dfn>
+    <li><dfn><a href="../../tools/Routes.shtml">Itin&#233;raires</a></dfn>
+    <li><dfn><a href="../../tools/fastclock/index.shtml">Horloges Rapides</a></dfn>
+    <li><dfn><a href="../../tools/scripting/index.shtml">Script</a></dfn>
+    </ul>
+</dd>
+		
 </dl>
-
-</div> <!-- End of block of text on left side of page -->
-
+</div> <!-- close #side -->
+<!-- /Sidebar -->
