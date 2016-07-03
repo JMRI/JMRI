@@ -129,7 +129,7 @@
 		JRE, select the "Separate JRE:" radio button, and then press the
 		"Installed JREs" button. If you don't see a JDK, you need to add one
 		(from site above).<br>
-		If an ant build fails with an error like "method getX() not found", this may indicate that an older version of a specific java library installed on your system prevents the IDE from finding the proper parts. Depending on your operating system, <a href="../../setup/Faq.shtml#updatejar">copy the newer jar library</a> to the User Java Extensions folder.</p>
+		If an ant build fails with an error like "method getX() not found", this may indicate that an older version of a specific java library installed on your system prevents the IDE from finding the proper parts. This <a href="../../setup/Faq.shtml#updatejar">FAQ</a> explains how to diagnose this.</p>
 
 	<p>If the ant build succeeds, you can now launch any of the JMRI
 		applications from ant, and create a jmri.jar file if you wish. Use the

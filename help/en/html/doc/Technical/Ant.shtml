@@ -65,7 +65,7 @@ do:
 </code>
 and make sure the tests run cleanly.</p>
 <p>
-If an ant build fails with an error like "method getX() not found", this may indicate that an older version of a specific java library installed on your system prevents the IDE from finding the proper parts. Depending on your operating system, <a href="../../setup/Faq.shtml#updatejar">copy the newer jar library</a> to the User Java Extensions folder.
+If an ant build fails with an error like "method getX() not found", this may indicate that an older version of a specific java library installed on your system prevents the IDE from finding the proper parts. This <a href="../../setup/Faq.shtml#updatejar">FAQ</a> explains how to diagnose this.</p>
 </p>
 
   <!--#include virtual="/Footer" -->

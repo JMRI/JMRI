@@ -35,12 +35,12 @@ JMRI Setup: Frequently Asked Questions
 	<dl class="faq">
 
 	<dt id="install" class="on">Is JMRI fun?</dt>
-	<dd>Sure</dd>
+	<dd>Sure, both powerful and fun.</dd>
 	
 	<dt id="updatejar">Why does ant stop with a getX() error? (advanced)</dt>
-	<dd>When you try to build JMRI using an IDE or ant and a build fails with an error like "method getX() not found", this may indicate that an older version of a specific java library installed on your system prevents ant from finding the proper parts. Ant uses the <a href="../doc/Technical/JVMCapabilities.shtml">JDK</a> (Java Development Kit) installed on your computer to build parts of JMRI. When developers add new parts to JMRI, anyone wishing to build de JMRI code should also install the matching parts, called Java Archives (.jar libraries) on their system. An example of this is the vecmath package that was updated to version 1.5.2 in 2016 with JMRI 4.5.1.<br>
-		Depending on your operating system, copy the new jar library to the User Java Extensions folder: On OS X create a folder named "Extensions" inside a folder named "Java" in the (hidden) Library folder of your user folder (~/Library/Java/Extensions/) and will be picked up by the JDK. On Windows, place the new file anywhere you prefer and add the full path to your CLASSPATH environment variable. On Ubuntu in Terminal type <code>apt-get install libvecmath-java</code> which adds it to <code>/usr/share/java/</code>. Next, on either Windows or Linux add the new jar to your class path (see <a href="http://www.java3d.org/suninstructions.html">third party help</a>).<!-- provided by Egbert Broerse June 2016 --></dd>
-
+	<dd>When you try to build JMRI using an IDE or ant and a build fails with an error like "method getX() not found", this may indicate that an older version of a specific java library installed on your system prevents ant from finding the proper parts. Ant uses the <a href="../doc/Technical/JVMCapabilities.shtml">JDK</a> (Java Development Kit) and additional Java modules supplied with the JMRI source code to build parts of JMRI.<br>
+		To diagnose a possible issue causing the above error in OS X, open Terminal and type <code>find /System/Library/Java -name \*.jar ! -name jdk\* -exec pkgutil --file-info {} \;</code><br>
+		Please report the results in a message to the JMRI Users Yahoo group so we can identify your setup and suggest a possible solution.<!-- provided by Egbert Broerse June 2016 --></dd>
 	</dl>
 
 <hr>
