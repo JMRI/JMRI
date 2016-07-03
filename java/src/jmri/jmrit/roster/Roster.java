@@ -914,7 +914,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * Uses writeFile(String), a protected method that can write to a specific
      * location.
      *
-     * @deprecated
+     * @deprecated Since 4.0 Use Roster.getDefault().writeRoster() instead
      * @see #writeRoster()
      */
     @Deprecated
