@@ -35,7 +35,7 @@ public class SprogMonFrame extends jmri.jmrix.AbstractMonFrame implements SprogL
     }
 
     public synchronized void notifyMessage(SprogMessage l) {  // receive a message and log it
-        nextLine("cmd: \"" + l.toString() + "\"\n", "");
+        nextLine("cmd: \"" + l.toString(_memo.getSprogTrafficController().isSIIBootMode()) + "\"\n", "");
 
     }
 

@@ -87,7 +87,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
         }
         final SprogMessage m = new SprogMessage(packet);
         if (log.isDebugEnabled()) {
-            log.debug("Sending packet " + m.toString());
+            log.debug("Sending packet " + m.toString(tc.isSIIBootMode()));
         }
         for (int i = 0; i < repeats; i++) {
             final SprogTrafficController thisTC = tc;
@@ -429,7 +429,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
      */
     @Override
     public void notifyMessage(SprogMessage m) {
-//        log.error("message received unexpectedly: "+m.toString());
+//        log.error("message received unexpectedly: "+m.toString(tc.isSIIBootMode()));
     }
 
     private SprogReply replyForMe;

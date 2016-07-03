@@ -93,10 +93,7 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
         }
     }
 
-    public void setElement(int n, int v,boolean isSIIBootMode) {
-        if (!isSIIBootMode) {
-            v &= 0x7f;
-        }
+    public void setElement(int n, int v) {
         _dataChars[n] = v;
     }
 
@@ -212,6 +209,11 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     // display format
+    public String ToString(){
+       // default to not SIIBootMode being false.
+       return this.toString(false);
+    }
+
     public String toString(boolean isSIIBootMode) {
         StringBuffer buf = new StringBuffer();
         if (isSIIBootMode) {
@@ -249,7 +251,9 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
         byte msg[] = new byte[len + cr];
 
         for (int i = 0; i < len; i++) {
-            msg[i] = (byte) this.getElement(i);
+            if (sprogState != SprogState.SIIBOOTMODE) {
+               msg[i] = (byte) ( this.getElement(i) & 0x7f);
+            }
         }
         if (sprogState != SprogState.SIIBOOTMODE) {
             msg[len] = 0x0d;
