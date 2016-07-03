@@ -1,235 +1,612 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
+
 <html lang="en">
 <head>
-    <TITLE>
- 	JMRI: 2007 User Poll
-    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
-    <meta name="keywords" content="JMRI technical code road map">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
-
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <title>JMRI: 2007 User Poll</title>
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content="JMRI technical code road map">
+  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+  <!-- are an arbitrary design pattern used by the update.pl script to -->
+  <!-- easily replace the common header/footer code for all the web pages -->
+  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+  <!-- or change them to reflect your alternative logo -->
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
-</head>
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head><!--#include virtual="/Header" -->
 
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
+<body>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-	<div id="mainContent">
+    <div id="mainContent">
+      <h1>JMRI: 2007 User Poll</h1>In late May and early June 2007,
+      we ran three polls in the <a href=
+      "http://groups.yahoo.com/group/jmriusers">jmriusers group</a>
+      to learn more about what our users are actually using. This
+      page reports the results.
 
-	    <H1>JMRI: 2007 User Poll</H1>
+      <p>There's likely to be a selection bias in the responses.
+      People who are actively involved with JMRI are more likely to
+      subscribe to the jmriusers group, which was necessary to
+      learn of the poll. They are possibly more likely to reply to
+      the poll, and more likely to have a more recent version. We
+      should take this into account when using the results.</p>
 
-In late May and early June 2007, we ran three polls in the 
-<a href="http://groups.yahoo.com/group/jmriusers">jmriusers group</a>
-to learn more about what our users are actually using. 
-This page reports the results.
+      <p>In the sections below, we summarize and interpret the
+      results. The complete <a href="#raw">raw data</a> is
+      available at the end of the page.</p>
 
-<P>
-There's likely to be a selection bias in the responses.
-People who are actively involved
-with JMRI are more likely to subscribe to the jmriusers group,
-which was necessary to learn of the poll.  They are possibly more likely
-to reply to the poll, and more likely to have a more recent version.
-We should take this into account when using the results.
+      <h3>JMRI Version</h3>The poll asked which version of JMRI
+      people were using. The results, in decreasing order of
+      popularity, were:
 
-<P>
-In the sections below, we summarize and interpret the results.
-The complete 
-<a href="#raw">raw data</a>
-is available at the end of the page.
+      <ol>
+        <li>74% 1.7.6 (The most recent test release at that
+        time)</li>
 
-<h3>JMRI Version</h3>
-The poll asked which version of JMRI people were using. 
-The results, in decreasing order of popularity, were:
+        <li>7% 1.7.5</li>
 
-<OL>
-<LI>74% 1.7.6 (The most recent test release at that time)
-<LI>7% 1.7.5
-<LI>5% 1.6.1 (The most recent production release)
-<LI>5% I build my own version from the code
-<LI>4% 1.7.4 and 1.7.3 combined
-<LI>0% Test releases in the 1.7 series before 1.7.3
-</OL>
+        <li>5% 1.6.1 (The most recent production release)</li>
 
-One respondent (of 266) reported using "1.5 (any)", and one reported
-"1.4 (any)".  These may be confusions with the Java version.
-<P>
-Note that 1.7.6 was the most recent test release, but it was quite old.
-The most recent production release, 1.6.1, was very old.  
-This may have caused more people to use the most recent test release(s) than we
-would have normally found. The poll's selection bias may also have resulting
-in more people listing the most recent test release(s) than is true of the
-user population as a whole, thus understating 
-the number of people who just download
-the more recent production version and run.
+        <li>5% I build my own version from the code</li>
 
+        <li>4% 1.7.4 and 1.7.3 combined</li>
 
-<h3>Java Version</h3>
-The poll asked which Java version JMRI was using. The 
-results, in decreasing order of popularity, were:
-<OL>
-<LI>35% 1.5
-<LI>33% 1.6
-<LI>20% 1.4
-<LI>10% 1.7
-<LI>&nbsp;&nbsp;0% 1.3 or earlier
-</OL>
-Out of 159 responses, there were zero users of Java 1.3 or earlier.
-This is somewhat inconsistent with smallbut non-zero number of 
-people who said they are using JMRI on original Macintosh computers, 
-which use Java 1.1, but the response to this poll was small than 
-to the operating system poll.
-<P>
-It's possible that 10% of JMRI users have downloaded test distributions
-of Java 1.7 from Sun, but since Java 1.7 is not generally released yet it
-seems more likely that some of those responses are confusions with the JMRI
-release number.  This in turn implies that the Java 1.6 number might be a little
-inflated by the same mechanism.
+        <li>0% Test releases in the 1.7 series before 1.7.3</li>
+      </ol>One respondent (of 266) reported using "1.5 (any)", and
+      one reported "1.4 (any)". These may be confusions with the
+      Java version.
 
-<h3>Operating System Version</h3>
+      <p>Note that 1.7.6 was the most recent test release, but it
+      was quite old. The most recent production release, 1.6.1, was
+      very old. This may have caused more people to use the most
+      recent test release(s) than we would have normally found. The
+      poll's selection bias may also have resulting in more people
+      listing the most recent test release(s) than is true of the
+      user population as a whole, thus understating the number of
+      people who just download the more recent production version
+      and run.</p>
 
-The poll asked which operating system
-and version was being using to run JMRI.
-The results, in decreasing order of popularity, were:
+      <h3>Java Version</h3>The poll asked which Java version JMRI
+      was using. The results, in decreasing order of popularity,
+      were:
 
-<OL>
-<LI>52% Windows XP (including SP1, SP2, Home and Professional)
-<LI>13% Windows 98
-<LI>11% Windows 2000
-<LI>&nbsp;&nbsp;9% Mac OS X - 10.4 or later
-<LI>&nbsp;&nbsp;8% Linux - combined types, with no clear leader among them
-<LI>&nbsp;&nbsp;3% Windows Vista
-<LI>&nbsp;&nbsp;2% Windows Millenium Edition
-</OL>
+      <ol>
+        <li>35% 1.5</li>
 
-There were no respondents using Windows x64, Windows NT, or Windows 95.
-One respondent used "Windows Server (Any, including 2003)", 
-and one "Windows (Other, including CE)".
-<P>
-There were four respondents (1.5%) who used Macintosh OS 8.6, 9.0 or 9.1.
-All of the Mac OS X respondents were using version 10.3 (4 votes) or later (20 votes).
-<P>
-Among only Linux varients, the responses were:
-<UL>
-<LI>5 Red Hat, including Centos
-<LI>4 Ubuntu
-<LI>4 Debian
-<LI>4 SUSE
-<LI>2 Other
-<LI>1 Gentoo
-</UL>
+        <li>33% 1.6</li>
 
-<P>
-Among other operating systems, there were no respondents indicating they
-used OS/2, or either "Other Unix-based" or "Other non-Unix-based". 
-One respondent was using Solaris.
+        <li>20% 1.4</li>
 
-<a name="raw">
-</a><h3>Raw Data</h3>
+        <li>10% 1.7</li>
 
-The poll results are available from the 
-<a href="http://groups.yahoo.com/group/jmriusers/polls">poll page</a>
-of the 
-<a href="http://groups.yahoo.com/group/jmriusers">jmriusers Yahoo group</a>.
+        <li>  0% 1.3 or earlier</li>
+      </ol>Out of 159 responses, there were zero users of Java 1.3
+      or earlier. This is somewhat inconsistent with smallbut
+      non-zero number of people who said they are using JMRI on
+      original Macintosh computers, which use Java 1.1, but the
+      response to this poll was small than to the operating system
+      poll.
 
-<h4>Operating System Poll</h4>
-The poll prompt was:
-<P>
-<I>
-Which operating system do you run JMRI on? We'd like to know this to improve our testing and development. You can pick as many choices as you want, but please only select ones that you are using now, or are actually running on a computer that you're likely to put JMRI on soon. 
-</I><p>
-A total of 266 users answered the poll.
-<table border="1">
-<tr><th>Answer</th><th>Number</th><th>Fraction</th></tr>
-<tr><td>Windows 95</td><td>0 votes</td><td>0.00%  </td></tr>
-<tr><td>Windows 98</td><td>35 votes</td><td>13.16%  </td></tr>
-<tr><td>Windows NT</td><td>0 votes</td><td>0.00%  </td></tr>
-<tr><td>Windows 2000</td><td>29 votes</td><td>10.90%  </td></tr>
-<tr><td>Windows Millennium Edition</td><td>6 votes</td><td>2.26%  </td></tr>
-<tr><td>Windows Server (any, including 2003)</td><td>1 votes</td><td>0.38%  </td></tr>
-<tr><td>Windows x64 (any 64-bit, including XP and Vista)</td><td>0 votes</td><td>0.00%  </td></tr>
-<tr><td>Windows XP (including SP1, SP2, Home and Professional)</td><td>138 votes</td><td>51.88%  </td></tr>
-<tr><td>Windows Vista (any except x64)</td><td>7 votes</td><td>2.63%  </td></tr>
-<tr><td>Windows (Other, including CE)</td><td>1 votes</td><td>0.38%  </td></tr>
-<tr><td>Mac OS X - 10.1, 10.2</td><td>0 votes</td><td>0.00%  </td></tr>
-<tr><td>Mac OS X - 10.3</td><td>4 votes</td><td>1.50%  </td></tr>
-<tr><td>Mac OS X - 10.4 or later</td><td>20 votes</td><td>7.52%  </td></tr>
-<tr><td>Macintosh - 8.6, 9.0 or 9.1</td><td>4 votes</td><td>1.50%  </td></tr>
-<tr><td>Linux - Ubuntu</td><td>4 votes</td><td>1.50%  </td></tr>
-<tr><td>Linux - Red Hat (including Centos)</td><td>5 votes</td><td>1.88%  </td></tr>
-<tr><td>Linux - Yellow Dog</td><td>0 votes</td><td>0.00%  </td></tr>
-<tr><td>Linux - Debian</td><td>4 votes</td><td>1.50%  </td></tr>
-<tr><td>Linux - Gentoo</td><td>1 votes</td><td>0.38%  </td></tr>
-<tr><td>Linux - SUSE</td><td>4 votes</td><td>1.50%  </td></tr>
-<tr><td>Linux - Other</td><td>2 votes</td><td>0.75%  </td></tr>
-<tr><td>IBM OS/2</td><td>0 votes</td><td>0.00%  </td></tr>
-<tr><td>Solaris - Intel or SPARC</td><td>1 votes</td><td>0.38%  </td></tr>
-<tr><td>Other Unix-based</td><td>0 votes</td><td>0.00%  </td></tr>
-<tr><td>Other non-Unix-based</td><td>0 votes</td><td>0.00%  </td></tr>
-</table>
+      <p>It's possible that 10% of JMRI users have downloaded test
+      distributions of Java 1.7 from Sun, but since Java 1.7 is not
+      generally released yet it seems more likely that some of
+      those responses are confusions with the JMRI release number.
+      This in turn implies that the Java 1.6 number might be a
+      little inflated by the same mechanism.</p>
 
-<h4>Java Version Poll</h4>
-The poll prompt was:
-<P>
-<I>
-Which version of Java do you use when running JMRI? If you're not sure, you can find out by starting DecoderPro and looking at the 2nd line on the startup window. It'll say something like "Java version 1.5.0_07 (en_US)"; we just want the first digits, e.g. 1.5. We want this information so we can understand what language features we can and can't use in JMRI. Please only enter what you're using now, not what you plan to use or have used in the past.
-</I><p>
-A total of 159 users answered the poll.
-<table border="1">
-<tr><th>Answer</th><th>Number</th><th>Fraction</th></tr>
-<tr><td>1.1</td><td>0 votes</td><td>0.00%</td></tr>
-<tr><td>1.2</td><td>0 votes</td><td>0.00%</td></tr>
-<tr><td>1.3</td><td>0 votes</td><td>0.00%</td></tr>
-<tr><td>1.4</td><td>32 votes</td><td>20.13%</td></tr>
-<tr><td>1.5</td><td>56 votes</td><td>35.22%</td></tr>
-<tr><td>1.6</td><td>54 votes</td><td>33.96%</td></tr>
-<tr><td>1.7</td><td>17 votes</td><td>10.69%</td></tr>
-</table>
+      <h3>Operating System Version</h3>The poll asked which
+      operating system and version was being using to run JMRI. The
+      results, in decreasing order of popularity, were:
 
+      <ol>
+        <li>52% Windows XP (including SP1, SP2, Home and
+        Professional)</li>
 
-<h4>JMRI Version Poll</h4>
-The poll prompt was:
-<P>
-<I>
-Which version of JMRI are you _currently_ running? If you're not sure, start DecoderPro or PanelPro and look at the startup window. It will say "DecoderPro 1.something.something, part of the JMRI Project"; that's the number we're looking for. We want this information to help us understand how far back we should make e.g. decoder files compatible. Please don't enter versions you no longer use, or just plan to use in the future; we want to know what you're using now.
-</I><p>
-A total of 168 users answered the poll.
-<table border="1">
-<tr><th>Answer</th><th>Number</th><th>Fraction</th></tr>
-<tr><td>I build my own copy <BR/>from the code</td><td>9 votes</td><td>5.36%</td></tr>
-<tr><td>1.7.6</td><td>125 votes</td><td>74.40%</td></tr>
-<tr><td>1.7.5</td><td>13 votes</td><td>7.74%</td></tr>
-<tr><td>1.7.4</td><td>2 votes</td><td>1.19%</td></tr>
-<tr><td>1.7.3</td><td>6 votes</td><td>3.57%</td></tr>
-<tr><td>1.7.2</td><td>0 votes</td><td>0.00%</td></tr>
-<tr><td>1.7.1</td><td>0 votes</td><td>0.00%</td></tr>
-<tr><td>1.7.0</td><td>0 votes</td><td>0.00%</td></tr>
-<tr><td>1.6.1</td><td>10 votes</td><td>5.95%</td></tr>
-<tr><td>1.6.0</td><td>1 votes</td><td>0.60%</td></tr>
-<tr><td>1.5 (any)</td><td>1 votes</td><td>0.60%</td></tr>
-<tr><td>1.4 (any)</td><td>1 votes</td><td>0.60%</td></tr>
-<tr><td>1.3 (any)</td><td>0 votes</td><td>0.00%</td></tr>
-<tr><td>1.2 (any)</td><td>0 votes</td><td>0.00%</td></tr>
-<tr><td>Before 1.2</td><td>0 votes</td><td>0.00%</td></tr>
-</table>
+        <li>13% Windows 98</li>
 
-<!--#include virtual="/Footer" -->
+        <li>11% Windows 2000</li>
 
-	  </div><!-- closes #mainContent-->
-	</div> <!-- closes #mBody-->
+        <li>  9% Mac OS X - 10.4 or later</li>
+
+        <li>  8% Linux - combined types, with no clear leader among
+        them</li>
+
+        <li>  3% Windows Vista</li>
+
+        <li>  2% Windows Millenium Edition</li>
+      </ol>There were no respondents using Windows x64, Windows NT,
+      or Windows 95. One respondent used "Windows Server (Any,
+      including 2003)", and one "Windows (Other, including CE)".
+
+      <p>There were four respondents (1.5%) who used Macintosh OS
+      8.6, 9.0 or 9.1. All of the Mac OS X respondents were using
+      version 10.3 (4 votes) or later (20 votes).</p>
+
+      <p>Among only Linux varients, the responses were:</p>
+
+      <ul>
+        <li>5 Red Hat, including Centos</li>
+
+        <li>4 Ubuntu</li>
+
+        <li>4 Debian</li>
+
+        <li>4 SUSE</li>
+
+        <li>2 Other</li>
+
+        <li>1 Gentoo</li>
+      </ul>
+
+      <p>Among other operating systems, there were no respondents
+      indicating they used OS/2, or either "Other Unix-based" or
+      "Other non-Unix-based". One respondent was using Solaris.
+      <a name="raw" id="raw"></a></p>
+
+      <h3>Raw Data</h3>The poll results are available from the
+      <a href="http://groups.yahoo.com/group/jmriusers/polls">poll
+      page</a> of the <a href=
+      "http://groups.yahoo.com/group/jmriusers">jmriusers Yahoo
+      group</a>.
+
+      <h4>Operating System Poll</h4>The poll prompt was:
+
+      <p><i>Which operating system do you run JMRI on? We'd like to
+      know this to improve our testing and development. You can
+      pick as many choices as you want, but please only select ones
+      that you are using now, or are actually running on a computer
+      that you're likely to put JMRI on soon.</i></p>
+
+      <p>A total of 266 users answered the poll.</p>
+
+      <table border="1">
+        <tr>
+          <th>Answer</th>
+
+          <th>Number</th>
+
+          <th>Fraction</th>
+        </tr>
+
+        <tr>
+          <td>Windows 95</td>
+
+          <td>0 votes</td>
+
+          <td>0.00%</td>
+        </tr>
+
+        <tr>
+          <td>Windows 98</td>
+
+          <td>35 votes</td>
+
+          <td>13.16%</td>
+        </tr>
+
+        <tr>
+          <td>Windows NT</td>
+
+          <td>0 votes</td>
+
+          <td>0.00%</td>
+        </tr>
+
+        <tr>
+          <td>Windows 2000</td>
+
+          <td>29 votes</td>
+
+          <td>10.90%</td>
+        </tr>
+
+        <tr>
+          <td>Windows Millennium Edition</td>
+
+          <td>6 votes</td>
+
+          <td>2.26%</td>
+        </tr>
+
+        <tr>
+          <td>Windows Server (any, including 2003)</td>
+
+          <td>1 votes</td>
+
+          <td>0.38%</td>
+        </tr>
+
+        <tr>
+          <td>Windows x64 (any 64-bit, including XP and Vista)</td>
+
+          <td>0 votes</td>
+
+          <td>0.00%</td>
+        </tr>
+
+        <tr>
+          <td>Windows XP (including SP1, SP2, Home and
+          Professional)</td>
+
+          <td>138 votes</td>
+
+          <td>51.88%</td>
+        </tr>
+
+        <tr>
+          <td>Windows Vista (any except x64)</td>
+
+          <td>7 votes</td>
+
+          <td>2.63%</td>
+        </tr>
+
+        <tr>
+          <td>Windows (Other, including CE)</td>
+
+          <td>1 votes</td>
+
+          <td>0.38%</td>
+        </tr>
+
+        <tr>
+          <td>Mac OS X - 10.1, 10.2</td>
+
+          <td>0 votes</td>
+
+          <td>0.00%</td>
+        </tr>
+
+        <tr>
+          <td>Mac OS X - 10.3</td>
+
+          <td>4 votes</td>
+
+          <td>1.50%</td>
+        </tr>
+
+        <tr>
+          <td>Mac OS X - 10.4 or later</td>
+
+          <td>20 votes</td>
+
+          <td>7.52%</td>
+        </tr>
+
+        <tr>
+          <td>Macintosh - 8.6, 9.0 or 9.1</td>
+
+          <td>4 votes</td>
+
+          <td>1.50%</td>
+        </tr>
+
+        <tr>
+          <td>Linux - Ubuntu</td>
+
+          <td>4 votes</td>
+
+          <td>1.50%</td>
+        </tr>
+
+        <tr>
+          <td>Linux - Red Hat (including Centos)</td>
+
+          <td>5 votes</td>
+
+          <td>1.88%</td>
+        </tr>
+
+        <tr>
+          <td>Linux - Yellow Dog</td>
+
+          <td>0 votes</td>
+
+          <td>0.00%</td>
+        </tr>
+
+        <tr>
+          <td>Linux - Debian</td>
+
+          <td>4 votes</td>
+
+          <td>1.50%</td>
+        </tr>
+
+        <tr>
+          <td>Linux - Gentoo</td>
+
+          <td>1 votes</td>
+
+          <td>0.38%</td>
+        </tr>
+
+        <tr>
+          <td>Linux - SUSE</td>
+
+          <td>4 votes</td>
+
+          <td>1.50%</td>
+        </tr>
+
+        <tr>
+          <td>Linux - Other</td>
+
+          <td>2 votes</td>
+
+          <td>0.75%</td>
+        </tr>
+
+        <tr>
+          <td>IBM OS/2</td>
+
+          <td>0 votes</td>
+
+          <td>0.00%</td>
+        </tr>
+
+        <tr>
+          <td>Solaris - Intel or SPARC</td>
+
+          <td>1 votes</td>
+
+          <td>0.38%</td>
+        </tr>
+
+        <tr>
+          <td>Other Unix-based</td>
+
+          <td>0 votes</td>
+
+          <td>0.00%</td>
+        </tr>
+
+        <tr>
+          <td>Other non-Unix-based</td>
+
+          <td>0 votes</td>
+
+          <td>0.00%</td>
+        </tr>
+      </table>
+
+      <h4>Java Version Poll</h4>The poll prompt was:
+
+      <p><i>Which version of Java do you use when running JMRI? If
+      you're not sure, you can find out by starting DecoderPro and
+      looking at the 2nd line on the startup window. It'll say
+      something like "Java version 1.5.0_07 (en_US)"; we just want
+      the first digits, e.g. 1.5. We want this information so we
+      can understand what language features we can and can't use in
+      JMRI. Please only enter what you're using now, not what you
+      plan to use or have used in the past.</i></p>
+
+      <p>A total of 159 users answered the poll.</p>
+
+      <table border="1">
+        <tr>
+          <th>Answer</th>
+
+          <th>Number</th>
+
+          <th>Fraction</th>
+        </tr>
+
+        <tr>
+          <td>1.1</td>
+
+          <td>0 votes</td>
+
+          <td>0.00%</td>
+        </tr>
+
+        <tr>
+          <td>1.2</td>
+
+          <td>0 votes</td>
+
+          <td>0.00%</td>
+        </tr>
+
+        <tr>
+          <td>1.3</td>
+
+          <td>0 votes</td>
+
+          <td>0.00%</td>
+        </tr>
+
+        <tr>
+          <td>1.4</td>
+
+          <td>32 votes</td>
+
+          <td>20.13%</td>
+        </tr>
+
+        <tr>
+          <td>1.5</td>
+
+          <td>56 votes</td>
+
+          <td>35.22%</td>
+        </tr>
+
+        <tr>
+          <td>1.6</td>
+
+          <td>54 votes</td>
+
+          <td>33.96%</td>
+        </tr>
+
+        <tr>
+          <td>1.7</td>
+
+          <td>17 votes</td>
+
+          <td>10.69%</td>
+        </tr>
+      </table>
+
+      <h4>JMRI Version Poll</h4>The poll prompt was:
+
+      <p><i>Which version of JMRI are you _currently_ running? If
+      you're not sure, start DecoderPro or PanelPro and look at the
+      startup window. It will say "DecoderPro
+      1.something.something, part of the JMRI Project"; that's the
+      number we're looking for. We want this information to help us
+      understand how far back we should make e.g. decoder files
+      compatible. Please don't enter versions you no longer use, or
+      just plan to use in the future; we want to know what you're
+      using now.</i></p>
+
+      <p>A total of 168 users answered the poll.</p>
+
+      <table border="1">
+        <tr>
+          <th>Answer</th>
+
+          <th>Number</th>
+
+          <th>Fraction</th>
+        </tr>
+
+        <tr>
+          <td>I build my own copy<br>
+          from the code</td>
+
+          <td>9 votes</td>
+
+          <td>5.36%</td>
+        </tr>
+
+        <tr>
+          <td>1.7.6</td>
+
+          <td>125 votes</td>
+
+          <td>74.40%</td>
+        </tr>
+
+        <tr>
+          <td>1.7.5</td>
+
+          <td>13 votes</td>
+
+          <td>7.74%</td>
+        </tr>
+
+        <tr>
+          <td>1.7.4</td>
+
+          <td>2 votes</td>
+
+          <td>1.19%</td>
+        </tr>
+
+        <tr>
+          <td>1.7.3</td>
+
+          <td>6 votes</td>
+
+          <td>3.57%</td>
+        </tr>
+
+        <tr>
+          <td>1.7.2</td>
+
+          <td>0 votes</td>
+
+          <td>0.00%</td>
+        </tr>
+
+        <tr>
+          <td>1.7.1</td>
+
+          <td>0 votes</td>
+
+          <td>0.00%</td>
+        </tr>
+
+        <tr>
+          <td>1.7.0</td>
+
+          <td>0 votes</td>
+
+          <td>0.00%</td>
+        </tr>
+
+        <tr>
+          <td>1.6.1</td>
+
+          <td>10 votes</td>
+
+          <td>5.95%</td>
+        </tr>
+
+        <tr>
+          <td>1.6.0</td>
+
+          <td>1 votes</td>
+
+          <td>0.60%</td>
+        </tr>
+
+        <tr>
+          <td>1.5 (any)</td>
+
+          <td>1 votes</td>
+
+          <td>0.60%</td>
+        </tr>
+
+        <tr>
+          <td>1.4 (any)</td>
+
+          <td>1 votes</td>
+
+          <td>0.60%</td>
+        </tr>
+
+        <tr>
+          <td>1.3 (any)</td>
+
+          <td>0 votes</td>
+
+          <td>0.00%</td>
+        </tr>
+
+        <tr>
+          <td>1.2 (any)</td>
+
+          <td>0 votes</td>
+
+          <td>0.00%</td>
+        </tr>
+
+        <tr>
+          <td>Before 1.2</td>
+
+          <td>0 votes</td>
+
+          <td>0.00%</td>
+        </tr>
+      </table><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>
-
