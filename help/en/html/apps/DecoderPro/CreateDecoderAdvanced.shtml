@@ -27,7 +27,7 @@
 the decoder definition
 files for the DecoderPro Symbolic Programmer.</p>
 
-<a name="html_formatting" id="html_formatting"></a>
+<a name="html_formatting"></a>
 <h3>Formatting on the page</h3>
 You can do limited formatting on the display using HTML formatting tags.
 
@@ -62,7 +62,7 @@ This provides only HTML5 support, so if something isn't displaying as you expect
 see if an approach using simpler HTML will work.
 </p>
 
-<a name="id" id="id"></a>
+<a name="id"></a>
 <h3>Identification</h3>
 Three pieces:
 <dl>
@@ -112,7 +112,7 @@ If the user selects a decoder model manually, that selection sets
 all three values for use by when the decoder definition is expanded
 for programming (see section <a href="#conditional">Conditional Decoder Definitions</a> below).
 
-<a name="pane_considerations" id="pane_considerations"></a>
+<a name="pane_considerations"></a>
 <h3>Pane Considerations</h3>
 Programmer panes are used to split and organise decoder variables into convenient named categories.
 <ul>
@@ -128,7 +128,7 @@ Programmer panes are used to split and organise decoder variables into convenien
     Pane names are specified by a &lt;name&gt; element at the top of each &lt;pane&gt; element.
   </li>
 </ul>
-<a name="pane_replacement" id="pane_replacement"></a>
+<a name="pane_replacement"></a>
 <h4>Pane Replacement</h4>
 Custom panes are usually added to definition files for one of the following reasons:
 <ol type="A">
@@ -150,8 +150,8 @@ Custom panes are usually added to definition files for one of the following reas
 <h4>Empty Panes</h4>
 Empty panes are defined as those with no active variable elements to display for the selected decoder.
 They may still contain text content.
-<a name="pane_visibility" id="pane_visibility"></a>
-<a name="visibility" id="visibility"></a>
+<a name="pane_visibility"></a>
+<a name="visibility"></a>
 <h4>Pane Visibility</h4>
 Pane visibility is governed by a complex set of rules:
 <ul>
@@ -188,7 +188,7 @@ Pane visibility is governed by a complex set of rules:
 
   </li>
 </ul>
-<a name="pane_best_practice" id="pane_best_practice"></a>
+<a name="pane_best_practice"></a>
 <h4>Best Pactice</h4>
 Advanced users may choose to hide empty panes, but Show Empty Tabs is enabled by default so beginner users need to see why panes are empty or where to find items not on the expected panes.
 <p>
@@ -244,7 +244,7 @@ locomotive-decoder panes make sense so the decoder definition contains lots of
 custom panes, it's a simplification to put a showEmptyPanes="no" attribute in
 the &lt;decoder-config&gt; element of the definition XML and just hide all those empty panes by default.
 
-<a name="frag_include" id="frag_include"></a>
+<a name="frag_include"></a>
 <h3>Including Fragment Files</h3>
 
 Common parts of decoder definitions can be placed into "fragment files",
@@ -269,7 +269,7 @@ fragment file to be found.
 <p>
 Use an existing file as an example for the top elements &amp; format needed.
 
-<a name="update" id="update"></a>
+<a name="update"></a>
 <h3>Updates and Migration</h3>
 
 Sometimes, we replace a decoder definition with a better one.  The old one is in use,
@@ -361,7 +361,7 @@ For an example of where to position this capability element in the file, etc., s
     xml/decoders/ESU_LokSoundV4_0.xml</a> file.
 
 <p>
-<a name="zimocapability" id="zimocapability"></a>
+<a name="zimocapability"></a>
 Another approach, used by e.g. Zimo, is to provide a way to page the access.
 For example, to write 21 to CV614 with one of these, you need to:
 	<ul>
@@ -523,7 +523,7 @@ For examples of how to use these, see the TCS WOW decoder definition.
 <p>For details and more advanced features, see this <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitVariableValue.html" target="_blank">JavaDoc page</a></p>
 
 
-<a name="conditional" id="conditional"></a>
+<a name="conditional"></a>
 <h3>Conditional Decoder Definitions</h3>
 
 To reduce the number of decoder definition files needed, each file can
@@ -535,7 +535,7 @@ These are particularly useful when using a common fragment file
 that might be included by multiple decoder definition files (defining
 different-but-similar families)
 
-<a name="var_include" id="var_include"></a>
+<a name="var_include"></a>
 <h4>Include/Exclude During Variable Expansion</h4>
 
 Whether a variable element is expanded and used can be made conditional on the
@@ -575,7 +575,7 @@ Attributes on a &lt;variables&gt; element act on all the &lt;variable&gt; elemen
 along with any include or exclude attributes on those individual variables.
 </p>
 
-<a name="pane_include" id="pane_include"></a>
+<a name="pane_include"></a>
 <h4>Include/Exclude During Pane Creation</h4>
 
 Whether a pane (or part of a pane) is created can be made conditional on the
@@ -630,7 +630,7 @@ The text will be created only when expanding the decoder definition
 for ModelA or product ID 400.
 </p>
 
-<a name="qualify" id="qualify"></a>
+<a name="qualify"></a>
 <h4>Run-time Qualification of Variables</h4>
 <h5>Qualifying Variables</h5>
 
@@ -676,7 +676,7 @@ If multiple qualifier elements are present, all must be true for the
 variable to be active and displayed.
 </p>
 
-<a name="panes" id="panes"></a>
+<a name="panes"></a>
 <h5>Qualifying Panes</h5>
 
 A "qualifier" element on a pane element allows you to enable or disable the pane
@@ -723,7 +723,7 @@ Other available operators include "gt", "ge", "ne", "lt" and "le".
 If multiple qualifier elements are present, all must be true for the
 pane to be active and displayed.
 
-<a name="labels" id="labels"></a>
+<a name="labels"></a>
 <h5>Qualifying Elements on Panes</h5>
 
 A "qualifier" element on a "label", "soundlabel", "row", "column", "grid" or "griditem" element

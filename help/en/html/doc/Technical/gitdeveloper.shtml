@@ -115,7 +115,7 @@ clear by itself as this will appear in lists of changes. You should
 keep that summary to 50 characters or less, so it can be displayed
 compactly. Please add more detail in additional lines after the
 summary, because that helps your friends and colleagues understand
-what you've done. <a name="repo" id="repo"></a>
+what you've done. <a name="repo"></a>
 
       <h3>Get Your Own GitHub Repository</h3>
 
@@ -157,7 +157,7 @@ what you've done. <a name="repo" id="repo"></a>
 <code>
    % git remote -v<br>   origin       https://github.com/JMRI/JMRI.git (fetch)<br>   origin       https://github.com/yourname/JMRI.git (push)
 </code>
-</pre><a name="push" id="push"></a>
+</pre><a name="push"></a>
 
       <h3>Push Your Changes to Your GitHub Repository</h3>Now that
       you have a consistent set of changes committed locally, you
@@ -169,7 +169,7 @@ what you've done. <a name="repo" id="repo"></a>
   </code>
 </pre>Sometimes, git will tell you that you need a more complicated
 push comment, with some options that start with - or --. Just copy
-and paste that line to execute it. <a name="pull" id="pull"></a>
+and paste that line to execute it. <a name="pull"></a>
 
       <h3>Submit a Pull Request</h3>The last step is to make your
       changes, already visible in your GitHub repository, known to

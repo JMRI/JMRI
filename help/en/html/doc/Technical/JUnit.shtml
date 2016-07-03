@@ -103,7 +103,7 @@
 
       <ul>
         <li><a href="#issues">Issues</a></li>
-      </ul><a name="Introduction" id="Introduction"></a> JUnit is a
+      </ul><a name="Introduction"></a> JUnit is a
       system for building "unit tests" of software. Unit tests are
       small tests that make sure that individual parts of the
       software do what they're supposed to do. In a distributed
@@ -127,7 +127,7 @@
       when you track down a bug (make sure it doesn't come
       back).</p>
 
-      <h2><a name="run" id="run">Running the Tests</a></h2>To run
+      <h2><a name="run">Running the Tests</a></h2>To run
       the existing tests, say
       <pre>
 <code>
@@ -147,7 +147,7 @@ test class for your package, you can run that directly with the
 </pre>The first line compiles all the test code, and the second
 runs a specific test or test suite.
 
-      <h2><a name="Continuous" id="Continuous">Continuous
+      <h2><a name="Continuous">Continuous
       Integration Test Execution</a></h2>The <a href=
       "ContinuousIntegration.shtml">continuous integration
       environment</a> senses changes in the code repository,
@@ -156,7 +156,7 @@ runs a specific test or test suite.
       the "alltest" ant target against the build to run the tests
       against the successful build of the code base.
 
-      <h3><a name="Reporting" id="Reporting">Error
+      <h3><a name="Reporting">Error
       Reporting</a></h3>If a test fails during the continuous
       integration execution of "alltest", an e-mail is sent to the
       jmri-build e-mail list as well as to the developers who have
@@ -175,7 +175,7 @@ runs a specific test or test suite.
       <p>(When the build succeeds, nothing is mailed, to cut down
       on traffic)</p>
 
-      <h3><a name="Coverage" id="Coverage">Code Coverage
+      <h3><a name="Coverage">Code Coverage
       Reports</a></h3>As part of running the tests, Jenkins
       accumulates information on how much of the code was executed,
       called the "code coverage". We use the <a href=
@@ -208,7 +208,7 @@ runs a specific test or test suite.
         scrolling down).</li>
       </ul>
 
-      <h2><a name="write" id="write">Writing Tests</a></h2>By
+      <h2><a name="write">Writing Tests</a></h2>By
       convention, we have a "test" class shadowing (almost) every
       real class. The "test" directory contains a tree of package
       directories parallel to the "src" tree. Each test class has
@@ -239,17 +239,17 @@ runs a specific test or test suite.
       piece of the classes operation. That's why they're called
       "unit" tests.</p>
 
-      <h3><a name="write4NewClass" id="write4NewClass">Writing
+      <h3><a name="write4NewClass">Writing
       Tests for a New Class</a></h3>(Needs info here: basically,
       copy some other package, and don't forget to put an entry in
       the enclosing package's test suite)
 
-      <h3><a name="Write4NewPackage" id="Write4NewPackage">Writing
+      <h3><a name="Write4NewPackage">Writing
       Tests for a New Package</a></h3>(Needs info here: basically,
       copy some other package, and don't forget to put an entry in
       the enclosing package's test suite)
 
-      <h2><a name="keyMetaphors" id="keyMetaphors">Key Test
+      <h2><a name="keyMetaphors">Key Test
       Metaphors</a></h2>
 
       <h3><a name="HandlingLogOutput" id=
@@ -337,7 +337,7 @@ runs a specific test or test suite.
       won't be able to merge your code into the common repository
       until those are handled.</p>
 
-      <h3><a name="ResetInstMgr" id="ResetInstMgr">Resetting the
+      <h3><a name="ResetInstMgr">Resetting the
       InstanceManager</a></h3>If you are testing code that is going
       to reference the InstanceManager, you should clear and reset
       it to ensure you get reproducible results.
@@ -357,7 +357,7 @@ and please add more if you need one that's not there yet.
     jmri.util.JUnitUtil.resetInstanceManager();<br>    apps.tests.Log4JFixture.tearDown(); <br>    super.tearDown();<br></code>
 </pre>
 
-      <h3><a name="RunningListeners" id="RunningListeners">Working
+      <h3><a name="RunningListeners">Working
       with Listeners</a></h3>JMRI is a multi-threaded application.
       Listeners for JMRI objects are notified on various threads.
       Sometimes you have to wait for that to take place.
@@ -391,7 +391,7 @@ the condition doesn't come true in a reasonable length of time.
       or yield() in your code. Use the JUnitUtil and JFCUtil
       support for those instead.</p>
 
-      <h3><a name="threads" id="threads">Working with
+      <h3><a name="threads">Working with
       Threads</a></h3>(See a <a href="#testSwingCode">following
       section</a> for how to work with <a href=
       "#testSwingCode">Swing (GUI) objects</a> and the <a href=
@@ -622,7 +622,7 @@ environment.
       <p>In the future, this could be extended to pick up files
       automatically, to support xUnit testing, etc.</p>
 
-      <h2><a name="issues" id="issues">Issues</a></h2>JUnit uses a
+      <h2><a name="issues">Issues</a></h2>JUnit uses a
       custom classloader, which can cause problems finding
       singletons and starting Swing. If you get the error about not
       being able to find or load a class, suspect that adding the

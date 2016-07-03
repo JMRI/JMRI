@@ -114,7 +114,7 @@
           debugging. Typically only turned on for one class at a
           time due to volume and performance issues.</td>
         </tr>
-      </table><a name="config" id="config"></a>
+      </table><a name="config"></a>
 
       <h3>Configuration</h3>By convention, JMRI applications will
       attempt to initialize Log4J using a "<a href=
@@ -180,7 +180,7 @@ log4j.appender.R.layout=org.apache.log4j.PatternLayout<br>log4j.appender.R.layou
 
         <li><code>[AWT-EventQueue-0]</code> - name of the thread
         that emitted the message</li>
-      </ul><a name="code" id="code"></a>
+      </ul><a name="code"></a>
 
       <h3>Coding</h3>To log messages from a class named MyClass,
       add this to the bottom of the class's .java file:

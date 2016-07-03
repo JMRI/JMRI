@@ -113,7 +113,7 @@
         JavaHelp can't display PDF files. Links to those should be
         shown explicitly as links, so they can be copied to an
         outside web browser.</li>
-      </ul><a name="web" id="web"></a>
+      </ul><a name="web"></a>
 
       <h2>Web access to help</h2>It's inconvenient to have to
       maintain two separate web pages for the main web site and the
@@ -132,7 +132,7 @@
         whether or not you want to include a "Sidebar" via a file
         of the same name. This will put the proper top and bottom
         matter in place to get the page properly displayed.</li>
-      </ul><a name="code" id="code"></a>
+      </ul><a name="code"></a>
 
       <h2>Access in the code</h2>Within the JMRI code, access the
       help system comes via the jmri.util.HelpUtil class. (For
@@ -157,7 +157,7 @@
 
       <p>A number of help files have been put in place without any
       contents; hopefully some users will edit them and contribute
-      them back. <a name="jhelpdev" id="jhelpdev"></a></p>
+      them back. <a name="jhelpdev"></a></p>
 
       <h2>Creating the control files with JHelpDev</h2>JavaHelp
       uses various XML files to control how the table of contents
@@ -243,7 +243,7 @@
       on how to do that on the <a href=
       "http://jhelpdev.sourceforge.net/">JHelpDev web site</a>.
       Remember to run "ant" after that to include your updates on
-      the web versions. <a name="site" id="site"></a></p>
+      the web versions. <a name="site"></a></p>
 
       <h2>Updating the JMRI.org site</h2>Changes to Help pages
       which are checked-in should show up automatically on the

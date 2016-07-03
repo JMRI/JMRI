@@ -172,7 +172,7 @@
         "263" alt="IntelliJ build java SDK prefs"></a></li>
 
         <li>Click OK to close the Preferences.</li>
-      </ol><a name="getgit" id="getgit"></a>
+      </ol><a name="getgit"></a>
 
       <h2>Getting the JMRI Source using Git</h2>
 
@@ -234,7 +234,7 @@
       </ol>
 
       <p>This will add JMRI to the IntelliJ Project window.
-      <a name="ijprojectwin" id="ijprojectwin"></a></p>
+      <a name="ijprojectwin"></a></p>
 
       <h2>The Project window</h2>
 
@@ -363,7 +363,7 @@
       build process, after which a Java icon will open with the
       application running with all your new (saved) edits.</p>
       <!-- to do: write instructions for configurations? -->
-      <a name="push" id="push"></a>
+      <a name="push"></a>
 
       <h2>Pushing changes to your GitHub branch</h2>
 
@@ -556,7 +556,7 @@
         shown below by going to Window -&gt; Preferences and selecting
         "Java -&gt; Compiler -&gt; Errors/Warnings".
         -->
-      <a name="more" id="more"></a>
+      <a name="more"></a>
 
       <h2>More Help</h2>
 

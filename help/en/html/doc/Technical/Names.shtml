@@ -55,7 +55,7 @@
         files, in a symbolic form. Names are a convenient way to
         connect objects and object references in that kind of
         configuration.</li>
-      </ol><a name="type" id="type"></a>
+      </ol><a name="type"></a>
 
       <h2>Items with names</h2>There are lots of things that might
       need names:
@@ -224,7 +224,7 @@
 
         <li>Z <a href="../../hardware/zimo/Zimo.shtml">Zimo
         MX-1</a></li>
-      </ul><a name="types" id="types"></a>
+      </ul><a name="types"></a>
 
       <h3>Device type letters</h3>Note that some of these are
       placeholders, and have no underlying implementation. Also,
@@ -284,7 +284,7 @@
 
         <li>X logiX - a set of logic equations used to control the
         layout</li>
-      </ul><a name="systeminfo" id="systeminfo"></a>
+      </ul><a name="systeminfo"></a>
 
       <h3>System-specific info</h3>Each different hardware system
       can specify the "string" that follows the system and type

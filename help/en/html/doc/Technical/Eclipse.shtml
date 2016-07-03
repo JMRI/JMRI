@@ -44,7 +44,7 @@
       that JMRI requires JAVA version 8. You must confirm that JRE
       8 is the default Java Runtime Environment. Eclipse recommends
       installing release Luna for Java 8, but there are workarounds
-      described online.</p><a name="getwgit" id="getwgit"></a>
+      described online.</p><a name="getwgit"></a>
 
       <h2>Getting the JMRI Source using Git</h2>To get the source
       code from GitHub using Git you need to do the following:
@@ -148,7 +148,7 @@
       JMRI applications from ant, and create a jmri.jar file if you
       wish. Use the "2 Ant Build" and in the window select the
       "Targets" tab, and use the appropriate checkbox to generate
-      what you want.</p><a name="build" id="build"></a>
+      what you want.</p><a name="build"></a>
 
       <h2>Building and running JMRI using Eclipse</h2>
 
@@ -222,7 +222,7 @@ library path to:
         the "Run" menu. Once you've done that once, you can just
         click the "Run" icon on the toolbar to rerun the last
         program.</li>
-      </ol><a name="javacc" id="javacc"></a>
+      </ol><a name="javacc"></a>
 
       <h2>Installing JavaCC Plugin (alternative to Run As Ant Build
       method above)</h2>Instead of using the ant build to populate
@@ -246,7 +246,7 @@ library path to:
 
         <li>Confirm that the "Java Build Path" includes the tmp
         directory (see Project Properties).</li>
-      </ol><a name="push" id="push"></a>
+      </ol><a name="push"></a>
 
       <h2>Pushing changes to your GitHub branch</h2>The standard
       practice for getting your changes included in main JMRI code
@@ -326,7 +326,7 @@ library path to:
           more info, see the <a href=
           "gitdeveloper.shtml#pull">developer instructions,</a></p>
         </li>
-      </ul><a name="errors" id="errors"></a>
+      </ul><a name="errors"></a>
 
       <h2>Compiler Errors and Warnings</h2>The default Eclipse
       compiler configuration produces many unnecessary warnings.

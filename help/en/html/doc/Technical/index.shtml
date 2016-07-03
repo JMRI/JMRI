@@ -82,7 +82,7 @@
       These screens show the exact contents of each specific
       decoder type. Both the programming screens and decoder
       information are stored in text files, so you can make up new
-      ones as desired.</p><a name="writecode" id="writecode"></a>
+      ones as desired.</p><a name="writecode"></a>
 
       <h2>How can you change how JMRI does things?</h2>There are
       several different ways to modify JMRI:
@@ -180,7 +180,7 @@
       <h2><a name="contributing" id=
       "contributing">Contributing</a></h2>
 
-      <p><a name="contributing" id="contributing">We encourage
+      <p><a name="contributing">We encourage
       contributions of code, decoder definitions, improvements to
       web pages, etc, to the JMRI project so that we can distribute
       them to the rest of the community.</a></p>
@@ -226,7 +226,7 @@
       "../../../Acknowledgements.shtml">acknowledgements
       page</a>.</p>
 
-      <h2><a name="use" id="use">Licensing</a></h2><a name="use"
+      <h2><a name="use">Licensing</a></h2><a name="use"
       id="use">We encourage people to build their own projects on
       top of JMRI. That's the original reason that the JMRI&reg;
       project was started!</a>
