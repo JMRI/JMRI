@@ -463,6 +463,19 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         if (!checkName(Bundle.getMessage("save"))) {
             return;
         }
+        // stop table editing so "Moves" are properly saved
+        if (spurTable.isEditing()) {
+            spurTable.getCellEditor().stopCellEditing();
+        }
+        if (yardTable.isEditing()) {
+            yardTable.getCellEditor().stopCellEditing();
+        }
+        if (interchangeTable.isEditing()) {
+            interchangeTable.getCellEditor().stopCellEditing();
+        }
+        if (stagingTable.isEditing()) {
+            stagingTable.getCellEditor().stopCellEditing();
+        }
         _location.setName(locationNameTextField.getText());
         _location.setComment(commentTextArea.getText());
         if (Setup.isRfidEnabled() &&
