@@ -1,4 +1,3 @@
-// CbusEventTableDataModel.java
 package jmri.jmrix.can.cbus.swing.eventtable;
 
 import java.awt.Font;
@@ -27,14 +26,9 @@ import org.slf4j.LoggerFactory;
  * Table data model for display of Cbus events
  *
  * @author	Andrew Crosland (C) 2009
- * @version	$Revision$
  */
 public class CbusEventTableDataModel extends javax.swing.table.AbstractTableModel implements CanListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 9220006375564405213L;
     static public final int IDCOLUMN = 0;
     static public final int NODECOLUMN = IDCOLUMN + 1;
     static public final int NAMECOLUMN = NODECOLUMN + 1;

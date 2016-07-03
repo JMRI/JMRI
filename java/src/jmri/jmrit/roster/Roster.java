@@ -1004,17 +1004,6 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     }
 
     /**
-     * Return the filename String for the default roster file, including
-     * location. This is here to allow easy override in tests.
-     *
-     * @return The roster default location.
-     */
-    @Deprecated
-    public static String defaultRosterFilename() {
-        return Roster.getDefault().getRosterIndexPath();
-    }
-
-    /**
      * Set the default location for the Roster file, and all individual
      * locomotive files.
      *
@@ -1063,40 +1052,6 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     @Nonnull
     public String getRosterLocation() {
         return this.rosterLocation;
-    }
-
-    /**
-     * Set the default location for the Roster file, and all individual
-     * locomotive files.
-     *
-     * @param f Absolute pathname to use. A null or "" argument flags a return
-     *          to the original default in the user's files directory.
-     * @deprecated use {@link #setRosterLocation(java.lang.String) } against the
-     * default Roster instance instead.
-     */
-    @Deprecated
-    public static void setFileLocation(String f) {
-        Roster.getDefault().setRosterLocation(f);
-    }
-
-    /**
-     * Absolute path to roster file location.
-     * <P>
-     * Default is in the user's files directory, but can be set to anything.
-     *
-     * @return location of the Roster file
-     * @see jmri.util.FileUtil#getUserFilesPath()
-     * @deprecated use {@link #getRosterLocation() } from the default Roster
-     * instance instead.
-     */
-    @Deprecated
-    public static String getFileLocation() {
-        return Roster.getDefault().getRosterLocation();
-    }
-
-    @Deprecated
-    public static void setRosterFileName(String name) {
-        Roster.getDefault().setRosterIndexFileName(name);
     }
 
     @Override
@@ -1230,20 +1185,6 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         groups.stream().forEach((rg) -> {
             this.addRosterGroup(rg);
         });
-    }
-
-    /**
-     * Add a roster group, notifying all listeners of the change
-     * <p>
-     * This method fires the property change notification "RosterGroupAdded"
-     *
-     * @param str The group to be added
-     * @deprecated Use {@link #addRosterGroup(java.lang.String) } instead.
-     */
-    @Deprecated
-    // All internal JMRI use has been removed.
-    public void addRosterGroupList(String str) {
-        this.addRosterGroup(new RosterGroup(str));
     }
 
     public void removeRosterGroup(RosterGroup rg) {

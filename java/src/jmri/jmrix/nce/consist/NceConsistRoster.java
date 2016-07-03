@@ -1,4 +1,3 @@
-// NceConsistRoster.java
 package jmri.jmrix.nce.consist;
 
 import java.io.File;
@@ -39,7 +38,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001; Dennis Miller Copyright 2004
  * @author Daniel Boudreau (C) 2008
- * @version $Revision$
  * @see NceConsistRosterEntry
  */
 public class NceConsistRoster extends XmlFile {
@@ -439,7 +437,7 @@ public class NceConsistRoster extends XmlFile {
      * location.
      */
     public static String defaultNceConsistRosterFilename() {
-        return Roster.getFileLocation() + NceConsistRosterFileName;
+        return Roster.getDefault().getRosterLocation() + NceConsistRosterFileName;
     }
 
     public static void setNceConsistRosterFileName(String name) {
