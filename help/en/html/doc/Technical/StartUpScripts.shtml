@@ -64,7 +64,7 @@
         Jython interpreter</li>
       </ul>
 
-      <h2 id="linux"><a name="linux" id="linux">Linux</a></h2>
+      <a name="linux"></a><h2>Linux</h2>
 
       <p>JMRI distributions for Linux contain bash shell scripts
       for each of the main applications: DecoderPro, PanelPro, etc.
@@ -195,7 +195,7 @@
       script in the Contents/MacOSX directory what does the actual
       startup. This is the same script as used for Linux, see
       please see <a href="#linux">that section</a> for details.
-      <a name="windows" id="windows"></a>
+      <a name="windows"></a>
 
       <h2>Windows</h2>Upto and including JMRI version 2.3.2, the
       Windows .bat files just create a fixed java command and
@@ -492,7 +492,7 @@
         <dd>"C:\Program Files\JMRI\decpro5.ico"</dd>
       </dl>
 
-      <a name="old_DecoderPro" id="old_DecoderPro"></a><h4>Retrieving
+      <a name="old_DecoderPro"></a><h4>Retrieving
       "legacy" DecoderPro from versions prior to 4.0.x</h4>
 
       <p>The "legacy"
@@ -531,7 +531,7 @@
         </li>
 
         <li><b>Using
-        PanelPro with buttons</b>:</a></li>
+        PanelPro with buttons</b>:</li>
 
         <li style="list-style: none">
           <ul>
@@ -548,8 +548,6 @@
             same buttons as on legacy DecoderPro, select "Open
             Roster", "DecoderPro service programmer" and
             "DecoderPro ops-mode programmer"</li>
-
-            <li style="list-style: none"></li>
 
             <li>Then, save and restart.</li>
           </ul>
