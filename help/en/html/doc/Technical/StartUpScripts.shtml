@@ -492,65 +492,64 @@
         <dd>"C:\Program Files\JMRI\decpro5.ico"</dd>
       </dl>
 
-      <h4><a name="old_DecoderPro" id="old_DecoderPro">Retrieving
-      "legacy" DecoderPro from versions prior to 4.0.x</a></h4>
+      <a name="old_DecoderPro" id="old_DecoderPro"></a><h4>Retrieving
+      "legacy" DecoderPro from versions prior to 4.0.x</h4>
 
-      <p><a name="old_DecoderPro" id="old_DecoderPro">The "legacy"
+      <p>The "legacy"
       DecoderPro that was existing prior to version 4.0.x has been
       removed from the distribution package and the former
       "DecoderPro 3" has been promoted to be the only available
-      DecoderPro version.</a></p>
+      DecoderPro version.</p>
 
-      <p><a name="old_DecoderPro" id="old_DecoderPro">If you
+      <p>If you
       absolutely cannot use the new DecoderPro user interface
       (roster view), we suggest one of the following
-      methods:</a></p>
+      methods:</p>
 
       <ol>
-        <li><a name="old_DecoderPro" id="old_DecoderPro"><b>Using
+        <li><b>Using
         PanelPro with script</b>: With the exception of a different
         icon and different fixed buttons on the main window,
         PanelPro has an identical user interface to the legacy
-        DecoderPro.</a></li>
+        DecoderPro.</li>
 
         <li style="list-style: none">
           <ul>
-            <li><a name="old_DecoderPro" id="old_DecoderPro">You
+            <li>You
             can add the 3 fixed buttons (Open Roster, Service Mode,
             Operations Mode) that used to be on the legacy
-            DecoderPro by adding a script at start-up.</a></li>
+            DecoderPro by adding a script at start-up.</li>
 
-            <li><a name="old_DecoderPro" id="old_DecoderPro">Go to
+            <li>Go to
             Edit &gt; Preferences &gt; Start-up &gt; Scripts &gt;
             Add Script. Select file "C:\Program
-            Files\JMRI\jython\jython/MakeOriginalDecoderPro.py"</a></li>
+            Files\JMRI\jython\jython/MakeOriginalDecoderPro.py"</li>
 
-            <li><a name="old_DecoderPro" id="old_DecoderPro">Then,
-            save and restart.</a></li>
+            <li>Then,
+            save and restart.</li>
           </ul>
         </li>
 
-        <li><a name="old_DecoderPro" id="old_DecoderPro"><b>Using
+        <li><b>Using
         PanelPro with buttons</b>:</a></li>
 
         <li style="list-style: none">
           <ul>
-            <li><a name="old_DecoderPro" id="old_DecoderPro">You
+            <li>You
             can add several fixed buttons of your choice on the
-            PanelPro interface.</a></li>
+            PanelPro interface.</li>
 
-            <li><a name="old_DecoderPro" id="old_DecoderPro">Go to
+            <li>Go to
             Edit &gt; Preferences &gt; Start-up &gt; Buttons &gt;
             Add Button. Select the action of your choice. Repeat
-            for as many buttons as you wish.</a></li>
+            for as many buttons as you wish.</li>
 
-            <li><a name="old_DecoderPro" id="old_DecoderPro">For
+            <li>For
             same buttons as on legacy DecoderPro, select "Open
             Roster", "DecoderPro service programmer" and
-            "DecoderPro ops-mode programmer"</a></li>
+            "DecoderPro ops-mode programmer"</li>
 
-            <li style="list-style: none"><a name="old_DecoderPro"
-            id="old_DecoderPro"></a></li>
+            <li style="list-style: none"></li>
 
             <li>Then, save and restart.</li>
           </ul>
