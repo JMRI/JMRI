@@ -3,7 +3,7 @@
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
 <!-- $Id$ -->
-<!-- UpDated by Blorec Herv&#233; le 2013-08-31-->
+<!-- UpDated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-03 -->
 
 <title>JMRI: DecoderPro Rosters</title>
 
@@ -23,160 +23,168 @@
 <div id="mainContent">
 
 <!-- Page Body -->
-<H2>
-Listes JMRI </H2>
+<h1>JMRI: Guide Utilisateur DecoderPro </h1>
+<H2>Inventaires JMRI </h2>
 
+<a href="images/DP4StartScreen.png"><img src="images/DP4StartScreen.png" width="376" height="278" align="right"></a>
 <P>La lecture du contenu d'un d&#233;codeur prend g&#233;n&#233;ralement beaucoup de temps, et avec
-certaines centrales de commande, ce n'est m&#234;me pas possible. La Liste JMRI
+certaines centrales de commande, ce n'est m&#234;me pas possible. L'Inventaire JMRI
 stocke les valeurs connues des valeurs de configuration d&#233;codeur pour ne pas avoir
- &#224; les lire &#224; partir du d&#233;codeur. Elle peut contenir des "entr&#233;es Liste"
+ &#224; les lire &#224; partir du d&#233;codeur. Elle peut contenir des "entr&#233;es Inventaire"
 pour un nombre illimit&#233; de locomotives individuelles.</p>
 
 <p>
-Chaque entr&#233;e de liste dispose d'un "identificateur" (ID), par lequel elle est connue.
-Lorsque le programme vous demande de s&#233;lectionner une entr&#233;e de liste, il affichera
-une bo&#238;te de s&#233;lection ou un menu contenant tous les IDs d'entr&#233;e de liste.
+Chaque entr&#233;e d'inventaire dispose d'un "identificateur" (ID), par lequel elle est connue.
+Lorsque le programme vous demande de s&#233;lectionner une entr&#233;e d'inventaire, il affichera
+une bo&#238;te de s&#233;lection ou un menu contenant tous les IDs d'entr&#233;e d'inventaire.
 Vous pouvez utiliser ce que vous voulez pour cela: num&#233;ro de l'itin&#233;raire, le type, m&#234;me
 "Ce vieux mod&#232;le est minable, J'ai besoin de le repeindre".</p>
 
 <p>
-Vous pouvez modifier le contenu d'une liste d'entr&#233;e avec les volets programmateur.</p>
+Vous pouvez modifier le contenu d'une entr&#233;e Inventaire avec les volets programmateur.</p>
 
-<H3>Entr&#233;e Liste</H3>
+<h3>Entr&#233;e Inventaire</h3>
 
-<p>Lorsque vous ouvrez un programmeur JMRI, vous verrez un volet "
-Entr&#233;e liste". Il affiche:</p>
-
-<dl>
-<DT>ID
-<dd>
-L'ID de cette entr&#233;e. Vous pouvez la changer si vous voulez, 
-auquel cas elle appara&#238;tra dans les cases de s&#233;lection, etc, avec le nouveau
-nom d'identification.
-
-<DT> Nom de Ligne
-<DT> Num&#233;ro de Ligne
-<DT> Fabriquant
-<DT> Mod&#232;le
-<DT> Propri&#233;taire
-<dd>
-Utilisez-les comme bon vous semble.
-
-
-<DT>DCC Adresse
-<dd>
-C'est rempli, en fonction de la fa&#231;on dont le d&#233;codeur est configur&#233;.
-Vous ne pouvez pas le modifier ici, aussi vous devez aller &#224; un autre volet
-pour changer l'adressage.
-
-<DT>Comment
-Utilisez le comme bon vous semble.
-
-<DT>  Decoder Family
-<DT>  Decoder Model 
-<dd>
-Ceux-ci sont remplis bas&#233;s sur le d&#233;codeur qui a &#233;t&#233; s&#233;lectionn&#233; lorsque
-l'entr&#233;e a &#233;t&#233; cr&#233;&#233;e. Il ne peut pas &#234;tre &#233;dit&#233; apr&#232;s.
-
-<DT> Decoder Comment
-<dd>
-Vous pouvez mettre ce que vous voulez ici. Certaines personnes l'ont
-utilis&#233; pour indiquer si une fiche NMRA a &#233;t&#233; utilis&#233;e, si le
-d&#233;codeur a &#233;t&#233; soud&#233; dedans, etc.
-
-<DT>Filename
-<dd>
-Il est donn&#233; &#224; titre indicatif; vous ne pouvez pas le changer, et vous n'avez pas 
-&#224; vous en pr&#233;occuper. Notez que m&#234;me si vous modifiez l'ID de cette entr&#233;e, le fichier 
-d'origine sera toujours utilis&#233;.
-
-</dl></p>
-
-<a id="menu">
-<h3>Menu Liste</h3>
-
-<a href="images/RosterMenu.jpg"><img src="images/RosterMenu.jpg" width="108" height="92" align="right"/></a>
-Les fen&#234;tres de l'application JMRI principal et les fen&#234;tres "D&#233;marrage programmateur" ont un menu "Liste"
- disponible. Ce menu vous permet de g&#233;rer les entr&#233;es de votre liste avec les commandes:
+<p>Lorsque vous ouvrez un programmeur JMRI, vous verrez un volet "Cr&#233;er une nouvelle Loco" ( photo &#224; droite ).<br>  
+ Il affiche:</p>
 
 <dl>
+	<dt>ID Inventaire</dt> 
+	<dd>
+	L'ID de cette entr&#233;e. Vous pouvez la changer si vous voulez, 
+	auquel cas elle appara&#238;tra dans les cases de s&#233;lection, etc, avec le nouveau
+	nom d'identification.</dd>
+	<dt>Adresse DCC</dt>
+	<dd>C'est soit une Adresse Courte ou Longue, bas&#233;e sur la configuration du d&#233;codeur.</dd>
+	<dt>Boutons</dt>
+	<dd>Pour <strong>Lire</strong> l'information depuis un d&#233;codeur avec cette adresse, <strong>&#201;crire</strong> pour faire des 
+	changements dans ce d&#233;codeur ou seulement <strong>Sauver</strong> cette entr&#233;e sur le disque.</dd>
+</dl>	
 
-<a id="create">
-<dt>Cr&#233;er ...
-<dd>
-"Cr&#233;er" est utilis&#233; pour cr&#233;er une nouvelle liste d'entr&#233;e, m&#234;me si vous n'avez pas actuellement de connexion &#224; un r&#233;seau.
-Lorsque vous s&#233;lectionnez cette option, vous avez une fen&#234;tre dans laquelle vous pouvez s&#233;lectionner un type de d&#233;codeur.
- Choisissez le type de d&#233;codeur &#224; droite, le format que vous voulez, et cliquez sur "Ouvrir". Vous verrez une fen&#234;tre de style
-DecoderPro pour modifier le contenu de la nouvelle entr&#233;e.
-N'oubliez pas de cliquez sur "Enregistrer" lorsque vous avez termin&#233;!
+<p>Cliquez sur le bouton "Ouvrir Programmateur Complet" en bas &#224; droite poue afficher une rang&#233;e de volet &#224; onglets avec 
+des propri&#233;t&#233;s 
+	additionnelles</p>
+<dl>
+	<dt>Inventaire</dt>	
+	<dd>
+			<ul>
+			<li> Compagnie
+			<li> Num&#233;ro d'identification
+			<li> Fabriquant
+			<li> Mod&#232;le
+			<li> Propri&#233;taire
+	<li>Commentaire<br>
+	Utilisez ce champs pour noter ce que vous voulez.</li>
+			<li>Famille de D&#233;codeur
+			Mod&#232;le de D&#233;codeur<br>
+			Ces deux champs sont remplis bas&#233;s sur le d&#233;codeur qui a &#233;t&#233; s&#233;lectionn&#233; lorsque
+		l'entr&#233;e a &#233;t&#233; cr&#233;&#233;e. Il ne peut pas &#234;tre modifi&#233; apr&#232;s.
+			<li>Commentaire D&#233;codeur<br>
+			Vous pouvez mettre ce que vous voulez ici. Certaines personnes l'ont
+		utilis&#233; pour indiquer si une fiche NMRA a &#233;t&#233; utilis&#233;e, si le
+		d&#233;codeur a &#233;t&#233; soud&#233; dedans, etc.
+		</ul>
+	  </dd>
+	  <dt>Basique</dt>
+	  <dd>Avec des informations compl&#233;mentaires &#224; propos de votre locomotive, etc,.</dd>
+	  <dt>Moteur, Commande Basique de Virtesse et beaucoup d'autres onblets:</dt>
+	  <dd><a href="images/DP4ComprehensiveTabs.png"><img src="images/DP4ComprehensiveTabs.png" alt="DP pane tabs" width="531" 
+       height="47"></a></dd>
+</dl>
 
-<a id="edit">
-<dt>Modifier ...
-<dd>
-"Modifier" est utilis&#233; pour mettre &#224; jour le contenu d'une liste d'entr&#233;e, m&#234;me si vous
- n'avez pas une connexion r&#233;seau (normalement, si vous avez une connexion circuit,
- vous allez utiliser les fonctions de programmation DecoderPro). Lorsque vous s&#233;lectionnez
- cette option, vous obtiendrez une fen&#234;tre dans laquelle vous pourrez  s&#233;lectionner une entr&#233;e
- liste existante, un format, et un bouton "Ouvrir". Une fois que vous cliquez sur "Ouvrir",
- vous obtiendrez une fen&#234;tre de style DecoderPro pour visualiser et modifier le contenu de 
-l'entr&#233;e. N'oubliez pas de cliquez sur "Enregistrer" lorsque vous avez termin&#233;!
+<a id="menu"></a>
+<h3>Menu Inventaire</h3>
 
-<a id="copy">
-<dt>Copier ...
-<dd>
-"Copier" est utilis&#233; pour cr&#233;er une autre entr&#233;e liste qui est identique &#224; l'originale, sauf
- pour son ID. Si vous avez une configuration standard que vous voulez utiliser pour de nouvelles
- locomotives, vous pouvez cr&#233;er une entr&#233;e de liste avec toutes les bonnes valeurs remplies, puis
- copiez - la chaque fois que vous souhaitez programmer une nouvelle locomotive.
+<img src="images/DPRosterMenu.png" width="207" height="313" align="right">
+Les fen&#234;tres principales de l'application JMRI et les fen&#234;tres "D&#233;marrage programmateur" ont un menu "Inventaire"
+ disponible. Ce menu vous permet de g&#233;rer les entr&#233;es de votre Inventaire avec les commandes:
 
-<a id="export">
-<dt>Exporter ...
-<dd>
-Bien qu'il soit possible de trouver les fichiers XML d&#233;finissant les entr&#233;es liste dans le r&#233;pertoire 
-des pr&#233;f&#233;rences, il vaut mieux ne pas travailler directement avec eux.
-La commande "Exportation" va cr&#233;er un nouveau fichier qui repr&#233;sente une entr&#233;e de liste,
-y compris toutes les observations, les valeurs de CV, etc. Vous pouvez alors la prendre pour une copie
- de DecoderPro et l'importer dans cette liste.
-Les exportations ne  modifient votre liste actuelle d'aucune fa&#231;on, elle est tout simplement une copie
- pour vous d'une entr&#233;e sp&#233;cifique.
+<dl>
 
-<p>
-Lorsque vous s&#233;lectionnez "Exporter ...",  il vous sera demander de choisir l'entr&#233;e de la liste que vous
- voulez exporter, puis vous serez invit&#233; &#224; s&#233;lectionner un nouveau nom. Vous pouvez l'appeler comme vous
- voulez, mais il est pr&#233;f&#233;rable de mettre une extension ".xml" au nom 
+	<a id="create">
+	<dt>Cr&#233;er ...
+	<dd>
+	"Cr&#233;er" est utilis&#233; pour cr&#233;er une nouvelle 'entr&#233;e Inventaire, m&#234;me si vous n'avez pas 
+	actuellement de connexion &#224; un r&#233;seau.
+	Lorsque vous s&#233;lectionnez cette option, vous avez une fen&#234;tre dans laquelle vous pouvez s&#233;lectionner 
+	un type de d&#233;codeur. Choisissez le type de d&#233;codeur &#224; droite, le format que vous voulez, 
+	et cliquez sur "Ouvrir". Vous verrez une fen&#234;tre de style DecoderPro pour modifier le contenu 
+	de la nouvelle entr&#233;e.
+	N'oubliez pas de cliquez sur "Enregistrer" lorsque vous avez termin&#233;!
 
-<a id="import">
-<dt>Importer ...
-<dd>
-La combinaison de "Exporter" puis "Importer" vous permet d'apporter une entr&#233;e de liste locomotives lorsque
- vous passez &#224; un autre r&#233;seau, avec sa propre installation DecoderPro.
+	<a id="edit">
+	<dt>Modifier ...
+	<dd>
+	"Modifier" est utilis&#233; pour mettre &#224; jour le contenu d'une entr&#233;e Inventaire, m&#234;me si vous
+ 	n'avez pas une connexion r&#233;seau (normalement, si vous avez une connexion circuit,
+ 	vous allez utiliser les fonctions de programmation DecoderPro). Lorsque vous s&#233;lectionnez
+ 	cette option, vous obtiendrez une fen&#234;tre dans laquelle vous pourrez  s&#233;lectionner une entr&#233;e
+ 	Inventaire existante, un format, et un bouton "Ouvrir". Une fois que vous cliquez sur "Ouvrir",
+ 	vous obtiendrez une fen&#234;tre de style DecoderPro pour visualiser et modifier le contenu de l'entr&#233;e. 
+	N'oubliez pas de cliquez sur "Enregistrer" lorsque vous avez termin&#233;!
 
-<p> Lorsque vous s&#233;lectionnez "Importer ...", il vous sera demand&#233; de localiser un fichier XML &#224; importer. 
-Il aurait &#233;t&#233; cr&#233;&#233; par une commande "exportation" . Vous serez &#233;galement invit&#233; &#224; cr&#233;er l'ID de l'entr&#233;e nouvelle liste.
-Cela peut &#234;tre la m&#234;me que ce qu'elle &#233;tait avant qu'elle ait &#233;t&#233; export&#233;e, ou vous pouvez lui donner un nouvel ID.</p>
+	<a id="copy">
+	<dt>Copier ...
+	<dd>
+	"Copier" est utilis&#233; pour cr&#233;er une autre entr&#233;e inventaire qui est identique &#224; l'originale, sauf
+ 	pour son ID. Si vous avez une configuration standard que vous voulez utiliser pour de nouvelles
+ 	locomotives, vous pouvez cr&#233;er une entr&#233;e d'inventaire avec toutes les bonnes valeurs remplies, puis
+ 	copiez la &#224; chaque fois que vous souhaitez programmer une nouvelle locomotive.
 
-<a id="delete">
-<dt>Effacement ...
-<dd>
-Cela supprime compl&#232;tement une entr&#233;e de liste. Une confirmation vous sera demand&#233;e et une sauvegarde est faite, en cas d'erreurs.
+	<a id="export">
+	<dt>Exporter ...
+	<dd>
+	Bien qu'il soit possible de trouver les fichiers XML d&#233;finissant les entr&#233;es Inventaire dans le r&#233;pertoire 
+	des pr&#233;f&#233;rences, il vaut mieux ne pas travailler directement avec eux.
+	La commande "Exportation" va cr&#233;er un nouveau fichier qui repr&#233;sente une entr&#233;e d'Inventaire,
+	y compris toutes les observations, les valeurs de CV, etc. Vous pouvez alors la prendre pour une copie
+ 	de DecoderPro et l'importer dans cette liste.
+	Les exportations ne  modifient votre Inventaire actuel d'aucune fa&#231;on, il est tout simplement une copie
+ 	pour vous d'une entr&#233;e sp&#233;cifique.
 
-<a id="summary">
-<dt>Impression Sommaire ...
-<dd>
-Ceci affiche un r&#233;sum&#233; de la liste enti&#232;re, la liste des informations primaires
- pour chaque entr&#233;e.
-<p>
-Pour une liste plus d&#233;taill&#233;e d'un d&#233;codeur sp&#233;cifique, voir le menu "Fichier" sur les &#233;crans programmateur.
+	<p>
+	Lorsque vous s&#233;lectionnez "Exporter ...",  il vous sera demander de choisir l'entr&#233;e de l'Inventaire que vous
+	voulez exporter, puis vous serez invit&#233; &#224; s&#233;lectionner un nouveau nom. Vous pouvez l'appeler comme vous
+ 	voulez, mais il est pr&#233;f&#233;rable de mettre une extension ".xml" au nom 
 
-<a id="previewsummary">
-<dt>Aper&#231;u avant impression ...
-<dd>
-Cela montre le contenu du r&#233;sum&#233; imprim&#233; sur votre &#233;cran,
-de sorte que vous pouvez avoir un aper&#231;u avant impression.
+	<a id="import">
+	<dt>Importer ...
+	<dd>
+	La combinaison de "Exporter" puis "Importer" vous permet d'apporter une entr&#233;e d'Inventaire de locomotives lorsque
+ 	vous passez &#224; un autre r&#233;seau, avec sa propre installation DecoderPro.
+
+	<p> Lorsque vous s&#233;lectionnez "Importer ...", il vous sera demand&#233; de localiser un fichier XML &#224; importer. 
+	Il aurait &#233;t&#233; cr&#233;&#233; par une commande "exportation" . Vous serez &#233;galement invit&#233; &#224; cr&#233;er 
+	l'ID de la nouvelle entr&#233;e Inventaire.
+	Cela peut &#234;tre la m&#234;me que ce qu'elle &#233;tait avant qu'elle ait &#233;t&#233; export&#233;e, ou vous pouvez lui donner 
+	un nouvel ID.</p>
+
+	<a id="delete">
+	<dt>Effacement ...
+	<dd>
+	Cela supprime compl&#232;tement une entr&#233;e d'Inventaire. Une confirmation vous sera demand&#233;e et une sauvegarde est faite, 
+	en cas d'erreurs.
+
+	<a id="summary">
+	<dt>Impression Sommaire ...
+	<dd>
+	Ceci affiche un r&#233;sum&#233; de l'Inventaire enti&#232;r, la liste des informations primaires
+ 	pour chaque entr&#233;e.
+	<p>
+	Pour une liste plus d&#233;taill&#233;e d'un d&#233;codeur sp&#233;cifique, voir le menu "Fichier" sur les &#233;crans 
+	programmateur.
+
+	<a id="previewsummary">
+	<dt>Aper&#231;u avant impression ...
+	<dd>
+	Cela montre le contenu du r&#233;sum&#233; imprim&#233; sur votre &#233;cran,
+	de sorte que vous pouvez avoir un aper&#231;u avant impression.
 
 
 </dl>
     
 <!--#include virtual="/Footer" -->
+  </div> <!-- close #mainContent -->
+</div> <!-- close #mBody -->    
 </body>
 </html>
