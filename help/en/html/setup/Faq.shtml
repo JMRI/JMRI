@@ -37,12 +37,6 @@ JMRI Setup: Frequently Asked Questions
 	<dt id="install" class="on">Is JMRI fun?</dt>
 	<dd>Sure, both powerful and fun.</dd>
 	
-	<dt id="updatejar">Why does ant stop with a getX() error? (advanced)</dt>
-	<dd>When you try to build JMRI using an IDE or ant and a build fails with an error like "method getX() not found", this may indicate that an older version of a specific java library installed on your system prevents ant from finding the proper parts. Ant uses the <a href="../doc/Technical/JVMCapabilities.shtml">JDK</a> (Java Development Kit) and additional Java modules supplied with the JMRI source code to build parts of JMRI.<br>
-		To diagnose a possible issue causing the above error in OS X, open Terminal and type <code>find /System/Library/Java -name \*.jar ! -name jdk\* -exec pkgutil --file-info {} \;</code><br>
-		Please report the results in a message to the JMRI Users Yahoo group so we can identify your setup and suggest a possible solution.<!-- provided by Egbert Broerse June 2016 --></dd>
-	</dl>
-
 <hr>
   
 <!--#include virtual="/Footer" -->

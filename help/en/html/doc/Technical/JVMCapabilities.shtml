@@ -247,6 +247,27 @@ terms with
 </code></pre>
 to drop tests for missing JavaDoc tags and certain benign HTML errors. (For now)
 
+<a name="extension"></a><h2>JVM and JDK Extensions</h2>
+
+It's possible to extend the JVM and/or JDK installed on your machine via
+<a href="http://docs.oracle.com/javase/8/docs/technotes/guides/standards/index.html ">the endorsed-standards override mechanism</a>
+and the 
+<a href="http://docs.oracle.com/javase/8/docs/technotes/guides/extensions/index.html">extension mechanism</a>.  
+Those extensions, if present, take precedence over code shipped with applications like JMRI.
+Unfortunately, these can 
+cause problems if the installed extensions interfere with a JMRI component. For example,
+an older (or younger) version might not be compatible, etc.
+It is very unusual for this to cause a problem with JMRI. You should investigate other 
+possible causes before looking into this one!  To check for this, execute the following from the 
+command line:
+<code>
+java -XX:+CheckEndorsedAndExtDirs
+</code>
+If you get a message about a specific directory, look there for conflicting Jar files.
+You should probably consult the JMRIusers or jmri-developers mailing list for help
+before changing that directory!
+
+
 <!--#include virtual="/Footer" -->
 
 	  </div><!-- closes #mainContent-->
