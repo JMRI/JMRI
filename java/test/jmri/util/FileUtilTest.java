@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
  * expect a file or non-existent filename and a directory exists at that path.
  *
  * @author	Bob Jacobsen Copyright 2003, 2009
- * @version	$Revision$
  */
 public class FileUtilTest extends TestCase {
 

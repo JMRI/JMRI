@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * locating the local implementation and some statistics support.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- *
  */
 public abstract class LnTrafficController implements LocoNetInterface {
 
