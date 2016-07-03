@@ -21,8 +21,7 @@ import org.slf4j.LoggerFactory;
  * Provides the mechanisms for storing an entire layout configuration to XML.
  * "Layout" refers to the hardware: Specific communcation systems, etc.
  *
- * @see <A HREF="package-summary.html">Package summary for details of the
- * overall structure</A>
+ * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen Copyright (c) 2002, 2008
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
@@ -189,7 +188,6 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     }
 
     ArrayList<Object> plist = new ArrayList<Object>();
-    //Hashtable<Object, Integer> clist = new Hashtable<Object, Integer>();
     Map<Object, Integer> clist = Collections.synchronizedMap(new LinkedHashMap<Object, Integer>());
     ArrayList<Object> tlist = new ArrayList<Object>();
     ArrayList<Object> ulist = new ArrayList<Object>();
@@ -427,14 +425,6 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     }
     File prefsFile;
 
-    /**
-     * Set location for user preferences file.
-     * <p>
-     * File need not exist, but location must be writable when storePrefs()
-     * called.
-     */
-    /*public void setUserPrefsLocation(File userPrefsFile) { this.userPrefsFile = userPrefsFile; }
-     File userPrefsFile;*/
     /**
      * Writes prefs to a file.
      *
@@ -725,72 +715,6 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             handler.done();
         }
 
-        /*try {
-         root = super.rootFromFile(fi);
-         // get the objects to load
-         List<Element> items = root.getChildren();
-         for (int i = 0; i<items.size(); i++) {
-         // get the class, hence the adapter object to do loading
-         Element item = items.get(i);
-         if (item.getAttribute("class") == null) {
-         // this is an element that we're not meant to read
-         continue;
-         }
-         String adapterName = item.getAttribute("class").getValue();
-         log.debug("load via "+adapterName);
-         XmlAdapter adapter = null;
-                
-         try {
-         adapter = (XmlAdapter)Class.forName(adapterName).newInstance();
-
-         // get version info
-         // loadVersion(root, adapter);
-                    
-         // and do it
-         if (adapter.loadDeferred() && registerDeferred) {
-         // register in the list for deferred load
-         loadDeferredList.add(item);
-         log.debug("deferred load registered for " + adapterName);
-         } else {
-         boolean loadStatus = adapter.load(item);
-         log.debug("load status for "+adapterName+" is "+loadStatus);
-                    
-         // if any adaptor load fails, then the entire load has failed
-         if (!loadStatus)
-         result = false;
-         }
-         } catch (Exception e) {
-         creationErrorEncountered (adapter, "load("+fi.getName()+")",Level.ERROR,
-         "Unexpected error (Exception)",null,null,e);
-                   
-         result = false;  // keep going, but return false to signal problem
-         } catch (Throwable et) {
-         creationErrorEncountered (adapter, "in load("+fi.getName()+")", Level.ERROR,
-         "Unexpected error (Throwable)",null,null,et);
-
-         result = false;  // keep going, but return false to signal problem
-         }
-         }
-
-
-         } catch (java.io.FileNotFoundException e1) {
-         // this returns false to indicate un-success, but not enough
-         // of an error to require a message
-         creationErrorEncountered (null, "opening file "+fi.getName(), Level.ERROR,
-         "File not found", null,null,e1);
-         result = false;
-         } catch (org.jdom2.JDOMException e) {
-         creationErrorEncountered (null, "parsing file "+fi.getName(), Level.ERROR,
-         "Parse error", null,null,e);
-         result = false;
-         } catch (Exception e) {
-         creationErrorEncountered (null, "loading from file "+fi.getName(), Level.ERROR,
-         "Unknown error (Exception)", null,null,e);
-         result = false;
-         } finally {
-         // no matter what, close error reporting
-         handler.done();
-         }*/
         // loading complete, as far as it got, make history entry
         FileHistory r = InstanceManager.getDefault(FileHistory.class);
         if (r != null) {
