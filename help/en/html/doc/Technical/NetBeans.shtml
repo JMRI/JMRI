@@ -223,7 +223,8 @@
     <p>    To build and run DecoderPro, all you have to do is select
            "Run Project (JMRI)" from the Run menu, or click the Run icon in the tool bar.
            <br>
-		If an ant build fails with an error like "method getX() not found", this may indicate that an older version of a specific java library installed on your system prevents the IDE from finding the proper parts. This <a href="../../setup/Faq.shtml#updatejar">FAQ</a> explains how to diagnose this.</p></p>
+		A new JMRI checkout should build cleanly. If not, please
+		check with the JMRIusers or jmri-developers mailings lists for help.
     </p>
 
     <ul>

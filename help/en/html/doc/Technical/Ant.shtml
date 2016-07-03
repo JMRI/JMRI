@@ -65,7 +65,8 @@ do:
 </code>
 and make sure the tests run cleanly.</p>
 <p>
-If an ant build fails with an error like "method getX() not found", this may indicate that an older version of a specific java library installed on your system prevents the IDE from finding the proper parts. This <a href="../../setup/Faq.shtml#updatejar">FAQ</a> explains how to diagnose this.</p>
+		A new JMRI checkout should build cleanly. If not, please
+		check with the JMRIusers or jmri-developers mailings lists for help.
 </p>
 
   <!--#include virtual="/Footer" -->
