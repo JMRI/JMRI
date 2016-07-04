@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
-<!-- UpDated by Blorec Herv&#233; 2013-09-02--> 
+<!-- UpDated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-04 -->
 <html lang="fr">
 <head>
  <TITLE>
@@ -34,13 +34,16 @@ capacit&#233;s de JMRI.
 Aide sur les menus sp&#233;cifiques:
 <ul>
 <li>Edit - (<a href="../TabbedPreferences.shtml">Pr&#233;f&#233;rences</a>)
-<li><a href="../../jmri/jmrit/ToolsMenu.shtml">Outils</a>
-<li><a href="../../../html/apps/DecoderPro/Roster.shtml#menu">Liste</a>
+<li><a href="../../jmri/jmrit/ToolsMenu.shtml">Outils -&gt; Tables -&gt; Signaux</a>
+<li><a href="../../../html/apps/DecoderPro/Roster.shtml#menu">Inventaire</a>
 </ul>
 
-<p>
+Plus d'information <a href="../../setup/Files.shtml">Fichier de Configuration JMRI</a> 
 
 <!--#include virtual="/Footer" -->
+</div> <!-- close #mainContent -->
+</div> <!-- close #mBody -->
 </body>
+</htm
 </html>
 
