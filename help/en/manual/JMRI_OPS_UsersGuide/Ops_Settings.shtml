@@ -89,7 +89,7 @@ travel from one Location to the another. Later when you create a <strong><a href
         <strong>Descriptive </strong>
         <input name="radio2" id="radio2" value="radio2" type="radio">
         <strong>AAR Codes</strong><br>
-        The program has two sets of car types for you to use. <strong>Descriptive </strong>provides type names like <strong>Boxcar </strong>and <strong>Tankcar</strong>, and <strong>AAR</strong> provides type  names like <strong>XM</strong> and <strong>T</strong> for boxcars and tank cars respectively. Select the one that you prefer</td><td style="vertical-align: top; width: 33%;"><strong><a name="unit" id="unit"></a>Unit of Length  
+        The program has two sets of car types for you to use. <strong>Descriptive </strong>provides type names like <strong>Boxcar </strong>and <strong>Tankcar</strong>, and <strong>AAR</strong> provides type  names like <strong>XM</strong> and <strong>T</strong> for boxcars and tank cars respectively. Select the one that you prefer</td><td style="vertical-align: top; width: 33%;"><strong><a name="unit"></a>Unit of Length  
         <br><br><input name="radio5" id="radio5" value="radio5" checked="checked" type="radio">
         Feet 
         <input name="radio6" id="radio6" value="radio6" type="radio">
