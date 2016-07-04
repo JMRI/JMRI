@@ -85,15 +85,11 @@
       <ul>
         <li>Anchor tags need a specific format. Specifically, they
         should be written
-          <pre>
-<code>
-&lt;a name="pull" id="pull"&gt;&lt;/a&gt;
-</code>
+<pre style="font-family: monospace;">
+&lt;a name="pull"&gt;&lt;/a&gt;
 </pre>For example, to put an anchor on a heading, do
-          <pre>
-<code>
-&lt;a name="foo" id="foo"&gt;&lt;/a&gt;&lt;h2&gt;Foo!&lt;/h2&gt;
-</code>
+<pre style="font-family: monospace;">
+&lt;a name="foo"&gt;&lt;/a&gt;&lt;h2&gt;Foo!&lt;/h2&gt;
 </pre>
 
           <p>Note: Incorrectly structured anchor tags (not like the
@@ -101,10 +97,17 @@
           itself on the rendered help page.</p>
         </li>
 
-        <li>Anchors also need to use the "name" attribute rather
+        <li>Anchors need to use the "name" attribute rather
         than the "id" attribute. See the item above for an
         example.</li>
 
+        <li>You can use the <code>&lt;code&gt;</code> element,
+        or the <code>&lt;pre&gt;</code> element, but you can't use both together.
+        <code>&lt;code&gt;</code> is good for highlighting in-line text as
+        being code (like we've used it here); <code>&lt;pre&gt;</code> 
+        is good for making a block of inline HTML or Java look right.
+        To give a code-like appearance to a block, wrap it in 
+        <code>&lt;pre style=&quot;font-family: monospace;&quot;&gt;</code>
         <li>You can't count on any particular location for your
         files on the local machine, so all links to other help
         pages need to be relative.</li>
@@ -113,8 +116,9 @@
         JavaHelp can't display PDF files. Links to those should be
         shown explicitly as links, so they can be copied to an
         outside web browser.</li>
-      </ul><a name="web"></a>
-
+      </ul>
+      
+      <a name="web"></a>
       <h2>Web access to help</h2>It's inconvenient to have to
       maintain two separate web pages for the main web site and the
       help system. To reduce the need for that, we use a particular
@@ -148,11 +152,10 @@
       <code>jmri.jmrit.simpleclock.SimpleClockFrame</code> class
       inherits from JmriJFrame, and adds a help menu with the
       line</p>
-      <pre>
-<code>
+<pre style="font-family: monospace;">
   addHelpMenu("package.jmri.jmrit.simpleclock.SimpleClockFrame", true);
-</code>
-</pre>The help file is then located at
+</pre>
+The help file is then located at
 <code>help/en/package/jmri/jmrit/simpleclock/SimpleClockFrame.shtml</code>.
 
       <p>A number of help files have been put in place without any

@@ -42,11 +42,11 @@ being replaced by &amp;quot;.</p>
 <p>
 For example:
 </p>
-<pre style="white-space: pre-wrap;">
+<pre style="font-family: monospace;">
    &lt;label label="&amp;lt;html&amp;gt;&amp;lt;strong&amp;gt;JMRI 3.7.2 or later is required to use this definition.&amp;lt;/strong&amp;gt;&amp;lt;/html&amp;gt;"/&gt;
 </pre>
 After the XML is read, the contents of that label will be displayed from the text in the "label" attribute, which is:
-<pre>
+<pre style="font-family: monospace;">
    &lt;html&gt;&lt;strong&gt;JMRI 3.7.2 or later is required to use this definition.&lt;/strong&gt;&lt;/html&gt;
 </pre>
 and will appear on the screen as
@@ -98,7 +98,7 @@ Three pieces:
                     </dd>
 </dl>
 For example:
-<pre><code>
+<pre style="font-family: monospace;">
   &lt;decoder&gt;
     &lt;family name="My Decoder Family" mfg="NMRA"&gt;
       &lt;model model="Model A" lowVersionID="16" highVersionID="19" productID="400" /&gt;
@@ -106,7 +106,7 @@ For example:
       &lt;model model="Model B" lowVersionID="21" highVersionID="22" productID="401" /&gt;
       &lt;/model&gt;
   &lt;/decoder&gt;
-</code></pre>
+</pre>
 
 If the user selects a decoder model manually, that selection sets
 all three values for use by when the decoder definition is expanded
@@ -258,7 +258,7 @@ By convention, we these fragment files in subdirectories:
 <dt>xml/decoders/(mfg)<dd>Manufacturer-specific variables, for example xml/decoders/esu
 </dl>
 The format for an include is:
-<pre><code>
+<pre style="font-family: monospace;">
      &lt;xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/&gt;
 </code></pre>
 
@@ -276,7 +276,8 @@ Sometimes, we replace a decoder definition with a better one.  The old one is in
 but we'd like to move those users to the new one eventually.  There are model-level
 attributes that can be added to the old (not the new) definition to facilitate that:
 
-<pre><code>
+<pre style="font-family: monospace;">
+
 &lt;model show="no" model="A4X" replacementModel="A4X" replacementFamily="Jan 2012"&gt;
 </code></pre>
 
@@ -322,7 +323,7 @@ Certain command stations can only access up to CV 256 or CV512.  Some
 decoder manufacturers have built in mechanisms to bypass this.  For example,
 some ESU decoders can use writes to various CVs to access high-address CVs.
 To tell DecoderPro that a decoder can do this, use an element like:
-<pre><code>
+<pre style="font-family: monospace;">
     &lt;capability&gt;
         &lt;name&gt;High Access via Double Index&lt;/name&gt;
         &lt;parameter name="Max Regular CV address"&gt;256&lt;/parameter&gt;
@@ -369,7 +370,7 @@ For example, to write 21 to CV614 with one of these, you need to:
 	<li>Write 21 to CV 14 (614 mod 100) to do the actual CV write
 	</ul>
 This capability element will do that:
-<pre><code>
+<pre style="font-family: monospace;">
         &lt;capability&gt;
             &lt;name&gt;High Access via Partial Index&lt;/name&gt;
             &lt;parameter name="Max Regular CV address"&gt;100&lt;/parameter&gt;
@@ -409,7 +410,7 @@ For example, to write 21 to CV614 with one of these, you need to:
 	<li>Write 0 back to CV7 to reset the indexing.
 	</ul>
 This capability element will do that:
-<pre><code>
+<pre style="font-family: monospace;">
         &lt;capability&gt;
             &lt;name&gt;High Access via Partial Index with Reset&lt;/name&gt;
             &lt;parameter name="Max Regular CV address"&gt;100&lt;/parameter&gt;
@@ -443,7 +444,7 @@ The parameters must appear in the order shown. They mean:
 Special programming packets are used by certain accessory decoders
 to configure their CVs from the DCC track signal.
 The capability to do that is written:
-<pre><code>
+<pre style="font-family: monospace;">
         &lt;capability&gt;
             &lt;name&gt;Ops Mode Accessory Programming&lt;/name&gt;
         &lt;/capability&gt;
@@ -455,7 +456,7 @@ in the service mode (programming track).
 <h4>Indexed CV Access</h4>
 
 To access indexed CVs, include this capability element:
-<pre><code>
+<pre style="font-family: monospace;">
         &lt;capability&gt;
             &lt;name&gt;Indexed CV access&lt;/name&gt;
             &lt;parameter name="PI"&gt;31&lt;/parameter&gt;
@@ -478,7 +479,7 @@ For an example of where to position it etc., see the
 The TCS WOW decoders use several unique (to say the least) CV access methods.
 JMRI accommodates them via a special capability element:
 
-<pre><code>
+<pre style="font-family: monospace;">
         &lt;capability&gt;
             &lt;name&gt;TCS 4 CV access&lt;/name&gt;
         &lt;/capability&gt;
@@ -500,7 +501,7 @@ For examples of how to use these, see the TCS WOW decoder definition.
 
 <p>Long addresses can be accessed via "splitVal" type, as in the following example:</p>
 
-<pre><code>
+<pre style="font-family: monospace;">
     &lt;variable CV="1" item="Accessory Address" default="1" minOut="1"&gt;
         &lt;splitVal highCV="9" upperMask="XXXXXVVV"/&gt;
         &lt;label&gt;Accessory Address&lt;/label&gt;
@@ -514,7 +515,7 @@ For examples of how to use these, see the TCS WOW decoder definition.
 	<li>Value to put in CVs = ((value in text field) - Offset)/Factor</li>
 	<li>Value to put in text field = ((value in CVs) * Factor) + Offset</li>
 	</ul>
-<pre><code>
+<pre style="font-family: monospace;">
     &lt;splitVal highCV="9" factor="4" offset="-3"/&gt;
 </code></pre>
 
@@ -555,7 +556,7 @@ use one.
 <p>
 Example:
 </p>
-<pre>
+<pre style="font-family: monospace;">
       &lt;variable label="My Variable" CV="72" include="ModelA,400"&gt;
         &lt;decVal/&gt;
       &lt;/variable&gt;
@@ -595,7 +596,7 @@ use one.
 <p>
 Example:
 </p>
-<pre>
+<pre style="font-family: monospace;">
       &lt;pane label="My Pane" include="ModelA,400"&gt;
         ...
       &lt;/pane&gt;
@@ -614,7 +615,7 @@ decoder models.
 <p>
 Example:
 
-<pre>
+<pre style="font-family: monospace;">
       &lt;group include="ModelA,400"&gt;
         &lt;label&gt;
           &lt;text&gt;These decoders are very old.&lt;/text&gt;
@@ -648,7 +649,7 @@ reloaded when the roster entry is reopened later.
 a CV is interpreted as two different variables depending on whether the
 decoder is set for short or long addressing.
 
-<pre>
+<pre style="font-family: monospace;">
   &lt;variable label="Variable for Short Address" CV="11"&gt;
     &lt;qualifier&gt;
       &lt;variableref&gt;Address Format&lt;/variableref&gt;
@@ -695,7 +696,7 @@ this is what you want. You might need to qualify the individual overlapping vari
 one of two panes depending on whether the decoder is currently set for short or
 long addressing.
 </p>
-<pre>
+<pre style="font-family: monospace;">
   &lt;pane name="Short Only"&gt;
     &lt;qualifier&gt;
       &lt;variableref&gt;Address Format&lt;/variableref&gt;
@@ -731,7 +732,7 @@ allows you to enable or disable the  display of that element on a specific pane.
 
 <p>The following example displays a warning label if a version-number
 variable has a too-low value:</p>
-<pre>
+<pre style="font-family: monospace;">
     &lt;label label="Version number too low!"&gt;
       &lt;qualifier&gt;
         &lt;variableref&gt;Version Number&lt;/variableref&gt;
@@ -744,7 +745,7 @@ variable has a too-low value:</p>
   You can use the same qualifier for multiple elements by enclosing the elements in a
   "group" element and adding the qualifier to the "group" element:
 </p>
-<pre>
+<pre style="font-family: monospace;">
     &lt;group&gt;
       &lt;qualifier&gt;
         &lt;variableref&gt;Version Number&lt;/variableref&gt;

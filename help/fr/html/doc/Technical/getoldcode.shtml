@@ -39,7 +39,8 @@ code source, vous devez utiliser les instructions d&#233;taill&#233;es ci-dessou
 <h2>D&#233;marrage Rapide</h2>
 
 Vous pouvez t&#233;l&#233;charger les plus r&#233;cents code souce via CVS en utilisant:
-<pre><code>
+<pre style="font-family: monospace;">
+
 cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri login
 cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri co all 
 </code></pre>
