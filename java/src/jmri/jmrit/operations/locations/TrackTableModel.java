@@ -346,10 +346,20 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
     private String getRestrictions(Track track) {
         StringBuffer restrictions = new StringBuffer();
         if (!track.getDropOption().equals(Track.ANY)) {
-            restrictions.append(Bundle.getMessage("AbbreviationSetOut") + " " + track.getDropIds().length);
+            String suffix = " ";
+            if (track.getDropOption().equals(Track.EXCLUDE_ROUTES) ||
+                    track.getDropOption().equals(Track.EXCLUDE_TRAINS)) {
+                suffix = "x";
+            }
+            restrictions.append(Bundle.getMessage("AbbreviationSetOut") + suffix + track.getDropIds().length);
         }
         if (!track.getPickupOption().equals(Track.ANY)) {
-            restrictions.append(" " + Bundle.getMessage("AbbreviationPickUp") + " " + track.getPickupIds().length);
+            String suffix = " ";
+            if (track.getPickupOption().equals(Track.EXCLUDE_ROUTES) ||
+                    track.getPickupOption().equals(Track.EXCLUDE_TRAINS)) {
+                suffix = "x";
+            }
+            restrictions.append(" " + Bundle.getMessage("AbbreviationPickUp") + suffix + track.getPickupIds().length);
         }
         return restrictions.toString();
     }
