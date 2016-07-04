@@ -1,32 +1,23 @@
-<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
-<!--  $Id$ -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
  <!--UpDated by Herv&#233; Blorec  2013-09-06 -->
 <html lang="fr">
-
-<html>
 <head>
-   <title>Jython access to JMRI tools</title>
+   <title>Acc&#232;s de Jython</title>
 
-    <META content="Bob Jacobsen" name=Author>
+    <META content="Bob Jacobsen" name="Author">
     <meta name="keywords" content="JMRI technical code CVS FAQ">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
-
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
-
+<body>
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
@@ -49,9 +40,7 @@ Pour utiliser la biblioth&#232;que JMRI &#224; partir de Jython, vous devez vous
 % ./jmrithon
 execFileJython 2.1 on java1.4.1_01 (JIT: null)
 (Taper "copyright", "credits" ou "license" pour plus d'informations.
-
->>> 
-
+>>>
 </PRE>
 
 Une fois obtenu l'invite Jython ">>>", vous pouvez taper des instructions Python.
@@ -92,7 +81,7 @@ toutes les fen&#234;tres et les menus sont pr&#233;sent&#233;s de la m&#234;me f
 
 <BR/>Cela montre aussi certaines des simplifications que Jython et le langage Python apportent &#224; l'utilisation du code JMRI. La fonction de membre de Java:
 <PRE>
-	turnout.SetCommandedState(jmri.Turnout.CLOSED);
+	turnout.setCommandedState(jmri.Turnout.CLOSED);
 </PRE>
 can also be expressed in Jython as:
 <PRE>
@@ -163,8 +152,6 @@ Cette section de la page est un tas d'informations utiles sur le contr&#244;le d
 <P>
 Notez que vous n'avez pas plus besoin de ceci lors de l'ex&#233;cution des scripts JmriDemo.py ou similaire, car ils g&#232;rent le d&#233;marrage d'une application compl&#232;te. 
 
-
-
 <h3>Initialisation</h3>
 
 JMRI utilise largement le syst&#232;me LogJ pour des informations de rapport pendant l'ex&#233;cution du programme. Pour configurer, lors de l'ex&#233;cution avec Jython, vous devez faire:
@@ -212,7 +199,7 @@ pour appeler ces commandes .
 
 <PRE>
    Turnout t2 = InstanceManager.turnoutManagerInstance().newTurnout("LT2", "turnout 2");
-   t2.SetCommandedState(Turnout.THROWN)(aiguillage D&#201;VI&#201;)
+   t2.setCommandedState(Turnout.THROWN)(aiguillage D&#201;VI&#201;)
 </PRE>
 Jython simplifie ceci, en nous permettant de fournir des variables utiles, et par le raccourcissement des appels &#224; certaines m&#233;thodes.
 <P>
@@ -238,7 +225,7 @@ Notez que la variable t2 n'a pas besoin d'&#234;tre d&#233;clar&#233;e.
 Jython fournit un raccourci pour les param&#232;tres qui ont
 &#233;t&#233; d&#233;finies avec Java-Bean-like les  m&#233;thodes get et set:
 <PRE>
-   t2.SetCommandedState(Turnout.THROWN)(D&#233;vi&#233;)
+   t2.setCommandedState(Turnout.THROWN)(D&#233;vi&#233;)
 </PRE>
 peuvent &#234;tre &#233;crit
 <PRE>
@@ -257,7 +244,7 @@ Un m&#233;canisme similaire peut &#234;tre utilis&#233; pour v&#233;rifier l'&#2
 >>> print sensors.provideSensor("3").knownState == INACTIVE
 0
 </PRE>
-Notez que Jython utilise des Â«1" pour indiquer vrai, et Â«0" pour indiquer
+Notez que Jython utilise des «1" pour indiquer vrai, et «0" pour indiquer
 faux, de sorte que le capteur 3 est actuellement actif dans cet exemple
 <P>
 Vous pouvez aussi appeler directement les m&#233;thodes, par exemple d'envoyer un paquet DCC
@@ -314,8 +301,8 @@ JmriDemo, DecoderPro ou une autre application, les noms seront
   % ./jmrithon -JmriDemo.py
 </PRE>
 
-Cela semble un peu moche, car ce n'est pas en utilisant les modules techniques normaux de Python
-. Mais les m&#233;thodes commodes sont
+Cela semble un peu moche, car ce n'est pas en utilisant les modules techniques normaux de Python.
+        Mais les m&#233;thodes commodes sont
 dans l'espace de nom de niveau sup&#233;rieur:
 <PRE>
   turnouts.newTurnout("LT1", "")
@@ -331,12 +318,12 @@ Nous avons besoin de comprendre comment les d&#233;veloppeurs de Jython ont pr&#
 Une fois que le lien principal JMRI (ou lien Swing GUI ?) a commenc&#233;,
 ^ D ne suffit pas pour faire quitter le programme. Vous devez s&#233;lectionner
 "Quit" dans le menu fichier r&#233;el, ou ^ C du programme.
-<P>
+<div>
 Il serait bon de comprendre ce qui emp&#234;cher le programme
 d'arr&#234;ter quand il obtient l'^D. 
 
-
-
 <!--#include virtual="/Footer" -->
+        </div>
+        </div>
 </body>
 </html>

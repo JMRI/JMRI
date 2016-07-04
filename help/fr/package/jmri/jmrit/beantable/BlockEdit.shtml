@@ -30,7 +30,7 @@ This edit window allows you to edit the following areas.<br>
 <a href="#reporter">Reporter</a><br>
 <a href="#properties">Properties</a>
 
-<a name="basic"><h2>Basic</h2></a>
+<a name="basic"></a><h2>Basic</h2>
 This provides basic information on the details of the block
 <ul>
 <li><p><b>System Name</b> - The system name of the Block. There is no functional 
@@ -45,7 +45,7 @@ set by Layout Editor and should not be changed.</p></li>
 <li><p><b>Comment</b> - You may enter any text in this field that will help you 
 distinguish this Block from other Blocks, or provide useful notes about its use.</p></li></ul>
 
-<a name="sensor"><h2>Sensor</h2></a>
+<a name="sensor"></a><h2>Sensor</h2>
 This tabs allows you to assign a sensor to the block to change the occupancy state, it
 also allows certain information about the sensor to be changed.
 
@@ -62,7 +62,7 @@ Such false triggers could be due to a dirty piece of track or electrical interfe
 specify the amount of time in milliSeconds that the system waits before registering 
 the state change of a sensor.</li></ul>
 
-<a name="reporter"><h2>Reporter</h2></a>
+<a name="reporter"></a><h2>Reporter</h2>
 <ul><li><p><b>Reporter</b>
 The Reporter assigned to this block. See the Reporter table. Puts the Reporter Value into 
 the Block value
@@ -92,7 +92,7 @@ When the something is 'out-of-range' 2 and 3 are then active.
 With 'Use Current?' selected the Block value will switch between 1 and 2, 
 whereas with 'Use Current?' unselected the Block value will switch between 3 and 4.</li></ul>
 
-<a name="properties"><h2>Properties</h2></a>
+<a name="properties"></a><h2>Properties</h2>
 
 <ul><li><p><b>Length</b> (optional) - Displays the length of the Block.  Optionally, you may 
 enter the length of the Block here.  The length is used for automatic running of trains. 

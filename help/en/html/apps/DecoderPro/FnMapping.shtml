@@ -15,7 +15,7 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+<div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
@@ -69,9 +69,9 @@ useful attributes and elements:
 	a fixed map is displayed below.</li>
 	</ul>
 <p>
-Several attributes and elements are ignored by a fnmapping element and <strong><em>should not</em></strong> be added to a definition file:
+Several attributes and elements (e.g. "tooltip" &amp; "label") on a fnmapping variable are ignored and <strong><em>should not</em></strong> be added to a definition file:
 </p>
-	f
+<p>
 Several attributes and elements of the "model" element of the decoder file also affect affect the Function Map display:
 </p>
 	<ul>

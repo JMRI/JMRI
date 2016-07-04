@@ -36,10 +36,6 @@ public class RfidStreamPortController extends AbstractStreamPortController imple
                 new StandaloneSensorManager(control, this.getSystemPrefix()),
                 new StandaloneReporterManager(control, this.getSystemPrefix()));
         control.connectPort(this);
-
-        // declare up
-        ActiveFlag.setActive();
-
     }
 
     /**

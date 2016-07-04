@@ -41,7 +41,7 @@ JMRI Guide Mat&#233;riel: Chubb C/MRI
 </UL>
 <P>A ce jour, les interfaces directement connect&#233;es IBEC et UBEC ne sont pas pris en charge.
 
-<a name=contents><H2>Table des Mati&#232;res</H2></a>
+<a name=contents></a><h2>Table des Mati&#232;res</h2>
 
 La documentation ci-dessous explique comment JMRI peut &#234;tre utilis&#233; avec C/MRI, et
 comment d&#233;marrer avec la connexion d'un syst&#232;me C/MRI &#224; JMRI. Il suppose une base de
@@ -150,7 +150,7 @@ de ce noeud. C'est cette action de scrutation qui maintient la LED sur votre ada
 Smini clignotante (&#224; un rythme &#233;lev&#233;).</p>
 
 
-<a name=iobits><H2>Bits d'Entr&#233;e et de Sortie C/MRI </H2></a>                                                                                          
+<a name=iobits></a><h2>Bits d'Entr&#233;e et de Sortie C/MRI </h2>                                                                                          
 
 JMRI consid&#232;re les  bits d'entr&#233;e de C/MRI comme des capteurs. Capteurs qui contribuent &#224; JMRI
 pour les conditions du circuit  - un bouton est enfonc&#233;, un bloc est occup&#233;,
@@ -212,7 +212,7 @@ non affect&#233;s pour la cr&#233;ation r&#233;ussie d'un nouvel aiguillage cont
 bits de sortie. La liste des affectations courantes C/MRI peut &#234;tre obtenue en s&#233;lectionnant
 <B> Liste affectations</B> dans le menu C/MRI.</P> 
 
-<a name=smini><H2>Mise en route avec un noeud Smini</H2></a>
+<a name=smini></a><h2>Mise en route avec un noeud Smini</h2>
 
 Il est plus facile d'essayer JMRI avec une carte Smini, car il y a peu
 d'options &#224; configurer pour le mat&#233;riel C/MRI. Apr&#232;s avoir
@@ -257,7 +257,7 @@ d'affectation pour ses bits.)
  <LI> L'&#233;tat de votre capteur dans le tableau capteur sera initialement
         "Inconnu", mais passera rapidement &#224; "Inactif"  lorsque la scrutation
         commence (en supposant que rien n'est raccord&#233; &#224; la broche d'entr&#233;e 1).
-  </ UL>
+  </ul>
     La LED d'&#233;mission et de r&#233;ception sur votre carte SMINI devrait maintenant
     clignoter, indiquant que l'ordinateur et lA SMINI dialoguent.
 <li> Pour v&#233;rifier que le bit d'entr&#233;e (capteur) que vous avez attribu&#233; est au travail,
@@ -295,7 +295,7 @@ plusieurs noeuds, en revenant au dialogue Configurer le noeud C/MRI
 .
 
 
-<a name=susic><H2>D&#233;buter avec une USIC ou SUSIC</H2></a>
+<a name=susic></a><h2>D&#233;buter avec une USIC ou SUSIC</h2>
 
 Apr&#232;s avoir connect&#233; physiquement votre SUSIC (ou USIC) &#224; votre ordinateur,
 suivez la proc&#233;dure ci-dessous pour configurer votre SUSIC (ou USIC) en tant que noeud C/MRI
@@ -349,7 +349,7 @@ la scrutation. S&#233;lectionnez <b>Tableau Capteur</b> dans le menu Outils, et 
 L'&#233;tat de votre capteur dans le tableau capteur sera initialement
 "Inconnu", mais passera rapidement &#224; "inactif"  lorsque la scrutation
 commence (en supposant que rien n'est raccord&#233; &#224; la broche d'entr&#233;e 1).
-</ UL>
+</ul>
 La LED d'&#233;mission et de r&#233;ception sur votre carte contr&#238;leur SUSIC devrait 
 maintenant clignoter, indiquant que l'ordinateur et la SUSIC dialoguent.
 <li> Pour v&#233;rifier que le bit d'entr&#233;e (capteur) que vous avez attribu&#233; est au travail,
@@ -382,7 +382,7 @@ plusieurs noeuds, ou modifier la configuration de la carte DIN/ DOUT de ce noeud
 en revenant au dialogue de  Configuration du noeuds C/MRI
 ( <a href="#nodes">voir ci-dessous</a>.  
 
-<a name=nodes><H2>Gestions des Noeuds</H2></a>
+<a name=nodes></a><h2>Gestions des Noeuds</h2>
 
 Chaque SMINI, USIC ou SUSIC est appel&#233; un "noeud". Avant d'utiliser C/MRI avec
 JMRI, vous devez dire &#224; JMRI les noeuds que vous avez sur votre syst&#232;me et la
@@ -422,7 +422,7 @@ L'impression vide de la liste d'affectation pour chaque noeud fournit un
 
 
 
-<a name=numbers><H2>Num&#233;rotation utilis&#233;e dans les Noms Syst&#232;mes C/MRI</H2></a>
+<a name=numbers></a><h2>Num&#233;rotation utilis&#233;e dans les Noms Syst&#232;mes C/MRI</h2>
 
 Les noms syst&#232;me C/MRI commencent par "C". Par exemple, "CS24" se r&#233;f&#232;re &#224; la 24eme ligne d'entr&#233;e, c'est un 
 "S" pour Sensor (Capteur), "CL35" se r&#233;f&#232;re &#224; la 35ieme  ligne de sortie ,
@@ -450,7 +450,7 @@ entr&#233;es et les sorties sur ce noeud seront num&#233;rot&#233;es &#224; part
      <LI> CT2048 est la derni&#232;re broche de sortie
      <LI> CS2001 est la premi&#232;re broche d'entr&#233;e
      <LI> CS2024 est la derni&#232;re broche d'entr&#233;ee 
-   </ UL>
+   </ul>
 <LI> Si vous avez une USIC avec ses commutateurs adresse  r&#233;gl&#233; sur "1", elle aurra
  toutes les entr&#233;es et les sorties num&#233;rot&#233;s &#224; partir de 1001. Si elle a
 trois cartes d'entr&#233;e 24-bit, et deux cartes de sortie 24-bit, leur adresse sera:
@@ -496,7 +496,7 @@ Liste Affectations</b> dans le menu pour acc&#233;der aux tables C/MRI des entr&
 entr&#233;es et sorties disponibles pour chaque noeud. Chaque table a une ligne pour chaque  broche incluant une colonne d'adresse montrant quelle est l'adresse &#224; utiliser pour cette broche dans les noms syst&#232;me.
 </P>   	
 
-<a name=alternate><H2> Num&#233;rotation Compl&#233;mentaire pour les Noms Syst&#232;me</H2></a>
+<a name=alternate></a><h2> Num&#233;rotation Compl&#233;mentaire pour les Noms Syst&#232;me</h2>
 
 Un sch&#233;ma de rechange pour la num&#233;rotation dans les noms syst&#232;me de C/MRI a &#233;t&#233; d&#233;velopp&#233; pour
  donner acc&#232;s aux utilisateurs au nombre total de lignes autoris&#233;es &#224; la conception de mat&#233;riel C/MRI.
@@ -519,7 +519,7 @@ l'utilisation du sch&#233;ma de num&#233;rotation principale est recommand&#233;
 doivent &#234;tre adress&#233;s.
 
 
-<a name=options><H2> Options de Commande d'un Aiguillage par C/MRI</H2></a>
+<a name=options></a><h2> Options de Commande d'un Aiguillage par C/MRI</h2>
 
 Les aiguillages peuvent &#234;tre command&#233;s en utilisant un ou deux bits de sortie.
 Lorsque l'aiguillage est cr&#233;&#233; en utilisant l'option Ajouter dans le tableau aiguillage,
@@ -587,7 +587,7 @@ la polarit&#233; oppos&#233;e.
 </dd>.
 
 
-<a name=signals><H2>C&#226;blage Signaux</H2></a>
+<a name=signals></a><h2>C&#226;blage Signaux</h2>
 
 JMRI peut travailler avec tous les moyens populaires de c&#226;blage
  des signaux au mat&#233;riel C/MRI (et il y en a beaucoup !)
@@ -595,7 +595,7 @@ Pour plus d'informations sur la fa&#231;on de configurer vos signaux pour le pro
  s'il vous pla&#238;t voir la page
 <A HREF="Signals.shtml">  signaux C/MRI</a>J.   
 
-<a name=diagnostics><H2>C/MRI Diagnostiques</H2></a>
+<a name=diagnostics></a><h2>C/MRI Diagnostiques</h2>
 
 JMRI supporte les deux proc&#233;dures automatis&#233;es de diagnostique mentionn&#233;es au
 chapitre 6 du <b> Manuel  Utilisateur Version 3.0 de Chubb Bruce</b>. Les diagnostiques
@@ -610,7 +610,7 @@ sont ex&#233;cut&#233;s. Les diagnostics sont faciles &#224; utiliser. Il suffit
 dans le dialogue Ex&#233;cution du Diagnostique C/MRI. Toutes les erreurs trouv&#233;es sont signal&#233;es dans la
 bo&#238;te d'&#233;tat du dialogue. .
 
-<a name=usb><H2>L'utilisation d'adaptateurs USB-s&#233;rie</H2></a>
+<a name=usb></a><h2>L'utilisation d'adaptateurs USB-s&#233;rie</h2>
 
 La plupart des syst&#232;mes C/MRI utilisent des signaux &#233;lectriques RS485 pour communiquer entre
 les noeuds et l'ordinateur. Il existe plusieurs fa&#231;ons de les g&#233;n&#233;rer:
@@ -638,7 +638,7 @@ comme un port s&#233;rie sur votre ordinateur. Dans Windows, il s'agit d'un port
 dans d'autres ordinateurs que c'est un appareil de s&#233;rie nomm&#233;e. Vous aurez &#224; choisir
 celui qui convient lors de la configuration JMRI.
 .
-<a name=sim><H2>Ex&#233;cution de JMRI lorsqu'il est d&#233;connect&#233; de votre syst&#232;me C/MRI</H2></a>
+<a name=sim></a><h2>Ex&#233;cution de JMRI lorsqu'il est d&#233;connect&#233; de votre syst&#232;me C/MRI</h2>
 
 JMRI scrute continuellement, le mat&#233;riel C/MRI pour les changements d'&#233;tat.
 Si un ou plusieurs noeuds C/MRI ne r&#233;pondent pas, &#233;ventuellement leurs entr&#233;es (capteurs)

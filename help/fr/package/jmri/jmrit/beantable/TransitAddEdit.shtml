@@ -1,13 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- UpDated by Herv&#233; Blorec 2013-10-12-->
 <html lang="fr">
 <head>
  <TITLE>
-      JMRI: Add/Edit Transits
+      JMRI: Ajouter/&#201;diter Transits
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
+    <META content="Bob Jacobsen" name="Author">
     <META name="keywords" content="JMRI help Transit Add Edit">
 
 <!-- Style -->
@@ -24,10 +22,10 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1> Ajouter/&#201;diter Transits</H1>
+<h1>Ajouter/&#201;diter Transits</h1>
 
 <a name="addTransit"> 
-<H2> Ajout d'un nouveau Transit</H2></a>
+</a><h2> Ajout d'un nouveau Transit</h2>
 Pour ajouter un nouveau Transit, suivez cette proc&#233;dure:
 <ol>
 <li><p>Cliquez <b><a href="TransitTable.shtml"> Transits</a></b> dans le sous-menu
@@ -38,7 +36,7 @@ tableau pour ouvrir la fen&#234;tre Ajouter/Modifier Transit.</p>
 <p><li> Entrez un <b>Nom Syst&#232;me</b>, selon la convention JMRI. Puisque les Transits
 sont des objets internes, la premi&#232;re lettre doit &#234;tre "I" (pour interne). La seconde
  lettre devrait &#234;tre "Z" pour indiquer un transit. Ceci est g&#233;n&#233;ralement suivi par un
-nombre, mais le programme accepte tous les caract&#232;res Alphanum&#233;riques . 
+nombre, mais le programme accepte tous les caract&#232;res Alphanum&#233;riques.
 Le Nom Syst&#232;me doit &#234;tre diff&#233;rent du nom syst&#232;me des autres Transits.</p>
 </Li>
 <p><li> Entrez un <b>Nom Utilisateur</b>. Toute cha&#238;ne de caract&#232;res qui est diff&#233;rente
@@ -135,6 +133,8 @@ est automatiquement s&#233;lectionn&#233;, et aucune modification ne sera apport
 </ol>
 
 <!--#include virtual="/Footer" -->
+        </div>
+      </div>
 </body>
 </html>
 

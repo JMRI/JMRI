@@ -1,36 +1,29 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- Updatedted by Blorec Herv&#233;  2013-09-05-->  
 <html lang="fr">
 <head>
     <TITLE>
  	JMRI: Use of JavaHelp
     </TITLE>
-    <META content="Bob Jacobsen" name=Author>
+    <META content="Bob Jacobsen" name="Author">
     <meta name="keywords" content="JMRI technical code Java Help JavaHelp ">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
-
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv=content-type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
-
+<body>
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
 
-		    <H1>JMRI:  Utiliser une Aide Java</H1>
+<h1>JMRI:  Utiliser une Aide Java</h1>
 
 Cette page parle des aspects techniques de la fa&#231;on dont JMRI fournit des informations d'aide
 &#224; partir de JavaHelp et JHelpDev.
@@ -75,24 +68,24 @@ atteindre le contenu. La deuxi&#232;me partie de l'arbre devrait &#233;galement 
 comme "une page, un th&#232;me", avec des liens pour les connecter au besoin
 
 <a name="limitations">
-<h3>Limitations de JavaHelp HTML</h3></a>
+</a><h3>Limitations de JavaHelp HTML</h3>
 
 JavaHelp affiche " un bon vieux HTML 4.0", sans fournir certains des
 sucre syntaxique fourni par de nombreux navigateurs pour permettre de pauvres rendus HTML.
 En particulier, il y a quelques choses &#224; surveiller.
 <ul>
 <li>Les balises d'ancrage ne sont pas XML. Plus pr&#233;cis&#233;ment,
-<code><pre>
+<pre><code>
 &lt;a id="foo"/&gt;Foo!
-</pre></code>
+</code></pre>
 demande d'&#234;tre remplac&#233; par
-<code><pre>
+<pre><code>
 &lt;a id="foo"&gt;Foo!
-</pre></code>
+</code></pre>
 or
-<code><pre>
+<pre><code>
 &lt;a name="foo"&gt;Foo!&lt;/a&gt;
-</pre></code>
+</code></pre>
 L'indicateur que vous avez pour faire ceci c'est un &lt;
 caract&#232;re apparaissant juste par lui-m&#234;me sur la page rendue>.
 

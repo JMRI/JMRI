@@ -20,7 +20,9 @@
 
 <body>
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
+
 <div id="mainContent">
 
 <h1>JMRI: LRoute Documentation</h1>
@@ -67,7 +69,7 @@ from the <b>Tools</b> menu
 and click the <b>Add...</b> button at the bottom of the pane to 
 bring up the Add/Edit LRoute window.</p>
 
-<a name="addroute"><h3>To add a new LRoute:</h3></a>
+<a name="addroute"></a><h3>To add a new LRoute:</h3>
 
 <ol>
 	<li><p>Enter a system name, such as 'RTX100'.  Any 
@@ -213,7 +215,7 @@ in the <b>Panel</b> menu. Note that the enabled/disabled state of each LRoute
 is not saved in the configuration file.  When LRoutes are loaded from a
 configuration file, they are all enabled.
 
-<a name="sensorlogic"><H3>Controlling LRoutes from Control/Trigger Entities</H3></a>
+<a name="sensorlogic"></a><h3>Controlling LRoutes from Control/Trigger Entities</h3>
 
 The operation of a LRoute can be controlled by many means: 
 sensors connected to occupancy detectors or 
@@ -330,7 +332,7 @@ entities are AND'ed together as a clause.  The two clauses
 are then joined by an AND operator.
 </p>
 
-<a name="setroutebehavior"><h2>Setting Behavior to Match That of Routes</h2></a>
+<a name="setroutebehavior"></a><h2>Setting Behavior to Match That of Routes</h2>
   
 <p>In Routes, the 'veto' entities are passive.  That is, although the 'veto'
 state prevents the Route from triggering, when the 'veto' state is left, it does

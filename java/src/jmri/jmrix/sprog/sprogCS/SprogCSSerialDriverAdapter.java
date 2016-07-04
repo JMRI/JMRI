@@ -1,8 +1,6 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.sprog.sprogCS;
 
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
-import jmri.jmrix.sprog.SprogTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * any other options at configuration time.
  *
  * @author	Andrew Crosland Copyright (C) 2006
- * @version	$Revision$
  */
 public class SprogCSSerialDriverAdapter
         extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
@@ -28,6 +25,10 @@ public class SprogCSSerialDriverAdapter
         this.getSystemConnectionMemo().setUserName("SPROG Command Station");
     }
 
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static public SprogCSSerialDriverAdapter instance() {
         if (mInstance == null) {
             SprogCSSerialDriverAdapter m = new SprogCSSerialDriverAdapter();
@@ -36,10 +37,12 @@ public class SprogCSSerialDriverAdapter
         }
         return mInstance;
     }
+    /**
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static volatile SprogCSSerialDriverAdapter mInstance = null;
 
     private final static Logger log = LoggerFactory.getLogger(SprogCSSerialDriverAdapter.class.getName());
 
 }
-
-/* @(#)SerialdriverAdapter.java */

@@ -15,6 +15,7 @@
 <!-- version 1 - for Unified Software -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <name>Sound Function</name>
+  <name xml:lang="it">Funzioni Suono</name>
   <column>
     <row>
       <column>
@@ -25,6 +26,110 @@
           <text>Must have JMRI 3.9.5 or later.</text>
           <text xml:lang="it">Dovete avere JMRI 3.9.5 o successivo.</text>
         </label>
+		<group>
+			<qualifier>
+				<variableref>First</variableref>
+				<relation>exists</relation>
+				<value>1</value>
+				</qualifier>
+			<label>
+			  <text>   </text>
+			</label>
+			<row>
+				<display item="First" format="radiobuttons"/>
+			</row>
+			<label>
+			  <text>   </text>
+			</label>
+			<label>
+			  <text>&lt;html&gt;&lt;strong&gt;To use the "Default Whistle/Horn" setting and the rotate whistle/horn function (default on F9):&lt;/strong&gt;&lt;/html&gt;</text>
+			</label>
+			<label>
+			  <text>For each function to have a whistle/horn assigned to it, select only the first choice, as listed above, of that group (long, short, quill, for, rev or stop)</text>
+			</label>
+			<label>
+			  <text>i.e. for a long whistle select "Whistle Alamo Michigan Plant Long"</text>
+			</label>
+			<label>
+			  <text>Note: With this config only one whistle/horn can be configured at a time</text>
+			</label>
+			<label>
+			  <text>   </text>
+			</label>
+			<label>
+			  <text>&lt;html&gt;&lt;strong&gt;To have different whistles/horns on different functions:&lt;/strong&gt;&lt;/html&gt;</text>
+			</label>
+			<label>
+			  <text>Set "Default Whistle/Horn" to first choice as listed above</text>
+			</label>
+			<label>
+			  <text>For each function, select the desired whistle/horn name from the desired group (long, short, quill, for, rev or stop)</text>
+			</label>
+			<label>
+			  <text>Do not use the rotate whistle/horn function, to prevent accidental changes, remap F9 to something else and do not have rotate whistle/horn mapped to anything</text>
+			</label>
+			<label>
+			  <text>example: F2 to "Southern Pacific Daylight #4460 6 chime long" and F3 to "Leslie 200 long"</text>
+			</label>
+			<label>
+			  <text>Note: With this config, use of rotate whistle/horn function will cause spoken whistle/horn name not to match played whistle/horn sound</text>
+			</label>
+			<label>
+			  <text>Also automatic Forward, Reverse and Stop toots will not play correct whistle/horn, they will play correct sound if mapped to functions</text>
+			</label>
+		</group>
+		<label>
+          <text>   </text>
+        </label>
+		<row>
+			<display item="Sound Option 1" />
+		</row>
+		<group>
+			<qualifier>
+				<variableref>First Bell</variableref>
+				<relation>exists</relation>
+				<value>1</value>
+				</qualifier>
+			<label>
+			  <text>   </text>
+			</label>
+			<row>
+				<display item="First Bell" format="radiobuttons"/>
+			</row>
+			<label>
+			  <text>   </text>
+			</label>
+			<label>
+			  <text>&lt;html&gt;&lt;strong&gt;To use the "Bell" setting and the rotate bell function (default on F9, when the bell is ringing):&lt;/strong&gt;&lt;/html&gt;</text>
+			</label>
+			<label>
+			  <text>For each function to have the bell assigned to it, select only the first choice, as listed above</text>
+			</label>
+			<label>
+			  <text>Note: With this config only one bell can be configured at a time</text>
+			</label>
+			<label>
+			  <text>   </text>
+			</label>
+			<label>
+			  <text>&lt;html&gt;&lt;strong&gt;To have different bells on different functions:&lt;/strong&gt;&lt;/html&gt;</text>
+			</label>
+			<label>
+			  <text>Set "Bell" to first choice as listed above</text>
+			</label>
+			<label>
+			  <text>For each function, select the desired bell name from the bell group</text>
+			</label>
+			<label>
+			  <text>Do not use the rotate whistle/horn function while bell is ringing, to prevent accidental changes, remap F9 to something else and do not have rotate whistle/horn mapped to anything</text>
+			</label>
+		</group>
+		<label>
+          <text>   </text>
+        </label>
+		<row>
+			<display item="Sound Option 6" />
+		</row>
         <label>
           <text>   </text>
         </label>
@@ -32,14 +137,43 @@
     </row>
     <row>
 		<display item="Function 0 Sound" layout="above" format="tree"/>
+		<label>
+			<text>   </text>
+		</label>
 		<display item="Function 1 Sound" layout="above" format="tree"/>
+		<label>
+			<text>   </text>
+		</label>
 		<display item="Function 2 Sound" layout="above" format="tree"/>
+		<label>
+			<text>   </text>
+		</label>
 		<display item="Function 3 Sound" layout="above" format="tree"/>
+		<label>
+			<text>   </text>
+		</label>
 		<display item="Function 4 Sound" layout="above" format="tree"/>
+    </row>
+	<label>
+		<text>   </text>
+	</label>
+    <row>
 		<display item="Function 5 Sound" layout="above" format="tree"/>
+		<label>
+			<text>   </text>
+		</label>
 		<display item="Function 6 Sound" layout="above" format="tree"/>
+		<label>
+			<text>   </text>
+		</label>
 		<display item="Function 7 Sound" layout="above" format="tree"/>
+		<label>
+			<text>   </text>
+		</label>
 		<display item="Function 8 Sound" layout="above" format="tree"/>
+		<label>
+			<text>   </text>
+		</label>
 		<display item="Function 9 Sound" layout="above" format="tree"/>
     </row>
 	<label>
@@ -47,14 +181,43 @@
 	</label>
     <row>
 		<display item="Function 10 Sound" layout="above" format="tree"/>
+		<label>
+			<text>   </text>
+		</label>
 		<display item="Function 11 Sound" layout="above" format="tree"/>
+		<label>
+			<text>   </text>
+		</label>
 		<display item="Function 12 Sound" layout="above" format="tree"/>
+		<label>
+			<text>   </text>
+		</label>
 		<display item="Function 13 Sound" layout="above" format="tree"/>
+		<label>
+			<text>   </text>
+		</label>
 		<display item="Function 14 Sound" layout="above" format="tree"/>
+    </row>
+	<label>
+		<text>   </text>
+	</label>
+    <row>
 		<display item="Function 15 Sound" layout="above" format="tree"/>
+		<label>
+			<text>   </text>
+		</label>
 		<display item="Function 16 Sound" layout="above" format="tree"/>
+		<label>
+			<text>   </text>
+		</label>
 		<display item="Function 17 Sound" layout="above" format="tree"/>
+		<label>
+			<text>   </text>
+		</label>
 		<display item="Function 18 Sound" layout="above" format="tree"/>
+		<label>
+			<text>   </text>
+		</label>
 		<display item="Function 19 Sound" layout="above" format="tree"/>
     </row>
 	<label>
@@ -62,13 +225,39 @@
 	</label>
     <row>
 		<display item="Function 20 Sound" layout="above" format="tree"/>
+		<label>
+			<text>   </text>
+		</label>
 		<display item="Function 21 Sound" layout="above" format="tree"/>
+		<label>
+			<text>   </text>
+		</label>
 		<display item="Function 22 Sound" layout="above" format="tree"/>
+		<label>
+			<text>   </text>
+		</label>
 		<display item="Function 23 Sound" layout="above" format="tree"/>
+		<label>
+			<text>   </text>
+		</label>
 		<display item="Function 24 Sound" layout="above" format="tree"/>
+    </row>
+	<label>
+		<text>   </text>
+	</label>
+    <row>
 		<display item="Function 25 Sound" layout="above" format="tree"/>
+		<label>
+			<text>   </text>
+		</label>
 		<display item="Function 26 Sound" layout="above" format="tree"/>
+		<label>
+			<text>   </text>
+		</label>
 		<display item="Function 27 Sound" layout="above" format="tree"/>
+		<label>
+			<text>   </text>
+		</label>
 		<display item="Function 28 Sound" layout="above" format="tree"/>
     </row>
 	<label>
@@ -76,8 +265,17 @@
 	</label>
     <row>
 		<display item="Random 1 Sound" layout="above" format="tree"/>
+		<label>
+			<text>   </text>
+		</label>
 		<display item="Random 2 Sound" layout="above" format="tree"/>
+		<label>
+			<text>   </text>
+		</label>
 		<display item="Random 3 Sound" layout="above" format="tree"/>
+		<label>
+			<text>   </text>
+		</label>
 		<display item="Random 4 Sound" layout="above" format="tree"/>
     </row>
 	<label>
@@ -94,6 +292,9 @@
 			<display item="Dual function F5" format="checkbox"/>
 			<display item="Dual function F6" format="checkbox"/>
 		</column>
+		<label>
+			<text>   </text>
+		</label>
 		<column>
 			<display item="Dual function F7" format="checkbox"/>
 			<display item="Dual function F8" format="checkbox"/>
@@ -106,5 +307,4 @@
 		</column>
     </row>
   </column>
-  <name xml:lang="it">Funzioni Suono</name>
 </pane>

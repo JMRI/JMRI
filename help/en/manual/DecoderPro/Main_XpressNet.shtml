@@ -16,7 +16,7 @@ DecoderPro&reg; Main Window
 
 <body>
 <!--#include virtual="/Header" -->
-
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
@@ -43,7 +43,7 @@ DecoderPro&reg; Main Window
 <p>Opens the <a href="#StackMonitor">Command Station Stack Monitor</a> window that allows you to monitor the status of the command station stack (database).</p>
 <p><strong><a name="LI101"></a>LI101 Configuration Manager</strong></p>
 <p>Open the <a href="#LI101CU">LI101 Configuration Utility</a> Window.</p>
-<p><strong><a name="LZ100" id="LZ100"></a>LZ100 Configuration Manager</strong></p>
+<p><strong><a name="LZ100"></a>LZ100 Configuration Manager</strong></p>
 <p>Open the <a href="#LZ100">LV100 Configuration Manager</a> Window</p>
 <p><strong><a name="LZV100"></a>LZV100 Configuration Manager</strong></p>
 <p>Open the <a href="#LZV100CM">LZV100 Configuration Manager</a> Window</p>
@@ -85,7 +85,7 @@ DecoderPro&reg; Main Window
     <p><a href="#LZV100">Back</a></p>
   </div>
 </div>
-<h4><a name="LV102CM" id="LV102CM"></a>LV102 Configuration Manager Window</h4>
+<h4><a name="LV102CM"></a>LV102 Configuration Manager Window</h4>
 <p><img src="images/Main_XpressNet_07.png" alt="configuration" width="561" height="270"></p>
 <div>
   <div align="right"><a href="#LV102">Back</a></div>

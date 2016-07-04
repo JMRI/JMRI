@@ -108,7 +108,7 @@ directions are consistent. That is:
 <p><b>WARNING: If Entry Points are not consistent strange behavior may result 
 when using the Section.</b></p>
 
-<a name="tools"><h3>Section Table Tools</h3></a>
+<a name="tools"></a><h3>Section Table Tools</h3>
 <p> The Section Table has a <b>Tools</b> menu to facilitate use of Sections. 
 Normally these tools would be used after all Sections are defined. 
 The menu items and their use are described below:</p>

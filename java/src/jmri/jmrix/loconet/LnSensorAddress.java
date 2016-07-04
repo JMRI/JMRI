@@ -47,28 +47,6 @@ public class LnSensorAddress {
         this.prefix = prefix;
     }
 
-    /**
-     * Old style ctor for e.g. CATS migration. Cannot handle multiple system
-     * connections.
-     *
-     * @deprecated 2.9.4
-     */
-    @Deprecated
-    public LnSensorAddress(int sw1, int sw2) {
-        this(sw1, sw2, "L");
-    }
-
-    /**
-     * Old style ctor for e.g. CATS migration. Cannot handle multiple system
-     * connections.
-     *
-     * @deprecated 2.9.4
-     */
-    @Deprecated
-    public LnSensorAddress(String s) {
-        this(s, "L");  // assume one connection
-    }
-
     public LnSensorAddress(String s, String prefix) {
         _valid = false;
         this.prefix = prefix;

@@ -69,7 +69,6 @@ public class SimulatorAdapter extends TamsPortController implements
 
         this.getSystemConnectionMemo().configureManagers();
         //tc.setCabNumber(2);
-        jmri.jmrix.tams.ActiveFlag.setActive();
 
         // start the simulator
         sourceThread = new Thread(this);

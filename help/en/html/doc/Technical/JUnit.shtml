@@ -1,575 +1,651 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
 <!-- $Id$ -->
+
 <html lang="en">
 <head>
-    <TITLE>
- 	JMRI: Unit testing with JUnit
-    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
-    <meta name="keywords" content="JMRI technical code ">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
-
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <title>JMRI: Unit testing with JUnit</title>
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content="JMRI technical code">
+  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+  <!-- are an arbitrary design pattern used by the update.pl script to -->
+  <!-- easily replace the common header/footer code for all the web pages -->
+  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+  <!-- or change them to reflect your alternative logo -->
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
-</head>
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head><!--#include virtual="/Header" -->
 
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
+<body>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<div id="mainContent">
+    <div id="mainContent">
+      <h1>JMRI: Unit testing with JUnit</h1>
 
-<H1>JMRI: Unit testing with JUnit</H1>
+      <ul>
+        <li><a href="#Introduction">Introduction</a></li>
 
-<ul>
-    <li><a href="#Introduction">Introduction</a></li>
-    <li><a href="#run">Running the Tests</a></li>
-    <li><a href="#Continuous">Continuous Integration Test Execution</a></li>
+        <li><a href="#run">Running the Tests</a></li>
+
+        <li><a href="#Continuous">Continuous Integration Test
+        Execution</a></li>
+
         <li><a href="#Reporting">Error Reporting</a></li>
+
         <li><a href="#Coverage">Code Coverage Reports</a></li>
-    <li><a href="#write">Writing Tests</a></li>
-        <ul>
-        <li><a href="#writeAddl4ExistClass">Writing Additional Tests for an Existing Class</a></li>
-        <li><a href="#write4NewClass">Writing Tests for a New Class</a></li>
-        <li><a href="#Write4NewPackage">Writing Tests for a New Package</a></li>
-        </ul>
-    <li><a href="#keyMetaphors">Key Metaphors</a></li>
-        <ul>
-        <li><a href="#HandlingLogOutput">Handling Log4J Output From Tests</a></li>
-        <li><a href="#ResetInstMgr">Resetting the InstanceManager</a></li>
-        <li><a href="#RunningListeners">Running Listeners</a></li>
-        <li><a href="#io">Testing I/O</a></li>
-        <li><a href="#tempFileCreation">Temporary File Creation in Tests</a></li>
-        </ul>
-    <li><a href="#testSwingCode">Testing Swing Code</a></li>
-        <ul>
-        <li><a href="#complicatedGuiTesting">Testing Complicated GUI code</a></li>
-        </ul>
-    </ul>
-    <li><a href="#testScriptCode">Testing Script Code</a></li>
-        <ul>
-        <li><a href="#sampleScriptTesting">Testing Jython sample scripts</a></li>
-        </ul>
-    </ul>
-    <li><a href="#issues">Issues</a></li>
-</ul>
 
-<a name="Introduction"></a>
-JUnit is a system for building "unit tests" of software.  
-Unit tests are small tests that make sure that individual
-parts of the software do what they're supposed to do.
-In a distributed project like JMRI, where there are lots
-of developers in only loose communication with each other,
-unit tests are a good way to make sure that the code hasn't 
-been broken by a change.
-<P>
-For more information on JUnit, see
-<A HREF="http://www.junit.org">the JUnit home page</A>.
-A very interesting example of test-based development is available from 
-<A HREF="http://www.objectmentor.com/publications/xpepisode.htm">Robert Martin</a>'s book.
-<P>
-Some of the classes have JUnit tests available. It's good
-to add JUnit tests as you make changes (test your new functionality
-to make sure that it is working, and keeps working),
-when you have to figure out what somebody's code does
-(the test documents exactly what should happen!),
-and when you track down a bug (make sure it doesn't come back).
+        <li><a href="#write">Writing Tests</a></li>
 
-<h2><a name="run">
-Running the Tests</a></h2>
+        <li style="list-style: none">
+          <ul>
+            <li><a href="#writeAddl4ExistClass">Writing Additional
+            Tests for an Existing Class</a></li>
 
-To run the existing tests, say
-<PRE><CODE>
+            <li><a href="#write4NewClass">Writing Tests for a New
+            Class</a></li>
+
+            <li><a href="#Write4NewPackage">Writing Tests for a New
+            Package</a></li>
+          </ul>
+        </li>
+
+        <li><a href="#keyMetaphors">Key Metaphors</a></li>
+
+        <li style="list-style: none">
+          <ul>
+            <li><a href="#HandlingLogOutput">Handling Log4J Output
+            From Tests</a></li>
+
+            <li><a href="#ResetInstMgr">Resetting the
+            InstanceManager</a></li>
+
+            <li><a href="#RunningListeners">Running
+            Listeners</a></li>
+
+            <li><a href="#io">Testing I/O</a></li>
+
+            <li><a href="#tempFileCreation">Temporary File Creation
+            in Tests</a></li>
+          </ul>
+        </li>
+
+        <li><a href="#testSwingCode">Testing Swing Code</a></li>
+
+        <li style="list-style: none">
+          <ul>
+            <li><a href="#complicatedGuiTesting">Testing
+            Complicated GUI code</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <ul>
+        <li><a href="#testScriptCode">Testing Script Code</a></li>
+
+        <li style="list-style: none">
+          <ul>
+            <li><a href="#sampleScriptTesting">Testing Jython
+            sample scripts</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <ul>
+        <li><a href="#issues">Issues</a></li>
+      </ul><a name="Introduction"></a> JUnit is a
+      system for building "unit tests" of software. Unit tests are
+      small tests that make sure that individual parts of the
+      software do what they're supposed to do. In a distributed
+      project like JMRI, where there are lots of developers in only
+      loose communication with each other, unit tests are a good
+      way to make sure that the code hasn't been broken by a
+      change.
+
+      <p>For more information on JUnit, see <a href=
+      "http://www.junit.org">the JUnit home page</a>. A very
+      interesting example of test-based development is available
+      from <a href=
+      "http://www.objectmentor.com/publications/xpepisode.htm">Robert
+      Martin</a>'s book.</p>
+
+      <p>Some of the classes have JUnit tests available. It's good
+      to add JUnit tests as you make changes (test your new
+      functionality to make sure that it is working, and keeps
+      working), when you have to figure out what somebody's code
+      does (the test documents exactly what should happen!), and
+      when you track down a bug (make sure it doesn't come
+      back).</p>
+
+      <h2><a name="run">Running the Tests</a></h2>To run
+      the existing tests, say
+      <pre>
+<code>
    ant alltest
-</CODE></PRE>
-This will compile the test code, which lives in the "test"
-subdirectory of the "java" directory in our usual code distributions,
-and then run the tests under a GUI.  
-(To make sure you've recompiled everything, you 
-may want to do <code>ant clean</code> first)
-If you know the name
-of your test class, or the test class for your package, you 
-can run that directly with the "runtest" script:
-<PRE>
-<CODE>
-   ant tests<br/>
-   ./runtest.csh jmri.jmrit.powerpanel.PowerPanelTest
-</CODE>
-</PRE>
-The first line compiles all the test code, and the second
+</code>
+</pre>This will compile the test code, which lives in the "test"
+subdirectory of the "java" directory in our usual code
+distributions, and then run the tests under a GUI. (To make sure
+you've recompiled everything, you may want to do <code>ant
+clean</code> first) If you know the name of your test class, or the
+test class for your package, you can run that directly with the
+"runtest" script:
+      <pre>
+<code>
+   ant tests<br>   ./runtest.csh jmri.jmrit.powerpanel.PowerPanelTest
+</code>
+</pre>The first line compiles all the test code, and the second
 runs a specific test or test suite.
 
+      <h2><a name="Continuous">Continuous
+      Integration Test Execution</a></h2>The <a href=
+      "ContinuousIntegration.shtml">continuous integration
+      environment</a> senses changes in the code repository,
+      rebuilds the code, performs a variety of checks. If no fatal
+      issues are found, the continuous integration process executes
+      the "alltest" ant target against the build to run the tests
+      against the successful build of the code base.
 
-<h2><a name="Continuous">Continuous Integration Test Execution</a></h2>
+      <h3><a name="Reporting">Error
+      Reporting</a></h3>If a test fails during the continuous
+      integration execution of "alltest", an e-mail is sent to the
+      jmri-build e-mail list as well as to the developers who have
+      checked in code which was included in the build.
 
-The <a href="ContinuousIntegration.shtml">continuous integration environment</a>
-senses changes in the code repository, rebuilds the code, performs a variety of
-checks.  If no fatal issues are found, the continuous integration process executes 
-the "alltest" ant target against the build to run the tests 
-against the successful build of the code base.
+      <p>You may visit the web site <a href=
+      "https://lists.sourceforge.net/lists/listinfo/jmri-builds">to
+      subscribe to the jmri-builds e-mail list</a> to get the bad
+      news as quickly as possible, or monitor <a href=
+      "http://sourceforge.net/mailarchive/forum.php?forum_name=jmri-builds">
+      to view the archives of the e-mail list</a> and see past
+      logs. Or you can monitor the "dashboard" at the <a href=
+      "ContinuousIntegration.shtml">continuous integration</a> web
+      site.</p>
 
-<h3><a name="Reporting">Error Reporting</a></h3>
+      <p>(When the build succeeds, nothing is mailed, to cut down
+      on traffic)</p>
 
-If a test fails during the continuous integration execution of "alltest", 
-an e-mail is sent to the jmri-build e-mail list as well as to the developers who 
-have checked in code which was included in the build.
-<p>You may visit the web site 
-<A HREF="https://lists.sourceforge.net/lists/listinfo/jmri-builds">to 
-subscribe to the jmri-builds e-mail list</a> to get the bad news as 
-quickly as possible, or monitor 
-<A HREF="http://sourceforge.net/mailarchive/forum.php?forum_name=jmri-builds">
-to view the archives of the e-mail list</a> and see past logs.  Or you can 
-monitor the "dashboard" at the <a href="ContinuousIntegration.shtml">
-continuous integration</a> web site.
+      <h3><a name="Coverage">Code Coverage
+      Reports</a></h3>As part of running the tests, Jenkins
+      accumulates information on how much of the code was executed,
+      called the "code coverage". We use the <a href=
+      "http://eclemma.org/jacoco/">JaCoCo tool</a> to do the
+      accounting. It provides detailed reports at multiple levels:
 
-<P>
-(When the build succeeds, nothing is mailed, to cut down on traffic)
+      <ul>
+        <li><a href=
+        "http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/jacoco/">
+        A plot of coverage as a whole</a>. Click on the graph to
+        see a</li>
 
-<h3><a name="Coverage">Code Coverage Reports</a></h3>
+        <li><a href=
+        "http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/">
+        summary by Java package</a>. Click on a package to see
+        a</li>
 
-As part of running the tests, Jenkins accumulates information on how much of the
-code was executed, called the "code coverage".  We use the
-<a href="http://eclemma.org/jacoco/">JaCoCo tool</a>
-to do the accounting. It provides detailed reports at multiple levels:
-<ul>
-<li><href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/jacoco/">A plot of coverage as a whole</a>. Click on the graph to see a</li>
-<li><href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/">summary by Java package</a>. Click on a package to see a</li>
-<li><href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/">summary by file</a> (e.g. class). Click on a class to see a</li>
-<li><href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/BlockBossLogic/">summary by method</a>. Click on a method to see</li>
-<li><href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/BlockBossLogic/defineIO()/">how each part of the code was covered</a> (may require scrolling down).</li>
-</ul>
+        <li><a href=
+        "http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/">
+        summary by file</a> (e.g. class). Click on a class to see
+        a</li>
 
-<h2><a name="write">Writing Tests</a></h2>
+        <li><a href=
+        "http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/BlockBossLogic/">
+        summary by method</a>. Click on a method to see</li>
 
-By convention, we have a "test" class shadowing 
-(almost) every real class.  
-The "test" directory contains a tree of package
-directories parallel to the "src" tree.
-Each test class has the same name
-as the class to be tested, except with "Test" appended, and
-will appear in the "test" source tree. 
-For example, 
-the "jmri.Version" class's source code is in "src/jmri/Version.java", 
-and it's test class is "jmri.VersionTest" found in "test/jmri/VersionTest.java".
+        <li><a href=
+        "http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/BlockBossLogic/defineIO()/">
+        how each part of the code was covered</a> (may require
+        scrolling down).</li>
+      </ul>
 
-<P>
-There are additional classes which are used to 
-group the test classes for a particular package
-into JUnit test suites.
+      <h2><a name="write">Writing Tests</a></h2>By
+      convention, we have a "test" class shadowing (almost) every
+      real class. The "test" directory contains a tree of package
+      directories parallel to the "src" tree. Each test class has
+      the same name as the class to be tested, except with "Test"
+      appended, and will appear in the "test" source tree. For
+      example, the "jmri.Version" class's source code is in
+      "src/jmri/Version.java", and it's test class is
+      "jmri.VersionTest" found in "test/jmri/VersionTest.java".
 
-<h3><a name="writeAddl4ExistClass">Writing Additional Tests for an Existing Class</a></h3>
+      <p>There are additional classes which are used to group the
+      test classes for a particular package into JUnit test
+      suites.</p>
 
-To write additional tests for a class with existing tests,
-first locate the test class. (If one doesn't exist, see the 
-section below about writing tests for a new class)
-<P>
-To that test class, add one or more test methods using the 
-JUnit conventions.  Basically, each method needs a name that starts with 
-"test", e.g. "testFirst", and has to have a "public void" signature.
-JUnit will handle everything after that.
-<P>
-In general, test methods should be small, testing just one piece of the 
-classes operation.  That's why they're called "unit" tests.
+      <h3><a name="writeAddl4ExistClass" id=
+      "writeAddl4ExistClass">Writing Additional Tests for an
+      Existing Class</a></h3>To write additional tests for a class
+      with existing tests, first locate the test class. (If one
+      doesn't exist, see the section below about writing tests for
+      a new class)
 
-<h3><a name="write4NewClass">Writing Tests for a New Class</a></h3>
+      <p>To that test class, add one or more test methods using the
+      JUnit conventions. Basically, each method needs a name that
+      starts with "test", e.g. "testFirst", and has to have a
+      "public void" signature. JUnit will handle everything after
+      that.</p>
 
-(Needs info here: basically, copy some other package, and
-don't forget to put an entry in the enclosing package's test suite)
+      <p>In general, test methods should be small, testing just one
+      piece of the classes operation. That's why they're called
+      "unit" tests.</p>
 
-<h3><a name="Write4NewPackage">Writing Tests for a New Package</a></h3>
+      <h3><a name="write4NewClass">Writing
+      Tests for a New Class</a></h3>(Needs info here: basically,
+      copy some other package, and don't forget to put an entry in
+      the enclosing package's test suite)
 
-(Needs info here: basically, copy some other package, and
-don't forget to put an entry in the enclosing package's test suite)
+      <h3><a name="Write4NewPackage">Writing
+      Tests for a New Package</a></h3>(Needs info here: basically,
+      copy some other package, and don't forget to put an entry in
+      the enclosing package's test suite)
 
-<h2><a name="keyMetaphors">Key Test Metaphors</a></h2>
+      <h2><a name="keyMetaphors">Key Test
+      Metaphors</a></h2>
 
-<h3><a name="HandlingLogOutput">Handling Log4J Output From Tests</a></h3>
+      <h3><a name="HandlingLogOutput" id=
+      "HandlingLogOutput">Handling Log4J Output From
+      Tests</a></h3>JMRI uses <a href=
+      "http://logging.apache.org/log4j/docs/index.html">Log4j</a>
+      to <a href="Logging.shtml">handle logging of various
+      conditions</a>, including error messages and debugging
+      information. Tests are intended to run without error or
+      warning output, so that it's immediately apparent from an
+      empty standard log that they ran cleanly.
 
-JMRI uses 
-<A HREF="http://logging.apache.org/log4j/docs/index.html">Log4j</a>
-to 
-<A HREF="Logging.shtml">handle logging of various conditions</a>, 
-including error messages and 
-debugging information. Tests are intended to run without error or warning
-output, so that it's immediately apparent from an empty standard log that
-they ran cleanly.
-<P>
-Log4j usage in the test classes themselves has two aspects:
-<OL>
-<LI>It's perfectly OK to use log.debug(...) statements to make it
-easy to debug problems in test statements.  log.info(...) can be used
-sparingly to indicate normal progress, because it's normally turned off when 
-running the tests.
-<LI>In general, log.warn or log.error should only be used when the test 
-then goes on to trigger a JUnit assertion or exception, because the fact that
-an error is being logged does not show up directly in the JUnit summary of results.
-</OL>
-<p>
-On the other hand, you might want to deliberately provoke errors in the
-code being tested to make sure that the conditions are being handled properly.
-This will often produce log.error(...) or log.warn(...) messages, which must 
-be intercepted and checked.
-<P>
-To allow this, JMRI runs it's using tests with a special log4j appender, which
-stores messages so that the JUnit tests can look at them before they are forwarded
-to the log.  There are two aspects to making this work:
-<OL>
-<LI>All the test classes should include common code in their setup()
-and teardown() code to ensure that log4j is properly initiated, and that
-the custom appender is told when a test is beginning and ending.
-<CODE><PRE>
-    // The minimal setup for log4J<br/>
-    protected void setUp() throws Exception { <br/>
-        apps.tests.Log4JFixture.setUp(); <br/>
-        super.setUp();<br/>
-    }<br/>
-    protected void tearDown() throws Exception { <br/>
-        super.tearDown();<br/>
-        apps.tests.Log4JFixture.tearDown(); <br/>
-    }<br/>
-</PRE></code>
-<LI>When a test is deliberately invoking a message, it should then
-use the check to see that the message was created.  
-For example, if the class under test is expected to do
-<BR><CODE><PRE>
+      <p>Log4j usage in the test classes themselves has two
+      aspects:</p>
+
+      <ol>
+        <li>It's perfectly OK to use log.debug(...) statements to
+        make it easy to debug problems in test statements.
+        log.info(...) can be used sparingly to indicate normal
+        progress, because it's normally turned off when running the
+        tests.</li>
+
+        <li>In general, log.warn or log.error should only be used
+        when the test then goes on to trigger a JUnit assertion or
+        exception, because the fact that an error is being logged
+        does not show up directly in the JUnit summary of
+        results.</li>
+      </ol>
+
+      <p>On the other hand, you might want to deliberately provoke
+      errors in the code being tested to make sure that the
+      conditions are being handled properly. This will often
+      produce log.error(...) or log.warn(...) messages, which must
+      be intercepted and checked.</p>
+
+      <p>To allow this, JMRI runs it's using tests with a special
+      log4j appender, which stores messages so that the JUnit tests
+      can look at them before they are forwarded to the log. There
+      are two aspects to making this work:</p>
+
+      <ol>
+        <li>All the test classes should include common code in
+        their setup() and teardown() code to ensure that log4j is
+        properly initiated, and that the custom appender is told
+        when a test is beginning and ending.
+          <pre>
+<code>
+    // The minimal setup for log4J<br>    protected void setUp() throws Exception { <br>        super.setUp();<br>        apps.tests.Log4JFixture.setUp(); <br>    }<br>    protected void tearDown() throws Exception { <br>        apps.tests.Log4JFixture.tearDown(); <br>        super.tearDown();<br>    }<br></code>
+</pre>
+        </li>
+
+        <li>When a test is deliberately invoking a message, it
+        should then use the check to see that the message was
+        created. For example, if the class under test is expected
+        to do<br>
+          <pre>
+<code>
     log.warn("Provoked message");
-</PRE></CODE>
-the invoking test case should follow that with the line:
-<BR><PRE><CODE>
+</code>
+</pre>the invoking test case should follow that with the line:<br>
+
+          <pre>
+<code>
     jmri.util.JUnitAppender.assertWarnMessage("Provoked message");
-</CODE></PRE>
-<P>
-It will be a JUnit error if a log.warn(...) or log.error(...) message is
-produced that isn't matched to a JUnitAppender.assertWarnMessage(...) call.
-</OL>
+</code>
+</pre>
 
-In any case, all of your main() routines should start with 
-<PRE><CODE>
+          <p>It will be a JUnit error if a log.warn(...) or
+          log.error(...) message is produced that isn't matched to
+          a JUnitAppender.assertWarnMessage(...) call.</p>
+        </li>
+      </ol>In any case, all of your main() routines should start
+      with
+      <pre>
+<code>
     apps.tests.Log4JFixture.initLogging();
-</CODE></PRE>
-so that they can be run independently.
+</code>
+</pre>so that they can be run independently.
 
-<p>
-Note: Our 
-<a href="ContinuousIntegration.shtml ">CI test</a>
-executables are configured to fail if any FATAL or ERROR messages
-are emitted instead of being handled.  This means that although you can
-run your tests successfully on your own computer if they're emitting ERROR messages, 
-but you won't be able to merge your code into the common repository until those are handled.
+      <p>Note: Our <a href="ContinuousIntegration.shtml">CI
+      test</a> executables are configured to fail if any FATAL or
+      ERROR messages are emitted instead of being handled. This
+      means that although you can run your tests successfully on
+      your own computer if they're emitting ERROR messages, but you
+      won't be able to merge your code into the common repository
+      until those are handled.</p>
 
-<h3><a name="ResetInstMgr">Resetting the InstanceManager</a></h3>
+      <h3><a name="ResetInstMgr">Resetting the
+      InstanceManager</a></h3>If you are testing code that is going
+      to reference the InstanceManager, you should clear and reset
+      it to ensure you get reproducible results.
 
-If you are testing code that is going to reference the InstanceManager, 
-you should
-clear and reset it to ensure you get reproducible results.
-<p>
-Depending on what managers your code uses, your <code>setUp()</code> implementation should start with:
-<p><CODE><PRE>
-    super.setUp();<br/>
-    jmri.util.JUnitUtil.resetInstanceManager();<br/>
-    jmri.util.JUnitUtil.initInternalTurnoutManager();<br/>
-    jmri.util.JUnitUtil.initInternalLightManager();<br/>
-    jmri.util.JUnitUtil.initInternalSensorManager();<br/>
-</PRE></code>
-(You can omit the initialization managers you don't need)
-See the jmri.util.JUnitUtil class for the full list of available ones, and please add 
-more if you need one that's not there yet.
+      <p>Depending on what managers your code uses, your
+      <code>setUp()</code> implementation should start with:</p>
+      <pre>
+<code>
+    super.setUp();<br>    apps.tests.Log4JFixture.setUp(); <br>    jmri.util.JUnitUtil.resetInstanceManager();<br>    jmri.util.JUnitUtil.initInternalTurnoutManager();<br>    jmri.util.JUnitUtil.initInternalLightManager();<br>    jmri.util.JUnitUtil.initInternalSensorManager();<br></code>
+</pre>(You can omit the initialization managers you don't need) See
+the jmri.util.JUnitUtil class for the full list of available ones,
+and please add more if you need one that's not there yet.
 
-<p>
-Your <code>tearDown()</code> should end with:
-<p>
-<CODE><PRE>
-    jmri.util.JUnitUtil.resetInstanceManager();<br/>
-    super.tearDown();
-</PRE></code>
+      <p>Your <code>tearDown()</code> should end with:</p>
+      <pre>
+<code>
+    jmri.util.JUnitUtil.resetInstanceManager();<br>    apps.tests.Log4JFixture.tearDown(); <br>    super.tearDown();<br></code>
+</pre>
 
-<h3><a name="RunningListeners">Working with Listeners</a></h3>
+      <h3><a name="RunningListeners">Working
+      with Listeners</a></h3>JMRI is a multi-threaded application.
+      Listeners for JMRI objects are notified on various threads.
+      Sometimes you have to wait for that to take place.
 
-JMRI is a multi-threaded application. Listeners for
-JMRI objects are notified on various threads.
-Sometimes you have to wait for that to take place.
-<p>
-If you want to wait for some specific condition to be true, e.g. 
-receiving a reply object, you can use 
-a waitFor method call
-which looks like:
-<pre><code>
-    JUnitUtil.waitFor(()->{reply!=null}, "reply didn't arrive");
-</code></pre>
-The first argument is a lambda closure, a small piece of code that'll
-be evaluated repeatedly until true.  The String second argument is the 
-text of the assertion (error message) you'll get if the condition
-doesn't come true in a reasonable length of time.
-<p>
-Waiting for a specific result is fastest and most reliable.
-If you can't do that for some reason, 
-you can do a short time-based wait:
-<pre><code>
+      <p>If you want to wait for some specific condition to be
+      true, e.g. receiving a reply object, you can use a waitFor
+      method call which looks like:</p>
+      <pre>
+<code>
+    JUnitUtil.waitFor(()-&gt;{reply!=null}, "reply didn't arrive");
+</code>
+</pre>The first argument is a lambda closure, a small piece of code
+that'll be evaluated repeatedly until true. The String second
+argument is the text of the assertion (error message) you'll get if
+the condition doesn't come true in a reasonable length of time.
+
+      <p>Waiting for a specific result is fastest and most
+      reliable. If you can't do that for some reason, you can do a
+      short time-based wait:</p>
+      <pre>
+<code>
     JUnitUtil.releaseThread(this);
-</code></pre>
-This uses a nominal delay.
-<p>
-Note that this should <b>not</b> be used to synchronize with
-Swing threads.  
-See the <a href="#testSwingCode">Testing Swing Code</a> section for that.
-<p>
-In general, you should not have calls to sleep(), wait() or yield() in your code.
-Use the JUnitUtil and JFCUtil support for those instead.
+</code>
+</pre>This uses a nominal delay.
 
-<h3><a name="threads">Working with Threads</a></h3>
+      <p>Note that this should <b>not</b> be used to synchronize
+      with Swing threads. See the <a href="#testSwingCode">Testing
+      Swing Code</a> section for that.</p>
 
-(See a 
-<a href="#testSwingCode">following section<a/>
-for how to work with 
-<a href="#testSwingCode">Swing (GUI) objects<a/>
-and the
-<a href="#testSwingCode">Swing/AWT thread</a>)
-<p>
-Some tests will need to start threads, for example to test signal controls
-or aspects of layout I/O.
-<p>
-General principles your tests must obey for reliable operation:
-<ul>
-<li>At the end of each test, you need to stop() any threads you started.
-Doing this in tearDown() can be most reliable, because tearDown runs
-even if your test method exists due to an error.
-<p>
-If you're doing multiple tests with threads, you should
-wait for thread to actually stop before moving on to the next operation.
-You can do that with a <code>JUnitUtil.waitFor(..)</code> call
-that waits on some flag in the thread.
-<li>If your thread does any operations at <code>code()</code>
-that need to happen before you test its operation, you also have to wait for those to complete.
-</ul>
-<p>
-For example, if creating a thread based on
-<a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html">AbstractAutomat</a>, 
-you can check the start with:
-<pre><code>
-    AbsractAutomat p = new MyThreadClass();<br/>
-    p.start();<br/>
-    JUnitUtil.waitFor(()->{return p.isRunning();}, "logic running");
-</code></pre>
-and ensure termination with
-<pre><code>
-    p.stop();<br/>
-    JUnitUtil.waitFor(()->{return !p.isRunning();}, "logic stopped");
-</code></pre>
+      <p>In general, you should not have calls to sleep(), wait()
+      or yield() in your code. Use the JUnitUtil and JFCUtil
+      support for those instead.</p>
 
-<h3><a id="io" name="io"></a>Testing I/O</h3>
+      <h3><a name="threads">Working with
+      Threads</a></h3>(See a <a href="#testSwingCode">following
+      section</a> for how to work with <a href=
+      "#testSwingCode">Swing (GUI) objects</a> and the <a href=
+      "#testSwingCode">Swing/AWT thread</a>)
 
-Some test environments don't automatically flush I/O operations such as 
-streams during testing.  If you're testing something that does I/O, for example
-a TrafficController, you'll need to add "flush()" statements on all your output streams.
-(Having to wait a long time to make a test reliable is a clue that this is happening somewhere in your code)
+      <p>Some tests will need to start threads, for example to test
+      signal controls or aspects of layout I/O.</p>
 
-<h3><a name="tempFileCreation">Temporary File Creation in Tests</a></h3>
+      <p>General principles your tests must obey for reliable
+      operation:</p>
 
-Testcases which create temporary files must be carefully created so
-that there will not be any problems with file path, filesystem security, 
-pre-existence of the file, etc.  These tests must also be written in a way 
-that will operate successfully in the <a href="ContinuousIntegration.shtml"> 
-continuous integration build</a> environment.  And the temporary files should 
-not become part of the JMRI code repository.
-<p>
-Here are some ideas which can help avoid these types of problems.
-<ul>
-    <li>Place the temporary file(s) in the the "temp" directory which is a sub-
-        directory of the jmri run-time directory.  This directory is used by 
-        some testcases and is already configured as excluded from the JMRI code 
-        repository.  It may be convenient to create a subdirectory there for files
-        created by a particular test.  Be sure that the directory exists before 
-        creating files in the directory, and create the directory if necessary.
-        An example is shown here:
-<CODE><PRE>
-    String tempDirectoryName = "temp";<br/>
-    if ( <strong>! (new File(tempDirectoryName).isDirectory())</strong>) {<br/>
-        // create the temp directory if it does not exist<br/>
-        <strong>FileUtil.createDirectory(tempDirectoryName);</strong><br/>
-    }<br/>
-</PRE></code>
-    </li>
-    <li>Allow the JRE to define the directory hierarchy separator character 
-        automatically:
-<CODE><PRE>
+      <ul>
+        <li>At the end of each test, you need to stop() any threads
+        you started. Doing this in tearDown() can be most reliable,
+        because tearDown runs even if your test method exists due
+        to an error.
+
+          <p>If you're doing multiple tests with threads, you
+          should wait for thread to actually stop before moving on
+          to the next operation. You can do that with a
+          <code>JUnitUtil.waitFor(..)</code> call that waits on
+          some flag in the thread.</p>
+        </li>
+
+        <li>If your thread does any operations at
+        <code>code()</code> that need to happen before you test its
+        operation, you also have to wait for those to
+        complete.</li>
+      </ul>
+
+      <p>For example, if creating a thread based on <a href=
+      "http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html">
+      AbstractAutomat</a>, you can check the start with:</p>
+      <pre>
+<code>
+    AbsractAutomat p = new MyThreadClass();<br>    p.start();<br>    JUnitUtil.waitFor(()-&gt;{return p.isRunning();}, "logic running");
+</code>
+</pre>and ensure termination with
+      <pre>
+<code>
+    p.stop();<br>    JUnitUtil.waitFor(()-&gt;{return !p.isRunning();}, "logic stopped");
+</code>
+</pre>
+
+      <h3><a id="io" name="io"></a>Testing I/O</h3>Some test
+      environments don't automatically flush I/O operations such as
+      streams during testing. If you're testing something that does
+      I/O, for example a TrafficController, you'll need to add
+      "flush()" statements on all your output streams. (Having to
+      wait a long time to make a test reliable is a clue that this
+      is happening somewhere in your code)
+
+      <h3><a name="tempFileCreation" id=
+      "tempFileCreation">Temporary File Creation in
+      Tests</a></h3>Testcases which create temporary files must be
+      carefully created so that there will not be any problems with
+      file path, filesystem security, pre-existence of the file,
+      etc. These tests must also be written in a way that will
+      operate successfully in the <a href=
+      "ContinuousIntegration.shtml">continuous integration
+      build</a> environment. And the temporary files should not
+      become part of the JMRI code repository.
+
+      <p>Here are some ideas which can help avoid these types of
+      problems.</p>
+
+      <ul>
+        <li>Place the temporary file(s) in the the "temp" directory
+        which is a sub- directory of the jmri run-time directory.
+        This directory is used by some testcases and is already
+        configured as excluded from the JMRI code repository. It
+        may be convenient to create a subdirectory there for files
+        created by a particular test. Be sure that the directory
+        exists before creating files in the directory, and create
+        the directory if necessary. An example is shown here:
+          <pre>
+<code>
+    String tempDirectoryName = "temp";<br>    if ( <strong>! (new File(tempDirectoryName).isDirectory())</strong>) {<br>        // create the temp directory if it does not exist<br>        <strong>FileUtil.createDirectory(tempDirectoryName);</strong><br>    }<br></code>
+</pre>
+        </li>
+
+        <li>Allow the JRE to define the directory hierarchy
+        separator character automatically:
+          <pre>
+<code>
     String filename = tempDirectoryName + <strong>File.separator</strong> + "testcaseFile.txt";
-</PRE></code>
-    </li>
-    <li>Code the testcase in a way that will not break if the file already exists
-        before the testcase is run.  One way to do this is to code the testcase to
-        check for existence of the testcase temporary file(s), and delete if 
-        necessary, before writing to the file(s).  The following example will 
+</code>
+</pre>
+        </li>
+
+        <li>Code the testcase in a way that will not break if the
+        file already exists before the testcase is run. One way to
+        do this is to code the testcase to check for existence of
+        the testcase temporary file(s), and delete if necessary,
+        before writing to the file(s). The following example will
         delete the previous file if it exists:
-<CODE><PRE>
-    String filename = tempDirectoryName + File.separator + "testcaseFile.txt";<br/>
-    File file = new File(filename);<br/>
-    <strong>if (file.exists())</strong> {<br/>
-        <strong> try {<br/>
-            file.delete();<br/>
-        } catch (java.lang.Exception e) {<br/>
-            Assert.fail("Exception while trying to delete the existing file " + <br/>
-                    filename + <br/>
-                    ".\n Exception reported: " + <br/>
-                    e.toString());<br/>
-            // perform some appropriate action in this case<br/>
-        }</strong><br/>
-    }<br/>
-</PRE></code>
-    </li>
-    <li>Make sure to "close" the temporary file after it has been written.</li>
-    <li>Delete the temporary file(s) as part of the test once it is no longer 
-        needed by the testcase(s).  To allow debugging of testcases, it may be 
-        convenient to display the path and filename when logging debug messages 
-        (without deleting the temporary file), and to perform the delete only 
-        when debug logging is not enabled, such as:
-<CODE><PRE>
-    <strong>if (log.isDebugEnabled()) {</strong><br/>
-        log.debug("Path to written hex file is: "+filename);<br/>
-    <strong>}<br/>
-    else {<br/>
-        file.delete();<br/>
-    }</strong><br/>
-</PRE></code>
-    </li>
-    <li>It is unclear whether native Java library routines which create temporary
-        files in an operating-system-specific way such as: 
-<CODE><PRE>
+          <pre>
+<code>
+    String filename = tempDirectoryName + File.separator + "testcaseFile.txt";<br>    File file = new File(filename);<br>    <strong>if (file.exists())</strong> {<br>        <strong> try {<br>            file.delete();<br>        } catch (java.lang.Exception e) {<br>            Assert.fail("Exception while trying to delete the existing file " + <br>                    filename + <br>                    ".\n Exception reported: " + <br>                    e.toString());<br>            // perform some appropriate action in this case<br>        }</strong><br>    }<br></code>
+</pre>
+        </li>
+
+        <li>Make sure to "close" the temporary file after it has
+        been written.</li>
+
+        <li>Delete the temporary file(s) as part of the test once
+        it is no longer needed by the testcase(s). To allow
+        debugging of testcases, it may be convenient to display the
+        path and filename when logging debug messages (without
+        deleting the temporary file), and to perform the delete
+        only when debug logging is not enabled, such as:
+          <pre>
+<code>
+    <strong>if (log.isDebugEnabled()) {</strong><br>        log.debug("Path to written hex file is: "+filename);<br>    <strong>}<br>    else {<br>        file.delete();<br>    }</strong><br></code>
+</pre>
+        </li>
+
+        <li>It is unclear whether native Java library routines
+        which create temporary files in an
+        operating-system-specific way such as:
+          <pre>
+<code>
     java.io.File.createTempFile("testcasefile","txt")
-</PRE></code>
-        will work reliably within the <a href="ContinuousIntegration.shtml">
-            continuous integration build</a> environment.</li>
-</ul>
-<p>The above issues were identified via one testcase which executed properly on 
-    a Windows-based PC for both the "alltest" and "headlesstest" ant target, 
-    regardless of how many times it was run.  In the 
-    <a href="ContinuousIntegration.shtml"> continuous integration</a> environment,
-    the test ran properly the first time after it was checked in, but failed for 
-    every subsequent continuous integration environment execution of "headlesstest".
-    Once the test was modified based on the temporary file recommendations shown 
-    here, the test became stable over multiple continuous integration executions 
-    of "headlesstest".
+</code>
+</pre>will work reliably within the <a href=
+"ContinuousIntegration.shtml">continuous integration build</a>
+environment.
+        </li>
+      </ul>
 
-<h2><a id="testSwingCode" name="testSwingCode"></a>Testing Swing Code</h2>
+      <p>The above issues were identified via one testcase which
+      executed properly on a Windows-based PC for both the
+      "alltest" and "headlesstest" ant target, regardless of how
+      many times it was run. In the <a href=
+      "ContinuousIntegration.shtml">continuous integration</a>
+      environment, the test ran properly the first time after it
+      was checked in, but failed for every subsequent continuous
+      integration environment execution of "headlesstest". Once the
+      test was modified based on the temporary file recommendations
+      shown here, the test became stable over multiple continuous
+      integration executions of "headlesstest".</p>
 
-AWT and Swing code runs on a separate thread from JUnit tests.
-Once a Swing or AWT object has been displayed (via
-<code>show()</code> or <code>setVisible(true)</code>),
-it cannot be reliably accessed from the JUnit thread.  Even using
-the listener delay technique described above isn't reliable.
+      <h2><a id="testSwingCode" name="testSwingCode"></a>Testing
+      Swing Code</h2>AWT and Swing code runs on a separate thread
+      from JUnit tests. Once a Swing or AWT object has been
+      displayed (via <code>show()</code> or
+      <code>setVisible(true)</code>), it cannot be reliably
+      accessed from the JUnit thread. Even using the listener delay
+      technique described above isn't reliable.
 
-<p>
-For the simplest possible test, displaying a window 
-for manual interaction, it's OK to create and invoke a Swing
-object from a JUnit test.  Just don't try to interact with it once
-it's been displayed!
+      <p>For the simplest possible test, displaying a window for
+      manual interaction, it's OK to create and invoke a Swing
+      object from a JUnit test. Just don't try to interact with it
+      once it's been displayed!</p>
 
-<p>
-Because we run tests in "headless" mode during the
-<a href="ContinuousIntegration.shtml">continuous integration builds</a>,
-it's important that Swing (and AWT) access in tests
-be enclosed within a mode check:
-<p><CODE><PRE>
-        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {<br/>
-            suite.addTest(myTest.suite());<br/>
-        }<br/>
-</PRE></code>
-<p>This will run the myTest suite of tests only when a display is available.
+      <p>Because we run tests in "headless" mode during the
+      <a href="ContinuousIntegration.shtml">continuous integration
+      builds</a>, it's important that Swing (and AWT) access in
+      tests be enclosed within a mode check:</p>
+      <pre>
+<code>
+        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {<br>            suite.addTest(myTest.suite());<br>        }<br></code>
+</pre>
 
-<p>GUI tests should close windows when they're done, and in general clean up after themselves.
-If you want to keep windows around so you can manipulate them, e.g. for manual testing or debugging, 
-you can use the jmri.demo system parameter to control that:
-<p><CODE><PRE>
-        if (!System.getProperty("jmri.demo", "false").equals("false")) {<br/>
-            myFrame.setVisible(false);<br/>
-            myFrame.dispose();<br/>
-        }
-</PRE></code>
+      <p>This will run the myTest suite of tests only when a
+      display is available.</p>
 
-<p>
-For many tests, you'll both make testing reliable and improve the structure 
-of your code by separating the GUI (Swing) code from the JMRI logic and
-communications.  This lets you check the logic code separately, but invoking
-those methods and checking the state them update.
+      <p>GUI tests should close windows when they're done, and in
+      general clean up after themselves. If you want to keep
+      windows around so you can manipulate them, e.g. for manual
+      testing or debugging, you can use the jmri.demo system
+      parameter to control that:</p>
+      <pre>
+<code>
+        if (!System.getProperty("jmri.demo", "false").equals("false")) {<br>            myFrame.setVisible(false);<br>            myFrame.dispose();<br>        }
+</code>
+</pre>
 
-<h3><a name="complicatedGuiTesting">Testing Complicated GUI code</a></h3>
-<p>
-For more complicated GUI testing, we use
-<a href="http://jfcunit.sourceforge.net/">JFCUnit</a>
-to control interactions with Swing objects.
+      <p>For many tests, you'll both make testing reliable and
+      improve the structure of your code by separating the GUI
+      (Swing) code from the JMRI logic and communications. This
+      lets you check the logic code separately, but invoking those
+      methods and checking the state them update.</p>
 
-<p>
-For a very simple example of the use of JFCUnit, see the
-<a href="https://github.com/JMRI/JMRI/blob/master/java/test/jmri/util/SwingTestCaseTest.java">test/jmri/util/SwingTestCaseTest.java</a> file.
+      <h3><a name="complicatedGuiTesting" id=
+      "complicatedGuiTesting">Testing Complicated GUI code</a></h3>
 
-<p>
-To use JFCUnit, you first inherit your class From
-<code>SwingTestCase</code> instead of <code>TestCase</code>.
-This is enough to get basic operation of Swing tests; the base class 
-pauses the test thread until Swing (actually, the AWT event mechanism)
-has completed all processing after every Swing call in the test.
-(For this reason, the tests will run much slower if you're e.g. moving the
-mouse cursor around while they're running)
+      <p>For more complicated GUI testing, we use <a href=
+      "http://jfcunit.sourceforge.net/">JFCUnit</a> to control
+      interactions with Swing objects.</p>
 
-<p>
-For more complex GUI testing, you can invoke various aspects of the interface
-and check internal state using test code.
+      <p>For a very simple example of the use of JFCUnit, see the
+      <a href=
+      "https://github.com/JMRI/JMRI/blob/master/java/test/jmri/util/SwingTestCaseTest.java">
+      test/jmri/util/SwingTestCaseTest.java</a> file.</p>
 
-<h2><a id="testScriptCode" name="testScriptCode"></a>Testing Script Code</h2>
+      <p>To use JFCUnit, you first inherit your class From
+      <code>SwingTestCase</code> instead of <code>TestCase</code>.
+      This is enough to get basic operation of Swing tests; the
+      base class pauses the test thread until Swing (actually, the
+      AWT event mechanism) has completed all processing after every
+      Swing call in the test. (For this reason, the tests will run
+      much slower if you're e.g. moving the mouse cursor around
+      while they're running)</p>
 
-JMRI ships with sample scripts.  This section discussions how you can write 
-simple tests for those to ensure they keep working.
+      <p>For more complex GUI testing, you can invoke various
+      aspects of the interface and check internal state using test
+      code.</p>
 
-<h3><a id="sampleJythonScriptTesting" name="sampleJythonScriptTesting"></a>Testing Jython sample scripts</h3>
+      <h2><a id="testScriptCode" name="testScriptCode"></a>Testing
+      Script Code</h2>JMRI ships with sample scripts. This section
+      discussions how you can write simple tests for those to
+      ensure they keep working.
 
-Test scripts can be placed in <code>jython</code> and invoked by 
-<code><a href="https://github.com/JMRI/JMRI/blob/master/java/test/jmri/jmrit/jython/SampleScriptTest.java">java/test/jmri/jmrit/jython/SampleScriptTest.java</a></code>.
-<p>
-See the <code><a href="https://github.com/JMRI/JMRI/blob/master/jython/test/jmri_bindings_test.py">jmri_bindings_test.py</a></code> 
-sample for syntax.
-<p>
-The <code>SampleScriptTest</code> class is a placeholder, and should (eventually) be extended to pick up files automatically, 
-to support xUnit testing, etc.
-<p>
+      <h3><a id="sampleJythonScriptTesting" name=
+      "sampleJythonScriptTesting"></a>Testing Jython sample
+      scripts</h3>Test scripts can be placed in
+      <code>jython/test</code> are automatically invoked by
+      <code><a href=
+      "https://github.com/JMRI/JMRI/blob/master/java/test/jmri/jmrit/jython/SampleScriptTest.java">
+      java/test/jmri/jmrit/jython/SampleScriptTest.java</a></code>.
 
-<h2><a name="issues">Issues</a></h2>
+      <p>See the <code><a href=
+      "https://github.com/JMRI/JMRI/blob/master/jython/test/jmri_bindings_test.py">
+      jmri_bindings_test.py</a></code> sample for syntax, including
+      examples of how to signal test failures.</p>
 
-JUnit uses a custom classloader, which can cause problems finding
-singletons and starting Swing.  If you get the error
-about not being able to find or load a class, suspect that
-adding the missing class to 
-the test/junit/runner/excluded.properties file would fix it.
-<p>
-<u>As a test only</u>, you can try setting the "-noloading" option in the
-<code>main</code> of whichever test class you're having trouble with:
-<CODE><PRE>
-    static public void main(String[] args) {<br/>
-        String[] testCaseName = {"-noloading", LogixTableActionTest.class.getName()};<br/>
-        junit.swingui.TestRunner.main(testCaseName);<br/>
-    }<br/>
-</PRE></code>
+      <p>In the future, this could be extended to pick up files
+      automatically, to support xUnit testing, etc.</p>
 
-<p>
-Please don't leave "-noloading" in place, as it prevents people from rerunning the test
-dynamically. Instead, the right long-term fix is to have all classes with JUnit loader
-issues included in the 
-<code>test/junit/runner/excluded.properties</code>
-file. JUnit uses those properties to decide how to handle loading
-and reloading of classes.
+      <h2><a name="issues">Issues</a></h2>JUnit uses a
+      custom classloader, which can cause problems finding
+      singletons and starting Swing. If you get the error about not
+      being able to find or load a class, suspect that adding the
+      missing class to the test/junit/runner/excluded.properties
+      file would fix it.
 
-  <!--#include virtual="/Footer" -->
+      <p><u>As a test only</u>, you can try setting the
+      "-noloading" option in the <code>main</code> of whichever
+      test class you're having trouble with:</p>
+      <pre>
+<code>
+    static public void main(String[] args) {<br>        String[] testCaseName = {"-noloading", LogixTableActionTest.class.getName()};<br>        junit.swingui.TestRunner.main(testCaseName);<br>    }<br></code>
+</pre>
 
-  </div><!-- closes #mainContent-->
-</div> <!-- closes #mBody-->
+      <p>Please don't leave "-noloading" in place, as it prevents
+      people from rerunning the test dynamically. Instead, the
+      right long-term fix is to have all classes with JUnit loader
+      issues included in the
+      <code>test/junit/runner/excluded.properties</code> file.
+      JUnit uses those properties to decide how to handle loading
+      and reloading of classes. 
+      <!--#include virtual="/Footer" --></p>
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>
-

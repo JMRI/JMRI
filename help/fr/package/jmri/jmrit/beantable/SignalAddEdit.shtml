@@ -77,14 +77,12 @@ Pour chaque connexion, saisissez l'aiguillage JMRI
 soit comme un nombre (1,2) ou comme un Nom JMRI
  (nom  syst&#232;me, comme LT1, CT2 ou un nom utilisateur d&#233;j&#224; d&#233;fini).
 Ils n'ont pas besoin d'&#234;tre cons&#233;cutives ou dans un ordre particulier.
-.
-  <p>
    
 <dt> sortie Quadruple</dt>
 <dd>
 Ce type commande d'une t&#234;te de signal via quatre connexions &#233;lectriques.
 On va &#224; une lampe /LED verte,  &#224; une jaune,
- &#224; une rouge, et le quatri&#232;me &#224; une "lunaire" (blanc) .<p>
+ &#224; une rouge, et le quatri&#232;me &#224; une "lunaire" (blanc).<p>
 Ces connexions sont command&#233;es via l'aiguillage logique JMRI, et donc appara&#238;tre dans le Tableau Aiguillage. Elles ne sont pas vraiment li&#233;es &#224; la commutation des moteurs, m&#234;me si, elles sont simplement des sorties &#233;lectriques.<p>
 Pour chaque connexion, saisissez l'aiguillage JMRI
 pour le raccordement &#233;lectrique sur le r&#233;seau soit comme un nombre (1,2,3) ou comme un Nom JMRI (nom  syst&#232;me, comme LT1, CT2 ou un nom utilisateur d&#233;j&#224; d&#233;fini). Ils n'ont pas besoin d'&#234;tre cons&#233;cutives ou dans un ordre particulier.<p>

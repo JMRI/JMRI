@@ -34,10 +34,6 @@ import org.slf4j.LoggerFactory;
 
 public class SignalMastItemPanel extends TableItemPanel implements ListSelectionListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7308622179668168349L;
     SignalMast _mast;
 
     public SignalMastItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel model, Editor editor) {
@@ -156,8 +152,10 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             _family = null;
             return;
         }
-        _mast = InstanceManager.signalMastManagerInstance().provideSignalMast(bean.getDisplayName());
-        if (_mast == null) {
+        
+        try {
+            _mast = InstanceManager.signalMastManagerInstance().provideSignalMast(bean.getDisplayName());
+        } catch (IllegalArgumentException ex) {
             log.error("getIconMap: No SignalMast called " + bean.getDisplayName());
             _currentIconMap = null;
             return;
@@ -169,7 +167,6 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         while (e.hasMoreElements()) {
             String aspect = e.nextElement();
             String s = appMap.getProperty(aspect, "imagelink");
-            s = s.substring(s.indexOf("resources"));
             NamedIcon n = new NamedIcon(s, s);
             _currentIconMap.put(aspect, n);
         }

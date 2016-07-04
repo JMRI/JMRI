@@ -58,6 +58,13 @@ import org.slf4j.LoggerFactory;
  * retrieve the locomotive information for that roster entry. Note that the
  * RosterEntry information is duplicated in both the Roster (stored in the
  * roster.xml file) and in the specific file for the entry.
+ * <p>
+ * Originally, JMRI managed just one global roster, held in a global Roster
+ * object. With the rise of more complicated layouts, code has been added to
+ * address multiple rosters, with the primary one now held in Roster.default().
+ * We're moving references to Roster.default() out to the using code, so that
+ * eventually we can make those explicit references to other Roster objects
+ * as/when needed.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2010
  * @author Dennis Miller Copyright 2004
@@ -249,7 +256,10 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     }
 
     /**
-     * @return The Number of roster entries that are in the specified group.
+     * @param group The group being queried or null for all entries in the
+     *              roster.
+     * @return The Number of roster entries in the specified group or 0 if the
+     *         group does not exist.
      */
     public int numGroupEntries(String group) {
         if (group != null
@@ -265,6 +275,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * Return RosterEntry from a "title" string, ala selection in
      * matchingComboBox.
      *
+     * @param title The title for the RosterEntry.
      * @return The matching RosterEntry or null
      */
     public RosterEntry entryFromTitle(String title) {
@@ -279,6 +290,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     /**
      * Return RosterEntry from a "id" string.
      *
+     * @param id The id for the RosterEntry.
      * @return The matching RosterEntry or null
      */
     public RosterEntry getEntryForId(String id) {
@@ -293,7 +305,8 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     /**
      * Return a list of RosterEntry which have a particular DCC address.
      *
-     * @return an ArrayList of matching entries, perhaps empty
+     * @param a The address.
+     * @return a List of matching entries, empty if there are not matches.
      */
     @Nonnull
     public List<RosterEntry> getEntriesByDccAddress(String a) {
@@ -307,6 +320,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     /**
      * Return a specific entry by index
      *
+     * @param i The RosterEntry at position i in the roster.
      * @return The matching RosterEntry
      */
     @Nonnull
@@ -317,7 +331,10 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     /**
      * Get the Nth RosterEntry in the group
      *
-     * @return The specified entry in the group
+     * @param group The group being queried.
+     * @param i     The index within the group of the requested entry.
+     * @return The specified entry in the group or null if i is larger than the
+     *         group, or the group does not exist.
      */
     public RosterEntry getGroupEntry(String group, int i) {
         List<RosterEntry> l = matchingList(null, null, null, null, null, null, null);
@@ -366,7 +383,9 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     /**
      * Return filename from a "title" string, ala selection in matchingComboBox.
      *
-     * @return The filename matching this "title", or null if none exists
+     * @param title The title for the entry.
+     * @return The filename for the RosterEntry matching title, or null if no
+     *         such RosterEntry exists.
      */
     public String fileFromTitle(String title) {
         RosterEntry r = entryFromTitle(title);
@@ -449,15 +468,23 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * Get a List of {@link RosterEntry} objects in Roster matching some
      * information. The list will be empty if there are no matches.
      *
-     * @return List or matching RosterEntries or an empty List
+     * @param roadName      road name of entry or null for any road name
+     * @param roadNumber    road number of entry of null for any number
+     * @param dccAddress    address of entry or null for any address
+     * @param mfg           manufacturer of entry or null for any manufacturer
+     * @param decoderModel  decoder model of entry or null for any model
+     * @param decoderFamily decoder family of entry or null for any family
+     * @param id            id of entry or null for any id
+     * @param group         group entry is member of or null for any group
+     * @return List of matching RosterEntries or an empty List
      */
     @Nonnull
     public List<RosterEntry> getEntriesMatchingCriteria(String roadName, String roadNumber, String dccAddress,
-            String mfg, String decoderMfgID, String decoderVersionID, String id, String group) {
+            String mfg, String decoderModel, String decoderFamily, String id, String group) {
         return findMatchingEntries(
                 (RosterEntry r) -> {
                     return checkEntry(r, roadName, roadNumber, dccAddress,
-                            mfg, decoderMfgID, decoderVersionID,
+                            mfg, decoderModel, decoderFamily,
                             id, group);
                 }
         );
@@ -471,6 +498,13 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * }
      * with a null group.
      *
+     * @param roadName      road name of entry or null for any road name
+     * @param roadNumber    road number of entry of null for any number
+     * @param dccAddress    address of entry or null for any address
+     * @param mfg           manufacturer of entry or null for any manufacturer
+     * @param decoderModel  decoder model of entry or null for any model
+     * @param decoderFamily decoder family of entry or null for any family
+     * @param id            id of entry or null for any id
      * @return List of matching RosterEntries or an empty List
      * @see #getEntriesMatchingCriteria(java.lang.String, java.lang.String,
      * java.lang.String, java.lang.String, java.lang.String, java.lang.String,
@@ -478,8 +512,8 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      */
     @Nonnull
     public List<RosterEntry> matchingList(String roadName, String roadNumber, String dccAddress,
-            String mfg, String decoderMfgID, String decoderVersionID, String id) {
-        return this.getEntriesMatchingCriteria(roadName, roadNumber, dccAddress, mfg, decoderMfgID, decoderVersionID, id, null);
+            String mfg, String decoderModel, String decoderFamily, String id) {
+        return this.getEntriesMatchingCriteria(roadName, roadNumber, dccAddress, mfg, decoderModel, decoderFamily, id, null);
     }
 
     /**
@@ -488,6 +522,15 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * A null String argument always matches. Strings are used for convenience
      * in GUI building.
      *
+     * @param i             index in the roster for the RosterEntry
+     * @param roadName      road name of entry or null for any road name
+     * @param roadNumber    road number of entry of null for any number
+     * @param dccAddress    address of entry or null for any address
+     * @param mfg           manufacturer of entry or null for any manufacturer
+     * @param decoderModel  decoder model of entry or null for any model
+     * @param decoderFamily decoder family of entry or null for any family
+     * @param id            id of entry or null for any id
+     * @param group         group entry is member of or null for any group
      * @return true if the entry matches
      */
     public boolean checkEntry(int i, String roadName, String roadNumber, String dccAddress,
@@ -502,6 +545,16 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * A null String argument always matches. Strings are used for convenience
      * in GUI building.
      *
+     * @param list          the list of RosterEntrys being searched
+     * @param i             the index of the roster entry in the list
+     * @param roadName      road name of entry or null for any road name
+     * @param roadNumber    road number of entry of null for any number
+     * @param dccAddress    address of entry or null for any address
+     * @param mfg           manufacturer of entry or null for any manufacturer
+     * @param decoderModel  decoder model of entry or null for any model
+     * @param decoderFamily decoder family of entry or null for any family
+     * @param id            id of entry or null for any id
+     * @param group         group entry is member of or null for any group
      * @return True if the entry matches
      */
     public boolean checkEntry(List<RosterEntry> list, int i, String roadName, String roadNumber, String dccAddress,
@@ -519,6 +572,15 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * A null String argument always matches. Strings are used for convenience
      * in GUI building.
      *
+     * @param r             the roster entry being checked
+     * @param roadName      road name of entry or null for any road name
+     * @param roadNumber    road number of entry of null for any number
+     * @param dccAddress    address of entry or null for any address
+     * @param mfg           manufacturer of entry or null for any manufacturer
+     * @param decoderModel  decoder model of entry or null for any model
+     * @param decoderFamily decoder family of entry or null for any family
+     * @param id            id of entry or null for any id
+     * @param group         group entry is member of or null for any group
      * @return True if the entry matches
      */
     public boolean checkEntry(RosterEntry r, String roadName, String roadNumber, String dccAddress,
@@ -852,7 +914,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * Uses writeFile(String), a protected method that can write to a specific
      * location.
      *
-     * @deprecated
+     * @deprecated Since 4.0 Use Roster.getDefault().writeRoster() instead
      * @see #writeRoster()
      */
     @Deprecated
@@ -942,17 +1004,6 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     }
 
     /**
-     * Return the filename String for the default roster file, including
-     * location. This is here to allow easy override in tests.
-     *
-     * @return The roster default location.
-     */
-    @Deprecated
-    public static String defaultRosterFilename() {
-        return Roster.getDefault().getRosterIndexPath();
-    }
-
-    /**
      * Set the default location for the Roster file, and all individual
      * locomotive files.
      *
@@ -1003,40 +1054,6 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         return this.rosterLocation;
     }
 
-    /**
-     * Set the default location for the Roster file, and all individual
-     * locomotive files.
-     *
-     * @param f Absolute pathname to use. A null or "" argument flags a return
-     *          to the original default in the user's files directory.
-     * @deprecated use {@link #setRosterLocation(java.lang.String) } against the
-     * default Roster instance instead.
-     */
-    @Deprecated
-    public static void setFileLocation(String f) {
-        Roster.getDefault().setRosterLocation(f);
-    }
-
-    /**
-     * Absolute path to roster file location.
-     * <P>
-     * Default is in the user's files directory, but can be set to anything.
-     *
-     * @return location of the Roster file
-     * @see jmri.util.FileUtil#getUserFilesPath()
-     * @deprecated use {@link #getRosterLocation() } from the default Roster
-     * instance instead.
-     */
-    @Deprecated
-    public static String getFileLocation() {
-        return Roster.getDefault().getRosterLocation();
-    }
-
-    @Deprecated
-    public static void setRosterFileName(String name) {
-        Roster.getDefault().setRosterIndexFileName(name);
-    }
-
     @Override
     public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
@@ -1075,6 +1092,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * Notify that the ID of an entry has changed. This doesn't actually change
      * the Roster per se, but triggers recreation.
      *
+     * @param r The RosterEntry that has changed.
      */
     public void entryIdChanged(RosterEntry r) {
         log.debug("EntryIdChanged");
@@ -1160,25 +1178,13 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * Add a list of {@link jmri.jmrit.roster.rostergroup.RosterGroup}.
      * RosterGroups that are already known to the Roster are ignored.
      *
+     * @param groups RosterGroups to add to the roster. RosterGroups already in
+     *               the roster will not be added again.
      */
     public void addRosterGroups(List<RosterGroup> groups) {
         groups.stream().forEach((rg) -> {
             this.addRosterGroup(rg);
         });
-    }
-
-    /**
-     * Add a roster group, notifying all listeners of the change
-     * <p>
-     * This method fires the property change notification "RosterGroupAdded"
-     *
-     * @param str The group to be added
-     * @deprecated Use {@link #addRosterGroup(java.lang.String) } instead.
-     */
-    @Deprecated
-    // All internal JMRI use has been removed.
-    public void addRosterGroupList(String str) {
-        this.addRosterGroup(new RosterGroup(str));
     }
 
     public void removeRosterGroup(RosterGroup rg) {
@@ -1374,6 +1380,12 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * To rename a RosterGroup, use
      * {@link jmri.jmrit.roster.rostergroup.RosterGroup#setName(java.lang.String)}.
      *
+     * @param group  The group being associated with newKey and will be
+     *               disassociated with the key matching
+     *               {@link RosterGroup#getName()}.
+     * @param newKey The new key by which group can be found in the map of
+     *               RosterGroups. This should match the intended new name of
+     *               group.
      */
     public void remapRosterGroup(RosterGroup group, String newKey) {
         this.rosterGroups.remove(group.getName());

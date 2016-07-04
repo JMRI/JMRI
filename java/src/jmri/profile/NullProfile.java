@@ -17,7 +17,7 @@ import javax.annotation.Nonnull;
  * that access the {@link #name} and {@link #id} fields to remove protections
  * and restrictions on those fields.
  *
- * @author rhwood Copyright (C) 2014
+ * @author Randall Wood Copyright (C) 2014
  * @see jmri.profile.ProfileManager#setActiveProfile(jmri.profile.Profile)
  */
 public class NullProfile extends Profile {

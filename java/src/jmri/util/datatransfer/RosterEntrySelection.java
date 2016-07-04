@@ -30,7 +30,6 @@ import jmri.jmrit.roster.RosterEntry;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Randall Wood Copyright (C) 2011
- * @version	$Revision: $
  */
 public class RosterEntrySelection implements Transferable, ClipboardOwner {
 

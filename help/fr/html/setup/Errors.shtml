@@ -15,13 +15,13 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
 <!-- Page Body -->
 <h1> 
-JMRI: Codes et Messages d'Erreurs
+<a name="erreurs">JMRI: Codes et Messages d'Erreurs</a>
 </h1>
 
 <dl>

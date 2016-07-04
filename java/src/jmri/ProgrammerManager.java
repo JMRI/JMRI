@@ -1,4 +1,3 @@
-/* ProgrammerManager.java */
 package jmri;
 
 /**
@@ -38,5 +37,3 @@ public interface ProgrammerManager extends AddressedProgrammerManager, GlobalPro
 
 }
 
-
-/* @(#)ProgrammerManager.java */

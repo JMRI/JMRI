@@ -24,6 +24,7 @@
 </head>
 
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
@@ -59,7 +60,7 @@ a default Locale (as part of the
 <a href="../../../package/apps/TabbedPreferences.shtml#locale">Advanced Preferences</a>), 
 we can customize the JMRI&reg; program to different countries and languages.
 
-<a name="resourcebundles"><h2>Use of Resource Bundles</h2></a>
+<a name="resourcebundles"></a><h2>Use of Resource Bundles</h2>
 The text for menus, buttons and similiar controls is for the most part contained in
 <strong>property files</strong>, which are accessed via the Resource Bundle mechanism
 of java.util.
@@ -176,18 +177,18 @@ by converting special characters to the right sequences, but you must run your f
 Special characters are somewhat machine-specific, so to make they're properly handled, they have to be converted to
 ISO 8859-1 sequences on your computer before submission.
 
-<a name="xml" id="xml"><h3>Translating XML files</h3>
+<a name="xml"><h3>Translating XML files</h3>
 XML files can also be internationalized.  There are examples in the 
 decoder definition directories.  Look for elements with an xml:lang
 attribute. Basically, you create additional elements with that attribute to 
 specify the language used:
-<code><pre>
+<pre><code>
       &lt;variable CV="6" default="22" item="Vmid"&gt;
         &lt;decVal max="64"/&gt;
         &lt;label&gt;Vmid&lt;/label&gt;
         &lt;label xml:lang="fr"&gt;Vmoy&lt;/label&gt;
       &lt;/variable&gt;
-</pre></code>
+</code></pre>
 <p>
 In the XML files, the 'item' attributes have to stay untranslated, as 
 does the entire xml/names.xml file.
@@ -343,20 +344,20 @@ Go ahead and
 call the <code>getBundle()</code> each time, it's fast because it works through
 a weakly-referenced and garbage-collected cache.
 
-<a name="xml-dev" id="xml-dev"></a>
+<a name="xml-dev"></a>
 <h3>XML Access</h3>
 <p>Second, you have to retrieve XML elements and attributes properly.
 The jmri.util.jdom.LocaleSelector provides a getAttribute(...) method
 that replaces the JDOM getAttribute element when the content of the 
 attribute might have been internationalized. You use it like this:
 
-<code><pre>
+<pre><code>
 String choice = LocaleSelector.getAttribute(choiceElement, "choice")
-</pre></code>
+</code></pre>
 where "choiceElement" is a JDOM Element object containing a (possibly translated)
 "choice" attribute.  &quot;Null&quot; will be returned if nothing is found.
 
-<a name="numbers" id="numbers"></a>
+<a name="numbers"></a>
 <h3>Numbers</h3>
 <p>The number "10*10*10+2+3/10" is written in different ways in different places:
 "1002.3",
@@ -365,10 +366,10 @@ where "choiceElement" is a JDOM Element object containing a (possibly translated
 <p>
 JMRI provides a helpful utility for handling this on input:
 
-<code><pre>
+<pre><code>
    double d = jmri.util.IntlUtilities.doubleValue("1,002.3");
    float  f = jmri.util.IntlUtilities.floatValue("1,002.3");
-</pre></code>
+</code></pre>
 
 Note that this can throw a <code>java.text.ParseException</code> if the input is unparsable, so 
 handling that is part of your user-error handling.
@@ -383,7 +384,7 @@ For output:
 without using these formatting tools. That way, the files can be moved
 from one user to another without worrying about whether they are using the same Locale.</strong>
 
-<a name="testing" id="testing">
+<a name="testing">
 <h3>Testing</h3>
 <p>
 You should check that you've properly internationalized 

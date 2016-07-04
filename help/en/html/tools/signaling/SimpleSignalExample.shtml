@@ -18,7 +18,7 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
@@ -40,7 +40,7 @@ signaling rule book. For more information on the various possibilities,
 please see the
 <a href="index.shtml">JMRI Signaling help page</a>.
 
-<a id="example1"><h2>Predefined example</h2></a>
+<a id="example1"></a><h2>Predefined example</h2>
 
 <p>A predefined SSL example is provided in the JMRI installation (see the
 <a href="http://jmri.org/download">download page</a> for information on downloading).
@@ -147,7 +147,7 @@ effect, then click on the example Panel to see how the new settings work.
 </ul>
 
 <a name="setup">
-<h2>Setting up your own example</h2></a>
+</a><h2>Setting up your own example</h2>
 The complete set of steps involved in creating this example are:
 <ol>
 <li>Launch and configure the PanelPro application. Restart it to 

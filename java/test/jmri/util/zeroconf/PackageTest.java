@@ -9,7 +9,6 @@ import junit.framework.TestSuite;
  *
  * @author	Bob Jacobsen Copyright 2003
  * @author Paul Bender Copyright 2014
- * @version $Revision: 22233 $
  */
 public class PackageTest extends TestCase {
 

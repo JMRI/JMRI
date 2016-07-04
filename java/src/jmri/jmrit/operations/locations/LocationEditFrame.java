@@ -297,9 +297,10 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
-        JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+        JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(new TrackCopyAction(this));
         toolMenu.add(new ChangeTracksTypeAction(this));
+        toolMenu.add(new ShowTrackMovesAction());
         toolMenu.add(new ModifyLocationsAction(Bundle.getMessage("TitleModifyLocation"), _location));
         toolMenu.add(new ModifyLocationsCarLoadsAction(_location));
         if (_location != null && _location.getLocationOps() == Location.NORMAL) {
@@ -461,6 +462,19 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     private void saveLocation() {
         if (!checkName(Bundle.getMessage("save"))) {
             return;
+        }
+        // stop table editing so "Moves" are properly saved
+        if (spurTable.isEditing()) {
+            spurTable.getCellEditor().stopCellEditing();
+        }
+        if (yardTable.isEditing()) {
+            yardTable.getCellEditor().stopCellEditing();
+        }
+        if (interchangeTable.isEditing()) {
+            interchangeTable.getCellEditor().stopCellEditing();
+        }
+        if (stagingTable.isEditing()) {
+            stagingTable.getCellEditor().stopCellEditing();
         }
         _location.setName(locationNameTextField.getText());
         _location.setComment(commentTextArea.getText());

@@ -43,7 +43,6 @@ import org.slf4j.LoggerFactory;
  * Initial implementation only handles the setting up of turnouts on a path.
  *
  * @author Kevin Dickerson Copyright (C) 2011
- * @version	$Revision: 19923 $
  */
 public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDefault {
 
@@ -228,11 +227,6 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
             return b;
         }
         return getBeanBySystemName(name);
-    }
-
-    @Deprecated
-    public char systemLetter() {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     public String getSystemPrefix() {
