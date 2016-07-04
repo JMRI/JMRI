@@ -3,7 +3,8 @@
 <head>
 <!-- Copyright Me 2008 -->
 <!--  $Id$ -->
-<!-- UpDated by Blorec Herv&#233;  2013-09-01-->
+<!-- UpDated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-03 -->
+
 
 <title>JMRI: Advanced Icons in PanelPro</title>
 
@@ -24,58 +25,79 @@
 
 <h1>JMRI: Ic&#244;nes Avanc&#233;es dans PanelPro</h1>
 
-<a name="memoryicon"><h3>Ic&#244;nes de M&#233;moire</h3></a>
+<a name="memoryicon"><h3>Ic&#244;nes M&#233;moire</h3></a>
 
 Les Objets M&#233;moire sont con&#231;us pour les scripts de
-contr&#244;le; la premi&#232;re application est un MemoryIcon qui vous permet de placer une ic&#244;ne 
+commande; la premi&#232;re application est un MemoryIcon qui vous permet de placer une ic&#244;ne 
 multi-&#233;tat sur l'&#233;cran.
-<P>
-Objets MemoryIcon travaillent de deux fa&#231;ons: Si une s&#233;rie d'ic&#244;nes est d&#233;finie dans le fichier, 
+<p>
+Les Objets MemoryIcon travaillent de deux fa&#231;ons: Si une s&#233;rie d'ic&#244;nes est d&#233;finie dans le fichier, 
 le contenu de la m&#233;moire sera traduit par l'interm&#233;diaire de cette table (ce fut le comportement 
 d'origine). S'il n'y a pas toutes les ic&#244;nes d&#233;finies, le contenu de la m&#233;moire est affich&#233;e
 directement, sous forme de cha&#238;ne si c'est une cha&#238;ne et en tant que NamedIcon si c'est un NamedIcon.
-<P>
+<p>
 Voir xml/samples/MemoryIconExample.xml pour tout savoir
 sur la fa&#231;on de le mettre en place.
 
 <a name="reportericon"><h3>Ic&#244;nes Journal</h3></a>
 
+<a href="../../tools/images/AddReportertoPanel.png">
+<img src="../../tools/images/AddReportertoPanel.png" height="146" width="166" align="right"></a>
 La premi&#232;re impl&#233;mentation de Journal est le transpondeur Digitrax.
-En ajoutant les &#233;l&#233;ments appropri&#233;s &#224; vos fichiers panneau, vous pouvez afficher des informations sur 
+En ajoutant les &#233;l&#233;ments appropri&#233;s &#224; vos fichiers Panneau, vous pouvez afficher des informations sur 
 l'ID de votre d&#233;codeur sur votre panneau.  
-<P>
-Voir xml/samples/ReporterIconExample.xml  pour tout savoir
-sur la fa&#231;on de le mettre en place.
+<!-- information below was copied from tools/Reporters.shtml 01/2016 -->
+<p>Une valeur Rapport peut &#234;tre affich&#233;e sur un Panneau par une ic&#244;ne.
+Pour faire ceci:
+	<ul>
+	<li>Sur la fen&#234;tre &#201;diteur de panneau pour votre Panneau, chercher le bouton "Ajouter Rapport"
+	<li>Dans la boite texte pr&#244;che de ce bouton, entrez le nom utilisateur ou le Nom Syst&#232;me Rapport d&#233;sir&#233;
+	<li> Cliquez sur le bouton "Ajouter au Panneau". L'ic&#244;ne Rapport sera plac&#233;e sur votre Panneau.
+	Si elle n'est pas visible, c'est que peut-&#234;tre la valeur actuelle est vide;
+	utilisez la Table Rapport pour changer la valeur &#224; quelque chose qui sera visible.
+	<li>vous pouvez glissez l'ic&#244;ne o&#249; vous la voulez de la mani&#232;re habituelle.
+	<li>Le menu contextuel sur l'ic&#244;ne vous permet de changer le formatage
+	</ul>
+<p>
+Voir xml/samples/ReporterIconExample.xml pour information 
+sur comment d&#233;finir ce code manuellement
 
-<UL>
-<LI>V&#233;rifiez d'abord que JMRI voit les messages LocoNet OK. Parmi le menu outils, ouvrez le "Tableau 
-Journal". Faites rouler une locomotive &#231; travers vos sections &#233;quip&#233;es de transpondeur, et vous devriez voir l'arriv&#233;e 
-et le d&#233;part. Afficher l'&#233;tat sur une des lignes dans la table.
+	<ul>
+	<li>V&#233;rifiez d'abord que JMRI voit les messages LocoNet OK. Depuis le menu outils, 
+	ouvrez le "Tableau 	Rapport". Faites rouler une locomotive &#231; travers vos
+ 	sections &#233;quip&#233;es de transpondeur, et vous devriez voir l'&#233;tat d'arriv&#233;e et de d&#233;part
+	affich&#233; sur une des lignes dans la table.
 
-<LI>
-Ensuite, vous devez ajouter la "ReporterIcon" qui affiche directement ceci dans le fichier du panneau.
-<P>
-Rechercher dans le r&#233;pertoire "xml/samples" dans JMRI un fichier appel&#233; "ReporterIconExample.xml".
-<P>
-(Il est &#233;galement disponible <a href="http://jmri.org/xml/samples/ReporterIconExample.xml"> sur le Web </a>
-mais de nombreux navigateurs vont essayer de l'interpr&#233;ter au lieu de vous montrer le texte, (votre option 
-navigateur "Afficher la source" tableau pourrait vous aider &#231; cet &#233;gard)
-<P>
-Vous verrez cette ligne:
-<P>
-&lt;reporter reportericon = "LR12" x = "10" y = "10" class = "jmri.jmrit.display.configurexml.ReporterIconXml"&gt;
-<P> Le "x"et "y" d&#233;finissent l'endroit o&#249; vous le voulez sur 
-votre panneau. Le "LR12" est le nom de l'objet journal, par exemple, le nom de celui que vous avez vu changer 
-quand vous cherchiez sur la table.
-<LI>
-Ouvrez votre fichier de panneau avec votre &#233;diteur favori (WordPad, si vous n'avez rien de mieux), et ins&#233;rer 
-une ligne comme celle ci juste au-dessus _apr&#232;s_ la ligne qui commence par
-<P>
-  &lt;classe paneleditor = "jmri.jmrit.display.configxml.PanelEditorXml"&gt;
-<P>
-(La ligne "paneleditor" commence sur un nouveau panneau. Si vous avez plus d'un panneau dans le fichier, vous devrez chercher le titre du panneau pour voir
-o&#249; ins&#233;rer la nouvelle ligne)
-</UL>
+	<li>
+	Ensuite, vous devez ajouter la "ReporterIcon" qui affiche directement 
+	ceci dans le fichier du panneau.
+	<p>
+	Rechercher dans le r&#233;pertoire "xml/samples" dans JMRI un fichier appel&#233; 	
+	"ReporterIconExample.xml".
+	<p>
+	(Il est &#233;galement disponible <a href="http://jmri.org/xml/samples/ReporterIconExample.xml"> sur le Web </a>
+	mais de nombreux navigateurs vont essayer de l'interpr&#233;ter au lieu de vous montrer 
+	le texte, (votre option navigateur "Afficher la source" tableau pourrait vous aider &#231; cet &#233;gard)
+	<p>
+	Vous pourrez voir cette ligne:
+	<p>
+	&lt;reporter reportericon = "LR12" x = "10" y = "10" 
+	class = "jmri.jmrit.display.configurexml.ReporterIconXml"&gt;
+	<p> 
+	Le "x"et "y" d&#233;finissent l'endroit o&#249; vous la voulez sur votre panneau. 
+	Le "LR12" est le nom de l'objet rapport, par exemple, le nom de celui que vous avez vu 
+	changer quand vous cherchiez sur la table.
+	<li>
+	Ouvrez votre fichier de panneau avec votre &#233;diteur favori (WordPad, si vous n'avez 
+	rien de mieux), et ins&#233;rer une ligne comme celle ci juste au-dessus 
+	_apr&#232;s_ la ligne qui commence par
+	<p>
+ 	 &lt;classe paneleditor = "jmri.jmrit.display.configxml.PanelEditorXml"&gt;
+	<p>
+	(La ligne "paneleditor" commence un nouveau panneau. Si vous avez plus 
+	d'un panneau dans le fichier, vous devrez chercher le titre du panneau pour voir
+	o&#249; ins&#233;rer la nouvelle ligne)
+	</ul>
 En r&#233;alit&#233; ce n''est  pas aussi difficile qu'il y para&#238;t
 
 	    </div> <!-- closes .list -->
@@ -83,4 +105,3 @@ En r&#233;alit&#233; ce n''est  pas aussi difficile qu'il y para&#238;t
 <!--#include virtual="/Footer" -->
 </body>
 </html>
-
