@@ -84,7 +84,7 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
         }
     }
 
-    public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    public void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }
 

@@ -1,4 +1,3 @@
-// MrcProgrammer.java
 package jmri.jmrix.mrc;
 
 import java.util.ArrayList;
@@ -19,7 +18,6 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2002
  * @author	Ken Cameron Copyright (C) 2014
  * @author Kevin Dickerson Copyright (C) 2014
- * @version $Revision: 24290 $
  */
 public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListener {
 
@@ -98,7 +96,8 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
         }
     }
 
-    public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    @Override
+    public void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }
 
@@ -230,4 +229,3 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
 
     private final static Logger log = LoggerFactory.getLogger(MrcProgrammer.class.getName());
 }
-/* @(#)MrcProgrammer.java */

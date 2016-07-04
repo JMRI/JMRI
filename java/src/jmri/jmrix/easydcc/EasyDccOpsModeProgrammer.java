@@ -1,4 +1,3 @@
-/* EasyDccOpsModeProgrammer.java */
 package jmri.jmrix.easydcc;
 
 import java.util.ArrayList;
@@ -20,7 +19,6 @@ import org.slf4j.LoggerFactory;
  *
  * @see jmri.Programmer
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version	$Revision$
  */
 public class EasyDccOpsModeProgrammer extends EasyDccProgrammer implements AddressedProgrammer {
 
@@ -76,7 +74,8 @@ public class EasyDccOpsModeProgrammer extends EasyDccProgrammer implements Addre
         throw new ProgrammerException();
     }
 
-    public synchronized void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
+    @Override
+    public synchronized void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("confirm CV=" + CV);
         }
@@ -130,5 +129,3 @@ public class EasyDccOpsModeProgrammer extends EasyDccProgrammer implements Addre
     private final static Logger log = LoggerFactory.getLogger(EasyDccOpsModeProgrammer.class.getName());
 
 }
-
-/* @(#)EasyDccOpsModeProgrammer.java */

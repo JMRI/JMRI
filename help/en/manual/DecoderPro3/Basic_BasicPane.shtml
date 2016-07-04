@@ -63,7 +63,7 @@ list. </p>
 confirmed from the decoder. Settings that have been changed by the user and  have not 
 been written back to the decoder appear in a orange color. You will see  examples of <br>
 this throughout the manual. </p>
-<a name="ReadData" id="ReadData"></a>
+<a name="ReadData"></a>
 To read the actual settings for these options (and IF your system and
 installed decoder will allow readback of decoder values), click on the <strong>
 <input name="button" id="button" value="Read full sheet" type="button">
@@ -81,7 +81,7 @@ what DecoderPro is doing, for example, the specific CV being read. </p>
   </strong>functions are  dependent on your command station. If 
   your system does not have the capability to read CVs,  then these buttons will not be 
   available. </p>
-<p><a name="EnterEditData" id="EnterEditData"></a>If you wish to change
+<p><a name="EnterEditData"></a>If you wish to change
 the address of the locomotive, type in the new address. To turn on or
 off 4 digit addressing, select the desired radio button. .&nbsp; Be
 sure that the address type agrees with the number of characters in the
@@ -89,7 +89,7 @@ address.&nbsp;</p>
 <p> When you are finished, click on 
   <input name="button4" id="button4" value="Write full sheet" type="button">
 to  write the new values in the decoder. </p>
-  <p><a name="WriteData" id="WriteData"></a>Writing
+  <p><a name="WriteData"></a>Writing
 usually takes much less time than reading, because the value can be
 sent directly. As the write operation proceeds, the data will change
 from yellow to white. If there is difficulty writing to the decoder,
@@ -104,7 +104,7 @@ back, or possibly because the command station or decoder cannot read
 back.&nbsp; Try moving the loco and try again.&nbsp; If it is a command
 station or decoder read-back issue, try the loco on the mainline and
 see if the programming was successful. </p>
-  <p><a name="SaveData" id="SaveData"></a>
+  <p><a name="SaveData"></a>
   To finish this "basic" programming of a  decoder, click once more on the <strong>Roster Entry</strong> tab, You will see that the  address field has now been filled in, so  you can now 
   click on the <strong>
   <input name="button5" id="button5" value="Save to roster" type="button">

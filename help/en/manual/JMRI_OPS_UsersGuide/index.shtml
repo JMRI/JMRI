@@ -17,7 +17,7 @@
     <div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
-<a name="Top" id="Top"></a>
+<a name="Top"></a>
 
 <h1>JMRI&reg; OperationsPro&trade; Manual</h1>
 <h2>Introduction</h2>
@@ -49,20 +49,20 @@ for model railroaders. It contains modular applications for:</p>
 
 <h2>Table of Contents</h2>
 
-<h4><a name="Installing" id="Installing">Installing JMRI</a></h4>
+<h4><a name="Installing">Installing JMRI</a></h4>
 <ul>
 <li><a href="Installing_JMRI.shtml">Preparing to install</a></li>
 <li><a href="Installing_JMRI.shtml#InstallJMRI">Installing the Software</a></li>
 </ul>
 
-<h4><a name="startOps" id="startOps"></a>Starting OperationsPro</h4>
+<h4><a name="startOps"></a>Starting OperationsPro</h4>
 <ul>
 <li> <a href="Start_DecoderPro.shtml">Starting DecoderPro&reg; and OperationsPro</a></li>
 <li><a href="Start_Preferences.shtml">How do I set up my Preferences?</a></li>
 <li><a href="Ops_Start.shtml">What does OperationsPro do?</a></li>
 </ul>
 
-<h4><a name="Main" id="Main"></a>DecoderPro&reg; Main Window</h4>
+<h4><a name="Main"></a>DecoderPro&reg; Main Window</h4>
 <ul>
 <li style="font-weight: bold;"><a href="Main_Main.shtml">Main Window</a></li>
 <li><a href="Main_Menu.shtml"><span style="font-weight: bold;">Menu Overview</span></a>

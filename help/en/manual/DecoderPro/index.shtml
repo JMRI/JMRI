@@ -67,7 +67,7 @@ Notes:
 <li><a href="Installing_JMRI.shtml#InstallJMRI">Installing JMRI&reg; Software</a></li>
 </ul>
 
-<h4><a name="GettingStarted" id="GettingStarted"></a>Getting started</h4>
+<h4><a name="GettingStarted"></a>Getting started</h4>
 
 <ul>
 <li><a href="Start_DCC.shtml">What is DCC?</a></li>
@@ -424,7 +424,7 @@ Notes:
   <li><a href="Dcode_Submit.shtml">Submitting to JMRI</a></li>
 </ul>
 
-<h4><a name="Error" id="Error">Error Messages</a></h4>
+<h4><a name="Error">Error Messages</a></h4>
 
 <ul>
   <li><a href="Error.shtml">Decoder Programmer Error Messages</a></li>

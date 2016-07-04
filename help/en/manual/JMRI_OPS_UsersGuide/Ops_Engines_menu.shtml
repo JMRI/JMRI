@@ -36,24 +36,24 @@
   <li><a href="Ops_ImportEngines_FromRoster.shtml">Import from JMRI roster</a></li>
   <li><a href="Ops_ImportEngines_FromFiles.shtml">Import from file</a></li>
 
-  <li><a name="export" id="export">Export to file</a>
+  <li><a name="export">Export to file</a>
 <p>Saves the Roster to your Operations\Export folder and displays the <strong>Export complete</strong> dialog. The file is exported automatically as a .csv file.<br>
 <img src="images/Ops_Engine_ExportFile.png" alt="export" height="122" width="742"></p></li>
 
-  <li><a name="delete" id="delete"><strong>Delete all locomotives</strong></a>
+  <li><a name="delete"><strong>Delete all locomotives</strong></a>
 <p>Opens the <strong>Delete all locomotives?</strong> dialog. <strong>OK</strong> will
 delete all Locomotives in the Operations Roster; <strong>Cancel</strong> will abort the deletion.<br>
 <img src="images/Ops_Engine_deleteRoster.png" alt="delete" height="122" width="446"></p></li>
 
-  <li><a name="reset" id="reset"><strong>Reset move count all locomotives</strong></a>
+  <li><a name="reset"><strong>Reset move count all locomotives</strong></a>
 <p>Allows resetting all locomotive move counts.
 <p><img style="width: 564px; height: 122px;" alt="Operations Engine" src="images/Ops_Engine_Tool_resetMove.png"></p></li>
 
-  <li><a name="print" id="print"><strong>Print</strong></a> -- Opens your
+  <li><a name="print"><strong>Print</strong></a> -- Opens your
 computers <strong>Print</strong> window and will print your locomotive roster.
 <p><img src="images/Ops_Engine_print.png" alt="print" height="345" width="722"></p></li>
 
-  <li><a name="preview" id="preview"><strong>Preview</strong></a>
+  <li><a name="preview"><strong>Preview</strong></a>
 <p>Opens your computer's <strong>Print Preview</strong> window and
 shows a preview of your Locomotive Roster.</p>
 <img src="images/Ops_Engine_preview.png" alt="engine preview" height="301" width="670"></p></li>

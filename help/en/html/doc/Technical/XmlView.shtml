@@ -1,87 +1,92 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
+
 <html lang="en">
 <head>
-    <TITLE>
- 	JMRI: Viewing JMRI XML Files
-    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
-    <meta name="keywords" content="JMRI technical code xml usage">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-    <!--#include virtual="/Style" -->
-</head>
+  <title>JMRI: Viewing JMRI XML Files</title>
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content="JMRI technical code xml usage">
+  <!--#include virtual="/Style" -->
+</head><!--#include virtual="/Header" -->
 
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
+<body>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-	<div id="mainContent">
+    <div id="mainContent">
+      <h1>JMRI: Viewing XML Files</h1>JMRI stores various
+      information in XML files. Although they're a text format that
+      is basically human-readable, it's a complicated format.
 
-<H1>JMRI: Viewing XML Files</H1>
+      <p>To make them easier to read, print and understand, most
+      JMRI XML files can be displayed in a web browser. A technique
+      called "XSLT stylesheets" is used to format them within the
+      web browser. For an example of how this looks, please see the
+      <a href="http://jmri.org/xml/samples/NicksClinic.xml">sample
+      panel XML file</a> on the main JMRI web site. (May take a few
+      seconds to load)</p>
 
-JMRI stores various information in XML files.
-Although they're a text format that is basically human-readable,
-it's a complicated format.
+      <p>To view an XML file that JMRI has created, just open the
+      file with your favorite web browser. In many cases, you
+      should be able to just double-click on it, or drag it to the
+      web browser's icon. On some computer types, you'll need to
+      open it from the "File" menu.</p>
 
-<P>
-To make them easier to read, print and understand, most JMRI XML
-files can be displayed in a web browser.  A technique called
-"XSLT stylesheets"
-is used to format them within the web browser.  
-For an example of how this looks, please see the 
-<a href="http://jmri.org/xml/samples/NicksClinic.xml">sample panel XML file</a> on the main JMRI
-web site. (May take a few seconds to load)
+      <p>Unfortunately, this simple approach doesn't always work,
+      because not all browsers properly implement the algorithms
+      for finding the formatting files that are needed for this
+      display. If the first browser you try doesn't display the XML
+      file (usually just showing a blank page, though sometimes
+      they'll display an error message), please try other ones
+      you've got installed. Internet Explorer is particularly
+      problematic. Mozilla, Safari and Opera seem to get this
+      right, while Firefox seems to work properly on some platforms
+      and not on others. (There might also be options that affect
+      whether it works)</p>
 
-<p>
-To view an XML file that JMRI has created, just open the file with your
-favorite web browser.  In many cases, you should be able to just double-click
-on it, or drag it to the web browser's icon.  On some computer types, you'll
-need to open it from the "File" menu.
+      <p>If none of the browsers available to you can display the
+      file, you can get around this problem using the <a href=
+      "../../web/index.shtml">JMRI mini web server</a> in JMRI
+      version 2.9.4 and later.</p>
 
-<p>
-Unfortunately, this simple approach doesn't always work, because not all browsers
-properly implement the algorithms for finding the formatting files that are
-needed for this display.  
-If the first browser you try doesn't display the XML file (usually just 
-showing a blank page, though sometimes they'll display an error message),
-please try other ones you've got installed.  Internet Explorer is particularly
-problematic.  Mozilla, Safari and Opera seem to get this right, while Firefox 
-seems to work properly on some platforms and not on others.  (There might also
-be options that affect whether it works)
-<p>
-If none of the browsers available to you can display the file, 
-you can get around this problem using the 
-<a href="../../web/index.shtml">JMRI mini web server</a>
-in JMRI version 2.9.4 and later.
-<p>
-To do this:
-<UL>
-<li>First, start JMRI. 
-    <ul>
-    <li>Either DecoderPro or PanelPro can
-        be used, and no layout connection is needed. 
-    <li>You do need to be using JMRI 2.9.4 or later.
-    <li>The file you want to view must have been stored
-        from JMRI 2.9.4 or later.  If it's older than that,
-        just load it into JMIR 2.9.4 or later and store it again.
-    </ul>
-<li>Start the JMRI web server.  Under the Tools
-    menu, select "Start JMRI Web Server".
-<li>Open your web browser and enter the URL
-    "<a href="http://localhost:12080/index.html">http://localhost:12080/index.html</a>"
-<li>You should now see the JMRI logo on a index page.
-    If your XML file is within the JMRI distribution directory,
-    click on the "dist" link.  If it's within the 
-    preferences directory, click on the "prefs" link.
-<li>Finally, click on any needed directory names to get to your
-    file, then click on your file.
-</ul>
+      <p>To do this:</p>
 
-You can then use your browser to view, print, save, etc as desired.
-<!--#include virtual="/Footer" -->
+      <ul>
+        <li>First, start JMRI.
 
-	  </div><!-- closes #mainContent-->
-	</div> <!-- closes #mBody-->
+          <ul>
+            <li>Either DecoderPro or PanelPro can be used, and no
+            layout connection is needed.</li>
+
+            <li>You do need to be using JMRI 2.9.4 or later.</li>
+
+            <li>The file you want to view must have been stored
+            from JMRI 2.9.4 or later. If it's older than that, just
+            load it into JMIR 2.9.4 or later and store it
+            again.</li>
+          </ul>
+        </li>
+
+        <li>Start the JMRI web server. Under the Tools menu, select
+        "Start JMRI Web Server".</li>
+
+        <li>Open your web browser and enter the URL "<a href=
+        "http://localhost:12080/index.html">http://localhost:12080/index.html</a>"</li>
+
+        <li>You should now see the JMRI logo on a index page. If
+        your XML file is within the JMRI distribution directory,
+        click on the "dist" link. If it's within the preferences
+        directory, click on the "prefs" link.</li>
+
+        <li>Finally, click on any needed directory names to get to
+        your file, then click on your file.</li>
+      </ul>You can then use your browser to view, print, save, etc
+      as desired. <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>
-
