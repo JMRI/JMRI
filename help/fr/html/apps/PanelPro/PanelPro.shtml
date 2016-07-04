@@ -1,3 +1,4 @@
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <head>
@@ -22,65 +23,73 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<H1>JMRI: PanelPro, Une Application pour Fabriquer de Panneaux de Commande</H1>
+<H1>JMRI: PanelPro, Une Application pour Fabriquer des Panneaux de Commande</H1>
 
-Les biblioth&#232;ques JMRI contiennent l'application PanelPro pour la cr&#233;ation de simples tableaux de commande.
+Les biblioth&#232;ques JMRI contiennent l'application PanelPro pour la cr&#233;ation de tableaux de commande.
 Cette page d&#233;crit cette application, et comment l'utiliser.
 <p>
 PanelPro propose deux m&#233;thodes distinctes pour cr&#233;er des panneaux de contr&#244;le.
-<ul>
-<li>
-L'<a href="../../../package/jmri/jmrit/display/PanelEditor.shtml"> &#201;diteur de Panneau </a>
-vous permet de dessiner un panneau exactement comme vous le voulez, puis les pi&#232;ces anim&#233;es pour montrer l'&#233;tat de 
-votre r&#233;seau et vous laissez cliquez dessus pour la commande.
- <li>
-<a href="../../../package/jmri/jmrit/display/LayoutEditor.shtml"> Editeur de R&#233;seau </a>
-fournit des outils pour dessiner votre r&#233;seau tout en construisant la logique des signaux, etc. Il limite un 
-peu la fa&#231;on dont le panneau apparait, mais il peut vous faire &#233;conomiser beaucoup de temps lors votre premier sch&#233;ma.
-</UL>
+	<ul>
+	<li>
+	L'<a href="#pe"> &#201;diteur de Panneau </a>
+	vous permet de dessiner graphiquement un panneau exactement 
+	comme vous le voulez, puis animer les pi&#232;ces pour montrer l'&#233;tat de 
+	votre r&#233;seau et vous laissez cliquez dessus pour la commande.</li>
+ 	<li><a href="#cpe">l'&#201;diteur de Panneau de Commande </a>travaille comme l'&#201;diteur de Panneau mais fournit une interface 
+	alternative.</li>
+	<li><a href="#le">L'&#201;diteur de R&#233;seau</a>
+	fournit des outils pour dessiner votre r&#233;seau 
+	tout en construisant la logique des signaux, etc. Cela limite un 
+	peu la fa&#231;on dont le panneau apparait, mais il peut vous faire &#233;conomiser beaucoup de temps 
+	lors votre premier sch&#233;ma.
+	</ul>
 
 <h2>Lequel utiliser? L'&#201;diteur de R&#233;seau ou l'&#201;diteur de Panneau? </h2>
  
-
 <p>
 L'&#201;diteur de R&#233;seau cr&#233;e un "Sch&#233;ma" qui est une <i>description logique </i> de
-votre mise en r&#233;seau enti&#232;r. Vous n'avez qu'un seul sch&#233;ma, car il n'est pas
+votre  r&#233;seau enti&#232;r. Vous n'avez qu'un seul sch&#233;ma, car il n'est pas
 possible pour le logiciel de raccorder des &#233;l&#233;ments de voie ensemble au-del&#224; des limites
 entre plusieurs R&#233;seau.
 Un R&#233;seau, construit avec l'&#201;diteur de R&#233;seau, peut &#234;tre utilis&#233; pour contr&#244;ler directement des
-&#233;l&#233;ments tels que les aiguillages et les signaux; en effet de nombreux utilisateurs le trouvent tr&#232;s appropri&#233; pour
+&#233;l&#233;ments tels que les Aiguillages et les Signaux; en effet de nombreux utilisateurs le trouvent tr&#232;s appropri&#233; pour
 cette t&#226;che. Mais, il est principalement con&#231;u pour l'automatisation et
 semi-automatisation au sein de JMRI. Par exemple, vous pouvez utiliser l'&#201;diteur de R&#233;seau, pour
 construire une description de votre voie et ses cantons et signaux.
 Le logiciel peut fonctionner automatiquement comment configurer vos signaux
 bas&#233;s sur la position des aiguillages et si les cantons sont occup&#233;s,
-et les r&#232;gles appropri&#233;es &#224; votre chemin de fer (c.-&#224; d  s&#233;lectionner les r&#232;gles de signalisation
- bas&#233;es sur les diff&#233;rentes pratiques de l'entreprise!, et pas besoin de savoir comment cr&#233;er
-les r&#232;gles pour relier les signaux &#224; l'&#233;tat d'aiguillages, les cantons et d'autres signaux!).
-En outre, le sch&#233;ma de description de votre chemin de fer peut &#234;tre utilis&#233; par des
-scripts tels que AutoDispatcher2 pour contr&#244;ler automatiquement vos trains. Il ya beaucoup d' outils de JMRI qui n&#233;cessitent une description de votre r&#233;seau et la description est issue du sch&#233;ma construit dans l'&#201;diteur de R&#233;seau,
-  L'&#201;diteur de R&#233;seau, a beaucoup de r&#232;gles internes sur la fa&#231;on dont la voie est connect&#233;e, la
+et les r&#232;gles appropri&#233;es &#224; votre chemin de fer (exemple:  s&#233;lectionner les r&#232;gles de signalisation
+ bas&#233;es sur les diff&#233;rentes pratiques des compagnies!, et pas besoin de savoir comment cr&#233;er
+ pour relier les signaux &#224; l'&#233;tat d'aiguillages, les cantons et d'autres signaux!).
+En outre, le sch&#233;ma de description de votre R&#233;seau peut &#234;tre utilis&#233; par des
+scripts tels que AutoDispatcher2 pour contr&#244;ler automatiquement vos trains. Il y a beaucoup d'outils de JMRI qui n&#233;cessitent 
+une description de votre r&#233;seau et la description est issue du sch&#233;ma construit dans l'&#201;diteur de R&#233;seau,
+L'&#201;diteur de R&#233;seau, a beaucoup de r&#232;gles internes sur la fa&#231;on dont la voie est connect&#233;e, la
 d&#233;nomination des cantons, etc. Afin de fonctionner, il existe des
 contraintes sur l'apparence d'&#233;l&#233;ments de voie et comment ils sont utilis&#233;s.
-<p> L'Editeurs de Panneau construit un <i> contr&#244;le graphique </i> des panneaux. Vous pouvez avoir autant
-de panneaux que vous le souhaitez, couvrant autant ou aussi peu de
-votre r&#233;seau que vous le souhaitez, avec des chevauchements dans la r&#233;gion ou la fonctionnalit&#233; si n&#233;cessaire.
+
+<p> 
+L'&#201;diteur de Panneau (de Commande) construit un des Panneaux de Commandes<i> graphiques </i>. Vous pouvez avoir 
+autant de panneaux que vous le souhaitez, couvrant autant ou aussi un peu de
+votre r&#233;seau comme vous le souhaitez, avec des chevauchements dans la r&#233;gion ou la fonctionnalit&#233; si n&#233;cessaire.
 Les panneaux peuvent &#234;tre des diagrammes montrant l'&#233;tat de la voie et des signaux, ou
 ils pourraient &#234;tre des Panneaus prototype de signalisation et de Dispatcheur. Ou toute autre chose que
 vous trouverez utile pour contr&#244;ler votre r&#233;seau, vous avez une flexibilit&#233; totale sur
-leur apparence. Il y a plusieurs normes graphiques d&#233;finies distribu&#233;es avec
-JMRI, mais il est souvent n&#233;cessaire de refaire quelques-uns des &#233;l&#233;ments&#224; partir d'un logiciel graphique externe pour importer au format GIF ou PNG. Ceux-ci pourraient &#234;tre
-le panneau arri&#232;re-plan, ou les ic&#244;nes pour fixer des &#233;l&#233;ments actifs (commutateurs,
-leviers, l'&#233;tat de la piste, signaux, etc) qui sont ensuite plac&#233;es sur le panneau.
+leur apparence. Il y a plusieurs jeux graphiques standard distribu&#233;es avec
+JMRI, mais il est souvent n&#233;cessaire de refaire quelques-uns des &#233;l&#233;ments &#224; 
+partir d'un logiciel graphique externe pour importer au format GIF ou PNG. Ceux-ci pourraient &#234;tre
+le Panneau Arri&#232;re-Plan, ou les ic&#244;nes pour fixer des &#233;l&#233;ments actifs (commutateurs,
+leviers, l'&#233;tat de la voie, signaux, etc) qui sont ensuite plac&#233;es sur le Panneau.
 
 <p>
 <a href="http://quaker-valley.com/CTC/JMRI%20Panel%20Tutorial.gif">
     <img src="http://quaker-valley.com/CTC/JMRI%20Panel%20Tutorial.gif" align="right" height="216" width="313">
 </a>
-Beaucoup d'utilisateurs utilisent les deux avec l'&#201;diteur de R&#233;seau pour la cr&#233;ation sch&#233;matique de panneaux
-pour g&#233;rer la configuration r&#233;elle des signaux et l'&#201;diteur de Panneau fournissant les apparences d&#233;sir&#233;es. Par exemple, 
-Bob Bucklew a pr&#233;par&#233; un tutotiel en trois parties <a href="http://www.quaker-valley.com/CTC/JMRI_Panel_Tutorial.html "></a>
-qui d&#233;crit comment Panel Pro et l'&#201;diteur de R&#233;seau peuvent &#234;tre utilis&#233; ensenble.
+Beaucoup d'utilisateurs utilisent les deux, avec l'&#201;diteur de R&#233;seau pour la cr&#233;ation sch&#233;matique de panneaux
+pour g&#233;rer la configuration r&#233;elle des signaux et l'&#201;diteur de Panneau fournissant 
+les apparences d&#233;sir&#233;es. Par exemple, Bob Bucklew a pr&#233;par&#233; un tutoriel en trois parties
+<a href="http://www.quaker-valley.com/CTC/JMRI_Panel_Tutorial.html "></a>
+qui d&#233;crit comment Panel Pro et l'&#201;diteur de R&#233;seau peuvent &#234;tre utilis&#233;s ensembles.
 <p>
 SVP voir notre
 <a href="http://jmri.org/community/examples/Gallery.shtml">page gallery</a>
@@ -88,198 +97,211 @@ pour des exemples pour voir comment des mod&#233;listes ont utilis&#233; ceci su
 Voir aussi un exemple d'utilisation de PanelPro pour
 <a href="http://jmri.org/community/examples/Modules.shtml"> des r&#233;seaux modulaires</a>.
 
-
 L'application <a href="http://cats4ctc.org/"> CATS </a>
-de Rodney Black est un autre outil pour cr&#233;er des panneaux de contr&#244;le de style moderne.
+de Rodney Black est un autre outil pour cr&#233;er des Panneaux de contr&#244;le de style moderne.
 
+<a name="pe"><h2>L'&#201;diteur de Panneau</h2>
+<img src="../../../images/PiecedPanel.gif" ALT="Screen shot of panel" width="292" height="107" hspace="0" vspace="0">
+<a href="../../../images/CornwallPanelLit.gif"><img src="../../../images/CornwallPanelLit.gif" ALT="screen shot of Cornwall panel" 
+width="333" height="200" hspace="0" vspace="0"></A>
 
-
-<h2>L'Editeur de Panneau</h2>
-<IMG SRC="../../../images/PiecedPanel.gif" ALT="Screen shot of panel" WIDTH="292" HEIGHT="107" HSPACE="0" VSPACE="0">
-<A href="../../../images/CornwallPanelLit.gif"><IMG src="../../../images/CornwallPanelLit.gif" ALT="screen shot of Cornwall panel" WIDTH="333" HEIGHT="200" HSPACE="0" VSPACE="0"></A>
-
-<BR>
-Utilisation de l'&#201;diteur Panneau JMRI,
+<br>
+Avec l'&#201;diteur Panneau JMRI,
 vous pouvez faire un panneau de commande avec l'aspect et le fonctionnement que vous souhaitez.
-<P>
+<p>
 Un panneau est compos&#233; d'une ou plusieurs images de fond, sur laquelle sont dessin&#233;es
-des ic&#244;nes pour repr&#233;senter les aiguillages, les signaux, des capteurs et sur le r&#233;seau.
+des ic&#244;nes pour repr&#233;senter les Aiguillages, les Signaux, des Capteurs sur le r&#233;seau.
 Vous pouvez construire le fond avec de petites ic&#244;nes (&#224; gauche ci-dessus),
 ou fournir un dessin d&#233;taill&#233; que vous avez cr&#233;&#233; dans un programme de dessin
 (&#224; droite ci-dessus).
 
-<P>
-Vous pouvez utiliser ces outils pour configurer des panneaux assez compliqu&#233; pour les grands sch&#233;mas . L'exemple ci-dessus &#224; partir du
-<A href="http://kc.pennsyrr.com/layouts/kulp/index.html">  chemin de fer de Cornwall de Nick Kulp  </a>.
+<p>
+Vous pouvez utiliser ces outils pour configurer des panneaux assez compliqu&#233; pour les grands r&#233;seaux.
+L'exemple ci-dessus est &#224; partir du
+<a href="http://kc.pennsyrr.com/layouts/kulp/index.html">  Chemin de Fer de Cornwall de Nick Kulp  </a>.
 Il y a une
-<A HREF="http://jmri.org/community/examples/Panels-Cornwall/Cornwall.html"> page sur le site Web principal </a>
+<a href="http://jmri.org/community/examples/Panels-Cornwall/Cornwall.html"> page sur le site Web principal </a>
 qui le d&#233;crit en d&#233;tail.
 Pour un autre exemple, voir la
-page <A HREF="http://jbritton.pennsyrr.com/control_panels.ws4d"> Jerry Britton </a> d&#233;crivant comment il contr&#244;le son r&#233;seau.
+page <a href="http://jbritton.pennsyrr.com/control_panels.ws4d"> Jerry Britton </a> d&#233;crivant comment il contr&#244;le son r&#233;seau.
 Il y a aussi une
-<A HREF="http://www.ownry.com/html/how_operations.html"> page d&#233;crivant le panneau </a>
+<a href="http://www.ownry.com/html/how_operations.html"> page d&#233;crivant le panneau </a>
 pour le
-<A HREF="http://www.ownry.com/index.html"> Navigation Oregon Washington &amp; Railway de Kent William </a>. 
+<a href="http://www.ownry.com/index.html"> Oregon Washington &amp; Railway de Kent William </a>. 
 Quaker Valley Lines de Robert Bucklew et &#233;galement la construction d'un
-<A HREF="http://www.quaker-valley.com/CTC/QV_CTCnew.html"> panneau de CTC </a>
+<a href="http://www.quaker-valley.com/CTC/QV_CTCnew.html"> panneau de CTC </a>
 utilisant PanelPro.
-
 (Il s'agit d'un panneau de deuxi&#232;me g&#233;n&#233;ration avec des fonctions avanc&#233;es, il y a aussi
 une page d&#233;crivant en
-<A HREF="http://www.quaker-valley.com/CTC/QV_CTC.html"> plus, le panneau simple </a>) _
-<P>
+<a href="http://www.quaker-valley.com/CTC/QV_CTC.html"> plus, le panneau simple </a>) _
+<p>
 De plus, reportez - vous &#224; la
-<A HREF="../../tools/signaling/index.shtml"> page de signalisation </a>
+<a href="../../tools/signaling/index.shtml"> page de signalisation </a>
 Pour plus d'informations sur la logique &#224; ajouter pour exploiter les signaux de votre r&#233;seau
-pour la  commande de votre panneau.
+pa la  commande de votre panneau.
 
 <h3>Le Fonctionnement du Panneau</h3>
-cliquer sur un symbole d'aiguillage, le commande de direct &#224; d&#233;vi&#233; et vice-versa.
-Un aiguillage a &#233;galement des  &#233;tats "inconnu" et "incoh&#233;rent", repr&#233;sent&#233;s respectivement par une
-ic&#244;ne avec un point d'interrogation et un X . Celles-ci repr&#233;sentent un &#233;tat o&#249;
+Cliquer sur un symbole d'aiguillage le commande de direct &#224; d&#233;vi&#233; et vice-versa.
+Un aiguillage a &#233;galement des  &#233;tats "inconnu" et "incoh&#233;rent", repr&#233;sent&#233;s par une
+ic&#244;ne avec un point d'interrogation et un X respectivement . Celles-ci repr&#233;sentent un &#233;tat o&#249;
 aucune information n'a &#233;t&#233; re&#231;ue, et o&#249; l'information est intrins&#232;quement contradictoire
 (par exemple, &#224; la fois direct et d&#233;vi&#233; dans le m&#234;me temps).
-<P>
+<p>
 Cette commande peut &#234;tre utilis&#233;e de diverses fa&#231;ons. Par exemple, vous pouvez avoir
 une ic&#244;ne d'aiguillage  couvrant un aiguillage sur un sch&#233;ma. Lorsque vous
 cliquez dessus, l'aiguillage sur le r&#233;seau va recevoir l'ordre de changer, et
 le diagramme de la voie montre de quel c&#244;t&#233; le train est dirig&#233;.
 Ou vous pourriez utiliser des ic&#244;nes qui montrent un levier vers la droite ou vers la gauche, et de cr&#233;er
 un groupe qui ressemble &#224; un classique panneau  des US&S .
-<P>
-Les "capteurs" peuvent &#234;tre utilis&#233;s pour repr&#233;senter les indicateurs d'occupation ou d'autres entr&#233;es. L'ic&#244;ne par d&#233;faut
-est un petit cercle, avec la couleur utilis&#233;e pour repr&#233;senter l'&#233;tat du capteur.
+<p>
+Les "Capteurs" peuvent &#234;tre utilis&#233;s pour repr&#233;senter les indicateurs d'occupation ou d'autres entr&#233;es. 
+L'ic&#244;ne par d&#233;faut est un petit cercle, avec la couleur utilis&#233;e pour repr&#233;senter l'&#233;tat du capteur.
 Ceux- ci r&#233;pondent  automatiquement aux changements sur le r&#233;seau.
-Cliquer sur un capteur entra&#238;ne l'alternance du capteur entre les &#233;tats "actifs" et "inactifs"
-. Avec les ic&#244;nes par d&#233;faut, actif est un cercle vert et inactif est un cercle vide.
+Cliquer sur un capteur entra&#238;ne l'alternance du capteur entre les &#233;tats "actifs" et "inactifs".
+Avec les ic&#244;nes par d&#233;faut, actif est un cercle vert et inactif est un cercle vide.
 Ceux-ci visent &#224; repr&#233;senter un  panneau indicateur allum&#233;/noir. Un cercle rouge repr&#233;sente l'&#233;tat
-"Ignorer ", utilis&#233; lorsque aucune information n'a encore &#233;t&#233; re&#231;ue du r&#233;seau.
+"Inconnu ", utilis&#233; lorsque aucune information n'a encore &#233;t&#233; re&#231;ue du r&#233;seau.
 
-<h3>Cr&#233;er un Panneau</h3>
+<h3>Cr&#233;ation d'un Panneau</h3>
 Ceux-ci sont fabriqu&#233;s avec une "&#201;diteur de Panneau", qui vous permet de placer des images
 pour repr&#233;senter les aiguillages, les capteurs (sur certains syst&#232;mes) et les voies.
-<P>
+<p>
 Le reste de cette page vous prom&#232;ne &#224; travers le
 processus. Si vous souhaitez voir les vid&#233;os d'animation qui
-montrer comment chacune de ces choses sont r&#233;ellement effectu&#233;es sur l'&#233;cran d'ordinateur, s'il vous pla&#238;t voir la
-<A HREF="http://www.rr-cirkits.com/Clinics/Clinics.html"> page vid&#233;o de Dick Bronson </a>.
-<P>
-Vous d&#233;marrez l'&#233;diteur en s&#233;lectionnant "Nouveau Panneau ..." puis "&#201;diteur de Ppanneau" dans le menu "Panneaux" 
+montrent comment chacune de ces choses sont r&#233;ellement effectu&#233;es sur l'&#233;cran d'ordinateur, s'il vous pla&#238;t voir les
+<a href="http://www.rr-cirkits.com/Clinics/Clinics.html"> pages vid&#233;o de Dick Bronson </a>.
+<p>
+Vous d&#233;marrez l'&#233;diteur en s&#233;lectionnant "Nouveau Panneau ..." puis "&#201;diteur de Panneau" dans le menu "Panneaux" 
 sur la fen&#234;tre principale. Vous aurez un panneau de commande vide, ainsi que les
-fen&#234;tre de l'&#233;diteur: <BR>
-<A HREF="../../../images/paneleditor.gif">
-<IMG SRC  ="../../../images/paneleditor.gif "ALT =" Capture d'&#233;cran de l'&#233;diteur de palettes "
-WIDTH = "208" HEIGHT = "364" hspace = "0"vspace = "0" align = "right"></a>
-<P>
+fen&#234;tre de l'&#233;diteur: <br>
+<a href="../../../images/paneleditor.gif">
+<img src  ="../../../images/paneleditor.gif "alt =" Capture d'&#233;cran de l'&#233;diteur de palettes "
+width = "208" height = "364" hspace = "0"vspace = "0" align = "right"></a>
+<p>
 
-<P>
+<p>
 Depuis le haut, il contient:
-<UL>
-<LI>Deux champs  texte pr&#233;cisant o&#249; (en pixels) de nouveaux composants seront ins&#233;r&#233;s sur le panneau.
-Vous pouvez g&#233;n&#233;ralement ignorer ceux-ci, car une fois les composants ins&#233;r&#233;s, vous pouvez les faire glisser en utilisant la touche m&#233;ta (Apple, commande, etc) enfonc&#233;e.
-<LI> Un bouton pour choisir une image de fond. Les capacit&#233; de dessin de l'&#233;diteur est rudimentaire
-et va probablement le rester pendant une longue p&#233;riode. Pour cr&#233;er des panneaux de la CTC, diagrammes de voie complexes, etc,
-il est plus facile de les dessiner dans un autre programme et de les ins&#233;rer comme image de fond
-pour un panneau de contr&#244;le JMRI.
+	<ul>
+	<li>Deux champs  texte pr&#233;cisant o&#249; (en pixels) de nouveaux composants seront ins&#233;r&#233;s sur le panneau.
+	Vous pouvez g&#233;n&#233;ralement ignorer ceux-ci, car une fois les composants ins&#233;r&#233;s, vous pouvez les faire glisser en 
+	utilisant la touche m&#233;ta (Apple, commande, etc) enfonc&#233;e.
+	<li> Un bouton pour choisir une image de fond. La capacit&#233; de dessin de l'&#233;diteur est rudimentaire
+	et va probablement le rester pendant une longue p&#233;riode. Pour cr&#233;er des panneaux CTC, diagrammes de voie complexes, 
+	etc, il est plus facile de les dessiner dans un autre programme et de les ins&#233;rer comme image de fond
+	pour un panneau de contr&#244;le JMRI.
 
-<LI> Un bouton pour ajouter une &#233;tiquette de texte. Mettre le texte souhait&#233; dans le champ et cliquez sur le bouton. Vous pouvez
-glisser l'&#233;tiquette autour apr&#232;s l'avoir ins&#233;r&#233;e, mais vous ne pouvez actuellement pas modifier le texte ult&#233;rieurement.
+	<li> Un bouton pour ajouter une &#233;tiquette de texte. Mettre le texte souhait&#233; dans le champ et cliquez sur le bouton. Vous 
+	pouvez glisser l'&#233;tiquette autour apr&#232;s l'avoir ins&#233;r&#233;e, mais vous ne pouvez actuellement pas modifier le texte 
+	ult&#233;rieurement.
 
-<LI> Un bouton pour ajouter une ic&#244;ne comme un label. Il s'agit d'un moyen d'ajouter des symboles de voies, etc. Pour s&#233;lectionner l'
-ic&#244;ne, cliquez sur le bouton "Modifier l'ic&#244;ne ..."  pour faire appara&#238;tre un
-panneau &#233;diteur d'ic&#244;nes. <BR>
-<A HREF="../../../images/iconeditor.gif">
-<IMG SRC ="../../../images/iconeditor.gif "ALT =" Capture d'&#233;cran de r&#233;dacteur d'ic&#244;ne "
-WIDTH = "148" HEIGHT = "214" hspace = "0"vspace = "0" align = "right"></a> <br>
-L'ic&#244;ne actuelle est affich&#233;e en haut.
-Pour la changer, utilisez l'arbre dans le bas de la fen&#234;tre pour s&#233;lectionner une nouvelle, puis cliquez sur
-l'ic&#244;ne en haut du panneau &#233;diteur d'ic&#244;nes pour charger l'ic&#244;ne s&#233;lectionn&#233;e. Il s'agit d'un m&#233;canisme g&#233;n&#233;ral: 
-Toute ic&#244;ne d'une fen&#234;tre de l'&#233;diteur ic&#244;ne peut &#234;tre remplac&#233;e en s&#233;lectionnant celle qui vous int&#233;resse et en 
-cliquant sur l'ic&#244;ne devant &#234;tre remplac&#233;e.
+	<li> Un bouton pour ajouter une ic&#244;ne comme un label. Il s'agit d'un moyen d'ajouter des symboles de voies, etc. Pour 
+	s&#233;lectionner l'ic&#244;ne, cliquez sur le bouton "Modifier l'ic&#244;ne ..."  pour faire appara&#238;tre un
+	panneau &#233;diteur d'ic&#244;nes. <br>
+	<a href="../../../images/iconeditor.gif">
+	<img src ="../../../images/iconeditor.gif "alt =" Capture d'&#233;cran de r&#233;dacteur d'ic&#244;ne "
+	width = "148" height = "214" hspace = "0"vspace = "0" align = "right"></a> <br>
+	L'ic&#244;ne actuelle est affich&#233;e en haut.
+	Pour la changer, utilisez l'arbre dans le bas de la fen&#234;tre pour s&#233;lectionner une nouvelle, puis cliquez sur
+	l'ic&#244;ne en haut du panneau &#233;diteur d'ic&#244;nes pour charger l'ic&#244;ne s&#233;lectionn&#233;e. Il s'agit d'un 
+	m&#233;canisme g&#233;n&#233;ral: 
+	Toute ic&#244;ne dans une fen&#234;tre de l'&#233;diteur ic&#244;ne peut &#234;tre remplac&#233;e en s&#233;lectionnant celle qui 
+	vous int&#233;resse et en cliquant sur l'ic&#244;ne devant &#234;tre remplac&#233;e.
 
-<LI> Deux sections pour l'ajout d'aiguillages reli&#233;s &#224; droite ou &#224; gauche. Ceux-ci fonctionnent effectivement de la m&#234;me fa&#231;on
-, seulement avec des ic&#244;nes diff&#233;rentes pour repr&#233;senter les &#233;tats de l'aiguillage. Entrez le num&#233;ro de l'aiguillage
-(par exemple 23) et cliquez sur "Ajouter aiguillage:". Si vous pr&#233;f&#233;rez un graphique diff&#233;rent pour les &#233;tats droit(close)
-et d&#233;vi&#233;(thrown), vous peuvent changer leurs ic&#244;nes comme d&#233;crit ci-dessus.
+	<li> Deux sections pour l'ajout d'aiguillages reli&#233;s &#224; droite ou &#224; gauche. Ceux-ci fonctionnent effectivement de la 
+	m&#234;me fa&#231;on, seulement avec des ic&#244;nes diff&#233;rentes pour repr&#233;senter les &#233;tats de l'aiguillage. Entrez 
+	le num&#233;ro de l'aiguillage (par exemple 23) et cliquez sur "Ajouter aiguillage:". Si vous pr&#233;f&#233;rez un graphique 
+	diff&#233;rent pour les &#233;tats droit(close) et d&#233;vi&#233;(thrown), vous peuvent changer leurs ic&#244;nes comme 
+	d&#233;crit ci-dessus.
 
-<LI> Une section pour ajouter un capteur.<A HREF="../../../images/iconeditor.gif">
-<IMG SRC="../../../images/iconeditor.gif" ALT="Screen shot of icon editor" 
-WIDTH="148" HEIGHT="214" HSPACE="0" VSPACE="0" align="right"></a><br>
-
-Tapez le num&#233;ro de capteur (par exemple 74) dans le champ et cliquez sur "Ajouter capteur:".
-</UL>
+	<li> Une section pour ajouter un capteur.
+	Tapez le num&#233;ro de capteur (par exemple 74) dans le champ et cliquez sur "Ajouter capteur:".
+	</ul>
 
 
 Il y a &#233;galement des boutons pour ajouter des objets plus avanc&#233;s, y compris un cadran d'horloge,
 et cases &#224; cocher qui contr&#244;lent le fonctionnement du panneau.
 Plus d'informations sur ceux-ci est disponible sur la
 <a href="../../../package/jmri/jmrit/display/PanelEditor.shtml"> page d'aide &#201;diteur de Panneau</a>.
-<P>
+
+<p>
 Apr&#232;s avoir obtenu le panneau comme vous le souhaitez, vous pouvez utiliser l'entr&#233;e "Enregistrer Panneau  ..."
- dans le menu "Panneaux" pour l'&#233;crire dans un fichier XML.
- 
-.
+dans le menu "Panneaux" pour l'&#233;crire dans un fichier XML.
+ Plus d'information dans les <a href="../../setup/Files.shtml">Fichiers de Configuration JMRI</a> 
 
 <h3>Ic&#244;nes Disponibles</h3>
-La biblioth&#232;que contient beaucoup d'ic&#244;nes JMRI contributives
+La biblioth&#232;que JMRI contient beaucoup d'ic&#244;nes contributives
 pour repr&#233;senter les panneaux CTC, les LED, etc. Vous peuvent les parcourir avec l'arbre
 dans le bas du cadre &#233;diteur. Peut-&#234;tre le meilleur moyen de voir ce &#224; quoi chacune ressemble
-est de la s&#233;lectionner dans l'arborescence, puis cliquez sur l'ic&#244;ne &#224; c&#244;t&#233; de l'ic&#244;ne "Ajouter ". Elle est
- charg&#233;e.
-<P>
+est de la s&#233;lectionner dans l'arborescence, puis cliquez sur l'ic&#244;ne &#224; c&#244;t&#233; de l'ic&#244;ne "Ajouter ". Elle 
+sera charg&#233;e.
+<p>
 Vous pouvez &#233;galement cr&#233;er vos propres ic&#244;nes et les utiliser en les s&#233;lectionnant dans la section "Fichier".
-<P>
-Pour des petits bouts de piste, par exemple,connecter des aiguillages, vous pouvez vouloir
+<p>
+Pour des petits bouts de voie, par exemple, connecter des aiguillages, vous pouvez vouloir
 <pre>
   resources -> icons -> small schematics -> tracksegments
 </PRE>
 puis block.gif, etc
 
-<P>
+<p>
 Nous devons faire un meilleur travail d'organisation des ic&#244;nes disponibles!
 
 <h3>Manipulation d'Ic&#244;nes</h3>
 
-Pour d&#233;placer une ic&#244;ne dans le panneau, vous "m&#233;ta-tirer ". Sur un Mac, c'est "la touche cmd et faites glisser le curseur",
- sur Windows pourrait &#234;tre la touche de Windows ou de commande.
-Ou cela peut &#234;tre un glisser- droit. D&#233;sol&#233;, je n'ai pas de machine Windows ici pour le d&#233;couvrir. Pour Linux Glisser+clic droit.
-<P>
+Pour d&#233;placer une ic&#244;ne dans le panneau, vous "m&#233;ta-tirer". Sur un Mac, c'est "la touche cmd et faites glisser le 
+curseur", sur Windows pourrait &#234;tre la touche de Windows ou de commande.
+Ou cela peut &#234;tre un glisser- droit. D&#233;sol&#233;, je n'ai pas de machine Windows ici pour le d&#233;couvrir. Pour Linux 
+Glisser+clic droit.
+<p>
 Il y a aussi un menu contextuel (ctrl-clic sur Mac) qui fournira
-diverses fa&#231;ons de manipuler l'ic&#244;ne. Il vous permettra de la faire tourner de sorte qu'elle pointe dans la direction que vous voulez. 
-Les &#233;tiquettes de texte
-peuvent avoir leur police, la taille et la couleur chang&#233;e. Vous pouvez &#233;galement supprimer des ic&#244;nes du panneau avec le menu contextuel.
+diverses fa&#231;ons de manipuler l'ic&#244;ne. Il vous permettra de la faire tourner de sorte qu'elle pointe dans la direction que 
+vous voulez. Les &#233;tiquettes de texte peuvent avoir leur police, la taille et la couleur chang&#233;e. Vous pouvez &#233;galement 
+supprimer des ic&#244;nes du panneau avec le menu contextuel.
 
 <h3>Autres types de panneaux</h3>
 
-Parce que c'est &#224; base d'ic&#244;nes, vous peuvez cr&#233;er des panneaux qui ressemblent &#224; ce que vous
+Parce que c'est &#224; base d'ic&#244;nes, vous pouvez cr&#233;er des panneaux qui ressemblent &#224; ce que vous
 voulez. Par exemple, au lieu d'utiliser des ic&#244;nes sch&#233;matique de voie pour les aiguillages, vous
-pourriez utiliser de petites images des niveaux et des plaques sur la machine de la CTC. Ceux-ci vous
- donneraient des leviers "m&#233;caniques" que vous pourriez basculer avec un clic.
-Cela peut &#234;tre un prototype, ou peut &#234;tre simplifi&#233; pour faciliter le fonctionnement et le rendre plus rapide
-, comme vous pr&#233;f&#233;rez.
+pourriez utiliser de petites images des leviers et des plaques sur la machine CTC. Ceux-ci vous
+donneraient des leviers "m&#233;caniques" que vous pourriez basculer avec un clic.
+Cela peut &#234;tre un prototype, ou peut &#234;tre simplifi&#233; pour faciliter le fonctionnement et le rendre plus rapide,
+comme vous pr&#233;f&#233;rez.
 
-<P> Il est &#233;galement possible de cr&#233;er un groupe o&#249; les "voies" 
+<p> Il est &#233;galement possible de cr&#233;er un panneau o&#249; les lignes "voie" 
 changent de couleur pour indiquer si la voie est occup&#233;e. La
 proc&#233;dure &#224; suivre est d&#233;crite sur une
-<A HREF="ColorTrack.shtml"> page s&#233;par&#233;e </a>.
+<a href="ColorTrack.shtml"> page s&#233;par&#233;e </a>.
 
-<h2>Utilisation de l'&#201;diteur de R&#233;seau</h2>
+<a name="cpe"><h2>&#201;diteur de Panneau de Commande</h2></a>
+<p<<b>L'&#201;diteur de Panneau de Commande</b> est simplement une vue alternative et commande avec les m&#234;me donn&#233;es que le <b>&#201;diteur 
+de Panneau</b>. L'&#201;diteur de Panneau de Commande vous permet de modifierun Panneau en utilisant des menus au lieu de d'une fen&#234;tre 
+d'&#233;dition s&#233;par&#233;e.</p>
+Pour plus d'information voir la 
+<a href="../../../package/jmri/jmrit/display/ControlPanelEditor.shtml">page d'aide &#201;diteur de Panneau de Commande</a>.
 
-<A href="../../../package/jmri/jmrit/display/images/EnhancedPanel.gif">
-<IMG src="../../../package/jmri/jmrit/display/images/EnhancedPanel.gif" ALIGN="right" ALT="screen shot of layout editor panel" WIDTH="296" HEIGHT="86" HSPACE="0" VSPACE="0"></A>
+<a name="le"><h2>L'&#201;diteur de R&#233;seau</h2></a>
+
+<a href="../../../package/jmri/jmrit/display/images/EnhancedPanel.gif">
+<img src="../../../package/jmri/jmrit/display/images/EnhancedPanel.gif" align="right" alt="screen shot of layout editor panel" 
+width="296" height="86" hspace="0" vspace="0"></A>
 
 L' 
-<a href="../../../package/jmri/jmrit/display/LayoutEditor.shtml">Editeur de R&#233;seau</a>
-vous aide &#224; cr&#233;er de simples panneaux sch&#233;matiques, et met en place simultan&#233;ment la logique de canton et de signalisation n&#233;cessaire au fonctionnement du r&#233;seau. Sa force r&#233;side dans sa capacit&#233; &#224; saisir la fa&#231;on dont les voies sont reli&#233;es, chaque canton est situ&#233; et comment chaque signal est li&#233; &#224; des cantons. D'autre part, il pr&#233;voit une capacit&#233; limit&#233;e de personnaliser la mani&#232;re dont le panneau appara&#238;t.
+<a href="../../../package/jmri/jmrit/display/LayoutEditor.shtml">&#201;diteur de R&#233;seau</a>
+vous aide &#224; cr&#233;er de simples panneaux sch&#233;matiques, et met en place simultan&#233;ment la logique de canton et de 
+signalisation n&#233;cessaire au fonctionnement du r&#233;seau. Sa force r&#233;side dans sa capacit&#233; &#224; saisir la fa&#231;on 
+dont les voies sont reli&#233;es, o&#249; chaque canton est situ&#233; et comment chaque signal est li&#233; &#224; des cantons. D'autre 
+part, il fournitt une capacit&#233; limit&#233;e de personnaliser la mani&#232;re dont le panneau appara&#238;t.
 <p>
 
-<A href="../../../package/jmri/jmrit/display/images/OvalLayoutEditMode.gif">
-<IMG src="../../../package/jmri/jmrit/display/images/OvalLayoutEditMode.gif" ALIGN="right" ALT="screen shot of layout editor panel" WIDTH="271" HEIGHT="85" HSPACE="0" VSPACE="0"></A>
+<a href="../../../package/jmri/jmrit/display/images/OvalLayoutEditMode.gif">
+<img src="../../../package/jmri/jmrit/display/images/OvalLayoutEditMode.gif" align="right" alt="screen shot of layout editor panel" 
+width="271" height="85" hspace="0" vspace="0"></A>
 
-<A href="../../../package/jmri/jmrit/display/images/OvalLayoutEditMode.gif">
-<IMG ="../../../ src / jmri / jmrit / affichage / images / OvalLayoutEditMode.gif "ALIGN ="right"ALT =" capture d'&#233;cran du panneau l'&#233;diteur mise en page "WIDTH =" 271 "HEIGHT = "85" hspace = "0"vspace = "0"></A>
+<a href="../../../package/jmri/jmrit/display/images/OvalLayoutEditMode.gif">
+<img ="../../../ src / jmri / jmrit / affichage / images / OvalLayoutEditMode.gif "align ="right"alt =" capture d'&#233;cran du panneau 
+l'&#233;diteur mise en page "width =" 271 "height = "85" hspace = "0"vspace = "0"></A>
 
-Vous pouvez &#233;diter via "Edit Mode", ce qui rend les connexions entre les &#233;l&#233;ments et
+Vous modifier en "Mode Modification", ce qui rend les connexions entre les &#233;l&#233;ments et
 le sch&#233;ma visible (voir figure &#224; droite). Par exemple, vous pouvez cliquer sur
 le cercle au milieu d'un segment de voie et s&#233;lectionnez le d&#233;tecteur d'occupation associ&#233;s (capteurs)
 sur le sch&#233;ma. Une fois que vous avez fait cela, la couleur du segment de voie sur l'&#233;cran va changer
@@ -287,26 +309,32 @@ lorsque la voie est occup&#233;e. Vous pouvez configurer les couleurs utilis&#23
 d'autres d&#233;tails de la pr&#233;sentation.
 
 <p>
-Pour plus d'informations, s'il vous pla&#238;t voir <a href="../../../package/jmri/jmrit/display/LayoutEditor.shtml">la page d'aide &#233;diteur R&#233;seau </a>.
+Pour plus d'informations, s'il vous pla&#238;t voir <a href="../../../package/jmri/jmrit/display/LayoutEditor.shtml">la page d'aide 
+&#233;diteur R&#233;seau </a>.
 
 
 
-<h2>Communiquer avec les Syst&#232;mes Multiples</h2>
+<h2>Communication avec les Syst&#232;mes Multiples</h2>
 
-PanelPro peut communiquer avec plus d'un syst&#232;me de commande de r&#233;seau. Par exemple, le chemin de fer Cornwall mentionn&#233; ci-dessus utilise du  mat&#233;riel de C/MRI pour la d&#233;tection de l'&#233;tat des cantons et des aiguillages, sur le r&#233;seau, mais pilote la position des aiguillages gr&#226;ce &#224; un syst&#232;me DCC Digitrax.
-<P>
-Pour configurer le programme pour dialoguer avec plusieurs syst&#232;mes, il suffit de s&#233;lectionner le premier dans la
-partie standard du panneau des pr&#233;f&#233;rences, et s&#233;lectionnez la seconde dans les<a href="../../../package/apps/TabbedPreferences.shtml#advanced"> pr&#233;f&#233;rences  avanc&#233;es  </a>.
-Pour plus d'informations, voir la<a href="../../../package/apps/TabbedPreferences.shtml"> page d'aide </a> du panneau des pr&#233;f&#233;rences.
-<P>
+PanelPro peut communiquer avec plus d'un syst&#232;me de commande de r&#233;seau. Par exemple, le chemin de fer Cornwall mentionn&#233; 
+ci-dessus utilise du  mat&#233;riel de C/MRI pour la d&#233;tection de l'&#233;tat des cantons et des aiguillages, sur le r&#233;seau, 
+mais pilote la position des aiguillages gr&#226;ce &#224; un syst&#232;me DCC Digitrax.
+<p>
+Pour configurer le programme pour dialoguer avec plusieurs syst&#232;mes, ajouter &#224; la fois dans les Pr&#233;f&#233;rences JMRI en utilisant 
+l'onglet + dans l'onvlet Connexions. Pour 
+<a href="../../../package/apps/TabbedPreferences.shtml">page d'Aide Panneau Pr&#233;f&#233;rences</a>.
+<p>
 Si vous ajoutez un aiguillage, un capteur ou signal sur un panneau en utilisant seulement un num&#233;ro, par exemple "23",
-il sera attribu&#233; au premier syst&#232;me sur le panneau pr&#233;f&#233;rences. Pour
+il sera attribu&#233; au premier syst&#232;me sur le panneau Pr&#233;f&#233;rences. Pour
 acc&#233;der au 2&#232;me syst&#232;me, vous devrez utiliser les
-<A HREF="../../doc/Technical/Names.shtml"> noms de syst&#232;me </a> JMRI. Par exemple, si la deuxi&#232;me pi&#232;ce jointe est
-sur un syst&#232;me LocoNet, vous vous r&#233;f&#233;rez &#224; un aiguillage LocoNet tel que LT13, un capteur LocoNet tel que LS21, etc. Voir la page sur les <A href="../../doc/Technical/Names.shtml"> noms </a> pour plus d'informations.
+<a href="../../doc/Technical/Names.shtml"> noms de syst&#232;me </a> JMRI. Par exemple, si la deuxi&#232;me pi&#232;ce est
+sur un syst&#232;me LocoNet, vous vous r&#233;f&#233;rez &#224; un aiguillage LocoNet tel que LT13, un capteur LocoNet tel que LS21, 
+etc. Voir la page sur les <a href="../../doc/Technical/Names.shtml"> Noms </a> pour plus d'informations.
 
 
     
 <!--#include virtual="/Footer" -->
-</body>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
 </html>
