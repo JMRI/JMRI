@@ -32,10 +32,6 @@ import org.slf4j.LoggerFactory;
  */
 public class BlockEditAction extends BeanEditAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2188902845944347657L;
     private String noneText = Bundle.getMessage("BlockNone");
     private String gradualText = Bundle.getMessage("BlockGradual");
     private String tightText = Bundle.getMessage("BlockTight");
