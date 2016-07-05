@@ -663,32 +663,27 @@
       <h3>Generics, Swing and JComboBox</h3>Java 1.8 introduces
       generics for Swing objects. The most common one is JComboBox.
       This Java 1.6 line:
-      <pre>
-<code>
+<pre style="font-family: monospace;">
     JComboBox box = new JComboBox();
-</code>
-</pre>describes the creation of a JComboBox that selects generic
+</pre>
+describes the creation of a JComboBox that selects generic
 (Object) items.<br>
       In Java 1.8, the JComboBox holds and selects objects of a
       specific type, usually String. It's written:
-      <pre>
-<code>
+<pre style="font-family: monospace;">
     JComboBox&lt;String&gt; box = new JComboBox&lt;&gt;();
-</code>
-</pre>The most common code for getting the selected item still
+</pre>
+The most common code for getting the selected item still
 includes a cast:
-      <pre>
-<code>
+<pre style="font-family: monospace;">
     String result = (String)box.getSelectedItem();
-</code>
-</pre>because the JComboBox can actually contain objects of other
+</pre>
+because the JComboBox can actually contain objects of other
 types (How can this happen? If the box is editable, and somebody
 enters some other type).<br>
       To avoid the case, a more robust idiom is:
-      <pre>
-<code>
+<pre style="font-family: monospace;">
     String result = box.getItemAt(progBox.getSelectedIndex());
-</code>
 </pre>
 
       <h3>JavaDoc and doclint</h3>Java 1.8 by default runs the
@@ -699,12 +694,13 @@ enters some other type).<br>
       "http://blog.joda.org/2014/02/turning-off-doclint-in-jdk-8-javadoc.html">
       very aggressive</a> on possible errors. The default Ant-based
       builds turn off some of the checking terms with
-      <pre>
-<code>
+<pre style="font-family: monospace;">
 -Xdoclint:all,-missing,-accessibility,-html,-syntax
-</code>
-</pre>to drop tests for missing JavaDoc tags and certain benign
-HTML errors. (For now) <a name="extension" id="extension"></a>
+</pre>
+      to drop tests for missing JavaDoc tags and certain benign
+      HTML errors. (For now) 
+
+      <a name="extension"></a>
 
       <h2>JVM and JDK Extensions</h2>It's possible to extend the
       JVM and/or JDK installed on your machine via <a href=
@@ -723,7 +719,9 @@ HTML errors. (For now) <a name="extension" id="extension"></a>
       If you get a message about a specific directory, look there
       for conflicting Jar files. You should probably consult the
       JMRIusers or jmri-developers mailing list for help before
-      changing that directory! <!--#include virtual="/Footer" -->
+      changing that directory! 
+      
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

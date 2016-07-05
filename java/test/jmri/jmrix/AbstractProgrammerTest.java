@@ -42,7 +42,7 @@ public class AbstractProgrammerTest extends TestCase {
             public ProgrammingMode getBestMode() { return DefaultProgrammerManager.REGISTERMODE; }
             
             public void writeCV(int i, int j, ProgListener l) {}
-            public void confirmCV(int i, int j, ProgListener l) {}
+            public void confirmCV(String i, int j, ProgListener l) {}
             public void readCV(int i, ProgListener l) {}
             public void timeout() {}
             public boolean getCanRead() { return true;}
@@ -135,7 +135,7 @@ public class AbstractProgrammerTest extends TestCase {
             }
 
             public void writeCV(int i, int j, ProgListener l) {}
-            public void confirmCV(int i, int j, ProgListener l) {}
+            public void confirmCV(String i, int j, ProgListener l) {}
             public void readCV(int i, ProgListener l) {}
             public void timeout() {}
             public boolean getCanRead() { return true;}

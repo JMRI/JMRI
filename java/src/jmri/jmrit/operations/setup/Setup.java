@@ -2989,7 +2989,7 @@ public class Setup {
                 if (log.isDebugEnabled()) {
                     log.debug("show track moves: " + enable);
                 }
-                setShowTrackMovesEnabled(enable.equals(Xml.TRUE));
+                showTrackMoves = enable.equals(Xml.TRUE);
             }
         }
 

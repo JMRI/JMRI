@@ -172,8 +172,9 @@
         "263" alt="IntelliJ build java SDK prefs"></a></li>
 
         <li>Click OK to close the Preferences.</li>
-      </ol><a name="getgit" id="getgit"></a>
-
+      </ol>
+      
+      <a name="getgit"></a>
       <h2>Getting the JMRI Source using Git</h2>
 
       <p>To get the source code from GitHub into IntelliJ, follow
@@ -233,9 +234,9 @@
         "119" alt="IntelliJ Git import pane3"></a></li>
       </ol>
 
-      <p>This will add JMRI to the IntelliJ Project window.
-      <a name="ijprojectwin" id="ijprojectwin"></a></p>
+      <p>This will add JMRI to the IntelliJ Project window.</p>
 
+      <a name="ijprojectwin"></a>
       <h2>The Project window</h2>
 
       <p>After cloning is completed, the IntelliJ Project window
@@ -298,9 +299,9 @@
       Note: Starting your Branch name with a unique two letter
       combination will make it stand out from the long list much
       better than a name like <code>patch-1</code>.</p>
-
-      <h2><a name="setant" id="setant">Building and running JMRI
-      using Ant</a></h2>
+      
+      <a name="setant"></a>
+      <h2>Building and running JMRI using Ant</h2>
 
       <p>We recommend that before you try to build and run one of
       the applications within IntelliJ, you run the Ant Build -&gt;
@@ -367,8 +368,8 @@
       build process, after which a Java icon will open with the
       application running with all your new (saved) edits.</p>
       <!-- to do: write instructions for configurations? -->
-      <a name="push" id="push"></a>
 
+      <a name="push"></a>
       <h2>Pushing changes to your GitHub branch</h2>
 
       <p>The standard practice for getting your changes included in
@@ -560,8 +561,8 @@
         shown below by going to Window -&gt; Preferences and selecting
         "Java -&gt; Compiler -&gt; Errors/Warnings".
         -->
-      <a name="more" id="more"></a>
 
+      <a name="more"></a>
       <h2>More Help</h2>
 
       <p>See the IntelliJ IDEA <a href=
