@@ -763,9 +763,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         resetDirty();
         // establish link to LayoutEditorAuxTools
         auxTools = new LayoutEditorAuxTools(thisPanel);
-        if (auxTools == null) {
-            log.error("Unable to create link to LayoutEditorAuxTools");
-        }
     }
 
     @Override
@@ -2073,9 +2070,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         Reporter reporter = null;
         String rName = reporterNameField.getText().trim();
         if (InstanceManager.reporterManagerInstance() != null) {
-            reporter = InstanceManager.reporterManagerInstance().
-                    provideReporter(rName);
-            if (reporter == null) {
+            try {
+                reporter = InstanceManager.reporterManagerInstance().
+                            provideReporter(rName);
+            } catch (IllegalArgumentException e) {
                 JOptionPane.showMessageDialog(enterReporterFrame,
                         java.text.MessageFormat.format(rb.getString("Error18"),
                                 new Object[]{rName}), rb.getString("Error"),
@@ -6050,32 +6048,29 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         newTrack = new TrackSegment(name, beginObject, beginPointType,
                 foundObject, foundPointType, dashedLine.isSelected(),
                 mainlineTrack.isSelected(), this);
-        if (newTrack != null) {
-            trackList.add(newTrack);
-            setDirty(true);
-            // link to connected objects
-            setLink(newTrack, TRACK, beginObject, beginPointType);
-            setLink(newTrack, TRACK, foundObject, foundPointType);
-            // check on layout block
-            LayoutBlock b = provideLayoutBlock(blockIDField.getText().trim());
-            if (b != null) {
-                newTrack.setLayoutBlock(b);
-                auxTools.setBlockConnectivityChanged();
-                // check on occupancy sensor
-                String sensorName = (blockSensor.getText().trim());
-                if (sensorName.length() > 0) {
-                    if (!validateSensor(sensorName, b, this)) {
-                        b.setOccupancySensorName("");
-                    } else {
-                        blockSensor.setText(b.getOccupancySensorName());
-                    }
-                }
-                newTrack.updateBlockInfo();
-            }
 
-        } else {
-            log.error("Failure to create a new Track Segment");
+        trackList.add(newTrack);
+        setDirty(true);
+        // link to connected objects
+        setLink(newTrack, TRACK, beginObject, beginPointType);
+        setLink(newTrack, TRACK, foundObject, foundPointType);
+        // check on layout block
+        LayoutBlock b = provideLayoutBlock(blockIDField.getText().trim());
+        if (b != null) {
+            newTrack.setLayoutBlock(b);
+            auxTools.setBlockConnectivityChanged();
+            // check on occupancy sensor
+            String sensorName = (blockSensor.getText().trim());
+            if (sensorName.length() > 0) {
+                if (!validateSensor(sensorName, b, this)) {
+                    b.setOccupancySensorName("");
+                } else {
+                    blockSensor.setText(b.getOccupancySensorName());
+                }
+            }
+            newTrack.updateBlockInfo();
         }
+
     }
 
     /**
@@ -7225,7 +7220,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // check for valid signal head entry
         String tName = nextSignalHead.getText().trim();
         SignalHead mHead = null;
-        if ((tName != null) && (!tName.equals(""))) {
+        if (!tName.equals("")) {
             mHead = InstanceManager.signalHeadManagerInstance().getSignalHead(tName);
             /*if (mHead == null)
              mHead = InstanceManager.signalHeadManagerInstance().getByUserName(tName);
@@ -7309,7 +7304,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // check for valid signal head entry
         String tName = nextSignalMast.getText().trim();
         SignalMast mMast = null;
-        if ((tName != null) && (!tName.equals(""))) {
+        if (!tName.equals("")) {
             mMast = InstanceManager.signalMastManagerInstance().getSignalMast(tName);
             nextSignalMast.setText(tName);
         }
@@ -7570,18 +7565,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (conTools == null) {
             conTools = new ConnectivityUtil(thisPanel);
         }
-        if (conTools == null) {
-            log.error("Unable to establish link to Connectivity Tools for Layout Editor panel " + layoutName);
-        }
         return conTools;
     }
 
     public LayoutEditorTools getLETools() {
         if (tools == null) {
             tools = new LayoutEditorTools(thisPanel);
-        }
-        if (tools == null) {
-            log.error("Unable to establish link to Layout Editor Tools for Layout Editor panel " + layoutName);
         }
         return tools;
     }

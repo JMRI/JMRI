@@ -32,7 +32,7 @@
 
 <h3>Tools</h3>
 <ul>
-<li><a name="copyroute" id="copyroute"></a><strong>Copy Route</strong> opens the <strong>Route
+<li><a name="copyroute"></a><strong>Copy Route</strong> opens the <strong>Route
 Copy</strong> dialog. This allows you to copy an existing Route.</li>
 </ul>
 <blockquote>
@@ -55,7 +55,7 @@ into your Route file.</p>
 </table>
 </blockquote>
 <ul>
-<li><a name="settrainicons" id="settrainicons"><strong>Set Train Icons Coordinates</strong></a><br>
+<li><a name="settrainicons"><strong>Set Train Icons Coordinates</strong></a><br>
 This tool
 is used to set the default X and Y coordinates of your Train Icons for
 each Location. The tool allows you to specify the icon coordinates
@@ -92,13 +92,13 @@ Routes files<br>
 </table>
 </li>
 
-<li><a name="print" id="print"><strong>Print</strong></a></li>
+<li><a name="print"><strong>Print</strong></a></li>
 </ul>
 <blockquote>
 <p><img src="images/Ops_RoutesPrint.png" alt="print" height="358" width="800"></p>
 </blockquote>
 <ul>
-<li><a name="preview" id="preview"><strong>Preview</strong></a></li>
+<li><a name="preview"><strong>Preview</strong></a></li>
 </ul>
 <div style="text-align: center;"><img style="width: 657px; height: 352px;" alt="operation routes preview" src="images/Ops_RoutesPreview.png"><br>
 </div>

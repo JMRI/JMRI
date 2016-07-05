@@ -41,13 +41,15 @@ infos sur les modes de pr&#233;f&#233;rence et de l'organisation, voir
 
 <h2>El&#233;ment avec juste le contenu du texte, pas d'attributs</h2>
 
-<pre><code>
+<pre style="font-family: monospace;">
+
 &lt;xs:element name="someData" minOccurs="0" maxOccurs="1"&gt;
 </code></pre>
 
 Cela ne veut pas pr&#233;ciser les frappe. Si vous souhaitez par exemple faire respecter les entier:
 
-<pre><code>
+<pre style="font-family: monospace;">
+
 &lt;xs:element name="someIntThing" &gt;
   &lt;xs:complexType&gt;
     &lt;xs:simpleContent&gt;
@@ -61,7 +63,8 @@ Cela ne veut pas pr&#233;ciser les frappe. Si vous souhaitez par exemple faire r
 
 Forme privil&#233;gi&#233;es Store Venitien:
 
-<pre><code>
+<pre style="font-family: monospace;">
+
 &lt;xs:element name="sample" type="SampleType" 
     minOccurs="0" maxOccurs="unbounded" /&gt;
 
@@ -74,7 +77,8 @@ Forme privil&#233;gi&#233;es Store Venitien:
 Peut aussi &#234;tre combin&#233; si vous pensez qu'il est peu probable qu'il soit
 utilis&#233; ailleur:
 
-<pre><code>
+<pre style="font-family: monospace;">
+
 &lt;xs:element name="sample" 
     minOccurs="0" maxOccurs="unbounded" /&gt;
   &lt;xs:complexType&gt;
@@ -86,7 +90,8 @@ utilis&#233; ailleur:
 
 <h2>El&#233;ment avec du contenu  texte et des attributs</h2>
 
-<pre><code>
+<pre style="font-family: monospace;">
+
 &lt;xs:element name="someIntThing" &gt;
   &lt;xs:complexType&gt;
     &lt;xs:simpleContent&gt;
@@ -104,7 +109,8 @@ utilis&#233; ailleur:
 Si vous voulez faire cela, &#231;a vaut la peine de d&#233;finir un type g&#233;n&#233;ral
 qui peux &#234;tre r&#233;utilis&#233;. Ceux-ci sont en xml/schema/types/general.xsd.
 
-<pre><code>
+<pre style="font-family: monospace;">
+
 &lt;xs:simpleType name="yesNoType"&gt;
   &lt;xs:annotation&gt;
     &lt;xs:documentation&gt;
@@ -120,7 +126,8 @@ qui peux &#234;tre r&#233;utilis&#233;. Ceux-ci sont en xml/schema/types/general
 
 Puis le mettre sur un attribut est simple:
 
-<pre><code>
+<pre style="font-family: monospace;">
+
 &lt;xs:attribute name="opsOnly" type="yesNoType"/&gt;
 </code></pre>
 
@@ -128,7 +135,8 @@ Puis le mettre sur un attribut est simple:
 
 Pas un attribut, un &#233;l&#233;ment:
 
-<pre><code>
+<pre style="font-family: monospace;">
+
 &lt;xs:element name="relation"&gt;
   &lt;xs:simpleType&gt;
     &lt;xs:restriction base="xs:string"&gt;
@@ -147,7 +155,8 @@ Des groupes d'attributs sont bons pour repr&#233;senter un ensemble d'attributs
 lus et &#233;crits ainsi que par une routine de service commune.
 Exemple de d&#233;finition:
 
-<pre><code>
+<pre style="font-family: monospace;">
+
 &lt;xs:attributeGroup name="EditorCommonAttributesGroup"&gt;
   &lt;xs:annotation&gt;
     &lt;xs:documentation&gt;
@@ -166,7 +175,8 @@ Exemple de d&#233;finition:
 
 par exemple l'utilisation, dans certains type plus tard:
 
-<pre><code>
+<pre style="font-family: monospace;">
+
 &lt;xs:attributeGroup ref="EditorCommonAttributesGroup" /&gt;
 </code></pre>
 

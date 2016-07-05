@@ -1,4 +1,3 @@
-// BeanEditAction.java
 package jmri.jmrit.beantable.beanedit;
 
 import java.awt.BorderLayout;
@@ -40,7 +39,6 @@ import org.slf4j.LoggerFactory;
  * a bean object
  *
  * @author	Kevin Dickerson Copyright (C) 2011
- * @version	$Revision: 17977 $
  */
 abstract class BeanEditAction extends AbstractAction {
 
@@ -477,16 +475,12 @@ abstract class BeanEditAction extends AbstractAction {
         }
 
         public void setModel(NamedBean nb) {
-            if (nb.getPropertyKeys() != null) {
-                attributes = new Vector<KeyValueModel>(nb.getPropertyKeys().size());
-                Iterator<String> ite = nb.getPropertyKeys().iterator();
-                while (ite.hasNext()) {
-                    String key = ite.next();
-                    KeyValueModel kv = new KeyValueModel(key, nb.getProperty(key));
-                    attributes.add(kv);
-                }
-            } else {
-                attributes = new Vector<KeyValueModel>(0);
+            attributes = new Vector<KeyValueModel>(nb.getPropertyKeys().size());
+            Iterator<String> ite = nb.getPropertyKeys().iterator();
+            while (ite.hasNext()) {
+                String key = ite.next();
+                KeyValueModel kv = new KeyValueModel(key, nb.getProperty(key));
+                attributes.add(kv);
             }
             wasModified = false;
         }
@@ -503,13 +497,12 @@ abstract class BeanEditAction extends AbstractAction {
                 }
             }
             //remove undefined keys
-            if (nb.getPropertyKeys() != null) {
-                Iterator<String> ite = nb.getPropertyKeys().iterator();
-                while (ite.hasNext()) {
-                    if (!keyExist(ite.next())) // not very efficient algorithm!
-                    {
-                        ite.remove();
-                    }
+
+            Iterator<String> ite = nb.getPropertyKeys().iterator();
+            while (ite.hasNext()) {
+                if (!keyExist(ite.next())) // not very efficient algorithm!
+                {
+                    ite.remove();
                 }
             }
             wasModified = false;
