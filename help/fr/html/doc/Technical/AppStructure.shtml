@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
-<!-- UpDated by Blorec Herv&#233;  2013-09-03-->
+<!-- UpDated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-05 -->
  <html lang="fr">
 <head>
     <TITLE>
@@ -41,15 +41,14 @@ La d&#233;mo principale cr&#233;e juste la barre de menus, et la remplit avec le
 et les &#233;l&#233;ments  d&#233;sir&#233;s. Chaque &#233;l&#233;ment a comme une classe objet "Action" qui lui est associ&#233;e qui fera l'
 initialisation n&#233;cessaire en cas de besoin.
 <P>
-Parce que nous nous attendons &#224; avoir des interfaces diff&#233;rentes dans le paquet jmrix, les outils JMRI
+Parce que nous nous attendons &#224; avoir des interfaces diff&#233;rentes dans le paquet  <code>jmrix</code> package, les outils JMRI
 ne cr&#233;ent pas directement les objets d'interface dont ils ont besoin. Plut&#244;t, ils demandent des exemples
-d'interfaces. Pour les interfaces dans le package jmri, qui pourraient &#234;tre mises en œuvre par
-beaucoup de types de r&#233;seau diff&#233;rents, jmri.InstanceManager r&#233;pond &#224; ces demandes.
+d'interfaces. Pour les interfaces dans le package <code>jmri</code>, qui pourraient &#234;tre mises en œuvre par
+beaucoup de types de r&#233;seau diff&#233;rents, <code>jmri.InstanceManager</code> r&#233;pond &#224; ces demandes.
 
 <P>
-Plus d'informations sur la fa&#231;on dont les choses (par exemple des objets repr&#233;sentant les &#233;l&#233;ments sur le sch&#233;ma)
-sont nomm&#233;s
-<A HREF="Names.shtml"> sont disponibles sur une page s&#233;par&#233;e </a>.
+Plus d'informations sur la fa&#231;on dont les choses (par exemple des objets repr&#233;sentant les &#233;l&#233;ments sur le réseau)
+sont nomm&#233;s si disponibles sur <A HREF="Names.shtml">une page s&#233;par&#233;e </a>.
 
 <p>
 Voir aussi la page sur
