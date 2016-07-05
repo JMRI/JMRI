@@ -94,11 +94,6 @@ public class BlockEditAction extends BeanEditAction {
         }
 
         reporter.setResetItem(new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 2449970976942578601L;
-
             public void actionPerformed(ActionEvent e) {
                 reporterField.setSelectedBean(((Block) bean).getReporter());
                 useCurrent.setSelected(((Block) bean).isReportingCurrent());
@@ -106,11 +101,6 @@ public class BlockEditAction extends BeanEditAction {
         });
 
         reporter.setSaveItem(new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -6560902254904220330L;
-
             public void actionPerformed(ActionEvent e) {
                 Block blk = (Block) bean;
                 blk.setReporter((Reporter) reporterField.getSelectedBean());
@@ -201,11 +191,6 @@ public class BlockEditAction extends BeanEditAction {
         permissiveField.setSelected(((Block) bean).getPermissiveWorking());
 
         basic.setSaveItem(new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 3999787373758196069L;
-
             public void actionPerformed(ActionEvent e) {
                 Block blk = (Block) bean;
                 String cName = (String) curvatureField.getSelectedItem();
@@ -244,11 +229,6 @@ public class BlockEditAction extends BeanEditAction {
             }
         });
         basic.setResetItem(new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 1875022997531442999L;
-
             public void actionPerformed(ActionEvent e) {
                 Block blk = (Block) bean;
                 lengthField.setText(twoDigit.format(((Block) bean).getLengthMm()));
@@ -318,11 +298,6 @@ public class BlockEditAction extends BeanEditAction {
         });
 
         basic.setSaveItem(new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 6849518499144179541L;
-
             public void actionPerformed(ActionEvent e) {
                 Block blk = (Block) bean;
                 jmri.jmrit.display.layoutEditor.LayoutBlock lBlk = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlock(blk);
@@ -336,11 +311,6 @@ public class BlockEditAction extends BeanEditAction {
             }
         });
         basic.setResetItem(new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 1648534584189754888L;
-
             public void actionPerformed(ActionEvent e) {
                 Block blk = (Block) bean;
                 //From basic details
