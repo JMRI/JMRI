@@ -2059,7 +2059,7 @@ public class LogixTableAction extends AbstractTableAction {
         }
         // Check if the User Name has been changed
         String uName = conditionalUserName.getText().trim();
-        if (uName != null && !(uName.equals(_curConditional.getUserName()))) {
+        if (!uName.equals(_curConditional.getUserName())) {
             // user name has changed - check if already in use
             if (!checkConditionalUserName(uName, _curLogix)) {
                 return;
@@ -2138,12 +2138,7 @@ public class LogixTableAction extends AbstractTableAction {
         if (sName == null) {
             sName = _curConditional.getSystemName();
         }
-        if (sName == null) {
-            if (log.isDebugEnabled()) {
-                log.error("Unable to delete Conditional, null system name");
-            }
-            return;
-        }
+
         _showReminder = true;
         _curConditional = null;
         numConditionals--;
@@ -5130,20 +5125,18 @@ public class LogixTableAction extends AbstractTableAction {
                 }
             } else if (col == UNAME_COLUMN) {
                 String uName = (String) value;
-                if (_curLogix != null) {
-                    Conditional cn = _conditionalManager.getByUserName(_curLogix,
-                            uName.trim());
-                    if (cn == null) {
-                        _conditionalManager.getBySystemName(
-                                _curLogix.getConditionalByNumberOrder(rx))
-                                .setUserName(uName.trim());
-                        fireTableRowsUpdated(rx, rx);
-                    } else {
-                        String svName = _curLogix.getConditionalByNumberOrder(rx);
-                        if (cn != _conditionalManager.getBySystemName(svName)) {
-                            messageDuplicateConditionalUserName(cn
-                                    .getSystemName());
-                        }
+                Conditional cn = _conditionalManager.getByUserName(_curLogix,
+                        uName.trim());
+                if (cn == null) {
+                    _conditionalManager.getBySystemName(
+                            _curLogix.getConditionalByNumberOrder(rx))
+                            .setUserName(uName.trim());
+                    fireTableRowsUpdated(rx, rx);
+                } else {
+                    String svName = _curLogix.getConditionalByNumberOrder(rx);
+                    if (cn != _conditionalManager.getBySystemName(svName)) {
+                        messageDuplicateConditionalUserName(cn
+                                .getSystemName());
                     }
                 }
             }

@@ -103,15 +103,13 @@ public class AddSignalMastPanel extends JPanel {
         signalMastDriver = new JComboBox<String>(new String[]{
             Bundle.getMessage("HeadCtlMast"), Bundle.getMessage("TurnCtlMast"), Bundle.getMessage("VirtualMast"), Bundle.getMessage("MatrixCtlMast")
         });
-        // Only allow the creation of DCC SignalMast if a command station instance is present, otherwise it will not work, so no point in adding it.
-        if (jmri.InstanceManager.getList(jmri.CommandStation.class) != null) {
-            signalMastDriver.addItem(Bundle.getMessage("DCCMast"));
-            java.util.List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
-            for (int x = 0; x < connList.size(); x++) {
-                if (connList.get(x) instanceof jmri.jmrix.loconet.SlotManager) {
-                    signalMastDriver.addItem(Bundle.getMessage("LNCPMast"));
-                    break;
-                }
+
+        signalMastDriver.addItem(Bundle.getMessage("DCCMast"));
+        java.util.List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
+        for (int x = 0; x < connList.size(); x++) {
+            if (connList.get(x) instanceof jmri.jmrix.loconet.SlotManager) {
+                signalMastDriver.addItem(Bundle.getMessage("LNCPMast"));
+                break;
             }
         }
 
