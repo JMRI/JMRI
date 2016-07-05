@@ -534,7 +534,7 @@ public class LayoutEditorTools {
             } else {
                 str = xoverTurnoutName.trim();
             }
-            if ((str == null) || (str.equals(""))) {
+            if (str.equals("")) {
                 JOptionPane.showMessageDialog(setSignalsFrame, rb.getString("SignalsError1"),
                         rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
                 return false;
@@ -1069,7 +1069,7 @@ public class LayoutEditorTools {
     public SignalHead getSignalHeadFromEntry(JTextField signalName, boolean requireEntry,
             JmriJFrame frame) {
         String str = signalName.getText().trim();
-        if ((str == null) || (str.equals(""))) {
+        if (str.equals("")) {
             if (requireEntry) {
                 JOptionPane.showMessageDialog(frame, rb.getString("SignalsError5"),
                         rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
@@ -2320,7 +2320,7 @@ public class LayoutEditorTools {
 
     private LayoutBlock getBlockFromEntry(JTextField blockNameField) {
         String str = blockNameField.getText().trim();
-        if ((str == null) || (str.equals(""))) {
+        if (str.equals("")) {
             JOptionPane.showMessageDialog(setSignalsAtBoundaryFrame, rb.getString("SignalsError9"),
                     rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
             return null;
@@ -4757,7 +4757,7 @@ public class LayoutEditorTools {
         layoutTurnout1 = null;
         layoutTurnout2 = null;
         str = turnout1NameField.getText().trim();
-        if ((str == null) || (str.equals(""))) {
+        if (str.equals("")) {
             // turnout 1 not entered, test turnout 2
             str = turnout2NameField.getText().trim();
             if ((str == null) || (str.equals(""))) {
@@ -6286,7 +6286,7 @@ public class LayoutEditorTools {
         layoutTurnoutA = null;
         layoutTurnoutB = null;
         str = turnoutANameField.getText().trim();
-        if ((str == null) || (str.equals(""))) {
+        if (str.equals("")) {
             // turnout A not entered, test turnout B
             str = turnoutBNameField.getText().trim();
             if ((str == null) || (str.equals(""))) {

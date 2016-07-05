@@ -1,4 +1,3 @@
-// SerialAddress.java
 package jmri.jmrix.cmri.serial;
 
 import jmri.jmrix.AbstractNode;
@@ -19,7 +18,6 @@ import org.slf4j.LoggerFactory;
  * 0, bit 2), CS1B3 (node address 1, bit 3), CL11B234 (node address 11, bit234)
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2004 - 2006
- * @version $Revision$
  */
 public class SerialAddress {
 
@@ -418,11 +416,10 @@ public class SerialAddress {
         }
         String altName = "";
         altName = convertSystemNameToAlternate(sysName);
-        if (altName != null) {
-            t = jmri.InstanceManager.turnoutManagerInstance().getBySystemName(altName);
-            if (t != null) {
-                return (altName);
-            }
+
+        t = jmri.InstanceManager.turnoutManagerInstance().getBySystemName(altName);
+        if (t != null) {
+            return (altName);
         }
 
         // check for a two-bit turnout assigned to the previous bit
@@ -499,12 +496,12 @@ public class SerialAddress {
         }
         String altName = "";
         altName = convertSystemNameToAlternate(sysName);
-        if (altName != null) {
-            s = jmri.InstanceManager.sensorManagerInstance().getBySystemName(altName);
-            if (s != null) {
-                return (altName);
-            }
+
+        s = jmri.InstanceManager.sensorManagerInstance().getBySystemName(altName);
+        if (s != null) {
+            return (altName);
         }
+
         // not assigned to a sensor
         return ("");
     }
@@ -554,5 +551,3 @@ public class SerialAddress {
 
     private final static Logger log = LoggerFactory.getLogger(SerialAddress.class.getName());
 }
-
-/* @(#)SerialAddress.java */

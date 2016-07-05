@@ -1,4 +1,3 @@
-// SpecificSensorManager.java
 package jmri.jmrix.powerline.simulator;
 
 import java.util.List;
@@ -22,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * @author	Ken Cameron, (C) 2009, 2010 sensors from poll replies Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
- * @version	$Revision$
  */
 public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorManager {
 
@@ -81,20 +79,18 @@ public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorMana
                         if (newHouseCode != null && newAddrCode > 0) {
                             String sysName = getSystemPrefix() + "S" + newHouseCode + newAddrCode;
                             sensor = provideSensor(sysName);
-                            if (sensor != null) {
-                                if (newCmdCode == X10Sequence.FUNCTION_ON || newCmdCode == X10Sequence.FUNCTION_BRIGHT || newCmdCode == X10Sequence.FUNCTION_STATUS_ON) {
-                                    try {
-                                        sensor.setKnownState(Sensor.ACTIVE);
-                                    } catch (jmri.JmriException e) {
-                                        log.error("Exception setting " + sysName + " sensor ACTIVE: " + e);
-                                    }
+                            if (newCmdCode == X10Sequence.FUNCTION_ON || newCmdCode == X10Sequence.FUNCTION_BRIGHT || newCmdCode == X10Sequence.FUNCTION_STATUS_ON) {
+                                try {
+                                    sensor.setKnownState(Sensor.ACTIVE);
+                                } catch (jmri.JmriException e) {
+                                    log.error("Exception setting " + sysName + " sensor ACTIVE: " + e);
                                 }
-                                if (newCmdCode == X10Sequence.FUNCTION_OFF || newCmdCode == X10Sequence.FUNCTION_DIM || newCmdCode == X10Sequence.FUNCTION_STATUS_OFF) {
-                                    try {
-                                        sensor.setKnownState(Sensor.INACTIVE);
-                                    } catch (jmri.JmriException e) {
-                                        log.error("Exception setting " + sysName + " sensor INACTIVE: " + e);
-                                    }
+                            }
+                            if (newCmdCode == X10Sequence.FUNCTION_OFF || newCmdCode == X10Sequence.FUNCTION_DIM || newCmdCode == X10Sequence.FUNCTION_STATUS_OFF) {
+                                try {
+                                    sensor.setKnownState(Sensor.INACTIVE);
+                                } catch (jmri.JmriException e) {
+                                    log.error("Exception setting " + sysName + " sensor INACTIVE: " + e);
                                 }
                             }
                         }
@@ -139,4 +135,3 @@ public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorMana
     private final static Logger log = LoggerFactory.getLogger(SpecificSensorManager.class.getName());
 }
 
-/* @(#)SpecificSensorManager.java */
