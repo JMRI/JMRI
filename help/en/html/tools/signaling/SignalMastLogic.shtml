@@ -144,7 +144,7 @@ a Signal Mast that faces into block A that protects block B; you can not add a
 Signal Mast that faces into block B to protect block A.
 	<p>Using the Panel Editor and not having defined Blocks, the Signal Mast Logic can't be automatically discovered as this type of Panel only displays individual icons over a layout graphic so you have to manually add the connections as Blocks using the Blocks Tool or add Signal Logic Pairs in the Signal Logic Table for every possible connection.<br/>Manually add Signal Icons to your panel by right-clicking and choosing "Add icon".
 	
-	<a name="autologic"><h3>Generate Signal Mast Logic</h3></a>
+	<a name="autologic"></a><h3>Generate Signal Mast Logic</h3>
 	Signal Mast Logic can automatically be generated in three different ways:
 <ul>
 	<li>The first method is to build it on a Signal Mast by Signal Mast basis. This can be done

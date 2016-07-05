@@ -125,7 +125,7 @@ r&#233;tro-signalisations, contactez NCE pour une mise &#224; niveau EPROM.</P>
 
 <name="AIU">
 <name="names">
-<H3>AIU (Entr&#233;e) Num&#233;rotation</H3></A></A>
+</a><h3>AIU (Entr&#233;e) Num&#233;rotation</h3></A>
 Le programme NCE "AIU" est un dispositif qui permet &#224; la centrale NCE de v&#233;rifier l'&#233;tat
 des entr&#233;es du r&#233;seau miniature. Celles-ci sont r&#233;f&#233;renc&#233;es dans JMRI comme "Capteurs"
 avec des noms comme "NS785". "NS" signifie "capteur NCE", et 785 est le num&#233;ro sp&#233;cifique
@@ -321,7 +321,7 @@ Programme JMRI.</P>
 	<DD>USB version sup&#233;rieure &#224; 7.*, sys&#232;me avec version firmware 1.65 et > , AIU support&#233;e</DD>
 </DL>
 <a name="troubleShoot">
- <h2>D&#233;pannage</h2></A>
+ </a><h2>D&#233;pannage</h2>
 
 Lorsque la connexion &#224; votre NCE est correct et que votre syst&#232;me NCE est aliment&#233; 
 vous devriez voir apr&#232;s le d&#233;marrage PanelPro le panneau de commande suivante:

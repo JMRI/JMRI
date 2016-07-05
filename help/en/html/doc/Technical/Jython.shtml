@@ -1,394 +1,385 @@
-<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
 <!-- $Id$ -->
+
 <html>
 <head>
-   <title>Jython access to JMRI tools</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-    <META content="Bob Jacobsen" name=Author>
-    <meta name="keywords" content="JMRI technical code Python Jython scripting">
-
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
-
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <title>Jython access to JMRI tools</title>
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content=
+  "JMRI technical code Python Jython scripting">
+  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+  <!-- are an arbitrary design pattern used by the update.pl script to -->
+  <!-- easily replace the common header/footer code for all the web pages -->
+  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+  <!-- or change them to reflect your alternative logo -->
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
-</head>
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head><!--#include virtual="/Header" -->
 
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
+<body>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-	<div id="mainContent">
+    <div id="mainContent">
+      <h1>Jython access to JMRI tools</h1>This page discusses
+      access to the JMRI libraries from Jython, a Java version of
+      Python. The emphasis is on using JMRI capabilities from a
+      command-line Jython interpreter. <b>This page is not about
+      scripting with Jython inside JMRI.</b> See the <a href=
+      "../../tools/scripting/index.shtml">scripting pages</a> if
+      you are more interested in Jython scripting within JMRI.
 
-<h1>Jython access to JMRI tools</h1>
+      <p>Note that this page is somewhat out of date; version
+      numbers, etc may not be current.</p>
 
-This page discusses access to the JMRI libraries from Jython, a Java version
-of Python.  The emphasis is on using JMRI capabilities from a 
-command-line Jython interpreter.  
-<b>This page is not about scripting with Jython inside JMRI.</b>
-See the
-<A HREF="../../tools/scripting/index.shtml">scripting pages</A> if you 
-are more interested in Jython scripting within JMRI.
+      <h2>Introduction</h2><a href=
+      "http://www.python.org">Python</a> is a widely used scripting
+      language that's available on many types of computers. A
+      Java-based varient, called <a href=
+      "http://www.jython.org">Jython</a>, has been integrated with
+      JMRI to make it easy to control a model railroad from the
+      command line of a computer.
 
-<p>
-Note that this page is somewhat out of date; version numbers, etc
-may not be current.
-
-<h2>Introduction</h2>
-
-<A HREF="http://www.python.org">Python</a> is a widely used scripting language that's
-available on many types of computers.  A Java-based varient, called
-<A HREF="http://www.jython.org">Jython</a>,
-has been integrated with JMRI to make it easy to control a model railroad
-from the command line of a computer.
-
-<P>
-To use the JMRI library from Jython, you have to ensure that Jython
-will search the correct jar files when it starts up.  We provide a
-"jmrithon" startup script that will do that for you:
-
-<PRE>
+      <p>To use the JMRI library from Jython, you have to ensure
+      that Jython will search the correct jar files when it starts
+      up. We provide a "jmrithon" startup script that will do that
+      for you:</p>
+      <pre>
 % ./jmrithon
 execFileJython 2.1 on java1.4.1_01 (JIT: null)
 (Type "copyright", "credits" or "license" for more information.
 
->>> 
+&gt;&gt;&gt; 
 
-</PRE>
-
-Once you get the Jython prompt of ">>>", you can
+</pre>Once you get the Jython prompt of "&gt;&gt;&gt;", you can
 type Python statements.
 
-<P>
-We've provided a few Python command files to make 
-setup easier. 
-<P>
-For example, you can run the JmriDemo application from the
-Jython command line, which is then available for manipulating
-objects like turnouts and sensors:
+      <p>We've provided a few Python command files to make setup
+      easier.</p>
 
-<pre>
+      <p>For example, you can run the JmriDemo application from the
+      Jython command line, which is then available for manipulating
+      objects like turnouts and sensors:</p>
+      <pre>
 execfile("JmriDemo.py")
      0 JmriDemo.JMRIdemo                     INFO  - program starts [main]
  11109 JmriDemo.JMRIdemo                     INFO  - main initialization done [main]
 
->>> turnouts.newTurnout("LT1", "")
+&gt;&gt;&gt; turnouts.newTurnout("LT1", "")
 jmri.jmrix.loconet.LnTurnout@1a8f49
 
->>> turnouts.getTurnout("LT1").getCommandedState()
+&gt;&gt;&gt; turnouts.getTurnout("LT1").getCommandedState()
 1
 
->>> lt1 = turnouts.getTurnout("LT1")
+&gt;&gt;&gt; lt1 = turnouts.getTurnout("LT1")
 
->>> lt1.setCommandedState(CLOSED)
+&gt;&gt;&gt; lt1.setCommandedState(CLOSED)
 
->>> lt1.commandedState
+&gt;&gt;&gt; lt1.commandedState
 2
 
->>> lt1.commandedState = THROWN
+&gt;&gt;&gt; lt1.commandedState = THROWN
 
->>> lt1.commandedState
+&gt;&gt;&gt; lt1.commandedState
 4
 
->>> 
-</PRE>
+&gt;&gt;&gt; 
+</pre>Note that this is running a complete version of the JmriDemo
+application; all of the windows and menus are presented the same
+way, configuration is done by the preferences panel, etc. What the
+Jython connection adds is a command line from which you can
+directly manipulate things.<br>
+      This also shows some of the simplifications that Jython and
+      the Python language brings to using JMRI code. The Java
+      member function:
+      <pre>
+        turnout.setCommandedState(jmri.Turnout.CLOSED);
+</pre>can also be expressed in Jython as:
+      <pre>
+        turnout.commandedState = CLOSED
+</pre><br>
+      This results in much easier-to-read code.
 
-Note that this is running a complete version of the JmriDemo application;
-all of the windows and menus are presented the same way, configuration is
-done by the preferences panel, etc. What the Jython connection adds is a 
-command line from which you can directly manipulate things.
+      <p>There are a lot of useful Python books and online
+      tutorials. For more information on the Jython language and
+      it's relations with Java, the best reference is the <a href=
+      "http://www.oreilly.com/catalog/jythoness/">Jython
+      Essentials</a> book published by O'Reilly. The <a href=
+      "http://www.jython.org/">jython.org web site</a> is also very
+      useful.</p>
 
-<BR/>This also shows some of the simplifications that
-Jython and the Python language brings to using JMRI code.  The
-Java member function:
-<PRE>
-	turnout.setCommandedState(jmri.Turnout.CLOSED);
-</PRE>
-can also be expressed in Jython as:
-<PRE>
-	turnout.commandedState = CLOSED
-</PRE>
-<BR/>
-This results in much easier-to-read code.
-<P>
-There are a lot of useful Python books and 
-online tutorials.
-For more information on the Jython language and it's 
-relations with Java, the best reference is the
-<A HREF="http://www.oreilly.com/catalog/jythoness/">Jython Essentials</a>
-book published by O'Reilly.  The 
-<A HREF="http://www.jython.org/">jython.org web site</a> is also very useful.
+      <h2>Setup</h2>Jython support is not (yet) standard in JMRI.
+      To use this:
 
-<H2>Setup</H2>
+      <ol>
+        <li>You must first have a working JMRI installation. In
+        particular, start the JMRI application and configure it to
+        connect to your DCC hardware, then save, quit and restart
+        the program. Make sure that the connection is working for
+        the menu-based tools before trying to use Jython.</li>
 
-Jython support is not (yet) standard in JMRI.  To use this:
-<OL>
-<LI>You must first have a working JMRI installation.  In particular, 
-start the JMRI application and configure it to connect to your DCC
-hardware, then save, quit and restart the program.  Make sure that the
-connection is working for the menu-based tools before trying to use Jython.
-<LI>Download and install Jython from
-<A HREF="http://www.jython.org">http://www.jython.org</a>.  
-Development is using the 2.1 version, so you
-might want to start with that.  On Mac OS X, the installer does not run, so you
-have to manually invoke the jython_21.class file; see the Mac OS X note
-on the jython web site.  Make sure the installation is complete
-by invoking jython from the command line:
-<PRE>
+        <li>Download and install Jython from <a href=
+        "http://www.jython.org">http://www.jython.org</a>.
+        Development is using the 2.1 version, so you might want to
+        start with that. On Mac OS X, the installer does not run,
+        so you have to manually invoke the jython_21.class file;
+        see the Mac OS X note on the jython web site. Make sure the
+        installation is complete by invoking jython from the
+        command line:
+          <pre>
    % jython
    Jython 2.1 on java1.4.1_01 (JIT: null)
    Type "copyright", "credits" or "license" for more information.
-   >>> ^D
-</PRE>
-If that works, your installation is OK. If not, you'll have to
-fix the installation before you'll be able to do the next step.
-<P>
-If the installer didn't run, 
-download the jython_21.class file from SourceForge, and
-enter at a command prompt:
-<PRE>
+   &gt;&gt;&gt; ^D
+</pre>If that works, your installation is OK. If not, you'll have
+to fix the installation before you'll be able to do the next step.
+
+          <p>If the installer didn't run, download the
+          jython_21.class file from SourceForge, and enter at a
+          command prompt:</p>
+          <pre>
   java -cp . jython_21
-</PRE>
-then follow the prompts through the installer.
-<P>
-If the installer did run, but the jython command isn't found:
-<UL>
-<LI>Windows:  Find the jython.bat file which the installer created,
-and copy it to your C:\WINDOWS directory.
-<LI>Linux:  Make sure that the jython install directory is on your path.
-</UL>
-<LI>
-Now you just have to have the required classes in the CLASSPATH
-used when jython starts up.  The required list in Unix syntax is:
-<PRE>
+</pre>then follow the prompts through the installer.
+
+          <p>If the installer did run, but the jython command isn't
+          found:</p>
+
+          <ul>
+            <li>Windows: Find the jython.bat file which the
+            installer created, and copy it to your C:\WINDOWS
+            directory.</li>
+
+            <li>Linux: Make sure that the jython install directory
+            is on your path.</li>
+          </ul>
+        </li>
+
+        <li>Now you just have to have the required classes in the
+        CLASSPATH used when jython starts up. The required list in
+        Unix syntax is:
+          <pre>
   setenv CLASSPATH .:jmri.jar:lib/log4j.jar:lib/collections.jar:lib/crimson.jar:lib/jdom-jdk11.jar
-</PRE>
-<BR/>
-To save typing, the "jmrithon" script is available for use on Linux
-and Mac OS X systems:
-<PRE>
+</pre><br>
+          To save typing, the "jmrithon" script is available for
+          use on Linux and Mac OS X systems:
+          <pre>
   % ./jmrithon
   Jython 2.1 on java1.4.1_01 (JIT: null)
   Type "copyright", "credits" or "license" for more information.
-  >>> ^D
-</PRE>
-<BR/>The first time you run this, you'll get a number of messages
-about "processing modified jar"; these can be ignored, as they are normal.
-</OL>
+  &gt;&gt;&gt; ^D
+</pre><br>
+          The first time you run this, you'll get a number of
+          messages about "processing modified jar"; these can be
+          ignored, as they are normal.
+        </li>
+      </ol>
 
-<H2>Using Jython directly</h2>
+      <h2>Using Jython directly</h2>This section of the page is a
+      pile of useful information on controlling JMRI from Jython
+      directly.
 
-This section of the page is a pile of useful information on
-controlling JMRI from Jython directly. 
-<P>
-Note that you don't need most of this when running the 
-JmriDemo.py or similar scripts, as they handle starting a 
-complete application.
+      <p>Note that you don't need most of this when running the
+      JmriDemo.py or similar scripts, as they handle starting a
+      complete application.</p>
 
-<h3>Initialization</h3>
-
-JMRI uses the LogJ system extensively for logging information
-during program execution.  To configure that when running with
-Jython, you should do:
-<PRE>
+      <h3>Initialization</h3>JMRI uses the LogJ system extensively
+      for logging information during program execution. To
+      configure that when running with Jython, you should do:
+      <pre>
   import org
   org.apache.log4j.PropertyConfigurator.configure("default.lcf")
-</PRE>
-before starting any of the JMRI classes.  The "default.lcf"
-is the name of the logging control file to be used; it can
-be omitted.
-<P>
-To make JMRI classes available, you have to do:
-<PRE>
+</pre>before starting any of the JMRI classes. The "default.lcf" is
+the name of the logging control file to be used; it can be omitted.
+
+      <p>To make JMRI classes available, you have to do:</p>
+      <pre>
   import jmri
-</PRE>
-As currently set up, this does not run any initialization
-code to start the hardware connections, etc. 
-One way to do that is to load a configuration file, perhaps one
-you've created earlier via the JmriDemo preferences panel:
-<PRE>
+</pre>As currently set up, this does not run any initialization
+code to start the hardware connections, etc. One way to do that is
+to load a configuration file, perhaps one you've created earlier
+via the JmriDemo preferences panel:
+      <pre>
   import java.io
   configfile = java.io.File(jmri.util.FileUtil.getPreferencesPath()+"JmriDemoConfig2.xml")
   jmri.InstanceManager.setConfigureManager(jmri.configurexml.ConfigXmlManager())
   jmri.InstanceManager.configureManagerInstance().load(configfile)
-</PRE>
-to activate the JMRI classes and connect to your layout 
+</pre>to activate the JMRI classes and connect to your layout
 hardware. "JmriDemoConfig2.xml" is the name of the configuration
-file from the JmriDemo program; you can use another name if desired.
-The configuration file controls the layout connection, and any other
-options that may have been set when it was created.
+file from the JmriDemo program; you can use another name if
+desired. The configuration file controls the layout connection, and
+any other options that may have been set when it was created.
 
-<P>
-Alternately, if you want to start the complete JmriDemo application,
-including the menu bar, spash screen, etc, you can do:
-<PRE>
+      <p>Alternately, if you want to start the complete JmriDemo
+      application, including the menu bar, spash screen, etc, you
+      can do:</p>
+      <pre>
  import apps
  apps.JmriDemo.JMRIdemo.main([]) 
-</PRE>
-<P>
-This will start the program, including its startup configuration, etc.
+</pre>
 
-<P>
-To simplify this startup even further, you can do:
-<PRE>
+      <p>This will start the program, including its startup
+      configuration, etc.</p>
+
+      <p>To simplify this startup even further, you can do:</p>
+      <pre>
  execfile("JmriDemo.py")
-</PRE>
-to invoke these commands. 
+</pre>to invoke these commands.
 
-<h3>Access to JMRI</h3>
-
-JMRI uses the factory-pattern extensively to get access to 
-objects.  In Java this results in verbose code like
-<PRE>
+      <h3>Access to JMRI</h3>JMRI uses the factory-pattern
+      extensively to get access to objects. In Java this results in
+      verbose code like
+      <pre>
    Turnout t2 = InstanceManager.turnoutManagerInstance().newTurnout("LT2", "turnout 2");
    t2.setCommandedState(Turnout.THROWN)
-</PRE>
-Jython simplifies that by allowing us to provide useful variables,
-and by shortening certain method calls.
-<P>
-To get access to the SignalHead, Sensor and Turnout managers and
-the CommandStation object,
-several shortcut variables are defined in the .py scripts listed above:
-<UL>
-<LI>sensors
-<LI>signals
-<LI>turnouts
-<LI>lights
-<LI>reporters
-<LI>memories
-<LI>dcc
-<LI>audio
-</UL>
-These can then be referenced directly in Jython as
-<PRE>
+</pre>Jython simplifies that by allowing us to provide useful
+variables, and by shortening certain method calls.
+
+      <p>To get access to the SignalHead, Sensor and Turnout
+      managers and the CommandStation object, several shortcut
+      variables are defined in the .py scripts listed above:</p>
+
+      <ul>
+        <li>sensors</li>
+
+        <li>signals</li>
+
+        <li>turnouts</li>
+
+        <li>lights</li>
+
+        <li>reporters</li>
+
+        <li>memories</li>
+
+        <li>dcc</li>
+
+        <li>audio</li>
+      </ul>These can then be referenced directly in Jython as
+      <pre>
    t2 = turnouts.provideTurnout("12");
    
    dcc.
-</PRE>
-Note that the variable t2 did not need to be declared.
-<P>
-Juthon provides a shortcut for parameters that have 
-been defined with Java-Bean-like get and set methods:
-<PRE>
+</pre>Note that the variable t2 did not need to be declared.
+
+      <p>Juthon provides a shortcut for parameters that have been
+      defined with Java-Bean-like get and set methods:</p>
+      <pre>
    t2.setCommandedState(Turnout.THROWN)
-</PRE>
-can be written as
-<PRE>
+</pre>can be written as
+      <pre>
    t2.commandedState = THROWN
-</PRE>
-where the assignment is actually invoking the set method.
-Also note that THROWN was defined when running the Python script
-at startup; CLOSED, ACTIVE, INACTIVE, RED, YELLOW and GREEN are
-also defined.
-<P>
-A similar mechanism can be used to check the state of something:
-<PRE>
->>> print sensors.provideSensor("3").knownState == ACTIVE 
+</pre>where the assignment is actually invoking the set method.
+Also note that THROWN was defined when running the Python script at
+startup; CLOSED, ACTIVE, INACTIVE, RED, YELLOW and GREEN are also
+defined.
+
+      <p>A similar mechanism can be used to check the state of
+      something:</p>
+      <pre>
+&gt;&gt;&gt; print sensors.provideSensor("3").knownState == ACTIVE 
 1
->>> print sensors.provideSensor("3").knownState == INACTIVE
+&gt;&gt;&gt; print sensors.provideSensor("3").knownState == INACTIVE
 0
-</PRE>
-Note that Jython uses "1" to indicate true, and "0" to indicate
-false, so sensor 3 is currently active in this example
-<P>
-You can also directly invoke methods, e.g. to send a DCC
-packet to the rails you type:
-<PRE>   
+</pre>Note that Jython uses "1" to indicate true, and "0" to
+indicate false, so sensor 3 is currently active in this example
+
+      <p>You can also directly invoke methods, e.g. to send a DCC
+      packet to the rails you type:</p>
+      <pre>
+   
    dcc.sendPacket([0x01, 0x03, 0xbb], 4) 
-</PRE>
-This sends that three-byte packet four times, and then returns to the
-command line.
-<P>
-To exit, either ^C from the command line, or use the exit
-command from the menu.  
+</pre>This sends that three-byte packet four times, and then
+returns to the command line.
 
-<H2>Using Python for signal logic and automation</h2>
+      <p>To exit, either ^C from the command line, or use the exit
+      command from the menu.</p>
 
-The existing JMRI 
-"<A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/package-summary.html">Automat</a>"
-classes provide hooks for user layout automation, including signaling.
-But they require that you write Java code and compile it into .class files.
-<P>
-The 
-<A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/JythonAutomaton.html">JythonAutomaton</a>
-class is intended to make it easier to code custom layout automation, as
-it will allow you to invoke a Jython script.  Once it's integrated into
-the configuration process, you'll be able to code your automation in one
-or more .py files, and have the program start running them at startup.
+      <h2>Using Python for signal logic and automation</h2>The
+      existing JMRI "<a href=
+      "http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/package-summary.html">Automat</a>"
+      classes provide hooks for user layout automation, including
+      signaling. But they require that you write Java code and
+      compile it into .class files.
 
-<h2>Next steps</h2>
-We're just learning how to best to integrate JMRI and Python, so there
-are still some basic mysteries.
-<h3>Initialization and modules</h3>
-The idea of Python "modules" isn't yet 
-clearly understood.  There are three ways to start the program via 
-a .py file:
-<OL>
-<LI>
-<PRE>
+      <p>The <a href=
+      "http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/JythonAutomaton.html">
+      JythonAutomaton</a> class is intended to make it easier to
+      code custom layout automation, as it will allow you to invoke
+      a Jython script. Once it's integrated into the configuration
+      process, you'll be able to code your automation in one or
+      more .py files, and have the program start running them at
+      startup.</p>
+
+      <h2>Next steps</h2>We're just learning how to best to
+      integrate JMRI and Python, so there are still some basic
+      mysteries.
+
+      <h3>Initialization and modules</h3>The idea of Python
+      "modules" isn't yet clearly understood. There are three ways
+      to start the program via a .py file:
+
+      <ol>
+        <li>
+          <pre>
   % ./jmrithon
   Jython 2.1 on java1.4.1_01 (JIT: null)
   Type "copyright", "credits" or "license" for more information.
-  >>> import JmriDemo
-</PRE>
-This works, in the sense that the program starts up. But the
+  &gt;&gt;&gt; import JmriDemo
+</pre>This works, in the sense that the program starts up. But the
 convenience methods are all in the JmriDemo namespace:
-<PRE>
-  >>> turnouts.newTurnout("LT1","")
+          <pre>
+  &gt;&gt;&gt; turnouts.newTurnout("LT1","")
   Traceback (innermost last):
     File &amp;&lt;console&gt;&amp;, line 1, in ?
   NameError: turnouts
 
-  >>> JmriDemo.turnouts.newTurnout("LT1","")
+  &gt;&gt;&gt; JmriDemo.turnouts.newTurnout("LT1","")
   jmri.jmrix.loconet.LnTurnout@36b91b
-</PRE>
-which makes for significantly more typing later.
-And it's confusing, because depending on whether you started
-JmriDemo, DecoderPro or some other application, the names will
-be different.
-<LI>
-<PRE>
+</pre>which makes for significantly more typing later. And it's
+confusing, because depending on whether you started JmriDemo,
+DecoderPro or some other application, the names will be different.
+        </li>
+
+        <li>
+          <pre>
   % ./jmrithon
-  >>>  execfile("JmriDemo.py")
-</PRE>
-or the simpler form
-<PRE>
+  &gt;&gt;&gt;  execfile("JmriDemo.py")
+</pre>or the simpler form
+          <pre>
   % ./jmrithon -JmriDemo.py
-</PRE>
-
-This looks somewhat ugly, as it's not using the normal Python
-modules technique.  But the convenience methods are
-in the top-level name space:
-<PRE>
+</pre>This looks somewhat ugly, as it's not using the normal Python
+modules technique. But the convenience methods are in the top-level
+name space:
+          <pre>
   turnouts.newTurnout("LT1", "")
-</PRE>
-<BR>
-We need to understand whether this is a real issue.  Most Python
-programs don't use that top-level namespace, and there's probably
-a good reason!
-</OL>
-We need to understand how the developers of Jython intended this
-to be done.
+</pre><br>
+          We need to understand whether this is a real issue. Most
+          Python programs don't use that top-level namespace, and
+          there's probably a good reason!
+        </li>
+      </ol>We need to understand how the developers of Jython
+      intended this to be done.
 
-<h3>Termination</h3>
-Once the JMRI main thread (or Swing GUI thread?) has started, 
-^D is not sufficient to exist the program.  You have to select
-"Quit" from the actual file menu, or ^C the program.
-<P>
-It would be good to understand what's preventing the program 
-from stopping when it gets the ^D.
+      <h3>Termination</h3>Once the JMRI main thread (or Swing GUI
+      thread?) has started, ^D is not sufficient to exist the
+      program. You have to select "Quit" from the actual file menu,
+      or ^C the program.
 
-<!--#include virtual="/Footer" -->
-	  </div><!-- closes #mainContent-->
-	</div> <!-- closes #mBody-->
+      <p>It would be good to understand what's preventing the
+      program from stopping when it gets the ^D. 
+      <!--#include virtual="/Footer" --></p>
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>

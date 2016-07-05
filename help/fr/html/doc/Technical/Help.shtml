@@ -68,22 +68,25 @@ atteindre le contenu. La deuxi&#232;me partie de l'arbre devrait &#233;galement 
 comme "une page, un th&#232;me", avec des liens pour les connecter au besoin
 
 <a name="limitations">
-<h3>Limitations de JavaHelp HTML</h3></a>
+</a><h3>Limitations de JavaHelp HTML</h3>
 
 JavaHelp affiche " un bon vieux HTML 4.0", sans fournir certains des
 sucre syntaxique fourni par de nombreux navigateurs pour permettre de pauvres rendus HTML.
 En particulier, il y a quelques choses &#224; surveiller.
 <ul>
 <li>Les balises d'ancrage ne sont pas XML. Plus pr&#233;cis&#233;ment,
-<pre><code>
+<pre style="font-family: monospace;">
+
 &lt;a id="foo"/&gt;Foo!
 </code></pre>
 demande d'&#234;tre remplac&#233; par
-<pre><code>
+<pre style="font-family: monospace;">
+
 &lt;a id="foo"&gt;Foo!
 </code></pre>
 or
-<pre><code>
+<pre style="font-family: monospace;">
+
 &lt;a name="foo"&gt;Foo!&lt;/a&gt;
 </code></pre>
 L'indicateur que vous avez pour faire ceci c'est un &lt;

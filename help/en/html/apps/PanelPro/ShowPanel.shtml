@@ -58,7 +58,8 @@ have different requirements.  But there are two things you can try:
 	Tell the browser to pick it up from a JMRI web server.
 	<p>
 	To do this, change the second line of the file to:
-	<pre><code>
+	<pre style="font-family: monospace;">
+
 	&lt;?xml-stylesheet href="http://jmri.org/xml/XSLT/panelfile.xsl" type="text/xsl"?&gt;
 	</code></pre>
 	<li>
@@ -72,7 +73,8 @@ have different requirements.  But there are two things you can try:
 	Put a copy of that file in the same directory as the panel file
 	you want to display.
 	Then change the second line of your panel file to:
-	<pre><code>
+	<pre style="font-family: monospace;">
+
 	&lt;?xml-stylesheet href="panelfile.xsl" type="text/xsl"?&gt;
 	</code></pre>
 	</ul>

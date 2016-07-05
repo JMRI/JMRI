@@ -310,6 +310,7 @@ public class RosterServlet extends HttpServlet {
         log.debug("Getting roster with filter {}", filter);
         String group = (!filter.path(GROUP).isMissingNode()) ? filter.path(GROUP).asText() : null;
         log.debug("Group {} was in filter", group);
+
         String format = request.getParameter(FORMAT);
         if (format == null) {
             format = "";

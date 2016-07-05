@@ -59,7 +59,6 @@ import org.slf4j.LoggerFactory;
  * Brown; may be freely used or adapted.
  *
  * @author Modifications by Bob Jacobsen Copyright 2005, 2006, 2008
- * @version $Revision$
  */
 public class JmriJFrameServlet extends HttpServlet {
 

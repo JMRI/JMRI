@@ -721,11 +721,6 @@ public class HardcopyWriter extends Writer {
 
     public static class PrintCanceledException extends Exception {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -281738262906826412L;
-
         public PrintCanceledException(String msg) {
             super(msg);
         }

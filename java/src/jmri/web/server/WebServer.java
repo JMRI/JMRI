@@ -31,7 +31,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright 2005, 2006
  * @author Randall Wood Copyright 2012, 2016
- * @version $Revision$
  */
 public final class WebServer implements LifeCycle.Listener {
 

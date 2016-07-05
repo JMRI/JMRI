@@ -25,7 +25,7 @@
 <h1>Ajouter/&#201;diter Transits</h1>
 
 <a name="addTransit"> 
-<h2> Ajout d'un nouveau Transit</h2></a>
+</a><h2> Ajout d'un nouveau Transit</h2>
 Pour ajouter un nouveau Transit, suivez cette proc&#233;dure:
 <ol>
 <li><p>Cliquez <b><a href="TransitTable.shtml"> Transits</a></b> dans le sous-menu

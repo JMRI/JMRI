@@ -27,7 +27,6 @@
       JMRI: Logix Documentation
       </h1>
     
-    <dd>
 	<p>Logix&trade; provide a powerful capability for JMRI to monitor one  
 	or more conditions on a layout, and take action when these  
 	conditions change in a user-specified way.  Logix can be used  
@@ -37,11 +36,8 @@
 	for setting up user-specified logic in an intuitive manner, without the 
 	user having to be familiar with mathematical logic.
 	</p>  
-	</dd>
 
-	<dl>
-	<dt class=left><a name=contents><h2>Contents</h2></a></dt>
-	<dd class=top>
+	<a name=contents></a><h2>Contents</h2>
 	<p>The documentation below describes Logix, and discusses how to set 
 	them up. The documentation is divided into sections; click below for 
 	easy access to a listed section. If you prefer to try before reading much,
@@ -61,13 +57,12 @@
 	<li><a href="#action">Available Actions</a>
 	<li><a href="#notes">Additional Notes</a>
 	</ul>
-	</dd>
 
-	<dt class="left"><a name="intro"><h2>Introduction to Logix and Conditionals</h2></a></dt>
-	<dd class="top">
+	<a name="intro"></a><h2>Introduction to Logix and Conditionals</h2>
+
 	<p>A Logix is a small group of Conditionals focused on a single task 
 	on the layout. Each <a href="#conditional">Conditional</a> may be viewed as a statement of the form:
-	<p><ul>if (logical expression) then (action)</ul></p>
+	<p><code>if (logical expression) then (action)</code></p>
 	<p>The "logical expression" part of a Conditional tests the state of a group
 	of user-specified conditions on the layout, for example, whether certain
 	turnouts are closed or thrown, or whether a block is occupied. The "action" 
@@ -88,10 +83,10 @@
 	is needed for all the logic addressing the task, and grouping all the logic 
 	for the task in one place, makes it much easier to see how related
 	logical expressions might work together and how they might affect each other. 	
-	</p></dd>
+	</p>
 
-    <dt class="left"><a name="logix"><h2>What are Logix?</h2></a></dt>                                                                                          
-	<dd class="top">
+    <a name="logix"></a><h2>What are Logix?</h2>                                                                                         
+
 	<p>Except when it is being created or edited, 
 	a Logix is "active", which means
 	that the entities (turnouts, sensors, lights, etc.) in logical 
@@ -126,7 +121,7 @@
 	table also shows whether a Logix is "Enabled". The last column of the 
 	table provides an easy way to edit a Logix and its Conditionals. 
 	Clicking the <b>Select</b> choice box for a Logix, will drop down a menu 
-  with three choices; <b>Edit</b>, <b>Copy</b> and <b>Delete</b>.
+    with three choices; <b>Edit</b>, <b>Copy</b> and <b>Delete</b>.
 	Each choice will bring up a pane for the corresponding operation.
   </p>
   
@@ -220,11 +215,9 @@
 	<b>select</b> menu on the Logix Table will show a series of dialog windows that
 	provide a way to copy the Logix and any or all of its Conditional to a new
 	or existing Logix.</p> 
-	</dd>
 	
-	<dt class="left"><a name="conditional"><h2>Conditionals</h2></a>
-	</dt>
-	<dd class="top">
+	<a name="conditional"></a><h2>Conditionals</h2>
+
 	<p>A Conditional's System Name has the form IXnnnnCmm, and  
 	is set automatically when the Conditional is created by the user clicking 
 	<b>New Conditional</b> in the Edit Logix window. The System Name of the 
@@ -241,7 +234,7 @@
 	name may be the same as the User Name of a Conditional in another Logix.
 	</p>
 	<p>As mentioned above, Conditionals are statements of the form:
-	<p><ul>if (antecedent) then (consequent).</ul></p>
+	<p><code>if (antecedent) then (consequent).</code></p>
 	<p>Therefore a Conditional has two distinct parts: its "logical expression" 
 	and its "actions". These are discussed separately below.
 	<p>Logical expressions connect the states (true or false) of "state 
@@ -263,9 +256,9 @@
 	to set up a logical expression to evaluate many situations on  
 	the layout. For example, "if block 10 and block 11 are  
 	occupied and turnout 20 is thrown" would be set up as:</p>
-	<p><ul>Sensor "LS1020" is Sensor Active AND Sensor "LS1021" is Sensor Active 
-        AND Turnout "LT20" is Turnout Thrown
-	</ul></p>
+	<ul><li><code>Sensor "LS1020" is Sensor Active AND Sensor "LS1021" is Sensor Active 
+        AND Turnout "LT20" is Turnout Thrown</code></li>
+	</ul>
 	<p>where LS1020 is a sensor that is true when block 10 is  
 	occupied (perhaps from a BDL168), sensor LS1021 is true when  
 	block 11 is occupied, and Turnout Thrown LT20 is true when turnout LT20  
@@ -283,14 +276,12 @@
 	logical expression changes.  This means a conditional may actually 
   be three statements.
   </p>	
-	<p><ul>if (antecedent is true) then (do "on change to true" actions)</p>
+	<p>if (antecedent is true) then (do "on change to true" actions)</p>
 	<p>if (antecedent is false) then (do "on change to false" actions)</p>
-	<p>if (antecedent state changes) then (do "on change" actions)</ul></p>
-	</dd>
+	<p>if (antecedent state changes) then (do "on change" actions)</p>
 	
-	<dt class="left"><a name="editconditional"><h3>The Edit Conditional Window</h3></a>
-	</dt>
-	<dd class="top">
+	<a name="editconditional"></a><h3>The Edit Conditional Window</h3>
+
 	<p>The Edit Conditional window is where logical expressions are set up and 
 	where actions are specified.  The Edit Conditional window is
 	displayed when a Conditional is created, or when the <b>Edit</b> button of a 
@@ -300,11 +291,9 @@
 	Name field. Any text may be used, provided it doesn't duplicate the user 
 	name of another Conditional in the same Logix. Next are two sections--one 
 	for the setup of a logical expression and one for set up of the actions.</p>
-	</dd>
 	
-	<dt class="left"><a name="logicalexpression"><h3>The Logical Expression</h3></a>
-	</dt>
-	<dd class="top">
+	<a name="logicalexpression"></a><h3>The Logical Expression</h3>
+
 	<p>The logical expression section contains a table of state variables, with 
 	two buttons and a drop down menu box below.  The drop down menu allows the
         choice of what logical operators to use in the antecedent.  The choices are:
@@ -372,18 +361,16 @@
 	the bottom of the window) so that the program is notified that you have 
 	finished your entry. Otherwise your entry may not take effect, and an error 
 	may be reported unnecessarily.</i></p>
-	</dd>
 	
-	<dt class="left"><a name="thepolicy"><h3>Triggering the Actions</h3></a>
-	</dt>
-	<dd class="top">	
+    <a name="thepolicy"></a><h3>Triggering the Actions</h3>
+	
         <p>
         There are two policies that can be taken after a conditional's state is evaluated:
         <ul>
         <li> Execute the conditional actions only if the state of the conditional has changed</li>
         <li> Execute the conditional actions regardless whether the state has changed</li>
         </ul>
-        Which policy to use is chosen by the radio buttons in the middle of the Edit
+        <p>Which policy to use is chosen by the radio buttons in the middle of the Edit
         Conditional window.
         The <b>Execute actions on change of state only</b> button prevents unwanted behavior
         from occurring when multiple instances of the "on true" or "on false" actions 
@@ -396,10 +383,10 @@
         button should be used.  If external events undo some of the actions of 
         the conditional but do not change the state of the conditional, then this policy
         will execute the action on any trigger.
-        </p>    
-	<dt class="left"><a name="theactions"><h3>The Actions</h3></a>
-	</dt>
-	<dd class="top">
+        </p>
+
+	<a name="theactions"></a><h3>The Actions</h3>
+
 	<p>The Actions section of the Edit Conditional window contains a table 
         of actions, with two buttons below for adding a new action and reordering the
         list of actions.  The section provides for specifying
@@ -440,11 +427,9 @@
         separate Conditionals for each action and chain the Conditionals such that a 
         preceding action's completed state is the state variable for the succeeding 
         action.</p>
-	</dd>
 	
-	<dt class="left"><a name="updateconditional"><h3>Saving the Conditional</h3></a>
-	</dt>
-	<dd class="top">
+	<a name="updateconditional"></a><h3>Saving the Conditional</h3>
+
 	<p>When the logical expression and actions have been specified, click 
 	<b>Update Conditional</b> at the bottom of the window. This initiates a
 	check of the logical expression (the same as done by <b>Check State 
@@ -462,11 +447,9 @@
 	Conditional</b>, provides an easy way to delete an unneeded Conditional. 
 	Click <b>Delete Conditional</b> to delete the Conditional being edited and 
 	return to the Edit Logix window.</p>
-	</dd>
 	
-	<dt class="left"><a name="start"><h2>Getting Started</h2></a>
-	</dt>
-	<dd class="top">
+	<a name="start"></a><h2>Getting Started</h2>
+
 	    <p>The following steps let you create your first Logix and become familiar
 	    with how the Logix user interface works.
 	    <ol>
@@ -517,10 +500,9 @@
     	<p>You'll have created a Logix to control the setting of a turnout 
     	according to the states of two sensors. It's as simple as that. It took 
     	you more time to read this tutorial than to create the Logix.</p>	    
-	</dd>
 
-	<dt class="left"><a name="variable"><h2>Available State Variables</h2></a></dt>
-	<dd>
+	<a name="variable"></a><h2>Available State Variables</h2>
+
 	<p>State variables that are currently available for use in Conditionals
 	are listed below, along with information on each. State variables
 	must always evaluate to either true or false. The condition resulting in 
@@ -530,7 +512,7 @@
 	monitored, unless the Triggers Calculation checkbox of the state variable is
 	unchecked (see <a href="#editconditional">above</a>). A calculation of all 
 	Conditionals in the Logix is triggered when any monitored state changes as 
-	noted below (if not obvious).
+	noted below (if not obvious).</p>
 	  <ul>
 		<li><b>Sensor Active</b>: Evaluates to true if the state of the
 		specified sensor is active. 
@@ -602,11 +584,10 @@
 		is being held. 
 		<li><b>OBlock status</b>: Evaluates to true if the specified status 
 		equals the status of the Occupancy Block. 
-    	</ul>
-	</dd>    
+    	</ul>   
     
-	<dt class="left"><a name="action"><h2>Available Actions</h2></a></dt>
-	<dd>
+	<a name="action"></a><h2>Available Actions</h2>
+
 	<p>Actions that are currently available for use in Conditionals are listed 
 	below along with information on each:
 	  <ul>
@@ -757,13 +738,12 @@
                 to Out-Of-Service.
 		Specify the OBlock by entering its System Name or User Name.</li>
   		<li><b>Clear Block Out-Of-Service</b>: Sets the status of an Occupancy
-                Block to the current normal status.</li>
-		Specify the OBlock by entering its System Name or User Name.</li>
-		</ul>
-	</dd>    
+                Block to the current normal status.
+		<p>Specify the OBlock by entering its System Name or User Name.</p></li>
+		</ul> 
 	
-	<dt class="left"><a name="notes"><h2>Additional Notes</h2></a></dt>
-	<dd>
+	<a name="notes"></a><h2>Additional Notes</h2>
+
 	<p> This section contains questions and answers that normally are not 
 	needed by Logix users, but in some cases were important or of 
 	interest for previous versions of Logix. 
@@ -785,7 +765,7 @@
 			required logic for setting appearances for one signal head. Thus once the 
 			sensors, turnouts, and signal heads are set up, only one new System Name, 
 			the System Name of the Logix, need be defined and kept track of. 
-			<p><li>Another reason for grouping multiple Conditionals is simpler 
+			<li>Another reason for grouping multiple Conditionals is simpler 
 			operation.  Fewer
 			behind the scene listeners are needed to accomplish the same task.  Even 
 			though, following the example above, the logic for each appearance of the 
@@ -849,7 +829,7 @@
 		and the Logix will work fine.  You can monitor this action by watching 
 		states in the Sensor Table, the Turnout Table, etc. Conditions at start up 
 		certainly are something to keep in mind when setting up a Logix.</p>
-		<p><li><b>When should Triggers Calculation be unchecked in a state variable?</b>	
+		<li><b>When should Triggers Calculation be unchecked in a state variable?</b>	
 		<p>Normally Triggers Calculation should be checked in all state variables, 
 		so a change in any of its state variable will trigger calculation of a Logix. 
 		This results in the Logix quickly reacting to changes on the layout, and 
@@ -931,8 +911,6 @@
 		offering a possible way to break into a logic loop without restarting the
 		program.</p>
 		</ul>
-
-    </dd>
 
 <!--#include virtual="/Footer" -->
  </div><!-- closes #mainContent-->

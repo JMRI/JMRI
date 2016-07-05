@@ -33,7 +33,7 @@ The Preferences pane is where you
 configure the basic operation of your JMRI application.</p>
 
 <a name="basic">
-<h2>Basic Preferences</h2></a>
+</a><h2>Basic Preferences</h2>
 <p>
 When the panel first opens, it displays the basic Preferences.
 <p>
@@ -74,7 +74,7 @@ don't take effect until the program is stopped and restarted, so the
 program will prompt you to do that after saving the preferences.
 
 <a name="advanced">
-<h2>Advanced Preferences</h2></a> Advanced Preferences allows you to
+</a><h2>Advanced Preferences</h2> Advanced Preferences allows you to
 customize your connection to the layout. You do not need to use them to
 get your initial connection to the layout up and running, and it is
 recommended that you leave them alone until the connection to your

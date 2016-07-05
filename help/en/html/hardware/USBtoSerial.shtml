@@ -58,7 +58,7 @@ cases.</p>
 <a name="connecting"></a><h2>Connecting</h2>
 
 <a name="MS100">
-<h3>LocoNet via MS100 adapter</h3></a>
+</a><h3>LocoNet via MS100 adapter</h3>
 
 <p>Note that using a LocoBuffer is highly recommended instead of
 trying to get a MS100 to work!</p>
@@ -80,7 +80,7 @@ needed by the MS100. (<a href="loconet/KeyspanUSB.shtml">More details</a>)</p>
 MS100 because it could not provide the special baud rate needed.</p>
 
 <a name="LocoBuffer">
-<h3>LocoNet via LocoBuffer, LocoBuffer-II</h3></a>
+</a><h3>LocoNet via LocoBuffer, LocoBuffer-II</h3>
 
 <p>If you haven't yet purchased a LocoBuffer, you're best bet is ordering a 
 <a href="http://www.rr-cirkits.com">LocoBuffer-USB</a>
@@ -108,7 +108,7 @@ or Linux computer, be sure to download the most recent drivers from the
 early versions had bugs.</p>
 
 <a name="LI100">
-<h3>XpressNet via LI100</h3></a>
+</a><h3>XpressNet via LI100</h3>
 <p>
 For reliable operation, the LI100 XpressNet interface requires that the
 RS232 control leads provide flow control.
@@ -118,7 +118,7 @@ gotten reports of success from Windows 98, Windows XP, MacOS 9 and OS
 X users.</p>
 
 <a name="LI101">
-<h3>XpressNet via LI101</h3></a>
+</a><h3>XpressNet via LI101</h3>
 <p>
 For reliable operation, the LI101 XpressNet interface requires that the
 RS232 control leads provide flow control.

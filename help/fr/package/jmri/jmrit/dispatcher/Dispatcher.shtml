@@ -25,7 +25,7 @@
 
 <h1> Dispatcheur</h1>
 
-<a name="contents"><h2>Contenus</h2></a>
+<a name="contents"></a><h2>Contenus</h2>
 
 <p> Ce document d&#233;crit le <b>Dispatcher</b>, et comment utiliser Dispatcher pour
 aider &#224; la r&#233;partition et l'exploitation des trains sur les r&#233;seaux avec les panneaux PanelPro. Le
@@ -174,7 +174,7 @@ r&#233;partiteur, ou automatiquement si vous utilisez la version <b>Auto</b>.</p
 directes et des gares en coulisses<p>
 
 <a name="transits">
-<h2>Utilisation des Transits et des Sections dans Le Dispatching  des Trains Actifs</h2></a>
+</a><h2>Utilisation des Transits et des Sections dans Le Dispatching  des Trains Actifs</h2>
 
 <p> Quand un <b>Transit</b> est jumel&#233; &#224; un  <b>Train</b> pour former un <b>Train Actif</b>,
 le canton de d&#233;part (lieu de d&#233;but du Train Actif) et la fin du canton (Lieu o&#249; le voyage  du Train Actif
@@ -288,7 +288,7 @@ disponibles dans la fen&#234;tre Options, dans le menu Options, sont contenues
 dans le fichier d'aide <b><a href="Options.shtml">Options</a></b>.</p>
 
 <a name="atrains">
-<h2>Le Tableau Trains Actifs</h2></a>
+</a><h2>Le Tableau Trains Actifs</h2>
  <p>Le Tableau Train Actif depuis l'exemple du fen&#234;tre de Dispatcheur ci-dessus est pr&#233;sent&#233; ci-dessous.</p>
 <img src="ActiveTrainsTable.jpg" height="118" width="802">
 <p> Chaque rang&#233;e du Tableau <b>Trains Actifs</b> correspond &#224; un train Actif. Les
@@ -368,7 +368,7 @@ Section est appropri&#233;e, de sorte que le r&#233;partiteur n'est pas interrog
 </ul>
 
 <a name="arequests">
-<h2> Le Tableau Allocations Demand&#233;es</h2></a>
+</a><h2> Le Tableau Allocations Demand&#233;es</h2>
 <p> L'exemple de Tableau Allocations Demand&#233;es dans la fen&#234;tre de Dispatcher ci-dessus est pr&#233;sent&#233; ci-dessous.</p>
 <img src="RequestedAllocationsTable.jpg" height="101" width="802">
 
@@ -448,7 +448,7 @@ sans allouer la Section demand&#233;e.
 </ul>
 
 <a name="allocated">
-<h2> Le Tableau des Sections Allou&#233;es</h2></a>
+</a><h2> Le Tableau des Sections Allou&#233;es</h2>
 <p>Le Tableau <b>Sections Allou&#233;es</b> affiche toutes les Sections
 actuellement affect&#233;es aux Trains Actifs. Ce Tableau sert &#224; deux fins. Il
 montre quelles Sections Allou&#233;es sont attribu&#233;es et &#224; quels Trains Actifs, et il
@@ -528,7 +528,7 @@ La d&#233;sactivation d'<b>Allouer Auto</b> annule tous les plans que l'option p
 sur plusieurs Trains Actifs <b>Note:. Lib&#233;ration Auto et Allouer Auto n&#233;cessitent
 du mat&#233;riel fiable pour que les cantons d'occupation  fonctionnent de mani&#232;re fiable</b>.</p>
 
-<a name="automatic"><h2>Trains Circulant Automatiquement</h2></a>
+<a name="automatic"></a><h2>Trains Circulant Automatiquement</h2>
 <p>Dispatcheur assiste les trains circulant autour du r&#233;seau automatiquement, &#224; condition que le r&#233;seau
  r&#233;ponde aux exigences minimales. Une fois qu'un Train Actif automatique (appel&#233;
  <b>Train Actif Auto</b>) est cr&#233;&#233;, il est g&#233;r&#233; automatiquement par un <i>
