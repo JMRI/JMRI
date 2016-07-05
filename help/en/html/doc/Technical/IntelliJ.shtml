@@ -172,8 +172,9 @@
         "263" alt="IntelliJ build java SDK prefs"></a></li>
 
         <li>Click OK to close the Preferences.</li>
-      </ol><a name="getgit"></a>
-
+      </ol>
+      
+      <a name="getgit"></a>
       <h2>Getting the JMRI Source using Git</h2>
 
       <p>To get the source code from GitHub into IntelliJ, follow
@@ -233,9 +234,9 @@
         "119" alt="IntelliJ Git import pane3"></a></li>
       </ol>
 
-      <p>This will add JMRI to the IntelliJ Project window.
-      <a name="ijprojectwin"></a></p>
+      <p>This will add JMRI to the IntelliJ Project window.</p>
 
+      <a name="ijprojectwin"></a>
       <h2>The Project window</h2>
 
       <p>After cloning is completed, the IntelliJ Project window
@@ -297,9 +298,9 @@
       Supply a name i.e. <code>my-dialog-2</code> and click OK.<br>
       Note: Starting your Branch name with a unique two letter
       combination will make it stand out from the long list much
-      better than a name like <code>patch-1</code>.</p><a name=
-      "setant" id="setant"></a>
-
+      better than a name like <code>patch-1</code>.</p>
+      
+      <a name="setant"></a>
       <h2>Building and running JMRI using Ant</h2>
 
       <p>We recommend that before you try to build and run one of
@@ -335,6 +336,10 @@
         start the ant build. Follow any messages in the Event Log
         that pops up from the bottom edge of the Project
         window.</li>
+
+        <li>A new JMRI checkout should build cleanly. If not,
+        please check with the JMRIusers or jmri-developers mailings
+        lists for help.</li>
       </ol>
 
       <p>If the ant build is successful, you can launch any of the
@@ -363,8 +368,8 @@
       build process, after which a Java icon will open with the
       application running with all your new (saved) edits.</p>
       <!-- to do: write instructions for configurations? -->
-      <a name="push"></a>
 
+      <a name="push"></a>
       <h2>Pushing changes to your GitHub branch</h2>
 
       <p>The standard practice for getting your changes included in
@@ -556,8 +561,8 @@
         shown below by going to Window -&gt; Preferences and selecting
         "Java -&gt; Compiler -&gt; Errors/Warnings".
         -->
-      <a name="more"></a>
 
+      <a name="more"></a>
       <h2>More Help</h2>
 
       <p>See the IntelliJ IDEA <a href=
