@@ -199,16 +199,19 @@ Signal Mast.
 <p>
 	A program (in Java or Python) can get access to 
 Aspect information in two ways.  If the code has a reference to a specific Signal Mast &quot;m&quot;, it can use
-<pre><code>
+<pre style="font-family: monospace;">
+
    m.getValidAspects()
 </code></pre>
 to get the list of aspect names that this Signal Mast can display.
 The program can then access the Signal System definition with
-<pre><code>
+<pre style="font-family: monospace;">
+
    SignalSystem sys = m.getSignalSystem()
 </code></pre>
 and then enquire about properties of the aspect:
-<pre><code>
+<pre style="font-family: monospace;">
+
    sys.getProperty("Clear","speed");
 </code></pre>
 where the first argument is the aspect name (use, for example,
@@ -228,7 +231,8 @@ two-head Signal Mast is different from that for a one-head Signal Mast,
 even if they both represent "Clear".
 <p>
 To get those:
-<pre><code>
+<pre style="font-family: monospace;">
+
    m.getAppearanceMap().getProperty("Clear","imagelink");
 </code></pre>
 In words, this is saying "Get the Appeance info for this Signal Mast,
@@ -237,7 +241,8 @@ and then check the imagelink property of the Clear aspect".
 <p>
 Alternatively, if you know the name of the Signal System in use,
 a program can access it directly via the InstanceManager:
-<pre><code>
+<pre style="font-family: monospace;">
+
    SignalSystem sys = InstanceManager.signalSystemManagerInstance().getSystem("basic");
 </code></pre>
 
