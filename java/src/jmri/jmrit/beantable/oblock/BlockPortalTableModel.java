@@ -1,5 +1,14 @@
 package jmri.jmrit.beantable.oblock;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.Arrays;
+import java.util.List;
+import javax.swing.JTextField;
+import javax.swing.table.AbstractTableModel;
+import jmri.NamedBean;
+import jmri.jmrit.logix.OBlock;
+
 /**
  * GUI to define OBlocks
  * <P>
@@ -16,23 +25,9 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version $Revision$
  */
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.Arrays;
-import java.util.List;
-import javax.swing.JTextField;
-import javax.swing.table.AbstractTableModel;
-import jmri.NamedBean;
-import jmri.jmrit.logix.OBlock;
-
 class BlockPortalTableModel extends AbstractTableModel implements PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6547843920072979055L;
     public static final int BLOCK_NAME_COLUMN = 0;
     public static final int PORTAL_NAME_COLUMN = 1;
     public static final int NUMCOLS = 2;
