@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.Vector;
+
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -18,6 +19,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.Memory;
@@ -29,9 +31,14 @@ import jmri.implementation.AbstractNamedBean;
 import jmri.jmrit.beantable.beanedit.BeanEditItem;
 import jmri.jmrit.beantable.beanedit.BeanItemPanel;
 import jmri.util.JmriJFrame;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
 
 /**
  * A LayoutBlock is a group of track segments and turnouts on a LayoutEditor
@@ -891,7 +898,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         if (!(getOccupancySensorName()).equals(sensorNameField.getText().trim())) {
             // sensor has changed
             String newName = sensorNameField.getText().trim();
-            if (newName == null || newName.length() < 1) {
+            if (newName.length() == 0) {
                 setOccupancySensorName(newName);
                 sensorNameField.setText("");
                 needsRedraw = true;
@@ -2649,7 +2656,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
      * block. direction, is optional and is used where the previousBlock is
      * equal to our block.
      */
-    public Block getNextBlock(Block previousBlock, Block destBlock) {
+    @CheckForNull public Block getNextBlock(Block previousBlock, Block destBlock) {
         int bestMetric = 965000;
         Block bestBlock = null;
         for (int i = 0; i < routes.size(); i++) {
@@ -2806,7 +2813,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         return bestIndex;
     }
 
-    Routes getRouteByDestBlock(Block blk) {
+    @CheckForNull Routes getRouteByDestBlock(Block blk) {
         for (int i = routes.size() - 1; i > -1; i--) {
             if (routes.get(i).getDestBlock() == blk) {
                 return routes.get(i);
@@ -2815,7 +2822,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         return null;
     }
 
-    ArrayList<Routes> getRouteByNeighbour(Block blk) {
+    @Nonnull ArrayList<Routes> getRouteByNeighbour(Block blk) {
         ArrayList<Routes> rtr = new ArrayList<Routes>();
         for (int i = 0; i < routes.size(); i++) {
             if (routes.get(i).getNextBlock() == blk) {
@@ -2928,16 +2935,16 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     /**
      * Returns a valid Routes, based upon the next block and destination block
      */
-    Routes getValidRoute(Block nxtBlock, Block dstBlock) {
+    @CheckForNull Routes getValidRoute(Block nxtBlock, Block dstBlock) {
         ArrayList<Routes> rtr = getRouteByNeighbour(nxtBlock);
-        if (rtr == null) {
+        if (rtr.size()==0) {
             log.info("From " + this.getDisplayName() + "No routes returned in get valid routes");
             return null;
         }
         for (int i = 0; i < rtr.size(); i++) {
-//            log.info("From " + this.getDisplayName() + ", found dest " + rtr.get(i).getDestBlock().getDisplayName() + ", required dest " + dstBlock.getDisplayName());
+            log.trace("From " + this.getDisplayName() + ", found dest " + rtr.get(i).getDestBlock().getDisplayName() + ", required dest " + dstBlock.getDisplayName());
             if (rtr.get(i).getDestBlock() == dstBlock) {
-//                log.info("From " + this.getDisplayName() + " matched");
+                log.trace("   From " + this.getDisplayName() + " matched");
                 return rtr.get(i);
             }
         }

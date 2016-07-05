@@ -1257,7 +1257,7 @@ public class LevelXing {
             }
             // get new block, or null if block has been removed
             blockNameAC = block1Name.getText().trim();
-            if ((blockNameAC != null) && (blockNameAC.length() > 0)) {
+            if (blockNameAC.length() > 0) {
                 try {
                     blockAC = layoutEditor.provideLayoutBlock(blockNameAC);
                     // decrement use if block was previously counted
@@ -1296,7 +1296,7 @@ public class LevelXing {
             }
             // get new block, or null if block has been removed
             blockNameBD = block2Name.getText().trim();
-            if ((blockNameBD != null) && (blockNameBD.length() > 0)) {
+            if (blockNameBD.length() > 0) {
                 try {
                     blockBD = layoutEditor.provideLayoutBlock(blockNameBD);
                     // decrement use if block was previously counted
@@ -1335,7 +1335,7 @@ public class LevelXing {
             }
             // get new block, or null if block has been removed
             blockNameAC = block1Name.getText().trim();
-            if ((blockNameAC != null) && (blockNameAC.length() > 0)) {
+            if (blockNameAC.length() > 0) {
                 try {
                     blockAC = layoutEditor.provideLayoutBlock(blockNameAC);
                     // decrement use if block was previously counted
@@ -1361,7 +1361,7 @@ public class LevelXing {
             }
             // get new block, or null if block has been removed
             blockNameBD = block2Name.getText().trim();
-            if ((blockNameBD != null) && (blockNameBD.length() > 0)) {
+            if (blockNameBD.length() > 0) {
                 try {
                     blockBD = layoutEditor.provideLayoutBlock(blockNameBD);
                     // decrement use if block was previously counted

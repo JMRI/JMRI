@@ -1,30 +1,40 @@
 version: '{build}'
 clone_depth: 50
 install:
-#  - echo JAVA_HOME %JAVA_HOME%
-  - choco install ant --limit-output --ignore-dependencies
-#  - echo JAVA_HOME %JAVA_HOME%
+  - SET MAVEN_VERSION=3.3.3
+  - SET MAVEN_HOME=C:\Users\appveyor\maven\apache-maven-%MAVEN_VERSION%
+  - ps: |
+      Add-Type -AssemblyName System.IO.Compression.FileSystem
+      if (!(Test-Path -Path "C:\Users\appveyor\maven" )) {
+        (new-object System.Net.WebClient).DownloadFile(
+          "http://www.apache.org/dyn/closer.cgi?action=download&filename=maven/maven-3/$($env:MAVEN_VERSION)/binaries/apache-maven-$($env:MAVEN_VERSION)-bin.zip",
+          "C:\Users\appveyor\maven.zip"
+        )
+        [System.IO.Compression.ZipFile]::ExtractToDirectory("C:\Users\appveyor\maven.zip", "C:\Users\appveyor\maven")
+      }
   - SET JAVA_HOME=C:\Program Files\Java\jdk1.8.0
-  - SET PATH=%JAVA_HOME%\bin;%PATH%
+  - SET PATH=%MAVEN_HOME%\bin;%JAVA_HOME%\bin;%PATH%
 #  - echo PATH %PATH%
 #  - echo JAVA_HOME %JAVA_HOME%
-#  - echo ANT_HOME %ANT_HOME%
+#  - echo MAVEN_HOME %MAVEN_HOME%
   - java -version
 #  - javac -version
-  - ant -version
+  - mvn -version
 build: off
 
-# note that PowerShell scripts need an empty line between each command
-# this is not normal for PowerShell and is likely a side effect of
-# AppVeyor's YAML processing
 test_script:
-- ps: >-
-    ant checkPropertiesFiles ci-test-appveyor
+- ps: |
+    mvn test -P appveyor --quiet --batch-mode
 
 on_finish:
-- ps: >-
-    $wc = New-Object 'System.Net.WebClient'
-
-    $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$env:APPVEYOR_JOB_ID", (Resolve-Path .\junit-results.xml))
+- ps: |
+    (new-object System.Net.WebClient).UploadFile(
+      "https://ci.appveyor.com/api/testresults/junit/$env:APPVEYOR_JOB_ID",
+      (Resolve-Path .\junit-results.xml)
+    )
 
 deploy: off
+
+cache:
+  - C:\Users\appveyor\maven -> appveyor.yml
+  - C:\Users\appveyor\.m2 -> pom.xml

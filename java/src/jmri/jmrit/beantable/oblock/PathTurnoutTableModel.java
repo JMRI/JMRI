@@ -1,5 +1,18 @@
 package jmri.jmrit.beantable.oblock;
 
+import java.beans.PropertyChangeEvent;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.table.AbstractTableModel;
+import jmri.BeanSetting;
+import jmri.InstanceManager;
+import jmri.Turnout;
+import jmri.jmrit.logix.OPath;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * GUI to define OBlocks
  * <P>
@@ -16,27 +29,9 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version $Revision$
  */
-import java.beans.PropertyChangeEvent;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.table.AbstractTableModel;
-import jmri.BeanSetting;
-import jmri.InstanceManager;
-import jmri.Turnout;
-import jmri.jmrit.logix.OPath;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class PathTurnoutTableModel extends AbstractTableModel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -734742811189091810L;
     public static final int TURNOUT_NAME_COL = 0;
     public static final int SETTINGCOLUMN = 1;
     public static final int DELETE_COL = 2;

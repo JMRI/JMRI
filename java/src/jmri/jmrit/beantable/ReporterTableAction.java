@@ -286,17 +286,17 @@ public class ReporterTableAction extends AbstractTableAction {
                 handleCreateException(rName);
                 return; // without creating       
             }
-            if (r != null) {
-                String user = userName.getText();
-                if ((x != 0) && user != null && !user.equals("")) {
-                    user = userName.getText() + ":" + x;
-                }
-                if (user != null && !user.equals("") && (reportManager.getByUserName(user) == null)) {
-                    r.setUserName(user);
-                } else if (reportManager.getByUserName(user) != null && !pref.getPreferenceState(getClassName(), userNameError)) {
-                    pref.showErrorMessage("Duplicate UserName", "The username " + user + " specified is already in use and therefore will not be set", userNameError, "", false, true);
-                }
+
+            String user = userName.getText();
+            if ((x != 0) && user != null && !user.equals("")) {
+                user = userName.getText() + ":" + x;
             }
+            if (user != null && !user.equals("") && (reportManager.getByUserName(user) == null)) {
+                r.setUserName(user);
+            } else if (reportManager.getByUserName(user) != null && !pref.getPreferenceState(getClassName(), userNameError)) {
+                pref.showErrorMessage("Duplicate UserName", "The username " + user + " specified is already in use and therefore will not be set", userNameError, "", false, true);
+            }
+
         }
         pref.addComboBoxLastSelection(systemSelectionCombo, (String) prefixBox.getSelectedItem());
     }

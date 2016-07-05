@@ -1,118 +1,114 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
+
 <html lang="en">
 <head>
-    <TITLE>
- 	JMRI: Use of Swing
-    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
-    <meta name="keywords" content="JMRI technical code standards recommendation Swing">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
-
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <title>JMRI: Use of Swing</title>
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content=
+  "JMRI technical code standards recommendation Swing">
+  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+  <!-- are an arbitrary design pattern used by the update.pl script to -->
+  <!-- easily replace the common header/footer code for all the web pages -->
+  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+  <!-- or change them to reflect your alternative logo -->
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
-</head>
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head><!--#include virtual="/Header" -->
 
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
+<body>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-	<div id="mainContent">
+    <div id="mainContent">
+      <h1>JMRI: Use of Swing</h1>We use Java Swing for our GUI
+      development. It's a lot more powerful than the original AWT,
+      and the price is right. In particular, we try to use the
+      "Bean format" of setting and getting members, call-backs to
+      notify of changes, etc, to make it easier to build
+      applications from JMRI components.
 
-<H1>JMRI: Use of Swing</H1>
+      <p>We have been evolving a particular pattern for using
+      Swing, described here. The JMRI codebase contains several
+      generations of implementations, so not all of it looks like
+      this, but we're moving classes in this direction as time
+      allows.</p>
 
-We use Java Swing for our GUI development.  It's a lot more powerful
-than the original AWT, and the price is right. In particular, we
-try to use the "Bean format" of setting and getting members, call-backs to
-notify of changes, etc, to make it easier to build applications 
-from JMRI components.
+      <p>The basic structure is to implement graphical tools as
+      JmriPanel objects. These are JPanels with enough extra
+      structure that the JMRI applications can directly work them.
+      For example, a JmriPanel subclass can be instantiated and
+      placed in a properly laid out window by creating a
+      JmriNamedPanel action with just the name of the JmriPanel
+      class, which in turn can be done with various automated
+      tools.</p>
 
-<p>
-We have been evolving a particular pattern for using Swing, 
-described here.  The JMRI codebase contains several generations of
-implementations, so not all of it looks like this, but we're moving
-classes in this direction as time allows.
+      <p>This pattern lets us write a tool panel just once, and
+      then use it in lots of various places, embedded into windows
+      in several ways. It also greatly reduces the number of
+      classes that need to be loaded at startup time, because there
+      are not separate *Action and *Frame classes, and JmriPanel
+      subclasses don't have to be loaded just because they are
+      listed in a menu.</p>
 
-<p>
-The basic structure is to implement graphical tools as JmriPanel objects.
-These are JPanels with enough extra structure that the JMRI applications
-can directly work them.  For example, a JmriPanel subclass can be 
-instantiated and placed in a properly laid out window by creating a 
-JmriNamedPanel action with just the name of the JmriPanel class,
-which in turn can be done with various automated tools.
-<p>
-This pattern lets us write a tool panel just once, and then use it in lots 
-of various places, embedded into windows in several ways. It also greatly reduces
-the number of classes that need to be loaded at startup time, because there are not 
-separate *Action and *Frame classes, and JmriPanel subclasses don't have to be loaded
-just because they are listed in a menu.
-<p>
-The 
-<a href="http://jmri.org/JavaDoc/doc/jmri/util/swing/package-summary.html">jmri.util.swing</a>
-package contains the suppoer code.
+      <p>The <a href=
+      "http://jmri.org/JavaDoc/doc/jmri/util/swing/package-summary.html">
+      jmri.util.swing</a> package contains the suppoer code.</p>
 
-<h2>Life Cycle of a JmriPanel</h2>
-First the ctor runs, then initComponents.  That second
-part should be the place for connections to other components,
-as all lower level objects have been created. (subclasses for
-particular systems might have e.g. more initComponents methods,
-called later)
+      <h2>Life Cycle of a JmriPanel</h2>First the ctor runs, then
+      initComponents. That second part should be the place for
+      connections to other components, as all lower level objects
+      have been created. (subclasses for particular systems might
+      have e.g. more initComponents methods, called later)
 
-<p>
-Dispose is called at the end.  (Note that JPanels don't have a dispose(), 
-that's normally only part of JFrames, but we provide it here for cleanup)
+      <p>Dispose is called at the end. (Note that JPanels don't
+      have a dispose(), that's normally only part of JFrames, but
+      we provide it here for cleanup)</p>
 
-<p>
-JmriPanels are best created by name with JmriNamedPaneAction, which has
-the advantage of greatly reducing the number of classes that need
-to be loaded to populate a menu.
+      <p>JmriPanels are best created by name with
+      JmriNamedPaneAction, which has the advantage of greatly
+      reducing the number of classes that need to be loaded to
+      populate a menu.</p>
 
-<p>
-If it can't be done by name, then JmriAbstractAction is the base.
+      <p>If it can't be done by name, then JmriAbstractAction is
+      the base.</p>
 
-<p>
-Use of WindowInterface to create subwindows, so as to put them
-in the right place.
+      <p>Use of WindowInterface to create subwindows, so as to put
+      them in the right place.</p>
 
-<p>
-(See the JavaDocs in that package, which are pretty good)
+      <p>(See the JavaDocs in that package, which are pretty
+      good)</p>
 
-<p>
-JmriJFrame is in the wrong place for now.
+      <p>JmriJFrame is in the wrong place for now.</p>
 
-<p>
-Older classes, some still to be moved to jmri.util.swing,
-some are 1.1.8 adapters that should just go away.
-<p>
-AbstractFrameAction<br>
-BusyGlassPane<br>
-FileChooserFilter<br>
-FontUtil<br>
-JTableUtil<br>
-JmriInsets<br>
-JmriJFrame<br>
-JmriJFrameAction<br>
-JmriSpinner<br>
-MouseInputAdapterInstaller<br>
-ResizableImagePanel<br>
-WindowMenu<br>
+      <p>Older classes, some still to be moved to jmri.util.swing,
+      some are 1.1.8 adapters that should just go away.</p>
 
-
-<!--#include virtual="/Footer" -->
-
-	  </div><!-- closes #mainContent-->
-	</div> <!-- closes #mBody-->
+      <p>AbstractFrameAction<br>
+      BusyGlassPane<br>
+      FileChooserFilter<br>
+      FontUtil<br>
+      JTableUtil<br>
+      JmriInsets<br>
+      JmriJFrame<br>
+      JmriJFrameAction<br>
+      JmriSpinner<br>
+      MouseInputAdapterInstaller<br>
+      ResizableImagePanel<br>
+      WindowMenu<br>
+      <!--#include virtual="/Footer" --></p>
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>
-
