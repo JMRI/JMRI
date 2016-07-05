@@ -76,9 +76,6 @@ public class MatrixSignalMastXml
                 String key = aspects.nextElement();
                 Element bs = new Element("bitString");
                 bs.setAttribute("aspect", key);
-                if (p.getBitstring(key) == null) {
-                    throw new IllegalStateException("Aspect key" + key + " missing from MatrixMast " + p.getSystemName());
-                }
                 bs.addContent(p.getBitstring(key));
                 bss.addContent(bs);
             }

@@ -14,6 +14,8 @@ import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Common utility methods for working with JMenus.
  * <P>
@@ -143,7 +145,7 @@ public class JMenuUtil extends GuiUtilBase {
         return menu;
     }
 
-    static void setMenuItemInterAction(Object context, final String ref, final JMenuItem menuItem) {
+    static void setMenuItemInterAction(@Nonnull Object context, final String ref, final JMenuItem menuItem) {
         java.lang.reflect.Method methodListener = null;
         try {
             methodListener = context.getClass().getMethod("addPropertyChangeListener", java.beans.PropertyChangeListener.class);
@@ -157,29 +159,28 @@ public class JMenuUtil extends GuiUtilBase {
             log.error("No such method remoteCalls for " + context.getClass().getName());
             return;
         }
-        if (methodListener != null) {
-            try {
-                methodListener.invoke(context, new PropertyChangeListener() {
-                    public void propertyChange(java.beans.PropertyChangeEvent e) {
-                        if (e.getPropertyName().equals(ref)) {
-                            String method = (String) e.getOldValue();
-                            if (method.equals("setSelected")) {
-                                menuItem.setSelected(true);
-                            } else if (method.equals("setEnabled")) {
-                                menuItem.setEnabled((Boolean) e.getNewValue());
-                            }
+
+        try {
+            methodListener.invoke(context, new PropertyChangeListener() {
+                public void propertyChange(java.beans.PropertyChangeEvent e) {
+                    if (e.getPropertyName().equals(ref)) {
+                        String method = (String) e.getOldValue();
+                        if (method.equals("setSelected")) {
+                            menuItem.setSelected(true);
+                        } else if (method.equals("setEnabled")) {
+                            menuItem.setEnabled((Boolean) e.getNewValue());
                         }
                     }
-                });
-            } catch (IllegalArgumentException ex) {
-                System.out.println("IllegalArgument " + ex);
-            } catch (IllegalAccessException ex) {
-                System.out.println("IllegalAccess " + ex);
-            } catch (java.lang.reflect.InvocationTargetException ex) {
-                System.out.println("InvocationTarget " + ref + " " + ex.getCause());
-            } catch (java.lang.NullPointerException ex) {
-                System.out.println("NPE " + context.getClass().getName() + " " + ex.toString());
-            }
+                }
+            });
+        } catch (IllegalArgumentException ex) {
+            System.out.println("IllegalArgument " + ex);
+        } catch (IllegalAccessException ex) {
+            System.out.println("IllegalAccess " + ex);
+        } catch (java.lang.reflect.InvocationTargetException ex) {
+            System.out.println("InvocationTarget " + ref + " " + ex.getCause());
+        } catch (java.lang.NullPointerException ex) {
+            System.out.println("NPE " + context.getClass().getName() + " " + ex.toString());
         }
 
     }
