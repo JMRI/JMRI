@@ -250,7 +250,8 @@ You can use all of the DecoderPro tools to manage a board using the LocoNet SV p
 if you provide an appropriate definition file.  These are in the same format as a 
 decoder definition file, except that to specify the LocoNet SV Version 2 protocol you modify the
 "programming" element to looks like:
-<pre><code>
+<pre style="font-family: monospace;">
+
     &lt;programming direct="no" paged="no" register="no" ops="no"&gt;
         &lt;mode&gt;LOCONETSV2MODE&lt;/mode&gt;
     &lt;/programming&gt;

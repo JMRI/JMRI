@@ -52,7 +52,8 @@ L'&#233;l&#233;ment mod&#232;le a un attribut "montr&#233;". Ses valeurs possibl
 Quelques fois nous rempla&#231;ons une d&#233;finition de d&#233;codeur par une meilleure.  L'ancienne est en cours d'utilisation,
 mais nous aimerions d&#233;placer les utilisateurs vers la nouvelle par la suite. Il y a des mod&#232;les d'attribut de niveaux qui peuvent &#234;tre ajout&#233;s &#225; l'ancienne ( pas la nouvelle) d&#233;finition pour facilter ceci:
 
-<pre><code>
+<pre style="font-family: monospace;">
+
 &lt;model show="no" model="A4X" replacementModel="A4X" replacementFamily="Jan 2012"&gt;
 </code></pre>
 <p>

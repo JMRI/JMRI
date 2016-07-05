@@ -222,7 +222,8 @@ Pour le test le plus simple possible, l'affichage d'une fen&#234;tre pour une in
 <p>
 Parce que nous ex&#233;cutons les tests en mode "headless" durant la <a href="ContinousIntegration.shtml">construction int&#233;gr&#233;e continue</a>
 il est important que les acc&#232;s Swing ( et AWT) dans les tests soient enferm&#233;s dans un mode contr&#244;l&#233;:
-<pre><code>
+<pre style="font-family: monospace;">
+
         if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
             suite.addTest(myTest.suite());
         }
