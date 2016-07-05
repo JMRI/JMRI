@@ -1,276 +1,730 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
 <html lang="en">
 <head>
-    <title>
- 	JMRI: Java Version-Specific Features
-    </title>
-    <meta content="Bob Jacobsen" name="Author">
-    <meta name="keywords" content="JMRI technical code road map">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <title>JMRI: Java Version-Specific Features</title>
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content="JMRI technical code road map">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
-</head>
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head><!--#include virtual="/Header" -->
 
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
+<body>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-	<div id="mainContent">
+    <div id="mainContent">
+      <h1>JMRI: Java Version-Specific Features</h1>This page
+      contains information about the compatibility and features of
+      various Java versions. We use this information to decide on
+      our <a href="TechRoadMap.shtml">road map</a> for future JMRI
+      versions.
 
-	<h1>JMRI: Java Version-Specific Features</h1>
+      <h2>Capabilities</h2>This section lists new Java
+      capabilities, and which Java version they first appeared in.
+      The "JDK" column shows the first Java Development Kit that
+      could compile the feature; the "JRE" column lists the first
+      runtime environment that could run the feature, including the
+      needed JVM and library support.
 
-This page contains information about 
-the compatibility and features of various
-Java versions.  We use this information
-to decide on our 
-<a href="TechRoadMap.shtml">road map</a>
-for future JMRI versions.
+      <table border="1">
+        <tr>
+          <th>Feature</th>
 
-<h2>Capabilities</h2>
+          <th>JDK</th>
 
-This section lists new Java capabilities, and which Java
-version they first appeared in.  The "JDK" column shows the first
-Java Development Kit that could compile the feature; the "JRE"
-column lists the first runtime environment that could run the feature,
-including the needed JVM and library support.
-<p>
-<table border="1">
-<tr><th>Feature</th>        <th>JDK</th>    <th>JRE</th></tr>
-<tr><td>Collections</td>    <td>1.3</td>    <td>1.3</td></tr>
-<tr><td>Java2D</td>         <td>1.3</td>    <td>1.3</td></tr>
-<tr><td>Printing update</td><td>1.3</td>    <td>1.3</td></tr>
-<tr><td>JUnit 3.8</td>      <td>1.3</td>    <td>1.3</td></tr>
+          <th>JRE</th>
+        </tr>
 
-<tr><td>JDOM 1.0</td>       <td>1.4</td>    <td>1.3</td></tr>
-<tr><td>Java regexp</td>    <td>1.4</td>    <td>1.4</td></tr>
-<tr><td>Java3D</td>         <td>1.4</td>    <td>1.4</td></tr>
-<tr><td>JavaHelp update</td><td>1.4</td>    <td>1.4</td></tr>
-<tr><td>Drag and Drop</td>  <td>1.4 (additional <br>improvements in 1.6)</td><td>1.4, 1.6</td></tr>
-<tr><td>Logging API</td>  <td>1.4 (additional <br>improvements in 1.6)</td><td>1.4, 1.6</td></tr>
-<tr><td>XML catalog resolver</td><td>1.3?</td><td>1.4?</td></tr>
+        <tr>
+          <td>Collections</td>
 
-<tr><td>Annotations</td>    <td>1.5</td>    <td>1.3</td></tr>
-<tr><td>JavaMail</td>       <td>1.5</td>    <td>1.3</td></tr>
-<tr><td>JUnit 4.0</td>      <td>1.5</td>    <td>1.3</td></tr>
-<tr><td>SwingWorker</td>    <td>1.5</td>    <td>1.5 (*1.4)</td></tr>
-<tr><td>JSpinner</td>       <td>1.5</td>    <td>1.5</td></tr>
-<tr><td>Enums</td>          <td>1.5</td>    <td>1.5</td></tr>
-<tr><td>printf, Formatter</td><td>1.5</td>  <td>1.5</td></tr>
-<tr><td>generics</td>       <td>1.5</td>    <td>1.5</td></tr>
-<tr><td>Desktop class</td>  <td>1.6</td>    <td>1.6</td></tr>
-<tr><td>JDOM2 (generics)</td><td>1.6</td><td>1.6</td></tr>
-<tr><td>Toolbars</td>       <td>1.6</td><td>1.6</td></tr>
-<tr><td>JTable Sorting</td> <td>1.6</td><td>1.6</td></tr>
-<tr><td>Webstart compatibility</td> <td>1.6</td><td>1.6</td></tr>
-<tr><td>Generics for Swing classes</td> <td>1.7</td><td>1.7</td></tr>
-<tr><td>NIO improves .zip file access</td> <td>1.7</td><td>1.7</td></tr>
-<tr><td>I18N I/O improvements</td> <td>1.7</td><td>1.7</td></tr>
-<tr><td>Memory use and <br/>GC improvements<br/>(better performance)</td> <td>1.7</td><td>1.7</td></tr>
-<tr><td>Jetty Version 9</td> <td>1.7</td><td>1.7</td></tr>
-<tr><td>JUnit 4 and the <br/><code>assert</code> keyword</td> <td>1.7</td><td>1.7</td></tr>
-</table>
-(* indicates that a compatibility library is used in the early version)
+          <td>1.3</td>
 
-<h2>JRE availability</h2>
+          <td>1.3</td>
+        </tr>
 
-This section lists the most recent Java Runtime version available
-for various operating system versions.  Please note that not all
-users of that operating system will have updated to this Java version;
-many will be using an older one.
-<p>
-<a href="http://www.oracle.com/technetwork/java/javase/config-417990.html">Oracle's page on Java 1.7 requirements</a>
-which says "Note: As of April 8, 2014 Microsoft stopped supporting Windows XP and therefore it is no longer a supported platform."
-Google finds numerous pages that show how to install Java 1.7 on XP or XP SP2.
-<p>
-<table border="1">
-<tr><th>OS and platform</th><th>Last JRE</th></tr>
-<tr><td>Linux</td><td>(depends?)</td></tr>
+        <tr>
+          <td>Java2D</td>
 
-<tr><td>Win 8 (32-bit)                      </td><td>1.8</td></tr>
-<tr><td>Win 7 (32-bit)                      </td><td>1.8</td></tr>
-<tr><td>Win Vista (32-bit)                  </td><td>1.8</td></tr>
-<tr><td>Win Server 2008 (32-bit)            </td><td>1.8</td></tr>
-<tr><td>Win Web Server 2008 (32-bit)        </td><td>1.6</td></tr>
-<tr><td>Win 2000 (32-bit)                   </td><td>1.6</td></tr>
-<tr><td>Win Server 2003 (32-bit)            </td><td>1.6</td></tr>
-<tr><td>Win 8 (64-bit)                      </td><td>1.8</td></tr>
-<tr><td>Win Server 2012 (64-bit)            </td><td>1.8</td></tr>
-<tr><td>Win Server 2012 R2 (64-bit)         </td><td>1.8</td></tr>
-<tr><td>Win 7 (64-bit)                      </td><td>1.8</td></tr>
-<tr><td>Win Server 2008 R2 (64-bit)         </td><td>1.8</td></tr>
-<tr><td>Win Server 2008 (64-bit)            </td><td>1.7</td></tr>
-<tr><td>Win Web Server 2008 R2 (64-bit)     </td><td>1.6</td></tr>
-<tr><td>Win Vista (64-bit)                  </td><td>1.8</td></tr>
-<tr><td>Win 2003 (64-bit)                   </td><td>1.6</td></tr>
-<tr><td>Windows XP                          </td><td>1.8<br><a href="https://www.java.com/en/download/faq/winxp.xml">Unofficial<br>Support</a></td></tr>
-<tr><td>Windows 98 (2nd Ed)                 </td><td>1.5-11</td></tr>
-<tr><td>Windows 98                          </td><td>1.4.2_14</td></tr>
-<tr><td>Windows 95                          </td><td>1.3.1_20</td></tr>
+          <td>1.3</td>
 
+          <td>1.3</td>
+        </tr>
 
-<tr><td>Mac OS X 10.8.3 and later on Intel</td><td>1.8</td></tr>
-<tr><td>Mac OS X 10.7.3 and later on Intel</td><td>1.7</td></tr>
-<tr><td>Mac OS X 10.5.8 and later on Intel</td><td>1.6 (Apple JVM)</td></tr>
-<tr><td>Mac OS X 10.5.7 and earlier on Intel</td><td>1.5 (Apple JVM)</td></tr>
-<tr><td>Mac OS X 10.3 and later on PowerPC</td><td>1.5 (Apple JVM)</td></tr>
-<tr><td>MacOS "Classic"</td><td>1.1.8</td></tr>
-<tr><td>OS/2</td><td>1.3</td></tr>
-</table>
-<p>
-See the 
-<a href="http://java.com/en/download/manual.jsp">Java.com download page for all Operating Systems</a> and<br>
-information on <a href="https://www.java.com/en/download/help/sysreq.xml">Java versions and hardware requirements</a>.</p>
+        <tr>
+          <td>Printing update</td>
 
-<h2 id="sysreq">System Requirements</h2>
-<p>The following combination of JMRI - Java - Platform/OS versions was based on Oracle and OS developers sources. It's translated to the OS install instructions (follow hyperlink in OS headers):
+          <td>1.3</td>
 
-	<table border="1">
-	<tbody>
-	<tr><th>JMRI</th>
-	<th>Java</th>
-	<th><a href="http://jmri.org/install/MacOSX.shtml#sysreq">OS X</a></th>
-	<th><a href="http://jmri.org/install/WindowsNew.shtml#sysreq">Windows</a></th>
-	<th><a href="http://jmri.org/install/Linux.shtml#sysreq">Linux</a></th>
-	<th><a href="http://jmri.org/install/Ubuntu.shtml#sysreq">Ubuntu</a></th>
-	<th><a href="http://jmri.org/install/Raspbian.shtml#sysreq">Raspbian</a></th>
-	</tr>
-	<tr><td>4.2</td>
-	<td>1.8</td>
-	<td>10.8.3+ Mountain Lion</td>
-	<td>Win7 SP1/8/10, Vista SP2, (XP)</td>
-	<td>5.5+</td>
-	<td>12.04+</td>
-	<td>14.04LTS</td>
-	</tr>
-	<tr><td>3.10.1</td>
-	<td>1.7</td>
-	<td>10.7.3 Lion</td>
-	<td>Win7 SP1/8/10, Vista SP2, (XP)</td>
-	<td>5.5+</td>
-	<td>12.04</td>
-	<td>12.04</td>
-	</tr>
-	<tr><td>3.10.1</td>
-	<td>1.6</td>
-	<td>10.6 Snow Leopard (JVM6)</td>
-	<td>Win2003, Win2000 (x86)</td>
-	<td>5.5</td>
-	<td>10.4</td>
-	<td>N/A</td>
-	</tr>
-	<tr><td>2.14.1</td>
-	<td>1.5</td>
-	<td>10.5.7 Leopard (JVM5)</td>
-	<td>Vista SP1, Win2000 SP3, Win8.x (x64)</td>
-	<td> </td>
-	<td>9.04</td>
-	<td>N/A</td>
-	</tr>
-	<tr><td>2.8</td>
-	<td>1.5</td>
-	<td>10.4 Tiger</td>
-	<td>Win98 (2nd Ed), XP, ME</td>
-	<td> </td>
-	<td> </td>
-	<td>N/A</td>
-	</tr>
-	<tr><td>2.2</td>
-	<td>1.5</td>
-	<td>10.3 Panther</td>
-	<td>Win98, ME</td>
-	<td>N/A</td>
-	<td>N/A</td>
-	<td>N/A</td>
-	</tr>
-	<tr><td></td>
-	<td>1.3.1</td>
-	<td>10.3 Panther</td>
-	<td>Win95, Win98</td>
-	<td>N/A</td>
-	<td>N/A</td>
-	<td>N/A</td>
-	</tr>
-	<tr><td>1.6</td>
-	<td>1.1.8</td>
-	<td>MacOS9.1 (MRJ)</td>
-	<td>Win95, Win98</td>
-	<td>N/A</td>
-	<td>N/A</td>
-	<td>N/A</td>
-	</tr>
-	</tbody>
-	</table>
+          <td>1.3</td>
+        </tr>
 
-<h2 id="JDK8">Moving to Java 1.8 from 1.6</h2>
-This section discusses, roughly in order of decreasing importance, 
-the process of migrating from Java 1.6 to Java 1.8.
+        <tr>
+          <td>JUnit 3.8</td>
 
-<h3>Generics, Swing and JComboBox</h3>
-Java 1.8 introduces generics for Swing objects. The most common 
-one is JComboBox.  This Java 1.6 line:
-<pre><code>
-    JComboBox box = new JComboBox();
-</code></pre>
-describes the creation of a JComboBox that selects generic (Object) items.<br>
-In Java 1.8, the JComboBox holds and selects objects of a specific type, usually
-String. It's written:
-<pre><code>
-    JComboBox&lt;String&gt; box = new JComboBox&lt;&gt;();
-</code></pre>
-The most common code for getting the selected item still includes a cast:
-<pre><code>
-    String result = (String)box.getSelectedItem();
-</code></pre>
-because the JComboBox can actually contain objects of other types (How can this 
-happen? If the box is editable, and somebody enters some other type).<br>
-To avoid the case, a more robust idiom is:
-<pre><code>
-    String result = box.getItemAt(progBox.getSelectedIndex());
-</code></pre>
+          <td>1.3</td>
 
-<h3>JavaDoc and doclint</h3>
+          <td>1.3</td>
+        </tr>
 
-Java 1.8 by default runs the 
-<a href="https://docs.oracle.com/javase/8/docs/technotes/tools/unix/javadoc.html#CHDFDACB">doclint</a> doclet when making JavaDoc.
-By default, it is 
-<a href="http://blog.joda.org/2014/02/turning-off-doclint-in-jdk-8-javadoc.html">very aggressive</a> 
-on possible errors.
-The default Ant-based builds turn off some of the checking
-terms with
-<pre><code>
--Xdoclint:all,-missing,-accessibility,-html,-syntax
-</code></pre>
-to drop tests for missing JavaDoc tags and certain benign HTML errors. (For now)
+        <tr>
+          <td>JDOM 1.0</td>
 
-<a name="extension"></a><h2>JVM and JDK Extensions</h2>
+          <td>1.4</td>
 
-It's possible to extend the JVM and/or JDK installed on your machine via
-<a href="http://docs.oracle.com/javase/8/docs/technotes/guides/standards/index.html ">the endorsed-standards override mechanism</a>
-and the 
-<a href="http://docs.oracle.com/javase/8/docs/technotes/guides/extensions/index.html">extension mechanism</a>.  
-Those extensions, if present, take precedence over code shipped with applications like JMRI.
-Unfortunately, these can 
-cause problems if the installed extensions interfere with a JMRI component. For example,
-an older (or younger) version might not be compatible, etc.
-It is very unusual for this to cause a problem with JMRI. You should investigate other 
-possible causes before looking into this one!  To check for this, execute the following from the 
-command line:
+          <td>1.3</td>
+        </tr>
+
+        <tr>
+          <td>Java regexp</td>
+
+          <td>1.4</td>
+
+          <td>1.4</td>
+        </tr>
+
+        <tr>
+          <td>Java3D</td>
+
+          <td>1.4</td>
+
+          <td>1.4</td>
+        </tr>
+
+        <tr>
+          <td>JavaHelp update</td>
+
+          <td>1.4</td>
+
+          <td>1.4</td>
+        </tr>
+
+        <tr>
+          <td>Drag and Drop</td>
+
+          <td>1.4 (additional<br>
+          improvements in 1.6)</td>
+
+          <td>1.4, 1.6</td>
+        </tr>
+
+        <tr>
+          <td>Logging API</td>
+
+          <td>1.4 (additional<br>
+          improvements in 1.6)</td>
+
+          <td>1.4, 1.6</td>
+        </tr>
+
+        <tr>
+          <td>XML catalog resolver</td>
+
+          <td>1.3?</td>
+
+          <td>1.4?</td>
+        </tr>
+
+        <tr>
+          <td>Annotations</td>
+
+          <td>1.5</td>
+
+          <td>1.3</td>
+        </tr>
+
+        <tr>
+          <td>JavaMail</td>
+
+          <td>1.5</td>
+
+          <td>1.3</td>
+        </tr>
+
+        <tr>
+          <td>JUnit 4.0</td>
+
+          <td>1.5</td>
+
+          <td>1.3</td>
+        </tr>
+
+        <tr>
+          <td>SwingWorker</td>
+
+          <td>1.5</td>
+
+          <td>1.5 (*1.4)</td>
+        </tr>
+
+        <tr>
+          <td>JSpinner</td>
+
+          <td>1.5</td>
+
+          <td>1.5</td>
+        </tr>
+
+        <tr>
+          <td>Enums</td>
+
+          <td>1.5</td>
+
+          <td>1.5</td>
+        </tr>
+
+        <tr>
+          <td>printf, Formatter</td>
+
+          <td>1.5</td>
+
+          <td>1.5</td>
+        </tr>
+
+        <tr>
+          <td>generics</td>
+
+          <td>1.5</td>
+
+          <td>1.5</td>
+        </tr>
+
+        <tr>
+          <td>Desktop class</td>
+
+          <td>1.6</td>
+
+          <td>1.6</td>
+        </tr>
+
+        <tr>
+          <td>JDOM2 (generics)</td>
+
+          <td>1.6</td>
+
+          <td>1.6</td>
+        </tr>
+
+        <tr>
+          <td>Toolbars</td>
+
+          <td>1.6</td>
+
+          <td>1.6</td>
+        </tr>
+
+        <tr>
+          <td>JTable Sorting</td>
+
+          <td>1.6</td>
+
+          <td>1.6</td>
+        </tr>
+
+        <tr>
+          <td>Webstart compatibility</td>
+
+          <td>1.6</td>
+
+          <td>1.6</td>
+        </tr>
+
+        <tr>
+          <td>Generics for Swing classes</td>
+
+          <td>1.7</td>
+
+          <td>1.7</td>
+        </tr>
+
+        <tr>
+          <td>NIO improves .zip file access</td>
+
+          <td>1.7</td>
+
+          <td>1.7</td>
+        </tr>
+
+        <tr>
+          <td>I18N I/O improvements</td>
+
+          <td>1.7</td>
+
+          <td>1.7</td>
+        </tr>
+
+        <tr>
+          <td>Memory use and<br>
+          GC improvements<br>
+          (better performance)</td>
+
+          <td>1.7</td>
+
+          <td>1.7</td>
+        </tr>
+
+        <tr>
+          <td>Jetty Version 9</td>
+
+          <td>1.7</td>
+
+          <td>1.7</td>
+        </tr>
+
+        <tr>
+          <td>JUnit 4 and the<br>
+          <code>assert</code> keyword</td>
+
+          <td>1.7</td>
+
+          <td>1.7</td>
+        </tr>
+      </table>(* indicates that a compatibility library is used in
+      the early version)
+
+      <h2>JRE availability</h2>This section lists the most recent
+      Java Runtime version available for various operating system
+      versions. Please note that not all users of that operating
+      system will have updated to this Java version; many will be
+      using an older one.
+
+      <p><a href=
+      "http://www.oracle.com/technetwork/java/javase/config-417990.html">
+      Oracle's page on Java 1.7 requirements</a> which says "Note:
+      As of April 8, 2014 Microsoft stopped supporting Windows XP
+      and therefore it is no longer a supported platform." Google
+      finds numerous pages that show how to install Java 1.7 on XP
+      or XP SP2.</p>
+
+      <table border="1">
+        <tr>
+          <th>OS and platform</th>
+
+          <th>Last JRE</th>
+        </tr>
+
+        <tr>
+          <td>Linux</td>
+
+          <td>(depends?)</td>
+        </tr>
+
+        <tr>
+          <td>Win 8 (32-bit)</td>
+
+          <td>1.8</td>
+        </tr>
+
+        <tr>
+          <td>Win 7 (32-bit)</td>
+
+          <td>1.8</td>
+        </tr>
+
+        <tr>
+          <td>Win Vista (32-bit)</td>
+
+          <td>1.8</td>
+        </tr>
+
+        <tr>
+          <td>Win Server 2008 (32-bit)</td>
+
+          <td>1.8</td>
+        </tr>
+
+        <tr>
+          <td>Win Web Server 2008 (32-bit)</td>
+
+          <td>1.6</td>
+        </tr>
+
+        <tr>
+          <td>Win 2000 (32-bit)</td>
+
+          <td>1.6</td>
+        </tr>
+
+        <tr>
+          <td>Win Server 2003 (32-bit)</td>
+
+          <td>1.6</td>
+        </tr>
+
+        <tr>
+          <td>Win 8 (64-bit)</td>
+
+          <td>1.8</td>
+        </tr>
+
+        <tr>
+          <td>Win Server 2012 (64-bit)</td>
+
+          <td>1.8</td>
+        </tr>
+
+        <tr>
+          <td>Win Server 2012 R2 (64-bit)</td>
+
+          <td>1.8</td>
+        </tr>
+
+        <tr>
+          <td>Win 7 (64-bit)</td>
+
+          <td>1.8</td>
+        </tr>
+
+        <tr>
+          <td>Win Server 2008 R2 (64-bit)</td>
+
+          <td>1.8</td>
+        </tr>
+
+        <tr>
+          <td>Win Server 2008 (64-bit)</td>
+
+          <td>1.7</td>
+        </tr>
+
+        <tr>
+          <td>Win Web Server 2008 R2 (64-bit)</td>
+
+          <td>1.6</td>
+        </tr>
+
+        <tr>
+          <td>Win Vista (64-bit)</td>
+
+          <td>1.8</td>
+        </tr>
+
+        <tr>
+          <td>Win 2003 (64-bit)</td>
+
+          <td>1.6</td>
+        </tr>
+
+        <tr>
+          <td>Windows XP</td>
+
+          <td>1.8<br>
+          <a href=
+          "https://www.java.com/en/download/faq/winxp.xml">Unofficial<br>
+
+          Support</a></td>
+        </tr>
+
+        <tr>
+          <td>Windows 98 (2nd Ed)</td>
+
+          <td>1.5-11</td>
+        </tr>
+
+        <tr>
+          <td>Windows 98</td>
+
+          <td>1.4.2_14</td>
+        </tr>
+
+        <tr>
+          <td>Windows 95</td>
+
+          <td>1.3.1_20</td>
+        </tr>
+
+        <tr>
+          <td>Mac OS X 10.8.3 and later on Intel</td>
+
+          <td>1.8</td>
+        </tr>
+
+        <tr>
+          <td>Mac OS X 10.7.3 and later on Intel</td>
+
+          <td>1.7</td>
+        </tr>
+
+        <tr>
+          <td>Mac OS X 10.5.8 and later on Intel</td>
+
+          <td>1.6 (Apple JVM)</td>
+        </tr>
+
+        <tr>
+          <td>Mac OS X 10.5.7 and earlier on Intel</td>
+
+          <td>1.5 (Apple JVM)</td>
+        </tr>
+
+        <tr>
+          <td>Mac OS X 10.3 and later on PowerPC</td>
+
+          <td>1.5 (Apple JVM)</td>
+        </tr>
+
+        <tr>
+          <td>MacOS "Classic"</td>
+
+          <td>1.1.8</td>
+        </tr>
+
+        <tr>
+          <td>OS/2</td>
+
+          <td>1.3</td>
+        </tr>
+      </table>
+
+      <p>See the <a href=
+      "http://java.com/en/download/manual.jsp">Java.com download
+      page for all Operating Systems</a> and<br>
+      information on <a href=
+      "https://www.java.com/en/download/help/sysreq.xml">Java
+      versions and hardware requirements</a>.</p>
+
+      <h2 id="sysreq">System Requirements</h2>
+
+      <p>The following combination of JMRI - Java - Platform/OS
+      versions was based on Oracle and OS developers sources. It's
+      translated to the OS install instructions (follow hyperlink
+      in OS headers):</p>
+
+      <table border="1">
+        <tbody>
+          <tr>
+            <th>JMRI</th>
+
+            <th>Java</th>
+
+            <th><a href=
+            "http://jmri.org/install/MacOSX.shtml#sysreq">OS
+            X</a></th>
+
+            <th><a href=
+            "http://jmri.org/install/WindowsNew.shtml#sysreq">Windows</a></th>
+
+            <th><a href=
+            "http://jmri.org/install/Linux.shtml#sysreq">Linux</a></th>
+
+            <th><a href=
+            "http://jmri.org/install/Ubuntu.shtml#sysreq">Ubuntu</a></th>
+
+            <th><a href=
+            "http://jmri.org/install/Raspbian.shtml#sysreq">Raspbian</a></th>
+          </tr>
+
+          <tr>
+            <td>4.2</td>
+
+            <td>1.8</td>
+
+            <td>10.8.3+ Mountain Lion</td>
+
+            <td>Win7 SP1/8/10, Vista SP2, (XP)</td>
+
+            <td>5.5+</td>
+
+            <td>12.04+</td>
+
+            <td>14.04LTS</td>
+          </tr>
+
+          <tr>
+            <td>3.10.1</td>
+
+            <td>1.7</td>
+
+            <td>10.7.3 Lion</td>
+
+            <td>Win7 SP1/8/10, Vista SP2, (XP)</td>
+
+            <td>5.5+</td>
+
+            <td>12.04</td>
+
+            <td>12.04</td>
+          </tr>
+
+          <tr>
+            <td>3.10.1</td>
+
+            <td>1.6</td>
+
+            <td>10.6 Snow Leopard (JVM6)</td>
+
+            <td>Win2003, Win2000 (x86)</td>
+
+            <td>5.5</td>
+
+            <td>10.4</td>
+
+            <td>N/A</td>
+          </tr>
+
+          <tr>
+            <td>2.14.1</td>
+
+            <td>1.5</td>
+
+            <td>10.5.7 Leopard (JVM5)</td>
+
+            <td>Vista SP1, Win2000 SP3, Win8.x (x64)</td>
+
+            <td></td>
+
+            <td>9.04</td>
+
+            <td>N/A</td>
+          </tr>
+
+          <tr>
+            <td>2.8</td>
+
+            <td>1.5</td>
+
+            <td>10.4 Tiger</td>
+
+            <td>Win98 (2nd Ed), XP, ME</td>
+
+            <td></td>
+
+            <td></td>
+
+            <td>N/A</td>
+          </tr>
+
+          <tr>
+            <td>2.2</td>
+
+            <td>1.5</td>
+
+            <td>10.3 Panther</td>
+
+            <td>Win98, ME</td>
+
+            <td>N/A</td>
+
+            <td>N/A</td>
+
+            <td>N/A</td>
+          </tr>
+
+          <tr>
+            <td></td>
+
+            <td>1.3.1</td>
+
+            <td>10.3 Panther</td>
+
+            <td>Win95, Win98</td>
+
+            <td>N/A</td>
+
+            <td>N/A</td>
+
+            <td>N/A</td>
+          </tr>
+
+          <tr>
+            <td>1.6</td>
+
+            <td>1.1.8</td>
+
+            <td>MacOS9.1 (MRJ)</td>
+
+            <td>Win95, Win98</td>
+
+            <td>N/A</td>
+
+            <td>N/A</td>
+
+            <td>N/A</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 id="JDK8">Moving to Java 1.8 from 1.6</h2>This section
+      discusses, roughly in order of decreasing importance, the
+      process of migrating from Java 1.6 to Java 1.8.
+
+      <h3>Generics, Swing and JComboBox</h3>Java 1.8 introduces
+      generics for Swing objects. The most common one is JComboBox.
+      This Java 1.6 line:
+      <pre>
 <code>
-java -XX:+CheckEndorsedAndExtDirs
+    JComboBox box = new JComboBox();
 </code>
-If you get a message about a specific directory, look there for conflicting Jar files.
-You should probably consult the JMRIusers or jmri-developers mailing list for help
-before changing that directory!
+</pre>describes the creation of a JComboBox that selects generic
+(Object) items.<br>
+      In Java 1.8, the JComboBox holds and selects objects of a
+      specific type, usually String. It's written:
+      <pre>
+<code>
+    JComboBox&lt;String&gt; box = new JComboBox&lt;&gt;();
+</code>
+</pre>The most common code for getting the selected item still
+includes a cast:
+      <pre>
+<code>
+    String result = (String)box.getSelectedItem();
+</code>
+</pre>because the JComboBox can actually contain objects of other
+types (How can this happen? If the box is editable, and somebody
+enters some other type).<br>
+      To avoid the case, a more robust idiom is:
+      <pre>
+<code>
+    String result = box.getItemAt(progBox.getSelectedIndex());
+</code>
+</pre>
 
+      <h3>JavaDoc and doclint</h3>Java 1.8 by default runs the
+      <a href=
+      "https://docs.oracle.com/javase/8/docs/technotes/tools/unix/javadoc.html#CHDFDACB">
+      doclint</a> doclet when making JavaDoc. By default, it is
+      <a href=
+      "http://blog.joda.org/2014/02/turning-off-doclint-in-jdk-8-javadoc.html">
+      very aggressive</a> on possible errors. The default Ant-based
+      builds turn off some of the checking terms with
+      <pre>
+<code>
+-Xdoclint:all,-missing,-accessibility,-html,-syntax
+</code>
+</pre>to drop tests for missing JavaDoc tags and certain benign
+HTML errors. (For now) <a name="extension" id="extension"></a>
 
-<!--#include virtual="/Footer" -->
-
-	  </div><!-- closes #mainContent-->
-	</div> <!-- closes #mBody-->
+      <h2>JVM and JDK Extensions</h2>It's possible to extend the
+      JVM and/or JDK installed on your machine via <a href=
+      "http://docs.oracle.com/javase/8/docs/technotes/guides/standards/index.html">
+      the endorsed-standards override mechanism</a> and the
+      <a href="http://docs.oracle.com/javase/8/docs/technotes/guides/extensions/index.html">
+      extension mechanism</a>. Those extensions, if present, take
+      precedence over code shipped with applications like JMRI.
+      Unfortunately, these can cause problems if the installed
+      extensions interfere with a JMRI component. For example, an
+      older (or younger) version might not be compatible, etc. It
+      is very unusual for this to cause a problem with JMRI. You
+      should investigate other possible causes before looking into
+      this one! To check for this, execute the following from the
+      command line: <code>java -XX:+CheckEndorsedAndExtDirs</code>
+      If you get a message about a specific directory, look there
+      for conflicting Jar files. You should probably consult the
+      JMRIusers or jmri-developers mailing list for help before
+      changing that directory! <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>
