@@ -495,7 +495,8 @@ all the time, though, and you might want to try a more modern version of
 Jython than the one that JMRI distributes. To do that, install Jython on 
 you computer, then add a python.properties in your user files location that
 sets the python configuration variables, e.g.:
-<pre><code>
+<pre style="font-family: monospace;">
+
 python.home = C:\Users\admin\JMRI\systemfiles 
 python.path = c:\jython2.5.3\lib 
 python.startup = 
