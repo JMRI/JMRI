@@ -1,78 +1,85 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
 <html lang="en">
 <head>
-    <title>
- 	JMRI: Building JMRI with Ant
-    </title>
-    <meta content="Bob Jacobsen" name="Author">
-    <meta name="keywords" content="JMRI technical code ant">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
-
-<!-- Style -->
-  <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <title>JMRI: Building JMRI with Ant</title>
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content="JMRI technical code ant">
+  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+  <!-- are an arbitrary design pattern used by the update.pl script to -->
+  <!-- easily replace the common header/footer code for all the web pages -->
+  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+  <!-- or change them to reflect your alternative logo -->
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header" -->
 
-<div id="mainContent">
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<h1>Building JMRI with Ant</h1>
+    <div id="mainContent">
+      <h1>Building JMRI with Ant</h1>Those of you who prefer a
+      command line approach might want to investigate "ant", a
+      better make-like utility for Java projects. Ant is available
+      for download at <a href=
+      "http://ant.apache.org/">http://ant.apache.org/</a>. Install
+      it, then:
 
-Those of you who prefer a command line approach might want to investigate "ant", a
-better make-like utility for Java projects.  Ant is available for 
-download at
-<a href="http://ant.apache.org/">http://ant.apache.org/</a>. 
-Install it, then:
-	<ul>
-	<li>Create a directory to contain your project.
-	<li>In that project directory, 
-	<a href="http://jmri.org/help/en/html/doc/Technical/getgitcode.shtml">get the code from GitHub</a>. 
-	This will create a <tt>jmri</tt> subdirectory 
-	where Ant will run, and load it with source, tests and resources.
-	It will also create and populate directories for xml, libraries, etc. in the 
-	project directory.
-	<li>Change to the newly created <tt>jmri</tt> subdirectory. To compile, type <tt>ant debug</tt>. 
-	<li>To run the program, type <tt>ant decoderpro</tt> or <tt>ant panelpro</tt>, and sit back to watch it go.
-	<li>To run the test suite, type <tt>ant alltest</tt>.
-	<li>To build a jmri.jar file, type <tt>ant dist</tt>.
-	Note that you don't have to create the <tt>jmri.jar</tt> file to run the program.
-	<li>To erase all previously compiled results and force the program to 
-	be entirely built from scratch, type <tt>ant clean</tt>.
-	</ul>
+      <ul>
+        <li>Create a directory to contain your project.</li>
 
-<p>
-To make sure everything is working, before you e.g. commit your code back, please
-do:
-<code>
-<pre>
-   ant clean
+        <li>In that project directory, <a href=
+        "http://jmri.org/help/en/html/doc/Technical/getgitcode.shtml">
+        get the code from GitHub</a>. This will create a
+        <tt>jmri</tt> subdirectory where Ant will run, and load it
+        with source, tests and resources. It will also create and
+        populate directories for xml, libraries, etc. in the
+        project directory.</li>
+
+        <li>Change to the newly created <tt>jmri</tt> subdirectory.
+        To compile, type <tt>ant debug</tt>.</li>
+
+        <li>To run the program, type <tt>ant decoderpro</tt> or
+        <tt>ant panelpro</tt>, and sit back to watch it go.</li>
+
+        <li>To run the test suite, type <tt>ant alltest</tt>.</li>
+
+        <li>To build a jmri.jar file, type <tt>ant dist</tt>. Note
+        that you don't have to create the <tt>jmri.jar</tt> file to
+        run the program.</li>
+
+        <li>To erase all previously compiled results and force the
+        program to be entirely built from scratch, type <tt>ant
+        clean</tt>.</li>
+      </ul>
+
+      <p>To make sure everything is working, before you e.g. commit
+      your code back, please do:</p>
+      <pre>
+<code>   ant clean
    ant alltest
-</pre>
 </code>
-and make sure the tests run cleanly.</p>
-<p>
-		A new JMRI checkout should build cleanly. If not, please
-		check with the JMRIusers or jmri-developers mailings lists for help.
-</p>
+</pre>and make sure the tests run cleanly.
 
-  <!--#include virtual="/Footer" -->
-
-  </div><!-- closes #mainContent-->
-</div> <!-- closes #mBody-->
+      <p>A new JMRI checkout should build cleanly. If not, please
+      check with the JMRIusers or jmri-developers mailings lists
+      for help.</p>
+    <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>
-

@@ -47,13 +47,13 @@ program generates manifests and switch lists.</li>
 <li><strong><a href="Ops_Cars.shtml">Show Cars</a></strong><br>
       Opens Cars window which lists cars for this location</li>
     
-<li><a name="print" id="print"><strong>Print</strong></a>
+<li><a name="print"><strong>Print</strong></a>
 <p><img src="images/Ops_locations_print.png" alt="print" height="179" width="195"><br>
 Click on <input name="button10" id="button10" value="Okay" type="button">
     to open the system printer dialog.</p>
 <p><img src="images/Ops_print_loc.png" alt="print location" height="608" width="718"></p></li>
     
-<li><a name="preview" id="preview"><strong>Preview</strong></a>
+<li><a name="preview"><strong>Preview</strong></a>
 <p><img src="images/Ops_locations_print.png" alt="print" height="158" width="195"></p>
 <p>Click <input name="button11" id="button11" value="Okay" type="button"> 
     to open the print preview window showing Location information.</p>

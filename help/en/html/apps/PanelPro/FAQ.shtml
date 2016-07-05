@@ -20,7 +20,7 @@
 
 <h1>JMRI: PanelPro Frequently Asked Questions</h1>
 
-<a name="context"><h3>How does JMRI tie into the rest of my layout?</h3></a>
+<a name="context"></a><h3>How does JMRI tie into the rest of my layout?</h3>
 <p>Jim Betz responded with this on the JMRI User's alias when asked for an overview:</p>
 
 	<ol>
@@ -122,7 +122,7 @@
 	of your layout in order to support them correctly/at all.
 	</ol>
 
-<a name="store"><h3>How do I save my work?</h3></a>
+<a name="store"></a><h3>How do I save my work?</h3>
 
 There are several ways to save your panel.  This is because the program
 has to store both configuration (turnouts, sensors, etc) and layout (the
@@ -140,7 +140,7 @@ And save this file from the "Panels" menu, using the "Store Panels..." item.
 This works because panels are stored with all the configuration information at 
 that same time (which guarantees they'll work when reloaded)
 
-<a name="multifile"><h3>Can I store just the configuration information?</h3></a>
+<a name="multifile"></a><h3>Can I store just the configuration information?</h3>
 
 You can store just the "configuration" information in a file, which
 you can save without worrying about whether your panel(s) are open, etc.
@@ -174,7 +174,7 @@ Now, to ensure this configuration information automatically loads when the progr
 	</ul>
 
 <a name="location">
-<h3>Where should I put my custom icons and other files?</h3></a>
+</a><h3>Where should I put my custom icons and other files?</h3>
 
 The best place to put your own files is in the JMRI
 Preferences directory (all JMRI apps use

@@ -22,9 +22,6 @@
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
-	    <!-- ------------- -->
-	    <!-- Page Contents --> <!-- Required -->
-	    <!-- ------------- -->
 
 	    <H1>JMRI: Ajouter un Nouveau Type de Donn&#233;es</H1>
 
