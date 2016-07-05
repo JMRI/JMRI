@@ -33,14 +33,8 @@ import org.slf4j.LoggerFactory;
  * Frame for Signal Mast Add / Edit Panel
  *
  * @author	Kevin Dickerson Copyright (C) 2011
- * @version $Revision: 20084 $
  */
 public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implements PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -9220621583127217095L;
 
     DefaultSignalMastManager dsmm;
 
