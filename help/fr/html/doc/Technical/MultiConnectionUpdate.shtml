@@ -53,7 +53,8 @@ Ajouter toute ces choses
      
 <p>
 Modifier la classe ConnectionConfig pour prendre et enregistrer une r&#233;f&#233;rence &#224; un objet SerialPortAdapter, et le retourner depuis la m&#233;thode getAdapter(). Aussi enlevez la m&#233;tode() en instance et sa mise en œuvre.
-<pre><code>
+<pre style="font-family: monospace;">
+
     protected void setIntrucsstance() { 
         if (adapter == null) {
             adapter = new PR3Adapter();
@@ -68,7 +69,8 @@ l'exemple () et sa mise en œuvre.
 <p>
 La classe configurexml/ConnectionConfigXml
 doit avoir une proc&#233;dure ajout&#233;e:
-<pre><code>
+<pre style="font-family: monospace;">
+
     protected void getInstance(Object object) {
         adapter = ((ConnectionConfig)object).getAdapter();
     }
@@ -81,13 +83,15 @@ Nous le laissons inchang&#233; pour le moment pour
 &#233;viter la concurrence avec les serial/network refactoring
 <p>
 Aussi, changez ceci
-<pre><code>
+<pre style="font-family: monospace;">
+
     protected void getInstance() {
       	 adapter= new PR3Adapter();
 	}
 </code></pre>
 pour ceci:
-<pre><code>
+<pre style="font-family: monospace;">
+
     protected void getInstance() {
         adapter = new LnHexFilePort();
     }
@@ -98,7 +102,8 @@ l'exemple() de proc&#233;dure et son application.
 <p>
 La classe configurexml / ConnectionConfigXml
 a besoin d'avoir une proc&#233;dure ajout&#233;e:
-<pre><code>
+<pre style="font-family: monospace;">
+
     protected void getInstance(Object object) {
         adapter = ((ConnectionConfig)object).getAdapter();
     }

@@ -1,5 +1,18 @@
 package jmri.jmrit.beantable.oblock;
 
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import jmri.InstanceManager;
+import jmri.Manager;
+import jmri.NamedBean;
+import jmri.jmrit.logix.OBlock;
+import jmri.jmrit.logix.OBlockManager;
+import jmri.jmrit.logix.Portal;
+import jmri.jmrit.logix.PortalManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * GUI to define OBlocks
  * <P>
@@ -16,24 +29,9 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version $Revision$
  */
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import jmri.InstanceManager;
-import jmri.Manager;
-import jmri.NamedBean;
-import jmri.jmrit.logix.OBlock;
-import jmri.jmrit.logix.OBlockManager;
-import jmri.jmrit.logix.Portal;
-import jmri.jmrit.logix.PortalManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
 
-    private static final long serialVersionUID = -4467086483594717590L;
     public static final int FROM_BLOCK_COLUMN = 0;
     public static final int NAME_COLUMN = 1;
     public static final int TO_BLOCK_COLUMN = 2;

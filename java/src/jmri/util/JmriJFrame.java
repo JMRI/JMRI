@@ -357,10 +357,6 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     void addWindowCloseShortCut() {
         // modelled after code in JavaDev mailing list item by Bill Tschumy <bill@otherwise.com> 08 Dec 2004
         AbstractAction act = new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -1110135969033124426L;
 
             public void actionPerformed(ActionEvent e) {
                 // log.debug("keystroke requested close window ", JmriJFrame.this.getTitle());
@@ -442,11 +438,6 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     public void setEscapeKeyClosesWindow(boolean closesWindow) {
         if (closesWindow) {
             setEscapeKeyAction(new AbstractAction() {
-
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = -814207277600217890L;
 
                 public void actionPerformed(ActionEvent ae) {
                     JmriJFrame.this.processWindowEvent(new java.awt.event.WindowEvent(JmriJFrame.this,

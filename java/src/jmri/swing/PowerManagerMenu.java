@@ -1,4 +1,3 @@
-// PowerManagerMenu.java
 package jmri.swing;
 
 import java.util.List;
@@ -13,15 +12,9 @@ import jmri.PowerManager;
  * Create a menu for selecting the Power Manager to use
  *
  * @author	Bob Jacobsen Copyright 2010
- * @version $Revision$
  * @since 2.9.5
  */
 abstract public class PowerManagerMenu extends JMenu {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1282259771699660069L;
 
     /**
      * Get the currently selected manager
@@ -45,19 +38,17 @@ abstract public class PowerManagerMenu extends JMenu {
 
         // now add an item for each available manager
         List<PowerManager> managers = InstanceManager.getList(PowerManager.class);
-        if (managers != null) {
-            for (PowerManager mgr : managers) {
-                if (mgr != null) {
-                    JMenuItem item = new JRadioButtonMenuItem(mgr.getUserName());
-                    add(item);
-                    group.add(item);
-                    items.add(item);
-                    item.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent e) {
-                            choiceChanged();
-                        }
-                    });
-                }
+        for (PowerManager mgr : managers) {
+            if (mgr != null) {
+                JMenuItem item = new JRadioButtonMenuItem(mgr.getUserName());
+                add(item);
+                group.add(item);
+                items.add(item);
+                item.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent e) {
+                        choiceChanged();
+                    }
+                });
             }
         }
 
@@ -73,10 +64,6 @@ abstract public class PowerManagerMenu extends JMenu {
             return;
         }
         String defaultMgr = manager.getUserName();
-        if (defaultMgr == null) {
-            return;
-        }
-
         for (JMenuItem item : items) {
             if (defaultMgr.equals(item.getActionCommand())) {
                 item.setSelected(true);

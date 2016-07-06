@@ -57,7 +57,6 @@ import org.slf4j.LoggerFactory;
  */
 public class ProfileManagerDialog extends JDialog {
 
-    private static final long serialVersionUID = 8335767552519729376L;
     private Timer timer;
     private int countDown;
 

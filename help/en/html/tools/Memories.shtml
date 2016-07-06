@@ -65,7 +65,8 @@ Basically, the XML browser file has a "memoryicon" element that carries various 
 about where to put the icon, whether it can be selected, etc.
 Within that element, you can define "memorystate" elements that 
 define what icon to show when the memory has a specific value:
-<pre><code>
+<pre style="font-family: monospace;">
+
     &lt;memoryicon memory="IM20" defaulticon="resources/icons/misc/Question-black.gif"&gt;
       &lt;memorystate value="9" icon="resource:resources/icons/misc/Nixie/M9B.gif" /&gt;
       &lt;memorystate value="8" icon="resource:resources/icons/misc/Nixie/M8B.gif" /&gt;

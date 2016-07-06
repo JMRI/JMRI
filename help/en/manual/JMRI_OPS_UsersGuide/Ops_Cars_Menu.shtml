@@ -48,17 +48,17 @@ following order: weight, color, owner name, date built, and location.<br>
 Check the Cars pane Help menu file for further information.</p>
   </li>
 
-  <li><a name="export" id="export"><strong>Export to file</a><br>
+  <li><a name="export"><strong>Export to file</a><br>
   <img src="images/Ops_Export_carRoster.png" alt="export roster" height="122" width="712"></strong> </li>
 
-  <li><a name="delete" id="delete"><strong>Delete all cars</a><br>
+  <li><a name="delete"><strong>Delete all cars</a><br>
   <img src="images/Ops_delete_cars_roster.png" alt="delete" height="122" width="403"></strong></li>
         
-  <li><a name="reset" id="reset"><strong>Reset move count all cars</strong></a><br>
+  <li><a name="reset"><strong>Reset move count all cars</strong></a><br>
   <img src="images/Ops_car_resetMove.png" alt="reset move" height="122" width="521"></li>
 
       
-<li><a name="print" id="print"><strong>Print</strong></a> - Print Window opens with Roster Printing options; Check all attributes that you want on print out.<br>
+<li><a name="print"><strong>Print</strong></a> - Print Window opens with Roster Printing options; Check all attributes that you want on print out.<br>
     <table style="text-align: left; width: 100%;" border="0" cellpadding="2" cellspacing="2">
       <tbody>
         <tr>
@@ -70,7 +70,7 @@ Check the Cars pane Help menu file for further information.</p>
     </table>
 </li>
 
-<li><a name="preview" id="preview"><strong>Print Preview</strong></a><br>
+<li><a name="preview"><strong>Print Preview</strong></a><br>
 Print window as above opens, <input name="button" id="button" value="OK" type="button"> opens output in the Printer Preview window (shown at right).</li>
 </ul>
 </li>
