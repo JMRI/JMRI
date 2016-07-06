@@ -951,7 +951,7 @@ public class LRouteTableAction extends AbstractTableAction {
                     cancelPressed(e);
                 }
             });
-            cancelButton.setToolTipText(rbx.getString("CancelHint"));
+            cancelButton.setToolTipText(Bundle.getMessage("TooltipCancelRoute"));
             cancelButton.setName("CancelButton");
 
             // Show the initial buttons, and hide the others
@@ -970,7 +970,7 @@ public class LRouteTableAction extends AbstractTableAction {
             tab2.add(new JLabel(rbx.getString("OutputTitle") + ":"));
             _outputAllButton = new JRadioButton(Bundle.getMessage("All"), true);
             JRadioButton includedOutputButton = new JRadioButton(Bundle.getMessage("Included"), false);
-            tab2.add(makeShowButtons(_outputAllButton, includedOutputButton, null, Bundle.getMessage("Show")));
+            tab2.add(makeShowButtons(_outputAllButton, includedOutputButton, null, Bundle.getMessage("Show") + ":"));
             _outputAllButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     // Setup for display of all Turnouts, if needed
@@ -1005,7 +1005,7 @@ public class LRouteTableAction extends AbstractTableAction {
             tab3.add(new JLabel(rbx.getString("InputTitle") + ":"));
             _inputAllButton = new JRadioButton(Bundle.getMessage("All"), true);
             JRadioButton includedInputButton = new JRadioButton(Bundle.getMessage("Included"), false);
-            tab3.add(makeShowButtons(_inputAllButton, includedInputButton, null, Bundle.getMessage("Show")));
+            tab3.add(makeShowButtons(_inputAllButton, includedInputButton, null, Bundle.getMessage("Show") + ":"));
             _inputAllButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     // Setup for display of all Turnouts, if needed
@@ -1038,7 +1038,7 @@ public class LRouteTableAction extends AbstractTableAction {
             ////////////////////// Tab 4 /////////////////
             JPanel tab4 = new JPanel();
             tab4.setLayout(new BoxLayout(tab4, BoxLayout.Y_AXIS));
-            tab4.add(new JLabel(rbx.getString("MiscTitle")));
+            tab4.add(new JLabel(rbx.getString("MiscTitle") + ":"));
             // Enter filenames for sound, script
             JPanel p25 = new JPanel();
             p25.setLayout(new FlowLayout());
@@ -1081,7 +1081,7 @@ public class LRouteTableAction extends AbstractTableAction {
 
             _alignAllButton = new JRadioButton(Bundle.getMessage("All"), true);
             JRadioButton includedAlignButton = new JRadioButton(Bundle.getMessage("Included"), false);
-            tab4.add(makeShowButtons(_alignAllButton, includedAlignButton, null, Bundle.getMessage("Show")));
+            tab4.add(makeShowButtons(_alignAllButton, includedAlignButton, null, Bundle.getMessage("Show") + ":"));
             _alignAllButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     // Setup for display of all Turnouts, if needed

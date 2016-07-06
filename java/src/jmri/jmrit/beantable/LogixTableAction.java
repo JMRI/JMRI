@@ -1960,7 +1960,6 @@ public class LogixTableAction extends AbstractTableAction {
         if (variable.getOpern() != oldOper) {
             makeAntecedent();
         }
-
     }
 
     /*
