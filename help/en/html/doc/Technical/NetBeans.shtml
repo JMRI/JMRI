@@ -32,9 +32,6 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <!-- - - - - - - - - -->
-      <!--  Teaser  --><!-- Optional -->
-      <!-- - - - - - - - - -->
 
       <h1>JMRI: Building with NetBeans</h1>
 
@@ -323,7 +320,10 @@
 
           <p>To build and run DecoderPro, all you have to do is
           select "Run Project (JMRI)" from the Run menu, or click
-          the Run icon in the tool bar.</p>
+          the Run icon in the tool bar.<br>
+          A new JMRI checkout should build cleanly. If not, please
+          check with the JMRIusers or jmri-developers mailings
+          lists for help.</p>
 
           <ul>
             <li>[Run] -&gt; [Run Project (JMRI)] will compile and

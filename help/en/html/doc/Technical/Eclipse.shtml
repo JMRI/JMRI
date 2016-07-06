@@ -44,8 +44,9 @@
       that JMRI requires JAVA version 8. You must confirm that JRE
       8 is the default Java Runtime Environment. Eclipse recommends
       installing release Luna for Java 8, but there are workarounds
-      described online.</p><a name="getwgit"></a>
-
+      described online.</p>
+      
+      <a name="getwgit"></a>
       <h2>Getting the JMRI Source using Git</h2>To get the source
       code from GitHub using Git you need to do the following:
 
@@ -128,8 +129,8 @@
 
         <li>Now select "Run As" then "2 Ant Build".</li>
 
-        <li>Confirm that under the menu tab JRE that you've
-        selected a JDK, not a JRE.</li>
+        <li>Confirm under the menu tab "JRE" that you've selected a
+        JDK, not a JRE.</li>
 
         <li>Now press the "Run" button, this should start the ant
         build.</li>
@@ -142,7 +143,10 @@
       the "JRE" tab. The change the JRE, select the "Separate JRE:"
       radio button, and then press the "Installed JREs" button. If
       you don't see a JDK, you need to add one (from site
-      above).</p>
+      above).<br>
+      A new JMRI checkout should build cleanly. If not, please
+      check with the JMRIusers or jmri-developers mailings lists
+      for help.</p>
 
       <p>If the ant build succeeds, you can now launch any of the
       JMRI applications from ant, and create a jmri.jar file if you
@@ -222,8 +226,8 @@ library path to:
         the "Run" menu. Once you've done that once, you can just
         click the "Run" icon on the toolbar to rerun the last
         program.</li>
-      </ol><a name="javacc"></a>
-
+      </ol>
+      <a name="javacc"></a>
       <h2>Installing JavaCC Plugin (alternative to Run As Ant Build
       method above)</h2>Instead of using the ant build to populate
       the "tmp" directory, you can install the JavaCC plugin.
@@ -246,8 +250,9 @@ library path to:
 
         <li>Confirm that the "Java Build Path" includes the tmp
         directory (see Project Properties).</li>
-      </ol><a name="push"></a>
+      </ol>
 
+      <a name="push"></a>
       <h2>Pushing changes to your GitHub branch</h2>The standard
       practice for getting your changes included in main JMRI code
       repository is to commit them to your local repository
@@ -326,8 +331,9 @@ library path to:
           more info, see the <a href=
           "gitdeveloper.shtml#pull">developer instructions,</a></p>
         </li>
-      </ul><a name="errors"></a>
+      </ul>
 
+      <a name="errors"></a>
       <h2>Compiler Errors and Warnings</h2>The default Eclipse
       compiler configuration produces many unnecessary warnings.
       You can adjust the warnings to match the screen shots as
