@@ -42,11 +42,6 @@ import org.slf4j.LoggerFactory;
  */
 abstract class BeanEditAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8002894695517110179L;
-
     public BeanEditAction(String s) {
         super(s);
     }
@@ -492,7 +487,7 @@ abstract class BeanEditAction extends AbstractAction {
             for (int i = 0; i < attributes.size(); i++) {
                 KeyValueModel kv = attributes.get(i);
                 if ((kv.key != null) && // only update if key value defined, will do the remove to
-                        ((nb.getPropertyKeys() == null) || (nb.getProperty(kv.key) == null) || (!kv.value.equals(nb.getProperty(kv.key))))) {
+                        ((nb.getProperty(kv.key) == null) || (!kv.value.equals(nb.getProperty(kv.key))))) {
                     nb.setProperty(kv.key, kv.value);
                 }
             }

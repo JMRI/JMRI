@@ -552,7 +552,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 typeBox.removeItem(dccSignalDecoder);
             }
             List<jmri.jmrix.grapevine.GrapevineSystemConnectionMemo> memos = InstanceManager.getList(jmri.jmrix.grapevine.GrapevineSystemConnectionMemo.class);
-            if (memos != null && !(memos.isEmpty())) {
+            if (!memos.isEmpty()) {
                 typeBox.addItem(grapevine);
             }
             typeBox.addActionListener(new ActionListener() {

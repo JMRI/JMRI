@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
+import javax.annotation.CheckForNull;
 
 /**
  * Common utility methods for working with JMenus.
@@ -51,7 +52,7 @@ public class JMenuUtil extends GuiUtilBase {
         return retval;
     }
 
-    static JMenu jMenuFromElement(Element main, WindowInterface wi, Object context) {
+    static @Nonnull JMenu jMenuFromElement(@CheckForNull Element main, WindowInterface wi, Object context) {
         boolean addSep = false;
         String name = "<none>";
         if (main == null) {
@@ -116,7 +117,7 @@ public class JMenuUtil extends GuiUtilBase {
         return menu;
     }
 
-    static JMenu createMenuGroupFromElement(Element main, WindowInterface wi, Object context) {
+    static @Nonnull JMenu createMenuGroupFromElement(@CheckForNull Element main, WindowInterface wi, Object context) {
         String name = "<none>";
         if (main == null) {
             log.warn("Menu from element called without an element");
@@ -185,7 +186,7 @@ public class JMenuUtil extends GuiUtilBase {
 
     }
 
-    static int convertStringToKeyEvent(String st) {
+    static int convertStringToKeyEvent(@Nonnull String st) {
         char a = (st.toLowerCase()).charAt(0);
         int kcode = a - 32;
         return kcode;

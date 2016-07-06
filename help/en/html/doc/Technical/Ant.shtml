@@ -47,8 +47,8 @@
         get the code from GitHub</a>. This will create a
         <tt>jmri</tt> subdirectory where Ant will run, and load it
         with source, tests and resources. It will also create and
-        populate directories for xml, libraries, etc in the project
-        directory.</li>
+        populate directories for xml, libraries, etc. in the
+        project directory.</li>
 
         <li>Change to the newly created <tt>jmri</tt> subdirectory.
         To compile, type <tt>ant debug</tt>.</li>
@@ -73,8 +73,12 @@
 <code>   ant clean
    ant alltest
 </code>
-</pre>and make sure the tests run cleanly. 
-<!--#include virtual="/Footer" -->
+</pre>and make sure the tests run cleanly.
+
+      <p>A new JMRI checkout should build cleanly. If not, please
+      check with the JMRIusers or jmri-developers mailings lists
+      for help.</p>
+    <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
