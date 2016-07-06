@@ -103,15 +103,13 @@ public class AddSignalMastPanel extends JPanel {
         signalMastDriver = new JComboBox<String>(new String[]{
             Bundle.getMessage("HeadCtlMast"), Bundle.getMessage("TurnCtlMast"), Bundle.getMessage("VirtualMast"), Bundle.getMessage("MatrixCtlMast")
         });
-        // Only allow the creation of DCC SignalMast if a command station instance is present, otherwise it will not work, so no point in adding it.
-        if (jmri.InstanceManager.getList(jmri.CommandStation.class) != null) {
-            signalMastDriver.addItem(Bundle.getMessage("DCCMast"));
-            java.util.List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
-            for (int x = 0; x < connList.size(); x++) {
-                if (connList.get(x) instanceof jmri.jmrix.loconet.SlotManager) {
-                    signalMastDriver.addItem(Bundle.getMessage("LNCPMast"));
-                    break;
-                }
+
+        signalMastDriver.addItem(Bundle.getMessage("DCCMast"));
+        java.util.List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
+        for (int x = 0; x < connList.size(); x++) {
+            if (connList.get(x) instanceof jmri.jmrix.loconet.SlotManager) {
+                signalMastDriver.addItem(Bundle.getMessage("LNCPMast"));
+                break;
             }
         }
 
@@ -419,19 +417,19 @@ public class AddSignalMastPanel extends JPanel {
             columnChoice.setSelectedIndex(bitNum - 1); // index of items in list starts counting at 0 while "1" is displayed
             columnChoice.setEnabled(false);
             // fill in the names of the outputs from mast:
-            if (xmast.getOutputName(1) != null && !xmast.getOutputName(1).equals("")) {
+            if (!xmast.getOutputName(1).equals("")) {
                 turnoutBox1.setDefaultNamedBean(InstanceManager.turnoutManagerInstance().getTurnout(xmast.getOutputName(1))); // load input into turnoutBox1
             }
-            if (bitNum > 1 && xmast.getOutputName(2) != null && !xmast.getOutputName(2).equals("")){
+            if (bitNum > 1 && !xmast.getOutputName(2).equals("")){
                 turnoutBox2.setDefaultNamedBean(InstanceManager.turnoutManagerInstance().getTurnout(xmast.getOutputName(2))); // load input into turnoutBox2
             }
-            if (bitNum > 2 && xmast.getOutputName(3) != null && !xmast.getOutputName(3).equals("")) {
+            if (bitNum > 2 && !xmast.getOutputName(3).equals("")) {
                 turnoutBox3.setDefaultNamedBean(InstanceManager.turnoutManagerInstance().getTurnout(xmast.getOutputName(3))); // load input into turnoutBox3
             }
-            if (bitNum > 3 && xmast.getOutputName(4) != null && !xmast.getOutputName(4).equals("")){
+            if (bitNum > 3 && !xmast.getOutputName(4).equals("")){
                 turnoutBox4.setDefaultNamedBean(InstanceManager.turnoutManagerInstance().getTurnout(xmast.getOutputName(4))); // load input into turnoutBox4
             }
-            if (bitNum > 4 && xmast.getOutputName(5) != null && !xmast.getOutputName(5).equals("")){
+            if (bitNum > 4 && !xmast.getOutputName(5).equals("")){
                 turnoutBox5.setDefaultNamedBean(InstanceManager.turnoutManagerInstance().getTurnout(xmast.getOutputName(5))); // load input into turnoutBox5
             }
             if (xmast.resetPreviousStates()) {

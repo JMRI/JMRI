@@ -47,7 +47,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
  * @author Bob Jacobsen Copyright (2) 2014
- * @version $Revision$
  */
 public class PositionablePoint {
 
@@ -1070,12 +1069,13 @@ public class PositionablePoint {
                     removelocal = getEastBoundSignal();
                     getLinkedPoint().setWestBoundSignal("");
                 }
-                if (removeremote != null && !removeremote.equals("")) {
+                // removelocal and removeremote have been set here.
+                if (!removeremote.equals("")) {
                     jmri.SignalHead sh = InstanceManager.signalHeadManagerInstance().getSignalHead(removeremote);
                     getLinkedEditor().removeSignalHead(sh);
                     jmri.jmrit.blockboss.BlockBossLogic.getStoppedObject(removeremote);
                 }
-                if (removelocal != null && !removelocal.equals("")) {
+                if (!removelocal.equals("")) {
                     jmri.SignalHead sh = InstanceManager.signalHeadManagerInstance().getSignalHead(removelocal);
                     layoutEditor.removeSignalHead(sh);
                     jmri.jmrit.blockboss.BlockBossLogic.getStoppedObject(removelocal);

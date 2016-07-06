@@ -1225,11 +1225,6 @@ public class TransitTableAction extends AbstractTableAction {
         for (int i = 0; i < sectionList.size(); i++) {
             TransitSection ts = new TransitSection(sectionList.get(i),
                     sequence[i], direction[i], alternate[i]);
-            // FIXME: Why is this null check here? We just instansiated ts as a new TransitSection, which should keep it from ever being null
-            if (null == ts) {
-                log.error("Trouble creating TransitSection");
-                return false;
-            }
             ArrayList<TransitSectionAction> list = action[i];
             if (list != null) {
                 for (int j = 0; j < list.size(); j++) {
@@ -1828,9 +1823,6 @@ public class TransitTableAction extends AbstractTableAction {
         }
         // entered data is OK, create a special action
         curTSA = new TransitSectionAction(tWhen, tWhat, tWhenData, tWhatData1, tWhatData2, tWhenString, tWhatString);
-        if (curTSA == null) {
-            log.error("Failure when creating new TransitSectionAction");
-        }
         ArrayList<TransitSectionAction> list = action[activeRow];
         list.add(curTSA);
         actionTableModel.fireTableDataChanged();

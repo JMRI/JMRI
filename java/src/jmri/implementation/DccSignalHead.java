@@ -62,15 +62,15 @@ public class DccSignalHead extends AbstractSignalHead {
             dccSignalDecoderAddress = Integer.parseInt(sys.substring(sys.indexOf("$") + 1, sys.length()));
             String commandStationPrefix = sys.substring(0, sys.indexOf("$") - 1);
             java.util.List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
-            if (connList != null) {
-                for (int x = 0; x < connList.size(); x++) {
-                    jmri.CommandStation station = connList.get(x);
-                    if (station.getSystemPrefix().equals(commandStationPrefix)) {
-                        c = station;
-                        break;
-                    }
+
+            for (int x = 0; x < connList.size(); x++) {
+                jmri.CommandStation station = connList.get(x);
+                if (station.getSystemPrefix().equals(commandStationPrefix)) {
+                    c = station;
+                    break;
                 }
             }
+
             if (c == null) {
                 c = InstanceManager.commandStationInstance();
                 log.error("No match against the command station for " + sys + ", so will use the default");

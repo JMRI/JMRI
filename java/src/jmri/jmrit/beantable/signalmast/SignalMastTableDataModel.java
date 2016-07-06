@@ -1,4 +1,3 @@
-// SignalMastTableDataModel.java
 package jmri.jmrit.beantable.signalmast;
 
 import java.util.Hashtable;
@@ -26,14 +25,9 @@ import org.slf4j.LoggerFactory;
  * Data model for a SignalMastTable
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2009
- * @version $Revision$
  */
 public class SignalMastTableDataModel extends BeanTableDataModel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2753901812548953185L;
     static public final int EDITMASTCOL = NUMCOLUMN;
     static public final int EDITLOGICCOL = EDITMASTCOL + 1;
     static public final int LITCOL = EDITLOGICCOL + 1;
@@ -362,5 +356,3 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
     private final static Logger log = LoggerFactory.getLogger(SignalMastTableDataModel.class.getName());
 
 }
-
-/* @(#)SignalMastTableDataModel.java */
