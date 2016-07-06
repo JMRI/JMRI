@@ -1156,10 +1156,7 @@ public class ConnectivityUtil {
             return false;
         }
         BlockBossLogic bbLogic = BlockBossLogic.getStoppedObject(sh.getSystemName());
-        if (bbLogic == null) {
-            log.error("Trouble opening BlockBossLogic for " + sh.getSystemName());
-            return false;
-        }
+
         int mode = bbLogic.getMode();
         if (((mode == BlockBossLogic.SINGLEBLOCK) || (mode == BlockBossLogic.TRAILINGMAIN)
                 || (mode == BlockBossLogic.TRAILINGDIVERGING)) || ((mode == BlockBossLogic.FACING)
@@ -1260,10 +1257,7 @@ public class ConnectivityUtil {
             return false;
         }
         BlockBossLogic bbLogic = BlockBossLogic.getStoppedObject(sh.getSystemName());
-        if (bbLogic == null) {
-            log.error("Trouble opening BlockBossLogic for " + sh.getSystemName());
-            return false;
-        }
+
         for (int i = 0; i < names.size(); i++) {
             String name = names.get(i);
             if ((bbLogic.getSensor1() != null) && (bbLogic.getSensor1()).equals(name)) {

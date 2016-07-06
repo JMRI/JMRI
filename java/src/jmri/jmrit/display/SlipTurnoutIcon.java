@@ -69,11 +69,11 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
      */
     public void setTurnout(String pName, int turn) {
         if (InstanceManager.turnoutManagerInstance() != null) {
-            Turnout turnout = InstanceManager.turnoutManagerInstance().
+            try {
+                Turnout turnout = InstanceManager.turnoutManagerInstance().
                     provideTurnout(pName);
-            if (turnout != null) {
                 setTurnout(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, turnout), turn);
-            } else {
+            } catch (IllegalArgumentException e) {
                 log.error("Turnout '" + pName + "' not available, icon won't see changes");
             }
         } else {

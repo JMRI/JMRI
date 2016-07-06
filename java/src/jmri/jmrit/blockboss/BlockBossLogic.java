@@ -10,6 +10,9 @@ import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.jmrit.automat.Siglet;
+
+import javax.annotation.Nonnull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1151,19 +1154,30 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * Return the BlockBossLogic item governing a specific signal.
+     * Return the BlockBossLogic item governing a specific signal head located from its name.
      * <P>
      * Unlike {@link BlockBossLogic#getStoppedObject(String signal)} this does
      * not remove the object from being used.
      *
-     * @param signal system name
-     * @return never null
+     * @param signal SignalHead system or user name
+     * @return never null - creates new object if none exists
      */
-    public static BlockBossLogic getExisting(String signal) {
+    @Nonnull
+    public static BlockBossLogic getExisting(@Nonnull String signal) {
         return getExisting(InstanceManager.signalHeadManagerInstance().getSignalHead(signal));
     }
 
-    public static BlockBossLogic getExisting(SignalHead sh) {
+    /**
+     * Return the BlockBossLogic item governing a specific signal head object.
+     * <P>
+     * Unlike {@link BlockBossLogic#getStoppedObject(String signal)} this does
+     * not remove the object from being used.
+     *
+     * @param signal Existing SignalHead object
+     * @return never null - creates new object if none exists
+     */
+    @Nonnull
+    public static BlockBossLogic getExisting(@Nonnull SignalHead sh) {
         setup();
 
         for (BlockBossLogic bbl : bblList) {

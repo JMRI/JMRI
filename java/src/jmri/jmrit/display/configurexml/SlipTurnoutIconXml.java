@@ -12,7 +12,6 @@ import org.jdom2.Element;
  * Based upon the TurnoutIconXml by Bob Jacobsen
  *
  * @author Kevin Dickerson Copyright: Copyright (c) 2010
- * @version $Revision$
  */
 public class SlipTurnoutIconXml extends PositionableLabelXml {
 
@@ -128,7 +127,7 @@ public class SlipTurnoutIconXml extends PositionableLabelXml {
             } else if (a.getValue().equals("singleSlip")) {
                 l.setTurnoutType(SlipTurnoutIcon.SINGLESLIP);
                 a = element.getAttribute("singleSlipRoute");
-                if ((a == null) || ((a != null) && a.getValue().equals("upperWestToUpperEast"))) {
+                if ((a == null) || a.getValue().equals("upperWestToUpperEast")) {
                     l.setSingleSlipRoute(true);
                 } else {
                     l.setSingleSlipRoute(false);
@@ -136,7 +135,7 @@ public class SlipTurnoutIconXml extends PositionableLabelXml {
             } else if (a.getValue().equals("threeWay")) {
                 l.setTurnoutType(SlipTurnoutIcon.THREEWAY);
                 a = element.getAttribute("firstTurnoutExit");
-                if ((a == null) || ((a != null) && a.getValue().equals("lower"))) {
+                if ((a == null) || a.getValue().equals("lower")) {
                     l.setSingleSlipRoute(false);
                 } else {
                     l.setSingleSlipRoute(true);
