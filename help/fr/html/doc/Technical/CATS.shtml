@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <!--  $Id$ -->
-<!-- Updated by Blorec Herv&#233;  2013-09-03--> 
+<!-- Updated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-05 -->
 <html lang="fr">
 <head>
     <TITLE>
@@ -31,49 +31,95 @@
 
 	<div id="mainContent">
 
-<H1>Integration avec CATS</H1>
+<h1>Integration avec CATS</h1>
 
 Le Crandic Automated Traffic System (CATS) est une application bas&#233;e sur JMRI cr&#233;e
-par Rodney Black pour le contr&#244;le et l'exploitation d'un chemin de fer miniature.
+par Rodney Black pour la commande et l'exploitation d'un chemin de fer miniature.
 Il y a plus d'informations sur le
 <a href="http://cats4ctc.org/"> site web CATS </a>.
 
 <p>
-JMRI est une biblioth&#232;que, et CATS est une grande application maintenue s&#233;par&#233;ment qui utilise la biblioth&#232;que. En tant que tel, CATS constitue un important
+JMRI est une biblioth&#232;que, et CATS est une grande application maintenue s&#233;par&#233;ment 
+qui utilise la biblioth&#232;que. En tant que tel, CATS constitue un important
 sc&#233;nario de r&#233;f&#233;rence pour les d&#233;veloppeurs JMRI car ils peuvent  &#233;tendre et adapter leur code.
 CATS doit continuer &#224; travailler pour ses utilisateurs, avec un minimum d'
 effort pour les d&#233;veloppeurs de CATS!
 
-<H3>Integration pour test</h3>
+<h3>Int&#233;gration pour test</h3>
 
-CATS a deux ensemble d'arbres, "cats.*" et "developper.*", correspondant &#224; peu pr&#232;s
+CATS a deux paquets d'arbres, "cats.*" et "developper.*", correspondant &#224; peu pr&#232;s
  aux deux applications CATS.
 
 <p>
-Le d&#233;veloppement de CATS  n'utilise pas les CVS, et le code n'est g&#233;n&#233;ralement pas
+Le d&#233;veloppement de CATS  n'utilise pas un code de r&#233;f&#233;rentiel public et le code n'est g&#233;n&#233;ralement pas
 disponible pendant qu'il est en cours de d&#233;veloppement.
 Rodney Black communique r&#233;guli&#232;rement les disponibilit&#233;s , y compris le code source, et les archives file.zip sur le
 <a href="http://cats4ctc.org/"> site web CATS </a>.
+voir le lien de t&#233;l&#233;chargementen bas dela 
+<a href="http://cats4ctc.wikidot.com/main:downloads">page de la licence CATS</a>.
 
 <p>
-Depuis Juillet 2009, la distribution actuelle de CATS oeuvres
-avec JMRI 2.6 et teste actuellement les version  (2.7 .*)
+Au d&#233;but de 2016, la distribution actuelle de CATS ( 2038 ) oeuvres
+avec JMRI 4.0.1 au travers des versions test actuelle ( 4.3 )
 A partir de cette base, nous voulons garder les compilation CATS
-durant le d&#233;veloppement de JMRI.
-
-
+au cours du d&#233;veloppement continu de JMRI. Les changements qui cassent CATS devraient &#234;tre 
+trait&#233;es par la mise au rencart, au moins pour une version de production JMRI
 
 <h3>Compiler CATS avec JMRI</h3>
 
-<p>
-CATS n'a pas de tests unitaires, il n'y a donc rien &#224; faire dans 
-l'arbre des sources "test".
+T&#233;l&#233;chargez la source CATS et d&#233;paquetez la. Vous devez obtenir un r&#233;pertoire "cats" et 
+"designer". ( Desidgner est destin&#233; &#224; &#234;tre ind&#233;pendant de JMRI, mais nous 
+compilons ensemble juste au cas o&#249; ) Selon la fa&#249;on dont vous avez d&#233;compress&#233;, 
+vous pourriez trouver ceux-ci dupliqu&#233;s: cats/cats. Prendre les r&#233;pertoire "cats" et 
+"designer" du niveau le plus bas et d&#233;placez les directement dans le r&#233;pertoire 
+JMRI java/src, exemple; aux c&#244;t&#233;s des applications existantes et r&#233;pertoires JMRI: 
+<pre><code>
+% ls java/src/<br/>
+META-INF   apps   cats   designer   jmri
+</code></pre>
 
 <p>
-Pour simplifier le travail CVS, le deux r&#233;pertoires CATS sont ignor&#233;s ...
+CATS n'a aucune unit&#233; de test, donc il n'y a rien &#224; faire dans le "test" arbre source.
 
+<p>
+Les r&#232;gles de compilation Ant compileront ensuite CATS chaque fois que vous compilerezr JMRI lui-m&#234;me. Cela va vous montrer 
+des erreurs, des avertissements relatifs &#224; l'obsolescence, etc.
 
+<p>
+Pour simplifier le travail du r&#233;pertoire JMRI,
+Les deux r&#233;pertoires lie&#233;s CATS sont ignor&#233;s lorsque vous faites des op&#233;rations sur le r&#233;pertoire.
 
+<p>
+Notez que cela inclut la source CATS au sein de la construction, ainsi n'importe 
+quels fichiers jar que vous cr&#233;ez incluentt aussi CATS. N'utilisez pas les fichier jar  &#224; partir 
+d'une construction comme celui-ci &#224; des fins JMRI.
+
+<p>
+JMRI lui-m&#234;me a beaucoup d'avertissements d'obsolescence, si vous voulez voir seulement 
+ceux de CATS:
+<ul>
+<li>ant nettoie la compil
+<li>rm -rf java/classes/cats java/classes/designer
+<li>ant -Ddeprecation="on" compile
+</ul>
+La premi&#232;re compilation compilera tout. La seconde compilera seulement 
+les sources CATS, ainsi elle vous donnera seulement les avertissement pour cces classes.
+
+<h3>Ex&#233;cution de CATS depuis une construction JMRI locale</h3>
+
+T&#233;l&#233;chargez la version la plus r&#233;cente de CATS dans le bas de la 
+<a href="http://cats4ctc.wikidot.com/main:downloads">page de la licence CATS</a>.
+A ce jour (f&#233;vrier 2016), c'est le &quot;<a href="http://cats4ctc.wikidot.com/local--files/main:downloads/release2038.zip">paquet 
+CATS et concepteur (compatible avec JMRI 4.0.1 &#224; la plus r&#233;cente - 2,53 Mo)</a>&quot; 
+lien qui donne la version 2038 du CATS.
+
+<p>
+D&#233;placez le contenu, incluant les scripts de d&#233;marrage "cats.csh" (Linux, Mac OS X) et "cats.bat" (Windows)
+et autre fichiers associ&#233;s, dans votre r&#233;pertoire JMRI de plus haut-niveau.
+<p>
+Si vous avez compil&#233; CATS localement, vous n'avez pas besoin des fichiers cats.jar ou designer.jar.
+<p>
+Puis ex&#233;cutez le script appropri&#233; "cats.csh" (Linux, Mac OS X) et "cats.bat" (Windows) 
 <!--#include virtual="/Footer" -->
 
 	  </div><!-- closes #mainContent-->
