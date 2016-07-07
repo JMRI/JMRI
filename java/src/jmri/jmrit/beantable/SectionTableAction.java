@@ -288,7 +288,7 @@ public class SectionTableAction extends AbstractTableAction {
     BlockTableModel blockTableModel = null;
     EntryPointTableModel entryPointTableModel = null;
     SectionManager sectionManager = null;
-    BlockManager blockManager = jmri.InstanceManager.blockManagerInstance();
+    BlockManager blockManager = jmri.InstanceManager.getDefault(jmri.BlockManager.class);
     boolean editMode = false;
     Section curSection = null;
     boolean addCreateActive = true;

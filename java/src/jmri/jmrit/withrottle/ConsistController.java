@@ -415,7 +415,7 @@ public class ConsistController extends AbstractController implements ProgListene
 
             return;
         }
-        AddressedProgrammer pom = jmri.InstanceManager.programmerManagerInstance()
+        AddressedProgrammer pom = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class)
                 .getAddressedProgrammer(loco.isLongAddress(), loco.getNumber());
 
         // loco done, now get CVs
@@ -433,7 +433,7 @@ public class ConsistController extends AbstractController implements ProgListene
                 log.warn("Error in setting CVs: " + nfe);
             }
         }
-        jmri.InstanceManager.programmerManagerInstance().releaseAddressedProgrammer(pom);
+        jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).releaseAddressedProgrammer(pom);
 
     }
 

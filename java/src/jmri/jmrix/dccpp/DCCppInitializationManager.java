@@ -41,10 +41,10 @@ public class DCCppInitializationManager extends AbstractDCCppInitializationManag
 	    log.error("Power Manager not (yet) created!");
 	}
 	jmri.InstanceManager.store(systemMemo.getPowerManager(), jmri.PowerManager.class);
-	if (jmri.InstanceManager.powerManagerInstance() == null) {
+	if (jmri.InstanceManager.getDefault(jmri.PowerManager.class) == null) {
 	    log.error("Power Manager not accessible!");
 	} else {
-	    log.debug("Power Manager: {}", jmri.InstanceManager.powerManagerInstance());
+	    log.debug("Power Manager: {}", jmri.InstanceManager.getDefault(jmri.PowerManager.class));
 	}
 	jmri.InstanceManager.setThrottleManager(systemMemo.getThrottleManager());
 	/* Next we check the command station type, and add the 

@@ -185,7 +185,7 @@ public class AutoTrainAction {
         for (int i = 0; i < _activeActionList.size(); i++) {
             if (_activeActionList.get(i).getWaitingForBlock()) {
                 TransitSectionAction tsa = _activeActionList.get(i);
-                Block target = InstanceManager.blockManagerInstance().getBlock(tsa.getStringWhen());
+                Block target = InstanceManager.getDefault(jmri.BlockManager.class).getBlock(tsa.getStringWhen());
                 if (b == target) {
                     // waiting on state change for this block
                     if (((b.getState() == Block.OCCUPIED) && (tsa.getWhenCode() == TransitSectionAction.BLOCKENTRY))

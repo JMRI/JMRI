@@ -49,7 +49,7 @@ public class BlockTableAction extends AbstractTableAction {
         super(actionName);
 
         // disable ourself if there is no primary Block manager available
-        if (jmri.InstanceManager.blockManagerInstance() == null) {
+        if (jmri.InstanceManager.getDefault(jmri.BlockManager.class) == null) {
             setEnabled(false);
         }
         inchBox.setSelected(true);
@@ -60,7 +60,7 @@ public class BlockTableAction extends AbstractTableAction {
             centimeterBox.setSelected(true);
         }
 
-        defaultBlockSpeedText = ("Use Global " + jmri.InstanceManager.blockManagerInstance().getDefaultSpeed()); // first entry in drop down list
+        defaultBlockSpeedText = ("Use Global " + jmri.InstanceManager.getDefault(jmri.BlockManager.class).getDefaultSpeed()); // first entry in drop down list
         speedList.add(defaultBlockSpeedText);
         java.util.Vector<String> _speedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getValidSpeedNames();
         for (int i = 0; i < _speedMap.size(); i++) {
@@ -107,7 +107,7 @@ public class BlockTableAction extends AbstractTableAction {
                     log.warn("requested getValue(null)");
                     return "(no name)";
                 }
-                Block b = InstanceManager.blockManagerInstance().getBySystemName(name);
+                Block b = InstanceManager.getDefault(jmri.BlockManager.class).getBySystemName(name);
                 if (b == null) {
                     log.debug("requested getValue(\"" + name + "\"), Block doesn't exist");
                     return "(no Block)";
@@ -121,15 +121,15 @@ public class BlockTableAction extends AbstractTableAction {
             }
 
             public Manager getManager() {
-                return InstanceManager.blockManagerInstance();
+                return InstanceManager.getDefault(jmri.BlockManager.class);
             }
 
             public NamedBean getBySystemName(String name) {
-                return InstanceManager.blockManagerInstance().getBySystemName(name);
+                return InstanceManager.getDefault(jmri.BlockManager.class).getBySystemName(name);
             }
 
             public NamedBean getByUserName(String name) {
-                return InstanceManager.blockManagerInstance().getByUserName(name);
+                return InstanceManager.getDefault(jmri.BlockManager.class).getByUserName(name);
             }
 
             protected String getMasterClassName() {
@@ -516,7 +516,7 @@ public class BlockTableAction extends AbstractTableAction {
 
     private void updateSpeedList() {
         speedList.remove(defaultBlockSpeedText);
-        defaultBlockSpeedText = ("Use Global " + jmri.InstanceManager.blockManagerInstance().getDefaultSpeed());
+        defaultBlockSpeedText = ("Use Global " + jmri.InstanceManager.getDefault(jmri.BlockManager.class).getDefaultSpeed());
         speedList.add(0, defaultBlockSpeedText);
         m.fireTableDataChanged();
     }
@@ -587,7 +587,7 @@ public class BlockTableAction extends AbstractTableAction {
 
         blockSpeedCombo.removeItem(defaultBlockSpeedText);
 
-        blockSpeedCombo.setSelectedItem(InstanceManager.blockManagerInstance().getDefaultSpeed());
+        blockSpeedCombo.setSelectedItem(InstanceManager.getDefault(jmri.BlockManager.class).getDefaultSpeed());
 
         int retval = JOptionPane.showOptionDialog(_who,
                 Bundle.getMessage("BlockSpeedSelectDialog"), Bundle.getMessage("BlockSpeedLabel"),
@@ -600,7 +600,7 @@ public class BlockTableAction extends AbstractTableAction {
         String speedValue = (String) blockSpeedCombo.getSelectedItem();
         //We will allow the turnout manager to handle checking if the values have changed
         try {
-            InstanceManager.blockManagerInstance().setDefaultSpeed(speedValue);
+            InstanceManager.getDefault(jmri.BlockManager.class).setDefaultSpeed(speedValue);
         } catch (IllegalArgumentException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + speedValue);
             return;
@@ -770,9 +770,9 @@ public class BlockTableAction extends AbstractTableAction {
             Block blk;
             try {
                 if (_autoSystemName.isSelected()) {
-                    blk = InstanceManager.blockManagerInstance().createNewBlock(user);
+                    blk = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock(user);
                 } else {
-                    blk = InstanceManager.blockManagerInstance().createNewBlock(sName, user);
+                    blk = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock(sName, user);
                 }
             } catch (IllegalArgumentException ex) {
                 // user input no good
@@ -806,7 +806,7 @@ public class BlockTableAction extends AbstractTableAction {
             }
         }
         pref.setSimplePreferenceState(systemNameAuto, _autoSystemName.isSelected());
-        // InstanceManager.blockManagerInstance().createNewBlock(sName, user);
+        // InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock(sName, user);
     }
 
     void handleCreateException(String sysName) {
@@ -829,10 +829,10 @@ public class BlockTableAction extends AbstractTableAction {
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
         if (retval != 0) {
-            InstanceManager.blockManagerInstance().setSavedPathInfo(true);
+            InstanceManager.getDefault(jmri.BlockManager.class).setSavedPathInfo(true);
             log.info("Requested to save path information via Block Menu.");
         } else {
-            InstanceManager.blockManagerInstance().setSavedPathInfo(false);
+            InstanceManager.getDefault(jmri.BlockManager.class).setSavedPathInfo(false);
             log.info("Requested not to save path information via Block Menu.");
         }
     }

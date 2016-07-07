@@ -138,7 +138,7 @@ public class ConditionalVariable {
                     _namedBean = nbhm.getNamedBeanHandle(_name, nb);
                     break;
                 case Conditional.ITEM_TYPE_CONDITIONAL:
-                    Conditional c = InstanceManager.conditionalManagerInstance().getConditional(_name);
+                    Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).getConditional(_name);
                     if (c == null) {
                         log.error("invalid conditiona; name= \"" + _name + "\" in state variable");
                         return;
@@ -248,7 +248,7 @@ public class ConditionalVariable {
                     bean = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(_name);
                     break;
                 case Conditional.ITEM_TYPE_CONDITIONAL:
-                    bean = InstanceManager.conditionalManagerInstance().getConditional(_name);
+                    bean = InstanceManager.getDefault(jmri.ConditionalManager.class).getConditional(_name);
                     break;
                 case Conditional.ITEM_TYPE_WARRANT:
                     bean = InstanceManager.getDefault(WarrantManager.class).getWarrant(_name);
@@ -598,9 +598,9 @@ public class ConditionalVariable {
                 result = compare(value1, value2, caseInsensitive);
                 break;
             case Conditional.ITEM_TYPE_CONDITIONAL:
-                Conditional c = InstanceManager.conditionalManagerInstance().getBySystemName(getName());
+                Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName(getName());
                 if (c == null) {
-                    c = InstanceManager.conditionalManagerInstance().getByUserName(getName());
+                    c = InstanceManager.getDefault(jmri.ConditionalManager.class).getByUserName(getName());
                     if (c == null) {
                         log.error("invalid conditional name= \"" + getName() + "\" in state variable");
                         return (false);

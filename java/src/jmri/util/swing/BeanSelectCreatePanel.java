@@ -213,7 +213,7 @@ public class BeanSelectCreatePanel extends JPanel {
                 }
             } else if (_manager instanceof jmri.Block) {
                 try {
-                    nBean = InstanceManager.blockManagerInstance().provideBlock(sName);
+                    nBean = InstanceManager.getDefault(jmri.BlockManager.class).provideBlock(sName);
                 } catch (IllegalArgumentException ex) {
                     // user input no good
                     throw new jmri.JmriException("ErrorBlockAddFailed");

@@ -477,7 +477,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         // set the programming mode
         if (pProg != null) {
-            if (jmri.InstanceManager.programmerManagerInstance() != null) {
+            if (jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class) != null) {
                 // go through in preference order, trying to find a mode
                 // that exists in both the programmer and decoder.
                 // First, get attributes. If not present, assume that

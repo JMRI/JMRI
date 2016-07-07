@@ -38,7 +38,7 @@ public class SectionManager extends AbstractManager
     public SectionManager() {
         super();
         InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
-        InstanceManager.blockManagerInstance().addVetoableChangeListener(this);
+        InstanceManager.getDefault(jmri.BlockManager.class).addVetoableChangeListener(this);
     }
 
     public int getXMLOrder() {

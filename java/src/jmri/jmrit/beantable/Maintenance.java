@@ -119,7 +119,7 @@ public class Maintenance {
                 names.add(name);
             }
         }
-        iter = InstanceManager.conditionalManagerInstance().getSystemNameList().iterator();
+        iter = InstanceManager.getDefault(jmri.ConditionalManager.class).getSystemNameList().iterator();
         while (iter.hasNext()) {
             String name = iter.next();
             if (!search(name, null)) {
@@ -137,7 +137,7 @@ public class Maintenance {
                 names.add(name);
             }
         }
-        iter = InstanceManager.blockManagerInstance().getSystemNameList().iterator();
+        iter = InstanceManager.getDefault(jmri.BlockManager.class).getSystemNameList().iterator();
         while (iter.hasNext()) {
             String name = iter.next();
             if (!search(name, null)) {
@@ -204,11 +204,11 @@ public class Maintenance {
                         }
                         InstanceManager.lightManagerInstance().deregister(l);
                     } else if (names[0].equals("Conditional")) {
-                        Conditional c = InstanceManager.conditionalManagerInstance().getBySystemName(names[2]);
+                        Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName(names[2]);
                         if (c == null) {
-                            c = InstanceManager.conditionalManagerInstance().getBySystemName(names[1]);
+                            c = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName(names[1]);
                         }
-                        InstanceManager.conditionalManagerInstance().deregister(c);
+                        InstanceManager.getDefault(jmri.ConditionalManager.class).deregister(c);
                     } else if (names[0].equals("Section")) {
                         jmri.Section sec = InstanceManager.getDefault(jmri.SectionManager.class).getBySystemName(names[2]);
                         if (sec == null) {
@@ -216,11 +216,11 @@ public class Maintenance {
                         }
                         InstanceManager.getDefault(jmri.SectionManager.class).deregister(sec);
                     } else if (names[0].equals("Block")) {
-                        jmri.Block b = InstanceManager.blockManagerInstance().getBySystemName(names[2]);
+                        jmri.Block b = InstanceManager.getDefault(jmri.BlockManager.class).getBySystemName(names[2]);
                         if (b == null) {
-                            b = InstanceManager.blockManagerInstance().getBySystemName(names[1]);
+                            b = InstanceManager.getDefault(jmri.BlockManager.class).getBySystemName(names[1]);
                         }
-                        InstanceManager.blockManagerInstance().deregister(b);
+                        InstanceManager.getDefault(jmri.BlockManager.class).deregister(b);
                     }
                     model.remove(index);
                     n.remove(index);
@@ -249,8 +249,8 @@ public class Maintenance {
         Vector<String> names = new Vector<String>();
 
         log.debug("findEmptyPressed");
-        Iterator<String> iter = InstanceManager.conditionalManagerInstance().getSystemNameList().iterator();
-        jmri.ConditionalManager cm = InstanceManager.conditionalManagerInstance();
+        Iterator<String> iter = InstanceManager.getDefault(jmri.ConditionalManager.class).getSystemNameList().iterator();
+        jmri.ConditionalManager cm = InstanceManager.getDefault(jmri.ConditionalManager.class);
         while (iter.hasNext()) {
             String name = iter.next();
             Conditional c = cm.getBySystemName(name);
@@ -298,15 +298,15 @@ public class Maintenance {
                 while (index >= min) {
                     String[] names = getTypeAndNames(name.get(index));
                     model.remove(index);
-                    Conditional c = InstanceManager.conditionalManagerInstance().getBySystemName(names[2]);
+                    Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName(names[2]);
                     if (c != null) {
-                        Logix x = InstanceManager.conditionalManagerInstance().getParentLogix(names[2]);
+                        Logix x = InstanceManager.getDefault(jmri.ConditionalManager.class).getParentLogix(names[2]);
                         if (x != null) {
                             x.deActivateLogix();
                             x.deleteConditional(names[2]);
                             x.activateLogix();
                         }
-                        InstanceManager.conditionalManagerInstance().deregister(c);
+                        InstanceManager.getDefault(jmri.ConditionalManager.class).deregister(c);
                         name.remove(index);
                         index--;
                     }
@@ -439,7 +439,7 @@ public class Maintenance {
                 Integer.toString(sh.getNumPropertyChangeListeners())});
         }
 
-        jmri.ConditionalManager cm = InstanceManager.conditionalManagerInstance();
+        jmri.ConditionalManager cm = InstanceManager.getDefault(jmri.ConditionalManager.class);
         Conditional c = cm.getBySystemName(sysName);
         if (c != null) {
             userName = c.getUserName();
@@ -463,7 +463,7 @@ public class Maintenance {
                 Integer.toString(c.getNumPropertyChangeListeners())});
         }
 
-        jmri.BlockManager blockManager = InstanceManager.blockManagerInstance();
+        jmri.BlockManager blockManager = InstanceManager.getDefault(jmri.BlockManager.class);
         jmri.Block b = blockManager.getBySystemName(sysName);
         if (b != null) {
             userName = b.getUserName();
@@ -586,11 +586,11 @@ public class Maintenance {
         boolean found = false;
         boolean empty = true;
         // search for references among each class known to be listeners
-        Iterator<String> iter1 = InstanceManager.logixManagerInstance().getSystemNameList().iterator();
+        Iterator<String> iter1 = InstanceManager.getDefault(jmri.LogixManager.class).getSystemNameList().iterator();
         while (iter1.hasNext()) {
             // get the next Logix
             String sName = iter1.next();
-            Logix x = InstanceManager.logixManagerInstance().getBySystemName(sName);
+            Logix x = InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName(sName);
             if (x == null) {
                 log.error("Error getting Logix  - " + sName);
                 break;
@@ -605,7 +605,7 @@ public class Maintenance {
                     log.error("Null conditional system name");
                     break;
                 }
-                Conditional c = InstanceManager.conditionalManagerInstance().getBySystemName(sName);
+                Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName(sName);
                 if (c == null) {
                     log.error("Invalid conditional system name - " + sName);
                     break;
@@ -964,7 +964,7 @@ public class Maintenance {
         tempText = new StringBuffer();
         found = false;
         empty = true;
-        jmri.BlockManager blockManager = InstanceManager.blockManagerInstance();
+        jmri.BlockManager blockManager = InstanceManager.getDefault(jmri.BlockManager.class);
         sysNameList = blockManager.getSystemNameList();
 
         sectionManager = InstanceManager.getDefault(jmri.SectionManager.class);
@@ -1159,13 +1159,13 @@ public class Maintenance {
         tempText = new StringBuffer();
         found = false;
         empty = true;
-        jmri.ConditionalManager conditionalManager = InstanceManager.conditionalManagerInstance();
+        jmri.ConditionalManager conditionalManager = InstanceManager.getDefault(jmri.ConditionalManager.class);
         sysNameList = conditionalManager.getSystemNameList();
 
-        iter1 = InstanceManager.logixManagerInstance().getSystemNameList().iterator();
+        iter1 = InstanceManager.getDefault(jmri.LogixManager.class).getSystemNameList().iterator();
         while (iter1.hasNext()) {
             String sName = iter1.next();
-            Logix x = InstanceManager.logixManagerInstance().getBySystemName(sName);
+            Logix x = InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName(sName);
             for (int i = 0; i < x.getNumConditionals(); i++) {
                 sName = x.getConditionalByNumberOrder(i);
                 sysNameList.remove(sName);

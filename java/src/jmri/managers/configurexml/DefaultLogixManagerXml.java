@@ -125,7 +125,7 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
         if (log.isDebugEnabled()) {
             log.debug("Found " + logixList.size() + " logixs");
         }
-        LogixManager tm = InstanceManager.logixManagerInstance();
+        LogixManager tm = InstanceManager.getDefault(jmri.LogixManager.class);
 
         for (int i = 0; i < logixList.size(); i++) {
 
@@ -189,14 +189,14 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
      * type.
      */
     protected void replaceLogixManager() {
-        if (InstanceManager.logixManagerInstance().getClass().getName()
+        if (InstanceManager.getDefault(jmri.LogixManager.class).getClass().getName()
                 .equals(DefaultLogixManager.class.getName())) {
             return;
         }
         // if old manager exists, remove it from configuration process
-        if (InstanceManager.logixManagerInstance() != null) {
+        if (InstanceManager.getDefault(jmri.LogixManager.class) != null) {
             InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).deregister(
-                    InstanceManager.logixManagerInstance());
+                    InstanceManager.getDefault(jmri.LogixManager.class));
         }
 
         // register new one with InstanceManager
@@ -207,7 +207,7 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
     }
 
     public int loadOrder() {
-        return InstanceManager.logixManagerInstance().getXMLOrder();
+        return InstanceManager.getDefault(jmri.LogixManager.class).getXMLOrder();
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultLogixManagerXml.class.getName());

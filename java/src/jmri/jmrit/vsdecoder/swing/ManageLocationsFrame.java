@@ -345,7 +345,7 @@ public class ManageLocationsFrame extends JmriJFrame {
         }
 
         data = blockModel.getDataMap();
-        BlockManager bmgr = jmri.InstanceManager.blockManagerInstance();
+        BlockManager bmgr = jmri.InstanceManager.getDefault(jmri.BlockManager.class);
         for (String s : data.keySet()) {
             log.debug("Block: " + s + " Location: " + data.get(s));
             Block b = bmgr.getByDisplayName(s);

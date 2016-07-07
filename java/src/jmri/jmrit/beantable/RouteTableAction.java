@@ -1333,9 +1333,9 @@ public class RouteTableAction extends AbstractTableAction {
         }
         String uName = _userName.getText();
         String logixSystemName = LOGIX_SYS_NAME + sName;
-        Logix logix = InstanceManager.logixManagerInstance().getBySystemName(logixSystemName);
+        Logix logix = InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName(logixSystemName);
         if (logix == null) {
-            logix = InstanceManager.logixManagerInstance().createNewLogix(logixSystemName, uName);
+            logix = InstanceManager.getDefault(jmri.LogixManager.class).createNewLogix(logixSystemName, uName);
             if (logix == null) {
                 log.error("Failed to create Logix " + logixSystemName + ", " + uName);
                 return;
@@ -1490,7 +1490,7 @@ public class RouteTableAction extends AbstractTableAction {
             actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE,
                     Conditional.ACTION_SET_SENSOR, sensorSystemName, Sensor.INACTIVE, ""));
 
-            Conditional c = InstanceManager.conditionalManagerInstance().createNewConditional(cSystemName, cUserName);
+            Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).createNewConditional(cSystemName, cUserName);
             c.setStateVariables(variableList);
             c.setLogicType(Conditional.ALL_AND, "");
             c.setAction(actionList);
@@ -1547,7 +1547,7 @@ public class RouteTableAction extends AbstractTableAction {
             }
 
             // add new Conditionals for action on 'locks'
-            Conditional c = InstanceManager.conditionalManagerInstance().createNewConditional(cSystemName, cUserName);
+            Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).createNewConditional(cSystemName, cUserName);
             c.setStateVariables(variableList);
             c.setLogicType(Conditional.ALL_AND, "");
             c.setAction(actionList);
@@ -1565,10 +1565,10 @@ public class RouteTableAction extends AbstractTableAction {
     }
 
     boolean removeConditionals(String cSystemName, Logix logix) {
-        Conditional c = InstanceManager.conditionalManagerInstance().getBySystemName(cSystemName);
+        Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName(cSystemName);
         if (c != null) {
             logix.deleteConditional(cSystemName);
-            InstanceManager.conditionalManagerInstance().deleteConditional(c);
+            InstanceManager.getDefault(jmri.ConditionalManager.class).deleteConditional(c);
             return true;
         }
         return false;
@@ -1592,7 +1592,7 @@ public class RouteTableAction extends AbstractTableAction {
             String cUserName = jmriBox.getSelectedDisplayName() + numConds + "C " + uName;
             Conditional c = null;
             try {
-                c = InstanceManager.conditionalManagerInstance().createNewConditional(cSystemName, cUserName);
+                c = InstanceManager.getDefault(jmri.ConditionalManager.class).createNewConditional(cSystemName, cUserName);
             } catch (Exception ex) {
                 // user input no good
                 handleCreateException(cSystemName);
@@ -1628,7 +1628,7 @@ public class RouteTableAction extends AbstractTableAction {
             String cUserName = jmriBox.getSelectedDisplayName() + numConds + "C " + uName;
             Conditional c = null;
             try {
-                c = InstanceManager.conditionalManagerInstance().createNewConditional(cSystemName, cUserName);
+                c = InstanceManager.getDefault(jmri.ConditionalManager.class).createNewConditional(cSystemName, cUserName);
             } catch (Exception ex) {
                 // user input no good
                 handleCreateException(cSystemName);

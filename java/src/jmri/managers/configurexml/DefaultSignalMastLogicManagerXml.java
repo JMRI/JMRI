@@ -322,7 +322,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                                         value = Block.UNOCCUPIED;
                                     }
 
-                                    Block blk = InstanceManager.blockManagerInstance().getBlock(block);
+                                    Block blk = InstanceManager.getDefault(jmri.BlockManager.class).getBlock(block);
                                     if (blk != null) {
                                         list.put(blk, value);
                                     } else if (debug) {

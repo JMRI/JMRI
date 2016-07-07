@@ -115,8 +115,8 @@ public class LogixTableAction extends AbstractTableAction {
         // set up managers - no need to use InstanceManager since both managers are
         // Default only (internal). We use InstanceManager to get managers for
         // compatibility with other facilities.
-        _logixManager = InstanceManager.logixManagerInstance();
-        _conditionalManager = InstanceManager.conditionalManagerInstance();
+        _logixManager = InstanceManager.getDefault(jmri.LogixManager.class);
+        _conditionalManager = InstanceManager.getDefault(jmri.ConditionalManager.class);
         // disable ourself if there is no Logix manager or no Conditional manager available
         if ((_logixManager == null) || (_conditionalManager == null)) {
             setEnabled(false);
@@ -247,16 +247,16 @@ public class LogixTableAction extends AbstractTableAction {
             }
 
             public Manager getManager() {
-                return InstanceManager.logixManagerInstance();
+                return InstanceManager.getDefault(jmri.LogixManager.class);
             }
 
             public NamedBean getBySystemName(String name) {
-                return InstanceManager.logixManagerInstance().getBySystemName(
+                return InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName(
                         name);
             }
 
             public NamedBean getByUserName(String name) {
-                return InstanceManager.logixManagerInstance().getByUserName(
+                return InstanceManager.getDefault(jmri.LogixManager.class).getByUserName(
                         name);
             }
 
@@ -4762,12 +4762,12 @@ public class LogixTableAction extends AbstractTableAction {
         Audio a = null;
         if (name != null) {
             if (name.length() > 0) {
-                a = InstanceManager.audioManagerInstance().getByUserName(name);
+                a = InstanceManager.getDefault(jmri.AudioManager.class).getByUserName(name);
                 if (a != null) {
                     return name;
                 }
             }
-            a = InstanceManager.audioManagerInstance().getBySystemName(name);
+            a = InstanceManager.getDefault(jmri.AudioManager.class).getBySystemName(name);
         }
         if (a == null || (a.getSubType() != Audio.SOURCE && a.getSubType() != Audio.LISTENER)) {
             messageInvalidActionItemName(name, "Audio"); //NOI18N

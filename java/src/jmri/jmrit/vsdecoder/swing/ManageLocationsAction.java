@@ -86,7 +86,7 @@ public class ManageLocationsAction extends AbstractAction {
             }
 
             // Handle Blocks
-            BlockManager bmgr = jmri.InstanceManager.blockManagerInstance();
+            BlockManager bmgr = jmri.InstanceManager.getDefault(jmri.BlockManager.class);
             String[] blockNameArray = bmgr.getSystemNameArray();
             Object[][] blockTable = new Object[blockNameArray.length][6];
             blockMap = new HashMap<String, PhysicalLocation>();

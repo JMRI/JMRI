@@ -877,7 +877,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             log.error("Train source is invalid - " + tSource + " - cannot create an Active Train");
             return null;
         }
-        Block startBlock = InstanceManager.blockManagerInstance().getBlock(startBlockName);
+        Block startBlock = InstanceManager.getDefault(jmri.BlockManager.class).getBlock(startBlockName);
         if (startBlock == null) {
             if (showErrorMessages) {
                 JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(rb.getString(
@@ -919,7 +919,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             log.error("Invalid sequence number '" + startBlockSectionSequenceNumber + "' when attempting to create an Active Train");
             return null;
         }
-        Block endBlock = InstanceManager.blockManagerInstance().getBlock(endBlockName);
+        Block endBlock = InstanceManager.getDefault(jmri.BlockManager.class).getBlock(endBlockName);
         if ((endBlock == null) || (!t.containsBlock(endBlock))) {
             if (showErrorMessages) {
                 JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(rb.getString(

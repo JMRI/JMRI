@@ -506,7 +506,7 @@ public class Section extends AbstractNamedBean
 
     private void initializeBlocks() {
         for (int i = 0; i < blockNameList.size(); i++) {
-            Block b = InstanceManager.blockManagerInstance().getBlock(blockNameList.get(i));
+            Block b = InstanceManager.getDefault(jmri.BlockManager.class).getBlock(blockNameList.get(i));
             if (b == null) {
                 log.error("Missing Block - " + blockNameList.get(i) + " - when initializing Section - "
                         + getSystemName());

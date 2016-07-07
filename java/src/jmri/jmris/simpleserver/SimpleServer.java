@@ -87,7 +87,7 @@ public class SimpleServer extends JmriServer {
             if (cmd.startsWith("POWER")) {
                 try {
                     powerServer.parseStatus(cmd);
-                    powerServer.sendStatus(InstanceManager.powerManagerInstance().getPower());
+                    powerServer.sendStatus(InstanceManager.getDefault(jmri.PowerManager.class).getPower());
                 } catch (JmriException je) {
                     outStream.writeBytes("not supported\n");
                 }

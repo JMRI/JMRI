@@ -169,7 +169,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         Logix logix = getSystemLogix();
         for (i = 0; i < logix.getNumConditionals(); i++) {
             String name = logix.getConditionalByNumberOrder(i);
-            Conditional c = InstanceManager.conditionalManagerInstance().getBySystemName(name);
+            Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName(name);
             if (c != null) {
                 groupModel.addElement(c.getUserName().substring(ConditionalUserPrefix.length()));
             }
@@ -228,7 +228,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
                     "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
         Conditional c = new SensorGroupConditional(cSystemName, cUserName);
-        InstanceManager.conditionalManagerInstance().register(c);
+        InstanceManager.getDefault(jmri.ConditionalManager.class).register(c);
         c.setStateVariables(variableList);
         c.setLogicType(Conditional.ALL_OR, "");
         c.setAction(actionList);
@@ -278,7 +278,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
             for (int i = 0; i < logix.getNumConditionals(); i++) {
                 String name = logix.getConditionalByNumberOrder(i);
                 if (cSystemName.equals(name) || cUserName.equals(name)) {
-                    Conditional c = InstanceManager.conditionalManagerInstance().getBySystemName(name);
+                    Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName(name);
                     if (c == null) {
                         log.error("Conditional \"" + name + "\" expected but NOT found in Logix " + logix.getSystemName());
                     } else {
@@ -305,9 +305,9 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
     }
 
     Logix getSystemLogix() {
-        Logix logix = InstanceManager.logixManagerInstance().getBySystemName(logixSysName);
+        Logix logix = InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName(logixSysName);
         if (logix == null) {
-            logix = InstanceManager.logixManagerInstance().createNewLogix(logixSysName, logixUserName);
+            logix = InstanceManager.getDefault(jmri.LogixManager.class).createNewLogix(logixSysName, logixUserName);
         }
         return logix;
     }
@@ -349,7 +349,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         for (int i = 0; i < logix.getNumConditionals(); i++) {
             String name = logix.getConditionalByNumberOrder(i);
             if (cSystemName.equals(name) || cUserName.equals(name)) {
-                Conditional c = InstanceManager.conditionalManagerInstance().getBySystemName(name);
+                Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName(name);
                 if (c == null) {
                     log.error("Conditional \"" + name + "\" expected but NOT found in Logix " + logix.getSystemName());
                 } else {

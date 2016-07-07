@@ -5903,15 +5903,15 @@ public class LayoutEditorTools {
             log.error("Trouble creating sensor " + sensorName + " while setting up Logix.");
             return "";
         }
-        if (InstanceManager.logixManagerInstance().getBySystemName(logixName) == null) {
+        if (InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName(logixName) == null) {
             // Logix does not exist, create it
-            Logix x = InstanceManager.logixManagerInstance().createNewLogix(logixName, "");
+            Logix x = InstanceManager.getDefault(jmri.LogixManager.class).createNewLogix(logixName, "");
             if (x == null) {
                 log.error("Trouble creating logix " + logixName + " while setting up signal logic.");
                 return "";
             }
             String cName = x.getSystemName() + "C1";
-            Conditional c = InstanceManager.conditionalManagerInstance().
+            Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).
                     createNewConditional(cName, "");
             if (c == null) {
                 log.error("Trouble creating conditional " + cName + " while setting up Logix.");
@@ -13233,9 +13233,9 @@ public class LayoutEditorTools {
             return "";
         }
         boolean newConditional = false;
-        Logix x = InstanceManager.logixManagerInstance().getBySystemName(logixName);
+        Logix x = InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName(logixName);
         if (x == null) {
-            x = InstanceManager.logixManagerInstance().createNewLogix(logixName, "");
+            x = InstanceManager.getDefault(jmri.LogixManager.class).createNewLogix(logixName, "");
             newConditional = true;
             if (x == null) {
                 log.error("Trouble creating logix " + logixName + " while setting up signal logic.");
@@ -13246,9 +13246,9 @@ public class LayoutEditorTools {
         x.deActivateLogix();
         String cName = logixName + "C" + number;
 
-        Conditional c = InstanceManager.conditionalManagerInstance().getBySystemName(cName);
+        Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName(cName);
         if (c == null) {
-            c = InstanceManager.conditionalManagerInstance().
+            c = InstanceManager.getDefault(jmri.ConditionalManager.class).
                     createNewConditional(cName, "");
             newConditional = true;
             if (c == null) {

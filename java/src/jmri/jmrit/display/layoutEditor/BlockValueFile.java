@@ -24,7 +24,7 @@ public class BlockValueFile extends XmlFile {
 
     public BlockValueFile() {
         super();
-        blockManager = jmri.InstanceManager.blockManagerInstance();
+        blockManager = jmri.InstanceManager.getDefault(jmri.BlockManager.class);
     }
 
     // operational variables

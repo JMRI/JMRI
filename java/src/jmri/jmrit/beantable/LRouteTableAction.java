@@ -73,8 +73,8 @@ public class LRouteTableAction extends AbstractTableAction {
      */
     public LRouteTableAction(String s) {
         super(s);
-        _logixManager = InstanceManager.logixManagerInstance();
-        _conditionalManager = InstanceManager.conditionalManagerInstance();
+        _logixManager = InstanceManager.getDefault(jmri.LogixManager.class);
+        _conditionalManager = InstanceManager.getDefault(jmri.ConditionalManager.class);
         // disable ourself if there is no Logix manager or no Conditional manager available
         if ((_logixManager == null) || (_conditionalManager == null)) {
             setEnabled(false);

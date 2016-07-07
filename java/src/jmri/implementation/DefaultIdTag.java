@@ -51,7 +51,7 @@ public class DefaultIdTag extends AbstractIdTag {
         this.whereLastSeen = r;
         if (r != null) {
             this.whenLastSeen = InstanceManager.getDefault(IdTagManager.class).isFastClockUsed()
-                    ? InstanceManager.clockControlInstance().getTime()
+                    ? InstanceManager.getDefault(jmri.ClockControl.class).getTime()
                     : Calendar.getInstance().getTime();
         } else {
             this.whenLastSeen = null;

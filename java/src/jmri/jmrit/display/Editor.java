@@ -221,7 +221,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
         jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
         jmri.InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
-        jmri.InstanceManager.blockManagerInstance().addVetoableChangeListener(this);
+        jmri.InstanceManager.getDefault(jmri.BlockManager.class).addVetoableChangeListener(this);
         editors.add(this);
     }
 

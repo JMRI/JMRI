@@ -152,7 +152,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 
     protected void initializeLayoutBlock() {
         // get/create a jmri.Block object corresponding to this LayoutBlock
-        block = InstanceManager.blockManagerInstance().getByUserName(blockName);
+        block = InstanceManager.getDefault(jmri.BlockManager.class).getByUserName(blockName);
         if (block == null) {
             // not found, create a new jmri.Block
             String s = "";
@@ -161,12 +161,12 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             while (found) {
                 s = "IB" + jmriblknum;
                 jmriblknum++;
-                block = InstanceManager.blockManagerInstance().getBySystemName(s);
+                block = InstanceManager.getDefault(jmri.BlockManager.class).getBySystemName(s);
                 if (block == null) {
                     found = false;
                 }
             }
-            block = InstanceManager.blockManagerInstance().createNewBlock(s, blockName);
+            block = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock(s, blockName);
             if (block == null) {
                 log.error("Failure to get/create Block: " + s + "," + blockName);
             }
@@ -879,7 +879,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         LayoutBlockEditAction beanEdit = new LayoutBlockEditAction();
         if (block == null) {
             //Block may not have been initialised due to an error so manually set it in the edit window
-            beanEdit.setBean(InstanceManager.blockManagerInstance().getBlock(blockName));
+            beanEdit.setBean(InstanceManager.getDefault(jmri.BlockManager.class).getBlock(blockName));
         } else {
             beanEdit.setBean(block);
         }

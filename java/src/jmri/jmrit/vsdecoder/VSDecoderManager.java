@@ -431,8 +431,8 @@ public class VSDecoderManager implements PropertyChangeListener {
         for (String sysName : jmri.InstanceManager.getDefault(jmri.ReporterManager.class).getSystemNameList()) {
             registerReporterListener(sysName);
         }
-        for (String sysname : jmri.InstanceManager.blockManagerInstance().getSystemNameList()) {
-            registerBeanListener(jmri.InstanceManager.blockManagerInstance(), sysname);
+        for (String sysname : jmri.InstanceManager.getDefault(jmri.BlockManager.class).getSystemNameList()) {
+            registerBeanListener(jmri.InstanceManager.getDefault(jmri.BlockManager.class), sysname);
         }
     }
 
@@ -454,8 +454,8 @@ public class VSDecoderManager implements PropertyChangeListener {
         for (String sysName : jmri.InstanceManager.getDefault(jmri.ReporterManager.class).getSystemNameList()) {
             registerReporterListener(sysName);
         }
-        for (String sysname : jmri.InstanceManager.blockManagerInstance().getSystemNameList()) {
-            registerBeanListener(jmri.InstanceManager.blockManagerInstance(), sysname);
+        for (String sysname : jmri.InstanceManager.getDefault(jmri.BlockManager.class).getSystemNameList()) {
+            registerBeanListener(jmri.InstanceManager.getDefault(jmri.BlockManager.class), sysname);
         }
     }
 

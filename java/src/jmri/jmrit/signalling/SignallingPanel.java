@@ -351,7 +351,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         JPanel blockPanel = new JPanel();
         blockPanel.setLayout(new BoxLayout(blockPanel, BoxLayout.Y_AXIS));
 
-        jmri.BlockManager bm = jmri.InstanceManager.blockManagerInstance();
+        jmri.BlockManager bm = jmri.InstanceManager.getDefault(jmri.BlockManager.class);
         List<String> systemNameList = bm.getSystemNameList();
         _manualBlockList = new ArrayList<ManualBlockList>(systemNameList.size());
         Iterator<String> iter = systemNameList.iterator();
@@ -837,7 +837,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         }
         Hashtable<Block, Integer> hashBlocks = new Hashtable<Block, Integer>();
         for (int i = 0; i < _includedManualBlockList.size(); i++) {
-            Block blk = jmri.InstanceManager.blockManagerInstance().getBlock(_includedManualBlockList.get(i).getSysName());
+            Block blk = jmri.InstanceManager.getDefault(jmri.BlockManager.class).getBlock(_includedManualBlockList.get(i).getSysName());
             hashBlocks.put(blk, _includedManualBlockList.get(i).getState());
         }
         sml.setBlocks(hashBlocks, destMast);
@@ -1028,7 +1028,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         for (int i = _manualBlockList.size() - 1; i >= 0; i--) {
             ManualBlockList block = _manualBlockList.get(i);
             String tSysName = block.getSysName();
-            Block blk = InstanceManager.blockManagerInstance().getBlock(tSysName);
+            Block blk = InstanceManager.getDefault(jmri.BlockManager.class).getBlock(tSysName);
             if (sml.isBlockIncluded(blk, destMast)) {
                 block.setIncluded(true);
                 block.setState(sml.getBlockState(blk, destMast));
@@ -1394,7 +1394,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         private static final long serialVersionUID = -7997858302507580484L;
 
         BlockModel() {
-            jmri.InstanceManager.blockManagerInstance().addPropertyChangeListener(this);
+            jmri.InstanceManager.getDefault(jmri.BlockManager.class).addPropertyChangeListener(this);
         }
 
         public int getRowCount() {

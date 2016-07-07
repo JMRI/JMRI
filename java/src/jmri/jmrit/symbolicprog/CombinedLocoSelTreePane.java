@@ -151,8 +151,8 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
         showAll.setSelected(true);
         showMatched = new JRadioButton(Bundle.getMessage("LabelMatched"));
 
-        if (jmri.InstanceManager.programmerManagerInstance() != null
-                && jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()) {
+        if (jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class) != null
+                && jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).isGlobalProgrammerAvailable()) {
             ButtonGroup group = new ButtonGroup();
             group.add(showAll);
             group.add(showMatched);
