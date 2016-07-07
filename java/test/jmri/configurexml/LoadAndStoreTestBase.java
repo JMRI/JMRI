@@ -1,6 +1,7 @@
 package jmri.configurexml;
 
 import java.io.BufferedReader;
+import jmri.ConfigureManager;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
@@ -104,7 +105,7 @@ public class LoadAndStoreTestBase extends TestCase {
     
     static void loadFile(File inFile) throws Exception  {
         // load file
-        InstanceManager.configureManagerInstance().load(inFile);
+        InstanceManager.getDefault(ConfigureManager.class).load(inFile);
 
         InstanceManager.logixManagerInstance().activateAllLogixs();
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
@@ -115,7 +116,7 @@ public class LoadAndStoreTestBase extends TestCase {
         String name = inFile.getName();
         FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
         File outFile = new File(FileUtil.getUserFilesPath() + "temp/" + name);
-        InstanceManager.configureManagerInstance().storeConfig(outFile);
+        InstanceManager.getDefault(ConfigureManager.class).storeConfig(outFile);
         return outFile;
     }
     
@@ -131,7 +132,7 @@ public class LoadAndStoreTestBase extends TestCase {
         String name = inFile.getName();
         FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
         File outFile = new File(FileUtil.getUserFilesPath() + "temp/" + name);
-        InstanceManager.configureManagerInstance().storeConfig(outFile);
+        InstanceManager.getDefault(ConfigureManager.class).storeConfig(outFile);
 
         checkFile(inFile, outFile);
     }
@@ -153,7 +154,7 @@ public class LoadAndStoreTestBase extends TestCase {
         // store file
         FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
         File outFile = new File(FileUtil.getUserFilesPath() + "temp/" + name);
-        InstanceManager.configureManagerInstance().storeConfig(outFile);
+        InstanceManager.getDefault(ConfigureManager.class).storeConfig(outFile);
 
         checkFile(inFile, outFile);
     }

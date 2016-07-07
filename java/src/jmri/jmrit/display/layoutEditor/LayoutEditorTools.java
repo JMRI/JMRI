@@ -4760,7 +4760,7 @@ public class LayoutEditorTools {
         if (str.equals("")) {
             // turnout 1 not entered, test turnout 2
             str = turnout2NameField.getText().trim();
-            if ((str == null) || (str.equals(""))) {
+            if (str.equals("")) {
                 // no entries in turnout fields 
                 JOptionPane.showMessageDialog(setSignalsAtTToTFrame, rb.getString("SignalsError1"),
                         rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
@@ -6289,7 +6289,7 @@ public class LayoutEditorTools {
         if (str.equals("")) {
             // turnout A not entered, test turnout B
             str = turnoutBNameField.getText().trim();
-            if ((str == null) || (str.equals(""))) {
+            if (str.equals("")) {
                 // no entries in turnout fields 
                 JOptionPane.showMessageDialog(setSignalsAt3WayFrame, rb.getString("SignalsError1"),
                         rb.getString("Error"), JOptionPane.ERROR_MESSAGE);

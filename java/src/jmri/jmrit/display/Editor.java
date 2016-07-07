@@ -2559,7 +2559,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             frame.dispose();
         }
         // delete panel - deregister the panel for saving
-        InstanceManager.configureManagerInstance().deregister(this);
+        InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).deregister(this);
         jmri.jmrit.display.PanelMenu.instance().deletePanel(this);
         Editor.editors.remove(this);
         setVisible(false);

@@ -3,6 +3,11 @@ package jmri.managers;
 import jmri.Audio;
 import jmri.AudioException;
 import jmri.AudioManager;
+
+import javax.annotation.Nonnull;
+import javax.annotation.CheckForNull;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -77,6 +82,16 @@ public abstract class AbstractAudioManager extends AbstractManager
         return (rv);
     }
 
+    @SuppressFBWarnings(value="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE", justification="defensive programming check of @Nonnull argument")
+    private void checkSystemName(@Nonnull String systemName, @CheckForNull String userName) {
+        if (systemName == null) {
+            log.error("SystemName cannot be null. UserName was "
+                    + ((userName == null) ? "null" : userName));
+            throw new IllegalArgumentException("SystemName cannot be null. UserName was "
+                    + ((userName == null) ? "null" : userName));
+        }
+    }
+
     @Override
     public Audio newAudio(String systemName, String userName) throws AudioException {
         if (log.isDebugEnabled()) {
@@ -84,11 +99,8 @@ public abstract class AbstractAudioManager extends AbstractManager
                     + ((systemName == null) ? "null" : systemName) // NOI18N
                     + ";" + ((userName == null) ? "null" : userName)); // NOI18N
         }
-        if (systemName == null) {
-            log.error("SystemName cannot be null. UserName was "
-                    + ((userName == null) ? "null" : userName)); // NOI18N
-            return null;
-        }
+        checkSystemName(systemName, userName);
+
         // is system name in correct format?
         if ((!systemName.startsWith("" + getSystemPrefix() + typeLetter() + Audio.BUFFER))
                 && (!systemName.startsWith("" + getSystemPrefix() + typeLetter() + Audio.SOURCE))

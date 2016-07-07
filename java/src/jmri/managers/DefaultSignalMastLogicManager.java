@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Manager;
@@ -218,16 +219,16 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
      *
      */
     protected void registerSelf() {
-        if (InstanceManager.configureManagerInstance() != null) {
-            InstanceManager.configureManagerInstance().registerConfig(this, jmri.Manager.SIGNALMASTLOGICS);
+        if (InstanceManager.getOptionalDefault(ConfigureManager.class) != null) {
+            InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerConfig(this, jmri.Manager.SIGNALMASTLOGICS);
         }
     }
 
     // abstract methods to be extended by subclasses
     // to free resources when no longer used
     public void dispose() {
-        if (InstanceManager.configureManagerInstance() != null) {
-            InstanceManager.configureManagerInstance().deregister(this);
+        if (InstanceManager.getOptionalDefault(ConfigureManager.class) != null) {
+            InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).deregister(this);
         }
         signalMastLogic.clear();
     }

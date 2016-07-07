@@ -65,7 +65,7 @@ public class AudioTableAction extends AbstractTableAction {
         super(actionName);
 
         // disable ourself if there is no primary Audio manager available
-        if (jmri.InstanceManager.audioManagerInstance() == null) {
+        if (jmri.InstanceManager.getOptionalDefault(AudioManager.class) == null) {
             setEnabled(false);
         }
 
@@ -276,8 +276,6 @@ public class AudioTableAction extends AbstractTableAction {
         public AudioManager getManager() {
             return InstanceManager.audioManagerInstance();
         }
-        /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getMultipleChoiceOption(getClassName(),"delete"); }
-         public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMultipleChoiceOption(getClassName(), "delete", boo); }*/
 
         @Override
         protected String getMasterClassName() {

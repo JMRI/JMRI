@@ -63,7 +63,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
             return;     // never loaded
         }
         if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
-        CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
+        CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
         // unfiltered, xml-stored, item palate icon tree
         CatalogTree tree = manager.getBySystemName("NXPI");
         // discard old version
@@ -140,7 +140,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
     }
 
     static boolean loadSavedIcons(Editor ed) {
-        CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
+        CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
         CatalogTree tree = manager.getBySystemName("NXPI");
         if (tree != null) {
             CatalogTreeNode root = tree.getRoot();

@@ -454,11 +454,10 @@ public class SerialAddress {
             return (sysName);
         }
         altName = convertSystemNameToAlternate(sysName);
-        if (altName != null) {
-            lgt = jmri.InstanceManager.lightManagerInstance().getBySystemName(altName);
-            if (lgt != null) {
-                return (altName);
-            }
+
+        lgt = jmri.InstanceManager.lightManagerInstance().getBySystemName(altName);
+        if (lgt != null) {
+            return (altName);
         }
 
         // not assigned to a turnout or a light

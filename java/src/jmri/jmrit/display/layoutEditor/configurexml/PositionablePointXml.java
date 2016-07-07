@@ -46,10 +46,10 @@ public class PositionablePointXml extends AbstractXmlAdapter {
         if (p.getConnect2() != null) {
             element.setAttribute("connect2name", p.getConnect2().getID());
         }
-        if ((p.getEastBoundSignal() != null) && (p.getEastBoundSignal().length() > 0)) {
+        if (p.getEastBoundSignal().length() > 0) {
             element.setAttribute("eastboundsignal", p.getEastBoundSignal());
         }
-        if ((p.getWestBoundSignal() != null) && (p.getWestBoundSignal().length() > 0)) {
+        if (p.getWestBoundSignal().length() > 0) {
             element.setAttribute("westboundsignal", p.getWestBoundSignal());
         }
 

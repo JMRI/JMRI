@@ -248,7 +248,7 @@ public abstract class AbstractVariableLight extends AbstractLight
             return; // already done
         }
         // Create a Timebase listener for the Minute change events
-        internalClock = InstanceManager.timebaseInstance();
+        internalClock = InstanceManager.getDefault(jmri.Timebase.class);
         if (internalClock == null) {
             log.error("No Timebase Instance");
             return;

@@ -507,6 +507,66 @@ public class JsonUtil {
         }
     }
 
+    static public JsonNode getBlocks(Locale locale) throws JsonException {
+        ArrayNode root = mapper.createArrayNode();
+        for (String name : InstanceManager.blockManagerInstance().getSystemNameList()) {
+            root.add(getBlock(locale, name));
+        }
+        return root;
+    }
+
+    static public JsonNode getBlock(Locale locale, String name) throws JsonException {
+        ObjectNode root = mapper.createObjectNode();
+        root.put(TYPE, BLOCK);
+        ObjectNode data = root.putObject(DATA);
+        Block block = InstanceManager.blockManagerInstance().getBlock(name);
+        try {
+            data.put(NAME, block.getSystemName());
+            data.put(USERNAME, block.getUserName());
+            data.put(COMMENT, block.getComment());
+            if (block.getValue() == null) {
+                data.putNull(VALUE);
+            } else {
+                data.put(VALUE, block.getValue().toString());
+            }
+        } catch (NullPointerException e) {
+            log.error("Unable to get block [{}].", name);
+            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", BLOCK, name));
+        }
+        return root;
+    }
+
+    static public void putBlock(Locale locale, String name, JsonNode data) throws JsonException {
+        try {
+            InstanceManager.blockManagerInstance().provideBlock(name);
+        } catch (Exception ex) {
+            throw new JsonException(500, Bundle.getMessage(locale, "ErrorCreatingObject", BLOCK, name));
+        }
+        setBlock(locale, name, data);
+    }
+
+    static public void setBlock(Locale locale, String name, JsonNode data) throws JsonException {
+        try {
+            Block block = InstanceManager.blockManagerInstance().getBlock(name);
+            if (data.path(USERNAME).isTextual()) {
+                block.setUserName(data.path(USERNAME).asText());
+            }
+            if (data.path(COMMENT).isTextual()) {
+                block.setComment(data.path(COMMENT).asText());
+            }
+            if (!data.path(VALUE).isMissingNode()) {
+                if (data.path(VALUE).isNull()) {
+                    block.setValue(null);
+                } else {
+                    block.setValue(data.path(VALUE).asText());
+                }
+            }
+        } catch (NullPointerException ex) {
+            log.error("Unable to get block [{}].", name);
+            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", BLOCK, name));
+        }
+    }
+
     static public JsonNode getMetadata(Locale locale, String name) throws JsonException {
         String metadata = Metadata.getBySystemName(name);
         ObjectNode root;
@@ -1157,9 +1217,9 @@ public class JsonUtil {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, TIME);
         ObjectNode data = root.putObject(DATA);
-        data.put(TIME, new ISO8601DateFormat().format(InstanceManager.timebaseInstance().getTime()));
-        data.put(RATE, InstanceManager.timebaseInstance().getRate());
-        data.put(STATE, InstanceManager.timebaseInstance().getRun() ? ON : OFF);
+        data.put(TIME, new ISO8601DateFormat().format(InstanceManager.getDefault(jmri.Timebase.class).getTime()));
+        data.put(RATE, InstanceManager.getDefault(jmri.Timebase.class).getRate());
+        data.put(STATE, InstanceManager.getDefault(jmri.Timebase.class).getRun() ? ON : OFF);
         return root;
     }
 
@@ -1167,13 +1227,13 @@ public class JsonUtil {
     static public void setTime(Locale locale, JsonNode data) throws JsonException {
         try {
             if (data.path(TIME).isTextual()) {
-                InstanceManager.timebaseInstance().setTime(new ISO8601DateFormat().parse(data.path(TIME).asText()));
+                InstanceManager.getDefault(jmri.Timebase.class).setTime(new ISO8601DateFormat().parse(data.path(TIME).asText()));
             }
             if (data.path(RATE).isDouble()) {
                 InstanceManager.clockControlInstance().setRate(data.path(RATE).asDouble());
             }
             if (data.path(STATE).isInt()) {
-                InstanceManager.timebaseInstance().setRun(data.path(STATE).asInt() == ON);
+                InstanceManager.getDefault(jmri.Timebase.class).setRun(data.path(STATE).asInt() == ON);
             }
         } catch (ParseException ex) {
             log.error("Time \"{}\" not in ISO 8601 date format", data.path(TIME).asText());
