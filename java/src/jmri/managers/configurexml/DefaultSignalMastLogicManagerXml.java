@@ -254,7 +254,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                         }
 
                         if (s.getChild("associatedSection") != null) {
-                            Section sect = InstanceManager.sectionManagerInstance().getSection(s.getChild("associatedSection").getText());
+                            Section sect = InstanceManager.getDefault(jmri.SectionManager.class).getSection(s.getChild("associatedSection").getText());
                             logic.setAssociatedSection(sect, dest);
                         }
 

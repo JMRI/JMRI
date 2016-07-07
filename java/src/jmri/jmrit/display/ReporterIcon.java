@@ -67,8 +67,8 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
      * @param pName Used as a system/user name to lookup the Reporter object
      */
     public void setReporter(String pName) {
-        if (InstanceManager.reporterManagerInstance() != null) {
-            reporter = InstanceManager.reporterManagerInstance().
+        if (InstanceManager.getDefault(jmri.ReporterManager.class) != null) {
+            reporter = InstanceManager.getDefault(jmri.ReporterManager.class).
                     provideReporter(pName);
             if (reporter != null) {
                 setReporter(reporter);

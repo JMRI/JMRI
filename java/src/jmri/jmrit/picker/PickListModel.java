@@ -690,7 +690,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         }
 
         public Manager getManager() {
-            manager = InstanceManager.reporterManagerInstance();
+            manager = InstanceManager.getDefault(jmri.ReporterManager.class);
             return manager;
         }
 

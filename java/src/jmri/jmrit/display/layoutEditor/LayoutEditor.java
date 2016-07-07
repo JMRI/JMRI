@@ -2069,9 +2069,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // get reporter name
         Reporter reporter = null;
         String rName = reporterNameField.getText().trim();
-        if (InstanceManager.reporterManagerInstance() != null) {
+        if (InstanceManager.getDefault(jmri.ReporterManager.class) != null) {
             try {
-                reporter = InstanceManager.reporterManagerInstance().
+                reporter = InstanceManager.getDefault(jmri.ReporterManager.class).
                             provideReporter(rName);
             } catch (IllegalArgumentException e) {
                 JOptionPane.showMessageDialog(enterReporterFrame,

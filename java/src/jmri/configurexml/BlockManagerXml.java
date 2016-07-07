@@ -329,7 +329,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
             // Reporter
             String name = reporters.get(0).getAttribute("systemName").getValue();
             try {
-                Reporter reporter = InstanceManager.reporterManagerInstance().provideReporter(name);
+                Reporter reporter = InstanceManager.getDefault(jmri.ReporterManager.class).provideReporter(name);
                 block.setReporter(reporter);
                 block.setReportingCurrent(reporters.get(0).getAttribute("useCurrent").getValue().equals("yes"));
             } catch (IllegalArgumentException ex) {

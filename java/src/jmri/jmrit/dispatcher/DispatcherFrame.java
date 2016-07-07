@@ -82,7 +82,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         if (_LE != null) {
             autoAllocate = new AutoAllocate(this);
         }
-        InstanceManager.sectionManagerInstance().initializeBlockingSensors();
+        InstanceManager.getDefault(jmri.SectionManager.class).initializeBlockingSensors();
         getActiveTrainFrame();
 
         if (fastClock == null) {
@@ -558,9 +558,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         ActiveTrain at = activeTrainsList.get(atSelectedIndex);
         //Transit t = at.getTransit();
         ArrayList<AllocatedSection> allocatedSectionList = at.getAllocatedSectionList();
-        ArrayList<String> allSections = (ArrayList<String>) InstanceManager.sectionManagerInstance().getSystemNameList();
+        ArrayList<String> allSections = (ArrayList<String>) InstanceManager.getDefault(jmri.SectionManager.class).getSystemNameList();
         for (int j = 0; j < allSections.size(); j++) {
-            Section s = InstanceManager.sectionManagerInstance().getSection(allSections.get(j));
+            Section s = InstanceManager.getDefault(jmri.SectionManager.class).getSection(allSections.get(j));
             if (s.getState() == Section.FREE) {
                 // not already allocated, check connectivity to this train's allocated sections
                 boolean connected = false;

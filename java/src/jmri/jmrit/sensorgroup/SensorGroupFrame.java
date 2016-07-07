@@ -145,7 +145,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
 
         DefaultListModel<String> groupModel = new DefaultListModel<String>();
         // Look for Sensor group in Route table
-        RouteManager rm = InstanceManager.routeManagerInstance();
+        RouteManager rm = InstanceManager.getDefault(jmri.RouteManager.class);
         List<String> routeList = rm.getSystemNameList();
         int i = 0;
         while (i < routeList.size()) {
@@ -251,7 +251,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         }
         _nameField.setText(group);
         // Look for Sensor group in Route table
-        RouteManager rm = InstanceManager.routeManagerInstance();
+        RouteManager rm = InstanceManager.getDefault(jmri.RouteManager.class);
         List<String> l = rm.getSystemNameList();
         String prefix = (namePrefix + group + nameDivider).toUpperCase();
         boolean isRoute = false;
@@ -331,7 +331,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         String prefix = (namePrefix + group + nameDivider).toUpperCase();
 
         // remove the old routes
-        RouteManager rm = InstanceManager.routeManagerInstance();
+        RouteManager rm = InstanceManager.getDefault(jmri.RouteManager.class);
         List<String> l = rm.getSystemNameList();
 
         for (int i = 0; i < l.size(); i++) {

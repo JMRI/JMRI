@@ -452,7 +452,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     }
 
     public void generateSection() {
-        SectionManager sm = InstanceManager.sectionManagerInstance();
+        SectionManager sm = InstanceManager.getDefault(jmri.SectionManager.class);
         for (NamedBean nb : sm.getNamedBeanList()) {
             if (((Section) nb).getSectionType() == Section.SIGNALMASTLOGIC) {
                 nb.removeProperty("intermediateSection");

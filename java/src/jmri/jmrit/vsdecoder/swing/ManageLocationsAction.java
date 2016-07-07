@@ -58,7 +58,7 @@ public class ManageLocationsAction extends AbstractAction {
             listenerLoc = VSDecoderManager.instance().getVSDecoderPreferences().getListenerPosition();
 
             // Handle Reporters
-            ReporterManager rmgr = jmri.InstanceManager.reporterManagerInstance();
+            ReporterManager rmgr = jmri.InstanceManager.getDefault(jmri.ReporterManager.class);
             String[] reporterNameArray = rmgr.getSystemNameArray();
             Object[][] reporterTable = new Object[reporterNameArray.length][6];
             reporterMap = new HashMap<String, PhysicalLocation>();

@@ -288,7 +288,7 @@ public class TransitTableAction extends AbstractTableAction {
     private boolean editMode = false;
     private boolean duplicateMode = false;
     private TransitManager transitManager = null;
-    private SectionManager sectionManager = InstanceManager.sectionManagerInstance();
+    private SectionManager sectionManager = InstanceManager.getDefault(jmri.SectionManager.class);
     private Transit curTransit = null;
     private SectionTableModel sectionTableModel = null;
     private ArrayList<Section> sectionList = new ArrayList<>();

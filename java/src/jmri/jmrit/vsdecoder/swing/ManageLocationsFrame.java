@@ -337,7 +337,7 @@ public class ManageLocationsFrame extends JmriJFrame {
         }
 
         HashMap<String, PhysicalLocation> data = reporterModel.getDataMap();
-        ReporterManager mgr = jmri.InstanceManager.reporterManagerInstance();
+        ReporterManager mgr = jmri.InstanceManager.getDefault(jmri.ReporterManager.class);
         for (String s : data.keySet()) {
             log.debug("Reporter: " + s + " Location: " + data.get(s));
             Reporter r = mgr.getByDisplayName(s);

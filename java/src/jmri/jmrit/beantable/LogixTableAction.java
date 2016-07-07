@@ -4744,12 +4744,12 @@ public class LogixTableAction extends AbstractTableAction {
         Route r = null;
         if (name != null) {
             if (name.length() > 0) {
-                r = InstanceManager.routeManagerInstance().getByUserName(name);
+                r = InstanceManager.getDefault(jmri.RouteManager.class).getByUserName(name);
                 if (r != null) {
                     return name;
                 }
             }
-            r = InstanceManager.routeManagerInstance().getBySystemName(name);
+            r = InstanceManager.getDefault(jmri.RouteManager.class).getBySystemName(name);
         }
         if (r == null) {
             messageInvalidActionItemName(name, "Route"); //NOI18N

@@ -275,7 +275,7 @@ public class BlockTableAction extends AbstractTableAction {
                 } else if (col == REPORTERCOL) {
                     Reporter r = null;
                     if (value != null && !value.equals("") ) {
-                        r = jmri.InstanceManager.reporterManagerInstance().provideReporter((String) value);
+                        r = jmri.InstanceManager.getDefault(jmri.ReporterManager.class).provideReporter((String) value);
                     }
                     b.setReporter(r);
                     fireTableRowsUpdated(row, row);

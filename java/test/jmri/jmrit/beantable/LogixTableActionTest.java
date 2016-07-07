@@ -225,7 +225,7 @@ public class LogixTableActionTest extends jmri.util.SwingTestCase {
             InstanceManager.getDefault(jmri.SignalHeadManager.class).register(sh);
             Route r = new jmri.implementation.DefaultRoute("Route" + i);
             assertNotNull(i + "th Route is null!", r);
-            InstanceManager.routeManagerInstance().register(r);
+            InstanceManager.getDefault(jmri.RouteManager.class).register(r);
         }
     }
 

@@ -19,7 +19,7 @@ public class ControllerFilterAction extends AbstractAction {
 
     public ControllerFilterAction(String name) {
         super(name);
-        if ((jmri.InstanceManager.turnoutManagerInstance() == null) && (jmri.InstanceManager.routeManagerInstance() == null)) {
+        if ((jmri.InstanceManager.turnoutManagerInstance() == null) && (jmri.InstanceManager.getDefault(jmri.RouteManager.class) == null)) {
             setEnabled(false);
         }
     }

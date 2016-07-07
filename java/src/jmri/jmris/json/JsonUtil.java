@@ -645,7 +645,7 @@ public class JsonUtil {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, REPORTER);
         ObjectNode data = root.putObject(DATA);
-        Reporter reporter = InstanceManager.reporterManagerInstance().getReporter(name);
+        Reporter reporter = InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(name);
         data.put(NAME, reporter.getSystemName());
         data.put(USERNAME, reporter.getUserName());
         data.put(STATE, reporter.getState());
@@ -657,7 +657,7 @@ public class JsonUtil {
 
     static public JsonNode getReporters(Locale locale) {
         ArrayNode root = mapper.createArrayNode();
-        for (String name : InstanceManager.reporterManagerInstance().getSystemNameList()) {
+        for (String name : InstanceManager.getDefault(jmri.ReporterManager.class).getSystemNameList()) {
             root.add(getReporter(locale, name));
         }
         return root;
@@ -665,7 +665,7 @@ public class JsonUtil {
 
     static public void putReporter(Locale locale, String name, JsonNode data) throws JsonException {
         try {
-            InstanceManager.reporterManagerInstance().provideReporter(name);
+            InstanceManager.getDefault(jmri.ReporterManager.class).provideReporter(name);
         } catch (Exception ex) {
             throw new JsonException(500, Bundle.getMessage(locale, "ErrorCreatingObject", REPORTER, name));
         }
@@ -674,7 +674,7 @@ public class JsonUtil {
 
     static public void setReporter(Locale locale, String name, JsonNode data) throws JsonException {
         try {
-            Reporter reporter = InstanceManager.reporterManagerInstance().getBySystemName(name);
+            Reporter reporter = InstanceManager.getDefault(jmri.ReporterManager.class).getBySystemName(name);
             if (data.path(USERNAME).isTextual()) {
                 reporter.setUserName(data.path(USERNAME).asText());
             }
@@ -682,9 +682,9 @@ public class JsonUtil {
                 reporter.setComment(data.path(COMMENT).asText());
             }
             if (data.path(REPORT).isNull()) {
-                InstanceManager.reporterManagerInstance().getReporter(name).setReport(null);
+                InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(name).setReport(null);
             } else {
-                InstanceManager.reporterManagerInstance().getReporter(name).setReport(data.path(REPORT).asText());
+                InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(name).setReport(data.path(REPORT).asText());
             }
         } catch (NullPointerException ex) {
             throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", REPORTER, name));
@@ -820,7 +820,7 @@ public class JsonUtil {
         root.put(TYPE, ROUTE);
         ObjectNode data = root.putObject(DATA);
         try {
-            Route route = InstanceManager.routeManagerInstance().getRoute(name);
+            Route route = InstanceManager.getDefault(jmri.RouteManager.class).getRoute(name);
             SensorManager s = InstanceManager.sensorManagerInstance();
             data.put(NAME, route.getSystemName());
             data.put(USERNAME, route.getUserName());
@@ -854,7 +854,7 @@ public class JsonUtil {
 
     static public JsonNode getRoutes(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
-        for (String name : InstanceManager.routeManagerInstance().getSystemNameList()) {
+        for (String name : InstanceManager.getDefault(jmri.RouteManager.class).getSystemNameList()) {
             root.add(getRoute(locale, name));
         }
         return root;
@@ -872,7 +872,7 @@ public class JsonUtil {
     @Deprecated
     static public void setRoute(Locale locale, String name, JsonNode data) throws JsonException {
         try {
-            Route route = InstanceManager.routeManagerInstance().getRoute(name);
+            Route route = InstanceManager.getDefault(jmri.RouteManager.class).getRoute(name);
             if (data.path(USERNAME).isTextual()) {
                 route.setUserName(data.path(USERNAME).asText());
             }

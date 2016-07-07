@@ -491,10 +491,10 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                         if (sml != null && sml.getAssociatedSection((SignalMast) getSignal()) != null) {
                             sec = sml.getAssociatedSection((SignalMast) getSignal());
                         } else {
-                            sec = InstanceManager.sectionManagerInstance().createNewSection(src.getPoint().getDisplayName() + ":" + point.getDisplayName());
+                            sec = InstanceManager.getDefault(jmri.SectionManager.class).createNewSection(src.getPoint().getDisplayName() + ":" + point.getDisplayName());
                             if (sec == null) {
                                 //A Section already exists, lets grab it and check that it is one used with the Interlocking, if so carry on using that.
-                                sec = InstanceManager.sectionManagerInstance().getSection(src.getPoint().getDisplayName() + ":" + point.getDisplayName());
+                                sec = InstanceManager.getDefault(jmri.SectionManager.class).getSection(src.getPoint().getDisplayName() + ":" + point.getDisplayName());
                             } else {
                                 sec.setSectionType(jmri.Section.DYNAMICADHOC);
                             }
@@ -696,7 +696,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                         if (sml != null && sml.getAssociatedSection((SignalMast) getSignal()) != null) {
                             sec = sml.getAssociatedSection((SignalMast) getSignal());
                         } else {
-                            sec = InstanceManager.sectionManagerInstance().getSection(src.getPoint().getDisplayName() + ":" + point.getDisplayName());
+                            sec = InstanceManager.getDefault(jmri.SectionManager.class).getSection(src.getPoint().getDisplayName() + ":" + point.getDisplayName());
                         }
                     }
                     if (sec != null) {

@@ -336,7 +336,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
     }
 
     private void addTransitPopup(JPopupMenu popup) {
-        if ((InstanceManager.sectionManagerInstance().getSystemNameList().size()) > 0
+        if ((InstanceManager.getDefault(jmri.SectionManager.class).getSystemNameList().size()) > 0
                 && jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
 
             if (tct == null) {

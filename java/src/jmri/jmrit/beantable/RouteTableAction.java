@@ -73,7 +73,7 @@ public class RouteTableAction extends AbstractTableAction {
     public RouteTableAction(String s) {
         super(s);
         // disable ourself if there is no primary Route manager available
-        if (jmri.InstanceManager.routeManagerInstance() == null) {
+        if (jmri.InstanceManager.getDefault(jmri.RouteManager.class) == null) {
             setEnabled(false);
         }
     }
@@ -283,15 +283,15 @@ public class RouteTableAction extends AbstractTableAction {
             }
 
             public Manager getManager() {
-                return jmri.InstanceManager.routeManagerInstance();
+                return jmri.InstanceManager.getDefault(jmri.RouteManager.class);
             }
 
             public NamedBean getBySystemName(String name) {
-                return jmri.InstanceManager.routeManagerInstance().getBySystemName(name);
+                return jmri.InstanceManager.getDefault(jmri.RouteManager.class).getBySystemName(name);
             }
 
             public NamedBean getByUserName(String name) {
-                return jmri.InstanceManager.routeManagerInstance().getByUserName(name);
+                return jmri.InstanceManager.getDefault(jmri.RouteManager.class).getByUserName(name);
             }
 
             protected String getMasterClassName() {
@@ -928,7 +928,7 @@ public class RouteTableAction extends AbstractTableAction {
         Route g = null;
         // check if a Route with the same user name exists
         if (!uName.equals("")) {
-            g = jmri.InstanceManager.routeManagerInstance().getByUserName(uName);
+            g = jmri.InstanceManager.getDefault(jmri.RouteManager.class).getByUserName(uName);
             if (g != null) {
                 // Route with this user name already exists
                 status1.setText(Bundle.getMessage("LightError8"));
@@ -938,7 +938,7 @@ public class RouteTableAction extends AbstractTableAction {
             }
         }
         // check if a Route with this system name already exists
-        g = jmri.InstanceManager.routeManagerInstance().getBySystemName(sName);
+        g = jmri.InstanceManager.getDefault(jmri.RouteManager.class).getBySystemName(sName);
         if (g != null) {
             // Route already exists
             status1.setText(Bundle.getMessage("LightError1"));
@@ -954,14 +954,14 @@ public class RouteTableAction extends AbstractTableAction {
         Route g;
         if (_autoSystemName.isSelected() && !editMode) {
             // create new Route with auto system name
-            g = jmri.InstanceManager.routeManagerInstance().newRoute(uName);
+            g = jmri.InstanceManager.getDefault(jmri.RouteManager.class).newRoute(uName);
         } else {
             if (sName.length() == 0) {
                 status1.setText(Bundle.getMessage("RouteAddStatusEnter"));
                 return null;
             }
             try {
-                g = jmri.InstanceManager.routeManagerInstance().provideRoute(sName, uName);
+                g = jmri.InstanceManager.getDefault(jmri.RouteManager.class).provideRoute(sName, uName);
             } catch (IllegalArgumentException ex) {
                 g = null; // for later check
             }
@@ -1115,10 +1115,10 @@ public class RouteTableAction extends AbstractTableAction {
     void editPressed(ActionEvent e) {
         // identify the Route with this name if it already exists
         String sName = _systemName.getText();
-        Route g = jmri.InstanceManager.routeManagerInstance().getBySystemName(sName);
+        Route g = jmri.InstanceManager.getDefault(jmri.RouteManager.class).getBySystemName(sName);
         if (g == null) {
             sName = _userName.getText();
-            g = jmri.InstanceManager.routeManagerInstance().getByUserName(sName);
+            g = jmri.InstanceManager.getDefault(jmri.RouteManager.class).getByUserName(sName);
             if (g == null) {
                 // Route does not exist, so cannot be edited
                 status1.setText(Bundle.getMessage("RouteAddStatusErrorNotFound"));
@@ -1233,7 +1233,7 @@ public class RouteTableAction extends AbstractTableAction {
      */
     void deletePressed(ActionEvent e) {
         // route is already deactivated, just delete it
-        InstanceManager.routeManagerInstance().deleteRoute(curRoute);
+        InstanceManager.getDefault(jmri.RouteManager.class).deleteRoute(curRoute);
 
         curRoute = null;
         finishUpdate();
@@ -1556,7 +1556,7 @@ public class RouteTableAction extends AbstractTableAction {
         }
         logix.activateLogix();
         if (curRoute != null) {
-            jmri.InstanceManager.routeManagerInstance().deleteRoute(curRoute);
+            jmri.InstanceManager.getDefault(jmri.RouteManager.class).deleteRoute(curRoute);
             curRoute = null;
         }
         status1.setText(Bundle.getMessage("BeanNameRoute") + "\"" + uName + "\" " + Bundle.getMessage("RouteAddStatusExported") + " (" + _includedTurnoutList.size()

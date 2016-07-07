@@ -44,7 +44,7 @@ public class ReporterTableAction extends AbstractTableAction {
         }
     }
 
-    protected ReporterManager reportManager = InstanceManager.reporterManagerInstance();
+    protected ReporterManager reportManager = InstanceManager.getDefault(jmri.ReporterManager.class);
 
     public void setManager(ReporterManager man) {
         reportManager = man;

@@ -128,7 +128,7 @@ public class Maintenance {
                 names.add(name);
             }
         }
-        iter = InstanceManager.sectionManagerInstance().getSystemNameList().iterator();
+        iter = InstanceManager.getDefault(jmri.SectionManager.class).getSystemNameList().iterator();
         while (iter.hasNext()) {
             String name = iter.next();
             if (!search(name, null)) {
@@ -210,11 +210,11 @@ public class Maintenance {
                         }
                         InstanceManager.conditionalManagerInstance().deregister(c);
                     } else if (names[0].equals("Section")) {
-                        jmri.Section sec = InstanceManager.sectionManagerInstance().getBySystemName(names[2]);
+                        jmri.Section sec = InstanceManager.getDefault(jmri.SectionManager.class).getBySystemName(names[2]);
                         if (sec == null) {
-                            sec = InstanceManager.sectionManagerInstance().getBySystemName(names[1]);
+                            sec = InstanceManager.getDefault(jmri.SectionManager.class).getBySystemName(names[1]);
                         }
-                        InstanceManager.sectionManagerInstance().deregister(sec);
+                        InstanceManager.getDefault(jmri.SectionManager.class).deregister(sec);
                     } else if (names[0].equals("Block")) {
                         jmri.Block b = InstanceManager.blockManagerInstance().getBySystemName(names[2]);
                         if (b == null) {
@@ -487,7 +487,7 @@ public class Maintenance {
                 Integer.toString(b.getNumPropertyChangeListeners())});
         }
 
-        jmri.SectionManager sectionManager = InstanceManager.sectionManagerInstance();
+        jmri.SectionManager sectionManager = InstanceManager.getDefault(jmri.SectionManager.class);
         jmri.Section sec = sectionManager.getBySystemName(sysName);
         if (sec != null) {
             userName = sec.getUserName();
@@ -701,7 +701,7 @@ public class Maintenance {
         tempText = new StringBuffer();
         found = false;
         empty = true;
-        jmri.RouteManager routeManager = InstanceManager.routeManagerInstance();
+        jmri.RouteManager routeManager = InstanceManager.getDefault(jmri.RouteManager.class);
         iter1 = routeManager.getSystemNameList().iterator();
         while (iter1.hasNext()) {
             // get the next Logix
@@ -867,7 +867,7 @@ public class Maintenance {
         tempText = new StringBuffer();
         found = false;
         empty = true;
-        jmri.SectionManager sectionManager = InstanceManager.sectionManagerInstance();
+        jmri.SectionManager sectionManager = InstanceManager.getDefault(jmri.SectionManager.class);
         java.util.List<String> sysNameList = sectionManager.getSystemNameList();
 
         transitManager = InstanceManager.getDefault(jmri.TransitManager.class);
@@ -967,7 +967,7 @@ public class Maintenance {
         jmri.BlockManager blockManager = InstanceManager.blockManagerInstance();
         sysNameList = blockManager.getSystemNameList();
 
-        sectionManager = InstanceManager.sectionManagerInstance();
+        sectionManager = InstanceManager.getDefault(jmri.SectionManager.class);
         iter1 = sectionManager.getSystemNameList().iterator();
         while (iter1.hasNext()) {
             String sName = iter1.next();

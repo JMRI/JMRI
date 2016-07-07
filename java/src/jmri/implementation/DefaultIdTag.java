@@ -116,7 +116,7 @@ public class DefaultIdTag extends AbstractIdTag {
             }
             if (e.getChild("whereLastSeen") != null) { //NOI18N
                 try {
-                    Reporter r = InstanceManager.reporterManagerInstance()
+                    Reporter r = InstanceManager.getDefault(jmri.ReporterManager.class)
                                     .provideReporter(e.getChild("whereLastSeen").getText()); //NOI18N
                     this.setWhereLastSeen(r);
                     this.whenLastSeen = null;
