@@ -1,5 +1,6 @@
 package jmri.server.json;
 
+import static jmri.server.json.JSON.BLOCKS;
 import static jmri.server.json.JSON.CARS;
 import static jmri.server.json.JSON.CONSIST;
 import static jmri.server.json.JSON.CONSISTS;
@@ -12,6 +13,7 @@ import static jmri.server.json.JSON.LIGHTS;
 import static jmri.server.json.JSON.LIST;
 import static jmri.server.json.JSON.LOCALE;
 import static jmri.server.json.JSON.LOCATIONS;
+import static jmri.server.json.JSON.MEMORIES;
 import static jmri.server.json.JSON.METADATA;
 import static jmri.server.json.JSON.METHOD;
 import static jmri.server.json.JSON.NAME;
@@ -176,6 +178,9 @@ public class JsonClientHandler {
                 JsonNode reply;
                 String list = root.path(LIST).asText();
                 switch (list) {
+                    case BLOCKS:
+                        reply = JsonUtil.getBlocks(this.connection.getLocale());
+                        break;
                     case CARS:
                         reply = JsonUtil.getCars(this.connection.getLocale());
                         break;
@@ -193,6 +198,9 @@ public class JsonClientHandler {
                         break;
                     case METADATA:
                         reply = JsonUtil.getMetadata(this.connection.getLocale());
+                        break;
+                    case MEMORIES:
+                        reply = JsonUtil.getMemories(this.connection.getLocale());
                         break;
                     case PANELS:
                         reply = JsonUtil.getPanels(this.connection.getLocale(), (data.path(FORMAT).isMissingNode()) ? XML : data.path(FORMAT).asText());
@@ -222,6 +230,7 @@ public class JsonClientHandler {
                             }
                             return;
                         } else {
+                            log.warn("Requested list type '{}' unknown.", list);
                             this.sendErrorMessage(404, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownType", list));
                             return;
                         }
@@ -259,6 +268,7 @@ public class JsonClientHandler {
                                 service.onMessage(type, data, this.connection.getLocale());
                             }
                         } else {
+                            log.warn("Requested type '{}' unknown.", type);
                             this.sendErrorMessage(404, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownType", type));
                         }
                         break;
