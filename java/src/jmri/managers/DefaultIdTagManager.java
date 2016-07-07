@@ -68,7 +68,7 @@ public class DefaultIdTagManager extends AbstractManager
 
             // Create shutdown task to save
             log.debug("Register ShutDown task");
-            InstanceManager.shutDownManagerInstance().
+            InstanceManager.getDefault(jmri.ShutDownManager.class).
                     register(new jmri.implementation.AbstractShutDownTask("Writing IdTags") { // NOI18N
                         @Override
                         public boolean execute() {

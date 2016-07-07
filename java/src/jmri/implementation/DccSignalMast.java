@@ -75,7 +75,7 @@ public class DccSignalMast extends AbstractSignalMast {
             }
 
             if (c == null) {
-                c = InstanceManager.commandStationInstance();
+                c = InstanceManager.getOptionalDefault(CommandStation.class);
                 log.error("No match against the command station for " + parts[0] + ", so will use the default");
             }
         }

@@ -3,6 +3,7 @@ package jmri.configurexml;
 import java.util.List;
 import jmri.BeanSetting;
 import jmri.Block;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.Path;
@@ -35,7 +36,7 @@ public class BlockManagerXmlTest extends TestCase {
         JUnitUtil.initMemoryManager();
         JUnitUtil.initLayoutBlockManager();
         // load file
-        InstanceManager.configureManagerInstance()
+        InstanceManager.getDefault(ConfigureManager.class)
                 .load(new java.io.File("java/test/jmri/configurexml/load/BlockManagerXmlTest.xml"));
 
         // check existance of blocks
@@ -369,7 +370,7 @@ public class BlockManagerXmlTest extends TestCase {
         JUnitUtil.initMemoryManager();
         JUnitUtil.initLayoutBlockManager();
         // load file
-        InstanceManager.configureManagerInstance()
+        InstanceManager.getDefault(ConfigureManager.class)
                 .load(new java.io.File("java/test/jmri/configurexml/loadref/BlockAndSignalMastTest.xml"));
         // in loadref because comparison not working right
 

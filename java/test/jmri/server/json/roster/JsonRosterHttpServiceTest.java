@@ -49,7 +49,7 @@ public class JsonRosterHttpServiceTest extends TestCase {
         JUnitUtil.resetInstanceManager();
         super.tearDown();
         Log4JFixture.tearDown();
-        InstanceManager.deregister(InstanceManager.getDefault(Roster.class), Roster.class);
+        InstanceManager.deregister(InstanceManager.getOptionalDefault(Roster.class), Roster.class);
     }
 
     /**

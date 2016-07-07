@@ -212,7 +212,7 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
                 log.info("Unable to read preferences for Default Selector.");
             }
             this.configure();
-            InstanceManager.configureManagerInstance().registerPref(this); // allow ProfileConfig.xml to be written correctly
+            InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerPref(this); // allow ProfileConfig.xml to be written correctly
             this.setInitialized(profile, true);
         }
     }

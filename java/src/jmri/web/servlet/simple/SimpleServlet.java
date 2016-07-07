@@ -102,7 +102,7 @@ public class SimpleServlet extends WebSocketServlet {
                 log.warn(e.getMessage(), e);
                 this.connection.getSession().close();
             }
-            InstanceManager.shutDownManagerInstance().register(this.shutDownTask);
+            InstanceManager.getDefault(jmri.ShutDownManager.class).register(this.shutDownTask);
         }
 
         @OnWebSocketError
@@ -140,12 +140,12 @@ public class SimpleServlet extends WebSocketServlet {
                 } catch (IOException ie) {
                     log.warn(ie.getMessage(), ie);
                     this.connection.getSession().close();
-                    InstanceManager.shutDownManagerInstance().deregister(this.shutDownTask);
+                    InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(this.shutDownTask);
                 }
             } catch (IOException ie) {
                 log.warn(ie.getMessage(), ie);
                 this.connection.getSession().close();
-                InstanceManager.shutDownManagerInstance().deregister(this.shutDownTask);
+                InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(this.shutDownTask);
             }
         }
     }

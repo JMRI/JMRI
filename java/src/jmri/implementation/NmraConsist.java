@@ -47,7 +47,7 @@ public class NmraConsist extends DccConsist implements Consist {
                 LocoAddress.isLongAddress(),
                 ConsistAddress.getNumber(),
                 directionNormal);
-        InstanceManager.commandStationInstance().sendPacket(contents, 4);
+        InstanceManager.getDefault(jmri.CommandStation.class).sendPacket(contents, 4);
         notifyConsistListeners(LocoAddress, ConsistListener.OPERATION_SUCCESS);
 
     }
@@ -68,7 +68,7 @@ public class NmraConsist extends DccConsist implements Consist {
                 LocoAddress.isLongAddress(),
                 0, //set to 0 to remove
                 true);//always normal direction
-        InstanceManager.commandStationInstance().sendPacket(contents, 4);
+        InstanceManager.getDefault(jmri.CommandStation.class).sendPacket(contents, 4);
         notifyConsistListeners(LocoAddress, ConsistListener.OPERATION_SUCCESS);
     }
     private final static Logger log = LoggerFactory.getLogger(NmraConsist.class.getName());

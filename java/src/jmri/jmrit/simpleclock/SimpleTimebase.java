@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * startAtTime member is the wall-clock time when the clock was started.
  * Together, those can be used to calculate the current fast time.
  * <P>
- * The pauseTime member is used to indicate that the timebase was paused. If
+ * The pauseTime member is used to indicate that the Timebase was paused. If
  * non-null, it indicates the current fast time when the clock was paused.
  *
  * @author	Bob Jacobsen Copyright (C) 2004, 2007 Dave Duchamp - 2007
@@ -490,7 +490,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     }
 
     /**
-     * Timebase variables and options
+     * InstanceManager.getDefault(jmri.Timebase.class) variables and options
      */
     private double mFactor = 1.0;  // this is the rate factor for the JMRI fast clock
     private double hardwareFactor = 1.0;  // this is the rate factor for the hardware clock
@@ -619,5 +619,3 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     private final static Logger log = LoggerFactory.getLogger(SimpleTimebase.class.getName());
 
 }
-
-/* @(#)Timebase.java */

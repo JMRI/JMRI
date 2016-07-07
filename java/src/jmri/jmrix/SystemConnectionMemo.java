@@ -302,7 +302,7 @@ abstract public class SystemConnectionMemo {
     abstract protected ResourceBundle getActionModelResourceBundle();
 
     protected void addToActionList() {
-        StartupActionModelUtil util = jmri.InstanceManager.getDefault(StartupActionModelUtil.class);
+        StartupActionModelUtil util = jmri.InstanceManager.getOptionalDefault(StartupActionModelUtil.class);
         ResourceBundle rb = getActionModelResourceBundle();
         if (rb == null || util == null) {
             return;
@@ -319,7 +319,7 @@ abstract public class SystemConnectionMemo {
     }
 
     protected void removeFromActionList() {
-        StartupActionModelUtil util = jmri.InstanceManager.getDefault(StartupActionModelUtil.class);
+        StartupActionModelUtil util = jmri.InstanceManager.getOptionalDefault(StartupActionModelUtil.class);
         ResourceBundle rb = getActionModelResourceBundle();
         if (rb == null || util == null) {
             return;

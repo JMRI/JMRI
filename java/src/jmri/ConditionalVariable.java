@@ -648,7 +648,7 @@ public class ConditionalVariable {
                 }
                 break;
             case Conditional.ITEM_TYPE_CLOCK:
-                Timebase fastClock = InstanceManager.timebaseInstance();
+                Timebase fastClock = InstanceManager.getDefault(jmri.Timebase.class);
                 Date currentTime = fastClock.getTime();
                 int currentMinutes = (currentTime.getHours() * 60) + currentTime.getMinutes();
                 int beginTime = fixMidnight(_num1);

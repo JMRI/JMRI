@@ -165,7 +165,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         newTrainActive = boo;
     }
     private AutoTrainsFrame _autoTrainsFrame = null;
-    private Timebase fastClock = InstanceManager.timebaseInstance();
+    private Timebase fastClock = InstanceManager.getDefault(jmri.Timebase.class);
     private Sensor fastClockSensor = InstanceManager.sensorManagerInstance().provideSensor("ISCLOCKRUNNING");
     private transient java.beans.PropertyChangeListener minuteChangeListener = null;
 

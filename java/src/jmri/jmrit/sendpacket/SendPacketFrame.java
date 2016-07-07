@@ -1,4 +1,3 @@
-// SendPacketFrame.java
 package jmri.jmrit.sendpacket;
 
 import java.awt.GridLayout;
@@ -24,14 +23,9 @@ import org.slf4j.LoggerFactory;
  * packet to be echo'd, while this starts the timeout immediately.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision$
  */
 public class SendPacketFrame extends jmri.util.JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1094279262803359342L;
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
@@ -111,7 +105,7 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
         });
 
         // get the CommandStation reference
-        cs = InstanceManager.commandStationInstance();
+        cs = InstanceManager.getOptionalDefault(CommandStation.class);
         if (cs == null) {
             log.error("No CommandStation object available");
         }

@@ -41,10 +41,10 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
         this.tc = tc;
         this.prefix = prefix;
 
-        // Create a Timebase listener for the Minute change events
-        internalClock = InstanceManager.timebaseInstance();
+        // Create a InstanceManager.getDefault(jmri.Timebase.class) listener for the Minute change events
+        internalClock = InstanceManager.getDefault(jmri.Timebase.class);
         if (internalClock == null) {
-            log.error(MrcClockBundle.getMessage("LogMrcNoInternalTimebaseInstanceError")); //IN18N
+            log.error(MrcClockBundle.getMessage("LogMrcNoInternalInstanceManager.getDefault(jmri.Timebase.class)InstanceError")); //IN18N
             return;
         }
         minuteChangeListener = new java.beans.PropertyChangeListener() {
@@ -272,7 +272,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
      */
     public void dispose() {
 
-        // Remove ourselves from the Timebase minute rollover event
+        // Remove ourselves from the InstanceManager.getDefault(jmri.Timebase.class) minute rollover event
         if (minuteChangeListener != null) {
             internalClock.removeMinuteChangeListener(minuteChangeListener);
             minuteChangeListener = null;

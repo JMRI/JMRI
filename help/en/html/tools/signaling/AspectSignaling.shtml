@@ -243,7 +243,7 @@ Alternatively, if you know the name of the Signal System in use,
 a program can access it directly via the InstanceManager:
 <pre style="font-family: monospace;">
 
-   SignalSystem sys = InstanceManager.signalSystemManagerInstance().getSystem("basic");
+   SignalSystem sys = InstanceManager.getDefault(SignalSystemManager.class).getSystem("basic");
 </code></pre>
 
 	<p>Back to the <a href="index.shtml">Signaling main help page</a>.

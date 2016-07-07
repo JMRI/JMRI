@@ -491,10 +491,10 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         }
         this.setSize(400, 300);
 
-        // Create a Timebase listener for the Minute change events
-        internalClock = InstanceManager.timebaseInstance();
+        // Create a InstanceManager.getDefault(jmri.Timebase.class) listener for the Minute change events
+        internalClock = InstanceManager.getDefault(jmri.Timebase.class);
         if (internalClock == null) {
-            log.error("No Timebase Instance; clock will not run");
+            log.error("No InstanceManager.getDefault(jmri.Timebase.class) Instance; clock will not run");
             return;
         }
         minuteChangeListener = new java.beans.PropertyChangeListener() {
@@ -1772,8 +1772,8 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
             timerDisplayUpdate.stop();
             timerDisplayUpdate = null;
         }
-        // Remove ourselves from the Timebase minute rollover event
-        InstanceManager.timebaseInstance().removeMinuteChangeListener(minuteChangeListener);
+        // Remove ourselves from the InstanceManager.getDefault(jmri.Timebase.class) minute rollover event
+        InstanceManager.getDefault(jmri.Timebase.class).removeMinuteChangeListener(minuteChangeListener);
         minuteChangeListener = null;
 
         // take apart the JFrame

@@ -46,7 +46,7 @@ public class DeferringProgrammerManager implements ProgrammerManager {
     }
 
     public Programmer getGlobalProgrammer() {
-        GlobalProgrammerManager gp = InstanceManager.getDefault(GlobalProgrammerManager.class);
+        GlobalProgrammerManager gp = InstanceManager.getOptionalDefault(GlobalProgrammerManager.class);
         if (gp == null) {
             log.debug("no defaultGlobal ProgrammerManager, getGlobalProgrammer returns null" );
             return null;
@@ -116,7 +116,7 @@ public class DeferringProgrammerManager implements ProgrammerManager {
      * @return false if there's no chance of getting one
      */
     public boolean isAddressedModePossible() {
-        AddressedProgrammerManager ap = InstanceManager.getDefault(AddressedProgrammerManager.class);
+        AddressedProgrammerManager ap = InstanceManager.getOptionalDefault(AddressedProgrammerManager.class);
         if (ap == null) {
             return false;
         }

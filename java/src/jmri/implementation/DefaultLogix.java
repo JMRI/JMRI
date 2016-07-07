@@ -643,7 +643,7 @@ public class DefaultLogix extends AbstractNamedBean
 
         switch (listener.getType()) {
             case LISTENER_TYPE_FASTCLOCK:
-                Timebase tb = InstanceManager.timebaseInstance();
+                Timebase tb = InstanceManager.getDefault(jmri.Timebase.class);
                 tb.addMinuteChangeListener(listener);
                 return;
             default:
@@ -703,7 +703,7 @@ public class DefaultLogix extends AbstractNamedBean
         try {
             switch (listener.getType()) {
                 case LISTENER_TYPE_FASTCLOCK:
-                    Timebase tb = InstanceManager.timebaseInstance();
+                    Timebase tb = InstanceManager.getDefault(jmri.Timebase.class);
                     tb.removeMinuteChangeListener(listener);
                     return;
                 case LISTENER_TYPE_ENTRYEXIT:

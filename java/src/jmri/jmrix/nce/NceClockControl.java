@@ -1,4 +1,3 @@
-// NceClockControl.java
 package jmri.jmrix.nce;
 
 import java.text.DecimalFormat;
@@ -37,7 +36,6 @@ import org.slf4j.LoggerFactory;
  * @author Ken Cameron Copyright (C) 2007
  * @author Dave Duchamp Copyright (C) 2007
  * @author	Bob Jacobsen, Alex Shepherd
- * @version $Revision$
  */
 public class NceClockControl extends DefaultClockControl implements NceListener {
 
@@ -51,10 +49,10 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         this.tc = tc;
         this.prefix = prefix;
 
-        // Create a Timebase listener for the Minute change events
-        internalClock = InstanceManager.timebaseInstance();
+        // Create a InstanceManager.getDefault(jmri.Timebase.class) listener for the Minute change events
+        internalClock = InstanceManager.getDefault(jmri.Timebase.class);
         if (internalClock == null) {
-            log.error("No Timebase Instance");
+            log.error("No InstanceManager.getDefault(jmri.Timebase.class) Instance");
             return;
         }
         minuteChangeListener = new java.beans.PropertyChangeListener() {
@@ -393,7 +391,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
      */
     public void dispose() {
 
-        // Remove ourselves from the Timebase minute rollover event
+        // Remove ourselves from the InstanceManager.getDefault(jmri.Timebase.class) minute rollover event
         if (minuteChangeListener != null) {
             internalClock.removeMinuteChangeListener(minuteChangeListener);
             minuteChangeListener = null;

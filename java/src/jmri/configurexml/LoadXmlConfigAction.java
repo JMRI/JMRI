@@ -43,7 +43,7 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
         java.io.File file = getFile(fileChooser);
         if (file != null) {
             try {
-                results = InstanceManager.configureManagerInstance().load(file);
+                results = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).load(file);
                 if (results) {
                     // insure logix etc fire up
                     InstanceManager.logixManagerInstance().activateAllLogixs();

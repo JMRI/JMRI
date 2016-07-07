@@ -3,6 +3,7 @@ package jmri.configurexml;
 import java.util.ArrayList;
 import java.util.List;
 import jmri.Block;
+import jmri.ConfigureManager;
 import jmri.EntryPoint;
 import jmri.InstanceManager;
 import jmri.Memory;
@@ -35,7 +36,7 @@ public class SectionManagerXmlTest extends TestCase {
         JUnitUtil.initMemoryManager();
         JUnitUtil.initLayoutBlockManager();
         JUnitUtil.initSectionManager();
-        InstanceManager.configureManagerInstance()
+        InstanceManager.getDefault(ConfigureManager.class)
                 .load(new java.io.File("java/test/jmri/configurexml/load/SectionManagerXmlTest.xml"));
 
         // Note: This test assumes that BlockManagerXMLTest passes and more importantly (weakly)
