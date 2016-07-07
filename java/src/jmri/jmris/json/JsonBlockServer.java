@@ -4,7 +4,6 @@ import static jmri.jmris.json.JSON.BLOCK;
 import static jmri.jmris.json.JSON.METHOD;
 import static jmri.jmris.json.JSON.NAME;
 import static jmri.jmris.json.JSON.PUT;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
