@@ -118,7 +118,7 @@ public class SimpleServlet extends WebSocketServlet {
             try {
                 if (string.startsWith("POWER")) {
                     this.powerServer.parseStatus(string);
-                    this.powerServer.sendStatus(InstanceManager.powerManagerInstance().getPower());
+                    this.powerServer.sendStatus(InstanceManager.getDefault(jmri.PowerManager.class).getPower());
                 } else if (string.startsWith("TURNOUT")) {
                     this.turnoutServer.parseStatus(string);
                 } else if (string.startsWith("LIGHT")) {

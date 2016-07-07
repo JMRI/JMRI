@@ -34,7 +34,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
     static public final int HELDCOL = LITCOL + 1;
 
     public String getValue(String name) {
-        return InstanceManager.signalMastManagerInstance().getBySystemName(name).getAspect();
+        return InstanceManager.getDefault(jmri.SignalMastManager.class).getBySystemName(name).getAspect();
     }
 
     public int getColumnCount() {
@@ -94,7 +94,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
             return true;
         } else if (col == EDITMASTCOL) {
             String name = sysNameList.get(row);
-            SignalMast s = InstanceManager.signalMastManagerInstance().getBySystemName(name);
+            SignalMast s = InstanceManager.getDefault(jmri.SignalMastManager.class).getBySystemName(name);
             if (s instanceof jmri.implementation.TurnoutSignalMast) {
                 return true;
             } else {
@@ -108,15 +108,15 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
     }
 
     protected Manager getManager() {
-        return InstanceManager.signalMastManagerInstance();
+        return InstanceManager.getDefault(jmri.SignalMastManager.class);
     }
 
     protected NamedBean getBySystemName(String name) {
-        return InstanceManager.signalMastManagerInstance().getBySystemName(name);
+        return InstanceManager.getDefault(jmri.SignalMastManager.class).getBySystemName(name);
     }
 
     protected NamedBean getByUserName(String name) {
-        return InstanceManager.signalMastManagerInstance().getByUserName(name);
+        return InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName(name);
     }
 
     protected String getMasterClassName() {
@@ -134,7 +134,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
             return "error";
         }
         String name = sysNameList.get(row);
-        SignalMast s = InstanceManager.signalMastManagerInstance().getBySystemName(name);
+        SignalMast s = InstanceManager.getDefault(jmri.SignalMastManager.class).getBySystemName(name);
         if (s == null) {
             return Boolean.valueOf(false); // if due to race condition, the device is going away
         }
@@ -158,7 +158,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
 
     public void setValueAt(Object value, int row, int col) {
         String name = sysNameList.get(row);
-        SignalMast s = InstanceManager.signalMastManagerInstance().getBySystemName(name);
+        SignalMast s = InstanceManager.getDefault(jmri.SignalMastManager.class).getBySystemName(name);
         if (s == null) {
             return;  // device is going away anyway
         }
@@ -304,7 +304,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
             Vector<String> retval = boxMap.get(sorter.getValueAt(row, SYSNAMECOL));
             if (retval == null) {
                 // create a new one with right aspects
-                Vector<String> v = InstanceManager.signalMastManagerInstance()
+                Vector<String> v = InstanceManager.getDefault(jmri.SignalMastManager.class)
                         .getSignalMast((String) sorter.getValueAt(row, SYSNAMECOL)).getValidAspects();
                 retval = v;
                 boxMap.put(sorter.getValueAt(row, SYSNAMECOL), retval);

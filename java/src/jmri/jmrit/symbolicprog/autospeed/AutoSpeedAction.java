@@ -39,8 +39,8 @@ public class AutoSpeedAction extends AbstractAction {
         statusLabel = new JLabel("idle");
 
         // disable ourself if ops programming is not possible
-        if (jmri.InstanceManager.programmerManagerInstance() == null
-                || !jmri.InstanceManager.programmerManagerInstance().isAddressedModePossible()) {
+        if (jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class) == null
+                || !jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).isAddressedModePossible()) {
             setEnabled(false);
         }
 
@@ -74,7 +74,7 @@ public class AutoSpeedAction extends AbstractAction {
                 if (address < 100) {
                     longAddr = false;
                 }
-                Programmer programmer = InstanceManager.programmerManagerInstance()
+                Programmer programmer = InstanceManager.getDefault(jmri.ProgrammerManager.class)
                         .getAddressedProgrammer(longAddr, address);
                 // and created the frame
                 JFrame p = new PaneOpsProgFrame(decoderFile, re,

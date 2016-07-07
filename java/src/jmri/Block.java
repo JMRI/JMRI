@@ -348,7 +348,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
      * block is barred, so traffic flow is bi-directional.
      */
     public void addBlockDenyList(String pName) {
-        Block blk = jmri.InstanceManager.blockManagerInstance().getBlock(pName);
+        Block blk = jmri.InstanceManager.getDefault(jmri.BlockManager.class).getBlock(pName);
         NamedBeanHandle<Block> namedBlock = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, blk);
         if (!blockDenyList.contains(namedBlock)) {
             blockDenyList.add(namedBlock);
@@ -427,7 +427,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
         }
         String speed = _blockSpeed;
         if (_blockSpeed.equals("Global")) {
-            speed = InstanceManager.blockManagerInstance().getDefaultSpeed();
+            speed = InstanceManager.getDefault(jmri.BlockManager.class).getDefaultSpeed();
         }
 
         try {
@@ -446,7 +446,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
 
     public String getBlockSpeed() {
         if (_blockSpeed.equals("Global")) {
-            return ("Use Global " + InstanceManager.blockManagerInstance().getDefaultSpeed());
+            return ("Use Global " + InstanceManager.getDefault(jmri.BlockManager.class).getDefaultSpeed());
         }
         return _blockSpeed;
     }

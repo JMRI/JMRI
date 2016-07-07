@@ -56,7 +56,7 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
             tabbedPane.addTab(rb.getString("LabelTurnout"), null, addTurnoutPanel(), rb.getString("ToolTipTurnoutTab"));
         }
 
-        if (InstanceManager.routeManagerInstance() != null) {
+        if (InstanceManager.getDefault(jmri.RouteManager.class) != null) {
 
             tabbedPane.addTab(rb.getString("LabelRoute"), null, addRoutePanel(), rb.getString("ToolTipRouteTab"));
         }
@@ -233,7 +233,7 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
 
         public void dispose() {
             InstanceManager.turnoutManagerInstance().removePropertyChangeListener(this);
-            InstanceManager.routeManagerInstance().removePropertyChangeListener(this);
+            InstanceManager.getDefault(jmri.RouteManager.class).removePropertyChangeListener(this);
         }
 
         public String getColumnName(int c) {
@@ -337,7 +337,7 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
          *
          */
         private static final long serialVersionUID = -6672681464508618475L;
-        RouteManager mgr = InstanceManager.routeManagerInstance();
+        RouteManager mgr = InstanceManager.getDefault(jmri.RouteManager.class);
 
         RouteFilterModel() {
 

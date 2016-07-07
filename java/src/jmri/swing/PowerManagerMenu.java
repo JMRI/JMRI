@@ -59,7 +59,7 @@ abstract public class PowerManagerMenu extends JMenu {
 
     void setDefault() {
         // name of default
-        PowerManager manager = InstanceManager.powerManagerInstance();
+        PowerManager manager = InstanceManager.getDefault(jmri.PowerManager.class);
         if (manager == null) {
             return;
         }
@@ -73,7 +73,7 @@ abstract public class PowerManagerMenu extends JMenu {
 
     public PowerManager getManager() {
         // start with default
-        PowerManager manager = InstanceManager.powerManagerInstance();
+        PowerManager manager = InstanceManager.getDefault(jmri.PowerManager.class);
         if (manager == null) {
             return null;
         }

@@ -109,7 +109,7 @@ public class SimpleClockFrame extends JmriJFrame
         timeSourceBox = new JComboBox<String>();
         panel11.add(timeSourceBox);
         timeSourceBox.addItem(Bundle.getMessage("ComputerClock"));
-        hardwareName = InstanceManager.clockControlInstance().getHardwareClockName();
+        hardwareName = InstanceManager.getDefault(jmri.ClockControl.class).getHardwareClockName();
         if (hardwareName != null) {
             timeSourceBox.addItem(hardwareName);
         }
@@ -138,7 +138,7 @@ public class SimpleClockFrame extends JmriJFrame
             });
             panel11x.add(synchronizeCheckBox);
             contentPane.add(panel11x);
-            if (InstanceManager.clockControlInstance().canCorrectHardwareClock()) {
+            if (InstanceManager.getDefault(jmri.ClockControl.class).canCorrectHardwareClock()) {
                 JPanel panel11y = new JPanel();
                 correctCheckBox = new JCheckBox(Bundle.getMessage("Correct"));
                 correctCheckBox.setToolTipText(Bundle.getMessage("TipCorrect"));
@@ -151,7 +151,7 @@ public class SimpleClockFrame extends JmriJFrame
                 panel11y.add(correctCheckBox);
                 contentPane.add(panel11y);
             }
-            if (InstanceManager.clockControlInstance().canSet12Or24HourClock()) {
+            if (InstanceManager.getDefault(jmri.ClockControl.class).canSet12Or24HourClock()) {
                 JPanel panel11z = new JPanel();
                 displayCheckBox = new JCheckBox(Bundle.getMessage("Display12Hour"));
                 displayCheckBox.setToolTipText(Bundle.getMessage("TipDisplay"));
@@ -373,7 +373,7 @@ public class SimpleClockFrame extends JmriJFrame
             factorField.setText(threeDigits.format(clock.userGetRate()));
             return;
         }
-        if (InstanceManager.clockControlInstance().requiresIntegerRate()) {
+        if (InstanceManager.getDefault(jmri.ClockControl.class).requiresIntegerRate()) {
             double frac = rate - (int) rate;
             if (frac > 0.001) {
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("NonIntegerError"),

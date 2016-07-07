@@ -680,14 +680,14 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
 
     void okPressed() {
         // check signal head exists
-        if (sh == null && InstanceManager.signalHeadManagerInstance().getSignalHead(outSignalField.getText()) == null) {
+        if (sh == null && InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(outSignalField.getText()) == null) {
             setTitle(rbt.getString("Simple_Signal_Logic"));
             JOptionPane.showMessageDialog(this, rbt.getString("Signal_head_") + outSignalField.getText() + rbt.getString("_is_not_defined_yet"));
             return;
         }
         SignalHead head = sh;
         if (sh == null) {
-            head = InstanceManager.signalHeadManagerInstance().getSignalHead(outSignalField.getText());
+            head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(outSignalField.getText());
         }
 
         // it does
@@ -805,7 +805,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
     void activate() {
 
         // check signal head exists
-        if (sh == null && InstanceManager.signalHeadManagerInstance().getSignalHead(outSignalField.getText()) == null) {
+        if (sh == null && InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(outSignalField.getText()) == null) {
             // head not exist, just title the window and leave
             setTitle(rbt.getString("Simple_Signal_Logic"));
             return;

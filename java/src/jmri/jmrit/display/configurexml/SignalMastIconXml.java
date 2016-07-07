@@ -101,7 +101,7 @@ public class SignalMastIconXml extends PositionableLabelXml {
             }
         }
 
-        SignalMast sh = jmri.InstanceManager.signalMastManagerInstance().getSignalMast(name);
+        SignalMast sh = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(name);
 
         if (sh != null) {
             l.setSignalMast(name);

@@ -116,7 +116,7 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
      * @param shared Element containing the SignalHead elements to load.
      */
     public void loadSignalHeads(Element shared, Element perNode) {
-        InstanceManager.signalHeadManagerInstance();
+        InstanceManager.getDefault(jmri.SignalHeadManager.class);
 
         // load the contents
         List<Element> items = shared.getChildren();
@@ -145,14 +145,14 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
      * absolute type.
      */
     protected void replaceSignalHeadManager() {
-        if (InstanceManager.signalHeadManagerInstance().getClass().getName()
+        if (InstanceManager.getDefault(jmri.SignalHeadManager.class).getClass().getName()
                 .equals(AbstractSignalHeadManager.class.getName())) {
             return;
         }
         // if old manager exists, remove it from configuration process
-        if (InstanceManager.signalHeadManagerInstance() != null) {
+        if (InstanceManager.getDefault(jmri.SignalHeadManager.class) != null) {
             InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).deregister(
-                    InstanceManager.signalHeadManagerInstance());
+                    InstanceManager.getDefault(jmri.SignalHeadManager.class));
         }
 
         // register new one with InstanceManager
@@ -163,7 +163,7 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
     }
 
     public int loadOrder() {
-        return InstanceManager.signalHeadManagerInstance().getXMLOrder();
+        return InstanceManager.getDefault(jmri.SignalHeadManager.class).getXMLOrder();
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractSignalHeadManagerXml.class.getName());

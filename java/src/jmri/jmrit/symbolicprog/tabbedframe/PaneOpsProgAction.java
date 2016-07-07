@@ -47,8 +47,8 @@ public class PaneOpsProgAction extends AbstractAction {
         statusLabel = new JLabel(SymbolicProgBundle.getMessage("StateIdle"));
 
         // disable ourself if ops programming is not possible
-        if (jmri.InstanceManager.programmerManagerInstance() == null
-                || !jmri.InstanceManager.programmerManagerInstance().isAddressedModePossible()) {
+        if (jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class) == null
+                || !jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).isAddressedModePossible()) {
             setEnabled(false);
             // This needs to return so the xmlThread is not started;
             return;
@@ -83,7 +83,7 @@ public class PaneOpsProgAction extends AbstractAction {
                 // find the ops-mode programmer
                 int address = Integer.parseInt(re.getDccAddress());
                 boolean longAddr = re.isLongAddress();
-                Programmer programmer = InstanceManager.programmerManagerInstance()
+                Programmer programmer = InstanceManager.getDefault(jmri.ProgrammerManager.class)
                         .getAddressedProgrammer(longAddr, address);
                 // and created the frame
                 JFrame p = new PaneOpsProgFrame(decoderFile, re,

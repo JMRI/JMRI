@@ -2255,7 +2255,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
      * @return list of layout block user names
      */
     public List<LayoutBlock> getLayoutBlocksOccupiedByRosterEntry(RosterEntry re) {
-        BlockManager bm = jmri.InstanceManager.blockManagerInstance();
+        BlockManager bm = jmri.InstanceManager.getDefault(jmri.BlockManager.class);
         List<Block> blockList = bm.getBlocksOccupiedByRosterEntry(re);
         List<LayoutBlock> layoutBlockList = new ArrayList<>();
         

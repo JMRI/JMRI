@@ -73,7 +73,7 @@ public class RouteTableAction extends AbstractTableAction {
     public RouteTableAction(String s) {
         super(s);
         // disable ourself if there is no primary Route manager available
-        if (jmri.InstanceManager.routeManagerInstance() == null) {
+        if (jmri.InstanceManager.getDefault(jmri.RouteManager.class) == null) {
             setEnabled(false);
         }
     }
@@ -283,15 +283,15 @@ public class RouteTableAction extends AbstractTableAction {
             }
 
             public Manager getManager() {
-                return jmri.InstanceManager.routeManagerInstance();
+                return jmri.InstanceManager.getDefault(jmri.RouteManager.class);
             }
 
             public NamedBean getBySystemName(String name) {
-                return jmri.InstanceManager.routeManagerInstance().getBySystemName(name);
+                return jmri.InstanceManager.getDefault(jmri.RouteManager.class).getBySystemName(name);
             }
 
             public NamedBean getByUserName(String name) {
-                return jmri.InstanceManager.routeManagerInstance().getByUserName(name);
+                return jmri.InstanceManager.getDefault(jmri.RouteManager.class).getByUserName(name);
             }
 
             protected String getMasterClassName() {
@@ -928,7 +928,7 @@ public class RouteTableAction extends AbstractTableAction {
         Route g = null;
         // check if a Route with the same user name exists
         if (!uName.equals("")) {
-            g = jmri.InstanceManager.routeManagerInstance().getByUserName(uName);
+            g = jmri.InstanceManager.getDefault(jmri.RouteManager.class).getByUserName(uName);
             if (g != null) {
                 // Route with this user name already exists
                 status1.setText(Bundle.getMessage("LightError8"));
@@ -938,7 +938,7 @@ public class RouteTableAction extends AbstractTableAction {
             }
         }
         // check if a Route with this system name already exists
-        g = jmri.InstanceManager.routeManagerInstance().getBySystemName(sName);
+        g = jmri.InstanceManager.getDefault(jmri.RouteManager.class).getBySystemName(sName);
         if (g != null) {
             // Route already exists
             status1.setText(Bundle.getMessage("LightError1"));
@@ -954,14 +954,14 @@ public class RouteTableAction extends AbstractTableAction {
         Route g;
         if (_autoSystemName.isSelected() && !editMode) {
             // create new Route with auto system name
-            g = jmri.InstanceManager.routeManagerInstance().newRoute(uName);
+            g = jmri.InstanceManager.getDefault(jmri.RouteManager.class).newRoute(uName);
         } else {
             if (sName.length() == 0) {
                 status1.setText(Bundle.getMessage("RouteAddStatusEnter"));
                 return null;
             }
             try {
-                g = jmri.InstanceManager.routeManagerInstance().provideRoute(sName, uName);
+                g = jmri.InstanceManager.getDefault(jmri.RouteManager.class).provideRoute(sName, uName);
             } catch (IllegalArgumentException ex) {
                 g = null; // for later check
             }
@@ -1115,10 +1115,10 @@ public class RouteTableAction extends AbstractTableAction {
     void editPressed(ActionEvent e) {
         // identify the Route with this name if it already exists
         String sName = _systemName.getText();
-        Route g = jmri.InstanceManager.routeManagerInstance().getBySystemName(sName);
+        Route g = jmri.InstanceManager.getDefault(jmri.RouteManager.class).getBySystemName(sName);
         if (g == null) {
             sName = _userName.getText();
-            g = jmri.InstanceManager.routeManagerInstance().getByUserName(sName);
+            g = jmri.InstanceManager.getDefault(jmri.RouteManager.class).getByUserName(sName);
             if (g == null) {
                 // Route does not exist, so cannot be edited
                 status1.setText(Bundle.getMessage("RouteAddStatusErrorNotFound"));
@@ -1233,7 +1233,7 @@ public class RouteTableAction extends AbstractTableAction {
      */
     void deletePressed(ActionEvent e) {
         // route is already deactivated, just delete it
-        InstanceManager.routeManagerInstance().deleteRoute(curRoute);
+        InstanceManager.getDefault(jmri.RouteManager.class).deleteRoute(curRoute);
 
         curRoute = null;
         finishUpdate();
@@ -1333,9 +1333,9 @@ public class RouteTableAction extends AbstractTableAction {
         }
         String uName = _userName.getText();
         String logixSystemName = LOGIX_SYS_NAME + sName;
-        Logix logix = InstanceManager.logixManagerInstance().getBySystemName(logixSystemName);
+        Logix logix = InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName(logixSystemName);
         if (logix == null) {
-            logix = InstanceManager.logixManagerInstance().createNewLogix(logixSystemName, uName);
+            logix = InstanceManager.getDefault(jmri.LogixManager.class).createNewLogix(logixSystemName, uName);
             if (logix == null) {
                 log.error("Failed to create Logix " + logixSystemName + ", " + uName);
                 return;
@@ -1490,7 +1490,7 @@ public class RouteTableAction extends AbstractTableAction {
             actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE,
                     Conditional.ACTION_SET_SENSOR, sensorSystemName, Sensor.INACTIVE, ""));
 
-            Conditional c = InstanceManager.conditionalManagerInstance().createNewConditional(cSystemName, cUserName);
+            Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).createNewConditional(cSystemName, cUserName);
             c.setStateVariables(variableList);
             c.setLogicType(Conditional.ALL_AND, "");
             c.setAction(actionList);
@@ -1547,7 +1547,7 @@ public class RouteTableAction extends AbstractTableAction {
             }
 
             // add new Conditionals for action on 'locks'
-            Conditional c = InstanceManager.conditionalManagerInstance().createNewConditional(cSystemName, cUserName);
+            Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).createNewConditional(cSystemName, cUserName);
             c.setStateVariables(variableList);
             c.setLogicType(Conditional.ALL_AND, "");
             c.setAction(actionList);
@@ -1556,7 +1556,7 @@ public class RouteTableAction extends AbstractTableAction {
         }
         logix.activateLogix();
         if (curRoute != null) {
-            jmri.InstanceManager.routeManagerInstance().deleteRoute(curRoute);
+            jmri.InstanceManager.getDefault(jmri.RouteManager.class).deleteRoute(curRoute);
             curRoute = null;
         }
         status1.setText(Bundle.getMessage("BeanNameRoute") + "\"" + uName + "\" " + Bundle.getMessage("RouteAddStatusExported") + " (" + _includedTurnoutList.size()
@@ -1565,10 +1565,10 @@ public class RouteTableAction extends AbstractTableAction {
     }
 
     boolean removeConditionals(String cSystemName, Logix logix) {
-        Conditional c = InstanceManager.conditionalManagerInstance().getBySystemName(cSystemName);
+        Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName(cSystemName);
         if (c != null) {
             logix.deleteConditional(cSystemName);
-            InstanceManager.conditionalManagerInstance().deleteConditional(c);
+            InstanceManager.getDefault(jmri.ConditionalManager.class).deleteConditional(c);
             return true;
         }
         return false;
@@ -1592,7 +1592,7 @@ public class RouteTableAction extends AbstractTableAction {
             String cUserName = jmriBox.getSelectedDisplayName() + numConds + "C " + uName;
             Conditional c = null;
             try {
-                c = InstanceManager.conditionalManagerInstance().createNewConditional(cSystemName, cUserName);
+                c = InstanceManager.getDefault(jmri.ConditionalManager.class).createNewConditional(cSystemName, cUserName);
             } catch (Exception ex) {
                 // user input no good
                 handleCreateException(cSystemName);
@@ -1628,7 +1628,7 @@ public class RouteTableAction extends AbstractTableAction {
             String cUserName = jmriBox.getSelectedDisplayName() + numConds + "C " + uName;
             Conditional c = null;
             try {
-                c = InstanceManager.conditionalManagerInstance().createNewConditional(cSystemName, cUserName);
+                c = InstanceManager.getDefault(jmri.ConditionalManager.class).createNewConditional(cSystemName, cUserName);
             } catch (Exception ex) {
                 // user input no good
                 handleCreateException(cSystemName);

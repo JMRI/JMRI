@@ -169,10 +169,10 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
                 String currentName = null;
                 if (c == ThrottleManager.class && InstanceManager.throttleManagerInstance() != null) {
                     currentName = InstanceManager.throttleManagerInstance().getUserName();
-                } else if (c == PowerManager.class && InstanceManager.powerManagerInstance() != null) {
-                    currentName = InstanceManager.powerManagerInstance().getUserName();
-                } else if (c == ProgrammerManager.class && InstanceManager.programmerManagerInstance() != null) {
-                    currentName = InstanceManager.programmerManagerInstance().getUserName();
+                } else if (c == PowerManager.class && InstanceManager.getDefault(jmri.PowerManager.class) != null) {
+                    currentName = InstanceManager.getDefault(jmri.PowerManager.class).getUserName();
+                } else if (c == ProgrammerManager.class && InstanceManager.getDefault(jmri.ProgrammerManager.class) != null) {
+                    currentName = InstanceManager.getDefault(jmri.ProgrammerManager.class).getUserName();
                 }
                 if (currentName != null) {
                     log.warn("The configured " + connectionName + " for " + c + " can not be found so will use the default " + currentName);

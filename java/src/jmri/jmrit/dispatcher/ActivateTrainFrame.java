@@ -71,7 +71,7 @@ public class ActivateTrainFrame {
     private boolean _TrainsFromRoster = true;
     private boolean _TrainsFromTrains = false;
     private ArrayList<ActiveTrain> _ActiveTrainsList = null;
-    private TransitManager _TransitManager = InstanceManager.transitManagerInstance();
+    private TransitManager _TransitManager = InstanceManager.getDefault(jmri.TransitManager.class);
     private String _trainInfoName = "";
 
     // initiate train window variables

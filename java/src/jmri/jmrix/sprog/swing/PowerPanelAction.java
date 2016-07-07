@@ -17,7 +17,7 @@ public class PowerPanelAction extends AbstractAction {
         super(s);
 
         // disable ourself if there is no power Manager
-        if (jmri.InstanceManager.powerManagerInstance() == null) {
+        if (jmri.InstanceManager.getDefault(jmri.PowerManager.class) == null) {
             setEnabled(false);
         }
     }

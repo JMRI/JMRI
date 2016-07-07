@@ -453,7 +453,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         }, eventMask);
 
         // do final activation
-        InstanceManager.logixManagerInstance().activateAllLogixs();
+        InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
         // Loads too late - now started from ItemPalette
 //        new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
@@ -1046,7 +1046,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             debugmsg = false;
             return;
         }
-        InstanceManager.logixManagerInstance().setLoadDisabled(true);
+        InstanceManager.getDefault(jmri.LogixManager.class).setLoadDisabled(true);
         log.info("Requested loading with Logixs disabled.");
         debugmsg = false;
     }

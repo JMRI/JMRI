@@ -71,7 +71,7 @@ public class SectionTableAction extends AbstractTableAction {
     public SectionTableAction(String actionName) {
         super(actionName);
         // set manager - no need to use InstanceManager here
-        sectionManager = jmri.InstanceManager.sectionManagerInstance();
+        sectionManager = jmri.InstanceManager.getDefault(jmri.SectionManager.class);
         // disable ourself if there is no Section manager available
         if (sectionManager == null) {
             setEnabled(false);
@@ -100,15 +100,15 @@ public class SectionTableAction extends AbstractTableAction {
             }
 
             public Manager getManager() {
-                return jmri.InstanceManager.sectionManagerInstance();
+                return jmri.InstanceManager.getDefault(jmri.SectionManager.class);
             }
 
             public NamedBean getBySystemName(String name) {
-                return jmri.InstanceManager.sectionManagerInstance().getBySystemName(name);
+                return jmri.InstanceManager.getDefault(jmri.SectionManager.class).getBySystemName(name);
             }
 
             public NamedBean getByUserName(String name) {
-                return jmri.InstanceManager.sectionManagerInstance().getByUserName(name);
+                return jmri.InstanceManager.getDefault(jmri.SectionManager.class).getByUserName(name);
             }
 
             protected String getMasterClassName() {
@@ -288,7 +288,7 @@ public class SectionTableAction extends AbstractTableAction {
     BlockTableModel blockTableModel = null;
     EntryPointTableModel entryPointTableModel = null;
     SectionManager sectionManager = null;
-    BlockManager blockManager = jmri.InstanceManager.blockManagerInstance();
+    BlockManager blockManager = jmri.InstanceManager.getDefault(jmri.BlockManager.class);
     boolean editMode = false;
     Section curSection = null;
     boolean addCreateActive = true;
@@ -1070,12 +1070,12 @@ public class SectionTableAction extends AbstractTableAction {
      * BeanTable processing results in misleading information
      */
     private void deleteSectionPressed(String sName) {
-        final Section s = jmri.InstanceManager.sectionManagerInstance().getBySystemName(sName);
+        final Section s = jmri.InstanceManager.getDefault(jmri.SectionManager.class).getBySystemName(sName);
         String fullName = sName;
         if (s.getUserName() != null && s.getUserName().length() > 0) {
             fullName = fullName + "(" + s.getUserName() + ")";
         }
-        ArrayList<Transit> affectedTransits = jmri.InstanceManager.transitManagerInstance().getListUsingSection(s);
+        ArrayList<Transit> affectedTransits = jmri.InstanceManager.getDefault(jmri.TransitManager.class).getListUsingSection(s);
         final JDialog dialog = new JDialog();
         String msg = "";
         dialog.setTitle(Bundle.getMessage("WarningTitle"));
@@ -1136,7 +1136,7 @@ public class SectionTableAction extends AbstractTableAction {
 
         yesButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                jmri.InstanceManager.sectionManagerInstance().deregister(s);
+                jmri.InstanceManager.getDefault(jmri.SectionManager.class).deregister(s);
                 s.dispose();
                 dialog.dispose();
             }

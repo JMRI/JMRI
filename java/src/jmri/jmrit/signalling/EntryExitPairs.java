@@ -656,7 +656,7 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
 
     }
 
-    jmri.SignalMastLogicManager smlm = InstanceManager.signalMastLogicManagerInstance();
+    jmri.SignalMastLogicManager smlm = InstanceManager.getDefault(jmri.SignalMastLogicManager.class);
 
     public final static int CANCELROUTE = 0;
     public final static int CLEARROUTE = 1;

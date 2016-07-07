@@ -449,7 +449,7 @@ public class JsonUtil {
 
     static public JsonNode getBlocks(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
-        for (String name : InstanceManager.blockManagerInstance().getSystemNameList()) {
+        for (String name : InstanceManager.getDefault(jmri.BlockManager.class).getSystemNameList()) {
             root.add(getBlock(locale, name));
         }
         return root;
@@ -459,7 +459,7 @@ public class JsonUtil {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, BLOCK);
         ObjectNode data = root.putObject(DATA);
-        Block block = InstanceManager.blockManagerInstance().getBlock(name);
+        Block block = InstanceManager.getDefault(jmri.BlockManager.class).getBlock(name);
         try {
             data.put(NAME, block.getSystemName());
             data.put(USERNAME, block.getUserName());
@@ -478,7 +478,7 @@ public class JsonUtil {
 
     static public void putBlock(Locale locale, String name, JsonNode data) throws JsonException {
         try {
-            InstanceManager.blockManagerInstance().provideBlock(name);
+            InstanceManager.getDefault(jmri.BlockManager.class).provideBlock(name);
         } catch (Exception ex) {
             throw new JsonException(500, Bundle.getMessage(locale, "ErrorCreatingObject", BLOCK, name));
         }
@@ -487,7 +487,7 @@ public class JsonUtil {
 
     static public void setBlock(Locale locale, String name, JsonNode data) throws JsonException {
         try {
-            Block block = InstanceManager.blockManagerInstance().getBlock(name);
+            Block block = InstanceManager.getDefault(jmri.BlockManager.class).getBlock(name);
             if (data.path(USERNAME).isTextual()) {
                 block.setUserName(data.path(USERNAME).asText());
             }
@@ -590,7 +590,7 @@ public class JsonUtil {
         root.put(TYPE, POWER);
         ObjectNode data = root.putObject(DATA);
         try {
-            switch (InstanceManager.powerManagerInstance().getPower()) {
+            switch (InstanceManager.getDefault(jmri.PowerManager.class).getPower()) {
                 case PowerManager.OFF:
                     data.put(STATE, OFF);
                     break;
@@ -617,10 +617,10 @@ public class JsonUtil {
         try {
             switch (state) {
                 case OFF:
-                    InstanceManager.powerManagerInstance().setPower(PowerManager.OFF);
+                    InstanceManager.getDefault(jmri.PowerManager.class).setPower(PowerManager.OFF);
                     break;
                 case ON:
-                    InstanceManager.powerManagerInstance().setPower(PowerManager.ON);
+                    InstanceManager.getDefault(jmri.PowerManager.class).setPower(PowerManager.ON);
                     break;
                 case UNKNOWN:
                     // quietly ignore
@@ -645,7 +645,7 @@ public class JsonUtil {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, REPORTER);
         ObjectNode data = root.putObject(DATA);
-        Reporter reporter = InstanceManager.reporterManagerInstance().getReporter(name);
+        Reporter reporter = InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(name);
         data.put(NAME, reporter.getSystemName());
         data.put(USERNAME, reporter.getUserName());
         data.put(STATE, reporter.getState());
@@ -657,7 +657,7 @@ public class JsonUtil {
 
     static public JsonNode getReporters(Locale locale) {
         ArrayNode root = mapper.createArrayNode();
-        for (String name : InstanceManager.reporterManagerInstance().getSystemNameList()) {
+        for (String name : InstanceManager.getDefault(jmri.ReporterManager.class).getSystemNameList()) {
             root.add(getReporter(locale, name));
         }
         return root;
@@ -665,7 +665,7 @@ public class JsonUtil {
 
     static public void putReporter(Locale locale, String name, JsonNode data) throws JsonException {
         try {
-            InstanceManager.reporterManagerInstance().provideReporter(name);
+            InstanceManager.getDefault(jmri.ReporterManager.class).provideReporter(name);
         } catch (Exception ex) {
             throw new JsonException(500, Bundle.getMessage(locale, "ErrorCreatingObject", REPORTER, name));
         }
@@ -674,7 +674,7 @@ public class JsonUtil {
 
     static public void setReporter(Locale locale, String name, JsonNode data) throws JsonException {
         try {
-            Reporter reporter = InstanceManager.reporterManagerInstance().getBySystemName(name);
+            Reporter reporter = InstanceManager.getDefault(jmri.ReporterManager.class).getBySystemName(name);
             if (data.path(USERNAME).isTextual()) {
                 reporter.setUserName(data.path(USERNAME).asText());
             }
@@ -682,9 +682,9 @@ public class JsonUtil {
                 reporter.setComment(data.path(COMMENT).asText());
             }
             if (data.path(REPORT).isNull()) {
-                InstanceManager.reporterManagerInstance().getReporter(name).setReport(null);
+                InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(name).setReport(null);
             } else {
-                InstanceManager.reporterManagerInstance().getReporter(name).setReport(data.path(REPORT).asText());
+                InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(name).setReport(data.path(REPORT).asText());
             }
         } catch (NullPointerException ex) {
             throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", REPORTER, name));
@@ -820,7 +820,7 @@ public class JsonUtil {
         root.put(TYPE, ROUTE);
         ObjectNode data = root.putObject(DATA);
         try {
-            Route route = InstanceManager.routeManagerInstance().getRoute(name);
+            Route route = InstanceManager.getDefault(jmri.RouteManager.class).getRoute(name);
             SensorManager s = InstanceManager.sensorManagerInstance();
             data.put(NAME, route.getSystemName());
             data.put(USERNAME, route.getUserName());
@@ -854,7 +854,7 @@ public class JsonUtil {
 
     static public JsonNode getRoutes(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
-        for (String name : InstanceManager.routeManagerInstance().getSystemNameList()) {
+        for (String name : InstanceManager.getDefault(jmri.RouteManager.class).getSystemNameList()) {
             root.add(getRoute(locale, name));
         }
         return root;
@@ -872,7 +872,7 @@ public class JsonUtil {
     @Deprecated
     static public void setRoute(Locale locale, String name, JsonNode data) throws JsonException {
         try {
-            Route route = InstanceManager.routeManagerInstance().getRoute(name);
+            Route route = InstanceManager.getDefault(jmri.RouteManager.class).getRoute(name);
             if (data.path(USERNAME).isTextual()) {
                 route.setUserName(data.path(USERNAME).asText());
             }
@@ -989,7 +989,7 @@ public class JsonUtil {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, SIGNAL_HEAD);
         ObjectNode data = root.putObject(DATA);
-        SignalHead signalHead = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
+        SignalHead signalHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name);
         try {
             data.put(NAME, name);
             data.put(USERNAME, signalHead.getUserName());
@@ -1013,7 +1013,7 @@ public class JsonUtil {
 
     static public JsonNode getSignalHeads(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
-        for (String name : InstanceManager.signalHeadManagerInstance().getSystemNameList()) {
+        for (String name : InstanceManager.getDefault(jmri.SignalHeadManager.class).getSystemNameList()) {
             root.add(getSignalHead(locale, name));
         }
         return root;
@@ -1021,7 +1021,7 @@ public class JsonUtil {
 
     static public void setSignalHead(Locale locale, String name, JsonNode data) throws JsonException {
         try {
-            SignalHead signalHead = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
+            SignalHead signalHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name);
             if (data.path(USERNAME).isTextual()) {
                 signalHead.setUserName(data.path(USERNAME).asText());
             }
@@ -1052,7 +1052,7 @@ public class JsonUtil {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, SIGNAL_MAST);
         ObjectNode data = root.putObject(DATA);
-        SignalMast signalMast = InstanceManager.signalMastManagerInstance().getSignalMast(name);
+        SignalMast signalMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(name);
         try {
             data.put(NAME, name);
             data.put(USERNAME, signalMast.getUserName());
@@ -1083,7 +1083,7 @@ public class JsonUtil {
 
     static public JsonNode getSignalMasts(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
-        for (String name : InstanceManager.signalMastManagerInstance().getSystemNameList()) {
+        for (String name : InstanceManager.getDefault(jmri.SignalMastManager.class).getSystemNameList()) {
             root.add(getSignalMast(locale, name));
         }
         return root;
@@ -1092,7 +1092,7 @@ public class JsonUtil {
     // TODO: test for HELD and DARK aspects
     static public void setSignalMast(Locale locale, String name, JsonNode data) throws JsonException {
         try {
-            SignalMast signalMast = InstanceManager.signalMastManagerInstance().getSignalMast(name);
+            SignalMast signalMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(name);
             if (data.path(USERNAME).isTextual()) {
                 signalMast.setUserName(data.path(USERNAME).asText());
             }
@@ -1170,7 +1170,7 @@ public class JsonUtil {
                 InstanceManager.getDefault(jmri.Timebase.class).setTime(new ISO8601DateFormat().parse(data.path(TIME).asText()));
             }
             if (data.path(RATE).isDouble()) {
-                InstanceManager.clockControlInstance().setRate(data.path(RATE).asDouble());
+                InstanceManager.getDefault(jmri.ClockControl.class).setRate(data.path(RATE).asDouble());
             }
             if (data.path(STATE).isInt()) {
                 InstanceManager.getDefault(jmri.Timebase.class).setRun(data.path(STATE).asInt() == ON);

@@ -79,7 +79,7 @@ public class BeanSelectCreatePanel extends JPanel {
                 jmri.managers.ProxyLightManager proxy = (jmri.managers.ProxyLightManager) InstanceManager.lightManagerInstance();
                 managerList = proxy.getManagerList();
             } else if (_manager instanceof jmri.ReporterManager) {
-                jmri.managers.ProxyReporterManager proxy = (jmri.managers.ProxyReporterManager) InstanceManager.reporterManagerInstance();
+                jmri.managers.ProxyReporterManager proxy = (jmri.managers.ProxyReporterManager) InstanceManager.getDefault(jmri.ReporterManager.class);
                 managerList = proxy.getManagerList();
             }
             for (int x = 0; x < managerList.size(); x++) {
@@ -213,7 +213,7 @@ public class BeanSelectCreatePanel extends JPanel {
                 }
             } else if (_manager instanceof jmri.Block) {
                 try {
-                    nBean = InstanceManager.blockManagerInstance().provideBlock(sName);
+                    nBean = InstanceManager.getDefault(jmri.BlockManager.class).provideBlock(sName);
                 } catch (IllegalArgumentException ex) {
                     // user input no good
                     throw new jmri.JmriException("ErrorBlockAddFailed");

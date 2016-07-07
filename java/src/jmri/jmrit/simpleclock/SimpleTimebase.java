@@ -90,8 +90,8 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
         if (synchronizeWithHardware) {
             // send new time to all hardware clocks, except the hardware time source if there is one
             // Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
-            if (jmri.InstanceManager.clockControlInstance() != hardwareTimeSource) {
-                jmri.InstanceManager.clockControlInstance().setTime(d);
+            if (jmri.InstanceManager.getDefault(jmri.ClockControl.class) != hardwareTimeSource) {
+                jmri.InstanceManager.getDefault(jmri.ClockControl.class).setTime(d);
             }
         }
         if (pauseTime != null) {
@@ -116,7 +116,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
         if (synchronizeWithHardware) {
             // send new time to all hardware clocks, including the hardware time source if there is one
             // Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
-            jmri.InstanceManager.clockControlInstance().setTime(d);
+            jmri.InstanceManager.getDefault(jmri.ClockControl.class).setTime(d);
         } else if (!internalMaster && (hardwareTimeSource != null)) {
             // if not synchronizing, send to the hardware time source if there is one
             hardwareTimeSource.setTime(d);
@@ -134,7 +134,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
             setTime(pauseTime);
             if (synchronizeWithHardware) {
                 // Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
-                jmri.InstanceManager.clockControlInstance().startHardwareClock(getTime());
+                jmri.InstanceManager.getDefault(jmri.ClockControl.class).startHardwareClock(getTime());
             } else if (!internalMaster && hardwareTimeSource != null) {
                 hardwareTimeSource.startHardwareClock(getTime());
             }
@@ -152,7 +152,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
             pauseTime = getTime();
             if (synchronizeWithHardware) {
                 // Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
-                jmri.InstanceManager.clockControlInstance().stopHardwareClock();
+                jmri.InstanceManager.getDefault(jmri.ClockControl.class).stopHardwareClock();
             } else if (!internalMaster && hardwareTimeSource != null) {
                 hardwareTimeSource.stopHardwareClock();
             }
@@ -191,8 +191,8 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
         if (internalMaster || (synchronizeWithHardware && notInitialized)) {
             // send new rate to all hardware clocks, except the hardware time source if there is one
             // Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
-            if (jmri.InstanceManager.clockControlInstance() != hardwareTimeSource) {
-                jmri.InstanceManager.clockControlInstance().setRate(factor);
+            if (jmri.InstanceManager.getDefault(jmri.ClockControl.class) != hardwareTimeSource) {
+                jmri.InstanceManager.getDefault(jmri.ClockControl.class).setRate(factor);
             }
         }
         // make sure time is right with new rate
@@ -219,7 +219,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
         if (synchronizeWithHardware) {
             // send new rate to all hardware clocks, including the hardware time source if there is one
             // Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
-            jmri.InstanceManager.clockControlInstance().setRate(factor);
+            jmri.InstanceManager.getDefault(jmri.ClockControl.class).setRate(factor);
         } else if (!internalMaster && (hardwareTimeSource != null)) {
             // if not synchronizing, send to the hardware time source if there is one
             hardwareTimeSource.setRate(factor);
@@ -252,12 +252,12 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
                 mFactor = hardwareFactor;  // get rid of any fiddled rate present
                 if (update) {
                     // Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
-                    jmri.InstanceManager.clockControlInstance().initializeHardwareClock(mFactor,
+                    jmri.InstanceManager.getDefault(jmri.ClockControl.class).initializeHardwareClock(mFactor,
                             getTime(), false);
                 }
             } else if (update) {
                 // Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
-                jmri.InstanceManager.clockControlInstance().initializeHardwareClock(hardwareFactor,
+                jmri.InstanceManager.getDefault(jmri.ClockControl.class).initializeHardwareClock(hardwareFactor,
                         getTime(), false);
             }
 
@@ -267,7 +267,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
             } else {
                 // Note if there are multiple hardware clocks, this should be changed to correctly
                 // identify which hardware clock has been chosen-currently assumes only one
-                hardwareTimeSource = jmri.InstanceManager.clockControlInstance();
+                hardwareTimeSource = jmri.InstanceManager.getDefault(jmri.ClockControl.class);
                 masterName = hardwareTimeSource.getHardwareClockName();
             }
         }
@@ -282,7 +282,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
             masterName = name;
             // if multiple clocks, this must be replaced by a loop over all hardware clocks to identify
             // the one that is the hardware time source
-            hardwareTimeSource = jmri.InstanceManager.clockControlInstance();
+            hardwareTimeSource = jmri.InstanceManager.getDefault(jmri.ClockControl.class);
         } else {
             masterName = "";
             hardwareTimeSource = null;
@@ -299,11 +299,11 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
             if (update) {
                 if (internalMaster) {
                     // Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
-                    jmri.InstanceManager.clockControlInstance().initializeHardwareClock(mFactor,
+                    jmri.InstanceManager.getDefault(jmri.ClockControl.class).initializeHardwareClock(mFactor,
                             getTime(), false);
                 } else {
                     // Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
-                    jmri.InstanceManager.clockControlInstance().initializeHardwareClock(hardwareFactor,
+                    jmri.InstanceManager.getDefault(jmri.ClockControl.class).initializeHardwareClock(hardwareFactor,
                             getTime(), false);
                 }
             }
@@ -320,11 +320,11 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
             if (update) {
                 if (internalMaster) {
                     // Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
-                    jmri.InstanceManager.clockControlInstance().initializeHardwareClock(mFactor,
+                    jmri.InstanceManager.getDefault(jmri.ClockControl.class).initializeHardwareClock(mFactor,
                             getTime(), false);
                 } else {
                     // Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
-                    jmri.InstanceManager.clockControlInstance().initializeHardwareClock(hardwareFactor,
+                    jmri.InstanceManager.getDefault(jmri.ClockControl.class).initializeHardwareClock(hardwareFactor,
                             getTime(), false);
                 }
             }
@@ -341,11 +341,11 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
             if (update) {
                 if (internalMaster) {
                     // Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
-                    jmri.InstanceManager.clockControlInstance().initializeHardwareClock(mFactor,
+                    jmri.InstanceManager.getDefault(jmri.ClockControl.class).initializeHardwareClock(mFactor,
                             getTime(), false);
                 } else {
                     // Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
-                    jmri.InstanceManager.clockControlInstance().initializeHardwareClock(hardwareFactor,
+                    jmri.InstanceManager.getDefault(jmri.ClockControl.class).initializeHardwareClock(hardwareFactor,
                             getTime(), false);
                 }
             }
@@ -417,11 +417,11 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
         if (synchronizeWithHardware || correctHardware) {
             if (startStopped) {
                 // Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
-                jmri.InstanceManager.clockControlInstance().initializeHardwareClock(0,
+                jmri.InstanceManager.getDefault(jmri.ClockControl.class).initializeHardwareClock(0,
                         getTime(), (!internalMaster && !startSetTime));
             } else {
                 // Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
-                jmri.InstanceManager.clockControlInstance().initializeHardwareClock(mFactor,
+                jmri.InstanceManager.getDefault(jmri.ClockControl.class).initializeHardwareClock(mFactor,
                         getTime(), (!internalMaster && !startSetTime));
             }
         } else if (!internalMaster) {

@@ -406,7 +406,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                     if (tempRow[REPORTERCOL] != null) {
                         Reporter rep = null;
                         try {
-                            rep = InstanceManager.reporterManagerInstance().getReporter(tempRow[REPORTERCOL]);
+                            rep = InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(tempRow[REPORTERCOL]);
                             if (rep != null) {
                                 block.setReporter(rep);
                                 block.setReportingCurrent(tempRow[REPORT_CURRENTCOL].equals(Bundle.getMessage("Current")));
@@ -556,7 +556,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
             case REPORTERCOL:
                 Reporter rep = null;
                 try {
-                    rep = InstanceManager.reporterManagerInstance().getReporter((String) value);
+                    rep = InstanceManager.getDefault(jmri.ReporterManager.class).getReporter((String) value);
                     if (rep != null) {
                         block.setReporter(rep);
                         fireTableRowsUpdated(row, row);

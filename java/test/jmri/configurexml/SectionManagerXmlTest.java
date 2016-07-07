@@ -43,40 +43,40 @@ public class SectionManagerXmlTest extends TestCase {
         //       that LoadSectionManagerFileText.xml and LoadBlockManagerFileText.xml refer to the
         //       same block / section layout definition.
         // check existance of sections
-        Assert.assertNotNull(InstanceManager.sectionManagerInstance().getSection("IY:AUTO:0001"));
-        Assert.assertNull(InstanceManager.sectionManagerInstance().getSection("no section"));
-        Assert.assertNotNull(InstanceManager.sectionManagerInstance().getSection("IY:AUTO:0002"));
-        Assert.assertNotNull(InstanceManager.sectionManagerInstance().getSection("IY:AUTO:0003"));
-        Assert.assertNotNull(InstanceManager.sectionManagerInstance().getSection("IY:AUTO:0004"));
-        Assert.assertNotNull(InstanceManager.sectionManagerInstance().getSection("IY:AUTO:0005"));
-        Assert.assertNotNull(InstanceManager.sectionManagerInstance().getSection("IY:AUTO:0006"));
-        Assert.assertNotNull(InstanceManager.sectionManagerInstance().getSection("IY:AUTO:0007"));
-        Assert.assertNotNull(InstanceManager.sectionManagerInstance().getSection("IY:AUTO:0008"));
-        Assert.assertNotNull(InstanceManager.sectionManagerInstance().getSection("IY:AUTO:0009"));
-        Assert.assertNotNull(InstanceManager.sectionManagerInstance().getSection("IY:AUTO:0010"));
-        Assert.assertNotNull(InstanceManager.sectionManagerInstance().getSection("IY:AUTO:0011"));
-        Assert.assertNotNull(InstanceManager.sectionManagerInstance().getSection("IY:AUTO:0012"));
-        Assert.assertNotNull(InstanceManager.sectionManagerInstance().getSection("NorthWest"));
-        Assert.assertNotNull(InstanceManager.sectionManagerInstance().getSection("North"));
-        Assert.assertNotNull(InstanceManager.sectionManagerInstance().getSection("NorthSiding"));
-        Assert.assertNotNull(InstanceManager.sectionManagerInstance().getSection("NorthEast"));
-        Assert.assertNotNull(InstanceManager.sectionManagerInstance().getSection("East"));
-        Assert.assertNotNull(InstanceManager.sectionManagerInstance().getSection("EastSiding"));
-        Assert.assertNotNull(InstanceManager.sectionManagerInstance().getSection("SouthEast"));
-        Assert.assertNotNull(InstanceManager.sectionManagerInstance().getSection("South"));
-        Assert.assertNotNull(InstanceManager.sectionManagerInstance().getSection("SouthSiding"));
-        Assert.assertNotNull(InstanceManager.sectionManagerInstance().getSection("SouthWest"));
-        Assert.assertNotNull(InstanceManager.sectionManagerInstance().getSection("West"));
-        Assert.assertNotNull(InstanceManager.sectionManagerInstance().getSection("WestSiding"));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SectionManager.class).getSection("IY:AUTO:0001"));
+        Assert.assertNull(InstanceManager.getDefault(jmri.SectionManager.class).getSection("no section"));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SectionManager.class).getSection("IY:AUTO:0002"));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SectionManager.class).getSection("IY:AUTO:0003"));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SectionManager.class).getSection("IY:AUTO:0004"));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SectionManager.class).getSection("IY:AUTO:0005"));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SectionManager.class).getSection("IY:AUTO:0006"));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SectionManager.class).getSection("IY:AUTO:0007"));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SectionManager.class).getSection("IY:AUTO:0008"));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SectionManager.class).getSection("IY:AUTO:0009"));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SectionManager.class).getSection("IY:AUTO:0010"));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SectionManager.class).getSection("IY:AUTO:0011"));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SectionManager.class).getSection("IY:AUTO:0012"));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SectionManager.class).getSection("NorthWest"));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SectionManager.class).getSection("North"));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SectionManager.class).getSection("NorthSiding"));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SectionManager.class).getSection("NorthEast"));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SectionManager.class).getSection("East"));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SectionManager.class).getSection("EastSiding"));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SectionManager.class).getSection("SouthEast"));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SectionManager.class).getSection("South"));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SectionManager.class).getSection("SouthSiding"));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SectionManager.class).getSection("SouthWest"));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SectionManager.class).getSection("West"));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SectionManager.class).getSection("WestSiding"));
 
         // check existance of a couple of blocks just to be sure 
         //       that LoadSectionManagerFileText.xml and LoadBlockManagerFileText.xml refer to the
         //       same block / section layout definition.
-        Assert.assertNotNull(InstanceManager.blockManagerInstance().getBlock("IB1"));
-        Assert.assertNull(InstanceManager.blockManagerInstance().getBlock("no block"));
-        Assert.assertNotNull(InstanceManager.blockManagerInstance().getBlock("IB12"));
-        Assert.assertNotNull(InstanceManager.blockManagerInstance().getBlock("blocknorthwest"));
-        Assert.assertNotNull(InstanceManager.blockManagerInstance().getBlock("blockwestsiding"));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("IB1"));
+        Assert.assertNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("no block"));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("IB12"));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blocknorthwest"));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blockwestsiding"));
         //Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("ILB1"));
         //Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("ILB12"));
         //Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("blocknorthwest"));
@@ -135,51 +135,51 @@ public class SectionManagerXmlTest extends TestCase {
         //  This matches up with the test file, ..., just be sure
         //       that LoadSectionManagerFileText.xml and LoadBlockManagerFileText.xml refer to the
         //       same block / section layout definition.
-        blockstotest[0] = InstanceManager.blockManagerInstance().getBlock("blocknorthwest");
+        blockstotest[0] = InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blocknorthwest");
         Assert.assertNotNull(blockstotest[0]);
         occupiedsensor[0] = InstanceManager.sensorManagerInstance().getSensor("blocknorthwestoccupied");
         Assert.assertNotNull(occupiedsensor[0]);
-        blockstotest[1] = InstanceManager.blockManagerInstance().getBlock("blocknorth");
+        blockstotest[1] = InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blocknorth");
         Assert.assertNotNull(blockstotest[1]);
         occupiedsensor[1] = InstanceManager.sensorManagerInstance().getSensor("blocknorthoccupied");
         Assert.assertNotNull(occupiedsensor[1]);
-        blockstotest[2] = InstanceManager.blockManagerInstance().getBlock("blocknorthsiding");
+        blockstotest[2] = InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blocknorthsiding");
         Assert.assertNotNull(blockstotest[2]);
         occupiedsensor[2] = InstanceManager.sensorManagerInstance().getSensor("blocknorthsidingoccupied");
         Assert.assertNotNull(occupiedsensor[2]);
-        blockstotest[3] = InstanceManager.blockManagerInstance().getBlock("blocknortheast");
+        blockstotest[3] = InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blocknortheast");
         Assert.assertNotNull(blockstotest[3]);
         occupiedsensor[3] = InstanceManager.sensorManagerInstance().getSensor("blocknortheastoccupied");
         Assert.assertNotNull(occupiedsensor[3]);
-        blockstotest[4] = InstanceManager.blockManagerInstance().getBlock("blockeast");
+        blockstotest[4] = InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blockeast");
         Assert.assertNotNull(blockstotest[4]);
         occupiedsensor[4] = InstanceManager.sensorManagerInstance().getSensor("blockeastoccupied");
         Assert.assertNotNull(occupiedsensor[4]);
-        blockstotest[5] = InstanceManager.blockManagerInstance().getBlock("blockeastsiding");
+        blockstotest[5] = InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blockeastsiding");
         Assert.assertNotNull(blockstotest[5]);
         occupiedsensor[5] = InstanceManager.sensorManagerInstance().getSensor("blockeastsidingoccupied");
         Assert.assertNotNull(occupiedsensor[5]);
-        blockstotest[6] = InstanceManager.blockManagerInstance().getBlock("blocksoutheast");
+        blockstotest[6] = InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blocksoutheast");
         Assert.assertNotNull(blockstotest[6]);
         occupiedsensor[6] = InstanceManager.sensorManagerInstance().getSensor("blocksoutheastoccupied");
         Assert.assertNotNull(occupiedsensor[6]);
-        blockstotest[7] = InstanceManager.blockManagerInstance().getBlock("blocksouth");
+        blockstotest[7] = InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blocksouth");
         Assert.assertNotNull(blockstotest[7]);
         occupiedsensor[7] = InstanceManager.sensorManagerInstance().getSensor("blocksouthoccupied");
         Assert.assertNotNull(occupiedsensor[7]);
-        blockstotest[8] = InstanceManager.blockManagerInstance().getBlock("blocksouthsiding");
+        blockstotest[8] = InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blocksouthsiding");
         Assert.assertNotNull(blockstotest[8]);
         occupiedsensor[8] = InstanceManager.sensorManagerInstance().getSensor("blocksouthsidingoccupied");
         Assert.assertNotNull(occupiedsensor[8]);
-        blockstotest[9] = InstanceManager.blockManagerInstance().getBlock("blocksouthwest");
+        blockstotest[9] = InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blocksouthwest");
         Assert.assertNotNull(blockstotest[9]);
         occupiedsensor[9] = InstanceManager.sensorManagerInstance().getSensor("blocksouthwestoccupied");
         Assert.assertNotNull(occupiedsensor[9]);
-        blockstotest[10] = InstanceManager.blockManagerInstance().getBlock("blockwest");
+        blockstotest[10] = InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blockwest");
         Assert.assertNotNull(blockstotest[10]);
         occupiedsensor[10] = InstanceManager.sensorManagerInstance().getSensor("blockwestoccupied");
         Assert.assertNotNull(occupiedsensor[10]);
-        blockstotest[11] = InstanceManager.blockManagerInstance().getBlock("blockwestsiding");
+        blockstotest[11] = InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blockwestsiding");
         Assert.assertNotNull(blockstotest[11]);
         occupiedsensor[11] = InstanceManager.sensorManagerInstance().getSensor("blockwestsidingoccupied");
         Assert.assertNotNull(occupiedsensor[11]);
@@ -317,7 +317,7 @@ public class SectionManagerXmlTest extends TestCase {
 //        expectednextpaths = new int[12];      //Make sure this is bigger than the list below
 
         //  This matches up with the test file, ...
-        sectionstotest[0] = InstanceManager.sectionManagerInstance().getSection("NorthWest");
+        sectionstotest[0] = InstanceManager.getDefault(jmri.SectionManager.class).getSection("NorthWest");
         Assert.assertNotNull(sectionstotest[0]);
         expectedsectionblocklistsize[0] = 1;
         expectedsectionentryblock[0] = blockstotest[0];
@@ -332,7 +332,7 @@ public class SectionManagerXmlTest extends TestCase {
         expectedForwardStoppingSensors[0] = InstanceManager.sensorManagerInstance().getSensor("ISSSTOPF1");
         expectedReverseStoppingSensors[0] = InstanceManager.sensorManagerInstance().getSensor("ISSSTOPR1");
 
-        sectionstotest[1] = InstanceManager.sectionManagerInstance().getSection("North");
+        sectionstotest[1] = InstanceManager.getDefault(jmri.SectionManager.class).getSection("North");
         Assert.assertNotNull(sectionstotest[1]);
         expectedsectionblocklistsize[1] = 1;
         expectedsectionentryblock[1] = blockstotest[1];
@@ -345,7 +345,7 @@ public class SectionManagerXmlTest extends TestCase {
         expectedForwardStoppingSensors[1] = InstanceManager.sensorManagerInstance().getSensor("ISSSTOPF2");
         expectedReverseStoppingSensors[1] = InstanceManager.sensorManagerInstance().getSensor("ISSSTOPR2");
 
-        sectionstotest[2] = InstanceManager.sectionManagerInstance().getSection("NorthSiding");
+        sectionstotest[2] = InstanceManager.getDefault(jmri.SectionManager.class).getSection("NorthSiding");
         Assert.assertNotNull(sectionstotest[2]);
         expectedsectionblocklistsize[2] = 1;
         expectedsectionentryblock[2] = blockstotest[2];
@@ -358,7 +358,7 @@ public class SectionManagerXmlTest extends TestCase {
         expectedForwardStoppingSensors[2] = InstanceManager.sensorManagerInstance().getSensor("ISSSTOPF3");
         expectedReverseStoppingSensors[2] = InstanceManager.sensorManagerInstance().getSensor("ISSSTOPR3");
 
-        sectionstotest[3] = InstanceManager.sectionManagerInstance().getSection("NorthEast");
+        sectionstotest[3] = InstanceManager.getDefault(jmri.SectionManager.class).getSection("NorthEast");
         Assert.assertNotNull(sectionstotest[3]);
         expectedsectionblocklistsize[3] = 1;
         expectedsectionentryblock[3] = blockstotest[3];
@@ -373,7 +373,7 @@ public class SectionManagerXmlTest extends TestCase {
         expectedForwardStoppingSensors[3] = InstanceManager.sensorManagerInstance().getSensor("ISSSTOPF4");
         expectedReverseStoppingSensors[3] = InstanceManager.sensorManagerInstance().getSensor("ISSSTOPR4");
 
-        sectionstotest[4] = InstanceManager.sectionManagerInstance().getSection("East");
+        sectionstotest[4] = InstanceManager.getDefault(jmri.SectionManager.class).getSection("East");
         Assert.assertNotNull(sectionstotest[4]);
         expectedsectionblocklistsize[4] = 1;
         expectedsectionentryblock[4] = blockstotest[4];
@@ -386,7 +386,7 @@ public class SectionManagerXmlTest extends TestCase {
         expectedForwardStoppingSensors[4] = InstanceManager.sensorManagerInstance().getSensor("ISSSTOPF5");
         expectedReverseStoppingSensors[4] = InstanceManager.sensorManagerInstance().getSensor("ISSSTOPR5");
 
-        sectionstotest[5] = InstanceManager.sectionManagerInstance().getSection("EastSiding");
+        sectionstotest[5] = InstanceManager.getDefault(jmri.SectionManager.class).getSection("EastSiding");
         Assert.assertNotNull(sectionstotest[5]);
         expectedsectionblocklistsize[5] = 1;
         expectedsectionentryblock[5] = blockstotest[5];
@@ -399,7 +399,7 @@ public class SectionManagerXmlTest extends TestCase {
         expectedForwardStoppingSensors[5] = InstanceManager.sensorManagerInstance().getSensor("ISSSTOPF6");
         expectedReverseStoppingSensors[5] = InstanceManager.sensorManagerInstance().getSensor("ISSSTOPR6");
 
-        sectionstotest[6] = InstanceManager.sectionManagerInstance().getSection("SouthEast");
+        sectionstotest[6] = InstanceManager.getDefault(jmri.SectionManager.class).getSection("SouthEast");
         Assert.assertNotNull(sectionstotest[6]);
         expectedsectionblocklistsize[6] = 1;
         expectedsectionentryblock[6] = blockstotest[6];
@@ -414,7 +414,7 @@ public class SectionManagerXmlTest extends TestCase {
         expectedForwardStoppingSensors[6] = InstanceManager.sensorManagerInstance().getSensor("ISSSTOPF7");
         expectedReverseStoppingSensors[6] = InstanceManager.sensorManagerInstance().getSensor("ISSSTOPR7");
 
-        sectionstotest[7] = InstanceManager.sectionManagerInstance().getSection("South");
+        sectionstotest[7] = InstanceManager.getDefault(jmri.SectionManager.class).getSection("South");
         Assert.assertNotNull(sectionstotest[7]);
         expectedsectionblocklistsize[7] = 1;
         expectedsectionentryblock[7] = blockstotest[7];
@@ -427,7 +427,7 @@ public class SectionManagerXmlTest extends TestCase {
         expectedForwardStoppingSensors[7] = InstanceManager.sensorManagerInstance().getSensor("ISSSTOPF8");
         expectedReverseStoppingSensors[7] = InstanceManager.sensorManagerInstance().getSensor("ISSSTOPR8");
 
-        sectionstotest[8] = InstanceManager.sectionManagerInstance().getSection("SouthSiding");
+        sectionstotest[8] = InstanceManager.getDefault(jmri.SectionManager.class).getSection("SouthSiding");
         Assert.assertNotNull(sectionstotest[8]);
         expectedsectionblocklistsize[8] = 1;
         expectedsectionentryblock[8] = blockstotest[8];
@@ -440,7 +440,7 @@ public class SectionManagerXmlTest extends TestCase {
         expectedForwardStoppingSensors[8] = InstanceManager.sensorManagerInstance().getSensor("ISSSTOPF9");
         expectedReverseStoppingSensors[8] = InstanceManager.sensorManagerInstance().getSensor("ISSSTOPR9");
 
-        sectionstotest[9] = InstanceManager.sectionManagerInstance().getSection("SouthWest");
+        sectionstotest[9] = InstanceManager.getDefault(jmri.SectionManager.class).getSection("SouthWest");
         Assert.assertNotNull(sectionstotest[9]);
         expectedsectionblocklistsize[9] = 1;
         expectedsectionentryblock[9] = blockstotest[9];
@@ -455,7 +455,7 @@ public class SectionManagerXmlTest extends TestCase {
         expectedForwardStoppingSensors[9] = InstanceManager.sensorManagerInstance().getSensor("ISSSTOPF10");
         expectedReverseStoppingSensors[9] = InstanceManager.sensorManagerInstance().getSensor("ISSSTOPR10");
 
-        sectionstotest[10] = InstanceManager.sectionManagerInstance().getSection("West");
+        sectionstotest[10] = InstanceManager.getDefault(jmri.SectionManager.class).getSection("West");
         Assert.assertNotNull(sectionstotest[10]);
         expectedsectionblocklistsize[10] = 1;
         expectedsectionentryblock[10] = blockstotest[10];
@@ -468,7 +468,7 @@ public class SectionManagerXmlTest extends TestCase {
         expectedForwardStoppingSensors[10] = InstanceManager.sensorManagerInstance().getSensor("ISSSTOPF11");
         expectedReverseStoppingSensors[10] = InstanceManager.sensorManagerInstance().getSensor("ISSSTOPR11");
 
-        sectionstotest[11] = InstanceManager.sectionManagerInstance().getSection("WestSiding");
+        sectionstotest[11] = InstanceManager.getDefault(jmri.SectionManager.class).getSection("WestSiding");
         Assert.assertNotNull(sectionstotest[11]);
         expectedsectionblocklistsize[11] = 1;
         expectedsectionentryblock[11] = blockstotest[11];

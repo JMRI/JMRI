@@ -269,9 +269,9 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
         // What services do we have?
         dccServices = BASIC;
-        if (InstanceManager.programmerManagerInstance() != null
-                && InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()) {
-            prog = InstanceManager.programmerManagerInstance().getGlobalProgrammer();
+        if (InstanceManager.getDefault(jmri.ProgrammerManager.class) != null
+                && InstanceManager.getDefault(jmri.ProgrammerManager.class).isGlobalProgrammerAvailable()) {
+            prog = InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer();
             dccServices |= PROG;
         }
         if (InstanceManager.throttleManagerInstance() != null) {
@@ -280,8 +280,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             dccServices |= THROTTLE;
         }
 
-        if (InstanceManager.powerManagerInstance() != null) {
-            pm = InstanceManager.powerManagerInstance();
+        if (InstanceManager.getDefault(jmri.PowerManager.class) != null) {
+            pm = InstanceManager.getDefault(jmri.PowerManager.class);
             pm.addPropertyChangeListener(this);
         }
 

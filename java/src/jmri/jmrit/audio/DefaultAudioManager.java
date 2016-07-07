@@ -162,7 +162,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
                 audioShutDownTask = new QuietShutDownTask("AudioFactory Shutdown") {
                     @Override
                     public boolean execute() {
-                        InstanceManager.audioManagerInstance().cleanUp();
+                        InstanceManager.getDefault(jmri.AudioManager.class).cleanUp();
                         return true;
                     }
                 };

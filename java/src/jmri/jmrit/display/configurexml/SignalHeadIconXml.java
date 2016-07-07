@@ -130,7 +130,7 @@ public class SignalHeadIconXml extends PositionableLabelXml {
             name = attr.getValue();
         }
 
-        SignalHead sh = jmri.InstanceManager.signalHeadManagerInstance().getSignalHead(name);
+        SignalHead sh = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name);
 
         if (sh != null) {
             l.setSignalHead(name);

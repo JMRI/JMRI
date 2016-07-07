@@ -377,7 +377,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
     }
 
     protected void readCV(int cv) {
-        jmri.Programmer p = jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer();
+        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer();
         if (p == null) {
             //statusUpdate("No programmer connected");
         } else {
@@ -435,9 +435,9 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
             f.repaint();
             f.pack();
         }
-        if (jmri.InstanceManager.programmerManagerInstance() != null
-                && jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()) {
-            this.mProgrammer = jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer();
+        if (jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class) != null
+                && jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).isGlobalProgrammerAvailable()) {
+            this.mProgrammer = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer();
         }
 
         cvModel = new CvTableModel(statusLabel, mProgrammer);

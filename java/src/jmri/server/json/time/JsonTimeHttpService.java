@@ -46,7 +46,7 @@ class JsonTimeHttpService extends JsonHttpService {
                 InstanceManager.getDefault(jmri.Timebase.class).setTime(new ISO8601DateFormat().parse(data.path(TIME).asText()));
             }
             if (data.path(RATE).isDouble()) {
-                InstanceManager.clockControlInstance().setRate(data.path(RATE).asDouble());
+                InstanceManager.getDefault(jmri.ClockControl.class).setRate(data.path(RATE).asDouble());
             }
             if (data.path(STATE).isInt()) {
                 InstanceManager.getDefault(jmri.Timebase.class).setRun(data.path(STATE).asInt() == ON);

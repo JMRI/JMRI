@@ -80,8 +80,8 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
      * @param pName Used as a system/user name to lookup the Block object
      */
     public void setBlock(String pName) {
-        if (InstanceManager.blockManagerInstance() != null) {
-            Block block = InstanceManager.blockManagerInstance().
+        if (InstanceManager.getDefault(jmri.BlockManager.class) != null) {
+            Block block = InstanceManager.getDefault(jmri.BlockManager.class).
                     provideBlock(pName);
             if (block != null) {
                 setBlock(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, block));

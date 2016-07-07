@@ -63,7 +63,7 @@ public class JythonSiglet extends Siglet {
 
             set.invoke(interp, new Object[]{"turnouts", InstanceManager.turnoutManagerInstance()});
             set.invoke(interp, new Object[]{"sensors", InstanceManager.sensorManagerInstance()});
-            set.invoke(interp, new Object[]{"signals", InstanceManager.signalHeadManagerInstance()});
+            set.invoke(interp, new Object[]{"signals", InstanceManager.getDefault(jmri.SignalHeadManager.class)});
             set.invoke(interp, new Object[]{"dcc", InstanceManager.getOptionalDefault(jmri.CommandStation.class)});
 
             set.invoke(interp, new Object[]{"CLOSED", Integer.valueOf(jmri.Turnout.CLOSED)});
