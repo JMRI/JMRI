@@ -943,19 +943,19 @@ public class DefaultConditional extends AbstractNamedBean
                         }
                         break;
                     case Conditional.ACTION_SET_FAST_CLOCK_TIME:
-                        Date date = InstanceManager.timebaseInstance().getTime();
+                        Date date = InstanceManager.getDefault(jmri.Timebase.class).getTime();
                         date.setHours(action.getActionData() / 60);
                         date.setMinutes(action.getActionData() - ((action.getActionData() / 60) * 60));
                         date.setSeconds(0);
-                        InstanceManager.timebaseInstance().userSetTime(date);
+                        InstanceManager.getDefault(jmri.Timebase.class).userSetTime(date);
                         actionCount++;
                         break;
                     case Conditional.ACTION_START_FAST_CLOCK:
-                        InstanceManager.timebaseInstance().setRun(true);
+                        InstanceManager.getDefault(jmri.Timebase.class).setRun(true);
                         actionCount++;
                         break;
                     case Conditional.ACTION_STOP_FAST_CLOCK:
-                        InstanceManager.timebaseInstance().setRun(false);
+                        InstanceManager.getDefault(jmri.Timebase.class).setRun(false);
                         actionCount++;
                         break;
                     case Conditional.ACTION_CONTROL_AUDIO:

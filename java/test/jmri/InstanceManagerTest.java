@@ -131,6 +131,7 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
     public void testAutoCreateNotOK() {
         NoAutoCreate obj = InstanceManager.getDefault(NoAutoCreate.class);
         Assert.assertNull(obj);
+        jmri.util.JUnitAppender.assertWarnMessage("getDefault found no default object for type \"jmri.InstanceManagerTest$NoAutoCreate\""); 
     }
 
     /**
@@ -157,9 +158,9 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
         Assert.assertNotNull(InstanceManager.clockControlInstance());
         Assert.assertNotNull(InstanceManager.signalGroupManagerInstance());
         Assert.assertNotNull(InstanceManager.reporterManagerInstance());
-        Assert.assertNotNull(InstanceManager.catalogTreeManagerInstance());
+        Assert.assertNotNull(InstanceManager.getDefault(CatalogTreeManager.class));
         Assert.assertNotNull(InstanceManager.memoryManagerInstance());
-        Assert.assertNotNull(InstanceManager.audioManagerInstance());
+        Assert.assertNotNull(InstanceManager.getDefault(AudioManager.class));
         Assert.assertNotNull(InstanceManager.rosterIconFactoryInstance());
     }
 

@@ -108,7 +108,7 @@ public class BlockEditAction extends BeanEditAction {
             }
         });
         bei.add(reporter);
-        if (jmri.InstanceManager.getDefault(jmri.ReporterManager.class) == null) {
+        if (jmri.InstanceManager.getOptionalDefault(jmri.ReporterManager.class) == null) {
             setEnabled(false);
         }
         return reporter;

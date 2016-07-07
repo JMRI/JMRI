@@ -1,4 +1,3 @@
-// FileHistoryAction.java
 package jmri.jmrit.revhistory.swing;
 
 import java.awt.event.ActionEvent;
@@ -15,7 +14,6 @@ import jmri.util.JmriJFrame;
  * Swing action to display the file revision history
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version $Revision$
  */
 public class FileHistoryAction extends AbstractAction {
 
@@ -34,11 +32,6 @@ public class FileHistoryAction extends AbstractAction {
 
     public void actionPerformed(ActionEvent e) {
         JFrame frame = new JmriJFrame() {
-
-            /**
-             *
-             */
-            private static final long serialVersionUID = 6117481384011187775L;
         };  // JmriJFrame to ensure fits on screen
 
         JTextArea pane = new JTextArea();
@@ -48,7 +41,7 @@ public class FileHistoryAction extends AbstractAction {
         JScrollPane scroll = new JScrollPane(pane);
         frame.getContentPane().add(scroll);
 
-        FileHistory r = InstanceManager.getDefault(FileHistory.class);
+        FileHistory r = InstanceManager.getOptionalDefault(FileHistory.class);
         if (r == null) {
             pane.append("<No History Found>\n");
         } else {
@@ -67,5 +60,3 @@ public class FileHistoryAction extends AbstractAction {
         frame.setVisible(true);
     }
 }
-
-/* @(#)FileHistoryAction.java */

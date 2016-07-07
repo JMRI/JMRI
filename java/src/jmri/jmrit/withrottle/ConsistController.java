@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Brett Hoffman Copyright (C) 2010
- * @version $Revision$
  */
 public class ConsistController extends AbstractController implements ProgListener {
 
@@ -30,7 +29,7 @@ public class ConsistController extends AbstractController implements ProgListene
             manager = new WiFiConsistManager();
             log.debug("Using WiFiConsisting");
         } else {
-            manager = jmri.InstanceManager.getDefault(jmri.ConsistManager.class);
+            manager = jmri.InstanceManager.getOptionalDefault(jmri.ConsistManager.class);
             log.debug("Using JMRIConsisting");
         }
 

@@ -259,15 +259,11 @@ public class LogixTableAction extends AbstractTableAction {
                 return InstanceManager.logixManagerInstance().getByUserName(
                         name);
             }
-            /* public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getMultipleChoiceOption(getClassName(),"deleteInUse"); }
-             public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMultipleChoiceOption(getClassName(), "deleteInUse", boo); }*/
 
             protected String getMasterClassName() {
                 return getClassName();
             }
 
-            /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnLogixInUse(); }
-             public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnLogixInUse(boo); }*/
             public void configureTable(JTable table) {
                 table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
                 table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
@@ -306,21 +302,12 @@ public class LogixTableAction extends AbstractTableAction {
     protected void setTitle() {
         f.setTitle(Bundle.getMessage("TitleLogixTable"));
     }
-    /*    
-     public void addToFrame(BeanTableFrame f) {
-     // Hack into Logix frame to add my junk. (pwc)
-     f.addToBottomBox(extraPanel, this.getClass().getName());
-     }
     
-     */ public void setMenuBar(BeanTableFrame f) {
+    public void setMenuBar(BeanTableFrame f) {
         JMenu menu = new JMenu(Bundle.getMessage("MenuOptions"));
         menu.setMnemonic(KeyEvent.VK_O);
         javax.swing.JMenuBar menuBar = f.getJMenuBar();
-        /*
-         if (InstanceManager.getDefault(jmri.UserPreferencesManager.class) != null)
-         _suppressReminder = InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-         getPreferenceState("beantable.LRouteTableAction.remindRoute");
-         */
+
         ButtonGroup enableButtonGroup = new ButtonGroup();
         JRadioButtonMenuItem r = new JRadioButtonMenuItem(rbx.getString("EnableAll"));
         r.addActionListener(new ActionListener() {
@@ -1198,7 +1185,7 @@ public class LogixTableAction extends AbstractTableAction {
          javax.swing.JOptionPane.INFORMATION_MESSAGE);
          }*/
         if (_showReminder) {
-            if (InstanceManager.getDefault(jmri.UserPreferencesManager.class) != null) {
+            if (InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class) != null) {
                 InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                         showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString", Bundle.getMessage("MenuItemLogixTable")),
                                 getClassName(),
@@ -1343,7 +1330,7 @@ public class LogixTableAction extends AbstractTableAction {
         }
         final Logix x = _logixManager.getBySystemName(sName);
         final jmri.UserPreferencesManager p;
-        p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        p = jmri.InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class);
         if (p != null && p.getMultipleChoiceOption(getClassName(), "delete") == 0x02) {
             if (x != null) {
                 _logixManager.deleteLogix(x);

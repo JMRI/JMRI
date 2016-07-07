@@ -167,8 +167,8 @@ public class DefaultAudioManager extends AbstractAudioManager {
                     }
                 };
             }
-            if (InstanceManager.shutDownManagerInstance() != null) {
-                InstanceManager.shutDownManagerInstance().register(audioShutDownTask);
+            if (InstanceManager.getOptionalDefault(jmri.ShutDownManager.class) != null) {
+                InstanceManager.getDefault(jmri.ShutDownManager.class).register(audioShutDownTask);
             }
 
             initialised = true;

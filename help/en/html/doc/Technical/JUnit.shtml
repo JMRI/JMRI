@@ -346,7 +346,12 @@ runs a specific test or test suite.
       <code>setUp()</code> implementation should start with:</p>
       <pre>
 <code>
-    super.setUp();<br>    apps.tests.Log4JFixture.setUp(); <br>    jmri.util.JUnitUtil.resetInstanceManager();<br>    jmri.util.JUnitUtil.initInternalTurnoutManager();<br>    jmri.util.JUnitUtil.initInternalLightManager();<br>    jmri.util.JUnitUtil.initInternalSensorManager();<br></code>
+    super.setUp();<br>
+    apps.tests.Log4JFixture.setUp(); <br>
+    jmri.util.JUnitUtil.resetInstanceManager();<br>
+    jmri.util.JUnitUtil.initInternalTurnoutManager();<br>
+    jmri.util.JUnitUtil.initInternalLightManager();<br>
+    jmri.util.JUnitUtil.initInternalSensorManager();<br></code>
 </pre>(You can omit the initialization managers you don't need) See
 the jmri.util.JUnitUtil class for the full list of available ones,
 and please add more if you need one that's not there yet.
@@ -354,7 +359,9 @@ and please add more if you need one that's not there yet.
       <p>Your <code>tearDown()</code> should end with:</p>
       <pre>
 <code>
-    jmri.util.JUnitUtil.resetInstanceManager();<br>    apps.tests.Log4JFixture.tearDown(); <br>    super.tearDown();<br></code>
+    jmri.util.JUnitUtil.resetInstanceManager();<br>
+    apps.tests.Log4JFixture.tearDown(); <br>
+    super.tearDown();<br></code>
 </pre>
 
       <h3><a name="RunningListeners">Working
@@ -427,12 +434,15 @@ the condition doesn't come true in a reasonable length of time.
       AbstractAutomat</a>, you can check the start with:</p>
       <pre>
 <code>
-    AbsractAutomat p = new MyThreadClass();<br>    p.start();<br>    JUnitUtil.waitFor(()-&gt;{return p.isRunning();}, "logic running");
+    AbsractAutomat p = new MyThreadClass();<br>
+    p.start();<br>
+    JUnitUtil.waitFor(()-&gt;{return p.isRunning();}, "logic running");
 </code>
 </pre>and ensure termination with
       <pre>
 <code>
-    p.stop();<br>    JUnitUtil.waitFor(()-&gt;{return !p.isRunning();}, "logic stopped");
+    p.stop();<br>
+    JUnitUtil.waitFor(()-&gt;{return !p.isRunning();}, "logic stopped");
 </code>
 </pre>
 
@@ -469,7 +479,11 @@ the condition doesn't come true in a reasonable length of time.
         the directory if necessary. An example is shown here:
           <pre>
 <code>
-    String tempDirectoryName = "temp";<br>    if ( <strong>! (new File(tempDirectoryName).isDirectory())</strong>) {<br>        // create the temp directory if it does not exist<br>        <strong>FileUtil.createDirectory(tempDirectoryName);</strong><br>    }<br></code>
+    String tempDirectoryName = "temp";<br>
+    if ( <strong>! (new File(tempDirectoryName).isDirectory())</strong>) {<br>
+        // create the temp directory if it does not exist<br>
+        <strong>FileUtil.createDirectory(tempDirectoryName);</strong><br>
+    }<br></code>
 </pre>
         </li>
 
@@ -490,7 +504,20 @@ the condition doesn't come true in a reasonable length of time.
         delete the previous file if it exists:
           <pre>
 <code>
-    String filename = tempDirectoryName + File.separator + "testcaseFile.txt";<br>    File file = new File(filename);<br>    <strong>if (file.exists())</strong> {<br>        <strong> try {<br>            file.delete();<br>        } catch (java.lang.Exception e) {<br>            Assert.fail("Exception while trying to delete the existing file " + <br>                    filename + <br>                    ".\n Exception reported: " + <br>                    e.toString());<br>            // perform some appropriate action in this case<br>        }</strong><br>    }<br></code>
+    String filename = tempDirectoryName + File.separator + "testcaseFile.txt";<br>
+    File file = new File(filename);<br>
+    <strong>if (file.exists())</strong> {<br>
+        <strong> try {<br>
+            file.delete();<br>
+        } catch (java.lang.Exception e) {<br>
+            Assert.fail("Exception while trying to delete the existing file " + <br>
+                    filename + <br>
+                    ".\n Exception reported: " + <br>
+                    e.toString());<br>
+            // perform some appropriate action in this case<br>
+        }</strong><br>
+    }<br>
+</code>
 </pre>
         </li>
 
@@ -505,7 +532,13 @@ the condition doesn't come true in a reasonable length of time.
         only when debug logging is not enabled, such as:
           <pre>
 <code>
-    <strong>if (log.isDebugEnabled()) {</strong><br>        log.debug("Path to written hex file is: "+filename);<br>    <strong>}<br>    else {<br>        file.delete();<br>    }</strong><br></code>
+    <strong>if (log.isDebugEnabled()) {</strong><br>
+        log.debug("Path to written hex file is: "+filename);<br>
+    <strong>}<br>
+    else {<br>
+        file.delete();<br>
+    }</strong><br>
+</code>
 </pre>
         </li>
 
@@ -553,7 +586,10 @@ environment.
       tests be enclosed within a mode check:</p>
       <pre>
 <code>
-        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {<br>            suite.addTest(myTest.suite());<br>        }<br></code>
+        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {<br>
+            suite.addTest(myTest.suite());<br>
+        }<br>
+</code>
 </pre>
 
       <p>This will run the myTest suite of tests only when a
@@ -566,7 +602,9 @@ environment.
       parameter to control that:</p>
       <pre>
 <code>
-        if (!System.getProperty("jmri.demo", "false").equals("false")) {<br>            myFrame.setVisible(false);<br>            myFrame.dispose();<br>        }
+        if (!System.getProperty("jmri.demo", "false").equals("false")) {<br>
+            myFrame.setVisible(false);<br>
+            myFrame.dispose();<br>        }
 </code>
 </pre>
 
@@ -634,7 +672,11 @@ environment.
       test class you're having trouble with:</p>
       <pre>
 <code>
-    static public void main(String[] args) {<br>        String[] testCaseName = {"-noloading", LogixTableActionTest.class.getName()};<br>        junit.swingui.TestRunner.main(testCaseName);<br>    }<br></code>
+    static public void main(String[] args) {<br>
+        String[] testCaseName = {"-noloading", LogixTableActionTest.class.getName()};<br>
+        junit.swingui.TestRunner.main(testCaseName);<br>
+    }<br>
+</code>
 </pre>
 
       <p>Please don't leave "-noloading" in place, as it prevents

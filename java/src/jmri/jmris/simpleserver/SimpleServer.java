@@ -1,4 +1,3 @@
-// SimpleServer.java
 package jmri.jmris.simpleserver;
 
 import java.io.DataInputStream;
@@ -21,7 +20,6 @@ import org.slf4j.LoggerFactory;
  * handshaking in this server. You may just start sending commands.
  *
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision$
  *
  */
 public class SimpleServer extends JmriServer {
@@ -29,7 +27,7 @@ public class SimpleServer extends JmriServer {
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmris.simpleserver.SimpleServerBundle");
 
     public static JmriServer instance() {
-        if (InstanceManager.getDefault(SimpleServer.class) == null) {
+        if (InstanceManager.getOptionalDefault(SimpleServer.class) == null) {
             InstanceManager.store(new SimpleServer(),SimpleServer.class);
         }
         return InstanceManager.getDefault(SimpleServer.class);

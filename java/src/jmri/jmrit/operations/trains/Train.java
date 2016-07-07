@@ -1,4 +1,3 @@
-// Train.java
 package jmri.jmrit.operations.trains;
 
 import java.awt.Color;
@@ -48,7 +47,6 @@ import org.slf4j.LoggerFactory;
  *         2014, 2015
  *
  * @author Rodney Black Copyright (C) 2011
- * @version $Revision$
  */
 @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
         justification = "CarManager only provides Car Objects")  // NOI18N
@@ -3369,7 +3367,7 @@ public class Train implements java.beans.PropertyChangeListener {
                     _trainIcon.setLocation(rl.getTrainIconX(), rl.getTrainIconY());
                 }
                 // add throttle if there's a throttle manager
-                if (jmri.InstanceManager.throttleManagerInstance() != null) {
+                if (jmri.InstanceManager.getOptionalDefault(jmri.ThrottleManager.class) != null) {
                     // add throttle if JMRI loco roster entry exist
                     RosterEntry entry = null;
                     if (getLeadEngine() != null) {

@@ -274,12 +274,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             prog = InstanceManager.programmerManagerInstance().getGlobalProgrammer();
             dccServices |= PROG;
         }
-        if (false /*jmri.InstanceManager.commandStationInstance() != null*/) {
-            // We'll use the command station to send explicit speed steps
-            commandStation = InstanceManager.commandStationInstance();
-            log.info("Using CommandStation interface for profiling");
-            dccServices |= COMMAND;
-        } else if (InstanceManager.throttleManagerInstance() != null) {
+        if (InstanceManager.throttleManagerInstance() != null) {
             // otherwise we'll send speed commands
             log.info("Using Throttle interface for profiling");
             dccServices |= THROTTLE;

@@ -267,7 +267,7 @@ public abstract class AppsBase {
         }
         preferenceFileExists = true;
         try {
-            configOK = InstanceManager.configureManagerInstance().load(file);
+            configOK = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).load(file);
             log.debug("end load config file {}, OK={}", file.getName(), configOK);
         } catch (JmriException e) {
             configOK = false;
@@ -298,7 +298,7 @@ public abstract class AppsBase {
             // migrate preferences
             InstanceManager.tabbedPreferencesInstance().init();
             InstanceManager.tabbedPreferencesInstance().saveContents();
-            InstanceManager.configureManagerInstance().storePrefs();
+            InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).storePrefs();
             // notify user of change
             log.info("Preferences have been migrated to new format.");
             log.info("New preferences format will be used after JMRI is restarted.");
@@ -312,7 +312,7 @@ public abstract class AppsBase {
             log.debug("start deferred load from config file " + file.getName());
         }
         try {
-            result = InstanceManager.configureManagerInstance().loadDeferred(file);
+            result = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).loadDeferred(file);
         } catch (JmriException e) {
             log.error("Unhandled problem loading deferred configuration: " + e);
             result = false;
@@ -350,7 +350,7 @@ public abstract class AppsBase {
     protected void addDefaultShutDownTasks() {
         // add the default shutdown task to save blocks
         // as a special case, register a ShutDownTask to write out blocks
-        InstanceManager.shutDownManagerInstance().
+        InstanceManager.getDefault(jmri.ShutDownManager.class).
                 register(new AbstractShutDownTask("Writing Blocks") {
 
                     public boolean execute() {
@@ -444,7 +444,7 @@ public abstract class AppsBase {
     static public boolean handleQuit() {
         log.debug("Start handleQuit");
         try {
-            return InstanceManager.shutDownManagerInstance().shutdown();
+            return InstanceManager.getDefault(jmri.ShutDownManager.class).shutdown();
         } catch (Exception e) {
             log.error("Continuing after error in handleQuit", e);
         }
@@ -457,7 +457,7 @@ public abstract class AppsBase {
     static public boolean handleRestart() {
         log.debug("Start handleRestart");
         try {
-            return InstanceManager.shutDownManagerInstance().restart();
+            return InstanceManager.getDefault(jmri.ShutDownManager.class).restart();
         } catch (Exception e) {
             log.error("Continuing after error in handleRestart", e);
         }

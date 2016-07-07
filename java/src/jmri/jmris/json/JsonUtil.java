@@ -1096,9 +1096,9 @@ public class JsonUtil {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, TIME);
         ObjectNode data = root.putObject(DATA);
-        data.put(TIME, new ISO8601DateFormat().format(InstanceManager.timebaseInstance().getTime()));
-        data.put(RATE, InstanceManager.timebaseInstance().getRate());
-        data.put(STATE, InstanceManager.timebaseInstance().getRun() ? ON : OFF);
+        data.put(TIME, new ISO8601DateFormat().format(InstanceManager.getDefault(jmri.Timebase.class).getTime()));
+        data.put(RATE, InstanceManager.getDefault(jmri.Timebase.class).getRate());
+        data.put(STATE, InstanceManager.getDefault(jmri.Timebase.class).getRun() ? ON : OFF);
         return root;
     }
 
@@ -1106,13 +1106,13 @@ public class JsonUtil {
     static public void setTime(Locale locale, JsonNode data) throws JsonException {
         try {
             if (data.path(TIME).isTextual()) {
-                InstanceManager.timebaseInstance().setTime(new ISO8601DateFormat().parse(data.path(TIME).asText()));
+                InstanceManager.getDefault(jmri.Timebase.class).setTime(new ISO8601DateFormat().parse(data.path(TIME).asText()));
             }
             if (data.path(RATE).isDouble()) {
                 InstanceManager.clockControlInstance().setRate(data.path(RATE).asDouble());
             }
             if (data.path(STATE).isInt()) {
-                InstanceManager.timebaseInstance().setRun(data.path(STATE).asInt() == ON);
+                InstanceManager.getDefault(jmri.Timebase.class).setRun(data.path(STATE).asInt() == ON);
             }
         } catch (ParseException ex) {
             log.error("Time \"{}\" not in ISO 8601 date format", data.path(TIME).asText());

@@ -111,8 +111,6 @@ public class SectionTableAction extends AbstractTableAction {
                 return jmri.InstanceManager.sectionManagerInstance().getByUserName(name);
             }
 
-            /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getMultipleChoiceOption(getClassName(),"delete"); }
-             public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMultipleChoiceOption(getClassName(), "delete", boo); }*/
             protected String getMasterClassName() {
                 return getClassName();
             }

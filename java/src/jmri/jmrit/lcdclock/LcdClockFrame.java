@@ -56,7 +56,7 @@ public class LcdClockFrame extends JmriJFrame implements java.beans.PropertyChan
     public LcdClockFrame() {
         super(Bundle.getMessage("MenuItemLcdClock"));
 
-        clock = InstanceManager.timebaseInstance();
+        clock = InstanceManager.getDefault(jmri.Timebase.class);
 
         //Load the images (these are now the larger version of the original gifs
         for (int i = 0; i < 10; i++) {
@@ -81,7 +81,7 @@ public class LcdClockFrame extends JmriJFrame implements java.beans.PropertyChan
         // enabled.  When the Run/Stop button is enabled, the layout will have to be changed
         aspect = (4.5 * 24.) / 32.;
 
-        // listen for changes to the timebase parameters
+        // listen for changes to the Timebase parameters
         clock.addPropertyChangeListener(this);
 
         // init GUI

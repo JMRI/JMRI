@@ -176,7 +176,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         super.setDefaultToolTip(new ToolTip(null, 0, 0, new Font("Serif", Font.PLAIN, 12),
                 Color.black, new Color(255, 250, 210), Color.black));
         // register the resulting panel for later configuration
-        InstanceManager.configureManagerInstance().registerUser(this);
+        InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerUser(this);
         pack();
         setVisible(true);
         class makeCatalog extends SwingWorker<CatalogPanel, Object> {

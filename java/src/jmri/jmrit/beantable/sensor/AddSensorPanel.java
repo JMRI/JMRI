@@ -20,8 +20,7 @@ import org.slf4j.LoggerFactory;
  * JPanel to create a new Sensor
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @deprecated Replaced by
- * {@link jmri.jmrit.beantable.AddNewHardwareDevicePanel}
+ * @deprecated Replaced by {@link jmri.jmrit.beantable.AddNewHardwareDevicePanel}
  */
 @Deprecated
 public class AddSensorPanel extends jmri.util.swing.JmriPanel {
@@ -228,6 +227,3 @@ public class AddSensorPanel extends jmri.util.swing.JmriPanel {
 
     private final static Logger log = LoggerFactory.getLogger(AddSensorPanel.class.getName());
 }
-
-
-/* @(#)AddSensorPanel.java */

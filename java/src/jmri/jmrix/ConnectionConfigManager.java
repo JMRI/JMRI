@@ -191,14 +191,14 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
     }
 
     public String[] getConnectionTypes(String manufacturer) {
-        if (InstanceManager.getDefault(ConnectionTypeManager.class) == null) {
+        if (InstanceManager.getOptionalDefault(ConnectionTypeManager.class) == null) {
             InstanceManager.setDefault(ConnectionTypeManager.class, new ConnectionTypeManager());
         }
         return InstanceManager.getDefault(ConnectionTypeManager.class).getConnectionTypes(manufacturer);
     }
 
     public String[] getConnectionManufacturers() {
-        if (InstanceManager.getDefault(ConnectionTypeManager.class) == null) {
+        if (InstanceManager.getOptionalDefault(ConnectionTypeManager.class) == null) {
             InstanceManager.setDefault(ConnectionTypeManager.class, new ConnectionTypeManager());
         }
         return InstanceManager.getDefault(ConnectionTypeManager.class).getConnectionManufacturers();

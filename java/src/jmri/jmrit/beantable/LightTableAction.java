@@ -255,9 +255,6 @@ public class LightTableAction extends AbstractTableAction {
                 return lightManager.getByUserName(name);
             }
 
-            /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnLightInUse(); }
-             public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnLightInUse(boo); }*/
-
             protected String getMasterClassName() {
                 return getClassName();
             }

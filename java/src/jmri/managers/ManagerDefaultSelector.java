@@ -145,9 +145,6 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
     public void configure() {
         log.debug("configure defaults into InstanceManager");
         List<SystemConnectionMemo> connList = InstanceManager.getList(SystemConnectionMemo.class);
-        if (connList == null) {
-            return; // nothing to do 
-        }
         for (Class<?> c : defaults.keySet()) {
             // 'c' is the class to load
             String connectionName = this.defaults.get(c);
@@ -215,7 +212,7 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
                 log.info("Unable to read preferences for Default Selector.");
             }
             this.configure();
-            InstanceManager.configureManagerInstance().registerPref(this); // allow ProfileConfig.xml to be written correctly
+            InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerPref(this); // allow ProfileConfig.xml to be written correctly
             this.setInitialized(profile, true);
         }
     }

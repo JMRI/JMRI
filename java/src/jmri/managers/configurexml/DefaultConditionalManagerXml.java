@@ -385,7 +385,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
         }
         // if old manager exists, remove it from configuration process
         if (InstanceManager.conditionalManagerInstance() != null) {
-            InstanceManager.configureManagerInstance().deregister(
+            InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).deregister(
                     InstanceManager.conditionalManagerInstance());
         }
         // register new one with InstanceManager

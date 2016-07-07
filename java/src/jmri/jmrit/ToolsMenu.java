@@ -81,7 +81,7 @@ public class ToolsMenu extends JMenu {
         add(throttleMenu);
 
         // disable the throttle menu if there is no throttle Manager
-        if (jmri.InstanceManager.throttleManagerInstance() == null) {
+        if (jmri.InstanceManager.getOptionalDefault(jmri.ThrottleManager.class) == null) {
             throttleMenu.setEnabled(false);
         }
 
@@ -90,7 +90,7 @@ public class ToolsMenu extends JMenu {
         add(consistAction);
 
         // disable the consist tool if there is no consist Manager
-        if (jmri.InstanceManager.getDefault(jmri.ConsistManager.class) == null) {
+        if (jmri.InstanceManager.getOptionalDefault(jmri.ConsistManager.class) == null) {
             consistAction.setEnabled(false);
         }
 

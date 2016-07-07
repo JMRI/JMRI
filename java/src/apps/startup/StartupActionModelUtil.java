@@ -32,7 +32,7 @@ public class StartupActionModelUtil extends Bean {
      */
     @Nonnull
     static public StartupActionModelUtil getDefault() {
-        StartupActionModelUtil instance = InstanceManager.getDefault(StartupActionModelUtil.class);
+        StartupActionModelUtil instance = InstanceManager.getOptionalDefault(StartupActionModelUtil.class);
         if (instance == null) {
             instance = new StartupActionModelUtil();
             InstanceManager.setDefault(StartupActionModelUtil.class, instance);

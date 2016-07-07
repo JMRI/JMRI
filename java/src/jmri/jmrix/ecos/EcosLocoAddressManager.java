@@ -15,6 +15,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import jmri.ConfigureManager;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
 import jmri.jmrit.roster.Roster;
@@ -30,7 +31,6 @@ import org.slf4j.LoggerFactory;
  * Managers the Ecos Loco entries within JMRI.
  *
  * @author Kevin Dickerson
- * @version $Revision$
  */
 public class EcosLocoAddressManager extends jmri.managers.AbstractManager implements java.beans.PropertyChangeListener, EcosListener, jmri.Manager {
 
@@ -221,8 +221,8 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                 }
             };
         }
-        if (jmri.InstanceManager.shutDownManagerInstance() != null) {
-            jmri.InstanceManager.shutDownManagerInstance().register(ecosLocoShutDownTask);
+        if (jmri.InstanceManager.getOptionalDefault(jmri.ShutDownManager.class) != null) {
+            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(ecosLocoShutDownTask);
         }
     }
 
@@ -286,8 +286,8 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
     }
 
     private boolean disposefinal() {
-        if (jmri.InstanceManager.configureManagerInstance() != null) {
-            jmri.InstanceManager.configureManagerInstance().deregister(this);
+        if (jmri.InstanceManager.getOptionalDefault(ConfigureManager.class) != null) {
+            jmri.InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).deregister(this);
         }
         _tecos.clear();
         _tdcc.clear();

@@ -806,6 +806,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
 
         // check signal head exists
         if (sh == null && InstanceManager.signalHeadManagerInstance().getSignalHead(outSignalField.getText()) == null) {
+            // head not exist, just title the window and leave
             setTitle(rbt.getString("Simple_Signal_Logic"));
             return;
         }
@@ -816,10 +817,6 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
             b = BlockBossLogic.getExisting(sh);
         } else {
             b = BlockBossLogic.getExisting(outSignalField.getText());
-        }
-        if (b == null) {
-            setTitle(rbt.getString("Simple_Signal_Logic"));
-            return;
         }
 
         setTitle(rbt.getString("Signal_logic_for_") + " " + outSignalField.getText());

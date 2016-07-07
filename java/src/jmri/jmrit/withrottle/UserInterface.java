@@ -1,13 +1,5 @@
 package jmri.jmrit.withrottle;
 
-/**
- * UserInterface.java Create a window for WiThrottle information, advertise
- * service, and create a thread for it to run in.
- *
- * @author Brett Hoffman Copyright (C) 2009, 2010
- * @author Randall Wood Copyright (C) 2013
- * @version $Revision$
- */
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
@@ -49,13 +41,18 @@ import jmri.util.zeroconf.ZeroConfServiceListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-//	listen() has to run in a separate thread.
+/**
+ * UserInterface.java Create a window for WiThrottle information, advertise
+ * service, and create a thread for it to run in.
+ *
+ *	listen() has to run in a separate thread.
+ *
+ * @author Brett Hoffman Copyright (C) 2009, 2010
+ * @author Randall Wood Copyright (C) 2013
+ * @version $Revision$
+ */
 public class UserInterface extends JmriJFrame implements DeviceListener, DeviceManager, ZeroConfServiceListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8012190396840569066L;
     private final static Logger log = LoggerFactory.getLogger(UserInterface.class.getName());
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.withrottle.WiThrottleBundle");
 
@@ -376,7 +373,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
 
     @Override
     protected void setShutDownTask() {
-        if (jmri.InstanceManager.shutDownManagerInstance() != null) {
+        if (jmri.InstanceManager.getOptionalDefault(jmri.ShutDownManager.class) != null) {
             task = new jmri.implementation.AbstractShutDownTask(getTitle()) {
                 @Override
                 public boolean execute() {
@@ -384,7 +381,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
                     return true;
                 }
             };
-            jmri.InstanceManager.shutDownManagerInstance().register(task);
+            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(task);
         }
     }
 

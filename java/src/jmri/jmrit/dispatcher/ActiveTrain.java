@@ -900,7 +900,7 @@ public class ActiveTrain {
         setStatus(READY);
         restartPoint = true;
         if (getDelayedRestart() == TIMEDDELAY) {
-            Date now = jmri.InstanceManager.timebaseInstance().getTime();
+            Date now = jmri.InstanceManager.getDefault(jmri.Timebase.class).getTime();
             @SuppressWarnings("deprecation")
             int nowHours = now.getHours();
             @SuppressWarnings("deprecation")

@@ -1,4 +1,3 @@
-// SpeedometerFrame.java
 package jmri.jmrit.speedometer;
 
 import java.awt.FlowLayout;
@@ -41,14 +40,9 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2001, 2004, 2007
  * @author Adapted for metric system - S.K. Bosch
  * @author Matthew Harris Copyright (c) 2011
- * @version	$Revision$
  */
 public class SpeedometerFrame extends jmri.util.JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8321031366797967218L;
     final String blank = "       ";
     JTextField startSensor = new JTextField(5);
     javax.swing.ButtonGroup startGroup = new javax.swing.ButtonGroup();
@@ -122,7 +116,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
     public SpeedometerFrame() {
         super(false, false);
         //Install the named bean handle if not installed, which can happen if opened from DP3
-        if (jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class) == null) {
+        if (jmri.InstanceManager.getOptionalDefault(jmri.NamedBeanHandleManager.class) == null) {
             jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
         }
 

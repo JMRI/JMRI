@@ -15,6 +15,7 @@ import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBean;
@@ -114,8 +115,8 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
     public int turnoutSetDelay = 0;
 
     public EntryExitPairs() {
-        if (InstanceManager.configureManagerInstance() != null) {
-            InstanceManager.configureManagerInstance().registerUser(this);
+        if (InstanceManager.getOptionalDefault(ConfigureManager.class) != null) {
+            InstanceManager.getDefault(ConfigureManager.class).registerUser(this);
         }
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).addPropertyChangeListener(propertyBlockManagerListener);
 

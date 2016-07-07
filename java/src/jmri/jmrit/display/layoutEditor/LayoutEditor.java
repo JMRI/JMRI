@@ -751,7 +751,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         helpBar.setVisible(false);
 
         // register the resulting panel for later configuration
-        InstanceManager.configureManagerInstance().registerUser(this);
+        InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerUser(this);
         // confirm that panel hasn't already been loaded
         if (jmri.jmrit.display.PanelMenu.instance().isPanelNameUsed(name)) {
             log.warn("File contains a panel with the same name (" + name + ") as an existing panel");

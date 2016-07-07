@@ -388,8 +388,8 @@ public class ZeroConfService {
             } catch (IOException ex) {
                 log.warn("Unable to create JmDNS with error: {}", ex.getMessage(), ex);
             }
-            if (InstanceManager.shutDownManagerInstance() != null) {
-                InstanceManager.shutDownManagerInstance().register(ZeroConfService.shutDownTask);
+            if (InstanceManager.getOptionalDefault(jmri.ShutDownManager.class) != null) {
+                InstanceManager.getDefault(jmri.ShutDownManager.class).register(ZeroConfService.shutDownTask);
             }
         }
         return new HashMap<>(ZeroConfService.netServices);
