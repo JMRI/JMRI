@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
-<!--Translated by Herv&#233; Blorec le 2013-09-03 -->
+<!--Translated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-06 -->
 <html lang="fr">
 <head>
     <TITLE>
@@ -35,49 +35,116 @@
 
 <H1>JMRI: Int&#233;gration Continue</H1>
 
-L'"Int&#233;gration Continue" est le proc&#233;d&#233; de reconstruction d'un syst&#232;me &#224; chaque fois qu'il change, de sorte que vous d&#233;couvrez rapidement les nouveaux probl&#232;mes et &#234;tes motiv&#233;s pour supprimer ceux existants
+L'"Int&#233;gration Continue" est le proc&#233;d&#233; de reconstruction 
+d'un syst&#232;me &#224; chaque fois qu'il change, de sorte que vous d&#233;couvrez rapidement 
+les nouveaux probl&#232;mes et &#234;tes motiv&#233;s pour supprimer ceux existants
+
 <p>
-JMRI utilise la machine d'int&#233;gration continue 
+Le c&#339;ur de notre syst&#232;me est une s&#233;rie de t&#226;che
+<a href="">Jenkins</a>
+qui construit d'une mani&#232;re routini&#232;re le code, ex&#233;cute les v&#233;rifications,
+et cr&#233;e les installateurs t&#233;l&#233;chargeables. Cela signifie que nous pouvons
+et mettons tr&#232;s rapidement des changements dans nos mains d'utilisateurs.
+
+<p>
+Nous utilisons aussi deux machines CI pour tester chaque changement
+entr&#233; dans notre r&#233;pertoire de code GitHub.
+
+<h2> Travis CI</h2>
+
+Nous utilisons
+<a href="https://travis-ci.org/">Travis CI</a>
+pour faire l'int&#233;gration/test construits sur Linux pour chaque ajout  dans nos 
+r&#233;pertoires <a href="http://github.com/JMRI">GitHub</a>
+<p>
+Travis normalement construit chaque branche qui contient un fichier .travis.yml.
+L'historique de construction pour le r&#233;f&#233;rentiel principal JMRI est &#224; 
+<a href="https://travis-ci.org/JMRI/JMRI">https://travis-ci.org/JMRI/JMRI</a>.
+<p>
+Normalement Travis ex&#233;cute les v&#233;rifications pour des fins de ligne valides, la v&#233;rification de caract&#232;res ASCII correctes,
+suivi par la construction du code et de l'ex&#233;cution des tests de routine "AllTest". Un tampon d'&#233;cran ( pas un vrai &#233;cran )
+est utilis&#233; pour tous les tests GUI.  
+<p>
+Vous pouvez ainsi activer Travis CI pour votre fourche (R&#233;f&#233;rentiel GitHub personnelle).
+Apr&#232;s la fusion JMRI/master dans votre propre fourche, 
+permettre &#224; Travis CI de surveiller votre fourche, et il va commencer &#224; tester votre prochaine sortie pour GitHub.
+Suivez les instructions sur <a href="https://travis-ci.org/">Travis CI</a> pour configurer vos fourches.
+<p>
+Vous pouvez emp&#234;cher un Travis CI de s'ex&#233;cuter apr&#232;s un e soumission sp&#233;cifique en 
+incluant  &quot;[ci skip]&quot; ( incluant les crochets mais pas les guillemets ) 
+n'importe o&#249; dans le message de soumission si on le d&#233;sire.
+
+<h2>AppVeyor CI</h2>
+
+Nous utilisons
+<a href="http://www.appveyor.com">AppVeyor CI</a>
+pour faire l'int&#233;gration/test construits sur Windows pour chaque ajout dans nos 
+r&#233;pertoires <a href="http://github.com/JMRI">GitHub</a>
+<p>
+AppVeyor normalement construit chaque branche qui contient un fichier .AppVeyor.yml.
+L'historique de construction pour le r&#233;f&#233;rentiel principal JMRI est &#224; 
+<a href="https://ci.appveyor.com/project/JMRI/jmri">https://ci.appveyor.com/project/JMRI/jmri</a>.
+<p>
+AppVeyor ex&#233;cute normalement les contr&#244;les propri&#233;t&#233;-fichiers ( pour les cibles dupliqu&#233;es et autres erreurs ),
+suivi par la construction du code et l'ex&#233;cution des routines de test "AllTest". Un tampon d'&#233;cran ( pas un vrai &#233;cran )
+est utilis&#233;pour tous les tests GUI.  
+<p>
+Bien qu'il soit possible de permettre &#224; AppVeyor de construire des soumissions pour votre propre fourche sur les 
+r&#233;f&#233;rentiels JMRI, c'est un peu plus compliqu&#233; de le faire au sein du mod&#232;le de s&#233;curit&#233; de AppVeyor.
+
+<h2><h2 id="jenkins">Jenkins</h2>
+JMRI utilise la machine d'int&#233;gration continue
 <a href="http://jenkins-ci.org/">Jenkins</a>
-pour ceci.
+pour l'int&#233;gration et les tests de constructions.
+Ceci inclut la conservation de notre <a href="WebSite.shtml">site web</a> &#224; jour des changements qui sont soumis, 
+de la construction de paquets d'installation depuis la construction en d&#233;velopppement, 
+et de la construction des versions finales.
+<p>
+Notre machine Jenkins primaire est &#224;
+<a href="http://jmri.tagadab.com/jenkins/">http://jmri.tagadab.com/jenkins/</a>, avec
+la machine originale &#224;
+<a href="http://builds.jmri.org/jenkins/">http://builds.jmri.org/jenkins/</a>
+et une machine secondaire &#224; 
+<a href="https://jmri.ci.cloudbees.com">https://jmri.ci.cloudbees.com</a>.
+<p>
+L'inter&#234;t des r&#233;sultats sp&#233;cifiques Jenkins
+<ul>
+
+<li>La page <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/">Constructions</a>
+montrant l'&#233;tat des constructions fait apr&#232;s chaque s&#233;rie de soumissions.
+Les constructions r&#233;ussies sont suivies par les constructions d'installateurs via la 
+t&#226;che <a href="http://jmri.tagadab.com/jenkins/view/All/job/Development/job/Packages">Paquets<a>
+
+<li>La page <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Findbugs/">FindBugs</a>
+montrant l'&#233;tat du test le plus extensif
+<a href="FindBugs.shtml">FindBugs</a> fait p&#233;riodiquement.Il y a aussi les pages des 
+<a href="http://jmri.tagadab.com/jenkins/job/Development/job/Findbugs/changes">Plus r&#233;cents changements<a> et le
+<a href="http://jmri.tagadab.com/jenkins/job/Development/job/Findbugs/lastBuild/">Les r&#233;sultats les plus r&#233;cents<a>.
 <p>
 
-Les r&#233;sultats sp&#233;cifiques int&#233;ressants:
-<ul><li><a href="http://builds.jmri.org/jenkins/job/Development/">Page D&#233;veloppement</a> page qui donne une ligne de statut
- montrant l'&#233;tat des constructions fait apr&#232;s chaque s&#233;rie de validations.
-Il y aussi les pages des 
-<a href="http://builds.jmri.org/jenkins/view/All/job/Development/job/Packages/changes">plus r&#233;cents changements</a>, 
-de <a href="http://builds.jmri.org/jenkins/job/Development/job/Builds/lastBuild/">la plupart des r&#233;sultats</a>
-<li> La page <a href="https://jmri.ci.cloudbees.com/job/Development/job/FindBugs/">FindBugs</a>, 
-&#233;tat montrant les tests les plus extensifs faits p&#233;riodiquement.
-Il y a aussi les pages des 
-<a href="https://jmri.ci.cloudbees.com/job/Development/job/FindBugs/changes">plus r&#233;cents changements<a> et les
-<a href="https://jmri.ci.cloudbees.com/job/Development/job/FindBugs/lastBuild/">r&#233;sultats les plus r&#233;cents<a>.
+Pour avoir plus d'informations sur l'usage de FindBugs par JMRI, voir la
+<a href="FindBugs.shtml">page s&#233;par&#233;e FindBugs</a>
+</ul
 
-<p>
-<!-- Apparemment liens cass&#233;s au 2013-09-03, except&#233; la page d&#233;veloppement et Jenkings</p><p> -->
-<!-- Liens r�par�s le 30-Mai-2014 - Alain LM -->
-Pour plus d'information sur l'usage de FindBugs par JMRI, voir la <a href="FindBugs.shtml">page s&#233;par&#233;e FindBugs</a>.
-</ul>
-
-<h2>Int&#233;gration avec NetBeans</h2>
+<h3>Int&#233;gration avec NetBeans</h3>
 <p>Si vous d&#233;veloppez dans un environnement <a href="NetBeans.shtml">NetBeans 7.0</a> ,
 il est possible d'int&#233;grer les retour d'information dans la machine d'Int&#233;gration Continue Jenkins (CI).
-<p>Dans l'environnement NetBeans, il est fait r&#233;f&#233;rence la machine d'Int&#233;gration Continue Hudson - Jenkins est une <a href="http://en.wikipedia.org/wiki/Fork_(software_development)">"branche"</a>
+<p>Dans l'environnement NetBeans, il est fait r&#233;f&#233;rence la machine d'Int&#233;gration Continue Hudson - Jenkins est une <a 
+href="http://en.wikipedia.org/wiki/Fork_(software_development)">"branche"</a>
 du code Hudson et supporte le  m&#234;me <a href="http://en.wikipedia.org/wiki/API">API</a>.
 <h3>Int&#233;gration</h3>
 <p>L'int&#233;gration dans NetBeans s'ach&#232;ve en ex&#233;cutant les &#233;tapes suivantes:
 <ol>
 <li>Ouvrir NetBeans
-<li>Basculer sur la fenêtre "Services" (Raccourci clavier "Ctrl+5")
+<li>Basculer sur la fen&#234;tre "Services" (Raccourci clavier "Ctrl+5")
 <li>Clic-Droit (Ctrl-clic sur Mac) sur l'entr&#233;e "Constructeurs Hudson" et choisir "Add Hudson Instance..."
     <p><img src="images/NetBeansJenkinsAdd.png" width="342" height="134" alt="Add Hudson Instance...">
-<li>
-Dans la r&#233;sultat d&#233;roulant, compl&#233;ter les rubriques suivantes:
+<li>Dans la r&#233;sultat d&#233;roulant, compl&#233;ter les rubriques suivantes:
     <dl>
     <dt>Name</dt><dd>JMRI</dd>
     <dt>URL</dt><dd>http://builds.jmri.org/jenkins/</dd>
-    <dt>Auto refresh every X minutes</dt><dd>60 (changer la valeur de 5 par d&#233;faut pour &#233;viter de surcharger le serveur CI)</dd>
+    <dt>Auto refresh every X minutes</dt><dd>60 (changer la valeur de 5 par d&#233;faut pour &#233;viter de surcharger le serveur CI)
+	</dd>
     </dl>
     <img src="images/NetBeansJenkinsAddDialog.png" width="453" height="240" alt="Add Hudson Instance dialog">
 </ol>
@@ -91,4 +158,3 @@ Dans la r&#233;sultat d&#233;roulant, compl&#233;ter les rubriques suivantes:
 	</div> <!-- closes #mBody-->
 </body>
 </html>
-
