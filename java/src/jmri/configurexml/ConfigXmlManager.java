@@ -330,7 +330,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
 
     protected void includeHistory(Element root) {
         // add history to end of document
-        if (InstanceManager.getDefault(FileHistory.class) != null) {
+        if (InstanceManager.getOptionalDefault(FileHistory.class) != null) {
             root.addContent(jmri.jmrit.revhistory.configurexml.FileHistoryXml.storeDirectly(InstanceManager.getDefault(FileHistory.class)));
         }
     }
@@ -487,9 +487,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      *
      * @param o The object to get an XML representation of
      * @return An XML element representing o
-     * @deprecated
      */
-    @Deprecated
     static public Element elementFromObject(Object o) {
         return ConfigXmlManager.elementFromObject(o, true);
     }
@@ -792,7 +790,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
          handler.done();
          }*/
         // loading complete, as far as it got, make history entry
-        FileHistory r = InstanceManager.getDefault(FileHistory.class);
+        FileHistory r = InstanceManager.getOptionalDefault(FileHistory.class);
         if (r != null) {
             FileHistory included = null;
             if (root != null) {
