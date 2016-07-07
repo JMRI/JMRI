@@ -70,7 +70,7 @@ public class TransitCreationTool {
     }
 
     public Transit createTransit() throws JmriException {
-        TransitManager tm = InstanceManager.transitManagerInstance();
+        TransitManager tm = InstanceManager.getDefault(jmri.TransitManager.class);
         String transitName = "From " + list.get(0).getDisplayName() + " to " + list.get(list.size() - 1).getDisplayName();
         Transit t = tm.createNewTransit(transitName);
         if (t == null) {

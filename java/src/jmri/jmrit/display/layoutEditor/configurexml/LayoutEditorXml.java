@@ -593,7 +593,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
 
         // register the resulting panel for later configuration
         InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerUser(panel);
-        if (jmri.InstanceManager.transitManagerInstance().getSystemNameList().size() > 0) {
+        if (jmri.InstanceManager.getDefault(jmri.TransitManager.class).getSystemNameList().size() > 0) {
             if (shared.getAttribute("openDispatcher") != null) {
                 if (shared.getAttribute("openDispatcher").getValue().equals("yes")) {
                     panel.setOpenDispatcherOnLoad(true);

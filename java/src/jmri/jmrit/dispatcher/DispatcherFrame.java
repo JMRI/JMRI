@@ -131,7 +131,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             = new ArrayList<java.beans.PropertyChangeListener>();
     private ArrayList<ActiveTrain> delayedTrains = new ArrayList<ActiveTrain>();  // list of delayed Active Trains
     private ArrayList<ActiveTrain> restartingTrainsList = new ArrayList<ActiveTrain>();  // list of Active Trains with restart requests
-    private TransitManager transitManager = InstanceManager.transitManagerInstance();
+    private TransitManager transitManager = InstanceManager.getDefault(jmri.TransitManager.class);
     private ArrayList<AllocationRequest> allocationRequests = new ArrayList<AllocationRequest>();  // List of AllocatedRequest objects
     private ArrayList<AllocatedSection> allocatedSections = new ArrayList<AllocatedSection>();  // List of AllocatedSection objects
     private boolean optionsRead = false;

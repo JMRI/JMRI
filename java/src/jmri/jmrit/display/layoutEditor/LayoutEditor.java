@@ -1764,7 +1764,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         dispMenu.add(newTrainItem);
         newTrainItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                if (jmri.InstanceManager.transitManagerInstance().getSystemNameList().size() <= 0) {
+                if (jmri.InstanceManager.getDefault(jmri.TransitManager.class).getSystemNameList().size() <= 0) {
                     // Inform the user that there are no Transits available, and don't open the window
                     javax.swing.JOptionPane.showMessageDialog(null, ResourceBundle.getBundle("jmri.jmrit.dispatcher.DispatcherBundle").getString("NoTransitsMessage"));
                     return;

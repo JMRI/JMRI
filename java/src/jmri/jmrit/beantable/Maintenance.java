@@ -768,7 +768,7 @@ public class Maintenance {
         tempText = new StringBuffer();
         found = false;
         empty = true;
-        jmri.TransitManager transitManager = InstanceManager.transitManagerInstance();
+        jmri.TransitManager transitManager = InstanceManager.getDefault(jmri.TransitManager.class);
         iter1 = transitManager.getSystemNameList().iterator();
         while (iter1.hasNext()) {
             // get the next Logix
@@ -870,7 +870,7 @@ public class Maintenance {
         jmri.SectionManager sectionManager = InstanceManager.sectionManagerInstance();
         java.util.List<String> sysNameList = sectionManager.getSystemNameList();
 
-        transitManager = InstanceManager.transitManagerInstance();
+        transitManager = InstanceManager.getDefault(jmri.TransitManager.class);
         iter1 = transitManager.getSystemNameList().iterator();
         while (iter1.hasNext()) {
             // get the next Logix

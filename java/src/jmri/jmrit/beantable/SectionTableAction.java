@@ -1075,7 +1075,7 @@ public class SectionTableAction extends AbstractTableAction {
         if (s.getUserName() != null && s.getUserName().length() > 0) {
             fullName = fullName + "(" + s.getUserName() + ")";
         }
-        ArrayList<Transit> affectedTransits = jmri.InstanceManager.transitManagerInstance().getListUsingSection(s);
+        ArrayList<Transit> affectedTransits = jmri.InstanceManager.getDefault(jmri.TransitManager.class).getListUsingSection(s);
         final JDialog dialog = new JDialog();
         String msg = "";
         dialog.setTitle(Bundle.getMessage("WarningTitle"));

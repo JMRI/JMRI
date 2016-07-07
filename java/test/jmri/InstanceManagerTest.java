@@ -149,7 +149,7 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
         Assert.assertNotNull(InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class));
         Assert.assertNotNull(InstanceManager.getDefault(WarrantManager.class));
         Assert.assertNotNull(InstanceManager.sectionManagerInstance());
-        Assert.assertNotNull(InstanceManager.transitManagerInstance());
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.TransitManager.class));
         Assert.assertNotNull(InstanceManager.routeManagerInstance());
         Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class));
         Assert.assertNotNull(InstanceManager.conditionalManagerInstance());

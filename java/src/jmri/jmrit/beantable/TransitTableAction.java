@@ -69,7 +69,7 @@ public class TransitTableAction extends AbstractTableAction {
     public TransitTableAction(String actionName) {
         super(actionName);
         // set manager - no need to use InstanceManager here
-        transitManager = jmri.InstanceManager.transitManagerInstance();
+        transitManager = jmri.InstanceManager.getDefault(jmri.TransitManager.class);
         // disable ourself if there is no Transit manager available
         if (sectionManager == null) {
             setEnabled(false);
@@ -98,7 +98,7 @@ public class TransitTableAction extends AbstractTableAction {
                     log.warn("requested getValue(null)");
                     return "(no name)";
                 }
-                Transit z = InstanceManager.transitManagerInstance().getBySystemName(name);
+                Transit z = InstanceManager.getDefault(jmri.TransitManager.class).getBySystemName(name);
                 if (z == null) {
                     log.debug("requested getValue(\"" + name + "\"), Transit doesn't exist");
                     return "(no Transit)";
@@ -107,15 +107,15 @@ public class TransitTableAction extends AbstractTableAction {
             }
 
             public Manager getManager() {
-                return InstanceManager.transitManagerInstance();
+                return InstanceManager.getDefault(jmri.TransitManager.class);
             }
 
             public NamedBean getBySystemName(String name) {
-                return InstanceManager.transitManagerInstance().getBySystemName(name);
+                return InstanceManager.getDefault(jmri.TransitManager.class).getBySystemName(name);
             }
 
             public NamedBean getByUserName(String name) {
-                return InstanceManager.transitManagerInstance().getByUserName(name);
+                return InstanceManager.getDefault(jmri.TransitManager.class).getByUserName(name);
             }
 
             protected String getMasterClassName() {
