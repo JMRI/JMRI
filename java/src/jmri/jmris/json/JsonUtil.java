@@ -507,66 +507,6 @@ public class JsonUtil {
         }
     }
 
-    static public JsonNode getBlocks(Locale locale) throws JsonException {
-        ArrayNode root = mapper.createArrayNode();
-        for (String name : InstanceManager.blockManagerInstance().getSystemNameList()) {
-            root.add(getBlock(locale, name));
-        }
-        return root;
-    }
-
-    static public JsonNode getBlock(Locale locale, String name) throws JsonException {
-        ObjectNode root = mapper.createObjectNode();
-        root.put(TYPE, BLOCK);
-        ObjectNode data = root.putObject(DATA);
-        Block block = InstanceManager.blockManagerInstance().getBlock(name);
-        try {
-            data.put(NAME, block.getSystemName());
-            data.put(USERNAME, block.getUserName());
-            data.put(COMMENT, block.getComment());
-            if (block.getValue() == null) {
-                data.putNull(VALUE);
-            } else {
-                data.put(VALUE, block.getValue().toString());
-            }
-        } catch (NullPointerException e) {
-            log.error("Unable to get block [{}].", name);
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", BLOCK, name));
-        }
-        return root;
-    }
-
-    static public void putBlock(Locale locale, String name, JsonNode data) throws JsonException {
-        try {
-            InstanceManager.blockManagerInstance().provideBlock(name);
-        } catch (Exception ex) {
-            throw new JsonException(500, Bundle.getMessage(locale, "ErrorCreatingObject", BLOCK, name));
-        }
-        setBlock(locale, name, data);
-    }
-
-    static public void setBlock(Locale locale, String name, JsonNode data) throws JsonException {
-        try {
-            Block block = InstanceManager.blockManagerInstance().getBlock(name);
-            if (data.path(USERNAME).isTextual()) {
-                block.setUserName(data.path(USERNAME).asText());
-            }
-            if (data.path(COMMENT).isTextual()) {
-                block.setComment(data.path(COMMENT).asText());
-            }
-            if (!data.path(VALUE).isMissingNode()) {
-                if (data.path(VALUE).isNull()) {
-                    block.setValue(null);
-                } else {
-                    block.setValue(data.path(VALUE).asText());
-                }
-            }
-        } catch (NullPointerException ex) {
-            log.error("Unable to get block [{}].", name);
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", BLOCK, name));
-        }
-    }
-
     static public JsonNode getMetadata(Locale locale, String name) throws JsonException {
         String metadata = Metadata.getBySystemName(name);
         ObjectNode root;
