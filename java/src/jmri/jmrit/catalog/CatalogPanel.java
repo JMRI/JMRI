@@ -599,12 +599,10 @@ public class CatalogPanel extends JPanel implements MouseListener {
         catalog.init(false);
         CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
         List<String> sysNames = manager.getSystemNameList();
-        if (sysNames != null) {
-            for (int i = 0; i < sysNames.size(); i++) {
-                String systemName = sysNames.get(i);
-                if (systemName.charAt(0) == 'I') {
-                    catalog.addTree(manager.getBySystemName(systemName));
-                }
+        for (int i = 0; i < sysNames.size(); i++) {
+            String systemName = sysNames.get(i);
+            if (systemName.charAt(0) == 'I') {
+                catalog.addTree(manager.getBySystemName(systemName));
             }
         }
         catalog.createNewBranch("IFJAR", "Program Directory", "resources");

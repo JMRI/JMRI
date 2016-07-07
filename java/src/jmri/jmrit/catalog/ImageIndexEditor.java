@@ -212,14 +212,14 @@ public final class ImageIndexEditor extends JmriJFrame {
         _catalog.init(false);
         CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
         List<String> sysNames = manager.getSystemNameList();
-        if (sysNames != null) {
-            for (int i = 0; i < sysNames.size(); i++) {
-                String systemName = sysNames.get(i);
-                if (systemName.startsWith("IF")) {
-                    _catalog.addTree(manager.getBySystemName(systemName));
-                }
+
+        for (int i = 0; i < sysNames.size(); i++) {
+            String systemName = sysNames.get(i);
+            if (systemName.startsWith("IF")) {
+                _catalog.addTree(manager.getBySystemName(systemName));
             }
         }
+
         _catalog.createNewBranch("IFJAR", "Program Directory", "resources");
         FileUtil.createDirectory(FileUtil.getUserFilesPath() + "resources");
         _catalog.createNewBranch("IFPREF", "Preferences Directory", FileUtil.getUserFilesPath() + "resources");
@@ -233,15 +233,15 @@ public final class ImageIndexEditor extends JmriJFrame {
         boolean found = false;
         CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
         List<String> sysNames = manager.getSystemNameList();
-        if (sysNames != null) {
-            for (int i = 0; i < sysNames.size(); i++) {
-                String systemName = sysNames.get(i);
-                if (systemName.startsWith("IX")) {
-                    _index.addTree(manager.getBySystemName(systemName));
-                    found = true;
-                }
+
+        for (int i = 0; i < sysNames.size(); i++) {
+            String systemName = sysNames.get(i);
+            if (systemName.startsWith("IX")) {
+                _index.addTree(manager.getBySystemName(systemName));
+                found = true;
             }
         }
+
         if (!found) {
             _index.createNewBranch("IXII", Bundle.getMessage("ImageIndexRoot"), "ImageIndexRoot");
         }

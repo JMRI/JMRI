@@ -128,7 +128,7 @@ abstract public class SystemConnectionMemo {
         
         // check for special case
         java.util.List<SystemConnectionMemo> list = jmri.InstanceManager.getList(SystemConnectionMemo.class);
-        if (list != null && (list.size() > 0) && (list.get(list.size()-1) instanceof jmri.jmrix.internal.InternalSystemConnectionMemo)) {
+        if ((list.size() > 0) && (list.get(list.size()-1) instanceof jmri.jmrix.internal.InternalSystemConnectionMemo)) {
             // last is internal, so insert before that one
             log.debug("   putting one before end");
             SystemConnectionMemo old = list.get(list.size()-1);

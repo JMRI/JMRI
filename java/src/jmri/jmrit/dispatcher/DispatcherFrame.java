@@ -79,14 +79,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         initializeOptions();
         openDispatcherWindow();
         autoTurnouts = new AutoTurnouts(this);
-        if (autoTurnouts == null) {
-            log.error("Failed to create AutoTurnouts object when constructing Dispatcher");
-        }
         if (_LE != null) {
             autoAllocate = new AutoAllocate(this);
-            if (autoAllocate == null) {
-                log.error("Failed to create AutoAllocate object when constructing Dispatcher");
-            }
         }
         InstanceManager.sectionManagerInstance().initializeBlockingSensors();
         getActiveTrainFrame();
@@ -149,9 +143,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
     public ActivateTrainFrame getActiveTrainFrame() {
         if (atFrame == null) {
             atFrame = new ActivateTrainFrame(this);
-            if (atFrame == null) {
-                log.error("Failed to create ActivateTrainFrame object when constructing Dispatcher");
-            }
         }
         return atFrame;
     }
