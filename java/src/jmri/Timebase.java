@@ -57,7 +57,7 @@ public interface Timebase extends NamedBean {
     /**
      * Set fast clock rate factor
      *
-     * @throws InstanceManager.getDefault(jmri.Timebase.class)RateException if the implementation can't do the
+     * @throws TimebaseRateException if the implementation can't do the
      *                               requested rate
      */
     public void setRate(double factor) throws TimebaseRateException;
@@ -80,7 +80,7 @@ public interface Timebase extends NamedBean {
      * This method is used by Setup Fast Clock when an external change in fast
      * clock rate occurs because of the peculiar way some hardware clocks
      * attempt to synchronize with the JMRI fast clock. This call will return
-     * the "true" rate even if the master InstanceManager.getDefault(jmri.Timebase.class) rate has been fiddled by a
+     * the "true" rate even if the master timebase rate has been fiddled by a
      * hardware clock.
      */
     public double userGetRate();

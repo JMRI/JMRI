@@ -146,7 +146,7 @@ public class InstanceManager {
      * <p>
      * In some cases, InstanceManager can create the object the first time it's requested.
      * For more on that, see the class comment.
-     * <pp>
+     * <p>
      * In most cases, system configuration assures the existence of a default
      * object, so this method will log and throw an exception if one doesn't
      * exist.  {@link #getOptionalDefault} should be used for cases where 
@@ -174,7 +174,7 @@ public class InstanceManager {
      * <p>
      * In some cases, InstanceManager can create the object the first time it's requested.
      * For more on that, see the class comment.
-     * <pp>
+     * <p>
      * In most cases, system configuration assures the existence of a default
      * object, but this method also handles the case where one doesn't exist.
      * {@link #getOptionalDefault} should be used for cases where 

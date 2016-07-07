@@ -1173,7 +1173,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
      * Unlike {@link BlockBossLogic#getStoppedObject(String signal)} this does
      * not remove the object from being used.
      *
-     * @param signal Existing SignalHead object
+     * @param sh Existing SignalHead object
      * @return never null - creates new object if none exists
      */
     @Nonnull

@@ -20,7 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Frame for user configuration of Simple InstanceManager.getDefault(jmri.Timebase.class)
+ * Frame for user configuration of Simple Timebase
  *
  * The current implementation (2007) handles the internal clock and one hardware
  * clock
@@ -316,7 +316,7 @@ public class SimpleClockFrame extends JmriJFrame
         // pack for display
         pack();
 
-        // listen for changes to the InstanceManager.getDefault(jmri.Timebase.class) parameters
+        // listen for changes to the timebase parameters
         clock.addPropertyChangeListener(this);
 
         // request callback to update time
@@ -387,7 +387,7 @@ public class SimpleClockFrame extends JmriJFrame
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, (Bundle.getMessage("SetRateError") + "\n" + e),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-            log.error("Exception when setting InstanceManager.getDefault(jmri.Timebase.class) rate: " + e);
+            log.error("Exception when setting timebase rate: " + e);
         }
         changed = true;
     }
@@ -583,7 +583,7 @@ public class SimpleClockFrame extends JmriJFrame
     }
 
     /**
-     * Method to set the current InstanceManager.getDefault(jmri.Timebase.class) time into timeLabel
+     * Method to set the current Timebase time into timeLabel
      */
     @SuppressWarnings("deprecation")
     void setTimeLabel() {

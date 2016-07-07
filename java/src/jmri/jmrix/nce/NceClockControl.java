@@ -49,10 +49,10 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         this.tc = tc;
         this.prefix = prefix;
 
-        // Create a InstanceManager.getDefault(jmri.Timebase.class) listener for the Minute change events
+        // Create a timebase listener for the Minute change events
         internalClock = InstanceManager.getDefault(jmri.Timebase.class);
         if (internalClock == null) {
-            log.error("No InstanceManager.getDefault(jmri.Timebase.class) Instance");
+            log.error("No Timebase Instance");
             return;
         }
         minuteChangeListener = new java.beans.PropertyChangeListener() {
@@ -391,7 +391,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
      */
     public void dispose() {
 
-        // Remove ourselves from the InstanceManager.getDefault(jmri.Timebase.class) minute rollover event
+        // Remove ourselves from the timebase minute rollover event
         if (minuteChangeListener != null) {
             internalClock.removeMinuteChangeListener(minuteChangeListener);
             minuteChangeListener = null;
