@@ -382,7 +382,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                     }
                     if (at == null) {
                         if (!isSignalLogicDynamic()) {
-                            jmri.SignalMastLogic tmSml = InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic((SignalMast) src.sourceSignal);
+                            jmri.SignalMastLogic tmSml = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic((SignalMast) src.sourceSignal);
                             for (Turnout t : tmSml.getAutoTurnouts((SignalMast) getSignal())) {
                                 turnoutSettings.put(t, tmSml.getAutoTurnoutState(t, (SignalMast) getSignal()));
                             }
@@ -421,7 +421,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                             SignalMast smSource = (SignalMast) src.sourceSignal;
                             SignalMast smDest = (SignalMast) getSignal();
                             synchronized (this) {
-                                sml = InstanceManager.signalMastLogicManagerInstance().newSignalMastLogic(smSource);
+                                sml = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).newSignalMastLogic(smSource);
                                 if (!sml.isDestinationValid(smDest)) {
                                     //if no signalmastlogic existed then created it, but set it not to be stored.
                                     sml.setDestinationMast(smDest);
@@ -558,8 +558,8 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         if ((src.sourceSignal instanceof SignalMast) && (getSignal() instanceof SignalMast)) {
             SignalMast smSource = (SignalMast) src.sourceSignal;
             SignalMast smDest = (SignalMast) getSignal();
-            if (InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(smSource) != null
-                    && InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(smSource).getStoreState(smDest) != jmri.SignalMastLogic.STORENONE) {
+            if (InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(smSource) != null
+                    && InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(smSource).getStoreState(smDest) != jmri.SignalMastLogic.STORENONE) {
                 return false;
             }
         }

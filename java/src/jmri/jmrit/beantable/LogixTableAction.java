@@ -3561,7 +3561,7 @@ public class LogixTableAction extends AbstractTableAction {
     void loadJComboBoxWithSignalAspects(JComboBox<String> box, String signalName) {
         box.removeAllItems();
         log.debug("loadJComboBoxWithSignalAspects called with name: " + signalName);
-        SignalHead h = InstanceManager.signalHeadManagerInstance().getSignalHead(signalName);
+        SignalHead h = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalName);
         if (h == null) {
             box.addItem(rbx.getString("PromptLoadSignalName"));
         } else {
@@ -3594,7 +3594,7 @@ public class LogixTableAction extends AbstractTableAction {
     void loadJComboBoxWithMastAspects(JComboBox<String> box, String mastName) {
         box.removeAllItems();
         log.debug("loadJComboBoxWithMastAspects called with name: " + mastName);
-        SignalMast m = InstanceManager.signalMastManagerInstance().getSignalMast(mastName);
+        SignalMast m = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(mastName);
         if (m == null) {
             box.addItem(rbx.getString("PromptLoadMastName"));
         } else {
@@ -4577,12 +4577,12 @@ public class LogixTableAction extends AbstractTableAction {
         SignalHead h = null;
         if (name != null) {
             if (name.length() > 0) {
-                h = InstanceManager.signalHeadManagerInstance().getByUserName(name);
+                h = InstanceManager.getDefault(jmri.SignalHeadManager.class).getByUserName(name);
                 if (h != null) {
                     return name;
                 }
             }
-            h = InstanceManager.signalHeadManagerInstance().getBySystemName(name);
+            h = InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(name);
         }
         if (h == null) {
             messageInvalidActionItemName(name, "SignalHead"); //NOI18N
@@ -4598,13 +4598,13 @@ public class LogixTableAction extends AbstractTableAction {
         SignalMast h = null;
         if (name != null) {
             if (name.length() > 0) {
-                h = InstanceManager.signalMastManagerInstance().getByUserName(name);
+                h = InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName(name);
                 if (h != null) {
                     return name;
                 }
             }
             try {
-                h = InstanceManager.signalMastManagerInstance().provideSignalMast(name);
+                h = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(name);
             } catch (IllegalArgumentException ex) {
                 h = null; // tested below
             }

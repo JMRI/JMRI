@@ -388,7 +388,7 @@ public class LRouteTableAction extends AbstractTableAction {
             inputTS.add(new RouteInputLight(systemName, userName));
             outputTS.add(new RouteOutputLight(systemName, userName));
         }
-        jmri.SignalHeadManager shm = InstanceManager.signalHeadManagerInstance();
+        jmri.SignalHeadManager shm = InstanceManager.getDefault(jmri.SignalHeadManager.class);
         systemNameList = shm.getSystemNameList();
         iter = systemNameList.iterator();
         while (iter.hasNext()) {

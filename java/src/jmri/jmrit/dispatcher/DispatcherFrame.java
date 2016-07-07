@@ -1396,7 +1396,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                     property = "reverseMast";
                 }
                 if (ar.getSection().getProperty(property) != null) {
-                    SignalMast endMast = InstanceManager.signalMastManagerInstance().getSignalMast(ar.getSection().getProperty(property).toString());
+                    SignalMast endMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(ar.getSection().getProperty(property).toString());
                     if (endMast != null) {
                         if (endMast.getHeld()) {
                             mastHeldAtSection = ar.getSection();
@@ -1450,7 +1450,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                         } else {
                             if (mastHeldAtSection == null) {
                                 if (se.getProperty(property) != null) {
-                                    SignalMast endMast = InstanceManager.signalMastManagerInstance().getSignalMast(se.getProperty(property).toString());
+                                    SignalMast endMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(se.getProperty(property).toString());
                                     if (endMast != null && endMast.getHeld()) {
                                         mastHeldAtSection = se;
                                     }
@@ -1573,7 +1573,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                 property = "reverseMast";
             }
             if (s.getProperty(property) != null) {
-                SignalMast toHold = InstanceManager.signalMastManagerInstance().getSignalMast(s.getProperty(property).toString());
+                SignalMast toHold = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(s.getProperty(property).toString());
                 if (toHold != null) {
                     if (!toHold.getHeld()) {
                         heldMasts.add(new HeldMastDetails(toHold, at));
@@ -1584,7 +1584,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             }
 
             if (at.getLastAllocatedSection() != null && at.getLastAllocatedSection().getProperty(property) != null) {
-                SignalMast toRelease = InstanceManager.signalMastManagerInstance().getSignalMast(at.getLastAllocatedSection().getProperty(property).toString());
+                SignalMast toRelease = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(at.getLastAllocatedSection().getProperty(property).toString());
                 if (toRelease != null && isMastHeldByDispatcher(toRelease, at)) {
                     removeHeldMast(toRelease, at);
                     //heldMasts.remove(toRelease);

@@ -989,7 +989,7 @@ public class JsonUtil {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, SIGNAL_HEAD);
         ObjectNode data = root.putObject(DATA);
-        SignalHead signalHead = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
+        SignalHead signalHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name);
         try {
             data.put(NAME, name);
             data.put(USERNAME, signalHead.getUserName());
@@ -1013,7 +1013,7 @@ public class JsonUtil {
 
     static public JsonNode getSignalHeads(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
-        for (String name : InstanceManager.signalHeadManagerInstance().getSystemNameList()) {
+        for (String name : InstanceManager.getDefault(jmri.SignalHeadManager.class).getSystemNameList()) {
             root.add(getSignalHead(locale, name));
         }
         return root;
@@ -1021,7 +1021,7 @@ public class JsonUtil {
 
     static public void setSignalHead(Locale locale, String name, JsonNode data) throws JsonException {
         try {
-            SignalHead signalHead = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
+            SignalHead signalHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name);
             if (data.path(USERNAME).isTextual()) {
                 signalHead.setUserName(data.path(USERNAME).asText());
             }
@@ -1052,7 +1052,7 @@ public class JsonUtil {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, SIGNAL_MAST);
         ObjectNode data = root.putObject(DATA);
-        SignalMast signalMast = InstanceManager.signalMastManagerInstance().getSignalMast(name);
+        SignalMast signalMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(name);
         try {
             data.put(NAME, name);
             data.put(USERNAME, signalMast.getUserName());
@@ -1083,7 +1083,7 @@ public class JsonUtil {
 
     static public JsonNode getSignalMasts(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
-        for (String name : InstanceManager.signalMastManagerInstance().getSystemNameList()) {
+        for (String name : InstanceManager.getDefault(jmri.SignalMastManager.class).getSystemNameList()) {
             root.add(getSignalMast(locale, name));
         }
         return root;
@@ -1092,7 +1092,7 @@ public class JsonUtil {
     // TODO: test for HELD and DARK aspects
     static public void setSignalMast(Locale locale, String name, JsonNode data) throws JsonException {
         try {
-            SignalMast signalMast = InstanceManager.signalMastManagerInstance().getSignalMast(name);
+            SignalMast signalMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(name);
             if (data.path(USERNAME).isTextual()) {
                 signalMast.setUserName(data.path(USERNAME).asText());
             }

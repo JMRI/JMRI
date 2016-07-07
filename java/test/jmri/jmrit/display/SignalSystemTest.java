@@ -151,7 +151,7 @@ public class SignalSystemTest extends jmri.configurexml.SchemaTestBase {
     }
     
     void checkAspect(String mastName, String aspect) {
-        SignalMast mast = InstanceManager.signalMastManagerInstance().getSignalMast(mastName);
+        SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(mastName);
         if (mast != null) {
             // wait present or error
             jmri.util.JUnitUtil.waitFor(()->{return mast.getAspect().equals(aspect);},

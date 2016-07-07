@@ -31,8 +31,8 @@ public class DefaultLogixManager extends AbstractManager
         jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
         jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
         jmri.InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
-        jmri.InstanceManager.signalHeadManagerInstance().addVetoableChangeListener(this);
-        jmri.InstanceManager.signalMastManagerInstance().addVetoableChangeListener(this);
+        jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).addVetoableChangeListener(this);
+        jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).addVetoableChangeListener(this);
         jmri.InstanceManager.blockManagerInstance().addVetoableChangeListener(this);
         jmri.InstanceManager.lightManagerInstance().addVetoableChangeListener(this);
         jmri.InstanceManager.conditionalManagerInstance().addVetoableChangeListener(this);

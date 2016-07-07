@@ -184,11 +184,11 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
                     String sourceItem = sourceList.get(i).getAttribute("item").getValue();
                     NamedBean source = null;
                     if (sourceType.equals("signalMast")) {
-                        source = jmri.InstanceManager.signalMastManagerInstance().getSignalMast(sourceItem);
+                        source = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(sourceItem);
                     } else if (sourceType.equals("sensor")) {
                         source = jmri.InstanceManager.sensorManagerInstance().getSensor(sourceItem);
                     } else if (sourceType.equals("signalHead")) {
-                        source = jmri.InstanceManager.signalHeadManagerInstance().getSignalHead(sourceItem);
+                        source = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(sourceItem);
                     }
 
                     //These two could be subbed off.
@@ -205,11 +205,11 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
                         String destItem = destinationList.get(j).getAttribute("item").getValue();
                         NamedBean dest = null;
                         if (destType.equals("signalMast")) {
-                            dest = jmri.InstanceManager.signalMastManagerInstance().getSignalMast(destItem);
+                            dest = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(destItem);
                         } else if (destType.equals("sensor")) {
                             dest = jmri.InstanceManager.sensorManagerInstance().getSensor(destItem);
                         } else if (destType.equals("signalHead")) {
-                            dest = jmri.InstanceManager.signalHeadManagerInstance().getSignalHead(destItem);
+                            dest = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(destItem);
                         }
                         try {
                             eep.addNXDestination(source, dest, panel, id);

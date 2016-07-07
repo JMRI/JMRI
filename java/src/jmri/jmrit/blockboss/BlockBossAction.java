@@ -19,7 +19,7 @@ public class BlockBossAction extends AbstractAction {
     public BlockBossAction(String s) {
         super(s);
         // disable ourself if there is no primary Signal Head manager available
-        if (jmri.InstanceManager.signalHeadManagerInstance() == null) {
+        if (jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class) == null) {
             setEnabled(false);
         }
     }

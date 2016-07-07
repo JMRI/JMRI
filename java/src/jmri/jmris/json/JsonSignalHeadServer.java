@@ -75,7 +75,7 @@ public class JsonSignalHeadServer extends AbstractSignalHeadServer {
         int state = data.path(STATE).asInt(UNKNOWN);
         if (state == UNKNOWN) {  //if unknown, retrieve current and respond
             try {   
-                state = InstanceManager.signalHeadManagerInstance().getSignalHead(name).getAppearance();
+                state = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name).getAppearance();
             } catch (NullPointerException e) {
                 log.error("Unable to get signalHead [{}].", name);
                 throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", SIGNAL_HEAD, name));

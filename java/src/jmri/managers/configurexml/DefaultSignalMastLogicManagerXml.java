@@ -183,8 +183,8 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
             log.debug("Found " + logicList.size() + " signal mast logics");
         }
 
-        SignalMastManager sm = InstanceManager.signalMastManagerInstance();
-        SignalMastLogicManager sml = InstanceManager.signalMastLogicManagerInstance();
+        SignalMastManager sm = InstanceManager.getDefault(jmri.SignalMastManager.class);
+        SignalMastLogicManager sml = InstanceManager.getDefault(jmri.SignalMastLogicManager.class);
         try {
             String logicDelay = signalMastLogic.getChild("logicDelay").getText();
             sml.setSignalLogicDelay(Long.parseLong(logicDelay));
@@ -340,7 +340,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                                 for (Element m : mastList) {
                                     String mast = m.getChild("mastName").getText();
                                     String state = m.getChild("mastState").getText();
-                                    SignalMast mst = InstanceManager.signalMastManagerInstance().getSignalMast(mast);
+                                    SignalMast mst = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(mast);
                                     if (mst != null) {
                                         list.put(mst, state);
                                     } else if (debug) {
@@ -366,7 +366,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
     }
 
     public int loadOrder() {
-        return InstanceManager.signalMastLogicManagerInstance().getXMLOrder();
+        return InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getXMLOrder();
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicManagerXml.class.getName());

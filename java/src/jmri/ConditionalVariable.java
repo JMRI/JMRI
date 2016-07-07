@@ -113,7 +113,7 @@ public class ConditionalVariable {
                     }
                     break;
                 case Conditional.ITEM_TYPE_SIGNALHEAD:
-                    SignalHead s = InstanceManager.signalHeadManagerInstance().getSignalHead(_name);
+                    SignalHead s = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(_name);
                     if (s == null) {
                         log.error("invalid signalhead name= \"" + _name + "\" in state variable");
                         return;
@@ -122,7 +122,7 @@ public class ConditionalVariable {
                     break;
                 case Conditional.ITEM_TYPE_SIGNALMAST:
                     try {
-                        SignalMast sm = InstanceManager.signalMastManagerInstance().provideSignalMast(_name);
+                        SignalMast sm = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(_name);
                         _namedBean = nbhm.getNamedBeanHandle(_name, sm);
                     } catch (IllegalArgumentException e) {
                         log.error("invalid signalmast name= \"" + _name + "\" in state variable");
@@ -242,10 +242,10 @@ public class ConditionalVariable {
                     bean = InstanceManager.memoryManagerInstance().provideMemory(_name);
                     break;
                 case Conditional.ITEM_TYPE_SIGNALMAST:
-                    bean = InstanceManager.signalMastManagerInstance().provideSignalMast(_name);
+                    bean = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(_name);
                     break;
                 case Conditional.ITEM_TYPE_SIGNALHEAD:
-                    bean = InstanceManager.signalHeadManagerInstance().getSignalHead(_name);
+                    bean = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(_name);
                     break;
                 case Conditional.ITEM_TYPE_CONDITIONAL:
                     bean = InstanceManager.conditionalManagerInstance().getConditional(_name);

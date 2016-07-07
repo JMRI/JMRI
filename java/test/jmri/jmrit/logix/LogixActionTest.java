@@ -49,7 +49,7 @@ public class LogixActionTest extends TestCase {
         sensor.setState(Sensor.ACTIVE);
         sensor.setState(Sensor.INACTIVE);
         sensor.setState(Sensor.ACTIVE);
-        SignalHead sh1 = InstanceManager.signalHeadManagerInstance().getSignalHead("IH1");
+        SignalHead sh1 = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead("IH1");
         Assert.assertEquals("SignalHead IH1", SignalHead.RED, sh1.getAppearance());
 
         // do some buttons -Sensors
@@ -80,7 +80,7 @@ public class LogixActionTest extends TestCase {
         im3.setValue("IH2");
         is3.setState(Sensor.ACTIVE);		// activate logix action
         Assert.assertEquals("Contents IM3", "IH2", im3.getValue());
-        SignalHead sh2 = InstanceManager.signalHeadManagerInstance().getSignalHead("IH2");
+        SignalHead sh2 = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead("IH2");
         Assert.assertEquals("Indirect SignalHead IH2", SignalHead.GREEN, sh2.getAppearance());
 
         // Turnout Buttons

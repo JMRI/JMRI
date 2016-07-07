@@ -44,7 +44,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     public DefaultSignalMastLogicManager() {
         registerSelf();
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).addPropertyChangeListener(propertyBlockManagerListener);
-        jmri.InstanceManager.signalMastManagerInstance().addVetoableChangeListener(this);
+        jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).addVetoableChangeListener(this);
         jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
         //_speedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class);
     }
@@ -421,7 +421,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         Hashtable<NamedBean, ArrayList<NamedBean>> validPaths = lbm.getLayoutBlockConnectivityTools().discoverValidBeanPairs(null, SignalMast.class, LayoutBlockConnectivityTools.MASTTOMAST);
         Enumeration<NamedBean> en = validPaths.keys();
         firePropertyChange("autoGenerateUpdate", null, ("Found " + validPaths.size() + " masts as sources for logic"));
-        for (NamedBean nb : InstanceManager.signalMastManagerInstance().getNamedBeanList()) {
+        for (NamedBean nb : InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBeanList()) {
             nb.removeProperty("intermediateSignal");
         }
         while (en.hasMoreElements()) {

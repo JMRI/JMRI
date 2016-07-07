@@ -222,7 +222,7 @@ public class LogixTableActionTest extends jmri.util.SwingTestCase {
             assertNotNull(i + "th Memory is null!", m);
             SignalHead sh = new jmri.implementation.VirtualSignalHead("Signal" + i);
             assertNotNull(i + "th SignalHead is null!", sh);
-            InstanceManager.signalHeadManagerInstance().register(sh);
+            InstanceManager.getDefault(jmri.SignalHeadManager.class).register(sh);
             Route r = new jmri.implementation.DefaultRoute("Route" + i);
             assertNotNull(i + "th Route is null!", r);
             InstanceManager.routeManagerInstance().register(r);

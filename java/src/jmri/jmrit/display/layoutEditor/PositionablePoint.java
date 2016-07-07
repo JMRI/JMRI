@@ -253,7 +253,7 @@ public class PositionablePoint {
             return;
         }
 
-        SignalHead head = InstanceManager.signalHeadManagerInstance().getSignalHead(signalHead);
+        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHead);
         if (head != null) {
             signalEastHeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
         } else {
@@ -321,7 +321,7 @@ public class PositionablePoint {
             return;
         }
 
-        SignalHead head = InstanceManager.signalHeadManagerInstance().getSignalHead(signalHead);
+        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHead);
         if (head != null) {
             signalWestHeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
         } else {
@@ -423,7 +423,7 @@ public class PositionablePoint {
     public void setEastBoundSignalMast(String signalMast) {
         SignalMast mast = null;
         if (signalMast != null && !signalMast.equals("")) {
-            mast = InstanceManager.signalMastManagerInstance().getSignalMast(signalMast);
+            mast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(signalMast);
             if (mast == null) {
                 log.error("Unable to find Signal Mast " + signalMast);
                 return;
@@ -483,7 +483,7 @@ public class PositionablePoint {
     public void setWestBoundSignalMast(String signalMast) {
         SignalMast mast = null;
         if (signalMast != null && !signalMast.equals("")) {
-            mast = InstanceManager.signalMastManagerInstance().getSignalMast(signalMast);
+            mast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(signalMast);
             if (mast == null) {
                 log.error("Unable to find Signal Mast " + signalMast);
                 return;
@@ -639,7 +639,7 @@ public class PositionablePoint {
         if (signalMast == null) {
             return;
         }
-        if (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() && InstanceManager.signalMastLogicManagerInstance().isSignalMastUsed(signalMast)) {
+        if (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() && InstanceManager.getDefault(jmri.SignalMastLogicManager.class).isSignalMastUsed(signalMast)) {
             SignallingGuiTools.removeSignalMastLogic(null, signalMast);
         }
     }
@@ -1094,12 +1094,12 @@ public class PositionablePoint {
                 }
                 // removelocal and removeremote have been set here.
                 if (!removeremote.equals("")) {
-                    jmri.SignalHead sh = InstanceManager.signalHeadManagerInstance().getSignalHead(removeremote);
+                    jmri.SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(removeremote);
                     getLinkedEditor().removeSignalHead(sh);
                     jmri.jmrit.blockboss.BlockBossLogic.getStoppedObject(removeremote);
                 }
                 if (!removelocal.equals("")) {
-                    jmri.SignalHead sh = InstanceManager.signalHeadManagerInstance().getSignalHead(removelocal);
+                    jmri.SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(removelocal);
                     layoutEditor.removeSignalHead(sh);
                     jmri.jmrit.blockboss.BlockBossLogic.getStoppedObject(removelocal);
                 }

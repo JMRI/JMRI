@@ -141,10 +141,10 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
         Assert.assertNotNull(InstanceManager.sensorManagerInstance());
         Assert.assertNotNull(InstanceManager.turnoutManagerInstance());
         Assert.assertNotNull(InstanceManager.lightManagerInstance());
-        Assert.assertNotNull(InstanceManager.signalHeadManagerInstance());
-        Assert.assertNotNull(InstanceManager.signalMastManagerInstance());
-        Assert.assertNotNull(InstanceManager.signalSystemManagerInstance());
-        Assert.assertNotNull(InstanceManager.signalGroupManagerInstance());
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SignalHeadManager.class));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SignalMastManager.class));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SignalSystemManager.class));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SignalGroupManager.class));
         Assert.assertNotNull(InstanceManager.blockManagerInstance());
         Assert.assertNotNull(InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class));
         Assert.assertNotNull(InstanceManager.getDefault(WarrantManager.class));
@@ -156,7 +156,7 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
         Assert.assertNotNull(InstanceManager.logixManagerInstance());
         Assert.assertNotNull(InstanceManager.timebaseInstance());
         Assert.assertNotNull(InstanceManager.clockControlInstance());
-        Assert.assertNotNull(InstanceManager.signalGroupManagerInstance());
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SignalGroupManager.class));
         Assert.assertNotNull(InstanceManager.reporterManagerInstance());
         Assert.assertNotNull(InstanceManager.getDefault(CatalogTreeManager.class));
         Assert.assertNotNull(InstanceManager.memoryManagerInstance());

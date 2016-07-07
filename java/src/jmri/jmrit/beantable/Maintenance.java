@@ -101,7 +101,7 @@ public class Maintenance {
                 names.add(name);
             }
         }
-        iter = InstanceManager.signalHeadManagerInstance().getSystemNameList().iterator();
+        iter = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSystemNameList().iterator();
         while (iter.hasNext()) {
             String name = iter.next();
             if (!search(name, null)) {
@@ -192,11 +192,11 @@ public class Maintenance {
                         }
                         InstanceManager.turnoutManagerInstance().deregister(t);
                     } else if (names[0].equals("SignalHead")) {
-                        SignalHead sh = InstanceManager.signalHeadManagerInstance().getBySystemName(names[2]);
+                        SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(names[2]);
                         if (sh == null) {
-                            sh = InstanceManager.signalHeadManagerInstance().getBySystemName(names[1]);
+                            sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(names[1]);
                         }
-                        InstanceManager.signalHeadManagerInstance().deregister(sh);
+                        InstanceManager.getDefault(jmri.SignalHeadManager.class).deregister(sh);
                     } else if (names[0].equals("Light")) {
                         Light l = InstanceManager.lightManagerInstance().getBySystemName(names[2]);
                         if (l == null) {
@@ -415,7 +415,7 @@ public class Maintenance {
                 Integer.toString(l.getNumPropertyChangeListeners())});
         }
 
-        jmri.SignalHeadManager signalManager = InstanceManager.signalHeadManagerInstance();
+        jmri.SignalHeadManager signalManager = InstanceManager.getDefault(jmri.SignalHeadManager.class);
         SignalHead sh = signalManager.getBySystemName(sysName);
         if (sh != null) {
             userName = sh.getUserName();

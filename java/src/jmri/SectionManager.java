@@ -228,7 +228,7 @@ public class SectionManager extends AbstractManager
                 sensorList.add(name);
             }
         }
-        jmri.SignalHeadManager shManager = InstanceManager.signalHeadManagerInstance();
+        jmri.SignalHeadManager shManager = InstanceManager.getDefault(jmri.SignalHeadManager.class);
         List<String> signalList = shManager.getSystemNameList();
         for (int j = 0; j < signalList.size(); j++) {
             SignalHead sh = shManager.getBySystemName(signalList.get(j));

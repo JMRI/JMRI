@@ -792,7 +792,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 //get maximum speed for the route between current and next signalmasts
                 float smLogicSpeed = -1.0f;
                 String smDestinationName = "unknown";
-                jmri.SignalMastLogic smLogic = InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(_controllingSignalMast);
+                jmri.SignalMastLogic smLogic = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(_controllingSignalMast);
                 if (smLogic != null) {
                     SignalMast smDestination = smLogic.getActiveDestination();
                     if (smDestination != null) {

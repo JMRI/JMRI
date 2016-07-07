@@ -584,14 +584,14 @@ public class DefaultLogix extends AbstractNamedBean
      * Conditional.TYPE_SIGNAL_HEAD_FLASHRED: case
      * Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW: case
      * Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN: SignalHead h =
-     * InstanceManager.signalHeadManagerInstance(). getSignalHead(testVarName);
+     * InstanceManager.getDefault(jmri.SignalHeadManager.class). getSignalHead(testVarName);
      * if (h!=null) { testSystemName = h.getSystemName(); testUserName =
      * h.getUserName(); } break; case Conditional.TYPE_SIGNAL_HEAD_LIT:
-     * SignalHead hx = InstanceManager.signalHeadManagerInstance().
+     * SignalHead hx = InstanceManager.getDefault(jmri.SignalHeadManager.class).
      * getSignalHead(testVarName); if (hx!=null) { testSystemName =
      * hx.getSystemName(); testUserName = hx.getUserName(); } break; case
      * Conditional.TYPE_SIGNAL_HEAD_HELD: SignalHead hy =
-     * InstanceManager.signalHeadManagerInstance(). getSignalHead(testVarName);
+     * InstanceManager.getDefault(jmri.SignalHeadManager.class). getSignalHead(testVarName);
      * if (hy!=null) { testSystemName = hy.getSystemName(); testUserName =
      * hy.getUserName(); } break; default: testSystemName = ""; } // check if
      * this state variable is already in the list to be returned boolean inList
@@ -804,7 +804,7 @@ public class DefaultLogix extends AbstractNamedBean
      * Conditional.ACTION_CLEAR_SIGNAL_HELD: case
      * Conditional.ACTION_SET_SIGNAL_DARK: case
      * Conditional.ACTION_SET_SIGNAL_LIT: SignalHead h =
-     * InstanceManager.signalHeadManagerInstance().
+     * InstanceManager.getDefault(jmri.SignalHeadManager.class).
      * getSignalHead(action.getDeviceName()); if (h!=null) { sName =
      * h.getSystemName(); uName = h.getUserName(); // check for action on the
      * same signal head Iterator <ConditionalVariable>it=

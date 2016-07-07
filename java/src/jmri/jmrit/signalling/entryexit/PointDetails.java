@@ -554,7 +554,7 @@ public class PointDetails {
         if ((getPanel() != null) && (!getPanel().isEditable()) && (getSignalHead() != null)) {
             return getSignalHead();
         }
-        jmri.SignalHeadManager sh = InstanceManager.signalHeadManagerInstance();
+        jmri.SignalHeadManager sh = InstanceManager.getDefault(jmri.SignalHeadManager.class);
         NamedBean signal = null;
 
         if (getRefObject() == null) {
