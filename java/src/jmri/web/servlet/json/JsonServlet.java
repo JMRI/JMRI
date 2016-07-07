@@ -310,7 +310,7 @@ public class JsonServlet extends WebSocketServlet {
                                 }
                             }
                             if (reply == null) {
-                                log.warn("Type {} unknown.", type);
+                                log.warn("Requested type '{}' unknown.", type);
                                 reply = JsonUtil.getUnknown(request.getLocale(), type);
                             }
                             break;
