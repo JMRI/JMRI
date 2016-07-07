@@ -38,7 +38,7 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
             _lRouteTable._outputList.get(3 * i + 1).setIncluded(true);
         }
         _lRouteTable.createPressed(null);
-        java.util.List<String> l = InstanceManager.logixManagerInstance().getSystemNameList();
+        java.util.List<String> l = InstanceManager.getDefault(jmri.LogixManager.class).getSystemNameList();
         assertEquals("Logix Count", 1, l.size());
 
         _lRouteTable.m.setValueAt(Bundle.getMessage("ButtonEdit"), 0,
@@ -135,7 +135,7 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
             assertNotNull("Turnout is null!", t);
             Light l = InstanceManager.lightManagerInstance().newLight("IL" + (i), "Light" + i);
             assertNotNull(i + "th Light is null!", l);
-            Conditional c = InstanceManager.conditionalManagerInstance().createNewConditional(
+            Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).createNewConditional(
                     "Conditional" + i, "Conditional" + i);
             assertNotNull(i + "th Conditional is null!", c);
             SignalHead sh = new jmri.implementation.VirtualSignalHead("Signal" + i);

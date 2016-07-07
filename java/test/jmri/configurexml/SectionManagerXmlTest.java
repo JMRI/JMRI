@@ -72,11 +72,11 @@ public class SectionManagerXmlTest extends TestCase {
         // check existance of a couple of blocks just to be sure 
         //       that LoadSectionManagerFileText.xml and LoadBlockManagerFileText.xml refer to the
         //       same block / section layout definition.
-        Assert.assertNotNull(InstanceManager.blockManagerInstance().getBlock("IB1"));
-        Assert.assertNull(InstanceManager.blockManagerInstance().getBlock("no block"));
-        Assert.assertNotNull(InstanceManager.blockManagerInstance().getBlock("IB12"));
-        Assert.assertNotNull(InstanceManager.blockManagerInstance().getBlock("blocknorthwest"));
-        Assert.assertNotNull(InstanceManager.blockManagerInstance().getBlock("blockwestsiding"));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("IB1"));
+        Assert.assertNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("no block"));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("IB12"));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blocknorthwest"));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blockwestsiding"));
         //Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("ILB1"));
         //Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("ILB12"));
         //Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("blocknorthwest"));
@@ -135,51 +135,51 @@ public class SectionManagerXmlTest extends TestCase {
         //  This matches up with the test file, ..., just be sure
         //       that LoadSectionManagerFileText.xml and LoadBlockManagerFileText.xml refer to the
         //       same block / section layout definition.
-        blockstotest[0] = InstanceManager.blockManagerInstance().getBlock("blocknorthwest");
+        blockstotest[0] = InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blocknorthwest");
         Assert.assertNotNull(blockstotest[0]);
         occupiedsensor[0] = InstanceManager.sensorManagerInstance().getSensor("blocknorthwestoccupied");
         Assert.assertNotNull(occupiedsensor[0]);
-        blockstotest[1] = InstanceManager.blockManagerInstance().getBlock("blocknorth");
+        blockstotest[1] = InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blocknorth");
         Assert.assertNotNull(blockstotest[1]);
         occupiedsensor[1] = InstanceManager.sensorManagerInstance().getSensor("blocknorthoccupied");
         Assert.assertNotNull(occupiedsensor[1]);
-        blockstotest[2] = InstanceManager.blockManagerInstance().getBlock("blocknorthsiding");
+        blockstotest[2] = InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blocknorthsiding");
         Assert.assertNotNull(blockstotest[2]);
         occupiedsensor[2] = InstanceManager.sensorManagerInstance().getSensor("blocknorthsidingoccupied");
         Assert.assertNotNull(occupiedsensor[2]);
-        blockstotest[3] = InstanceManager.blockManagerInstance().getBlock("blocknortheast");
+        blockstotest[3] = InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blocknortheast");
         Assert.assertNotNull(blockstotest[3]);
         occupiedsensor[3] = InstanceManager.sensorManagerInstance().getSensor("blocknortheastoccupied");
         Assert.assertNotNull(occupiedsensor[3]);
-        blockstotest[4] = InstanceManager.blockManagerInstance().getBlock("blockeast");
+        blockstotest[4] = InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blockeast");
         Assert.assertNotNull(blockstotest[4]);
         occupiedsensor[4] = InstanceManager.sensorManagerInstance().getSensor("blockeastoccupied");
         Assert.assertNotNull(occupiedsensor[4]);
-        blockstotest[5] = InstanceManager.blockManagerInstance().getBlock("blockeastsiding");
+        blockstotest[5] = InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blockeastsiding");
         Assert.assertNotNull(blockstotest[5]);
         occupiedsensor[5] = InstanceManager.sensorManagerInstance().getSensor("blockeastsidingoccupied");
         Assert.assertNotNull(occupiedsensor[5]);
-        blockstotest[6] = InstanceManager.blockManagerInstance().getBlock("blocksoutheast");
+        blockstotest[6] = InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blocksoutheast");
         Assert.assertNotNull(blockstotest[6]);
         occupiedsensor[6] = InstanceManager.sensorManagerInstance().getSensor("blocksoutheastoccupied");
         Assert.assertNotNull(occupiedsensor[6]);
-        blockstotest[7] = InstanceManager.blockManagerInstance().getBlock("blocksouth");
+        blockstotest[7] = InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blocksouth");
         Assert.assertNotNull(blockstotest[7]);
         occupiedsensor[7] = InstanceManager.sensorManagerInstance().getSensor("blocksouthoccupied");
         Assert.assertNotNull(occupiedsensor[7]);
-        blockstotest[8] = InstanceManager.blockManagerInstance().getBlock("blocksouthsiding");
+        blockstotest[8] = InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blocksouthsiding");
         Assert.assertNotNull(blockstotest[8]);
         occupiedsensor[8] = InstanceManager.sensorManagerInstance().getSensor("blocksouthsidingoccupied");
         Assert.assertNotNull(occupiedsensor[8]);
-        blockstotest[9] = InstanceManager.blockManagerInstance().getBlock("blocksouthwest");
+        blockstotest[9] = InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blocksouthwest");
         Assert.assertNotNull(blockstotest[9]);
         occupiedsensor[9] = InstanceManager.sensorManagerInstance().getSensor("blocksouthwestoccupied");
         Assert.assertNotNull(occupiedsensor[9]);
-        blockstotest[10] = InstanceManager.blockManagerInstance().getBlock("blockwest");
+        blockstotest[10] = InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blockwest");
         Assert.assertNotNull(blockstotest[10]);
         occupiedsensor[10] = InstanceManager.sensorManagerInstance().getSensor("blockwestoccupied");
         Assert.assertNotNull(occupiedsensor[10]);
-        blockstotest[11] = InstanceManager.blockManagerInstance().getBlock("blockwestsiding");
+        blockstotest[11] = InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blockwestsiding");
         Assert.assertNotNull(blockstotest[11]);
         occupiedsensor[11] = InstanceManager.sensorManagerInstance().getSensor("blockwestsidingoccupied");
         Assert.assertNotNull(occupiedsensor[11]);

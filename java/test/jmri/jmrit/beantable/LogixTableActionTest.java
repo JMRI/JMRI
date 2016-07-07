@@ -216,7 +216,7 @@ public class LogixTableActionTest extends jmri.util.SwingTestCase {
             assertNotNull(i + "th Turnout is null!", t);
             Light l = InstanceManager.lightManagerInstance().newLight("IL" + (i), "Light" + i);
             assertNotNull(i + "th Light is null!", l);
-            Conditional c = InstanceManager.conditionalManagerInstance().createNewConditional("C" + i, "Conditional" + i);
+            Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).createNewConditional("C" + i, "Conditional" + i);
             assertNotNull(i + "th Conditional is null!", c);
             Memory m = InstanceManager.memoryManagerInstance().provideMemory("IMemory" + i);
             assertNotNull(i + "th Memory is null!", m);
