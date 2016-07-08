@@ -51,7 +51,7 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
 
     public void initComponents() throws Exception {
         JTabbedPane tabbedPane = new JTabbedPane();
-        if (InstanceManager.turnoutManagerInstance() != null) {
+        if (InstanceManager.getOptionalDefault(jmri.TurnoutManager.class) != null) {
 
             tabbedPane.addTab(rb.getString("LabelTurnout"), null, addTurnoutPanel(), rb.getString("ToolTipTurnoutTab"));
         }
