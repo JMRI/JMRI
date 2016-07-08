@@ -49,7 +49,7 @@ public class BlockTableAction extends AbstractTableAction {
         super(actionName);
 
         // disable ourself if there is no primary Block manager available
-        if (jmri.InstanceManager.getDefault(jmri.BlockManager.class) == null) {
+        if (jmri.InstanceManager.getOptionalDefault(jmri.BlockManager.class) == null) {
             setEnabled(false);
         }
         inchBox.setSelected(true);

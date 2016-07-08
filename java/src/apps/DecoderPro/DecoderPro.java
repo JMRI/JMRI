@@ -91,7 +91,7 @@ public class DecoderPro extends Apps {
         b1.addActionListener(serviceprog);
         b1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         j.add(b1);
-        if (InstanceManager.getDefault(jmri.ProgrammerManager.class) == null
+        if (InstanceManager.getOptionalDefault(jmri.ProgrammerManager.class) == null
                 || !InstanceManager.getDefault(jmri.ProgrammerManager.class).isGlobalProgrammerAvailable()) {
             b1.setEnabled(false);
             b1.setToolTipText(Bundle.getMessage("MsgServiceButtonDisabled"));
@@ -100,7 +100,7 @@ public class DecoderPro extends Apps {
         m1.addActionListener(opsprog);
         m1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         j.add(m1);
-        if (InstanceManager.getDefault(jmri.ProgrammerManager.class) == null
+        if (InstanceManager.getOptionalDefault(jmri.ProgrammerManager.class) == null
                 || !InstanceManager.getDefault(jmri.ProgrammerManager.class).isAddressedModePossible()) {
             m1.setEnabled(false);
             m1.setToolTipText(Bundle.getMessage("MsgOpsButtonDisabled"));
