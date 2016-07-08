@@ -15,7 +15,6 @@ import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
-import jmri.Block;
 import jmri.Consist;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
@@ -289,6 +288,7 @@ public class JsonUtil {
         return root;
     }
 
+    @Deprecated
     static public JsonNode getLight(Locale locale, String name) throws JsonException {
         try {
             ObjectNode root = mapper.createObjectNode();
@@ -316,6 +316,7 @@ public class JsonUtil {
         }
     }
 
+    @Deprecated
     static public JsonNode getLights(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
         for (String name : InstanceManager.lightManagerInstance().getSystemNameList()) {
@@ -324,6 +325,7 @@ public class JsonUtil {
         return root;
     }
 
+    @Deprecated
     static public void putLight(Locale locale, String name, JsonNode data) throws JsonException {
         try {
             InstanceManager.lightManagerInstance().provideLight(name);
@@ -333,6 +335,7 @@ public class JsonUtil {
         setLight(locale, name, data);
     }
 
+    @Deprecated
     static public void setLight(Locale locale, String name, JsonNode data) throws JsonException {
         try {
             Light light = InstanceManager.lightManagerInstance().getBySystemName(name);
@@ -387,6 +390,7 @@ public class JsonUtil {
         return root;
     }
 
+    @Deprecated
     static public JsonNode getMemories(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
         for (String name : InstanceManager.memoryManagerInstance().getSystemNameList()) {
@@ -395,6 +399,7 @@ public class JsonUtil {
         return root;
     }
 
+    @Deprecated
     static public JsonNode getMemory(Locale locale, String name) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, MEMORY);
@@ -416,6 +421,7 @@ public class JsonUtil {
         return root;
     }
 
+    @Deprecated
     static public void putMemory(Locale locale, String name, JsonNode data) throws JsonException {
         try {
             InstanceManager.memoryManagerInstance().provideMemory(name);
@@ -425,6 +431,7 @@ public class JsonUtil {
         setMemory(locale, name, data);
     }
 
+    @Deprecated
     static public void setMemory(Locale locale, String name, JsonNode data) throws JsonException {
         try {
             Memory memory = InstanceManager.memoryManagerInstance().getMemory(name);
@@ -444,66 +451,6 @@ public class JsonUtil {
         } catch (NullPointerException ex) {
             log.error("Unable to get memory [{}].", name);
             throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", MEMORY, name));
-        }
-    }
-
-    static public JsonNode getBlocks(Locale locale) throws JsonException {
-        ArrayNode root = mapper.createArrayNode();
-        for (String name : InstanceManager.getDefault(jmri.BlockManager.class).getSystemNameList()) {
-            root.add(getBlock(locale, name));
-        }
-        return root;
-    }
-
-    static public JsonNode getBlock(Locale locale, String name) throws JsonException {
-        ObjectNode root = mapper.createObjectNode();
-        root.put(TYPE, BLOCK);
-        ObjectNode data = root.putObject(DATA);
-        Block block = InstanceManager.getDefault(jmri.BlockManager.class).getBlock(name);
-        try {
-            data.put(NAME, block.getSystemName());
-            data.put(USERNAME, block.getUserName());
-            data.put(COMMENT, block.getComment());
-            if (block.getValue() == null) {
-                data.putNull(VALUE);
-            } else {
-                data.put(VALUE, block.getValue().toString());
-            }
-        } catch (NullPointerException e) {
-            log.error("Unable to get block [{}].", name);
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", BLOCK, name));
-        }
-        return root;
-    }
-
-    static public void putBlock(Locale locale, String name, JsonNode data) throws JsonException {
-        try {
-            InstanceManager.getDefault(jmri.BlockManager.class).provideBlock(name);
-        } catch (Exception ex) {
-            throw new JsonException(500, Bundle.getMessage(locale, "ErrorCreatingObject", BLOCK, name));
-        }
-        setBlock(locale, name, data);
-    }
-
-    static public void setBlock(Locale locale, String name, JsonNode data) throws JsonException {
-        try {
-            Block block = InstanceManager.getDefault(jmri.BlockManager.class).getBlock(name);
-            if (data.path(USERNAME).isTextual()) {
-                block.setUserName(data.path(USERNAME).asText());
-            }
-            if (data.path(COMMENT).isTextual()) {
-                block.setComment(data.path(COMMENT).asText());
-            }
-            if (!data.path(VALUE).isMissingNode()) {
-                if (data.path(VALUE).isNull()) {
-                    block.setValue(null);
-                } else {
-                    block.setValue(data.path(VALUE).asText());
-                }
-            }
-        } catch (NullPointerException ex) {
-            log.error("Unable to get block [{}].", name);
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", BLOCK, name));
         }
     }
 
@@ -815,6 +762,7 @@ public class JsonUtil {
         return root;
     }
 
+    @Deprecated
     static public JsonNode getRoute(Locale locale, String name) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, ROUTE);
@@ -852,6 +800,7 @@ public class JsonUtil {
         return root;
     }
 
+    @Deprecated
     static public JsonNode getRoutes(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
         for (String name : InstanceManager.getDefault(jmri.RouteManager.class).getSystemNameList()) {

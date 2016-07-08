@@ -1,6 +1,5 @@
 package jmri.server.json;
 
-import static jmri.server.json.JSON.BLOCKS;
 import static jmri.server.json.JSON.CARS;
 import static jmri.server.json.JSON.CONSIST;
 import static jmri.server.json.JSON.CONSISTS;
@@ -178,9 +177,6 @@ public class JsonClientHandler {
                 JsonNode reply;
                 String list = root.path(LIST).asText();
                 switch (list) {
-                    case BLOCKS:
-                        reply = JsonUtil.getBlocks(this.connection.getLocale());
-                        break;
                     case CARS:
                         reply = JsonUtil.getCars(this.connection.getLocale());
                         break;
