@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * Handle configuration for {@link ControlPanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision$
  */
 public class ControlPanelEditorXml extends AbstractXmlAdapter {
 

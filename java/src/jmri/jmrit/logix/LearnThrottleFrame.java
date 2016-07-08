@@ -348,7 +348,6 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
      * A KeyAdapter that listens for the keys that work the control pad buttons
      *
      * @author glen
-     * @version $Revision$
      */
     class ControlPadKeyListener extends KeyAdapter {
 

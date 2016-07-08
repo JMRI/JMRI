@@ -20,7 +20,6 @@ import jmri.jmrit.catalog.NamedIcon;
  * use this.
  *
  * @author Bob Jacobsen Copyright (c) 2003
- * @version $Revision$
  * @see jmri.jmrit.display.SensorIcon
  * @see jmri.jmrit.display.layoutEditor.LayoutEditor
  * @see jmri.jmrit.catalog

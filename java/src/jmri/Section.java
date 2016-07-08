@@ -1638,8 +1638,7 @@ public class Section extends AbstractNamedBean
             ArrayList<PositionablePoint> anchorList = cUtil.getAnchorBoundariesThisBlock(cBlock);
             for (int j = 0; j < anchorList.size(); j++) {
                 PositionablePoint p = anchorList.get(j);
-                if ((p.getEastBoundSignal() != null) && (p.getWestBoundSignal() != null)
-                        && (!p.getEastBoundSignal().equals("")) && (!p.getWestBoundSignal().equals(""))) {
+                if ((!p.getEastBoundSignal().equals("")) && (!p.getWestBoundSignal().equals(""))) {
                     // have a signalled block boundary
                     SignalHead sh = cUtil.getSignalHeadAtAnchor(p, cBlock, false);
                     if (sh == null) {

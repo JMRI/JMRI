@@ -287,7 +287,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
 
     private boolean disposefinal() {
         if (jmri.InstanceManager.getOptionalDefault(ConfigureManager.class) != null) {
-            jmri.InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).deregister(this);
+            jmri.InstanceManager.getDefault(jmri.ConfigureManager.class).deregister(this);
         }
         _tecos.clear();
         _tdcc.clear();

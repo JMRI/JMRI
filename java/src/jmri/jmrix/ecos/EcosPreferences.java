@@ -24,7 +24,7 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
                 @Override
                 public boolean execute() {
                     if (getChangeMade()) {
-                        jmri.InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).storePrefs();
+                        jmri.InstanceManager.getDefault(jmri.ConfigureManager.class).storePrefs();
                     }
                     return true;
                 }

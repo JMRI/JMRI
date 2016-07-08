@@ -30,7 +30,6 @@ import jmri.Block;
  * Object and Node Type, are not returned.
  *
  * @author	Dave Duchamp Copyright (C) 2009
- * @version	$Revision$
  */
 public class TrackNode {
 

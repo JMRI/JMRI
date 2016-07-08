@@ -1,4 +1,3 @@
-// DispatcherAction.java
 package jmri.jmrit.dispatcher;
 
 import java.awt.event.ActionEvent;
@@ -9,14 +8,9 @@ import javax.swing.AbstractAction;
  * Swing action to create and register a DispatcherFrame
  *
  * @author	Dave Duchamp Copyright (C) 2008
- * @version	$Revision$
  */
 public class DispatcherAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 9148108708234506778L;
     static final ResourceBundle rb = ResourceBundle
             .getBundle("jmri.jmrit.dispatcher.DispatcherBundle");
 
@@ -45,5 +39,3 @@ public class DispatcherAction extends AbstractAction {
     }
 
 }
-
-/* @(#)DispatcherAction.java */

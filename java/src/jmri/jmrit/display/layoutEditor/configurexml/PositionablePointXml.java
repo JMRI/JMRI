@@ -1,4 +1,3 @@
-// PositionablePointXml.java
 package jmri.jmrit.display.layoutEditor.configurexml;
 
 import java.awt.geom.Point2D;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision$
  */
 public class PositionablePointXml extends AbstractXmlAdapter {
 

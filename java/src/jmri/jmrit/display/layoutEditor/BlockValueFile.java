@@ -1,4 +1,3 @@
-// BlockValueFile.java
 package jmri.jmrit.display.layoutEditor;
 
 import java.io.File;
@@ -18,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * manipulates files conforming to the block_value DTD.
  *
  * @author Dave Duchamp Copyright (C) 2008
- * @version $Revision$
  */
 public class BlockValueFile extends XmlFile {
 

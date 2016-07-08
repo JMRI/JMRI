@@ -1,4 +1,3 @@
-// AllocationPlan.java
 package jmri.jmrit.dispatcher;
 
 import jmri.Section;
@@ -34,7 +33,6 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author	Dave Duchamp Copyright (C) 2011
- * @version	$Revision$
  */
 public class AllocationPlan {
 
@@ -164,5 +162,3 @@ public class AllocationPlan {
 
     private final static Logger log = LoggerFactory.getLogger(AllocationPlan.class.getName());
 }
-
-/* @(#)AllocationPlan.java */

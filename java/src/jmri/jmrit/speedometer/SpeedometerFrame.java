@@ -15,6 +15,7 @@ import jmri.Application;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.Sensor;
+import jmri.SensorManager;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.SensorIcon;
@@ -205,7 +206,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
         clearButton.setVisible(false);
 
         // see if there's a sensor manager, if not disable
-        if (null == InstanceManager.sensorManagerInstance()) {
+        if (null == InstanceManager.getOptionalDefault(SensorManager.class)) {
             startButton.setEnabled(false);
             startButton.setToolTipText(Bundle.getMessage("TooltipSensorsNotSupported"));
         }

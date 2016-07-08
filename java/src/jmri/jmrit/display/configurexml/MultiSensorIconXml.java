@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * Handle configuration for display.MultiSensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision$
  */
 public class MultiSensorIconXml extends PositionableLabelXml {
 

@@ -34,7 +34,7 @@ public class ToolsMenu extends JMenu {
         add(programmerMenu);
 
         // disable programmer menu if there's no programmer manager
-        if (jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class) == null) {
+        if (jmri.InstanceManager.getOptionalDefault(jmri.ProgrammerManager.class) == null) {
             programmerMenu.setEnabled(false);
         }
 
