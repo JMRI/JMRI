@@ -1344,7 +1344,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 programmer = gpm.getGlobalProgrammer();
                 log.warn("Selector did not provide a programmer, attempt to use GlobalProgrammerManager default: {}", programmer);
             } else {
-                ProgrammerManager dpm = InstanceManager.getDefault(jmri.ProgrammerManager.class);
+                ProgrammerManager dpm = InstanceManager.getOptionalDefault(jmri.ProgrammerManager.class);
                 if (dpm != null) {
                     programmer = dpm.getGlobalProgrammer();
                     log.warn("Selector did not provide a programmer, attempt to use InstanceManager default: {}", programmer);
