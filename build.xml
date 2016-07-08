@@ -1293,7 +1293,7 @@
     </target>
 
     <target name="logalltest" depends="tests, runtime-library-selection" description="run headless test suite">
-        <jacoco:coverage destfile="jacoco.exec">
+        <jacoco:coverage destfile="jacoco.exec" excludes="org.slf4j.*">
         <junit haltonerror="false" haltonfailure="false" showoutput="yes" printsummary="withOutAndErr" fork="yes" dir="." timeout="3600000">
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
