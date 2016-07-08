@@ -1,4 +1,3 @@
-// AllocatedSection.java
 package jmri.jmrit.dispatcher;
 
 import java.beans.PropertyChangeEvent;
@@ -36,7 +35,6 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author	Dave Duchamp Copyright (C) 2008-2011
- * @version	$Revision$
  */
 public class AllocatedSection {
 
@@ -426,5 +424,3 @@ public class AllocatedSection {
 
     private final static Logger log = LoggerFactory.getLogger(AllocatedSection.class.getName());
 }
-
-/* @(#)AllocatedSection.java */

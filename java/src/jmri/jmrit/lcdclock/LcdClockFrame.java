@@ -1,4 +1,3 @@
-// LcdClockFrame.java
 package jmri.jmrit.lcdclock;
 
 import java.awt.Image;
@@ -21,9 +20,7 @@ import jmri.util.JmriJFrame;
  * A Run/Stop button is built into this, but because I don't like the way it
  * looks, it's not currently displayed in the GUI.
  *
- *
  * @author	Ken Cameron Copyright (C) 2007
- * @version	$Revision$
  *
  * This was a very direct steal from the Nixie clock code, ver 1.12. Thank you
  * Bob Jacobson.
@@ -31,10 +28,6 @@ import jmri.util.JmriJFrame;
  */
 public class LcdClockFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7573000785469413478L;
     // GUI member declarations
     JLabel h1;  // msb of hours
     JLabel h2;
