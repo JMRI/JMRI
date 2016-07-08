@@ -67,7 +67,7 @@ public class LightTableAction extends AbstractTableAction {
         this(Bundle.getMessage("TitleLightTable"));
     }
 
-    protected LightManager lightManager = InstanceManager.lightManagerInstance();
+    protected LightManager lightManager = InstanceManager.getOptionalDefault(jmri.LightManager.class);
 
     public void setManager(Manager man) {
         lightManager = (LightManager) man;

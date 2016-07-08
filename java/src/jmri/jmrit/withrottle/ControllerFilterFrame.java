@@ -31,14 +31,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Brett Hoffman Copyright (C) 2010
- * @version $Revision$
  */
 public class ControllerFilterFrame extends JmriJFrame implements TableModelListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6006763517792223304L;
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.withrottle.WiThrottleBundle");
     //static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
     private static String[] COLUMN_NAMES = {Bundle.getMessage("ColumnSystemName"),
@@ -51,12 +46,12 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
 
     public void initComponents() throws Exception {
         JTabbedPane tabbedPane = new JTabbedPane();
-        if (InstanceManager.turnoutManagerInstance() != null) {
+        if (InstanceManager.getOptionalDefault(jmri.TurnoutManager.class) != null) {
 
             tabbedPane.addTab(rb.getString("LabelTurnout"), null, addTurnoutPanel(), rb.getString("ToolTipTurnoutTab"));
         }
 
-        if (InstanceManager.getDefault(jmri.RouteManager.class) != null) {
+        if (InstanceManager.getOptionalDefault(jmri.RouteManager.class) != null) {
 
             tabbedPane.addTab(rb.getString("LabelRoute"), null, addRoutePanel(), rb.getString("ToolTipRouteTab"));
         }
@@ -333,10 +328,6 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
 
     class RouteFilterModel extends AbstractFilterModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -6672681464508618475L;
         RouteManager mgr = InstanceManager.getDefault(jmri.RouteManager.class);
 
         RouteFilterModel() {

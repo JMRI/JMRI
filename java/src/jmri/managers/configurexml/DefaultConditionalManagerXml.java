@@ -1,4 +1,3 @@
-// DefaultConditionalManagerXML.java
 package jmri.managers.configurexml;
 
 import java.util.ArrayList;
@@ -21,7 +20,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (c) 2007
  * @author Pete Cressman Copyright (C) 2009, 2011
- * @version $Revision$
  */
 public class DefaultConditionalManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -384,8 +382,8 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
             return;
         }
         // if old manager exists, remove it from configuration process
-        if (InstanceManager.getDefault(jmri.ConditionalManager.class) != null) {
-            InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).deregister(
+        if (InstanceManager.getOptionalDefault(jmri.ConditionalManager.class) != null) {
+            InstanceManager.getDefault(jmri.ConfigureManager.class).deregister(
                     InstanceManager.getDefault(jmri.ConditionalManager.class));
         }
         // register new one with InstanceManager

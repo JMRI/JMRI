@@ -1,4 +1,3 @@
-// ActiveTrain.java
 package jmri.jmrit.dispatcher;
 
 import java.util.ArrayList;
@@ -88,7 +87,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author	Dave Duchamp Copyright (C) 2008-2011
- * @version	$Revision$
  */
 public class ActiveTrain {
 
@@ -970,5 +968,3 @@ public class ActiveTrain {
 
     private final static Logger log = LoggerFactory.getLogger(ActiveTrain.class.getName());
 }
-
-/* @(#)ActiveTrain.java */

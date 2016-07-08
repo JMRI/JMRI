@@ -28,7 +28,7 @@ public class PowerButtonAction extends javax.swing.AbstractAction implements jav
 
     void checkManager() {
         // disable ourself if there is no power Manager
-        if (jmri.InstanceManager.getDefault(jmri.PowerManager.class) == null) {
+        if (jmri.InstanceManager.getOptionalDefault(jmri.PowerManager.class) == null) {
             setEnabled(false);
         } else {
             jmri.InstanceManager.getDefault(jmri.PowerManager.class).addPropertyChangeListener(this);

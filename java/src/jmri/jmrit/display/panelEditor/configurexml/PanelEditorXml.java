@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
  * Handle configuration for {@link PanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision$
  */
 public class PanelEditorXml extends AbstractXmlAdapter {
 

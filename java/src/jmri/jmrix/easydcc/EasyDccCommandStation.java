@@ -1,4 +1,3 @@
-// EasyDccCommandStation.java
 package jmri.jmrix.easydcc;
 
 import jmri.CommandStation;
@@ -9,7 +8,6 @@ import org.slf4j.LoggerFactory;
  * EasyDcc implementation of the CommandStation interface.
  *
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version	$Revision$
  */
 public class EasyDccCommandStation implements CommandStation {
 
@@ -76,6 +74,3 @@ public class EasyDccCommandStation implements CommandStation {
     private final static Logger log = LoggerFactory.getLogger(EasyDccCommandStation.class.getName());
 
 }
-
-
-/* @(#)EasyDccCommandStation.java */

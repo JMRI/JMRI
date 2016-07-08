@@ -1339,7 +1339,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             programmer = modePanel.getProgrammer();
         }
         if (programmer == null) {
-            GlobalProgrammerManager gpm = InstanceManager.getDefault(GlobalProgrammerManager.class);
+            GlobalProgrammerManager gpm = InstanceManager.getOptionalDefault(GlobalProgrammerManager.class);
             if (gpm != null) {
                 programmer = gpm.getGlobalProgrammer();
                 log.warn("Selector did not provide a programmer, attempt to use GlobalProgrammerManager default: {}", programmer);
@@ -1510,7 +1510,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         ConnectionConfig oldOpsMode = opsModeProCon;
 
         // Find the connection that goes with the global programmer
-        GlobalProgrammerManager gpm = InstanceManager.getDefault(GlobalProgrammerManager.class);
+        GlobalProgrammerManager gpm = InstanceManager.getOptionalDefault(GlobalProgrammerManager.class);
         if (gpm != null) {
             String serviceModeProgrammerName = gpm.getUserName();
             for (ConnectionConfig connection : InstanceManager.getDefault(ConnectionConfigManager.class)) {
@@ -1521,7 +1521,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         }
 
         // Find the connection that goes with the addressed programmer
-        AddressedProgrammerManager apm = InstanceManager.getDefault(AddressedProgrammerManager.class);
+        AddressedProgrammerManager apm = InstanceManager.getOptionalDefault(AddressedProgrammerManager.class);
         if (apm != null) {
             String opsModeProgrammerName = apm.getUserName();
             for (ConnectionConfig connection : InstanceManager.getDefault(ConnectionConfigManager.class)) {

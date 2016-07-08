@@ -318,7 +318,7 @@ public class RosterServlet extends HttpServlet {
         switch (format) {
             case JSON.JSON:
                 response.setContentType(UTF8_APPLICATION_JSON);
-                JsonRosterServiceFactory factory = InstanceManager.getDefault(JsonRosterServiceFactory.class);
+                JsonRosterServiceFactory factory = InstanceManager.getOptionalDefault(JsonRosterServiceFactory.class);
                 if (factory == null) {
                     factory = new JsonRosterServiceFactory();
                 }

@@ -1,4 +1,3 @@
-// DefaultLogixManagerXML.java
 package jmri.managers.configurexml;
 
 import java.util.List;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision$
  */
 public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 

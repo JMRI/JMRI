@@ -11,15 +11,10 @@ import javax.swing.JFrame;
  */
 public class BlockBossAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1838689834093701766L;
-
     public BlockBossAction(String s) {
         super(s);
         // disable ourself if there is no primary Signal Head manager available
-        if (jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class) == null) {
+        if (jmri.InstanceManager.getOptionalDefault(jmri.SignalHeadManager.class) == null) {
             setEnabled(false);
         }
     }

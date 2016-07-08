@@ -155,6 +155,7 @@ public class InstanceManager {
      * @param type The class Object for the item's type.
      * @return The default object for type. Never null.
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NONNULL_RETURN_VIOLATION", justification = "warns first, eventually should assert()")   
     @Nonnull
     static public <T> T getDefault(@Nonnull Class<T> type) {
         log.trace("getDefault of type {}", type.getName());

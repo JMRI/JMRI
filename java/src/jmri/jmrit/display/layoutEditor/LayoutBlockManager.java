@@ -2185,7 +2185,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
      * upon if the routing protocol has stabilised or is under going a change.
      */
     public void setStabilisedSensor(String pName) throws jmri.JmriException {
-        if (InstanceManager.sensorManagerInstance() != null) {
+        if (InstanceManager.getOptionalDefault(jmri.SensorManager.class) != null) {
             try {
                 Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
                 namedStabilisedIndicator = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor);

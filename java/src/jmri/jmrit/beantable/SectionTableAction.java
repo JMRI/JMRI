@@ -71,7 +71,7 @@ public class SectionTableAction extends AbstractTableAction {
     public SectionTableAction(String actionName) {
         super(actionName);
         // set manager - no need to use InstanceManager here
-        sectionManager = jmri.InstanceManager.getDefault(jmri.SectionManager.class);
+        sectionManager = jmri.InstanceManager.getOptionalDefault(jmri.SectionManager.class);
         // disable ourself if there is no Section manager available
         if (sectionManager == null) {
             setEnabled(false);

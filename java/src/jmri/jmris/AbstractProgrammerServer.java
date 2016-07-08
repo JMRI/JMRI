@@ -1,4 +1,3 @@
-//AbstractProgrammerServer.java
 package jmri.jmris;
 
 import java.io.IOException;
@@ -13,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * Connects to default global programmer at construction time.
  *
  * @author Paul Bender Copyright (C) 2012
- * @version $Revision$
  */
 abstract public class AbstractProgrammerServer implements jmri.ProgListener {
 
@@ -26,7 +24,7 @@ abstract public class AbstractProgrammerServer implements jmri.ProgListener {
     protected int lastCV = -1;
 
     public AbstractProgrammerServer() {
-        if (InstanceManager.getDefault(jmri.ProgrammerManager.class) != null) {
+        if (InstanceManager.getOptionalDefault(jmri.ProgrammerManager.class) != null) {
             p = InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer();
         } else {
             log.warn("no Service Mode ProgrammerManager configured, network programming disabled");

@@ -31,7 +31,6 @@ import jmri.jmrit.display.Editor.TargetPane;
 /**
  * <P>
  * @author Pete Cressman Copyright: Copyright (c) 2012
- * @version $Revision: 1 $
  *
  */
 public abstract class DrawFrame extends jmri.util.JmriJFrame {

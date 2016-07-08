@@ -642,7 +642,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         reuseFrameSavedPosition = save;
         jmri.UserPreferencesManager prefsMgr = jmri.InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class);
         if (prefsMgr == null) {  /* Why is this duplicated with above? */
-            prefsMgr = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+            prefsMgr = jmri.InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class);
         }
         if (prefsMgr != null) {
             prefsMgr.setSaveWindowLocation(windowFrameRef, save);
@@ -660,7 +660,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         reuseFrameSavedSized = save;
         jmri.UserPreferencesManager prefsMgr = jmri.InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class);
         if (prefsMgr == null) {  /* Why is this duplicated with above? */
-            prefsMgr = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+            prefsMgr = jmri.InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class);
         }
         if (prefsMgr != null) {
             prefsMgr.setSaveWindowSize(windowFrameRef, save);

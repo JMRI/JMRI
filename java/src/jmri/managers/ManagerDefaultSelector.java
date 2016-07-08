@@ -167,11 +167,11 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
             if (!found) {
                 log.debug("!found, so resetting");
                 String currentName = null;
-                if (c == ThrottleManager.class && InstanceManager.throttleManagerInstance() != null) {
+                if (c == ThrottleManager.class && InstanceManager.getOptionalDefault(jmri.ThrottleManager.class) != null) {
                     currentName = InstanceManager.throttleManagerInstance().getUserName();
-                } else if (c == PowerManager.class && InstanceManager.getDefault(jmri.PowerManager.class) != null) {
+                } else if (c == PowerManager.class && InstanceManager.getOptionalDefault(jmri.PowerManager.class) != null) {
                     currentName = InstanceManager.getDefault(jmri.PowerManager.class).getUserName();
-                } else if (c == ProgrammerManager.class && InstanceManager.getDefault(jmri.ProgrammerManager.class) != null) {
+                } else if (c == ProgrammerManager.class && InstanceManager.getOptionalDefault(jmri.ProgrammerManager.class) != null) {
                     currentName = InstanceManager.getDefault(jmri.ProgrammerManager.class).getUserName();
                 }
                 if (currentName != null) {

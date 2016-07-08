@@ -1,4 +1,3 @@
-// DualDecoderSelectFrame.java
 package jmri.jmrit.dualdecoder;
 
 /**
@@ -6,14 +5,8 @@ package jmri.jmrit.dualdecoder;
  * select an active decoder from multiple ones in a loco
  *
  * @author Bob Jacobsen Copyright (C) 2003
- * @version $Revision$
  */
 public class DualDecoderSelectFrame extends jmri.util.JmriJFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1029903266811472795L;
 
     public DualDecoderSelectFrame() {
         this("Multi-Decoder Control");
