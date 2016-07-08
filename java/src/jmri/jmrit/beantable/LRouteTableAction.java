@@ -58,6 +58,7 @@ import org.slf4j.LoggerFactory;
  * railroad control task.
  *
  * @author Pete Cressman Copyright (C) 2009
+ * @author Egbert Broerse i18n 2016
  *
  */
 public class LRouteTableAction extends AbstractTableAction {
@@ -1816,9 +1817,9 @@ public class LRouteTableAction extends AbstractTableAction {
             if (tSize > 1) {
                 antecedent.append("(");
             }
-            antecedent.append("R1");
+            antecedent.append(Bundle.getMessage("rowAbrev").trim() + "1"); // rowAbrev = "R" in English
             for (int i = 1; i < tSize; i++) {
-                antecedent.append(" OR R" + (i + 1));
+                antecedent.append(" " + Bundle.getMessage("LogicOR") + " " + Bundle.getMessage("rowAbrev").trim() + (i + 1));
             }
             if (tSize > 1) {
                 antecedent.append(")");
@@ -1832,14 +1833,14 @@ public class LRouteTableAction extends AbstractTableAction {
         if (vetoList != null && vetoList.size() > 0) {
             int vSize = vetoList.size();
             if (tSize > 0) {
-                antecedent.append(" AND ");
+                antecedent.append(" " + Bundle.getMessage("LogicAND") + " ");
             }
             if (vSize > 1) {
                 antecedent.append("(");
             }
-            antecedent.append("NOT R" + (1 + tSize));
+            antecedent.append(Bundle.getMessage("LogicNOT") + " " + Bundle.getMessage("rowAbrev").trim() + (1 + tSize)); // rowAbrev = "R" in English
             for (int i = 1; i < vSize; i++) {
-                antecedent.append(" AND NOT R" + (i + 1 + tSize));
+                antecedent.append(" " + Bundle.getMessage("LogicAND") + " " + Bundle.getMessage("LogicNOT") + " " + Bundle.getMessage("rowAbrev").trim() + (i + 1 + tSize));
             }
             if (vSize > 1) {
                 antecedent.append(")");

@@ -438,7 +438,7 @@ public class DefaultConditional extends AbstractNamedBean
             argsUsed.or(dp.argsUsed);
         } else {
             // cannot be '('.  must be either leftArg or notleftArg
-            if (s.charAt(i) == 'R') {
+            if (s.charAt(i) == Bundle.getMessage("rowAbrev").charAt(0)) { // compare i18n key value instead of just 'R'
                 try {
                     k = Integer.parseInt(String.valueOf(s.substring(i + 1, i + 3)));
                     i += 2;
@@ -453,7 +453,7 @@ public class DefaultConditional extends AbstractNamedBean
                 }
                 i++;
                 argsUsed.set(k - 1);
-            } else if (rbx.getString("LogicNOT").equals(s.substring(i, i + (rbx.getString("LogicNOT").length())))) { // compare the right length after i18n
+            } else if (Bundle.getMessage("LogicNOT").equals(s.substring(i, i + (Bundle.getMessage("LogicNOT").length())))) { // compare the right length after i18n
                 i += 3;
                 //not leftArg
                 if (s.charAt(i) == '(') {
@@ -461,7 +461,7 @@ public class DefaultConditional extends AbstractNamedBean
                     leftArg = dp.result;
                     i += dp.indexCount;
                     argsUsed.or(dp.argsUsed);
-                } else if (s.charAt(i) == 'R') {
+                } else if (s.charAt(i) == Bundle.getMessage("rowAbrev").charAt(0)) { // compare i18n key value instead of just 'R'
                     try {
                         k = Integer.parseInt(String.valueOf(s.substring(i + 1, i + 3)));
                         i += 2;
@@ -490,10 +490,10 @@ public class DefaultConditional extends AbstractNamedBean
         while (i < s.length()) {
             if (s.charAt(i) != ')') {
                 // must be either AND or OR
-                if (rbx.getString("LogicAND").equals(s.substring(i, i + (rbx.getString("LogicAND").length())))) { // compare the right length after i18n
+                if (Bundle.getMessage("LogicAND").equals(s.substring(i, i + (Bundle.getMessage("LogicAND").length())))) { // compare the right length after i18n
                     i += 3;
                     oper = OPERATOR_AND;
-                } else if (rbx.getString("LogicOR").equals(s.substring(i, i + (rbx.getString("LogicOR").length())))) { // compare the right length after i18n
+                } else if (Bundle.getMessage("LogicOR").equals(s.substring(i, i + (Bundle.getMessage("LogicOR").length())))) { // compare the right length after i18n
                     i += 2;
                     oper = OPERATOR_OR;
                 } else {
@@ -507,7 +507,7 @@ public class DefaultConditional extends AbstractNamedBean
                     argsUsed.or(dp.argsUsed);
                 } else {
                     // cannot be '('.  must be either rightArg or notRightArg
-                    if (s.charAt(i) == 'R') {
+                    if (s.charAt(i) == Bundle.getMessage("rowAbrev").charAt(0)) { // compare i18n key value instead of just 'R'
                         try {
                             k = Integer.parseInt(String.valueOf(s.substring(i + 1, i + 3)));
                             i += 2;
@@ -522,7 +522,7 @@ public class DefaultConditional extends AbstractNamedBean
                         }
                         i++;
                         argsUsed.set(k - 1);
-                    } else if ((i + 3) < s.length() && rbx.getString("LogicNOT").equals(s.substring(i, i + (rbx.getString("LogicNOT").length())))) { // compare the right length after i18n
+                    } else if ((i + 3) < s.length() && Bundle.getMessage("LogicNOT").equals(s.substring(i, i + (Bundle.getMessage("LogicNOT").length())))) { // compare the right length after i18n
                         i += 3;
                         //not rightArg
                         if (s.charAt(i) == '(') {
@@ -530,7 +530,7 @@ public class DefaultConditional extends AbstractNamedBean
                             rightArg = dp.result;
                             i += dp.indexCount;
                             argsUsed.or(dp.argsUsed);
-                        } else if (s.charAt(i) == 'R') {
+                        } else if (s.charAt(i) == Bundle.getMessage("rowAbrev").charAt(0)) { // compare i18n key value instead of just 'R'
                             try {
                                 k = Integer.parseInt(String.valueOf(s.substring(i + 1, i + 3)));
                                 i += 2;

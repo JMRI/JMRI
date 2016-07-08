@@ -1615,11 +1615,11 @@ public class LogixTableAction extends AbstractTableAction {
             // initialize and populate Combo boxes for table of state variables
             _notOperatorBox = new JComboBox<String>();
             _notOperatorBox.addItem(" ");
-            _notOperatorBox.addItem(rbx.getString("LogicNOT"));
+            _notOperatorBox.addItem(Bundle.getMessage("LogicNOT"));
 
             _andOperatorBox = new JComboBox<String>();
-            _andOperatorBox.addItem(rbx.getString("LogicAND"));
-            _andOperatorBox.addItem(rbx.getString("LogicOR"));
+            _andOperatorBox.addItem(Bundle.getMessage("LogicAND"));
+            _andOperatorBox.addItem(Bundle.getMessage("LogicOR"));
             // initialize table of state variables
             _variableTableModel = new VariableTableModel();
             JTable variableTable = new JTable(_variableTableModel);
@@ -1707,9 +1707,9 @@ public class LogixTableAction extends AbstractTableAction {
 
             // logic type area
             _operatorBox = new JComboBox<String>(new String[]{
-                rbx.getString("LogicAND"),
-                rbx.getString("LogicOR"),
-                rbx.getString("LogicMixed")});
+                    Bundle.getMessage("LogicAND"),
+                    Bundle.getMessage("LogicOR"),
+                    Bundle.getMessage("LogicMixed")});
             JPanel typePanel = makeEditPanel(_operatorBox, "LabelLogicType", "TypeLogicHint");
             _operatorBox.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -1935,7 +1935,7 @@ public class LogixTableAction extends AbstractTableAction {
         if (oper == null) {
             variable.setNegation(false);
         } else {
-            variable.setNegation(oper.equals(rbx.getString("LogicNOT")));
+            variable.setNegation(oper.equals(Bundle.getMessage("LogicNOT")));
         }
         if (variable.isNegated() != state) {
             makeAntecedent();
@@ -1949,7 +1949,7 @@ public class LogixTableAction extends AbstractTableAction {
         ConditionalVariable variable = _variableList.get(row);
         int oldOper = variable.getOpern();
         if (row > 0) {
-            if (oper.equals(rbx.getString("LogicOR"))) {
+            if (oper.equals(Bundle.getMessage("LogicOR"))) {
                 variable.setOpern(Conditional.OPERATOR_OR);
             } else {
                 variable.setOpern(Conditional.OPERATOR_AND);
@@ -2210,10 +2210,10 @@ public class LogixTableAction extends AbstractTableAction {
     void makeAntecedent() {
         String str = "";
         if (_variableList.size() != 0) {
-            String not = rbx.getString("LogicNOT").toLowerCase();
-            String row = rbx.getString("rowAbrev");
-            String and = " " + rbx.getString("LogicAND").toLowerCase() + " ";
-            String or = " " + rbx.getString("LogicOR").toLowerCase() + " ";
+            String not = Bundle.getMessage("LogicNOT").toLowerCase();
+            String row = Bundle.getMessage("rowAbrev").trim();
+            String and = " " + Bundle.getMessage("LogicAND").toLowerCase() + " ";
+            String or = " " + Bundle.getMessage("LogicOR").toLowerCase() + " ";
             if (_variableList.get(0).isNegated()) {
                 str = not + " ";
             }
@@ -2231,7 +2231,7 @@ public class LogixTableAction extends AbstractTableAction {
                         break;
                 }
                 if (variable.isNegated()) {
-                    str = str + not;
+                    str = str + not + " ";
                 }
                 str = str + row + (i + 1);
                 if (i > 0 && i + 1 < _variableList.size()) {
@@ -2247,12 +2247,12 @@ public class LogixTableAction extends AbstractTableAction {
     void appendToAntecedent(ConditionalVariable variable) {
         if (_variableList.size() > 1) {
             if (_logicType == Conditional.OPERATOR_OR) {
-                _antecedent = _antecedent + " " + rbx.getString("LogicOR").toLowerCase() + " ";
+                _antecedent = _antecedent + " " + Bundle.getMessage("LogicOR").toLowerCase() + " ";
             } else {
-                _antecedent = _antecedent + " " + rbx.getString("LogicAND").toLowerCase() + " ";
+                _antecedent = _antecedent + " " + Bundle.getMessage("LogicAND").toLowerCase() + " ";
             }
         }
-        _antecedent = _antecedent + rbx.getString("rowAbrev") + _variableList.size();
+        _antecedent = _antecedent + Bundle.getMessage("rowAbrev").trim() + _variableList.size();
         _antecedentField.setText(_antecedent);
     }
 
@@ -2634,17 +2634,18 @@ public class LogixTableAction extends AbstractTableAction {
             ActionListener deleteListener) {
         JPanel panel3 = new JPanel();
         panel3.setLayout(new BoxLayout(panel3, BoxLayout.X_AXIS));
-        JButton updateAction = new JButton(Bundle.getMessage("ButtonUpdate"));
-        panel3.add(updateAction);
-        panel3.add(Box.createHorizontalStrut(STRUT));
-        updateAction.addActionListener(updateListener);
-        updateAction.setToolTipText(rbx.getString("UpdateButtonHint"));
 
         JButton cancelAction = new JButton(Bundle.getMessage("ButtonCancel"));
         panel3.add(cancelAction);
         panel3.add(Box.createHorizontalStrut(STRUT));
         cancelAction.addActionListener(cancelListener);
         cancelAction.setToolTipText(rbx.getString("CancelButtonHint"));
+
+        JButton updateAction = new JButton(Bundle.getMessage("ButtonUpdate"));
+        panel3.add(updateAction);
+        panel3.add(Box.createHorizontalStrut(STRUT));
+        updateAction.addActionListener(updateListener);
+        updateAction.setToolTipText(rbx.getString("UpdateButtonHint"));
 
         JButton deleteAction = new JButton(Bundle.getMessage("ButtonDelete"));
         panel3.add(deleteAction);
@@ -5251,7 +5252,7 @@ public class LogixTableAction extends AbstractTableAction {
             ConditionalVariable variable = _variableList.get(r);
             switch (c) {
                 case ROWNUM_COLUMN:
-                    return (rbx.getString("rowAbrev") + (r + 1));
+                    return (Bundle.getMessage("rowAbrev").trim() + (r + 1));
                 case AND_COLUMN:
                     if (r == 0 || _logicType == Conditional.MIXED) {
                         return "";
@@ -5259,7 +5260,7 @@ public class LogixTableAction extends AbstractTableAction {
                     return variable.getOpernString();
                 case NOT_COLUMN:
                     if (variable.isNegated()) {
-                        return rbx.getString("LogicNOT");
+                        return Bundle.getMessage("LogicNOT");
                     }
                     break;
                 case DESCRIPTION_COLUMN:

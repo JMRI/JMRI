@@ -368,15 +368,15 @@ public class ConditionalVariable {
     public String getOpernString() {
         switch (_opern) {
             case Conditional.OPERATOR_AND:
-                return rbx.getString("LogicAND");
+                return rbean.getString("LogicAND"); // also used for i18n by LRouteTableAction and LogixTableAction
             case Conditional.OPERATOR_NOT:
-                return rbx.getString("LogicNOT");
+                return rbean.getString("LogicNOT");
             case Conditional.OPERATOR_AND_NOT:
-                return rbx.getString("LogicAND");
+                return rbean.getString("LogicAND");
             case Conditional.OPERATOR_NONE:
                 return "";
             case Conditional.OPERATOR_OR:
-                return rbx.getString("LogicOR");
+                return rbean.getString("LogicOR");
             default:
                 return "";
         }
