@@ -294,6 +294,26 @@ public final class JSON {
      * {@value #TRAIN}
      */
     public static final String TRAIN = "train"; // NOI18N
+    /**
+     * {@value #USE_EXTRA_COLOR}
+     */
+    public static final String USE_EXTRA_COLOR = "useExtraColor"; // NOI18N
+    /**
+     * {@value #BLOCK_COLOR}
+     */
+    public static final String BLOCK_COLOR = "blockColor"; // NOI18N
+    /**
+     * {@value #TRACK_COLOR}
+     */
+    public static final String TRACK_COLOR = "trackColor"; // NOI18N
+    /**
+     * {@value #BLOCK_OCCUPIED_COLOR}
+     */
+    public static final String BLOCK_OCCUPIED_COLOR = "blockOccupiedColor"; // NOI18N
+    /**
+     * {@value #BLOCK_EXTRA_COLOR}
+     */
+    public static final String BLOCK_EXTRA_COLOR = "blockExtraColor"; // NOI18N
 
     /* JSON operations tokens */
     /**

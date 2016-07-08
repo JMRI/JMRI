@@ -1,11 +1,16 @@
 package jmri.server.json.layoutblock;
 
+import static jmri.server.json.JSON.BLOCK_COLOR;
+import static jmri.server.json.JSON.BLOCK_EXTRA_COLOR;
+import static jmri.server.json.JSON.BLOCK_OCCUPIED_COLOR;
 import static jmri.server.json.JSON.COMMENT;
 import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.STATE;
+import static jmri.server.json.JSON.TRACK_COLOR;
 import static jmri.server.json.JSON.TYPE;
 import static jmri.server.json.JSON.USERNAME;
+import static jmri.server.json.JSON.USE_EXTRA_COLOR;
 import static jmri.server.json.layoutblock.JsonLayoutBlockServiceFactory.LAYOUTBLOCK;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -42,11 +47,11 @@ public class JsonLayoutBlockHttpService extends JsonHttpService {
         data.put(USERNAME, layoutblock.getUserName());
         data.put(COMMENT, layoutblock.getComment());
         data.put(STATE, layoutblock.getState());
-        data.put("useExtraColor", layoutblock.getUseExtraColor());
-        data.put("blockColor", jmri.util.ColorUtil.colorToHexString(layoutblock.getBlockColor()));
-        data.put("trackColor", jmri.util.ColorUtil.colorToHexString(layoutblock.getBlockTrackColor()));
-        data.put("blockOccupiedColor", jmri.util.ColorUtil.colorToHexString(layoutblock.getBlockOccupiedColor()));
-        data.put("blockExtraColor", jmri.util.ColorUtil.colorToHexString(layoutblock.getBlockExtraColor()));
+        data.put(USE_EXTRA_COLOR, layoutblock.getUseExtraColor());
+        data.put(BLOCK_COLOR, jmri.util.ColorUtil.colorToHexString(layoutblock.getBlockColor()));
+        data.put(TRACK_COLOR, jmri.util.ColorUtil.colorToHexString(layoutblock.getBlockTrackColor()));
+        data.put(BLOCK_OCCUPIED_COLOR, jmri.util.ColorUtil.colorToHexString(layoutblock.getBlockOccupiedColor()));
+        data.put(BLOCK_EXTRA_COLOR, jmri.util.ColorUtil.colorToHexString(layoutblock.getBlockExtraColor()));
         
         return root;
     }

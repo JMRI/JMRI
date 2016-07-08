@@ -13,8 +13,8 @@ import jmri.spi.JsonServiceFactory;
  */
 public class JsonLayoutBlockServiceFactory implements JsonServiceFactory {
 
-    public static final String LAYOUTBLOCK = "layoutblock"; // NOI18N
-    public static final String LAYOUTBLOCKS = "layoutblocks"; // NOI18N
+    public static final String LAYOUTBLOCK = "layoutBlock"; // NOI18N
+    public static final String LAYOUTBLOCKS = "layoutBlocks"; // NOI18N
 
     @Override
     public String[] getTypes() {
