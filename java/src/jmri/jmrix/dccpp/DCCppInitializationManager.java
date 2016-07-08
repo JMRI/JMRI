@@ -1,4 +1,3 @@
-// DCCppInitializationManager.java
 package jmri.jmrix.dccpp;
 
 import org.slf4j.Logger;
@@ -41,7 +40,7 @@ public class DCCppInitializationManager extends AbstractDCCppInitializationManag
 	    log.error("Power Manager not (yet) created!");
 	}
 	jmri.InstanceManager.store(systemMemo.getPowerManager(), jmri.PowerManager.class);
-	if (jmri.InstanceManager.getDefault(jmri.PowerManager.class) == null) {
+	if (jmri.InstanceManager.getOptionalDefault(jmri.PowerManager.class) == null) {
 	    log.error("Power Manager not accessible!");
 	} else {
 	    log.debug("Power Manager: {}", jmri.InstanceManager.getDefault(jmri.PowerManager.class));

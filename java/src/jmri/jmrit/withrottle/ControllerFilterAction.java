@@ -8,18 +8,12 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Brett Hoffman Copyright (C) 2010
- * @version $Revision$
  */
 public class ControllerFilterAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8079644588217664906L;
-
     public ControllerFilterAction(String name) {
         super(name);
-        if ((jmri.InstanceManager.getOptionalDefault(jmri.TurnoutManager.class) == null) && (jmri.InstanceManager.getDefault(jmri.RouteManager.class) == null)) {
+        if ((jmri.InstanceManager.getOptionalDefault(jmri.TurnoutManager.class) == null) && (jmri.InstanceManager.getOptionalDefault(jmri.RouteManager.class) == null)) {
             setEnabled(false);
         }
     }
