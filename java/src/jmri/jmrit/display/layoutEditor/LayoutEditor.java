@@ -751,7 +751,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         helpBar.setVisible(false);
 
         // register the resulting panel for later configuration
-        InstanceManager.configureManagerInstance().registerUser(this);
+        InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerUser(this);
         // confirm that panel hasn't already been loaded
         if (jmri.jmrit.display.PanelMenu.instance().isPanelNameUsed(name)) {
             log.warn("File contains a panel with the same name (" + name + ") as an existing panel");
@@ -1764,7 +1764,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         dispMenu.add(newTrainItem);
         newTrainItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                if (jmri.InstanceManager.transitManagerInstance().getSystemNameList().size() <= 0) {
+                if (jmri.InstanceManager.getDefault(jmri.TransitManager.class).getSystemNameList().size() <= 0) {
                     // Inform the user that there are no Transits available, and don't open the window
                     javax.swing.JOptionPane.showMessageDialog(null, ResourceBundle.getBundle("jmri.jmrit.dispatcher.DispatcherBundle").getString("NoTransitsMessage"));
                     return;
@@ -2069,9 +2069,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // get reporter name
         Reporter reporter = null;
         String rName = reporterNameField.getText().trim();
-        if (InstanceManager.reporterManagerInstance() != null) {
+        if (InstanceManager.getDefault(jmri.ReporterManager.class) != null) {
             try {
-                reporter = InstanceManager.reporterManagerInstance().
+                reporter = InstanceManager.getDefault(jmri.ReporterManager.class).
                             provideReporter(rName);
             } catch (IllegalArgumentException e) {
                 JOptionPane.showMessageDialog(enterReporterFrame,
@@ -6594,9 +6594,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (sm instanceof SignalMast) {
             sb.append("Signal Mast");
             sb.append(" is linked to the following items<br> do you want to remove those references");
-            if (InstanceManager.signalMastLogicManagerInstance().isSignalMastUsed((SignalMast) sm)) {
+            if (InstanceManager.getDefault(jmri.SignalMastLogicManager.class).isSignalMastUsed((SignalMast) sm)) {
                 jmri.SignalMastLogic sml = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic((SignalMast) sm);
-                //jmri.SignalMastLogic sml = InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic((SignalMast)sm);
+                //jmri.SignalMastLogic sml = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic((SignalMast)sm);
                 if (sml != null && sml.useLayoutEditor(sml.getDestinationList().get(0))) {
                     sb.append(" and any SignalMast Logic associated with it");
                 }
@@ -7221,9 +7221,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         String tName = nextSignalHead.getText().trim();
         SignalHead mHead = null;
         if (!tName.equals("")) {
-            mHead = InstanceManager.signalHeadManagerInstance().getSignalHead(tName);
+            mHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(tName);
             /*if (mHead == null)
-             mHead = InstanceManager.signalHeadManagerInstance().getByUserName(tName);
+             mHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getByUserName(tName);
              else */
             nextSignalHead.setText(tName);
         }
@@ -7260,9 +7260,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     SignalHead getSignalHead(String name) {
-        SignalHead sh = InstanceManager.signalHeadManagerInstance().getBySystemName(name);
+        SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(name);
         if (sh == null) {
-            sh = InstanceManager.signalHeadManagerInstance().getByUserName(name);
+            sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getByUserName(name);
         }
         if (sh == null) {
             log.warn("did not find a SignalHead named " + name);
@@ -7305,7 +7305,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         String tName = nextSignalMast.getText().trim();
         SignalMast mMast = null;
         if (!tName.equals("")) {
-            mMast = InstanceManager.signalMastManagerInstance().getSignalMast(tName);
+            mMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(tName);
             nextSignalMast.setText(tName);
         }
         if (mMast == null) {
@@ -7331,9 +7331,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     SignalMast getSignalMast(String name) {
-        SignalMast sh = InstanceManager.signalMastManagerInstance().getBySystemName(name);
+        SignalMast sh = InstanceManager.getDefault(jmri.SignalMastManager.class).getBySystemName(name);
         if (sh == null) {
-            sh = InstanceManager.signalMastManagerInstance().getByUserName(name);
+            sh = InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName(name);
         }
         if (sh == null) {
             log.warn("did not find a SignalMast named " + name);

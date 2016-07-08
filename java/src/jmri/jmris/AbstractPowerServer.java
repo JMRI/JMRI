@@ -1,4 +1,3 @@
-//AbstractPowerServer.java
 package jmri.jmris;
 
 import java.beans.PropertyChangeListener;
@@ -13,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * Abstract interface between the JMRI power manager and a network connection
  *
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision$
  */
 abstract public class AbstractPowerServer implements PropertyChangeListener {
 
@@ -37,7 +35,7 @@ abstract public class AbstractPowerServer implements PropertyChangeListener {
 
     protected boolean mgrOK() {
         if (p == null) {
-            p = InstanceManager.powerManagerInstance();
+            p = InstanceManager.getOptionalDefault(PowerManager.class);
             if (p == null) {
                 log.error("No power manager instance found");
                 try {

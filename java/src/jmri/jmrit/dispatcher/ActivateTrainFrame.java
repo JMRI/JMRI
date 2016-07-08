@@ -1,4 +1,3 @@
-// ActivateTrainFrame.java 
 package jmri.jmrit.dispatcher;
 
 import java.awt.Container;
@@ -49,7 +48,6 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author	Dave Duchamp Copyright (C) 2009
- * @version	$Revision$
  */
 public class ActivateTrainFrame {
 
@@ -71,7 +69,7 @@ public class ActivateTrainFrame {
     private boolean _TrainsFromRoster = true;
     private boolean _TrainsFromTrains = false;
     private ArrayList<ActiveTrain> _ActiveTrainsList = null;
-    private TransitManager _TransitManager = InstanceManager.transitManagerInstance();
+    private TransitManager _TransitManager = InstanceManager.getDefault(jmri.TransitManager.class);
     private String _trainInfoName = "";
 
     // initiate train window variables

@@ -44,7 +44,7 @@ public class ReporterTableAction extends AbstractTableAction {
         }
     }
 
-    protected ReporterManager reportManager = InstanceManager.reporterManagerInstance();
+    protected ReporterManager reportManager = InstanceManager.getDefault(jmri.ReporterManager.class);
 
     public void setManager(ReporterManager man) {
         reportManager = man;
@@ -78,8 +78,6 @@ public class ReporterTableAction extends AbstractTableAction {
             public NamedBean getByUserName(String name) {
                 return reportManager.getByUserName(name);
             }
-            /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getMultipleChoiceOption(getClassName(),"delete"); }
-             public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMultipleChoiceOption(getClassName(), "delete", boo); }*/
 
             protected String getMasterClassName() {
                 return getClassName();

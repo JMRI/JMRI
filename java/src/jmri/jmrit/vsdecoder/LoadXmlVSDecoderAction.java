@@ -1,23 +1,5 @@
 package jmri.jmrit.vsdecoder;
 
-/*
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
- * for more details.
- * <P>
- *
- * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision$
- */
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.List;
@@ -35,9 +17,7 @@ import org.slf4j.LoggerFactory;
  * Adapted from LoadXmlThrottleProfileAction by Glen Oberhauser (2004)
  *
  * @author Mark Underwood 2011
- * @version $Revision$
  */
-@SuppressWarnings("serial")
 public class LoadXmlVSDecoderAction extends AbstractAction {
 
     static final ResourceBundle rb = VSDecoderBundle.bundle();
@@ -52,7 +32,7 @@ public class LoadXmlVSDecoderAction extends AbstractAction {
         // Pretty sure I don't need this
         // disable the ourselves if there is no throttle Manager
 	/*
-         if (jmri.InstanceManager.throttleManagerInstance() == null) {
+         if (jmri.InstanceManager.getOptionalDefault(jmri.ThrottleManager.class) == null) {
          setEnabled(false);
          }
          */

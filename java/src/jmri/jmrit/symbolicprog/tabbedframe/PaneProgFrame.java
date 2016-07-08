@@ -138,7 +138,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     protected void installComponents() {
 
         // create ShutDownTasks
-        if (jmri.InstanceManager.shutDownManagerInstance() != null) {
+        if (jmri.InstanceManager.getOptionalDefault(jmri.ShutDownManager.class) != null) {
 
             if (decoderDirtyTask == null) {
                 decoderDirtyTask
@@ -151,7 +151,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                             }
                         };
             }
-            jmri.InstanceManager.shutDownManagerInstance().register(decoderDirtyTask);
+            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(decoderDirtyTask);
             if (fileDirtyTask == null) {
                 fileDirtyTask
                         = new SwingShutDownTask("DecoderPro Decoder Window Check",
@@ -168,7 +168,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                             }
                         };
             }
-            jmri.InstanceManager.shutDownManagerInstance().register(fileDirtyTask);
+            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(fileDirtyTask);
         }
 
         // Create a menu bar
@@ -477,7 +477,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         // set the programming mode
         if (pProg != null) {
-            if (jmri.InstanceManager.programmerManagerInstance() != null) {
+            if (jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class) != null) {
                 // go through in preference order, trying to find a mode
                 // that exists in both the programmer and decoder.
                 // First, get attributes. If not present, assume that
@@ -868,12 +868,12 @@ abstract public class PaneProgFrame extends JmriJFrame
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         // deregister shutdown hooks
-        if (jmri.InstanceManager.shutDownManagerInstance() != null) {
-            jmri.InstanceManager.shutDownManagerInstance().deregister(decoderDirtyTask);
+        if (jmri.InstanceManager.getOptionalDefault(jmri.ShutDownManager.class) != null) {
+            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(decoderDirtyTask);
         }
         decoderDirtyTask = null;
-        if (jmri.InstanceManager.shutDownManagerInstance() != null) {
-            jmri.InstanceManager.shutDownManagerInstance().deregister(fileDirtyTask);
+        if (jmri.InstanceManager.getOptionalDefault(jmri.ShutDownManager.class) != null) {
+            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(fileDirtyTask);
         }
         fileDirtyTask = null;
 
@@ -1726,7 +1726,7 @@ abstract public class PaneProgFrame extends JmriJFrame
      * @param yes true if empty panes should be shown
      */
     public static void setShowEmptyPanes(boolean yes) {
-        if (InstanceManager.getDefault(ProgrammerConfigManager.class) != null)
+        if (InstanceManager.getOptionalDefault(ProgrammerConfigManager.class) != null)
             InstanceManager.getDefault(ProgrammerConfigManager.class).setShowEmptyPanes(yes);
     }
 
@@ -1734,7 +1734,7 @@ abstract public class PaneProgFrame extends JmriJFrame
      * get value of Preference option to show empty panes
      */
     public static boolean getShowEmptyPanes() {
-        return (InstanceManager.getDefault(ProgrammerConfigManager.class) == null ) ?
+        return (InstanceManager.getOptionalDefault(ProgrammerConfigManager.class) == null ) ?
             true :
             InstanceManager.getDefault(ProgrammerConfigManager.class).isShowEmptyPanes();
     }
@@ -1763,12 +1763,12 @@ abstract public class PaneProgFrame extends JmriJFrame
      * @param yes true is CV numbers should be shown
      */
     public static void setShowCvNumbers(boolean yes) {
-        if (InstanceManager.getDefault(ProgrammerConfigManager.class) != null)
+        if (InstanceManager.getOptionalDefault(ProgrammerConfigManager.class) != null)
             InstanceManager.getDefault(ProgrammerConfigManager.class).setShowCvNumbers(yes);
     }
 
     public static boolean getShowCvNumbers() {
-        return (InstanceManager.getDefault(ProgrammerConfigManager.class) == null ) ?
+        return (InstanceManager.getOptionalDefault(ProgrammerConfigManager.class) == null ) ?
             true :
             InstanceManager.getDefault(ProgrammerConfigManager.class).isShowCvNumbers();
     }

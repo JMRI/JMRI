@@ -75,7 +75,7 @@
             <p>The <b>HTTP</b> feature of the servlet responds to the following URL patterns:
             <ul>
                 <li>/json/<i>&lt;listName&gt;</i> -- used with HTTP GET to retrieve a list from JMRI, or with PUT to add an item to a list</li>
-                <li>/json/&lt;<i>typeName</i>&gt;/<i>&lt;itemName&gt;</i> -- used with HTTP GET to retrieve a single item from a list, or with POST to udpate an existing item</li>
+                <li>/json/&lt;<i>typeName</i>&gt;/<i>&lt;itemName&gt;</i> -- used with HTTP GET to retrieve a single item from a list, or with POST to update an existing item</li>
             </ul>
             <p>There are a number of lists, and not all operations are supported on these lists and/or items within each list. Check the sections below for the
             operations that are currently supported.</p>
@@ -84,27 +84,28 @@
                 These lists are roughly grouped according to the module that uses them.</p>
             <table class="data">
                 <tr><th>Name</th>             <th>GET</th> <th>PUT</th> <th>POST</th> <th>Module</th></tr>
+                <tr><td>blocks</td>           <td>*</td>   <td></td>    <td></td>     <td>PanelPro</td></tr>
                 <tr><td>cars</td>             <td>*</td>   <td></td>    <td></td>     <td>OperationsPro</td></tr>
-                <tr><td>consits</td>          <td>*</td>   <td></td>    <td></td>     <td>DecoderPro</td></tr>
+                <tr><td>consists</td>         <td>*</td>   <td></td>    <td></td>     <td>DecoderPro</td></tr>
                 <tr><td>engines</td>          <td>*</td>   <td></td>    <td></td>     <td>OperationsPro</td></tr>
                 <tr><td>hello</td>            <td>*</td>   <td></td>    <td></td>     <td>DecoderPro</td></tr>
+                <tr><td>layoutBlocks</td>     <td>*</td>   <td></td>    <td></td>     <td>PanelPro</td></tr>
                 <tr><td>lights</td>           <td>*</td>   <td></td>    <td></td>     <td>PanelPro</td></tr>
                 <tr><td>locations</td>        <td>*</td>   <td></td>    <td></td>     <td>OperationsPro</td></tr>
                 <tr><td>panels</td>           <td>*</td>   <td></td>    <td></td>     <td>PanelPro</td></tr>
-                <tr><td>memories</td>         <td>*</td>   <td></td>    <td></td>     <td>DecoderPro</td></tr>
+                <tr><td>memories</td>         <td>*</td>   <td></td>    <td></td>     <td>PanelPro</td></tr>
                 <tr><td>metadata</td>         <td>*</td>   <td></td>    <td></td>     <td>DecoderPro</td></tr>
                 <tr><td>networkServices</td>  <td>*</td>   <td></td>    <td></td>     <td>DecoderPro</td></tr>
                 <tr><td>node</td>             <td>*</td>   <td></td>    <td></td>     <td>DecoderPro</td></tr>
-                <tr><td>power</td>            <td>*</td>   <td>*</td>   <td>*</td>    <td>DecoderPro</td></tr>
+                <tr><td>power</td>            <td>*</td>   <td>*</td>   <td>*</td>    <td>PanelPro</td></tr>
                 <tr><td>railroad</td>         <td>*</td>   <td></td>    <td></td>     <td>DecoderPro</td></tr>
                 <tr><td>roster</td>           <td>*</td>   <td></td>    <td></td>     <td>DecoderPro</td></tr>
                 <tr><td>rosterGroups</td>     <td>*</td>   <td></td>    <td></td>     <td>DecoderPro</td></tr>
-                <tr><td>routes</td>           <td>*</td>   <td></td>    <td></td>     <td>OperationsPro</td></tr>
+                <tr><td>routes</td>           <td>*</td>   <td></td>    <td></td>     <td>PanelPro</td></tr>
                 <tr><td>systemConnections</td><td>*</td>   <td></td>    <td></td>     <td>DecoderPro</td></tr>
                 <tr><td>time</td>             <td>*</td>   <td></td>    <td></td>     <td>DecoderPro</td></tr>
                 <tr><td>trains</td>           <td>*</td>   <td></td>    <td></td>     <td>OperationsPro</td></tr>
                 <tr><td>reporters</td>        <td>*</td>   <td></td>    <td></td>     <td>PanelPro</td></tr>
-                <tr><td>routes</td>           <td>*</td>   <td></td>    <td></td>     <td>PanelPro</td></tr>
                 <tr><td>signalHeads</td>      <td>*</td>   <td></td>    <td></td>     <td>PanelPro</td></tr>
                 <tr><td>signalMasts</td>      <td>*</td>   <td></td>    <td></td>     <td>PanelPro</td></tr>
                 <tr><td>sensors</td>          <td>*</td>   <td></td>    <td></td>     <td>PanelPro</td></tr>
@@ -130,15 +131,15 @@
             </ul>
             <p>Continuing with the power example above, the JsonServlet code calls JsonUtil.getPower to get the reply. Looking this up in JsonUtil, the result
             is set to one of three values: OFF, ON, or UNKNOWN. These values, in turn, are defined as static imports. These names are too generic to be able to
-            find easily with Github's search box for searching the repository. However, as UKNOWN is defined like this: </p>
+            find easily with Github's search box for searching the repository. However, as UNKNOWN is defined like this: </p>
             <pre>    import static jmri.jmris.json.JSON.UNKNOWN;</pre>
-            <p>it makes sence to browse the source tree for for a file called JSON.java under jmri/jmris/json. Sure enough, the file exists and contains definitions for
+            <p>it makes sense to browse the source tree for for a file called JSON.java under jmri/jmris/json. Sure enough, the file exists and contains definitions for
             these three values:</p>
             <pre>
     public static final int UNKNOWN = 0x00;
     public static final int ON = 0x02;
     public static final int OFF = 0x04;</pre>
-            <p>Therefore, the JSON returned above for power incicates that the power is currently on (state is set to 2).</p>
+            <p>Therefore, the JSON returned above for power indicates that the power is currently on (state is set to 2).</p>
             <p>As you can see, given the number of lists and types, it's best to do some searching through the source for all of the details, as well as
             experimenting with a tool like Postman in Google's Chrome browser.</p>
             <h3>Type Names</h3>
@@ -146,18 +147,20 @@
 
             <table class="data">
                 <tr><th>Name</th>        <th>GET</th>   <th>PUT</th>    <th>POST</th>   <th>DELETE</th</th><th>Module</th></tr>
+                <tr><td>block</td>       <td>*</td>     <td>*</td>      <td>*</td>      <td></td><td>PanelPro</td></tr>
                 <tr><td>car</td>         <td>*</td>     <td></td>       <td></td>       <td></td><td>OperationsPro</td></tr>
-                <tr><td>consit</td>      <td>*</td>     <td>*</td>      <td>*</td>      <td>*</td><td>DecoderPro</td></tr>
+                <tr><td>consist</td>     <td>*</td>     <td>*</td>      <td>*</td>      <td>*</td><td>DecoderPro</td></tr>
                 <tr><td>engine</td>      <td>*</td>     <td></td>       <td></td>       <td></td><td>OperationsPro</td></tr>
+                <tr><td>layoutBlock</td> <td>*</td>     <td></td>       <td></td>       <td>PanelPro</td></tr>
                 <tr><td>light</td>       <td>*</td>     <td>*</td>      <td>*</td>      <td></td><td>PanelPro</td></tr>
                 <tr><td>location</td>    <td>*</td>     <td></td>       <td></td>       <td></td><td>OperationsPro</td></tr>
-                <tr><td>memory</td>      <td>*</td>     <td>*</td>      <td>*</td>      <td></td><td>DecoderPro</td></tr>
+                <tr><td>memory</td>      <td>*</td>     <td>*</td>      <td>*</td>      <td></td><td>PanelPro</td></tr>
                 <tr><td>metadata</td>    <td>*</td>     <td></td>       <td></td>       <td></td><td>DecoderPro</td></tr>
                 <tr><td>reporter</td>    <td>*</td>     <td>*</td>      <td>*</td>      <td></td><td>PanelPro</td></tr>
                 <tr><td>roster</td>      <td>*</td>     <td></td>       <td></td>       <td></td><td>DecoderPro</td></tr>
                 <tr><td>rosterEntry</td> <td>*</td>     <td></td>       <td></td>       <td></td><td>DecoderPro</td></tr>
                 <tr><td>rosterGroup</td> <td>*</td>     <td></td>       <td></td>       <td></td><td>DecoderPro</td></tr>
-                <tr><td>route</td>       <td>*</td>     <td></td>       <td>*</td>      <td></td><td>OperationsPro</td></tr>
+                <tr><td>route</td>       <td>*</td>     <td></td>       <td>*</td>      <td></td><td>PanelPro</td></tr>
                 <tr><td>sensor</td>      <td>*</td>     <td>*</td>      <td>*</td>      <td></td><td>PanelPro</td></tr>
                 <tr><td>signalHead</td>  <td>*</td>     <td></td>       <td>*</td>      <td></td><td>PanelPro</td></tr>
                 <tr><td>signalMast</td>  <td>*</td>     <td></td>       <td>*</td>      <td></td><td>PanelPro</td></tr>
@@ -214,6 +217,7 @@
                 <tr><td><code>{"type":"throttle","data":{"throttle":"CSX754","speed":0.25}}</code></td><td><code>{"type":"throttle","data":{"speed":0.25,"throttle":"CSX754"}}</code></td><td>request speed of throttle "CSX754" to 25%</td></tr>
                 <tr><td><code>{"type":"throttle","data":{"throttle":"CSX754","release":null}}</code></td><td><code>{"type":"throttle","data":{"release":null,"throttle":"CSX754"}}</code></td><td>release the throttle "CSX754"</td></tr>
                 <tr><td><code>{"list":"trains"}</code></td><td><em>If list is empty:</em><code>[]</code></td><td>Example showing list response if there are no objects of that type.</td></tr>
+                <tr><td><code>{"type":"block","data":{"name":"IB1"}}</code></td><td><code>{"type":"block","data":{"name":"IB1","userName":"AUTOBLK:1","comment":null,"value":"ns2608"}}</code></td><td>request current value for block IB1</td></tr>
             </table>
             
         <h2>JMRI JSON Server</h2>

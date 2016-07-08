@@ -1,4 +1,3 @@
-// PositionablePointXml.java
 package jmri.jmrit.display.layoutEditor.configurexml;
 
 import java.awt.geom.Point2D;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision$
  */
 public class PositionablePointXml extends AbstractXmlAdapter {
 
@@ -46,10 +44,10 @@ public class PositionablePointXml extends AbstractXmlAdapter {
         if (p.getConnect2() != null) {
             element.setAttribute("connect2name", p.getConnect2().getID());
         }
-        if ((p.getEastBoundSignal() != null) && (p.getEastBoundSignal().length() > 0)) {
+        if (p.getEastBoundSignal().length() > 0) {
             element.setAttribute("eastboundsignal", p.getEastBoundSignal());
         }
-        if ((p.getWestBoundSignal() != null) && (p.getWestBoundSignal().length() > 0)) {
+        if (p.getWestBoundSignal().length() > 0) {
             element.setAttribute("westboundsignal", p.getWestBoundSignal());
         }
 

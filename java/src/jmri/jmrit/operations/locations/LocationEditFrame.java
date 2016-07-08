@@ -167,7 +167,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
             if (Setup.isRfidEnabled()) {
                 // setup the Reader dropdown.
                 readerSelector.addItem(""); // add an empty entry.
-                for (jmri.NamedBean r : jmri.InstanceManager.reporterManagerInstance().getNamedBeanList()) {
+                for (jmri.NamedBean r : jmri.InstanceManager.getDefault(jmri.ReporterManager.class).getNamedBeanList()) {
                     readerSelector.addItem(((Reporter) r).getDisplayName());
                 }
 
@@ -482,7 +482,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
                 readerSelector.getSelectedItem() != null &&
                 !((String) readerSelector.getSelectedItem()).equals("")) {
             _location.setReporter(
-                    jmri.InstanceManager.reporterManagerInstance()
+                    jmri.InstanceManager.getDefault(jmri.ReporterManager.class)
                             .getReporter((String) readerSelector.getSelectedItem()));
         } else if (Setup.isRfidEnabled() &&
                 readerSelector.getSelectedItem() != null &&

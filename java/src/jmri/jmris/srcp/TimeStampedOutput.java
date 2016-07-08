@@ -1,4 +1,3 @@
-//TimeStampedOutput
 package jmri.jmris.srcp;
 
 import java.util.Date;
@@ -10,12 +9,11 @@ import java.util.Date;
  * <P>
  *
  * @author Paul Bender Copyright 2014
- * @version $Revision$
  */
 public class TimeStampedOutput {
 
     static public void writeTimestamp(java.io.DataOutputStream outStream, String s) throws java.io.IOException {
-        Date currenttime = (jmri.InstanceManager.timebaseInstance()).getTime();
+        Date currenttime = jmri.InstanceManager.getDefault(jmri.Timebase.class).getTime();
         long time = currenttime.getTime();
         outStream.writeBytes("" + time / 1000 + "." + time % 1000 + " " + s);
     }

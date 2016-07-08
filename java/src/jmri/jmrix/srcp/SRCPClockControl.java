@@ -47,7 +47,7 @@ public class SRCPClockControl extends DefaultClockControl {
         // There is no way to request the current rate from the
         // server, so we need to watch for rate in return messages
         // and save the value.
-        return InstanceManager.timebaseInstance().getRate();
+        return InstanceManager.getDefault(jmri.Timebase.class).getRate();
     }
 
     /**
@@ -70,7 +70,7 @@ public class SRCPClockControl extends DefaultClockControl {
         // create and send the message itself
         _tc.sendSRCPMessage(new SRCPMessage(text), null);
 
-        return InstanceManager.timebaseInstance().getTime();
+        return InstanceManager.getDefault(jmri.Timebase.class).getTime();
     }
 
     /**

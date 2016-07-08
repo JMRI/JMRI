@@ -13,7 +13,7 @@ import javax.annotation.Nonnull;
  * Audo objects are obtained from an AudioManager, which in turn is generally
  * located from the InstanceManager. A typical call sequence might be:
  * <PRE>
- * Audio audio = InstanceManager.audioManagerInstance().provideAudio("myAudio");
+ * Audio audio = InstanceManager.getDefault(jmri.AudioManager.class).provideAudio("myAudio");
  * </PRE>
  * <P>
  * Each Audio has two names. The "user" name is entirely free form, and can be

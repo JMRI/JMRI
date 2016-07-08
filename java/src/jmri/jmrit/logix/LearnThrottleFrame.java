@@ -87,7 +87,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
     public LearnThrottleFrame(WarrantFrame warrantFrame) {
         super(false, false);
         _warrantFrame = warrantFrame;
-        powerMgr = InstanceManager.powerManagerInstance();
+        powerMgr = InstanceManager.getDefault(jmri.PowerManager.class);
         if (powerMgr == null) {
             log.info("No power manager instance found, panel not active");
         } else {
@@ -348,7 +348,6 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
      * A KeyAdapter that listens for the keys that work the control pad buttons
      *
      * @author glen
-     * @version $Revision$
      */
     class ControlPadKeyListener extends KeyAdapter {
 

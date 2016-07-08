@@ -1,4 +1,3 @@
-// EntryExitPairsXml.java
 package jmri.jmrit.signalling.configurexml;
 
 import java.awt.Color;
@@ -20,7 +19,6 @@ import org.slf4j.LoggerFactory;
  * interlocking on a layouteditor
  *
  * @author Kevin Dickerson Copyright (c) 2007
- * @version $Revision: 1.2 $
  */
 public class EntryExitPairsXml extends AbstractXmlAdapter {
 
@@ -154,7 +152,7 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
             //Considered normal if it doesn't exists
         }
         // get attributes
-        ArrayList<Object> loadedPanel = jmri.InstanceManager.configureManagerInstance().getInstanceList(LayoutEditor.class);
+        ArrayList<Object> loadedPanel = jmri.InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).getInstanceList(LayoutEditor.class);
         if (shared.getChild("dispatcherintegration") != null && shared.getChild("dispatcherintegration").getText().equals("yes")) {
             eep.setDispatcherIntegration(true);
         }
@@ -186,11 +184,11 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
                     String sourceItem = sourceList.get(i).getAttribute("item").getValue();
                     NamedBean source = null;
                     if (sourceType.equals("signalMast")) {
-                        source = jmri.InstanceManager.signalMastManagerInstance().getSignalMast(sourceItem);
+                        source = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(sourceItem);
                     } else if (sourceType.equals("sensor")) {
                         source = jmri.InstanceManager.sensorManagerInstance().getSensor(sourceItem);
                     } else if (sourceType.equals("signalHead")) {
-                        source = jmri.InstanceManager.signalHeadManagerInstance().getSignalHead(sourceItem);
+                        source = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(sourceItem);
                     }
 
                     //These two could be subbed off.
@@ -207,11 +205,11 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
                         String destItem = destinationList.get(j).getAttribute("item").getValue();
                         NamedBean dest = null;
                         if (destType.equals("signalMast")) {
-                            dest = jmri.InstanceManager.signalMastManagerInstance().getSignalMast(destItem);
+                            dest = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(destItem);
                         } else if (destType.equals("sensor")) {
                             dest = jmri.InstanceManager.sensorManagerInstance().getSensor(destItem);
                         } else if (destType.equals("signalHead")) {
-                            dest = jmri.InstanceManager.signalHeadManagerInstance().getSignalHead(destItem);
+                            dest = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(destItem);
                         }
                         try {
                             eep.addNXDestination(source, dest, panel, id);
@@ -313,7 +311,7 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
     }
 
     public int loadOrder() {
-        if (jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class) == null) {
+        if (jmri.InstanceManager.getOptionalDefault(jmri.jmrit.signalling.EntryExitPairs.class) == null) {
             jmri.InstanceManager.store(new EntryExitPairs(), EntryExitPairs.class);
         }
         return jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class).getXMLOrder();

@@ -1,4 +1,3 @@
-// EcosPreferences.java
 package jmri.jmrix.ecos;
 
 import jmri.InstanceManager;
@@ -13,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * with JMRI.
  *
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version $Revision$
  */
 public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
 
@@ -26,13 +24,13 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
                 @Override
                 public boolean execute() {
                     if (getChangeMade()) {
-                        jmri.InstanceManager.configureManagerInstance().storePrefs();
+                        jmri.InstanceManager.getDefault(jmri.ConfigureManager.class).storePrefs();
                     }
                     return true;
                 }
             };
-            if (jmri.InstanceManager.shutDownManagerInstance() != null) {
-                jmri.InstanceManager.shutDownManagerInstance().register(ecosPreferencesShutDownTask);
+            if (jmri.InstanceManager.getOptionalDefault(jmri.ShutDownManager.class) != null) {
+                jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(ecosPreferencesShutDownTask);
             }
         }
         adaptermemo = memo;

@@ -216,12 +216,12 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         setName(name);
         _defaultToolTip = new ToolTip(null, 0, 0);
         setVisible(false);
-        jmri.InstanceManager.signalHeadManagerInstance().addVetoableChangeListener(this);
-        jmri.InstanceManager.signalMastManagerInstance().addVetoableChangeListener(this);
+        jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).addVetoableChangeListener(this);
+        jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).addVetoableChangeListener(this);
         jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
         jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
         jmri.InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
-        jmri.InstanceManager.blockManagerInstance().addVetoableChangeListener(this);
+        jmri.InstanceManager.getDefault(jmri.BlockManager.class).addVetoableChangeListener(this);
         editors.add(this);
     }
 
@@ -2559,7 +2559,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             frame.dispose();
         }
         // delete panel - deregister the panel for saving
-        InstanceManager.configureManagerInstance().deregister(this);
+        InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).deregister(this);
         jmri.jmrit.display.PanelMenu.instance().deletePanel(this);
         Editor.editors.remove(this);
         setVisible(false);

@@ -68,10 +68,10 @@ public class TransitTableAction extends AbstractTableAction {
      */
     public TransitTableAction(String actionName) {
         super(actionName);
-        // set manager - no need to use InstanceManager here
-        transitManager = jmri.InstanceManager.transitManagerInstance();
+
+        transitManager = jmri.InstanceManager.getOptionalDefault(jmri.TransitManager.class);
         // disable ourself if there is no Transit manager available
-        if (sectionManager == null) {
+        if (sectionManager == null || transitManager == null) {
             setEnabled(false);
         }
 
@@ -98,7 +98,7 @@ public class TransitTableAction extends AbstractTableAction {
                     log.warn("requested getValue(null)");
                     return "(no name)";
                 }
-                Transit z = InstanceManager.transitManagerInstance().getBySystemName(name);
+                Transit z = InstanceManager.getDefault(jmri.TransitManager.class).getBySystemName(name);
                 if (z == null) {
                     log.debug("requested getValue(\"" + name + "\"), Transit doesn't exist");
                     return "(no Transit)";
@@ -107,18 +107,16 @@ public class TransitTableAction extends AbstractTableAction {
             }
 
             public Manager getManager() {
-                return InstanceManager.transitManagerInstance();
+                return InstanceManager.getDefault(jmri.TransitManager.class);
             }
 
             public NamedBean getBySystemName(String name) {
-                return InstanceManager.transitManagerInstance().getBySystemName(name);
+                return InstanceManager.getDefault(jmri.TransitManager.class).getBySystemName(name);
             }
 
             public NamedBean getByUserName(String name) {
-                return InstanceManager.transitManagerInstance().getByUserName(name);
+                return InstanceManager.getDefault(jmri.TransitManager.class).getByUserName(name);
             }
-            /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getMultipleChoiceOption(getClassName(),"delete"); }
-             public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMultipleChoiceOption(getClassName(), "delete", boo); }*/
 
             protected String getMasterClassName() {
                 return getClassName();
@@ -290,7 +288,7 @@ public class TransitTableAction extends AbstractTableAction {
     private boolean editMode = false;
     private boolean duplicateMode = false;
     private TransitManager transitManager = null;
-    private SectionManager sectionManager = InstanceManager.sectionManagerInstance();
+    private SectionManager sectionManager = InstanceManager.getOptionalDefault(jmri.SectionManager.class);
     private Transit curTransit = null;
     private SectionTableModel sectionTableModel = null;
     private ArrayList<Section> sectionList = new ArrayList<>();

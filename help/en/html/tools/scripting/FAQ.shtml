@@ -275,7 +275,7 @@ sleep(10)
 <h2>How do I load a panel file from within a script?</h2>
 
 <div class="para"><code>
-<pre>jmri.InstanceManager.configureManagerInstance().load(java.io.File("filename.xml"))</pre>
+<pre>jmri.InstanceManager.getDefault(jmri.ConfigureManager.class).load(java.io.File("filename.xml"))</pre>
 </code></div>
 
 That looks for "filename.xml" in the JMRI program directory, which is

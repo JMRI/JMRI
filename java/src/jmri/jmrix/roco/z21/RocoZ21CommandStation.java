@@ -32,21 +32,12 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2001 
  * @author      Paul Bender Copyright (C) 2016
  */
-public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation implements jmri.jmrix.DccCommandStation, jmri.CommandStation {
+public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation implements jmri.CommandStation {
 
     private int broadcast_flags = 0; // holds the value of the broadcast flags.
     private int serial_number = 0; // holds the serial number of the Z21.
     private float software_version = 0; // holds the software version of the Z21.
     private int hardware_version = 0; // holds the hardware version of the Z21.
-
-    /**
-     * Roco does use a service mode
-     */
-    @Override
-    public boolean getHasServiceMode() {
-        return true;
-    }
-
 
    /**
     * get the serial number.

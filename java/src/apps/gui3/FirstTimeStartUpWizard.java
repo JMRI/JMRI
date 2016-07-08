@@ -268,7 +268,7 @@ public class FirstTimeStartUpWizard {
             Cursor hourglassCursor = new Cursor(Cursor.WAIT_CURSOR);
             parent.setCursor(hourglassCursor);
             ConnectionConfig connect = JmrixConfigPane.instance(0).getCurrentObject();
-            InstanceManager.configureManagerInstance().registerPref(connect);
+            InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerPref(connect);
             if (connect instanceof jmri.jmrix.AbstractConnectionConfig) {
                 ((AbstractConnectionConfig) connect).updateAdapter();
                 PortAdapter adp = connect.getAdapter();

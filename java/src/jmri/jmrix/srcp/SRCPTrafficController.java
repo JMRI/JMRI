@@ -32,9 +32,9 @@ public class SRCPTrafficController extends AbstractMRTrafficController
 
     public SRCPTrafficController() {
         super();
-        try {
-            jmri.InstanceManager.shutDownManagerInstance().register(this);
-        } catch (java.lang.NullPointerException npe) {
+        if (jmri.InstanceManager.getOptionalDefault(jmri.ShutDownManager.class) != null) {
+            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(this);
+        } else {
             if (log.isDebugEnabled()) {
                 log.debug("attempted to register shutdown task, but shutdown manager is null");
             }

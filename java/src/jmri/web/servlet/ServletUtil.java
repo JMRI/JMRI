@@ -102,7 +102,7 @@ public class ServletUtil {
     }
 
     public static ServletUtil getInstance() {
-        ServletUtil instance = InstanceManager.getDefault(ServletUtil.class);
+        ServletUtil instance = InstanceManager.getOptionalDefault(ServletUtil.class);
         if (instance == null) {
             instance = new ServletUtil();
             InstanceManager.setDefault(ServletUtil.class, instance);

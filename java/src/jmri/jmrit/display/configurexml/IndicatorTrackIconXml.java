@@ -20,7 +20,6 @@ import org.slf4j.LoggerFactory;
  * Handle configuration for display.IndicatorTrackIconXml objects.
  *
  * @author Pete Cressman Copyright: Copyright (c) 2010
- * @version $Revision$
  */
 public class IndicatorTrackIconXml extends PositionableLabelXml {
 

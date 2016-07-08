@@ -1,4 +1,3 @@
-// JsonServer.java
 package jmri.jmris.json;
 
 import static jmri.jmris.json.JSON.GOODBYE;
@@ -29,7 +28,6 @@ import org.slf4j.LoggerFactory;
  * handshaking in this server. You may just start sending commands.
  *
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision: 21126 $
  *
  */
 public class JsonServer extends JmriServer {
@@ -38,7 +36,7 @@ public class JsonServer extends JmriServer {
     private ObjectMapper mapper;
 
     public static JsonServer getDefault() {
-        if (InstanceManager.getDefault(JsonServer.class) == null) {
+        if (InstanceManager.getOptionalDefault(JsonServer.class) == null) {
             InstanceManager.store(new JsonServer(), JsonServer.class);
         }
         return InstanceManager.getDefault(JsonServer.class);

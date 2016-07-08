@@ -52,14 +52,14 @@ public class JsonWebSocket {
             log.warn("Error opening WebSocket:\n{}", e.getMessage());
             sn.close();
         }
-        InstanceManager.shutDownManagerInstance().register(this.shutDownTask);
+        InstanceManager.getDefault(jmri.ShutDownManager.class).register(this.shutDownTask);
     }
 
     @OnWebSocketClose
     public void onClose(int i, String string) {
         log.debug("Closing connection because {} ({})", string, i);
         this.handler.dispose();
-        InstanceManager.shutDownManagerInstance().deregister(this.shutDownTask);
+        InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(this.shutDownTask);
     }
 
     @OnWebSocketError
@@ -78,7 +78,7 @@ public class JsonWebSocket {
         } catch (IOException e) {
             log.error("Error on WebSocket message:\n{}", e.getMessage());
             this.connection.getSession().close();
-            InstanceManager.shutDownManagerInstance().deregister(this.shutDownTask);
+            InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(this.shutDownTask);
         }
     }
 

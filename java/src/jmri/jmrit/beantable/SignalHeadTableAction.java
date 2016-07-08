@@ -59,7 +59,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
     public SignalHeadTableAction(String s) {
         super(s);
         // disable ourself if there is no primary Signal Head manager available
-        if (jmri.InstanceManager.signalHeadManagerInstance() == null) {
+        if (jmri.InstanceManager.getOptionalDefault(jmri.SignalHeadManager.class) == null) {
             setEnabled(false);
         }
     }
@@ -139,7 +139,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                     return "error";
                 }
                 String name = sysNameList.get(row);
-                SignalHead s = InstanceManager.signalHeadManagerInstance().getBySystemName(name);
+                SignalHead s = InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(name);
                 if (s == null) {
                     return Boolean.valueOf(false); // if due to race condition, the device is going away
                 }
@@ -158,7 +158,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 
             public void setValueAt(Object value, int row, int col) {
                 String name = sysNameList.get(row);
-                SignalHead s = InstanceManager.signalHeadManagerInstance().getBySystemName(name);
+                SignalHead s = InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(name);
                 if (s == null) {
                     return;  // device is going away anyway
                 }
@@ -177,7 +177,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             }
 
             public String getValue(String name) {
-                SignalHead s = InstanceManager.signalHeadManagerInstance().getBySystemName(name);
+                SignalHead s = InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(name);
                 if (s == null) {
                     return "<lost>"; // if due to race condition, the device is going away
                 }
@@ -195,15 +195,15 @@ public class SignalHeadTableAction extends AbstractTableAction {
             }
 
             public Manager getManager() {
-                return InstanceManager.signalHeadManagerInstance();
+                return InstanceManager.getDefault(jmri.SignalHeadManager.class);
             }
 
             public NamedBean getBySystemName(String name) {
-                return InstanceManager.signalHeadManagerInstance().getBySystemName(name);
+                return InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(name);
             }
 
             public NamedBean getByUserName(String name) {
-                return InstanceManager.signalHeadManagerInstance().getByUserName(name);
+                return InstanceManager.getDefault(jmri.SignalHeadManager.class).getByUserName(name);
             }
             /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getMultipleChoiceOption(getClassName(),"delete"); }
              public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMultipleChoiceOption(getClassName(), "delete", boo); }*/
@@ -925,11 +925,11 @@ public class SignalHeadTableAction extends AbstractTableAction {
             }
         }
         // check for pre-existing signal head with same system name
-        SignalHead s = InstanceManager.signalHeadManagerInstance().getBySystemName(sName);
+        SignalHead s = InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(sName);
         // return true if signal head does not exist
         if (s == null) {
             //Need to check that the Systemname doesn't already exists as a UserName
-            NamedBean nB = InstanceManager.signalHeadManagerInstance().getByUserName(sName);
+            NamedBean nB = InstanceManager.getDefault(jmri.SignalHeadManager.class).getByUserName(sName);
             if (nB != null) {
                 log.error("System name is not unique " + sName + " It already exists as a User name");
                 String msg = Bundle.getMessage("WarningSystemNameAsUser", new Object[]{("" + sName)});
@@ -1026,7 +1026,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                     } else {
                         s = new jmri.jmrix.acela.AcelaSignalHead("AH" + headnumber, inputusername,jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
                     }
-                    InstanceManager.signalHeadManagerInstance().register(s);
+                    InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);
                 }
 
                 int st = signalheadTypeFromBox(stBox);
@@ -1067,7 +1067,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 }
                 if (checkBeforeCreating(inputsysname)) {
                     s = new jmri.jmrix.grapevine.SerialSignalHead(inputsysname, userName.getText());
-                    InstanceManager.signalHeadManagerInstance().register(s);
+                    InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);
                 }
             } else if (quadOutput.equals(typeBox.getSelectedItem())) {
                 if (checkBeforeCreating(systemName.getText())) {
@@ -1097,7 +1097,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                             nbhm.getNamedBeanHandle(to2.getDisplayName(), t2),
                             nbhm.getNamedBeanHandle(to3.getDisplayName(), t3),
                             nbhm.getNamedBeanHandle(to4.getDisplayName(), t4));
-                    InstanceManager.signalHeadManagerInstance().register(s);
+                    InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);
 
                 }
             } else if (tripleTurnout.equals(typeBox.getSelectedItem())) {
@@ -1125,7 +1125,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                             nbhm.getNamedBeanHandle(to2.getDisplayName(), t2),
                             nbhm.getNamedBeanHandle(to3.getDisplayName(), t3));
 
-                    InstanceManager.signalHeadManagerInstance().register(s);
+                    InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);
                 }
             } else if (tripleOutput.equals(typeBox.getSelectedItem())) {
                 if (checkBeforeCreating(systemName.getText())) {
@@ -1152,7 +1152,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                             nbhm.getNamedBeanHandle(to2.getDisplayName(), t2),
                             nbhm.getNamedBeanHandle(to3.getDisplayName(), t3));
 
-                    InstanceManager.signalHeadManagerInstance().register(s);
+                    InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);
                 }
             } else if (doubleTurnout.equals(typeBox.getSelectedItem())) {
                 if (checkBeforeCreating(systemName.getText())) {
@@ -1174,7 +1174,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                             nbhm.getNamedBeanHandle(to1.getDisplayName(), t1),
                             nbhm.getNamedBeanHandle(to2.getDisplayName(), t2));
                     s.setUserName(userName.getText());
-                    InstanceManager.signalHeadManagerInstance().register(s);
+                    InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);
                 }
             } else if (singleTurnout.equals(typeBox.getSelectedItem())) {
                 if (checkBeforeCreating(systemName.getText())) {
@@ -1192,12 +1192,12 @@ public class SignalHeadTableAction extends AbstractTableAction {
 
                     s = new jmri.implementation.SingleTurnoutSignalHead(systemName.getText(), userName.getText(),
                             nbhm.getNamedBeanHandle(t1.getDisplayName(), t1), on, off);
-                    InstanceManager.signalHeadManagerInstance().register(s);
+                    InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);
                 }
             } else if (virtualHead.equals(typeBox.getSelectedItem())) {
                 if (checkBeforeCreating(systemName.getText())) {
                     s = new jmri.implementation.VirtualSignalHead(systemName.getText(), userName.getText());
-                    InstanceManager.signalHeadManagerInstance().register(s);
+                    InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);
                 }
             } else if (lsDec.equals(typeBox.getSelectedItem())) {
                 if (checkBeforeCreating(systemName.getText())) {
@@ -1251,7 +1251,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                             nbhm.getNamedBeanHandle(t6.getDisplayName(), t6), s6, 
                             nbhm.getNamedBeanHandle(t7.getDisplayName(), t7), s7);
                     s.setUserName(userName.getText());
-                    InstanceManager.signalHeadManagerInstance().register(s);
+                    InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);
                 }
             } else if (dccSignalDecoder.equals(typeBox.getSelectedItem())) {
                 handleDCCOkPressed();
@@ -1315,7 +1315,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                     return;
                 }
             }
-            InstanceManager.signalHeadManagerInstance().register(s);
+            InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);
             s.useAddressOffSet(dccOffSetAddress.isSelected());
         }
     }
@@ -1340,7 +1340,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                         t2.getSystemName(), userName.getText());
                 return; // without creating any 
             }
-            InstanceManager.signalHeadManagerInstance().register(s);
+            InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);
         } else {
             // couldn't create turnouts, error
             String msg;
@@ -1449,7 +1449,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 
             s = new jmri.implementation.MergSD2SignalHead(systemName.getText(), ukSignalAspectsFromBox(msaBox), nbt1, nbt2, nbt3, false, home);
             s.setUserName(userName.getText());
-            InstanceManager.signalHeadManagerInstance().register(s);
+            InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);
 
         }
     }
@@ -1521,7 +1521,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
     void editSignal(int row) {
         // Logix was found, initialize for edit
         String eSName = (String) m.getValueAt(row, BeanTableDataModel.SYSNAMECOL);
-        _curSignal = InstanceManager.signalHeadManagerInstance().getBySystemName(eSName);
+        _curSignal = InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(eSName);
         //numConditionals = _curLogix.getNumConditionals();
         // create the Edit Logix Window
         // Use separate Runnable so window is created on top
@@ -1557,7 +1557,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 
         editSysName = eSName;
         editingHead = true;
-        curS = InstanceManager.signalHeadManagerInstance().getBySystemName(editSysName);
+        curS = InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(editSysName);
         if (editFrame == null) {
             dccSignalPanelEdt();
             eto1 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
@@ -2251,7 +2251,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
     boolean checkUserName(String nam) {
         if (!((nam == null) || (nam.equals("")))) {
             // user name changed, check if new name already exists
-            NamedBean nB = InstanceManager.signalHeadManagerInstance().getByUserName(nam);
+            NamedBean nB = InstanceManager.getDefault(jmri.SignalHeadManager.class).getByUserName(nam);
             if (nB != null) {
                 log.error("User name is not unique " + nam);
                 String msg = Bundle.getMessage("WarningUserName", new Object[]{("" + nam)});
@@ -2261,7 +2261,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 return false;
             }
             //Check to ensure that the username doesn't exist as a systemname.
-            nB = InstanceManager.signalHeadManagerInstance().getBySystemName(nam);
+            nB = InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(nam);
             if (nB != null) {
                 log.error("User name is not unique " + nam + " It already exists as a System name");
                 String msg = Bundle.getMessage("WarningUserNameAsSystem", new Object[]{("" + nam)});

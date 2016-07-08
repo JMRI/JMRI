@@ -1,4 +1,3 @@
-// DefaultLogixManagerXML.java
 package jmri.managers.configurexml;
 
 import java.util.List;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision$
  */
 public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -125,7 +123,7 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
         if (log.isDebugEnabled()) {
             log.debug("Found " + logixList.size() + " logixs");
         }
-        LogixManager tm = InstanceManager.logixManagerInstance();
+        LogixManager tm = InstanceManager.getDefault(jmri.LogixManager.class);
 
         for (int i = 0; i < logixList.size(); i++) {
 
@@ -189,25 +187,25 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
      * type.
      */
     protected void replaceLogixManager() {
-        if (InstanceManager.logixManagerInstance().getClass().getName()
+        if (InstanceManager.getDefault(jmri.LogixManager.class).getClass().getName()
                 .equals(DefaultLogixManager.class.getName())) {
             return;
         }
         // if old manager exists, remove it from configuration process
-        if (InstanceManager.logixManagerInstance() != null) {
-            InstanceManager.configureManagerInstance().deregister(
-                    InstanceManager.logixManagerInstance());
+        if (InstanceManager.getDefault(jmri.LogixManager.class) != null) {
+            InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).deregister(
+                    InstanceManager.getDefault(jmri.LogixManager.class));
         }
 
         // register new one with InstanceManager
         DefaultLogixManager pManager = DefaultLogixManager.instance();
         InstanceManager.store(pManager, LogixManager.class);
         // register new one for configuration
-        InstanceManager.configureManagerInstance().registerConfig(pManager, jmri.Manager.LOGIXS);
+        InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerConfig(pManager, jmri.Manager.LOGIXS);
     }
 
     public int loadOrder() {
-        return InstanceManager.logixManagerInstance().getXMLOrder();
+        return InstanceManager.getDefault(jmri.LogixManager.class).getXMLOrder();
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultLogixManagerXml.class.getName());

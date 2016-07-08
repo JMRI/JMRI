@@ -1,4 +1,3 @@
-// AutoTrainAction.java
 package jmri.jmrit.dispatcher;
 
 import java.util.ArrayList;
@@ -37,7 +36,6 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author	Dave Duchamp Copyright (C) 2010-2011
- * @version	$Revision$
  */
 public class AutoTrainAction {
 
@@ -185,7 +183,7 @@ public class AutoTrainAction {
         for (int i = 0; i < _activeActionList.size(); i++) {
             if (_activeActionList.get(i).getWaitingForBlock()) {
                 TransitSectionAction tsa = _activeActionList.get(i);
-                Block target = InstanceManager.blockManagerInstance().getBlock(tsa.getStringWhen());
+                Block target = InstanceManager.getDefault(jmri.BlockManager.class).getBlock(tsa.getStringWhen());
                 if (b == target) {
                     // waiting on state change for this block
                     if (((b.getState() == Block.OCCUPIED) && (tsa.getWhenCode() == TransitSectionAction.BLOCKENTRY))
@@ -667,5 +665,3 @@ public class AutoTrainAction {
 
     private final static Logger log = LoggerFactory.getLogger(AutoTrainAction.class.getName());
 }
-
-/* @(#)AutoTrainAction.java */

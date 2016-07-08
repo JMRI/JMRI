@@ -213,7 +213,7 @@ via the JmriDemo preferences panel:
   import java.io
   configfile = java.io.File(jmri.util.FileUtil.getPreferencesPath()+"JmriDemoConfig2.xml")
   jmri.InstanceManager.setConfigureManager(jmri.configurexml.ConfigXmlManager())
-  jmri.InstanceManager.configureManagerInstance().load(configfile)
+  jmri.InstanceManager.getDefault(jmri.ConfigureManager.class).load(configfile)
 </pre>to activate the JMRI classes and connect to your layout
 hardware. "JmriDemoConfig2.xml" is the name of the configuration
 file from the JmriDemo program; you can use another name if
@@ -240,7 +240,7 @@ any other options that may have been set when it was created.
       extensively to get access to objects. In Java this results in
       verbose code like
       <pre>
-   Turnout t2 = InstanceManager.turnoutManagerInstance().newTurnout("LT2", "turnout 2");
+   Turnout t2 = InstanceManager.getDefault(jmri.TurnoutManager.class).newTurnout("LT2", "turnout 2");
    t2.setCommandedState(Turnout.THROWN)
 </pre>Jython simplifies that by allowing us to provide useful
 variables, and by shortening certain method calls.

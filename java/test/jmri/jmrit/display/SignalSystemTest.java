@@ -25,10 +25,10 @@ public class SignalSystemTest extends jmri.configurexml.SchemaTestBase {
         if (System.getProperty("jmri.headlesstest", "false").equals("true")) { return; }
         
         // load file
-        InstanceManager.configureManagerInstance()
+        InstanceManager.getDefault(ConfigureManager.class)
                 .load(new java.io.File("java/test/jmri/jmrit/display/verify/SimplePanel_OBlocks-DB1969.xml"));
         
-        InstanceManager.logixManagerInstance().activateAllLogixs();
+        InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
     
         // check aspects
@@ -95,10 +95,10 @@ public class SignalSystemTest extends jmri.configurexml.SchemaTestBase {
         // load file
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).setStabilisedSensor("IS_ROUTING_DONE");
 
-        InstanceManager.configureManagerInstance()
+        InstanceManager.getDefault(ConfigureManager.class)
                 .load(new java.io.File("java/test/jmri/jmrit/display/verify/AA1UPtest.xml"));
 
-        InstanceManager.logixManagerInstance().activateAllLogixs();
+        InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
 
         jmri.util.JUnitUtil.waitFor(()->{
@@ -151,7 +151,7 @@ public class SignalSystemTest extends jmri.configurexml.SchemaTestBase {
     }
     
     void checkAspect(String mastName, String aspect) {
-        SignalMast mast = InstanceManager.signalMastManagerInstance().getSignalMast(mastName);
+        SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(mastName);
         if (mast != null) {
             // wait present or error
             jmri.util.JUnitUtil.waitFor(()->{return mast.getAspect().equals(aspect);},

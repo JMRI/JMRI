@@ -198,7 +198,7 @@ public class LayoutEditorFindItems {
     }
 
     public LayoutTurnout findLayoutTurnoutBySignalMast(String signalMastName) throws IllegalArgumentException {
-        return findLayoutTurnoutByBean(jmri.InstanceManager.signalMastManagerInstance().provideSignalMast(signalMastName));
+        return findLayoutTurnoutByBean(jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(signalMastName));
     }
 
     public LayoutTurnout findLayoutTurnoutByBean(NamedBean bean) {
@@ -276,7 +276,7 @@ public class LayoutEditorFindItems {
     }
 
     public LevelXing findLevelXingBySignalMast(String signalMastName) throws IllegalArgumentException {
-        return findLevelXingByBean(jmri.InstanceManager.signalMastManagerInstance().provideSignalMast(signalMastName));
+        return findLevelXingByBean(jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(signalMastName));
     }
 
     public LevelXing findLevelXingBySensor(String sensorName) throws IllegalArgumentException {
@@ -395,7 +395,7 @@ public class LayoutEditorFindItems {
     }
 
     public LayoutSlip findLayoutSlipBySignalMast(String signalMastName) throws IllegalArgumentException {
-        return findLayoutSlipByBean(jmri.InstanceManager.signalMastManagerInstance().provideSignalMast(signalMastName));
+        return findLayoutSlipByBean(jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(signalMastName));
     }
 
     public LayoutSlip findLayoutSlipBySensor(String sensorName) throws IllegalArgumentException {
