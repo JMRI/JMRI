@@ -1,4 +1,3 @@
-// MarklinSensorManager.java
 package jmri.jmrix.marklin;
 
 import java.util.Hashtable;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * given s88 Bus Module and yy is the port on that module.
  *
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision: 20820 $
  */
 public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
         implements MarklinListener {
@@ -192,18 +190,16 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
                     }
                     ms = (MarklinSensor) provideSensor(sb.toString());
                 }
-                if (ms != null) {
-                    if (r.getElement(9) == 0x01) {
-                        ms.setOwnState(Sensor.INACTIVE);
-                        return;
-                    }
-                    if (r.getElement(10) == 0x01) {
-                        ms.setOwnState(Sensor.ACTIVE);
-                        return;
-                    }
-                    log.error("state not found " + ms.getDisplayName() + " " + r.getElement(9) + " " + r.getElement(10));
-                    log.error(r.toHexString());
+                if (r.getElement(9) == 0x01) {
+                    ms.setOwnState(Sensor.INACTIVE);
+                    return;
                 }
+                if (r.getElement(10) == 0x01) {
+                    ms.setOwnState(Sensor.ACTIVE);
+                    return;
+                }
+                log.error("state not found " + ms.getDisplayName() + " " + r.getElement(9) + " " + r.getElement(10));
+                log.error(r.toHexString());
             } else {
                 int s88Module = r.getElement(9);
                 if (_tmarklin.containsKey(s88Module)) {
@@ -240,12 +236,10 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
                 padPortNumber(portNo, sb);
                 ms = (MarklinSensor) provideSensor(sb.toString());
             }
-            if (ms != null) {
-                if (result == 0) {
-                    ms.setOwnState(Sensor.INACTIVE);
-                } else {
-                    ms.setOwnState(Sensor.ACTIVE);
-                }
+            if (result == 0) {
+                ms.setOwnState(Sensor.INACTIVE);
+            } else {
+                ms.setOwnState(Sensor.ACTIVE);
             }
             k = k * 2;
         }

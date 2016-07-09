@@ -115,8 +115,8 @@ public class LogixTableAction extends AbstractTableAction {
         // set up managers - no need to use InstanceManager since both managers are
         // Default only (internal). We use InstanceManager to get managers for
         // compatibility with other facilities.
-        _logixManager = InstanceManager.getDefault(jmri.LogixManager.class);
-        _conditionalManager = InstanceManager.getDefault(jmri.ConditionalManager.class);
+        _logixManager = InstanceManager.getOptionalDefault(jmri.LogixManager.class);
+        _conditionalManager = InstanceManager.getOptionalDefault(jmri.ConditionalManager.class);
         // disable ourself if there is no Logix manager or no Conditional manager available
         if ((_logixManager == null) || (_conditionalManager == null)) {
             setEnabled(false);

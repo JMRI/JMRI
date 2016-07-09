@@ -36,6 +36,9 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.script.JmriScriptEngineManager;
 import jmri.util.FileUtil;
+
+import javax.annotation.Nonnull;
+
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -2106,7 +2109,7 @@ public class Train implements java.beans.PropertyChangeListener {
      *
      * @return Road and number of caboose.
      */
-    public String getCabooseRoadAndNumber() {
+    public @Nonnull String getCabooseRoadAndNumber() {
         String cabooseRoadNumber = NONE;
         RouteLocation rl = getCurrentLocation();
         List<RollingStock> cars = CarManager.instance().getByTrainList(this);

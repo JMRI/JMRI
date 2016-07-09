@@ -121,7 +121,7 @@ class LocoFile extends XmlFile {
 
                 // Hack to fix ESU LokSound V4.0 existing decoder file Indexed CV names
                 if (family.equals("ESU LokPilot V4.0") || family.equals("ESU LokSound Select") || family.equals("ESU LokSound V4.0")) {
-                    if (piCv == "32") {
+                    if (piCv.equals("32")) {
                         piCv = "31";
 
                         siVal = piVal;

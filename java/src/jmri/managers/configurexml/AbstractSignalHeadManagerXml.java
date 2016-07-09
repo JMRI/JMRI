@@ -150,8 +150,8 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
             return;
         }
         // if old manager exists, remove it from configuration process
-        if (InstanceManager.getDefault(jmri.SignalHeadManager.class) != null) {
-            InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).deregister(
+        if (InstanceManager.getOptionalDefault(jmri.SignalHeadManager.class) != null) {
+            InstanceManager.getDefault(jmri.ConfigureManager.class).deregister(
                     InstanceManager.getDefault(jmri.SignalHeadManager.class));
         }
 

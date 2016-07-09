@@ -840,7 +840,7 @@ public class AddSignalMastPanel extends JPanel {
             } else if (Bundle.getMessage("MatrixCtlMast").equals(signalMastDriver.getSelectedItem())) {
                 // Create was pressed for new mast, check all boxes are filled
                 if (turnoutBox1.getDisplayName() == "" || (bitNum > 1 && turnoutBox2.getDisplayName() == "") || (bitNum > 2 && turnoutBox3.getDisplayName() == "") ||
-                        (bitNum > 3 && turnoutBox4.getDisplayName() == "") || (bitNum > 4 && turnoutBox5.getDisplayName() == "")) {
+                        (bitNum > 3 && turnoutBox4.getDisplayName().equals("")) || (bitNum > 4 && turnoutBox5.getDisplayName().equals(""))) {
                     //error dialog
                     JOptionPane.showMessageDialog(null, Bundle.getMessage("MatrixOutputEmpty", mastname),
                             Bundle.getMessage("WarningTitle"),

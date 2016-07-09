@@ -492,7 +492,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         this.setSize(400, 300);
 
         // Create a timebase listener for the Minute change events
-        internalClock = InstanceManager.getDefault(jmri.Timebase.class);
+        internalClock = InstanceManager.getOptionalDefault(jmri.Timebase.class);
         if (internalClock == null) {
             log.error("No Timebase Instance; clock will not run");
             return;
