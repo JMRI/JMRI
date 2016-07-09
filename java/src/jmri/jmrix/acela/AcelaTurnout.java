@@ -19,15 +19,17 @@ import org.slf4j.LoggerFactory;
  */
 public class AcelaTurnout extends AbstractTurnout {
 
-    final String prefix = "AT";
+    private AcelaSystemConnectionMemo _memo = null;
+    private String prefix = null;
 
     /**
      * Create a Light object, with only system name.
      * <P>
      * 'systemName' was previously validated in AcelaLightManager
      */
-    public AcelaTurnout(String systemName) {
+    public AcelaTurnout(String systemName,AcelaSystemConnectionMemo memo) {
         super(systemName);
+        _memo = memo;
         initializeTurnout(systemName);
     }
 
@@ -36,20 +38,13 @@ public class AcelaTurnout extends AbstractTurnout {
      * <P>
      * 'systemName' was previously validated in AcelaLightManager
      */
-    public AcelaTurnout(String systemName, String userName) {
+    public AcelaTurnout(String systemName, String userName,AcelaSystemConnectionMemo memo) {
         super(systemName, userName);
+        _memo = memo;
+        prefix = _memo.getSystemPrefix() + "T";
         initializeTurnout(systemName);
     }
 
-// Added to get rid of errors.
-    /**
-     * State value indicating output intensity is at or above maxIntensity
-     */
-//    public static final int ON          = 0x01;
-    /**
-     * State value indicating output intensity is at or below minIntensity
-     */
-//    public static final int OFF         = 0x00;
     /**
      * Sets up system dependent instance variables and sets system independent
      * instance variables to default values Note: most instance variables are in
@@ -96,7 +91,7 @@ public class AcelaTurnout extends AbstractTurnout {
      */
     /*
      public void setState(int newState) {
-     AcelaNode mNode = AcelaAddress.getNodeFromSystemName(mSystemName);
+     AcelaNode mNode = AcelaAddress.getNodeFromSystemName(mSystemName,_memo);
 
      if (mNode!=null) {
      if (newState==ON) {
@@ -183,7 +178,7 @@ public class AcelaTurnout extends AbstractTurnout {
             newState = adjustStateForInversion(THROWN);
         }
 
-        AcelaNode mNode = AcelaAddress.getNodeFromSystemName(mSystemName);
+        AcelaNode mNode = AcelaAddress.getNodeFromSystemName(mSystemName,_memo);
 
         if (mNode != null) {
 //            if (newState==ON) {

@@ -13,6 +13,7 @@
 
 <body>
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
@@ -22,8 +23,8 @@
 <h2>Expanded Basic Pane</h2>
 
 <div align="right">
-    <a href="Comp_Setup_Roster.shtml">Previous</a> | <a href="Comp_Motor.shtml">Next <br>
-  </a><a href="Comp_Motor.shtml"> </a></p>
+    <a href="Comp_Setup_Roster.shtml">Previous</a> | <a href="Comp_Motor.shtml">Next</a><br>
+    <a href="Comp_Motor.shtml"></a>
 <p>      <a href="index.shtml#Advanced%20Programmer">Back to Index</a>
     </p>
 </div>

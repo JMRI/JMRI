@@ -23,7 +23,8 @@ import java
 # Default filename - located in the same location as the Roster itself
 # The script does show a pop-up 'Save As' dialog allowing this to be
 # changed when executed
-outFile = jmri.jmrit.roster.Roster.instance().getFileLocation()+"roster.csv"
+outFile = jmri.jmrit.roster.Roster.getDefault().getRosterLocation()+"roster.csv"
+print outFile
 
 # Determine if to output the header or not
 # Set to 'True' if required; 'False' if not
@@ -80,7 +81,7 @@ def writeCvValue(cvValue, format):
 def writeDetails(csvFile):
     # Get a list of matched roster entries;
     # the list of None's means match everything
-    rosterlist = jmri.jmrit.roster.Roster.instance().matchingList(None, None, None, None, None, None, None)
+    rosterlist = jmri.jmrit.roster.Roster.getDefault().matchingList(None, None, None, None, None, None, None)
 
     # now loop through the matched entries, outputing things
     for entry in rosterlist.toArray() :
@@ -121,7 +122,7 @@ def writeDetails(csvFile):
         cvTable = CvTableModel(None, None)
         icvTable = IndexedCvTableModel(None, None)
         entry.readFile()
-        entry.loadCvModel(cvTable, icvTable)
+        entry.loadCvModel(None, cvTable, icvTable)  # just load CVs, not variables
 
         # Now we can grab the CV values we're interested in
         # Bear in mind that these need to be converted from
@@ -159,8 +160,12 @@ def writeDetails(csvFile):
         #   8th    7    128
 
         # OK, read the value of CV29
-        cv29Value = cvTable.getCvByNumber("29").getValue()
-
+        cv29Value = 0;
+        if cvTable.getCvByNumber("29")  != None :
+            cv29Value = cvTable.getCvByNumber("29").getValue()
+        else :
+            Print "Did not find a CV29 value, using zero"
+        
         # Now do the bitwise comparisons.
         # First example is speedsteps, which is the second bit 
         if (cv29Value & 2) == 2:

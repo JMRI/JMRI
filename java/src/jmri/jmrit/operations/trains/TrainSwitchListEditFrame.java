@@ -1,4 +1,3 @@
-// TrainSwitchListEditFrame.java
 package jmri.jmrit.operations.trains;
 
 import java.awt.Dimension;
@@ -37,7 +36,6 @@ import org.slf4j.LoggerFactory;
  * Frame for user selection of switch lists
  *
  * @author Dan Boudreau Copyright (C) 2008, 2012, 2013, 2014
- * @version $Revision$
  */
 public class TrainSwitchListEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 

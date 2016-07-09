@@ -1,4 +1,3 @@
-// IntlUtilities.java
 package jmri.util;
 
 /**
@@ -8,7 +7,6 @@ package jmri.util;
  * See http://jmri.org/help/en/html/doc/Technical/I8N.shtml
  *
  * @author Bob Jacobsen Copyright 2014
- * @version $Revision$
  * @since 3.9.3
  */
 public class IntlUtilities {

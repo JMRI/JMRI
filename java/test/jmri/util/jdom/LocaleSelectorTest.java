@@ -11,7 +11,6 @@ import org.jdom2.Namespace;
  * Tests for the jmri.util.LocaleSelector class.
  *
  * @author	Bob Jacobsen Copyright 2010
- * @version	$Revision$
  */
 public class LocaleSelectorTest extends TestCase {
 

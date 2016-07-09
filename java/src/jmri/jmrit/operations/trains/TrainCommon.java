@@ -1793,8 +1793,8 @@ public class TrainCommon {
 
     public static String getISO8601Date(boolean isModelYear) {
         Calendar calendar = Calendar.getInstance();
-        // use the JMRI timebase (which may be a fast clock).
-        calendar.setTime(jmri.InstanceManager.timebaseInstance().getTime());
+        // use the JMRI Timebase (which may be a fast clock).
+        calendar.setTime(jmri.InstanceManager.getDefault(jmri.Timebase.class).getTime());
         if (isModelYear && !Setup.getYearModeled().isEmpty()) {
             try {
                 calendar.set(Calendar.YEAR, Integer.parseInt(Setup.getYearModeled().trim()));
@@ -1815,8 +1815,8 @@ public class TrainCommon {
 
     public static String getDate(boolean isModelYear) {
         Calendar calendar = Calendar.getInstance();
-        // use the JMRI timebase (which may be a fast clock).
-        calendar.setTime(jmri.InstanceManager.timebaseInstance().getTime());
+        // use the JMRI Timebase (which may be a fast clock).
+        calendar.setTime(jmri.InstanceManager.getDefault(jmri.Timebase.class).getTime());
         if (isModelYear && !Setup.getYearModeled().equals(Setup.NONE)) {
             try {
                 calendar.set(Calendar.YEAR, Integer.parseInt(Setup.getYearModeled().trim()));

@@ -127,8 +127,6 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
         sourceThread.start();
 
         new XNetInitializationManager(this.getSystemConnectionMemo());
-
-        jmri.jmrix.lenz.ActiveFlag.setActive();
     }
 
     // base class methods for the XNetSimulatorPortController interface

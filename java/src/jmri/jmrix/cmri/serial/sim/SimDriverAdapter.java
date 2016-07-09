@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.InputStream;
 import jmri.jmrix.cmri.serial.SerialSensorManager;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,14 +60,8 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
 
         // connect to the traffic controller
         SerialTrafficController.instance().connectPort(this);
+        ((CMRISystemConnectionMemo)getSystemConnectionMemo()).configureManagers();
 
-        jmri.InstanceManager.setTurnoutManager(jmri.jmrix.cmri.serial.SerialTurnoutManager.instance());
-        jmri.InstanceManager.setLightManager(jmri.jmrix.cmri.serial.SerialLightManager.instance());
-
-        SerialSensorManager s;
-        jmri.InstanceManager.setSensorManager(s = jmri.jmrix.cmri.serial.SerialSensorManager.instance());
-        SerialTrafficController.instance().setSensorManager(s);
-        jmri.jmrix.cmri.serial.ActiveFlag.setActive();
     }
 
     // base class methods for the SerialPortController interface

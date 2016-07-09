@@ -1,160 +1,142 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
-<title>JMRI: Multi-connection Update</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright ($Author$) 2009 -->
+  <!-- $Id$ -->
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>JMRI: Multi-connection Update</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<h1> 
-JMRI: Multi-connection Update
-</h1>
+    <div id="mainContent">
+      <h1>JMRI: Multi-connection Update</h1>This page is a list of
+      hints for adapting systems (jmri.jmrix subdirectories) to the
+      new multi-system format. It's clearly a work in progress!
 
-This page is a list of hints for adapting systems
-(jmri.jmrix subdirectories) to the new multi-system format.
-It's clearly a work in progress!
+      <p>Basically, you have to get all the static variables and
+      instance() methods out of the code. In their place, you put
+      references to methods of a specific SystemConnectionMemo
+      object that carries the references that used to be
+      static.</p>
 
-<p>
-Basically, you have to get all the static variables
-and instance() methods out of the code. In their place, 
-you put references to methods of a specific
-SystemConnectionMemo object that carries the references that
-used to be static.
+      <p>At the same time, we're doing the Swing pattern update,
+      and a couple other minor cleanups on the code.</p>
 
-<p>
-At the same time, we're doing the Swing pattern update, and
-a couple other minor cleanups on the code.
+      <h2>In primary system directory</h2>Create a specific
+      subclass of SystemConnectionMemo. This will eventually do all
+      the manager initialization, and carry any object references
+      that used to be through instance variables.
 
+      <p>Add all that stuff.</p>
 
-<h2>In primary system directory </h2>
+      <h3>For each connection method (e.g. each subdirectory)</h3>
 
-Create a specific subclass of SystemConnectionMemo.
-This will eventually do all the manager initialization, and
-carry any object references that used to be through instance
-variables.
-
-<p>
-Add all that stuff.
-
-
-<h3>For each connection method (e.g. each subdirectory)</h3>
-
-<p>
-Edit the ConnectionConfig class to take
-and record a reference to a SerialPortAdapter object,
-and to return it from the getAdapter() method.
-Also, remove the instance() method and its 
-implementation.
-<code><pre>
+      <p>Edit the ConnectionConfig class to take and record a
+      reference to a SerialPortAdapter object, and to return it
+      from the getAdapter() method. Also, remove the instance()
+      method and its implementation.</p>
+      <pre>
+<code>
     protected void setInstance() { 
         if (adapter == null) {
             adapter = new PR3Adapter();
         }
     }
-</pre></code>
+</code>
+</pre>
 
-<p>
-Edit the adapter class (e.g. PR3Adapter) to remove
-the instance() method and its implementation.
+      <p>Edit the adapter class (e.g. PR3Adapter) to remove the
+      instance() method and its implementation.</p>
 
-<p>
-The configurexml/ConnectionConfigXml class 
-needs to have a method added:
-<code><pre>
+      <p>The configurexml/ConnectionConfigXml class needs to have a
+      method added:</p>
+      <pre>
+<code>
     protected void getInstance(Object object) {
         adapter = ((ConnectionConfig)object).getAdapter();
     }
-</pre></code>
-We should probably refactor this later, but this
-is the current form to make sure the correct
-ConnectionConfig class is used.
-We're leaving it unchanged for now to 
-avoid competition with the 
-serial/network refactoring. 
+</code>
+</pre>We should probably refactor this later, but this is the
+current form to make sure the correct ConnectionConfig class is
+used. We're leaving it unchanged for now to avoid competition with
+the serial/network refactoring.
 
-<p>
-Also, change this
-<code><pre>
+      <p>Also, change this</p>
+      <pre>
+<code>
     protected void getInstance() {
         adapter = LnHexFilePort.instance();
     }
-</pre></code>
-to this
-<code><pre>
+</code>
+</pre>to this
+      <pre>
+<code>
     protected void getInstance() {
         adapter = new LnHexFilePort();
     }
-</pre></code>
+</code>
+</pre>
 
-<h3>Managers and Beans</h3>
+      <h3>Managers and Beans</h3>For each manager and bean
+      combination, you have to update them to no longer use an
+      instance() method to access the TrafficController. Passing
+      the SystemConectionMemo in to the Manager at construction
+      time is the recommended approach, then if need be passing it
+      through to the newly created Beans. That passes the prefix
+      string, user name for tbe connection, etc.
 
-For each manager and bean combination, you have to 
-update them to no longer use an instance() method
-to access the TrafficController.  Passing the 
-SystemConectionMemo in to the Manager at construction
-time is the recommended approach, then if need be 
-passing it through to the newly created Beans.
-That passes the prefix string, user name for tbe connection, etc.
+      <p>The manager must also use the system prefix instead of a
+      fixed, single system letter. Using e.g.
+      '.startsWith(getSystemPrefix()+"T")' is a good approach.
+      Don't just check that the name starts with the prefix because
+      e.g. "L" and "L2" are not unambiguous then.</p>
 
-<p>
-The manager must also use the system prefix instead of a 
-fixed, single system letter.  Using e.g. '.startsWith(getSystemPrefix()+"T")'
-is a good approach.  Don't just check that the name starts with the prefix because
-e.g. "L" and "L2" are not unambiguous then.
+      <h3>Menu</h3>Create a swing subdirectory, if it doesn't exist
+      already.
 
-<h3>Menu</h3>
+      <p>Put the code for making the menu there, if need be leaving
+      a migration subclass behind. (c.f.
+      jmri.jmrix.loconet.LocoNetMenu and
+      jmri.jmrix.loconet.swing.LocoNetMenu for a template)</p>
 
-Create a swing subdirectory, if it doesn't exist already.
-<p>
-Put the code for making the menu there, if need
-be leaving a migration subclass behind. (c.f.
-jmri.jmrix.loconet.LocoNetMenu and jmri.jmrix.loconet.swing.LocoNetMenu
-for a template)
+      <p>Create a ComponentFactory factory class in the swing
+      subpackage that can e.g. create the menu, and eventually the
+      trees, etc.</p>
 
-<p>
-Create a ComponentFactory factory class in the
-swing subpackage that can e.g. create the menu, 
-and eventually the trees, etc.
+      <p>Edit jmri.jmrix.ActiveSystemsMenu to remove the class;
+      menu creation is automatic from now on. (Every time you
+      create and register a *SystemConnectionMemo, you also
+      register the ComponentFactory)</p>
 
-<p>
-Edit jmri.jmrix.ActiveSystemsMenu to remove 
-the class; menu creation is automatic from now on.
+      <h3>To keep startup actions working</h3>(We're going to
+      refactor this code soon)
 
-(Every time you create and register a *SystemConnectionMemo,
-you also register the ComponentFactory)
+      <p>To keep things working, it's best to convert to JmriPane
+      subclasses. Temporarily, the system connection is then
+      created via the use of internal classes, like
+      jmri.jmrix.loconet.locomon.LocoMonPane$Default</p>
 
-
-<h3>To keep startup actions working</h3>
-(We're going to refactor this code soon)
-
-<p>
-To keep things working, it's best to convert
-to JmriPane subclasses.  Temporarily, the
-system connection is then created
-via the use of internal classes, like
-jmri.jmrix.loconet.locomon.LocoMonPane$Default
-
-<p>
-This does require people to reset their preferences for startup
-actions, buttons, etc. We're not going to migrate those
-for them.
-
-
-
-<!--#include virtual="/Footer" -->
+      <p>This does require people to reset their preferences for
+      startup actions, buttons, etc. We're not going to migrate
+      those for them. <!--#include virtual="/Footer" --></p>
+    </div>
+  </div>
 </body>
 </html>

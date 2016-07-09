@@ -382,7 +382,7 @@ public class PositionableShape extends PositionableJComponent
         }
         _saveLevel = getDisplayLevel();
         if (msg == null) {
-            if (InstanceManager.sensorManagerInstance() != null) {
+            if (InstanceManager.getOptionalDefault(jmri.SensorManager.class) != null) {
                 Sensor sensor = InstanceManager.sensorManagerInstance().getSensor(pName);
                 senHandle = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor);
                 if (sensor != null) {

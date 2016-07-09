@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * Handle configuration for display.MemorySpinnerIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision$
  */
 public class MemoryInputIconXml extends PositionableLabelXml {
 

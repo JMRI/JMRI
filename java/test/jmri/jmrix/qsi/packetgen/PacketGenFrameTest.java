@@ -15,7 +15,7 @@ import junit.framework.TestSuite;
 public class PacketGenFrameTest extends TestCase {
 
     public void testFrameCreate() {
-        new PacketGenFrame();
+        new PacketGenFrame(new jmri.jmrix.qsi.QsiSystemConnectionMemo());
     }
 
     // from here down is testing infrastructure

@@ -1,4 +1,3 @@
-// NameCheckAction.java
 package jmri.jmrit.decoderdefn;
 
 import java.awt.event.ActionEvent;
@@ -19,15 +18,9 @@ import org.slf4j.LoggerFactory;
  * Check the names in an XML decoder file against the names.xml definitions
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2007
- * @version	$Revision$
  * @see jmri.jmrit.XmlFile
  */
 public class NameCheckAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8721690694443271221L;
 
     public NameCheckAction(String s, JPanel who) {
         super(s);

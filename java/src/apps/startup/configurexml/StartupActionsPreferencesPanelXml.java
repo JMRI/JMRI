@@ -31,7 +31,7 @@ public class StartupActionsPreferencesPanelXml extends AbstractXmlAdapter {
     @Override
     public Element store(Object o) {
         for (StartupModel model : InstanceManager.getDefault(StartupActionsManager.class).getActions()) {
-            InstanceManager.configureManagerInstance().registerPref(model);
+            InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerPref(model);
         }
         return null;
     }

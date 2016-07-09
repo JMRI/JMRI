@@ -16,7 +16,7 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+<div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
@@ -40,11 +40,12 @@ JMRI jython scripts, and then invoke them to have your Mac perform
 functions outside JMRI.  An example of this is in the
 <a href="http://jmri.org/jython/AppleScript.py">AppleScript.py</a> sample script distributed with 
 JMRI. It executes a very simple AppleScript:
-<code><pre>
+<pre style="font-family: monospace;">
+
   tell application "Finder"
     make new folder at desktop
   end tell
-</pre></code>
+</code></pre>
 To do this, it has to
 <ul>
 <li>Import some libraries to get access to AppleScript
@@ -58,9 +59,10 @@ your own AppleScripts from within JMRI.
 <h2>Controlling JMRI via an AppleScript</h2>
 
 This section needs a lot of work; in the meantime, try 
-<code><pre>
+<pre style="font-family: monospace;">
+
 osascript -e 'tell application "DecoderPro" to get its |user.name|'
-</pre></code>
+</code></pre>
 and look at the 
 <a href="http://developer.apple.com/documentation/AppleScript/Conceptual/AppleScriptX/Concepts/work_with_as.html">Apple doc page</a>.
 <p>

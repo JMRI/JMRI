@@ -746,7 +746,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             abortWarrant(msg);
             return msg;
         }
-        jmri.ThrottleManager tm = InstanceManager.throttleManagerInstance();
+        jmri.ThrottleManager tm = InstanceManager.getOptionalDefault(jmri.ThrottleManager.class);
         if (tm==null) {
             msg = Bundle.getMessage("noThrottle");
         } else {

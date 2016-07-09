@@ -185,9 +185,6 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
         tc.connectPort(this);
         // Configure the form of serial address validation for this connection
 //        adaptermemo.setSerialAddress(new jmri.jmrix.ieee802154.SerialAddress(adaptermemo));
-
-        // declare up
-        jmri.jmrix.ieee802154.ActiveFlag.setActive();
     }
 
     // base class methods for the SerialPortController interface

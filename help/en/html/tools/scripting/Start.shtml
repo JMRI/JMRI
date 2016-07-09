@@ -14,7 +14,7 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+<div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
@@ -114,7 +114,7 @@ book published by O'Reilly.  The
 JMRI uses the factory-pattern extensively to get access to 
 objects.  In Java this results in verbose code like
 <pre>
-   Turnout t2 = InstanceManager.turnoutManagerInstance().newTurnout("LT2", "turnout 2");
+   Turnout t2 = InstanceManager.getDefault(TurnoutManager.class).newTurnout("LT2", "turnout 2");
    t2.SetCommandedState(Turnout.THROWN)
 </pre>
 Jython simplifies that by allowing us to provide useful variables,

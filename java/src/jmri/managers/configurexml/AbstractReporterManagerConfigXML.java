@@ -50,6 +50,7 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
                 String sname = iter.next();
                 if (sname == null) {
                     log.error("System name null during store");
+                    break;
                 }
                 log.debug("system name is " + sname);
                 Reporter r = tm.getBySystemName(sname);
@@ -91,7 +92,7 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
         if (log.isDebugEnabled()) {
             log.debug("Found " + reporterList.size() + " reporters");
         }
-        ReporterManager tm = InstanceManager.reporterManagerInstance();
+        ReporterManager tm = InstanceManager.getDefault(jmri.ReporterManager.class);
 
         for (int i = 0; i < reporterList.size(); i++) {
 
@@ -114,7 +115,7 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
     }
 
     public int loadOrder() {
-        return InstanceManager.reporterManagerInstance().getXMLOrder();
+        return InstanceManager.getDefault(jmri.ReporterManager.class).getXMLOrder();
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractReporterManagerConfigXML.class.getName());

@@ -15,8 +15,7 @@ import jmri.util.swing.WindowInterface;
  * Creates a menu showing all open windows and allows to bring one in front
  * <P>
  * @author	Giorgio Terdina Copyright 2008
- * @version $Revision$ 18-Nov-2008 GT Replaced blank menu lines, due to
- * untitled windows, with "Untitled" string
+ * @version 18-Nov-2008 GT Replaced blank menu lines, due to untitled windows, with "Untitled" string
  */
 public class WindowMenu extends JMenu implements javax.swing.event.MenuListener {
 

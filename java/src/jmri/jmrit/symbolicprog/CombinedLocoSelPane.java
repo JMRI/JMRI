@@ -96,14 +96,12 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         return pane1a;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
-            justification = "return values for jmri.InstanceManager.programmerManagerInstance() and programmerManagerInstance().getGlobalProgrammer() are checked known to be non-null before the getGlobalProgrammer().getCanRead() call is executed.")
     JToggleButton addDecoderIdentButton() {
         JToggleButton iddecoder = new JToggleButton(Bundle.getMessage("ButtonReadType"));
         iddecoder.setToolTipText(Bundle.getMessage("TipSelectType"));
-        if (jmri.InstanceManager.programmerManagerInstance() != null
-                && jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer() != null
-                && !jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer().getCanRead()) {
+        if (jmri.InstanceManager.getOptionalDefault(jmri.ProgrammerManager.class) != null
+                && jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer() != null
+                && !jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer().getCanRead()) {
             // can't read, disable the button
             iddecoder.setEnabled(false);
             iddecoder.setToolTipText(Bundle.getMessage("TipNoRead"));
@@ -151,8 +149,6 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
      *
      * @return a JPanel for handling the entry-selection GUI
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
-            justification = "return values for jmri.InstanceManager.programmerManagerInstance() and programmerManagerInstance().getGlobalProgrammer() are checked known to be non-null before the getGlobalProgrammer().getCanRead() call is executed.")
     protected JPanel layoutRosterSelection() {
         JPanel pane2a = new JPanel();
         pane2a.setLayout(new BoxLayout(pane2a, BoxLayout.X_AXIS));
@@ -179,9 +175,9 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         });
         idloco = new JToggleButton(Bundle.getMessage("IDENT"));
         idloco.setToolTipText(Bundle.getMessage("READ THE LOCOMOTIVE'S ADDRESS AND ATTEMPT TO SELECT THE RIGHT SETTINGS"));
-        if (jmri.InstanceManager.programmerManagerInstance() != null
-                && jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer() != null
-                && !jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer().getCanRead()) {
+        if (jmri.InstanceManager.getOptionalDefault(jmri.ProgrammerManager.class) != null
+                && jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer() != null
+                && !jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer().getCanRead()) {
             // can't read, disable the button
             idloco.setEnabled(false);
             idloco.setToolTipText(Bundle.getMessage("BUTTON DISABLED BECAUSE CONFIGURED COMMAND STATION CAN'T READ CVS"));
@@ -267,7 +263,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         if (selector != null && selector.isSelected()) p = selector.getProgrammer();
         if (p == null) {
             log.warn("Selector did not provide a programmer, use default");
-            p = jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer();
+            p = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer();
         }
         IdentifyLoco id = new IdentifyLoco(p) {
             private CombinedLocoSelPane who = me;
@@ -302,7 +298,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         if (selector != null && selector.isSelected()) p = selector.getProgrammer();
         if (p == null) {
             log.warn("Selector did not provide a programmer, use default");
-            p = jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer();
+            p = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer();
         }
         IdentifyDecoder id = new IdentifyDecoder(p) {
             private CombinedLocoSelPane who = me;

@@ -14,6 +14,7 @@
  * goodbye(data)
  * light(name, state, data)
  * memory(name, value, data)
+ * block(name, value, data)
  * power(state)
  * railroad(name)
  * reporter(name, value, data)
@@ -69,6 +70,8 @@
             jmri.light = function(name, state, data) {
             };
             jmri.memory = function(name, value, data) {
+            };
+            jmri.block = function(name, value, data) {
             };
             jmri.power = function(state) {
             };
@@ -157,10 +160,38 @@
                     });
                 }
             };
+            jmri.getBlock = function(name) {
+                if (jmri.socket) {
+                    jmri.socket.send("block", {name: name});
+                } else {
+                    $.getJSON(jmri.url + "block/" + name, function(json) {
+                        jmri.block(json.data.name, json.data.value, json.data);
+                    });
+                }
+            };
+            jmri.setBlock = function(name, value) {
+                if (jmri.socket) {
+                    jmri.socket.send("block", {name: name, value: value});
+                } else {
+                    $.ajax({
+                        url: jmri.url + "block/" + name,
+                        type: "POST",
+                        data: JSON.stringify({value: value}),
+                        contentType: "application/json; charset=utf-8",
+                        success: function(json) {
+                            jmri.block(json.data.name, json.data.value, json.data);
+                            jmri.getBlock(json.data.name, json.data.value);
+                        }
+                    });
+                }
+            };
             jmri.getObject = function(type, name) {
                 switch (type) {
                     case "light":
                         jmri.getLight(name);
+                        break;
+                    case "block":
+                        jmri.getBlock(name);
                         break;
                     case "memory":
                         jmri.getMemory(name);
@@ -192,6 +223,9 @@
                         break;
                     case "memory":
                         jmri.setMemory(name, state);
+                        break;
+                    case "block":
+                        jmri.setBlock(name, state);
                         break;
                     case "rosterEntry":
                         jmri.setRosterEntry(name, state);
@@ -557,6 +591,9 @@
                         },
                         light: function(e) {
                             jmri.light(e.data.name, e.data.state, e.data);
+                        },
+                        block: function(e) {
+                            jmri.block(e.data.name, e.data.value, e.data);
                         },
                         memory: function(e) {
                             jmri.memory(e.data.name, e.data.value, e.data);

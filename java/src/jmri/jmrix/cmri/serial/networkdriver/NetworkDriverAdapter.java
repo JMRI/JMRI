@@ -29,13 +29,7 @@ public class NetworkDriverAdapter extends SerialNetworkPortController {
         // connect to the traffic controller
         SerialTrafficController.instance().connectPort(this);
 
-        jmri.InstanceManager.setTurnoutManager(jmri.jmrix.cmri.serial.SerialTurnoutManager.instance());
-        jmri.InstanceManager.setLightManager(jmri.jmrix.cmri.serial.SerialLightManager.instance());
-
-        SerialSensorManager s;
-        jmri.InstanceManager.setSensorManager(s = jmri.jmrix.cmri.serial.SerialSensorManager.instance());
-        SerialTrafficController.instance().setSensorManager(s);
-        jmri.jmrix.cmri.serial.ActiveFlag.setActive();
+        ((CMRISystemConnectionMemo)getSystemConnectionMemo()).configureManagers();
     }
 
 }

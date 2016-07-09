@@ -97,7 +97,7 @@ public class DefaultSignalMastManagerXml
                 SignalMast m;
                 String sys = getSystemName(e);
                 try {
-                    m = InstanceManager.signalMastManagerInstance()
+                    m = InstanceManager.getDefault(jmri.SignalMastManager.class)
                             .provideSignalMast(sys);
 
                     if (getUserName(e) != null) {
@@ -175,7 +175,7 @@ public class DefaultSignalMastManagerXml
 
         list = shared.getChildren("signalmastrepeater");
         if (list != null) {
-            DefaultSignalMastManager m = (DefaultSignalMastManager) InstanceManager.signalMastManagerInstance();
+            DefaultSignalMastManager m = (DefaultSignalMastManager) InstanceManager.getDefault(jmri.SignalMastManager.class);
             for (int i = 0; i < list.size(); i++) {
                 Element e = list.get(i);
                 String masterName = e.getChild("masterMast").getText();
@@ -207,7 +207,7 @@ public class DefaultSignalMastManagerXml
     }
 
     public int loadOrder() {
-        return InstanceManager.signalMastManagerInstance().getXMLOrder();
+        return InstanceManager.getDefault(jmri.SignalMastManager.class).getXMLOrder();
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastManagerXml.class.getName());

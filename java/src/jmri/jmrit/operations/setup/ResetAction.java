@@ -21,11 +21,6 @@ import jmri.jmrit.operations.UnexpectedExceptionContext;
  */
 public class ResetAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3591765950664839428L;
-
     public ResetAction(String s) {
         super(s);
     }

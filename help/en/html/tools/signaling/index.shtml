@@ -18,7 +18,7 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
@@ -39,7 +39,7 @@ ranging from simple "stoplights" to a complete emulation of a particular prototy
 <li><a href="#advanced">Advanced Signaling</a></li>
 	</ul>
 		
-<a name="terms"><h2>Signaling Vocabulary</h2></a></dt>
+<a name="terms"></a><h2>Signaling Vocabulary</h2></dt>
 
 <h3>Prototype Railroad Signaling terms:</h3>
 <a href="https://commons.wikimedia.org/wiki/File:CSX_River_Sub_Kingston_CP_90.jpg"><img src="images/132px-CSX_River_Sub_Kingston_CP_90.jpg" width="132" height="240" align="right"></a>
@@ -116,7 +116,7 @@ Example #2: Dennis Drury's CTC signals get even numbers with a directional modif
   <li><a href="http://www.railroadsignals.us/basics/nomenclature.htm">US Circuit Nomenclature</a> helps in prototypically naming parts of a signaling system.</li>
 </ul>
 
-<a name="tools"><h2>JMRI Signaling Tools</h2></a>
+<a name="tools"></a><h2>JMRI Signaling Tools</h2>
 <p>It is really straight forward to use Aspect Signaling, especially if suitable signal hardware is already configured in JMRI or you want to use Signal Masts with more than one Signal Head.
 	Aspect Signaling in JMRI uses of a series of Aspect definition files that come with JMRI since version 2.9. In addition to tapping into one of the more than 20 prototypical <a href="AspectSignaling.shtml#systems">Signaling Systems</a> that come with JMRI, you can tweak one to suit your hardware and operations or define your own and share it as part of a next version of JMRI.<br/>
 	JMRI provides the following core Signaling Tools, available from the <b>Tools > Tables > Signals ></b> menu:</p>
@@ -156,7 +156,7 @@ on your panels, please see the
 	<li>Elmer McKay provided a general overview <a href="IntroToSignalingYourMRR.html">How to get started</a> with signals on your layout.</li>
 	</ul>
 
-<a name="advanced"><h2>Advanced Signaling</h2></a>
+<a name="advanced"></a><h2>Advanced Signaling</h2>
 	
 <ul>
 	<li><a href="interlock/index.shtml">Interlocking Entry/Exit</a>
@@ -166,7 +166,7 @@ on your panels, please see the
 <li><a href="#widgets">Toolkit</a> for experienced users to do any kind of automation on a layout by writing a new program
 	</ul>
 	
-<a name="logix"><h3>Signaling with Logix</h3></a>
+<a name="logix"></a><h3>Signaling with Logix</h3>
 <p>A JMRI <a href="../Logix.shtml">Logix</a> provides logic and control capabilities for JMRI objects, including
 Signal Heads and Masts. Logix can be used to configure custom signaling logic by filling out forms, without writing any code. A user defines "Conditional" logic and the "Actions"
 	that take place depending on the state of the logic. The following sub-sections show how Logix can examine and control Signals.</p>
@@ -222,7 +222,7 @@ Signal Heads and Masts. Logix can be used to configure custom signaling logic by
 		</li></ul>
 	<p>For more information see the <a href="../Logix.shtml">Logix help pages</a>.</p>
 	
-<a name="scripting"><h3>Scripting</h3></a>
+<a name="scripting"></a><h3>Scripting</h3>
 
 	<a href="../../../package/jmri/jmrit/beantable/jmriScriptWindow.png">
    <img src="../../../package/jmri/jmrit/beantable/jmriScriptWindow.png" 
@@ -242,7 +242,7 @@ Python. It listens for changes to two Sensors and a Turnout, and then
 
 For more information see the <a href="../scripting/index.shtml">JMRI Scripting help page</a>.
 
-<a name="automat"><h3>Automation Classes</h3></a>
+<a name="automat"></a><h3>Automation Classes</h3>
 
 JMRI provides classes to help you write Java code to control your layout. The most powerful of these are aimed
 at general automation and make it easy to code your own signal logic into the program; see the <a href="../automation/viaJava.shtml">Automation page</a>.
@@ -258,7 +258,7 @@ back to the layout, and even the details of "which outputs do I have
 to set to get signal Apple Siding East to show Yellow?".  You can
 concentrate on just the signal logic in the code you write.
 
-<a name="widgets"><h3>Toolkit</h3></a>
+<a name="widgets"></a><h3>Toolkit</h3>
 
 The entire
 <a href="../../doc/Technical/index.shtml">JMRI toolkit</a>

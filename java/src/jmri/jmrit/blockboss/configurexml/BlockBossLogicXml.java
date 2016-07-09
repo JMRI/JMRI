@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * "signalelement" respectively.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2005
- * @version $Revision$
  *
  * Revisions to add facing point sensors, approach lighting, and limited speed.
  * Dick Bronson (RJB) 2006

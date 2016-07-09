@@ -22,6 +22,7 @@
 <body>
 
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
       <div id="mainContent">
@@ -34,7 +35,7 @@
 		  outputs that can be set to various colors: Red, Yellow, Green, Flashing Yellow, etc. Depending on the hardware used to connect your model signals tot the DCC system, the program deploys a different technique to turn each of these colors on or off. <br/>
 		  Signal Heads may be used to build Signal Masts using the <a href="SignalMasts.shtml">Signal Masts Tool</a>. Depending on the way your signals on the layout are connected to the DCC system, Signal Heads are normally part of a Signal Mast, but <a href="../../../package/jmri/jmrit/beantable/SignalMastAddEdit.shtml">some signal hardware</a> is able to support multiple Aspects directly, and will not require the use of individual Signal Heads.
 
-<a name="table"><h3>The Signal Head Table</h3></a>
+<a name="table"></a><h3>The Signal Head Table</h3>
 
 	<a href="../../../package/jmri/jmrit/beantable/SignalHeads.png"><img src="../../../package/jmri/jmrit/beantable/SignalHeads.png" align="right" width="554" height="184" hspace="0" vspace="0" alt="Signal Head Table figure"></a>
 <!-- The following section is taken from, and should be kept consistent with -->
@@ -48,7 +49,7 @@ using the "Signal Head Table" tool in the Tools menu of most JMRI programs.
 Table, please see the 
 	<a href="../../../package/jmri/jmrit/beantable/SignalHeadTable.shtml">Signal Head Table help page</a>.
 
-<a name="add"><h3>Creating a Signal Head</h3></a>
+<a name="add"></a><h3>Creating a Signal Head</h3>
 	<a href="../../../package/jmri/jmrit/beantable/SignalHeadAdd1.png"><img src="../../../package/jmri/jmrit/beantable/SignalHeadAdd1.png" align="right" width="181" height="218" hspace="0" vspace="0" alt="Add Signal Head window figure"></a>
 
 <p>To define a new Signal Head, click on the 

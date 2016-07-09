@@ -268,7 +268,7 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
 
        //
         //protected void deletePair(int r){
-            /*jmri.InstanceManager.signalMastLogicManagerInstance().removeSignalMastLogic(senMan, _boardListCount.get(r));*/
+            /*jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager.class).removeSignalMastLogic(senMan, _boardListCount.get(r));*/
         //}
         public static final int ADDRESS_COLUMN = 0;
         public static final int INPUTS_COLUMN = 1;

@@ -20,10 +20,6 @@ import jmri.jmrit.operations.trains.TrainManifestHeaderText;
  */
 public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3520403072636166571L;
 //    private static final Logger log = LoggerFactory.getLogger(OperationsSetupPanel.class);
 
     protected static final ResourceBundle rb = ResourceBundle

@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * Handle configuration for display.LocoIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision$
  */
 public class LocoIconXml extends PositionableLabelXml {
 

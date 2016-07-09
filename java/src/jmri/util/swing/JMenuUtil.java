@@ -14,6 +14,9 @@ import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+import javax.annotation.CheckForNull;
+
 /**
  * Common utility methods for working with JMenus.
  * <P>
@@ -36,7 +39,7 @@ public class JMenuUtil extends GuiUtilBase {
         for (Object child : root.getChildren("node")) {
             JMenu menuItem = jMenuFromElement((Element) child, wi, context);
             retval[i++] = menuItem;
-            if (((Element) child).getChild("mnemonic") != null && menuItem != null) {
+            if (((Element) child).getChild("mnemonic") != null) {
                 int mnemonic = convertStringToKeyEvent(((Element) child).getChild("mnemonic").getText());
                 if (mnemonicList.contains(mnemonic)) {
                     log.error("Menu item '" + menuItem.getLabel() + "' Mnemonic '" + ((Element) child).getChild("mnemonic").getText() + "' has already been assigned");
@@ -49,7 +52,7 @@ public class JMenuUtil extends GuiUtilBase {
         return retval;
     }
 
-    static JMenu jMenuFromElement(Element main, WindowInterface wi, Object context) {
+    static @Nonnull JMenu jMenuFromElement(@CheckForNull Element main, WindowInterface wi, Object context) {
         boolean addSep = false;
         String name = "<none>";
         if (main == null) {
@@ -114,7 +117,7 @@ public class JMenuUtil extends GuiUtilBase {
         return menu;
     }
 
-    static JMenu createMenuGroupFromElement(Element main, WindowInterface wi, Object context) {
+    static @Nonnull JMenu createMenuGroupFromElement(@CheckForNull Element main, WindowInterface wi, Object context) {
         String name = "<none>";
         if (main == null) {
             log.warn("Menu from element called without an element");
@@ -143,7 +146,7 @@ public class JMenuUtil extends GuiUtilBase {
         return menu;
     }
 
-    static void setMenuItemInterAction(Object context, final String ref, final JMenuItem menuItem) {
+    static void setMenuItemInterAction(@Nonnull Object context, final String ref, final JMenuItem menuItem) {
         java.lang.reflect.Method methodListener = null;
         try {
             methodListener = context.getClass().getMethod("addPropertyChangeListener", java.beans.PropertyChangeListener.class);
@@ -157,34 +160,33 @@ public class JMenuUtil extends GuiUtilBase {
             log.error("No such method remoteCalls for " + context.getClass().getName());
             return;
         }
-        if (methodListener != null) {
-            try {
-                methodListener.invoke(context, new PropertyChangeListener() {
-                    public void propertyChange(java.beans.PropertyChangeEvent e) {
-                        if (e.getPropertyName().equals(ref)) {
-                            String method = (String) e.getOldValue();
-                            if (method.equals("setSelected")) {
-                                menuItem.setSelected(true);
-                            } else if (method.equals("setEnabled")) {
-                                menuItem.setEnabled((Boolean) e.getNewValue());
-                            }
+
+        try {
+            methodListener.invoke(context, new PropertyChangeListener() {
+                public void propertyChange(java.beans.PropertyChangeEvent e) {
+                    if (e.getPropertyName().equals(ref)) {
+                        String method = (String) e.getOldValue();
+                        if (method.equals("setSelected")) {
+                            menuItem.setSelected(true);
+                        } else if (method.equals("setEnabled")) {
+                            menuItem.setEnabled((Boolean) e.getNewValue());
                         }
                     }
-                });
-            } catch (IllegalArgumentException ex) {
-                System.out.println("IllegalArgument " + ex);
-            } catch (IllegalAccessException ex) {
-                System.out.println("IllegalAccess " + ex);
-            } catch (java.lang.reflect.InvocationTargetException ex) {
-                System.out.println("InvocationTarget " + ref + " " + ex.getCause());
-            } catch (java.lang.NullPointerException ex) {
-                System.out.println("NPE " + context.getClass().getName() + " " + ex.toString());
-            }
+                }
+            });
+        } catch (IllegalArgumentException ex) {
+            System.out.println("IllegalArgument " + ex);
+        } catch (IllegalAccessException ex) {
+            System.out.println("IllegalAccess " + ex);
+        } catch (java.lang.reflect.InvocationTargetException ex) {
+            System.out.println("InvocationTarget " + ref + " " + ex.getCause());
+        } catch (java.lang.NullPointerException ex) {
+            System.out.println("NPE " + context.getClass().getName() + " " + ex.toString());
         }
 
     }
 
-    static int convertStringToKeyEvent(String st) {
+    static int convertStringToKeyEvent(@Nonnull String st) {
         char a = (st.toLowerCase()).charAt(0);
         int kcode = a - 32;
         return kcode;
