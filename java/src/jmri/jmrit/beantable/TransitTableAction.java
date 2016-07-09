@@ -1963,7 +1963,7 @@ public class TransitTableAction extends AbstractTableAction {
                     return false;
                 }
                 tWhatString = whatStringField.getText();
-                if ((tWhatString == null) || tWhatString == "" || (tWhatString.length() < 1)) {
+                if ((tWhatString == null) || tWhatString.equals("") || (tWhatString.length() < 1)) {
                     JOptionPane.showMessageDialog(addEditActionFrame, (rbx.getString("MissingPattern")),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return false;

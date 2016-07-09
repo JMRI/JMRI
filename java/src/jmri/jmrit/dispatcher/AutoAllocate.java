@@ -81,9 +81,6 @@ public class AutoAllocate {
             return;
         }
         _conUtil = _dispatcher.getLayoutEditor().getConnectivityUtil();
-        if (_conUtil == null) {
-            log.error("null ConnectivityUtil when constructing AutoAllocate");
-        }
     }
 
     // operational variables

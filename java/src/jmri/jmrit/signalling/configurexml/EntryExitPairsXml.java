@@ -51,75 +51,74 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
         for (int k = 0; k < editors.size(); k++) {
             LayoutEditor panel = editors.get(k);
             List<Object> nxpair = p.getSourceList(panel);
-            if (nxpair != null) {
-                Element panelElem = new Element("layoutPanel");
-                panelElem.setAttribute("name", panel.getLayoutName());
-                for (int j = 0; j < nxpair.size(); j++) {
-                    Object key = nxpair.get(j);
-                    Element source = new Element("source");
-                    String type = "";
-                    String item = "";
 
-                    if (key instanceof SignalMast) {
-                        type = "signalMast";
-                        item = ((SignalMast) key).getDisplayName();
-                    } else if (key instanceof Sensor) {
-                        type = "sensor";
-                        item = ((Sensor) key).getDisplayName();
-                    } else if (key instanceof SignalHead) {
-                        type = "signalHead";
-                        item = ((SignalHead) key).getDisplayName();
-                    }
+            Element panelElem = new Element("layoutPanel");
+            panelElem.setAttribute("name", panel.getLayoutName());
+            for (int j = 0; j < nxpair.size(); j++) {
+                Object key = nxpair.get(j);
+                Element source = new Element("source");
+                String type = "";
+                String item = "";
 
-                    source.setAttribute("type", type);
-                    source.setAttribute("item", item);
-
-                    ArrayList<Object> a = p.getDestinationList(key, panel);
-                    for (int i = 0; i < a.size(); i++) {
-                        Object keyDest = a.get(i);
-                        String typeDest = "";
-                        String itemDest = "";
-                        if (keyDest instanceof SignalMast) {
-                            typeDest = "signalMast";
-                            itemDest = ((SignalMast) keyDest).getDisplayName();
-                        } else if (keyDest instanceof Sensor) {
-                            typeDest = "sensor";
-                            itemDest = ((Sensor) keyDest).getDisplayName();
-                        } else if (keyDest instanceof SignalHead) {
-                            typeDest = "signalHead";
-                            itemDest = ((SignalHead) keyDest).getDisplayName();
-                        }
-                        Element dest = new Element("destination");
-                        dest.setAttribute("type", typeDest);
-                        dest.setAttribute("item", itemDest);
-                        if (!p.isUniDirection(key, panel, keyDest)) {
-                            dest.setAttribute("uniDirection", "no");
-                        }
-                        if (!p.isEnabled(key, panel, keyDest)) {
-                            dest.setAttribute("enabled", "no");
-                        }
-                        int nxType = p.getEntryExitType(key, panel, keyDest);
-                        switch (nxType) {
-                            case 0x00:
-                                dest.setAttribute("nxType", "turnoutsetting");
-                                break;
-                            case 0x01:
-                                dest.setAttribute("nxType", "signalmastlogic");
-                                break;
-                            case 0x02:
-                                dest.setAttribute("nxType", "fullinterlocking");
-                                break;
-                            default:
-                                dest.setAttribute("nxType", "turnoutsetting");
-                                break;
-                        }
-                        if (p.getUniqueId(key, panel, keyDest) != null) {
-                            dest.setAttribute("uniqueid", p.getUniqueId(key, panel, keyDest));
-                        }
-                        source.addContent(dest);
-                    }
-                    panelElem.addContent(source);
+                if (key instanceof SignalMast) {
+                    type = "signalMast";
+                    item = ((SignalMast) key).getDisplayName();
+                } else if (key instanceof Sensor) {
+                    type = "sensor";
+                    item = ((Sensor) key).getDisplayName();
+                } else if (key instanceof SignalHead) {
+                    type = "signalHead";
+                    item = ((SignalHead) key).getDisplayName();
                 }
+
+                source.setAttribute("type", type);
+                source.setAttribute("item", item);
+
+                ArrayList<Object> a = p.getDestinationList(key, panel);
+                for (int i = 0; i < a.size(); i++) {
+                    Object keyDest = a.get(i);
+                    String typeDest = "";
+                    String itemDest = "";
+                    if (keyDest instanceof SignalMast) {
+                        typeDest = "signalMast";
+                        itemDest = ((SignalMast) keyDest).getDisplayName();
+                    } else if (keyDest instanceof Sensor) {
+                        typeDest = "sensor";
+                        itemDest = ((Sensor) keyDest).getDisplayName();
+                    } else if (keyDest instanceof SignalHead) {
+                        typeDest = "signalHead";
+                        itemDest = ((SignalHead) keyDest).getDisplayName();
+                    }
+                    Element dest = new Element("destination");
+                    dest.setAttribute("type", typeDest);
+                    dest.setAttribute("item", itemDest);
+                    if (!p.isUniDirection(key, panel, keyDest)) {
+                        dest.setAttribute("uniDirection", "no");
+                    }
+                    if (!p.isEnabled(key, panel, keyDest)) {
+                        dest.setAttribute("enabled", "no");
+                    }
+                    int nxType = p.getEntryExitType(key, panel, keyDest);
+                    switch (nxType) {
+                        case 0x00:
+                            dest.setAttribute("nxType", "turnoutsetting");
+                            break;
+                        case 0x01:
+                            dest.setAttribute("nxType", "signalmastlogic");
+                            break;
+                        case 0x02:
+                            dest.setAttribute("nxType", "fullinterlocking");
+                            break;
+                        default:
+                            dest.setAttribute("nxType", "turnoutsetting");
+                            break;
+                    }
+                    if (p.getUniqueId(key, panel, keyDest) != null) {
+                        dest.setAttribute("uniqueid", p.getUniqueId(key, panel, keyDest));
+                    }
+                    source.addContent(dest);
+                }
+                panelElem.addContent(source);
                 element.addContent(panelElem);
             }
         }

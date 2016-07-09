@@ -280,17 +280,16 @@ public class AllocatedSection {
             if (mBlockList == null) {
                 mBlockList = mSection.getBlockList();
             }
-            if (mBlockList != null) {
-                jmri.Block b = mBlockList.get(index);
-                if (!isInActiveBlockList(b)) {
-                    int occ = b.getState();
-                    Runnable handleBlockChange = new RespondToBlockStateChange(b, occ, this);
-                    Thread tBlockChange = new Thread(handleBlockChange, "Allocated Section Block Change on " + b.getDisplayName());
-                    tBlockChange.start();
-                    addToActiveBlockList(b);
-                    if (DispatcherFrame.instance().getSupportVSDecoder()) {
-                        firePropertyChangeEvent("BlockStateChange", null, b.getSystemName()); // NOI18N
-                    }
+
+            jmri.Block b = mBlockList.get(index);
+            if (!isInActiveBlockList(b)) {
+                int occ = b.getState();
+                Runnable handleBlockChange = new RespondToBlockStateChange(b, occ, this);
+                Thread tBlockChange = new Thread(handleBlockChange, "Allocated Section Block Change on " + b.getDisplayName());
+                tBlockChange.start();
+                addToActiveBlockList(b);
+                if (DispatcherFrame.instance().getSupportVSDecoder()) {
+                    firePropertyChangeEvent("BlockStateChange", null, b.getSystemName()); // NOI18N
                 }
             }
         }

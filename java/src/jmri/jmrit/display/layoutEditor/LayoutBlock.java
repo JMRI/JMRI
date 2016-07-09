@@ -2888,7 +2888,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             if (e.getPropertyName().equals("NewRoute")) {
                 LayoutBlock lbkblock = (LayoutBlock) e.getNewValue();
                 if (enableUpdateRouteLogging) {
-                    log.info("==Event type " + e.getPropertyName().toString() + " New " + lbkblock.getDisplayName());
+                    log.info("==Event type {} New {}", e.getPropertyName(), lbkblock.getDisplayName());
                 }
             } else if (e.getPropertyName().equals("through-path-added")) {
                 if (enableUpdateRouteLogging) {

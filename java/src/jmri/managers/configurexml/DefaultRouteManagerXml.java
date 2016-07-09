@@ -499,16 +499,16 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
         }
         // if old manager exists, remove it from configuration process
         if (current != null) {
-            InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).deregister(
+            InstanceManager.getDefault(jmri.ConfigureManager.class).deregister(
                     current);
+            InstanceManager.deregister(current, RouteManager.class);
         }
 
         // register new one with InstanceManager
-        InstanceManager.deregister(current, RouteManager.class);
         DefaultRouteManager pManager = DefaultRouteManager.instance();
         InstanceManager.store(pManager, RouteManager.class);
         // register new one for configuration
-        InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerConfig(pManager, jmri.Manager.ROUTES);
+        InstanceManager.getDefault(jmri.ConfigureManager.class).registerConfig(pManager, jmri.Manager.ROUTES);
     }
 
     public int loadOrder() {

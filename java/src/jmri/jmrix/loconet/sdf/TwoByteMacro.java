@@ -1,11 +1,9 @@
-// TwoByteMacro.java
 package jmri.jmrix.loconet.sdf;
 
 /**
  * Implement generic two-byte macros from the Digitrax sound definition language
  *
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version $Revision$
  */
 public class TwoByteMacro extends SdfMacro {
 
@@ -53,5 +51,3 @@ public class TwoByteMacro extends SdfMacro {
         return indent + oneInstructionString();
     }
 }
-
-/* @(#)TwoByteMacro.java */

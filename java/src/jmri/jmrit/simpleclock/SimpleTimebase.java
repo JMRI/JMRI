@@ -58,7 +58,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
             log.warn("Exception setting ISCLOCKRUNNING sensor ACTIVE: " + e);
         }
         // initialize rate factor-containing memory
-        if (jmri.InstanceManager.memoryManagerInstance() != null) {
+        if (jmri.InstanceManager.getOptionalDefault(jmri.MemoryManager.class) != null) {
             // only try to create memory if memories are supported
             try {
                 factorMemory = jmri.InstanceManager.memoryManagerInstance().provideMemory("IMRATEFACTOR");

@@ -2214,7 +2214,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                         ((jmri.implementation.MergSD2SignalHead) curS).setInput1(nbhm.getNamedBeanHandle(eto3.getDisplayName(), t1));
                     }
                     ((jmri.implementation.MergSD2SignalHead) curS).setAspects(ukSignalAspectsFromBox(emsaBox));
-                    if (ukSignalTypeFromBox(emstBox) == "Distant") {
+                    if (ukSignalTypeFromBox(emstBox).equals("Distant")) {
                         ((jmri.implementation.MergSD2SignalHead) curS).setHome(false);
                     } else {
                         ((jmri.implementation.MergSD2SignalHead) curS).setHome(true);

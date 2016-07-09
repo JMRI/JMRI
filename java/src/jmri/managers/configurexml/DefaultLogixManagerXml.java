@@ -192,7 +192,7 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
             return;
         }
         // if old manager exists, remove it from configuration process
-        if (InstanceManager.getDefault(jmri.LogixManager.class) != null) {
+        if (InstanceManager.getOptionalDefault(jmri.LogixManager.class) != null) {
             InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).deregister(
                     InstanceManager.getDefault(jmri.LogixManager.class));
         }

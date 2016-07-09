@@ -19,20 +19,20 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
         if (log.isDebugEnabled()) {
             log.debug("creating a new EcosPreferences object");
         }
-        if (ecosPreferencesShutDownTask == null) {
-            ecosPreferencesShutDownTask = new QuietShutDownTask("Ecos Preferences Shutdown") {
-                @Override
-                public boolean execute() {
-                    if (getChangeMade()) {
-                        jmri.InstanceManager.getDefault(jmri.ConfigureManager.class).storePrefs();
-                    }
-                    return true;
+
+        ecosPreferencesShutDownTask = new QuietShutDownTask("Ecos Preferences Shutdown") {
+            @Override
+            public boolean execute() {
+                if (getChangeMade()) {
+                    jmri.InstanceManager.getDefault(jmri.ConfigureManager.class).storePrefs();
                 }
-            };
-            if (jmri.InstanceManager.getOptionalDefault(jmri.ShutDownManager.class) != null) {
-                jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(ecosPreferencesShutDownTask);
+                return true;
             }
+        };
+        if (jmri.InstanceManager.getOptionalDefault(jmri.ShutDownManager.class) != null) {
+            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(ecosPreferencesShutDownTask);
         }
+
         adaptermemo = memo;
         InstanceManager.tabbedPreferencesInstance().addPreferencesPanel(new PreferencesPane(this));
     }
