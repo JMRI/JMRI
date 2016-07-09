@@ -229,12 +229,26 @@ class LocoFile extends XmlFile {
             if (var != null) {
                 var.setValue(value);
             } else {
-                log.warn("Did not find locofile variable \"{}\" in decoder definition, not loading", item);
+                if (selectMissingVarResponse(item) == MessageResponse.REPORT) {
+                    log.warn("Did not find locofile variable \"{}\" in decoder definition, not loading", item);
+                }
             }
         }
 
     }
 
+    enum MessageResponse { IGNORE, REPORT }
+
+    /**
+     * Determine if a missing variable in decoder definition should be logged
+     * @param var Name of missing variable
+     * @return Decision on how to handle
+     */
+    protected static MessageResponse selectMissingVarResponse(String var) {
+        if (var.startsWith("ESU Function Row")) return MessageResponse.IGNORE; // from jmri.jmrit.symbolicprog.FnMapPanelESU
+        return MessageResponse.REPORT;
+    }
+    
     /**
      * Write an XML version of this object, including also the RosterEntry
      * information, and memory-resident decoder contents.
