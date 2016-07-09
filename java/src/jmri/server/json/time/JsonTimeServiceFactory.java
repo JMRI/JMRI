@@ -20,12 +20,12 @@ public class JsonTimeServiceFactory implements JsonServiceFactory {
     }
 
     @Override
-    public JsonSocketService getSocketService(JsonConnection connection) {
+    public JsonTimeSocketService getSocketService(JsonConnection connection) {
         return new JsonTimeSocketService(connection);
     }
 
     @Override
-    public JsonHttpService getHttpService(ObjectMapper mapper) {
+    public JsonTimeHttpService getHttpService(ObjectMapper mapper) {
         return new JsonTimeHttpService(mapper);
     }
 
