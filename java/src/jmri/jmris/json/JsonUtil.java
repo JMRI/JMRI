@@ -291,7 +291,7 @@ public class JsonUtil {
     /*
      * deprecated in favor of the implementations of the {@code do*} methods in
      * {@link jmri.server.json.JsonHttpService}.
-     * @Deprecated since 4.5.1
+     * @deprecated since 4.5.1
      */
     @Deprecated
     static public JsonNode getLight(Locale locale, String name) throws JsonException {
@@ -324,7 +324,7 @@ public class JsonUtil {
     /*
      * deprecated in favor of the implementations of the {@code do*} methods in
      * {@link jmri.server.json.JsonHttpService}.
-     * @Deprecated since 4.5.1
+     * @deprecated since 4.5.1
      */
     @Deprecated
     static public JsonNode getLights(Locale locale) throws JsonException {
@@ -338,7 +338,7 @@ public class JsonUtil {
     /*
      * deprecated in favor of the implementations of the {@code do*} methods in
      * {@link jmri.server.json.JsonHttpService}.
-     * @Deprecated since 4.5.1
+     * @deprecated since 4.5.1
      */
     @Deprecated
     static public void putLight(Locale locale, String name, JsonNode data) throws JsonException {
@@ -353,7 +353,7 @@ public class JsonUtil {
     /*
      * deprecated in favor of the implementations of the {@code do*} methods in
      * {@link jmri.server.json.JsonHttpService}.
-     * @Deprecated since 4.5.1
+     * @deprecated since 4.5.1
      */
     @Deprecated
     static public void setLight(Locale locale, String name, JsonNode data) throws JsonException {
@@ -413,7 +413,7 @@ public class JsonUtil {
     /*
      * deprecated in favor of the implementations of the {@code do*} methods in
      * {@link jmri.server.json.JsonHttpService}.
-     * @Deprecated since 4.5.1
+     * @deprecated since 4.5.1
      */
     @Deprecated
     static public JsonNode getMemories(Locale locale) throws JsonException {
@@ -427,7 +427,7 @@ public class JsonUtil {
     /*
      * deprecated in favor of the implementations of the {@code do*} methods in
      * {@link jmri.server.json.JsonHttpService}.
-     * @Deprecated since 4.5.1
+     * @deprecated since 4.5.1
      */
     @Deprecated
     static public JsonNode getMemory(Locale locale, String name) throws JsonException {
@@ -454,7 +454,7 @@ public class JsonUtil {
     /*
      * deprecated in favor of the implementations of the {@code do*} methods in
      * {@link jmri.server.json.JsonHttpService}.
-     * @Deprecated since 4.5.1
+     * @deprecated since 4.5.1
      */
     @Deprecated
     static public void putMemory(Locale locale, String name, JsonNode data) throws JsonException {
@@ -469,7 +469,7 @@ public class JsonUtil {
     /*
      * deprecated in favor of the implementations of the {@code do*} methods in
      * {@link jmri.server.json.JsonHttpService}.
-     * @Deprecated since 4.5.1
+     * @deprecated since 4.5.1
      */
     @Deprecated
     static public void setMemory(Locale locale, String name, JsonNode data) throws JsonException {
