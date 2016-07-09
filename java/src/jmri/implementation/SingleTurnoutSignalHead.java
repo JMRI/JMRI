@@ -240,7 +240,7 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead implements Proper
      * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
      */
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getSource() == mOutput.getBean() && evt.getPropertyName() == "KnownState") {
+        if (evt.getSource().equals(mOutput.getBean()) && evt.getPropertyName().equals("KnownState")) {
             // The underlying turnout has some state change. Check if its known state matches what we expected it to do.
             int newTurnoutValue = ((Integer)evt.getNewValue()).intValue();
             /*String oldTurnoutString = turnoutToString(mTurnoutCommandedState);

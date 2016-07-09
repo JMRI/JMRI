@@ -433,7 +433,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
                 return;
             }
             int locoAddr = validLocoAdr(locoTextField1.getText());
-            boolean isLong = (adrButton1.getText() == rb.getString("KeyLONG"));
+            boolean isLong = (adrButton1.getText().equals(rb.getString("KeyLONG")));
             if (locoAddr < 0) {
                 return;
             }
