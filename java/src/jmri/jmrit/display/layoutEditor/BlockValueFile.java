@@ -44,7 +44,7 @@ public class BlockValueFile extends XmlFile {
         if (checkFile(defaultFileName)) {
             // file is present, 
             root = rootFromName(defaultFileName);
-            if ((root != null) && (blocks != null) && (blocks.size() > 0)) {
+            if ((root != null) && (blocks.size() > 0)) {
                 // there is a file and there are Blocks defined
                 Element blockvalues = root.getChild("blockvalues");
                 if (blockvalues != null) {

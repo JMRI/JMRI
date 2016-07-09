@@ -85,7 +85,7 @@ public class InstallTest extends Apps {
         m1.addActionListener(opsprog);
         m1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         j.add(m1);
-        if (jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class) == null
+        if (jmri.InstanceManager.getOptionalDefault(jmri.ProgrammerManager.class) == null
                 || !jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).isAddressedModePossible()) {
             m1.setEnabled(false);
             m1.setToolTipText(Bundle.getMessage("MsgOpsButtonDisabled"));

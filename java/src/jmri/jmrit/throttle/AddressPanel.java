@@ -211,7 +211,8 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         // enable program button if programmer available
         // for ops-mode programming
         if ((rosterEntry != null) && (ProgDefault.getDefaultProgFile() != null)
-                && (InstanceManager.getDefault(jmri.ProgrammerManager.class) != null) && (InstanceManager.getDefault(jmri.ProgrammerManager.class).isAddressedModePossible())) {
+                && (InstanceManager.getOptionalDefault(jmri.ProgrammerManager.class) != null) 
+                && (InstanceManager.getDefault(jmri.ProgrammerManager.class).isAddressedModePossible())) {
             progButton.setEnabled(true);
         }
 

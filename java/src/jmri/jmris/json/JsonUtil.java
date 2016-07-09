@@ -1215,9 +1215,7 @@ public class JsonUtil {
             if (train.getLeadEngine() != null) {
                 data.put(LEAD_ENGINE, train.getLeadEngine().toString());
             }
-            if (train.getCabooseRoadAndNumber() != null) {
-                data.put(CABOOSE, train.getCabooseRoadAndNumber());
-            }
+            data.put(CABOOSE, train.getCabooseRoadAndNumber());
 
         } catch (NullPointerException e) {
             log.error("Unable to get train id [{}].", id);

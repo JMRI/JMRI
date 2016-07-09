@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.mrc.simulator;
 
 import java.io.DataInputStream;
@@ -20,7 +19,6 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
  * @author	Paul Bender, Copyright (C) 2009
  * @author Daniel Boudreau Copyright (C) 2010
- * @version	$Revision: 24776 $
  */
 public class SimulatorAdapter extends MrcPortController implements
         jmri.jmrix.SerialPortAdapter, Runnable {
@@ -151,7 +149,7 @@ public class SimulatorAdapter extends MrcPortController implements
                     r = generateReply(m);
                     writeReply(r);
                 }
-                if (log.isDebugEnabled() && r != null) {
+                if (log.isDebugEnabled()) {
                     StringBuffer buf = new StringBuffer();
                     buf.append("Mrc Simulator Thread sent reply: ");//IN18N
                     for (int i = 0; i < r.getNumDataElements(); i++) {

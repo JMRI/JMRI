@@ -39,7 +39,7 @@ public class AutoSpeedAction extends AbstractAction {
         statusLabel = new JLabel("idle");
 
         // disable ourself if ops programming is not possible
-        if (jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class) == null
+        if (jmri.InstanceManager.getOptionalDefault(jmri.ProgrammerManager.class) == null
                 || !jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).isAddressedModePossible()) {
             setEnabled(false);
         }

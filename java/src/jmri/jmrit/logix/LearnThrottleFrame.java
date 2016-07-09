@@ -87,7 +87,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
     public LearnThrottleFrame(WarrantFrame warrantFrame) {
         super(false, false);
         _warrantFrame = warrantFrame;
-        powerMgr = InstanceManager.getDefault(jmri.PowerManager.class);
+        powerMgr = InstanceManager.getOptionalDefault(jmri.PowerManager.class);
         if (powerMgr == null) {
             log.info("No power manager instance found, panel not active");
         } else {

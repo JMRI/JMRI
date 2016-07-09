@@ -43,16 +43,12 @@ public abstract class AbstractVariableLight extends AbstractLight
 
     public AbstractVariableLight(String systemName, String userName) {
         super(systemName, userName);
-        if (internalClock == null) {
-            initClocks();
-        }
+        initClocks();
     }
 
     public AbstractVariableLight(String systemName) {
         super(systemName);
-        if (internalClock == null) {
-            initClocks();
-        }
+        initClocks();
     }
 
     /**

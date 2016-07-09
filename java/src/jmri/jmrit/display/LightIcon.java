@@ -57,11 +57,7 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         if (InstanceManager.getOptionalDefault(jmri.LightManager.class) != null) {
             light = InstanceManager.lightManagerInstance().
                     provideLight(pName);
-            if (light != null) {
-                setLight(light);
-            } else {
-                log.error("Light '" + pName + "' not available, icon won't see changes");
-            }
+            setLight(light);
         } else {
             log.error("No LightManager for this protocol, icon won't see changes");
         }

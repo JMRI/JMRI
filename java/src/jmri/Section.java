@@ -15,6 +15,9 @@ import jmri.jmrit.display.layoutEditor.PositionablePoint;
 import jmri.jmrit.display.layoutEditor.TrackNode;
 import jmri.jmrit.display.layoutEditor.TrackSegment;
 import jmri.util.JmriJFrame;
+
+import javax.annotation.Nonnull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -546,7 +549,7 @@ public class Section extends AbstractNamedBean
     /**
      * Get a Copy of this Section's Block List
      */
-    public ArrayList<Block> getBlockList() {
+    public @Nonnull ArrayList<Block> getBlockList() {
         if (initializationNeeded) {
             initializeBlocks();
         }

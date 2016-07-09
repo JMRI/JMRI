@@ -166,7 +166,7 @@ public class Server {
                     }
                 };
             }
-            if (this.shutDownTask != null && InstanceManager.getOptionalDefault(jmri.ShutDownManager.class) != null) {
+            if (InstanceManager.getOptionalDefault(jmri.ShutDownManager.class) != null) {
                 InstanceManager.getDefault(jmri.ShutDownManager.class).register(this.shutDownTask);
             }
         }

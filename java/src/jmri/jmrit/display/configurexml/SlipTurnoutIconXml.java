@@ -169,7 +169,7 @@ public class SlipTurnoutIconXml extends PositionableLabelXml {
         loadTurnoutIcon("inconsistent", rotation, l, element, p);
 
         a = element.getAttribute("tristate");
-        if ((a == null) || ((a != null) && a.getValue().equals("true"))) {
+        if ((a == null) || a.getValue().equals("true")) {
             l.setTristate(true);
         } else {
             l.setTristate(false);
