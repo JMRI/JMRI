@@ -19,8 +19,7 @@ import org.slf4j.MDC;
  * if a path from a source to destination bean is valid. If a route between two
  * layout blocks is usable and free.
  * 
-* @author Kevin Dickerson Copyright (C) 2011
- * @version	$Revision: 19923 $
+ * @author Kevin Dickerson Copyright (C) 2011
  */
 public class LayoutBlockConnectivityTools {
 

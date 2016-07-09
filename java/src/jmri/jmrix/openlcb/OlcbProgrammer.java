@@ -1,4 +1,3 @@
-/* OlcbProgrammer.java */
 package jmri.jmrix.openlcb;
 
 import java.util.ArrayList;
@@ -78,11 +77,6 @@ public class OlcbProgrammer extends jmri.jmrix.AbstractProgrammer implements jmr
     }
 
     @Override
-    @Deprecated
-    public void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
-    }
-
-    @Override
     public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
     }
     
@@ -93,6 +87,3 @@ public class OlcbProgrammer extends jmri.jmrix.AbstractProgrammer implements jmr
     public String getAddress() { return "";}
 
 }
-
-
-/* @(#)OlcbProgrammer.java */

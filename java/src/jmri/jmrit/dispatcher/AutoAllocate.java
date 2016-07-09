@@ -1,4 +1,3 @@
-// AutoAllocate.java
 package jmri.jmrit.dispatcher;
 
 import java.util.ArrayList;
@@ -65,7 +64,6 @@ import org.slf4j.LoggerFactory;
  * </P>
  *
  * @author	Dave Duchamp Copyright (C) 2011
- * @version	$Revision$
  */
 public class AutoAllocate {
 
@@ -83,9 +81,6 @@ public class AutoAllocate {
             return;
         }
         _conUtil = _dispatcher.getLayoutEditor().getConnectivityUtil();
-        if (_conUtil == null) {
-            log.error("null ConnectivityUtil when constructing AutoAllocate");
-        }
     }
 
     // operational variables
@@ -1246,4 +1241,3 @@ public class AutoAllocate {
     private final static Logger log = LoggerFactory.getLogger(AutoAllocate.class.getName());
 }
 
-/* @(#)AutoAllocate.java */

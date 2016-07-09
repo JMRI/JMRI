@@ -77,7 +77,7 @@ public class JsonSignalMastServer extends AbstractSignalMastServer {
         String name = data.path(NAME).asText();
         String state = data.path(STATE).asText();
         if ("".equals(state)) {  //if not passed, retrieve current and respond
-            SignalMast sm = InstanceManager.signalMastManagerInstance().getSignalMast(name);
+            SignalMast sm = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(name);
             try {
                 state = sm.getAspect();
                 if (state == null) {

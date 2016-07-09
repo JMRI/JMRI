@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /*
- * A collection of utilities relaed to colors.
+ * A collection of utilities related to colors.
  * 
  * @author Dave Duchamp Copyright: (c) 2004-2007
  */
@@ -81,6 +81,13 @@ public class ColorUtil{
         }
         log.error("unknown color text '" + string + "' sent to stringToColor");
         return Color.black;
+    }
+
+    /**
+    * Convert a color into hex value of form #RRGGBB
+    */
+    public static String colorToHexString(Color color) {
+        return "#"+Integer.toHexString(color.getRGB()).substring(2);
     }
 
     // initialize logging

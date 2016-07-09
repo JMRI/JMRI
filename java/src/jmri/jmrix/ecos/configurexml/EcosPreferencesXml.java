@@ -31,10 +31,10 @@ public class EcosPreferencesXml extends jmri.configurexml.AbstractXmlAdapter /*e
     protected void register() {
         /*log.error("unexpected call to register()");
          new Exception().printStackTrace();*/
-        jmri.InstanceManager.configureManagerInstance().registerPref(this);
+        jmri.InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerPref(this);
     }
     /*protected void register(String host, String port, String mode) {
-     InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(host, port, mode));
+     InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerPref(new ConnectionConfig(host, port, mode));
      }*/
 
     public boolean load(Element shared, Element perNode) {

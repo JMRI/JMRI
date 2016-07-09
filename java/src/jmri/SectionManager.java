@@ -38,7 +38,7 @@ public class SectionManager extends AbstractManager
     public SectionManager() {
         super();
         InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
-        InstanceManager.blockManagerInstance().addVetoableChangeListener(this);
+        InstanceManager.getDefault(jmri.BlockManager.class).addVetoableChangeListener(this);
     }
 
     public int getXMLOrder() {
@@ -228,7 +228,7 @@ public class SectionManager extends AbstractManager
                 sensorList.add(name);
             }
         }
-        jmri.SignalHeadManager shManager = InstanceManager.signalHeadManagerInstance();
+        jmri.SignalHeadManager shManager = InstanceManager.getDefault(jmri.SignalHeadManager.class);
         List<String> signalList = shManager.getSystemNameList();
         for (int j = 0; j < signalList.size(); j++) {
             SignalHead sh = shManager.getBySystemName(signalList.get(j));

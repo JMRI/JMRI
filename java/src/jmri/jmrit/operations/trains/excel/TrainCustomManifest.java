@@ -18,12 +18,10 @@ public class TrainCustomManifest {
     private static String directoryName = "csvManifests"; // NOI18N
     private static String mcAppName = "MC4JMRI.xls"; // NOI18N
     private static final String mcAppArg = ""; // NOI18N
-
     private static String csvNamesFileName = "CSVFilesFile.txt"; // NOI18N
-
     private static int fileCount = 0;
-    
-    private static Process process;
+    private static Process process;   
+    private static boolean alive = false;
 
     public static String getFileName() {
         return mcAppName;
@@ -107,14 +105,16 @@ public class TrainCustomManifest {
         if (SystemType.isWindows()) {
             String cmd = "cmd /c start " + getFileName() + " " + mcAppArg; // NOI18N
             try {
-                process = Runtime.getRuntime().exec(cmd, null, OperationsManager.getInstance().getFile(getDirectoryName()));
+                process = Runtime.getRuntime().exec(cmd, null,
+                        OperationsManager.getInstance().getFile(getDirectoryName()));
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {
             String cmd = "open " + getFileName() + " " + mcAppArg; // NOI18N
             try {
-                process = Runtime.getRuntime().exec(cmd, null, OperationsManager.getInstance().getFile(getDirectoryName()));
+                process = Runtime.getRuntime().exec(cmd, null,
+                        OperationsManager.getInstance().getFile(getDirectoryName()));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -126,7 +126,7 @@ public class TrainCustomManifest {
         File file = new File(OperationsManager.getInstance().getFile(getDirectoryName()), getFileName());
         return file.exists();
     }
-    
+
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UW_UNCOND_WAIT")
     public void checkProcessComplete() {
         if (alive) {
@@ -144,7 +144,7 @@ public class TrainCustomManifest {
             }
         }
     }
-    
+
     public static boolean isProcessAlive() {
         if (process != null) {
             return process.isAlive();
@@ -152,13 +152,20 @@ public class TrainCustomManifest {
             return false;
         }
     }
-    
-    static boolean alive = false;
-    public static void waitForProcessToComplete() throws InterruptedException {
+
+    /**
+     * 
+     * @return true if process completes without a timeout, false if there's a
+     *         timeout.
+     * @throws InterruptedException if process thread is interrupted
+     */
+    public static boolean waitForProcessToComplete() throws InterruptedException {
+        boolean status;
         synchronized (process) {
-            process.waitFor(Control.excelWaitTime, TimeUnit.SECONDS);
+            status = process.waitFor(Control.excelWaitTime, TimeUnit.SECONDS);
         }
         alive = false;
+        return status;
     }
 
     public static void load(Element options) {
@@ -194,5 +201,5 @@ public class TrainCustomManifest {
         options.addContent(mc);
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(TrainCustomManifest.class.getName());
+    //    private final static Logger log = LoggerFactory.getLogger(TrainCustomManifest.class.getName());
 }

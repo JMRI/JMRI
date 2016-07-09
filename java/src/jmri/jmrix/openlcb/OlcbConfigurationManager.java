@@ -85,9 +85,6 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         dmb = new DatagramMeteringBuffer(connection);
         dcs = new DatagramService(nodeID, dmb);
         mcs = new MemoryConfigurationService(nodeID, dcs);
-
-        // show active
-        ActiveFlag.setActive();
     }
 
     AliasMap aliasMap;

@@ -105,7 +105,7 @@ public class ProgDeferredServiceModePane extends ProgModeSelector implements jav
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (e.getPropertyName() == "Mode") {
+        if (e.getPropertyName().equals("Mode")) {
             // mode changed in programmer, change GUI here if needed
             // take the mode from the message, not the programmer, to get
             // proper synchronization

@@ -267,8 +267,6 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
         packets.connectPort(this);
         this.getSystemConnectionMemo().setXNetTrafficController(packets);
         new XNetInitializationManager(this.getSystemConnectionMemo());
-
-        jmri.jmrix.lenz.ActiveFlag.setActive();
     }
 
 // Base class methods for the XNetNetworkPortController interface

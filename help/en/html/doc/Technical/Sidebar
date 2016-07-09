@@ -2,8 +2,6 @@
 <!-- This is the common sidebar definition for help/doc/Technical (developer) pages -->
     <hr class="hide">
 
-    <div id="mBody">
-
 	<div id="side"> <!-- Block of text on left side of page -->
 	    <div style="text-align: center">Software documentation</div>
 	    <dl>

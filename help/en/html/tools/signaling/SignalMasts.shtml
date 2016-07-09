@@ -17,7 +17,7 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
@@ -43,7 +43,7 @@ From the table, you can manually set individual Signal Masts to any Aspect that 
 	display by clicking on one of the buttons in the "Aspect" column.<br/>
 	You can change the settings of a Signal Mast by clicking on the "Edit" button in the corresponding line.</p>
 
-<a name="add"><h3>Creating a Signal Mast</h3></a>
+<a name="add"></a><h3>Creating a Signal Mast</h3>
 	<p>You add a new Signal Mast by clicking on the "Add..."  button
 at the bottom of the Signal Mast Table, which takes you to the
 	<a href="../../../package/jmri/jmrit/beantable/SignalMastAddEdit.shtml">"Add Signal Mast" pane</a>.</p>

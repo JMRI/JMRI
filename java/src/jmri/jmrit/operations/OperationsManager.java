@@ -109,13 +109,13 @@ public final class OperationsManager {
      * @param shutDownTask The new ShutDownTask or null
      */
     public void setShutDownTask(ShutDownTask shutDownTask) {
-        if (InstanceManager.shutDownManagerInstance() != null) {
+        if (InstanceManager.getOptionalDefault(jmri.ShutDownManager.class) != null) {
             if (this.shutDownTask != null) {
-                InstanceManager.shutDownManagerInstance().deregister(this.shutDownTask);
+                InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(this.shutDownTask);
             }
             this.shutDownTask = shutDownTask;
             if (this.shutDownTask != null) {
-                InstanceManager.shutDownManagerInstance().register(this.shutDownTask);
+                InstanceManager.getDefault(jmri.ShutDownManager.class).register(this.shutDownTask);
             }
         }
     }

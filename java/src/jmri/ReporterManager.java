@@ -12,7 +12,7 @@ import javax.annotation.Nonnull;
  * Reporter objects are obtained from a ReporterManager, which in turn is
  * generally located from the InstanceManager. A typical call sequence might be:
  * <PRE>
- * Reporter device = InstanceManager.reporterManagerInstance().newReporter(null,"23");
+ * Reporter device = InstanceManager.getDefault(jmri.ReporterManager.class).newReporter(null,"23");
  * </PRE>
  * <P>
  * Each Reporter has a two names. The "user" name is entirely free form, and can

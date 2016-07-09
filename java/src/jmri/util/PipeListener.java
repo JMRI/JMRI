@@ -1,4 +1,3 @@
-// PipeListener.java
 package jmri.util;
 
 import java.io.IOException;
@@ -10,7 +9,6 @@ import javax.swing.JTextArea;
  * JTextArea for display
  *
  * @author	Bob Jacobsen Copyright (C) 2004
- * @version $Revision$
  */
 public class PipeListener extends Thread {
 

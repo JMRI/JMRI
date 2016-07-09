@@ -10,6 +10,11 @@ import jmri.RailCom;
 import jmri.RailComManager;
 import jmri.Reporter;
 import jmri.implementation.DefaultRailCom;
+
+import javax.annotation.Nonnull;
+import javax.annotation.CheckForNull;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +30,7 @@ public class DefaultRailComManager extends AbstractManager
 
     public DefaultRailComManager() {
         InstanceManager.store(this, RailComManager.class);
-        if (jmri.InstanceManager.getDefault(jmri.jmrit.beantable.ListedTableFrame.class) == null) {
+        if (jmri.InstanceManager.getOptionalDefault(jmri.jmrit.beantable.ListedTableFrame.class) == null) {
             new jmri.jmrit.beantable.ListedTableFrame();
         }
         jmri.InstanceManager.getDefault(jmri.jmrit.beantable.ListedTableFrame.class).addTable("jmri.jmrit.beantable.RailComTableAction", "RailComm Table", true);
@@ -53,19 +58,25 @@ public class DefaultRailComManager extends AbstractManager
         return new DefaultRailCom(systemName, userName);
     }
 
-    @Override
-    public RailCom newIdTag(String systemName, String userName) {
-        if (log.isDebugEnabled()) {
-            log.debug("new IdTag:"
-                    + ((systemName == null) ? "null" : systemName)
-                    + ";" + ((userName == null) ? "null" : userName));
-        }
+    @SuppressFBWarnings(value="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE", justification="defensive programming check of @Nonnull argument")
+    private void checkSystemName(@Nonnull String systemName, @CheckForNull String userName) {
         if (systemName == null) {
             log.error("SystemName cannot be null. UserName was "
                     + ((userName == null) ? "null" : userName));
             throw new IllegalArgumentException("SystemName cannot be null. UserName was "
                     + ((userName == null) ? "null" : userName));
         }
+    }
+    
+    @Override
+    public RailCom newIdTag(@Nonnull String systemName, @CheckForNull String userName) {
+        if (log.isDebugEnabled()) {
+            log.debug("new IdTag:"
+                    + ((systemName == null) ? "null" : systemName)
+                    + ";" + ((userName == null) ? "null" : userName));
+        }
+        checkSystemName(systemName, userName);
+        
         // return existing if there is one
         RailCom s;
         if ((userName != null) && ((s = getByUserName(userName)) != null)) {

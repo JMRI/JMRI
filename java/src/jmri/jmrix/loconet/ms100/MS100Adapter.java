@@ -264,9 +264,6 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
 
         // start operation
         packets.startThreads();
-
-        jmri.jmrix.loconet.ActiveFlag.setActive();
-
     }
 
     // base class methods for the LnPortController interface

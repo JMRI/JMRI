@@ -1,4 +1,3 @@
-// LocaleSelector.java
 package jmri.util.jdom;
 
 import java.util.Locale;
@@ -15,7 +14,6 @@ import org.jdom2.Namespace;
  *
  * @author Bob Jacobsen Copyright 2010
  * @since 2.9.3
- * @version $Revision$
  */
 public class LocaleSelector {
 

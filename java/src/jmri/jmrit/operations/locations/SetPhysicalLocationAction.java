@@ -30,10 +30,6 @@ import org.slf4j.LoggerFactory;
  */
 public class SetPhysicalLocationAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6120570804079570966L;
     Location _location;
 
     public SetPhysicalLocationAction(String s, Location location) {
@@ -54,11 +50,6 @@ public class SetPhysicalLocationAction extends AbstractAction {
     }
 
     public class SetPhysicalLocationFrame extends OperationsFrame {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -5360920519968407743L;
 
         LocationManager locationManager = LocationManager.instance();
 

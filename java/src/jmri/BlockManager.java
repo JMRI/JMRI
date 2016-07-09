@@ -42,7 +42,7 @@ public class BlockManager extends AbstractManager
     public BlockManager() {
         super();
         jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
-        jmri.InstanceManager.reporterManagerInstance().addVetoableChangeListener(this);
+        jmri.InstanceManager.getDefault(jmri.ReporterManager.class).addVetoableChangeListener(this);
     }
 
     @Override
@@ -140,7 +140,7 @@ public class BlockManager extends AbstractManager
      * If the argument starts with the system prefix and type letter, usually "IB",
      * then the argument is considered a system name, otherwise it's considered
      * a user name and a system name is automatically created.
-     * @returns never null
+     * @return never null
      */
     public @Nonnull Block provideBlock(@Nonnull String name)  {
         Block b = getBlock(name);

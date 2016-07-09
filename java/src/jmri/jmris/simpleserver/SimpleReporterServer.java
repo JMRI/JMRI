@@ -68,7 +68,7 @@ public class SimpleReporterServer extends AbstractReporterServer {
         } else {
             // send the current status if the report
             try {
-               Reporter reporter = InstanceManager.reporterManagerInstance().provideReporter(reporterName);
+               Reporter reporter = InstanceManager.getDefault(jmri.ReporterManager.class).provideReporter(reporterName);
                sendReport(reporterName, reporter.getCurrentReport());
             } catch (IllegalArgumentException ex) {
                 log.warn("Failed to provide Reporter \"{}\" in parseStatus", reporterName);

@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * Definition of objects to handle configuring a layout connection via an C/MRI
@@ -34,7 +35,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     public void loadDetails(JPanel details) {
 
-        b.addActionListener(new NodeConfigAction());
+        b.addActionListener(new NodeConfigAction((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()));
         if (!additionalItems.contains(b)) {
             additionalItems.add(b);
         }

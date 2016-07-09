@@ -1,4 +1,3 @@
-// QsiProgrammer.java
 package jmri.jmrix.qsi;
 
 import java.util.ArrayList;
@@ -13,27 +12,23 @@ import org.slf4j.LoggerFactory;
  * Implements the jmri.Programmer interface via commands for the QSI programmer.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
- * @version	$Revision$
  */
 public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
 
-    protected QsiProgrammer() {
-        // error if more than one constructed?
-        if (self != null) {
-            log.error("Creating too many QsiProgrammer objects");
-        }
+    private QsiSystemConnectionMemo _memo = null;
+
+    protected QsiProgrammer(QsiSystemConnectionMemo memo) {
+        _memo = memo;
     }
 
     /*
      * method to find the existing QsiProgrammer object, if need be creating one
+     * @deprecated since 4.5.1, use constructor instead.
      */
+    @Deprecated
     static public final QsiProgrammer instance() {
-        if (self == null) {
-            self = new QsiProgrammer();
-        }
-        return self;
+           return null;
     }
-    static volatile private QsiProgrammer self = null;
 
     /**
      * Types implemented here.
@@ -75,7 +70,8 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
         controller().sendQsiMessage(QsiMessage.getWriteCV(CV, val, getMode()), this);
     }
 
-    public synchronized void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    @Override
+    public synchronized void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }
 
@@ -210,7 +206,7 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
     protected QsiTrafficController controller() {
         // connect the first time
         if (_controller == null) {
-            _controller = QsiTrafficController.instance();
+            _controller = _memo.getQsiTrafficController();
         }
         return _controller;
     }
@@ -218,5 +214,3 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
     private final static Logger log = LoggerFactory.getLogger(QsiProgrammer.class.getName());
 
 }
-
-/* @(#)QsiProgrammer.java */

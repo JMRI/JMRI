@@ -116,7 +116,7 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
      * @param shared Element containing the SignalHead elements to load.
      */
     public void loadSignalHeads(Element shared, Element perNode) {
-        InstanceManager.signalHeadManagerInstance();
+        InstanceManager.getDefault(jmri.SignalHeadManager.class);
 
         // load the contents
         List<Element> items = shared.getChildren();
@@ -145,25 +145,25 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
      * absolute type.
      */
     protected void replaceSignalHeadManager() {
-        if (InstanceManager.signalHeadManagerInstance().getClass().getName()
+        if (InstanceManager.getDefault(jmri.SignalHeadManager.class).getClass().getName()
                 .equals(AbstractSignalHeadManager.class.getName())) {
             return;
         }
         // if old manager exists, remove it from configuration process
-        if (InstanceManager.signalHeadManagerInstance() != null) {
-            InstanceManager.configureManagerInstance().deregister(
-                    InstanceManager.signalHeadManagerInstance());
+        if (InstanceManager.getOptionalDefault(jmri.SignalHeadManager.class) != null) {
+            InstanceManager.getDefault(jmri.ConfigureManager.class).deregister(
+                    InstanceManager.getDefault(jmri.SignalHeadManager.class));
         }
 
         // register new one with InstanceManager
         AbstractSignalHeadManager pManager = new AbstractSignalHeadManager();
         InstanceManager.setSignalHeadManager(pManager);
         // register new one for configuration
-        InstanceManager.configureManagerInstance().registerConfig(pManager, jmri.Manager.SIGNALHEADS);
+        InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerConfig(pManager, jmri.Manager.SIGNALHEADS);
     }
 
     public int loadOrder() {
-        return InstanceManager.signalHeadManagerInstance().getXMLOrder();
+        return InstanceManager.getDefault(jmri.SignalHeadManager.class).getXMLOrder();
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractSignalHeadManagerXml.class.getName());

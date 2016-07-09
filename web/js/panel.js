@@ -24,6 +24,7 @@
  *  TODO: draw dashed curves
  *  TODO: handle inputs/selection on various memory widgets
  *  TODO: alignment of memoryIcons without fixed width is very different.  Recommended workaround is to use fixed width. 
+ *  TODO: add support for LayoutSlip
  *   
  **********************************************************************************************/
 
@@ -411,6 +412,13 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 if (typeof $widget["systemName"] == "undefined")
                                     $widget["systemName"] = $widget.name;
                                 jmri.getMemory($widget["systemName"]);
+                                break;
+                            case "BlockContentsIcon" :
+                                $widget['name'] = $widget.systemName; //normalize name (id got stepped on)
+                                $widget.jsonType = "block"; // JSON object type
+                                $widget['text'] = $widget.name; //use name for initial text
+                                $widget['state'] = $widget.name; //use name for initial state as well
+                                jmri.getBlock($widget["systemName"]);
                                 break;
                             case "memoryInputIcon" :
                             case "memoryComboIcon" :
@@ -1289,10 +1297,10 @@ var $setWidgetState = function($id, $newState) {
                 $reDrawIcon($widget)
                 break;
             case "text" :
-                if ($widget.jsonType == "memory") {
+                if ($widget.jsonType == "memory" || $widget.jsonType == "block") {
                     if ($widget.widgetType == "fastclock") {
                         $drawClock($widget);
-                    } else {  //set memory text to new value from server, suppressing "null"
+                    } else {  //set memory/block text to new value from server, suppressing "null"
                         $('div#' + $id).text(($newState != null) ? $newState : "");
                     }
                 } else {
@@ -1515,6 +1523,7 @@ var $getWidgetFamily = function($widget, $element) {
         case "memoryComboIcon" :
         case "memoryInputIcon" :
         case "fastclock" :
+        case "BlockContentsIcon" :
 //	case "reportericon" :
             return "text";
             break;
@@ -1540,7 +1549,8 @@ var $getWidgetFamily = function($widget, $element) {
             return "drawn";
             break;
     }
-
+    if (window.console)
+        console.log("unknown widget type of '" + $widget.widgetType +"'");
     return; //unrecognized widget returns undefined
 };
 
@@ -1712,6 +1722,9 @@ $(document).ready(function() {
             },
             light: function(name, state, data) {
                 updateWidgets(name, state, data);
+            },
+            block: function(name, value, data) {
+                updateWidgets(name, value, data);
             },
             memory: function(name, value, data) {
                 updateWidgets(name, value, data);

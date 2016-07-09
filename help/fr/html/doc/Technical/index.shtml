@@ -18,6 +18,7 @@
 </head>
 <body>
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
@@ -32,7 +33,7 @@ qui contient les mises &#224; jour depuis que la derni&#232;re version t&#233;l&
 cette section du site web vous aidera &#224; d&#233;marrer.
 
 <a id="moreinfo">
-<h2>Info Aspects techniques sur le projet JMRI</h2></a>
+</a><h2>Info Aspects techniques sur le projet JMRI</h2>
 <p>JMRI est con&#231;u comme un
 point de d&#233;part pour les amateurs qui veulent contr&#244;ler leur r&#233;seau &#224; partir d'un ordinateur sans avoir &#224; cr&#233;er un ensemble de
 syst&#232;me &#224; partir de z&#233;ro. </p>
@@ -65,7 +66,7 @@ de configuration compliqu&#233; des d&#233;codeurs DCC en fournissant des &#233;
 options et valeurs que vous souhaitez.
 Ces &#233;crans affichent le contenu exact de chaque type d&#233;codeur sp&#233;cifique. Les deux &#233;crans de programmation et d'information d&#233;codeur sont stock&#233;s dans des fichiers textes, de sorte que vous pouvez en cr&#233;er de nouveaux comme  vous le d&#233;sirez. </p> 
 
-<h2>Comment pouvez-vous modifier la fa&#231;on dont JMRI fait les choses?</h2></a>
+</a><h2>Comment pouvez-vous modifier la fa&#231;on dont JMRI fait les choses?</h2>
 
 Il ya plusieurs fa&#231;ons pour modifier JMRI:
 <ol>

@@ -562,7 +562,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         }
 
         public Manager getManager() {
-            manager = InstanceManager.signalHeadManagerInstance();
+            manager = InstanceManager.getDefault(jmri.SignalHeadManager.class);
             return manager;
         }
 
@@ -596,7 +596,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         }
 
         public Manager getManager() {
-            manager = InstanceManager.signalMastManagerInstance();
+            manager = InstanceManager.getDefault(jmri.SignalMastManager.class);
             return manager;
         }
 
@@ -660,7 +660,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         }
 
         public Manager getManager() {
-            manager = InstanceManager.blockManagerInstance();
+            manager = InstanceManager.getDefault(jmri.BlockManager.class);
             return manager;
         }
 
@@ -690,7 +690,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         }
 
         public Manager getManager() {
-            manager = InstanceManager.reporterManagerInstance();
+            manager = InstanceManager.getDefault(jmri.ReporterManager.class);
             return manager;
         }
 
@@ -810,7 +810,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         }
 
         public Manager getManager() {
-            manager = InstanceManager.conditionalManagerInstance();
+            manager = InstanceManager.getDefault(jmri.ConditionalManager.class);
             return manager;
         }
 

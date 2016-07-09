@@ -34,7 +34,7 @@ Cette page d&#233;crit un vieux panneau de pr&#233;f&#233;rences qui a &#233;t&#
 
 <p>
 <a name="basic">
-<h2> Pr&#233;f&#233;rences Basiques</h2></a>
+</a><h2> Pr&#233;f&#233;rences Basiques</h2>
 <p>
 Lorsque la fen&#234;tre s'ouvre d'abord, elle affiche les pr&#233;f&#233;rences de bases.
 <p>
@@ -77,7 +77,7 @@ ne prendront effet qu'apr&#232;s red&#233;marrage du programme, de sorte que le
 programme vous invite &#224; le faire apr&#232;s avoir sauv&#233; les pr&#233;f&#233;rences.
 
 <a name="advanced">
-<h2>Pr&#233;f&#233;rences avanc&#233;es</h2></a>
+</a><h2>Pr&#233;f&#233;rences avanc&#233;es</h2>
 <p>
 La case "Montrer Pr&#233;f&#233;rences avanc&#233;es" vous permet de
 personnaliser votre connexion au r&#233;seau. Vous n'avez pas besoin d'utiliser les

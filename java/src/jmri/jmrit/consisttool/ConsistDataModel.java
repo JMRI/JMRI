@@ -1,4 +1,3 @@
-// ConsistDataModel.java
 package jmri.jmrit.consisttool;
 
 import java.util.ResourceBundle;
@@ -21,14 +20,9 @@ import org.slf4j.LoggerFactory;
  * Table data model for display of consist information.
  *
  * @author	Paul Bender Copyright (c) 2004-2005
- * @version	$Revision$
  */
 public class ConsistDataModel extends AbstractTableModel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2830664682896481975L;
     final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.consisttool.ConsistTool");
     static private final int ADDRCOLUMN = 0;    // Locomotive address
     static private final int ROSTERCOLUMN = 1;  // Roster Entry, this exists
@@ -37,12 +31,12 @@ public class ConsistDataModel extends AbstractTableModel {
     static private final int NUMCOLUMN = 4;
     // a place holder for a consist and Consist Manager objects.
     private Consist _consist = null;
-    private ConsistManager ConsistMan = null;
+    private ConsistManager consistMan = null;
     //private DccLocoAddress ConsistAddress;
 
     // Construct a new instance
     ConsistDataModel(int row, int column) {
-        ConsistMan = InstanceManager.getDefault(jmri.ConsistManager.class);
+        consistMan = InstanceManager.getDefault(jmri.ConsistManager.class);
     }
 
     void initTable(JTable ConsistTable) {
@@ -62,7 +56,7 @@ public class ConsistDataModel extends AbstractTableModel {
 
     public void setConsist(DccLocoAddress Address) {
         log.debug("Setting Consist using address: " + Address.toString());
-        _consist = ConsistMan.getConsist(Address);
+        _consist = consistMan.getConsist(Address);
         fireTableDataChanged();
     }
 

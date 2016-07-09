@@ -14,6 +14,7 @@
 
 <body>
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent"><a name="Top"></a>
 <h1>Using JMRI&reg; to Operate Trains</h1>
@@ -35,28 +36,28 @@
 <li><a href="Ops_PrintOptions.shtml"><strong>Manifest
 Print Options </strong></a><br>&nbsp;</li>
 
-<li><a name="buildreportoptions" id="buildreportoptions"><strong>Build Report Options</strong></a>
+<li><a name="buildreportoptions"><strong>Build Report Options</strong></a>
 <p><img style="width: 436px; height: 400px;" alt="build report options" src="images/Ops_Setting_BuildReportOptions.png"><br>
 Let's you select the amount of detail that you want in the build
 report. Very Detailed produces the highest number of pages.</p></li>
 
-<li><a name="backup" id="backup"><strong>Backup</strong></a>
+<li><a name="backup"><strong>Backup</strong></a>
 <p>Opens the OS <strong>Save backup file</strong> dialog to select a place to store your OperationsPro backup file</p></li>
 
-<li><a name="restore" id="restore"><strong>Restore</strong></a>
+<li><a name="restore"><strong>Restore</strong></a>
 <p>Opens the OS <strong>Open file</strong> dialog to select a OperationsPro backup file from disk.</p></li>
 
-<li><a name="loaddemofiles" id="loaddemofiles"><strong>Load Demo Files</strong></a>
+<li><a name="loaddemofiles"><strong>Load Demo Files</strong></a>
 <p><img style="width: 387px; height: 122px;" alt="laod demo files" src="images/Ops_Setting_tool_LoadDemoFiles.png">
 <p>Opens the <strong>Demo load successful!</strong>dialog box:</p>
 <img src="images/Ops_Setting03.png" alt="Demo load" align="bottom" height="122" width="409"></p></li>
 
-<li><a name="resetdb" id="resetdb"><strong>Reset Databases</strong></li>
+<li><a name="resetdb"><strong>Reset Databases</strong></li>
 <p>Opens the <strong>Reset Databases </strong>dialog
 box</p>
 <p><img src="images/Ops_Setting04.png" alt="reset database" height="122" width="445"></p></li>
 
-<li><a name="manageautobackups" id="manageautobackups"><strong>Manage Auto Backups</strong></a><br>
+<li><a name="manageautobackups"><strong>Manage Auto Backups</strong></a><br>
 <img src="images/Ops_Setting_ManageBackupSets.png" alt="auto backup" height="387" width="461"></li>
 </ul>
 

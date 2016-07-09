@@ -14,6 +14,7 @@
 
 <body>
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 <div id="mainContent">
@@ -46,11 +47,11 @@
 <li><strong>Timetable</strong>
 <p>Opens the <a href="Ops_Trains_Timetable.shtml"><strong>Timetable</strong></a> window.</p></li>
 
-<li><a name="copy" id="copy"><strong>Copy Train</strong></a>
+<li><a name="copy"><strong>Copy Train</strong></a>
 <p>Opens the Copy Train dialog:</p>
 <p><img src="images/Ops_Trains_copy.png" alt="copy" height="150" width="400"></p></li>
 
-<li><a name="scripts" id="scripts"><strong>Scripts</strong></a>
+<li><a name="scripts"><strong>Scripts</strong></a>
 <p>Opens the <strong>Scripts</strong> dialog:<br>
 <table border="0" cellpadding="2" cellspacing="1">
 <tbody>
@@ -64,14 +65,14 @@
 </td></tr></tbody></table>
 </li>
 
-<li><a name="setupexcel" id="setupexcel"><strong>Setup Excel Program (Manifest Creator)</strong></a>
+<li><a name="setupexcel"><strong>Setup Excel Program (Manifest Creator)</strong></a>
 <p><img style="width: 362px; height: 200px;" alt="Excel setup" src="images/Ops_TrainExcellSetup.png"></p></li>
 
-<li><a name="print" id="print"><strong>Print</strong>
+<li><a name="print"><strong>Print</strong>
 <p>Opens a printer dialog for your default printer and prints the list of Trains.<br>
 <img src="images/Ops_Trains_PrintList.png" alt="print" height="247" width="723"></li>
 
-<li><a name="preview" id="preview"><strong>Preview</strong>
+<li><a name="preview"><strong>Preview</strong>
 <p>Opens a default printer preview window:<br>
 <img src="images/Ops_Trains_PrintPreview.png" alt="print preview" height="266" width="673"></p></li>
 </ul>
