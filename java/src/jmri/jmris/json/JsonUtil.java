@@ -454,6 +454,15 @@ public class JsonUtil {
         }
     }
 
+    /**
+     * 
+     * @param locale The client's Locale.
+     * @param name The metadata element to get.
+     * @return JSON metadata element.
+     * @throws JsonException if name is not a recognized metadata element.
+     * @deprecated since 4.5.2
+     */
+    @Deprecated
     static public JsonNode getMetadata(Locale locale, String name) throws JsonException {
         String metadata = Metadata.getBySystemName(name);
         ObjectNode root;
@@ -470,6 +479,14 @@ public class JsonUtil {
         return root;
     }
 
+    /**
+     * 
+     * @param locale The client's Locale.
+     * @return Array of JSON metadata elements.
+     * @throws JsonException if thrown by {@link #getMetadata(java.util.Locale, java.lang.String)}.
+     * @deprecated since 4.5.2
+     */
+    @Deprecated
     static public JsonNode getMetadata(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
         List<String> names = Metadata.getSystemNameList();
@@ -1060,6 +1077,14 @@ public class JsonUtil {
         }
     }
 
+    /**
+     *
+     * @param locale the client's Locale.
+     * @return the JSON networkServices message.
+     * @deprecated since 4.5.2; use
+     * {@link jmri.server.json.util.JsonUtilHttpService#getSystemConnections(java.util.Locale)}.
+     */
+    @Deprecated
     static public JsonNode getSystemConnections(Locale locale) {
         ArrayNode root = mapper.createArrayNode();
         ArrayList<String> prefixes = new ArrayList<String>();
@@ -1192,6 +1217,8 @@ public class JsonUtil {
      * @param locale The locale to throw exceptions in.
      * @param id     The id of the train.
      * @param data   Train data to change.
+     * @throws jmri.server.json.JsonException if the train cannot move to the
+     *                                        location in data.
      */
     static public void setTrain(Locale locale, String id, JsonNode data) throws JsonException {
         Train train = TrainManager.instance().getTrainById(id);
@@ -1290,6 +1317,15 @@ public class JsonUtil {
         }
     }
 
+    /**
+     *
+     * @param locale the client's Locale.
+     * @param type   the requested type.
+     * @return JSON error message.
+     * @deprecated since 4.5.2; throw a {@link jmri.server.json.JsonException}
+     * instead.
+     */
+    @Deprecated
     static public JsonNode getUnknown(Locale locale, String type) {
         return handleError(404, Bundle.getMessage(locale, "ErrorUnknownType", type));
     }
@@ -1333,6 +1369,16 @@ public class JsonUtil {
         return rlan;  //return array of routeLocations
     }
 
+    /**
+     *
+     * @param locale    the client's Locale
+     * @param heartbeat seconds before which no communications from client will
+     *                  cause connection to be broken
+     * @return a JSON hello message
+     * @deprecated since 4.5.2; use
+     * {@link jmri.server.json.util.JsonUtilHttpService#getHello(java.util.Locale, int)}.
+     */
+    @Deprecated
     static public JsonNode getHello(Locale locale, int heartbeat) {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, HELLO);
@@ -1346,6 +1392,14 @@ public class JsonUtil {
         return root;
     }
 
+    /**
+     *
+     * @param locale the client's Locale.
+     * @return the JSON networkServices message.
+     * @deprecated since 4.5.2; use
+     * {@link jmri.server.json.util.JsonUtilHttpService#getNetworkServices(java.util.Locale)}.
+     */
+    @Deprecated
     static public JsonNode getNetworkServices(Locale locale) {
         ArrayNode root = mapper.createArrayNode();
         for (ZeroConfService service : ZeroConfService.allServices()) {
@@ -1364,6 +1418,14 @@ public class JsonUtil {
         return root;
     }
 
+    /**
+     *
+     * @param locale the client's Locale
+     * @return the JSON node message
+     * @deprecated since 4.5.2; use
+     * {@link jmri.server.json.util.JsonUtilHttpService#getNode(java.util.Locale)}.
+     */
+    @Deprecated
     public static JsonNode getNode(Locale locale) {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, NODE);
