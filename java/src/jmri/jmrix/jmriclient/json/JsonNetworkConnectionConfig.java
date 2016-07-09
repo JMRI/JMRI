@@ -30,6 +30,7 @@ public class JsonNetworkConnectionConfig extends AbstractNetworkConnectionConfig
      * Constructor for an object being created while loading existing
      * preferences.
      *
+     * @param portAdapter The existing portAdapter
      */
     public JsonNetworkConnectionConfig(NetworkPortAdapter portAdapter) {
         super(portAdapter);
