@@ -149,17 +149,10 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
             return;
         }
         super.buttonActionPerformed(ae);
-        update();
     }
 
-    private void clearAndUpdate() {
-        trainCommon.clearUtilityCarTypes(); // reset the utility car counts
-        carCheckBoxes.clear();
-        isSetMode = false;
-        update();
-    }
-
-    private void update() {
+    @Override
+    protected void update() {
         log.debug("queue update");
         // use invokeLater to prevent deadlock
         SwingUtilities.invokeLater(new Runnable() {

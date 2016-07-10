@@ -146,14 +146,14 @@ public class AcelaNode extends AbstractNode {
      * setNodeAddress, and actual node type using 'setNodeType'
      */
     public AcelaNode() {
-        this(0, UN);
+        this(0, UN,jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class).getTrafficController());
     }
 
     /**
      * Creates a new AcelaNode and initialize default instance variables address
      * - Address of first bit on Acela bus (0-1023) type - D8, SM, WM
      */
-    public AcelaNode(int address, int type) {
+    public AcelaNode(int address, int type,AcelaTrafficController tc) {
         // set address and type and check validity
         setNodeAddress(address);
         setNodeType(type);
@@ -191,7 +191,7 @@ public class AcelaNode extends AbstractNode {
         hasActiveSensors = false;
 
         // register this node
-        AcelaTrafficController.instance().registerAcelaNode(this);
+        tc.registerAcelaNode(this);
     }
 
     public void initNode() {

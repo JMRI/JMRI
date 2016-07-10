@@ -20,7 +20,7 @@
 Panel. From this table you can change the state of a Turnout, change the
 feedback mode, enter Sensors for feedback, invert, lock, and delete it.
 
-<a name="columns"><h2>Turnout Table Columns</h2></a>
+<a name="columns"></a><h2>Turnout Table Columns</h2>
 
 <dl>
 	<dt>System Name</dt>
@@ -150,7 +150,7 @@ feedback mode, enter Sensors for feedback, invert, lock, and delete it.
 	</dd>
 </dl>
 
-<a name="controls"><h2>Turnout Table Controls</h2></a>
+<a name="controls"></a><h2>Turnout Table Controls</h2>
 
 There are some buttons and checkboxes along the bottom of the 
 Turnout Table pane that control its operation.

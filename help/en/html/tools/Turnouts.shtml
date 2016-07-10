@@ -21,6 +21,7 @@
   <div id="container">
 
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
       <div id="mainContent">
@@ -65,7 +66,7 @@ Configuration...</b> in the <b>File</b> menu at the top of the Turnout
 Table (or other tables from the Tools menu), or select <b>Store Panel...</b>
 in the <b>Panel</b> menu. 
 
-<a name="add"><h3>Adding a new Turnout</h3></a>
+<a name="add"></a><h3>Adding a new Turnout</h3>
 <p>To fully configure a new Turnout, follow this procedure:</p>
 		<ol>
 		<li><p>Click <b>Tables</b> -&gt; <b>Turnouts</b> in the <b>Tools</b> menu to bring up

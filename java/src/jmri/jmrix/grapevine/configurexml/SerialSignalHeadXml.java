@@ -53,7 +53,7 @@ public class SerialSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
 
         loadCommon(h, shared);
 
-        InstanceManager.signalHeadManagerInstance().register(h);
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
         return true;
     }
 

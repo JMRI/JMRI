@@ -266,7 +266,7 @@ public class LightControl {
 
                 case Light.FAST_CLOCK_CONTROL:
                     if (_clock == null) {
-                        _clock = InstanceManager.timebaseInstance();
+                        _clock = InstanceManager.getDefault(jmri.Timebase.class);
                     }
                     // set up time as minutes in a day
                     _timeOn = _fastClockOnHour * 60 + _fastClockOnMin;

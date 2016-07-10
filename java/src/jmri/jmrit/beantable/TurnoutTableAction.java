@@ -1325,35 +1325,33 @@ public class TurnoutTableAction extends AbstractTableAction {
                     return; // without creating       
                 }
 
-                if (t != null) {
-                    String user = userName.getText();
-                    if ((x != 0) && user != null && !user.equals("")) {
-                        user = user + ":" + x;
-                    }
-                    if (user != null && !user.equals("") && (InstanceManager.turnoutManagerInstance().getByUserName(user) == null)) {
-                        t.setUserName(user);
-                    } else if (InstanceManager.turnoutManagerInstance().getByUserName(user) != null && !p.getPreferenceState(getClassName(), "duplicateUserName")) {
-                        InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showErrorMessage("Duplicate UserName", "The username " + user + " specified is already in use and therefore will not be set", getClassName(), "duplicateUserName", false, true);
-                        //p.showErrorMessage("Duplicate UserName", "The username " + user + " specified is already in use and therefore will not be set", userNameError, "", false, true);
-                    }
-                    t.setNumberOutputBits(iNum);
-                    // Ask about the type of turnout control if appropriate
-                    if (!useLastType) {
-                        iType = InstanceManager.turnoutManagerInstance().askControlType(sName);
-                        if ((InstanceManager.turnoutManagerInstance().isControlTypeSupported(sName)) && (range.isSelected())) {
-                            if (JOptionPane.showConfirmDialog(addFrame,
-                                    "Do you want to use the last setting for all turnouts in this range? ", "Use Setting",
-                                    JOptionPane.YES_NO_OPTION) == 0)// Add a pop up here asking if the user wishes to use the same value for all
-                            {
-                                useLastType = true;
-                            }
-                        } else {
+                String user = userName.getText();
+                if ((x != 0) && user != null && !user.equals("")) {
+                    user = user + ":" + x;
+                }
+                if (user != null && !user.equals("") && (InstanceManager.turnoutManagerInstance().getByUserName(user) == null)) {
+                    t.setUserName(user);
+                } else if (InstanceManager.turnoutManagerInstance().getByUserName(user) != null && !p.getPreferenceState(getClassName(), "duplicateUserName")) {
+                    InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                            showErrorMessage("Duplicate UserName", "The username " + user + " specified is already in use and therefore will not be set", getClassName(), "duplicateUserName", false, true);
+                    //p.showErrorMessage("Duplicate UserName", "The username " + user + " specified is already in use and therefore will not be set", userNameError, "", false, true);
+                }
+                t.setNumberOutputBits(iNum);
+                // Ask about the type of turnout control if appropriate
+                if (!useLastType) {
+                    iType = InstanceManager.turnoutManagerInstance().askControlType(sName);
+                    if ((InstanceManager.turnoutManagerInstance().isControlTypeSupported(sName)) && (range.isSelected())) {
+                        if (JOptionPane.showConfirmDialog(addFrame,
+                                "Do you want to use the last setting for all turnouts in this range? ", "Use Setting",
+                                JOptionPane.YES_NO_OPTION) == 0)// Add a pop up here asking if the user wishes to use the same value for all
+                        {
                             useLastType = true;
                         }
+                    } else {
+                        useLastType = true;
                     }
-                    t.setControlType(iType);
                 }
+                t.setControlType(iType);
             }
         }
         p.addComboBoxLastSelection(systemSelectionCombo, (String) prefixBox.getSelectedItem());

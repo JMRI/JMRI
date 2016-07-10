@@ -14,7 +14,7 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+<div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
@@ -275,7 +275,7 @@ sleep(10)
 <h2>How do I load a panel file from within a script?</h2>
 
 <div class="para"><code>
-<pre>jmri.InstanceManager.configureManagerInstance().load(java.io.File("filename.xml"))</pre>
+<pre>jmri.InstanceManager.getDefault(jmri.ConfigureManager.class).load(java.io.File("filename.xml"))</pre>
 </code></div>
 
 That looks for "filename.xml" in the JMRI program directory, which is
@@ -495,11 +495,12 @@ all the time, though, and you might want to try a more modern version of
 Jython than the one that JMRI distributes. To do that, install Jython on 
 you computer, then add a python.properties in your user files location that
 sets the python configuration variables, e.g.:
-<code><pre>
+<pre style="font-family: monospace;">
+
 python.home = C:\Users\admin\JMRI\systemfiles 
 python.path = c:\jython2.5.3\lib 
 python.startup = 
-</pre></code>
+</code></pre>
 
 <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->

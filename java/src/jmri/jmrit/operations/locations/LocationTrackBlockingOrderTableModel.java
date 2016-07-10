@@ -25,11 +25,6 @@ import org.slf4j.LoggerFactory;
  */
 public class LocationTrackBlockingOrderTableModel extends AbstractTableModel implements PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7318273766197527079L;
-
     protected Location _location;
     protected List<Track> _tracksList = new ArrayList<Track>();
     protected JTable _table;

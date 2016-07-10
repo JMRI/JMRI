@@ -12,6 +12,7 @@ import static jmri.server.json.JSON.LIGHTS;
 import static jmri.server.json.JSON.LIST;
 import static jmri.server.json.JSON.LOCALE;
 import static jmri.server.json.JSON.LOCATIONS;
+import static jmri.server.json.JSON.MEMORIES;
 import static jmri.server.json.JSON.METADATA;
 import static jmri.server.json.JSON.METHOD;
 import static jmri.server.json.JSON.NAME;
@@ -194,6 +195,9 @@ public class JsonClientHandler {
                     case METADATA:
                         reply = JsonUtil.getMetadata(this.connection.getLocale());
                         break;
+                    case MEMORIES:
+                        reply = JsonUtil.getMemories(this.connection.getLocale());
+                        break;
                     case PANELS:
                         reply = JsonUtil.getPanels(this.connection.getLocale(), (data.path(FORMAT).isMissingNode()) ? XML : data.path(FORMAT).asText());
                         break;
@@ -222,6 +226,7 @@ public class JsonClientHandler {
                             }
                             return;
                         } else {
+                            log.warn("Requested list type '{}' unknown.", list);
                             this.sendErrorMessage(404, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownType", list));
                             return;
                         }
@@ -259,6 +264,7 @@ public class JsonClientHandler {
                                 service.onMessage(type, data, this.connection.getLocale());
                             }
                         } else {
+                            log.warn("Requested type '{}' unknown.", type);
                             this.sendErrorMessage(404, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownType", type));
                         }
                         break;

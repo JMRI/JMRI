@@ -49,7 +49,6 @@ public class IntelliboxAdapter extends LocoBufferAdapter {
 
         // start operation
         packets.startThreads();
-        jmri.jmrix.loconet.ActiveFlag.setActive();
     }
 
     /**

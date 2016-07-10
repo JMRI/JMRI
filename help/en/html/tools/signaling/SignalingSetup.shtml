@@ -19,7 +19,7 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 <!-- Page Body -->
@@ -31,7 +31,7 @@
 	<li><a href="#magic">Magic SignalMan Set Up</a></li>
 </ul>
 	
-<a name="7steps"><h2>Start to use JMRI Signaling in 7 steps</h2></a>
+<a name="7steps"></a><h2>Start to use JMRI Signaling in 7 steps</h2>
 	<p>Thanks to Suzie Tall.</p>
 <!-- Listing from JMRI Group, March 4, 2014 -->
 <h3>Steps</h3>
@@ -74,7 +74,7 @@ You will probably have some locations (e.g. in a hidden section) where you do no
 	<li>If you prefer the flexibility of the Control Panel Editor for duplicating specific prototype panels you can still use Aspect Signaling and its Signal Mast Logic. You will just need to add some items manually.</li>
 			</ul>
 <!-- Listing from JMRI Group, March 4, 2014 -->	
-<a name="magic"><h2>Magic SignalMan Set Up</h2></a>
+<a name="magic"></a><h2>Magic SignalMan Set Up</h2>
 	<p>Thanks to Jim Duncan.</p>
 
 	<p>With Dick Bronson's new <a href="http://www.rr-cirkits.com">SignalMan hardware</a> all you need to do is:<p/>

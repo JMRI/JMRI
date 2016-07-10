@@ -16,7 +16,7 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+<div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
@@ -99,7 +99,8 @@ not work with other servlet containers.
 <h3>Get the status of individual objects</h3>
 
 Request:
-<code><pre>
+<pre style="font-family: monospace;">
+
 &lt;xmlio&gt;
   &lt;item&gt;
     &lt;type&gt;turnout&lt;/type&gt;
@@ -114,10 +115,11 @@ Request:
     &lt;name&gt;power&lt;/name&gt;
   &lt;/item&gt;
 &lt;/xmlio&gt;
-</pre></code>
+</code></pre>
 
 Reply:
-<code><pre>
+<pre style="font-family: monospace;">
+
 &lt;xmlio&gt;
   &lt;item&gt;
     &lt;type&gt;turnout&lt;/type&gt;
@@ -135,7 +137,7 @@ Reply:
     &lt;value&gt;2&lt;/value&gt;
   &lt;/item&gt;
 &lt;/xmlio&gt;
-</pre></code>
+</code></pre>
 
 The "value" element is inserted in the request, and then it's 
 returned as the reply. You can just turn the reply around and use it 
@@ -147,16 +149,18 @@ item's state has changed to something different.
 
 Request:
 
-<code><pre>
+<pre style="font-family: monospace;">
+
 &lt;xmlio&gt;
   &lt;list&gt;
     &lt;type&gt;sensor&lt;/type&gt;
   &lt;/list&gt;
 &lt;/xmlio&gt;
-</pre></code>
+</code></pre>
 
 Reply:
-<code><pre>
+<pre style="font-family: monospace;">
+
 &lt;xmlio&gt;
   &lt;item&gt;
     &lt;type&gt;sensor&lt;/type&gt;
@@ -174,14 +178,15 @@ Reply:
     &lt;value&gt;2&lt;/value&gt;
   &lt;/item&gt;
 &lt;/xmlio&gt;
-</pre></code>
+</code></pre>
 
 The response can be turned around and used as the next request.
 
 <h3>Set the status of an object</h3>
 
 Request:
-<code><pre>
+<pre style="font-family: monospace;">
+
 &lt;xmlio&gt;
   &lt;item&gt;
     &lt;type&gt;turnout&lt;/type&gt;
@@ -189,10 +194,11 @@ Request:
     &lt;set&gt;2&lt;/set&gt;
   &lt;/item&gt;
 &lt;/xmlio&gt;
-</pre></code>
+</code></pre>
 
 Reply:
-<code><pre>
+<pre style="font-family: monospace;">
+
 &lt;xmlio&gt;
   &lt;item&gt;
     &lt;type&gt;turnout&lt;/type&gt;
@@ -200,7 +206,7 @@ Reply:
     &lt;value&gt;2&lt;/value&gt;
   &lt;/item&gt;
 &lt;/xmlio&gt;
-</pre></code>
+</code></pre>
 
 The "set" element in the request results in the state
 being set to the given value, and then it's 
@@ -215,14 +221,16 @@ have propagated completely.
 <h3>Set the status of an object (attribute-based syntax)</h3>
 
 Request:
-<code><pre>
+<pre style="font-family: monospace;">
+
 &lt;turnout name="IT12" set="2" /&gt;
-</pre></code>
+</code></pre>
 
 Reply:
-<code><pre>
+<pre style="font-family: monospace;">
+
 &lt;turnout name="IT12" value="2" /&gt;
-</pre></code>
+</code></pre>
 
 <h3>Control a Throttle</h3>
 
@@ -232,7 +240,8 @@ default ThrottleManager. The first use
 allocates the throttle, and all later ones
 set any attributes present:
 
-<code><pre>
+<pre style="font-family: monospace;">
+
 &lt;xmlio&gt;
     &lt;throttle&gt;
         &lt;address&gt;1234&lt;/address&gt;
@@ -241,7 +250,7 @@ set any attributes present:
         &lt;F3&gt;false&lt;/F3&gt;
     &lt;/throttle&gt;
 &lt;/xmlio&gt;
-</pre></code>
+</code></pre>
 
 A throttle element is returned unchanged.
 

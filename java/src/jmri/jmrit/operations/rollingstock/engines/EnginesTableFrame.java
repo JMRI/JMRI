@@ -38,10 +38,6 @@ import org.slf4j.LoggerFactory;
  */
 public class EnginesTableFrame extends OperationsFrame implements PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3672037911597893323L;
     EnginesTableModel enginesModel;
     TableSorter sorter;
     javax.swing.JTable enginesTable;

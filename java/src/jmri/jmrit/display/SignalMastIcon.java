@@ -90,7 +90,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
      * @param pName Used as a system/user name to lookup the SignalMast object
      */
     public void setSignalMast(String pName) {
-        SignalMast mMast = (SignalMast) InstanceManager.signalMastManagerInstance().getNamedBean(pName);
+        SignalMast mMast = (SignalMast) InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBean(pName);
         if (mMast == null) {
             log.warn("did not find a SignalMast named " + pName);
         } else {
@@ -336,7 +336,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
     }
 
     private void addTransitPopup(JPopupMenu popup) {
-        if ((InstanceManager.sectionManagerInstance().getSystemNameList().size()) > 0
+        if ((InstanceManager.getDefault(jmri.SectionManager.class).getSystemNameList().size()) > 0
                 && jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
 
             if (tct == null) {

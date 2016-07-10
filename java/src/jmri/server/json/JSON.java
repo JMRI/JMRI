@@ -155,6 +155,10 @@ public final class JSON {
 
     /* JSON list types */
     /**
+     * {@value #BLOCKS}
+     */
+    public static final String BLOCKS = "blocks"; // NOI18N
+    /**
      * {@value #CARS}
      */
     public static final String CARS = "cars"; // NOI18N
@@ -216,6 +220,10 @@ public final class JSON {
     public static final String NETWORK_SERVICES = "networkServices"; // NOI18N
 
     /* JSON data types */
+    /**
+     * {@value #BLOCK}
+     */
+    public static final String BLOCK = "block"; // NOI18N
     /**
      * {@value #CAR}
      */
@@ -286,6 +294,26 @@ public final class JSON {
      * {@value #TRAIN}
      */
     public static final String TRAIN = "train"; // NOI18N
+    /**
+     * {@value #USE_EXTRA_COLOR}
+     */
+    public static final String USE_EXTRA_COLOR = "useExtraColor"; // NOI18N
+    /**
+     * {@value #BLOCK_COLOR}
+     */
+    public static final String BLOCK_COLOR = "blockColor"; // NOI18N
+    /**
+     * {@value #TRACK_COLOR}
+     */
+    public static final String TRACK_COLOR = "trackColor"; // NOI18N
+    /**
+     * {@value #BLOCK_OCCUPIED_COLOR}
+     */
+    public static final String BLOCK_OCCUPIED_COLOR = "blockOccupiedColor"; // NOI18N
+    /**
+     * {@value #BLOCK_EXTRA_COLOR}
+     */
+    public static final String BLOCK_EXTRA_COLOR = "blockExtraColor"; // NOI18N
 
     /* JSON operations tokens */
     /**

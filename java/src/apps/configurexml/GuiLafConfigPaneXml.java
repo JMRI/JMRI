@@ -102,7 +102,7 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setNonStandardMouseEvent(nonStandardMouseEvent);
         }
         GuiLafConfigPane g = new GuiLafConfigPane();
-        jmri.InstanceManager.configureManagerInstance().registerPref(g);
+        jmri.InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerPref(g);
 
         Attribute fontsize = shared.getAttribute("fontsize");
         if (fontsize != null) {

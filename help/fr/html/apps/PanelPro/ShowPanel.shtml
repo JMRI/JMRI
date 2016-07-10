@@ -16,7 +16,7 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
@@ -51,9 +51,10 @@ Malheureusement, nous ne pouvons pas donner des r&#232;gles pr&#233;cises, comme
  Dites au navigateur de la prendre &#224; partir d'un serveur web JMRI.
  <br>
  Pour ce faire, changer la deuxi&#232;me ligne du fichier en:
- <code><pre>
+ <pre style="font-family: monospace;">
+
   &lt;xml-stylesheet href = "http://jmri.org/xml/XSLT/panelfile.xsl"type = "text/xsl"&gt;
- </pre></code></li>
+ </code></pre></li>
  <li>
  Placez le fichier feuille de style dans le m&#234;me endroit que votre fichier de panneau, et
  dire au navigateur de l'utiliser.
@@ -62,9 +63,10 @@ Malheureusement, nous ne pouvons pas donner des r&#232;gles pr&#233;cises, comme
  <a href=  "http://jmri.org/xml/XSLT/panelfile.xsl"> ce lien </a>.
  Placez une copie de ce fichier dans le m&#234;me r&#233;pertoire que le fichier de panneau que vous souhaitez afficher.
  Puis changez la deuxi&#232;me ligne de votre fichier de panneau en:
- <code><pre>
+ <pre style="font-family: monospace;">
+
  &lt; xml-stylesheet href = "panelfile.xsl" type = "text/xsl"&gt;
- </pre></code></li>
+ </code></pre></li>
  </ul>
 <p>
 Ne pas modifier la premi&#232;re ligne!

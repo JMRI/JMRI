@@ -1,4 +1,3 @@
-// PrintRosterAction.java
 package jmri.jmrit.roster;
 
 import java.awt.Frame;
@@ -22,14 +21,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author Dennis Miller Copyright (C) 2005
- * @version $Revision$
  */
 public class PrintRosterAction extends jmri.util.swing.JmriAbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8641271368187099365L;
 
     public PrintRosterAction(String s, jmri.util.swing.WindowInterface wi) {
         super(s, wi);

@@ -120,7 +120,6 @@ public class NetworkDriverAdapter extends MarklinPortController implements jmri.
         control.setAdapterMemo(this.getSystemConnectionMemo());
         this.getSystemConnectionMemo().setMarklinTrafficController(control);
         this.getSystemConnectionMemo().configureManagers();
-        jmri.jmrix.marklin.ActiveFlag.setActive();
     }
 
     @Override

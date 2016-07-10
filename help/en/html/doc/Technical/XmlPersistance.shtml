@@ -1,96 +1,109 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
+
 <html lang="en">
 <!-- Copyright Bob Jacobsen 2004, 2007, 2008 -->
+
 <head>
-    <TITLE>
- 	JMRI: XML Persistance
-    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
-    <meta name="keywords" content="JMRI technical code xml persistance">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-    <!--#include virtual="/Style" -->
-</head>
+  <title>JMRI: XML Persistance</title>
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content=
+  "JMRI technical code xml persistance">
+  <!--#include virtual="/Style" -->
+</head><!--#include virtual="/Header" -->
 
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
+<body>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-	<div id="mainContent">
+    <div id="mainContent">
+      <h1>JMRI: XML Persistance</h1>
 
-	    <H1>JMRI: XML Persistance</H1>
+      <p>JMRI uses XML for persisting internal structures,
+      especially when storing the preferences and panel files.</p>
 
+      <p>XML persistance is done via some explicitly written code.
+      Basically, certain classes register themselves with a
+      instance of the "ConfigureManager". The only implementation
+      of one of those we have is the one for loading and storing
+      XML files: jmri.configurexml. ConfigXmlManager When it's time
+      to store, the ConfigureXmlManager is told to do it. It goes
+      through the registered objects and finds the persisting class
+      responsible for storing the object. E.g. class a.b.Foo will
+      have the class a.b.configurexml.FooXml located. If that class
+      is found, it's told to store the Foo object, and it adds Xml
+      content to a JDOM document to do that. If it's not located,
+      an error message is issued.</p>
 
-<P>
-JMRI uses XML for persisting internal structures, especially when storing
-the preferences and panel files.
+      <p>On load, an XML file is read by the manager. Each element
+      is examined for a "class" attribute. If found, that class is
+      loaded and handed the element to process. Etc.</p>
 
-<P>
-XML persistance is done via some explicitly written code. Basically, certain classes 
-register themselves with a instance of the "ConfigureManager".  The only implementation 
-of one of those we have is the one for loading and storing XML files: jmri.configurexml. 
-ConfigXmlManager   When it's time to store, the ConfigureXmlManager is told to do it.  
-It goes through the registered objects and finds the persisting class responsible for 
-storing the object.  E.g. class a.b.Foo will have the class a.b.configurexml.FooXml 
-located.  If that class is found, it's told to store the Foo object, and it adds Xml 
-content to a JDOM document to do that.  If it's not located, an error message is issued.
-<P>
-On load, an XML file is read by the manager.  Each element is examined for 
-a "class" attribute.  If found, that class is loaded and handed the element to 
-process.  Etc.
-<P>
-It's quite hackish, and not very cleanly factored. There's a fair amount of 
-code duplication, but that might be because it comes from a C++ background and 
-the developer keeps wishing 
-for templates and mixin classes.  But it works!
+      <p>It's quite hackish, and not very cleanly factored. There's
+      a fair amount of code duplication, but that might be because
+      it comes from a C++ background and the developer keeps
+      wishing for templates and mixin classes. But it works!</p>
 
-<h3>Example</h3>
+      <h3>Example</h3>A LightManager knows about Lights.
 
-A LightManager knows about Lights.
-<p>
-There are lots of concrete classes implementing the Light interface:
-<ul>
-<li>jmri.jmrix.loconet.LnLight
-<li>jmri.jmrix.cmri.serial.SerialLight
-<li>jmri.jmrix.powerline.SerialLight
-</ul>
-These have their own internal information, which is not always the
-same.
-<p>
-There are also multiple LightManager concrete classes to handle them:
-<ul>
-<li>jmri.jmrix.loconet.LnLightManager
-<li>jmri.jmrix.cmri.serial.SerialLightManager
-<li>jmri.jmrix.powerline.SerialLightManager
-</ul>
+      <p>There are lots of concrete classes implementing the Light
+      interface:</p>
 
-<p>
-Each type of manager is stored and loaded via a persistance class, 
-who is found by looking the a class with "Xml" appended to the name, in a 
-"configurexml" direct subpackage:
-<ul>
-<li>jmri.jmrix.loconet.configurexml.LnLightManagerXml
-<li>jmri.jmrix.cmri.serial.configurexml.SerialLightManagerXml
-<li>jmri.jmrix.powerline.configurexml.SerialLightManagerXml
-</ul>
+      <ul>
+        <li>jmri.jmrix.loconet.LnLight</li>
 
-<p>
-In the case of Light concrete classes, the code for persisting the
-managers directly stores and loads the individual lights.  This is
-because (so far) a given manager only has one type of Light (e.g. 
-LnLightManager only has to worry about LnLight).  In cases where this
-is not true, e.g. SignalHeads which have multiple classes, there
-are persistance classes for the individual objects in addition to the manager.
+        <li>jmri.jmrix.cmri.serial.SerialLight</li>
 
-<h3>Added More Information To A Class</h3>
+        <li>jmri.jmrix.powerline.SerialLight</li>
+      </ul>These have their own internal information, which is not
+      always the same.
 
-If you want to store more state information, find the persisting class
-and add code to it to create and read attributes or elements.
-<p>
-Perhaps the easiest way to do this is to create a sample panel file
-with the objects you want to store in it:
+      <p>There are also multiple LightManager concrete classes to
+      handle them:</p>
 
-<p>
-<pre>
+      <ul>
+        <li>jmri.jmrix.loconet.LnLightManager</li>
+
+        <li>jmri.jmrix.cmri.serial.SerialLightManager</li>
+
+        <li>jmri.jmrix.powerline.SerialLightManager</li>
+      </ul>
+
+      <p>Each type of manager is stored and loaded via a
+      persistance class, who is found by looking the a class with
+      "Xml" appended to the name, in a "configurexml" direct
+      subpackage:</p>
+
+      <ul>
+        <li>jmri.jmrix.loconet.configurexml.LnLightManagerXml</li>
+
+        <li>
+        jmri.jmrix.cmri.serial.configurexml.SerialLightManagerXml</li>
+
+        <li>
+        jmri.jmrix.powerline.configurexml.SerialLightManagerXml</li>
+      </ul>
+
+      <p>In the case of Light concrete classes, the code for
+      persisting the managers directly stores and loads the
+      individual lights. This is because (so far) a given manager
+      only has one type of Light (e.g. LnLightManager only has to
+      worry about LnLight). In cases where this is not true, e.g.
+      SignalHeads which have multiple classes, there are
+      persistance classes for the individual objects in addition to
+      the manager.</p>
+
+      <h3>Added More Information To A Class</h3>If you want to
+      store more state information, find the persisting class and
+      add code to it to create and read attributes or elements.
+
+      <p>Perhaps the easiest way to do this is to create a sample
+      panel file with the objects you want to store in it:</p>
+      <pre>
   &lt;sensors class="jmri.jmrix.cmri.serial.configurexml.SerialSensorManagerXml" /&gt;
     &lt;sensor systemName="CS3001" /&gt;
   &lt;/sensor&gt;
@@ -105,49 +118,44 @@ with the objects you want to store in it:
   &lt;/signalheads&gt;
 </pre>
 
-<p>
-Note the "class" attributes. They give the fully-qualified name
-of the class that can load or store that particular element. In the 
-case of Sensors, we see there are two managers in use: One for C/MRI, and
-one for internal Sensors.  For SignalHeads, there's only one manager,
-jmri.configurexml.AbstractSignalHeadManager persisted by jmri.configurexml.AbstractSignalHeadManager, 
-but each particular SignalHead implementing class has it's own persisting class.
+      <p>Note the "class" attributes. They give the fully-qualified
+      name of the class that can load or store that particular
+      element. In the case of Sensors, we see there are two
+      managers in use: One for C/MRI, and one for internal Sensors.
+      For SignalHeads, there's only one manager,
+      jmri.configurexml.AbstractSignalHeadManager persisted by
+      jmri.configurexml.AbstractSignalHeadManager, but each
+      particular SignalHead implementing class has it's own
+      persisting class.</p>
 
-<p>
-To e.g. add more data to a sensor, the jmri.jmrix.cmri.serial.configurexml.SerialSensorManagerXml
-and jmri.managers.configurexml.InternalSensorManagerXml classes would have to be
-modified.
+      <p>To e.g. add more data to a sensor, the
+      jmri.jmrix.cmri.serial.configurexml.SerialSensorManagerXml
+      and jmri.managers.configurexml.InternalSensorManagerXml
+      classes would have to be modified.</p>
 
-<p>
-Note that in some cases, there's an inheritance relationship amoung the
-persisting classes that can help.  For example, the LocoNet 
-<a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/configurexml/LnSensorManagerXml.html">LnSensorManagerXml</a>
-class inherits from 
-<a href="http://jmri.org/JavaDoc/doc/jmri/configurexml/AbstractTurnoutManagerConfigXML.html">jmri.configurexml.AbstractSensorManagerConfigXML</a>, which does
-almost all the work of storing and loading sensors.
+      <p>Note that in some cases, there's an inheritance
+      relationship amoung the persisting classes that can help. For
+      example, the LocoNet <a href=
+      "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/configurexml/LnSensorManagerXml.html">
+      LnSensorManagerXml</a> class inherits from <a href=
+      "http://jmri.org/JavaDoc/doc/jmri/configurexml/AbstractTurnoutManagerConfigXML.html">
+      jmri.configurexml.AbstractSensorManagerConfigXML</a>, which
+      does almost all the work of storing and loading sensors.</p>
 
-<p>
-If you do add new attributes or elements, don't forget to update
-the format definition, see below.
+      <p>If you do add new attributes or elements, don't forget to
+      update the format definition, see below.</p>
 
-<a id="schema">
-<h2>Schema Management</h2>
+      <h2><a id="schema" name="schema">Schema
+      Management</a></h2><a id="schema" name="schema">JMRI controls
+      XML semantics using</a> <a href="XmlSchema.shtml">XML
+      Schema</a>.
 
-JMRI controls XML semantics using 
-<a href="XmlSchema.shtml">XML Schema</a>.
-
-<p>
-For example, layout information is stored in XML files as
-a "layout-config" element, whose contents are then defined via a
-schema file.  These files are kept in the 
-<a href="http://jmri.org/xml/schema">xml/schema</a>
-directory.
-
-
-<!--#include virtual="/Footer" -->
-
-	  </div><!-- closes #mainContent-->
-	</div> <!-- closes #mBody-->
+      <p>For example, layout information is stored in XML files as
+      a "layout-config" element, whose contents are then defined
+      via a schema file. These files are kept in the <a href=
+      "http://jmri.org/xml/schema">xml/schema</a> directory. 
+      <!--#include virtual="/Footer" --></p>
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>
-

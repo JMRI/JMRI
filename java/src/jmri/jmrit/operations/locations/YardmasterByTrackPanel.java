@@ -169,7 +169,8 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
         }
     }
 
-    private void update() {
+    @Override
+    protected void update() {
         // use invokeLater to prevent deadlock
         SwingUtilities.invokeLater(new Runnable() {
             @Override

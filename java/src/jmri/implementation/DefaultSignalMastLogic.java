@@ -149,7 +149,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
         }
         int oldSize = destList.size();
         destList.put(dest, new DestinationMast(dest));
-        //InstanceManager.signalMastLogicManagerInstance().addDestinationMastToLogic(this, dest);
+        //InstanceManager.getDefault(jmri.SignalMastLogicManager.class).addDestinationMastToLogic(this, dest);
         firePropertyChange("length", oldSize, Integer.valueOf(destList.size()));
     }
 
@@ -266,7 +266,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
     public boolean removeDestination(SignalMast dest) {
         int oldSize = destList.size();
         if (destList.containsKey(dest)) {
-            //InstanceManager.signalMastLogicManagerInstance().removeDestinationMastToLogic(this, dest);
+            //InstanceManager.getDefault(jmri.SignalMastLogicManager.class).removeDestinationMastToLogic(this, dest);
             destList.get(dest).dispose();
             destList.remove(dest);
             firePropertyChange("length", oldSize, Integer.valueOf(destList.size()));
@@ -865,7 +865,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
         Runnable r = new Runnable() {
             public void run() {
                 try {
-                    Thread.sleep((InstanceManager.signalMastLogicManagerInstance().getSignalLogicDelay() / 2));
+                    Thread.sleep((InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalLogicDelay() / 2));
                     inWait = false;
                     setMastAppearance();
                 } catch (InterruptedException ex) {
@@ -1834,7 +1834,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
                 public void run() {
                     try {
 //                    log.debug("Wait started");
-                        Thread.sleep(InstanceManager.signalMastLogicManagerInstance().getSignalLogicDelay());
+                        Thread.sleep(InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalLogicDelay());
 //                    log.debug("wait is over");
                         inWait = false;
                         checkStateDetails();
@@ -1992,8 +1992,8 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
             /*This check is purely for use with the dispatcher, it will check to see if any of the blocks are set to "useExtraColor" 
              which is a means to determine if the block is in a section that is occupied and it not ours thus we can set the signal to danger.*/
             if (state && getAssociatedSection() != null
-                    && jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame.class) != null
-                    && jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class) != null
+                    && jmri.InstanceManager.getOptionalDefault(jmri.jmrit.dispatcher.DispatcherFrame.class) != null
+                    && jmri.InstanceManager.getOptionalDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class) != null
                     && getAssociatedSection().getState() != Section.FORWARD) {
 
                 LayoutBlockManager lbm = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
@@ -2433,7 +2433,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
             if (!allowAutoSignalMastGeneration) {
                 return;
             }
-            ArrayList<jmri.SignalMastLogic> smlList = InstanceManager.signalMastLogicManagerInstance().getLogicsByDestination(destination);
+            ArrayList<jmri.SignalMastLogic> smlList = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getLogicsByDestination(destination);
             ArrayList<Block> allBlock = new ArrayList<Block>();
 
             for (NamedBeanSetting nbh : userSetBlocks) {

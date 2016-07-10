@@ -4,7 +4,6 @@
 
 <html lang="fr">
 	  <hr class="hide">
-	  <div id="mBody">
 	  
 	  <div id="side"> <!-- Block of text on left side of page -->
 	    <div style="text-align: center">JMRI c'est...</div>

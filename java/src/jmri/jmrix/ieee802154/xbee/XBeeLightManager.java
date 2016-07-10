@@ -1,4 +1,3 @@
-// XBeeLightManager.java
 package jmri.jmrix.ieee802154.xbee;
 
 import jmri.Light;
@@ -11,14 +10,8 @@ import org.slf4j.LoggerFactory;
  * <p>
  *
  * @author Paul Bender Copyright (C) 2014
- * @version $Revision$
  */
 public class XBeeLightManager extends AbstractLightManager {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3033596888763946284L;
 
     protected String prefix = null;
 

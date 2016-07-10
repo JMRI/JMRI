@@ -26,6 +26,7 @@
 
 
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
@@ -86,7 +87,7 @@ Eventually, all but a few index pages will have
 ".shtml" extensions. (The remaining index.html pages keep that name
 so that people who request just a directory URL will be served something useful).</p>
 
-<p><a name="redirect" id="redirect"></a>
+<p><a name="redirect"></a>
 We are using .htaccess files to do redirects when a web page is removed.  This
 lets older bookmarks continue to work.  
 The 
@@ -140,7 +141,7 @@ by the
 job on the 
 <a href="http://jmri.tagadab.com/jenkins/">production Jenkins server</a>.</p>
 
-<a name="local" id="local"></a><h2>Local Web Site: Mac OS X</h2>
+<a name="local"></a><h2>Local Web Site: Mac OS X</h2>
 
 <p>If you want to host a copy of the JMRI web site on your local
 Mac OS X machine, follow these instructions to first configure
@@ -239,7 +240,7 @@ LoadModule php5_module libexec/apache2/libphp5.so
 
 <LI>Install the JMRI files to be served:
     <UL>
-    <LI><a name="link" id="link"></a>Check out both the JMRI/JMRI
+    <LI><a name="link"></a>Check out both the JMRI/JMRI
         and JMRI/website repositories to somewhere on your computer.  It's OK for these
         to be outside the web server's directory tree.
     <LI>Change to the web server directory
@@ -261,7 +262,7 @@ were directly present.
 which should get you a JMRI top-level page.
 </OL>
 
-<a name="catalog" id="catalog"></a><h3>Installing a local XML catalog</h3>
+<a name="catalog"></a><h3>Installing a local XML catalog</h3>
 
 Many JMRI XML files contain XIncludes that reference
 other XML files with URLs like "http://jmri.org/xml/schema/types/turnouts-2-9-6.xsd".

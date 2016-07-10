@@ -139,7 +139,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
         // add the default shutdown task to save blocks
         // as a special case, register a ShutDownTask to write out blocks
-        InstanceManager.shutDownManagerInstance().
+        InstanceManager.getDefault(jmri.ShutDownManager.class).
                 register(new AbstractShutDownTask("Writing Blocks") {
                     @Override
                     public boolean execute() {
@@ -263,7 +263,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         if (file.exists()) {
             log.debug("start load config file {}", file.getPath());
             try {
-                configOK = InstanceManager.configureManagerInstance().load(file, true);
+                configOK = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).load(file, true);
             } catch (JmriException e) {
                 log.error("Unhandled problem loading configuration", e);
                 configOK = false;
@@ -358,7 +358,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             // migrate preferences
             InstanceManager.tabbedPreferencesInstance().init();
             InstanceManager.tabbedPreferencesInstance().saveContents();
-            InstanceManager.configureManagerInstance().storePrefs();
+            InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).storePrefs();
             // notify user of change
             log.info("Preferences have been migrated to new format.");
             log.info("New preferences format will be used after JMRI is restarted.");
@@ -453,7 +453,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         }, eventMask);
 
         // do final activation
-        InstanceManager.logixManagerInstance().activateAllLogixs();
+        InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
         // Loads too late - now started from ItemPalette
 //        new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
@@ -465,7 +465,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         boolean result;
         log.debug("start deferred load from config");
         try {
-            result = InstanceManager.configureManagerInstance().loadDeferred(file);
+            result = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).loadDeferred(file);
         } catch (JmriException e) {
             log.error("Unhandled problem loading deferred configuration", e);
             result = false;
@@ -1046,7 +1046,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             debugmsg = false;
             return;
         }
-        InstanceManager.logixManagerInstance().setLoadDisabled(true);
+        InstanceManager.getDefault(jmri.LogixManager.class).setLoadDisabled(true);
         log.info("Requested loading with Logixs disabled.");
         debugmsg = false;
     }
@@ -1128,10 +1128,10 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     }
 
     static protected void loadFile(String name) {
-        URL pFile = InstanceManager.configureManagerInstance().find(name);
+        URL pFile = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).find(name);
         if (pFile != null) {
             try {
-                InstanceManager.configureManagerInstance().load(pFile);
+                InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).load(pFile);
             } catch (JmriException e) {
                 log.error("Unhandled problem in loadFile", e);
             }

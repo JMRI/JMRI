@@ -46,13 +46,14 @@ Les Trames CAN sont cr&#233;&#233;s comme des objets, puis mis en file d'attente
 transmission. L'en-t&#234;te (ID) et les donn&#233;es sont trait&#233;es
 s&#233;par&#233;ment.
 
-<code><pre>
+<pre style="font-family: monospace;">
+
 frame = jmri.jmrix.can.CanMessage(2)  # charge 2 bytes
 frame.setId(0x123)
 frame.setElement(0, 0x45)
 frame.setElement(1, 0x67)
 jmri.jmrix.can.TrafficController.instance().sendCanMessage(frame, None)
-</pre></code>
+</code></pre>
 
 <h2>R&#233;ception de Trames CAN</h2>
 Un script peut &#233;couter les trames CAN comme elles sont re&#231;ues
@@ -61,7 +62,8 @@ transmises sur le bus par JMRI.
 L'interface fournit ces CanListener s&#233;par&#233;ment
 via des proc&#233;dures "reply"et "message", respectivement.
 
-<code><pre>
+<pre style="font-family: monospace;">
+
 class MyCanListener (jmri.jmrix.can.CanListener) :
     def message(self, msg) :
         # g&#232;re la transmission des trames CAN en ignorant leurs retours
@@ -73,7 +75,7 @@ class MyCanListener (jmri.jmrix.can.CanListener) :
         return
     
 jmri.jmrix.can.TrafficController.instance().addCanListener(MyCanListener())
-</pre></code>
+</code></pre>
 
 <!--#include virtual="/Footer" -->
 </body>

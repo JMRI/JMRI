@@ -112,11 +112,6 @@ public abstract class AbstractLightManager extends AbstractManager
                     + ((systemName == null) ? "null" : systemName)
                     + ";" + ((userName == null) ? "null" : userName));
         }
-        if (systemName == null) {
-            log.error("SystemName cannot be null. UserName was "
-                    + ((userName == null) ? "null" : userName));
-            throw new IllegalArgumentException("Non-null systemName required");
-        }
         // is system name in correct format?
         if (!validSystemNameFormat(systemName)) {
             log.error("Invalid system name for newLight: " + systemName);

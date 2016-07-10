@@ -203,7 +203,7 @@ ainsi une approche est de rechercher cela. Il va ressembler &#224; (il sera prob
             sxscale = "11.849106591612951" syscale = "-11,889381744148094"
             sxorigin = "41" syorigin = "768"
             class = "jmri.jmrit.display.configurexml.RpsPositionIconXml" /&gt;
-</Pre></code>
+</code></pre>
 <li> Pour que l'ic&#244;ne suive d'un &#233;metteur sp&#233;cifique, entrez l'ID de l'&#233;metteur en tant qu'attribut "filtre". Par exemple, pour
 suivre l'&#233;metteur 5510, modifiez la ligne:
 <code> <pre>
@@ -214,7 +214,7 @@ suivre l'&#233;metteur 5510, modifiez la ligne:
             xscale = "11.849106591612951" syscale = "-11,889381744148094"
             sxorigin = "41" syorigin = "768"
             class = "jmri.jmrit.display.configurexml.RpsPositionIconXml" /&gt;
-</Pre></code>
+</code></pre>
 <li> Les attributs "actif" et "erreur" sont les ic&#244;nes &#224; afficher lorsque le syst&#232;me 
 obtiennent des r&#233;sultats fiables et n'obtiennent pas de bonnes lectures, respectivement.
 Vous pouvez modifier celle ci &#224; l'emplacement de n'importe quel fichier d'ic&#244;ne que vous souhaitez.

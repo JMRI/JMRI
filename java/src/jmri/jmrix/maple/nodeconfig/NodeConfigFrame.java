@@ -275,14 +275,6 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         }
         // all ready, create the new node
         curNode = new SerialNode(nodeAddress, 0);
-        if (curNode == null) {
-            statusText1.setText(rb.getString("Error3"));
-            statusText1.setVisible(true);
-            log.error("Error creating Maple Serial Node, constructor returned null");
-            errorInStatus1 = true;
-            resetNotes2();
-            return;
-        }
         // configure the new node
         setNodeParameters();
 //        // register any orphan sensors that this node may have

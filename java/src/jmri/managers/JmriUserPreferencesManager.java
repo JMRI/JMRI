@@ -79,7 +79,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
      * @return the default UserPreferencesManager
      */
     public static UserPreferencesManager getDefault() {
-        if (InstanceManager.getDefault(UserPreferencesManager.class) == null) {
+        if (InstanceManager.getOptionalDefault(UserPreferencesManager.class) == null) {
             JmriUserPreferencesManager manager = new JmriUserPreferencesManager();
             InstanceManager.setDefault(UserPreferencesManager.class, manager);
             manager.readUserPreferences();

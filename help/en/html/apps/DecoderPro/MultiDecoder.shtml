@@ -15,7 +15,7 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+<div id="mBody">
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
@@ -107,7 +107,7 @@ in that case it's not able to confirm operations, so one can't be 100%
 sure that the right decoder is selected.
 
 <a name="digitraxproposal">
-<h2>Digitrax's Original Proposal</h2></a>
+</a><h2>Digitrax's Original Proposal</h2>
 
 DCC users sometimes want to install more than one decoder in a single locomotive. One common case is using separate decoders for motor control and sound.  Because these decoders often need to have their CVs configured separately, a mechanism is needed to communicate with only one at a time.
 <p>

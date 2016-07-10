@@ -201,8 +201,8 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
             return;
         }
         // if old manager exists, remove it from configuration process
-        if (InstanceManager.getDefault(LayoutBlockManager.class) != null) {
-            InstanceManager.configureManagerInstance().deregister(
+        if (InstanceManager.getOptionalDefault(LayoutBlockManager.class) != null) {
+            InstanceManager.getDefault(jmri.ConfigureManager.class).deregister(
                     InstanceManager.getDefault(LayoutBlockManager.class));
         }
 
@@ -210,7 +210,7 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
         LayoutBlockManager pManager = LayoutBlockManager.instance();
         InstanceManager.store(pManager, jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
         // register new one for configuration
-        InstanceManager.configureManagerInstance().registerConfig(pManager, jmri.Manager.LAYOUTBLOCKS);
+        InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).registerConfig(pManager, jmri.Manager.LAYOUTBLOCKS);
     }
 
     private final static Logger log = LoggerFactory.getLogger(LayoutBlockManagerXml.class.getName());

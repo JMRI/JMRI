@@ -1,4 +1,3 @@
-// ServerFrame.java
 package jmri.jmrix.loconet.loconetovertcp;
 
 import java.awt.event.ActionEvent;
@@ -22,16 +21,10 @@ import javax.swing.event.ChangeListener;
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2004
+ * @author Bob Jacobsen Copyright (C) 2003, 2004
  * @author Alex Shepherd Copyright (C) 2006
- * @version	$Revision$
  */
 public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3729652398213286613L;
 
     private ServerFrame() {
         super("LocoNetOverTcp Server");
@@ -91,13 +84,11 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
             }
         });
 
-        if (portNumber != null) {
-            portNumber.addChangeListener(new ChangeListener() {
-                public void stateChanged(ChangeEvent e) {
-                    saveButton.setEnabled(true);
-                }
-            });
-        }
+        portNumber.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                saveButton.setEnabled(true);
+            }
+        });
 
         pack();
     }

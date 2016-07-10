@@ -178,6 +178,10 @@ public final class JSON {
 
     /* JSON list types */
     /**
+     * {@value #BLOCKS}
+     */
+    public static final String BLOCKS = "blocks"; // NOI18N
+    /**
      * {@value #CARS}
      */
     public static final String CARS = "cars"; // NOI18N
@@ -257,6 +261,10 @@ public final class JSON {
     public static final String NETWORK_SERVICES = "networkServices"; // NOI18N
 
     /* JSON data types */
+    /**
+     * {@value #BLOCK}
+     */
+    public static final String BLOCK = "block"; // NOI18N
     /**
      * {@value #CAR}
      */

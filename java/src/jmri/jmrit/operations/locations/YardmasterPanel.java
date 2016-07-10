@@ -32,11 +32,6 @@ import org.slf4j.LoggerFactory;
  */
 public class YardmasterPanel extends CommonConductorYardmasterPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -88218348551032298L;
-
     protected static final boolean IS_MANIFEST = false;
 
     int _visitNumber = 1;
@@ -142,7 +137,6 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
             nextButtonAction();
         }
         super.buttonActionPerformed(ae);
-        update();
     }
 
     private void nextButtonAction() {
@@ -190,14 +184,8 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
         }
     }
 
-    private void clearAndUpdate() {
-        trainCommon.clearUtilityCarTypes(); // reset the utility car counts
-        carCheckBoxes.clear();
-        isSetMode = false;
-        update();
-    }
-
-    private void update() {
+    @Override
+    protected void update() {
         log.debug("queue update");
         // use invokeLater to prevent deadlock
         SwingUtilities.invokeLater(new Runnable() {

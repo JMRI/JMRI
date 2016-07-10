@@ -679,8 +679,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         if (speedSpinner != null) {
             spinnerPanel.add(speedSpinner, constraints);
         }
-        //this.getContentPane().add(spinnerPanel,BorderLayout.CENTER);
+
         speedControlPanel.add(spinnerPanel);
+
         // remove old actions
         if (speedSpinner != null) {
             speedSpinner.addChangeListener(
@@ -1396,14 +1397,14 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         if ((throttle != null) && (_displaySlider != STEPDISPLAY)) { // Update UI depending on function state
             try {
                 java.lang.reflect.Method getter = throttle.getClass().getMethod("get" + switchSliderFunction, (Class[]) null);
-                if (getter != null) {
-                    Boolean state = (Boolean) getter.invoke(throttle, (Object[]) null);
-                    if (state) {
-                        setSpeedController(SLIDERDISPLAYCONTINUOUS);
-                    } else {
-                        setSpeedController(SLIDERDISPLAY);
-                    }
+
+                Boolean state = (Boolean) getter.invoke(throttle, (Object[]) null);
+                if (state) {
+                    setSpeedController(SLIDERDISPLAYCONTINUOUS);
+                } else {
+                    setSpeedController(SLIDERDISPLAY);
                 }
+                
             } catch (java.lang.Exception ex) {
                 log.debug("Exception in setSwitchSliderFunction: " + ex + " while looking for function " + switchSliderFunction);
             }

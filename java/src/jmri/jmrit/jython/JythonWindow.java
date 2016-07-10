@@ -1,4 +1,3 @@
-// JythonWindow.java
 package jmri.jmrit.jython;
 
 import java.awt.BorderLayout;
@@ -27,7 +26,6 @@ import jmri.util.JmriJFrame;
  *
  * @author	Bob Jacobsen Copyright (C) 2004
  * @author Matthew Harris Copyright (C) 2010
- * @version $Revision$
  */
 public class JythonWindow extends AbstractAction {
 

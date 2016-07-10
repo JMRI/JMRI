@@ -1339,7 +1339,7 @@ public class Location implements java.beans.PropertyChangeListener {
         if (e.getAttribute(Xml.READER) != null) {
             @SuppressWarnings("unchecked")
             Reporter r = jmri.InstanceManager
-                    .reporterManagerInstance()
+                    .getDefault(jmri.ReporterManager.class)
                     .provideReporter(
                             e.getAttribute(Xml.READER).getValue());
             setReporter(r);
