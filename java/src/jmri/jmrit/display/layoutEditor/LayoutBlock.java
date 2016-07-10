@@ -19,7 +19,6 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.Memory;
@@ -31,7 +30,6 @@ import jmri.implementation.AbstractNamedBean;
 import jmri.jmrit.beantable.beanedit.BeanEditItem;
 import jmri.jmrit.beantable.beanedit.BeanItemPanel;
 import jmri.util.JmriJFrame;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -308,6 +306,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 panels.get(i).redrawPanel();
             }
         }
+        firePropertyChange("redraw", null, null);
     }
 
     /**

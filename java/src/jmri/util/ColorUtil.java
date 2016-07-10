@@ -87,7 +87,7 @@ public class ColorUtil{
     * Convert a color into hex value of form #RRGGBB
     */
     public static String colorToHexString(Color color) {
-        return "#"+Integer.toHexString(color.getRGB()).substring(2);
+        return "#"+Integer.toHexString(color.getRGB()).substring(2).toUpperCase();
     }
 
     // initialize logging

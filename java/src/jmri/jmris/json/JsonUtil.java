@@ -298,6 +298,11 @@ public class JsonUtil {
         return root;
     }
 
+    /*
+     * deprecated in favor of the implementations of the {@code do*} methods in
+     * {@link jmri.server.json.JsonHttpService}.
+     * @deprecated since 4.5.1
+     */
     @Deprecated
     static public JsonNode getLight(Locale locale, String name) throws JsonException {
         try {
@@ -325,7 +330,12 @@ public class JsonUtil {
             throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", LIGHT, name));
         }
     }
-
+    
+    /*
+     * deprecated in favor of the implementations of the {@code do*} methods in
+     * {@link jmri.server.json.JsonHttpService}.
+     * @deprecated since 4.5.1
+     */
     @Deprecated
     static public JsonNode getLights(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
@@ -335,6 +345,11 @@ public class JsonUtil {
         return root;
     }
 
+    /*
+     * deprecated in favor of the implementations of the {@code do*} methods in
+     * {@link jmri.server.json.JsonHttpService}.
+     * @deprecated since 4.5.1
+     */
     @Deprecated
     static public void putLight(Locale locale, String name, JsonNode data) throws JsonException {
         try {
@@ -345,6 +360,11 @@ public class JsonUtil {
         setLight(locale, name, data);
     }
 
+    /*
+     * deprecated in favor of the implementations of the {@code do*} methods in
+     * {@link jmri.server.json.JsonHttpService}.
+     * @deprecated since 4.5.1
+     */
     @Deprecated
     static public void setLight(Locale locale, String name, JsonNode data) throws JsonException {
         try {
@@ -400,6 +420,11 @@ public class JsonUtil {
         return root;
     }
 
+    /*
+     * deprecated in favor of the implementations of the {@code do*} methods in
+     * {@link jmri.server.json.JsonHttpService}.
+     * @deprecated since 4.5.1
+     */
     @Deprecated
     static public JsonNode getMemories(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
@@ -409,6 +434,11 @@ public class JsonUtil {
         return root;
     }
 
+    /*
+     * deprecated in favor of the implementations of the {@code do*} methods in
+     * {@link jmri.server.json.JsonHttpService}.
+     * @deprecated since 4.5.1
+     */
     @Deprecated
     static public JsonNode getMemory(Locale locale, String name) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
@@ -431,6 +461,11 @@ public class JsonUtil {
         return root;
     }
 
+    /*
+     * deprecated in favor of the implementations of the {@code do*} methods in
+     * {@link jmri.server.json.JsonHttpService}.
+     * @deprecated since 4.5.1
+     */
     @Deprecated
     static public void putMemory(Locale locale, String name, JsonNode data) throws JsonException {
         try {
@@ -441,6 +476,11 @@ public class JsonUtil {
         setMemory(locale, name, data);
     }
 
+    /*
+     * deprecated in favor of the implementations of the {@code do*} methods in
+     * {@link jmri.server.json.JsonHttpService}.
+     * @deprecated since 4.5.1
+     */
     @Deprecated
     static public void setMemory(Locale locale, String name, JsonNode data) throws JsonException {
         try {
