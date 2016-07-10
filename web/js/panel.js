@@ -1546,8 +1546,8 @@ var $getWidgetFamily = function($widget, $element) {
 
 //redraw all "drawn" elements for given block (called after color change) 
 function $redrawBlock(blockName) {
-	if (window.console)
-		console.log("redrawing all track for block " + blockName);
+//	if (window.console)
+//		console.log("redrawing all track for block " + blockName);
 	//loop thru widgets, if block matches, redraw widget by proper method
 	jQuery.each($gWidgets, function($id, $widget) {
 		if ($widget.blockname == blockName) {
@@ -1618,29 +1618,23 @@ function updateWidgets(name, state, data) {
 }
 
 function updateOccupancy(occupancyName, state) {
-    if (occupancyNames[occupancyName]) {
-        if (window.console)
-            console.log("setting occupancies for sensor " + occupancyName + " to " + state);
-        $.each(occupancyNames[occupancyName], function(index, widgetId) {
-            $widget = $gWidgets[widgetId];
-            if ($widget.blockname) {
-                $gBlks[$widget.blockname].state = state; //set occupancy for the block (if one) to the newstate
-            }
-            $gWidgets[widgetId].occupancystate = state; //set occupancy for the widget to the newstate
-            switch ($widget.widgetType) {
-                case 'layoutturnout' :
-                    $drawTurnout($widget);
-                    break;
-                case 'tracksegment' :
-                    $drawTrackSegment($widget);
-                    break;
-                case 'indicatortrackicon' :
-                case 'indicatorturnouticon' :
-                    $reDrawIcon($widget);
-                    break;
-            }
-        });
-    }
+	if (occupancyNames[occupancyName]) {
+		if (window.console)
+			console.log("setting occupancies for sensor " + occupancyName + " to " + state);
+		$.each(occupancyNames[occupancyName], function(index, widgetId) {
+			$widget = $gWidgets[widgetId];
+			if ($widget.blockname) {
+				$gBlks[$widget.blockname].state = state; //set occupancy for the block (if one) to the newstate
+			}
+			$gWidgets[widgetId].occupancystate = state; //set occupancy for the widget to the newstate
+			switch ($widget.widgetType) {
+			case 'indicatortrackicon' :
+			case 'indicatorturnouticon' :
+				$reDrawIcon($widget);
+				break;
+			}
+		});
+	}
 }
 
 function setBlockColor(blockName, newColor) {
