@@ -1,11 +1,5 @@
 package jmri.server.json.util;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
 import static org.junit.Assert.*;
 
 import apps.tests.Log4JFixture;
@@ -18,18 +12,28 @@ import jmri.profile.NullProfile;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.server.json.JSON;
+import jmri.server.json.JsonException;
 import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.node.NodeIdentity;
 import jmri.util.zeroconf.ZeroConfService;
 import jmri.web.server.WebServerPreferences;
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author rhwood
  */
 public class JsonUtilHttpServiceTest {
+
+    public final static Logger log = LoggerFactory.getLogger(JsonUtilHttpServiceTest.class);
 
     public JsonUtilHttpServiceTest() {
     }
@@ -93,18 +97,18 @@ public class JsonUtilHttpServiceTest {
      * Test of doPost method, of class JsonUtilHttpService.
      */
     @Test
-    public void testDoPost() throws Exception {
-        System.out.println("doPost");
-        String type = "";
-        String name = "";
-        JsonNode data = null;
-        Locale locale = null;
-        JsonUtilHttpService instance = null;
-        JsonNode expResult = null;
-        JsonNode result = instance.doPost(type, name, data, locale);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testDoPost() {
+        Locale locale = Locale.ENGLISH;
+        ObjectMapper mapper = new ObjectMapper();
+        JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
+        String type = JSON.HELLO;
+        String name = JSON.HELLO;
+        try {
+            Assert.assertEquals(instance.doGet(type, name, locale), instance.doPost(type, name, null, locale));
+        } catch (JsonException ex) {
+            log.error("Unexpected exception.", ex);
+            Assert.fail("Unexpected exception");
+        }
     }
 
     /**
@@ -127,31 +131,48 @@ public class JsonUtilHttpServiceTest {
      * Test of getMetadata method, of class JsonUtilHttpService.
      */
     @Test
-    public void testGetMetadata_Locale_String() throws Exception {
-        System.out.println("getMetadata");
-        Locale locale = null;
-        String name = "";
-        JsonUtilHttpService instance = null;
-        JsonNode expResult = null;
-        JsonNode result = instance.getMetadata(locale, name);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testGetMetadata_Locale_String() {
+        Locale locale = Locale.ENGLISH;
+        ObjectMapper mapper = new ObjectMapper();
+        JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
+        JsonNode result;
+        try {
+            for (String metadata : Metadata.getSystemNameList()) {
+                result = instance.getMetadata(locale, metadata);
+                Assert.assertEquals(JSON.METADATA, result.path(JSON.TYPE).asText());
+                Assert.assertEquals(metadata, result.path(JSON.DATA).path(JSON.NAME).asText());
+                Assert.assertEquals(Metadata.getBySystemName(metadata), result.path(JSON.DATA).path(JSON.VALUE).asText());
+            }
+        } catch (JsonException ex) {
+            log.error("Unexpected exception.", ex);
+            Assert.fail("Unexpected exception");
+        }
+        JsonException exception = null;
+        try {
+            instance.getMetadata(locale, "invalid_metadata_entry");
+        } catch (JsonException ex) {
+            exception = ex;
+        }
+        Assert.assertNotNull(exception);
     }
 
     /**
      * Test of getMetadata method, of class JsonUtilHttpService.
      */
     @Test
-    public void testGetMetadata_Locale() throws Exception {
-        System.out.println("getMetadata");
-        Locale locale = null;
-        JsonUtilHttpService instance = null;
-        JsonNode expResult = null;
-        JsonNode result = instance.getMetadata(locale);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testGetMetadata_Locale() {
+        Locale locale = Locale.ENGLISH;
+        ObjectMapper mapper = new ObjectMapper();
+        JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
+        JsonNode result = null;
+        try {
+            result = instance.getMetadata(locale);
+        } catch (JsonException ex) {
+            log.error("Unexpected exception.", ex);
+            Assert.fail("Unexpected exception");
+        }
+        Assert.assertNotNull(result);
+        Assert.assertEquals(Metadata.getSystemNameList().size(), result.size());
     }
 
     /**
