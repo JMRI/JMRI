@@ -18,6 +18,9 @@ import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonSocketService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  *
@@ -27,8 +30,9 @@ import jmri.server.json.JsonSocketService;
 public class JsonLayoutBlockSocketService extends JsonSocketService {
 
     private final JsonLayoutBlockHttpService service;
-    private final HashMap<String, LayoutBlockListener> layoutblocks = new HashMap<>();
+    private final HashMap<String, LayoutBlockListener> layoutBlocks = new HashMap<>();
     private Locale locale;
+    private static final Logger log = LoggerFactory.getLogger(JsonLayoutBlockServiceFactory.class);
 
     public JsonLayoutBlockSocketService(JsonConnection connection) {
         super(connection);
@@ -44,11 +48,11 @@ public class JsonLayoutBlockSocketService extends JsonSocketService {
         } else {
             this.connection.sendMessage(this.service.doPost(type, name, data, locale));
         }
-        if (!this.layoutblocks.containsKey(name)) {
+        if (!this.layoutBlocks.containsKey(name)) {
             LayoutBlock layoutblock = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(name);
             LayoutBlockListener listener = new LayoutBlockListener(layoutblock);
             layoutblock.addPropertyChangeListener(listener);
-            this.layoutblocks.put(name, listener);
+            this.layoutBlocks.put(name, listener);
         }
     }
 
@@ -60,34 +64,35 @@ public class JsonLayoutBlockSocketService extends JsonSocketService {
 
     @Override
     public void onClose() {
-        layoutblocks.values().stream().forEach((layoutblock) -> {
-            layoutblock.layoutblock.removePropertyChangeListener(layoutblock);
+        layoutBlocks.values().stream().forEach((layoutblock) -> {
+            layoutblock.layoutBlock.removePropertyChangeListener(layoutblock);
         });
-        layoutblocks.clear();
+        layoutBlocks.clear();
     }
 
     private class LayoutBlockListener implements PropertyChangeListener {
 
-        protected final LayoutBlock layoutblock;
+        protected final LayoutBlock layoutBlock;
 
         public LayoutBlockListener(LayoutBlock layoutblock) {
-            this.layoutblock = layoutblock;
+            this.layoutBlock = layoutblock;
         }
 
         @Override
         public void propertyChange(PropertyChangeEvent e) {
-            if (e.getPropertyName().equals("state") ||
-                e.getPropertyName().equals("routing")) {
+            if (e.getPropertyName().equals("redraw")) {
+//                log.debug("{} property '{}' changed from '{}' to '{}'", this.layoutBlock.getUserName(), 
+//                        e.getPropertyName(), e.getOldValue(), e.getNewValue());
                 try {
                     try {
-                        connection.sendMessage(service.doGet(LAYOUTBLOCK, this.layoutblock.getSystemName(), locale));
+                        connection.sendMessage(service.doGet(LAYOUTBLOCK, this.layoutBlock.getSystemName(), locale));
                     } catch (JsonException ex) {
                         connection.sendMessage(ex.getJsonMessage());
                     }
                 } catch (IOException ex) {
                     // if we get an error, de-register
-                    layoutblock.removePropertyChangeListener(this);
-                    layoutblocks.remove(this.layoutblock.getSystemName());
+                    layoutBlock.removePropertyChangeListener(this);
+                    layoutBlocks.remove(this.layoutBlock.getSystemName());
                 }
             }
         }

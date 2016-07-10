@@ -68,6 +68,7 @@ public class JsonLayoutBlockHttpService extends JsonHttpService {
         if (data.path(COMMENT).isTextual()) {
             layoutblock.setComment(data.path(COMMENT).asText());
         }
+        //layoutBlock.state is a bogus construct, so don't expect valid results from this
         if (!data.path(STATE).isMissingNode()) {
             layoutblock.setState(data.path(STATE).asInt());
         }

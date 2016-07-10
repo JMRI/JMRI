@@ -15,6 +15,7 @@
  * light(name, state, data)
  * memory(name, value, data)
  * block(name, value, data)
+ * layoutBlock(name, value, data)
  * power(state)
  * railroad(name)
  * reporter(name, value, data)
@@ -72,6 +73,8 @@
             jmri.memory = function(name, value, data) {
             };
             jmri.block = function(name, value, data) {
+            };
+            jmri.layoutBlock = function(name, value, data) {
             };
             jmri.power = function(state) {
             };
@@ -185,6 +188,31 @@
                     });
                 }
             };
+            jmri.getLayoutBlock = function(name) {
+                if (jmri.socket) {
+                    jmri.socket.send("layoutBlock", {name: name});
+                } else {
+                    $.getJSON(jmri.url + "layoutBlock/" + name, function(json) {
+                        jmri.layoutBlock(json.data.name, json.data.value, json.data);
+                    });
+                }
+            };
+            jmri.setLayoutBlock = function(name, value) {
+                if (jmri.socket) {
+                    jmri.socket.send("layoutBlock", {name: name, value: value});
+                } else {
+                    $.ajax({
+                        url: jmri.url + "layoutBlock/" + name,
+                        type: "POST",
+                        data: JSON.stringify({value: value}),
+                        contentType: "application/json; charset=utf-8",
+                        success: function(json) {
+                            jmri.layoutBlock(json.data.name, json.data.value, json.data);
+                            jmri.getLayoutBlock(json.data.name, json.data.value);
+                        }
+                    });
+                }
+            };
             jmri.getObject = function(type, name) {
                 switch (type) {
                     case "light":
@@ -192,6 +220,9 @@
                         break;
                     case "block":
                         jmri.getBlock(name);
+                        break;
+                    case "layoutBlock":
+                        jmri.getLayoutBlock(name);
                         break;
                     case "memory":
                         jmri.getMemory(name);
@@ -226,6 +257,9 @@
                         break;
                     case "block":
                         jmri.setBlock(name, state);
+                        break;
+                    case "layoutBlock":
+                        jmri.setLayoutBlock(name, state);
                         break;
                     case "rosterEntry":
                         jmri.setRosterEntry(name, state);
@@ -594,6 +628,9 @@
                         },
                         block: function(e) {
                             jmri.block(e.data.name, e.data.value, e.data);
+                        },
+                        layoutBlock: function(e) {
+                            jmri.layoutBlock(e.data.name, e.data.value, e.data);
                         },
                         memory: function(e) {
                             jmri.memory(e.data.name, e.data.value, e.data);
