@@ -86,7 +86,7 @@
       locomotive, price, or any other information you might feel is
       important to record.</p>
 
-      <p>The <input name="Save to Roster" id="Save to Roster"
+      <p>The <input name="SaveToRoster"
       value="Save to Roster" type="submit"> button stores the
       current decoder information to your computer hard drive and
       folder where your roster file is located. The default storage
