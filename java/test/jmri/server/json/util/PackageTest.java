@@ -6,7 +6,9 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     BundleTest.class,
-    JsonUtilServiceFactoryTest.class})
+    JsonUtilServiceFactoryTest.class,
+    JsonUtilHttpServiceTest.class,
+    JsonUtilSocketServiceTest.class})
 
 /**
  * @author Randall Wood (C) 2016
