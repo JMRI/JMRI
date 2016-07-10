@@ -1,241 +1,571 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en">
-<head><title>LocoNet Menu</title>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>LocoNet Menu</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <!--#include virtual="/Header" -->
 
-<a name="Top"></a>
-<h1>DecoderPro&reg; Main Window</h1>
-<h2>LocoNet Menu</h2>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<div align="right">
-<p><a href="Main_Menu.shtml#System">Back to Index</a></p>
-</div>
+    <div id="mainContent">
+      <a name="Top" id="Top"></a>
 
-<hr>
-<p><strong>Monitor LocoNet</strong></p>
-<p style="margin-left: 40px;">Opens the <a href="Main_Monitor_Window.shtml">Monitor LocoNet  Window(Gerneric Communications Monitor Window)</a>
-and automatically displays the information that is being sent and
-received on the communications link between your computer and your DCC
-system.</p>
-<p><strong><a name="Slots"></a>Monitor Slots</strong></p>
-<p style="margin-left: 40px;">Opens the  Monitor Slots window, and displays a table of the "command station slots" contents.</p><p style="margin-left: 40px;">Slots are used to control individual locomotive and consists. The
-display includes the decoder's speed step format, current speed and
-function settings, consist information and status. You may choose to
-show all slots or just the ones being actively used.</p>
-<p align="center"><img src="images/Main_Loconet01.png" alt="slot monitor" height="274" width="800"></p>
-<p style="margin-left: 40px;">The check box at the top allow to select what slots are displayed.</p>
-<p style="margin-left: 40px;">
-  <input name="checkbox" id="checkbox" type="checkbox"> 
-  <strong>Show unused slots</strong></p>
-<p style="margin-left: 40px;">
-  <input name="checkbox2" id="checkbox2" type="checkbox"> 
-  <strong>Show system slots</strong></p>
-<p style="margin-left: 40px;"><strong>
-  <input name="button" id="button" value="estop all" type="submit"> 
-  </strong>Executes an <strong>Emergency Stop </strong>for all locomotives.</p>
-<p style="margin-left: 40px;">The columns are:</p>
+      <h1>DecoderPro&reg; Main Window</h1>
 
-  <table align="center" border="1" cellpadding="1" cellspacing="1" width="90%"><tbody><tr>
-    <td width="18%"><strong>Column</strong></td>
-    <td colspan="2" width="82%"><strong>Displays</strong></td>
-  </tr>
-  <tr>
-    <td>Slot</td>
-    <td colspan="2">The number of the slot</td>
-  </tr>
-  <tr>
-    <td>Address</td>
-    <td colspan="2">Locomotive address the slot controls</td>
-  </tr>
-  <tr>
-    <td>Speed</td>
-    <td colspan="2">For
-unconsisted locomotives and addresses that are at the top of a consist,
-this is the current speed setting. It is an internal value for
-consisted slots.</td>
-  </tr>
-  <tr>
-    <td>Decoder Type</td>
-    <td colspan="2">The format of the commands being sent to the decoder, typically, either 128 step or 28 step, though other values are possible.</td>
-  </tr>
-  <tr>
-    <td rowspan="5" valign="top">Status</td>
-    <td colspan="2">One of the four possible states:</td>
-  </tr>
-  <tr>
-    <td>Free</td>
-    <td>Not reserved for any particular use, no contents</td>
-  </tr>
-  <tr>
-    <td>Idle</td>
-    <td>Not reserved for any particular use, no contents</td>
-  </tr>
-  <tr>
-    <td>Common</td>
-    <td>Not in use at the moment, but still contains valid data for the last decoder to use it.</td>
-  </tr>
-  <tr>
-    <td>In Use</td>
-    <td>Currently controlling a decoder</td>
-  </tr>
-  <tr>
-    <td>Consisted</td>
-    <td colspan="2">Displays the consist status of the slot, whether it is not consisted, the top of a consist, included in a consist, etc.</td>
-  </tr>
-  <tr>
-    <td>Throttle ID</td>
-    <td colspan="2">The
-UT4 throttles have a fixed throttle ID. The DT400 has a fixed common
-leading HEX value and a user programmable second HEX value. . It is
-displayed as two hexadecimal bytes, see the Digitrax instructions for
-details.</td>
-  </tr>
-  <tr>
-    <td>Direction</td>
-    <td colspan="2">Whether the decoder is currently being commanded to go Forward or Reverse.</td>
-  </tr>
-  <tr>
-    <td>F0-F8</td>
-    <td colspan="2">The current function settings</td></tr></tbody></table><p></p>
-<p><strong><a name="Clock"></a>Monitor Clock</strong></p>
-<p style="margin-left: 40px;">A Digtrax LocoNet can contain it's own fast clock timebase. This
-can be driven either by a DCS100/DCS200 command station, or by a
-separate fast clock module such as those made by Logic Rail
-Technologies. The <span style="font-weight: bold;">  Monitor Clock</span> dialog allows you to control this feature.</p><p style="margin-left: 40px;"><img src="images/Main_Loconet02.png" alt="clock monitor" height="153" width="215"></p>
-<p style="margin-left: 40px;">The <strong>Clock Monitor </strong> tool  provides a   convenient way to: </p>
-<ul style="margin-left: 40px;"><li>
-    <input name="button2" id="button2" value="Read" type="submit">
-  the current contents of the LocoNet fast clock </li><li>Set the <strong>Day</strong> and <strong>Time</strong> </li><li>Set the <strong>Rate</strong>. Note that you can't explicitly pause a LocoNet clock, but you can stop  it by setting the rate to zero. </li></ul>
-<p style="margin-left: 40px;">If you are using a DCS100 or DCS200 command station to create your
-LocoNet fast clock, you may have noticed that it doesn't keep
-particularly good time. If you select the "Correct LocoNet Fast Clock
-Master", JMRI will adjust the rate of the LocoNet clock so that it
-keeps better time. </p><strong>Monitor LocoNet Stats</strong>
-<p style="margin-left: 40px;">If active displays the statistics related to traffic on the LocoNet Monitor <strong>LocoNet Stats</strong> Window.</p><p style="margin-left: 40px;"><img style="width: 537px; height: 103px;" alt="stat monitor" src="images/Main_Loconet_Stats.png"></p>
-<p><img src="images/separator.png" alt="sep" height="4" width="340"></p>
-<p><strong><a name="BDL16"></a>Configure BDL16</strong><span style="font-weight: bold;">/BDL162</span><strong>/BDL168</strong></p>
-<p style="margin-left: 40px;"><img style="width: 528px; height: 626px;" alt="BDL" src="images/Main_Loconet03.png"></p>
-<p><strong>Configure LocoIO</strong></p>
-<p style="margin-left: 40px;">Opens the <span style="font-weight: bold;">Configure LocoIO </span>window.</p><p style="margin-left: 40px;"><img src="images/Main_Loconet04.png" alt="LocoNet IO programmer" border="4" height="518" width="693"></p><p><strong><a name="PM4"></a>Configure PM4</strong>/PM42 </p>
-<p style="margin-left: 40px;">Opens the Configure PM4/PM42 window.</p><p style="margin-left: 40px;"><img src="images/Main_Loconet05.png" alt="PM4 programmer" border="4" height="289" width="416"></p><p><strong><a name="SE8C"></a>Configure SE8C</strong></p>
-<p style="margin-left: 40px;">Opens the <span style="font-weight: bold;">Configure SE8C</span> window.</p><p style="margin-left: 40px;"><img src="images/Main_Loconet06.png" alt="SE8C programmer" border="4" height="506" width="411"></p><p><strong><a name="DS64"></a>Configure DS64</strong></p>
-<p style="margin-left: 40px;">Opens the <span style="font-weight: bold;">Configure DS64 </span>window.</p><p style="margin-left: 40px;">The DS64 programming tool lets you configure   the internal options of a DS64 directly from your computer. </p>
-<p style="margin-left: 40px;">Type  the address of a DS64 board in the text field  and click 
-  <input name="button3" id="button3" value="Read from DS64" type="submit">
-. The tool will read back the current state of the various options, and
-set the check boxes to correspond to their current values. </p>
-<p style="margin-left: 40px;"> You can then, if you wish, change the checkboxes and click 
-  <input name="button4" id="button4" value="Write to DS64" type="submit">   
-to make your changes permanent. </p>
-<h4 style="margin-left: 40px;">Limitations</h4><div style="margin-left: 40px;">
-Because of the way the DS64 board works, this tool can't change  the basic address of the unit.
-</div><p style="margin-left: 40px;"> At present, DS64 routes cannot be programmed by this tool. It's
-possible, but nobody has written the code for it yet because JMRI
-routes are more powerful and easier to use. </p>
-<p style="margin-left: 40px;"><img src="images/Main_Loconet07.png" alt="DS64 Programmer" border="4" height="624" width="466"></p><p><strong><a name="CommandStation"></a>Configure Command Station</strong></p>
-<p style="margin-left: 40px;">Opens the Configure Command Station window</p>
-<p><strong>Configure LocoNet ID</strong></p>
-<p style="margin-left: 40px;">Opens the <strong>Configure LocoNet ID</strong> dialog that allows you to
-<input name="button5" id="button5" value="Read" type="submit"> 
-  or 
-  <input name="button6" id="button6" value="Set" type="submit"> 
-  the LocoNet ID <strong>Value:</strong></p>
-<p style="margin-left: 40px;"><img src="images/Main_Loconet08.png" alt="loconet if" height="145" width="245"></p><p><span style="font-weight: bold;">Configure Duplex Group</span></p><p style="margin-left: 40px;">Opens the<span style="font-weight: bold;"> Duplex Group Configuration</span> Window<span style="font-weight: bold;">/</span></p><table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2"><tbody><tr><td><img style="width: 478px; height: 406px;" alt="duplex" src="images/Main_Loconet_Duplex01.png"></td><td><img style="width: 478px; height: 406px;" alt="duplex" src="images/Main_Loconet_Duplex02.png"></td></tr></tbody></table>
-<p><img src="images/separator.png" alt="sep" height="4" width="340"></p>
-<p><strong>Send Throttle Messages</strong></p>
-<p style="margin-left: 40px;">Opens <strong>Throttle message</strong> prompt with limited capability to send messages to handheld throttle.</p>
-<p style="margin-left: 40px;"><img src="images/Main_Loconet10.png" alt="send loconet messages" height="100" width="267"></p>
-<p><img src="images/separator.png" alt="sep" height="4" width="340"></p>
-<p><strong><a name="Packet"></a>Send LocoNet Packet</strong></p>
-<p style="margin-left: 40px;">Opens the <span style="font-weight: bold;">Send LocoNet Packet</span> dialog that lets you directly command LocoNet devices.</p>
-<p style="margin-left: 40px;"><img src="images/Main_Loconet11.png" alt="Send packet" border="4" height="311" width="468"></p>
-<p style="margin-left: 40px;">LocoNet packets are sent in raw hexadecimal format, you may use the <a href="Main_Monitor_Window.shtml">Monitor Window</a> in the <strong>Show Raw Data</strong> option to monitor the packets.</p>
-<p style="margin-left: 40px;">The top section lets you send a single LocoNet packet. Type the hexidecimal numbers and click 
-  <input name="button7" id="button7" value="Send" type="submit"> 
-, you should include the byte for the  checksum at the end of the message.</p>
-<p style="margin-left: 40px;">The bottom section lets you enter from one to four packets that will
-be repeatedly sent in sequence, with the user-defined delays in
-between. Press the <input name="button8" id="button8" value="Go" type="submit"> 
-  to start transmission sequence, and press again to stop the sequence.
-</p><p><strong>Select PR3 Mode</strong></p>
-<p style="margin-left: 40px;">Opens the <strong>Select PR3 Mode</strong> dialog.</p>
-<p style="margin-left: 40px;"><img src="images/Main_Loconet14.png" alt="PR3 Mode" height="91" width="452"></p>
-<p><img src="images/separator.png" alt="sep" height="4" width="340"></p>
-<p><strong><a name="Firmware"></a>Download Firmware</strong></p>
-<p style="margin-left: 40px;">Some Digitrax products can have new firmware downloaded to them.The
-firmware updates are distributed as .dml (Digitrax Mangled Firmware)
-files. They contain both the code itself, and various management
-information to make sure that it can be downloaded into the hardware it
-expects.</p>
-<p style="margin-left: 40px;"><img src="images/Main_Loconet12.png" alt="firmware downloader" height="473" width="425"></p>
-<p style="margin-left: 40px;">To use this tool:</p>
-<ul style="margin-left: 40px;"><li>Click 
-    <input name="button9" id="button9" value="Select" type="submit"> 
-    and select the .dmf file you want to download.<br>
-    <br>
-</li><li>Click 
-    <input name="button10" id="button10" value="Read file" type="submit">
-  to read the file into the program and verify its contents.</li><li>Only if instructed to by Digitrax, change the various values in the control fields (this is usually not needed</li><li>Click 
-    <input name="button11" id="button11" value="Download" type="submit">
-    to load the firmware. This will take a little while.</li></ul>
-<p><strong><a name="Sounds"></a>Download Sounds</strong></p><ol style="margin-left: 40px;"><li>&nbsp;not ready". If this happens
-repeatedly, make sure that the serial port and cable that the PR2 is
-using as the control lea<p>Opens the <span style="font-weight: bold;">Decoder Sound Downloader</span>.</p><img src="images/Main_Loconet13.png" alt="Sound Download" height="232" width="436">
-<p>Digitrax sound decoders are loaded with "sound projects", stored in
-"Sound Project" (.spj) files. Those contain a number of "sound
-fragments" in .wav format, plus some additional control information. </p>
-<p> The Decoder Sound Downloader tool lets you load a new .spj file
-into a Digitrax sound decoder via a Digitrax PR2 or PR3 interface. If
-you're using a PR3, it needs to be put into "Programmer mode" before
-trying to download, see the main <a href="../help/en/html/hardware/loconet/PR3.shtml">PR3 page</a>. </p>
-<p> Digitrax provides sample sound project files at their Sound Depot <a href="http://www.digitrax.com/sounddepot.php">(http://www.digitrax.com/sounddepot.php)</a> web site. You can also find links to documentation and additional tools there. </p>
-<p> JMRI also provides tools for <a href="../package/jmri/jmrix/loconet/soundloader/EditorFrame.shtml">editing sound project files</a> to include new sounds and even to <a href="../package/jmri/jmrix/loconet/sdfeditor/EditorFrame.shtml">change the sound logic</a>. When you first select the Download Sounds tool, it opens a dialog  with most of the controls disabled:<br>
-  <br>
-(Click on any image on this page to see a larger version)</p>
-<p> The status line at the bottom will walk you through the steps needed. </p>
-</li><li>First, click "Select" and pick the .spj file you want to download. </li><li>Next,
-click "Read" to read the file (this is a separate step so you can just
-click "Read" multiple times if you're editing and saving new versions
-of the file). <p> If everything is OK, the file will be read into the program
-and verified, a version string from the file will be displayed, and the
-"Download" button will be enabled. </p>
-  </li><li>Click "Download" to start the download process. It will take a little  while. The progress is described in the status line:
-    <dl><dt>"Starting download; erase flash"</dt><dd>The
-first step is to erase the decoders memory so it can take new data.
-This will take up to about 30 seconds, depending on the specific
-decoder. </dd><dt>"Sending initialization message"</dt><dd>Set up the decoder to accept data          after being erased.  This should only take a fraction of a second. </dd><dt>"Send SDF data"</dt><dd>Load the Sound Definition data into the decoder, which          should only take a few seconds </dd><dt>"Send WAV data"</dt><dd>The
-sound data is being downloaded. As each block is sent you'll get an
-update: "Send WAV data block 1", then 2, then 3, etc. </dd><dt>"Done"</dt><dd>The download completed OK. </dd></dl>
-If something goes wrong, the final status will be "Download aborted".
-The most common reason is that the PR2 couldn't handle the data that
-was being send, which is listed as "PR2</li></ol><p><strong>Edit SPJ Sound</strong> <strong>File</strong></p>
-<p style="margin-left: 40px;">Opens Sound File editing tool</p><div style="margin-left: 40px;"><img src="images/Main_Loconet15.png" alt="Edit soumd" height="93" width="248"></div><p><img src="images/separator.png" alt="sep" height="4" width="340"></p><strong>Start LocoNet Server</strong>
-<p style="margin-left: 40px;">Starts the LocoNet server.</p>
-<p><strong>Start LocoNet over TCP Server</strong></p>
-<p style="margin-left: 40px;">Opens the <strong>LocoNetOver Tcp Server</strong> dialog.</p>
-<p style="margin-left: 40px;"><img src="images/Main_Loconet09.png" alt="LocoNet server" border="4" height="120" width="361"></p>
+      <h2>LocoNet Menu</h2>
 
-<hr>
-<div align="right">
-  <p><a href="Main_Menu.shtml#System">Back to Index</a></p>
-</div>
+      <div align="right">
+        <p><a href="Main_Menu.shtml#System">Back to Index</a></p>
+      </div>
+      <hr>
 
-<!--#include virtual="/Footer" -->
-  </div><!-- closes #mainContent-->
- </div> <!-- closes #mBody-->
+      <p><strong>Monitor LocoNet</strong></p>
+
+      <p style="margin-left: 40px;">Opens the <a href=
+      "Main_Monitor_Window.shtml">Monitor LocoNet Window(Gerneric
+      Communications Monitor Window)</a> and automatically displays
+      the information that is being sent and received on the
+      communications link between your computer and your DCC
+      system.</p>
+
+      <p><strong><a name="Slots" id="Slots"></a>Monitor
+      Slots</strong></p>
+
+      <p style="margin-left: 40px;">Opens the Monitor Slots window,
+      and displays a table of the "command station slots"
+      contents.</p>
+
+      <p style="margin-left: 40px;">Slots are used to control
+      individual locomotive and consists. The display includes the
+      decoder's speed step format, current speed and function
+      settings, consist information and status. You may choose to
+      show all slots or just the ones being actively used.</p>
+
+      <p align="center"><img src="images/Main_Loconet01.png" alt=
+      "slot monitor" height="274" width="800"></p>
+
+      <p style="margin-left: 40px;">The check box at the top allow
+      to select what slots are displayed.</p>
+
+      <p style="margin-left: 40px;"><input name="checkbox" id=
+      "checkbox" type="checkbox"> <strong>Show unused
+      slots</strong></p>
+
+      <p style="margin-left: 40px;"><input name="checkbox2" id=
+      "checkbox2" type="checkbox"> <strong>Show system
+      slots</strong></p>
+
+      <p style="margin-left: 40px;"><strong><input name="button"
+      id="button" value="estop all" type="submit"></strong>
+      Executes an <strong>Emergency Stop</strong> for all
+      locomotives.</p>
+
+      <p style="margin-left: 40px;">The columns are:</p>
+
+      <table align="center" border="1" cellpadding="1" cellspacing=
+      "1" width="90%">
+        <tbody>
+          <tr>
+            <td width="18%"><strong>Column</strong></td>
+
+            <td colspan="2" width="82%">
+            <strong>Displays</strong></td>
+          </tr>
+
+          <tr>
+            <td>Slot</td>
+
+            <td colspan="2">The number of the slot</td>
+          </tr>
+
+          <tr>
+            <td>Address</td>
+
+            <td colspan="2">Locomotive address the slot
+            controls</td>
+          </tr>
+
+          <tr>
+            <td>Speed</td>
+
+            <td colspan="2">For unconsisted locomotives and
+            addresses that are at the top of a consist, this is the
+            current speed setting. It is an internal value for
+            consisted slots.</td>
+          </tr>
+
+          <tr>
+            <td>Decoder Type</td>
+
+            <td colspan="2">The format of the commands being sent
+            to the decoder, typically, either 128 step or 28 step,
+            though other values are possible.</td>
+          </tr>
+
+          <tr>
+            <td rowspan="5" valign="top">Status</td>
+
+            <td colspan="2">One of the four possible states:</td>
+          </tr>
+
+          <tr>
+            <td>Free</td>
+
+            <td>Not reserved for any particular use, no
+            contents</td>
+          </tr>
+
+          <tr>
+            <td>Idle</td>
+
+            <td>Not reserved for any particular use, no
+            contents</td>
+          </tr>
+
+          <tr>
+            <td>Common</td>
+
+            <td>Not in use at the moment, but still contains valid
+            data for the last decoder to use it.</td>
+          </tr>
+
+          <tr>
+            <td>In Use</td>
+
+            <td>Currently controlling a decoder</td>
+          </tr>
+
+          <tr>
+            <td>Consisted</td>
+
+            <td colspan="2">Displays the consist status of the
+            slot, whether it is not consisted, the top of a
+            consist, included in a consist, etc.</td>
+          </tr>
+
+          <tr>
+            <td>Throttle ID</td>
+
+            <td colspan="2">The UT4 throttles have a fixed throttle
+            ID. The DT400 has a fixed common leading HEX value and
+            a user programmable second HEX value. . It is displayed
+            as two hexadecimal bytes, see the Digitrax instructions
+            for details.</td>
+          </tr>
+
+          <tr>
+            <td>Direction</td>
+
+            <td colspan="2">Whether the decoder is currently being
+            commanded to go Forward or Reverse.</td>
+          </tr>
+
+          <tr>
+            <td>F0-F8</td>
+
+            <td colspan="2">The current function settings</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p><strong><a name="Clock" id="Clock"></a>Monitor
+      Clock</strong></p>
+
+      <p style="margin-left: 40px;">A Digtrax LocoNet can contain
+      it's own fast clock timebase. This can be driven either by a
+      DCS100/DCS200 command station, or by a separate fast clock
+      module such as those made by Logic Rail Technologies. The
+      <span style="font-weight: bold;">Monitor Clock</span> dialog
+      allows you to control this feature.</p>
+
+      <p style="margin-left: 40px;"><img src=
+      "images/Main_Loconet02.png" alt="clock monitor" height="153"
+      width="215"></p>
+
+      <p style="margin-left: 40px;">The <strong>Clock
+      Monitor</strong> tool provides a convenient way to:</p>
+
+      <ul style="margin-left: 40px;">
+        <li><input name="button2" id="button2" value="Read" type=
+        "submit"> the current contents of the LocoNet fast
+        clock</li>
+
+        <li>Set the <strong>Day</strong> and
+        <strong>Time</strong></li>
+
+        <li>Set the <strong>Rate</strong>. Note that you can't
+        explicitly pause a LocoNet clock, but you can stop it by
+        setting the rate to zero.</li>
+      </ul>
+
+      <p style="margin-left: 40px;">If you are using a DCS100 or
+      DCS200 command station to create your LocoNet fast clock, you
+      may have noticed that it doesn't keep particularly good time.
+      If you select the "Correct LocoNet Fast Clock Master", JMRI
+      will adjust the rate of the LocoNet clock so that it keeps
+      better time.</p><strong>Monitor LocoNet Stats</strong>
+
+      <p style="margin-left: 40px;">If active displays the
+      statistics related to traffic on the LocoNet Monitor
+      <strong>LocoNet Stats</strong> Window.</p>
+
+      <p style="margin-left: 40px;"><img style=
+      "width: 537px; height: 103px;" alt="stat monitor" src=
+      "images/Main_Loconet_Stats.png"></p>
+
+      <p><img src="images/separator.png" alt="sep" height="4"
+      width="340"></p>
+
+      <p><strong><a name="BDL16" id="BDL16"></a>Configure
+      BDL16</strong><span style=
+      "font-weight: bold;">/BDL162</span><strong>/BDL168</strong></p>
+
+      <p style="margin-left: 40px;"><img style=
+      "width: 528px; height: 626px;" alt="BDL" src=
+      "images/Main_Loconet03.png"></p>
+
+      <p><strong>Configure LocoIO</strong></p>
+
+      <p style="margin-left: 40px;">Opens the <span style=
+      "font-weight: bold;">Configure LocoIO</span> window.</p>
+
+      <p style="margin-left: 40px;"><img src=
+      "images/Main_Loconet04.png" alt="LocoNet IO programmer"
+      border="4" height="518" width="693"></p>
+
+      <p><strong><a name="PM4" id="PM4"></a>Configure
+      PM4</strong>/PM42</p>
+
+      <p style="margin-left: 40px;">Opens the Configure PM4/PM42
+      window.</p>
+
+      <p style="margin-left: 40px;"><img src=
+      "images/Main_Loconet05.png" alt="PM4 programmer" border="4"
+      height="289" width="416"></p>
+
+      <p><strong><a name="SE8C" id="SE8C"></a>Configure
+      SE8C</strong></p>
+
+      <p style="margin-left: 40px;">Opens the <span style=
+      "font-weight: bold;">Configure SE8C</span> window.</p>
+
+      <p style="margin-left: 40px;"><img src=
+      "images/Main_Loconet06.png" alt="SE8C programmer" border="4"
+      height="506" width="411"></p>
+
+      <p><strong><a name="DS64" id="DS64"></a>Configure
+      DS64</strong></p>
+
+      <p style="margin-left: 40px;">Opens the <span style=
+      "font-weight: bold;">Configure DS64</span> window.</p>
+
+      <p style="margin-left: 40px;">The DS64 programming tool lets
+      you configure the internal options of a DS64 directly from
+      your computer.</p>
+
+      <p style="margin-left: 40px;">Type the address of a DS64
+      board in the text field and click <input name="button3" id=
+      "button3" value="Read from DS64" type="submit"> . The tool
+      will read back the current state of the various options, and
+      set the check boxes to correspond to their current
+      values.</p>
+
+      <p style="margin-left: 40px;">You can then, if you wish,
+      change the checkboxes and click <input name="button4" id=
+      "button4" value="Write to DS64" type="submit"> to make your
+      changes permanent.</p>
+
+      <h4 style="margin-left: 40px;">Limitations</h4>
+
+      <div style="margin-left: 40px;">
+        Because of the way the DS64 board works, this tool can't
+        change the basic address of the unit.
+      </div>
+
+      <p style="margin-left: 40px;">At present, DS64 routes cannot
+      be programmed by this tool. It's possible, but nobody has
+      written the code for it yet because JMRI routes are more
+      powerful and easier to use.</p>
+
+      <p style="margin-left: 40px;"><img src=
+      "images/Main_Loconet07.png" alt="DS64 Programmer" border="4"
+      height="624" width="466"></p>
+
+      <p><strong><a name="CommandStation" id=
+      "CommandStation"></a>Configure Command Station</strong></p>
+
+      <p style="margin-left: 40px;">Opens the Configure Command
+      Station window</p>
+
+      <p><strong>Configure LocoNet ID</strong></p>
+
+      <p style="margin-left: 40px;">Opens the <strong>Configure
+      LocoNet ID</strong> dialog that allows you to <input name=
+      "button5" id="button5" value="Read" type="submit"> or
+      <input name="button6" id="button6" value="Set" type="submit">
+      the LocoNet ID <strong>Value:</strong></p>
+
+      <p style="margin-left: 40px;"><img src=
+      "images/Main_Loconet08.png" alt="loconet if" height="145"
+      width="245"></p>
+
+      <p><span style="font-weight: bold;">Configure Duplex
+      Group</span></p>
+
+      <p style="margin-left: 40px;">Opens the <span style=
+      "font-weight: bold;">Duplex Group Configuration</span>
+      Window<span style="font-weight: bold;">/</span></p>
+
+      <table style="text-align: left; width: 100%;" border="1"
+      cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td><img style="width: 478px; height: 406px;" alt=
+            "duplex" src="images/Main_Loconet_Duplex01.png"></td>
+
+            <td><img style="width: 478px; height: 406px;" alt=
+            "duplex" src="images/Main_Loconet_Duplex02.png"></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p><img src="images/separator.png" alt="sep" height="4"
+      width="340"></p>
+
+      <p><strong>Send Throttle Messages</strong></p>
+
+      <p style="margin-left: 40px;">Opens <strong>Throttle
+      message</strong> prompt with limited capability to send
+      messages to handheld throttle.</p>
+
+      <p style="margin-left: 40px;"><img src=
+      "images/Main_Loconet10.png" alt="send loconet messages"
+      height="100" width="267"></p>
+
+      <p><img src="images/separator.png" alt="sep" height="4"
+      width="340"></p>
+
+      <p><strong><a name="Packet" id="Packet"></a>Send LocoNet
+      Packet</strong></p>
+
+      <p style="margin-left: 40px;">Opens the <span style=
+      "font-weight: bold;">Send LocoNet Packet</span> dialog that
+      lets you directly command LocoNet devices.</p>
+
+      <p style="margin-left: 40px;"><img src=
+      "images/Main_Loconet11.png" alt="Send packet" border="4"
+      height="311" width="468"></p>
+
+      <p style="margin-left: 40px;">LocoNet packets are sent in raw
+      hexadecimal format, you may use the <a href=
+      "Main_Monitor_Window.shtml">Monitor Window</a> in the
+      <strong>Show Raw Data</strong> option to monitor the
+      packets.</p>
+
+      <p style="margin-left: 40px;">The top section lets you send a
+      single LocoNet packet. Type the hexidecimal numbers and click
+      <input name="button7" id="button7" value="Send" type=
+      "submit"> , you should include the byte for the checksum at
+      the end of the message.</p>
+
+      <p style="margin-left: 40px;">The bottom section lets you
+      enter from one to four packets that will be repeatedly sent
+      in sequence, with the user-defined delays in between. Press
+      the <input name="button8" id="button8" value="Go" type=
+      "submit"> to start transmission sequence, and press again to
+      stop the sequence.</p>
+
+      <p><strong>Select PR3 Mode</strong></p>
+
+      <p style="margin-left: 40px;">Opens the <strong>Select PR3
+      Mode</strong> dialog.</p>
+
+      <p style="margin-left: 40px;"><img src=
+      "images/Main_Loconet14.png" alt="PR3 Mode" height="91" width=
+      "452"></p>
+
+      <p><img src="images/separator.png" alt="sep" height="4"
+      width="340"></p>
+
+      <p><strong><a name="Firmware" id="Firmware"></a>Download
+      Firmware</strong></p>
+
+      <p style="margin-left: 40px;">Some Digitrax products can have
+      new firmware downloaded to them.The firmware updates are
+      distributed as .dml (Digitrax Mangled Firmware) files. They
+      contain both the code itself, and various management
+      information to make sure that it can be downloaded into the
+      hardware it expects.</p>
+
+      <p style="margin-left: 40px;"><img src=
+      "images/Main_Loconet12.png" alt="firmware downloader" height=
+      "473" width="425"></p>
+
+      <p style="margin-left: 40px;">To use this tool:</p>
+
+      <ul style="margin-left: 40px;">
+        <li>Click <input name="button9" id="button9" value="Select"
+        type="submit"> and select the .dmf file you want to
+        download.<br>
+        <br></li>
+
+        <li>Click <input name="button10" id="button10" value=
+        "Read file" type="submit"> to read the file into the
+        program and verify its contents.</li>
+
+        <li>Only if instructed to by Digitrax, change the various
+        values in the control fields (this is usually not
+        needed</li>
+
+        <li>Click <input name="button11" id="button11" value=
+        "Download" type="submit"> to load the firmware. This will
+        take a little while.</li>
+      </ul>
+
+      <p><strong><a name="Sounds" id="Sounds"></a>Download
+      Sounds</strong></p>
+
+      <ol style="margin-left: 40px;">
+        <li> not ready". If this happens repeatedly, make sure that
+        the serial port and cable that the PR2 is using as the
+        control lea
+
+          <p>Opens the <span style="font-weight: bold;">Decoder
+          Sound Downloader</span>.</p><img src=
+          "images/Main_Loconet13.png" alt="Sound Download" height=
+          "232" width="436">
+
+          <p>Digitrax sound decoders are loaded with "sound
+          projects", stored in "Sound Project" (.spj) files. Those
+          contain a number of "sound fragments" in .wav format,
+          plus some additional control information.</p>
+
+          <p>The Decoder Sound Downloader tool lets you load a new
+          .spj file into a Digitrax sound decoder via a Digitrax
+          PR2 or PR3 interface. If you're using a PR3, it needs to
+          be put into "Programmer mode" before trying to download,
+          see the main <a href=
+          "../help/en/html/hardware/loconet/PR3.shtml">PR3
+          page</a>.</p>
+
+          <p>Digitrax provides sample sound project files at their
+          Sound Depot <a href=
+          "http://www.digitrax.com/sounddepot.php">(http://www.digitrax.com/sounddepot.php)</a>
+          web site. You can also find links to documentation and
+          additional tools there.</p>
+
+          <p>JMRI also provides tools for <a href=
+          "../package/jmri/jmrix/loconet/soundloader/EditorFrame.shtml">
+          editing sound project files</a> to include new sounds and
+          even to <a href=
+          "../package/jmri/jmrix/loconet/sdfeditor/EditorFrame.shtml">
+          change the sound logic</a>. When you first select the
+          Download Sounds tool, it opens a dialog with most of the
+          controls disabled:<br>
+          <br>
+          (Click on any image on this page to see a larger
+          version)</p>
+
+          <p>The status line at the bottom will walk you through
+          the steps needed.</p>
+        </li>
+
+        <li>First, click "Select" and pick the .spj file you want
+        to download.</li>
+
+        <li>Next, click "Read" to read the file (this is a separate
+        step so you can just click "Read" multiple times if you're
+        editing and saving new versions of the file).
+
+          <p>If everything is OK, the file will be read into the
+          program and verified, a version string from the file will
+          be displayed, and the "Download" button will be
+          enabled.</p>
+        </li>
+
+        <li>Click "Download" to start the download process. It will
+        take a little while. The progress is described in the
+        status line:
+
+          <dl>
+            <dt>"Starting download; erase flash"</dt>
+
+            <dd>The first step is to erase the decoders memory so
+            it can take new data. This will take up to about 30
+            seconds, depending on the specific decoder.</dd>
+
+            <dt>"Sending initialization message"</dt>
+
+            <dd>Set up the decoder to accept data after being
+            erased. This should only take a fraction of a
+            second.</dd>
+
+            <dt>"Send SDF data"</dt>
+
+            <dd>Load the Sound Definition data into the decoder,
+            which should only take a few seconds</dd>
+
+            <dt>"Send WAV data"</dt>
+
+            <dd>The sound data is being downloaded. As each block
+            is sent you'll get an update: "Send WAV data block 1",
+            then 2, then 3, etc.</dd>
+
+            <dt>"Done"</dt>
+
+            <dd>The download completed OK.</dd>
+          </dl>If something goes wrong, the final status will be
+          "Download aborted". The most common reason is that the
+          PR2 couldn't handle the data that was being send, which
+          is listed as "PR2
+        </li>
+      </ol>
+
+      <p><strong>Edit SPJ Sound</strong> <strong>File</strong></p>
+
+      <p style="margin-left: 40px;">Opens Sound File editing
+      tool</p>
+
+      <div style="margin-left: 40px;">
+        <img src="images/Main_Loconet15.png" alt="Edit soumd"
+        height="93" width="248">
+      </div>
+
+      <p><img src="images/separator.png" alt="sep" height="4"
+      width="340"></p><strong>Start LocoNet Server</strong>
+
+      <p style="margin-left: 40px;">Starts the LocoNet server.</p>
+
+      <p><strong>Start LocoNet over TCP Server</strong></p>
+
+      <p style="margin-left: 40px;">Opens the <strong>LocoNetOver
+      Tcp Server</strong> dialog.</p>
+
+      <p style="margin-left: 40px;"><img src=
+      "images/Main_Loconet09.png" alt="LocoNet server" border="4"
+      height="120" width="361"></p>
+      <hr>
+
+      <div align="right">
+        <p><a href="Main_Menu.shtml#System">Back to Index</a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>

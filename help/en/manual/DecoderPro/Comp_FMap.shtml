@@ -1,59 +1,80 @@
-<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
 <html lang="en">
 <head>
-<title>Comprehensive Programmer - Function Mapping Pane</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>Comprehensive Programmer - Function Mapping Pane</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <!--#include virtual="/Header" -->
 
-<a name="Top"></a>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<h1>DecoderPro&reg; Comprehensive Programmer</h1>
-<h2>Function Mapping Pane</h2>
+    <div id="mainContent">
+      <a name="Top" id="Top"></a>
 
-<div align="right">
-<p><a href="Comp_Speed_Talble.shtml">Previous | </a>
-  <a href="Comp_LightFX.shtml">Next </a>
-</p><p><a href="index.shtml#Advanced%20Programmer">Back to Index</a>
-</p></div>
+      <h1>DecoderPro&reg; Comprehensive Programmer</h1>
 
-<hr>
-<p>Some decoders allow you to change the function assigned to each set
-of output wires (or pads). Multiple choices for function assignments
-are shown by several check boxes. This is more common in decoders with
-more than four functions, and in sound decoders. </p><p> Some of the new sound decoders may have up to 28 functions,
-and your throttle may have a limited function capability. So, here&#8217;s
-your opportunity to pick which ones you can operate from your throttle.
-</p><p>When this capability is present, the check boxes as shown in
-the window below are active and allow you to choose to which function
-key on the throttle each output responds.
-</p><h1 style="text-align: center;"><img style="width: 820px; height: 697px;" src="images/Comp_05_FMap.png" alt="F Map"></h1>
-<p>If a checkbox is dimmed that indicates that no changes in function
-assignments are possible. Not all decoders allow you to remap the
-functions and others have very limited functions. </p><h1>&nbsp;</h1>
+      <h2>Function Mapping Pane</h2>
 
-<hr>
+      <div align="right">
+        <p><a href="Comp_Speed_Talble.shtml">Previous |</a>
+        <a href="Comp_LightFX.shtml">Next</a></p>
 
-<div align="right">
-<p><a href="Comp_FunctionLabel.shtml"></a>
-  <a href="Comp_Speed_Talble.shtml">Previous | </a> <a href="Comp_LightFX.shtml">Next </a>
-</p><p><a href="index.shtml#Advanced%20Programmer">Back to Index</a>
-</p></div>
+        <p><a href="index.shtml#Advanced%20Programmer">Back to
+        Index</a></p>
+      </div>
+      <hr>
 
-<!--#include virtual="/Footer" -->
-  </div><!-- closes #mainContent-->
- </div> <!-- closes #mBody-->
- </body>
+      <p>Some decoders allow you to change the function assigned to
+      each set of output wires (or pads). Multiple choices for
+      function assignments are shown by several check boxes. This
+      is more common in decoders with more than four functions, and
+      in sound decoders.</p>
+
+      <p>Some of the new sound decoders may have up to 28
+      functions, and your throttle may have a limited function
+      capability. So, here's your opportunity to pick which ones
+      you can operate from your throttle.</p>
+
+      <p>When this capability is present, the check boxes as shown
+      in the window below are active and allow you to choose to
+      which function key on the throttle each output responds.</p>
+
+      <h1 style="text-align: center;"><img style=
+      "width: 820px; height: 697px;" src="images/Comp_05_FMap.png"
+      alt="F Map"></h1>
+
+      <p>If a checkbox is dimmed that indicates that no changes in
+      function assignments are possible. Not all decoders allow you
+      to remap the functions and others have very limited
+      functions.</p>
+
+      <h1> </h1>
+      <hr>
+
+      <div align="right">
+        <p><a href="Comp_FunctionLabel.shtml"></a> <a href=
+        "Comp_Speed_Talble.shtml">Previous |</a> <a href=
+        "Comp_LightFX.shtml">Next</a></p>
+
+        <p><a href="index.shtml#Advanced%20Programmer">Back to
+        Index</a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
 </html>

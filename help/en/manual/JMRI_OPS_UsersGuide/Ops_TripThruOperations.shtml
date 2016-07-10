@@ -1,64 +1,168 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
-<title>Operations-A Trip Through Operations</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>Operations-A Trip Through Operations</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <!--#include virtual="/Header" -->
 
-<a name="Top"></a>
-<h1>Using JMRI&reg; to Operate Trains</h1>
-<h2>A Trip through Operations</h2>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<div align="right">
-<p><a href="Ops_Trains.shtml">Previous</a></p>
-<p><a href="index.shtml#Operations">Index</a></p>
-</div>
+    <div id="mainContent">
+      <a name="Top" id="Top"></a>
 
-<hr>
-<p>Well, now that we&rsquo;ve had an overview of OperationsPro,  let&rsquo;s see if  we can make it work.&nbsp; We could sit down  and enter a whole bunch of information into the Locations, Cars, Engines,  Routes and Trains screens or do it the easy way and use the built-in Demo  Railroad.&nbsp; Since this is a training (pun  intended) exercise, we&rsquo;ll use the Demo files.&nbsp; <br>
-To get the demo files loaded, go to the JMRI main menu and click on <strong>Tools</strong>, scroll all the way to the bottom to select Operations (or pick the Operations menu if set in Operations settings), and slide sideways  to select Settings.&nbsp; On the Operations Settings  screen select the Tools menu and then select Load Demo  Files.&nbsp; DecoderPro&reg; will need to restart.</p>
-<p align="center"><img src="images/Ops_Operations01.png" width="778" height="608"></p>
-<p align="left">Now go back to the DecoderPro main menu to quit and then  re-start the program. This will load the Demo files. When the program  presents the main JMRI screen, click on Tools menu, scroll all the way to the bottom to select Operations, and it expands to the Operations menu. Select Locations which opens and displays the Location window as shown below. All of the locations are shown as a list sorted by <strong>Name.</strong></p>
-<p align="center"><img src="images/Ops_Operations02.png" width="670" height="245"></p>
-<p align="left">If you select Lakeview and click on the Edit box way over on  the right of the entry for Lakeview, you&rsquo;ll see a screen like that below, Edit Location,  showing that Lakeview is a staging area that can accommodate almost any kind of  car.&nbsp; This will be the starting point for  our mythical trip.</p>
-<p align="center"><img src="images/Ops_Operations03.png" width="766" height="577" alt="location Edit"></p>
-<p>We will now exit <strong>Edit Location</strong> window that describes location Lakeview Staging Area, by clicking  the window close icon (red X) in the upper right corner of the window. Also close the <strong>Locations</strong> window in the same manner.</p>
-<p>  Now, let&rsquo;s take a look at what resources are available to make up our  train. Open the Cars window from the Operations menu. The Cars window now lists all the cars that are in the  OperationsPro database and can be chosen to make up a train, so many that there&rsquo;s a  scrollbar on the right to scroll through the list. Again clicking on the Edit box on the right we could see the specifics  of any one car and of course Edit the data (if it was our own).&nbsp; We won&rsquo;t bother.</p>
-<p align="center"><img src="images/Ops_Operations04.png" width="900" height="486"></p>
-<p>Of course, we&rsquo;ll need Motive Power to pull our train, so  let&rsquo;s look at what&rsquo;s in the Locomotives Table.</p>
-<p align="center"><img src="images/Ops_Operations05.png" width="900" height="453"></p>
-<p>Since we know we&rsquo;re departing from <strong>Lakeview</strong> we probably want  to eyeball that pair of <strong>Trainmasters</strong> sitting over on track <strong>#97.</strong>&nbsp; The Command Station on our Demo railroad is  obviously an NCE product because these locos are assigned <strong>NCE consist #118.</strong></p>
-<p>So how does Operations REALLY work? Well, once you have all the data entered as we&rsquo;ve seen above, we can generate a set of manifests for the train  operations.&nbsp; To do this we use the Trains  window. Select <strong>Trains</strong> from the <strong>Operations</strong> menu and the <strong>Trains</strong> window will display.</p>
-<p align="center"><img src="images/Ops_Operations06.png" width="899" height="358"></p>
-<p>Here there are several trains ready to build.&nbsp; The highlighted train is <strong>LBX from  Lakeview to Bakersfield</strong>. By putting a check mark in the box in the Build column and then clicking the <input name="button1" id="button1" value="Build" type="button"> button at the bottom of the screen we were able to get the manifest built so that we can preview  it.&nbsp; It&rsquo;s a short run, but still takes more  than one page of fine print instructions for the crew.</p>
-<p align="center"><img src="images/Ops_Operations07.png" width="900" height="1169"></p>
-<p align="center"><img src="images/Ops_Operations08.png" width="900" height="472"></p>
-<p>We pick up our locomotives in Lakeview and head over to the yard  to gather up a bunch of cars and a caboose.&nbsp;  Then we get ready to depart at 7:10 on the fast clock.&nbsp; We should arrive at Farmington at 7:14, and  since there were no Farmington bound cars in Lakeview, and nothing in  Farmington bound for 
-  Hillsboro or Bakersfield, the program has scheduled no work to do at  Farmington.&nbsp; So we&rsquo;ll keep going.&nbsp; When we arrive at Hillsboro (hopefully at  7:18), we have some set-outs and pick-ups to attend to.&nbsp; Then, we&rsquo;re off to Bakersfield, gliding  through Danville and Port Arthur on the way.&nbsp;  Arriving at Bakersfield right on time at 8:21, we drop the boxcar at  Heritage Furniture, the Coalhopper in the yard, and slide the caboose gently  into the caboose track.&nbsp; Now we can take  the motive power over to the locomotive terminal and call in to Dispatch asking for  the trip to be terminated.<br>
-  The trip is terminated by selecting it in the Trains screen  and clicking the terminate button.&nbsp; This  would then enter the new locations of the rolling stock into the data screens  and release them for the next build.<br>
-  So that wasn&rsquo;t so difficult, was it?&nbsp; Hope you enjoyed your cab ride.</p>
-<hr>
+      <h1>Using JMRI&reg; to Operate Trains</h1>
 
-<div align="right">
-<p><a href="Ops_Trains.shtml">Previous</a></p>
-<p><a href="index.shtml#Operations">Index</a><a href="index.shtml#Operations"></a></p>
-</div>
+      <h2>A Trip through Operations</h2>
 
-<!--#include virtual="/Footer" -->
-</div>
-</div>
+      <div align="right">
+        <p><a href="Ops_Trains.shtml">Previous</a></p>
+
+        <p><a href="index.shtml#Operations">Index</a></p>
+      </div>
+      <hr>
+
+      <p>Well, now that we've had an overview of OperationsPro,
+      let's see if we can make it work.  We could sit down and
+      enter a whole bunch of information into the Locations, Cars,
+      Engines, Routes and Trains screens or do it the easy way and
+      use the built-in Demo Railroad.  Since this is a training
+      (pun intended) exercise, we'll use the Demo files. <br>
+      To get the demo files loaded, go to the JMRI main menu and
+      click on <strong>Tools</strong>, scroll all the way to the
+      bottom to select Operations (or pick the Operations menu if
+      set in Operations settings), and slide sideways to select
+      Settings.  On the Operations Settings screen select the Tools
+      menu and then select Load Demo Files.  DecoderPro&reg; will
+      need to restart.</p>
+
+      <p align="center"><img src="images/Ops_Operations01.png"
+      width="778" height="608"></p>
+
+      <p align="left">Now go back to the DecoderPro main menu to
+      quit and then re-start the program. This will load the Demo
+      files. When the program presents the main JMRI screen, click
+      on Tools menu, scroll all the way to the bottom to select
+      Operations, and it expands to the Operations menu. Select
+      Locations which opens and displays the Location window as
+      shown below. All of the locations are shown as a list sorted
+      by <strong>Name.</strong></p>
+
+      <p align="center"><img src="images/Ops_Operations02.png"
+      width="670" height="245"></p>
+
+      <p align="left">If you select Lakeview and click on the Edit
+      box way over on the right of the entry for Lakeview, you'll
+      see a screen like that below, Edit Location, showing that
+      Lakeview is a staging area that can accommodate almost any
+      kind of car.  This will be the starting point for our
+      mythical trip.</p>
+
+      <p align="center"><img src="images/Ops_Operations03.png"
+      width="766" height="577" alt="location Edit"></p>
+
+      <p>We will now exit <strong>Edit Location</strong> window
+      that describes location Lakeview Staging Area, by clicking
+      the window close icon (red X) in the upper right corner of
+      the window. Also close the <strong>Locations</strong> window
+      in the same manner.</p>
+
+      <p>Now, let's take a look at what resources are available to
+      make up our train. Open the Cars window from the Operations
+      menu. The Cars window now lists all the cars that are in the
+      OperationsPro database and can be chosen to make up a train,
+      so many that there's a scrollbar on the right to scroll
+      through the list. Again clicking on the Edit box on the right
+      we could see the specifics of any one car and of course Edit
+      the data (if it was our own).  We won't bother.</p>
+
+      <p align="center"><img src="images/Ops_Operations04.png"
+      width="900" height="486"></p>
+
+      <p>Of course, we'll need Motive Power to pull our train, so
+      let's look at what's in the Locomotives Table.</p>
+
+      <p align="center"><img src="images/Ops_Operations05.png"
+      width="900" height="453"></p>
+
+      <p>Since we know we're departing from
+      <strong>Lakeview</strong> we probably want to eyeball that
+      pair of <strong>Trainmasters</strong> sitting over on track
+      <strong>#97.</strong>  The Command Station on our Demo
+      railroad is obviously an NCE product because these locos are
+      assigned <strong>NCE consist #118.</strong></p>
+
+      <p>So how does Operations REALLY work? Well, once you have
+      all the data entered as we've seen above, we can generate a
+      set of manifests for the train operations.  To do this we use
+      the Trains window. Select <strong>Trains</strong> from the
+      <strong>Operations</strong> menu and the
+      <strong>Trains</strong> window will display.</p>
+
+      <p align="center"><img src="images/Ops_Operations06.png"
+      width="899" height="358"></p>
+
+      <p>Here there are several trains ready to build.  The
+      highlighted train is <strong>LBX from Lakeview to
+      Bakersfield</strong>. By putting a check mark in the box in
+      the Build column and then clicking the <input name="button1"
+      id="button1" value="Build" type="button"> button at the
+      bottom of the screen we were able to get the manifest built
+      so that we can preview it.  It's a short run, but still takes
+      more than one page of fine print instructions for the
+      crew.</p>
+
+      <p align="center"><img src="images/Ops_Operations07.png"
+      width="900" height="1169"></p>
+
+      <p align="center"><img src="images/Ops_Operations08.png"
+      width="900" height="472"></p>
+
+      <p>We pick up our locomotives in Lakeview and head over to
+      the yard to gather up a bunch of cars and a caboose.  Then we
+      get ready to depart at 7:10 on the fast clock.  We should
+      arrive at Farmington at 7:14, and since there were no
+      Farmington bound cars in Lakeview, and nothing in Farmington
+      bound for Hillsboro or Bakersfield, the program has scheduled
+      no work to do at Farmington.  So we'll keep going.  When we
+      arrive at Hillsboro (hopefully at 7:18), we have some
+      set-outs and pick-ups to attend to.  Then, we're off to
+      Bakersfield, gliding through Danville and Port Arthur on the
+      way.  Arriving at Bakersfield right on time at 8:21, we drop
+      the boxcar at Heritage Furniture, the Coalhopper in the yard,
+      and slide the caboose gently into the caboose track.  Now we
+      can take the motive power over to the locomotive terminal and
+      call in to Dispatch asking for the trip to be terminated.<br>
+      The trip is terminated by selecting it in the Trains screen
+      and clicking the terminate button.  This would then enter the
+      new locations of the rolling stock into the data screens and
+      release them for the next build.<br>
+      So that wasn't so difficult, was it?  Hope you enjoyed your
+      cab ride.</p>
+      <hr>
+
+      <div align="right">
+        <p><a href="Ops_Trains.shtml">Previous</a></p>
+
+        <p><a href="index.shtml#Operations">Index</a><a href=
+        "index.shtml#Operations"></a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div>
+  </div>
 </body>
 </html>

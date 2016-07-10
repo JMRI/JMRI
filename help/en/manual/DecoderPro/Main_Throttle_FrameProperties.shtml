@@ -1,73 +1,102 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
-<title>DecoderPro Throttle</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>DecoderPro Throttle</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <!--#include virtual="/Header" -->
 
-<a name="Top"></a>
-<h1>DecoderPro&reg; Main Menu Bar</h1>
-<h2>JMRI&reg; Throttle Window - Frame Properties</h2>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<div align="right">
-<p><a href="Main_Throttle.shtml">Back </a></p>
-</div>
+    <div id="mainContent">
+      <a name="Top" id="Top"></a>
 
-<hr>
-<p><strong>Frame Properties</strong></p>
-<p><img src="images/Main_Throttle_Frame.png" alt="Frame Edit" border="4" height="188" width="425"></p>
-<p><strong>Frame Title:</strong>Type the title of your choice for  the Throttle frame. This is referred to below  as&#8221;text&#8221;.</p>
-<p><strong>Frame Title Components:</strong> Select the text component
-desired. There are two components which can be in the title bar of the
-throttle &#8220;Text&#8221; and &#8220;Address&#8221;&nbsp; The selections allow either or both
-to be in the title (in the order they appear in the selection), or one
-can opt for the description in the locomotive Roster Entry</p>
-<blockquote>
-  <p><strong>Address </strong>--Automatically display the address of whatever locomotive is selected. (default)</p>
-  <p><strong>Text</strong> -- Display the text that you enter in the field as the title at the top of this window</p>
-  <p><strong>Text Address</strong> -- Display the text you entered, followed by the selected address</p>
-  <p>Address Text -- Display the selected address, followed by the text you entered</p>
-  <p><strong>Roster ID</strong> -- Display the selected roster ID</p>
-  <blockquote>
-    <p class="ACCENT">(Note that if you enter text, it will not be visible unless one of the middle three modes is selected)</p>
-  </blockquote>
-</blockquote>
-<p class="ACCENT"><strong>
-  <input name="checkbox6" id="checkbox6" type="checkbox">
-Frame Decorations</strong>: </p>
-<p>This will remove the individual control bars for the separate panes
-of the throttle.&nbsp; This is advised for Windows users, as clicking
-the minimize buttons causes the restore button to be lost behind the
-rest of the panels.&nbsp; Recovery entails using the view menus to
-remove and then restore the panel in question. </p>
-<p><strong>
-  <input name="button" id="button" value="OK" type="submit">
-</strong>  adds the edits</p>
-<p>
-  <input name="button2" id="button2" value="Cancel" type="submit">
-aborts the operation</p>
+      <h1>DecoderPro&reg; Main Menu Bar</h1>
 
-  <div align="right"></div>
-<hr>
-<div align="right">
-<p><a href="Main_Throttle.shtml">Back </a></p>
-</div>
+      <h2>JMRI&reg; Throttle Window - Frame Properties</h2>
 
-<!--#include virtual="/Footer" -->
-  </div><!-- closes #mainContent-->
- </div> <!-- closes #mBody-->
+      <div align="right">
+        <p><a href="Main_Throttle.shtml">Back</a></p>
+      </div>
+      <hr>
+
+      <p><strong>Frame Properties</strong></p>
+
+      <p><img src="images/Main_Throttle_Frame.png" alt="Frame Edit"
+      border="4" height="188" width="425"></p>
+
+      <p><strong>Frame Title:</strong>Type the title of your choice
+      for the Throttle frame. This is referred to below
+      as"text".</p>
+
+      <p><strong>Frame Title Components:</strong> Select the text
+      component desired. There are two components which can be in
+      the title bar of the throttle "Text" and "Address"  The
+      selections allow either or both to be in the title (in the
+      order they appear in the selection), or one can opt for the
+      description in the locomotive Roster Entry</p>
+
+      <blockquote>
+        <p><strong>Address</strong> --Automatically display the
+        address of whatever locomotive is selected. (default)</p>
+
+        <p><strong>Text</strong> -- Display the text that you enter
+        in the field as the title at the top of this window</p>
+
+        <p><strong>Text Address</strong> -- Display the text you
+        entered, followed by the selected address</p>
+
+        <p>Address Text -- Display the selected address, followed
+        by the text you entered</p>
+
+        <p><strong>Roster ID</strong> -- Display the selected
+        roster ID</p>
+
+        <blockquote>
+          <p class="ACCENT">(Note that if you enter text, it will
+          not be visible unless one of the middle three modes is
+          selected)</p>
+        </blockquote>
+      </blockquote>
+
+      <p class="ACCENT"><strong><input name="checkbox6" id=
+      "checkbox6" type="checkbox"> Frame Decorations</strong>:</p>
+
+      <p>This will remove the individual control bars for the
+      separate panes of the throttle.  This is advised for Windows
+      users, as clicking the minimize buttons causes the restore
+      button to be lost behind the rest of the panels.  Recovery
+      entails using the view menus to remove and then restore the
+      panel in question.</p>
+
+      <p><strong><input name="button" id="button" value="OK" type=
+      "submit"></strong> adds the edits</p>
+
+      <p><input name="button2" id="button2" value="Cancel" type=
+      "submit"> aborts the operation</p>
+
+      <div align="right"></div>
+      <hr>
+
+      <div align="right">
+        <p><a href="Main_Throttle.shtml">Back</a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>
