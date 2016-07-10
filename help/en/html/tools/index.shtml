@@ -244,7 +244,7 @@
 <a href="../../package/jmri/jmrix/grapevine/nodeconfig/NodeConfigFrame.shtml">Configure Nodes</a>
 </ul>
 
-<h3><a href="../apps/LocoTools/index.shtml">LocoNet (Digitrax) Tools</a></h3>
+<h3><a href="../hardware/loconet/Digitrax.shtml#tools">LocoNet (Digitrax) Tools</a></h3>
 <p>A full range of tools are available from the <b>LocoNet</b> menu when JMRI is connected to a (Digitrax) LocoNet DCC layout.<br>
 You may also access them by double clicking the <strong>Loco Tools</strong> icon in the JMRI installation folder. To name just a few:</p>
 <!-- No (doubling/outdated) list here, just a link to the page -->
