@@ -70,8 +70,7 @@ public class JsonUtilHttpService extends JsonHttpService {
     }
 
     /**
-     * Send a JSON {@link jmri.server.json.util.JsonUtilServiceFactory#HELLO}
-     * message.
+     * Send a JSON {@link jmri.server.json.JSON#HELLO} message.
      *
      * @param locale    the client's Locale
      * @param heartbeat seconds in which a client must send a message before its
@@ -155,8 +154,8 @@ public class JsonUtilHttpService extends JsonHttpService {
     }
 
     /**
-     * Send a JSON {@link jmri.server.json.util.JsonUtilServiceFactory#NODE}
-     * message containing the JMRI node identity and former identities.
+     * Send a JSON {@link jmri.server.json.JSON#NODE} message containing the
+     * JMRI node identity and former identities.
      *
      * @param locale the client's Locale
      * @return the JSON node message
