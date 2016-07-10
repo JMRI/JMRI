@@ -12,7 +12,7 @@ import org.eclipse.jetty.websocket.api.Session;
 public class JsonMockConnection extends JsonConnection {
 
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JsonMockConnection.class);
-    private JsonNode message;
+    private JsonNode message = null;
 
     public JsonMockConnection(Session connection) {
         super(connection);
