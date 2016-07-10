@@ -56,7 +56,7 @@ public class PowerButtonAction extends javax.swing.AbstractAction implements jav
     public void actionPerformed(java.awt.event.ActionEvent e) {
         try {
             // alternate power state, updating name
-            PowerManager p = jmri.InstanceManager.getDefault(jmri.PowerManager.class);
+            PowerManager p = jmri.InstanceManager.getOptionalDefault(jmri.PowerManager.class);
             if (p == null) {
                 return;
             }

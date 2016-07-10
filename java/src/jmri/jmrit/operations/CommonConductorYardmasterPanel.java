@@ -46,7 +46,7 @@ import org.slf4j.LoggerFactory;
  * @author Dan Boudreau Copyright (C) 2013
  * @version $Revision: 18630 $
  */
-public class CommonConductorYardmasterPanel extends OperationsPanel implements PropertyChangeListener {
+public abstract class CommonConductorYardmasterPanel extends OperationsPanel implements PropertyChangeListener {
 
     protected static final String Tab = "     "; // used to space out headers
     protected static final String Space = " "; // used to pad out panels
@@ -218,6 +218,7 @@ public class CommonConductorYardmasterPanel extends OperationsPanel implements P
         }
         if (ae.getSource() == setButton) {
             isSetMode = !isSetMode; // toggle setMode
+            update();
         }
         check();
     }
@@ -257,8 +258,8 @@ public class CommonConductorYardmasterPanel extends OperationsPanel implements P
         pSetouts.revalidate();
         pMoves.revalidate();
 
-        selectButton.setEnabled(carCheckBoxes.size() > 0);
-        clearButton.setEnabled(carCheckBoxes.size() > 0);
+        selectButton.setEnabled(carCheckBoxes.size() > 0 && !isSetMode);
+        clearButton.setEnabled(carCheckBoxes.size() > 0 && !isSetMode);
         check();
 
         log.debug("update complete");
@@ -585,6 +586,16 @@ public class CommonConductorYardmasterPanel extends OperationsPanel implements P
                 _train.getName()});
         }
     }
+    
+    protected void clearAndUpdate() {
+        trainCommon.clearUtilityCarTypes(); // reset the utility car counts
+        carCheckBoxes.clear();
+        isSetMode = false;
+        update();
+    }
+    
+    // to be overridden
+    protected abstract void update();
 
     protected void removePropertyChangeListerners() {
         rollingStock.stream().forEach((rs) -> {

@@ -280,7 +280,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
     JButton upBtn;
     // End of variables declaration//GEN-END:variables
 
-    private class TableModel extends AbstractTableModel implements PropertyChangeListener {
+    private static class TableModel extends AbstractTableModel implements PropertyChangeListener {
 
         private final StartupActionsManager manager;
 

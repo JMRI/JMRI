@@ -211,7 +211,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
     public void register() {
         this.setInstance();
         InstanceManager.getDefault(jmri.ConfigureManager.class).registerPref(this);
-        ConnectionConfigManager ccm = InstanceManager.getDefault(ConnectionConfigManager.class);
+        ConnectionConfigManager ccm = InstanceManager.getOptionalDefault(ConnectionConfigManager.class);
         if (ccm != null) {
             ccm.add(this);
         }
@@ -219,7 +219,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
 
     @Override
     public void dispose() {
-        ConnectionConfigManager ccm = InstanceManager.getDefault(ConnectionConfigManager.class);
+        ConnectionConfigManager ccm = InstanceManager.getOptionalDefault(ConnectionConfigManager.class);
         if (ccm != null) {
             ccm.remove(this);
         }

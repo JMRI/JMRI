@@ -399,7 +399,7 @@ public class LayoutEditorTools {
             } else if (assigned != A2) {
 // need to figure out what to do in this case.			
             }
-        } else if (throatDivergingHead == null) {
+        } else {   // throatDivergingHead is always null here
             removeSignalHeadFromPanel(layoutTurnout.getSignalA2Name());
             layoutTurnout.setSignalA2Name("");
         }
@@ -1257,13 +1257,11 @@ public class LayoutEditorTools {
         }
         for (int i = 0; i < layoutEditor.pointList.size(); i++) {
             PositionablePoint po = layoutEditor.pointList.get(i);
-            if ((po.getEastBoundSignal() != null)
-                    && (po.getEastBoundSignal().equals(sName) || ((uName != null)
+            if (    (po.getEastBoundSignal().equals(sName) || ((uName != null)
                     && (po.getEastBoundSignal().equals(uName))))) {
                 return true;
             }
-            if ((po.getWestBoundSignal() != null)
-                    && (po.getWestBoundSignal().equals(sName) || ((uName != null)
+            if (    (po.getWestBoundSignal().equals(sName) || ((uName != null)
                     && (po.getWestBoundSignal().equals(uName))))) {
                 return true;
             }
@@ -1351,14 +1349,10 @@ public class LayoutEditorTools {
         }
         for (int i = 0; i < layoutEditor.pointList.size(); i++) {
             PositionablePoint po = layoutEditor.pointList.get(i);
-            if ((po.getEastBoundSignal() != null)
-                    && (po.getEastBoundSignal().equals(sName) || ((uName != null)
-                    && (po.getEastBoundSignal().equals(uName))))) {
+            if (po.getEastBoundSignal().equals(sName) || po.getEastBoundSignal().equals(uName)) {
                 po.setEastBoundSignal("");
             }
-            if ((po.getWestBoundSignal() != null)
-                    && (po.getWestBoundSignal().equals(sName) || ((uName != null)
-                    && (po.getWestBoundSignal().equals(uName))))) {
+            if (po.getWestBoundSignal().equals(sName) || po.getWestBoundSignal().equals(uName)) {
                 po.setWestBoundSignal("");
             }
         }
@@ -1496,7 +1490,7 @@ public class LayoutEditorTools {
                     } else {
                         signalName = p.getEastBoundSignal();
                     }
-                    if ((signalName == null) || (signalName.equals(""))) {
+                    if (signalName.equals("")) {
                         return null;
                     }
                     return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
@@ -1553,8 +1547,7 @@ public class LayoutEditorTools {
                     warnOfSkippedTurnout(frame, to.getTurnoutName(), headName);
                     obj = to;
                 } else {
-                    return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
-                            getSignalHead(signalName);
+                    return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalName);
                 }
             } else if (type == LayoutEditor.TURNOUT_C) {
                 // Reached turnout diverging, should be signalled
@@ -1563,7 +1556,7 @@ public class LayoutEditorTools {
                 if (to.getContinuingSense() == Turnout.THROWN) {
                     signalName = to.getSignalB2Name();
                 }
-                if ((!(signalName == null)) && (!(signalName.equals("")))) {
+                if ((signalName != null) && !signalName.equals("") ) {
                     auxSignal = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).
                             getSignalHead(signalName);
                 }
@@ -2878,7 +2871,7 @@ public class LayoutEditorTools {
             } else if (assigned != A2) {
 // need to figure out what to do in this case.			
             }
-        } else if (a2Head == null) {
+        } else { // a2Head known to be null here
             removeSignalHeadFromPanel(layoutTurnout.getSignalA2Name());
             layoutTurnout.setSignalA2Name("");
         }
@@ -2965,7 +2958,7 @@ public class LayoutEditorTools {
             } else if (assigned != B2) {
 // need to figure out what to do in this case.			
             }
-        } else if (b2Head == null) {
+        } else { // b2Head known to be null here
             removeSignalHeadFromPanel(layoutTurnout.getSignalB2Name());
             layoutTurnout.setSignalB2Name("");
         }
@@ -3052,7 +3045,7 @@ public class LayoutEditorTools {
             } else if (assigned != C2) {
 // need to figure out what to do in this case.			
             }
-        } else if (c2Head == null) {
+        } else { // c2Head known to be null here
             removeSignalHeadFromPanel(layoutTurnout.getSignalC2Name());
             layoutTurnout.setSignalC2Name("");
         }
@@ -3139,7 +3132,7 @@ public class LayoutEditorTools {
             } else if (assigned != D2) {
 // need to figure out what to do in this case.			
             }
-        } else if (d2Head == null) {
+        } else { // d2Head known to be null here
             removeSignalHeadFromPanel(layoutTurnout.getSignalD2Name());
             layoutTurnout.setSignalD2Name("");
         }
@@ -4838,7 +4831,7 @@ public class LayoutEditorTools {
             turnout1NameField.setText(str);
             // have turnout 1 and layout turnout 1 - was something entered for turnout 2
             str = turnout2NameField.getText().trim();
-            if ((str == null) || (str.equals(""))) {
+            if (str.equals("")) {
                 // no entry for turnout 2
                 connectorTrack = (TrackSegment) layoutTurnout1.getConnectA();
                 if (connectorTrack == null) {
@@ -5056,7 +5049,7 @@ public class LayoutEditorTools {
             } else if (assigned != B2) {
 // need to figure out what to do in this case.			
             }
-        } else if (a2TToTHead == null) {
+        } else { // a2TToTHead known to be null here
             removeSignalHeadFromPanel(layoutTurnout1.getSignalB2Name());
             layoutTurnout1.setSignalB2Name("");
         }
@@ -5151,7 +5144,7 @@ public class LayoutEditorTools {
             } else if (assigned != C2) {
 // need to figure out what to do in this case.			
             }
-        } else if (b2TToTHead == null) {
+        } else { // b2TToTHead known to be null here
             removeSignalHeadFromPanel(layoutTurnout1.getSignalC2Name());
             layoutTurnout1.setSignalC2Name("");
         }
@@ -5247,7 +5240,7 @@ public class LayoutEditorTools {
             } else if (assigned != B2) {
 // need to figure out what to do in this case.			
             }
-        } else if (c2TToTHead == null) {
+        } else { // c2TToTHead known to be null here
             removeSignalHeadFromPanel(layoutTurnout2.getSignalB2Name());
             layoutTurnout2.setSignalB2Name("");
         }
@@ -5342,7 +5335,7 @@ public class LayoutEditorTools {
             } else if (assigned != C2) {
 // need to figure out what to do in this case.			
             }
-        } else if (d2TToTHead == null) {
+        } else { // d2TToTHead known to be null here
             removeSignalHeadFromPanel(layoutTurnout2.getSignalC2Name());
             layoutTurnout2.setSignalC2Name("");
         }
@@ -6367,7 +6360,7 @@ public class LayoutEditorTools {
             turnoutANameField.setText(str);
             // have turnout A and layout turnout A - was something entered for turnout B
             str = turnoutBNameField.getText().trim();
-            if ((str == null) || (str.equals(""))) {
+            if (str.equals("")) {
                 // no entry for turnout B
                 connectorTrack = (TrackSegment) layoutTurnoutA.getConnectB();
                 if (connectorTrack == null) {
@@ -6579,7 +6572,7 @@ public class LayoutEditorTools {
             } else if (assigned != A2) {
 // need to figure out what to do in this case.			
             }
-        } else if (a23WayHead == null) {
+        } else {  // a23WayHead is always null here
             removeSignalHeadFromPanel(layoutTurnoutA.getSignalA2Name());
             layoutTurnoutA.setSignalA2Name("");
         }
@@ -6624,7 +6617,7 @@ public class LayoutEditorTools {
             } else if (assigned != A3) {
 // need to figure out what to do in this case.			
             }
-        } else if (a33WayHead == null) {
+        } else {  // a23WayHead is always null here
             removeSignalHeadFromPanel(layoutTurnoutA.getSignalA3Name());
             layoutTurnoutA.setSignalA3Name("");
         }
@@ -7530,13 +7523,13 @@ public class LayoutEditorTools {
         for (PositionablePoint po : layoutEditor.pointList) {
             //We allow the same sensor to be allocated in both directions.
             if (po != boundary) {
-                if ((po.getEastBoundSensor() != null) && po.getEastBoundSensor() == sensor) {
+                if (po.getEastBoundSensor() == sensor) {
                     if (!sensorAssignedElseWhere(sensor.getDisplayName())) {
                         return true;
                     }
 
                 }
-                if ((po.getWestBoundSensorName() != null) && po.getWestBoundSensor() == sensor) {
+                if (po.getWestBoundSensor() == sensor) {
                     if (!sensorAssignedElseWhere(sensor.getDisplayName())) {
                         return true;
                     }
@@ -9271,14 +9264,10 @@ public class LayoutEditorTools {
         }
         for (int i = 0; i < layoutEditor.pointList.size(); i++) {
             PositionablePoint po = layoutEditor.pointList.get(i);
-            if ((po.getEastBoundSignalMastName() != null)
-                    && (po.getEastBoundSignalMastName().equals(sName) || ((uName != null)
-                    && (po.getEastBoundSignalMastName().equals(uName))))) {
+            if (po.getEastBoundSignalMastName().equals(sName) || po.getEastBoundSignalMastName().equals(uName)) {
                 po.setEastBoundSignalMast("");
             }
-            if ((po.getWestBoundSignalMastName() != null)
-                    && (po.getWestBoundSignalMastName().equals(sName) || ((uName != null)
-                    && (po.getWestBoundSignalMastName().equals(uName))))) {
+            if (po.getWestBoundSignalMastName().equals(sName) || po.getWestBoundSignalMastName().equals(uName)) {
                 po.setWestBoundSignalMast("");
             }
         }
@@ -12687,7 +12676,7 @@ public class LayoutEditorTools {
             } else if (assigned != B2) {
 // need to figure out what to do in this case.			
             }
-        } else if (a2SlipHead == null) {
+        } else { // a2SlipHead known to be null here
             removeSignalHeadFromPanel(layoutSlip.getSignalA2Name());
             layoutSlip.setSignalB2Name("");
         }
@@ -12767,7 +12756,7 @@ public class LayoutEditorTools {
                 } else if (assigned != C2) {
                     // need to figure out what to do in this case.			
                 }
-            } else if (b2SlipHead == null) {
+            } else { // b2SlipHead known to be null here
                 removeSignalHeadFromPanel(layoutSlip.getSignalB2Name());
                 layoutSlip.setSignalB2Name("");
             }
@@ -12856,7 +12845,7 @@ public class LayoutEditorTools {
                 } else if (assigned != B2) {
                     // need to figure out what to do in this case.			
                 }
-            } else if (c2SlipHead == null) {
+            } else { // c2SlipHead known to be null here
                 removeSignalHeadFromPanel(layoutSlip.getSignalC2Name());
                 layoutSlip.setSignalC2Name("");
             }
@@ -12943,7 +12932,7 @@ public class LayoutEditorTools {
             } else if (assigned != C2) {
 // need to figure out what to do in this case.			
             }
-        } else if (d2SlipHead == null) {
+        } else { // d2SlipHead known to be null here
             removeSignalHeadFromPanel(layoutSlip.getSignalD2Name());
             layoutSlip.setSignalD2Name("");
         }
