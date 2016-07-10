@@ -9,7 +9,7 @@ import javax.jmdns.ServiceInfo;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JViewport;
-import jmri.jmris.json.JSON;
+import jmri.server.json.JSON;
 import jmri.jmrix.AbstractNetworkConnectionConfig;
 import jmri.jmrix.NetworkPortAdapter;
 import jmri.util.zeroconf.ZeroConfClient;

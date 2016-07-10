@@ -1,7 +1,17 @@
 package jmri.jmris.json;
 
-import static jmri.jmris.json.JSON.*;
+import static jmri.server.json.JSON.*;
 import static jmri.jmrit.operations.trains.TrainCommon.splitString;
+import static jmri.server.json.JsonException.CODE;
+import static jmri.server.json.JsonException.ERROR;
+import static jmri.server.json.JsonException.MESSAGE;
+import static jmri.server.json.power.JsonPowerServiceFactory.POWER;
+import static jmri.server.json.roster.JsonRoster.ROSTER;
+import static jmri.server.json.roster.JsonRoster.ROSTER_ENTRY;
+import static jmri.server.json.roster.JsonRoster.ROSTER_GROUP;
+import static jmri.server.json.roster.JsonRoster.ROSTER_GROUPS;
+import static jmri.server.json.time.JsonTimeServiceFactory.TIME;
+import static jmri.server.json.turnout.JsonTurnoutServiceFactory.TURNOUT;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
