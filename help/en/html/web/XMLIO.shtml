@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <!-- Copyright 2015 -->
-<!-- $Id$ -->
 <title>JMRI: XML I/O Servlet - no longer supported</title>
 
 <!-- Style -->
@@ -100,7 +99,6 @@ not work with other servlet containers.
 
 Request:
 <pre style="font-family: monospace;">
-
 &lt;xmlio&gt;
   &lt;item&gt;
     &lt;type&gt;turnout&lt;/type&gt;
@@ -115,11 +113,10 @@ Request:
     &lt;name&gt;power&lt;/name&gt;
   &lt;/item&gt;
 &lt;/xmlio&gt;
-</code></pre>
+</pre>
 
 Reply:
 <pre style="font-family: monospace;">
-
 &lt;xmlio&gt;
   &lt;item&gt;
     &lt;type&gt;turnout&lt;/type&gt;
@@ -137,7 +134,7 @@ Reply:
     &lt;value&gt;2&lt;/value&gt;
   &lt;/item&gt;
 &lt;/xmlio&gt;
-</code></pre>
+</pre>
 
 The "value" element is inserted in the request, and then it's 
 returned as the reply. You can just turn the reply around and use it 
@@ -150,17 +147,15 @@ item's state has changed to something different.
 Request:
 
 <pre style="font-family: monospace;">
-
 &lt;xmlio&gt;
   &lt;list&gt;
     &lt;type&gt;sensor&lt;/type&gt;
   &lt;/list&gt;
 &lt;/xmlio&gt;
-</code></pre>
+</pre>
 
 Reply:
 <pre style="font-family: monospace;">
-
 &lt;xmlio&gt;
   &lt;item&gt;
     &lt;type&gt;sensor&lt;/type&gt;
@@ -178,7 +173,7 @@ Reply:
     &lt;value&gt;2&lt;/value&gt;
   &lt;/item&gt;
 &lt;/xmlio&gt;
-</code></pre>
+</pre>
 
 The response can be turned around and used as the next request.
 
@@ -186,7 +181,6 @@ The response can be turned around and used as the next request.
 
 Request:
 <pre style="font-family: monospace;">
-
 &lt;xmlio&gt;
   &lt;item&gt;
     &lt;type&gt;turnout&lt;/type&gt;
@@ -194,11 +188,10 @@ Request:
     &lt;set&gt;2&lt;/set&gt;
   &lt;/item&gt;
 &lt;/xmlio&gt;
-</code></pre>
+</pre>
 
 Reply:
 <pre style="font-family: monospace;">
-
 &lt;xmlio&gt;
   &lt;item&gt;
     &lt;type&gt;turnout&lt;/type&gt;
@@ -206,7 +199,7 @@ Reply:
     &lt;value&gt;2&lt;/value&gt;
   &lt;/item&gt;
 &lt;/xmlio&gt;
-</code></pre>
+</pre>
 
 The "set" element in the request results in the state
 being set to the given value, and then it's 
@@ -222,15 +215,13 @@ have propagated completely.
 
 Request:
 <pre style="font-family: monospace;">
-
 &lt;turnout name="IT12" set="2" /&gt;
-</code></pre>
+</pre>
 
 Reply:
 <pre style="font-family: monospace;">
-
 &lt;turnout name="IT12" value="2" /&gt;
-</code></pre>
+</pre>
 
 <h3>Control a Throttle</h3>
 
@@ -241,7 +232,6 @@ allocates the throttle, and all later ones
 set any attributes present:
 
 <pre style="font-family: monospace;">
-
 &lt;xmlio&gt;
     &lt;throttle&gt;
         &lt;address&gt;1234&lt;/address&gt;
@@ -250,7 +240,7 @@ set any attributes present:
         &lt;F3&gt;false&lt;/F3&gt;
     &lt;/throttle&gt;
 &lt;/xmlio&gt;
-</code></pre>
+</pre>
 
 A throttle element is returned unchanged.
 

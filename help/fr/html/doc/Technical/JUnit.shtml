@@ -175,19 +175,20 @@ Si vous testez le code qui va faire r&#233;f&#233;rence &#224; l' InstanceManage
 vous devez l'effacer et le r&#233;initialiser pour vous assurer d'obtenir des r&#233;sultats reproductibles.
 <p>
 Votre <code>configuration ()</code> de  mise en œuvre doit commencer par:
-<code> <pre>
+<pre style="font-family: monospace;">
 	super.setUp ();
 	jmri.util.JUnitUtil.resetInstanceManager ();
 	jmri.util.JUnitUtil.initInternalTurnoutManager ();
 	jmri.util.JUnitUtil.initInternalLightManager ();
 	jmri.util.JUnitUtil.initInternalSensorManager ();
-</pre> </code>
+</pre>
 (Vous pouvez omettre les gestionnaires d'initialisation vous n'en n'avez pas besoin)
 <p>
 Votre <code>tearDown(d&#233;montage) () </code> doit se terminer par:
-<code> <pre>
+<pre style="font-family: monospace;">
 jmri.util.JUnitUtil.resetInstanceManager ();
-super.tearDown ()</code></pre>
+super.tearDown ()
+</pre>
 
 <h4>Ex&#233;cution des Auditeurs</h4>
 
@@ -223,11 +224,10 @@ Pour le test le plus simple possible, l'affichage d'une fen&#234;tre pour une in
 Parce que nous ex&#233;cutons les tests en mode "headless" durant la <a href="ContinousIntegration.shtml">construction int&#233;gr&#233;e continue</a>
 il est important que les acc&#232;s Swing ( et AWT) dans les tests soient enferm&#233;s dans un mode contr&#244;l&#233;:
 <pre style="font-family: monospace;">
-
         if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
             suite.addTest(myTest.suite());
         }
-</code></pre>
+</pre>
 Ceci ex&#233;cute la suite myTest de test seulement quand un affichage et disponible
 <p>
 Pour de nombreux tests, vous ferez tester les deux  fiables et am&#233;liorer la structure de votre code en s&#233;parant l'interface graphique 

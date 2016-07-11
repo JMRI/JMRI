@@ -2,7 +2,6 @@
 <html lang="fr">
 <head>
 <!-- Copyright ($Author$) 2008 -->
-<!-- $Id$ -->
 <!-- Translated  by Blorec Herv&#233; le 2013-09-10 -->
 <title>JMRI: CAN Network Support</title>
 
@@ -53,7 +52,7 @@ frame.setId(0x123)
 frame.setElement(0, 0x45)
 frame.setElement(1, 0x67)
 jmri.jmrix.can.TrafficController.instance().sendCanMessage(frame, None)
-</code></pre>
+</pre>
 
 <h2>R&#233;ception de Trames CAN</h2>
 Un script peut &#233;couter les trames CAN comme elles sont re&#231;ues
@@ -75,7 +74,7 @@ class MyCanListener (jmri.jmrix.can.CanListener) :
         return
     
 jmri.jmrix.can.TrafficController.instance().addCanListener(MyCanListener())
-</code></pre>
+</pre>
 
 <!--#include virtual="/Footer" -->
 </body>

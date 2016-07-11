@@ -66,12 +66,11 @@ about where to put the icon, whether it can be selected, etc.
 Within that element, you can define "memorystate" elements that 
 define what icon to show when the memory has a specific value:
 <pre style="font-family: monospace;">
-
     &lt;memoryicon memory="IM20" defaulticon="resources/icons/misc/Question-black.gif"&gt;
       &lt;memorystate value="9" icon="resource:resources/icons/misc/Nixie/M9B.gif" /&gt;
       &lt;memorystate value="8" icon="resource:resources/icons/misc/Nixie/M8B.gif" /&gt;
     &lt;/memoryicon&gt;
-</code></pre>
+</pre>
 (That example has been simplified by omitting some stuff from the memoryicon element)
 In the example, the two memorystate elements ensure that if the 
 memory contains "9" or "8", certain images will be shown, otherwise 

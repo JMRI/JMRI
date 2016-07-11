@@ -54,13 +54,12 @@ Ajouter toute ces choses
 <p>
 Modifier la classe ConnectionConfig pour prendre et enregistrer une r&#233;f&#233;rence &#224; un objet SerialPortAdapter, et le retourner depuis la m&#233;thode getAdapter(). Aussi enlevez la m&#233;tode() en instance et sa mise en œuvre.
 <pre style="font-family: monospace;">
-
     protected void setIntrucsstance() { 
         if (adapter == null) {
             adapter = new PR3Adapter();
         }
     }
-</code></pre>
+</pre>
 
 <p>
 Modifier la classe d'adaptateur (exemple: PR3Adapter) pour &#233;liminer
@@ -70,11 +69,10 @@ l'exemple () et sa mise en œuvre.
 La classe configurexml/ConnectionConfigXml
 doit avoir une proc&#233;dure ajout&#233;e:
 <pre style="font-family: monospace;">
-
     protected void getInstance(Object object) {
         adapter = ((ConnectionConfig)object).getAdapter();
     }
-</code></pre>
+</pre>
 
 Nous devrions sans doute le remanier plus tard, mais ceci
 est la forme actuelle pour veiller &#224; ce que la bonne classe 
@@ -84,18 +82,16 @@ Nous le laissons inchang&#233; pour le moment pour
 <p>
 Aussi, changez ceci
 <pre style="font-family: monospace;">
-
     protected void getInstance() {
       	 adapter= new PR3Adapter();
 	}
-</code></pre>
+</pre>
 pour ceci:
 <pre style="font-family: monospace;">
-
     protected void getInstance() {
         adapter = new LnHexFilePort();
     }
-</code></pre>
+</pre>
 <p>
 Modifier la classe d'adaptateur (par exemple PR3Adapter) pour enlever
 l'exemple() de proc&#233;dure et son application.
@@ -107,7 +103,7 @@ a besoin d'avoir une proc&#233;dure ajout&#233;e:
     protected void getInstance(Object object) {
         adapter = ((ConnectionConfig)object).getAdapter();
     }
-</code></pre>
+</pre>
 
 <h3>Gestionnaire et Composants JavaBeans</h3>
 Pour chaque gestionnaire et  combinaison de Composants JavaBeans, vous devez

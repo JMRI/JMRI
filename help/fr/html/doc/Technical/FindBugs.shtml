@@ -48,10 +48,9 @@ Vous pouvez voir les r&#233;sultats des plus r&#233;centes constructions en lign
 <p>
 Si findBugs trouve une erreur positive, un bug qui n'est pas r&#233;ellemnt un bug, vous pouvez l'&#233;teindre avec une annotation tels que:
 <pre style="font-family: monospace;">
-
 @edu.umd.cs.findbugs.annotations.SuppressWarnings("FE_FLOATING_POINT_EQUALITY","OK pour comparer les flottantess, car m&#233;me les plus infimes diff&#233;rences 
 devraient d&#233;clencher les mises &#224; jour")
-</code></pre>
+</pre>
 Le second argument "justification" est optionnel, mais hautement recommand&#233;.
 Expliquer pourquoi vous avez ajout&#233; cette annotation pour supprimer un message aidera
 Celui qui viendra apr&#232;s vous et tentera de comprendre le code.
@@ -61,9 +60,8 @@ du bugg sous-jacent: Parfois ce qui semble un faux positif ne l'est pas vraiment
 <p>
 si vous avez besoin de mettre plus d'un type de message dans une annotation, utilisez la syntaxe en tableau:
 <pre style="font-family: monospace;">
-
 @edu.umd.cs.findbugs.annotations.SuppressWarnings("{type1},{type2}","Pourquoi les deux sont n&#233;cessaire")
-</code></pre>
+</pre>
 
 Les annotations de bug  peuvent aider &#224; mieux comprendre votre code. Parfois, ils vont lui donner suffisamment de compr&#233;hension
 exemple: quand une variable peut &#233;tre nulle, que &#231;a ne va plus faire de fausses erreurs positives.
