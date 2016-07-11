@@ -4659,14 +4659,13 @@ public class LogixTableAction extends AbstractTableAction {
         Sensor s = null;
         if (name != null) {
             if (name.length() > 0) {
-                s = InstanceManager.sensorManagerInstance().getByUserName(name);
+                s = InstanceManager.getDefault(jmri.SensorManager.class).getByUserName(name);
                 if (s != null) {
                     return name;
                 }
             }
-            s = InstanceManager.sensorManagerInstance().getBySystemName(name);
+            s = InstanceManager.getDefault(jmri.SensorManager.class).getBySystemName(name);
         }
-        s = InstanceManager.sensorManagerInstance().getBySystemName(name);
         if (s == null) {
             messageInvalidActionItemName(name, "Sensor"); //NOI18N
             return null;
