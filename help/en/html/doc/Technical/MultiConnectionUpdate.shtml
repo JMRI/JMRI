@@ -52,14 +52,12 @@
       reference to a SerialPortAdapter object, and to return it
       from the getAdapter() method. Also, remove the instance()
       method and its implementation.</p>
-      <pre>
-<code>
+<pre style="font-family: monospace">
     protected void setInstance() { 
         if (adapter == null) {
             adapter = new PR3Adapter();
         }
     }
-</code>
 </pre>
 
       <p>Edit the adapter class (e.g. PR3Adapter) to remove the
@@ -67,31 +65,27 @@
 
       <p>The configurexml/ConnectionConfigXml class needs to have a
       method added:</p>
-      <pre>
-<code>
+<pre style="font-family: monospace">
     protected void getInstance(Object object) {
         adapter = ((ConnectionConfig)object).getAdapter();
     }
-</code>
-</pre>We should probably refactor this later, but this is the
+</pre>
+We should probably refactor this later, but this is the
 current form to make sure the correct ConnectionConfig class is
 used. We're leaving it unchanged for now to avoid competition with
 the serial/network refactoring.
 
       <p>Also, change this</p>
-      <pre>
-<code>
+<pre style="font-family: monospace">
     protected void getInstance() {
         adapter = LnHexFilePort.instance();
     }
-</code>
-</pre>to this
-      <pre>
-<code>
+</pre>
+to this
+<pre>
     protected void getInstance() {
         adapter = new LnHexFilePort();
     }
-</code>
 </pre>
 
       <h3>Managers and Beans</h3>For each manager and bean
@@ -125,8 +119,7 @@ the serial/network refactoring.
       create and register a *SystemConnectionMemo, you also
       register the ComponentFactory)</p>
 
-      <h3>To keep startup actions working</h3>(We're going to
-      refactor this code soon)
+      <h3>Keep startup actions working</h3>
 
       <p>To keep things working, it's best to convert to JmriPane
       subclasses. Temporarily, the system connection is then
@@ -135,7 +128,15 @@ the serial/network refactoring.
 
       <p>This does require people to reset their preferences for
       startup actions, buttons, etc. We're not going to migrate
-      those for them. <!--#include virtual="/Footer" --></p>
+      those for them. 
+      
+      <p>See 
+      <a href="https://github.com/JMRI/JMRI/issues/1383#issuecomment-226808327">this GitHub discussion</a>
+      and associated PR for information on making startup actions 
+      work with more than one connection of the same type.
+      
+
+      <!--#include virtual="/Footer" --></p>
     </div>
   </div>
 </body>
