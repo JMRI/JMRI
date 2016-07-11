@@ -1,53 +1,71 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
-<title>Comprehensive Programmer - Advanced Features Pane</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>Comprehensive Programmer - Advanced Features Pane</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <!--#include virtual="/Header" -->
 
-<a name="Top"></a>
-<h1>DecoderPro&reg; Comprehensive Programmer</h1>
-<h2>Analog Controls Pane</h2>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<div align="right">
-<p><a href="Comp_LightFX.shtml"> Previous | </a>
-  <a href="Comp_Consist.shtml">Next </a>
-</p><p><a href="index.shtml#Advanced%20Programmer">Back to Index</a>
-</p></div>
+    <div id="mainContent">
+      <a name="Top" id="Top"></a>
 
-<hr>
-<p>As  discussed in the <a href="Comp_Basic.shtml"><strong>Expanded Basic Pane</strong></a>,
-some decoders allow operation on Analog or Conventional DC
-layouts.&nbsp; At the discretion of the manufacturer, some of the
-non-motor responses may be changeable by setting CV&#8217;s in the
-decoder.&nbsp; This pane is where you would set these values.&nbsp;
-Typical would be whether any of the various functions (such as lights
-and bell) would be on or off when in DC mode. Consult your decoder's
-manual for options available
-</p><p>Some are very complex and others are very simple, such as alternate analog or DCC only.
-</p><h1><img style="width: 932px; height: 424px;" src="images/AnalogModeFunctions.png" alt="analog options"></h1>
+      <h1>DecoderPro&reg; Comprehensive Programmer</h1>
 
-<hr>
+      <h2>Analog Controls Pane</h2>
 
-<div align="right">
-<p><a href="Comp_SoundFX.shtml"></a><a href="Comp_LightFX.shtml">Previous | </a> <a href="Comp_Consist.shtml">Next </a>
-</p><p><a href="index.shtml#Advanced%20Programmer">Back to Index</a> </p></div>
+      <div align="right">
+        <p><a href="Comp_LightFX.shtml">Previous |</a> <a href=
+        "Comp_Consist.shtml">Next</a></p>
 
-<!--#include virtual="/Footer" -->
-  </div><!-- closes #mainContent-->
- </div> <!-- closes #mBody-->
- </body>
+        <p><a href="index.shtml#Advanced%20Programmer">Back to
+        Index</a></p>
+      </div>
+      <hr>
+
+      <p>As discussed in the <a href=
+      "Comp_Basic.shtml"><strong>Expanded Basic Pane</strong></a>,
+      some decoders allow operation on Analog or Conventional DC
+      layouts.  At the discretion of the manufacturer, some of the
+      non-motor responses may be changeable by setting CV's in the
+      decoder.  This pane is where you would set these values. 
+      Typical would be whether any of the various functions (such
+      as lights and bell) would be on or off when in DC mode.
+      Consult your decoder's manual for options available</p>
+
+      <p>Some are very complex and others are very simple, such as
+      alternate analog or DCC only.</p>
+
+      <h1><img style="width: 932px; height: 424px;" src=
+      "images/AnalogModeFunctions.png" alt="analog options"></h1>
+      <hr>
+
+      <div align="right">
+        <p><a href="Comp_SoundFX.shtml"></a><a href=
+        "Comp_LightFX.shtml">Previous |</a> <a href=
+        "Comp_Consist.shtml">Next</a></p>
+
+        <p><a href="index.shtml#Advanced%20Programmer">Back to
+        Index</a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
 </html>

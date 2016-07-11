@@ -1,132 +1,217 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
-<title>OperationsPro - Schedules</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>OperationsPro - Schedules</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <!--#include virtual="/Header" -->
 
-<h1>Using JMRI&reg; to Operate Trains</h1>
-<h2>OperationsPro: Schedules</h2>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<div align="right">
-<p><a href="Ops_Locations_Menu.shtml">back</a><a href="#"></a></p>
-<p><a href="index.shtml#Main">Back to Index</a></p>
-</div>
+    <div id="mainContent">
+      <h1>Using JMRI&reg; to Operate Trains</h1>
 
-<hr>
-<p>If you would like to see Cars delivered to a customer's siding in a particular sequence, or
-with a specific Load for delivery or shipping, the program allows you
-to apply a (Manifest) <strong>Schedule</strong> to a Spur Track. <strong>This is an optional feature and
-shouldn't be used until you become very familiar with how the program
-generates Manifests and Switch Lists.</strong></p>
-<p>A Schedule provides very fine
-control on the order in which specific Cars Types will be delivered to a Spur Track. You
-can also specify the Road name for the type of Car delivered. For
-example, if you wanted two SP boxcars to be delivered followed by a
-tank car loaded with "Oil", you can create a Schedule that will make OperationsPro do
-exactly that.</p>
-<p><a name="Schedules"></a>You can also access your Schedules from the <a href="Ops_Locations.shtml">Locations</a> panel Tools menu</a>.
-The Schedules table provides status for each Schedule. Since you can
-assign one Schedule to multiple Spurs Tracks, the table also provides additional
-status info for each of the Tracks that use that particular Schedule. The
-table also allows you the edit a Schedule once its been assigned to a
-Spur Track.</p>
+      <h2>OperationsPro: Schedules</h2>
 
-<p style="text-align: center;"><img src="images/Ops_Schedule07.png" alt="schedule" height="218" width="900"></p>
+      <div align="right">
+        <p><a href="Ops_Locations_Menu.shtml">back</a><a href=
+        "#"></a></p>
 
-<h4>Creating a Schedule</h4>
-<p>First open the<a style="font-weight: bold;" href="Ops_Locations.shtml"> Locations&nbsp;</a> window.</p>
+        <p><a href="index.shtml#Main">Back to Index</a></p>
+      </div>
+      <hr>
 
-<p>Then press 
-  <input name="button" id="button" value="Edit" type="submit"> 
-in the column to the right of the location that you desire to schedule and the <strong>Edit Location</strong> window will open.</p><p><img src="images/Ops_Schedule02.png" alt="Schedule" height="544" width="777"></p>
-<p>To Schedule a location, select 
-  <input name="button2" id="button2" value="Edit" type="button"> in the column to the right to schedule the specific track at a location, then the <strong>Edit (Spur or other type of track) Track</strong> window will open.</p>
-<table border="0" cellpadding="2" cellspacing="1" width="90%">
-  <tbody><tr>
-    <td width="44%"><input name="schedule" id="schedule" src="images/Ops_Schedule03.png" type="image"></td>
-    <td align="left" valign="top" width="56%"><p>Next to <strong>Optional Schedule</strong>
-        <select name="select" id="select"></select>
-on the <strong>Edit Spur Track</strong> panel. Press
-<input name="button3" id="button3" value="Edit" type="submit">
-should open the <strong>Add Schedule</strong> panel.</p>
-    <p>&nbsp;</p></td>
-  </tr>
-</tbody></table>
-<p>If the Schedule already exists, the <strong>Edit Schedule for <em>Spur</em> [spur name]</strong> window opens so you can modify (or delete) it.<br>
-If no Schedule is selected, then pressing 
-  <input name="button8" id="button8" value="Edit" type="button"> 
-opens the <strong>Add Schedule for <em>Spur</em> [spur name]</strong> pane.</p>
-<p><img src="images/Ops_Schedule04.png" alt="Schedule" height="281" width="900"></p>
-<p>A Schedule can operate in two modes:
-<ul>
-<li>Sequential, if you want cars in sequence</li>
-<li>Match mode, if you do not care about car order</li>
-</ul>
-</p>
-<p>Type  a <strong>Name </strong>for your Schedule and then press
-  <input name="button4" id="button4" value="Add Schedule" type="submit">
-on the bottom of the panel. Multiple Spur Tracks can use the same Schedule as long as the Tracks use the same Car types and Roads.</p>
-<p><img src="images/Ops_Schedule05.png" alt="Schedule" height="281" width="900"></p>
-<p><img src="images/Ops_Schedule05a.png" alt="Schedule" height="281" width="900"></p>
-<p> Now add your first delivery for this Track by selecting a Car type 
-  <select name="select2" id="select2"><option>Boxcar</option></select>
-and pressing 
-<input name="button5" id="button5" value="Add car type" type="submit">
-. A new item of Type "Boxcar" should appear in your Schedule list:</p>
-<p><img src="images/Ops_Schedule06.png" alt="Schedule" height="281" width="900"></p>
-<p>A Timetable may be specified using drop-down menus.<br>
-If you wish, specify a particular Road for the type of Car
-you entered, or leave the Road field blank if you don't care about the Road name.<br>
-You can also specify the Car Load for both Receive and Ship.</p>
+      <p>If you would like to see Cars delivered to a customer's
+      siding in a particular sequence, or with a specific Load for
+      delivery or shipping, the program allows you to apply a
+      (Manifest) <strong>Schedule</strong> to a Spur Track.
+      <strong>This is an optional feature and shouldn't be used
+      until you become very familiar with how the program generates
+      Manifests and Switch Lists.</strong></p>
 
-<!-- New in version 3.10 -->
-<div style="margin:40px; padding:10px; background-color:#eee;">New in v3.10: Random moves
-<p>The Add/Edit Schedule panel has a new "Random" column with a menu of 8 items. The default is [Blank] (disabled), and there are values between 5 and 50. If you select 5, it tells the program to randomly reduce the number of Car Moves at this Location by up to 5%. So if you asked for 10 Moves, you could get 10 or 9 Moves. If you selected 50, you could get any number of Moves between 10 and 5. Be sure to press "Save Schedule" to save you setting.</p>
-<img src="images/Ops_AddScheduleRandom413.png" alt="Schedule v3.8 with Random column" height="268" width="825">
-</div>
-<!-- End of New -->
+      <p>A Schedule provides very fine control on the order in
+      which specific Cars Types will be delivered to a Spur Track.
+      You can also specify the Road name for the type of Car
+      delivered. For example, if you wanted two SP boxcars to be
+      delivered followed by a tank car loaded with "Oil", you can
+      create a Schedule that will make OperationsPro do exactly
+      that.</p>
 
-<p>If you want more than one Car of this Type to be delivered consecutively,
-increase the number in the Count field. The maximum Count is 10
-and the minimum is 1. Repeat selecting Car types and pressing <input name="button6" id="button6" value="Add car type" type="submit">
-until your have a delivery Schedule you like. Press
-<input name="button7" id="button7" value="Save Schedule" type="submit">
-and close the Add/Edit Schedule panel when you are done.</p>
-<p>Note only Car Types and Roads that are accepted by this Spur Track are
-available. If a Car Type or Road isn't available, check the Car Types
-and Roads set up for this <a href="Ops_AddSiding.shtml">Track</a> and <a href="Ops_AddLocations.shtml">Location</a> in the respective panes.</p>
-<p>If you want a specific Load for your cars, you can create them using the <a href="Ops_CarAttributes.shtml">Edit Car Attributes</a> for car <strong>Load</strong>.
-Each new custom Load type is associated with the Car type. For example you can have
-"Screws" for a Boxcar, and "Oil" for a Tankcar. OperationsPro will only
-deliver Cars with a "Schedule Load" to a Spur Track that has a matching Schedule that
-also requests that particular Load. However, Cars with a Schedule Load
-can still be placed at Yards, Staging, and Interchange Tracks.</p>
-<p>You can optionally use your Staging Tracks to empty cars with a
-"Schedule" load, and you can also <em>create</em> "Schedule" loads
-using staging tracks.</p>
-<hr>
+      <p><a name="Schedules" id="Schedules"></a>You can also access
+      your Schedules from the <a href=
+      "Ops_Locations.shtml">Locations</a> panel Tools menu. The
+      Schedules table provides status for each Schedule. Since you
+      can assign one Schedule to multiple Spurs Tracks, the table
+      also provides additional status info for each of the Tracks
+      that use that particular Schedule. The table also allows you
+      the edit a Schedule once its been assigned to a Spur
+      Track.</p>
 
-<div align="right">
-<p><a href="Ops_Locations_Menu.shtml">back</a><a href="#"></a></p>
-<p><a href="index.shtml#Main">Back to Index</a></p>
-</div>
+      <p style="text-align: center;"><img src=
+      "images/Ops_Schedule07.png" alt="schedule" height="218"
+      width="900"></p>
 
-<!--#include virtual="/Footer" -->
-</div>
-</div>
+      <h4>Creating a Schedule</h4>
+
+      <p>First open the <a style="font-weight: bold;" href=
+      "Ops_Locations.shtml">Locations </a> window.</p>
+
+      <p>Then press <input name="button" id="button" value="Edit"
+      type="submit"> in the column to the right of the location
+      that you desire to schedule and the <strong>Edit
+      Location</strong> window will open.</p>
+
+      <p><img src="images/Ops_Schedule02.png" alt="Schedule"
+      height="544" width="777"></p>
+
+      <p>To Schedule a location, select <input name="button2" id=
+      "button2" value="Edit" type="button"> in the column to the
+      right to schedule the specific track at a location, then the
+      <strong>Edit (Spur or other type of track) Track</strong>
+      window will open.</p>
+
+      <table border="0" cellpadding="2" cellspacing="1" width=
+      "90%">
+        <tbody>
+          <tr>
+            <td width="44%"><input name="schedule" id="schedule"
+            src="images/Ops_Schedule03.png" type="image"></td>
+
+            <td align="left" valign="top" width="56%">
+              <p>Next to <strong>Optional Schedule</strong>
+              <select name="select" id="select">
+                </select> on the <strong>Edit Spur Track</strong>
+                panel. Press <input name="button3" id="button3"
+                value="Edit" type="submit"> should open the
+                <strong>Add Schedule</strong> panel.</p>
+
+              <p> </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>If the Schedule already exists, the <strong>Edit Schedule
+      for <em>Spur</em> [spur name]</strong> window opens so you
+      can modify (or delete) it.<br>
+      If no Schedule is selected, then pressing <input name=
+      "button8" id="button8" value="Edit" type="button"> opens the
+      <strong>Add Schedule for <em>Spur</em> [spur name]</strong>
+      pane.</p>
+
+      <p><img src="images/Ops_Schedule04.png" alt="Schedule"
+      height="281" width="900"></p>
+
+      <p>A Schedule can operate in two modes:</p>
+
+      <ul>
+        <li>Sequential, if you want cars in sequence</li>
+
+        <li>Match mode, if you do not care about car order</li>
+      </ul>
+
+      <p>Type a <strong>Name</strong> for your Schedule and then
+      press <input name="button4" id="button4" value="Add Schedule"
+      type="submit"> on the bottom of the panel. Multiple Spur
+      Tracks can use the same Schedule as long as the Tracks use
+      the same Car types and Roads.</p>
+
+      <p><img src="images/Ops_Schedule05.png" alt="Schedule"
+      height="281" width="900"></p>
+
+      <p><img src="images/Ops_Schedule05a.png" alt="Schedule"
+      height="281" width="900"></p>
+
+      <p>Now add your first delivery for this Track by selecting a
+      Car type <select name="select2" id="select2">
+        <option>
+          Boxcar
+        </option>
+      </select> and pressing <input name="button5" id="button5"
+      value="Add car type" type="submit"> . A new item of Type
+      "Boxcar" should appear in your Schedule list:</p>
+
+      <p><img src="images/Ops_Schedule06.png" alt="Schedule"
+      height="281" width="900"></p>
+
+      <p>A Timetable may be specified using drop-down menus.<br>
+      If you wish, specify a particular Road for the type of Car
+      you entered, or leave the Road field blank if you don't care
+      about the Road name.<br>
+      You can also specify the Car Load for both Receive and
+      Ship.</p><!-- New in version 3.10 -->
+
+      <div style=
+      "margin:40px; padding:10px; background-color:#eee;">
+        New in v3.10: Random moves
+
+        <p>The Add/Edit Schedule panel has a new "Random" column
+        with a menu of 8 items. The default is [Blank] (disabled),
+        and there are values between 5 and 50. If you select 5, it
+        tells the program to randomly reduce the number of Car
+        Moves at this Location by up to 5%. So if you asked for 10
+        Moves, you could get 10 or 9 Moves. If you selected 50, you
+        could get any number of Moves between 10 and 5. Be sure to
+        press "Save Schedule" to save you setting.</p><img src=
+        "images/Ops_AddScheduleRandom413.png" alt=
+        "Schedule v3.8 with Random column" height="268" width=
+        "825">
+      </div><!-- End of New -->
+
+      <p>If you want more than one Car of this Type to be delivered
+      consecutively, increase the number in the Count field. The
+      maximum Count is 10 and the minimum is 1. Repeat selecting
+      Car types and pressing <input name="button6" id="button6"
+      value="Add car type" type="submit"> until your have a
+      delivery Schedule you like. Press <input name="button7" id=
+      "button7" value="Save Schedule" type="submit"> and close the
+      Add/Edit Schedule panel when you are done.</p>
+
+      <p>Note only Car Types and Roads that are accepted by this
+      Spur Track are available. If a Car Type or Road isn't
+      available, check the Car Types and Roads set up for this
+      <a href="Ops_AddSiding.shtml">Track</a> and <a href=
+      "Ops_AddLocations.shtml">Location</a> in the respective
+      panes.</p>
+
+      <p>If you want a specific Load for your cars, you can create
+      them using the <a href="Ops_CarAttributes.shtml">Edit Car
+      Attributes</a> for car <strong>Load</strong>. Each new custom
+      Load type is associated with the Car type. For example you
+      can have "Screws" for a Boxcar, and "Oil" for a Tankcar.
+      OperationsPro will only deliver Cars with a "Schedule Load"
+      to a Spur Track that has a matching Schedule that also
+      requests that particular Load. However, Cars with a Schedule
+      Load can still be placed at Yards, Staging, and Interchange
+      Tracks.</p>
+
+      <p>You can optionally use your Staging Tracks to empty cars
+      with a "Schedule" load, and you can also <em>create</em>
+      "Schedule" loads using staging tracks.</p>
+      <hr>
+
+      <div align="right">
+        <p><a href="Ops_Locations_Menu.shtml">back</a><a href=
+        "#"></a></p>
+
+        <p><a href="index.shtml#Main">Back to Index</a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div>
+  </div>
 </body>
 </html>

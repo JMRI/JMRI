@@ -1,76 +1,108 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
-<title>JMRI OperationsPro - Routes</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>JMRI OperationsPro - Routes</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <!--#include virtual="/Header" -->
 
-<a name="Top"></a>
-<h1>Using JMRI&reg; to Operate Trains</h1>
-<h2>OperationsPro: Routes pane</h2>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<div align="right">
-<p><a href="Ops_Engines.shtml">Previous </a> | <a href="Ops_Trains.shtml">Next</a></p>
-<p><a href="index.shtml#Operations">Back to Index</a></p>
-</div>
+    <div id="mainContent">
+      <a name="Top" id="Top"></a>
 
-<hr>
-<p>A Route is a series of Locations that a Train will visit. After adding Locations to a Route, you
-can decide if the Train will stop at a Location for work. Routes can be
-point to point or out and back.</p>
-<p>Operations Demo Panel showing Locations and connecting trackwork over which Routes could be defined:</p>
-<p><img src="images/Ops_DemoPanel.png" alt="panel" height="220" width="800"></p>
+      <h1>Using JMRI&reg; to Operate Trains</h1>
 
-<p>All Routes in your OperationsPro Roster are listed in the <strong>Routes</strong> window with their status. &quot;Orphan&quot; means it has currently not been assigned to a Train.</p>
-<p><img src="images/Ops_Routes.png" alt="routes" height="310" width="730"></p>
+      <h2>OperationsPro: Routes pane</h2>
 
-<h4>Body of Routes pane</span></h4>
-<p>The Routes pane lists all the Routes defined for your Railroad:</p>
-<div style="margin-left: 40px;"><span style="font-weight: bold;">Id</span> column - Route Id is assigned by OperationsPro<br>
-<span style="font-weight: bold;">Name</span> column - Name of Route<br>
-<span style="font-weight: bold;">Comment</span> column - Any comments that you wish to include for each Route<br>
-<span style="font-weight: bold;">Status</span> column - Indicates the state of the Route:
-<ul>
-<li>Okay - Route is assigned to a Train</li>
-<li>Orphan - Route has not been assigned to a Train</li>
-</ul>
-<a style="font-weight: bold;" href="Ops_EditRoutes.shtml">Edit</a> button column - allows you to edit selected Route attributes.
-</div>
+      <div align="right">
+        <p><a href="Ops_Engines.shtml">Previous</a> | <a href=
+        "Ops_Trains.shtml">Next</a></p>
 
-<h4>Bottom of Routes pane</h4>
-<p><strong>Sort by 
-  <input name="radio" id="radio" value="radio" checked="checked" type="radio">
-  Name
-  <input name="radio2" id="radio2" value="radio2" type="radio"> 
-  Id
-</strong>establishes the sort order of the Routes in the list.</p>
-<p>
-  <input name="button2" id="button2" value="Add" type="submit"> 
-opens the <a href="Ops_AddRoutes.shtml"><strong>Add Route</strong></a> window allowing you to add Routes to your Operations database.</p>
+        <p><a href="index.shtml#Operations">Back to Index</a></p>
+      </div>
+      <hr>
 
-<h4>The <a href="Ops_Routes_Menu.shtml">Routes window menu bar</a></h4>
-<hr>
+      <p>A Route is a series of Locations that a Train will visit.
+      After adding Locations to a Route, you can decide if the
+      Train will stop at a Location for work. Routes can be point
+      to point or out and back.</p>
 
-<div align="right">
-<p><a href="Ops_Engines.shtml">Previous </a> | <a href="Ops_Trains.shtml">Next</a></p>
-<p><a href="index.shtml#Operations">Back to Index</a></p>
-</div>
+      <p>Operations Demo Panel showing Locations and connecting
+      trackwork over which Routes could be defined:</p>
 
-<!--#include virtual="/Footer" -->
-</div>
-</div>
+      <p><img src="images/Ops_DemoPanel.png" alt="panel" height=
+      "220" width="800"></p>
+
+      <p>All Routes in your OperationsPro Roster are listed in the
+      <strong>Routes</strong> window with their status. "Orphan"
+      means it has currently not been assigned to a Train.</p>
+
+      <p><img src="images/Ops_Routes.png" alt="routes" height="310"
+      width="730"></p>
+
+      <h4>Body of Routes pane</h4>
+
+      <p>The Routes pane lists all the Routes defined for your
+      Railroad:</p>
+
+      <div style="margin-left: 40px;">
+        <span style="font-weight: bold;">Id</span> column - Route
+        Id is assigned by OperationsPro<br>
+        <span style="font-weight: bold;">Name</span> column - Name
+        of Route<br>
+        <span style="font-weight: bold;">Comment</span> column -
+        Any comments that you wish to include for each Route<br>
+        <span style="font-weight: bold;">Status</span> column -
+        Indicates the state of the Route:
+
+        <ul>
+          <li>Okay - Route is assigned to a Train</li>
+
+          <li>Orphan - Route has not been assigned to a Train</li>
+        </ul><a style="font-weight: bold;" href=
+        "Ops_EditRoutes.shtml">Edit</a> button column - allows you
+        to edit selected Route attributes.
+      </div>
+
+      <h4>Bottom of Routes pane</h4>
+
+      <p><strong>Sort by <input name="radio" id="radio" value=
+      "radio" checked="checked" type="radio"> Name <input name=
+      "radio2" id="radio2" value="radio2" type="radio"> Id</strong>
+      establishes the sort order of the Routes in the list.</p>
+
+      <p><input name="button2" id="button2" value="Add" type=
+      "submit"> opens the <a href="Ops_AddRoutes.shtml"><strong>Add
+      Route</strong></a> window allowing you to add Routes to your
+      Operations database.</p>
+
+      <h4>The <a href="Ops_Routes_Menu.shtml">Routes window menu
+      bar</a></h4>
+      <hr>
+
+      <div align="right">
+        <p><a href="Ops_Engines.shtml">Previous</a> | <a href=
+        "Ops_Trains.shtml">Next</a></p>
+
+        <p><a href="index.shtml#Operations">Back to Index</a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div>
+  </div>
 </body>
 </html>

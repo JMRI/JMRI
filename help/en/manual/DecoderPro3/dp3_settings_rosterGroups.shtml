@@ -27,8 +27,6 @@
 </div>
 
 <hr>
-<ul>
-  <blockquote>
     <p>The <strong>Roster Groups</strong>
 function allows you to take your entire roster and categorize it.&nbsp;
 At home you might want to break it down by diesel vs. steam, or by
@@ -54,26 +52,54 @@ open the panel<br>
 <img style="width: 900px; height: 415px;" alt="roster group" src="images/dp3_rosterGroup01.png"><br>
 The Roster Groups will be listed in the Roster Group panel as we create
 them. <br>
-  </blockquote>
-</ul>
-<ul>
-  <ul>
-    <li>
-      <h3><strong><a name="create"></a>Create Roster Group</strong></h3>
-    </li>
-  </ul>
-  <blockquote>
-    <p>Use Create Roster Group to define any other groups you wish. From the Settings menu Create Roster Group opens the <strong>New Roster Group</strong> dialog.     This same <strong>New Roster Group</strong> dialog may be opened using the + button above.</p><p></p><table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2"><tbody><tr><td style="width: 30%;" colspan="1" rowspan="5"><img style="width: 272px; height: 312px;" alt="Roster groups" src="images/dp3_rosterGroup02.png"></td><td style="width: 15%;"><img style="width: 118px; height: 81px;" alt="add group" src="images/dp3_rosterGroup02a.png"></td><td style="vertical-align: top;">Creates a&nbsp;Roster Group<img style="width: 297px; height: 128px;" src="images/dp3_settings_rosterGroup_new.png" alt="new group"><br><p>The <span style="font-weight: bold;">OK</span> button will Add the Roster Group to the list in the  panel and to the drop-down list on Main window toolbar.</p>
-<p>You can now add locomotives to the Groups either by dragging from
-the locomotive roster list or using the Table Associate, discussed
-later.</p></td></tr><tr><td colspan="1" rowspan="1"><img style="width: 147px; height: 77px;" alt="menu button" src="images/dp3_rosterGroup02b.png"></td><td colspan="1" rowspan="1"><img style="width: 216px; height: 209px;" alt="roster group menu" src="images/dp3_rosterGroup02c.png"><br>Opens context menu for Roster Groups<br><span style="font-weight: bold;">Open in New Window</span><br>A window may be opened for each group if you wish.<br><span style="font-weight: bold;">Export...</span><br>Opens Save dialog box allowing you to save the group to a file.<br><span style="font-weight: bold;">Rename...</span><br><img style="width: 327px; height: 144px;" alt="rename" src="images/dp3_RosterGroup_rename.png"><br><span style="font-weight: bold;">Duplicate</span><br><img style="width: 303px; height: 144px;" alt="duplicae" src="images/dp3_RosterGroup_duplicate.png"><br><span style="font-weight: bold;">Delete</span><br><img style="width: 377px; height: 122px;" alt="delete" src="images/dp3_RosterGroup_delete.png"></td></tr><tr></tr><tr></tr><tr></tr></tbody></table></blockquote><h3><a name="renameRoster"></a>Rename Roster Group</h3><blockquote><div style="text-align: center;"><div style="text-align: left;"><img style="width: 327px; height: 144px;" alt="rename roster" src="images/dp3_RosterGroup_rename.png">&nbsp;&nbsp;&nbsp; <br></div></div></blockquote><h3><a name="DupRosterGroup"></a>Duplicate Roster Group&nbsp;</h3><blockquote><img style="width: 303px; height: 144px;" alt="roster group duplicate" src="images/dp3_RosterGroup_duplicate.png"><br></blockquote><h3><a name="Delete"></a>Delete Roster Group&nbsp;</h3><blockquote><img style="width: 377px; height: 122px;" alt="delete roster group" src="images/dp3_RosterGroup_delete.png"></blockquote></ul>
+
+<h3><strong><a name="create"></a>Create Roster Group</strong></h3>
+
+<p>Use Create Roster Group to define any other groups you wish. 
+From the Settings menu Create Roster Group opens the <strong>New Roster Group</strong> dialog.
+This same <strong>New Roster Group</strong> dialog may be opened using the + button above.</p>
+
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2" summary="Create Roster Group">
+<tbody><tr>
+        <td style="width: 30%;" colspan="1" rowspan="5"><img style="width: 272px; height: 312px;" alt="Roster groups" src="images/dp3_rosterGroup02.png"></td>
+        <td style="width: 15%;"><img style="width: 118px; height: 81px;" alt="add group" src="images/dp3_rosterGroup02a.png"></td>
+        <td style="vertical-align: top;">Creates a&nbsp;Roster Group<img style="width: 297px; height: 128px;" src="images/dp3_settings_rosterGroup_new.png" alt="new group">
+            <p>The <span style="font-weight: bold;">OK</span> button will Add the Roster Group to the list in the  panel and to the drop-down list on Main window toolbar.</p>
+            <p>You can now add locomotives to the Groups either by dragging from the locomotive roster list or using the Table Associate, discussed later.</p></td>
+    </tr>
+    <tr>
+        <td colspan="1" rowspan="1"><img style="width: 147px; height: 77px;" alt="menu button" src="images/dp3_rosterGroup02b.png"></td>
+        <td colspan="1" rowspan="1"><img style="width: 216px; height: 209px;" alt="roster group menu" src="images/dp3_rosterGroup02c.png">
+            <br>Opens context menu for Roster Groups<br><span style="font-weight: bold;">Open in New Window</span>
+            <br>A window may be opened for each group if you wish.<br><span style="font-weight: bold;">Export...</span>
+            <br>Opens Save dialog box allowing you to save the group to a file.<br><span style="font-weight: bold;">Rename...</span>
+            <br><img style="width: 327px; height: 144px;" alt="rename" src="images/dp3_RosterGroup_rename.png">
+            <br><span style="font-weight: bold;">Duplicate</span>
+            <br><img style="width: 303px; height: 144px;" alt="duplicae" src="images/dp3_RosterGroup_duplicate.png">
+            <br><span style="font-weight: bold;">Delete</span>
+            <br><img style="width: 377px; height: 122px;" alt="delete" src="images/dp3_RosterGroup_delete.png"></td>
+        </tr>
+        <tr><td></td></tr>
+        <tr><td></td></tr>
+        <tr><td></td></tr>
+    </tbody></table>
+    
+    <h3><a name="renameRoster"></a>Rename Roster Group</h3>
+    <div style="text-align: center;"><div style="text-align: left;"><img style="width: 327px; height: 144px;" alt="rename roster" src="images/dp3_RosterGroup_rename.png">&nbsp;&nbsp;&nbsp; 
+    <br></div>
+    </div>
+
+<h3><a name="DupRosterGroup"></a>Duplicate Roster Group&nbsp;</h3>
+<img style="width: 303px; height: 144px;" alt="roster group duplicate" src="images/dp3_RosterGroup_duplicate.png">
+<br><h3><a name="Delete"></a>Delete Roster Group&nbsp;</h3>
+<img style="width: 377px; height: 122px;" alt="delete roster group" src="images/dp3_RosterGroup_delete.png">
+
 <h3 style="margin-left: 40px;"> <a name="table"></a>Roster Group Table Association</h3>
 <p> Once the groups are named, then you  &#8220;associate&#8221; the roster entries with their group.&nbsp;  This can be done by  using  the <strong>Table Association</strong>
 selection.&nbsp; At the top of the table you select the group you wish
 the roster entries to be associated with, then the roster entries that
 you want to associate with that group.</p>
-<ul>
-  <blockquote>
+
     <p><img src="images/dp3_setting_rosterGroup_table.png" alt="table" height="591" width="784"></p>
     <p>Select Roster Group:
       <select name="select3" id="select3"><option>Santa Fe</option></select>
@@ -85,8 +111,7 @@ the Roster Group, click individually to select a single item, hold the
 shift key down to select a range of items, hold the CNTRL key down to
 randomly select items. Close the Table and the entries will be added to
 the group.</p>
-  </blockquote>
-</ul>
+
 <p>&nbsp;Once the associations have been made, then you can select the
 Active Roster Group.&nbsp; Once this is done then the Print and Print
 Summary actions will show only the roster entries associated with that
@@ -99,6 +124,7 @@ copy, etc.&nbsp; Also, when adding a new roster entry it will
 automatically be associated with the currently active group, so it is
 good practice when finishing working with a group to return the active
 group to Global. </p>
+
 <h4><strong><em><br>
   Restoring Roster to include all Engines</em></strong></h4>
 <p>    To return your roster to  show all engines, <strong>Select  Roster Group</strong> to All Entries, or Global. Then you may be certain that you are  working with all engines in your  roster.</p>

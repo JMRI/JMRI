@@ -1,113 +1,260 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
-<title>Comprehensive Programmer - Advanced Features Pane</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>Comprehensive Programmer - Advanced Features Pane</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <!--#include virtual="/Header" -->
 
-<a name="Top"></a>
-<h1>DecoderPro&reg; Main Window</h1>
-<h2>NCE Menu</h2>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<div align="right">
-<p><a href="dp3_menubar.shtml">Back to Index</a><a href="Main_Menu.shtml#System"></a></p>
-</div>
+    <div id="mainContent">
+      <a name="Top" id="Top"></a>
 
-<hr>
-<p><strong>Command Monitor</strong></p>
+      <h1>DecoderPro&reg; Main Window</h1>
 
-  <p>Opens the <a href="Main_Monitor_Window.shtml">Communications  Monitor Window</a> and automatically displays the information that is being  sent and received on the communications link between your computer and your DCC  system.</p>
+      <h2>NCE Menu</h2>
 
-<p><strong>Send Command</strong></p>
+      <div align="right">
+        <p><a href="dp3_menubar.shtml">Back to Index</a><a href=
+        "Main_Menu.shtml#System"></a></p>
+      </div>
+      <hr>
 
-  <p>Opens the <strong>Send</strong> prompt with a text box to enter the NCE Format command that  you want to send.</p>
-  <p align="center"><img src="images/Main_NCE_01.png" alt="NCE Send" width="232" height="156" border="4"></p>
+      <p><strong>Command Monitor</strong></p>
 
-<p><strong>Send Macro</strong></p>
+      <p>Opens the <a href=
+      "Main_Monitor_Window.shtml">Communications Monitor Window</a>
+      and automatically displays the information that is being sent
+      and received on the communications link between your computer
+      and your DCC system.</p>
 
-  <p>Opens  the <strong>Execute NCE Macro</strong> Window which allows you to enter the Macro number to be  executed. Clicking the <strong>Send</strong> button sends the macro.</p>
-  <p align="center"><img src="images/Main_NCE_02.png" alt="NCE Macro Send" width="199" height="131" border="4"></p>
+      <p><strong>Send Command</strong></p>
 
-<p><strong><a name="EditMacro"></a>Edit Macro</strong></p>
+      <p>Opens the <strong>Send</strong> prompt with a text box to
+      enter the NCE Format command that you want to send.</p>
 
-  <p>Open the <a href="#EditMacroWin">Edit NCE Macro </a>window.</p>
+      <p align="center"><img src="images/Main_NCE_01.png" alt=
+      "NCE Send" width="232" height="156" border="4"></p>
 
-<p><strong><a name="Editconsist"></a>Edit Consist</strong></p>
-<p>Opens the <a href="#Consist">Edit NCE Consist</a> window.</p>
-<p><strong>DCC Packet Analyzer</strong></p>
+      <p><strong>Send Macro</strong></p>
 
-  <p>The DCC packet analyzer entry is software to log  data from&nbsp;a hardware device sold by NCE which allows the user to observe  the packets on the NCE Command Bus, or alternatively directly from the  track.&nbsp; The latter feature allows the device to look at track packets&nbsp;sent  from&nbsp;any Command Station that conforms to&nbsp;the NMRA standard (such as  Digitrax or Lenz). The input&nbsp;signal is interpreted and sent to JMRI  through a serial interface.&nbsp;&nbsp; With it the user can see speed and  function instructions being sent from the Command Station to the decoder </p>
+      <p>Opens the <strong>Execute NCE Macro</strong> Window which
+      allows you to enter the Macro number to be executed. Clicking
+      the <strong>Send</strong> button sends the macro.</p>
 
-<p><strong><a name="Clock"></a>Monitor Clock</strong></p>
-<p>Opens the <a href="#ClockMon">NCE Clock Monitor</a> window. When the clock is running as clock master mode, the internal clock rate is adjusted to match time with the NCE command station clock. The goal is the minute should roll over at the same time for the internal clock and ProCab displays.</p>
-<p><strong>Show Cabs</strong></p>
-<p><br>
-  Opens a window that  displays the cabs currently on the system.&nbsp;  This is handy for determining the cab number assigned to a throttle that  doesn&rsquo;t have a display.&nbsp; Just use &ldquo;Show  Cabs&rdquo; to display the cabs currently on the system.&nbsp; Then plug in the cab in question and use it  again to see which one is added.&nbsp; If you  have a standalone set-up bench it&rsquo;s even easier.&nbsp; Cycle the power to clear the command station  memory. Then plug in the new cab and Show Cabs will display its number</p>
-<p><strong>Booster Programming</strong></p>
+      <p align="center"><img src="images/Main_NCE_02.png" alt=
+      "NCE Macro Send" width="199" height="131" border="4"></p>
 
-  <p>Booster  Programming is stated to be only for NCE booster testing, and warns that the  booster must be disconnected from the track before using.</p>
+      <p><strong><a name="EditMacro" id="EditMacro"></a>Edit
+      Macro</strong></p>
 
-<hr>
-<h4><a name="EditMacroWin"></a>Edit NCE Macro Window</h4>
-<p>This tool allows you to review, edit and save NCE style macros. It also allows you to backup and restore all the NCE command station macros to and from a file. The file format is identical to NCE,	so you can restore a file that was generated by the NCE backup command. It is recommended that you set the baud rate at 9600 when using this tool.</p>
-<p align="center"><img src="images/Main_NCE_03.png" alt="Edit NCE Macro " width="369" height="446" border="4"></p>
-<p align="left"><strong>Backup button</strong></p>
-<p align="left">Click on the <strong>Backup</strong> button located on the bottom row. This will open the <strong>Save</strong> dialog. This will read the NCE command station memory and store the contents into the file you selected.</p>
-<p align="left"><strong>Restore button</strong></p>
-<p align="left">Click the <strong>Restore</strong> button located on the bottom row. This will display the <strong>Open</strong> dialog, select the file you want to restore to the NCE command stations memory and click on <strong>Open</strong> button.</p>
-<p align="left"><strong>Get button</strong></p>
-<p align="left">To review a macro, enter the number of the macro in the text box under the heading <strong>Macro</strong> and click the <strong>Get</strong> button. This will retrieve the macro from the command station's memory. If the the macro currently exists,<strong> Reply:</strong> will be macro found. If the macro does not exist, the <strong>Reply:</strong> will be macro empty. If there is a macro, the editor will show a list of accessories that the macro is programmed to activate.</p>
-<p align="left"><strong>Add button</strong></p>
-<p align="left">The <strong>Add </strong>button will add an accessory's address </p>
-<p align="left"><strong>Delete button</strong></p>
-<p align="left">The <strong>Delete</strong> button will remove an accessory's address </p>
-<p align="left"><strong>Link Macro button</strong></p>
-<p align="left">Links this macro to another one.</p>
-<p align="left"><strong>Previous and Next buttons</strong></p>
-<p align="left">Allow you to search the macros.</p>
-<p align="left"><strong>Save button</strong></p>
-<p align="left">Saves macros to the NCE command station</p>
-<div>
-  <div align="right"><a href="#EditMacro">Back</a></div>
-</div>
-<h4 align="left"><a name="Consist"></a>Edit Consist Window</h4>
-<p align="left">This tool allows you to review, edit and save NCE style consists. Also allows you to backup and restore all the NCE command station consists to and from a file.</p>
-<p align="center"><img src="images/Main_NCE_04.png" alt="consit tool" width="564" height="411" border="4"></p>
-<p align="left"><strong>Backup</strong> button allows you to backup all of your consists to a file from the NCE command Station.</p>
-<p align="left"><strong>Restore</strong> button allows you restore consists from a file to the NCE command Station.</p>
-<p align="left"><strong>Get</strong> button is used to retrieve the consist from the command station's memory.</p>
-<p>You may add a locomotive by entering  the address and clicking the <strong>?? </strong>button to set forward or reverse running.  The <strong>Type</strong> button toggles between <strong>Long</strong> and <strong>Short </strong>address (remember that NCE allows both long and short  addresses in the range below 128).  Click the <strong>Add</strong> button and that locomotive will be added to the consist.</p>
-<p align="left">Alternately, you may add a locomotive from your roster with the drop-down list, then click the <strong>Add </strong>button.</p>
-<p align="left">
-  <input name="checkbox" type="checkbox" id="checkbox" checked> 
-  <strong>Consist roster </strong>enables saving and maintaining consist roster when checked.</p>
-<p align="left"><strong>Save</strong> and <strong>Load</strong> Button is displayed as a <strong>Save</strong> button when program has detected that a change has been made to a consist. When you select a consist to load from the consist menu, it becomes the <strong>Load </strong>button.</p>
-<p align="left"><strong>Clear </strong>button removes all the locomotives from a consist.</p>
-<div>
-  <div align="right"><a href="#Editconsist">Back</a></div>
-</div>
-<h4 align="left"><a name="ClockMon"></a> NCE Clock Monitor Window</h4>
-<p align="center"><img src="images/Main_NCE_05.png" alt="NCE clock monitor" width="690" height="481" border="4"></p>
-<div>
-  <div align="right"><a href="#Clock">Back</a>
-<p><a href="dp3_menubar.shtml">Back to Index</a><a href="Main_Menu.shtml#System"></a></p>
-</div>
+      <p>Open the <a href="#EditMacroWin">Edit NCE Macro</a>
+      window.</p>
 
-<!--#include virtual="/Footer" -->
-  </div><!-- closes #mainContent-->
- </div> <!-- closes #mBody-->
- </body>
+      <p><strong><a name="Editconsist" id="Editconsist"></a>Edit
+      Consist</strong></p>
+
+      <p>Opens the <a href="#Consist">Edit NCE Consist</a>
+      window.</p>
+
+      <p><strong>DCC Packet Analyzer</strong></p>
+
+      <p>The DCC packet analyzer entry is software to log data from
+      a hardware device sold by NCE which allows the user to
+      observe the packets on the NCE Command Bus, or alternatively
+      directly from the track.  The latter feature allows the
+      device to look at track packets sent from any Command Station
+      that conforms to the NMRA standard (such as Digitrax or
+      Lenz). The input signal is interpreted and sent to JMRI
+      through a serial interface.   With it the user can see speed
+      and function instructions being sent from the Command Station
+      to the decoder</p>
+
+      <p><strong><a name="Clock" id="Clock"></a>Monitor
+      Clock</strong></p>
+
+      <p>Opens the <a href="#ClockMon">NCE Clock Monitor</a>
+      window. When the clock is running as clock master mode, the
+      internal clock rate is adjusted to match time with the NCE
+      command station clock. The goal is the minute should roll
+      over at the same time for the internal clock and ProCab
+      displays.</p>
+
+      <p><strong>Show Cabs</strong></p>
+
+      <p><br>
+      Opens a window that displays the cabs currently on the
+      system.  This is handy for determining the cab number
+      assigned to a throttle that doesn't have a display.  Just use
+      "Show Cabs" to display the cabs currently on the system. 
+      Then plug in the cab in question and use it again to see
+      which one is added.  If you have a standalone set-up bench
+      it's even easier.  Cycle the power to clear the command
+      station memory. Then plug in the new cab and Show Cabs will
+      display its number</p>
+
+      <p><strong>Booster Programming</strong></p>
+
+      <p>Booster Programming is stated to be only for NCE booster
+      testing, and warns that the booster must be disconnected from
+      the track before using.</p>
+      <hr>
+
+      <h4><a name="EditMacroWin" id="EditMacroWin"></a>Edit NCE
+      Macro Window</h4>
+
+      <p>This tool allows you to review, edit and save NCE style
+      macros. It also allows you to backup and restore all the NCE
+      command station macros to and from a file. The file format is
+      identical to NCE, so you can restore a file that was
+      generated by the NCE backup command. It is recommended that
+      you set the baud rate at 9600 when using this tool.</p>
+
+      <p align="center"><img src="images/Main_NCE_03.png" alt=
+      "Edit NCE Macro " width="369" height="446" border="4"></p>
+
+      <p align="left"><strong>Backup button</strong></p>
+
+      <p align="left">Click on the <strong>Backup</strong> button
+      located on the bottom row. This will open the
+      <strong>Save</strong> dialog. This will read the NCE command
+      station memory and store the contents into the file you
+      selected.</p>
+
+      <p align="left"><strong>Restore button</strong></p>
+
+      <p align="left">Click the <strong>Restore</strong> button
+      located on the bottom row. This will display the
+      <strong>Open</strong> dialog, select the file you want to
+      restore to the NCE command stations memory and click on
+      <strong>Open</strong> button.</p>
+
+      <p align="left"><strong>Get button</strong></p>
+
+      <p align="left">To review a macro, enter the number of the
+      macro in the text box under the heading
+      <strong>Macro</strong> and click the <strong>Get</strong>
+      button. This will retrieve the macro from the command
+      station's memory. If the the macro currently exists,
+      <strong>Reply:</strong> will be macro found. If the macro
+      does not exist, the <strong>Reply:</strong> will be macro
+      empty. If there is a macro, the editor will show a list of
+      accessories that the macro is programmed to activate.</p>
+
+      <p align="left"><strong>Add button</strong></p>
+
+      <p align="left">The <strong>Add</strong> button will add an
+      accessory's address</p>
+
+      <p align="left"><strong>Delete button</strong></p>
+
+      <p align="left">The <strong>Delete</strong> button will
+      remove an accessory's address</p>
+
+      <p align="left"><strong>Link Macro button</strong></p>
+
+      <p align="left">Links this macro to another one.</p>
+
+      <p align="left"><strong>Previous and Next
+      buttons</strong></p>
+
+      <p align="left">Allow you to search the macros.</p>
+
+      <p align="left"><strong>Save button</strong></p>
+
+      <p align="left">Saves macros to the NCE command station</p>
+
+      <div>
+        <div align="right">
+          <a href="#EditMacro">Back</a>
+        </div>
+      </div>
+
+      <h4 align="left"><a name="Consist" id="Consist"></a>Edit
+      Consist Window</h4>
+
+      <p align="left">This tool allows you to review, edit and save
+      NCE style consists. Also allows you to backup and restore all
+      the NCE command station consists to and from a file.</p>
+
+      <p align="center"><img src="images/Main_NCE_04.png" alt=
+      "consit tool" width="564" height="411" border="4"></p>
+
+      <p align="left"><strong>Backup</strong> button allows you to
+      backup all of your consists to a file from the NCE command
+      Station.</p>
+
+      <p align="left"><strong>Restore</strong> button allows you
+      restore consists from a file to the NCE command Station.</p>
+
+      <p align="left"><strong>Get</strong> button is used to
+      retrieve the consist from the command station's memory.</p>
+
+      <p>You may add a locomotive by entering the address and
+      clicking the <strong>??</strong> button to set forward or
+      reverse running. The <strong>Type</strong> button toggles
+      between <strong>Long</strong> and <strong>Short</strong>
+      address (remember that NCE allows both long and short
+      addresses in the range below 128). Click the
+      <strong>Add</strong> button and that locomotive will be added
+      to the consist.</p>
+
+      <p align="left">Alternately, you may add a locomotive from
+      your roster with the drop-down list, then click the
+      <strong>Add</strong> button.</p>
+
+      <p align="left"><input name="checkbox" type="checkbox" id=
+      "checkbox" checked> <strong>Consist roster</strong> enables
+      saving and maintaining consist roster when checked.</p>
+
+      <p align="left"><strong>Save</strong> and
+      <strong>Load</strong> Button is displayed as a
+      <strong>Save</strong> button when program has detected that a
+      change has been made to a consist. When you select a consist
+      to load from the consist menu, it becomes the
+      <strong>Load</strong> button.</p>
+
+      <p align="left"><strong>Clear</strong> button removes all the
+      locomotives from a consist.</p>
+
+      <div>
+        <div align="right">
+          <a href="#Editconsist">Back</a>
+        </div>
+      </div>
+
+      <h4 align="left"><a name="ClockMon" id="ClockMon"></a> NCE
+      Clock Monitor Window</h4>
+
+      <p align="center"><img src="images/Main_NCE_05.png" alt=
+      "NCE clock monitor" width="690" height="481" border="4"></p>
+
+      <div>
+        <div align="right">
+          <a href="#Clock">Back</a>
+
+          <p><a href="dp3_menubar.shtml">Back to Index</a><a href=
+          "Main_Menu.shtml#System"></a></p>
+        </div><!--#include virtual="/Footer" -->
+      </div><!-- closes #mainContent-->
+    </div><!-- closes #mBody-->
+  </div>
+</body>
 </html>

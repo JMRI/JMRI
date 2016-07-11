@@ -1,295 +1,505 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
-<title>JMRI OperationsPro: Add Cars</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>JMRI OperationsPro: Add Cars</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <!--#include virtual="/Header" -->
 
-<a name="Top"></a>
-<h1>Using JMRI&reg; to Operate Trains</h1>
-<h2>OperationsPro: Add Car (Edit Car) Window</h2>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<div align="right">
-<p><a href="Ops_Cars.shtml">Back</a><a href="#"></a></p>
-<p><a href="index.shtml#Operations">Back to Index</a></p>
-</div>
+    <div id="mainContent">
+      <a name="Top" id="Top"></a>
 
-<hr>
-<p>The <strong>Add Car</strong> window or <strong>Edit Car</strong> window is opened. Both windows share the same features except for their title.</p>
-<table width="90%" border="0" align="center" cellpadding="2" cellspacing="1">
-  <tr>
-    <td width="49%" align="left" valign="top"><img src="images/Ops_CarMenu.png" width="475" height="91" alt="Car Menu"><br>
-    <br>
-    <img src="images/Ops_CarMenu01.png" width="461" height="106" alt="menu"></td>
-    <td width="51%" align="left" valign="top"><p><strong><em>Menu</em></strong></p>
-    <p><strong>Window</strong>-- Same as other JMRI menus</p>
-    <p><strong>Help</strong> -- Same as other JMRI Menus</p></td>
-  </tr>
-  <tr>
-    <td align="left" valign="top"><img src="images/Ops_CarRoad.png" width="473" height="71" alt="Car's Road"></td>
-    <td width="51%" align="left" valign="top"><p>Select <strong>Road</strong>
-      <select name="select" id="select">
-        <option>AA</option>
-      </select>
-      If your Road is not listed then press
-  <input type="submit" name="button" id="button" value="Edit">
-      and the <a href="Ops_CarAttributes.shtml">Edit Car Road</a>. A dialog box will display. Check this reference for the <a href="http://www.railserve.com/aar_railroad_reporting_marks.html" target="_blank">Railroad Reporting Marks.</a></p></td>
-  </tr>
-  <tr>
-    <td align="left" valign="top"><img src="images/Ops_CarNumber.png" width="474" height="81" alt="Car Number"></td>
-    <td width="51%" align="left" valign="top"><p>Enter the car's Road Number 
-      <input name="textfield" type="text" id="textfield" size="15">
-    The program requires a unique Road Name and Road Number for each car. If you have cars with  identical roads and numbers, simply add "-1", "-2", etc. to each of the car numbers. The program when printing out the Manifest or Switch List will drop the -1, -2, etc. from the car's Road Number.</p></td>
-  </tr>
-  <tr>
-    <td align="left" valign="top"><img src="images/Ops_CarType.png" width="474" height="120" alt="Car Type"><br>
-    If the car is a
-      <input type="checkbox" name="checkbox" id="checkbox">
-      <strong> Caboose</strong>, has a
-      <input type="checkbox" name="checkbox2" id="checkbox2">
-      <strong>FRED</strong> (Flashing Rear End Device), or is
-      <input type="checkbox" name="checkbox3" id="checkbox3">
-    <strong>Hazardous</strong>, check the proper box. The program uses the Caboose and FRED functions to place the car at the end of a train when the train requires  a caboose or car with FRED. The Hazardous checkbox will cause the  program to add a note to the switch list that the car is transporting hazardous materials. Your railroad's policy regarding hazardous materials can than be applied to this car!</td>
-    
-    <td width="51%" align="left" valign="top"><p><strong>Type</strong>
-      <select name="select2" id="select2">
-        <option>Baggage</option>
-      </select>
-      from drop-down list. if your type is not listed then press
-      <input type="submit" name="button3" id="button3" value="Edit">
-      and the <a href="Ops_CarAttributes.shtml">Edit Car Type</a> dialog box will display. </p>
-    <p>The program supports the ability to add a subType to your car types. Adding a "-subType" to your car type will create a new type of car. The "-subType" is not printed on the Manifest or Switch Lists. For example you might have coal cars with loads and coal cars that are empty. If you enter the car type as HopCoal-C for your cars loaded with coal, and HopCoal-E for the empties, the program can use this information to assign and deliver Cars to their appropriate Trains and Locations respectively. </p></td>
-  </tr>
-  <tr>
-    <td align="left" valign="top"><img src="images/Ops_CarLength.png" width="470" height="104" alt="Car Length"></td>
-    <td width="51%" align="left" valign="top">Select the Car's <strong>Length</strong>
-      <select name="select3" id="select3">
-        <option>32</option>
-      </select>
-If the appropriate Length is not listed then press <input type="submit" name="button3" id="button3" value="Edit"> and the <a href="Ops_CarAttributes.shtml">Edit Car Length</a> dialog box will display.</td>
-  </tr>
-  <tr>
-    <td align="left" valign="top"><img src="images/Ops_CarWeight.png" width="474" height="115" alt="Car Weight"></td>
-    <td width="51%" align="left" valign="top">The Car <strong>Weight</strong> is automatically calculated when the
-      <input name="checkbox4" type="checkbox" id="checkbox4" checked>
-      <strong>Auto</strong> is selected based on the car's length, but you can enter a different weight if necessary. If the
-      <input type="checkbox" name="checkbox5" id="checkbox5">
-      <strong>Auto</strong> is not checked then you may use the
-      <input type="submit" name="button4" id="button4" value="Calculate">
-to calculate the weight. When entering the length of a car, enter the length of the body and not the total length. For  example, a forty foot boxcar has a length of 40 feet. The program when calculating lengths will add two feet to each end of a car for the couplers. Therefore when you place a forty foot car at a siding, it will consume 44 feet of track.</td>
-  </tr>
-  <tr>
-    <td align="left" valign="top"><img src="images/Ops_CarLocation.png" width="457" height="106" alt="car location"></td>
-    <td width="51%" align="left" valign="top"><p>Now you select the car's <strong>Location
-          and Track
-          <select name="select8" id="select8">
-            <option>Red Rock Junction</option>
-          </select></strong>. The first selection
-      is the Location, city, yard etc. that was created under <a href="Ops_Locations.shtml">Locations</a>.</p>
-      <p>The second selection
-        <select name="select9" id="select9">
-          <option>Food Depot</option>
-        </select>
-is based on the first and only has entries if there is more than one track at this Location.</p>
-    <p>If the car is off the layout, set the location to None (blank space)</p>
-    <p>
-      <input type="checkbox" name="checkbox6" id="checkbox6">
-    Auto selection</p></td>
-  </tr>
-  <tr>
-    <td colspan="2" valign="top"><h3>Optional Car Attributes</h3></td>
-  </tr>
-  <tr>
-    <td align="left" valign="top"><img src="images/Ops_CarColor.png" width="475" height="119" alt="Car Color"></td>
-    <td width="51%" align="left" valign="top">Select the car's <strong>Color</strong>
-      <select name="select4" id="select4">
-        <option>Black</option>
-      </select>
-if the applicable Car Color is not listed then press
-<input type="submit" name="button5" id="button5" value="Edit">
-and the <a href="Ops_CarAttributes.shtml">Edit Color</a> dialog box will display. </td>
-  </tr>
-  <tr>
-    <td align="left" valign="top"><img src="images/Ops_CarLoad.png" width="471" height="100" alt="Car Load"></td>
-    <td width="51%" align="left" valign="top"><p>You can optionally set the <strong>Load</strong>
-        <select name="select5" id="select5">
-          <option>E</option>
-        </select>
-state of the car. Select <strong>E</strong> for Empty or  <strong>L</strong> for loaded. Press
-<input type="submit" name="button6" id="button6" value="Edit">
-to create your own Car Load codes, but beware there are restrictions. Only sidings with <a href="Ops_schedule.shtml">Schedules</a> can load or unload Cars with custom Load types that you've created. It is also suggested that you use a format similar to <strong>L(commodity)</strong> to describe your Loads. For example a load of tools could be entered as L(Tools).</p></td>
-  </tr>
-  <tr>
-    <td align="left" valign="top"><img src="images/Ops_CarKernel.png" width="471" height="93" alt="Car Kernel"></td>
-    <td width="51%" align="left" valign="top"><p><strong>Kernel</strong></p>
-      <p>If you wish this Car to be part of a Kernel, which is a group of Cars that you want to switch as one unit, select 
-        <select name="select6" id="select6">
-          <option>Coal Empty</option>
-        </select> 
-        Kernel from drop-down list. If the Kernel you want is not there, press
-        <input type="submit" name="button7" id="button7" value="Edit">
-      and enter a <a href="Ops_CarAttributes.shtml">Kernel name.</a> to add to the list. Then select the Kernel from the drop-down list.</p></td>
-  </tr>
-  <tr>
-    <td align="left" valign="top"><img src="images/Ops_CarBuilt.png" width="474" height="91" alt="Car Built"></td>
-    <td width="51%" align="left" valign="top">Optional Built
-      <input name="textfield2" type="text" id="textfield2" size="15">
-you may enter the built date.</td>
-  </tr>
-  <tr>
-    <td align="left" valign="top"><img src="images/Ops_CarOwner.png" width="475" height="92" alt="Car Owner"></td>
-    <td width="51%" align="left" valign="top">You may optionally select an <strong>Owner</strong>
-      <select name="select7" id="select7">
-      </select>
-or press
-<input type="submit" name="button8" id="button8" value="Edit">
-to enter an <a href="Ops_CarAttributes.shtml">Owner.</a> Then select the Owner from the menu box.</td>
-  </tr>
-  <tr>
-    <td align="left" valign="top"><img src="images/Ops_CarComment.png" width="475" height="97" alt="Car Comment"></td>
-    <td width="51%" align="left" valign="top"><strong>Comment</strong>
-      <input type="text" name="textfield3" id="textfield3">
-for  this car.</td>
-  </tr>
-  <tr>
-    <td align="left" valign="top"><img src="images/Ops_CarButtons.png" width="475" height="75" alt="Car Butttons"></td>
-    <td width="51%" align="left" valign="top"><p>
-      <input type="submit" name="button9" id="button9" value="Add">
-      add another car.</p>
-      <p>
-        <input type="submit" name="button10" id="button10" value="Delete">
-        delete the Car currently open.</p>
-      <p>
-        <input type="submit" name="button11" id="button11" value="Save">
-        to store the Car's settings. The program will create a file  (OperationsCarRoster.xml) in your JMRI directory in a folder called "operations". A backup file with the last settings for all of your Cars is also created each time the
-  <input type="submit" name="button12" id="button12" value="Save">
-        button is pressed. </p>
-    <p></p></td>
-  </tr>
-</table>
+      <h1>Using JMRI&reg; to Operate Trains</h1>
 
-<p>Now lets add several cars to our Car Roster. When we add and save the Cars, they will be added to the Roster and shown in the <strong>Cars</strong> window.</p>
-<p align="center"><img src="images/Ops_Cars06.png" width="922" height="421" alt="Cars with roster"></p>
-<p align="left">Now if you desire to change a value of a <strong>Cars</strong> attributes that is already in the Cars Roster, press the 
-  <input type="submit" name="button2" id="button2" value="Edit"> 
-to the right of that Car. The <strong><a href="Ops_AddCars.shtml">Edit Car</a></strong>window will open, which is almost identical to the <strong>Add Car</strong> window.</p>
-<p align="left"><img src="images/Ops_EditCar.png" width="467" height="765" alt="Edit Car"></p>
-<p align="left">You may choose from:</p>
-<p align="left">
-  <input type="submit" name="button13" id="button13" value="Delete"> 
-  removes the selected Car from the Roster.
-</p>
-<p align="left">
-  <input type="submit" name="button14" id="button14" value="Add"> 
-  add the edited Car as another item to the Car Roster.
-</p>
-<p align="left">
-  <input type="submit" name="button15" id="button15" value="Save"> 
-make changes and save them in the Car Roster.</p>
-<p align="left">The 
-  <input type="submit" name="button16" id="button16" value="Set"> 
-when pressed, opens the <strong>Set Car Location</strong> pane and allows you to override the program and set a Car at a Location that is defined in your OperationsPro database.</p>
-<table width="90%" border="0" cellspacing="1" cellpadding="2">
-  <tr>
-    <td width="47%" valign="top"><img src="images/Ops_SetCarLocation.png" width="500" height="650" alt="set car location"></td>
-    <td width="53%" align="left" valign="top"><p><strong>Menu</strong> is standard for JMRI&reg;.</p>
-    <p><strong>Car</strong> displays the user name of the selected Car.<br>
-      <strong>Type</strong> displays Car Type <br>
-      <strong>Status </strong><br>
-      <input type="checkbox" name="checkbox7" id="checkbox7">
-      Location Unknown<br>
-    <input type="checkbox" name="checkbox8" id="checkbox8">
-    Out of Service</p>
-    <p><strong>Location</strong><br>
-    Using <strong>Name
-      <select name="select10" id="select10">
-        <option>North Yard</option>
-      </select>
-    </strong> and <strong>Track
-    <select name="select11" id="select11">
-      <option>Track 2</option>
-    </select>
-    </strong>you can set the Car at any defined Location on your layout.<br>
-    <input type="checkbox" name="checkbox9" id="checkbox9">
-    <strong>Auto</strong> When checked, OperationsPro will choose a Location</p>
-    <p><strong>Optional</strong></p>
-    <p><strong>Return When Empty</strong><br>
-      <select name="select15" size="1" id="select15">
-      </select>
-      <strong>Name</strong> of the return Location <strong>
-    <select name="select16" id="select16">
-    </select>
-    Track </strong>at Location <strong>
-    <input type="checkbox" name="checkbox10" id="checkbox10">
-    Auto</strong> selection</p>
-    <p><strong>Load</strong><br>
-      <select name="select17" id="select17">
-        <option>E&lt;mpty&gt;</option>
-      </select>
-      type of load 
-      <input type="button" name="button18" id="button18" value="Edit">
-    Edit Load for this Car</p>
-    <p><strong>Optional</strong> (the values in this box are normally set by OperationsPro)</p>
-    <p><strong>Destination </strong>optionally set the <strong>Name</strong><strong>
-      <select name="select12" id="select12">
-        <option>North Yard</option>
-      </select>
-    </strong> of location and the <strong>Track
-    <select name="select13" id="select13">
-      <option>Track 2</option>
-    </select>
-    </strong>.
-    <input type="checkbox" name="checkbox11" id="checkbox11">
-    <strong>    Auto</strong></p>
-    <p><strong>Final Destination</strong><br>
-      <strong>Name</strong><strong>
-      <select name="select18" id="select18">
-        <option>North Yard</option>
-      </select>
-      </strong> of the Location and the <strong>Track
-      <select name="select18" id="select19">
-        <option>Track 2</option>
-      </select>
-      </strong>.
-      <input type="checkbox" name="checkbox12" id="checkbox12">
-      <strong> Auto</strong>      <br>
-    </p>
-    <p><strong>Train</strong><br>
-<select name="select14" id="select14">
-</select>
-      optionally set the Train.
-      <input type="checkbox" name="checkbox13" id="checkbox13">
-      <strong>Auto</strong></p>
-    <p>
-      <input type="submit" name="button17" id="button17" value="Save">
-    press to save the Car Locations that you have set.</p>
-    <p>&nbsp;</p>
-    <p>Close the window when completed.</p></td>
-  </tr>
-</table>
-<p align="left">Now that you have your Cars stored in the Roster, you will probably want to add some <a href="Ops_Engines.shtml">Locomotives</a> to move your Cars about the layout.</p>
-<hr>
+      <h2>OperationsPro: Add Car (Edit Car) Window</h2>
 
-<div align="right">
-<p><a href="Ops_Cars.shtml">Back</a><a href="#"></a></p>
-<p><a href="index.shtml#Operations">Back to Index</a></p>
-</div>
+      <div align="right">
+        <p><a href="Ops_Cars.shtml">Back</a><a href="#"></a></p>
 
-<!--#include virtual="/Footer" -->
-</div>
-</div>
+        <p><a href="index.shtml#Operations">Back to Index</a></p>
+      </div>
+      <hr>
+
+      <p>The <strong>Add Car</strong> window or <strong>Edit
+      Car</strong> window is opened. Both windows share the same
+      features except for their title.</p>
+
+      <table width="90%" border="0" align="center" cellpadding="2"
+      cellspacing="1">
+        <tr>
+          <td width="49%" align="left" valign="top"><img src=
+          "images/Ops_CarMenu.png" width="475" height="91" alt=
+          "Car Menu"><br>
+          <br>
+          <img src="images/Ops_CarMenu01.png" width="461" height=
+          "106" alt="menu"></td>
+
+          <td width="51%" align="left" valign="top">
+            <p><strong><em>Menu</em></strong></p>
+
+            <p><strong>Window</strong>-- Same as other JMRI
+            menus</p>
+
+            <p><strong>Help</strong> -- Same as other JMRI
+            Menus</p>
+          </td>
+        </tr>
+
+        <tr>
+          <td align="left" valign="top"><img src=
+          "images/Ops_CarRoad.png" width="473" height="71" alt=
+          "Car's Road"></td>
+
+          <td width="51%" align="left" valign="top">
+            <p>Select <strong>Road</strong> <select name="select"
+            id="select">
+              <option>
+                AA
+              </option>
+            </select> If your Road is not listed then press
+            <input type="submit" name="button" id="button" value=
+            "Edit"> and the <a href="Ops_CarAttributes.shtml">Edit
+            Car Road</a>. A dialog box will display. Check this
+            reference for the <a href=
+            "http://www.railserve.com/aar_railroad_reporting_marks.html"
+            target="_blank">Railroad Reporting Marks.</a></p>
+          </td>
+        </tr>
+
+        <tr>
+          <td align="left" valign="top"><img src=
+          "images/Ops_CarNumber.png" width="474" height="81" alt=
+          "Car Number"></td>
+
+          <td width="51%" align="left" valign="top">
+            <p>Enter the car's Road Number <input name="textfield"
+            type="text" id="textfield" size="15"> The program
+            requires a unique Road Name and Road Number for each
+            car. If you have cars with identical roads and numbers,
+            simply add "-1", "-2", etc. to each of the car numbers.
+            The program when printing out the Manifest or Switch
+            List will drop the -1, -2, etc. from the car's Road
+            Number.</p>
+          </td>
+        </tr>
+
+        <tr>
+          <td align="left" valign="top"><img src=
+          "images/Ops_CarType.png" width="474" height="120" alt=
+          "Car Type"><br>
+          If the car is a <input type="checkbox" name="checkbox"
+          id="checkbox"> <strong>Caboose</strong>, has a
+          <input type="checkbox" name="checkbox2" id="checkbox2">
+          <strong>FRED</strong> (Flashing Rear End Device), or is
+          <input type="checkbox" name="checkbox3" id="checkbox3">
+          <strong>Hazardous</strong>, check the proper box. The
+          program uses the Caboose and FRED functions to place the
+          car at the end of a train when the train requires a
+          caboose or car with FRED. The Hazardous checkbox will
+          cause the program to add a note to the switch list that
+          the car is transporting hazardous materials. Your
+          railroad's policy regarding hazardous materials can than
+          be applied to this car!</td>
+
+          <td width="51%" align="left" valign="top">
+            <p><strong>Type</strong> <select name="select2" id=
+            "select2">
+              <option>
+                Baggage
+              </option>
+            </select> from drop-down list. if your type is not
+            listed then press <input type="submit" name="button3"
+            id="button3" value="Edit"> and the <a href=
+            "Ops_CarAttributes.shtml">Edit Car Type</a> dialog box
+            will display.</p>
+
+            <p>The program supports the ability to add a subType to
+            your car types. Adding a "-subType" to your car type
+            will create a new type of car. The "-subType" is not
+            printed on the Manifest or Switch Lists. For example
+            you might have coal cars with loads and coal cars that
+            are empty. If you enter the car type as HopCoal-C for
+            your cars loaded with coal, and HopCoal-E for the
+            empties, the program can use this information to assign
+            and deliver Cars to their appropriate Trains and
+            Locations respectively.</p>
+          </td>
+        </tr>
+
+        <tr>
+          <td align="left" valign="top"><img src=
+          "images/Ops_CarLength.png" width="470" height="104" alt=
+          "Car Length"></td>
+
+          <td width="51%" align="left" valign="top">Select the
+          Car's <strong>Length</strong> <select name="select3" id=
+          "select3">
+            <option>
+              32
+            </option>
+          </select> If the appropriate Length is not listed then
+          press <input type="submit" name="button3" id="button3"
+          value="Edit"> and the <a href=
+          "Ops_CarAttributes.shtml">Edit Car Length</a> dialog box
+          will display.</td>
+        </tr>
+
+        <tr>
+          <td align="left" valign="top"><img src=
+          "images/Ops_CarWeight.png" width="474" height="115" alt=
+          "Car Weight"></td>
+
+          <td width="51%" align="left" valign="top">The Car
+          <strong>Weight</strong> is automatically calculated when
+          the <input name="checkbox4" type="checkbox" id=
+          "checkbox4" checked> <strong>Auto</strong> is selected
+          based on the car's length, but you can enter a different
+          weight if necessary. If the <input type="checkbox" name=
+          "checkbox5" id="checkbox5"> <strong>Auto</strong> is not
+          checked then you may use the <input type="submit" name=
+          "button4" id="button4" value="Calculate"> to calculate
+          the weight. When entering the length of a car, enter the
+          length of the body and not the total length. For example,
+          a forty foot boxcar has a length of 40 feet. The program
+          when calculating lengths will add two feet to each end of
+          a car for the couplers. Therefore when you place a forty
+          foot car at a siding, it will consume 44 feet of
+          track.</td>
+        </tr>
+
+        <tr>
+          <td align="left" valign="top"><img src=
+          "images/Ops_CarLocation.png" width="457" height="106"
+          alt="car location"></td>
+
+          <td width="51%" align="left" valign="top">
+            <p>Now you select the car's <strong>Location and Track
+            <select name="select8" id="select8">
+              <option>
+                Red Rock Junction
+              </option>
+            </select></strong>. The first selection is the
+            Location, city, yard etc. that was created under
+            <a href="Ops_Locations.shtml">Locations</a>.</p>
+
+            <p>The second selection <select name="select9" id=
+            "select9">
+              <option>
+                Food Depot
+              </option>
+            </select> is based on the first and only has entries if
+            there is more than one track at this Location.</p>
+
+            <p>If the car is off the layout, set the location to
+            None (blank space)</p>
+
+            <p><input type="checkbox" name="checkbox6" id=
+            "checkbox6"> Auto selection</p>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="2" valign="top">
+            <h3>Optional Car Attributes</h3>
+          </td>
+        </tr>
+
+        <tr>
+          <td align="left" valign="top"><img src=
+          "images/Ops_CarColor.png" width="475" height="119" alt=
+          "Car Color"></td>
+
+          <td width="51%" align="left" valign="top">Select the
+          car's <strong>Color</strong> <select name="select4" id=
+          "select4">
+            <option>
+              Black
+            </option>
+          </select> if the applicable Car Color is not listed then
+          press <input type="submit" name="button5" id="button5"
+          value="Edit"> and the <a href=
+          "Ops_CarAttributes.shtml">Edit Color</a> dialog box will
+          display.</td>
+        </tr>
+
+        <tr>
+          <td align="left" valign="top"><img src=
+          "images/Ops_CarLoad.png" width="471" height="100" alt=
+          "Car Load"></td>
+
+          <td width="51%" align="left" valign="top">
+            <p>You can optionally set the <strong>Load</strong>
+            <select name="select5" id="select5">
+              <option>
+                E
+              </option>
+            </select> state of the car. Select <strong>E</strong>
+            for Empty or <strong>L</strong> for loaded. Press
+            <input type="submit" name="button6" id="button6" value=
+            "Edit"> to create your own Car Load codes, but beware
+            there are restrictions. Only sidings with <a href=
+            "Ops_schedule.shtml">Schedules</a> can load or unload
+            Cars with custom Load types that you've created. It is
+            also suggested that you use a format similar to
+            <strong>L(commodity)</strong> to describe your Loads.
+            For example a load of tools could be entered as
+            L(Tools).</p>
+          </td>
+        </tr>
+
+        <tr>
+          <td align="left" valign="top"><img src=
+          "images/Ops_CarKernel.png" width="471" height="93" alt=
+          "Car Kernel"></td>
+
+          <td width="51%" align="left" valign="top">
+            <p><strong>Kernel</strong></p>
+
+            <p>If you wish this Car to be part of a Kernel, which
+            is a group of Cars that you want to switch as one unit,
+            select <select name="select6" id="select6">
+              <option>
+                Coal Empty
+              </option>
+            </select> Kernel from drop-down list. If the Kernel you
+            want is not there, press <input type="submit" name=
+            "button7" id="button7" value="Edit"> and enter a
+            <a href="Ops_CarAttributes.shtml">Kernel name.</a> to
+            add to the list. Then select the Kernel from the
+            drop-down list.</p>
+          </td>
+        </tr>
+
+        <tr>
+          <td align="left" valign="top"><img src=
+          "images/Ops_CarBuilt.png" width="474" height="91" alt=
+          "Car Built"></td>
+
+          <td width="51%" align="left" valign="top">Optional Built
+          <input name="textfield2" type="text" id="textfield2"
+          size="15"> you may enter the built date.</td>
+        </tr>
+
+        <tr>
+          <td align="left" valign="top"><img src=
+          "images/Ops_CarOwner.png" width="475" height="92" alt=
+          "Car Owner"></td>
+
+          <td width="51%" align="left" valign="top">You may
+          optionally select an <strong>Owner</strong> <select name=
+          "select7" id="select7">
+            </select> or press <input type="submit" name="button8"
+            id="button8" value="Edit"> to enter an <a href=
+            "Ops_CarAttributes.shtml">Owner.</a> Then select the
+            Owner from the menu box.</td>
+        </tr>
+
+        <tr>
+          <td align="left" valign="top"><img src=
+          "images/Ops_CarComment.png" width="475" height="97" alt=
+          "Car Comment"></td>
+
+          <td width="51%" align="left" valign="top">
+          <strong>Comment</strong> <input type="text" name=
+          "textfield3" id="textfield3"> for this car.</td>
+        </tr>
+
+        <tr>
+          <td align="left" valign="top"><img src=
+          "images/Ops_CarButtons.png" width="475" height="75" alt=
+          "Car Butttons"></td>
+
+          <td width="51%" align="left" valign="top">
+            <p><input type="submit" name="button9" id="button9"
+            value="Add"> add another car.</p>
+
+            <p><input type="submit" name="button10" id="button10"
+            value="Delete"> delete the Car currently open.</p>
+
+            <p><input type="submit" name="button11" id="button11"
+            value="Save"> to store the Car's settings. The program
+            will create a file (OperationsCarRoster.xml) in your
+            JMRI directory in a folder called "operations". A
+            backup file with the last settings for all of your Cars
+            is also created each time the <input type="submit"
+            name="button12" id="button12" value="Save"> button is
+            pressed.</p>
+          </td>
+        </tr>
+      </table>
+
+      <p>Now lets add several cars to our Car Roster. When we add
+      and save the Cars, they will be added to the Roster and shown
+      in the <strong>Cars</strong> window.</p>
+
+      <p align="center"><img src="images/Ops_Cars06.png" width=
+      "922" height="421" alt="Cars with roster"></p>
+
+      <p align="left">Now if you desire to change a value of a
+      <strong>Cars</strong> attributes that is already in the Cars
+      Roster, press the <input type="submit" name="button2" id=
+      "button2" value="Edit"> to the right of that Car. The
+      <strong><a href="Ops_AddCars.shtml">Edit
+      Car</a></strong>window will open, which is almost identical
+      to the <strong>Add Car</strong> window.</p>
+
+      <p align="left"><img src="images/Ops_EditCar.png" width="467"
+      height="765" alt="Edit Car"></p>
+
+      <p align="left">You may choose from:</p>
+
+      <p align="left"><input type="submit" name="button13" id=
+      "button13" value="Delete"> removes the selected Car from the
+      Roster.</p>
+
+      <p align="left"><input type="submit" name="button14" id=
+      "button14" value="Add"> add the edited Car as another item to
+      the Car Roster.</p>
+
+      <p align="left"><input type="submit" name="button15" id=
+      "button15" value="Save"> make changes and save them in the
+      Car Roster.</p>
+
+      <p align="left">The <input type="submit" name="button16" id=
+      "button16" value="Set"> when pressed, opens the <strong>Set
+      Car Location</strong> pane and allows you to override the
+      program and set a Car at a Location that is defined in your
+      OperationsPro database.</p>
+
+      <table width="90%" border="0" cellspacing="1" cellpadding=
+      "2">
+        <tr>
+          <td width="47%" valign="top"><img src=
+          "images/Ops_SetCarLocation.png" width="500" height="650"
+          alt="set car location"></td>
+
+          <td width="53%" align="left" valign="top">
+            <p><strong>Menu</strong> is standard for JMRI&reg;.</p>
+
+            <p><strong>Car</strong> displays the user name of the
+            selected Car.<br>
+            <strong>Type</strong> displays Car Type<br>
+            <strong>Status</strong><br>
+            <input type="checkbox" name="checkbox7" id="checkbox7">
+            Location Unknown<br>
+            <input type="checkbox" name="checkbox8" id="checkbox8">
+            Out of Service</p>
+
+            <p><strong>Location</strong><br>
+            Using <strong>Name <select name="select10" id=
+            "select10">
+              <option>
+                North Yard
+              </option>
+            </select></strong> and <strong>Track <select name=
+            "select11" id="select11">
+              <option>
+                Track 2
+              </option>
+            </select></strong> you can set the Car at any defined
+            Location on your layout.<br>
+            <input type="checkbox" name="checkbox9" id="checkbox9">
+            <strong>Auto</strong> When checked, OperationsPro will
+            choose a Location</p>
+
+            <p><strong>Optional</strong></p>
+
+            <p><strong>Return When Empty</strong><br>
+            <select name="select15" size="1" id="select15">
+              </select> <strong>Name</strong> of the return
+              Location <strong><select name="select16" id=
+              "select16">
+              </select> Track</strong> at Location
+              <strong><input type="checkbox" name="checkbox10" id=
+              "checkbox10"> Auto</strong> selection</p>
+
+            <p><strong>Load</strong><br>
+            <select name="select17" id="select17">
+              <option>
+                E&lt;mpty&gt;
+              </option>
+            </select> type of load <input type="button" name=
+            "button18" id="button18" value="Edit"> Edit Load for
+            this Car</p>
+
+            <p><strong>Optional</strong> (the values in this box
+            are normally set by OperationsPro)</p>
+
+            <p><strong>Destination</strong> optionally set the
+            <strong>Name</strong> <strong><select name="select12"
+            id="select12">
+              <option>
+                North Yard
+              </option>
+            </select></strong> of location and the <strong>Track
+            <select name="select13" id="select13">
+              <option>
+                Track 2
+              </option>
+            </select></strong> . <input type="checkbox" name=
+            "checkbox11" id="checkbox11"> <strong>Auto</strong></p>
+
+            <p><strong>Final Destination</strong><br>
+            <strong>Name</strong> <strong><select name="select18"
+            id="select18">
+              <option>
+                North Yard
+              </option>
+            </select></strong> of the Location and the
+            <strong>Track <select name="select18" id="select19">
+              <option>
+                Track 2
+              </option>
+            </select></strong> . <input type="checkbox" name=
+            "checkbox12" id="checkbox12">
+            <strong>Auto</strong><br></p>
+
+            <p><strong>Train</strong><br>
+            <select name="select14" id="select14">
+              </select> optionally set the Train. <input type=
+              "checkbox" name="checkbox13" id="checkbox13">
+              <strong>Auto</strong></p>
+
+            <p><input type="submit" name="button17" id="button17"
+            value="Save"> press to save the Car Locations that you
+            have set.</p>
+
+            <p> </p>
+
+            <p>Close the window when completed.</p>
+          </td>
+        </tr>
+      </table>
+
+      <p align="left">Now that you have your Cars stored in the
+      Roster, you will probably want to add some <a href=
+      "Ops_Engines.shtml">Locomotives</a> to move your Cars about
+      the layout.</p>
+      <hr>
+
+      <div align="right">
+        <p><a href="Ops_Cars.shtml">Back</a><a href="#"></a></p>
+
+        <p><a href="index.shtml#Operations">Back to Index</a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div>
+  </div>
 </body>
 </html>
