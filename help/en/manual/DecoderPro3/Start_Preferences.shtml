@@ -61,7 +61,7 @@ have been made
   </blockquote>
 </blockquote>
 <p><a name="Top"></a>
-</p><table class="BOXIT" align="center" border="1" cellpadding="1" cellspacing="1" width="86%">
+</p><table class="BOXIT" align="center" border="1" cellpadding="1" cellspacing="1" width="86%" summary="connections">
   <tbody><tr>
     <td align="left" valign="top" width="22%"><strong><a href="#Connections">Connections</a><a href="#Connectorss"></a></strong></td>
     <td align="left" valign="top" width="78%">Allows
@@ -116,7 +116,7 @@ used to customize your specific system.</td>
     <p>Now we will set up preferences for the JMRI environment with your command station.</p>
   </blockquote>
 </blockquote>
-<table align="center" border="1" cellpadding="2" cellspacing="1" width="80%">
+<table align="center" border="1" cellpadding="2" cellspacing="1" width="80%" title="Example" summary="Example">
   <tbody><tr>
     <td>I
 am using a Digitrax Super Chief Command Station (radio) interfaced to
@@ -134,7 +134,7 @@ Digitrax Chief system with PR3 interface.</p>
     <p><img src="images/Preferences2.png" alt="connectionpane" height="441" width="666"></p>
   </blockquote>
 </blockquote>
-<table align="center" border="1" cellpadding="2" cellspacing="1" width="80%">
+<table align="center" border="1" cellpadding="2" cellspacing="1" width="80%" summary="Drop down table">
   <tbody><tr>
     <td width="21%">System manufacturer:</td>
     <td colspan="2">Drop-down list with all the supported DCC manufacturers, select the manufacturer of your system.</td>
@@ -188,7 +188,7 @@ possibility</td>
     <p><img src="images/Preferences5.png" alt="preferences" height="450" width="663"></p>
   </blockquote>
 </blockquote>
-<table align="center" border="1" cellpadding="2" cellspacing="1" width="50%">
+<table align="center" border="1" cellpadding="2" cellspacing="1" width="50%" summary="File locations">
   <tbody>
     <tr>
       <td align="left" valign="top" width="26%"><strong>User File Locations</strong></td>
@@ -224,7 +224,7 @@ possibility</td>
     <p><img src="images/Preferences_GUI.png" alt="GUI" height="467" width="667"></p>
   </blockquote>
 </blockquote>
-<table align="center" border="1" cellpadding="2" cellspacing="1" width="80%">
+<table align="center" border="1" cellpadding="2" cellspacing="1" width="80%" summary="Setting preferences">
   <tbody><tr>
     <td rowspan="5" width="51%"><strong>Select your preferred appearance for buttons, menus, etc.</strong></td>
     <td width="49%"><input name="radio" id="radio" value="radio" checked="checked" type="radio">
@@ -284,7 +284,7 @@ possibility</td>
     <p><strong><a href="#Top">Top</a></strong></p>
     <h3><a name="WiThrottle"></a>WiThrottle Pane</h3>
     <p>This pane allows WiThrottle users to customize the setup.</p>
-    <p><img src="images/Preferences_Wi.png" height="446" width="669"></p>
+    <p><img src="images/Preferences_Wi.png" height="446" width="669" alt="preferences"></p>
     <p><strong><a href="#Top">Top</a></strong></p>
     <h2><a name="JSON"></a>JSON Server Pane</h2>
     <p>The JMRI <em>Json</em> Servlet provides web access to lists and values for numerous JMRI-defined entities, in the modern <em>JSON</em> format.</p>

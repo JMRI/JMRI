@@ -11,7 +11,6 @@ import jmri.jmrit.logix.OBlock;
 
 /**
  * GUI to define OBlocks
- * <P>
  * <hr>
  * This file is part of JMRI.
  * <P>

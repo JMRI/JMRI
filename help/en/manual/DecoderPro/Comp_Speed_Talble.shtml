@@ -1,154 +1,229 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
-<title>Comprehensive Programmer - Speed Control Pane</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>Comprehensive Programmer - Speed Control Pane</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <!--#include virtual="/Header" -->
 
-<a name="Top"></a>
-<h1>DecoderPro&reg; Comprehensive Programmer</h1>
-<h2>The Speed Table Pane</h2>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<div align="right">
-<p><a href="Comp_Speed.shtml">Previous | </a>
-  <a href="Comp_FMap.shtml">Next</a>
-</p><p><a href="index.shtml#Advanced%20Programmer">Back to Index</a>
-</p></div>
+    <div id="mainContent">
+      <a name="Top" id="Top"></a>
 
-<hr>
-<p>The <strong>Speed Table</strong> allows you to fine-tune the
-throttle response of your locomotive. You might opt to match all of
-your locomotives so they run at the same speed for the same throttle
-setting, or you might want to set the table up so that your locomotive
-runs at the actual scale speed indicated by the throttle. Or maybe you
-have someone in your operating group that likes to switch the yard at
-Mach 2.5, and you want to slow them down a bit. There are a lot of ways
-to use this feature. (This feature may vary by manufacturer and decoder
-series) </p><p> You  now have the option of using <strong>Speed Table </strong>(this pane) which if selected  and written to the decoder will replace the <a href="Comp_Speed.shtml"><strong>Basic Speed Control</strong></a>
-to set your locomotive's speed control mode. Which ever one you select
-last and write to your decoder will be the method used for speed
-control. To select the use of speed tables, the <strong>Use Table</strong>
-radio button is selected at the top of the pane, and in the case of
-Soundtraxx and QSI decoders, the drop down selection box must be
-used.&nbsp; See the discussion at the end of this section for an
-example. </p><p>Not all decoders allow speed table programming and some are limited to fixed curves, usually selected by a drop-down list.
-</p><p>The default speed table for most decoders is a straight line from zero on the left to maximum on the right.  The <b>
-    <input name="button" id="button" value="Force Straight" type="button">
-</b>  below the table duplicates that in the table..
-</p><h1 style="text-align: center;"><img style="width: 799px; height: 697px;" src="images/Speed_Table_Straight.png" alt="speed table"></h1>
-<p align="center"><strong>Straight Line Speed Curve</strong></p>
-<p>As you can see, you have both numbers and sliders to work with.
-Changing either a number or slider will make the other change to match
-it. If you are CV inquisitive, you can use the tool tip to
-advantage. By hovering over any of the sliders, the tool tip will
-reveal the CV to which you are pointing . </p><p>The <strong>
-    <input name="button2" id="button2" value="Match ends" type="button">
-</strong> will also result in a straight-line graph, but you can offset
-the beginning and end by any amount you wish. The first and last steps
-are used to set to minimum and maximum values for the straight line.
-The function will then draw a straight line between those two end
-points. Below is an example of the result.
-</p><h1><img src="images/Speed_Table_Match.png" alt="speed table match" height="315" width="914"></h1>
-<p>Now if you&#8217;ve used DecoderPro in the past, you&#8217;re probably wondering
-what those little boxes at the bottom of each slider are used
-for.&nbsp; Well, they&#8217;re difficult to explain, but easy to use.&nbsp;
-They basically allow you to set a slider to control every slider in
-columns to its left as well as to its right.&nbsp; If you click two of
-the boxes and then move one of those sliders you&#8217;ll see that they are
-linked to the sliders between them.&nbsp; Points to the right never are
-higher than the slider being moved, and the points to the left are
-never lower that the slider being moved. This &#8220;always increasing left
-to right&#8221; is normally the way the sliders worked, but now the ones in
-between the check are linked. If the slider is lowered and then raised
-the straight line is drawn between the column checked to the right and
-the column that the slider is controlling. &nbsp;It&#8217;s difficult to
-describe, but try it and you&#8217;ll see.
-</p><p><br> What could that possibly be used for, you ask?&nbsp; Well,
-many decoders (like the Soundtraxx Tsunami in this example) do not
-support V-start, V-mid and V-max.&nbsp; So, if you are trying to use
-the simplified method of speed matching locos, these decoders won&#8217;t
-support it.&nbsp;&nbsp; Well now you have a way.&nbsp; Check the
-left-hand, right-hand and middle columns.&nbsp; Set the left-hand
-column to V-start, the right-hand to V-max and then slide the middle
-slider up and down until you get the V-mid that you want.&nbsp; Now all
-you have to do is write this speed table to the loco and you&#8217;ve
-accomplished what you wanted to do, but the decoder manufacturer didn&#8217;t
-provide for.
-</p><h1><img src="images/Speed_Table_SpeedMatch.png" alt="Speed Match" height="527" width="922"></h1>
-<p align="center"><strong>Substitute for Quick Speed Matching</strong></p>
-<p align="left">If you want to set up a loco for switching you can set
-a start speed that is the same for the first portion of the throttle
-revolution and lower the top speed for use in the yard as shown below:</p>
-<h1><img src="images/Speed_Table_Constant.png" alt="Speed Table - Constant Ratio Curve" border="5" height="270" width="800"></h1>
-<p align="center"><strong>Switcher Speed Curve</strong></p>
-<p>if you don't desire a strait-line response curve there are other
-options available. The Constant ratio curve gives you a response that
-increases slowly in the low end and rapidly at high throttle. This
-function will also draw the curve between preset end points.</p>
-<h1><img src="images/Speed_Table_Switcher.png" alt="switcher" height="335" width="807"></h1>
-<p align="center"><strong>Constant Ratio Curve</strong></p>
-<p>
-  The <b>Log curve</b> reverses this response, giving you a logarithmic
-  response curve with high acceleration at low speeds, but topping out
-  quickly. It will also draw the curve between preset end points.
-</p><h1><img src="images/Speed_Table_Log.png" alt="log" height="345" width="851"></h1>
+      <h1>DecoderPro&reg; Comprehensive Programmer</h1>
 
-<p align="center"><strong>Logarithmic Speed Curve</strong>
-</p><p align="center">
-</p><p>The
-  <input name="button3" id="button3" value="Shift left" type="button">
-moves the entire speed table to the left one space with each click on
-the button. The example below shows a linear 0-255 speed table that has
-been <b>Shifted left</b>  three times. 
-  
-</p><h1><img src="images/Speed_Table_ShiftLeft.png" alt="shift left" height="369" width="840"></h1>
-<p align="center"><strong>Curve Shifted Left</strong></p>
-<p>The 
-  <input name="button4" id="button4" value="Shft right" type="button">
-move the entire speed table to the right one space with each click on
-the button. The example below shows a linear 0-255 speed table that has
-been <b>Shifted right</b> three times. </p>
-<h1><img src="images/Speed_Table_ShiftRight.png" alt="shift right" height="331" width="824"></h1>
-<p align="center"><strong>Curve Shifted Right</strong></p>
-<p>Of course, you can enter the numbers individually or move the
-sliders one at a time to create your own fully customized speed table.
-To aid you with setting the individual values, the slider value is
-shown at the top of each slider. Also, by hovering the mouse at a
-slider column the number of the CV being entered will be revealed.
-</p><p>
-One very important thing to remember: <span class="ACCENT"><strong>No matter
-how pretty your speed table looks, it has absolutely no effect on the locomotive
-unless you write it to the decoder!</strong></span></p>
-<p>And this point is especially pertinent with the QSI and Soundtraxx
-Tsunami decoders, because they have a separate drop down box like the
-QSI box below.&nbsp; They require that you select the <strong>user defined</strong>
-speed table entry in this box or your table will not be written to the
-decoder.&nbsp; Interestingly, Tsunami puts the selection at the bottom
-of the list making it very easy to miss. </p>
-<p align="center"><img src="images/Speed_Table_QSI.png" alt="QSI speed table" height="308" width="799"></p>
+      <h2>The Speed Table Pane</h2>
 
-<hr>
-<div align="right">
-<p><a href="Comp_FMap.shtml"></a>
-  <a href="Comp_Speed.shtml">Previous | </a> <a href="Comp_FMap.shtml">Next</a>
-</p><p><a href="index.shtml#Advanced%20Programmer">Back to Index</a>
-</p></div>
+      <div align="right">
+        <p><a href="Comp_Speed.shtml">Previous |</a> <a href=
+        "Comp_FMap.shtml">Next</a></p>
 
-<!--#include virtual="/Footer" -->
-  </div><!-- closes #mainContent-->
- </div> <!-- closes #mBody-->
- </body>
+        <p><a href="index.shtml#Advanced%20Programmer">Back to
+        Index</a></p>
+      </div>
+      <hr>
+
+      <p>The <strong>Speed Table</strong> allows you to fine-tune
+      the throttle response of your locomotive. You might opt to
+      match all of your locomotives so they run at the same speed
+      for the same throttle setting, or you might want to set the
+      table up so that your locomotive runs at the actual scale
+      speed indicated by the throttle. Or maybe you have someone in
+      your operating group that likes to switch the yard at Mach
+      2.5, and you want to slow them down a bit. There are a lot of
+      ways to use this feature. (This feature may vary by
+      manufacturer and decoder series)</p>
+
+      <p>You now have the option of using <strong>Speed
+      Table</strong> (this pane) which if selected and written to
+      the decoder will replace the <a href=
+      "Comp_Speed.shtml"><strong>Basic Speed Control</strong></a>
+      to set your locomotive's speed control mode. Which ever one
+      you select last and write to your decoder will be the method
+      used for speed control. To select the use of speed tables,
+      the <strong>Use Table</strong> radio button is selected at
+      the top of the pane, and in the case of Soundtraxx and QSI
+      decoders, the drop down selection box must be used.  See the
+      discussion at the end of this section for an example.</p>
+
+      <p>Not all decoders allow speed table programming and some
+      are limited to fixed curves, usually selected by a drop-down
+      list.</p>
+
+      <p>The default speed table for most decoders is a straight
+      line from zero on the left to maximum on the right. The
+      <b><input name="button" id="button" value="Force Straight"
+      type="button"></b> below the table duplicates that in the
+      table..</p>
+
+      <h1 style="text-align: center;"><img style=
+      "width: 799px; height: 697px;" src=
+      "images/Speed_Table_Straight.png" alt="speed table"></h1>
+
+      <p align="center"><strong>Straight Line Speed
+      Curve</strong></p>
+
+      <p>As you can see, you have both numbers and sliders to work
+      with. Changing either a number or slider will make the other
+      change to match it. If you are CV inquisitive, you can use
+      the tool tip to advantage. By hovering over any of the
+      sliders, the tool tip will reveal the CV to which you are
+      pointing .</p>
+
+      <p>The <strong><input name="button2" id="button2" value=
+      "Match ends" type="button"></strong> will also result in a
+      straight-line graph, but you can offset the beginning and end
+      by any amount you wish. The first and last steps are used to
+      set to minimum and maximum values for the straight line. The
+      function will then draw a straight line between those two end
+      points. Below is an example of the result.</p>
+
+      <h1><img src="images/Speed_Table_Match.png" alt=
+      "speed table match" height="315" width="914"></h1>
+
+      <p>Now if you've used DecoderPro in the past, you're probably
+      wondering what those little boxes at the bottom of each
+      slider are used for.  Well, they're difficult to explain, but
+      easy to use.  They basically allow you to set a slider to
+      control every slider in columns to its left as well as to its
+      right.  If you click two of the boxes and then move one of
+      those sliders you'll see that they are linked to the sliders
+      between them.  Points to the right never are higher than the
+      slider being moved, and the points to the left are never
+      lower that the slider being moved. This "always increasing
+      left to right" is normally the way the sliders worked, but
+      now the ones in between the check are linked. If the slider
+      is lowered and then raised the straight line is drawn between
+      the column checked to the right and the column that the
+      slider is controlling.  It's difficult to describe, but try
+      it and you'll see.</p>
+
+      <p><br>
+      What could that possibly be used for, you ask?  Well, many
+      decoders (like the Soundtraxx Tsunami in this example) do not
+      support V-start, V-mid and V-max.  So, if you are trying to
+      use the simplified method of speed matching locos, these
+      decoders won't support it.   Well now you have a way.  Check
+      the left-hand, right-hand and middle columns.  Set the
+      left-hand column to V-start, the right-hand to V-max and then
+      slide the middle slider up and down until you get the V-mid
+      that you want.  Now all you have to do is write this speed
+      table to the loco and you've accomplished what you wanted to
+      do, but the decoder manufacturer didn't provide for.</p>
+
+      <h1><img src="images/Speed_Table_SpeedMatch.png" alt=
+      "Speed Match" height="527" width="922"></h1>
+
+      <p align="center"><strong>Substitute for Quick Speed
+      Matching</strong></p>
+
+      <p align="left">If you want to set up a loco for switching
+      you can set a start speed that is the same for the first
+      portion of the throttle revolution and lower the top speed
+      for use in the yard as shown below:</p>
+
+      <h1><img src="images/Speed_Table_Constant.png" alt=
+      "Speed Table - Constant Ratio Curve" border="5" height="270"
+      width="800"></h1>
+
+      <p align="center"><strong>Switcher Speed Curve</strong></p>
+
+      <p>if you don't desire a strait-line response curve there are
+      other options available. The Constant ratio curve gives you a
+      response that increases slowly in the low end and rapidly at
+      high throttle. This function will also draw the curve between
+      preset end points.</p>
+
+      <h1><img src="images/Speed_Table_Switcher.png" alt="switcher"
+      height="335" width="807"></h1>
+
+      <p align="center"><strong>Constant Ratio Curve</strong></p>
+
+      <p>The <b>Log curve</b> reverses this response, giving you a
+      logarithmic response curve with high acceleration at low
+      speeds, but topping out quickly. It will also draw the curve
+      between preset end points.</p>
+
+      <h1><img src="images/Speed_Table_Log.png" alt="log" height=
+      "345" width="851"></h1>
+
+      <p align="center"><strong>Logarithmic Speed
+      Curve</strong></p>
+
+      <p align="center"></p>
+
+      <p>The <input name="button3" id="button3" value="Shift left"
+      type="button"> moves the entire speed table to the left one
+      space with each click on the button. The example below shows
+      a linear 0-255 speed table that has been <b>Shifted left</b>
+      three times.</p>
+
+      <h1><img src="images/Speed_Table_ShiftLeft.png" alt=
+      "shift left" height="369" width="840"></h1>
+
+      <p align="center"><strong>Curve Shifted Left</strong></p>
+
+      <p>The <input name="button4" id="button4" value="Shft right"
+      type="button"> move the entire speed table to the right one
+      space with each click on the button. The example below shows
+      a linear 0-255 speed table that has been <b>Shifted right</b>
+      three times.</p>
+
+      <h1><img src="images/Speed_Table_ShiftRight.png" alt=
+      "shift right" height="331" width="824"></h1>
+
+      <p align="center"><strong>Curve Shifted Right</strong></p>
+
+      <p>Of course, you can enter the numbers individually or move
+      the sliders one at a time to create your own fully customized
+      speed table. To aid you with setting the individual values,
+      the slider value is shown at the top of each slider. Also, by
+      hovering the mouse at a slider column the number of the CV
+      being entered will be revealed.</p>
+
+      <p>One very important thing to remember: <span class=
+      "ACCENT"><strong>No matter how pretty your speed table looks,
+      it has absolutely no effect on the locomotive unless you
+      write it to the decoder!</strong></span></p>
+
+      <p>And this point is especially pertinent with the QSI and
+      Soundtraxx Tsunami decoders, because they have a separate
+      drop down box like the QSI box below.  They require that you
+      select the <strong>user defined</strong> speed table entry in
+      this box or your table will not be written to the decoder. 
+      Interestingly, Tsunami puts the selection at the bottom of
+      the list making it very easy to miss.</p>
+
+      <p align="center"><img src="images/Speed_Table_QSI.png" alt=
+      "QSI speed table" height="308" width="799"></p>
+      <hr>
+
+      <div align="right">
+        <p><a href="Comp_FMap.shtml"></a> <a href=
+        "Comp_Speed.shtml">Previous |</a> <a href=
+        "Comp_FMap.shtml">Next</a></p>
+
+        <p><a href="index.shtml#Advanced%20Programmer">Back to
+        Index</a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
 </html>

@@ -51,7 +51,7 @@ to update your browser.</li>
 <li>DecoderPro&reg; v3.x was at one time known as DecoderPro3&reg; v3.x, however since JMRI version 4 we leave out the 3 in the name.</li>
 </ol>
 
-<h2 name="index" id="index">Table of Contents</h2>
+<a name="index"></a><h2>Table of Contents</h2>
 
 <h4><a name="Installing"></a>Installing JMRI</h4>
 <ul>
@@ -59,7 +59,7 @@ to update your browser.</li>
 <li><strong><a href="Installing_JMRI.shtml#InstallJMRI">Installing JMRI Software</a></strong></li>
 </ul>
 
-<h4 name="GettingStarted" id="GettingStarted">Getting started</h4>
+<a name="GettingStarted"></a><h4>Getting started</h4>
 <ul>
 <li><a href="Start_DCC.shtml"><strong>What is DCC?</strong></a></li>
 <li> <strong><a href="Start_DCC_Systems.shtml">What DCC systems will DecoderPro3&reg; work with?</a></strong></li>
@@ -69,7 +69,7 @@ to update your browser.</li>
 <li> <strong><a href="Start_Preferences.shtml">How do I set up my Preferences?</a></strong></li>
 </ul>
 
-<h4 name="Setting up" id="Setting up">Using DecoderPro3</h4>
+<a name="SettingUp"></a><h4>Using DecoderPro3</h4>
 <ul>
 <li><a href="Programmer_Setup.shtml"><strong>How do I set up to program a decoder?</strong></a></li>
 </ul>
@@ -81,7 +81,7 @@ to update your browser.</li>
 <li><strong><a href="Programmer_OpsMode.shtml">Ops Mode Programming</a></strong></li>
 </ul>
 
-<h4 name="Basic Programmer"id="Basic Programmer">The Basic Programmer</h4>
+<a name="BasicProgrammer"></a><h4>The Basic Programmer</h4>
 <ul>
 <li><a href="Basic_Start.shtml"><strong>Entering Locomotives in the "Roster"</strong></a></li>
 <li><strong><a href="Basic_BasicPane.shtml">The Basic Programmer</a></strong></li>
@@ -92,7 +92,7 @@ to update your browser.</li>
 <li><strong><a href="Basic_BasicPane.shtml#DoMore">What if I need to do more?</a></strong></li>
 </ul>
 
-<h4 name="Advanced Programmer" id="Advanced Programmer">The Comprehensive Programmer</h4>
+<a name="AdvancedProgrammer"></a><h4>The Comprehensive Programmer</h4>
 <ul>
 <li><a href="Comp_Setup_Roster.shtml"><strong>Set-up and Roster Panes</strong></a></li>
 <li><strong><a href="Adv_FunctionLabel.shtml">Function Labels Pane</a></strong></li>
@@ -113,7 +113,7 @@ to update your browser.</li>
 <li><strong><a href="Comp_PrintData.shtml">Printing the Decoder Data</a></strong></li>
 </ul>
 
-<h4 name="Main" id="Main">DecoderPro3&reg; Main Window</h4>
+<a name="Main"></a><h4>DecoderPro3&reg; Main Window</h4>
 <ul>
 <li><a href="dp3_Main_Main.shtml"><strong>Main Window</strong></a>
   <ul>
@@ -147,7 +147,7 @@ to update your browser.</li>
 </li>
 </ul>
 
-<h4 name="Error" id="Error">Error Messages</h4>
+<a name="Error"></a><h4>Error Messages</h4>
 <ul>
 <li><a href="Error.shtml"><strong>Decoder Programmer Error Messages</strong></a></li>
 </ul>
@@ -157,8 +157,8 @@ to update your browser.</li>
 <p>Thanks for reading, and Let's Run Trains!
 </p>
 
-<h3><a name="revisions">Revisions</a></h3>
-<table align="center" border="1" cellpadding="2" cellspacing="1" width="90%">
+<a name="revisions"></a><h3>Revisions</h3>
+<table align="center" border="1" cellpadding="2" cellspacing="1" width="90%" summary="Table of Revisions">
 
 <tbody>
 
