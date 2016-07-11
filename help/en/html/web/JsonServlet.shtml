@@ -151,7 +151,7 @@
                 <tr><td>car</td>         <td>*</td>     <td></td>       <td></td>       <td></td><td>OperationsPro</td></tr>
                 <tr><td>consist</td>     <td>*</td>     <td>*</td>      <td>*</td>      <td>*</td><td>DecoderPro</td></tr>
                 <tr><td>engine</td>      <td>*</td>     <td></td>       <td></td>       <td></td><td>OperationsPro</td></tr>
-                <tr><td>layoutBlock</td> <td>*</td>     <td></td>       <td></td>       <td>PanelPro</td></tr>
+                <tr><td>layoutBlock</td> <td>*</td>     <td></td>       <td>*</td>      <td></td><td>PanelPro</td></tr>
                 <tr><td>light</td>       <td>*</td>     <td>*</td>      <td>*</td>      <td></td><td>PanelPro</td></tr>
                 <tr><td>location</td>    <td>*</td>     <td></td>       <td></td>       <td></td><td>OperationsPro</td></tr>
                 <tr><td>memory</td>      <td>*</td>     <td>*</td>      <td>*</td>      <td></td><td>PanelPro</td></tr>
