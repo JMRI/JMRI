@@ -183,7 +183,7 @@ public class JsonManifest extends TrainCommon {
     protected ArrayNode dropEngines(List<Engine> engines, RouteLocation routeLocation) {
         ArrayNode node = this.mapper.createArrayNode();
         for (Engine engine : engines) {
-            if (engine.getRouteDestination().equals(routeLocation)) {
+            if (engine.getRouteDestination() != null && engine.getRouteDestination().equals(routeLocation)) {
                 node.add(JsonUtil.getEngine(engine));
             }
         }
@@ -193,7 +193,7 @@ public class JsonManifest extends TrainCommon {
     protected ArrayNode pickupEngines(List<Engine> engines, RouteLocation routeLocation) {
         ArrayNode node = this.mapper.createArrayNode();
         for (Engine engine : engines) {
-            if (engine.getRouteLocation().equals(routeLocation)) {
+            if (engine.getRouteLocation() != null && engine.getRouteLocation().equals(routeLocation)) {
                 node.add(JsonUtil.getEngine(engine));
             }
         }
