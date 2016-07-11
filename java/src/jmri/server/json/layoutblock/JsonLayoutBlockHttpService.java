@@ -48,10 +48,10 @@ public class JsonLayoutBlockHttpService extends JsonHttpService {
         data.put(COMMENT, layoutblock.getComment());
         data.put(STATE, layoutblock.getState());
         data.put(USE_EXTRA_COLOR, layoutblock.getUseExtraColor());
-        data.put(BLOCK_COLOR, jmri.util.ColorUtil.colorToHexString(layoutblock.getBlockColor()));
-        data.put(TRACK_COLOR, jmri.util.ColorUtil.colorToHexString(layoutblock.getBlockTrackColor()));
-        data.put(BLOCK_OCCUPIED_COLOR, jmri.util.ColorUtil.colorToHexString(layoutblock.getBlockOccupiedColor()));
-        data.put(BLOCK_EXTRA_COLOR, jmri.util.ColorUtil.colorToHexString(layoutblock.getBlockExtraColor()));
+        data.put(BLOCK_COLOR, jmri.util.ColorUtil.colorToColorName(layoutblock.getBlockColor()));
+        data.put(TRACK_COLOR, jmri.util.ColorUtil.colorToColorName(layoutblock.getBlockTrackColor()));
+        data.put(BLOCK_OCCUPIED_COLOR, jmri.util.ColorUtil.colorToColorName(layoutblock.getBlockOccupiedColor()));
+        data.put(BLOCK_EXTRA_COLOR, jmri.util.ColorUtil.colorToColorName(layoutblock.getBlockExtraColor()));
         
         return root;
     }
