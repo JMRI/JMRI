@@ -126,7 +126,7 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
                 log.info("LnHexFDilePort.run: normal finish to file");
 
             } catch (InterruptedException e) {
-                if (sFile != null) {
+                if (sFile != null) { // changed in another thread before the interrupt
                     log.info("LnHexFilePort.run: user selected new file");
                     // swallow the exception since we have handled its intent
                 } else {
