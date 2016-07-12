@@ -45,7 +45,7 @@
       <strong>Program</strong>.</p>
 
       <p><b>Operations Mode (Main Track) Programmer</b> - or
-      <strong>Programming on the main(POM)</strong>.  Opens the
+      <strong>Programming on the main(POM)</strong>. Opens the
       <strong>Operations Mode (Main Track)</strong> windowThis lets
       you program a specific decoder on the layout, even while it
       is operating. However, because it addresses a specific
@@ -59,7 +59,7 @@
       commands, which can mean every locomotive on the layout gets
       the same programming! The same is true if you try to program
       a loco with address zero (or forget to enter an address when
-      you start).  If in doubt, check your documentation.</p>
+      you start). If in doubt, check your documentation.</p>
 
       <blockquote>
         <strong>Reading from your Decoder on the main:</strong><br>
@@ -72,14 +72,14 @@
         <br>
         Program on the Main writes are often called a "blind write"
         because there is no response from the decoder that the
-        write was successful.  POM is very useful for tuning loco
+        write was successful. POM is very useful for tuning loco
         performance while it is operating and the ack is the change
         in performance.<br>
         The decoder is first addressed by the Command Station, then
         the CV is addressed and then the data that is to be written
         into that CV of that decoder is sent. An exception is if
         address zero is used,(or you forget to enter an address
-        when you start).  Then <strong>ALL</strong> decoders on the
+        when you start). Then <strong>ALL</strong> decoders on the
         main will write that data into the appropriate CV which
         usually is an "unintended consequence".
       </blockquote>

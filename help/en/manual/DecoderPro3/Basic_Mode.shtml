@@ -54,10 +54,10 @@
       mode that gives full access to all decoder CVs.</p>
 
       <p><strong>Direct Byte Mode</strong> is another method, not
-      yet supported by all decoders, that allows full access.  
-      There are two ways of implementing Direct Mode. The radio
-      button(s) for the Direct Byte Mode method(s) your command
-      station supports will be activated.</p>
+      yet supported by all decoders, that allows full access. There
+      are two ways of implementing Direct Mode. The radio button(s)
+      for the Direct Byte Mode method(s) your command station
+      supports will be activated.</p>
 
       <p>If you experience difficulty programming a decoder in
       Paged Mode, try Direct Byte Mode, then<br>

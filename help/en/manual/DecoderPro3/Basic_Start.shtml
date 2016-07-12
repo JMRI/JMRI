@@ -39,7 +39,7 @@
 
       <p>The Basic Programmer uses only the required panes to set
       up the decoder for DCC operation and creating a Roster entry
-      and uses only the first two TABs.  The first action in
+      and uses only the first two TABs. The first action in
       programming a locomotive with DecoderPro&reg; is to fill out
       the roster entry screen.</p>
 
@@ -58,26 +58,25 @@
       that the first field (<strong>ID</strong>) becomes the file
       name in the Roster for the locomotive you are programming.
       Set up a schema to identify your locomotive to its decoder
-      program. i.e. Mfr, Loco Type, and  Address
-      (Kato_SD40-2_5645). Spaces in the ID field will be changed to
-      underscores (_) when the file is written.  In a club
-      environment, often the ID begins with the owner's name, or
-      member number. This way the Roster (which is sorted
-      alphabetically) will keep all of an owner's locomotives
-      listed together. DecoderPro also allows you to categorize
-      roster entries into Groups, so you could have a separate
-      group for each member. </p>
+      program. i.e. Mfr, Loco Type, and Address (Kato_SD40-2_5645).
+      Spaces in the ID field will be changed to underscores (_)
+      when the file is written. In a club environment, often the ID
+      begins with the owner's name, or member number. This way the
+      Roster (which is sorted alphabetically) will keep all of an
+      owner's locomotives listed together. DecoderPro also allows
+      you to categorize roster entries into Groups, so you could
+      have a separate group for each member.</p>
 
       <p>We'll get to Groups and all the other neat stuff that can
       be done with DecoderPro in a while. I just thought I'd give
       you peek behind the curtain, and give you a chance to
       mentally thank the JMRI developers for all their work on
-      DecoderPro version 3.  Of course a message to that effect
+      DecoderPro version 3. Of course a message to that effect
       posted to the JMRI Yahoo group would also be warmly
       received.<br>
       <br>
       The DCC address will be filled in automatically when we get
-      to programming the address.  The Decoder Family and Model are
+      to programming the address. The Decoder Family and Model are
       entered automatically from the Selection page we just used to
       get here.</p>
 
@@ -86,20 +85,20 @@
       locomotive, price, or any other information you might feel is
       important to record.</p>
 
-      <p>The <input name="SaveToRoster"
-      value="Save to Roster" type="submit"> button stores the
-      current decoder information to your computer hard drive and
-      folder where your roster file is located. The default storage
-      is the same directory where the program is installed.</p>
+      <p>The <input name="SaveToRoster" value="Save to Roster"
+      type="submit"> button stores the current decoder information
+      to your computer hard drive and folder where your roster file
+      is located. The default storage is the same directory where
+      the program is installed.</p>
 
       <p>The <input name="button" id="button" value=
       "Reset to Defaults" type="submit"> button can be used to
       return the Roster file to the condition of a new file for the
-      type and version of the decoder listed in the roster entry. 
+      type and version of the decoder listed in the roster entry.
       It does NOT change the values in the roster file on your hard
       disk, unless you specifically save it after using this reset
       button. It also is not written to the decoder until you
-      specifically select a write operation.  It was included in
+      specifically select a write operation. It was included in
       DecoderPro so that if you get hopelessly confused in
       proceeding screen to screen entering variables, you can
       return to the decoder manufacturers baseline default set and
@@ -107,11 +106,11 @@
 
       <p><br>
       Most decoders will activate the <strong>Reset Menu</strong>
-      (next to the File menu at the top of the page).  This will
+      (next to the File menu at the top of the page). This will
       reset the decoder to the manufacturers default settings for
       all the CVs, or just some of them if the manufacturer has
-      several reset routines.  It does this by writing directly to
-      a CV in the decoder, if the decoder has that feature, CV8 in
+      several reset routines. It does this by writing directly to a
+      CV in the decoder, if the decoder has that feature, CV8 in
       the case of Digitrax. All decoders may not support reset and
       how they work is manufacturer and decoder dependent.</p>
 
@@ -125,12 +124,12 @@
       width="638"></p>
 
       <p>You will note that the decoder address is shown but grayed
-      out (or blank if this is a new locomotive in the roster). 
+      out (or blank if this is a new locomotive in the roster).
       This field is automatically filled in by the program and is
       determined from the address entered using the
-      <strong>Basic</strong> tab which we will get to shortly. 
-      This address is used with the <strong>Ident</strong> function
-      on the start page if you wish to recall a locomotive that is
+      <strong>Basic</strong> tab which we will get to shortly. This
+      address is used with the <strong>Ident</strong> function on
+      the start page if you wish to recall a locomotive that is
       already in your roster.</p>
 
       <p><a name="ProgramModes" id="ProgramModes"></a>The

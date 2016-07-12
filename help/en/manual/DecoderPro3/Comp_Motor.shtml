@@ -39,16 +39,16 @@
       <hr>
 
       <p><strong>Motor</strong> control is divided into three
-      separate panes.  The <strong>Motor Control pane</strong>
-      deals with CV's for simulating locomotive weight or inertia.
-      The <a href="Comp_Speed.shtml" target="_parent"><strong>Basic
+      separate panes. The <strong>Motor Control pane</strong> deals
+      with CV's for simulating locomotive weight or inertia. The
+      <a href="Comp_Speed.shtml" target="_parent"><strong>Basic
       Speed Control pane</strong></a><a href="Comp_Basic.shtml"
       target="_parent"></a> deals with basic motor control CV's and
       the third <a href="Comp_Speed_Talble.shtml" target=
       "_parent"><strong>Speed Table pane</strong></a> covers those
       dealing with the <strong>Speed Table</strong> method of
-      controlling the motor.  These last two methods of motor
-      control are mutually exclusive.  The selection is made with a
+      controlling the motor. These last two methods of motor
+      control are mutually exclusive. The selection is made with a
       radio button at the top of each of those two panes. The
       default selection is <strong>Basic Speed
       Control.</strong></p>
@@ -70,7 +70,7 @@
       latest Tsunami Diesel sound decoders the firmware has been
       changed. The decoder now returns to the last speed setting
       before the power interruption but it has no knowledge of
-      where it was in the acceleration curve.  So if you have been
+      where it was in the acceleration curve. So if you have been
       in the habit of using lots of momentum and setting speed to
       maximum to get the sound of a notch 8 motor, be aware that if
       the loco loses power for just an instant from a dirt spot on
