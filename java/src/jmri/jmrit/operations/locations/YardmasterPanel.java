@@ -323,9 +323,9 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
             // remove car from list
             if (e.getSource().getClass().equals(Car.class)) {
                 Car car = (Car) e.getSource();
-                carCheckBoxes.remove("p" + car.getId());
-                carCheckBoxes.remove("s" + car.getId());
-                carCheckBoxes.remove("m" + car.getId());
+                checkBoxes.remove("p" + car.getId());
+                checkBoxes.remove("s" + car.getId());
+                checkBoxes.remove("m" + car.getId());
                 log.debug("Car ({}) removed from list", car.toString());
             }
             update();
