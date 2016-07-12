@@ -1,335 +1,355 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
 <html lang="en">
 <head>
-<title>JMRI: Scripting FAQ</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>JMRI: Scripting FAQ</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-<div id="mBody">
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <!--#include virtual="/Header" -->
 
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
       <!-- Page Body -->
-        <h1>
-		JMRI: Scripting FAQ
-        </h1>
 
-		<p class=subtitle>
-		    Frequently asked questions about scripting JMRI
-		    with Jython
-		</p>
+      <h1>JMRI: Scripting FAQ</h1>
 
-		    <h2>Where can I learn more about the Jython language?</h2>
+      <p class="subtitle">Frequently asked questions about
+      scripting JMRI with Jython</p>
 
-		    <div class=para>
-		    
-		    <p>See the
-		    <A HREF="Python.shtml">Python &amp; JMRI</a>
-		    page for more info, including pointers to articles, etc.
-		    See also the navigation links to the left.
-            </div>
-            
-		    <h2>How do Jython and Python differ?</h2>
+      <h2>Where can I learn more about the Jython language?</h2>
 
-		    <div class=para>
-		    
-		    <p>For the purposes of writing JMRI scripts, they
-		    don't differ very much.  Most of the differences involve
-		    what happens in somewhat contrived error cases.
-		    There are also some restrictions
-		    on what you can do with the computer's configuration
-		    information, etc, in Jython, but these are not things
-		    a JMRI script is likely to need.</p>
-		    <P>Some additional information on the differences
-		    is 
-		    <A HREF="http://jython.sourceforge.net/docs/differences.html">available here</a>.
-		    </div>
+      <div class="para">
+        <p>See the <a href="Python.shtml">Python &amp; JMRI</a>
+        page for more info, including pointers to articles, etc.
+        See also the navigation links to the left.</p>
+      </div>
 
-		    <h2>Where can I find some examples of JMRI scripts?</h2>
+      <h2>How do Jython and Python differ?</h2>
 
-		    <div class=para>
-		    
-		    See the 
-		    <a href="Examples.shtml">examples page</a>.
-		    Also, the
-		    <a href="Start.shtml">introductory page</a>
-		    shows some of the basic commands.
-		    </div>
+      <div class="para">
+        <p>For the purposes of writing JMRI scripts, they don't
+        differ very much. Most of the differences involve what
+        happens in somewhat contrived error cases. There are also
+        some restrictions on what you can do with the computer's
+        configuration information, etc, in Jython, but these are
+        not things a JMRI script is likely to need.</p>
 
-		    <h2>What do those words like 
-		    "<code>import</code>",
-		    "<code>class</code>", etc, in the example files mean?
-		    </h2>
+        <p>Some additional information on the differences is
+        <a href=
+        "http://jython.sourceforge.net/docs/differences.html">available
+        here</a>.</p>
+      </div>
 
-		    <div class=para>
-            They're part of the jython language used for the scripting.
-            <P>
-            The imports allow you to refer to things by shorter names, 
-            essentially telling jython "search the jarray, jmri packages and 
-            recognize all the names there".   For somebody trying to understand 
-            this script, you can just treat them as "ensuring the program can 
-            find parts we want".
-            <P>
-            "class" means "start the definition of a group of things that go 
-            together"  (all you other experts, please don't jump on me about 
-            this; I understand both intrinsic/extrinsic polymorphism, I'm just 
-            trying to get the general idea across).  
-            <P>
-            For example, in the SigletExample.py file is a description of a 
-            "class" called SigletExample, which contains two 
-            routines/functions/members:  A subroutine called "defineIO", and one 
-            called "setOutput"
-            <P>
-            This "class" is associated with another called "Siglet" (actually 
-            jmri.jmrit.automat.Siglet; that's that long naming thing again), 
-            which knows when to invoke routines by those two names to get done 
-            what you want.
-            <P>
-            Essentially, you're defining two parts ("defineIO" & "setOutput") 
-            that plug into a pre-existing structure to drive signals.  That 
-            pre-existing structure is very powerful, and lets you do all sorts of 
-            things, but also provides this method to try to keep it simpler.
-            <P>
-            OK, at this point most people's eyes are fully glazed over.  Your 
-            best bet when starting with this stuff is to use the "copy and 
-            modify" approach to software development.  It's good to try to 
-            understand the entire content of the file, but don't worry about 
-            understanding it well enough to be able to recreate it from scratch. 
-            Instead, just modify little bits and play with it.
-		    </div>
+      <h2>Where can I find some examples of JMRI scripts?</h2>
 
-		    <h2>Where can I find more information on the JMRI classes?</h2>
+      <div class="para">
+        See the <a href="Examples.shtml">examples page</a>. Also,
+        the <a href="Start.shtml">introductory page</a> shows some
+        of the basic commands.
+      </div>
 
-		    <div class=para>
-		    
-		    The 
-		    <a href="http://jmri.org/JavaDoc/doc/">class documentation pages</a> 
-		    include automatically-built summary information
-		    on every class.
-		    <p>
-		    There are a lot of classes!  To help you find things,
-		    it might be useful to look at the 
-		    <a href="../../doc/Technical/Patterns.shtml">page on JMRI structure</a>,
-		    which is part of the 
-		    <a href="../../doc/Technical/index.shtml">JMRI technical documentation</a>.
-		    Note the references on the left-hand side.
-		    </div>
+      <h2>What do those words like "<code>import</code>",
+      "<code>class</code>", etc, in the example files mean?</h2>
 
+      <div class="para">
+        They're part of the jython language used for the scripting.
 
-		    <h2>Are there required naming conventions?</h2>
+        <p>The imports allow you to refer to things by shorter
+        names, essentially telling jython "search the jarray, jmri
+        packages and recognize all the names there". For somebody
+        trying to understand this script, you can just treat them
+        as "ensuring the program can find parts we want".</p>
 
-		    <div class=para>
-            In many of the sample files, turnouts are referred to by 
-            names like "to12", signals by names like "si21",
-            and sensors by names like "bo45". These conventions grew out of 
-            how some older code was
-            written, and they can make the code clearer.  
-            But they are in no way required; the
-            program doesn't care what you call variables.
-            <P>
-            For example, "self.to12" is just the name of a variable.  
-            You can call it anything 
-            you want, e.g. self.MyBigFatNameForTheLeftTurnout
-            <P>
-            The "self" part makes it completely local; "self" refers to "an 
-            object of the particular class I'm defining right now".  Alternately, 
-            you can define a global variable, but that's not recommended.  If you 
-            have multiple scripts running (and you can have as many as you'd 
-            like; we recommend that you put each signal head in a separate one), 
-            the variables can get confused if you use the same variable name to 
-            mean too different things.  Using "self" like this one does makes 
-            sure that doesn't happen.
-            <P>
-            Note that turnouts, etc, do have "System Names" that look like 
-            "LT12".  You'll see those occasionally, but that's something 
-            different from the variable names in a script file.		   
-            </div>
+        <p>"class" means "start the definition of a group of things
+        that go together" (all you other experts, please don't jump
+        on me about this; I understand both intrinsic/extrinsic
+        polymorphism, I'm just trying to get the general idea
+        across).</p>
 
-		<a name="windows">
-		    <h2>Can a script access the JMRI application windows?</h2>
+        <p>For example, in the SigletExample.py file is a
+        description of a "class" called SigletExample, which
+        contains two routines/functions/members: A subroutine
+        called "defineIO", and one called "setOutput"</p>
 
-		    <div class=para>
-            Your scripts can change the properties of all the main 
-            JMRI windows. They're all jmri.util.JmriJFrame objects,
-            so they have all the various methods of a Swing JFrame.
-            For example, this code snippet
-            <p>
-            <code>
-            window = jmri.util.JmriJFrame.getFrameList()[1]<br/>
-            window.setLocation(java.awt.Point(0,0))
-            </code>
-            <p>
-            locates the application's main window, and sets its 
-            location to the upper left corner of the screen.
-            <p>
-            The <code>jmri.util.JmriJFrame.getFrameList()</code>
-            call in the first line returns a list of the existing 
-            windows. The [0] element of this list is the original
-            splash screen and the [1] element is the main window;
-            after that, they're the various windows in the order they
-            are created.  To find a particular one, you can
-            index through the list checking e.g. the window's title
-            with the <code>getTitle()</code> method.
-            
-            </div>
+        <p>This "class" is associated with another called "Siglet"
+        (actually jmri.jmrit.automat.Siglet; that's that long
+        naming thing again), which knows when to invoke routines by
+        those two names to get done what you want.</p>
 
-		    <h2>What's the difference between the "Siglet" and "AbstractAutomaton" classes?</h2>
+        <p>Essentially, you're defining two parts ("defineIO" &amp;
+        "setOutput") that plug into a pre-existing structure to
+        drive signals. That pre-existing structure is very
+        powerful, and lets you do all sorts of things, but also
+        provides this method to try to keep it simpler.</p>
 
-		    <div class=para>
-            (Maybe not a <em>frequently</em> asked question, but it needs
-            to go somewhere)
-            <P>
-            Some examples use the 
-            <A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html">AbstractAutomaton</a>
-            class as a base, while
-            others use the 
-            <A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/Siglet.html">Siglet</a>
-            class. This is because those are intended for two different 
-            purposes.
-            <P>
-            "Siglet" is meant to be used for driving signals.  You
-            provide two pieces of code:
-            <dl>
-            <dt>defineIO<DD>which defines the various sensors, turnouts
-            and signals that the output signal depends on as input when
-            calculating the appearance of the signal.
-            <dt>setOutout<dd>which recalculates the signal appearance
-            from the defined inputs.
-            </dl>
-            <P>The Siglet base class then handles all of the listening
-            for changes, setting up for parallel execution, etc. Your
-            defineIO routine will be called once at the beginning, and 
-            after than any time one or more of the inputs changes, your setOutput
-            routine will be called to recalculate the signal appearance.
-            <P>
-            Of course, you can use this class to calculate other things than
-            signal appearances.  But the key element is that the calculation
-            is redone when the inputs change, and only when the inputs change.
-            <P>
-            AbstractAutomaton is a more general class that's intended
-            to allow more powerful operations (and Siglet actually
-            uses that more powerful base).  You define two functions:
-            <DL>
-            <DT>init<DD>which is called exactly once to do any one-time
-            setup you need
-            <DT>handle<DD>which is called over and over and over again
-            until it returns FALSE.
-            </DL>
-            
-            Using AbstractAutomoton provides you with a number of 
-            tools:  you can wait for a particular sensor to go
-            active, do something, then wait for a different sensor
-            to go inactive, etc.  This allows you much more freedom to
-            create complicated &amp; powerful sequences than the Siglet class,
-            because Siglets are limited to doing just one thing (they aren't
-            intended to do sequences of operations).
-            <P>
-            For more info on the routines that AbstractAutomaton provides
-            to help you, see the 
-            <A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html#method_summary">JavaDocs</a>
-            for the class. (Scroll down to the section called "Method Summary")
-            </div>
+        <p>OK, at this point most people's eyes are fully glazed
+        over. Your best bet when starting with this stuff is to use
+        the "copy and modify" approach to software development.
+        It's good to try to understand the entire content of the
+        file, but don't worry about understanding it well enough to
+        be able to recreate it from scratch. Instead, just modify
+        little bits and play with it.</p>
+      </div>
 
-		    <h2>How can I limit the priority of a script?</h2>
+      <h2>Where can I find more information on the JMRI
+      classes?</h2>
 
-		    <div class=para>
-            <P>If the script runs a loop that's supposed to update something, it 
-            can't be written to run continuously or else it will just suck up as 
-            much computer time as it can.  Rather, it should wait.
+      <div class="para">
+        The <a href="http://jmri.org/JavaDoc/doc/">class
+        documentation pages</a> include automatically-built summary
+        information on every class.
 
-            <P>The best thing to do is to wait for something to change.  For 
-            example, if your script looks at some sensors to decide what to do, 
-            wait for one of those sensors to change (see the sample scripts for 
-            examples)
+        <p>There are a lot of classes! To help you find things, it
+        might be useful to look at the <a href=
+        "../../doc/Technical/Patterns.shtml">page on JMRI
+        structure</a>, which is part of the <a href=
+        "../../doc/Technical/index.shtml">JMRI technical
+        documentation</a>. Note the references on the left-hand
+        side.</p>
+      </div>
 
-            <P>Simpler, but not as efficient, is to just wait for a little while 
-            before checking again. For example
-<PRE>
+      <h2>Are there required naming conventions?</h2>
+
+      <div class="para">
+        In many of the sample files, turnouts are referred to by
+        names like "to12", signals by names like "si21", and
+        sensors by names like "bo45". These conventions grew out of
+        how some older code was written, and they can make the code
+        clearer. But they are in no way required; the program
+        doesn't care what you call variables.
+
+        <p>For example, "self.to12" is just the name of a variable.
+        You can call it anything you want, e.g.
+        self.MyBigFatNameForTheLeftTurnout</p>
+
+        <p>The "self" part makes it completely local; "self" refers
+        to "an object of the particular class I'm defining right
+        now". Alternately, you can define a global variable, but
+        that's not recommended. If you have multiple scripts
+        running (and you can have as many as you'd like; we
+        recommend that you put each signal head in a separate one),
+        the variables can get confused if you use the same variable
+        name to mean too different things. Using "self" like this
+        one does makes sure that doesn't happen.</p>
+
+        <p>Note that turnouts, etc, do have "System Names" that
+        look like "LT12". You'll see those occasionally, but that's
+        something different from the variable names in a script
+        file.</p>
+      </div><a name="windows" id="windows"></a>
+
+      <h2><a name="windows" id="windows">Can a script access the
+      JMRI application windows?</a></h2>
+
+      <div class="para">
+        <a name="windows" id="windows">Your scripts can change the
+        properties of all the main JMRI windows. They're all
+        jmri.util.JmriJFrame objects, so they have all the various
+        methods of a Swing JFrame. For example, this code
+        snippet</a>
+
+        <p><code>window =
+        jmri.util.JmriJFrame.getFrameList()[1]<br>
+        window.setLocation(java.awt.Point(0,0))</code></p>
+
+        <p>locates the application's main window, and sets its
+        location to the upper left corner of the screen.</p>
+
+        <p>The <code>jmri.util.JmriJFrame.getFrameList()</code>
+        call in the first line returns a list of the existing
+        windows. The [0] element of this list is the original
+        splash screen and the [1] element is the main window; after
+        that, they're the various windows in the order they are
+        created. To find a particular one, you can index through
+        the list checking e.g. the window's title with the
+        <code>getTitle()</code> method.</p>
+      </div>
+
+      <h2>What's the difference between the "Siglet" and
+      "AbstractAutomaton" classes?</h2>
+
+      <div class="para">
+        (Maybe not a <em>frequently</em> asked question, but it
+        needs to go somewhere)
+
+        <p>Some examples use the <a href=
+        "http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html">
+        AbstractAutomaton</a> class as a base, while others use the
+        <a href=
+        "http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/Siglet.html">
+        Siglet</a> class. This is because those are intended for
+        two different purposes.</p>
+
+        <p>"Siglet" is meant to be used for driving signals. You
+        provide two pieces of code:</p>
+
+        <dl>
+          <dt>defineIO</dt>
+
+          <dd>which defines the various sensors, turnouts and
+          signals that the output signal depends on as input when
+          calculating the appearance of the signal.</dd>
+
+          <dt>setOutout</dt>
+
+          <dd>which recalculates the signal appearance from the
+          defined inputs.</dd>
+        </dl>
+
+        <p>The Siglet base class then handles all of the listening
+        for changes, setting up for parallel execution, etc. Your
+        defineIO routine will be called once at the beginning, and
+        after than any time one or more of the inputs changes, your
+        setOutput routine will be called to recalculate the signal
+        appearance.</p>
+
+        <p>Of course, you can use this class to calculate other
+        things than signal appearances. But the key element is that
+        the calculation is redone when the inputs change, and only
+        when the inputs change.</p>
+
+        <p>AbstractAutomaton is a more general class that's
+        intended to allow more powerful operations (and Siglet
+        actually uses that more powerful base). You define two
+        functions:</p>
+
+        <dl>
+          <dt>init</dt>
+
+          <dd>which is called exactly once to do any one-time setup
+          you need</dd>
+
+          <dt>handle</dt>
+
+          <dd>which is called over and over and over again until it
+          returns FALSE.</dd>
+        </dl>Using AbstractAutomoton provides you with a number of
+        tools: you can wait for a particular sensor to go active,
+        do something, then wait for a different sensor to go
+        inactive, etc. This allows you much more freedom to create
+        complicated &amp; powerful sequences than the Siglet class,
+        because Siglets are limited to doing just one thing (they
+        aren't intended to do sequences of operations).
+
+        <p>For more info on the routines that AbstractAutomaton
+        provides to help you, see the <a href=
+        "http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html#method_summary">
+        JavaDocs</a> for the class. (Scroll down to the section
+        called "Method Summary")</p>
+      </div>
+
+      <h2>How can I limit the priority of a script?</h2>
+
+      <div class="para">
+        <p>If the script runs a loop that's supposed to update
+        something, it can't be written to run continuously or else
+        it will just suck up as much computer time as it can.
+        Rather, it should wait.</p>
+
+        <p>The best thing to do is to wait for something to change.
+        For example, if your script looks at some sensors to decide
+        what to do, wait for one of those sensors to change (see
+        the sample scripts for examples)</p>
+
+        <p>Simpler, but not as efficient, is to just wait for a
+        little while before checking again. For example</p>
+        <pre>
     waitMsec(1000)
-</PRE>
-            causes an automaton or Siglet script to wait for 
-            1000 milliseconds (one second) before continuing.
-            <P>
-            For just a simple script, something that doesn't use the
-            Automat or Siglet classes, you can sleep by doing
-            
-<PRE>
+</pre>causes an automaton or Siglet script to wait for 1000
+milliseconds (one second) before continuing.
+
+        <p>For just a simple script, something that doesn't use the
+        Automat or Siglet classes, you can sleep by doing</p>
+        <pre>
 from time import sleep
 sleep(10)
-</PRE>
-            The first line defines the "sleep" routine, and only needs
-            to be done once.  The second line then sleeps for 10 seconds.
-            Note that the accuracy of this method is not as good as
-            using one of the special classes.
-		    </div>
+</pre>The first line defines the "sleep" routine, and only needs to
+be done once. The second line then sleeps for 10 seconds. Note that
+the accuracy of this method is not as good as using one of the
+special classes.
+      </div>
 
-<h2>How do I load a panel file from within a script?</h2>
+      <h2>How do I load a panel file from within a script?</h2>
 
-<div class="para"><code>
-<pre>jmri.InstanceManager.getDefault(jmri.ConfigureManager.class).load(java.io.File("filename.xml"))</pre>
-</code></div>
+      <div class="para">
+        <pre>
+<code>jmri.InstanceManager.getDefault(jmri.ConfigureManager.class).load(java.io.File("filename.xml"))</code>
+</pre>
+      </div>That looks for "filename.xml" in the JMRI program
+      directory, which is not a good place to keep your files.
+      (They tend to get lost or damaged when JMRI is updated). See
+      the next question for a solution to this.
 
-That looks for "filename.xml" in the JMRI program directory, which is
-not a good place to keep your files. (They tend to get lost or damaged
-when JMRI is updated). See the next question for a solution to this.
+      <h2>How do I find a file in the preferences
+      directory?</h2>You can always specify the complete pathname
+      to a file, e.g. <code>C:\Documents and
+      Files\mine\JMRI\filename.xml</code> or
+      <code>/Users/mine/.jmri/filename.xml</code>. This is not very
+      portable from computer to computer, however, and can become a
+      pain to keep straight.
 
-<h2>How do I find a file in the preferences directory?</h2>
+      <p>JMRI provides a routine to convert "portable" names to
+      names your computer will recognize:</p>
 
-You can always specify the complete pathname to a file, e.g. 
-<code>C:\Documents and Files\mine\JMRI\filename.xml</code> or
-<code>/Users/mine/.jmri/filename.xml</code>.
-This is not very portable from computer to computer, however, and
-can become a pain to keep straight.
+      <div class="para">
+        <pre>
+<code>fullname = FileUtil.getExternalFilename("preference:filename.xml")</code>
+</pre>
+      </div>The "<code>preference:</code>" means to look for that
+      file starting in the preferences directory on the current
+      computer. Other choices are "program:" and "home:", see the
+      <a href=
+      "http://jmri.org/JavaDoc/doc/jmri/util/FileUtil.html#getExternalFilename(java.lang.String)">
+      documentation</a>.
 
-<p>
-JMRI provides a routine to convert "portable" names to names your 
-computer will recognize:
+      <h2>How do I invoke another script file from a script?</h2>
 
-<div class="para"><code>
-<pre>fullname = FileUtil.getExternalFilename("preference:filename.xml")</pre>
-</code></div>
+      <div class="para">
+        <pre>
+execfile("filename.py")
+</pre>
+      </div>That will look for the file in the top-level JMRI
+      program directory, which might now be what you want. If you
+      want JMRI to search for the file in the default scripts
+      directory (which you can set in preferences), use the
+      slightly more complex form:
 
-The "<code>preference:</code>" means to look for that file starting in the preferences
-directory on the current computer. Other choices are "program:" and "home:", see the 
-<a href="http://jmri.org/JavaDoc/doc/jmri/util/FileUtil.html#getExternalFilename(java.lang.String)">documentation</a>.
+      <div class="para">
+        <pre>
+execfile(FileUtil.getExternalFilename("scripts:filename.py"))
+</pre>
+      </div>The call to FileUtil.getExternalFilename(..) translates
+      the string using JMRI's standard prefixes. The "scripts:"
+      tells JMRI to search in the default scripts directory. You
+      can also use other prefixes, see the <a href=
+      "http://jmri.org/JavaDoc/doc/jmri/util/FileUtil.html#getExternalFilename(java.lang.String)">
+      documentation</a>.
 
-<h2>How do I invoke another script file from a script?</h2>
+      <h2>Can I communicate between scripts?</h2>
 
-<div class="para">
-<pre>execfile("filename.py")</pre>
-</div>
-
-That will look for the file in the top-level JMRI program directory, which 
-might now be what you want.  If you want JMRI to search for the file in the 
-default scripts directory (which you can set in preferences), use the slightly
-more complex form:
-
-<div class="para">
-<pre>execfile(FileUtil.getExternalFilename("scripts:filename.py"))</pre>
-</div>
-
-The call to FileUtil.getExternalFilename(..) translates the string using JMRI's standard
-prefixes. The "scripts:" tells JMRI to search in the default scripts directory.
-You can also use other prefixes, see the 
-<a href="http://jmri.org/JavaDoc/doc/jmri/util/FileUtil.html#getExternalFilename(java.lang.String)">documentation</a>.
-
-<h2>Can I communicate between scripts?</h2>
-
-<div class="para">
-All scripts run in the same default namespace, which means that a variable like "x"
-refers to the same location in all scripts. This allows you to define a
-procedure, for example, in one script, and use it elsewhere. For example, if a
-"definitions.py" file contained: 
-<pre>def printStatus() :
+      <div class="para">
+        All scripts run in the same default namespace, which means
+        that a variable like "x" refers to the same location in all
+        scripts. This allows you to define a procedure, for
+        example, in one script, and use it elsewhere. For example,
+        if a "definitions.py" file contained:
+        <pre>
+def printStatus() :
   print "x is", x
   print "y is", y
   print "z is", z
@@ -337,112 +357,132 @@ procedure, for example, in one script, and use it elsewhere. For example, if a
 
 x = 0
 y = 0
-z = 0</pre>
-Once that file has been executed, any later script can invoke the
-<code>printStatus()</code> routine in the global namespace whenever needed.</div>
+z = 0
+</pre>Once that file has been executed, any later script can invoke
+the <code>printStatus()</code> routine in the global namespace
+whenever needed.
+      </div>
 
-<div class="para">
-You can also share variables, which allows two routines to share information.
-In the example above, the <code>x</code>, <code>y</code>, and <code>z</code>
-variables are available to anybody. This can lead to obscure bugs if two
-different routines are using a variable of the same name, without realizing
-that they are sharing data with each other. Putting your code into "classes" is
-a way to avoid that. </div>
+      <div class="para">
+        You can also share variables, which allows two routines to
+        share information. In the example above, the
+        <code>x</code>, <code>y</code>, and <code>z</code>
+        variables are available to anybody. This can lead to
+        obscure bugs if two different routines are using a variable
+        of the same name, without realizing that they are sharing
+        data with each other. Putting your code into "classes" is a
+        way to avoid that.
+      </div>
 
-<p>
-    Note that scripts imported into another script using <code>import</code>
-    statements are not in the same namespace as other scripts and do not share
-    variables or routines. To share variables from the default namespace with an
-    imported script, you need to explicitly add the shared variable:
-</p>
-<pre>
+      <p>Note that scripts imported into another script using
+      <code>import</code> statements are not in the same namespace
+      as other scripts and do not share variables or routines. To
+      share variables from the default namespace with an imported
+      script, you need to explicitly add the shared variable:</p>
+      <pre>
 import myImport
 myImport.x = x # make x available to myImport
 </pre>
 
-<h2><a id="several" name="several"></a>Can a script wait for more than one thing to change?</h2>
+      <h2><a id="several" name="several"></a>Can a script wait for
+      more than one thing to change?</h2>
 
-<div class="para">
-If your script is based on a Siglet or 
-<a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html">AbstractAutomaton</a>
-class (e.g. if you're
-writing a "handle" routine"), there's a general
-"<a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html#waitChange-jmri.NamedBean:A-">waitChange</a>"
-routine which waits
-for any of several sensors to change before returning to you. Note that more
-than one may change at the same time, so you can't assume that just one has a
-different value! And you'll then have to check whether they've become some
-particular state. It's written as: 
-<pre>    self.waitChange([self.sensorA, self.sensorB, self.sensorC])</pre>
-where you've previously defined each of those "self.sensorA" things via a line
-like: 
-<pre>    self.sensorA = sensors.provideSensor("21")</pre>
-You can then check for various combinations like: 
-<pre>   if self.sensorA.knownState == ACTIVE :
+      <div class="para">
+        If your script is based on a Siglet or <a href=
+        "http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html">
+        AbstractAutomaton</a> class (e.g. if you're writing a
+        "handle" routine"), there's a general "<a href=
+        "http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html#waitChange-jmri.NamedBean:A-">waitChange</a>"
+        routine which waits for any of several sensors to change
+        before returning to you. Note that more than one may change
+        at the same time, so you can't assume that just one has a
+        different value! And you'll then have to check whether
+        they've become some particular state. It's written as:
+        <pre>
+    self.waitChange([self.sensorA, self.sensorB, self.sensorC])
+</pre>where you've previously defined each of those "self.sensorA"
+things via a line like:
+        <pre>
+    self.sensorA = sensors.provideSensor("21")
+</pre>You can then check for various combinations like:
+        <pre>
+   if self.sensorA.knownState == ACTIVE :
         print "The plane! The plane!"
    elif self.sensorB.knownState == INACTIVE :
         print "Would you believe a really fast bird?"
    else
-        print "Nothing to see here, move along..."</pre>
-You can also wait for any changes in objects of multiple types:
-<pre>    self.waitChange([self.sensorA, self.turnoutB, self.signalC])</pre>
-Finally, you can specify the maximum time to wait before continuing
-even though nothing has changed:
-<pre>    self.waitChange([self.sensorA, self.sensorB, self.sensorC], 5000)</pre>
-will wait a maximum of 5000 milliseconds, e.g. 5 seconds. If nothing has 
-changed, the script will continue anyway.
-</div>
+        print "Nothing to see here, move along..."
+</pre>You can also wait for any changes in objects of multiple
+types:
+        <pre>
+    self.waitChange([self.sensorA, self.turnoutB, self.signalC])
+</pre>Finally, you can specify the maximum time to wait before
+continuing even though nothing has changed:
+        <pre>
+    self.waitChange([self.sensorA, self.sensorB, self.sensorC], 5000)
+</pre>will wait a maximum of 5000 milliseconds, e.g. 5 seconds. If
+nothing has changed, the script will continue anyway.
+      </div>
 
-<h2>Can a script listen to more than one Turnout?</h2>
+      <h2>Can a script listen to more than one Turnout?</h2>
 
-<div class="para">
-JMRI objects (Turnouts, Sensors, etc) can have "Listeners" attached to them.
-These are then notified when the status of the object changes. If you're using
-the Automat or Siglet classes, you don't need to use this capability; those
-classes handle all the creationg and registering of listeners. But if you want
-to do something special, you may need to use that capability. 
+      <div class="para">
+        JMRI objects (Turnouts, Sensors, etc) can have "Listeners"
+        attached to them. These are then notified when the status
+        of the object changes. If you're using the Automat or
+        Siglet classes, you don't need to use this capability;
+        those classes handle all the creationg and registering of
+        listeners. But if you want to do something special, you may
+        need to use that capability.
 
-<p>A single routine can listen to more than one Turnout, Sensor, etc. </p>
+        <p>A single routine can listen to more than one Turnout,
+        Sensor, etc.</p>
 
-<p>If you retain a reference to your listener object, you can attach it to more
-than one object: </p>
-<pre>m = MyListener()
+        <p>If you retain a reference to your listener object, you
+        can attach it to more than one object:</p>
+        <pre>
+m = MyListener()
 turnouts.provideTurnout("12").addPropertyChangeListener(m)
 turnouts.provideTurnout("13").addPropertyChangeListener(m)
-turnouts.provideTurnout("14").addPropertyChangeListener(m)</pre>
+turnouts.provideTurnout("14").addPropertyChangeListener(m)
+</pre>
 
-<p>But how does the listener know what changed? </p>
+        <p>But how does the listener know what changed?</p>
 
-<p>A listener routine looks like this: </p>
-<pre>class MyListener(java.beans.PropertyChangeListener):
+        <p>A listener routine looks like this:</p>
+        <pre>
+class MyListener(java.beans.PropertyChangeListener):
   def propertyChange(self, event):
     print "change",event.propertyName
     print "from", event.oldValue, "to", event.newValue
     print "source systemName", event.source.systemName
-    print "source userName", event.source.userName</pre>
+    print "source userName", event.source.userName
+</pre>
 
-<p>When the listener is called, it's given an object (called event above) that
-contains the name of the property that changed, plus the old and new values of
-that property. </p>
+        <p>When the listener is called, it's given an object
+        (called event above) that contains the name of the property
+        that changed, plus the old and new values of that
+        property.</p>
 
-<p>You can also get a reference to the original object that changed via "name",
-and then do whatever you'd like through that. In the example above, you can
-retrieve the systemName, userName (or even other types of status). </p>
+        <p>You can also get a reference to the original object that
+        changed via "name", and then do whatever you'd like through
+        that. In the example above, you can retrieve the
+        systemName, userName (or even other types of status).</p>
 
+        <h2>How can I get a script to play a sound?</h2>The
+        jython/SampleSound.py file shows how to play a sound within
+        a script. Briefly, you load a sound into a variable ("snd"
+        in this case), then call "play()" to play it once, etc.
 
-<h2>How can I get a script to play a sound?</h2>
+        <p>Note that if more than one sound is playing at a time,
+        the program combines them as best it can. Generally, it
+        does a pretty good job.</p>
 
-The jython/SampleSound.py file shows how to play a sound within a script.
-Briefly, you load a sound into a variable ("snd" in this case), then call
-"play()" to play it once, etc. 
-
-<p>Note that if more than one sound is playing at a time, the program combines
-them as best it can. Generally, it does a pretty good job. </p>
-
-<p>You can combine the play() call with other logic to play a sound when a
-Sensor changes, etc. Ron McKinnon provided an example of doing this. It plays a
-railroad crossing bell when the sensor goes active. </p>
-<pre>
+        <p>You can combine the play() call with other logic to play
+        a sound when a Sensor changes, etc. Ron McKinnon provided
+        an example of doing this. It plays a railroad crossing bell
+        when the sensor goes active.</p>
+        <pre>
 # It listens for changes to a sensor,
 # and then plays a sound file when sensor active
 
@@ -483,27 +523,26 @@ class SensndExample(jmri.jmrit.automat.Siglet) :
 SensndExample().start()
 </pre>
 
-<h2>Is JMRI's support for Python complete?</h2>
+        <h2>Is JMRI's support for Python complete?</h2>JMRI
+        scripting uses <a href="">Jython</a>, a Java-implemented
+        form of the Python language. The basic language is pretty
+        complete, but not all of the Python libraries are
+        available. Some "import" statements that you might read in
+        a book might not work because of missing libraries.
 
-JMRI scripting uses <a href="">Jython</a>, a Java-implemented 
-form of the Python language.  The basic language is pretty complete,
-but not all of the Python libraries are available.  Some "import" statements
-that you might read in a book might not work because of missing libraries.
-<p>
-Support is improving
-all the time, though, and you might want to try a more modern version of 
-Jython than the one that JMRI distributes. To do that, install Jython on 
-you computer, then add a python.properties in your user files location that
-sets the python configuration variables, e.g.:
-<pre style="font-family: monospace;">
-
+        <p>Support is improving all the time, though, and you might
+        want to try a more modern version of Jython than the one
+        that JMRI distributes. To do that, install Jython on you
+        computer, then add a python.properties in your user files
+        location that sets the python configuration variables,
+        e.g.:</p>
+        <pre style="font-family: monospace;">
 python.home = C:\Users\admin\JMRI\systemfiles 
 python.path = c:\jython2.5.3\lib 
 python.startup = 
-</code></pre>
-
-<!--#include virtual="/Footer" -->
-    </div><!-- closes #mainContent-->
-  </div> <!-- closes #mBody-->
+</pre><!--#include virtual="/Footer" -->
+      </div><!-- closes #mainContent-->
+    </div><!-- closes #mBody-->
+  </div>
 </body>
 </html>

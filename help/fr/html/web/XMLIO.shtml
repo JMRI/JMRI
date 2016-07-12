@@ -108,7 +108,7 @@ Demande:
     &lt;name&gt;power&lt;/name&gt;
   &lt;/item&gt;
 &lt;/xmlio&gt;
-</code></pre>
+</pre>
 
 <pre style="font-family: monospace;">
 
@@ -129,7 +129,7 @@ Demande:
     &lt;value&gt;2&lt;/value&gt;
   &lt;/item&gt;
 &lt;/xmlio&gt;
-</code></pre>
+</pre>
 
 La "valeur" &#233;l&#233;ment est ins&#233;r&#233;e dans la demande, et puis est
 retourn&#233;e comme r&#233;ponse. Vous pouvez simplement tourner autour de la r&#233;ponse et l'utiliser
@@ -148,7 +148,7 @@ Demande:
     &lt;type&gt;sensor&lt;/type&gt;
   &lt;/list&gt;
 &lt;/xmlio&gt;
-</code></pre>
+</pre>
 
 R&#233;ponse:
 <pre style="font-family: monospace;">
@@ -170,8 +170,7 @@ R&#233;ponse:
     &lt;value&gt;2&lt;/value&gt;
   &lt;/item&gt;
 &lt;/xmlio&gt;
-</code></pre>
-</code></pre>
+</pre>
 
 La r&#233;ponse peut &#234;tre retourn&#233;e et utilis&#233;e comme la prochaine requ&#234;te.
 
@@ -188,7 +187,7 @@ Demande:
     &lt;set&gt;2&lt;/set&gt;
   &lt;/item&gt;
 &lt;/xmlio&gt;
-</code></pre>
+</pre>
 
 R&#233;ponse:
 <pre style="font-family: monospace;">
@@ -200,7 +199,7 @@ R&#233;ponse:
     &lt;value&gt;2&lt;/value&gt;
   &lt;/item&gt;
 &lt;/xmlio&gt;
-</code></pre>
+</pre>
 
 L'&#233;l&#233;ment "set" de la demande r&#233;sulte de l'&#233;tat
  fix&#233; &#224; la valeur donn&#233;e, et puis est
@@ -219,12 +218,12 @@ Demande:
 <pre style="font-family: monospace;">
 
 &lt;turnout name="IT12" set="2" /&gt;
-</code></pre>
+</pre>
 R&#233;ponse:
 <pre style="font-family: monospace;">
 
 &lt;turnout name="IT12" value="2" /&gt;
-</code></pre>
+</pre>
 
 Un &#233;l&#233;ment
 peut &#234;tre utilis&#233; pour contr&#244;ler un r&#233;gulateur via le
@@ -241,8 +240,7 @@ alloue le r&#233;gulateur, et tous les post&#233;rieurs utilisent
   &lt;F3&gt; False&lt;/F3&gt;
    &lt;/throttle&gt;
 &lt;/Xmlio&gt;
-
-</code></pre>
+</pre>
 
 Un &#233;l&#233;ment r&#233;gulateur est retourn&#233; inchang&#233;.
 

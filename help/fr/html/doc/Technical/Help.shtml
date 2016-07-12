@@ -76,19 +76,16 @@ En particulier, il y a quelques choses &#224; surveiller.
 <ul>
 <li>Les balises d'ancrage ne sont pas XML. Plus pr&#233;cis&#233;ment,
 <pre style="font-family: monospace;">
-
 &lt;a id="foo"/&gt;Foo!
-</code></pre>
+</pre>
 demande d'&#234;tre remplac&#233; par
 <pre style="font-family: monospace;">
-
 &lt;a id="foo"&gt;Foo!
-</code></pre>
+</pre>
 or
 <pre style="font-family: monospace;">
-
 &lt;a name="foo"&gt;Foo!&lt;/a&gt;
-</code></pre>
+</pre>
 L'indicateur que vous avez pour faire ceci c'est un &lt;
 caract&#232;re apparaissant juste par lui-m&#234;me sur la page rendue>.
 

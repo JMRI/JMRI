@@ -81,7 +81,6 @@ Beaucoup de classes descendent de jmri.configurexml.XmAdapter:
 <p>
 Par convention, fournir des &#233;l&#233;ments &lt;xsd:appinfo&gt;&lt;xsd:annotation&gt; contenant le nom de classe qui lit/&#233;crit l'&#233;l&#233;ment:
 <pre style="font-family: monospace;">
-
     &lt;xs:annotation&gt;
         &lt;xs:documentation&gt;
         beaucoup de docs lisibles sont ici
@@ -90,7 +89,7 @@ Par convention, fournir des &#233;l&#233;ments &lt;xsd:appinfo&gt;&lt;xsd:annota
             &lt;jmri:usingclass configurexml="false"&gt;jmri.managers.DefaultSignalSystemManager&lt;/jmri:usingclass&gt;
         &lt;/xs:appinfo&gt;
     &lt;/xs:annotation&gt;
-</code></pre>
+</pre>
 
 <h3>Le Mod&#232;le de Store V&#233;nitien</h3>
 
@@ -216,7 +215,7 @@ le fichier de test Java dans l'arborescence de fichier "test/"
     public void testValidateRoster() {
         validate(new java.io.File("java/test/jmri/configurexml/RosterSchemaTest.xml"));
     }
-</code></pre>
+</pre>
 
 <p>
 Pour une v&#233;rification rapide de fichiers,les utilisateurs de Linux et Mac OS X peuvent valider &#224; partir de la ligne de commande avec par exemple 
@@ -224,16 +223,15 @@ Pour une v&#233;rification rapide de fichiers,les utilisateurs de Linux et Mac O
 
  cd xml
  xmllint -schema schema/aspecttable.xsd -noout signals/sample-aspects.xml
-</code></pre>
+</pre>
 <code>xmllint</code> ne peut pas v&#233;rifier les fichiers de sch&#233;ma eux-m&#234;mes, malheureusement, parce que leur sch&#233;ma n'est pas quelque chose qu'il peut g&#233;rer
 
 <p>
 Votre docs sch&#233;ma doit pointer sur notre feuille de style standard dans
 leur en-t&#234;te:
 <pre style="font-family: monospace;">
-
 &lt;?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?&gt;
-</code></pre>
+</pre>
 C'est un style assez basique, vraiment suffisant pour
 montrer la structure de base. Pour un exemple de la sortie qu'il
 produit, cliquez sur ce lien vers le fichier de sch&#233;mas <a href="http://jmri.org/xml/schema/aspecttable.xsd">aspecttable.xsd</a>  e.
@@ -317,7 +315,6 @@ pour les informations de copyright, l'auteur et des versions dans notre XML
 <p>
 Exemple XML:
 <pre style="font-family: monospace;">
-
   &lt;db:copyright&gt;
         &lt;db:year&gt;2009&lt;/db:year&gt;
         &lt;db:year&gt;2010&lt;/db:year&gt;&lt;
@@ -337,12 +334,11 @@ Exemple XML:
         &lt;db:authorinitials&gt;initials&lt;/db:authorinitials&gt;
     &lt;/db:revision&gt;    
   &lt;/db:revhistory&gt;
-</code></pre>
+</pre>
 
 <p>
 Exemple de description de sch&#233;ma: (Mais voir le vrai, qui est fourni dans le sch&#233;ma/docbookok)
 <pre style="font-family: monospace;">
-
     &lt;xs:element ref="docbook:copyright" minOccurs="1" maxOccurs="1" &gt;
       &lt;xs:annotation&gt;&lt;xs:documentation&gt;
       DocBook element(s) providing copyright information in standard form.
@@ -361,7 +357,7 @@ Exemple de description de sch&#233;ma: (Mais voir le vrai, qui est fourni dans l
       DocBook element(s) describing the revision history in standard form
       &lt;/xs:documentation&gt;&lt;/xs:annotation&gt;
     &lt;/xs:element&gt;
-</code></pre>
+</pre>
 
 
 <!--#include virtual="/Footer" -->
