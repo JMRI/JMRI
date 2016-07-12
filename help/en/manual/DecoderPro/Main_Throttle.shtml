@@ -42,7 +42,7 @@
       DCC system. One or several throttles may be in use at one
       time. The Throttle opens as a floating window that may be
       positioned anywhere on your desktop. Note the Title Bar
-      contains the locomotive Roster ID  information or the
+      contains the locomotive Roster ID information or the
       Locomotive address.</p>
 
       <p><img style="width: 512px; height: 538px;" alt="Throttle"
@@ -57,15 +57,15 @@
       "Main_Throttle_toolbar.shtml"><strong>Toolbar</strong></a>
       and three panels which may be enabled or disabled via check
       box in the View menu. Each panel has a title bar with windows
-      controls to minimize, maximize and exit: :  </p>
+      controls to minimize, maximize and exit: :</p>
 
       <p style="color: red;"><strong>Warning!!!</strong> Be careful
       with the left hand (minimize) buttons. In Windows, if the
       little guy is clicked it will minimize the panel, which means
       it is no longer visible but the restore button is lost behind
-      the rest of the panels.  The way to easily get it back, is to
+      the rest of the panels. The way to easily get it back, is to
       go into the view menu, uncheck it there, then go back again
-      and re-check it.  You may also drag the panels out of the way
+      and re-check it. You may also drag the panels out of the way
       to uncover the Maximize icon for a minimized panel.</p>
 
       <p><a href="Main_Throttle_addressPanel.shtml"><strong>Address
@@ -92,14 +92,14 @@
       "font-weight: bold;">Throttle</strong><span style=
       "font-weight: bold;">Window have created an extensive set of
       Help files to help you customize Throttle Windows to your way
-      of operating.  To access Help, just open a New</span>
+      of operating. To access Help, just open a New</span>
       <strong style=
       "font-weight: bold;">Throttle</strong><span style=
       "font-weight: bold;">. Then, click on</span> <strong style=
       "font-weight: bold;">Help</strong> <span style=
       "font-weight: bold;">and select</span> <strong style=
       "font-weight: bold;">Window Help</strong> <span style=
-      "font-weight: bold;">from the dropdown box.  There's lots of
+      "font-weight: bold;">from the dropdown box. There's lots of
       good stuff in there</span>.<br>
       <hr>
 

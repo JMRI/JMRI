@@ -58,27 +58,27 @@
       Acknowledgement from Decoder", well the decoder may be
       locked. CV 15 and 16 deal with locking, if your manufacturer
       implements this feature (and manufacturers have slight
-      differences as to how they implement it).  If the decoder is
+      differences as to how they implement it). If the decoder is
       locked, then you will not be able to read data from it or
-      write to it.  To unlock the decoder, you must enter a value
+      write to it. To unlock the decoder, you must enter a value
       into CV15 (the only CV that can be written when the decoder
       is locked), that is equal to the value that is currently in
-      CV16.  Now I hear you thinking "but I can't read CV16 to know
-      what to put into CV15".  Well, you'll have to try all
-      possible values,  which isn't that hard since it can only
-      have 8 possible values 0 thru 7.  After each write, try to
-      read CV16.  It's the fastest read since it can only have 8
-      possible values.  If JMRI responds with the no-ack error,
-      then try the next value.  If it returns the value in CV16,
-      you've unlocked the decoder and you're in.  If you have
-      unsuccessfully tried all the 8 possibilities, then check your
-      layout connection and the loco's wheels for poor connections
-      and try again. Now you say, "I've looked thru the list
-      several times and CV 15 doesn't appear".  That's on purpose,
-      to minimize inadvertent locking by a Write All Sheets.  You
-      will have to use the <a href="Simple_Programmer.shtml">Single
-      CV Programmer</a> to write CV15.  It can be found in the
-      Tools menu on the Main Page, under Programmers.</p>
+      CV16. Now I hear you thinking "but I can't read CV16 to know
+      what to put into CV15". Well, you'll have to try all possible
+      values, which isn't that hard since it can only have 8
+      possible values 0 thru 7. After each write, try to read CV16.
+      It's the fastest read since it can only have 8 possible
+      values. If JMRI responds with the no-ack error, then try the
+      next value. If it returns the value in CV16, you've unlocked
+      the decoder and you're in. If you have unsuccessfully tried
+      all the 8 possibilities, then check your layout connection
+      and the loco's wheels for poor connections and try again. Now
+      you say, "I've looked thru the list several times and CV 15
+      doesn't appear". That's on purpose, to minimize inadvertent
+      locking by a Write All Sheets. You will have to use the
+      <a href="Simple_Programmer.shtml">Single CV Programmer</a> to
+      write CV15. It can be found in the Tools menu on the Main
+      Page, under Programmers.</p>
 
       <p>If you have more than one decoder in your locomotive, you
       probably have a decoder locking scheme implemented to be able

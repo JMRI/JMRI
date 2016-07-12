@@ -206,7 +206,7 @@
 
               <li>Rear marker lights, and</li>
 
-              <li>A rear Drum light. </li>
+              <li>A rear Drum light.</li>
             </ol>
 
             <p>We have no need for the speed control pane and only
@@ -256,7 +256,7 @@
       <ul>
         <li>
           <strong>Switch Throttle frame view mode</strong><br>
-                Toggles the Throttle frames on/off
+          Toggles the Throttle frames on/off
 
           <blockquote>
             <p>Frames on.</p>
@@ -274,11 +274,9 @@
         </li>
       </ul>
 
-      <p> </p>
-
       <ul>
-        <li><strong>Show/Hide Throttles list window<br>
-            </strong> Toggles the <a href=
+        <li><strong>Show/Hide Throttles list window<br></strong>
+        Toggles the <a href=
         "Main_Throttle_List.shtml"><strong>Local JMRI
         throttles</strong></a> list window on or off<br></li>
       </ul>

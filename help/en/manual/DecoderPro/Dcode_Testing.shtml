@@ -51,8 +51,8 @@
       the line number. Re-open the editor to that line and try to
       see what's wrong with the syntax.</p>
 
-      <p>Once you have a decoder definition file that checks out 
-      for syntax, you need to try it in DecoderPro.   Your new file
+      <p>Once you have a decoder definition file that checks out
+      for syntax, you need to try it in DecoderPro. Your new file
       should copied into the jmri decoders folder (windows
       C:\Program Files\JMRI\xml\decoders).</p>
 
@@ -66,10 +66,10 @@
         decoder index should be created and your new definition
         should be available to use.</li>
       </ul>After including in your decoder definitions for
-      DecoderPro&reg;  you will want to test the definition on an
+      DecoderPro&reg; you will want to test the definition on an
       actual decoder installation using the Programmers available
-      to you.  When satisfied that it works as expected, then
-      follow the next step.
+      to you. When satisfied that it works as expected, then follow
+      the next step.
 
       <p>When you are happy with your definition, you'll probably
       want to share it with the JMRI world, so next we'll look at

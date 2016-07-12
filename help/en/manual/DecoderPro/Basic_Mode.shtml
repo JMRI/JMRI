@@ -48,8 +48,8 @@
       decoder.</p>
 
       <p><strong>Direct Byte</strong> is another method, not yet
-      supported by all decoders, that allows full access.   There
-      are two ways of implementing Direct Mode. The Direct Byte
+      supported by all decoders, that allows full access. There are
+      two ways of implementing Direct Mode. The Direct Byte
       method(s) your command station supports will be
       activated.</p>
 

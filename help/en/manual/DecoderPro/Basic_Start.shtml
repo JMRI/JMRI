@@ -74,11 +74,11 @@
       <p>The <input name="button" id="button" value=
       "Reset to Defaults" type="submit"> button can be used to
       return the Roster file to the condition of a new file for the
-      type and version of the decoder listed in the roster entry. 
+      type and version of the decoder listed in the roster entry.
       It does NOT change the values in the roster file on your hard
       disk, unless you specifically save it after using this reset
       button. It also is not written to the decoder until you
-      specifically select a write operation.  It was included in
+      specifically select a write operation. It was included in
       DecoderPro so that if you get hopelessly confused in
       proceeding screen to screen entering variables, you can
       return to the manufacturers baseline default set and start
@@ -86,11 +86,11 @@
 
       <p><br>
       Most decoders will activate the <strong>Reset Menu</strong>
-      (next to the File menu at the top of the page).  This will
+      (next to the File menu at the top of the page). This will
       reset the decoder to the manufacturers default settings for
       all the CVs, or just some of them if the manufacturer has
-      several reset routines.  It does this by writing directly to
-      a CV in the decoder, if the decoder has that feature, CV8 in
+      several reset routines. It does this by writing directly to a
+      CV in the decoder, if the decoder has that feature, CV8 in
       the case of Digitrax. All decoders may not support reset and
       how they work is manufacturer and decoder dependent.</p>
 
@@ -104,12 +104,12 @@
       "images/Factory%20Reset.png" alt="factory reset"></p>
 
       <p>You will note that the decoder address is shown but grayed
-      out (or blank if this is a new locomotive in the roster). 
+      out (or blank if this is a new locomotive in the roster).
       This field is automatically filled in by the program and is
       determined from the address entered using the
-      <strong>Basic</strong> tab which we will get to shortly. 
-      This address is used with the <strong>Ident</strong> function
-      on the start page if you wish to recall a locomotive that is
+      <strong>Basic</strong> tab which we will get to shortly. This
+      address is used with the <strong>Ident</strong> function on
+      the start page if you wish to recall a locomotive that is
       already in your roster.</p>
 
       <p><a name="ProgramModes" id="ProgramModes"></a>The
@@ -152,24 +152,24 @@
       <p>Now that we have the Roster information all in order, we
       can continue with programming the decoder.</p>
 
-      <p>But, first a let's talk a bit about Roster management. 
-      The Main DecoderPro window (the one where we selected the
+      <p>But, first a let's talk a bit about Roster management. The
+      Main DecoderPro window (the one where we selected the
       programmer) and the initial DecoderPro "Splash" screen have a
-      menu called <strong>Roster.</strong>  When you click on it
-      you get opportunities to modify, print and move your roster
-      files.  Particularly interesting are
-      <strong>Export/Import</strong> and <strong>Copy</strong>. 
+      menu called <strong>Roster.</strong> When you click on it you
+      get opportunities to modify, print and move your roster
+      files. Particularly interesting are
+      <strong>Export/Import</strong> and <strong>Copy</strong>.
       Let's say you and a friend have two identical Berkshires, and
       you desire to have yours to be set up just like your friends.
-       Now, you could put his loco on your track and read all the
+      Now, you could put his loco on your track and read all the
       CVs out and then put them in yours, but if he lives on the
-      other coast that's not practical.  So, have him use
-      DecoderPro to export his loco file and e-mail it to you.  You
-      import it into DecoderPro, change the address if you wish and
-      then use that roster entry to program your loco. Similarly
-      you can Copy a roster entry to duplicate one of your own
-      locomotives into a second roster entry with it's own address.
-      Details about the <strong><a href="Main_Roster.shtml">Roster
+      other coast that's not practical. So, have him use DecoderPro
+      to export his loco file and e-mail it to you. You import it
+      into DecoderPro, change the address if you wish and then use
+      that roster entry to program your loco. Similarly you can
+      Copy a roster entry to duplicate one of your own locomotives
+      into a second roster entry with it's own address. Details
+      about the <strong><a href="Main_Roster.shtml">Roster
       Menu</a></strong></p>
 
       <p align="center"><img style="width: 456px; height: 334px;"

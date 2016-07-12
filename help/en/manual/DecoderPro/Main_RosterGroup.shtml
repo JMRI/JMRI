@@ -39,16 +39,16 @@
 
       <div style="margin-left: 4em">
         <p>The <strong>Roster Groups</strong> function allows you
-        to take your entire roster and categorize it.  At home you
+        to take your entire roster and categorize it. At home you
         might want to break it down by diesel vs. steam, or by
-        railroad.  At a club it would be handy to have categories
-        by member name in addition to any other category you might
-        think of.  A roster entry can be associated with more than
-        one group.  Again in a club environment, a roster entry
+        railroad. At a club it would be handy to have categories by
+        member name in addition to any other category you might
+        think of. A roster entry can be associated with more than
+        one group. Again in a club environment, a roster entry
         could be associated with the Steam, Union Pacific and John
         Member groups all at the same time. There is always one
-        group present and it is called Global.  All the roster
-        entries are in the Global Group. <br></p>
+        group present and it is called Global. All the roster
+        entries are in the Global Group.<br></p>
 
         <p><img src="images/Main_RosterMenu08.png" alt=
         "roster group" height="363" width="497"></p>
@@ -68,8 +68,6 @@
           <p>Use Create Roster Group to define any other groups you
           wish. Opens <strong>Create new roster group</strong>
           dialog</p>
-
-          <p> </p>
 
           <table align="center" border="0" cellpadding="2"
           cellspacing="1" width="90%">
@@ -139,8 +137,8 @@
         <h4>Association of roster entries to a Roster Group</h4>
 
         <p>Once the groups are named, then you "associate" the
-        roster entries with their group.  This can be done two
-        ways. </p>
+        roster entries with their group. This can be done two
+        ways.</p>
 
         <ol>
           <li>
@@ -148,16 +146,16 @@
             Group</strong> to select a group and a roster entry.
             This method is best used when only a few associations
             need to be made, like when a new loco has been added to
-            the roster.  Then you can concentrate on the groups it
-            belongs to. </p>
+            the roster. Then you can concentrate on the groups it
+            belongs to.</p>
           </li>
 
           <li>
             <p>The other method is to use the <strong>Table
-            Association</strong> selection.  At the top of the
-            table you select the group you wish the roster entries
-            to be associated with, then the roster entries that you
-            want to associate with that group.</p>
+            Association</strong> selection. At the top of the table
+            you select the group you wish the roster entries to be
+            associated with, then the roster entries that you want
+            to associate with that group.</p>
           </li>
         </ol>
       </blockquote>
@@ -237,25 +235,22 @@
             </tr>
           </tbody>
         </table>
-
-        <p> </p>
       </div>
 
       <blockquote>
-        <p> Once the associations have been made, then you can
+        <p>Once the associations have been made, then you can
         select the Active Roster Group. Once this is done then the
         Print and Print Summary actions will show only the roster
         entries associated with that group. As an example you could
         select the Group <strong>Santa Fe</strong> and only the
         roster entries in this Roster Group will be printed. The
         printout does not currently show the active group in the
-        header.   The active group will also influence any drop
-        down box which has a list of entries in it, such as
-        Throttle, edit entry, copy, etc.  Also, when adding a new
-        roster entry it will automatically be associated with the
-        currently active group, so it is good practice when
-        finishing working with a group to return the active group
-        to Global.</p>
+        header. The active group will also influence any drop down
+        box which has a list of entries in it, such as Throttle,
+        edit entry, copy, etc. Also, when adding a new roster entry
+        it will automatically be associated with the currently
+        active group, so it is good practice when finishing working
+        with a group to return the active group to Global.</p>
 
         <h4><strong><em><br>
         Restoring Roster to include all Engines</em></strong></h4>
@@ -278,8 +273,6 @@
         <blockquote>
           <p>Opens the <strong>Remove Loco from Group</strong>
           dialog.</p>
-
-          <p> </p>
 
           <table align="center" border="0" cellpadding="2"
           cellspacing="1" width="90%">

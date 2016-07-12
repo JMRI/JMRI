@@ -93,30 +93,30 @@
 
       <p>The Advanced Consist Address is for <strong>EPF</strong>
       (<strong>Extended Packet Format</strong>, as defined by the
-      NMRA Recommended Practices for DCC).  If the consist address
+      NMRA Recommended Practices for DCC). If the consist address
       is <strong>any value other than zero</strong>, the locomotive
       is considered to be in a consist and will only respond to
       instructions sent to the consist address. Thus we set a short
       address here to create a multiple engine group that will all
       respond to the same address. Think of it as an MU specific
-      locomotive address.  Since the address is in the same range
-      as non-consisted locomotives with short addresses, we need to
-      be sure the address is unique on the layout.  A way of doing
-      this is to use higher end of the short address range starting
-      from 127 and going down.  Most folks working with single
+      locomotive address. Since the address is in the same range as
+      non-consisted locomotives with short addresses, we need to be
+      sure the address is unique on the layout. A way of doing this
+      is to use higher end of the short address range starting from
+      127 and going down. Most folks working with single
       locomotives with short addresses tend to be using the
       manufacturer's default of 3, or other low values, typically
       for their logging locomotives.</p>
 
       <p>This Pane also allows one to instruct the decoder what
       effects are to be active when the locomotive is in a consist,
-      assuming the decoder is capable of responding appropriately. 
+      assuming the decoder is capable of responding appropriately.
       As an example, this allows you to specify if the headlights
       and other lighting functions are to be always off if the
-      locomotive is in the middle, or tail end.  This can be handy
-      if only the "B" unit has sound.  You can set it's lights to
-      be off in a consist, but it can sound it's horn even though
-      it's in the consist.</p>
+      locomotive is in the middle, or tail end. This can be handy
+      if only the "B" unit has sound. You can set it's lights to be
+      off in a consist, but it can sound it's horn even though it's
+      in the consist.</p>
 
       <p>If you've had your locomotives on another layout and ran
       them together, but can't get them to run separately on your

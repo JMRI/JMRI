@@ -65,7 +65,7 @@
       decoder if CV15 and CV16 are the same value. In effect, CV16
       is a lock and CV15 is the key. Once the decoder is locked in
       this way, the ONLY CV that can be programmed is CV15 (you do
-      need to be able to unlock it). </p>
+      need to be able to unlock it).</p>
 
       <p><br>
       So now you have two decoders with the same address (both of
@@ -109,12 +109,12 @@
             <p>But, what if you didn't follow the recommendations?
             The <strong>Search</strong> button sequentially works
             through the possible values and marks values found to
-            be present.  If you're dealing with a single decoder to
-            unlock, than you're home free.  If we're talking about
+            be present. If you're dealing with a single decoder to
+            unlock, than you're home free. If we're talking about
             multiple decoders with the same address we're probably
-            going to get more than one value marked.  It's up to
-            you to figure which is which. One way is by changing
-            the address of one and then testing to see what action
+            going to get more than one value marked. It's up to you
+            to figure which is which. One way is by changing the
+            address of one and then testing to see what action
             changed with the new address.</p>
 
             <p><strong>Search</strong> button sequentially works

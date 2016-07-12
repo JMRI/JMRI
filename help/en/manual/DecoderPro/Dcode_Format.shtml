@@ -43,13 +43,13 @@
 
       <p>The easiest way to create a new decoder definition is to
       edit one that already exists that has parameters similar to
-      your new decoder.  Hundreds of decoder definitions are
+      your new decoder. Hundreds of decoder definitions are
       available in JMRI, so you should be able to find one that is
-      similar as a starting point.  Don't feel bad about standing
-      on someone else's shoulders, that's the spirit of JMRI and
-      open source software in general.  Although you can call this
-      new file anything you like, it will work best if you use the
-      same convention as the provided files. That is
+      similar as a starting point. Don't feel bad about standing on
+      someone else's shoulders, that's the spirit of JMRI and open
+      source software in general. Although you can call this new
+      file anything you like, it will work best if you use the same
+      convention as the provided files. That is
       "<strong>manufacturer name</strong>"_"<strong>decoder
       family</strong>".xml, for example:
       <strong>Digitrax_1x2.xml</strong> and
@@ -85,8 +85,8 @@
 
       <p>The next part of the file consists of a set of 'variable'
       elements defining specific variables, nested inside a
-      'variables' (note the extra "s") element.  Here's where the
-      real definition is determined. </p>
+      'variables' (note the extra "s") element. Here's where the
+      real definition is determined.</p>
 
       <p>Each variable represents one thing to configure. They can
       represent a single CV, e.g. address, or a few bits that can

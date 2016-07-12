@@ -78,13 +78,13 @@
       <p>The DCC packet analyzer entry is software to log data from
       a hardware device sold by NCE which allows the user to
       observe the packets on the NCE Command Bus, or alternatively
-      directly from the track.  The latter feature allows the
-      device to look at track packets sent from any Command Station
-      that conforms to the NMRA standard (such as Digitrax or
-      Lenz). The input signal is interpreted and sent to JMRI
-      through a serial interface.   With it the user can see speed
-      and function instructions being sent from the Command Station
-      to the decoder</p>
+      directly from the track. The latter feature allows the device
+      to look at track packets sent from any Command Station that
+      conforms to the NMRA standard (such as Digitrax or Lenz). The
+      input signal is interpreted and sent to JMRI through a serial
+      interface. With it the user can see speed and function
+      instructions being sent from the Command Station to the
+      decoder</p>
 
       <p><strong><a name="Clock" id="Clock"></a>Monitor
       Clock</strong></p>
@@ -100,14 +100,14 @@
 
       <p><br>
       Opens a window that displays the cabs currently on the
-      system.  This is handy for determining the cab number
-      assigned to a throttle that doesn't have a display.  Just use
-      "Show Cabs" to display the cabs currently on the system. 
-      Then plug in the cab in question and use it again to see
-      which one is added.  If you have a standalone set-up bench
-      it's even easier.  Cycle the power to clear the command
-      station memory. Then plug in the new cab and Show Cabs will
-      display its number</p>
+      system. This is handy for determining the cab number assigned
+      to a throttle that doesn't have a display. Just use "Show
+      Cabs" to display the cabs currently on the system. Then plug
+      in the cab in question and use it again to see which one is
+      added. If you have a standalone set-up bench it's even
+      easier. Cycle the power to clear the command station memory.
+      Then plug in the new cab and Show Cabs will display its
+      number</p>
 
       <p><strong>Booster Programming</strong></p>
 

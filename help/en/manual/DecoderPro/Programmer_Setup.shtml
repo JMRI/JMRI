@@ -61,7 +61,7 @@
       Mode</a></b> - With this button you select a programmer to
       program the locomotive(decoder) on the dedicated programming
       track. (Probably because the Locomotive has to be taken to
-      the servicing track to be programmed).  Not all command
+      the servicing track to be programmed). Not all command
       stations support a dedicated programming track, and some
       brands will shut down the mainline power when in programming
       mode (not pleasant when you have an ops session in
@@ -71,16 +71,16 @@
       name="button2" id="button2" value=
       "Operations Mode (Main Track ) Programmer"> Operations
       Mode</a></b> - or <strong>[Programming on the
-      main(POM)]</strong>.  This lets you program a specific
-      decoder on the layout, even while it is operating. However,
-      because it addresses a specific decoder address, some
-      decoders will not allow you to change the decoder's address
-      using this method! Some command stations will only
-      "broadcast" programming commands, which can mean every
-      locomotive on the layout gets the same programming! The same
-      is true if you try to program a loco with address zero (or
-      forget to enter an address when you start).  If in doubt,
-      check your documentation.</p>
+      main(POM)]</strong>. This lets you program a specific decoder
+      on the layout, even while it is operating. However, because
+      it addresses a specific decoder address, some decoders will
+      not allow you to change the decoder's address using this
+      method! Some command stations will only "broadcast"
+      programming commands, which can mean every locomotive on the
+      layout gets the same programming! The same is true if you try
+      to program a loco with address zero (or forget to enter an
+      address when you start). If in doubt, check your
+      documentation.</p>
 
       <p><strong><input type="button" name="button3" id="button3"
       value="Help"></strong> - Accesses the help files<br></p>

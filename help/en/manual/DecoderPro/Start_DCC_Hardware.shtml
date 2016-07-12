@@ -57,17 +57,17 @@
       hardware interface to send the commands from your computer to
       the command station, and from there on to the decoder in the
       locomotive. For a Digitrax system, for example, you will need
-      either the  <strong>PR3 programmer</strong> or a
+      either the <strong>PR3 programmer</strong> or a
       <b>LocoBuffer</b>. The <b>PR1</b> device from Digitrax is a
       stand-alone programmer and is <span class="ACCENT">not</span>
       usable with this software.</p>
 
       <p>For those who do not have any DCC hardware yet and are
       considering purchasing a DCC locomotive and want to use
-      Decoder Pro to program it consider the SPROG II USB.  It has
+      Decoder Pro to program it consider the SPROG II USB. It has
       all the electronics in one package with enough output to run
-      a locomotive.  It comes complete with the USB cable, power
-      supply, instructions and JMRI on disk.  All you need in
+      a locomotive. It comes complete with the USB cable, power
+      supply, instructions and JMRI on disk. All you need in
       addition, is the test track.</p>
 
       <p>You will also need, of course, some locomotives with the
