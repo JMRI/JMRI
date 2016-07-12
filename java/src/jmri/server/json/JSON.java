@@ -307,13 +307,21 @@ public final class JSON {
      */
     public static final String TRACK_COLOR = "trackColor"; // NOI18N
     /**
-     * {@value #BLOCK_OCCUPIED_COLOR}
+     * {@value #OCCUPIED_COLOR}
      */
-    public static final String BLOCK_OCCUPIED_COLOR = "blockOccupiedColor"; // NOI18N
+    public static final String OCCUPIED_COLOR = "occupiedColor"; // NOI18N
     /**
-     * {@value #BLOCK_EXTRA_COLOR}
+     * {@value #EXTRA_COLOR}
      */
-    public static final String BLOCK_EXTRA_COLOR = "blockExtraColor"; // NOI18N
+    public static final String EXTRA_COLOR = "extraColor"; // NOI18N
+    /**
+    * {@value #OCCUPANCY_SENSOR}
+    */
+   public static final String OCCUPANCY_SENSOR = "occupancySensor"; // NOI18N
+   /**
+   * {@value #OCCUPIED_SENSE}
+   */
+  public static final String OCCUPIED_SENSE = "occupiedSense"; // NOI18N
 
     /* JSON operations tokens */
     /**
