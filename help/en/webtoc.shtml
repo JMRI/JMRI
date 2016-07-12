@@ -1709,7 +1709,43 @@
 
    
 <li>
+<a href="html/doc/Technical/Names.shtml">Names and Naming </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="html/doc/Technical/Patterns.shtml">Code Structure Patterns </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="html/doc/Technical/Swing.shtml">Swing Structure </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="html/doc/Technical/Threads.shtml">External Connection Structure </a>
+<ul></ul>
+</li>
+
+   
+<li>
 <a href="html/doc/Technical/Help.shtml">JavaHelp HowTo </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="html/doc/Technical/JavaDoc.shtml">Documentation with JavaDoc and UML </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="html/doc/Technical/JUnit.shtml">Unit testing with JUnit </a>
 <ul></ul>
 </li>
 
