@@ -539,6 +539,7 @@ public class Section extends AbstractNamedBean
         for (int i = 0; i < mBlockEntries.size(); i++) {
             if (mBlockEntries.get(i).getState() == OCCUPIED) {
                 o = OCCUPIED;
+                break;
             }
         }
         if (mOccupancy != o) {
