@@ -218,12 +218,13 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
-            log.debug("Property change ({}) for: ({}) old: {} new: {}",
+            log.debug("Property change ({}) for: ({}) old: {}, new: {}",
                     e.getPropertyName(), e.getSource().toString(),
                     e.getOldValue(), e.getNewValue());
         }
         if (e.getPropertyName().equals(Train.TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)) {
+                || e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)
+                || e.getPropertyName().equals(Train.TRAIN_MODIFIED_CHANGED_PROPERTY)) {
             clearAndUpdate();
         }
         if ((e.getPropertyName().equals(RollingStock.ROUTE_LOCATION_CHANGED_PROPERTY) && e.getNewValue() == null)
