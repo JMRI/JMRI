@@ -38,17 +38,17 @@
       <hr>
 
       <p>Well, now that we've had an overview of OperationsPro,
-      let's see if we can make it work.  We could sit down and
-      enter a whole bunch of information into the Locations, Cars,
+      let's see if we can make it work. We could sit down and enter
+      a whole bunch of information into the Locations, Cars,
       Engines, Routes and Trains screens or do it the easy way and
-      use the built-in Demo Railroad.  Since this is a training
-      (pun intended) exercise, we'll use the Demo files. <br>
+      use the built-in Demo Railroad. Since this is a training (pun
+      intended) exercise, we'll use the Demo files.<br>
       To get the demo files loaded, go to the JMRI main menu and
       click on <strong>Tools</strong>, scroll all the way to the
       bottom to select Operations (or pick the Operations menu if
       set in Operations settings), and slide sideways to select
-      Settings.  On the Operations Settings screen select the Tools
-      menu and then select Load Demo Files.  DecoderPro&reg; will
+      Settings. On the Operations Settings screen select the Tools
+      menu and then select Load Demo Files. DecoderPro&reg; will
       need to restart.</p>
 
       <p align="center"><img src="images/Ops_Operations01.png"
@@ -70,8 +70,8 @@
       box way over on the right of the entry for Lakeview, you'll
       see a screen like that below, Edit Location, showing that
       Lakeview is a staging area that can accommodate almost any
-      kind of car.  This will be the starting point for our
-      mythical trip.</p>
+      kind of car. This will be the starting point for our mythical
+      trip.</p>
 
       <p align="center"><img src="images/Ops_Operations03.png"
       width="766" height="577" alt="location Edit"></p>
@@ -89,7 +89,7 @@
       so many that there's a scrollbar on the right to scroll
       through the list. Again clicking on the Edit box on the right
       we could see the specifics of any one car and of course Edit
-      the data (if it was our own).  We won't bother.</p>
+      the data (if it was our own). We won't bother.</p>
 
       <p align="center"><img src="images/Ops_Operations04.png"
       width="900" height="486"></p>
@@ -103,13 +103,13 @@
       <p>Since we know we're departing from
       <strong>Lakeview</strong> we probably want to eyeball that
       pair of <strong>Trainmasters</strong> sitting over on track
-      <strong>#97.</strong>  The Command Station on our Demo
+      <strong>#97.</strong> The Command Station on our Demo
       railroad is obviously an NCE product because these locos are
       assigned <strong>NCE consist #118.</strong></p>
 
       <p>So how does Operations REALLY work? Well, once you have
       all the data entered as we've seen above, we can generate a
-      set of manifests for the train operations.  To do this we use
+      set of manifests for the train operations. To do this we use
       the Trains window. Select <strong>Trains</strong> from the
       <strong>Operations</strong> menu and the
       <strong>Trains</strong> window will display.</p>
@@ -117,13 +117,13 @@
       <p align="center"><img src="images/Ops_Operations06.png"
       width="899" height="358"></p>
 
-      <p>Here there are several trains ready to build.  The
+      <p>Here there are several trains ready to build. The
       highlighted train is <strong>LBX from Lakeview to
       Bakersfield</strong>. By putting a check mark in the box in
       the Build column and then clicking the <input name="button1"
       id="button1" value="Build" type="button"> button at the
       bottom of the screen we were able to get the manifest built
-      so that we can preview it.  It's a short run, but still takes
+      so that we can preview it. It's a short run, but still takes
       more than one page of fine print instructions for the
       crew.</p>
 
@@ -134,25 +134,25 @@
       width="900" height="472"></p>
 
       <p>We pick up our locomotives in Lakeview and head over to
-      the yard to gather up a bunch of cars and a caboose.  Then we
-      get ready to depart at 7:10 on the fast clock.  We should
+      the yard to gather up a bunch of cars and a caboose. Then we
+      get ready to depart at 7:10 on the fast clock. We should
       arrive at Farmington at 7:14, and since there were no
       Farmington bound cars in Lakeview, and nothing in Farmington
       bound for Hillsboro or Bakersfield, the program has scheduled
-      no work to do at Farmington.  So we'll keep going.  When we
+      no work to do at Farmington. So we'll keep going. When we
       arrive at Hillsboro (hopefully at 7:18), we have some
-      set-outs and pick-ups to attend to.  Then, we're off to
+      set-outs and pick-ups to attend to. Then, we're off to
       Bakersfield, gliding through Danville and Port Arthur on the
-      way.  Arriving at Bakersfield right on time at 8:21, we drop
+      way. Arriving at Bakersfield right on time at 8:21, we drop
       the boxcar at Heritage Furniture, the Coalhopper in the yard,
-      and slide the caboose gently into the caboose track.  Now we
+      and slide the caboose gently into the caboose track. Now we
       can take the motive power over to the locomotive terminal and
       call in to Dispatch asking for the trip to be terminated.<br>
       The trip is terminated by selecting it in the Trains screen
-      and clicking the terminate button.  This would then enter the
+      and clicking the terminate button. This would then enter the
       new locations of the rolling stock into the data screens and
       release them for the next build.<br>
-      So that wasn't so difficult, was it?  Hope you enjoyed your
+      So that wasn't so difficult, was it? Hope you enjoyed your
       cab ride.</p>
       <hr>
 

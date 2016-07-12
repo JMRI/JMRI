@@ -69,7 +69,7 @@
       <h4>Creating a Schedule</h4>
 
       <p>First open the <a style="font-weight: bold;" href=
-      "Ops_Locations.shtml">Locations </a> window.</p>
+      "Ops_Locations.shtml">Locations</a> window.</p>
 
       <p>Then press <input name="button" id="button" value="Edit"
       type="submit"> in the column to the right of the location
@@ -99,8 +99,6 @@
                 panel. Press <input name="button3" id="button3"
                 value="Edit" type="submit"> should open the
                 <strong>Add Schedule</strong> panel.</p>
-
-              <p> </p>
             </td>
           </tr>
         </tbody>

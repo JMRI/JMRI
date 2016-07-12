@@ -71,7 +71,7 @@
       <input name="button52" id="button52" value="Preview" type=
       "button"> .</p>
 
-      <p>You may select the  Action that you want to perform on all
+      <p>You may select the Action that you want to perform on all
       trains that are selected.</p>
 
       <p><img style="width: 422px; height: 126px;" alt="action"
@@ -84,7 +84,7 @@
       <input name="checkbox5" id="checkbox5" checked="checked"
       type="checkbox"> <strong>Build Reports</strong> before
       pressing <input name="button19" id="button20" value="Preview"
-      type="submit"> for the desired train. </p>
+      type="submit"> for the desired train.</p>
 
       <p><img style="width: 635px; height: 148px;" alt=
       "trains build" src="images/Ops_trainsBuild03.png"></p>

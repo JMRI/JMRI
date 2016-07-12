@@ -49,10 +49,10 @@
       width="808"></p>
 
       <ol>
-        <li>Title Bar:  Window title Locations.</li>
+        <li>Title Bar: Window title Locations.</li>
 
-        <li><a href="Ops_Locations_Menu.shtml">MenuBar</a>: 
-        Windows menus</li>
+        <li><a href="Ops_Locations_Menu.shtml">MenuBar</a>: Windows
+        menus</li>
 
         <li><a href="Ops_Locations_List.shtml"><span style=
         "text-decoration: underline;">Locations
@@ -69,8 +69,8 @@
       <p style="margin-left: 40px;"><strong>Sort by <input name=
       "radio" id="radio" value="radio" checked="checked" type=
       "radio"> Name <input name="radio2" id="radio2" value="radio2"
-      type="radio"> Id             </strong>Sets the sort order for
-      the locations</p>
+      type="radio"> Id</strong> Sets the sort order for the
+      locations</p>
 
       <p style="margin-left: 40px;">Press <input name="button" id=
       "button" value="Add" type="submit"> to <a href=
