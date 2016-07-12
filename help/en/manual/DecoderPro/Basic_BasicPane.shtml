@@ -150,8 +150,8 @@
       <p><a name="Enter/Edit data"></a>If you wish to change the
       address of the locomotive, type in the new address. To turn
       on or off 4 digit addressing, select the desired radio
-      button. .  Be sure that the address type agrees with the
-      number of characters in the address.  </p>
+      button. . Be sure that the address type agrees with the
+      number of characters in the address.</p>
 
       <p>To enable Analog (old style DC, some vendors refer to this
       as dual mode) Operation select the appropriate entry from the
@@ -169,13 +169,13 @@
       automatically keep trying until the write operation is
       successful. In some instances the system will "time-out"
       after a certain number of tries without an acknowledgement
-      from the decoder.  This does not necessarily mean that the
+      from the decoder. This does not necessarily mean that the
       values have not been written, just that the program has not
-      received an acknowledgement.  This can be due to  the
+      received an acknowledgement. This can be due to the
       locomotive moving and getting on dirty track so that it can't
       pulse back, or possibly because the command station or
-      decoder cannot read back.  Try moving the loco and try again.
-       If it is a command station or decoder read-back issue, try
+      decoder cannot read back. Try moving the loco and try again.
+      If it is a command station or decoder read-back issue, try
       the loco on the mainline and see if the programming was
       successful.</p>
 
@@ -189,11 +189,11 @@
       also saved to a computer file where they may be recalled in
       the future. .</p><a name="Do More"></a> But you say..."I want
       to change more than what's shown on the Basic decoder pane."
-      Well&hellip; there are other programmers that are available. 
-      But&hellip; first we need to look at the various options.  In
+      Well&hellip; there are other programmers that are available.
+      But&hellip; first we need to look at the various options. In
       fact there are so many options the programmers had to use a
-      slider to get them all to show.  Here are the option windows.
-       Don't panic&hellip;.Most are of no use to the average user.
+      slider to get them all to show. Here are the option windows.
+      Don't panic&hellip;.Most are of no use to the average user.
 
       <p align="center"><img src="images/Basic_programmers.png"
       alt="Basic Programmers" height="341" width="568"><br></p>
@@ -202,12 +202,12 @@
       other programmers "<strong><em>Normal Users</em>"</strong>
       will ever need, because it is,
       well&hellip;<strong>Comprehensive</strong> and the
-      <strong>Advanced</strong> adds features that are optional.. 
+      <strong>Advanced</strong> adds features that are optional..
       So why all the others?</p>
 
       <p>First of all eliminate the Manufacturer specific
       programmers (unless of course you have a
-      <strong>Zimo</strong> or <strong>ESU</strong> system). </p>
+      <strong>Zimo</strong> or <strong>ESU</strong> system).</p>
 
       <p>We can also eliminate the <strong>Tutorial</strong> and
       <strong>Custom</strong> programmers. They were put in to show
@@ -221,18 +221,18 @@
       might want to look at <strong>Sample Club</strong> or
       <strong>TrainShowBasic</strong> to see what panes can be
       taken out of Comprehensive to make an intermediate
-      complexity, special purpose programmer.  Again, how to do
-      this is a subject for another manual.</p>
+      complexity, special purpose programmer. Again, how to do this
+      is a subject for another manual.</p>
 
       <p>And that leaves us with the <strong>Advanced</strong> and
-      <strong>Registers</strong> programmers.  The
+      <strong>Registers</strong> programmers. The
       <strong>Advanced</strong> programmer has a couple of
       sophisticated features added on top of the
       <strong>Comprehensive</strong> programmer and a name was
-      needed.  Well, why not call it <strong>Advanced</strong>?
+      needed. Well, why not call it <strong>Advanced</strong>?
       We'll cover the additional features once we get through with
       <strong>Comprehensive</strong>.<br>
-      So what about the <strong>Registers</strong> programmer?  If
+      So what about the <strong>Registers</strong> programmer? If
       you have an old or bargain basement decoder that only
       programs using registers, then of course you'll be interested
       in <strong>Registers.</strong><br>

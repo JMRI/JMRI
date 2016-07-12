@@ -56,7 +56,7 @@
       <p>Select a decoder that matches the one installed in your
       Locomotive. The Open Programmer button will now become
       activated and you'll be able to move on with the Programmer
-      selected from the drop-down list, then  click on the
+      selected from the drop-down list, then click on the
       <strong>Open Programmer</strong> button, the selected
       Programmer window will open. All programmers, Basic and
       Comprehensive, open to the <a href=
@@ -189,8 +189,8 @@
       reverse direction. Currently it requires three sensors which
       monitor the occupancy of a section of track. Ideally the
       section of track that the timed runs are performed over
-      should be straight, and a minimum of 1 m  long, the longer
-      the length the better the result. For this profiling to work
+      should be straight, and a minimum of 1 m long, the longer the
+      length the better the result. For this profiling to work
       correctly acceleration / deceleration should be disabled on
       the loco decoder.</p>
 

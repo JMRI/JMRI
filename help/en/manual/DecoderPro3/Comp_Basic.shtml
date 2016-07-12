@@ -97,10 +97,10 @@
       control) Enable Analog Operation with caution, as some
       decoders will jump to full speed resulting in a "Runaway
       locomotive" if they are enabled for Analog Operation and
-      encounter power spikes on a DCC digital signal.  They seem to
+      encounter power spikes on a DCC digital signal. They seem to
       get confused, and revert to Analog operation and use the full
-      track voltage DCC power to take off and GO!  There is no
-      stopping them without removing layout power.  Very disturbing
+      track voltage DCC power to take off and GO! There is no
+      stopping them without removing layout power. Very disturbing
       to your operating mates, but better than running into them at
       full tilt.</p>
 

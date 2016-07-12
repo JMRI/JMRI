@@ -230,8 +230,6 @@
               <p><input name="checkbox10" id="checkbox10" type=
               "checkbox"> <strong>Enable physical locations for
               Virtual Sound Decoder -</strong></p>
-
-              <p> </p>
             </td>
           </tr>
 
@@ -255,7 +253,7 @@
                       <p>Add Helpers</p>
                     </td>
 
-                    <td> </td>
+                    <td></td>
                   </tr>
 
                   <tr>
@@ -271,7 +269,7 @@
 
                     <td>Change Locos and Caboose</td>
 
-                    <td> </td>
+                    <td></td>
                   </tr>
 
                   <tr>
@@ -279,7 +277,7 @@
 
                     <td>Change Locos</td>
 
-                    <td> </td>
+                    <td></td>
                   </tr>
 
                   <tr>
@@ -319,7 +317,7 @@
 
                     <td>No Work</td>
 
-                    <td> </td>
+                    <td></td>
                   </tr>
 
                   <tr>
@@ -351,7 +349,7 @@
 
                     <td>Remove Helpers</td>
 
-                    <td> </td>
+                    <td></td>
                   </tr>
 
                   <tr>
@@ -477,7 +475,7 @@
               </table>
             </td>
 
-            <td valign="top" width="34%"> </td>
+            <td valign="top" width="34%"></td>
           </tr>
         </tbody>
       </table>

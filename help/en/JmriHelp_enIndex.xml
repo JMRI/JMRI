@@ -234,7 +234,6 @@
   <indexitem text="Slot Monitor " target="package.jmri.jmrix.loconet.slotmon.SlotMonFrame"/>
 
  </indexitem>
-
  <indexitem text="Logix ">
   <indexitem text="Add Logix " target="package.jmri.jmrit.beantable.LogixAddEdit"/>
 
@@ -468,6 +467,14 @@
  <indexitem text="Technical ">
   <indexitem text="Eclipse IDE " target="html.doc.Technical.Eclipse"/>
 
+  <indexitem text="Git ">
+   <indexitem text="Getting the Source Code Via Git " target="html.doc.Technical.getgitcode"/>
+
+   <indexitem text="Git FAQs " target="html.doc.Technical.GitFAQ"/>
+
+   <indexitem text="Git for Developers " target="html.doc.Technical.gitdeveloper"/>
+
+  </indexitem>
   <indexitem text="NetBeans IDE " target="html.doc.Technical.NetBeans"/>
 
   <indexitem text="Thread Monitor " target="package.jmri.jmrit.automat.monitor.AutomatTableFrame"/>

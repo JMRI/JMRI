@@ -1,77 +1,104 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
 <html lang="fr">
 <head>
-<!-- Translated  by Blorec Herv&#233; le 2011-11-3--> 
-<title>JMRI: Menu D&#233;bogage</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Translated  by Blorec Herv&#233; le 2011-11-3-->
 
-<!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css" MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css" MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
+  <title>JMRI: Menu D&eacute;bogage</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>JMRI: Menu D&eacute;bogage</h1>Le menu JMRI
+      "D&eacute;boger" contient les &eacute;l&eacute;ments
+      suivants:
 
-<h1>JMRI: Menu D&#233;bogage</h1>
+      <ul>
+        <li>Moniteur Utilisation M&eacute;moire</li>
+      </ul>
+      <hr>
 
-Le menu JMRI "D&#233;boger" contient les &#233;l&#233;ments suivants:
-<ul>
-   <li>Moniteur Utilisation M&#233;moire</li>
-</ul>
-<hr>
-<ul>
-  <li>Importer Fichier D&#233;codeur</li>
-   <li>Importer URL D&#233;codeur</li>
-   <li>Recr&#233;ez Index des D&#233;codeurs</li>
-   <li>Recr&#233;ez Indice Liste</li>
- <li>Mise &#224; jour d&#233;finitions des d&#233;codeurs</li>	
-</ul>
-<hr>
-<ul> 
-  <li>V&#233;rifiez fichier XML </li>
-   <li>Valider un fichier XML </li>
-   <li>V&#233;rifiez les Noms D&#233;codeur </li>
-   <li> V&#233;rifier les Noms Programmateur</li>
-</ul>
-<hr>
-<ul>
-   <li> Charger Logixs D&#233;sactiv&#233;s </li>
-   <li> Message Connexion </li>
-   <li> Afficher un Message de Connexion </li>
-   <li> Afficher les Cat&#233;gories de Connexions</li>
-</ul>
-<hr>
-<ul>
-   <li> D&#233;codeur Son Virtuel</li>
-</ul>
-<hr>
-<ul>
-   <li> PRICOM </li>
-</ul>
-<hr>
-<ul>
-   <li> Contr&#244;ler  Entr&#233;e USB </li>
-   <li> Visionneur Mat&#233;riel USB </li>
-</ul>
-<hr>
-<ul>
-   <li> R&#233;gulateur RailDriver </li>
-</ul>
-<hr>
-<ul>
-   <li> <a href="../../../html/web/index.shtml">D&#233;marrer Mini Serveur Web </a></li>
-</ul>
+      <ul>
+        <li>Importer Fichier D&eacute;codeur</li>
 
-<p> Ceci est la page d'aide help/en/package/jmri/jmrit.DebugMenu. </p>
+        <li>Importer URL D&eacute;codeur</li>
 
-<!--#include virtual="/Footer" -->
+        <li>Recr&eacute;ez Index des D&eacute;codeurs</li>
+
+        <li>Recr&eacute;ez Indice Liste</li>
+
+        <li>Mise &agrave; jour d&eacute;finitions des
+        d&eacute;codeurs</li>
+      </ul>
+      <hr>
+
+      <ul>
+        <li>V&eacute;rifiez fichier XML</li>
+
+        <li>Valider un fichier XML</li>
+
+        <li>V&eacute;rifiez les Noms D&eacute;codeur</li>
+
+        <li>V&eacute;rifier les Noms Programmateur</li>
+      </ul>
+      <hr>
+
+      <ul>
+        <li>Charger Logixs D&eacute;sactiv&eacute;s</li>
+
+        <li>Message Connexion</li>
+
+        <li>Afficher un Message de Connexion</li>
+
+        <li>Afficher les Cat&eacute;gories de Connexions</li>
+      </ul>
+      <hr>
+
+      <ul>
+        <li>D&eacute;codeur Son Virtuel</li>
+      </ul>
+      <hr>
+
+      <ul>
+        <li>PRICOM</li>
+      </ul>
+      <hr>
+
+      <ul>
+        <li>Contr&ocirc;ler Entr&eacute;e USB</li>
+
+        <li>Visionneur Mat&eacute;riel USB</li>
+      </ul>
+      <hr>
+
+      <ul>
+        <li>R&eacute;gulateur RailDriver</li>
+      </ul>
+      <hr>
+
+      <ul>
+        <li><a href="../../../html/web/index.shtml">D&eacute;marrer
+        Mini Serveur Web</a></li>
+      </ul>
+
+      <p>Ceci est la page d'aide
+      help/en/package/jmri/jmrit.DebugMenu.</p>
+      <!--#include virtual="/Footer" -->
     </div>
-    </div>
+  </div>
 </body>
 </html>

@@ -45,12 +45,10 @@
 
       <ul>
         <li name="OptionsMenu"><strong><a href=
-        "Ops_Settings_Tools_Options.shtml">Options</a></strong><br>
-         </li>
+        "Ops_Settings_Tools_Options.shtml">Options</a></strong><br></li>
 
         <li><a href="Ops_PrintOptions.shtml"><strong>Manifest Print
-        Options</strong></a><br>
-         </li>
+        Options</strong></a><br></li>
 
         <li>
           <a name="buildreportoptions"><strong>Build Report

@@ -46,7 +46,7 @@
       <p align="center"><img style="width: 739px; height: 215px;"
       alt="monitor" src="images/Main_MonitorWindow.png"><br></p>
 
-      <p align="left"> </p>
+      <p align="left"></p>
 
       <p align="left">The messages that are sent and received over
       the communications link are displayed in the main pane of the
@@ -83,7 +83,7 @@
       continuously.</p>
 
       <p align="left"><span style="font-weight: bold;">Filter
-      Bytes: <input size="40" name="c"></span>  </p>
+      Bytes: <input size="40" name="c"></span></p>
 
       <div class="nomenu" id="mBody">
         <div id="mainContent">
@@ -112,7 +112,7 @@
 
       <h4 align="left"><span style=
       "font-weight: normal;"><span style="font-weight: bold;">Stop
-      logging</span> button -- Stops sending data  in <span style=
+      logging</span> button -- Stops sending data in <span style=
       "font-weight: bold;">Monitor Window</span> to selected
       file.</span><br></h4>
 
@@ -146,7 +146,7 @@
         button to store the data and close the file.</li>
       </ol>
 
-      <h4>Adding Message </h4>button <input size="50" name="v">
+      <h4>Adding Message</h4>button <input size="50" name="v">
 
       <p>Type your message in the Add Message text box, then click
       on the <strong>Add Message</strong> button to add your

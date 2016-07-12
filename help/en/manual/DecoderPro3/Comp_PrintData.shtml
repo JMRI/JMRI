@@ -41,7 +41,7 @@
       capability to print out a full list of the decoder CV data or
       selected data. To print, select the <strong>File</strong>
       menu of any Comprehensive Programmer Pane, then select the
-      Print or Print Preview options. </p>
+      Print or Print Preview options.</p>
 
       <ul>
         <li><strong>Print all..., Preview all...</strong> Displays
@@ -63,19 +63,19 @@
         Preview screen</li>
       </ul>
 
-      <p>These printouts show the variables by name in each 
+      <p>These printouts show the variables by name in each
       category that is selectected.(as shown on the DecoderPro
-      panes) along with their CV number and Value.  A handy
+      panes) along with their CV number and Value. A handy
       reference for the future.</p>
 
       <p>Print preview will look like it's about to print the list,
-      and ask for which printer to use.  Don't panic!, that's only
-      to get the preview to work.  Go ahead and select the printer
+      and ask for which printer to use. Don't panic!, that's only
+      to get the preview to work. Go ahead and select the printer
       and you'll only get the preview.</p>
 
       <p><strong>Import Data:</strong> You may import the list from
-      another computer in the PR1 file format.  Thus, the Export
-      and Import capability allows you to take the data from one
+      another computer in the PR1 file format. Thus, the Export and
+      Import capability allows you to take the data from one
       computer system to another.</p>
 
       <p><strong>Export Data:</strong> you may export the list as

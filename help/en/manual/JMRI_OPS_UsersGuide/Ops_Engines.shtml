@@ -69,7 +69,7 @@
       window</em></strong>
 
       <p><strong>Sort by</strong> -- select the radio button for
-      the attribute you wish to sort by.   (Last sorts by last
+      the attribute you wish to sort by. (Last sorts by last
       moved)</p>
 
       <p><input name="button" id="button" value="Add" type=

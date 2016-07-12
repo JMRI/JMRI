@@ -46,7 +46,7 @@
 
       <p><strong>Frame Title Components:</strong> Select the text
       component desired. There are two components which can be in
-      the title bar of the throttle "Text" and "Address"  The
+      the title bar of the throttle "Text" and "Address" The
       selections allow either or both to be in the title (in the
       order they appear in the selection), or one can opt for the
       description in the locomotive Roster Entry</p>
@@ -78,9 +78,9 @@
       "checkbox6" type="checkbox"> Frame Decorations</strong>:</p>
 
       <p>This will remove the individual control bars for the
-      separate panes of the throttle.  This is advised for Windows
+      separate panes of the throttle. This is advised for Windows
       users, as clicking the minimize buttons causes the restore
-      button to be lost behind the rest of the panels.  Recovery
+      button to be lost behind the rest of the panels. Recovery
       entails using the view menus to remove and then restore the
       panel in question.</p>
 

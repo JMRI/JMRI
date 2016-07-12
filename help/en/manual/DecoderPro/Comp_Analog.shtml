@@ -43,9 +43,9 @@
       <p>As discussed in the <a href=
       "Comp_Basic.shtml"><strong>Expanded Basic Pane</strong></a>,
       some decoders allow operation on Analog or Conventional DC
-      layouts.  At the discretion of the manufacturer, some of the
+      layouts. At the discretion of the manufacturer, some of the
       non-motor responses may be changeable by setting CV's in the
-      decoder.  This pane is where you would set these values. 
+      decoder. This pane is where you would set these values.
       Typical would be whether any of the various functions (such
       as lights and bell) would be on or off when in DC mode.
       Consult your decoder's manual for options available</p>

@@ -60,7 +60,7 @@
       used for speed control. To select the use of speed tables,
       the <strong>Use Table</strong> radio button is selected at
       the top of the pane, and in the case of Soundtraxx and QSI
-      decoders, the drop down selection box must be used.  See the
+      decoders, the drop down selection box must be used. See the
       discussion at the end of this section for an example.</p>
 
       <p>Not all decoders allow speed table programming and some
@@ -100,33 +100,33 @@
 
       <p>Now if you've used DecoderPro in the past, you're probably
       wondering what those little boxes at the bottom of each
-      slider are used for.  Well, they're difficult to explain, but
-      easy to use.  They basically allow you to set a slider to
+      slider are used for. Well, they're difficult to explain, but
+      easy to use. They basically allow you to set a slider to
       control every slider in columns to its left as well as to its
-      right.  If you click two of the boxes and then move one of
+      right. If you click two of the boxes and then move one of
       those sliders you'll see that they are linked to the sliders
-      between them.  Points to the right never are higher than the
+      between them. Points to the right never are higher than the
       slider being moved, and the points to the left are never
       lower that the slider being moved. This "always increasing
       left to right" is normally the way the sliders worked, but
       now the ones in between the check are linked. If the slider
       is lowered and then raised the straight line is drawn between
       the column checked to the right and the column that the
-      slider is controlling.  It's difficult to describe, but try
-      it and you'll see.</p>
+      slider is controlling. It's difficult to describe, but try it
+      and you'll see.</p>
 
       <p><br>
-      What could that possibly be used for, you ask?  Well, many
+      What could that possibly be used for, you ask? Well, many
       decoders (like the Soundtraxx Tsunami in this example) do not
-      support V-start, V-mid and V-max.  So, if you are trying to
+      support V-start, V-mid and V-max. So, if you are trying to
       use the simplified method of speed matching locos, these
-      decoders won't support it.   Well now you have a way.  Check
-      the left-hand, right-hand and middle columns.  Set the
-      left-hand column to V-start, the right-hand to V-max and then
-      slide the middle slider up and down until you get the V-mid
-      that you want.  Now all you have to do is write this speed
-      table to the loco and you've accomplished what you wanted to
-      do, but the decoder manufacturer didn't provide for.</p>
+      decoders won't support it. Well now you have a way. Check the
+      left-hand, right-hand and middle columns. Set the left-hand
+      column to V-start, the right-hand to V-max and then slide the
+      middle slider up and down until you get the V-mid that you
+      want. Now all you have to do is write this speed table to the
+      loco and you've accomplished what you wanted to do, but the
+      decoder manufacturer didn't provide for.</p>
 
       <h1><img src="images/Speed_Table_SpeedMatch.png" alt=
       "Speed Match" height="527" width="922"></h1>
@@ -205,9 +205,9 @@
 
       <p>And this point is especially pertinent with the QSI and
       Soundtraxx Tsunami decoders, because they have a separate
-      drop down box like the QSI box below.  They require that you
+      drop down box like the QSI box below. They require that you
       select the <strong>user defined</strong> speed table entry in
-      this box or your table will not be written to the decoder. 
+      this box or your table will not be written to the decoder.
       Interestingly, Tsunami puts the selection at the bottom of
       the list making it very easy to miss.</p>
 

@@ -112,7 +112,7 @@
           <tr>
             <td width="26%">Program</td>
 
-            <td width="74%"> </td>
+            <td width="74%"></td>
           </tr>
 
           <tr>
@@ -193,7 +193,7 @@
       cases any of the highlighted decoders will work, and you
       should select the one with the least letters at the end,
       since letters are often used to denote locomotive specific
-      variations.  Note all of the Tsunami decoders are using the
+      variations. Note all of the Tsunami decoders are using the
       same hardware in different configurations.</p>
 
       <p><img style="width: 556px; height: 594px;" alt=

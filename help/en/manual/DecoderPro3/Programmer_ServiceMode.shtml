@@ -52,7 +52,7 @@
       <p><b>Service Mode (programming track) Programmer</b> -
       Select to program the locomotive on the dedicated programming
       track. (Probably because the Locomotive has to be taken to
-      the servicing track to be programmed).  Not all command
+      the servicing track to be programmed). Not all command
       stations support a dedicated programming track, and some
       brands will shut down the mainline power when in programming
       mode (not pleasant when you have an ops session in
@@ -66,29 +66,29 @@
         track we rely on the ability of the decoder to respond to a
         query, what is known as <strong>Readback.</strong> Most
         decoders cannot talk to send information back to the
-        command station.  They just respond to instructions, so
+        command station. They just respond to instructions, so
         special instructions were developed which allow the Command
-        Station  to determine the contents of the decoder's
+        Station to determine the contents of the decoder's
         memories<br>
         <br>
         Basically the decoder is asked a whole series of questions
         and when the answer is "yes" it turns on the motor for only
-        a very brief time.  The command station notices the current
+        a very brief time. The command station notices the current
         being drawn and stops asking questions, since it got the
-        <strong><em>yes</em></strong> answer to the last question. 
+        <strong><em>yes</em></strong> answer to the last question.
         This can take a bit of time since the command station must
         ask all possible values waiting for the
         <strong><em>yes</em></strong> response. You can observe the
         process by looking down at the bottom line of all the panes
         (the status bar) where the word
         <strong><em>idle</em></strong> is normally shown when the
-        programmer is inactive.  When DecoderPro is working it will
-        show you what events are being performed.  Sometimes you
-        can see the loco jump a bit as the decoder pulses the motor
-        for "yes".  The computer folks call this an ack (for
-        acknowledgement).  When the Command Station sends the
+        programmer is inactive. When DecoderPro is working it will
+        show you what events are being performed. Sometimes you can
+        see the loco jump a bit as the decoder pulses the motor for
+        "yes". The computer folks call this an ack (for
+        acknowledgement). When the Command Station sends the
         decoder data that is in agreement with what is in the CV of
-        the decoder, the decoder will send an ack.  If the ack is
+        the decoder, the decoder will send an ack. If the ack is
         never received the Command Station tells DecoderPro that
         the Decoder did not respond.<br>
         <br>
@@ -112,58 +112,58 @@
 
         <p>The first item at the top of the service mode programmer
         pane is a selection for the mode used to program your
-        decoders.  This is a legacy to the olden times and rather
+        decoders. This is a legacy to the olden times and rather
         technical, but fortunately DecoderPro has matured to the
         point that it is quite good at selecting the best mode for
-        you.  It uses the selection of command station from your
+        you. It uses the selection of command station from your
         Preferences selections, combined with the decoder
         manufacturer and type selections (which we'll get to real
-        soon now).  Just accept what's there as a good start.  And,
+        soon now). Just accept what's there as a good start. And,
         fear not, for each pane in the programmer has a button
         which can be used to change programming mode if you have a
-        problem.  For further details on programming mode <a href=
+        problem. For further details on programming mode <a href=
         "Basic_Mode.shtml"><strong>click here</strong></a>.</p>
 
         <p>Now let's determine the type of decoder that's installed
         in the locomotive that you would like to program.</p>
 
         <p>The decoder identification is entered by using the
-        selections in the middle of the page. </p>
+        selections in the middle of the page.</p>
 
         <p>Since we want to know what type of decoder is in the
         locomotive, we can either look up what was listed when it
         was entered in the roster stored in this computer, or we
         can ask it what it's manufacturer and firmware version are.
-          The first is method is <strong>IDENT,</strong> and the
-        other is <strong>READ TYPE.</strong>  You can use one or
-        the other, but they are mutually exclusive.</p>
+        The first is method is <strong>IDENT,</strong> and the
+        other is <strong>READ TYPE.</strong> You can use one or the
+        other, but they are mutually exclusive.</p>
 
         <p><strong>IDENT</strong> is used to identify a locomotive
-        that is already stored in your computer's roster file.  You
+        that is already stored in your computer's roster file. You
         can use the drop down arrow to display a listing of
         locomotives in your roster, and then select the desired
-        locomotive from the list.  An alternative is to be lazy and
-        click the <strong>IDENT</strong> button.  The program will
+        locomotive from the list. An alternative is to be lazy and
+        click the <strong>IDENT</strong> button. The program will
         then query the locomotive to get it's address which is
-        linked to the roster entry.  The Decoder Pro roster entry
+        linked to the roster entry. The Decoder Pro roster entry
         includes the decoder type used when it programmed the
-        locomotive.  If it gets a valid address, but there is no
+        locomotive. If it gets a valid address, but there is no
         roster entry with that address, then you will get an error
         message.</p>
 
         <p><strong>READ TYPE</strong> is the other method located
-        in the center of the page.  If you click on <strong>Read
+        in the center of the page. If you click on <strong>Read
         Type From Decoder</strong> button, the system will query
         the decoder to get the manufacturer and firmware version
-        number.  From this information it will highlight all the
-        decoders which are known to match.  There may be several,
+        number. From this information it will highlight all the
+        decoders which are known to match. There may be several,
         usually with differences in the physical shape and size to
         fit in a particular locomotive's shell, or a few more
-        "bells and whistles".    When confronted with a large
+        "bells and whistles". When confronted with a large
         selection, you can either remove the shell to try to read
         information printed on the decoder itself, or just select
         one of the ones with the fewest letters in the model
-        number.  (Letters are often used to separate the shape
+        number. (Letters are often used to separate the shape
         differences which have no bearing on the electronic
         functions of the decoder.) Just be aware that some
         functions that Decoder Pro allows you to program may not be
@@ -173,11 +173,11 @@
         command stations which are capable of reading back the
         contents of CV's, and the process does take some time. Many
         lower end and/or older systems and decoders do not provide
-        readback capability.   If the command station cannot read
+        readback capability. If the command station cannot read
         CV's from the programming track, you will have to select
         the decoder manually by using the large selection box in
-        the middle of the page.  With it you can select the
-        manufacturer, family and specific model of the decoder. 
+        the middle of the page. With it you can select the
+        manufacturer, family and specific model of the decoder.
         This manual method may be the best and fastest way if you
         know for sure "What's in there".</p>
 
@@ -185,7 +185,7 @@
         listing, you may want to check to be sure that you are
         using the most up to date version of Decoder Pro, because
         manufacturers are adding models almost faster than the team
-        can enter the new decoder definitions into the files.  You
+        can enter the new decoder definitions into the files. You
         can choose a manufacturer's version which is as close as
         you can find, or if you're only interested in basic
         programming functions, use the NMRA&copy; decoder which is
@@ -193,13 +193,13 @@
         standards.</p>
 
         <p>The last item on this pane is the Programmer Format
-        entry.  It is preset by your Preferences entry, but you can
+        entry. It is preset by your Preferences entry, but you can
         select other programmers using the drop down arrow.</p>
 
         <p>Once you have selected a decoder, or Decoder Pro has
         done it for you, the <strong>Open Programmer</strong>
         button will become activated and you'll be able to move on
-        with Service Mode Programming. </p>
+        with Service Mode Programming.</p>
 
         <p>When you click on the <strong>Open Programmer</strong>
         button, the selected Programmer window will open. Both

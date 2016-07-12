@@ -1,84 +1,138 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <!--Translated by Herv&#233; Blorec le 2013-09-03 -->
+
 <html lang="fr">
 <head>
-    <TITLE>
- 	JMRI: Int&#233;gration Continue
-    </TITLE>
-    <meta content="Bob Jacobsen" name="Author">
-    <meta name="keywords" content="JMRI technical code Continuous Integration jenkins CVS">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <title>JMRI: Int&eacute;gration Continue</title>
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content=
+  "JMRI technical code Continuous Integration jenkins CVS">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
+
 <body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header" -->
 
-	<div id="mainContent">
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<h1>JMRI: Int&#233;gration Continue</h1>
+    <div id="mainContent">
+      <h1>JMRI: Int&eacute;gration
+      Continue</h1>L'"Int&eacute;gration Continue" est le
+      proc&eacute;d&eacute; de reconstruction d'un syst&egrave;me
+      &agrave; chaque fois qu'il change, de sorte que vous
+      d&eacute;couvrez rapidement les nouveaux probl&egrave;mes et
+      &ecirc;tes motiv&eacute;s pour supprimer ceux existants
 
-L'"Int&#233;gration Continue" est le proc&#233;d&#233; de reconstruction d'un syst&#232;me &#224; chaque fois qu'il change, de sorte que vous d&#233;couvrez rapidement les nouveaux probl&#232;mes et &#234;tes motiv&#233;s pour supprimer ceux existants
-<p>
-JMRI utilise la machine d'int&#233;gration continue 
-<a href="http://jenkins-ci.org/">Jenkins</a>
-pour ceci.
-<p>
+      <p>JMRI utilise la machine d'int&eacute;gration continue
+      <a href="http://jenkins-ci.org/">Jenkins</a> pour ceci.</p>
 
-Les r&#233;sultats sp&#233;cifiques int&#233;ressants:
-<ul>
-    <li><a href="http://builds.jmri.org/jenkins/job/Development/">Page D&#233;veloppement</a> page qui donne une ligne de statut
- montrant l'&#233;tat des constructions fait apr&#232;s chaque s&#233;rie de validations.
-Il y aussi les pages des 
-<a href="http://builds.jmri.org/jenkins/view/All/job/Development/job/Packages/changes">plus r&#233;cents changements</a>, 
-de <a href="http://builds.jmri.org/jenkins/job/Development/job/Builds/lastBuild/">la plupart des r&#233;sultats</a>
-<li> La page <a href="https://jmri.ci.cloudbees.com/job/Development/job/FindBugs/">FindBugs</a>, 
-&#233;tat montrant les tests les plus extensifs faits p&#233;riodiquement.
-Il y a aussi les pages des 
-<a href="https://jmri.ci.cloudbees.com/job/Development/job/FindBugs/changes">plus r&#233;cents changements<a> et les
-<a href="https://jmri.ci.cloudbees.com/job/Development/job/FindBugs/lastBuild/">r&#233;sultats les plus r&#233;cents<a>.
-    </ul>
-<!-- Apparemment liens cass&#233;s au 2013-09-03, except&#233; la page d&#233;veloppement et Jenkins</p><p> -->
-<!-- Liens r&eacute;par&eacute;s le 30-Mai-2014 - Alain LM -->
-Pour plus d'information sur l'usage de FindBugs par JMRI, voir la <a href="FindBugs.shtml">page s&#233;par&#233;e FindBugs</a>.
+      <p>Les r&eacute;sultats sp&eacute;cifiques
+      int&eacute;ressants:</p>
 
+      <ul>
+        <li><a href=
+        "http://builds.jmri.org/jenkins/job/Development/">Page
+        D&eacute;veloppement</a> page qui donne une ligne de statut
+        montrant l'&eacute;tat des constructions fait apr&egrave;s
+        chaque s&eacute;rie de validations. Il y aussi les pages
+        des <a href=
+        "http://builds.jmri.org/jenkins/view/All/job/Development/job/Packages/changes">
+        plus r&eacute;cents changements</a>, de <a href=
+        "http://builds.jmri.org/jenkins/job/Development/job/Builds/lastBuild/">
+        la plupart des r&eacute;sultats</a></li>
 
-<h2>Int&#233;gration avec NetBeans</h2>
-<p>Si vous d&#233;veloppez dans un environnement <a href="NetBeans.shtml">NetBeans 7.0</a> ,
-il est possible d'int&#233;grer les retour d'information dans la machine d'Int&#233;gration Continue Jenkins (CI).
-<p>Dans l'environnement NetBeans, il est fait r&#233;f&#233;rence la machine d'Int&#233;gration Continue Hudson - Jenkins est une <a href="http://en.wikipedia.org/wiki/Fork_(software_development)">"branche"</a>
-du code Hudson et supporte le  m&#234;me <a href="http://en.wikipedia.org/wiki/API">API</a>.
-<h3>Int&#233;gration</h3>
-<p>L'int&#233;gration dans NetBeans s'ach&#232;ve en ex&#233;cutant les &#233;tapes suivantes:
-<ol>
-<li>Ouvrir NetBeans
-<li>Basculer sur la fen&ecirc;tre "Services" (Raccourci clavier "Ctrl+5")
-<li>Clic-Droit (Ctrl-clic sur Mac) sur l'entr&#233;e "Constructeurs Hudson" et choisir "Add Hudson Instance..."
-    <p><img src="images/NetBeansJenkinsAdd.png" width="342" height="134" alt="Add Hudson Instance...">
-<li>
-Dans la r&#233;sultat d&#233;roulant, compl&#233;ter les rubriques suivantes:
-    <dl>
-    <dt>Name</dt><dd>JMRI</dd>
-    <dt>URL</dt><dd>http://builds.jmri.org/jenkins/</dd>
-    <dt>Auto refresh every X minutes</dt><dd>60 (changer la valeur de 5 par d&#233;faut pour &#233;viter de surcharger le serveur CI)</dd>
-    </dl>
-    <img src="images/NetBeansJenkinsAddDialog.png" width="453" height="240" alt="Add Hudson Instance dialog">
-</ol>
-<p>&#224; partir de maintenant, l'&#233;tat actuel des constructions Jenkins peut &#234;tre examin&#233; dans la fen&#234;tre "Services"
- en &#233;largissant l'entr&#233;e "JMRI" sous "Hudson Builders".
-<p><img src="images/NetBeansJenkinsOverview.png" width="342" height="452" alt="Jenkins Overview">
+        <li>La page <a href=
+        "https://jmri.ci.cloudbees.com/job/Development/job/FindBugs/">
+        FindBugs</a>, &eacute;tat montrant les tests les plus
+        extensifs faits p&eacute;riodiquement. Il y a aussi les
+        pages des <a href=
+        "https://jmri.ci.cloudbees.com/job/Development/job/FindBugs/changes">
+        plus r&eacute;cents changements</a> et les <a href=
+        "https://jmri.ci.cloudbees.com/job/Development/job/FindBugs/lastBuild/">
+        r&eacute;sultats les plus r&eacute;cents</a>.</li>
+      </ul>
+      <!-- Apparemment liens cass&#233;s au 2013-09-03, except&#233; la page d&#233;veloppement et Jenkins</p><p> -->
+      <!-- Liens r&eacute;par&eacute;s le 30-Mai-2014 - Alain LM -->
+      Pour plus d'information sur l'usage de FindBugs par JMRI,
+      voir la <a href="FindBugs.shtml">page s&eacute;par&eacute;e
+      FindBugs</a>.
 
-<!--#include virtual="/Footer" -->
+      <h2>Int&eacute;gration avec NetBeans</h2>
 
-	  </div><!-- closes #mainContent-->
-	</div> <!-- closes #mBody-->
+      <p>Si vous d&eacute;veloppez dans un environnement <a href=
+      "NetBeans.shtml">NetBeans 7.0</a> , il est possible
+      d'int&eacute;grer les retour d'information dans la machine
+      d'Int&eacute;gration Continue Jenkins (CI).</p>
+
+      <p>Dans l'environnement NetBeans, il est fait
+      r&eacute;f&eacute;rence la machine d'Int&eacute;gration
+      Continue Hudson - Jenkins est une <a href=
+      "http://en.wikipedia.org/wiki/Fork_(software_development)">"branche"</a>
+      du code Hudson et supporte le m&ecirc;me <a href=
+      "http://en.wikipedia.org/wiki/API">API</a>.</p>
+
+      <h3>Int&eacute;gration</h3>
+
+      <p>L'int&eacute;gration dans NetBeans s'ach&egrave;ve en
+      ex&eacute;cutant les &eacute;tapes suivantes:</p>
+
+      <ol>
+        <li>Ouvrir NetBeans</li>
+
+        <li>Basculer sur la fen&ecirc;tre "Services" (Raccourci
+        clavier "Ctrl+5")</li>
+
+        <li>Clic-Droit (Ctrl-clic sur Mac) sur l'entr&eacute;e
+        "Constructeurs Hudson" et choisir "Add Hudson Instance..."
+
+          <p><img src="images/NetBeansJenkinsAdd.png" width="342"
+          height="134" alt="Add Hudson Instance..."></p>
+        </li>
+
+        <li>Dans la r&eacute;sultat d&eacute;roulant,
+        compl&eacute;ter les rubriques suivantes:
+
+          <dl>
+            <dt>Name</dt>
+
+            <dd>JMRI</dd>
+
+            <dt>URL</dt>
+
+            <dd>http://builds.jmri.org/jenkins/</dd>
+
+            <dt>Auto refresh every X minutes</dt>
+
+            <dd>60 (changer la valeur de 5 par d&eacute;faut pour
+            &eacute;viter de surcharger le serveur CI)</dd>
+          </dl><img src="images/NetBeansJenkinsAddDialog.png"
+          width="453" height="240" alt=
+          "Add Hudson Instance dialog">
+        </li>
+      </ol>
+
+      <p>&agrave; partir de maintenant, l'&eacute;tat actuel des
+      constructions Jenkins peut &ecirc;tre examin&eacute; dans la
+      fen&ecirc;tre "Services" en &eacute;largissant
+      l'entr&eacute;e "JMRI" sous "Hudson Builders".</p>
+
+      <p><img src="images/NetBeansJenkinsOverview.png" width="342"
+      height="452" alt="Jenkins Overview"> 
+      <!--#include virtual="/Footer" --></p>
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>
-

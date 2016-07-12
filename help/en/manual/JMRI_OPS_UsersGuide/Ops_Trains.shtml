@@ -56,7 +56,7 @@
       <p><img style="width: 900px; height: 142px;" alt="train body"
       src="images/Ops_Trains_train.png"><br>
       <strong>Time or Id</strong> (depends upon <span style=
-      "font-weight: bold;">Show</span> option at bottom of window) 
+      "font-weight: bold;">Show</span> option at bottom of window)
       column shows the departure time of the train<br>
       <strong>Build</strong> column is checked to include in
       current build<br>

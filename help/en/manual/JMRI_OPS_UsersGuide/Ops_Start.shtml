@@ -111,9 +111,9 @@
 
       <p>The program will create a backup of your current
       configuration if you have one, and then load the demo files.
-      Restart JMRI to complete the demo load process.  To get rid
-      of the demo files, use the <strong>Restore</strong> function
-      in the <strong>Tools</strong> menu of the <strong>Operations
+      Restart JMRI to complete the demo load process. To get rid of
+      the demo files, use the <strong>Restore</strong> function in
+      the <strong>Tools</strong> menu of the <strong>Operations
       Settings</strong> to reload the first backup date, which is
       the blank entry form.</p>
 

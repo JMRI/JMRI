@@ -67,11 +67,13 @@
             <li><a href="#HandlingLogOutput">Handling Log4J Output
             From Tests</a></li>
 
-            <li><a href="#ResetInstMgr">Resetting the
-            InstanceManager</a></li>
-
             <li><a href="#RunningListeners">Running
             Listeners</a></li>
+
+            <li><a href="#threads">Working with Threads</a></li>
+
+            <li><a href="#ResetInstMgr">Resetting the
+            InstanceManager</a></li>
 
             <li><a href="#io">Testing I/O</a></li>
 

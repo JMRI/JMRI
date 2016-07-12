@@ -54,16 +54,16 @@
       Table to control your locomotive's speed. Use the tabs at the
       top of the screen to select the method you wish to use and
       then click the button in the top center for the page to
-      select that method of speed control.  Whichever one you
-      select last with the button will be the method used for speed
+      select that method of speed control. Whichever one you select
+      last with the button will be the method used for speed
       control.</p>
 
       <p>Now back to Basic Speed Control Pane. We see the
       <strong>Start Voltage(0-255)</strong> slider to set the start
       voltage. What appears in the body of this panel is dependent
-      on what is available from your decoder manufacturer.  Most
+      on what is available from your decoder manufacturer. Most
       have something similar to what is shown, but the Soundtraxx
-      Tsunami series is very limited.  We'll show you a way around
+      Tsunami series is very limited. We'll show you a way around
       this limitation when we get to the Speed Table screen.</p>
 
       <p>Three important CVs are programmed in this pane Vstart,

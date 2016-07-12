@@ -54,13 +54,13 @@
     sound decoders, and the <a href=
     "Comp_SoundLevels.shtml"><strong>Sound Levels Pane</strong></a>
     allows for setting the loudness levels of those sounds when
-    they play back. </p>
+    they play back.</p>
 
     <h1><img src="images/Comp_09_Sound.png" width="852" height=
     "503" alt="sound pane"></h1>
 
     <p>For specific function options, see your decoder
-    documentation and the programmer for the specific decoder. 
+    documentation and the programmer for the specific decoder.
     Sometimes (depending on the volunteer that wrote the decoder
     definition file) there are "tool tips" that appear if you hover
     over a selection entry box.</p>
