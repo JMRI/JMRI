@@ -14,7 +14,6 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -217,13 +216,14 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.SHOW_PROPERTY) {
-            log.debug("Property change ({}) for: ({}) old: {} new: {}",
+//        if (Control.SHOW_PROPERTY) {
+            log.debug("Property change ({}) for: ({}) old: {}, new: {}",
                     e.getPropertyName(), e.getSource().toString(),
                     e.getOldValue(), e.getNewValue());
-        }
+//        }
         if (e.getPropertyName().equals(Train.TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)) {
+                || e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)
+                || e.getPropertyName().equals(Train.TRAIN_MODIFIED_CHANGED_PROPERTY)) {
             clearAndUpdate();
         }
         if ((e.getPropertyName().equals(RollingStock.ROUTE_LOCATION_CHANGED_PROPERTY) && e.getNewValue() == null)
