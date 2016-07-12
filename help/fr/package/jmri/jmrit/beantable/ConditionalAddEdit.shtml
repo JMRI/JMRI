@@ -1,366 +1,678 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
 <!-- UpDated by Herv&#233; Blorec 2013-10-10-->
-<HTML LANG="fr">
-<HEAD>
-<TITLE>JMRI: Adding/Editing Logix Conditionals</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1"
-<META CONTENT="Bob Jacobsen" NAME="Author">
-<META NAME="keywords" CONTENT="JMRI help Logix Conditional Add Edit">
 
-<!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
-</HEAD>
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<BODY>
-<!--#include virtual="/Header" -->
+  <title>JMRI: Adding/Editing Logix Conditionals</title>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content=
+  "JMRI help Logix Conditional Add Edit"><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>Ajouter/Modifier Conditions Logix</h1>
 
-<H1> Ajouter/Modifier Conditions Logix </H1>
-<P>La fen&#234;tre Modifier Condition c'est o&#249; les expressions logiques sont &#233;labor&#233;es
-et o&#249; les actions sont sp&#233;cifi&#233;es. La fen&#234;tre Modifier Condition
-s'affiche quand un Condition est cr&#233;&#233;e, ou lorsque le bouton <B>&#233;dition</b>
-d'une Condition est press&#233; dans la
-<a href="LogixAddEdit.shtml"> fen&#234;tre Modifier Logix </a>. La fen&#234;tre "Modification
-Condition" affiche le nom syst&#232;me et nom utilisateur de la
-Condition au sommet. Le nom  syst&#232;me est automatiquement g&#233;r&#233; par le
-programme et ne peut pas &#234;tre chang&#233;. Le nom utilisateur peut &#234;tre &#233;dit&#233; par
-entrer/modifier le texte dans le champ Nom Utilisateur. Le nom d'utilisateur peut ne
-pas &#234;tre le m&#234;me que le nom utilisateur d'une autre Condition dans ce Logix,
-mais peut &#234;tre le m&#234;me que le nom utilisateur d'une Condition dans un autre
-Logix.</P>
-<P>A Suivre il y a deux sections - une pour l'installation d'une expression logique
-et une autre pour mettre en place des actions. Les Conditions sont des &#233;nonc&#233;s de la forme:</P>
-<UL>
-if (expression logique) then (action).
-</UL>
-Une Condition a deux parties distinctes: son "expression logique" et ses
-"Action". La fen&#234;tre a des sections s&#233;par&#233;es pour la mise en place de chacune.
-</P>
-<P> La section expression logique contient un tableau de l'&#233;tat des variables, avec deux boutons en dessous. La premi&#232;re
-colonne de l'&#233;tat des variables du tableau affiche le num&#233;ro de la ligne de la
-variable d'&#233;tat. Ce n'a que peu d'importance lorsque le choix de <b>l'Op&#233;rateur Logique</b>
- est mis &#224; "mixte". La deuxi&#232;me colonne contient un AND automatique lorsque le choix de
-<b>l'Op&#233;rateur Logique</b> est mis &#224; "AND" ou un OR automatique 
-lorsque le choix est "OR". Lorsque le choix est "mixte", l'utilisateur peut
-s&#233;lectionnez AND ou OR au besoin. La troisi&#232;me colonne contient une bo&#238;te de choix qui permet &#224; l'utilisateur de s&#233;lectionner l'op&#233;rateur NOT au besoin. La quatri&#232;me colonne est une description
-de la variable d'&#233;tat type et la condition pour laquelle elle doit &#234;tre test&#233;e. La suivante
-est une colonne affichant l'&#233;tat actuel de la description du test.
-L'&#233;tat affich&#233; inclut l'effet
-de l'op&#233;rateur NOT, si NOT est s&#233;lectionn&#233;.
-<P> La colonne  Calculs Triggers (D&#233;clencheurs) contient des cases &#224; cocher qui, normalement,
-sont v&#233;rifi&#233;es, de sorte qu'un changement dans la variable d'&#233;tat va d&#233;clencher un 
-calcul du Logix. Pour les rares cas o&#249; un changement dans un
-entit&#233; sp&#233;cifique (capteur, aiguillage, etc) ne devrait pas d&#233;clencher un
-r&#233;sultat du calcul, vous devez d&#233;cocher la case en cliquant dessus.
-D&#233;cocher la case indique au programme de surveiller cette entit&#233; pour les
-changements d'&#233;tat et de calculer l'&#233;tat de la condition, mais il ne prend pas
-action en fonction des r&#233;sultats.
-</P>
-<P> Les deux derni&#232;res colonnes du tableau (les boutons <b>Modifier</b> et <b>Supprimer</b>)
-sont utilis&#233;s pour modifier ou supprimer cette ligne dans la table de variable d'&#233;tat.
-supprimer une variable d'&#233;tat si vous d&#233;cidez qu'elle n'est plus n&#233;cessaire. La colonne &#233;tat
-du tableau montre l'&#233;tat (vrai ou faux) de chaque &#233;tat de la
-variable quand elle est &#233;valu&#233;e.
-</P>
-<p> Pour l'expression logique, et
-donc la Condition, pour calculer vrai, toutes les variables d'&#233;tat
-doivent &#233;valuer &#224; vrai.</P>
-<P> &#224; tout moment pendant l'entr&#233;e des donn&#233;es des variable d'&#233;tat, <B> V&#233;rifier
-Variables d'&#233;tat </B> peut &#234;tre cliqu&#233; pour v&#233;rifier les donn&#233;es saisies et d'&#233;valuer l'&#233;tat des variables. Lorsque ce bouton est enfonc&#233;, la v&#233;rification et l'&#233;valuation se produisent
-jusqu'&#224; ce que la v&#233;rifications se termine correctement, ou si une erreur est d&#233;tect&#233;e. Si une
-erreur est d&#233;tect&#233;e, la v&#233;rification s'arr&#234;te pour vous permettre de corriger l'erreur et cliquez sur
-<B> V&#233;rifiez Variables d'&#233;tat</B> &#224; nouveau.<i> S'il vous pla&#238;t rappelez vous apr&#232;s l'&#233;dition
-des &#233;l&#233;ments de donn&#233;es et du nom, cliquez sur une cellule diff&#233;rente dans la table avant de
-cliquer <B>V&#233;rifiez Variables d'&#233;tat</B> (ou <B>Mise &#224; Jour Conditions</B> au
-le bas de la fen&#234;tre) pour que le programme soit averti que vous avez
-termin&#233; votre saisie. Sinon votre entr&#233;e ne peut prendre effet, et une
-erreur peut &#234;tre signal&#233;e inutilement. </i> </P>
-<p>
-L'<b>Op&#233;rateur Logique</b> par d&#233;faut est "AND". Dans ce cas, la condition
-permettra de tester si tous les tests variables sont vraies, apr&#232;s la prise du
-"NON" n&#233;gations en compte.
-L'utilisation de la boite <b>Op&#233;rateur Logique </b> dessous la liste des variables, vous ne pouvez
-changer que de "OR" ou "mixtes". «OR» signifie que la Condition sera
-vrai si l'un des tests de variables sont vraies, apr&#232;s comptabilisation des n&#233;gations.
-S&#233;lection "mixtes" vous permettra de saisir une expression logique dans une nouvelle
-zone de texte &#224; l'aide de AND, OR et NOT et les num&#233;ros de ligne.
-Dans cette expression,
-chaque variable est mentionn&#233;e par un num&#233;ro, par exemple R1, R2, R3
-pour les trois premieres variables, vous pouvez utiliser les op&#233;rateurs "and", "or"
-et "not" en plus de parenth&#232;ses.
-Quelques exemples:
-<pre>
-    R1 and R2
-    R1 or (R2 et R3)
-    (R2 and R3) or (R3 and R1)
+      <p>La fen&ecirc;tre Modifier Condition c'est o&ugrave; les
+      expressions logiques sont &eacute;labor&eacute;es et
+      o&ugrave; les actions sont sp&eacute;cifi&eacute;es. La
+      fen&ecirc;tre Modifier Condition s'affiche quand un Condition
+      est cr&eacute;&eacute;e, ou lorsque le bouton
+      <b>&eacute;dition</b> d'une Condition est press&eacute; dans
+      la <a href="LogixAddEdit.shtml">fen&ecirc;tre Modifier
+      Logix</a> . La fen&ecirc;tre "Modification Condition" affiche
+      le nom syst&egrave;me et nom utilisateur de la Condition au
+      sommet. Le nom syst&egrave;me est automatiquement
+      g&eacute;r&eacute; par le programme et ne peut pas &ecirc;tre
+      chang&eacute;. Le nom utilisateur peut &ecirc;tre
+      &eacute;dit&eacute; par entrer/modifier le texte dans le
+      champ Nom Utilisateur. Le nom d'utilisateur peut ne pas
+      &ecirc;tre le m&ecirc;me que le nom utilisateur d'une autre
+      Condition dans ce Logix, mais peut &ecirc;tre le m&ecirc;me
+      que le nom utilisateur d'une Condition dans un autre
+      Logix.</p>
+
+      <p>A Suivre il y a deux sections - une pour l'installation
+      d'une expression logique et une autre pour mettre en place
+      des actions. Les Conditions sont des &eacute;nonc&eacute;s de
+      la forme:</p>
+
+      <div style="margin-left: 2em">
+        if (expression logique) then (action).
+      </div>Une Condition a deux parties distinctes: son
+      "expression logique" et ses "Action". La fen&ecirc;tre a des
+      sections s&eacute;par&eacute;es pour la mise en place de
+      chacune.
+
+      <p>La section expression logique contient un tableau de
+      l'&eacute;tat des variables, avec deux boutons en dessous. La
+      premi&egrave;re colonne de l'&eacute;tat des variables du
+      tableau affiche le num&eacute;ro de la ligne de la variable
+      d'&eacute;tat. Ce n'a que peu d'importance lorsque le choix
+      de <b>l'Op&eacute;rateur Logique</b> est mis &agrave;
+      "mixte". La deuxi&egrave;me colonne contient un AND
+      automatique lorsque le choix de <b>l'Op&eacute;rateur
+      Logique</b> est mis &agrave; "AND" ou un OR automatique
+      lorsque le choix est "OR". Lorsque le choix est "mixte",
+      l'utilisateur peut s&eacute;lectionnez AND ou OR au besoin.
+      La troisi&egrave;me colonne contient une bo&icirc;te de choix
+      qui permet &agrave; l'utilisateur de s&eacute;lectionner
+      l'op&eacute;rateur NOT au besoin. La quatri&egrave;me colonne
+      est une description de la variable d'&eacute;tat type et la
+      condition pour laquelle elle doit &ecirc;tre test&eacute;e.
+      La suivante est une colonne affichant l'&eacute;tat actuel de
+      la description du test. L'&eacute;tat affich&eacute; inclut
+      l'effet de l'op&eacute;rateur NOT, si NOT est
+      s&eacute;lectionn&eacute;.</p>
+
+      <p>La colonne Calculs Triggers (D&eacute;clencheurs) contient
+      des cases &agrave; cocher qui, normalement, sont
+      v&eacute;rifi&eacute;es, de sorte qu'un changement dans la
+      variable d'&eacute;tat va d&eacute;clencher un calcul du
+      Logix. Pour les rares cas o&ugrave; un changement dans un
+      entit&eacute; sp&eacute;cifique (capteur, aiguillage, etc) ne
+      devrait pas d&eacute;clencher un r&eacute;sultat du calcul,
+      vous devez d&eacute;cocher la case en cliquant dessus.
+      D&eacute;cocher la case indique au programme de surveiller
+      cette entit&eacute; pour les changements d'&eacute;tat et de
+      calculer l'&eacute;tat de la condition, mais il ne prend pas
+      action en fonction des r&eacute;sultats.</p>
+
+      <p>Les deux derni&egrave;res colonnes du tableau (les boutons
+      <b>Modifier</b> et <b>Supprimer</b>) sont utilis&eacute;s
+      pour modifier ou supprimer cette ligne dans la table de
+      variable d'&eacute;tat. supprimer une variable d'&eacute;tat
+      si vous d&eacute;cidez qu'elle n'est plus n&eacute;cessaire.
+      La colonne &eacute;tat du tableau montre l'&eacute;tat (vrai
+      ou faux) de chaque &eacute;tat de la variable quand elle est
+      &eacute;valu&eacute;e.</p>
+
+      <p>Pour l'expression logique, et donc la Condition, pour
+      calculer vrai, toutes les variables d'&eacute;tat doivent
+      &eacute;valuer &agrave; vrai.</p>
+
+      <p>&agrave; tout moment pendant l'entr&eacute;e des
+      donn&eacute;es des variable d'&eacute;tat, <b>V&eacute;rifier
+      Variables d'&eacute;tat</b> peut &ecirc;tre cliqu&eacute;
+      pour v&eacute;rifier les donn&eacute;es saisies et
+      d'&eacute;valuer l'&eacute;tat des variables. Lorsque ce
+      bouton est enfonc&eacute;, la v&eacute;rification et
+      l'&eacute;valuation se produisent jusqu'&agrave; ce que la
+      v&eacute;rifications se termine correctement, ou si une
+      erreur est d&eacute;tect&eacute;e. Si une erreur est
+      d&eacute;tect&eacute;e, la v&eacute;rification s'arr&ecirc;te
+      pour vous permettre de corriger l'erreur et cliquez sur
+      <b>V&eacute;rifiez Variables d'&eacute;tat</b> &agrave;
+      nouveau. <i>S'il vous pla&icirc;t rappelez vous apr&egrave;s
+      l'&eacute;dition des &eacute;l&eacute;ments de donn&eacute;es
+      et du nom, cliquez sur une cellule diff&eacute;rente dans la
+      table avant de cliquer <b>V&eacute;rifiez Variables
+      d'&eacute;tat</b> (ou <b>Mise &agrave; Jour Conditions</b> au
+      le bas de la fen&ecirc;tre) pour que le programme soit averti
+      que vous avez termin&eacute; votre saisie. Sinon votre
+      entr&eacute;e ne peut prendre effet, et une erreur peut
+      &ecirc;tre signal&eacute;e inutilement.</i></p>
+
+      <p>L'<b>Op&eacute;rateur Logique</b> par d&eacute;faut est
+      "AND". Dans ce cas, la condition permettra de tester si tous
+      les tests variables sont vraies, apr&egrave;s la prise du
+      "NON" n&eacute;gations en compte. L'utilisation de la boite
+      <b>Op&eacute;rateur Logique</b> dessous la liste des
+      variables, vous ne pouvez changer que de "OR" ou "mixtes".
+      &Acirc;&laquo;OR&Acirc;&raquo; signifie que la Condition sera
+      vrai si l'un des tests de variables sont vraies, apr&egrave;s
+      comptabilisation des n&eacute;gations. S&eacute;lection
+      "mixtes" vous permettra de saisir une expression logique dans
+      une nouvelle zone de texte &agrave; l'aide de AND, OR et NOT
+      et les num&eacute;ros de ligne. Dans cette expression, chaque
+      variable est mentionn&eacute;e par un num&eacute;ro, par
+      exemple R1, R2, R3 pour les trois premieres variables, vous
+      pouvez utiliser les op&eacute;rateurs "and", "or" et "not" en
+      plus de parenth&egrave;ses. Quelques exemples:</p>
+      <pre>
+&Acirc; &Acirc; &Acirc;  R1 and R2
+&Acirc; &Acirc; &Acirc;  R1 or (R2 et R3)
+&Acirc; &Acirc; &Acirc;  (R2 and R3) or (R3 and R1)
 </pre>
 
-<H2> Ajout d'une Nouvelle Variable d'&#233;tat</H2>
- <p>Pressez <b>Ajouter Variable d'&#233;tat </b> pour ajouter une
-variable d'&#233;tat (une ligne dans la table des variables d'&#233;tat). Cela affichera une
- fen&#234;tre avec une bo&#238;te de choix pour l'utilisateur pour s&#233;lectionner un type de variable d'&#233;tat.
- Les variables d'&#233;tat disponibles sont document&#233;es
-<a href="#variable"> ci-dessous</a>. Quand un type est choisie la  fen&#234;tre Modifier Variable
- affiche un champ de texte pour le nom de l'entit&#233; &#224; utiliser pour
- la variable d'&#233;tat.
-  Quand un nom (soit  nom syst&#232;me ou nom utilisateur) est entr&#233;, 
-il doit correspondre &#224; une entit&#233; existante (capteur, aiguillage,
- lumi&#232;re, etc.) Il est utile d'ouvrir le Tableau Capteur lors de l'entr&#233;e du nom du capteur
- ou le Tableau Aiguillage pour montrer les aiguillages disponibles, etc</p>
- <p><b>Attention :</b> Si vous utilisez des noms utilisateur pour sp&#233;cifier des variables d'&#233;tat soyez
-prudent lorsque vous &#233;ditez vos noms d'utilisateur ou vous pouvez casser vos d&#233;finitions de variable d'&#233;tat
-. Le nom utilisateur sp&#233;cifi&#233; doit correspondre, caract&#232;re pour caract&#232;re,
-blancs, y compris, au nom 'utilisateur r&#233;el du capteur, aiguillage, etc, pour que
-vos variables d'&#233;tat  travaillent. Si vous voulez &#234;tre en mesure d'&#233;diter librement vos
-noms utilisateur, utilisez le nom  syst&#232;me pour d&#233;finir vos variables d'&#233;tat.</p>
-<p> A tout moment pendant l'entr&#233;e
-des donn&#233;es des variables d'&#233;tat, le bouton <b>V&#233;rifier Variable d'&#233;tat</b> peut &#234;tre
-cliqu&#233; pour v&#233;rifier les donn&#233;es saisies et &#233;valuer les variables d'&#233;tat. Lorsque
-ce bouton est enfonc&#233;, il produit un contr&#244;le et l'&#233;valuation proc&#232;det jusqu'&#224; se terminer
-  avec succ&#232;s, ou si une erreur est d&#233;tect&#233;e. Si une erreur est
-d&#233;tect&#233;e, la v&#233;rification s'arr&#234;te pour que l'utilisateur corrige l'erreur et clique sur
-<b>V&#233;rifier les Variables d'&#233;tat</b> &#224; nouveau. S'il vous pla&#238;t rappelez vous <i> apr&#232;s l'&#233;dition du
-nom  syst&#232;me et des donn&#233;es des &#233;l&#233;ments de cliquer sur une cellule diff&#233;rente dans la table avant de
-cliquer <b>V&#233;rifiez Variables d'&#233;tat</b> (ou <b>Mise &#224; Jour Conditions</b>
-au bas de la fen&#234;tre) pour que le programme soit averti que vous avez
-termin&#233; votre saisie. Sinon votre entr&#233;e ne peut prendre effet, et une erreur
-peuvent &#234;tre signal&#233;s inutilement.</i></p> 
+      <h2>Ajout d'une Nouvelle Variable d'&eacute;tat</h2>
 
+      <p>Pressez <b>Ajouter Variable d'&eacute;tat</b> pour ajouter
+      une variable d'&eacute;tat (une ligne dans la table des
+      variables d'&eacute;tat). Cela affichera une fen&ecirc;tre
+      avec une bo&icirc;te de choix pour l'utilisateur pour
+      s&eacute;lectionner un type de variable d'&eacute;tat. Les
+      variables d'&eacute;tat disponibles sont document&eacute;es
+      <a href="#variable">ci-dessous</a>. Quand un type est choisie
+      la fen&ecirc;tre Modifier Variable affiche un champ de texte
+      pour le nom de l'entit&eacute; &agrave; utiliser pour la
+      variable d'&eacute;tat. Quand un nom (soit nom syst&egrave;me
+      ou nom utilisateur) est entr&eacute;, il doit correspondre
+      &agrave; une entit&eacute; existante (capteur, aiguillage,
+      lumi&egrave;re, etc.) Il est utile d'ouvrir le Tableau
+      Capteur lors de l'entr&eacute;e du nom du capteur ou le
+      Tableau Aiguillage pour montrer les aiguillages disponibles,
+      etc</p>
 
-<H2> Ajouter une Nouvelle Action</H2>
+      <p><b>Attention :</b> Si vous utilisez des noms utilisateur
+      pour sp&eacute;cifier des variables d'&eacute;tat soyez
+      prudent lorsque vous &eacute;ditez vos noms d'utilisateur ou
+      vous pouvez casser vos d&eacute;finitions de variable
+      d'&eacute;tat . Le nom utilisateur sp&eacute;cifi&eacute;
+      doit correspondre, caract&egrave;re pour caract&egrave;re,
+      blancs, y compris, au nom 'utilisateur r&eacute;el du
+      capteur, aiguillage, etc, pour que vos variables
+      d'&eacute;tat travaillent. Si vous voulez &ecirc;tre en
+      mesure d'&eacute;diter librement vos noms utilisateur,
+      utilisez le nom syst&egrave;me pour d&eacute;finir vos
+      variables d'&eacute;tat.</p>
 
-<P> La section action de la fen&#234;tre &#233;diter Condition pr&#233;voit les mesures sp&#233;cifiques qui doivent &#234;tre prises quand une Condition est calcul&#233;e.
+      <p>A tout moment pendant l'entr&eacute;e des donn&eacute;es
+      des variables d'&eacute;tat, le bouton <b>V&eacute;rifier
+      Variable d'&eacute;tat</b> peut &ecirc;tre cliqu&eacute; pour
+      v&eacute;rifier les donn&eacute;es saisies et &eacute;valuer
+      les variables d'&eacute;tat. Lorsque ce bouton est
+      enfonc&eacute;, il produit un contr&ocirc;le et
+      l'&eacute;valuation proc&egrave;det jusqu'&agrave; se
+      terminer avec succ&egrave;s, ou si une erreur est
+      d&eacute;tect&eacute;e. Si une erreur est
+      d&eacute;tect&eacute;e, la v&eacute;rification s'arr&ecirc;te
+      pour que l'utilisateur corrige l'erreur et clique sur
+      <b>V&eacute;rifier les Variables d'&eacute;tat</b> &agrave;
+      nouveau. S'il vous pla&icirc;t rappelez vous <i>apr&egrave;s
+      l'&eacute;dition du nom syst&egrave;me et des donn&eacute;es
+      des &eacute;l&eacute;ments de cliquer sur une cellule
+      diff&eacute;rente dans la table avant de cliquer
+      <b>V&eacute;rifiez Variables d'&eacute;tat</b> (ou <b>Mise
+      &agrave; Jour Conditions</b> au bas de la fen&ecirc;tre) pour
+      que le programme soit averti que vous avez termin&eacute;
+      votre saisie. Sinon votre entr&eacute;e ne peut prendre
+      effet, et une erreur peuvent &ecirc;tre signal&eacute;s
+      inutilement.</i></p>
 
-<P> Pour ajouter une nouvelle action, appuyez sur le bouton "Ajouter  Action". 
-Une nouvelle fen&#234;tre «&#233;dition Action"  appara&#238;tra.
-S&#233;lectionnez un type d'action dans les
-&#233;l&#233;ments de la zone Type, et les donn&#233;es n&#233;cessaires pour sp&#233;cifier compl&#232;tement l'action
-apparaissent &#224; la droite de la zone Type. Si vous ne savez pas ce qui doit &#234;tre
-entr&#233; dans un champ de donn&#233;es, placez votre curseur dessus, et un message 
-appara&#238;tra. Quand un nom doit &#234;tre inscrit, le nom doit correspondre &#224;
-un nom syst&#232;me ou un nom utilisateur d'une entit&#233; existante (capteur, aiguillage,
- signal, etc) du type appropri&#233;. L'ouverture du Tableau capteur lorsque
-la saisie des noms de capteur, ou du tableau aiguillages peut &#234;tre utiles pour voir les aiguillages disponibles,
-etc. Les Types d'actions disponibles sont d&#233;crits en d&#233;tail <a HREF= "# d'action"> ci-dessous</A>.</P>
-<P> Pour chaque action, trois options sont disponibles pour le moment pour d&#233;clencher des actions: 1) Le changement &#224; True (Vrai, 2) sur le changement &#224; False (Faux), et 3) sur
-Changement. Elles font r&#233;f&#233;rence &#224; l'&#233;tat calcul&#233; de la condition, qui est
-&#233;gale &#224; la valeur de l'expression logique tel que sp&#233;cifi&#233;e dans le
-tableau des variables d'&#233;tat. Une de ces options doit &#234;tre s&#233;lectionn&#233;e. Lorsque vous avez termin&#233;, cliquez sur
-"Mettre &#224; jour" pour installer vos modifications,
-"Annuler" pour fermer la fen&#234;tre sans aucune modification
-ou "Supprimer" pour supprimer l'action enti&#232;rement.</P>
+      <h2>Ajouter une Nouvelle Action</h2>
 
-<p>Les  Actions sont &#233;valu&#233;es dans l'ordre indiqu&#233;. Pour changer cet ordre,
-cliquez sur le bouton  "R&#233;organiser" sur la fen&#234;tre "&#233;diter condition". Les boutons les plus &#224; droite
- par les actions pourront ensuite vous permettent de s&#233;lectionner la premi&#232;re, la suivante, etc
+      <p>La section action de la fen&ecirc;tre &eacute;diter
+      Condition pr&eacute;voit les mesures sp&eacute;cifiques qui
+      doivent &ecirc;tre prises quand une Condition est
+      calcul&eacute;e.</p>
 
-<P> Lorsque l'expression logique et les actions ont &#233;t&#233; sp&#233;cifi&#233;es,
-cliquez <b>Mise &#224; Jour Condition</B> au bas de la fen&#234;tre. Ceci
-initie une v&#233;rification de l'expression logique (le m&#234;me que celui effectu&#233; par <b>V&#233;rifier Variables d'&#233;tat</B>) et une v&#233;rification des donn&#233;es saisies pour les actions. Si 
-le nom utilisateur a &#233;t&#233; &#233;dit&#233;, il est &#233;galement v&#233;rifi&#233;. Si une erreur est trouv&#233;e, une
-bo&#238;te de message s'ouvre annon&#231;ant l'erreur, et la mise &#224; jour est arr&#234;t&#233; pour
-vous permettre de corriger l'erreur et cliquez sur <b>Mise &#224; Jour Conditions</B>
-&#224; nouveau. Si aucune erreur n'est trouv&#233;e, l'action est mis &#224; jour avec l'entr&#233;e des donn&#233;es, la fen&#234;tre Modifier Condition est ferm&#233;e, et l'utilisateur est retourn&#233; &#224;
-la fen&#234;tre Modifier Logix.</P>
-<P> Deux autres boutons sont disponibles au bas de la fen&#234;tre &#233;dition Condition. En cliquant sur <b>Annuler</B> vous fermez la fen&#234;tre &#233;dition Condition sans mise &#224; jour de la Condition. En cliquant <b>Annuler</B> vous perdrez  toutes les donn&#233;e qui ont &#233;t&#233; entr&#233;es. L'autre bouton, <b>Supprimer
-Condition</B>, fournit un moyen facile de supprimer une Condition inutile.
-Cliquez <b>Supprimer Conditions </B> pour supprimer le Condition en cours de Modification
-et revenir &#224; la fen&#234;tre Modifier Logix.</P>
+      <p>Pour ajouter une nouvelle action, appuyez sur le bouton
+      "Ajouter Action". Une nouvelle fen&ecirc;tre
+      &Acirc;&laquo;&eacute;dition Action" appara&icirc;tra.
+      S&eacute;lectionnez un type d'action dans les
+      &eacute;l&eacute;ments de la zone Type, et les donn&eacute;es
+      n&eacute;cessaires pour sp&eacute;cifier compl&egrave;tement
+      l'action apparaissent &agrave; la droite de la zone Type. Si
+      vous ne savez pas ce qui doit &ecirc;tre entr&eacute; dans un
+      champ de donn&eacute;es, placez votre curseur dessus, et un
+      message appara&icirc;tra. Quand un nom doit &ecirc;tre
+      inscrit, le nom doit correspondre &agrave; un nom
+      syst&egrave;me ou un nom utilisateur d'une entit&eacute;
+      existante (capteur, aiguillage, signal, etc) du type
+      appropri&eacute;. L'ouverture du Tableau capteur lorsque la
+      saisie des noms de capteur, ou du tableau aiguillages peut
+      &ecirc;tre utiles pour voir les aiguillages disponibles, etc.
+      Les Types d'actions disponibles sont d&eacute;crits en
+      d&eacute;tail <a href="#%20d'action">ci-dessous</a>.</p>
 
-<P> Les variables d'&#233;tat Disponibles et les actions sont list&#233;es ci-dessous. Pour de plus amples
-d'informations, consultez la documentation Logix sur la page web JMRI
-http://jmri.org/.</P>
+      <p>Pour chaque action, trois options sont disponibles pour le
+      moment pour d&eacute;clencher des actions: 1) Le changement
+      &agrave; True (Vrai, 2) sur le changement &agrave; False
+      (Faux), et 3) sur Changement. Elles font
+      r&eacute;f&eacute;rence &agrave; l'&eacute;tat calcul&eacute;
+      de la condition, qui est &eacute;gale &agrave; la valeur de
+      l'expression logique tel que sp&eacute;cifi&eacute;e dans le
+      tableau des variables d'&eacute;tat. Une de ces options doit
+      &ecirc;tre s&eacute;lectionn&eacute;e. Lorsque vous avez
+      termin&eacute;, cliquez sur "Mettre &agrave; jour" pour
+      installer vos modifications, "Annuler" pour fermer la
+      fen&ecirc;tre sans aucune modification ou "Supprimer" pour
+      supprimer l'action enti&egrave;rement.</p>
 
-<DT CLASS="left"><A NAME="variable">
-<H2> Variables d'&#233;tat Disponibles</H2>
-<dt>
+      <p>Les Actions sont &eacute;valu&eacute;es dans l'ordre
+      indiqu&eacute;. Pour changer cet ordre, cliquez sur le bouton
+      "R&eacute;organiser" sur la fen&ecirc;tre "&eacute;diter
+      condition". Les boutons les plus &agrave; droite par les
+      actions pourront ensuite vous permettent de
+      s&eacute;lectionner la premi&egrave;re, la suivante, etc</p>
 
+      <p>Lorsque l'expression logique et les actions ont
+      &eacute;t&eacute; sp&eacute;cifi&eacute;es, cliquez <b>Mise
+      &agrave; Jour Condition</b> au bas de la fen&ecirc;tre. Ceci
+      initie une v&eacute;rification de l'expression logique (le
+      m&ecirc;me que celui effectu&eacute; par <b>V&eacute;rifier
+      Variables d'&eacute;tat</b>) et une v&eacute;rification des
+      donn&eacute;es saisies pour les actions. Si le nom
+      utilisateur a &eacute;t&eacute; &eacute;dit&eacute;, il est
+      &eacute;galement v&eacute;rifi&eacute;. Si une erreur est
+      trouv&eacute;e, une bo&icirc;te de message s'ouvre
+      annon&ccedil;ant l'erreur, et la mise &agrave; jour est
+      arr&ecirc;t&eacute; pour vous permettre de corriger l'erreur
+      et cliquez sur <b>Mise &agrave; Jour Conditions</b> &agrave;
+      nouveau. Si aucune erreur n'est trouv&eacute;e, l'action est
+      mis &agrave; jour avec l'entr&eacute;e des donn&eacute;es, la
+      fen&ecirc;tre Modifier Condition est ferm&eacute;e, et
+      l'utilisateur est retourn&eacute; &agrave; la fen&ecirc;tre
+      Modifier Logix.</p>
 
-<P>Les variables d'&#233;tat  qui sont actuellement disponibles pour une utilisation dans les
-Conditions sont &#233;num&#233;r&#233;es ci-dessous, ainsi que des informations sur chacune. Les
-variables d'&#233;tat doivent toujours &#234;tre &#233;valuer soit true ou false. La condition
-r&#233;sultant en true est donn&#233;e pour chacune. Si la condition n'est pas remplie, le
-variable d'&#233;tat est &#233;valu&#233;e &#224; false. Quand un Logix est actif, les &#233;tats des
-entit&#233;s (capteur, aiguillage, lumi&#232;re, etc) sp&#233;cifi&#233;s dans les variables d'&#233;tat de
-ses Conditions  sont surveill&#233;s, sauf si la case Calcul D&#233;clencheurs
-de la variable d'&#233;tat n'est pas coch&#233;e. Un calcul de toutes les conditions avec
-Logix est d&#233;clench&#233; lorsqu'un changement d'&#233;tat surveill&#233; comme indiqu&#233; ci-dessous
-(S'il n'est pas &#233;vident).</p>
-<UL>
-<LI>  <b>Capteur Active</b>: true si l'&#233;tat du
-capteur sp&#233;cifi&#233; est actif.</LI>
-<LI>  <b>Capteur Inactive</b>: true si l'&#233;tat du
-capteur sp&#233;cifi&#233; est inactif.</LI>
-<LI>  <b>Aiguillage D&#233;vi&#233;</b>: true si l'&#233;tat connu de
-l'aiguillage sp&#233;cifi&#233; est d&#233;vi&#233;.</LI>
-<LI>  <b>Aiguillage Droit</b>: true si l'&#233;tat connu de
-l'aiguillage indiqu&#233; est direct.</LI>
-<LI>  <b>Condition Vrai</b>: true si l'&#233;tat de la
-Condition sp&#233;cifi&#233;e est vraie.</LI>
-<LI>  <b>Condition fausse</b>: true si l'&#233;tat de
-le Conditionsp&#233;cifi&#233; est faux.</LI>
-<LI>  <b>Lumi&#232;re On</b>: true si la lumi&#232;re sp&#233;cifi&#233;e est allum&#233;e.</LI>
-<LI>  <b>Lumi&#232;re Off</b>: true si la lumi&#232;re sp&#233;cifi&#233;e est &#233;teinte.</LI>
-<LI>  <b>M&#233;moire Egale</b>: true si la valeur enregistr&#233;e dans
-la m&#233;moire sp&#233;cifi&#233;e est la m&#234;me que la valeur sp&#233;cifi&#233;e dans la variable d'&#233;tat
-. Le calcul est d&#233;clench&#233;e lorsque la valeur de m&#233;moire surveill&#233;e change de ou vers la valeur sp&#233;cifi&#233;e.</LI>
-<LI>  <b>Intervalle Horloge Rapide</b>: true si le temps Horloge rapide en cours
-est entre l'heure de d&#233;but et de fin sp&#233;cifi&#233;es pour le
-gamme. Les heures doivent &#234;tre sp&#233;cifi&#233;es dans le format hh: mm, o&#249; hh est heures et
-mm est minutes, par rapport &#224; une horloge de 24 heures. Le calcul est d&#233;clench&#233;
-lorsque le temps d'horloge rapide entre dans la plage et quand le temps d'horloge rapide
-sort de la gamme.</LI>
-<LI>  <b>Signal Rouge</b>: true si l'apparition du
- signal sp&#233;cifi&#233; est rouge. Le calcul est d&#233;clench&#233; lorsque 
- rouge.</LI>
-<LI>  <b>Signal Jaune</b>: true si l'apparition du signal sp&#233;cifi&#233; est jaune. Le calcul est d&#233;clench&#233;e lorsque  l'apparence change du ou vers le jaune.</li>
-<LI>  <b>Signal Vert.</b>: true si l'apparition du signal sp&#233;cifi&#233; est vert. Le calcul est d&#233;clench&#233; lorsque  l'apparence change du ou vers le vert.</li>
-<LI> <b> Signal  Eteint</b>: true si l'apparition du signal est sombre. Le calcul est d&#233;clench&#233; lorsque l'apparence
-change de ou vers l'obscurit&#233;.</li>
-<LI>  <b>Signal Clignotant Rouge</b>: true si l'
-l'apparence du signal sp&#233;cifi&#233; est rouge clignotant. Le calcul est
-d&#233;clench&#233; lorsque l'apparence change de ou vers clignotement rouge.</li>
-<LI>  <b>Signal Clignotant Jaune</b>: true si l'
-l'apparence du signal sp&#233;cifi&#233; est jaune clignotant. Le calcul
-est d&#233;clench&#233; lorsque l 'apparence change de ou vers jaune clignotant.</li>
-<LI>  <b>Signal Clignotant Vert</b>: true si l'
-l'apparence due signal sp&#233;cifi&#233; est vert clignotant. Le calcul
-est d&#233;clench&#233; lorsque l'apparence change de ou vers vert clignotant.</li>
-<LI>  <b>Signal Allum&#233;</b>: true si le signal sp&#233;cifi&#233;  est allum&#233;.</li>
-<LI>  <b>Signal Maintenu</b>: true si le signal sp&#233;cifi&#233; maintenu
-.</li>
-</UL>
-<P></P>
+      <p>Deux autres boutons sont disponibles au bas de la
+      fen&ecirc;tre &eacute;dition Condition. En cliquant sur
+      <b>Annuler</b> vous fermez la fen&ecirc;tre &eacute;dition
+      Condition sans mise &agrave; jour de la Condition. En
+      cliquant <b>Annuler</b> vous perdrez toutes les donn&eacute;e
+      qui ont &eacute;t&eacute; entr&eacute;es. L'autre bouton,
+      <b>Supprimer Condition</b>, fournit un moyen facile de
+      supprimer une Condition inutile. Cliquez <b>Supprimer
+      Conditions</b> pour supprimer le Condition en cours de
+      Modification et revenir &agrave; la fen&ecirc;tre Modifier
+      Logix.</p>
 
-<DT CLASS="left"><A NAME="action">
-<H2> Actions Disponibles</H2>
-</A></dt>
+      <p>Les variables d'&eacute;tat Disponibles et les actions
+      sont list&eacute;es ci-dessous. Pour de plus amples
+      d'informations, consultez la documentation Logix sur la page
+      web JMRI http://jmri.org/.</p>
 
-<P>Les Actions  qui sont actuellement disponibles pour une utilisation dans les Conditions sont
-&#233;num&#233;r&#233;s ci-dessous avec des informations sur chacune d'elles:</P>
-<UL>
-<LI>  <b>D&#233;finir Aiguillage</B>: D&#233;finit l'aiguillage indiqu&#233; avec l'&#233;tat choisi.
- Sp&#233;cifiez l’aiguillage en entrant son nom. Sp&#233;cifiez l'&#233;tat 
- en choisissant Closed ou Thrown  dans le menu contextuel.</LI>
-<LI>  <b>D&#233;finir Apparence Signal</B>: D&#233;finit le signal sp&#233;cifi&#233;
-avec l'apparence choisie. Pr&#233;cisez le signal &#224; D&#233;finir en entrant
-son nom. Sp&#233;cifier l'apparence  en choisissant dans le menu contextuel
-.</LI>
-<LI>  <b>D&#233;finir Signal Maintenu</B>: D&#233;finit le signal sp&#233;cifi&#233; &#224; Maintenir
-. Pr&#233;cisez le signal &#224; tenir en entrant son nom.</LI>
-<LI>  <b>Effacer Signal Maintenu</B>: Efface le maintient sur le signal pr&#233;cis&#233;. Pr&#233;cisez le signal en entrant son nom.</LI>
-<LI>  <b>D&#233;finir Signal Eteint</B>: D&#233;finit le signal sp&#233;cifi&#233; &#224; ne pas
-allum&#233;. Pr&#233;cisez le signal en entrant son nom.</LI>
-<LI>  <b>D&#233;finirt Signal allum&#233;</B>: D&#233;finit la t&#234;te signal sp&#233;cifi&#233; et reste allum&#233;.
-Pr&#233;cisez la t&#234;te du signal en entrant son nom.</LI>
-<LI> <b>D&#233;clencheur Itin&#233;raire</B>: Les d&#233;clencheurs de l'itin&#233;raire indiqu&#233;. Pr&#233;cisez
-l'itin&#233;raire en entrant son nom.</LI>
-<LI>  <b>D&#233;finir Capteur</B>: D&#233;finit le capteur sp&#233;cifi&#233; dans l'&#233;tat choisi
-. Sp&#233;cifiez le capteur en entrant son nom. Sp&#233;cifiez l'
-&#233;tat en choisissant actif ou inactif dans le menu contextuel.</LI>
-<LI>  <b>D&#233;finir Capteur Temporis&#233;</B>: D&#233;finit le capteur sp&#233;cifi&#233; pour l'&#233;tat 
-choisie apr&#232;s attente d'un certain nombre de secondes sp&#233;cifi&#233;es. Pr&#233;cisez
-le capteur en entrant son nom. Sp&#233;cifier l'&#233;tat en choisissant
-actif ou inactif dans le menu contextuel. Indiquez le nombre de
-secondes &#224; attendre avant de fixer les capteurs en entrant un nombre dans le champ le
-plus &#224; droite. Si cette condition est d&#233;j&#224; en attente pour d&#233;finir ce
-capteur, cette action est ignor&#233;e, et l'action pr&#233;c&#233;dente se poursuit comme
-initialement pr&#233;vue. (voir aussi  <b>R&#233;initialisation du Capteur Temporis&#233;</b> ci-dessous.)</li>
-<LI>  <b>D&#233;finir Lumi&#232;re</B>: D&#233;finit la lumi&#232;re pr&#233;cis&#233; dans l'&#233;tat choisi
-. Pr&#233;cisez la lumi&#232;re en entrant son nom. Sp&#233;cifier l'&#233;tat
-&#224; mettre en choisissant On ou Off dans le menu contextuel.</LI>
-<LI> <b>D&#233;finir M&#233;moire </B>: D&#233;finit la m&#233;moire sp&#233;cifi&#233;e pour entrer une 
-valeur. Pr&#233;cisez la m&#233;moire  en entrant son nom. Sp&#233;cifiez la
-valeur &#224; d&#233;finir dans la m&#233;moire en l'inscrivant dans le champ le plus &#224; droite.</LI>
-<LI>  <b>Active Logix</B>: Active le logix sp&#233;cifi&#233;. Sp&#233;cifiez le
-Logix &#224; activer en entrant son nom.</LI>
-<LI>  <b>D&#233;sactive Logix</B>: d&#233;sactive le logix sp&#233;cifi&#233;. Pr&#233;cisez
-le Logix &#224; d&#233;sactiver en entrant son nom.</LI>
-<LI><b>Jouer un Fichier Son</B>: lit le fichier son sp&#233;cifi&#233;.
-Sp&#233;cifiez le fichier son &#224; jouer en entrant son nom dans le champ
-fournis. Cliquez  <b>D&#233;finir</B> pour faire appara&#238;tre une bo&#238;te de dialogue de s&#233;lection de fichier d'aide
-pour trouver le fichier. Acc&#233;dez &#224; votre fichier audio, puis cliquez sur votre
-nom de fichier son dans la bo&#238;te de dialogue pour le copier (y compris son chemin) dans le champ.
-</LI>
- <LI>  <b>Ex&#233;cuter Script</B>: D&#233;marre le script sp&#233;cifi&#233;. Sp&#233;cifiez le
-script &#224; d&#233;marrer en entrant son nom dans le champ pr&#233;vu. Cliquez <b>D&#233;finir</B>
-pour faire appara&#238;tre une bo&#238;te de dialogue de s&#233;lection de fichiers pour trouver le fichier. Acc&#233;dez &#224;
-votre fichier de script, puis cliquez sur le nom de votre fichier de script dans la bo&#238;te de dialogue pour
-copier (y compris son chemin) le champ.</LI>
-	<LI>  <b>D&#233;finir Aiguillage Temporis&#233;</B>: D&#233;finit l'aiguillage indiqu&#233; &#224; l'&#233;tat
-choisi apr&#232;s attente d'un certain nombre de secondes sp&#233;cifi&#233;es. Pr&#233;cisez
-l'aiguillage concern&#233; en entrant son nom. Sp&#233;cifier l'&#233;tat &#224; fixer par
-le choix Closed ou Thrown dans le menu contextuel. Indiquez le nombre de
-secondes &#224; attendre avant de fixer l'aiguillage en entrant un nombre dans le champ le
-plus &#224; droite. Si cette condition est d&#233;j&#224; en attente pour d&#233;finir cet
-aiguillage, cette action est ignor&#233;e, et l'action pr&#233;c&#233;dente se poursuit comme
-initialement pr&#233;vue. (voir aussi  <b>R&#233;initialiser Aiguillage Temporis&#233;</b> ci-dessous.)</li>
-<LI>  <b>Verrouillage Aiguillage</B>: Verrouille ou d&#233;verrouille un aiguillage. Entrez le
-nom de l'aiguillage, et de choisir l'op&#233;ration &#224; partir du menu contextuel.
-Remarque, pour contr&#244;ler le type d'aiguillage &#224; verrouiller aller &#224; la <A
-HREF = "TurnoutTable.shtml"> Table Aiguillage</A> et s&#233;lectionnez le mode de verrouillage.</LI>
-<LI>  <b>D&#233;finir Capteur R&#233;armement retard&#233; </B>: D&#233;finit le capteur sp&#233;cifi&#233; dans l'&#233;tat 
-choisi apr&#232;s d'attente d'un certain nombre de secondes sp&#233;cifi&#233;es. Pr&#233;cisez
-le capteur concern&#233; en entrant son nom. Sp&#233;cifier l'&#233;tat &#224; fixer par le
-choix  de actif ou inactif dans le menu contextuel. Indiquez le nombre de
-secondes &#224; attendre avant de fixer les capteurs en entrant un nombre dans le champ le
-plus &#224; droite sur le terrain. Cette action est la m&#234;me que <b>Delayed Set Sensor</b>,
-sauf si cette condition est d&#233;j&#224; activement en attente pour D&#233;finir
-de capteur sp&#233;cifi&#233;, l'attente pr&#233;c&#233;dente est annul&#233;e, et une nouvelle p&#233;riode d'attente est d&#233;marr&#233;e.
-En effet, le temps d'attente est red&#233;marr&#233;. Le capteur n'est pas activ&#233; jusqu'&#224; ce que la
-p&#233;riode d'attente la plus r&#233;cente expire.</LI>
-<LI>  <b>Annulez Temporisations Capteur</B>: Annule toutes les minuteries d'attente pour D&#233;finir le capteur
-sp&#233;cifi&#233; dans tous les Conditions  dans tous Logixs. Sp&#233;cifiez le capteur en
-entrant son nom. Le capteur n'est pas d&#233;fini; toutes les actions actives retard&#233;e pour des
-R&#233;glage du capteur sp&#233;cifi&#233; sont annul&#233;s sans r&#233;glage du capteur.</LI>
-<LI>  <b>D&#233;finir Aiguillage R&#233;armement Retard&#233;</B>: D&#233;finit l'aiguillage indiqu&#233; &#224; l'&#233;tat
-choisie apr&#232;s attente d'un certain nombre de secondes sp&#233;cifi&#233;es. Pr&#233;cisez
-l'aiguillage concern&#233; en entrant son nom. Sp&#233;cifier l'&#233;tat &#224; fixer par
- le choix Droit ou D&#233;vi&#233; dans le menu contextuel. Indiquez le nombre de
-secondes &#224; attendre avant de fixer l'aiguillage en entrant un nombre dans le champ le
-plus &#224; droite. Cette action est la m&#234;me que <b>D&#233;finir Aiguillage Temporis&#233;</b>,
-sauf si cette Condition est d&#233;j&#224; activement en attente pour D&#233;finir l'aiguillage sp&#233;cifi&#233;e, l'attente pr&#233;c&#233;dente est annul&#233;e, et une nouvelle p&#233;riode d'attente est d&#233;marr&#233;e.
-En effet, le temps d'attente est red&#233;marr&#233;. L'Aiguillage n'est pas activ&#233; jusqu'&#224; ce que la
-p&#233;riode d'attente la plus r&#233;cente expire.</LI>
-<LI>  <b>Annuler Temporisations Aiguillage</B>:  Annule toutes les minuteries d'attente pour D&#233;finir l'
-aiguillage sp&#233;cifi&#233; dans toutes les Conditions avec tous les Logixs. Sp&#233;cifiez l'aiguillage en
-entrant son nom. L'aiguillage n'est pas d&#233;fini; toutes les actions actives retard&#233;e pour D&#233;finir
-les aiguillages sp&#233;cifi&#233;es sont annul&#233;es sans r&#233;glage de l'aiguillage.</LI>
-<LI>  <b>D&#233;finir Heure Horloge Rapide</B>: D&#233;finit l'heure sur l'horloge rapide. L'heure est entr&#233; comme <i> hh: mm</i> o&#249; <i> hh</i> est des heures et des <i> mn</i>  minutes sur une horloge de 24 heures. Cette action d&#233;finit l'horloge rapide &#224; l'heure sp&#233;cifi&#233;e ind&#233;pendamment du fait que l'horloge rapide fonctionne ou est arr&#234;t&#233;e.</LI>
-<LI>  <b>D&#233;marrage Horloge Rapide</B>: D&#233;marre le horloge rapide JMRI. Si l'horloge fonctionne d&#233;j&#224;
- , cette action n'a aucun effet.</LI>
-<LI> <b>Arr&#234;t Horloge Rapide</B>: Suspend l'horloge rapide JMRI. Si l'Horloge
- ne fonctionne pas, cette action n'a aucun effet.</LI>
- <LI><b>Copier M&#233;moire dans M&#233;moire</B>: Copie la valeur d'une variable de m&#233;moire pour
-une autre variable  m&#233;moire. Pr&#233;cisez la m&#233;moire &#224; copier en entrant son
-nom dans le champ gauche. Pr&#233;cisez la m&#233;moirereczevant la valeur copi&#233;e en
-entrant son nom dans le champ &#224; droite.</LI>
-<LI>  <b>D&#233;finir Intensit&#233; Lumi&#232;re</B>: D&#233;finit l'intensit&#233; de la variable lumineuse sp&#233;cifi&#233;e &#224; la valeur de l'intensit&#233; entr&#233;. Pr&#233;cisez la lumi&#232;re concern&#233;e en
-entrant son nom. Pr&#233;ciser l'intensit&#233; en entrant l'intensit&#233; en pourcentage
-comme un nombre entier dans la gamme 0 &#224; 100. Si la lumi&#232;re sp&#233;cifi&#233; n'est pas une
-variable de la lumi&#232;re, ou si la valeur d'intensit&#233; entr&#233; n'est pas un entier dans la
- gamme requise, un message d'erreur est affich&#233;.</LI>
+      <dl>
+        <dd>
+          <h2><a name="variable" id="variable">Variables
+          d'&eacute;tat Disponibles</a></h2>
+        </dd>
 
-	<LI> <B> D&#233;finir la Dur&#233;e de Variation de la Lumi&#232;re </B>: D&#233;finit le temps de transition d'un
-d'intensit&#233; lumineuse variable sp&#233;cifi&#233;e  &#224; l'heure indiqu&#233;e. Pr&#233;cisez la lumi&#232;re
-concern&#233;e en entrant son nom. Sp&#233;cifiez le temps de transition en entrant le
-nombre de minutes d'horloge rapide n&#233;cessaire pour passer de 0% d'intensit&#233; &#224; 100%
-intensit&#233;. Si la lumi&#232;re sp&#233;cifi&#233;e n'est pas une variable de la lumi&#232;re, ou si un effet positif
-entier n'est pas entr&#233; pour le nombre de minutes d'horloge rapide, un
- message d'erreur en r&#233;sultera</LI>
-</UL>
-<P></P>
+        <dt><a name="variable" id="variable"><br>
+        Les variables d'&eacute;tat qui sont actuellement
+        disponibles pour une utilisation dans les Conditions sont
+        &eacute;num&eacute;r&eacute;es ci-dessous, ainsi que des
+        informations sur chacune. Les variables d'&eacute;tat
+        doivent toujours &ecirc;tre &eacute;valuer soit true ou
+        false. La condition r&eacute;sultant en true est
+        donn&eacute;e pour chacune. Si la condition n'est pas
+        remplie, le variable d'&eacute;tat est
+        &eacute;valu&eacute;e &agrave; false. Quand un Logix est
+        actif, les &eacute;tats des entit&eacute;s (capteur,
+        aiguillage, lumi&egrave;re, etc) sp&eacute;cifi&eacute;s
+        dans les variables d'&eacute;tat de ses Conditions sont
+        surveill&eacute;s, sauf si la case Calcul
+        D&eacute;clencheurs de la variable d'&eacute;tat n'est pas
+        coch&eacute;e. Un calcul de toutes les conditions avec
+        Logix est d&eacute;clench&eacute; lorsqu'un changement
+        d'&eacute;tat surveill&eacute; comme indiqu&eacute;
+        ci-dessous (S'il n'est pas &eacute;vident).<br>
+        <br></a></dt>
 
-<!--#include virtual="/Footer" -->
-</BODY>
-</HTML>
+        <dd>
+          <ul>
+            <li><b>Capteur Active</b>: true si l'&eacute;tat du
+            capteur sp&eacute;cifi&eacute; est actif.</li>
 
+            <li><b>Capteur Inactive</b>: true si l'&eacute;tat du
+            capteur sp&eacute;cifi&eacute; est inactif.</li>
+
+            <li><b>Aiguillage D&eacute;vi&eacute;</b>: true si
+            l'&eacute;tat connu de l'aiguillage
+            sp&eacute;cifi&eacute; est d&eacute;vi&eacute;.</li>
+
+            <li><b>Aiguillage Droit</b>: true si l'&eacute;tat
+            connu de l'aiguillage indiqu&eacute; est direct.</li>
+
+            <li><b>Condition Vrai</b>: true si l'&eacute;tat de la
+            Condition sp&eacute;cifi&eacute;e est vraie.</li>
+
+            <li><b>Condition fausse</b>: true si l'&eacute;tat de
+            le Conditionsp&eacute;cifi&eacute; est faux.</li>
+
+            <li><b>Lumi&egrave;re On</b>: true si la lumi&egrave;re
+            sp&eacute;cifi&eacute;e est allum&eacute;e.</li>
+
+            <li><b>Lumi&egrave;re Off</b>: true si la
+            lumi&egrave;re sp&eacute;cifi&eacute;e est
+            &eacute;teinte.</li>
+
+            <li><b>M&eacute;moire Egale</b>: true si la valeur
+            enregistr&eacute;e dans la m&eacute;moire
+            sp&eacute;cifi&eacute;e est la m&ecirc;me que la valeur
+            sp&eacute;cifi&eacute;e dans la variable d'&eacute;tat
+            . Le calcul est d&eacute;clench&eacute;e lorsque la
+            valeur de m&eacute;moire surveill&eacute;e change de ou
+            vers la valeur sp&eacute;cifi&eacute;e.</li>
+
+            <li><b>Intervalle Horloge Rapide</b>: true si le temps
+            Horloge rapide en cours est entre l'heure de
+            d&eacute;but et de fin sp&eacute;cifi&eacute;es pour le
+            gamme. Les heures doivent &ecirc;tre
+            sp&eacute;cifi&eacute;es dans le format hh: mm,
+            o&ugrave; hh est heures et mm est minutes, par rapport
+            &agrave; une horloge de 24 heures. Le calcul est
+            d&eacute;clench&eacute; lorsque le temps d'horloge
+            rapide entre dans la plage et quand le temps d'horloge
+            rapide sort de la gamme.</li>
+
+            <li><b>Signal Rouge</b>: true si l'apparition du signal
+            sp&eacute;cifi&eacute; est rouge. Le calcul est
+            d&eacute;clench&eacute; lorsque rouge.</li>
+
+            <li><b>Signal Jaune</b>: true si l'apparition du signal
+            sp&eacute;cifi&eacute; est jaune. Le calcul est
+            d&eacute;clench&eacute;e lorsque l'apparence change du
+            ou vers le jaune.</li>
+
+            <li><b>Signal Vert.</b>: true si l'apparition du signal
+            sp&eacute;cifi&eacute; est vert. Le calcul est
+            d&eacute;clench&eacute; lorsque l'apparence change du
+            ou vers le vert.</li>
+
+            <li><b>Signal Eteint</b>: true si l'apparition du
+            signal est sombre. Le calcul est
+            d&eacute;clench&eacute; lorsque l'apparence change de
+            ou vers l'obscurit&eacute;.</li>
+
+            <li><b>Signal Clignotant Rouge</b>: true si l'
+            l'apparence du signal sp&eacute;cifi&eacute; est rouge
+            clignotant. Le calcul est d&eacute;clench&eacute;
+            lorsque l'apparence change de ou vers clignotement
+            rouge.</li>
+
+            <li><b>Signal Clignotant Jaune</b>: true si l'
+            l'apparence du signal sp&eacute;cifi&eacute; est jaune
+            clignotant. Le calcul est d&eacute;clench&eacute;
+            lorsque l 'apparence change de ou vers jaune
+            clignotant.</li>
+
+            <li><b>Signal Clignotant Vert</b>: true si l'
+            l'apparence due signal sp&eacute;cifi&eacute; est vert
+            clignotant. Le calcul est d&eacute;clench&eacute;
+            lorsque l'apparence change de ou vers vert
+            clignotant.</li>
+
+            <li><b>Signal Allum&eacute;</b>: true si le signal
+            sp&eacute;cifi&eacute; est allum&eacute;.</li>
+
+            <li><b>Signal Maintenu</b>: true si le signal
+            sp&eacute;cifi&eacute; maintenu .</li>
+          </ul>
+        </dd>
+
+        <dd>
+          <h2><a name="action" id="action">Actions
+          Disponibles</a></h2>
+
+          <p>Les Actions qui sont actuellement disponibles pour une
+          utilisation dans les Conditions sont
+          &eacute;num&eacute;r&eacute;s ci-dessous avec des
+          informations sur chacune d'elles:</p>
+
+          <ul>
+            <li><b>D&eacute;finir Aiguillage</b>: D&eacute;finit
+            l'aiguillage indiqu&eacute; avec l'&eacute;tat choisi.
+            Sp&eacute;cifiez l&acirc;&euro;&trade;aiguillage en
+            entrant son nom. Sp&eacute;cifiez l'&eacute;tat en
+            choisissant Closed ou Thrown dans le menu
+            contextuel.</li>
+
+            <li><b>D&eacute;finir Apparence Signal</b>:
+            D&eacute;finit le signal sp&eacute;cifi&eacute; avec
+            l'apparence choisie. Pr&eacute;cisez le signal &agrave;
+            D&eacute;finir en entrant son nom. Sp&eacute;cifier
+            l'apparence en choisissant dans le menu contextuel
+            .</li>
+
+            <li><b>D&eacute;finir Signal Maintenu</b>:
+            D&eacute;finit le signal sp&eacute;cifi&eacute;
+            &agrave; Maintenir . Pr&eacute;cisez le signal &agrave;
+            tenir en entrant son nom.</li>
+
+            <li><b>Effacer Signal Maintenu</b>: Efface le maintient
+            sur le signal pr&eacute;cis&eacute;. Pr&eacute;cisez le
+            signal en entrant son nom.</li>
+
+            <li><b>D&eacute;finir Signal Eteint</b>: D&eacute;finit
+            le signal sp&eacute;cifi&eacute; &agrave; ne pas
+            allum&eacute;. Pr&eacute;cisez le signal en entrant son
+            nom.</li>
+
+            <li><b>D&eacute;finirt Signal allum&eacute;</b>:
+            D&eacute;finit la t&ecirc;te signal
+            sp&eacute;cifi&eacute; et reste allum&eacute;.
+            Pr&eacute;cisez la t&ecirc;te du signal en entrant son
+            nom.</li>
+
+            <li><b>D&eacute;clencheur Itin&eacute;raire</b>: Les
+            d&eacute;clencheurs de l'itin&eacute;raire
+            indiqu&eacute;. Pr&eacute;cisez l'itin&eacute;raire en
+            entrant son nom.</li>
+
+            <li><b>D&eacute;finir Capteur</b>: D&eacute;finit le
+            capteur sp&eacute;cifi&eacute; dans l'&eacute;tat
+            choisi . Sp&eacute;cifiez le capteur en entrant son
+            nom. Sp&eacute;cifiez l' &eacute;tat en choisissant
+            actif ou inactif dans le menu contextuel.</li>
+
+            <li><b>D&eacute;finir Capteur Temporis&eacute;</b>:
+            D&eacute;finit le capteur sp&eacute;cifi&eacute; pour
+            l'&eacute;tat choisie apr&egrave;s attente d'un certain
+            nombre de secondes sp&eacute;cifi&eacute;es.
+            Pr&eacute;cisez le capteur en entrant son nom.
+            Sp&eacute;cifier l'&eacute;tat en choisissant actif ou
+            inactif dans le menu contextuel. Indiquez le nombre de
+            secondes &agrave; attendre avant de fixer les capteurs
+            en entrant un nombre dans le champ le plus &agrave;
+            droite. Si cette condition est d&eacute;j&agrave; en
+            attente pour d&eacute;finir ce capteur, cette action
+            est ignor&eacute;e, et l'action
+            pr&eacute;c&eacute;dente se poursuit comme initialement
+            pr&eacute;vue. (voir aussi <b>R&eacute;initialisation
+            du Capteur Temporis&eacute;</b> ci-dessous.)</li>
+
+            <li><b>D&eacute;finir Lumi&egrave;re</b>:
+            D&eacute;finit la lumi&egrave;re pr&eacute;cis&eacute;
+            dans l'&eacute;tat choisi . Pr&eacute;cisez la
+            lumi&egrave;re en entrant son nom. Sp&eacute;cifier
+            l'&eacute;tat &agrave; mettre en choisissant On ou Off
+            dans le menu contextuel.</li>
+
+            <li><b>D&eacute;finir M&eacute;moire</b> :
+            D&eacute;finit la m&eacute;moire
+            sp&eacute;cifi&eacute;e pour entrer une valeur.
+            Pr&eacute;cisez la m&eacute;moire en entrant son nom.
+            Sp&eacute;cifiez la valeur &agrave; d&eacute;finir dans
+            la m&eacute;moire en l'inscrivant dans le champ le plus
+            &agrave; droite.</li>
+
+            <li><b>Active Logix</b>: Active le logix
+            sp&eacute;cifi&eacute;. Sp&eacute;cifiez le Logix
+            &agrave; activer en entrant son nom.</li>
+
+            <li><b>D&eacute;sactive Logix</b>: d&eacute;sactive le
+            logix sp&eacute;cifi&eacute;. Pr&eacute;cisez le Logix
+            &agrave; d&eacute;sactiver en entrant son nom.</li>
+
+            <li><b>Jouer un Fichier Son</b>: lit le fichier son
+            sp&eacute;cifi&eacute;. Sp&eacute;cifiez le fichier son
+            &agrave; jouer en entrant son nom dans le champ
+            fournis. Cliquez <b>D&eacute;finir</b> pour faire
+            appara&icirc;tre une bo&icirc;te de dialogue de
+            s&eacute;lection de fichier d'aide pour trouver le
+            fichier. Acc&eacute;dez &agrave; votre fichier audio,
+            puis cliquez sur votre nom de fichier son dans la
+            bo&icirc;te de dialogue pour le copier (y compris son
+            chemin) dans le champ.</li>
+
+            <li><b>Ex&eacute;cuter Script</b>: D&eacute;marre le
+            script sp&eacute;cifi&eacute;. Sp&eacute;cifiez le
+            script &agrave; d&eacute;marrer en entrant son nom dans
+            le champ pr&eacute;vu. Cliquez <b>D&eacute;finir</b>
+            pour faire appara&icirc;tre une bo&icirc;te de dialogue
+            de s&eacute;lection de fichiers pour trouver le
+            fichier. Acc&eacute;dez &agrave; votre fichier de
+            script, puis cliquez sur le nom de votre fichier de
+            script dans la bo&icirc;te de dialogue pour copier (y
+            compris son chemin) le champ.</li>
+
+            <li><b>D&eacute;finir Aiguillage Temporis&eacute;</b>:
+            D&eacute;finit l'aiguillage indiqu&eacute; &agrave;
+            l'&eacute;tat choisi apr&egrave;s attente d'un certain
+            nombre de secondes sp&eacute;cifi&eacute;es.
+            Pr&eacute;cisez l'aiguillage concern&eacute; en entrant
+            son nom. Sp&eacute;cifier l'&eacute;tat &agrave; fixer
+            par le choix Closed ou Thrown dans le menu contextuel.
+            Indiquez le nombre de secondes &agrave; attendre avant
+            de fixer l'aiguillage en entrant un nombre dans le
+            champ le plus &agrave; droite. Si cette condition est
+            d&eacute;j&agrave; en attente pour d&eacute;finir cet
+            aiguillage, cette action est ignor&eacute;e, et
+            l'action pr&eacute;c&eacute;dente se poursuit comme
+            initialement pr&eacute;vue. (voir aussi
+            <b>R&eacute;initialiser Aiguillage Temporis&eacute;</b>
+            ci-dessous.)</li>
+
+            <li><b>Verrouillage Aiguillage</b>: Verrouille ou
+            d&eacute;verrouille un aiguillage. Entrez le nom de
+            l'aiguillage, et de choisir l'op&eacute;ration &agrave;
+            partir du menu contextuel. Remarque, pour
+            contr&ocirc;ler le type d'aiguillage &agrave;
+            verrouiller aller &agrave; la <a href=
+            "TurnoutTable.shtml">Table Aiguillage</a> et
+            s&eacute;lectionnez le mode de verrouillage.</li>
+
+            <li><b>D&eacute;finir Capteur R&eacute;armement
+            retard&eacute;</b> : D&eacute;finit le capteur
+            sp&eacute;cifi&eacute; dans l'&eacute;tat choisi
+            apr&egrave;s d'attente d'un certain nombre de secondes
+            sp&eacute;cifi&eacute;es. Pr&eacute;cisez le capteur
+            concern&eacute; en entrant son nom. Sp&eacute;cifier
+            l'&eacute;tat &agrave; fixer par le choix de actif ou
+            inactif dans le menu contextuel. Indiquez le nombre de
+            secondes &agrave; attendre avant de fixer les capteurs
+            en entrant un nombre dans le champ le plus &agrave;
+            droite sur le terrain. Cette action est la m&ecirc;me
+            que <b>Delayed Set Sensor</b>, sauf si cette condition
+            est d&eacute;j&agrave; activement en attente pour
+            D&eacute;finir de capteur sp&eacute;cifi&eacute;,
+            l'attente pr&eacute;c&eacute;dente est annul&eacute;e,
+            et une nouvelle p&eacute;riode d'attente est
+            d&eacute;marr&eacute;e. En effet, le temps d'attente
+            est red&eacute;marr&eacute;. Le capteur n'est pas
+            activ&eacute; jusqu'&agrave; ce que la p&eacute;riode
+            d'attente la plus r&eacute;cente expire.</li>
+
+            <li><b>Annulez Temporisations Capteur</b>: Annule
+            toutes les minuteries d'attente pour D&eacute;finir le
+            capteur sp&eacute;cifi&eacute; dans tous les Conditions
+            dans tous Logixs. Sp&eacute;cifiez le capteur en
+            entrant son nom. Le capteur n'est pas d&eacute;fini;
+            toutes les actions actives retard&eacute;e pour des
+            R&eacute;glage du capteur sp&eacute;cifi&eacute; sont
+            annul&eacute;s sans r&eacute;glage du capteur.</li>
+
+            <li><b>D&eacute;finir Aiguillage R&eacute;armement
+            Retard&eacute;</b>: D&eacute;finit l'aiguillage
+            indiqu&eacute; &agrave; l'&eacute;tat choisie
+            apr&egrave;s attente d'un certain nombre de secondes
+            sp&eacute;cifi&eacute;es. Pr&eacute;cisez l'aiguillage
+            concern&eacute; en entrant son nom. Sp&eacute;cifier
+            l'&eacute;tat &agrave; fixer par le choix Droit ou
+            D&eacute;vi&eacute; dans le menu contextuel. Indiquez
+            le nombre de secondes &agrave; attendre avant de fixer
+            l'aiguillage en entrant un nombre dans le champ le plus
+            &agrave; droite. Cette action est la m&ecirc;me que
+            <b>D&eacute;finir Aiguillage Temporis&eacute;</b>, sauf
+            si cette Condition est d&eacute;j&agrave; activement en
+            attente pour D&eacute;finir l'aiguillage
+            sp&eacute;cifi&eacute;e, l'attente
+            pr&eacute;c&eacute;dente est annul&eacute;e, et une
+            nouvelle p&eacute;riode d'attente est
+            d&eacute;marr&eacute;e. En effet, le temps d'attente
+            est red&eacute;marr&eacute;. L'Aiguillage n'est pas
+            activ&eacute; jusqu'&agrave; ce que la p&eacute;riode
+            d'attente la plus r&eacute;cente expire.</li>
+
+            <li><b>Annuler Temporisations Aiguillage</b>: Annule
+            toutes les minuteries d'attente pour D&eacute;finir l'
+            aiguillage sp&eacute;cifi&eacute; dans toutes les
+            Conditions avec tous les Logixs. Sp&eacute;cifiez
+            l'aiguillage en entrant son nom. L'aiguillage n'est pas
+            d&eacute;fini; toutes les actions actives
+            retard&eacute;e pour D&eacute;finir les aiguillages
+            sp&eacute;cifi&eacute;es sont annul&eacute;es sans
+            r&eacute;glage de l'aiguillage.</li>
+
+            <li><b>D&eacute;finir Heure Horloge Rapide</b>:
+            D&eacute;finit l'heure sur l'horloge rapide. L'heure
+            est entr&eacute; comme <i>hh: mm</i> o&ugrave;
+            <i>hh</i> est des heures et des <i>mn</i> minutes sur
+            une horloge de 24 heures. Cette action d&eacute;finit
+            l'horloge rapide &agrave; l'heure
+            sp&eacute;cifi&eacute;e ind&eacute;pendamment du fait
+            que l'horloge rapide fonctionne ou est
+            arr&ecirc;t&eacute;e.</li>
+
+            <li><b>D&eacute;marrage Horloge Rapide</b>:
+            D&eacute;marre le horloge rapide JMRI. Si l'horloge
+            fonctionne d&eacute;j&agrave; , cette action n'a aucun
+            effet.</li>
+
+            <li><b>Arr&ecirc;t Horloge Rapide</b>: Suspend
+            l'horloge rapide JMRI. Si l'Horloge ne fonctionne pas,
+            cette action n'a aucun effet.</li>
+
+            <li><b>Copier M&eacute;moire dans M&eacute;moire</b>:
+            Copie la valeur d'une variable de m&eacute;moire pour
+            une autre variable m&eacute;moire. Pr&eacute;cisez la
+            m&eacute;moire &agrave; copier en entrant son nom dans
+            le champ gauche. Pr&eacute;cisez la
+            m&eacute;moirereczevant la valeur copi&eacute;e en
+            entrant son nom dans le champ &agrave; droite.</li>
+
+            <li><b>D&eacute;finir Intensit&eacute;
+            Lumi&egrave;re</b>: D&eacute;finit l'intensit&eacute;
+            de la variable lumineuse sp&eacute;cifi&eacute;e
+            &agrave; la valeur de l'intensit&eacute; entr&eacute;.
+            Pr&eacute;cisez la lumi&egrave;re concern&eacute;e en
+            entrant son nom. Pr&eacute;ciser l'intensit&eacute; en
+            entrant l'intensit&eacute; en pourcentage comme un
+            nombre entier dans la gamme 0 &agrave; 100. Si la
+            lumi&egrave;re sp&eacute;cifi&eacute; n'est pas une
+            variable de la lumi&egrave;re, ou si la valeur
+            d'intensit&eacute; entr&eacute; n'est pas un entier
+            dans la gamme requise, un message d'erreur est
+            affich&eacute;.</li>
+
+            <li><b>D&eacute;finir la Dur&eacute;e de Variation de
+            la Lumi&egrave;re</b> : D&eacute;finit le temps de
+            transition d'un d'intensit&eacute; lumineuse variable
+            sp&eacute;cifi&eacute;e &agrave; l'heure
+            indiqu&eacute;e. Pr&eacute;cisez la lumi&egrave;re
+            concern&eacute;e en entrant son nom. Sp&eacute;cifiez
+            le temps de transition en entrant le nombre de minutes
+            d'horloge rapide n&eacute;cessaire pour passer de 0%
+            d'intensit&eacute; &agrave; 100% intensit&eacute;. Si
+            la lumi&egrave;re sp&eacute;cifi&eacute;e n'est pas une
+            variable de la lumi&egrave;re, ou si un effet positif
+            entier n'est pas entr&eacute; pour le nombre de minutes
+            d'horloge rapide, un message d'erreur en
+            r&eacute;sultera</li>
+          </ul><!--#include virtual="/Footer" -->
+        </dd>
+      </dl>
+    </div>
+  </div>
+</body>
+</html>
