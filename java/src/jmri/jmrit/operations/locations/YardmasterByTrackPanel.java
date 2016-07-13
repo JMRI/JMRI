@@ -379,7 +379,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                 } else {
                     text = MessageFormat.format(TrainSwitchListText.getStringHoldCar(),
                             new Object[]{TrainCommon.padAndTruncateString(car.getRoadName(), CarRoads.instance().getMaxNameLength()),
-                                    TrainCommon.padAndTruncateString(car.getNumber(), Control.max_len_string_print_road_number),
+                                    TrainCommon.padAndTruncateString(TrainCommon.splitString(car.getNumber()), Control.max_len_string_print_road_number),
                                     TrainCommon.padAndTruncateString(car.getTypeName().split("-")[0], CarTypes.instance().getMaxNameLength()),
                                     TrainCommon.padAndTruncateString(car.getLength() + TrainCommon.LENGTHABV, Control.max_len_string_length_name),
                                     TrainCommon.padAndTruncateString(car.getLoadName(), CarLoads.instance().getMaxNameLength()),
