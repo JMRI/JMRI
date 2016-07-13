@@ -1,6 +1,7 @@
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <!--  $Id$ -->
-<!-- UpDated by Blorec Herv&#233; le 2013-09-04-->  
+<!-- UpDated by  Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-10 --> 
 <html lang="fr">
 <head>
     <TITLE>
@@ -36,8 +37,9 @@
 
 <H1>JMRI: Analyse statique avec FindBugs</H1>
 
-FindBugs est un outil qui peut examiner le code pour trouver d'&#233;ventuels probl&#232;mes. Il fait un "analyse statique", en regardant &#224; travers le
-code pour trouver certaines "mauvaises id&#233;es connues ":
+FindBugs est un outil qui peut examiner le code pour trouver d'&#233;ventuels 
+probl&#232;mes. Il fait un "analyse statique", en regardant &#224; travers le
+code pour trouver certaines "mauvaises id&#233;es connues":
 Les choses qui sont susceptibles de causer des probl&#232;mes occasionnels/intermittents,
 mauvaise performance, etc
 Parce que ces genre de probl&#232;mes sont difficile &#224; trouver avec les tests,
@@ -49,6 +51,7 @@ remarque jusqu'&#224; ce qu'il soit trop tard.
 <P>
 Pour plus d'informations sur FindBugs, voir
 <A HREF="http://findbugs.sourceforge.net/"> la page d'accueil FindBugs  </A>.
+
 <p>
 Nous ex&#233;cutons sous forme d'une routine FindBugs comme une partie de notre
 <a href="ContinuousIntegration.shtml">processus continue d'int&#233;gration</a>.
@@ -56,58 +59,157 @@ Vous pouvez voir les r&#233;sultats des plus r&#233;centes constructions en lign
 <a href="https://jmri.ci.cloudbees.com/job/Development/job/FindBugs/lastBuild/">ici</a>.
  
 <p>
-Si findBugs trouve une erreur positive, un bug qui n'est pas r&#233;ellemnt un bug, vous pouvez l'&#233;teindre avec une annotation tels que:
+Si FindBugs trouve une erreur positive, un bug qui n'est pas r&#233;ellemnt un
+ bug, vous pouvez l'&#233;teindre avec une annotation 
+tels que:
 <pre><code>
-@edu.umd.cs.findbugs.annotations.SuppressWarnings("FE_FLOATING_POINT_EQUALITY","OK pour comparer les flottantess, car m&#233;me les plus infimes diff&#233;rences 
-devraient d&#233;clencher les mises &#224; jour")
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings("FE_FLOATING_POINT_EQUALITY","OK to compare floats, as even tiny differences should 
+trigger update")
 </code></pre>
-Le second argument "justification" est optionnel, mais hautement recommand&#233;.
+Bien que Java lui-m&#234;me estime qu'il est facultatif, nous avons besoin du deuxi&#232;me argument "justification".
 Expliquer pourquoi vous avez ajout&#233; cette annotation pour supprimer un message aidera
-Celui qui viendra apr&#232;s vous et tentera de comprendre le code.
-Il aidera &#233;galement &#224; vous assurer que vous comprenez correctement la cause du rapport
-du bugg sous-jacent: Parfois ce qui semble un faux positif ne l'est pas vraiment.
+celui qui vient apr&#232;s vous et tente de comprendre le code.
+Il aidera &#233;galement &#224; vous assurer que vous comprenez bien la cause du rapport de bogue sous-jacent: 
+Parfois, ce qui semble un faux positif ne l'est vraiment pas.
+Les Annotations sans une clause de justification
+seront p&#233;riodiquement &#233;limin&#233;es.
 
 <p>
-si vous avez besoin de mettre plus d'un type de message dans une annotation, utilisez la syntaxe en tableau:
+Si vous avez besoin de mettre plus d'un type de message dans une annotation, utilisez la syntaxe de tableau:
 <pre><code>
-@edu.umd.cs.findbugs.annotations.SuppressWarnings("{type1},{type2}","Pourquoi les deux sont n&#233;cessaire")
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings("{type1},{type2}","why both are needed")
 </code></pre>
 
-Les annotations de bug  peuvent aider &#224; mieux comprendre votre code. Parfois, ils vont lui donner suffisamment de compr&#233;hension
-exemple: quand une variable peut &#233;tre nulle, que &#231;a ne va plus faire de fausses erreurs positives.
-Pour plus d'information sur ceci, voir la
-<a href="http://findbugs.sourceforge.net/manual/annotations.html">page des annotations Findbugs </a>.
-
-Elle peut &#233;tre utile pour marquer les classes avec une des annotations suivantes de telle sorte que FindBugs fasse un bon travail de raisonnement &#224; ce sujet:
-<li><a href="http://findbugs.sourceforge.net/manual/annotations.html">edu.umd.cs.findbugs.annotations.CheckForNull</a> -
-   une variable ou un param&#232;tre peut avoir une valeur nulle ,donc toutes les utilisations devraient convenablement g&#233;rer cela.
-<li><a href="http://findbugs.sourceforge.net/manual/annotations.html">edu.umd.cs.findbugs.annotations.CheckReturnValue</a> -
-    cette m&#233;thode n'a aucun effet secondaire, il n'y a donc pas lieu de l'appeler sans v&#233;rifier que c'est la valeur de retour 
-<li><a href="http://jcip.net/annotations/doc/net/jcip/annotations/Immutable.html">net.jcip.annotations.Immutable</a> -
-    Un objet de cette classe ne peut pas &#233;tre modifi&#233; apr&#232;s sa cr&#233;ation. Cela permet &#224; la fois la une meilleure v&#233;rification de la logique, et de simplifier &#233;galement l'utilisation par vos coll&#232;gues, il est donc bon de marquer les classes avec cette propri&#233;t&#233;.
-<li><a href="http://jcip.net/annotations/doc/net/jcip/annotations/NotThreadSafe.html">net.jcip.annotations.NotThreadSafe</a> - 
-   une classe qui n'est pas un lien de s&#233;curit&#233;,ne devrait donc pas &#233;tre v&#233;rifi&#233;e pour les probl&#232;mes de simultan&#233;it&#233;. Souvent utilis&#233; pour les classes Swing , mais il faut noter que certains composants Swing (par exemple, les fen&#233;tres moniteur, les classes avec les auditeurs) ne doivent pas accepter l'entr&#233;e d'autres liens.
-   <li><a href="http://jcip.net/annotations/doc/net/jcip/annotations/ThreadSafe.html">net.jcip.annotations.ThreadSafe</a> -
-Les classes qui ne doivent &#233;tre utilisables pour de multiples liens. FindBugs l'assumes g&#233;n&#233;ralement, mais il est bon de le mettre sur une classe qui est destin&#233;e &#224; &#233;tre un lien de s&#233;curit&#233; comme un rappel pour les d&#233;veloppeurs futurs.</ul>
-Pour de plus ample informations au sujet de ces annotations, svp voir la 
-<a href="http://jcip.net/annotations/doc/index.html">page dans l'API Concurrency</a>.
+<p>
+Il y a ausi des annotations Java et FingBugs qui peuvent vous aider 
+&#224; mieux comprendre votre code. Parfois, ils vont lui donner suffisamment de compr&#233;hension, 
+par exemple: quand une variable peut &#234;tre nulle, que &#231;a ne va plus faire des erreurs de faux positifs.
+Pour en savoir plus, voir les
+<a href="https://docs.oracle.com/javase/tutorial/java/annotations/">Annotations Java </a> et les
+<a href="http://findbugs.sourceforge.net/manual/annotations.html">pages d'annotations Findbugs </a>.
 
 <p>
-Simon White a ajout&#233; le support FindBugs &#224; notre Chaine de construction bas&#233;e sur Ant pendant le d&#233;veloppement du JMRI 2.5.5. Sa note sur ceci suit...
+Les bases d'annotations sont couverts dans un <a href="https://docs.oracle.com/javase/tutorial/java/annotations/">Tutoriel annotation 
+Java</a>.
 
 <p>
-Comme demande de fonctionnalit&#233; par 1716873, j'ai ajout&#233; une t&#226;che Ant pour ex&#233;cuter FindBugs. Ceci va produire un rapport en HTML dans le m&#233;me emplacement que le  JMRI jar (c'est &#224; dire le plus haut niveau du r&#233;pertoire projet ). Notez  la nouvelle t&#226;che ex&#233;cute en premier ant dist parce FindBugs examine le dossier jmri.jar.
+Il peut &#234;tre utile de marquer le code avec une des annotaions suivantes
+de telle sorte que FindBugs fasse un bon travail de raisonnement &#224; ce sujet:
+<ul>
+<li><a href="http://findbugs.sourceforge.net/manual/annotations.html"><code>javax.annotation.Nonnull</code></a> -
+	L'element annot&#233; ne doit pas &#234;tre nul.
+	Les champs annot&#233;s ne doivent pas &#234;tre nuls apr&#232;s la construction termin&#233;e.
+	Les m&#233;thodes annot&#233;es doivent avoir des valeurs non-nulles retourn&#233;es
+	Utiliser javax.annotation.ParametersAreNonnullByDefault pour d&#233;finir pour toute une classe.
+	Pr&#233;f&#233;rer l'usage de <code>CheckForNull</code>.
+
+<li><a href="http://findbugs.sourceforge.net/manual/annotations.html"><code>javax.annotation.CheckForNull</code></a> -
+	La variable, param&#232;tre ou valeur annot&#233;e peut avoir une valeur nulle, de sorte que tous les utilisateurs devraient les traiter 
+	convenablement. S'il vous pla&#238;t mettre cela dans des d&#233;finitions de m&#233;thode pour signaler que la valeur de retourn&#233;e doit &#234;tre 
+	v&#233;rifi&#233; pour &#234;tre nulle
+ <li><a href="http://findbugs.sourceforge.net/manual/annotations.html"><code>edu.umd.cs.findbugs.annotations.OverrideMustInvoke
+	</code></a> Utilis&#233; pour annoter une m&#233;thode qui, si surcharg&#233;e, doit (ou devrait) &#234;tre super invoqu&#233;e dans le m&#233;thode red&#233;finie.
+	Des exemples de tels proc&#233;d&#233;s comprennent la finalisation () et clone ().
+	L'argument de la m&#233;thode indique quand la super invocation doit se produire: &#224; tout moment ( ANYTIME ), au d&#233;but de la m&#233;thode 
+	d&#233;rogatoire ( FIRST ), ou &#224; la fin de la m&#233;thode d&#233;rogatoire ( LAST ), par d&#233;faut &#224; tout moment, 
+	par exemple <Code> @OverrideMustInvoke ( valeur = ANYTIME ) </code>
+
+<li><a href="http://findbugs.sourceforge.net/manual/annotations.html"><code>javax.annotation.CheckReturnValue</code></a> -
+	annoter une m&#233;thode pour dire QUE la m&#233;thode n'a pas d'effets secondaires, donc il n'y a aucun point en appelant sans v&#233;rifier sa 
+	valeur de retour
+
+<li><a href="http://jcip.net/annotations/doc/net/jcip/annotations/Immutable.html"><code>net.jcip.annotations.Immutable</code></a> -
+	Un objet de cettte classe ne peut pas &#234;tre chang&#233; apr&#232;s avoir &#233;t&#233; cr&#233;&#233;. Ceci permet &#224; la fois une meilleure v&#233;rification 
+	de la logique et aussi simplifie l'usage pour vos coll&#232;gues, aussi il est bon de cr&#233;er des classes qui ont cette 
+	propri&#233;t&#233; et de les annoter. 
+
+<li><a href="http://jcip.net/annotations/doc/net/jcip/annotations/ThreadSafe.html"><code>net.jcip.annotations.ThreadSafe</code></a> -
+	classes qui doivent &#234;tre utilisables pour plusieurs threads.Fidbugs l'assume g&#233;n&#233;ralement,
+	mais il es bon de de le mettre dans une classe qui est pr&#233;vue pour &#234;tre thread-safe comme un rappel 
+	pour de futures d&#233;veloppeurs. 
+
+</ul>
+Pour avoir plus d'information &#224; propos de ces annotations, SVP voir la
+<a href="http://jcip.net/annotations/doc/index.html">Page dans l'API Concurrency</a>.
+
+<p>
+Nous n'utilisons pas ces annotations:
+<ul>
+<li><a href="http://findbugs.sourceforge.net/manual/annotations.html"><code>javax.annotation.Nullable</code></a> -
+	cela ne signifie pas vraiment ce que les gens pensent qu'il fait, comme FindBugs ne v&#233;rifie pas vraiment
+	pas quelque chose quand il est utilis&#233;. De la documentation:
+	FindBugs traitera les articles annot&#233;s comme s'ils n'avaient aucune annotation.
+	Dans la pratique, cette annotation est utile que pour des raisons imp&#233;rieuses d'une annotation globale non nulle.
+	Utilisez javax.annotation.ParametersAreNullableByDefault pour le d&#233;finir comme une classe enti&#232;re.
+	Pref&#233;rez l'usage de <code>CheckForNull</code>.
+</ul>
+
+<h3><H3>Suppression Avertissements</h3>
+
+Nous avons d&#233;sactiv&#233; les FindBugs de routine de contr&#244;le de certains types de conditions:
+<dl>
+<dt><a href="http://findbugs.sourceforge.net/bugDescriptions.html#RI_REDUNDANT_INTERFACES">RI_REDUNDANT_INTERFACES</a>
+	<dd>Ce drapeaux au cas o&#249; une classe impl&#233;mente une interface, et aussi h&#233;rite d'une 
+	superclasse qui impl&#233;mente d&#233;j&#224; cette interface. Ceci est redondant et inutile, mais il ne peut pas provoquer de dysfonctionnement 
+	du code.Nous avons assez d'entre eux que nousavons &#233;teint l'avertissement, et nous y reviendrons plus tard.
+<dt><a href="http://findbugs.sourceforge.net/bugDescriptions.html#SIC_INNER_SHOULD_BE_STATIC_ANON">SIC_INNER_SHOULD_BE_STATIC_ANON
+, 
+<dt><a href="http://findbugs.sourceforge.net/bugDescriptions.html#SIC_INNER_SHOULD_BE_STATIC_NEEDS_THIS"> 	
+	SIC_INNER_SHOULD_BE_STATIC_NEEDS_THIS</a>
+	<dd>Static oppos&#233; &#224; non-static,
+	les classes internes ( classes d&#233;finies au c&#339;ur d'autres classes ) prennent moins de place
+	parce qu'ils ne maintiennent pas de r&#233;f&#233;rences &#224; l'objet contenant. Cet avertissement sugg&#232;re de d&#233;placer 
+	une classe anonyme interne (d&#233;finie dans la ligne du code) &#224; une classe r&#233;guli&#232;re (non d&#233;finie en ligne) ainsi elles peuvent
+	&#234;tre statiques. Bien que ce soit probablement une petite am&#233;lioration, c'est un peu de travail pour une petite am&#233;lioration.
+	Nous avons assez de ceux o&#249; nous avons coup&#233; les avertissements, et et nous y reviendront plus tard.
+<dt><a href="http://findbugs.sourceforge.net/bugDescriptions.html#SIC_INNER_SHOULD_BE_STATIC_ANON">SIC_INNER_SHOULD_BE_STATIC_ANON</a>, 
+    <a href="http://findbugs.sourceforge.net/bugDescriptions.html#SIC_INNER_SHOULD_BE_STATIC_NEEDS_THIS"> 			
+	SIC_INNER_SHOULD_BE_STATIC_NEEDS_THIS</a>
+	<dd>Statique, comme oppos&#233; &#224; non-statique,
+	Les inner classes ( classes d&#233;finies au sein d'autres classes ) prennent peu de place
+	parce qu'lles ne permettent pas de maintenir les r&#233;f&#233;rences &#224; l'objet contenant. Cet avertissement sugg&#232;re de d&#233;placer une classe 
+	interne anonyme ( d&#233;finie dans la ligne du code ) vers une classe r&#233;guli&#232;re ( non d&#233;fini pas en ligne ) ainsi elle peut 
+	&#234;tre rendue statique.Bien que ce soit probablement une petite am&#233;lioration, c'est un peu de travail pour une petite am&#233;lioration. 
+	Nous en avons assez aussi nous avons eteint l'avertissement, et il reviendra un peu plus tard.
+<dt><a href="http://findbugs.sourceforge.net/bugDescriptions.html#PZLA_PREFER_ZERO_LENGTH_ARRAYS">PZLA_PREFER_ZERO_LENGTH_ARRAYS</a>	
+	<dd>Que doit faire une m&#233;thode qui retourne un tableau de valeurs quand il n'y en a pas?
+	Retourner "Nulle", oppos&#233; &#224; un tableau vides, exige tout le code d'appel pour traiter un cas particulier.
+	Dans beaucoup de cas, retourner un tableau vide rend le code plus simple. Mais pour du code existant, la simplification est 
+	marginale. Comme cela est un probl&#232;me de conception, mais il surgit souvent nous avons supprim&#233; ceci 
+	pour nous focaliser maintenant sur des probl&#232;mes plus presssants
+<dt>Code Malveillant
+	<dd>C'est une classe d'avertissement centr&#233;e autour d'une id&#233;e que les donn&#233;es et les m&#233;thodes de codes  ne doivent pas &#234;tre trop 
+	visibles sp&#233;cialement en statique. Ceci est vrai, mais JMRI n'est pas une biblioth&#232;que tremp&#233;e qui est publi&#233;e dans un monde de 	
+	gens qui essaient de le briser, aussi ces changements ne sont pas une grande priorit&#233;.
+<dt>Nm<dd>La convention est que les noms de cette clase d&#233;marre avec une lettre capitale et les noms de proc&#233;d&#233; ( donn&#233; et code ) avec 
+	une lettre minuscule. 
+<dt>Se,SvVI<dd>Cette une grande classe d'averissementss associ&#233;es avec la s&#233;rialisation Java. JMRI 
+	n'utilise pas la s&#233;rialisation et il est peu probable qu'il le  fasse &#224; l'avenir, de sorte que nous supprimons ces derniers pour 
+	&#233;lever la qualit&#233; moyenne des avertissements &#233;mis.
+</dl>	
+
+<h3>Arri&#232;re Plan</h3>
+
+<p>
+Simon White a ajout&#233; le support FindBugs &#224; notre Chaine de construction bas&#233;e sur Ant pendant le d&#233;veloppement du 
+JMRI 2.5.5. Sa note sur ceci suit...
+
+<p>
+Comme demande de fonctionnalit&#233; par 1716873, j'ai ajout&#233; une t&#226;che Ant pour ex&#233;cuter FindBugs. 
+Ceci va produire un rapport en HTML dans le m&#233;me emplacement que le  JMRI jar 
+( c'est &#224; dire le plus haut niveau du r&#233;pertoire projet ). Notez  la nouvelle t&#226;che ex&#233;cute en premier ant dist 
+parce FindBugs examine le dossier jmri.jar.
 
 Pour ex&#233;cuter la t&#226;che:
 <ul>
-<li> Installer Findbugs (pour moi j'ai mis cela dans C:/FindBugs-1.3.8)
-<li> copie FindBugs-ant.jar &#224; partir du r&#233;pertoire lib FindBugs dans le r&#233;pertoire
-java/lib
+<li> Installer Findbugs ( pour moi j'ai mis cela dans C:/FindBugs-1.3.8 )
+<li> copie FindBugs-ant.jar &#224; partir du r&#233;pertoire lib FindBugs dans le 
+r&#233;pertoire java/lib
 
 <li> soit ex&#233;cuter
  
 </code><pre>
-ant-Dfindbugs.home = C: / FindBugs-1.3.8 FindBugs (rempla&#231;ant le param&#232;tre de votre emplacement d'installation)
+ant-Dfindbugs.home = C: /FindBugs-1.3.8 FindBugs ( rempla&#233;ant le param&#232;tre de votre emplacement d'installation )
 </pre> </code>
 
 <p>
@@ -139,7 +241,7 @@ L'ex&#233;cution de ceci sur JMRI 2.5.4 donn&#233; les r&#233;sultats suivants:
 <tr> <th> Total</th><th>1322</th></tr>
 
 </table>
-<p>Beaucoup de travail a &#233;t&#233; fait dans JMRI pendant le cycle de lib&#233;ration 2,12 pour
+<p>Beaucoup de travail a &#233;t&#233; fait dans JMRI pendant le cycle de lib&#233;ration 2.12 pour
 amener le compteur de bug &#224; z&#233;ro. Le <a
   href = "ContinuousIntegration.shtml"> serveur d'int&#233;gration continue a fait </a>
 fonctionner FindBugs deux fois par jour, ce qui permet aux d&#233;veloppeurs de voir les r&#233;sultats de
@@ -157,4 +259,3 @@ introduire de nouvelles erreurs.</p>
 	</div> <!-- closes #mBody-->
 </body>
 </html>
-
