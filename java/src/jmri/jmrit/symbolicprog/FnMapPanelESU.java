@@ -382,7 +382,7 @@ public class FnMapPanelESU extends JPanel {
 
                             // generate a fullItemName
                             String fullItemName = itemName[item][0];
-                            if (itemLabel[item] != "") {
+                            if ( !itemLabel[item].equals("")) {
                                 fullItemName = fullItemName + (": " + itemLabel[item]);
                             }
 

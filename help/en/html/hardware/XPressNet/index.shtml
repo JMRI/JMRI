@@ -249,7 +249,7 @@ each system below.
 	the <a href="http://www.opendcc.de/elektronik/gateway/gateway.html">OpenDCC Gateway</a>.  These devices should be configured as LI100F devices with the port speed set to 19,200bps. The OpenDCC Command Station provides feedback via an S88 connection.
 	</ul>
 
-<a name="Limitations"><h2>Limitations</h2></a>
+<a name="Limitations"></a><h2>Limitations</h2>
 
 <div class="list">
   <dl>

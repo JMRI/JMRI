@@ -1,4 +1,3 @@
-// AnalogClock.Action.java
 package jmri.jmrit.analogclock;
 
 import java.awt.event.ActionEvent;
@@ -9,7 +8,6 @@ import javax.swing.AbstractAction;
  * code for NixieClockAction by Bob Jacobsen
  *
  * @author	Dennis Miller Copyright (C) 2004
- * @version	$Revision$
  */
 public class AnalogClockAction extends AbstractAction {
 

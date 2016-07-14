@@ -1,92 +1,124 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
-<title>How to build a throttle oriented JMRI interface</title>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org" />
 
-<meta name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro" />
-<meta name="Description" content="Throttle documentation for JMRI project" />
-<meta name="Keywords" content="JMRI" />
-<meta name="Author" content="Lionel Jeanson" />
-<meta name="Language" content="EN" />
-<meta name="Robots" content="Index, Follow" />
-<meta name="Revisit-After" content="7 Days" /><!-- The combination of "Define" and {Header,Style, Logo and Footer} comments --><!-- are an arbitrary design pattern used by the update.pl script to --><!-- easily replace the common header/footer code for all the web pages --><!-- delete the following 2 Defines if you want to use the default JMRI logo --><!-- or change them to reflect your alternative logo --><!-- Style -->
-
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen" />
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print" />
-<link rel="icon" href="/images/jmri.ico" type="image/png" />
-<link rel="home" title="Home" href="/" />
-<!-- /Style -->
+  <title>How to build a throttle oriented JMRI interface</title>
+  <meta name="keywords" content=
+  "JMRI decoderpro dcc nmra throttle throttlepro" />
+  <meta name="Description" content=
+  "Throttle documentation for JMRI project" />
+  <meta name="Keywords" content="JMRI" />
+  <meta name="Author" content="Lionel Jeanson" />
+  <meta name="Language" content="EN" />
+  <meta name="Robots" content="Index, Follow" />
+  <meta name="Revisit-After" content="7 Days" />
+  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments --><!-- are an arbitrary design pattern used by the update.pl script to --><!-- easily replace the common header/footer code for all the web pages --><!-- delete the following 2 Defines if you want to use the default JMRI logo --><!-- or change them to reflect your alternative logo --><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii" />
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen" />
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print" />
+  <link rel="icon" href="/images/jmri.ico" type="image/png" />
+  <link rel="home" title="Home" href="/" /><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <!--#include virtual="/Header" -->
 
-<h1>How to build a throttle oriented JMRI interface</h1>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-For this how to we assume you're an already experienced user of JMRI.<br />
-<br />
-Particularly we assume that your JMRI layout connection is already
-working and that you're already able to open a Throttle Window and
-control a locomotive.<br />
-<br />
-Further more we assume that your Roster database already exists, all
-most of these Throttles features are tightly linked to the Roster DB and
-need it to work correctly.<br />
+    <div id="mainContent">
+      <h1>How to build a throttle oriented JMRI interface</h1>For
+      this how to we assume you're an already experienced user of
+      JMRI.<br />
+      <br />
+      Particularly we assume that your JMRI layout connection is
+      already working and that you're already able to open a
+      Throttle Window and control a locomotive.<br />
+      <br />
+      Further more we assume that your Roster database already
+      exists, all most of these Throttles features are tightly
+      linked to the Roster DB and need it to work correctly.<br />
 
-<h2>1) Prepare your rosters entry</h2>
-First step is to <a href="RostersMediaPane.shtml">fill in the Media and Functions labels panes in
-DecoderPro</a>.<br />
-<br />
-Once this is done and all functions label are defined for your rosters,
-<a href="ThrottlesPreferencesPane.shtml">you want to make sure that the
-options to hide the undefined function buttons and the one to use
-roster image as a background for a
-throttle window</a> are enabled.<br />
+      <h2>1) Prepare your rosters entry</h2>First step is to
+      <a href="RostersMediaPane.shtml">fill in the Media and
+      Functions labels panes in DecoderPro</a>.<br />
+      <br />
+      Once this is done and all functions label are defined for
+      your rosters, <a href="ThrottlesPreferencesPane.shtml">you
+      want to make sure that the options to hide the undefined
+      function buttons and the one to use roster image as a
+      background for a throttle window</a> are enabled.<br />
 
-<h2>2) Design your throttle panes</h2>
-At this step, when you open a throttle and select a roster (or enter an
-address that match a roster (there is a <a href="ThrottlesPreferencesPane.shtml">preference setting to enable that
-look back</a>)), the background image should be there, and the function butons should reflect what you entered in DecoderPro.<br />
-<br />
-Now what you can do, is set up the Throttle Window the way you like it,
-particularly its size, and then for each roster set the Function and
-Control Panel position and size as you like ( I personally choose to
-close the Address Panel, you can still reopen it through the View menu,
-and I don't need it most of the time, the save throttle menu entry will
-also save the closed (or iconified) status of inner windows).<br />
+      <h2>2) Design your throttle panes</h2>At this step, when you
+      open a throttle and select a roster (or enter an address that
+      match a roster (there is a <a href=
+      "ThrottlesPreferencesPane.shtml">preference setting to enable
+      that look back</a>)), the background image should be there,
+      and the function butons should reflect what you entered in
+      DecoderPro.<br />
+      <br />
+      Now what you can do, is set up the Throttle Window the way
+      you like it, particularly its size, and then for each roster
+      set the Function and Control Panel position and size as you
+      like ( I personally choose to close the Address Panel, you
+      can still reopen it through the View menu, and I don't need
+      it most of the time, the save throttle menu entry will also
+      save the closed (or iconified) status of inner
+      windows).<br />
 
-<h2>3) Customize with Jynstruments</h2>
-You can also add some specific <a href="../scripting/Jynstruments.shtml">Jynstruments</a>
-to your Throttle Windows, actually you can mix Function Labels in the
-Function Pane for Functions that are not used that often, and
-Jynstruments for the most used one, or some more complex
-functionalities where only a Jython script can do it.<br />
-<br />
-When you're satisfied with step 3) and 4 ) for a specific roster, you want to hit the Save menu entry in the <a href="ThrottleWindowMenus.shtml">Throttle Window File menu </a>in
-order to save the current Throttle configuration, next time a throttle
-is acquired for that Roster entry, this backup file will be
-automatically loaded and the Throttle Window updated.<br />
+      <h2>3) Customize with Jynstruments</h2>You can also add some
+      specific <a href=
+      "../scripting/Jynstruments.shtml">Jynstruments</a> to your
+      Throttle Windows, actually you can mix Function Labels in the
+      Function Pane for Functions that are not used that often, and
+      Jynstruments for the most used one, or some more complex
+      functionalities where only a Jython script can do it.<br />
+      <br />
+      When you're satisfied with step 3) and 4 ) for a specific
+      roster, you want to hit the Save menu entry in the <a href=
+      "ThrottleWindowMenus.shtml">Throttle Window File menu</a> in
+      order to save the current Throttle configuration, next time a
+      throttle is acquired for that Roster entry, this backup file
+      will be automatically loaded and the Throttle Window
+      updated.<br />
 
-<h2>4) Design your throttles layout</h2>
+      <h2>4) Design your throttles layout</h2>Next step is to set
+      up the gloabl screen layout, with maybe several Throttle
+      Windows, the <a href="ThrottlesListWindow.shtml">Throttle
+      List Window</a> (accessible from the <a href=
+      "ThrottleToolBar.shtml">Throttle Window toolbar</a>) and
+      finally hit the Save throttle layout (or Save as default
+      throttle layout) in the <a href=
+      "ToolsMenuThrottleEntry.shtml">JMRI Throttles Tools menu
+      entry</a>.<br />
+      <br />
 
-Next step is to set up the gloabl screen layout, with maybe several Throttle Windows, the <a href="ThrottlesListWindow.shtml">Throttle List Window</a> (accessible from the <a href="ThrottleToolBar.shtml">Throttle Window toolbar</a>) and finally hit the Save throttle layout (or Save as default throttle layout) in the <a href="ToolsMenuThrottleEntry.shtml">JMRI Throttles Tools menu entry</a>. <br />
-<br />
-<h2>5) Get more control with Jynstruments</h2><a href="AdvancedThrottleControl.shtml">Using Jysntruments it is also possible to set up an external controller for a Throttle Window.</a> (at the moment USB Joypad or Nintendo Wiimote, but more classic Jython scripts exist for USB Raildriver device and ...)<br />
+      <h2>5) Get more control with Jynstruments</h2><a href=
+      "AdvancedThrottleControl.shtml">Using Jysntruments it is also
+      possible to set up an external controller for a Throttle
+      Window.</a> (at the moment USB Joypad or Nintendo Wiimote,
+      but more classic Jython scripts exist for USB Raildriver
+      device and ...)<br />
 
-<h2>6) Finally adding a quick start button to the JMRI main window</h2>
-
-And finally, using the Launchers <a href="../scripting/Jynstruments.shtml">Jynstruments</a>
-that can be dropped at the bottom of the JMRI main Window you can add
-some fast launchers for specific JMRI applications, particularly <a href="http://jmri.org/jython/Jynstruments/Launchers/Throttles.jyn/">loading the default throttle layout button</a>.<br>
-
-<span style="font-style: italic;">Note: It is not possible to save customizations of steps 5) and 6) at the moment. </span>
-
-<!--#include virtual="/Footer" -->
-
-      </div><!-- closes #mainContent-->
-    </div> <!-- closes #mBody-->
-    </body>
+      <h2>6) Finally adding a quick start button to the JMRI main
+      window</h2>And finally, using the Launchers <a href=
+      "../scripting/Jynstruments.shtml">Jynstruments</a> that can
+      be dropped at the bottom of the JMRI main Window you can add
+      some fast launchers for specific JMRI applications,
+      particularly <a href=
+      "http://jmri.org/jython/Jynstruments/Launchers/Throttles.jyn/">
+      loading the default throttle layout button</a>.<br />
+      <span style="font-style: italic;">Note: It is not possible to
+      save customizations of steps 5) and 6) at the moment.</span> 
+      <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
 </html>

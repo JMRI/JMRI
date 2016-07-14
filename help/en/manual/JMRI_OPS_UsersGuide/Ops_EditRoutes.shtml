@@ -1,81 +1,170 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
-<title>JMRI OperationsPro - Edit Route</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>JMRI OperationsPro - Edit Route</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
-<div id="mainContent"><a name="Top"></a>
+  <!--#include virtual="/Header" -->
 
-<h1>Using JMRI&reg; to Operate Trains</h1>
-<h2>OperationsPro: Edit Route Window</h2>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<div align="right">
-<p><a href="Ops_Routes.shtml">Back</a><a href="Ops_Trains.shtml"></a></p>
-<p><a href="index.shtml#Operations">Back to Index</a></p>
-</div>
+    <div id="mainContent">
+      <a name="Top" id="Top"></a>
 
-<hr>
-<p>The <span style="font-weight: bold;">Edit Route</span> window is opened from the <span style="font-weight: bold;">Routes</span> window by selecting a Route and clicking on the associated <span style="font-weight: bold;">Edit</span> button in the list.</p>
-<p><img style="width: 799px; height: 290px;" alt="edit route" src="images/Ops_EditRoute.png"></p>
+      <h1>Using JMRI&reg; to Operate Trains</h1>
 
-<p>The selected Route <span style="font-weight: bold;">Name</span> is displayed in the window.</p>
-<p>A <span style="font-weight: bold;">Comment</span> may be displayed if in the database.</p>
-<p>Columns contain the following data for each Stop on the Route:</p>
-<p><span style="font-weight: bold;">Id</span> - identifies the Stop to the program.</p>
-<p><span style="font-weight: bold;">Location</span> - displays the Location for each stop.</p>
-<p><span style="font-weight: bold;">Train Direction</span> - may be set using drop down list to either East or West.</p>
-<p><span style="font-weight: bold;">Moves</span> - shows the number of Moves at each stop.</p>
-<p><span style="font-weight: bold;">Pickups?</span> - set to Yes or No using drop down list.</p>
-<p><span style="font-weight: bold;">Set outs?</span> - set to Yes or No using drop down list.</p>
-<p><span style="font-weight: bold;">Wait</span> - value is shown.</p>
-<p><span style="font-weight: bold;">Max Length</span> - of Track at Stop is shown in scale feet.</p>
-<p><span style="font-weight: bold;">Grade</span> - at Stop is shown.</p>
-<p><span style="font-weight: bold;">X</span> and <span style="font-weight: bold;">Y</span> - coordinates of the stop are shown in the two columns.</p>
-<p><span style="font-weight: bold;">Comment</span> - Add button opens the Comment dialog for the stop:</p>
-<p><img style="width: 405px; height: 116px;" alt="stop comment" src="images/Ops_EditRoute_comment.png"></p>
-<p><span style="font-weight: bold;">Up</span> and <span style="font-weight: bold;">Down</span> columns move the postion of the stop on the route either Up or Down using the associated button.</p>
-<p><span style="font-weight: bold;">Delete</span> button - deletes the stop from the route without confirmation.</p>
+      <h2>OperationsPro: Edit Route Window</h2>
 
-<!-- New in version 3.10 -->
-<div style="margin:40px; padding:10px; background-color:#eee;">New in v3.10: Random Moves
-<p>The Add/Edit Route panel has a "Random" column with a menu of 10 items. The default is "Off" (0%), and there are values between 10 and 90.<br>
-If you select 10, it tells the program to randomly reduce the number of Car Moves at that Location by up to 10%. So if you asked for 10 Moves, you could get 10 or 9 Moves. If you selected 50, you could get any number of Moves between 10 and 5. Be sure to press "Save Route" to save you setting.</p>
-<img src="images/Ops_EditRouteRandom413.png" alt="Route v3.8 with Random column" height="284" width="713">
-</div>
-<!-- End of New -->
+      <div align="right">
+        <p><a href="Ops_Routes.shtml">Back</a><a href=
+        "Ops_Trains.shtml"></a></p>
 
-<p><span style="font-weight: bold;"><span style="font-style: italic;">Bottom of the Window:</span></p>
-<p><span style="font-weight: bold;"><span style="font-style: italic;">Location</span> -</p>
-<p style="margin-left: 40px;"><span style="font-weight: bold;">drop down list</span> to select any of the possible locations on your Railroad.</p>
-<p style="margin-left: 40px;"><span style="font-weight: bold;">Add Location</span> button - adds the location to the route.</p>
-<p style="margin-left: 40px;">Select radio buttons to <span style="font-weight: bold;">Add location at start</span> or <span style="font-weight: bold;">Add location at end</span>.</p>
-<p style="font-weight: bold;">Display</p>
-<p style="margin-left: 40px;">Select radio buttons for either <span style="font-weight: bold;">Wait</span> or <span style="font-weight: bold;">Departure Time</span></p>
-<p><span style="font-weight: bold;">Delete Route</span> button removes the Route from database.</p>
-<p><span style="font-weight: bold;">Add Route</span> button adds a new Route to database.</p>
-<p><span style="font-weight: bold;">Save Route</span> button save the changes to the database.</p>
+        <p><a href="index.shtml#Operations">Back to Index</a></p>
+      </div>
+      <hr>
 
-<h3><a href="Ops_Routes_Menu.shtml">Edit Route panel menu bar</a></h3>
-<hr>
+      <p>The <span style="font-weight: bold;">Edit Route</span>
+      window is opened from the <span style=
+      "font-weight: bold;">Routes</span> window by selecting a
+      Route and clicking on the associated <span style=
+      "font-weight: bold;">Edit</span> button in the list.</p>
 
-<div align="right">
-<p><a rel="tag" href="Ops_Routes.shtml">Back</a><a href="Ops_Trains.shtml"></a></p>
-<p><a href="index.shtml#Operations">Back to Index</a></p>
-</div>
+      <p><img style="width: 799px; height: 290px;" alt="edit route"
+      src="images/Ops_EditRoute.png"></p>
 
-<!--#include virtual="/Footer" -->
-</div>
-</div>
+      <p>The selected Route <span style=
+      "font-weight: bold;">Name</span> is displayed in the
+      window.</p>
+
+      <p>A <span style="font-weight: bold;">Comment</span> may be
+      displayed if in the database.</p>
+
+      <p>Columns contain the following data for each Stop on the
+      Route:</p>
+
+      <p><span style="font-weight: bold;">Id</span> - identifies
+      the Stop to the program.</p>
+
+      <p><span style="font-weight: bold;">Location</span> -
+      displays the Location for each stop.</p>
+
+      <p><span style="font-weight: bold;">Train Direction</span> -
+      may be set using drop down list to either East or West.</p>
+
+      <p><span style="font-weight: bold;">Moves</span> - shows the
+      number of Moves at each stop.</p>
+
+      <p><span style="font-weight: bold;">Pickups?</span> - set to
+      Yes or No using drop down list.</p>
+
+      <p><span style="font-weight: bold;">Set outs?</span> - set to
+      Yes or No using drop down list.</p>
+
+      <p><span style="font-weight: bold;">Wait</span> - value is
+      shown.</p>
+
+      <p><span style="font-weight: bold;">Max Length</span> - of
+      Track at Stop is shown in scale feet.</p>
+
+      <p><span style="font-weight: bold;">Grade</span> - at Stop is
+      shown.</p>
+
+      <p><span style="font-weight: bold;">X</span> and <span style=
+      "font-weight: bold;">Y</span> - coordinates of the stop are
+      shown in the two columns.</p>
+
+      <p><span style="font-weight: bold;">Comment</span> - Add
+      button opens the Comment dialog for the stop:</p>
+
+      <p><img style="width: 405px; height: 116px;" alt=
+      "stop comment" src="images/Ops_EditRoute_comment.png"></p>
+
+      <p><span style="font-weight: bold;">Up</span> and
+      <span style="font-weight: bold;">Down</span> columns move the
+      postion of the stop on the route either Up or Down using the
+      associated button.</p>
+
+      <p><span style="font-weight: bold;">Delete</span> button -
+      deletes the stop from the route without confirmation.</p>
+      <!-- New in version 3.10 -->
+
+      <div style=
+      "margin:40px; padding:10px; background-color:#eee;">
+        New in v3.10: Random Moves
+
+        <p>The Add/Edit Route panel has a "Random" column with a
+        menu of 10 items. The default is "Off" (0%), and there are
+        values between 10 and 90.<br>
+        If you select 10, it tells the program to randomly reduce
+        the number of Car Moves at that Location by up to 10%. So
+        if you asked for 10 Moves, you could get 10 or 9 Moves. If
+        you selected 50, you could get any number of Moves between
+        10 and 5. Be sure to press "Save Route" to save you
+        setting.</p><img src="images/Ops_EditRouteRandom413.png"
+        alt="Route v3.8 with Random column" height="284" width=
+        "713">
+      </div><!-- End of New -->
+
+      <p><span style="font-weight: bold;"><span style=
+      "font-style: italic;">Bottom of the Window:</span></span></p>
+
+      <p><span style="font-weight: bold;"><span style=
+      "font-style: italic;">Location</span> -</span></p>
+
+      <p style="margin-left: 40px;"><span style=
+      "font-weight: bold;">drop down list</span> to select any of
+      the possible locations on your Railroad.</p>
+
+      <p style="margin-left: 40px;"><span style=
+      "font-weight: bold;">Add Location</span> button - adds the
+      location to the route.</p>
+
+      <p style="margin-left: 40px;">Select radio buttons to
+      <span style="font-weight: bold;">Add location at start</span>
+      or <span style="font-weight: bold;">Add location at
+      end</span>.</p>
+
+      <p style="font-weight: bold;">Display</p>
+
+      <p style="margin-left: 40px;">Select radio buttons for either
+      <span style="font-weight: bold;">Wait</span> or <span style=
+      "font-weight: bold;">Departure Time</span></p>
+
+      <p><span style="font-weight: bold;">Delete Route</span>
+      button removes the Route from database.</p>
+
+      <p><span style="font-weight: bold;">Add Route</span> button
+      adds a new Route to database.</p>
+
+      <p><span style="font-weight: bold;">Save Route</span> button
+      save the changes to the database.</p>
+
+      <h3><a href="Ops_Routes_Menu.shtml">Edit Route panel menu
+      bar</a></h3>
+      <hr>
+
+      <div align="right">
+        <p><a rel="tag" href="Ops_Routes.shtml">Back</a><a href=
+        "Ops_Trains.shtml"></a></p>
+
+        <p><a href="index.shtml#Operations">Back to Index</a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div>
+  </div>
 </body>
 </html>

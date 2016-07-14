@@ -2,7 +2,6 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!--  $Id$ -->
 <!-- UpDated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-11-01--> 
 
 <title>JMRI: RPS Icon</title>
@@ -195,7 +194,7 @@ Format XML, que nous utilisons
 <li> A l'aide d'un &#233;diteur de texte, ouvrez le fichier pour le modifier.
 <li> Trouvez la ligne qui d&#233;finit l'ic&#244;ne. Il contiendra la cha&#238;ne "RpsPositionIconXml»,
 ainsi une approche est de rechercher cela. Il va ressembler &#224; (il sera probablement sur une seule ligne):
-<code> <pre>
+<pre style="font-family: monospace;">
     &lt;Sensoricon x = "95" y = "150" level = "10"
             actif = "resources/icons/smallschematics/tracksegments/circuit occupied.gif"
             error = "resources/icons/smallschematics/tracksegments/circuit error.gif"
@@ -203,10 +202,10 @@ ainsi une approche est de rechercher cela. Il va ressembler &#224; (il sera prob
             sxscale = "11.849106591612951" syscale = "-11,889381744148094"
             sxorigin = "41" syorigin = "768"
             class = "jmri.jmrit.display.configurexml.RpsPositionIconXml" /&gt;
-</code></pre>
+</pre>
 <li> Pour que l'ic&#244;ne suive d'un &#233;metteur sp&#233;cifique, entrez l'ID de l'&#233;metteur en tant qu'attribut "filtre". Par exemple, pour
 suivre l'&#233;metteur 5510, modifiez la ligne:
-<code> <pre>
+<pre style="font-family: monospace;">
     &lt;Sensoricon filter = "5510" x = "95" y = "150" level = "10"
             actif = "resources/icons/smallschematics/tracksegments/circuit occupied.gif"
             error = "resources/icons/smallschematics/tracksegments/circuit error.gif"
@@ -214,7 +213,7 @@ suivre l'&#233;metteur 5510, modifiez la ligne:
             xscale = "11.849106591612951" syscale = "-11,889381744148094"
             sxorigin = "41" syorigin = "768"
             class = "jmri.jmrit.display.configurexml.RpsPositionIconXml" /&gt;
-</code></pre>
+</pre>
 <li> Les attributs "actif" et "erreur" sont les ic&#244;nes &#224; afficher lorsque le syst&#232;me 
 obtiennent des r&#233;sultats fiables et n'obtiennent pas de bonnes lectures, respectivement.
 Vous pouvez modifier celle ci &#224; l'emplacement de n'importe quel fichier d'ic&#244;ne que vous souhaitez.

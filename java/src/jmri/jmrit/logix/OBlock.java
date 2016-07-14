@@ -132,10 +132,6 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         }
         return _statusNameMap.get(str);
     }
-    /* maybe show fast clock time later
-     protected static Timebase 	_clock = InstanceManager.timebaseInstance();
-     private java.util.Date	_entryTime;		// time when block became occupied
-     */
     ArrayList<Portal> _portals = new ArrayList<Portal>();     // portals to this block
 
     private Warrant _warrant;       // when not null, block is allocated to this warrant

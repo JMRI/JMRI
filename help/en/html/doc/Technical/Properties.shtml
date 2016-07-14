@@ -1,125 +1,119 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
 <html lang="en">
 <head>
-<!-- Copyright Bob Jacobsen 2008 -->
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen 2008 -->
 
-<title>JMRI: System Properties</title>
+  <title>JMRI: System Properties</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
 
-<!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
-</HEAD>
+<body>
+  <!--#include virtual="/Header" -->
 
-<BODY>
-<!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h2>JMRI: System Properties</h2>This page lists the system
+      properties that JMRI uses.
 
-<h2> 
-JMRI: System Properties
-</h2>
+      <h3>Operating System Properties</h3>
 
-This page lists the system properties that JMRI uses.
+      <dl>
+        <dt>os.name</dt>
 
-<h3>Operating System Properties</h3>
-<dl>
+        <dd>
+          Most of JMRI is system-independent, but in a couple
+          places we provide system-specific code to customize the
+          user experience. This is the property we use to tell what
+          type of computer operating system is in use.
 
-<dt>
-os.name
-<dd>
-Most of JMRI is system-independent, but in a couple
-places we provide system-specific code to customize the user experience.
-This is the property we use to tell what type of computer operating system
-is in use.
-<p>
-For example, we locate the default 
-<a href="../../apps/DecoderPro/Files.shtml#location">preferences directory</a>
-in different places depending on the system type.
+          <p>For example, we locate the default <a href=
+          "../../apps/DecoderPro/Files.shtml#location">preferences
+          directory</a> in different places depending on the system
+          type.</p>
+        </dd>
 
-<dt>
-user.dir
-<dd>
-Java sets this to the directory in which JMRI is running.
-JMRI uses it to find many of its files; this property should not
-be changed by the user!
+        <dt>user.dir</dt>
 
-<dt>
-user.home
-<dd>
-Java sets this to the "home" directory of the current user.
-JMRI uses it, on some systems, for locating the default
-locations for the preferences directory.
+        <dd>Java sets this to the directory in which JMRI is
+        running. JMRI uses it to find many of its files; this
+        property should not be changed by the user!</dd>
 
-<dt>
-gnu.io.rxtx.SerialPorts
-<dd>
-The RXTX communications library uses this to specify 
-additional ports to use.  If you have e.g. a USB to serial
-adapter which is not showing up in the preferences chooser boxes,
-assign its name to this property.
-<p>
--Dgnu.io.rxtx.SerialPorts=/dev/ttyUSB0
-<p>
-The Linux startup scripts will do this if you have set the JMRI_SERIAL_PORT environment variable.
+        <dt>user.home</dt>
 
-</dl>
+        <dd>Java sets this to the "home" directory of the current
+        user. JMRI uses it, on some systems, for locating the
+        default locations for the preferences directory.</dd>
 
-<h3>JMRI properties</h3>
-<dl>
+        <dt>gnu.io.rxtx.SerialPorts</dt>
 
-<dt>
-jmri.log
-<dd>
-Name of JMRI's logging control file, typically default.lcf
+        <dd>
+          The RXTX communications library uses this to specify
+          additional ports to use. If you have e.g. a USB to serial
+          adapter which is not showing up in the preferences
+          chooser boxes, assign its name to this property.
 
-<dt>
-jmri.log.path
-<dd>
-The directory for storing logs. If not specified,
-logs are stored in the JMRI settings directory.
+          <p>-Dgnu.io.rxtx.SerialPorts=/dev/ttyUSB0</p>
 
-<dt>
-jmri.prefsdir
-<dd>
-By setting this property, you can explicitly set where JMRI
-looks for it's preference directory.
+          <p>The Linux startup scripts will do this if you have set
+          the JMRI_SERIAL_PORT environment variable.</p>
+        </dd>
+      </dl>
 
-<dt>
-jmri.inset.height
-<dd>
-If set, provides a minimum inset value for the height of JMRI windows.
-The inset is the space allowed for decorations at the top and bottom of the screen.
-Set this to a positive integer N to ensure that JMRI windows open with at
-least N pixels available at the top and/or bottom.
-<p>
--Djmri.inset.height=45
+      <h3>JMRI properties</h3>
 
-<dt>
-jmri.inset.width
-<dd>
-If set, provides a minimum inset value for the width of JMRI windows.
-The inset is the space allowed for decorations around the sides of the screen.
-Set this to a positive integer N to ensure that JMRI windows open with at
-least N pixels available on the sides.
+      <dl>
+        <dt>jmri.log</dt>
 
-<dt>
-org.jmri.Apps.(key)
-<dd>
+        <dd>Name of JMRI's logging control file, typically
+        default.lcf</dd>
 
+        <dt>jmri.log.path</dt>
 
-<dt>
-org.jmri.Apps.configFilename
-<dd>
+        <dd>The directory for storing logs. If not specified, logs
+        are stored in the JMRI settings directory.</dd>
 
+        <dt>jmri.prefsdir</dt>
 
-</dl>
-    
-<!--#include virtual="/Footer" -->
+        <dd>By setting this property, you can explicitly set where
+        JMRI looks for it's preference directory.</dd>
+
+        <dt>jmri.inset.height</dt>
+
+        <dd>
+          If set, provides a minimum inset value for the height of
+          JMRI windows. The inset is the space allowed for
+          decorations at the top and bottom of the screen. Set this
+          to a positive integer N to ensure that JMRI windows open
+          with at least N pixels available at the top and/or
+          bottom.
+
+          <p>-Djmri.inset.height=45</p>
+        </dd>
+
+        <dt>jmri.inset.width</dt>
+
+        <dd>If set, provides a minimum inset value for the width of
+        JMRI windows. The inset is the space allowed for
+        decorations around the sides of the screen. Set this to a
+        positive integer N to ensure that JMRI windows open with at
+        least N pixels available on the sides.</dd>
+
+        <dt>org.jmri.Apps.(key)</dt>
+
+        <dt>org.jmri.Apps.configFilename</dt>
+      </dl><!--#include virtual="/Footer" -->
+    </div>
+  </div>
 </body>
 </html>

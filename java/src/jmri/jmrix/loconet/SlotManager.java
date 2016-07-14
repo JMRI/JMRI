@@ -769,6 +769,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         doWrite(CV, val, p, 0x67);  // ops mode byte write, with feedback
     }
 
+    @Override
     public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         lopsa = 0;
         hopsa = 0;
@@ -806,15 +807,18 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         tc.sendLocoNetMessage(progTaskStart(pcmd, val, CV, true));
     }
 
-    public void confirmCVOpsMode(int CV, int val, jmri.ProgListener p,
+    public void confirmCVOpsMode(String CVname, int val, jmri.ProgListener p,
             int addr, boolean longAddr) throws jmri.ProgrammerException {
+        int CV = Integer.parseInt(CVname);
         lopsa = addr & 0x7f;
         hopsa = (addr / 128) & 0x7f;
         mServiceMode = false;
         doConfirm(CV, val, p, 0x2F);  // although LPE implies 0x2C, 0x2F is observed
     }
 
-    public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    @Override
+    public void confirmCV(String CVname, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+        int CV = Integer.parseInt(CVname);
         lopsa = 0;
         hopsa = 0;
         mServiceMode = true;
@@ -872,6 +876,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         doRead(CV, p, 0x2F);  // although LPE implies 0x2C, 0x2F is observed
     }
 
+    @Override
     public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         lopsa = 0;
         hopsa = 0;
@@ -1090,7 +1095,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 // finished service-track programming, time to power on
                 log.debug("end service-mode programming: turn power on");
                 try {
-                    jmri.InstanceManager.powerManagerInstance().setPower(jmri.PowerManager.ON);
+                    jmri.InstanceManager.getDefault(jmri.PowerManager.class).setPower(jmri.PowerManager.ON);
                 } catch (jmri.JmriException e) {
                     log.error("exception during power on at end of programming: " + e);
                 }

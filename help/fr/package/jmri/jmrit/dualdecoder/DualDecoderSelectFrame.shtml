@@ -1,114 +1,139 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="fr">
 <head>
-<!-- Copyright Bob Jacobsen 2008 -->
-<!--  $Id$ -->
-<!-- UpDated by Herv&#233; Blorec  bzh56420@yahoo.fr 2013-11-02--> 
-<title>JMRI: Multi-Decoder Control</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen 2008 -->
+  <!--  $Id$ -->
+  <!-- UpDated by Herv&#233; Blorec  bzh56420@yahoo.fr 2013-11-02-->
 
-<!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
-</HEAD>
+  <title>JMRI: Multi-Decoder Control</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
 
-<BODY>
-<!--#include virtual="/Header" -->
+<body>
+  <!--#include virtual="/Header" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h2>JMRI: Commandes Multi-d&eacute;codeur</h2>A l'origine,
+      DCC n'a pas fourni un moyen commode de programmer Les valeurs
+      de configuration des (CV) quand vous avez plus d'un
+      d&eacute;codeur install&eacute; dans une locomotive. Par
+      exemple, si vous avez des d&eacute;codeurs
+      s&eacute;par&eacute;s pour contr&ocirc;ler le moteur et
+      fournir du son, et ils ont tous deux utiliser les m&ecirc;mes
+      CV, la programmation d'un d&eacute;codeur fera modifier les
+      param&egrave;tres de l'autre, g&eacute;n&eacute;ralement
+      d'une mani&egrave;re ind&eacute;sirable.
 
+      <p>Il y a diff&eacute;rentes astuces qui peuvent &ecirc;tre
+      utilis&eacute;es avec des adresses longues et courtes et la
+      programmation sur la voie principale, mais elles ne sont pas
+      enti&egrave;rement satisfaisantes.</p>
 
+      <p>Digitrax <a href=
+      "http://www.digitrax.com/v1/LOCK.htm">propose une
+      m&eacute;thode</a> pour faire face &agrave; cela au <a href=
+      "http://www.nmra.org/standards/DCC/WGpublic/0305051/0305051.html">
+      groupe de travail DCC</a>. Ce fut <a href=
+      "http://www.nmra.org/standards/DCC/WGpublic/discussion_topics.html#Topic0305051">
+      accept&eacute;e par la NMRA</a> pour inclusion dans une
+      <a href=
+      "http://www.nmra.org/standards/DCC/standards_rps/rp922.html#Descriptions%20of%20Configuration%20Variables%20for%20Multi-Function%20Decoders">
+      "Pratique Recommand&eacute;e</a> ", et a depuis
+      &eacute;t&eacute; adopt&eacute;e par de nombreux
+      fabricants.</p>
 
+      <p>La m&eacute;thode utilise CV15 et CV16 pour commander
+      l'&eacute;criture et la lecture des CV. Avant que les
+      d&eacute;codeurs soient install&eacute;s dans la locomotive,
+      chacun a une valeur sp&eacute;cifique programm&eacute;e dans
+      CV16. (Les valeurs recommand&eacute;es sont de 1 pour le
+      d&eacute;codeur de moteur, 2 pour un d&eacute;codeur de son,
+      3 pour un d&eacute;codeur de fonction, et 4-7 pour d'autres
+      usages; Les d&eacute;codeurs sont cens&eacute;s &ecirc;tre
+      vendus avec une valeur de 0 dans les deux CV15 et CV16 ) Un
+      d&eacute;codeur ne fera que lire et &eacute;crire les
+      op&eacute;rations si les valeurs CV15 et CV16 sont les
+      m&ecirc;mes, &agrave; l'exception que vous pouvez toujours
+      &eacute;crire dans CV15. En effet, CV16 est un verrou et CV15
+      est la cl&eacute;.</p>
 
-<h2> 
-JMRI: Commandes Multi-d&#233;codeur
-</H2>
+      <p><a href="../../../../images/DualDecoder.jpg"><img width=
+      "122" height="306" align="right" src=
+      "../../../../images/DualDecoder.jpg" alt=
+      "Dual D&eacute;codeur Window"></a> DecoderPro a une "
+      Commande Multi-d&eacute;codeur" pour rendre l'usage de cette
+      fonctionnalit&eacute; plus facile. Vous pouvez l'ouvrir
+      &agrave; partir de la s&eacute;lection "programmateurs" dans
+      le menu "Outils". Cela ouvre une fen&ecirc;tre, que vous
+      pouvez &eacute;galement voir sur la droite de cette page.</p>
 
-A l'origine, DCC n'a pas fourni un moyen commode de programmer
-Les valeurs de configuration des (CV) quand vous avez plus d'un d&#233;codeur install&#233; dans
-une locomotive. Par exemple, si vous avez des d&#233;codeurs s&#233;par&#233;s
-pour contr&#244;ler le moteur et fournir du son, et ils ont tous deux
-utiliser les m&#234;mes CV, la programmation d'un d&#233;codeur fera
-modifier les param&#232;tres de l'autre, g&#233;n&#233;ralement d'une mani&#232;re ind&#233;sirable.
+      <p>La section sup&eacute;rieure de la fen&ecirc;tre se
+      compose de huit boutons radio. Cliquer sur les boutons
+      num&eacute;rot&eacute;s de 0 &agrave; 6 fera
+      d&eacute;verrouiller le d&eacute;codeur avec le num&eacute;ro
+      correspondant dans ce verrouillage CV (CV16). DecoderPro lit
+      alors la valeur de retour dans le CV16 pour confirmer que le
+      d&eacute;codeur a r&eacute;ussi &agrave; se
+      d&eacute;verrouiller.</p>
 
-<p>
-Il y a diff&#233;rentes astuces qui peuvent &#234;tre utilis&#233;es avec des adresses longues et courtes
-et la programmation sur la voie principale, mais elles ne sont pas enti&#232;rement satisfaisantes.
+      <p>Normalement, un clic sur le bouton pour le d&eacute;codeur
+      que vous souhaitez programmer, et le d&eacute;placer vers la
+      fen&ecirc;tre principale DecoderPro pour lire et
+      &eacute;crire les valeurs.</p>
 
-<p>
-Digitrax
-<a href="http://www.digitrax.com/v1/LOCK.htm">propose une m&#233;thode</a>
-pour faire face &#224; cela au
-<a href="http://www.nmra.org/standards/DCC/WGpublic/0305051/0305051.html"> groupe de travail DCC</a>.
-Ce fut
-<a href="http://www.nmra.org/standards/DCC/WGpublic/discussion_topics.html#Topic0305051"> accept&#233;e par la NMRA</a> pour inclusion dans une 
-<a href="http://www.nmra.org/standards/DCC/standards_rps/rp922.html#Descriptions%20of%20Configuration%20Variables%20for%20Multi-Function%20Decoders">"Pratique Recommand&#233;e</a> ",
-et a depuis &#233;t&#233; adopt&#233;e par de nombreux fabricants.
+      <p>Le bouton "Legacy" &eacute;crit un 7 dans CV15, qui est un
+      autre cas particulier Beaucoup de d&eacute;codeurs, des
+      mod&egrave;les surtout les plus &acirc;g&eacute;s, n'ont pas
+      ce m&eacute;canisme actuel de blocage. Dans certains cas,
+      plus sp&eacute;cifiquement pour un FX3 Digitrax ou un
+      d&eacute;codeur plus ancien et un d&eacute;codeur du
+      d&eacute;but SoundTraxx, il est possible d'&eacute;muler la
+      serrure &agrave; l'aide d'&eacute;criture s&eacute;quentielle
+      de CV. Cliquer sur le bouton "Legacy" l'active.
+      Malheureusement, ce n'est pas une m&eacute;thode
+      enti&egrave;rement fiable.</p>
 
-<p>
-La m&#233;thode utilise CV15 et CV16 pour commander l'&#233;criture et la lecture des CV.
-Avant que les d&#233;codeurs soient install&#233;s dans la locomotive, chacun a une valeur sp&#233;cifique
-programm&#233;e dans CV16. (Les valeurs recommand&#233;es sont de 1 pour le d&#233;codeur de moteur,
-2 pour un d&#233;codeur de son, 3 pour un d&#233;codeur de fonction, et 4-7 pour d'autres usages;
-Les d&#233;codeurs sont cens&#233;s &#234;tre vendus avec une valeur de 0 dans les deux CV15 et CV16 )
-Un d&#233;codeur ne fera que lire et &#233;crire les op&#233;rations si les valeurs CV15 et CV16 
-sont les m&#234;mes, &#224; l'exception que vous pouvez toujours &#233;crire dans CV15.
-En effet, CV16 est un verrou et CV15 est la cl&#233;.
+      <p>Dans la section du milieu il y a des boutons qui peuvent
+      faire des op&eacute;rations plus compliqu&eacute;es.</p>
 
-<p>
-<a href="../../../../images/DualDecoder.jpg"> 
-<img width="122" height="306" align="right" src="../../../../images/DualDecoder.jpg" alt="Dual D&#233;codeur Window"/></a>
+      <p>Le bouton "Rechercher" fonctionne de mani&egrave;re
+      s&eacute;quentielle par les adresses possibles , marquant les
+      adresses de d&eacute;codeurs qui se trouvent &ecirc;tre
+      pr&eacute;sents.</p>
 
-DecoderPro a une " Commande Multi-d&#233;codeur" pour rendre l'usage de cette fonctionnalit&#233; plus facile.
-Vous pouvez l'ouvrir &#224; partir de la s&#233;lection "programmateurs"  dans le menu "Outils".
-Cela ouvre une fen&#234;tre, que vous pouvez &#233;galement voir sur la droite de cette page.
+      <p>"R&eacute;init" fonctionne &agrave; travers les
+      combinaisons possibles pour d&eacute;bloquer un
+      d&eacute;codeur qui a &eacute;t&eacute; verrouill&eacute; par
+      inadvertance. Cela devrait &ecirc;tre utilis&eacute; si vous
+      avez juste un d&eacute;codeur dans la locomotive. Si vous
+      avez plus d'un, il les d&eacute;bloquera tous, ce qui peut
+      causer de la confusion plus tard.</p>
 
-<p>
-La section sup&#233;rieure de la fen&#234;tre se compose de huit boutons radio.
- Cliquer sur les boutons num&#233;rot&#233;s de 0 &#224; 6 fera d&#233;verrouiller le d&#233;codeur
-avec le num&#233;ro correspondant dans ce verrouillage CV (CV16). DecoderPro
-lit alors la valeur de retour dans le CV16 pour confirmer que le d&#233;codeur a r&#233;ussi &#224; se d&#233;verrouiller.
+      <p>"Init DH163 + Soundtraxx" configure le mode "Legacy"
+      discut&eacute; ci-dessus.</p>
 
-<p>
-Normalement, un clic sur le bouton pour le d&#233;codeur que vous souhaitez programmer,
-et le d&#233;placer vers la fen&#234;tre principale DecoderPro pour lire et &#233;crire les
-valeurs.
+      <p>En dessous, le programme affiche des messages
+      d'&eacute;tat.</p>
 
-<p>
-Le bouton "Legacy" &#233;crit un 7 dans CV15, qui est un autre cas particulier
-Beaucoup de d&#233;codeurs, des mod&#232;les surtout les plus &#226;g&#233;s, n'ont pas ce m&#233;canisme actuel de blocage. Dans certains cas, plus sp&#233;cifiquement pour un FX3 Digitrax ou un
-d&#233;codeur plus ancien et un d&#233;codeur du d&#233;but SoundTraxx, il est possible d'&#233;muler
-la serrure &#224; l'aide d'&#233;criture s&#233;quentielle de CV. Cliquer sur le bouton "Legacy" 
-l'active. Malheureusement, ce n'est pas une m&#233;thode enti&#232;rement fiable.
-
-<p>
-Dans la section du milieu il y a des boutons qui
-peuvent faire des op&#233;rations plus compliqu&#233;es.
-<p>
-Le bouton "Rechercher" fonctionne de mani&#232;re s&#233;quentielle par les adresses possibles
-, marquant les adresses de d&#233;codeurs qui se trouvent  &#234;tre pr&#233;sents.
-<p>
-"R&#233;init" fonctionne &#224; travers les combinaisons possibles pour d&#233;bloquer un d&#233;codeur qui
-a &#233;t&#233;  verrouill&#233; par inadvertance. Cela devrait &#234;tre utilis&#233; si vous avez
-juste un d&#233;codeur dans la locomotive. Si vous avez plus d'un,
-il les d&#233;bloquera tous, ce qui peut causer de la confusion plus tard.
-
-<p>
-"Init DH163 + Soundtraxx" configure le mode "Legacy" discut&#233; ci-dessus.
-
-<p>
-En dessous, le programme affiche des messages d'&#233;tat.
-
-<p>
-La section du bas vous permet de d&#233;finir directement le mode de programmation en cours d'utilisation.
-Si vous utilisez la programmation  mode ops (programmation sur la voie principale), vous aurez
-&#233;galement besoin de sp&#233;cifier l'adresse de la locomotive en cours de programmation.
-
-<!--#include virtual="/Footer" -->
+      <p>La section du bas vous permet de d&eacute;finir
+      directement le mode de programmation en cours d'utilisation.
+      Si vous utilisez la programmation mode ops (programmation sur
+      la voie principale), vous aurez &eacute;galement besoin de
+      sp&eacute;cifier l'adresse de la locomotive en cours de
+      programmation. <!--#include virtual="/Footer" --></p>
+    </div>
+  </div>
 </body>
 </html>

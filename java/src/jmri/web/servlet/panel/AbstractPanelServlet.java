@@ -215,7 +215,7 @@ abstract class AbstractPanelServlet extends HttpServlet {
     //  element names are cleaned-up aspect names, aspect attribute is actual name of aspect
     Element getSignalMastIconsElement(String name) {
         Element icons = new Element("icons");
-        jmri.SignalMast signalMast = jmri.InstanceManager.signalMastManagerInstance().getSignalMast(name);
+        jmri.SignalMast signalMast = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(name);
         for (String aspect : signalMast.getValidAspects()) {
             Element ea = new Element(aspect.replaceAll("[ ()]", "")); //create element for aspect after removing invalid chars
             String url = signalMast.getAppearanceMap().getImageLink(aspect, "default");  //TODO: use correct imageset

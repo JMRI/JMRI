@@ -39,7 +39,7 @@ public class JsonPowerHttpService extends JsonHttpService {
         root.put(TYPE, POWER);
         ObjectNode data = root.putObject(DATA);
         try {
-            switch (InstanceManager.powerManagerInstance().getPower()) {
+            switch (InstanceManager.getDefault(jmri.PowerManager.class).getPower()) {
                 case PowerManager.OFF:
                     data.put(STATE, OFF);
                     break;
@@ -66,10 +66,10 @@ public class JsonPowerHttpService extends JsonHttpService {
         try {
             switch (state) {
                 case OFF:
-                    InstanceManager.powerManagerInstance().setPower(PowerManager.OFF);
+                    InstanceManager.getDefault(jmri.PowerManager.class).setPower(PowerManager.OFF);
                     break;
                 case ON:
-                    InstanceManager.powerManagerInstance().setPower(PowerManager.ON);
+                    InstanceManager.getDefault(jmri.PowerManager.class).setPower(PowerManager.ON);
                     break;
                 case UNKNOWN:
                     // quietly ignore

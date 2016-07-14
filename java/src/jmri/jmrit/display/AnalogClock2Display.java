@@ -123,7 +123,7 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
 
     public AnalogClock2Display(Editor editor) {
         super(editor);
-        clock = InstanceManager.timebaseInstance();
+        clock = InstanceManager.getDefault(jmri.Timebase.class);
 
         rate = (int) clock.userGetRate();
 

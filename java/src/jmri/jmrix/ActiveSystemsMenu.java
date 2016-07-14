@@ -43,12 +43,11 @@ public class ActiveSystemsMenu extends JMenu {
         // get ComponentFactory objects and create menus
         java.util.List<ComponentFactory> list
                 = jmri.InstanceManager.getList(ComponentFactory.class);
-        if (list != null) {
-            for (ComponentFactory memo : list) {
-                JMenu menu = memo.getMenu();
-                if (menu != null) {
-                    m.add(menu);
-                }
+
+        for (ComponentFactory memo : list) {
+            JMenu menu = memo.getMenu();
+            if (menu != null) {
+                m.add(menu);
             }
         }
 
@@ -104,12 +103,11 @@ public class ActiveSystemsMenu extends JMenu {
         // get ComponentFactory objects and create menus
         java.util.List<ComponentFactory> list
                 = jmri.InstanceManager.getList(ComponentFactory.class);
-        if (list != null) {
-            for (ComponentFactory memo : list) {
-                JMenu menu = memo.getMenu();
-                if (menu != null) {
-                    m.add(menu);
-                }
+
+        for (ComponentFactory memo : list) {
+            JMenu menu = memo.getMenu();
+            if (menu != null) {
+                m.add(menu);
             }
         }
 

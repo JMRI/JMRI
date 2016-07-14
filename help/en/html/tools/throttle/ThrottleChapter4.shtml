@@ -1,332 +1,427 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
-  <title>Throttle: Opening/Saving a Throttle Layout </title>
-  <meta name="keywords" content="JMRI decoderpro dcc nmra throttlepro">
-  <meta name="Description" content="Throttle documentation for JMRI project">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>Throttle: Opening/Saving a Throttle Layout</title>
+  <meta name="keywords" content=
+  "JMRI decoderpro dcc nmra throttlepro">
+  <meta name="Description" content=
+  "Throttle documentation for JMRI project">
   <meta name="Author" content="Paul Fraker (paul@frakers.com)">
-  <meta name="Language" content="EN">
-  
-  <!-- Style -->
-  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <meta name="Language" content="EN"><!-- Style -->
+  <meta http-equiv="content-type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header" -->
 
-<div id="mainContent">
-<h1>Current Throttle documentation</h1>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<p>Please note that the Throttles Help was updated. Current version:</p>
-<ul>
-  <li>The <a href="ToolsMenuThrottleEntry.shtml">Throttle menu in JMRI</a></li>
-  <li>The <a href="BasicThrottleWindow.shtml">Throttle Window itself</a></li>
-  <li>The <a href="ThrottleWindowMenus.shtml">Throttle Window menus</a></li>
-  <li>The <a href="ThrottleToolBar.shtml">Throttle Window toolbar</a></li>
-  <li>The <a href="AdvancedThrottleControl.shtml">Throttle Window
-  controls</a></li>
-  <li>The <a href="ThrottlesListWindow.shtml">Throttles List Window</a></li>
-  <li>The <a href="ThrottlesPreferencesPane.shtml">Throttles preferences
-    pane</a></li>
-</ul>
+    <div id="mainContent">
+      <h1>Current Throttle documentation</h1>
 
-<hr>
-<h1>Throttles in JMRI v2.x</h2>
-<h2>Saving a Throttle Layout</h2>
+      <p>Please note that the Throttles Help was updated. Current
+      version:</p>
 
-<p>A new throttle window can be started and a DCC address established to run a
-train around a layout, and then close down the throttle window when done with
-it. This of course loses the configuration that you established during this
-throttle session. And this is fine if you are running a test of sorts on a loco
-that you have no intention of running by one of these computer throttles.
-Therefore, closing down the throttle window to eliminate it would suffice.</p>
+      <ul>
+        <li>The <a href="ToolsMenuThrottleEntry.shtml">Throttle
+        menu in JMRI</a></li>
 
-<table border="0" width="100%" cellpadding="0" cellspacing="0">
-  <tbody>
-    <tr>
-      <td align="left" valign="top"><p>But what if you don't want to keep
-        establishing a new throttle window each time for one or more
-        locomotives that you intend on running from your computer?</p>
+        <li>The <a href="BasicThrottleWindow.shtml">Throttle Window
+        itself</a></li>
 
-        <p>If you were following along in the <a
-        href="ThrottleChapter2.shtml">previous chapters</a> with building up a
-        new throttle layout and got your train moving, then the next question
-        that probably comes to your mind is, "how do I save it?"</p>
+        <li>The <a href="ThrottleWindowMenus.shtml">Throttle Window
+        menus</a></li>
 
-        <p>Following the directions provided in <a
-        href="ThrottleChapter1.shtml#MainMenu">Chapter 1</a> for locating the
-        Throttle Menu, locate the option that says "<strong>Save Throttle
-        Layout</strong>" (see figure 4-1 on the right). Clicking on this menu
-        option will display a "<b>Save As</b>" dialog box see figure 4-2
-        below).</p>
-      </td>
-      <td><img width="20" height="20" src="images/spacer.gif"> </td>
-      <td align="center" valign="top"><br>
+        <li>The <a href="ThrottleToolBar.shtml">Throttle Window
+        toolbar</a></li>
 
+        <li>The <a href="AdvancedThrottleControl.shtml">Throttle
+        Window controls</a></li>
 
-        <p style="text-align: center; font-size: xx-small"><img width="163"
-        height="82" src="images/jmri006.jpg" title="Save Throttle Layout"><br>
-        Figure 4-1: Save Throttle Layout </p>
-      </td>
-    </tr>
-  </tbody>
-</table>
+        <li>The <a href="ThrottlesListWindow.shtml">Throttles List
+        Window</a></li>
 
-<p style="text-align: center; font-size: xx-small"><img width="327"
-height="272" src="images/jmri040.jpg" title="Save As Dialog"><br>
-Figure 4-2: Save As Dialog </p>
+        <li>The <a href="ThrottlesPreferencesPane.shtml">Throttles
+        preferences pane</a></li>
+      </ul>
+      <hr>
 
-<p>By default, it should show the directory where your roster file is located.
-You can save it to this directory if you wish, or you can save it to another
-location of your choosing. For example, the figure on the right shows a
-"Throttles" folder (sub-directory) where all throttle layout files are
-saved.</p>
+      <h1>Throttles in JMRI v2.x</h1>
 
-<p>After entering a file name of your choosing (and optional location) that
-best supports your railroad environment, the current throttle layout will be
-saved with all preferences, including window size and location.</p>
+      <h2>Saving a Throttle Layout</h2>
 
-<p>After the save is successful, you can close down the throttle window.</p>
+      <p>A new throttle window can be started and a DCC address
+      established to run a train around a layout, and then close
+      down the throttle window when done with it. This of course
+      loses the configuration that you established during this
+      throttle session. And this is fine if you are running a test
+      of sorts on a loco that you have no intention of running by
+      one of these computer throttles. Therefore, closing down the
+      throttle window to eliminate it would suffice.</p>
 
-<p class="important"><b>Note:</b> The "Save" option will save <u>all</u>
-currently opened Throttle windows. They are <u>not</u> saved as individual
-Throttles. This is explained in more detail below. </p>
+      <table border="0" width="100%" cellpadding="0" cellspacing=
+      "0">
+        <tbody>
+          <tr>
+            <td align="left" valign="top">
+              <p>But what if you don't want to keep establishing a
+              new throttle window each time for one or more
+              locomotives that you intend on running from your
+              computer?</p>
 
-<a name="SaveMultiple"></a> 
-<h2>Saving Multiple Throttle Windows</h2>
-<dir>
-  <p>The above instructions are pretty simple when working with a single
-  throttle window.</p>
+              <p>If you were following along in the <a href=
+              "ThrottleChapter2.shtml">previous chapters</a> with
+              building up a new throttle layout and got your train
+              moving, then the next question that probably comes to
+              your mind is, "how do I save it?"</p>
 
-  <p>But what happens when you have two or more throttle windows open at the
-  same time? When you use the save option, <u>all</u> opened throttle windows
-  will be saved in the same file. When that file is re-opened, all throttle
-  windows identified in that file will get opened.</p>
+              <p>Following the directions provided in <a href=
+              "ThrottleChapter1.shtml#MainMenu">Chapter 1</a> for
+              locating the Throttle Menu, locate the option that
+              says "<strong>Save Throttle Layout</strong>" (see
+              figure 4-1 on the right). Clicking on this menu
+              option will display a "<b>Save As</b>" dialog box see
+              figure 4-2 below).</p>
+            </td>
 
-  <p>This is important to understand, especially further along when working
-  with <a href="#Merging">merging multiple throttles</a>.</p>
+            <td><img width="20" height="20" src=
+            "images/spacer.gif"></td>
 
-  <table border="0" width="100%" cellpadding="0" cellspacing="0">
-    <tbody>
-      <tr>
-        <td valign="top"><p>In the previous chapter, a single throttle window
-          was initiated. And a simple "save" would certainly have saved just
-          the single throttle window into a single layout file. When the file
-          is opened again, only the single throttle window would appear.</p>
-        </td>
-        <td><img width="20" height="20" src="images/spacer.gif"> </td>
-        <td align="center" valign="top"><p
-          style="text-align: center; font-size: xx-small"><img width="309"
-          height="187" src="images/jmri036.jpg"
-          title="Example of 2 active throttle windows"><br>
-          Figure 4-3: Two Active Throttle Windows </p>
-        </td>
-      </tr>
-      <tr>
-        <td colspan="3" align="left" valign="top"><p>But what if we had opened
-          and configured a second throttle window, while the first throttle
-          window was still active on the screen? There would then be two active
-          throttle windows that would be "saved" into the same layout file (see
-          figure 4-3). Not only would the configuration of the throttles be
-          saved, but also the exact screen sizing and locations of the two
-          throttles.</p>
+            <td align="center" valign="top">
+              <br>
 
-          <p>When the layout file is re-opened, both throttle windows would be
-          opened and positioned on the computer screen in the exact place they
-          were when the file was saved.</p>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</dir>
+              <p style="text-align: center; font-size: xx-small">
+              <img width="163" height="82" src="images/jmri006.jpg"
+              title="Save Throttle Layout"><br>
+              Figure 4-1: Save Throttle Layout</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-<a name="LoadLayout"></a> 
-<h2>Open/Load a Throttle Layout</h2>
+      <p style="text-align: center; font-size: xx-small">
+      <img width="327" height="272" src="images/jmri040.jpg" title=
+      "Save As Dialog"><br>
+      Figure 4-2: Save As Dialog</p>
 
-<p>After saving a throttle layout has been accomplished, you'll want to open
-the file again. This is a very simple procedure. However, opening up a throttle
-layout file when one or more throttle windows are already active somewhere on
-the screen, requires an extra step. Before we discuss this extra step, let's
-first open a simple throttle layout file.</p>
+      <p>By default, it should show the directory where your roster
+      file is located. You can save it to this directory if you
+      wish, or you can save it to another location of your
+      choosing. For example, the figure on the right shows a
+      "Throttles" folder (sub-directory) where all throttle layout
+      files are saved.</p>
 
-<p>If you were following the guidelines shown above for saving a throttle
-layout file, you should now have created your first throttle file. If you
-haven't done so already, close down the throttle window that you created in the
-previous chapter (make sure you saved it first by following the above
-instructions).</p>
+      <p>After entering a file name of your choosing (and optional
+      location) that best supports your railroad environment, the
+      current throttle layout will be saved with all preferences,
+      including window size and location.</p>
 
-<table border="0" width="100%" cellpadding="0" cellspacing="0">
-  <tbody>
-    <tr>
-      <td align="left" valign="top"><p>You shouldn't have any throttle windows
-        open on your screen at this time. Following the directions provided in
-        <a href="ThrottleChapter1.shtml#MainMenu">Chapter 1</a> for locating
-        the Throttle Menu, locate the option that says "<strong>Load Throttle
-        Layout</strong>" (see figure 4-4 on the right). Clicking on this menu
-        option will display an "<b>Open</b>" dialog box. Locate the throttle
-        layout file that you just previously saved and open it.</p>
-      </td>
-      <td><img width="20" height="20" src="images/spacer.gif"> </td>
-      <td align="center" valign="top"><p
-        style="text-align: center; font-size: xx-small"><img width="163"
-        height="82" src="images/jmri007.jpg" title="Load throttle layout"><br>
-        Figure 4-4: Load Throttle Layout </p>
-      </td>
-    </tr>
-  </tbody>
-</table>
+      <p>After the save is successful, you can close down the
+      throttle window.</p>
 
-<p>The throttle window that you just created should open up in the same place
-where you closed it. At the same time that the window opens, it is also
-initializing the decoder address to the command station (just like when the
-address was first "Set"). The throttle attempts to determine the current
-direction of the locomotive, as well as identify any functions that are in the
-"on" state.</p>
+      <p class="important"><b>Note:</b> The "Save" option will save
+      <u>all</u> currently opened Throttle windows. They are
+      <u>not</u> saved as individual Throttles. This is explained
+      in more detail below.</p><a name="SaveMultiple" id=
+      "SaveMultiple"></a>
 
-<p class="important"><b>Note:</b> Because the JMRI Throttles are still in
-their "beta" development mode, there are still some quirks that need to be
-ironed out. An example of this is when opening a throttle layout and the DCC
-address is already "in use" by another throttle. Some systems (i.e. Digitrax)
-are reacting differently when this occurs.<br>
-<br>
-<b>Enhancement requests</b> are already on the list for the throttles to be
-"smart" in determining when another throttle already has the address. But until
-these throttles are fully implemented, just beware that there may be quirks
-with your particular DCC system with this feature. It is therefore suggested
-that <u>prior</u> to opening up a saved throttle layout file, the DCC address
-is verified as not being used by another throttle somewhere.</p>
+      <h2>Saving Multiple Throttle Windows</h2>
 
-<a name="Merging"></a> 
-<h2>Merging Throttle Windows</h2>
-<dir>
-  <p>Throttle layout files can consist of a single throttle window (to control
-  a single locomotive or consist address), or it can contain multiple throttle
-  windows (refer to figure 4-3). In either case, when opening a throttle layout
-  file, the program will check to see if any existing active throttle windows
-  are already open. If none are found, then the file is opened just like a
-  simple layout opening (explained above).</p>
+      <div style="margin-left: 2em">
+        <p>The above instructions are pretty simple when working
+        with a single throttle window.</p>
 
-  <p style="text-align: center; font-size: xx-small"><img width="354"
-  height="125" src="images/jmri035.jpg" title="Merge Dialog Box"><br>
-  Figure 4-5: Merge Dialog Box </p>
+        <p>But what happens when you have two or more throttle
+        windows open at the same time? When you use the save
+        option, <u>all</u> opened throttle windows will be saved in
+        the same file. When that file is re-opened, all throttle
+        windows identified in that file will get opened.</p>
 
-  <p>However, when one or more throttle windows are discovered already open on
-  the screen, the program will open up a dialog box as shown in figure 4-5 on
-  the right.</p>
-</dir>
-<ul>
-  <li><strong>Merge</strong> leaves the currently active open throttle
-    windows in place and opens the throttle(s) contained in the layout file
-    being opened.<br>
-    <br>
-  </li>
-  <li><strong>Replace</strong> closes down the currently active open throttle
-    window(s) and opens up the throttle window(s) established in the saved
-    layout file.<br>
-    <br>
-  </li>
-  <li><strong>Cancel</strong> cancels the "open" request and closes down this
-    dialog window. </li>
-</ul>
+        <p>This is important to understand, especially further
+        along when working with <a href="#Merging">merging multiple
+        throttles</a>.</p>
 
-<p class="important"><b>Note: Do not confuse the action that is occurring here
-with any attempts to overwrite your saved throttle layout files. The above
-actions have no effect on the actual saved throttle layout files themselves.
-The only "merging" and "replacing" that occurs is simply on your screen.</b>
-</p>
+        <table border="0" width="100%" cellpadding="0" cellspacing=
+        "0">
+          <tbody>
+            <tr>
+              <td valign="top">
+                <p>In the previous chapter, a single throttle
+                window was initiated. And a simple "save" would
+                certainly have saved just the single throttle
+                window into a single layout file. When the file is
+                opened again, only the single throttle window would
+                appear.</p>
+              </td>
 
-<table border="2" width="100%" cellpadding="4" cellspacing="2">
-  <tbody>
-    <tr>
-      <td valign="top"><strong>TIP!</strong>  
+              <td><img width="20" height="20" src=
+              "images/spacer.gif"></td>
 
-        <p>When creating throttle layout files, you can save the same decoder
-        address in multiple throttle layout files. A good example of why you
-        may want to do this would be if you create several throttle layout
-        files, each consisting of a single throttle window controlling one
-        single Locomotive, like one for each loco in your Roster. There may be
-        times when you wish to just run a single locomotive and you just open
-        up the associated layout file. Simple! But what if you find yourself
-        opening up the same locomotive throttles consistently on each session.
-        It's going to become a pain opening up (and "merging") these throttles
-        one at a time. Therefore, you could create another layout file that
-        contains all of the throttle windows that you wish; then just open up
-        the one layout file and you'll have all of the throttle windows
-        defined.</p>
+              <td align="center" valign="top">
+                <p style="text-align: center; font-size: xx-small">
+                <img width="309" height="187" src=
+                "images/jmri036.jpg" title=
+                "Example of 2 active throttle windows"><br>
+                Figure 4-3: Two Active Throttle Windows</p>
+              </td>
+            </tr>
 
-        <p>Just remember, when making a change to the configuration of a
-        throttle window, it only gets changed in the layout file that you saved;
-        it is <u>not</u> a global change in every file where that Locomotive
-        is used.</p>
-      </td>
-    </tr>
-  </tbody>
-</table>
+            <tr>
+              <td colspan="3" align="left" valign="top">
+                <p>But what if we had opened and configured a
+                second throttle window, while the first throttle
+                window was still active on the screen? There would
+                then be two active throttle windows that would be
+                "saved" into the same layout file (see figure 4-3).
+                Not only would the configuration of the throttles
+                be saved, but also the exact screen sizing and
+                locations of the two throttles.</p>
 
-<a name="SaveThrottlePreferences"></a> 
-<h2>Save Throttle Preferences</h2>
+                <p>When the layout file is re-opened, both throttle
+                windows would be opened and positioned on the
+                computer screen in the exact place they were when
+                the file was saved.</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div><a name="LoadLayout" id="LoadLayout"></a>
 
-<p>The "Save Throttle Preferences" allows you to customize the way new
-throttles will appear. Load or create one throttle that you want as your
-default. The program will warn you if multiple throttles exist. Then use the
-"Save Throttle Preferences" in the "Tools-&gt;Throttle" menu to save the
-throttle. When you create a new throttle, the defaults that you set should
-appear. Also when you use the "Save Throttle Preferences" feature the program
-will create a new directory called "throttles" in the JMRI directory. A file
-called "JMRI_ThrottlePreferences.xml" contains the default xml values for your
-throttles. If you want to restore the throttle settings to the original
-defaults, simply delete this file.</p>
+      <h2>Open/Load a Throttle Layout</h2>
 
-<p>To help you better organize your throttles, the program will also reference
-the "throttles" directory when saving or loading throttle layouts.</p>
+      <p>After saving a throttle layout has been accomplished,
+      you'll want to open the file again. This is a very simple
+      procedure. However, opening up a throttle layout file when
+      one or more throttle windows are already active somewhere on
+      the screen, requires an extra step. Before we discuss this
+      extra step, let's first open a simple throttle layout
+      file.</p>
 
-<a name="CloseThrottle"></a> 
-<h2>Closing a Throttle Window</h2>
+      <p>If you were following the guidelines shown above for
+      saving a throttle layout file, you should now have created
+      your first throttle file. If you haven't done so already,
+      close down the throttle window that you created in the
+      previous chapter (make sure you saved it first by following
+      the above instructions).</p>
 
-<p>When done with a throttle window, it might be a good idea if you get into
-the practice of either "releasing" or "dispatching" the locomotive before
-completely closing down the throttle window.</p>
+      <table border="0" width="100%" cellpadding="0" cellspacing=
+      "0">
+        <tbody>
+          <tr>
+            <td align="left" valign="top">
+              <p>You shouldn't have any throttle windows open on
+              your screen at this time. Following the directions
+              provided in <a href=
+              "ThrottleChapter1.shtml#MainMenu">Chapter 1</a> for
+              locating the Throttle Menu, locate the option that
+              says "<strong>Load Throttle Layout</strong>" (see
+              figure 4-4 on the right). Clicking on this menu
+              option will display an "<b>Open</b>" dialog box.
+              Locate the throttle layout file that you just
+              previously saved and open it.</p>
+            </td>
 
-<p>If you have made any configuration changes to the throttle window, and you
-want to save them, you'll need to follow the steps as outlined above.</p>
+            <td><img width="20" height="20" src=
+            "images/spacer.gif"></td>
 
-<p class="important"><b>Note:</b> If you "save" any changes that you have
-made during a session back to an existing throttle layout file, beware that
-<u>ALL</u> currently opened throttle windows will also be saved to the same
-file. </p>
+            <td align="center" valign="top">
+              <p style="text-align: center; font-size: xx-small">
+              <img width="163" height="82" src="images/jmri007.jpg"
+              title="Load throttle layout"><br>
+              Figure 4-4: Load Throttle Layout</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-<p>When you are ready, simply close down the throttle window as you normally
-would on whatever computer system you use. For example, for Microsoft Windows,
-simply click on the "<big>X</big>" in the upper right corner of the throttle
-window.</p>
+      <p>The throttle window that you just created should open up
+      in the same place where you closed it. At the same time that
+      the window opens, it is also initializing the decoder address
+      to the command station (just like when the address was first
+      "Set"). The throttle attempts to determine the current
+      direction of the locomotive, as well as identify any
+      functions that are in the "on" state.</p>
 
-<table border="0" width="100%" cellpadding="0" cellspacing="0">
-  <tbody>
-    <tr>
-      <td align="right"><dl>
-          <dt><a href="ThrottleChapter3.shtml"
-          title="Return to the previous chapter"><img width="18" height="18"
-          src="images/LeftArrow2.jpg"></a></dt>
-        </dl>
-      </td>
-      <td><img src="images/spacer.gif" width="30" height="10"> </td>
-      <td align="center"><b><a href="ThrottleTOC.shtml"
-        title="Jump to the Table Of Contents page">TOC</a></b> </td>
-      <td><img src="images/spacer.gif" width="30" height="10"> </td>
-      <td align="left"></td>
-    </tr>
-  </tbody>
-</table>
+      <p class="important"><b>Note:</b> Because the JMRI Throttles
+      are still in their "beta" development mode, there are still
+      some quirks that need to be ironed out. An example of this is
+      when opening a throttle layout and the DCC address is already
+      "in use" by another throttle. Some systems (i.e. Digitrax)
+      are reacting differently when this occurs.<br>
+      <br>
+      <b>Enhancement requests</b> are already on the list for the
+      throttles to be "smart" in determining when another throttle
+      already has the address. But until these throttles are fully
+      implemented, just beware that there may be quirks with your
+      particular DCC system with this feature. It is therefore
+      suggested that <u>prior</u> to opening up a saved throttle
+      layout file, the DCC address is verified as not being used by
+      another throttle somewhere.</p><a name="Merging" id=
+      "Merging"></a>
 
-<!--#include virtual="/Footer" -->
+      <h2>Merging Throttle Windows</h2>
 
-      </div><!-- closes #mainContent-->
-    </div> <!-- closes #mBody-->
+      <div style="margin-left: 2em">
+        <p>Throttle layout files can consist of a single throttle
+        window (to control a single locomotive or consist address),
+        or it can contain multiple throttle windows (refer to
+        figure 4-3). In either case, when opening a throttle layout
+        file, the program will check to see if any existing active
+        throttle windows are already open. If none are found, then
+        the file is opened just like a simple layout opening
+        (explained above).</p>
+
+        <p style="text-align: center; font-size: xx-small">
+        <img width="354" height="125" src="images/jmri035.jpg"
+        title="Merge Dialog Box"><br>
+        Figure 4-5: Merge Dialog Box</p>
+
+        <p>However, when one or more throttle windows are
+        discovered already open on the screen, the program will
+        open up a dialog box as shown in figure 4-5 on the
+        right.</p>
+      </div>
+
+      <ul>
+        <li><strong>Merge</strong> leaves the currently active open
+        throttle windows in place and opens the throttle(s)
+        contained in the layout file being opened.<br>
+        <br></li>
+
+        <li><strong>Replace</strong> closes down the currently
+        active open throttle window(s) and opens up the throttle
+        window(s) established in the saved layout file.<br>
+        <br></li>
+
+        <li><strong>Cancel</strong> cancels the "open" request and
+        closes down this dialog window.</li>
+      </ul>
+
+      <p class="important"><b>Note: Do not confuse the action that
+      is occurring here with any attempts to overwrite your saved
+      throttle layout files. The above actions have no effect on
+      the actual saved throttle layout files themselves. The only
+      "merging" and "replacing" that occurs is simply on your
+      screen.</b></p>
+
+      <table border="2" width="100%" cellpadding="4" cellspacing=
+      "2">
+        <tbody>
+          <tr>
+            <td valign="top">
+              <strong>TIP!</strong>
+
+              <p>When creating throttle layout files, you can save
+              the same decoder address in multiple throttle layout
+              files. A good example of why you may want to do this
+              would be if you create several throttle layout files,
+              each consisting of a single throttle window
+              controlling one single Locomotive, like one for each
+              loco in your Roster. There may be times when you wish
+              to just run a single locomotive and you just open up
+              the associated layout file. Simple! But what if you
+              find yourself opening up the same locomotive
+              throttles consistently on each session. It's going to
+              become a pain opening up (and "merging") these
+              throttles one at a time. Therefore, you could create
+              another layout file that contains all of the throttle
+              windows that you wish; then just open up the one
+              layout file and you'll have all of the throttle
+              windows defined.</p>
+
+              <p>Just remember, when making a change to the
+              configuration of a throttle window, it only gets
+              changed in the layout file that you saved; it is
+              <u>not</u> a global change in every file where that
+              Locomotive is used.</p>
+            </td>
+          </tr>
+        </tbody>
+      </table><a name="SaveThrottlePreferences" id=
+      "SaveThrottlePreferences"></a>
+
+      <h2>Save Throttle Preferences</h2>
+
+      <p>The "Save Throttle Preferences" allows you to customize
+      the way new throttles will appear. Load or create one
+      throttle that you want as your default. The program will warn
+      you if multiple throttles exist. Then use the "Save Throttle
+      Preferences" in the "Tools-&gt;Throttle" menu to save the
+      throttle. When you create a new throttle, the defaults that
+      you set should appear. Also when you use the "Save Throttle
+      Preferences" feature the program will create a new directory
+      called "throttles" in the JMRI directory. A file called
+      "JMRI_ThrottlePreferences.xml" contains the default xml
+      values for your throttles. If you want to restore the
+      throttle settings to the original defaults, simply delete
+      this file.</p>
+
+      <p>To help you better organize your throttles, the program
+      will also reference the "throttles" directory when saving or
+      loading throttle layouts.</p><a name="CloseThrottle" id=
+      "CloseThrottle"></a>
+
+      <h2>Closing a Throttle Window</h2>
+
+      <p>When done with a throttle window, it might be a good idea
+      if you get into the practice of either "releasing" or
+      "dispatching" the locomotive before completely closing down
+      the throttle window.</p>
+
+      <p>If you have made any configuration changes to the throttle
+      window, and you want to save them, you'll need to follow the
+      steps as outlined above.</p>
+
+      <p class="important"><b>Note:</b> If you "save" any changes
+      that you have made during a session back to an existing
+      throttle layout file, beware that <u>ALL</u> currently opened
+      throttle windows will also be saved to the same file.</p>
+
+      <p>When you are ready, simply close down the throttle window
+      as you normally would on whatever computer system you use.
+      For example, for Microsoft Windows, simply click on the
+      "<big>X</big>" in the upper right corner of the throttle
+      window.</p>
+
+      <table border="0" width="100%" cellpadding="0" cellspacing=
+      "0">
+        <tbody>
+          <tr>
+            <td align="right">
+              <dl>
+                <dt><a href="ThrottleChapter3.shtml" title=
+                "Return to the previous chapter"><img width="18"
+                height="18" src="images/LeftArrow2.jpg"></a></dt>
+              </dl>
+            </td>
+
+            <td><img src="images/spacer.gif" width="30" height=
+            "10"></td>
+
+            <td align="center"><b><a href="ThrottleTOC.shtml"
+            title="Jump to the Table Of Contents page">TOC</a></b></td>
+
+            <td><img src="images/spacer.gif" width="30" height=
+            "10"></td>
+
+            <td align="left"></td>
+          </tr>
+        </tbody>
+      </table><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>

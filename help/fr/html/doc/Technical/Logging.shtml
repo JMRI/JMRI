@@ -18,6 +18,7 @@
 </head>
 <body>
 <!--#include virtual="/Header" -->
+    <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
@@ -66,9 +67,9 @@ par "A 1 ", et un fichier par "R".
 <P>
 Le fichier "default.lcf" d&#233;termine la destination et le format des messages enregistr&#233;s. Par d&#233;faut, vous obtenez des lignes qui ressemblent &#224;:
 
-<pre><code>
+<pre style="font-family: monospace;">
 514668 [AWT-EventQueue-0] WARN jmri.jmrit.powerpanel.PowerPane  -Aucune instance du gestionnaire de puissance trouv&#233;s, panneau non actif 
-</code></pre>
+</pre>
 Les colonnes sont:
 <ul>
 <li><CODE>514668 - temps en millisecondes depuis le d&#233;marrage du programme</CODE>
@@ -81,33 +82,33 @@ Les colonnes sont:
 
 Pour Rapporter
 &#224; partir d'une classe nomm&#233;e MyClass, ajoutez ceci &#224; la fin du fichier de class:
-<pre><code>
+<pre style="font-family: monospace;">
 	private static final Logger log = LoggerFactory.getLogger(MyClass.class());
-</code></pre>
+</pre>
 <p>et ajouter des importations pour org.slf4j.Logger et org.slf4j.LoggerFactory dans votre section importations:</p>
-<pre><code>
+<pre style="font-family: monospace;">
   import org.slf4j.Logger;
   import org.slf4j.LoggerFactory;
-</code></PRE>
+</PRE>
 
 Puis pour chaque message &#224; Rapporter ins&#233;rer une ligne comme:</p>
-<pre><code>
+<pre style="font-family: monospace;">
 	log.debug("message");
-</code></pre>
+</pre>
 <P>
 Les message qui ne seront pas seulement une cha&#238;ne explicite,devront utiliser
 cette forme &#224; la place:</p>
-<PRE>><code>
+<pre style="font-family: monospace;">
 	log.debug("message");
-</code></pre>
+</pre>
 <p>Les messages qui ne sont pas juste une cha&#238;ne explicite devrait utiliser ce formulaire &#224; la place de variables:</p>
-<pre><code>
+<pre style="font-family: monospace;">
 	log.debug("Found {}", numberEntries);
-</code></pre>	
+</pre>	
 <p> Au cas o&#249; il serait co&#251;teux en calcul de passer un param&#232;tre dans le Rapport, utilisez le formulaire ci-dessous
 de sorte que le programme ne perd pas de temps avec le calcul des param&#232;tres (dans ce
 cas, appeler numberEntries () et concat&#233;ner les cha&#238;nes): </p>
-<pre><code>
+<pre style="font-family: monospace;">
         if (log.isDebugEnabled()) {
             log.debug("Found {}", numberEntries());
         }Par convention, les applications JMRI va tenter d'initialiser
@@ -115,11 +116,11 @@ Log4J l'aide d'un fichier "default.lcf". Les distributions JMRI
 contenir une version de ce fichier avec
 commentaires d&eacute;taill&eacute;s. (Ce fichier doit &ecirc;tre dans le r&eacute;pertoire &quot;Program&quot;,
 qui peut &ecirc;tre trouv&eacute; en s&eacute;lectionnant l&apos;option 'Lieux' dans le menu principal de l&apos;aide)
-</code></pre>
+</pre>
 <p>Les exceptions doivent être Rapport&#233;es sous cette forme:</p>
-<pre><code>
+<pre style="font-family: monospace;">
 	  log.error(exception.getLocalizedMessage(), exception);
-</code></pre>
+</pre>
 
 <h3>Niveaux de Message</h3>
 <table border="1">

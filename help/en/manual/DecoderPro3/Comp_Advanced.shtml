@@ -1,58 +1,80 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
-<title>Comprehensive Programmer - Advanced Features Pane</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>Comprehensive Programmer - Advanced Features Pane</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<a name="Top"></a>
-<h1>DecoderPro&reg; Comprehensive Programmer</h1>
-<h2>Advanced Features Pane</h2>
+    <div id="mainContent">
+      <a name="Top" id="Top"></a>
 
-<div align="right">
-<p><a href="Comp_Consist.shtml">Previous | </a>
-  <a href="Comp_SoundFX.shtml">Next </a>
-<p><a href="index.shtml#Advanced Programmer">Back to Index</a>
-</div>
+      <h1>DecoderPro&reg; Comprehensive Programmer</h1>
 
-<hr>
-<p>
-The <b>Advanced Features</b> pane covers CVs that don't fall readily into
-one of the other categories, and more importantly are not generally part
-of the NMRA DCC standard. This is a bit like the Netscape/Microsoft Browser
-Wars, areas where the manufacturer is pushing the envelope. In this case,
-the CV here controls the Transponding feature of newer Digitrax decoders,
-which allows them to report their location and engine number back to the
-Loconet.
-<p>There  may be one or several of these panes, depending on how complex the decoder  programming is and the style of the person who wrote the definition file for  your particular decoder.
+      <h2>Advanced Features Pane</h2>
 
-<p>Simple Advanced pane for Digitrax decoder.
-<h1><img src="images/Comp_08_Advanced.png" width="787" height="308" alt="advance pane"></h1>
-<p>Complex Advanced pane for Tsunami OEM of the FP-45 decoder.
-<p><img src="images/Comp_08b_Advanced.png" width="1000" height="348" alt="advanced pane">
-<hr>
+      <div align="right">
+        <p><a href="Comp_Consist.shtml">Previous |</a> <a href=
+        "Comp_SoundFX.shtml">Next</a></p>
 
-<div align="right">
-<p><a href="Comp_SoundFX.shtml"></a>
-  <a href="Comp_Consist.shtml">Previous | </a> <a href="Comp_SoundFX.shtml">Next </a>
-<p><a href="index.shtml#Advanced Programmer">Back to Index</a>
-</div>
+        <p><a href="index.shtml#Advanced%20Programmer">Back to
+        Index</a></p>
+      </div>
+      <hr>
 
-<!--#include virtual="/Footer" -->
-  </div><!-- closes #mainContent-->
- </div> <!-- closes #mBody-->
- </body>
+      <p>The <b>Advanced Features</b> pane covers CVs that don't
+      fall readily into one of the other categories, and more
+      importantly are not generally part of the NMRA DCC standard.
+      This is a bit like the Netscape/Microsoft Browser Wars, areas
+      where the manufacturer is pushing the envelope. In this case,
+      the CV here controls the Transponding feature of newer
+      Digitrax decoders, which allows them to report their location
+      and engine number back to the Loconet.</p>
+
+      <p>There may be one or several of these panes, depending on
+      how complex the decoder programming is and the style of the
+      person who wrote the definition file for your particular
+      decoder.</p>
+
+      <p>Simple Advanced pane for Digitrax decoder.</p>
+
+      <h1><img src="images/Comp_08_Advanced.png" width="787"
+      height="308" alt="advance pane"></h1>
+
+      <p>Complex Advanced pane for Tsunami OEM of the FP-45
+      decoder.</p>
+
+      <p><img src="images/Comp_08b_Advanced.png" width="1000"
+      height="348" alt="advanced pane"></p>
+      <hr>
+
+      <div align="right">
+        <p><a href="Comp_SoundFX.shtml"></a> <a href=
+        "Comp_Consist.shtml">Previous |</a> <a href=
+        "Comp_SoundFX.shtml">Next</a></p>
+
+        <p><a href="index.shtml#Advanced%20Programmer">Back to
+        Index</a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
 </html>

@@ -310,6 +310,7 @@ public class RosterServlet extends HttpServlet {
         log.debug("Getting roster with filter {}", filter);
         String group = (!filter.path(GROUP).isMissingNode()) ? filter.path(GROUP).asText() : null;
         log.debug("Group {} was in filter", group);
+
         String format = request.getParameter(FORMAT);
         if (format == null) {
             format = "";
@@ -317,7 +318,7 @@ public class RosterServlet extends HttpServlet {
         switch (format) {
             case JSON.JSON:
                 response.setContentType(UTF8_APPLICATION_JSON);
-                JsonRosterServiceFactory factory = InstanceManager.getDefault(JsonRosterServiceFactory.class);
+                JsonRosterServiceFactory factory = InstanceManager.getOptionalDefault(JsonRosterServiceFactory.class);
                 if (factory == null) {
                     factory = new JsonRosterServiceFactory();
                 }

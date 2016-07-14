@@ -86,7 +86,7 @@ public class StoreXmlConfigAction extends LoadStoreBaseAction {
         }
 
         // and finally store
-        boolean results = InstanceManager.configureManagerInstance().storeConfig(file);
+        boolean results = InstanceManager.getOptionalDefault(jmri.ConfigureManager.class).storeConfig(file);
         System.out.println(results);
         log.debug(results ? "store was successful" : "store failed");
         if (!results) {

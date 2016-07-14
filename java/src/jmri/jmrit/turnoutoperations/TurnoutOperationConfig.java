@@ -1,6 +1,3 @@
-/**
- *
- */
 package jmri.jmrit.turnoutoperations;
 
 import java.lang.reflect.Constructor;
@@ -15,14 +12,9 @@ import org.slf4j.LoggerFactory;
  * one shown below
  *
  * @author John Harper	Copyright 2005
- * @version $Revision$
  */
 public class TurnoutOperationConfig extends JPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8525871604406638058L;
     TurnoutOperation myOperation;
     //boolean valid = true;
 

@@ -217,7 +217,7 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
         Assert.assertNotNull(iconEditor);
 
         SignalHead signalHead = new jmri.implementation.VirtualSignalHead("IH0");
-        InstanceManager.signalHeadManagerInstance().register(signalHead);
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(signalHead);
 
         iconEditor.setSelection(signalHead);
 

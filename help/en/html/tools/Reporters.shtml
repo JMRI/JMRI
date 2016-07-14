@@ -1,90 +1,103 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
-  <title>
- 	JMRI: Reporters Documentation
-  </title>
-  
-  <meta name="Author" content="Bob Jacobsen">
-  <meta name="keywords"
-        content="sensor model railroad JMRI decoderpro panelpro">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <title>JMRI: Reporters Documentation</title>
+  <meta name="Author" content="Bob Jacobsen">
+  <meta name="keywords" content=
+  "sensor model railroad JMRI decoderpro panelpro"><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
   <div id="container">
+    <!--#include virtual="/Header" -->
 
-<!--#include virtual="/Header" -->
     <div id="mBody">
-<!--#include virtual="Sidebar" -->
+      <!--#include virtual="Sidebar" -->
 
- <div id="mainContent">
-  <!-- Page Body -->
-        <h1>
-		JMRI: Reporters Documentation
-        </h1>
+      <div id="mainContent">
+        <!-- Page Body -->
 
-<h2>What is a Reporter?</h2>
+        <h1>JMRI: Reporters Documentation</h1>
 
-<p>
-A Reporter is JMRI's way of representing information reported back from the layout.
-<p>
-A Reporter can contain arbitrary information, unlike a Sensor which is only ACTIVE
-or INACTIVE.  Each Reporter is associated with some specific source of information
-on the layout, and makes that devices information available to the rest of JMRI.
-<p>
-The initial implementation is for LocoNet (Digitrax) transponding,
-where the Reporter provides access to information
-from Digitrax 
-<a  href="http://www.digitrax.com/prd_statdec_bdl168.php">BDL168</a> cards with 
-<a href="http://www.digitrax.com/prd_statdec_rx4.php">RX4 transponding sensors</a>.
-When the BDL168 reports that a decoder has been seen
-in a transponding block or is not longer visible
-in the block, the corresponding Reporter will display messages
-like "1234 enter" and "1234 exits".  There is also a LocoNet Reporter 
-implementation for displaying messages from 
-<a href="http://www.rjftrains.com/intellibox/uhlenbrock.htm">Lissy detectors</a>.
+        <h2>What is a Reporter?</h2>
 
-<h2>How to setup Reporters</h2>
+        <p>A Reporter is JMRI's way of representing information
+        reported back from the layout.</p>
 
-<h3>The Reporter Table</h3>
-The 
-<a href="../../package/jmri/jmrit/beantable/ReporterTable.shtml">Reporter Table</a>
-provides easy access to the contents of all Reporters that JMRI knows about.
-There's also an 
-<a href="../../package/jmri/jmrit/beantable/ReporterAddEdit.shtml">"Add..." button</a> 
-for creating your own internal Reporters; JMRI automatically creates
-Reporter objects for devices on the layout.
+        <p>A Reporter can contain arbitrary information, unlike a
+        Sensor which is only ACTIVE or INACTIVE. Each Reporter is
+        associated with some specific source of information on the
+        layout, and makes that devices information available to the
+        rest of JMRI.</p>
 
-<h3>Displaying Reporter Values on Panels</h3>
-<a href="images/AddReportertoPanel.png">
-<img src="images/AddReportertoPanel.png" height="146" width="166" align="right">
-</a>
-<p>A Reporter's value can be displayed on a Panel via an icon.
-To do this:
-	<ul>
-	<li>On the Panel Editor window for your Panel, find the "Add Reporter" 
-	button.
-	<li>In the text box next to that button, type the user name or System Name of the
-	desired Reporter.
-	<li>Click the "Add to Panel" button. The Reporter icon will be placed on your Panel.
-	If it's not visible, that might be because the value is currently blank;
-	use the Reporter Table to change the value to something that will be visible.
-	<li>You can drag the icon to where you want it in the usual way.
-	<li>The pop-up menu on the icon will let you change the formatting.
-	</ul>
+        <p>The initial implementation is for LocoNet (Digitrax)
+        transponding, where the Reporter provides access to
+        information from Digitrax <a href=
+        "http://www.digitrax.com/prd_statdec_bdl168.php">BDL168</a>
+        cards with <a href=
+        "http://www.digitrax.com/prd_statdec_rx4.php">RX4
+        transponding sensors</a>. When the BDL168 reports that a
+        decoder has been seen in a transponding block or is not
+        longer visible in the block, the corresponding Reporter
+        will display messages like "1234 enter" and "1234 exits".
+        There is also a LocoNet Reporter implementation for
+        displaying messages from <a href=
+        "http://www.rjftrains.com/intellibox/uhlenbrock.htm">Lissy
+        detectors</a>.</p>
 
-<!--#include virtual="/Footer" -->
+        <h2>How to setup Reporters</h2>
 
+        <h3>The Reporter Table</h3>The <a href=
+        "../../package/jmri/jmrit/beantable/ReporterTable.shtml">Reporter
+        Table</a> provides easy access to the contents of all
+        Reporters that JMRI knows about. There's also an <a href=
+        "../../package/jmri/jmrit/beantable/ReporterAddEdit.shtml">"Add..."
+        button</a> for creating your own internal Reporters; JMRI
+        automatically creates Reporter objects for devices on the
+        layout.
+
+        <h3>Displaying Reporter Values on Panels</h3><a href=
+        "images/AddReportertoPanel.png"><img src=
+        "images/AddReportertoPanel.png" height="146" width="166"
+        align="right"></a>
+
+        <p>A Reporter's value can be displayed on a Panel via an
+        icon. To do this:</p>
+
+        <ul>
+          <li>On the Panel Editor window for your Panel, find the
+          "Add Reporter" button.</li>
+
+          <li>In the text box next to that button, type the user
+          name or System Name of the desired Reporter.</li>
+
+          <li>Click the "Add to Panel" button. The Reporter icon
+          will be placed on your Panel. If it's not visible, that
+          might be because the value is currently blank; use the
+          Reporter Table to change the value to something that will
+          be visible.</li>
+
+          <li>You can drag the icon to where you want it in the
+          usual way.</li>
+
+          <li>The pop-up menu on the icon will let you change the
+          formatting.</li>
+        </ul><!--#include virtual="/Footer" -->
       </div><!-- closes #mainContent-->
-    </div> <!-- closes #mBody-->
-  </div> <!-- closes #container -->
+    </div><!-- closes #mBody-->
+  </div><!-- closes #container -->
 </body>
 </html>

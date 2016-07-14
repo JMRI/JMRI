@@ -24,6 +24,8 @@
  *  TODO: draw dashed curves
  *  TODO: handle inputs/selection on various memory widgets
  *  TODO: alignment of memoryIcons without fixed width is very different.  Recommended workaround is to use fixed width. 
+ *  TODO: add support for LayoutSlip
+ *  TODO: improve handling of layoutBlock with systemname != username
  *   
  **********************************************************************************************/
 
@@ -412,6 +414,13 @@ function processPanelXML($returnedData, $success, $xhr) {
                                     $widget["systemName"] = $widget.name;
                                 jmri.getMemory($widget["systemName"]);
                                 break;
+                            case "BlockContentsIcon" :
+                                $widget['name'] = $widget.systemName; //normalize name (id got stepped on)
+                                $widget.jsonType = "block"; // JSON object type
+                                $widget['text'] = $widget.name; //use name for initial text
+                                $widget['state'] = $widget.name; //use name for initial state as well
+                                jmri.getBlock($widget["systemName"]);
+                                break;
                             case "memoryInputIcon" :
                             case "memoryComboIcon" :
                                 $widget['name'] = $widget.memory; //normalize name
@@ -453,9 +462,11 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 break;
                             case "layoutblock" :
                                 $widget['state'] = UNKNOWN;  //add a state member for this block
+                                $widget["blockcolor"] = $widget.trackcolor; //init blockcolor to trackcolor
                                 //store these blocks in a persistent var
-                                //id is username
+                                //id is username, because references use it
                                 $gBlks[$widget.username] = $widget;
+                                jmri.getLayoutBlock($widget.username);
                                 break;
                             case "layoutturnout" :
                                 $widget['name'] = $widget.turnoutname; //normalize name
@@ -695,19 +706,13 @@ function $drawTrackSegment($widget) {
         return;
     }
 
-    //	set trackcolor based on block occupancy state
+    //set trackcolor based on blockcolor
     var $color = $gPanel.defaulttrackcolor;
     var $blk = $gBlks[$widget.blockname];
     if (typeof $blk !== "undefined") {
-        if ($blk.occupiedsense == $blk.state) { //set the color based on occupancy state
-            $color = $blk.occupiedcolor;
-            //if (window.console) console.log("set block color to occupiedcolor " + $color);
-        } else {
-            $color = $blk.trackcolor;
-            //if (window.console) console.log("set block color to trackcolor " + $color);
-        }
-    }
-
+    	$color = $blk.blockcolor;
+    }    
+    
     var $width = $gPanel.sidetrackwidth;
     if ($widget.mainline == "yes") {
         $width = $gPanel.mainlinetrackwidth;
@@ -845,16 +850,13 @@ function $drawLevelXing($widget) {
     if ($gPanel.turnoutcircles == "yes") {
         $drawCircle($widget.xcen, $widget.ycen, $gPanel.turnoutcirclesize * SIZE, $gPanel.turnoutcirclecolor, 1);
     }
-    //	set trackcolor based on block occupancy state of AC block
+    //	set trackcolor based on block color of AC block
     var $color = $gPanel.defaulttrackcolor;
     var $blk = $gBlks[$widget.blocknameac];
     if (typeof $blk !== "undefined") {
-        if ($blk.occupiedsense == $blk.state) { //set the color based on occupancy state
-            $color = $blk.occupiedcolor;
-        } else {
-            $color = $blk.trackcolor;
-        }
-    }
+    	$color = $blk.blockcolor;
+    }    
+      
     var cenx = $widget.xcen;
     var ceny = $widget.ycen
     var ax = $gPts[$widget.ident + LEVEL_XING_A].x;  //retrieve the points
@@ -914,16 +916,12 @@ function $drawTurnout($widget) {
     }
     var erase = $gPanel.backgroundcolor;
 
-    //	set trackcolor based on block occupancy state
+    //set trackcolor based on blockcolor
     var $color = $gPanel.defaulttrackcolor;
     var $blk = $gBlks[$widget.blockname];
-    if (typeof $blk != "undefined") {
-        if ($blk.occupiedsense == $blk.state) { //set the color based on occupancy state
-            $color = $blk.occupiedcolor;
-        } else {
-            $color = $blk.trackcolor;
-        }
-    }
+    if (typeof $blk !== "undefined") {
+    	$color = $blk.blockcolor;
+    }    
 
     //turnout A--B
     //         \-C
@@ -1289,10 +1287,10 @@ var $setWidgetState = function($id, $newState) {
                 $reDrawIcon($widget)
                 break;
             case "text" :
-                if ($widget.jsonType == "memory") {
+                if ($widget.jsonType == "memory" || $widget.jsonType == "block") {
                     if ($widget.widgetType == "fastclock") {
                         $drawClock($widget);
-                    } else {  //set memory text to new value from server, suppressing "null"
+                    } else {  //set memory/block text to new value from server, suppressing "null"
                         $('div#' + $id).text(($newState != null) ? $newState : "");
                     }
                 } else {
@@ -1515,6 +1513,7 @@ var $getWidgetFamily = function($widget, $element) {
         case "memoryComboIcon" :
         case "memoryInputIcon" :
         case "fastclock" :
+        case "BlockContentsIcon" :
 //	case "reportericon" :
             return "text";
             break;
@@ -1540,8 +1539,31 @@ var $getWidgetFamily = function($widget, $element) {
             return "drawn";
             break;
     }
-
+    if (window.console)
+        console.log("unknown widget type of '" + $widget.widgetType +"'");
     return; //unrecognized widget returns undefined
+};
+
+//redraw all "drawn" elements for given block (called after color change) 
+function $redrawBlock(blockName) {
+//	if (window.console)
+//		console.log("redrawing all track for block " + blockName);
+	//loop thru widgets, if block matches, redraw widget by proper method
+	jQuery.each($gWidgets, function($id, $widget) {
+		if ($widget.blockname == blockName) {
+			switch ($widget.widgetType) {
+			case 'layoutturnout' :
+				$drawTurnout($widget);
+				break;
+			case 'tracksegment' :
+				$drawTrackSegment($widget);
+				break;
+			case 'levelxing' :
+				$drawLevelXing($widget);
+				break;
+			}
+		}
+	});
 };
 
 //redraw all "drawn" elements to overcome some bidirectional dependencies in the xml
@@ -1596,29 +1618,36 @@ function updateWidgets(name, state, data) {
 }
 
 function updateOccupancy(occupancyName, state) {
-    if (occupancyNames[occupancyName]) {
-        if (window.console)
-            console.log("setting occupancies for sensor " + occupancyName + " to " + state);
-        $.each(occupancyNames[occupancyName], function(index, widgetId) {
-            $widget = $gWidgets[widgetId];
-            if ($widget.blockname) {
-                $gBlks[$widget.blockname].state = state; //set occupancy for the block (if one) to the newstate
-            }
-            $gWidgets[widgetId].occupancystate = state; //set occupancy for the widget to the newstate
-            switch ($widget.widgetType) {
-                case 'layoutturnout' :
-                    $drawTurnout($widget);
-                    break;
-                case 'tracksegment' :
-                    $drawTrackSegment($widget);
-                    break;
-                case 'indicatortrackicon' :
-                case 'indicatorturnouticon' :
-                    $reDrawIcon($widget);
-                    break;
-            }
-        });
+	if (occupancyNames[occupancyName]) {
+		if (window.console)
+			console.log("setting occupancies for sensor " + occupancyName + " to " + state);
+		$.each(occupancyNames[occupancyName], function(index, widgetId) {
+			$widget = $gWidgets[widgetId];
+			if ($widget.blockname) {
+				$gBlks[$widget.blockname].state = state; //set occupancy for the block (if one) to the newstate
+			}
+			$gWidgets[widgetId].occupancystate = state; //set occupancy for the widget to the newstate
+			switch ($widget.widgetType) {
+			case 'indicatortrackicon' :
+			case 'indicatorturnouticon' :
+				$reDrawIcon($widget);
+				break;
+			}
+		});
+	}
+}
+
+function setBlockColor(blockName, newColor) {
+	if (window.console)
+		console.log("setting color for block " + blockName + " to " + newColor);
+    var $blk = $gBlks[blockName];
+    if (typeof $blk != "undefined") {
+    	$gBlks[blockName].blockcolor = newColor;
+    } else {
+    	if (window.console)
+    		console.log("ERROR: block " + blockName + " not found for color " + newColor);
     }
+    $redrawBlock(blockName);
 }
 
 function listPanels(name) {
@@ -1712,6 +1741,12 @@ $(document).ready(function() {
             },
             light: function(name, state, data) {
                 updateWidgets(name, state, data);
+            },
+            block: function(name, value, data) {
+                updateWidgets(name, value, data);
+            },
+            layoutBlock: function(name, value, data) {
+                setBlockColor(data.userName, data.blockColor);
             },
             memory: function(name, value, data) {
                 updateWidgets(name, value, data);

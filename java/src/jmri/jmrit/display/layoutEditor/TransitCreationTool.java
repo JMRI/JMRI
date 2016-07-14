@@ -33,7 +33,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author	Kevin Dickerson Copyright (C) 2011
- * @version	$Revision: 23263 $
  */
 public class TransitCreationTool {
 
@@ -50,7 +49,7 @@ public class TransitCreationTool {
             }
             //Run through a series of checks that this bean is reachable from the previous
             if ((nb instanceof SignalMast) && (list.get(list.size() - 1) instanceof SignalMast)) {
-                jmri.SignalMastLogicManager smlm = InstanceManager.signalMastLogicManagerInstance();
+                jmri.SignalMastLogicManager smlm = InstanceManager.getDefault(jmri.SignalMastLogicManager.class);
                 jmri.SignalMastLogic sml = smlm.getSignalMastLogic(((SignalMast) list.get(list.size() - 1)));
                 if (sml == null || !sml.isDestinationValid((SignalMast) nb)) {
                     String error = Bundle.getMessage("TCTErrorMastPairsNotValid", nb.getDisplayName(), list.get(list.size() - 1).getDisplayName());
@@ -70,7 +69,7 @@ public class TransitCreationTool {
     }
 
     public Transit createTransit() throws JmriException {
-        TransitManager tm = InstanceManager.transitManagerInstance();
+        TransitManager tm = InstanceManager.getDefault(jmri.TransitManager.class);
         String transitName = "From " + list.get(0).getDisplayName() + " to " + list.get(list.size() - 1).getDisplayName();
         Transit t = tm.createNewTransit(transitName);
         if (t == null) {
@@ -79,7 +78,7 @@ public class TransitCreationTool {
         }
 
         if (list.get(0) instanceof SignalMast) {
-            jmri.SignalMastLogicManager smlm = InstanceManager.signalMastLogicManagerInstance();
+            jmri.SignalMastLogicManager smlm = InstanceManager.getDefault(jmri.SignalMastLogicManager.class);
             for (int i = 1; i <= list.size() - 1; i++) {
                 jmri.SignalMastLogic sml = smlm.getSignalMastLogic((SignalMast) list.get(i - 1));
                 Section sec = sml.getAssociatedSection((SignalMast) list.get(i));

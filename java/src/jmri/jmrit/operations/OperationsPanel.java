@@ -1,4 +1,3 @@
-//OperationsPanel.java
 package jmri.jmrit.operations;
 
 import java.awt.Dimension;
@@ -36,7 +35,6 @@ import org.slf4j.LoggerFactory;
  * Panel for operations
  *
  * @author Dan Boudreau Copyright (C) 2008, 2012
- * @version $Revision$
  */
 public class OperationsPanel extends JPanel implements AncestorListener {
 
@@ -246,7 +244,7 @@ public class OperationsPanel extends JPanel implements AncestorListener {
      * @param table Table to be saved.
      */
     protected void saveTableDetails(JTable table) {
-        UserPreferencesManager p = InstanceManager.getDefault(UserPreferencesManager.class);
+        UserPreferencesManager p = InstanceManager.getOptionalDefault(UserPreferencesManager.class);
         if (p == null) {
             return;
         }
@@ -303,7 +301,7 @@ public class OperationsPanel extends JPanel implements AncestorListener {
      * @return true if table has been adjusted by saved xml file.
      */
     public boolean loadTableDetails(JTable table) {
-        UserPreferencesManager p = InstanceManager.getDefault(UserPreferencesManager.class);
+        UserPreferencesManager p = InstanceManager.getOptionalDefault(UserPreferencesManager.class);
         TableSorter sorter = null;
         String tableref = getWindowFrameRef() + ":table"; // NOI18N
         if (p == null || p.getTablesColumnList(tableref).isEmpty()) {

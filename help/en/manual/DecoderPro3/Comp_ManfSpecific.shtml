@@ -1,53 +1,75 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title></title>
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<a name="Top"></a>
-<h1>DecoderPro&reg; Comprehensive Programmer</h1>
-<h2>Manufacturer Specific Data Pane</h2>
+    <div id="mainContent">
+      <a name="Top" id="Top"></a>
 
-<div align="right">
-<p><a href="Comp_GlobalCVs.shtml">Previous</a> | <a href="Comp_PrintData.shtml">Next </a>
-<p><a href="index.shtml#Advanced Programmer">Back to Index</a>
-</div>
+      <h1>DecoderPro&reg; Comprehensive Programmer</h1>
 
-<hr>
-<p>
-This pane in the <b>Comprehensive Programmer</b> provides programming
-for functions that are specific to an individual manufacturer, but outside
-the realm of the DCC standard. While items like <b>Transponding</b> may eventually find a place in the NMRA DCC standard, and are therefore in the Advanced pane, these items are obviously beyond that category.
+      <h2>Manufacturer Specific Data Pane</h2>
 
-This pane will be manufacturer dependent and decoder family dependent<h1><img src="images/Comp_12_Manufacturer.png" width="922" height="799" alt="Manufacturers pane"></h1>
+      <div align="right">
+        <p><a href="Comp_GlobalCVs.shtml">Previous</a> | <a href=
+        "Comp_PrintData.shtml">Next</a></p>
 
-<p align="center"><img src="images/Comp_12A_Manufacturer.png" width="922" height="739" alt="Extended mfr panes">
-<p>These items will, by definition, vary greatly between manufacturers.
-  Once again, your best resource is the documentation for the specific decoder
-  you are programming and this pane in the programmer for that decoder.
-  
-<hr>
-<div align="right">
-<p><a href="Comp_PrintData.shtml"></a>
-  <a href="Comp_GlobalCVs.shtml">Previous</a> | <a href="Comp_PrintData.shtml">Next </a>
-<p><a href="index.shtml#Advanced Programmer">Back to Index</a>
-</div>
+        <p><a href="index.shtml#Advanced%20Programmer">Back to
+        Index</a></p>
+      </div>
+      <hr>
 
-<!--#include virtual="/Footer" -->
-  </div><!-- closes #mainContent-->
- </div> <!-- closes #mBody-->
- </body>
+      <p>This pane in the <b>Comprehensive Programmer</b> provides
+      programming for functions that are specific to an individual
+      manufacturer, but outside the realm of the DCC standard.
+      While items like <b>Transponding</b> may eventually find a
+      place in the NMRA DCC standard, and are therefore in the
+      Advanced pane, these items are obviously beyond that
+      category. This pane will be manufacturer dependent and
+      decoder family dependent</p>
+
+      <h1><img src="images/Comp_12_Manufacturer.png" width="922"
+      height="799" alt="Manufacturers pane"></h1>
+
+      <p align="center"><img src="images/Comp_12A_Manufacturer.png"
+      width="922" height="739" alt="Extended mfr panes"></p>
+
+      <p>These items will, by definition, vary greatly between
+      manufacturers. Once again, your best resource is the
+      documentation for the specific decoder you are programming
+      and this pane in the programmer for that decoder.</p>
+      <hr>
+
+      <div align="right">
+        <p><a href="Comp_PrintData.shtml"></a> <a href=
+        "Comp_GlobalCVs.shtml">Previous</a> | <a href=
+        "Comp_PrintData.shtml">Next</a></p>
+
+        <p><a href="index.shtml#Advanced%20Programmer">Back to
+        Index</a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
 </html>

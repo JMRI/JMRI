@@ -313,7 +313,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
             src.getPoint().getPanel().redrawPanel();
         }
         ActiveTrain tmpat = null;
-        if (manager.getDispatcherIntegration() && jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame.class) != null) {
+        if (manager.getDispatcherIntegration() && jmri.InstanceManager.getOptionalDefault(jmri.jmrit.dispatcher.DispatcherFrame.class) != null) {
             jmri.jmrit.dispatcher.DispatcherFrame df = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame.class);
             for (ActiveTrain atl : df.getActiveTrainsList()) {
                 if (atl.getEndBlock() == src.getStart().getBlock()) {
@@ -382,7 +382,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                     }
                     if (at == null) {
                         if (!isSignalLogicDynamic()) {
-                            jmri.SignalMastLogic tmSml = InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic((SignalMast) src.sourceSignal);
+                            jmri.SignalMastLogic tmSml = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic((SignalMast) src.sourceSignal);
                             for (Turnout t : tmSml.getAutoTurnouts((SignalMast) getSignal())) {
                                 turnoutSettings.put(t, tmSml.getAutoTurnoutState(t, (SignalMast) getSignal()));
                             }
@@ -421,7 +421,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                             SignalMast smSource = (SignalMast) src.sourceSignal;
                             SignalMast smDest = (SignalMast) getSignal();
                             synchronized (this) {
-                                sml = InstanceManager.signalMastLogicManagerInstance().newSignalMastLogic(smSource);
+                                sml = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).newSignalMastLogic(smSource);
                                 if (!sml.isDestinationValid(smDest)) {
                                     //if no signalmastlogic existed then created it, but set it not to be stored.
                                     sml.setDestinationMast(smDest);
@@ -491,10 +491,10 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                         if (sml != null && sml.getAssociatedSection((SignalMast) getSignal()) != null) {
                             sec = sml.getAssociatedSection((SignalMast) getSignal());
                         } else {
-                            sec = InstanceManager.sectionManagerInstance().createNewSection(src.getPoint().getDisplayName() + ":" + point.getDisplayName());
+                            sec = InstanceManager.getDefault(jmri.SectionManager.class).createNewSection(src.getPoint().getDisplayName() + ":" + point.getDisplayName());
                             if (sec == null) {
                                 //A Section already exists, lets grab it and check that it is one used with the Interlocking, if so carry on using that.
-                                sec = InstanceManager.sectionManagerInstance().getSection(src.getPoint().getDisplayName() + ":" + point.getDisplayName());
+                                sec = InstanceManager.getDefault(jmri.SectionManager.class).getSection(src.getPoint().getDisplayName() + ":" + point.getDisplayName());
                             } else {
                                 sec.setSectionType(jmri.Section.DYNAMICADHOC);
                             }
@@ -558,8 +558,8 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         if ((src.sourceSignal instanceof SignalMast) && (getSignal() instanceof SignalMast)) {
             SignalMast smSource = (SignalMast) src.sourceSignal;
             SignalMast smDest = (SignalMast) getSignal();
-            if (InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(smSource) != null
-                    && InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(smSource).getStoreState(smDest) != jmri.SignalMastLogic.STORENONE) {
+            if (InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(smSource) != null
+                    && InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(smSource).getStoreState(smDest) != jmri.SignalMastLogic.STORENONE) {
                 return false;
             }
         }
@@ -679,7 +679,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         }
 
         if (cancelClear == EntryExitPairs.CANCELROUTE) {
-            if (manager.getDispatcherIntegration() && jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame.class) != null) {
+            if (manager.getDispatcherIntegration() && jmri.InstanceManager.getOptionalDefault(jmri.jmrit.dispatcher.DispatcherFrame.class) != null) {
                 jmri.jmrit.dispatcher.DispatcherFrame df = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame.class);
                 ActiveTrain at = null;
                 for (ActiveTrain atl : df.getActiveTrainsList()) {
@@ -696,7 +696,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                         if (sml != null && sml.getAssociatedSection((SignalMast) getSignal()) != null) {
                             sec = sml.getAssociatedSection((SignalMast) getSignal());
                         } else {
-                            sec = InstanceManager.sectionManagerInstance().getSection(src.getPoint().getDisplayName() + ":" + point.getDisplayName());
+                            sec = InstanceManager.getDefault(jmri.SectionManager.class).getSection(src.getPoint().getDisplayName() + ":" + point.getDisplayName());
                         }
                     }
                     if (sec != null) {

@@ -1,4 +1,3 @@
-// DecoderFile.java
 package jmri.jmrit.decoderdefn;
 
 import java.io.File;
@@ -21,7 +20,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Howard G. Penny Copyright (C) 2005
- * @version $Revision$
  * @see jmri.jmrit.decoderdefn.DecoderIndexFile
  */
 public class DecoderFile extends XmlFile {
