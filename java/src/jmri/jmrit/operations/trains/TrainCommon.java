@@ -1828,46 +1828,7 @@ public class TrainCommon {
     }
 
     /**
-     * Returns a double in minutes representing the string date. Date string has
-     * to be in the order: Month / day / year hour:minute AM_PM
-     *
-     * @return double in minutes @deprecated. Use date object comparisons
-     *         instead.
-     */
-    @Deprecated
-    public double convertStringDateToDouble(String date) {
-        double dateToDouble = 0;
-        try {
-            // log.debug("Convert date: " + date);
-            String[] breakdownDate = date.split("/");
-            // log.debug("Month: " + breakdownDate[0]);
-            // convert month to minutes
-            dateToDouble += 60 * 24 * 31 * Integer.parseInt(breakdownDate[0]);
-            // log.debug("Day: " + breakdownDate[1]);
-            dateToDouble += 60 * 24 * Integer.parseInt(breakdownDate[1]);
-            String[] breakDownYear = breakdownDate[2].split(" ");
-            // log.debug("Year: " + breakDownYear[0]);
-            dateToDouble += 60 * 24 * 365 * Integer.parseInt(breakDownYear[0]);
-            String[] breakDownTime = breakDownYear[1].split(":");
-            // log.debug("Hour: " + breakDownTime[0]);
-            dateToDouble += 60 * Integer.parseInt(breakDownTime[0]);
-            // log.debug("Minute: " + breakDownTime[1]);
-            dateToDouble += Integer.parseInt(breakDownTime[1]);
-            if (breakDownYear.length > 2) {
-                log.debug("AM_PM: " + breakDownYear[2]);
-                if (breakDownYear[2].equals(Bundle.getMessage("PM"))) {
-                    dateToDouble += 60 * 12;
-                }
-            }
-        } catch (NumberFormatException e) {
-            log.error("Not able to convert date: " + date + " to double");
-        }
-        // log.debug("Double: "+dateToDouble);
-        return dateToDouble;
-    }
-
-    /**
-     * Will pad out a string by adding spaces to the end of the string, and will
+     * Pads out a string by adding spaces to the end of the string, and will
      * remove characters from the end of the string if the string exceeds the
      * field size.
      *
