@@ -63,10 +63,10 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
             baseDigits[i] = new NamedIcon("resources/icons/misc/LCD/Lcd_" + i + "b.GIF", "resources/icons/misc/LCD/Lcd_" + i + "b.GIF");
             digits[i] = new NamedIcon("resources/icons/misc/LCD/Lcd_" + i + "b.GIF", "resources/icons/misc/LCD/Lcd_" + i + "b.GIF");
         }
-        percentIcon = new NamedIcon("resources/icons/misc/LCD/percentb.GIF", "resources/icons/misc/LCD/percentb.GIF");
-        basePercent = new NamedIcon("resources/icons/misc/LCD/percentb.GIF", "resources/icons/misc/LCD/percentb.GIF");
-        decimalIcon = new NamedIcon("resources/icons/misc/LCD/LCD_Colonb.GIF", "resources/icons/misc/LCD/LCD_Colonb.GIF");
-        baseDecimal = new NamedIcon("resources/icons/misc/LCD/LCD_Colonb.GIF", "resources/icons/misc/LCD/LCD_Colonb.GIF");
+        percentIcon = new NamedIcon("resources/icons/misc/LCD/percentb.gif", "resources/icons/misc/LCD/percentb.gif");
+        basePercent = new NamedIcon("resources/icons/misc/LCD/percentb.gif", "resources/icons/misc/LCD/percentb.gif");
+        decimalIcon = new NamedIcon("resources/icons/misc/LCD/decimalb.gif", "resources/icons/misc/LCD/decimalb.gif");
+        baseDecimal = new NamedIcon("resources/icons/misc/LCD/decimalb.gif", "resources/icons/misc/LCD/decimalb.gif");
         // set initial size the same as the original gifs
         for (int i = 0; i < 10; i++) {
             Image scaledImage = baseDigits[i].getImage().getScaledInstance(23, 32, Image.SCALE_SMOOTH);
