@@ -283,7 +283,8 @@
 	<li>Martin Jahner, who fixed the constant checkboxen
 	<li>Bob Jacobsen, who wrote some of the early code and does packaging and user support
 	<li>Martin Jahner, who built a replacement library for Mac OS X
-	<li>Jay Janzen, who debugged a RobotThrottle problem
+	<li>Jay Janzen, who debugged a RobotThrottle problem and provided improvements
+	    for Dispatcher.
 	<li>Lionel Jeanson, who added images to the roster,
 	    updated the throttle to add preferences for displaying them,
 	    cleaned up some code problems in the throttle,
@@ -403,7 +404,8 @@
 	<li>Gerry Pruss, who provided information on connecting to the QSI Programmer
 <a name="Q"></a>
 <a name="R"></a>
-	<li>Balazs Racz, who fixed a bug in startup and improved our tech documentation
+	<li>Balazs Racz, who fixed a bug in startup and improved our tech documentation,
+	    and updated the OpenLCB support to their version 0.7
 	<li>Steve Rawlinson, who fixed a bug in Layout Blocks.</li>
 	<li>Simon Reader, who improved the throttle,
 	added a check for completed status to Routes,
