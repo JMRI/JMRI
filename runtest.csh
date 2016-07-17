@@ -162,7 +162,7 @@ fi
 [ "${DEBUG}" ] && echo "ALTPORTS: '${ALTPORTS}'"
 
 [ "${DEBUG}" ] && echo java ${OPTIONS} "${ALTPORTS}" -cp "${CP}" "${CLASSNAME}" ${CONFIGFILE}
-java ${OPTIONS} ${ALTPORTS} -cp "${CP}" "${CLASSNAME}" $2 $3
+java ${OPTIONS} ${ALTPORTS} -cp "${CP}" jmri.util.junit.TestClassMainMethod "${CLASSNAME}" $2 $3
 
 
 
