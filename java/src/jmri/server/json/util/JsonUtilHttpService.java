@@ -35,16 +35,24 @@ public class JsonUtilHttpService extends JsonHttpService {
 
     @Override
     public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
-        if (name.isEmpty()) {
-            return this.doGetList(type, locale);
-        }
         switch (type) {
             case JSON.HELLO:
                 return this.getHello(locale, JsonServerPreferences.getDefault().getHeartbeatInterval());
             case JSON.METADATA:
+                if (name == null) {
+                    return this.getMetadata(locale);
+                }
                 return this.getMetadata(locale, name);
+            case JSON.NETWORK_SERVICE:
+            case JSON.NETWORK_SERVICES:
+                if (name == null) {
+                    return this.getNetworkServices(locale);
+                }
+                return this.getNetworkService(locale, name);
             case JSON.NODE:
                 return this.getNode(locale);
+            case JSON.SYSTEM_CONNECTIONS:
+                return this.getSystemConnections(locale);
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
         }
@@ -131,6 +139,39 @@ public class JsonUtilHttpService extends JsonHttpService {
     }
 
     /**
+     * Get a running {@link jmri.util.zeroconf.ZeroConfService} using the
+     * protocol as the name of the service.
+     *
+     * @param locale the client's Locale.
+     * @param name   the service protocol.
+     * @return the JSON networkService message.
+     * @throws jmri.server.json.JsonException if type is not a running zeroconf
+     *                                        networking protocol.
+     */
+    public JsonNode getNetworkService(Locale locale, String name) throws JsonException {
+        for (ZeroConfService service : ZeroConfService.allServices()) {
+            if (service.type().equals(name)) {
+                return this.getNetworkService(service);
+            }
+        }
+        throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", JSON.NETWORK_SERVICE, name));
+    }
+
+    private JsonNode getNetworkService(ZeroConfService service) {
+        ObjectNode ns = mapper.createObjectNode().put(JSON.TYPE, JSON.NETWORK_SERVICE);
+        ObjectNode data = ns.putObject(JSON.DATA);
+        data.put(JSON.NAME, service.name());
+        data.put(JSON.PORT, service.serviceInfo().getPort());
+        data.put(JSON.TYPE, service.type());
+        Enumeration<String> pe = service.serviceInfo().getPropertyNames();
+        while (pe.hasMoreElements()) {
+            String pn = pe.nextElement();
+            data.put(pn, service.serviceInfo().getPropertyString(pn));
+        }
+        return ns;
+    }
+
+    /**
      *
      * @param locale the client's Locale.
      * @return the JSON networkServices message.
@@ -138,17 +179,7 @@ public class JsonUtilHttpService extends JsonHttpService {
     public JsonNode getNetworkServices(Locale locale) {
         ArrayNode root = mapper.createArrayNode();
         ZeroConfService.allServices().stream().forEach((service) -> {
-            ObjectNode ns = mapper.createObjectNode().put(JSON.TYPE, JSON.NETWORK_SERVICE);
-            ObjectNode data = ns.putObject(JSON.DATA);
-            data.put(JSON.NAME, service.name());
-            data.put(JSON.PORT, service.serviceInfo().getPort());
-            data.put(JSON.TYPE, service.type());
-            Enumeration<String> pe = service.serviceInfo().getPropertyNames();
-            while (pe.hasMoreElements()) {
-                String pn = pe.nextElement();
-                data.put(pn, service.serviceInfo().getPropertyString(pn));
-            }
-            root.add(ns);
+            root.add(this.getNetworkService(service));
         });
         return root;
     }

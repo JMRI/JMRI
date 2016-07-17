@@ -1,13 +1,13 @@
 package jmri.server.json.util;
 
-import static org.junit.Assert.*;
-
 import apps.tests.Log4JFixture;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.Locale;
+import javax.servlet.http.HttpServletResponse;
 import jmri.Metadata;
+import jmri.jmris.json.JsonServerPreferences;
 import jmri.profile.NullProfile;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
@@ -50,7 +50,7 @@ public class JsonUtilHttpServiceTest {
 
     @Before
     public void setUp() throws IOException {
-        Profile profile = new NullProfile(null, null, FileUtil.getFile(FileUtil.SETTINGS));
+        Profile profile = new NullProfile("TestProfile", null, FileUtil.getFile(FileUtil.SETTINGS));
         ProfileManager.getDefault().setActiveProfile(profile);
         JUnitUtil.initConfigureManager();
     }
@@ -65,16 +65,25 @@ public class JsonUtilHttpServiceTest {
      */
     @Test
     public void testDoGet() throws Exception {
-        System.out.println("doGet");
-        String type = "";
-        String name = "";
-        Locale locale = null;
-        JsonUtilHttpService instance = null;
-        JsonNode expResult = null;
-        JsonNode result = instance.doGet(type, name, locale);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Locale locale = Locale.ENGLISH;
+        ObjectMapper mapper = new ObjectMapper();
+        JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
+        JsonServerPreferences.getDefault().setHeartbeatInterval(10);
+        Assert.assertEquals(instance.getHello(locale, 10), instance.doGet(JSON.HELLO, null, locale));
+        Assert.assertEquals(instance.getMetadata(locale, Metadata.JMRIVERCANON), instance.doGet(JSON.METADATA, Metadata.JMRIVERCANON, locale));
+        Assert.assertEquals(instance.getMetadata(locale), instance.doGet(JSON.METADATA, null, locale));
+        Assert.assertEquals(instance.getNode(locale), instance.doGet(JSON.NODE, null, locale));
+        Assert.assertEquals(instance.getNetworkService(locale, JSON.ZEROCONF_SERVICE_TYPE), instance.doGet(JSON.NETWORK_SERVICE, JSON.ZEROCONF_SERVICE_TYPE, locale));
+        Assert.assertEquals(instance.getNetworkServices(locale), instance.doGet(JSON.NETWORK_SERVICE, null, locale));
+        Assert.assertEquals(instance.getNetworkServices(locale), instance.doGet(JSON.NETWORK_SERVICES, null, locale));
+        JsonException exception = null;
+        try {
+            instance.doGet("INVALID TYPE TOKEN", null, locale);
+        } catch (JsonException ex) {
+            exception = ex;
+        }
+        Assert.assertNotNull(exception);
+        Assert.assertEquals(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, exception.getCode());
     }
 
     /**
@@ -82,15 +91,13 @@ public class JsonUtilHttpServiceTest {
      */
     @Test
     public void testDoGetList() throws Exception {
-        System.out.println("doGetList");
-        String type = "";
-        Locale locale = null;
-        JsonUtilHttpService instance = null;
-        JsonNode expResult = null;
-        JsonNode result = instance.doGetList(type, locale);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Locale locale = Locale.ENGLISH;
+        ObjectMapper mapper = new ObjectMapper();
+        JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
+        JsonServerPreferences.getDefault().setHeartbeatInterval(10);
+        Assert.assertEquals(instance.getMetadata(locale), instance.doGetList(JSON.METADATA, locale));
+        Assert.assertEquals(instance.getNetworkServices(locale), instance.doGetList(JSON.NETWORK_SERVICES, locale));
+        Assert.assertEquals(instance.getSystemConnections(locale), instance.doGetList(JSON.SYSTEM_CONNECTIONS, locale));
     }
 
     /**
@@ -116,15 +123,19 @@ public class JsonUtilHttpServiceTest {
      */
     @Test
     public void testGetHello() {
-        System.out.println("getHello");
-        Locale locale = null;
-        int heartbeat = 0;
-        JsonUtilHttpService instance = null;
-        JsonNode expResult = null;
+        Locale locale = Locale.ENGLISH;
+        int heartbeat = 10;
+        ObjectMapper mapper = new ObjectMapper();
+        JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         JsonNode result = instance.getHello(locale, heartbeat);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Assert.assertEquals(JSON.HELLO, result.path(JSON.TYPE).asText());
+        JsonNode data = result.path(JSON.DATA);
+        Assert.assertEquals(jmri.Version.name(), data.path(JSON.JMRI).asText());
+        Assert.assertEquals(JSON.JSON_PROTOCOL_VERSION, data.path(JSON.JSON).asText());
+        Assert.assertEquals(Math.round(heartbeat * 0.9f), data.path(JSON.HEARTBEAT).asInt());
+        Assert.assertEquals(WebServerPreferences.getDefault().getRailRoadName(), data.path(JSON.RAILROAD).asText());
+        Assert.assertEquals(NodeIdentity.identity(), data.path(JSON.NODE).asText());
+        Assert.assertEquals(ProfileManager.getDefault().getActiveProfile().getName(), data.path(JSON.ACTIVE_PROFILE).asText());
     }
 
     /**
