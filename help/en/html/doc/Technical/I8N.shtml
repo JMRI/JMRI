@@ -183,13 +183,12 @@ decoder definition directories.  Look for elements with an xml:lang
 attribute. Basically, you create additional elements with that attribute to 
 specify the language used:
 <pre style="font-family: monospace;">
-
       &lt;variable CV="6" default="22" item="Vmid"&gt;
         &lt;decVal max="64"/&gt;
         &lt;label&gt;Vmid&lt;/label&gt;
         &lt;label xml:lang="fr"&gt;Vmoy&lt;/label&gt;
       &lt;/variable&gt;
-</code></pre>
+</pre>
 <p>
 In the XML files, the 'item' attributes have to stay untranslated, as 
 does the entire xml/names.xml file.
@@ -265,16 +264,14 @@ may put that part of the message in different places, and supporting that
 is important.  
 That's handled by putting a placeholder in the message definition:
 <pre style="font-family: monospace;">
-
 Error123 = System name {0} is already in use
-</code></pre>
+</pre>
 (You can have more than one insertion, called {1}, {2}, etc)
 <p>
 Next, format the final message by inserting the content into it:
 <pre style="font-family: monospace;">
-
   String msg = Bundle.getMessage("Error123", badName);
-</code></pre>
+</pre>
 <p>
 The first argument is the message key
 followed by one or more strings to be inserted into the message.
@@ -295,9 +292,8 @@ the translation bundles are another example.
 In the Java code, these strings can be marked with a "<code>// NOI18N</code>"
 comment at the end of the line. If needed, put that after another comment:
 <pre style="font-family: monospace;">
-
   firePropertyChange("size", oldSize, newSize); // promptly! // NOI18N
-</code></pre>
+</pre>
 
 <h3>Adding a new Bundle</h3>
 <p>
@@ -326,9 +322,8 @@ If your package does not already have a Bundle class, you can add it by:
 <p>
 Older code typically references the bundles directly:
 <pre style="font-family: monospace;">
-
   java.util.ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
-</code></pre>
+</pre>
 
 <p>
 The getBundle argument is the complete package name (not file name)
@@ -339,9 +334,8 @@ strings in more than one properties file.
 <p>
 You can then retrieve particular strings like this:
 <pre style="font-family: monospace;">
-
 java.util.ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle").getString("ButtonNew");
-</code></pre>
+</pre>
 <p>
 We no longer recommend defining a class-static variable to hold the 
 reference to the Bundle object, as this ends up consuming a lot 
@@ -358,9 +352,8 @@ that replaces the JDOM getAttribute element when the content of the
 attribute might have been internationalized. You use it like this:
 
 <pre style="font-family: monospace;">
-
 String choice = LocaleSelector.getAttribute(choiceElement, "choice")
-</code></pre>
+</pre>
 where "choiceElement" is a JDOM Element object containing a (possibly translated)
 "choice" attribute.  &quot;Null&quot; will be returned if nothing is found.
 
@@ -374,17 +367,16 @@ where "choiceElement" is a JDOM Element object containing a (possibly translated
 JMRI provides a helpful utility for handling this on input:
 
 <pre style="font-family: monospace;">
-
    double d = jmri.util.IntlUtilities.doubleValue("1,002.3");
    float  f = jmri.util.IntlUtilities.floatValue("1,002.3");
-</code></pre>
+</pre>
 
 Note that this can throw a <code>java.text.ParseException</code> if the input is unparsable, so 
 handling that is part of your user-error handling.
 
 <p>
 For output:
-<pre>
+<pre style="font-family: monospace;">
    String s = jmri.util.IntlUtilities.valueOf(1002.3);
 </pre>
 <p>

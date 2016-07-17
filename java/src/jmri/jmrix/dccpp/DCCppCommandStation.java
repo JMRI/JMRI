@@ -28,9 +28,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
     /** ctor */
     public DCCppCommandStation() {
 	super();
-	if (rmgr == null) {
 	    rmgr = new DCCppRegisterManager();
-	}
     }
 
     public void setBaseStationType(String s) {

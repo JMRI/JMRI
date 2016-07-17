@@ -150,15 +150,22 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
         }
         super.buttonActionPerformed(ae);
     }
+    
+    private boolean queued = false;
 
     @Override
     protected void update() {
         log.debug("queue update");
+        if (queued) {
+            return;
+        }
+        queued = true;
         // use invokeLater to prevent deadlock
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                log.debug("update, setMode " + isSetMode);
+                log.debug("run update, setMode: " + isSetMode);
+                queued = false;
                 initialize();
                 if (_train != null && _train.getRoute() != null) {
                     textTrainName.setText(_train.getIconName());
@@ -181,12 +188,13 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
                         // now update the car pick ups and set outs
                         blockCars(rl, IS_MANIFEST);
 
-                        textStatus.setText(getStatus(rl, IS_MANIFEST));
-
                     } else {
                         moveButton.setEnabled(false);
                         setButton.setEnabled(false);
                     }
+                    
+                    textStatus.setText(getStatus(rl, IS_MANIFEST));
+                    
                     // adjust move button text
                     if (rl == _train.getTrainTerminatesRouteLocation()) {
                         moveButton.setText(Bundle.getMessage("Terminate"));
@@ -210,12 +218,13 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
-            log.debug("Property change ({}) for: ({}) old: {} new: {}",
+            log.debug("Property change ({}) for: ({}) old: {}, new: {}",
                     e.getPropertyName(), e.getSource().toString(),
                     e.getOldValue(), e.getNewValue());
         }
         if (e.getPropertyName().equals(Train.TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)) {
+                || e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)
+                || e.getPropertyName().equals(Train.TRAIN_MODIFIED_CHANGED_PROPERTY)) {
             clearAndUpdate();
         }
         if ((e.getPropertyName().equals(RollingStock.ROUTE_LOCATION_CHANGED_PROPERTY) && e.getNewValue() == null)
@@ -225,9 +234,9 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
             // remove car from list
             if (e.getSource().getClass().equals(Car.class)) {
                 Car car = (Car) e.getSource();
-                carCheckBoxes.remove("p" + car.getId());
-                carCheckBoxes.remove("s" + car.getId());
-                carCheckBoxes.remove("m" + car.getId());
+                checkBoxes.remove("p" + car.getId());
+                checkBoxes.remove("s" + car.getId());
+                checkBoxes.remove("m" + car.getId());
                 log.debug("Car ({}) removed from list", car.toString());
             }
             update();

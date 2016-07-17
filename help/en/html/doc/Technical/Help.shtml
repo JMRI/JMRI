@@ -85,11 +85,17 @@
       <ul>
         <li>Anchor tags need a specific format. Specifically, they
         should be written
-<pre style="font-family: monospace;">
-&lt;a name="pull"&gt;&lt;/a&gt;
-</pre>For example, to put an anchor on a heading, do
-<pre style="font-family: monospace;">
-&lt;a name="foo"&gt;&lt;/a&gt;&lt;h2&gt;Foo!&lt;/h2&gt;
+          <pre style="font-family: monospace;">
+&lt;a name="pull"&gt;...&lt;/a&gt;
+</pre>around text content only. 
+It's OK to be empty between the open and close
+tags.
+It's not OK to combine them into a single <code>&lt;a name="pull"/&gt;</code>
+tag; don't do that, as it confuses JavaHelp.
+<p>
+For example, to put an anchor on a heading, do
+          <pre style="font-family: monospace;">
+&lt;h2&gt;&lt;a name="foo"&gt;Foo!&lt;/a&gt;&lt;/h2&gt;
 </pre>
 
           <p>Note: Incorrectly structured anchor tags (not like the
@@ -97,28 +103,27 @@
           itself on the rendered help page.</p>
         </li>
 
-        <li>Anchors need to use the "name" attribute rather
-        than the "id" attribute. See the item above for an
-        example.</li>
+        <li>Anchors need to use the "name" attribute rather than
+        the "id" attribute. See the item above for an example.</li>
 
-        <li>You can use the <code>&lt;code&gt;</code> element,
-        or the <code>&lt;pre&gt;</code> element, but you can't use both together.
-        <code>&lt;code&gt;</code> is good for highlighting in-line text as
-        being code (like we've used it here); <code>&lt;pre&gt;</code> 
-        is good for making a block of inline HTML or Java look right.
-        To give a code-like appearance to a block, wrap it in 
-        <code>&lt;pre style=&quot;font-family: monospace;&quot;&gt;</code>
+        <li>You can use the <code>&lt;code&gt;</code> element, or
+        the <code>&lt;pre&gt;</code> element, but you can't use
+        both together. <code>&lt;code&gt;</code> is good for
+        highlighting in-line text as being code (like we've used it
+        here); <code>&lt;pre&gt;</code> is good for making a block
+        of inline HTML or Java look right. To give a code-like
+        appearance to a block, wrap it in <code>&lt;pre
+        style="font-family: monospace;"&gt;</code></li>
+
         <li>You can't count on any particular location for your
         files on the local machine, so all links to other help
         pages need to be relative.</li>
 
-        <li>Links to web pages outside the help system work, but
-        JavaHelp can't display PDF files. Links to those should be
-        shown explicitly as links, so they can be copied to an
+        <li>Links to web pages outside the help system work.
+        In most cases they'll be automatically opened in an
         outside web browser.</li>
-      </ul>
-      
-      <a name="web"></a>
+      </ul><a name="web" id="web"></a>
+
       <h2>Web access to help</h2>It's inconvenient to have to
       maintain two separate web pages for the main web site and the
       help system. To reduce the need for that, we use a particular
@@ -136,7 +141,7 @@
         whether or not you want to include a "Sidebar" via a file
         of the same name. This will put the proper top and bottom
         matter in place to get the page properly displayed.</li>
-      </ul><a name="code"></a>
+      </ul><a name="code" id="code"></a>
 
       <h2>Access in the code</h2>Within the JMRI code, access the
       help system comes via the jmri.util.HelpUtil class. (For
@@ -152,15 +157,14 @@
       <code>jmri.jmrit.simpleclock.SimpleClockFrame</code> class
       inherits from JmriJFrame, and adds a help menu with the
       line</p>
-<pre style="font-family: monospace;">
+      <pre style="font-family: monospace;">
   addHelpMenu("package.jmri.jmrit.simpleclock.SimpleClockFrame", true);
-</pre>
-The help file is then located at
+</pre>The help file is then located at
 <code>help/en/package/jmri/jmrit/simpleclock/SimpleClockFrame.shtml</code>.
 
       <p>A number of help files have been put in place without any
       contents; hopefully some users will edit them and contribute
-      them back. <a name="jhelpdev"></a></p>
+      them back. <a name="jhelpdev" id="jhelpdev"></a></p>
 
       <h2>Creating the control files with JHelpDev</h2>JavaHelp
       uses various XML files to control how the table of contents
@@ -246,7 +250,7 @@ The help file is then located at
       on how to do that on the <a href=
       "http://jhelpdev.sourceforge.net/">JHelpDev web site</a>.
       Remember to run "ant" after that to include your updates on
-      the web versions. <a name="site"></a></p>
+      the web versions. <a name="site" id="site"></a></p>
 
       <h2>Updating the JMRI.org site</h2>Changes to Help pages
       which are checked-in should show up automatically on the

@@ -3,7 +3,6 @@ package jmri.jmrit.operations;
 
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Frame;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
@@ -29,6 +28,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarSetFrame;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
+import jmri.jmrit.operations.rollingstock.engines.EngineSetFrame;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -102,7 +102,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
     protected JPanel pButtons = new JPanel();
 
     // check boxes
-    protected Hashtable<String, JCheckBox> carCheckBoxes = new Hashtable<>();
+    protected Hashtable<String, JCheckBox> checkBoxes = new Hashtable<>();
     protected List<RollingStock> rollingStock = new ArrayList<>();
 
     // flags
@@ -258,8 +258,8 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
         pSetouts.revalidate();
         pMoves.revalidate();
 
-        selectButton.setEnabled(carCheckBoxes.size() > 0 && !isSetMode);
-        clearButton.setEnabled(carCheckBoxes.size() > 0 && !isSetMode);
+        selectButton.setEnabled(checkBoxes.size() > 0 && !isSetMode);
+        clearButton.setEnabled(checkBoxes.size() > 0 && !isSetMode);
         check();
 
         log.debug("update complete");
@@ -268,9 +268,9 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
     CarSetFrame csf = null;
 
     // action for set button for a car, opens the set car window
-    public void setCarButtonActionPerfomed(ActionEvent ae) {
+    public void carSetButtonActionPerfomed(ActionEvent ae) {
         String name = ((JButton) ae.getSource()).getName();
-        log.debug("Set button for car " + name);
+        log.debug("Set button for car {}", name);
         Car car = carManager.getById(name);
         if (csf != null) {
             csf.dispose();
@@ -278,9 +278,21 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
         csf = new CarSetFrame();
         csf.initComponents();
         csf.loadCar(car);
-        // csf.setTitle(Bundle.getMessage("TitleCarSet"));
-        csf.setVisible(true);
-        csf.setExtendedState(Frame.NORMAL);
+    }
+    
+    EngineSetFrame esf = null;
+    
+    // action for set button for an engine, opens the set engine window
+    public void engineSetButtonActionPerfomed(ActionEvent ae) {
+        String name = ((JButton) ae.getSource()).getName();
+        log.debug("Set button for loco {}", name);
+        Engine eng = engManager.getById(name);
+        if (esf != null) {
+            esf.dispose();
+        }
+        esf = new EngineSetFrame();
+        esf.initComponents();
+        esf.loadEngine(eng);
     }
 
     // confirm that all work is done
@@ -292,7 +304,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
     // Determines if all car checkboxes are selected. Disables the Set button if
     // all checkbox are selected.
     protected void check() {
-        Enumeration<JCheckBox> en = carCheckBoxes.elements();
+        Enumeration<JCheckBox> en = checkBoxes.elements();
         while (en.hasMoreElements()) {
             JCheckBox checkBox = en.nextElement();
             if (!checkBox.isSelected()) {
@@ -310,7 +322,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
     }
 
     protected void selectCheckboxes(boolean enable) {
-        Enumeration<JCheckBox> en = carCheckBoxes.elements();
+        Enumeration<JCheckBox> en = checkBoxes.elements();
         while (en.hasMoreElements()) {
             JCheckBox checkBox = en.nextElement();
             checkBox.setSelected(enable);
@@ -318,6 +330,12 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
         isSetMode = false;
     }
 
+    /**
+     * Uses "ep" prefix to denote a checkbox with an engine pick up, and "es"
+     * for an engine set out.
+     * 
+     * @param rl The routeLocation to show loco pick ups or set outs.
+     */
     protected void updateLocoPanes(RouteLocation rl) {
         if (Setup.isPrintHeadersEnabled()) {
             JLabel header = new JLabel(Tab + trainCommon.getPickupEngineHeader());
@@ -335,18 +353,40 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                 pPickupLocos.setVisible(true);
                 rollingStock.add(engine);
                 engine.addPropertyChangeListener(this);
-                JCheckBox checkBox = new JCheckBox(trainCommon.pickupEngine(engine));
-                setCheckBoxFont(checkBox);
-                pPickupLocos.add(checkBox);
+                JCheckBox checkBox;
+                if (checkBoxes.containsKey("ep" + engine.getId())) {
+                    checkBox = checkBoxes.get("ep"+ engine.getId());
+                } else {
+                    checkBox = new JCheckBox(trainCommon.pickupEngine(engine));
+                    setCheckBoxFont(checkBox);
+                    addCheckBoxAction(checkBox);
+                    checkBoxes.put("ep" + engine.getId(), checkBox);
+                }
+                if (isSetMode && !checkBox.isSelected()) {
+                    pPickupLocos.add(addSet(engine));
+                } else {
+                    pPickupLocos.add(checkBox);
+                }
             }
             if (engine.getRouteDestination() == rl) {
                 locoPane.setVisible(true);
                 pSetoutLocos.setVisible(true);
                 rollingStock.add(engine);
                 engine.addPropertyChangeListener(this);
-                JCheckBox checkBox = new JCheckBox(trainCommon.dropEngine(engine));
-                setCheckBoxFont(checkBox);
-                pSetoutLocos.add(checkBox);
+                JCheckBox checkBox;
+                if (checkBoxes.containsKey("es" + engine.getId())) {
+                    checkBox = checkBoxes.get("es"+ engine.getId());
+                } else {
+                    checkBox = new JCheckBox(trainCommon.dropEngine(engine));
+                    setCheckBoxFont(checkBox);
+                    addCheckBoxAction(checkBox);
+                    checkBoxes.put("es" + engine.getId(), checkBox);
+                }
+                if (isSetMode && !checkBox.isSelected()) {
+                    pSetoutLocos.add(addSet(engine));
+                } else {
+                    pSetoutLocos.add(checkBox);
+                }
             }
         }
         // pad the panels in case the horizontal scroll bar appears
@@ -401,12 +441,12 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                             car.addPropertyChangeListener(this);
                         }
                         // did we already process this car?
-                        if (carCheckBoxes.containsKey("p" + car.getId())) {
-                            if (isSetMode && !carCheckBoxes.get("p" + car.getId()).isSelected()) {
+                        if (checkBoxes.containsKey("p" + car.getId())) {
+                            if (isSetMode && !checkBoxes.get("p" + car.getId()).isSelected()) {
                                 // change to set button so user can remove car from train
                                 pPickups.add(addSet(car));
                             } else {
-                                pPickups.add(carCheckBoxes.get("p" + car.getId()));
+                                pPickups.add(checkBoxes.get("p" + car.getId()));
                             }
                             // figure out the checkbox text, either single car or utility
                         } else {
@@ -423,7 +463,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                             setCheckBoxFont(checkBox);
                             addCheckBoxAction(checkBox);
                             pPickups.add(checkBox);
-                            carCheckBoxes.put("p" + car.getId(), checkBox);
+                            checkBoxes.put("p" + car.getId(), checkBox);
                         }
                     }
                 }
@@ -445,12 +485,12 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                         rollingStock.add(car);
                         car.addPropertyChangeListener(this);
                     }
-                    if (carCheckBoxes.containsKey("s" + car.getId())) {
-                        if (isSetMode && !carCheckBoxes.get("s" + car.getId()).isSelected()) {
+                    if (checkBoxes.containsKey("s" + car.getId())) {
+                        if (isSetMode && !checkBoxes.get("s" + car.getId()).isSelected()) {
                             // change to set button so user can remove car from train
                             pSetouts.add(addSet(car));
                         } else {
-                            pSetouts.add(carCheckBoxes.get("s" + car.getId()));
+                            pSetouts.add(checkBoxes.get("s" + car.getId()));
                         }
                     } else {
                         String text;
@@ -466,7 +506,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                         setCheckBoxFont(checkBox);
                         addCheckBoxAction(checkBox);
                         pSetouts.add(checkBox);
-                        carCheckBoxes.put("s" + car.getId(), checkBox);
+                        checkBoxes.put("s" + car.getId(), checkBox);
                     }
                     // local move?
                 } else if (car.getTrack() != null && car.getRouteLocation() == rl
@@ -476,12 +516,12 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                         rollingStock.add(car);
                         car.addPropertyChangeListener(this);
                     }
-                    if (carCheckBoxes.containsKey("m" + car.getId())) {
-                        if (isSetMode && !carCheckBoxes.get("m" + car.getId()).isSelected()) {
+                    if (checkBoxes.containsKey("m" + car.getId())) {
+                        if (isSetMode && !checkBoxes.get("m" + car.getId()).isSelected()) {
                             // change to set button so user can remove car from train
                             pMoves.add(addSet(car));
                         } else {
-                            pMoves.add(carCheckBoxes.get("m" + car.getId()));
+                            pMoves.add(checkBoxes.get("m" + car.getId()));
                         }
                     } else {
                         String text;
@@ -497,7 +537,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                         setCheckBoxFont(checkBox);
                         addCheckBoxAction(checkBox);
                         pMoves.add(checkBox);
-                        carCheckBoxes.put("m" + car.getId(), checkBox);
+                        checkBoxes.put("m" + car.getId(), checkBox);
                     }
                 }
             }
@@ -512,20 +552,25 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
         pMoves.add(new JLabel(Space));
     }
 
-    // replace the car checkbox and text with the car's road and number and a Set button
-    protected JPanel addSet(Car car) {
+    // replace the car or engine checkbox and text with only the road and number and a Set button
+    protected JPanel addSet(RollingStock rs) {
         JPanel pSet = new JPanel();
         pSet.setLayout(new GridBagLayout());
-        JButton carSetButton = new JButton(Bundle.getMessage("Set"));
-        carSetButton.setName(car.getId());
-        carSetButton.addActionListener((ActionEvent e) -> {
-            setCarButtonActionPerfomed(e);
+        JButton setButton = new JButton(Bundle.getMessage("Set"));
+        setButton.setName(rs.getId());
+        setButton.addActionListener((ActionEvent e) -> {
+            if (Car.class.isInstance(rs)) {
+                carSetButtonActionPerfomed(e);
+            } else {
+                engineSetButtonActionPerfomed(e);
+            }
         });
-        JLabel label = new JLabel(TrainCommon.padString(car.toString(), Control.max_len_string_attibute
-                + Control.max_len_string_road_number));
+        JLabel label = new JLabel(TrainCommon.padString(rs.toString(),
+                Control.max_len_string_attibute + Control.max_len_string_road_number));
         setLabelFont(label);
         addItem(pSet, label, 0, 0);
-        addItemLeft(pSet, carSetButton, 1, 0);
+        addItemLeft(pSet, setButton, 1, 0);
+        pSet.setAlignmentX(LEFT_ALIGNMENT);
         return pSet;
     }
 
@@ -561,6 +606,9 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
             return MessageFormat.format(TrainSwitchListText.getStringTrainDone(), new Object[]{_train
                 .getName()});
         }
+        if (!_train.isBuilt()) {
+            return _train.getStatus();
+        }
         if (Setup.isPrintLoadsAndEmptiesEnabled()) {
             int emptyCars = _train.getNumberEmptyCarsInTrain(rl);
             String text;
@@ -589,7 +637,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
     
     protected void clearAndUpdate() {
         trainCommon.clearUtilityCarTypes(); // reset the utility car counts
-        carCheckBoxes.clear();
+        checkBoxes.clear();
         isSetMode = false;
         update();
     }

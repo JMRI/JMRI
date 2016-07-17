@@ -1,72 +1,77 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated by Blorec Herv&#233;  2013-09-03--> 
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- Updated by Blorec Herv&#233;  2013-09-03-->
+
 <html lang="fr">
 <head>
-    <TITLE>
- 	JMRI: Integration with CATS
-    </TITLE>
-    <META content="Bob Jacobsen" name="Author">
-    <meta name="keywords" content="JMRI technical code Java CATS ">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <title>JMRI: Integration with CATS</title>
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content="JMRI technical code Java CATS">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header" -->
 
-	<div id="mainContent">
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<h1>Integration avec CATS</h1>
+    <div id="mainContent">
+      <h1>Integration avec CATS</h1>Le Crandic Automated Traffic
+      System (CATS) est une application bas&eacute;e sur JMRI
+      cr&eacute;e par Rodney Black pour le contr&ocirc;le et
+      l'exploitation d'un chemin de fer miniature. Il y a plus
+      d'informations sur le <a href="http://cats4ctc.org/">site web
+      CATS</a> .
 
-Le Crandic Automated Traffic System (CATS) est une application bas&#233;e sur JMRI cr&#233;e
-par Rodney Black pour le contr&#244;le et l'exploitation d'un chemin de fer miniature.
-Il y a plus d'informations sur le
-<a href="http://cats4ctc.org/"> site web CATS </a>.
+      <p>JMRI est une biblioth&egrave;que, et CATS est une grande
+      application maintenue s&eacute;par&eacute;ment qui utilise la
+      biblioth&egrave;que. En tant que tel, CATS constitue un
+      important sc&eacute;nario de r&eacute;f&eacute;rence pour les
+      d&eacute;veloppeurs JMRI car ils peuvent &eacute;tendre et
+      adapter leur code. CATS doit continuer &agrave; travailler
+      pour ses utilisateurs, avec un minimum d' effort pour les
+      d&eacute;veloppeurs de CATS!</p>
 
-<p>
-JMRI est une biblioth&#232;que, et CATS est une grande application maintenue s&#233;par&#233;ment qui utilise la biblioth&#232;que. En tant que tel, CATS constitue un important
-sc&#233;nario de r&#233;f&#233;rence pour les d&#233;veloppeurs JMRI car ils peuvent  &#233;tendre et adapter leur code.
-CATS doit continuer &#224; travailler pour ses utilisateurs, avec un minimum d'
-effort pour les d&#233;veloppeurs de CATS!
+      <h3>Integration pour test</h3>
 
-<H3>Integration pour test</h3>
-<p>
-CATS a deux ensemble d'arbres, "cats.*" et "developper.*", correspondant &#224; peu pr&#232;s
- aux deux applications CATS.
+      <p>CATS a deux ensemble d'arbres, "cats.*" et "developper.*",
+      correspondant &agrave; peu pr&egrave;s aux deux applications
+      CATS.</p>
 
-<p>
-Le d&#233;veloppement de CATS  n'utilise pas les CVS, et le code n'est g&#233;n&#233;ralement pas
-disponible pendant qu'il est en cours de d&#233;veloppement.
-Rodney Black communique r&#233;guli&#232;rement les disponibilit&#233;s , y compris le code source, et les archives file.zip sur le
-<a href="http://cats4ctc.org/"> site web CATS </a>.
+      <p>Le d&eacute;veloppement de CATS n'utilise pas les CVS, et
+      le code n'est g&eacute;n&eacute;ralement pas disponible
+      pendant qu'il est en cours de d&eacute;veloppement. Rodney
+      Black communique r&eacute;guli&egrave;rement les
+      disponibilit&eacute;s , y compris le code source, et les
+      archives file.zip sur le <a href="http://cats4ctc.org/">site
+      web CATS</a> .</p>
 
-<p>
-Depuis Juillet 2009, la distribution actuelle de CATS oeuvres
-avec JMRI 2.6 et teste actuellement les version  (2.7 .*)
-A partir de cette base, nous voulons garder les compilation CATS
-durant le d&#233;veloppement de JMRI.
+      <p>Depuis Juillet 2009, la distribution actuelle de CATS
+      oeuvres avec JMRI 2.6 et teste actuellement les version (2.7
+      .*) A partir de cette base, nous voulons garder les
+      compilation CATS durant le d&eacute;veloppement de JMRI.</p>
 
+      <h3>Compiler CATS avec JMRI</h3>
 
-<h3>Compiler CATS avec JMRI</h3>
+      <p>CATS n'a pas de tests unitaires, il n'y a donc rien
+      &agrave; faire dans l'arbre des sources "test".</p>
 
-<p>
-CATS n'a pas de tests unitaires, il n'y a donc rien &#224; faire dans 
-l'arbre des sources "test".
-
-<p>
-Pour simplifier le travail CVS, le deux r&#233;pertoires CATS sont ignor&#233;s ...
-
-<!--#include virtual="/Footer" -->
-
-	  </div><!-- closes #mainContent-->
-	</div> <!-- closes #mBody-->
+      <p>Pour simplifier le travail CVS, le deux r&eacute;pertoires
+      CATS sont ignor&eacute;s ... 
+      <!--#include virtual="/Footer" --></p>
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>

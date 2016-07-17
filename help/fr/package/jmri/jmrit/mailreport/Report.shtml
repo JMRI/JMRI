@@ -1,69 +1,79 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="fr">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- <!-- $Id$ --> -->
-<!-- Translated by Herv&#233; Blorec bzh56420@yahoo.fr 2013-11-04
---> 
-<title>JMRI: Send Problem Report</title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright ($Author$) 2009 -->
+  <!-- <!== $Id$ -->
 
-<!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html;charset=iso-8859-1"> 
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
-</HEAD>
+  <title>JMRI: Send Problem Report</title>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+</head>
 
-<BODY>
-<!--#include virtual="/Header" -->
+<body>
+  --&gt; 
+  <!-- Translated by Herv&#233; Blorec bzh56420@yahoo.fr 2013-11-04
+--> <!-- Style -->
+   <!-- /Style -->
+   <!--#include virtual="/Header" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>JMRI: T&eacute;l&eacute;chargement des Informations de
+      D&eacute;bogage</h1>L'&eacute;l&eacute;ment
+      "Transf&eacute;rer les informations de d&eacute;bogage" dans
+      les menus d'aide JMRI vous permet de stocker des informations
+      de d&eacute;bogage, o&ugrave; les d&eacute;veloppeurs JMRI
+      peuvent facilement les trouver. Les informations contiennent
+      tous les d&eacute;tails sp&eacute;cifiques de votre
+      installation JMRI, y compris le journal de la session la plus
+      r&eacute;cente du programme, mais ne contiennent aucune de
+      vos informations priv&eacute;es. Vous pouvez voir les
+      rapports des probl&egrave;mes ant&eacute;rieurs dans le
+      <a href=
+      "http://groups.google.com/group/jmri-problem-reports">jmri-problem-reports
+      Google group</a> .
 
-<h1> 
-JMRI: T&#233;l&#233;chargement des Informations de D&#233;bogage
-</h1>
+      <p>Pour rendre l'information plus utile, vous devriez
+      t&eacute;l&eacute;charger d&egrave;s que possible
+      apr&egrave;s avoir rencontr&eacute; le probl&egrave;me, de
+      sorte que toute information utile n'ait pas &eacute;t&eacute;
+      &eacute;cras&eacute;e.</p>
 
-L'&#233;l&#233;ment "Transf&#233;rer les informations de d&#233;bogage"  dans les menus d'aide JMRI
-vous permet de stocker des informations de d&#233;bogage, o&#249; les d&#233;veloppeurs JMRI
-peuvent facilement les trouver. Les informations contiennent tous
-les d&#233;tails sp&#233;cifiques de votre installation JMRI, y compris le
-journal de la session la plus r&#233;cente du programme,
-mais ne contiennent aucune de vos informations priv&#233;es.
-Vous pouvez voir les rapports des probl&#232;mes ant&#233;rieurs dans le
-<a href="http://groups.google.com/group/jmri-problem-reports">jmri-problem-reports Google group </a>.
+      <p>L'&eacute;l&eacute;ment "T&eacute;l&eacute;charger
+      Informations d&eacute;bogage" va aider en ouvrant une
+      nouvelle fen&ecirc;tre avec trois champs et deux cases
+      &agrave; cocher. Entrez votre adresse email dans la ligne du
+      haut. elle ne sera pas rendue visible pour le public, mais
+      nous avons besoin d'une adresse courriel valide pour
+      r&eacute;duire les spams. Dans le champ suivant, entrez un
+      r&eacute;sum&eacute; en une ligne du probl&egrave;me qui
+      appara&icirc;tra comme le sujet du
+      t&eacute;l&eacute;chargement. Enfin, tapez quelques lignes
+      d&eacute;crivant ce qui s'est mal pass&eacute;, que vous avez
+      recr&eacute;er, etc</p>
 
-<p>
-Pour rendre l'information plus utile, vous devriez
-t&#233;l&#233;charger d&#232;s que possible apr&#232;s avoir rencontr&#233;
-le probl&#232;me, de sorte que toute information utile n'ait pas &#233;t&#233;
-&#233;cras&#233;e.
+      <p>Normalement, vous laissez les deux cases &agrave; cocher
+      afin que le rapport contienne les informations de contexte
+      (version JMRI, la version Java, types de mat&eacute;riel,
+      etc) et les fichiers journaux les plus r&eacute;cents. Si
+      vous ne voulez pas inclure ceux-ci pour une raison
+      quelconque, il suffit de d&eacute;cocher leur case</p>
 
-<p>
-L'&#233;l&#233;ment "T&#233;l&#233;charger Informations d&#233;bogage" va aider en ouvrant une nouvelle fen&#234;tre
-avec trois champs et deux cases &#224; cocher.
-Entrez votre adresse email dans la ligne du haut.
-elle ne sera pas rendue visible pour le public, mais nous
-avons besoin d'une adresse courriel valide pour r&#233;duire les spams.
-Dans le champ suivant, entrez un r&#233;sum&#233; en une ligne du probl&#232;me
-qui appara&#238;tra comme le sujet du t&#233;l&#233;chargement.
-Enfin, tapez quelques lignes d&#233;crivant ce qui s'est mal pass&#233;, que vous avez
-recr&#233;er, etc
-
-<p>
-Normalement, vous laissez les deux cases &#224; cocher afin que le rapport
-contienne les informations de contexte (version JMRI, la version Java,
-types de mat&#233;riel, etc) et les fichiers journaux les plus r&#233;cents. Si vous
-ne voulez pas inclure ceux-ci pour une raison quelconque, il suffit de d&#233;cocher leur case
-
-<p>
-Enfin,appuyer sur envoyer. Si tout va bien, la fen&#234;tre va se fermer
- quelques secondes apr&#232;s que l'information ait &#233;t&#233; envoy&#233;.
-
-    
-<!--#include virtual="/Footer" -->
+      <p>Enfin,appuyer sur envoyer. Si tout va bien, la
+      fen&ecirc;tre va se fermer quelques secondes apr&egrave;s que
+      l'information ait &eacute;t&eacute; envoy&eacute;. 
+      <!--#include virtual="/Footer" --></p>
+    </div>
+  </div>
 </body>
 </html>

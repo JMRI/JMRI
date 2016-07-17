@@ -1,108 +1,128 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
 <html lang="en">
 <head>
-  <title>
- 	JMRI: Entry/Exit (NX) Documentation
-  </title>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
+  <title>JMRI: Entry/Exit (NX) Documentation</title>
   <meta content="Kevin Dickerson" name="Author">
-  <meta name="keywords"
-        content="hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
-
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <meta name="keywords" content=
+  "hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <!--#include virtual="/Header" -->
 
-<h1>JMRI: Entry/Exit (NX) Routing Documentation</h1>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<h2>What is NX Routing?</h2>
+    <div id="mainContent">
+      <h1>JMRI: Entry/Exit (NX) Routing Documentation</h1>
 
-<p>NX Routing builds a dynamic valid path between two locations on a Layout Editor 
-such as Sensors or Signal Masts.  The path can traverse a number of Turnouts 
-and different Blocks.  The Entry and Exit locations on the Layout Editor are 
-defined by the placement of Sensors at various Block boundaries.  When two Sensors 
-are activated and a clear and valid route is found between them, then the Turnouts 
-in the route will automatically be set accordingly.
-<p>
-If there are multiple paths between two locations, then the system will use the 
-path with the smallest cost or number of different Blocks.  If one on the Blocks on the 
-path is already occupied and there is a valid alternative path, then this will be taken.
+      <h2>What is NX Routing?</h2>
 
-<h2>How to setup for Entry Exit Routing</h2>
+      <p>NX Routing builds a dynamic valid path between two
+      locations on a Layout Editor such as Sensors or Signal Masts.
+      The path can traverse a number of Turnouts and different
+      Blocks. The Entry and Exit locations on the Layout Editor are
+      defined by the placement of Sensors at various Block
+      boundaries. When two Sensors are activated and a clear and
+      valid route is found between them, then the Turnouts in the
+      route will automatically be set accordingly.</p>
 
-First you will need to have built a representation of your layout in the 
-<a href="../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor</a>.
-<a href="Blocks.shtml">Blocks</a> will also need be defined so that the
-<a href="Sensors.shtml">Sensors</a> can be assigned to their boundaries.
+      <p>If there are multiple paths between two locations, then
+      the system will use the path with the smallest cost or number
+      of different Blocks. If one on the Blocks on the path is
+      already occupied and there is a valid alternative path, then
+      this will be taken.</p>
 
-<h3>Placing Sensors</h3>
-Sensors can be placed by Turnouts, Layout Editor anchor points and level crossings, 
-but only where there is a boundary between two different layout Blocks.<br>
-To add a Sensor, right click on the Turnout, level crossing or anchor point
-on your <a href="../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor</a> Panel.
-If a Block boundary exists you will be given the option to "Set Sensors..." 
-You can also set Sensors at End Bumpers or Buffer Stops.
-<p>
-You will then be presented with a new pane that allows you to select 
-the Sensor that will be used to either "protect" or be on the boundary between Block x &amp; y.<br>
-The boundary or the protecting Block selected will define which direction the 
-Sensors is active in. 
-<p>
-<img src="images/EntryExitExample1.png" height="560" width="628">
-<p>
-In the example above, the Sensor protecting Block 51 will be used
-for routes going in an easterly direction. While the Sensor 
-protecting Block 50 will be used for routes going in a westerly direction.<p>
+      <h2>How to setup for Entry Exit Routing</h2>First you will
+      need to have built a representation of your layout in the
+      <a href=
+      "../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout
+      Editor</a>. <a href="Blocks.shtml">Blocks</a> will also need
+      be defined so that the <a href="Sensors.shtml">Sensors</a>
+      can be assigned to their boundaries.
 
-For Turnouts and crossings, you can only add sensors for the boundary 
-going <em>into</em> the Turnout or crossing. It is not possible to add a Sensor 
-for the boundary going <em>out</em> from the Turnout or crossing.<br>
-E.g., if Block A is the section of track attached to the Turnout and the 
-Turnout is in Block B, you can only add a Sensor that faces into Block A 
-that protects Block B; you cannot add a Sensor that faces into Block B to 
-protect Block A. 
+      <h3>Placing Sensors</h3>Sensors can be placed by Turnouts,
+      Layout Editor anchor points and level crossings, but only
+      where there is a boundary between two different layout
+      Blocks.<br>
+      To add a Sensor, right click on the Turnout, level crossing
+      or anchor point on your <a href=
+      "../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout
+      Editor</a> Panel. If a Block boundary exists you will be
+      given the option to "Set Sensors..." You can also set Sensors
+      at End Bumpers or Buffer Stops.
 
-<p>
-<img src="images/EntryExitLayout.png" height="232" width="725">
-<p>
+      <p>You will then be presented with a new pane that allows you
+      to select the Sensor that will be used to either "protect" or
+      be on the boundary between Block x &amp; y.<br>
+      The boundary or the protecting Block selected will define
+      which direction the Sensors is active in.</p>
 
-<h3>Generating Entry Exit Pairs</h3>
-You can have the system automatically generate the basic Entry Exit pairs and it is also possible 
-to manually add pairs in the system, along with adding in what would normally be considered invalid 
-configuration.
+      <p><img src="images/EntryExitExample1.png" height="560"
+      width="628"></p>
 
-To access the Entry Exit panel, select "Entry Exit" from the Tools menu of the Layout Editor. 
-You will then be presented with the following screen...
-<p>
-<img src="images/AddEntryExit.png" height="302" width="633">
-<p>
-If you press the <b>Auto Generate Entry Exit Pairs</b> this will then discover all the 
-valid Entry Exit pairs on the layout.<br>
-Using the combo boxes it is also possible to manually add in additional Entry Exit pairs.<br>
-In all cases when the <b>From</b> Sensor is set active followed by the <b>To</b> Sensor, the 
-route will be set between those two points and the two Sensors will return back to the "Inactive" state. 
-If the <b>Both Way</b> option is ticked, then it is possible to activate the route in either direction, 
-i.e. you can select the <b>To</b> Sensor prior to the <b>From</b> Sensor and the same route will be set.
-<p>
+      <p>In the example above, the Sensor protecting Block 51 will
+      be used for routes going in an easterly direction. While the
+      Sensor protecting Block 50 will be used for routes going in a
+      westerly direction.</p>
 
-<h2>Limitation</h2>
-The Entry Exit currently only deals with the throwing of Turnouts between two Routes. It does not 
-yet provide a method to set-up <a href="signaling/SignalMastLogic.shtml">Signal Mast Logic</a>
- or full interlocking.
-    
-<!--#include virtual="/Footer" -->
+      <p>For Turnouts and crossings, you can only add sensors for
+      the boundary going <em>into</em> the Turnout or crossing. It
+      is not possible to add a Sensor for the boundary going
+      <em>out</em> from the Turnout or crossing.<br>
+      E.g., if Block A is the section of track attached to the
+      Turnout and the Turnout is in Block B, you can only add a
+      Sensor that faces into Block A that protects Block B; you
+      cannot add a Sensor that faces into Block B to protect Block
+      A.</p>
+
+      <p><img src="images/EntryExitLayout.png" height="232" width=
+      "725"></p>
+
+      <h3>Generating Entry Exit Pairs</h3>You can have the system
+      automatically generate the basic Entry Exit pairs and it is
+      also possible to manually add pairs in the system, along with
+      adding in what would normally be considered invalid
+      configuration. To access the Entry Exit panel, select "Entry
+      Exit" from the Tools menu of the Layout Editor. You will then
+      be presented with the following screen...
+
+      <p><img src="images/AddEntryExit.png" height="302" width=
+      "633"></p>
+
+      <p>If you press the <b>Auto Generate Entry Exit Pairs</b>
+      this will then discover all the valid Entry Exit pairs on the
+      layout.<br>
+      Using the combo boxes it is also possible to manually add in
+      additional Entry Exit pairs.<br>
+      In all cases when the <b>From</b> Sensor is set active
+      followed by the <b>To</b> Sensor, the route will be set
+      between those two points and the two Sensors will return back
+      to the "Inactive" state. If the <b>Both Way</b> option is
+      ticked, then it is possible to activate the route in either
+      direction, i.e. you can select the <b>To</b> Sensor prior to
+      the <b>From</b> Sensor and the same route will be set.</p>
+
+      <h2>Limitation</h2>The Entry Exit currently only deals with
+      the throwing of Turnouts between two Routes. It does not yet
+      provide a method to set-up <a href=
+      "signaling/SignalMastLogic.shtml">Signal Mast Logic</a> or
+      full interlocking. <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
-  </div> <!-- closes #mBody-->
+  </div><!-- closes #mBody-->
 </body>
 </html>

@@ -291,7 +291,7 @@ public class ReporterTableAction extends AbstractTableAction {
             }
             if (user != null && !user.equals("") && (reportManager.getByUserName(user) == null)) {
                 r.setUserName(user);
-            } else if (reportManager.getByUserName(user) != null && !pref.getPreferenceState(getClassName(), userNameError)) {
+            } else if (user != null && !user.equals("") && reportManager.getByUserName(user) != null && !pref.getPreferenceState(getClassName(), userNameError)) {
                 pref.showErrorMessage("Duplicate UserName", "The username " + user + " specified is already in use and therefore will not be set", userNameError, "", false, true);
             }
 

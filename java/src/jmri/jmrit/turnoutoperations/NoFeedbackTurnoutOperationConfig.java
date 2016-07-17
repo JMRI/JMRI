@@ -1,6 +1,3 @@
-/**
- *
- */
 package jmri.jmrit.turnoutoperations;
 
 import jmri.TurnoutOperation;
@@ -13,11 +10,6 @@ import jmri.TurnoutOperation;
  *
  */
 public class NoFeedbackTurnoutOperationConfig extends CommonTurnoutOperationConfig {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8073858688153354354L;
 
     /**
      * Create the config JPanel, if there is one, to configure this operation

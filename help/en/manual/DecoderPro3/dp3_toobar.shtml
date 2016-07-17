@@ -1,66 +1,110 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
-<title>DecoderPro&reg; Main Window</title>
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style -->
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>DecoderPro&reg; Main Window</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <!--#include virtual="/Header" -->
 
-<h1>DecoderPro&reg; Main Window</h1>
-<h2>Toolbar</h2>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<div align="right">
-  <p><a href="dp3_Main_Main.shtml">Back </a></p>
-<p><a href="index.shtml#Main">Back to Index</a></p>
-</div>
+    <div id="mainContent">
+      <h1>DecoderPro&reg; Main Window</h1>
 
-<hr>
-<p><img src="images/dp3_toolbar.png" alt="toolbar" height="115" width="900"></p>
-<table border="1" cellpadding="2" cellspacing="1" width="90%">
-  <tbody><tr>
-    <td width="35%"><img src="images/dp3_toolbar_newloco.png" alt="new loco button" height="43" width="105"></td>
-    <td width="65%">Opens the<a href="Programmer_Setup.shtml#newloco"> </a><a href="Programmer_Setup.shtml#newloco"><strong>create new loco</strong></a> window</td>
-  </tr>
-  <tr>
-    <td><img src="images/dp3_toolbar_identify.png" alt="identify button" height="48" width="91"></td>
-    <td>Attempts to Identify the locomotive if it is in the roster.</td>
-  </tr>
-  <tr>
-    <td><img src="images/dp3_toolbar_help.png" alt="help button" height="47" width="71"></td>
-    <td>Displays the Help file for the DecoderPro&reg; window</td>
-  </tr>
-  <tr>
-    <td><strong><a href="dp3_Main_Throttle.shtml"><img src="images/dp3_toolbar_newThrottle.png" alt="throttle" height="30" width="120"></a></strong></td>
-    <td>Opens new <strong><a href="dp3_Main_Throttle.shtml">Throttle</a></strong> or other buttons added in <strong><a href="Start_Preferences.shtml">Preferences.</a></strong></td>
-  </tr>
-  <tr>
-    <td><img src="images/dp3_toolbar_Power.png" alt="power control" height="49" width="69"></td>
-    <td>Controls Track power if your command station supports this feature.</td>
-  </tr>
-  <tr>
-    <td><img src="images/dp3_toolbar_programMode.png" alt="programming mode" height="28" width="232"></td>
-    <td>Drop down list allows you to select <a style="font-weight: bold;" href="Basic_Mode.shtml">Proglamming Mode</a></td>
-  </tr>
-</tbody></table>
-<hr>
+      <h2>Toolbar</h2>
 
-<div align="right">
-<p><a href="dp3_Main_Main.shtml">Back </a></p>
-<p><a href="index.shtml#Main">Back to Index</a></p>
-</div>
+      <div align="right">
+        <p><a href="dp3_Main_Main.shtml">Back</a></p>
 
-<!--#include virtual="/Footer" -->
-  </div><!-- closes #mainContent-->
- </div> <!-- closes #mBody-->
+        <p><a href="index.shtml#Main">Back to Index</a></p>
+      </div>
+      <hr>
+
+      <p><img src="images/dp3_toolbar.png" alt="toolbar" height=
+      "115" width="900"></p>
+
+      <table border="1" cellpadding="2" cellspacing="1" width=
+      "90%">
+        <tbody>
+          <tr>
+            <td width="35%"><img src=
+            "images/dp3_toolbar_newloco.png" alt="new loco button"
+            height="43" width="105"></td>
+
+            <td width="65%">Opens the <a href=
+            "Programmer_Setup.shtml#newloco"></a><a href=
+            "Programmer_Setup.shtml#newloco"><strong>create new
+            loco</strong></a> window</td>
+          </tr>
+
+          <tr>
+            <td><img src="images/dp3_toolbar_identify.png" alt=
+            "identify button" height="48" width="91"></td>
+
+            <td>Attempts to Identify the locomotive if it is in the
+            roster.</td>
+          </tr>
+
+          <tr>
+            <td><img src="images/dp3_toolbar_help.png" alt=
+            "help button" height="47" width="71"></td>
+
+            <td>Displays the Help file for the DecoderPro&reg;
+            window</td>
+          </tr>
+
+          <tr>
+            <td><strong><a href="dp3_Main_Throttle.shtml"><img src=
+            "images/dp3_toolbar_newThrottle.png" alt="throttle"
+            height="30" width="120"></a></strong></td>
+
+            <td>Opens new <strong><a href=
+            "dp3_Main_Throttle.shtml">Throttle</a></strong> or
+            other buttons added in <strong><a href=
+            "Start_Preferences.shtml">Preferences.</a></strong></td>
+          </tr>
+
+          <tr>
+            <td><img src="images/dp3_toolbar_Power.png" alt=
+            "power control" height="49" width="69"></td>
+
+            <td>Controls Track power if your command station
+            supports this feature.</td>
+          </tr>
+
+          <tr>
+            <td><img src="images/dp3_toolbar_programMode.png" alt=
+            "programming mode" height="28" width="232"></td>
+
+            <td>Drop down list allows you to select <a style=
+            "font-weight: bold;" href=
+            "Basic_Mode.shtml">Proglamming Mode</a></td>
+          </tr>
+        </tbody>
+      </table>
+      <hr>
+
+      <div align="right">
+        <p><a href="dp3_Main_Main.shtml">Back</a></p>
+
+        <p><a href="index.shtml#Main">Back to Index</a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>

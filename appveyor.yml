@@ -1,7 +1,7 @@
 version: '{build}'
 clone_depth: 50
 install:
-  - SET MAVEN_VERSION=3.3.3
+  - SET MAVEN_VERSION=3.3.9
   - SET MAVEN_HOME=C:\Users\appveyor\maven\apache-maven-%MAVEN_VERSION%
   - ps: |
       Add-Type -AssemblyName System.IO.Compression.FileSystem

@@ -22,7 +22,7 @@
 <div class="nomenu" ID="mBody">
 <div id="mainContent">
 
-<a name="usb2serial"><h1>Hardware Setup Support: Using a USB-to-Serial Adapter</h1></a>
+<h1><a name="usb2serial">Hardware Setup Support: Using a USB-to-Serial Adapter</a></h1>
 
 <p>If your model railroad hardware is supposed to connect to a
 computer via a traditional RS232 serial connection, but your computer

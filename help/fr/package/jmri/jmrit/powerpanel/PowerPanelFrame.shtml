@@ -1,39 +1,45 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
-<!-- UpDated by Herv&#233; Blorec bzh56420@yahoo.fr--> 
+<!-- UpDated by Herv&#233; Blorec bzh56420@yahoo.fr-->
+
 <html lang="fr">
 <head>
- <TITLE>
-      JMRI: Power Control
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help Route Add Edit">
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <title>JMRI: Power Control</title>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content="JMRI help Route Add Edit">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header" -->
+
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+      <h1>Commande Alimentation</h1>
 
-<H1>Commande Alimentation</H1>
+      <p>Les boutons On/Off sur ce volet font la m&ecirc;me chose
+      que les boutons Power On/Off sur votre r&eacute;gulateur
+      &agrave; main. Il bascule la tension DCC des rails A/B sur
+      On/Off.</p>
 
-<p>
-Les boutons On/Off sur ce volet font la m&#234;me chose que les boutons Power On/Off sur votre r&#233;gulateur &#224; main. Il bascule la tension DCC des rails A/B sur On/Off.
-<p>  
-Ceci est la page d'aide help/en/package/jmri/jmrit/powerpanel/PowerPanelFrame
-
-<!--#include virtual="/Footer" -->
+      <p>Ceci est la page d'aide
+      help/en/package/jmri/jmrit/powerpanel/PowerPanelFrame 
+      <!--#include virtual="/Footer" --></p>
+    </div>
+  </div>
 </body>
 </html>
-
-
- 	  	 

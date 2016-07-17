@@ -556,34 +556,9 @@
                                     jmri.log("Reconnecting from failed reconnection attempt.");
                                 }
                                 jmri.reconnect();
-                                jmri.reconnectPoller = setInterval(jmri.pollReconnectionAttempt, 1000);
                             }, jmri.reconnectDelay);
                 } else {
                     jmri.failedReconnect();
-                }
-            };
-            jmri.pollReconnectionAttempt = function() {
-                // socket.readyState 0 == CONNECTING
-                // socket.readyState 1 == OPEN
-                if (!jmri.socket || (jmri.socket.readyState !== 1 && jmri.socket.readyState !== 0)) {
-                    // No socket or socket is CLOSED or CLOSING
-                    jmri.log("Reconnection attempt " + jmri.reconnectAttempts + " failed.");
-                    jmri.log("Will retry in " + (jmri.reconnectAttempts + 1) * 15 + " seconds.");
-                    clearInterval(jmri.reconnectPoller);
-                    jmri.attemptReconnection();
-                } else if (jmri.socket.readyState === 0) {
-                    // socket is CONNECTING
-                    if (jmri.reconnectPolls < 60) {
-                        jmri.reconnectPolls++;
-                        jmri.log("Reconnection attempt " + jmri.reconnectAttempts + " pending.");
-                    } else {
-                        jmri.reconnectPolls = 0;
-                        jmri.socket = null;
-                    }
-                } else {
-                    // socket is OPEN
-                    clearInterval(jmri.reconnectPoller);
-                    jmri.didReconnect();
                 }
             };
             jmri.reconnect = function() {
@@ -596,6 +571,7 @@
                     close: function(e) {
                         jmri.log("Closed WebSocket " + ((e.wasClean) ? "cleanly" : "unexpectedly") + " (" + e.code + "): " + e.reason);
                         clearInterval(jmri.heartbeatInterval);
+                        jmri.socket.close();
                         jmri.socket = null;
                         jmri.close(e);
                         jmri.attemptReconnection();
