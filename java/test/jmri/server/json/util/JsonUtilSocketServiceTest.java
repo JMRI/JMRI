@@ -1,11 +1,5 @@
 package jmri.server.json.util;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
 import static org.junit.Assert.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -13,7 +7,11 @@ import java.io.DataOutputStream;
 import java.util.Locale;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonMockConnection;
-import org.junit.Assert;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,30 +20,33 @@ import org.slf4j.LoggerFactory;
  * @author rhwood
  */
 public class JsonUtilSocketServiceTest {
-    
+
     private static final Logger log = LoggerFactory.getLogger(JsonUtilSocketServiceTest.class);
-    
+
     public JsonUtilSocketServiceTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
 
     /**
      * Test of onMessage method, of class JsonUtilSocketService.
+     *
+     * @throws java.lang.Exception if an exception unexpected in the context of
+     *                             these tests occurs
      */
     @Test
     public void testOnMessage() throws Exception {
@@ -72,6 +73,9 @@ public class JsonUtilSocketServiceTest {
 
     /**
      * Test of onList method, of class JsonUtilSocketService.
+     *
+     * @throws java.lang.Exception if an exception unexpected in the context of
+     *                             these tests occurs
      */
     @Test
     public void testOnList() throws Exception {
@@ -97,5 +101,5 @@ public class JsonUtilSocketServiceTest {
             log.error("Unexpected exception", ex);
         }
     }
-    
+
 }
